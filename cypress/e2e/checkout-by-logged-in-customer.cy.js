@@ -2,16 +2,10 @@ describe('Checkout By Logged In Customer', () => {
   it('Checkout with one concrete product', () => {
 
     // Login as a spencor.hopkin@spryker.com
-    cy.visit('/en/login');
-    cy.get('#loginForm_email').type('spencor.hopkin@spryker.com');
-    cy.get('#loginForm_password').type('change123');
-    cy.get('form[name=loginForm] .form__action.button.button--success').click();
-    cy.url().should('include', '/en/customer/overview');
+    cy.amLoggedInCustomer('spencor.hopkin@spryker.com', 'change123');
 
     // Create new cart to avoid conflicts with other tests
-    cy.visit('/en/multi-cart/create');
-    cy.get('#quoteForm_name').type(`[e2e-scenario] Cart#${new Date().getTime()}${Math.floor(Math.random() * 900 + 100)}`);
-    cy.get('form[name=quoteForm] .form__action.button.button--success').click();
+    cy.amUsingSeparateMultiCart();
 
     // Add a product to my cart
     cy.visit('/en/hp-slate-10-pro-ee-169');
@@ -24,15 +18,7 @@ describe('Checkout By Logged In Customer', () => {
 
     // Fill out the address form
     cy.url().should('include', '/en/checkout/address');
-    cy.get('.select__select.js-address__form-select-shippingAddress').select('0');
-    cy.get('#addressesForm_shippingAddress_first_name').type('Spencor');
-    cy.get('#addressesForm_shippingAddress_last_name').type('Hopkin');
-    cy.get('#addressesForm_shippingAddress_address1').type('123 Main St');
-    cy.get('#addressesForm_shippingAddress_address2').type('12c');
-    cy.get('#addressesForm_shippingAddress_zip_code').type('10001');
-    cy.get('#addressesForm_shippingAddress_city').type('New York');
-    cy.get('#addressesForm_billingSameAsShipping').check({ force: true });
-    cy.contains('button', 'Next').click();
+    cy.haveFilledShippingAddressForm('Spencor', 'Hopkin', '123 Main St', '12c', '10001', 'New York');
 
     // Select a shipment method
     cy.url().should('include', '/en/checkout/shipment');
@@ -56,16 +42,10 @@ describe('Checkout By Logged In Customer', () => {
   it('should checkout with two concrete products', () => {
 
     // Login as a spencor.hopkin@spryker.com
-    cy.visit('/en/login');
-    cy.get('#loginForm_email').type('spencor.hopkin@spryker.com');
-    cy.get('#loginForm_password').type('change123');
-    cy.get('form[name=loginForm] .form__action.button.button--success').click();
-    cy.url().should('include', '/en/customer/overview');
+    cy.amLoggedInCustomer('spencor.hopkin@spryker.com', 'change123');
 
     // Create new cart to avoid conflicts with other tests
-    cy.visit('/en/multi-cart/create');
-    cy.get('#quoteForm_name').type(`[e2e-scenario] Cart#${new Date().getTime()}${Math.floor(Math.random() * 900 + 100)}`);
-    cy.get('form[name=quoteForm] .form__action.button.button--success').click();
+    cy.amUsingSeparateMultiCart();
 
     // Add a product to my cart
     cy.visit('/en/hp-slate-10-pro-ee-169');
@@ -81,15 +61,7 @@ describe('Checkout By Logged In Customer', () => {
 
     // Fill out the address form
     cy.url().should('include', '/en/checkout/address');
-    cy.get('.select__select.js-address__form-select-shippingAddress').select('0');
-    cy.get('#addressesForm_shippingAddress_first_name').type('Spencor');
-    cy.get('#addressesForm_shippingAddress_last_name').type('Hopkin');
-    cy.get('#addressesForm_shippingAddress_address1').type('123 Main St');
-    cy.get('#addressesForm_shippingAddress_address2').type('12c');
-    cy.get('#addressesForm_shippingAddress_zip_code').type('10001');
-    cy.get('#addressesForm_shippingAddress_city').type('New York');
-    cy.get('#addressesForm_billingSameAsShipping').check({ force: true });
-    cy.contains('button', 'Next').click();
+    cy.haveFilledShippingAddressForm('Spencor', 'Hopkin', '123 Main St', '12c', '10001', 'New York');
 
     // Select a shipment method
     cy.url().should('include', '/en/checkout/shipment');

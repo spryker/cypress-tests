@@ -21,15 +21,7 @@ describe('Checkout By Guest Customer', () => {
 
     // Fill out the address form
     cy.url().should('include', '/en/checkout/address');
-    cy.get('.select__select.js-address__form-select-shippingAddress').select('0');
-    cy.get('#addressesForm_shippingAddress_first_name').type('Harry');
-    cy.get('#addressesForm_shippingAddress_last_name').type('Klein');
-    cy.get('#addressesForm_shippingAddress_address1').type('Julie-Wolfthorn-Str');
-    cy.get('#addressesForm_shippingAddress_address2').type('1');
-    cy.get('#addressesForm_shippingAddress_zip_code').type('10235');
-    cy.get('#addressesForm_shippingAddress_city').type('Berlin');
-    cy.get('#addressesForm_billingSameAsShipping').check({ force: true });
-    cy.contains('button', 'Next').click();
+    cy.haveFilledShippingAddressForm('Harry', 'Klein', 'Julie-Wolfthorn-Str', '1', '10235', 'Berlin');
 
     // Select a shipment method
     cy.url().should('include', '/en/checkout/shipment');
@@ -74,16 +66,8 @@ describe('Checkout By Guest Customer', () => {
     cy.contains('button', 'Submit').click();
 
     // Fill out the address form
-    cy.url().should('include', '/en/checkout/address');
-    cy.get('.select__select.js-address__form-select-shippingAddress').select('0');
-    cy.get('#addressesForm_shippingAddress_first_name').type('Harry');
-    cy.get('#addressesForm_shippingAddress_last_name').type('Klein');
-    cy.get('#addressesForm_shippingAddress_address1').type('Julie-Wolfthorn-Str');
-    cy.get('#addressesForm_shippingAddress_address2').type('1');
-    cy.get('#addressesForm_shippingAddress_zip_code').type('10235');
-    cy.get('#addressesForm_shippingAddress_city').type('Berlin');
-    cy.get('#addressesForm_billingSameAsShipping').check({ force: true });
-    cy.contains('button', 'Next').click();
+    cy.url().should('include', '/en/checkout/address')
+    cy.haveFilledShippingAddressForm('Harry', 'Klein', 'Julie-Wolfthorn-Str', '1', '10235', 'Berlin');
 
     // Select a shipment method
     cy.url().should('include', '/en/checkout/shipment');
