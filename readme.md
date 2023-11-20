@@ -7,13 +7,12 @@
 
 ## Setup
 - **Install Dependencies:** `npm install`
-- **Install Cypress:** `npm install cypress --save-dev`
 
 ## Running Tests
 Run Cypress tests with:
 
 ```arduino
-npx cypress run
+npm run cy:open
 ```
 
 ## Contributing
