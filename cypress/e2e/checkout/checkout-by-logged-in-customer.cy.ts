@@ -21,8 +21,8 @@ const secondProduct = CheckoutHelper.createProduct(
 
 describe('Checkout By Logged In Customer', () => {
   beforeEach(() => {
-    CheckoutHelper.login(customer)
-    CheckoutHelper.createCart()
+    CheckoutHelper.login(customer);
+    CheckoutHelper.createCart();
   });
 
   it('should checkout with one concrete product', () => {
@@ -44,7 +44,7 @@ describe('Checkout By Logged In Customer', () => {
     cy.url().should('include', '/en/checkout/summary');
     CheckoutHelper.placeOrder();
 
-    cy.contains('Your order has been placed successfully!')
+    cy.contains('Your order has been placed successfully!');
   });
 
   it('should checkout with two concrete products', () => {
@@ -68,6 +68,6 @@ describe('Checkout By Logged In Customer', () => {
     cy.url().should('include', '/en/checkout/summary');
     CheckoutHelper.placeOrder();
 
-    cy.contains('Your order has been placed successfully!')
+    cy.contains('Your order has been placed successfully!');
   });
 });

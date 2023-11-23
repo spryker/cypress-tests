@@ -37,7 +37,7 @@ describe('Checkout By Guest Customer', () => {
         cy.url().should('include', '/en/checkout/summary');
         CheckoutHelper.placeOrder();
 
-        cy.contains('Your order has been placed successfully!')
+        cy.contains('Your order has been placed successfully!');
     });
 
     it('should checkout with two concrete products', () => {
@@ -63,6 +63,6 @@ describe('Checkout By Guest Customer', () => {
         cy.url().should('include', '/en/checkout/summary');
         CheckoutHelper.placeOrder();
 
-        cy.contains('Your order has been placed successfully!')
+        cy.contains('Your order has been placed successfully!');
     });
 });
