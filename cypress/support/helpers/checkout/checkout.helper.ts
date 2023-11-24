@@ -1,14 +1,14 @@
 import {faker} from '@faker-js/faker';
-import {Customer} from "./types/customer";
-import {Address} from "./types/address";
-import {Product} from "./types/product";
+import {CheckoutCustomer} from "./types/checkout.customer";
+import {CheckoutAddress} from "./types/checkout.address";
+import {CheckoutProduct} from "./types/checkout.product";
 
 export const createCustomer = (
     email?: string,
     firstName?: string,
     lastName?: string,
     password?: string
-): Customer => {
+): CheckoutCustomer => {
     return {
         email: email ?? faker.internet.email(),
         firstName: firstName ?? faker.person.firstName(),
@@ -17,15 +17,14 @@ export const createCustomer = (
     };
 }
 
-export const createProduct = (sku: string, name: string, link: string): Product => {
+export const createProduct = (sku: string, link: string): CheckoutProduct => {
     return {
         sku: sku,
-        name: name,
         link: link,
     };
 }
 
-export const createAddress = (address1?: string, address2?: string, zipCode?: string, city?: string): Address => {
+export const createAddress = (address1?: string, address2?: string, zipCode?: string, city?: string): CheckoutAddress => {
     return {
         address1: address1 ?? faker.location.secondaryAddress(),
         address2: address2 ?? faker.location.buildingNumber(),
@@ -34,12 +33,12 @@ export const createAddress = (address1?: string, address2?: string, zipCode?: st
     };
 }
 
-export const addProductToCart = (product: Product) => {
+export const addProductToCart = (product: CheckoutProduct) => {
     cy.visit(product.link);
     cy.get('button').contains('Add to Cart').click();
 };
 
-export const checkoutAsGuest = (customer: Customer) => {
+export const checkoutAsGuest = (customer: CheckoutCustomer) => {
     cy.url().should('include', '/en/checkout/customer');
     cy.get('#guest').click({force: true});
 
@@ -54,18 +53,18 @@ export const checkoutAsGuest = (customer: Customer) => {
 export const createCart = () => {
     cy.visit('/en/multi-cart/create');
     cy.get('#quoteForm_name').type(`[e2e-scenario] Cart #${faker.string.uuid()}`);
-    cy.get('form[name=quoteForm] .form__action.button.button--success').click();
+    cy.get('form[name=quoteForm]').submit();
 };
 
-export const login = (Customer: Customer) => {
+export const login = (customer: CheckoutCustomer) => {
     cy.visit('/en/login');
-    cy.get('#loginForm_email').type(Customer.email);
-    cy.get('#loginForm_password').type(Customer.password);
+    cy.get('#loginForm_email').type(customer.email);
+    cy.get('#loginForm_password').type(customer.password);
 
-    cy.get('form[name=loginForm] .form__action.button.button--success').click();
+    cy.get('form[name=loginForm]').submit();
 };
 
-export const fillShippingAddress = (customer: Customer, address: Address) => {
+export const fillShippingAddress = (customer: CheckoutCustomer, address: CheckoutAddress) => {
     cy.get('.select__select.js-address__form-select-shippingAddress').select('0');
     cy.get('#addressesForm_shippingAddress_first_name').type(customer.firstName);
     cy.get('#addressesForm_shippingAddress_last_name').type(customer.lastName);
@@ -92,6 +91,5 @@ export const setDummyPaymentMethod = () => {
 export const placeOrder = () => {
     cy.get('.form__action.button.button--success.js-summary__submit-button').scrollIntoView();
     cy.get('[name="acceptTermsAndConditions"]').check({force: true});
-    cy.get('.form__action.button.button--success.js-summary__submit-button').invoke('prop', 'disabled', false);
-    cy.contains('button', 'Submit your order').click();
+    cy.get('form[name=summaryForm]').submit();
 };

@@ -1,25 +1,32 @@
 import * as CheckoutHelper from '../../support/helpers/checkout/checkout.helper';
-
-const customer = CheckoutHelper.createCustomer(
-    'spencor.hopkin@spryker.com',
-    'Spencor',
-    'Hopkin',
-    'change123',
-);
-const address = CheckoutHelper.createAddress();
-const firstProduct = CheckoutHelper.createProduct(
-    '169_25880805',
-    'HP Slate 10 Pro EE',
-    '/en/hp-slate-10-pro-ee-169'
-);
-
-const secondProduct = CheckoutHelper.createProduct(
-    '156_32018944',
-    'Acer Iconia B1-850',
-    '/en/acer-iconia-b1-850-156'
-);
+import {CheckoutCustomer} from "../../support/helpers/checkout/types/checkout.customer";
+import {CheckoutAddress} from "../../support/helpers/checkout/types/checkout.address";
+import {CheckoutProduct} from "../../support/helpers/checkout/types/checkout.product";
 
 describe('Checkout By Logged In Customer', () => {
+  let customer: CheckoutCustomer;
+  let address: CheckoutAddress;
+  let firstProduct: CheckoutProduct, secondProduct: CheckoutProduct;
+
+  before(() => {
+    customer = CheckoutHelper.createCustomer(
+        'spencor.hopkin@spryker.com',
+        'Spencor',
+        'Hopkin',
+        'change123',
+    );
+    address = CheckoutHelper.createAddress();
+    firstProduct = CheckoutHelper.createProduct(
+        '169_25880805',
+        '/en/hp-slate-10-pro-ee-169'
+    );
+
+    secondProduct = CheckoutHelper.createProduct(
+        '156_32018944',
+        '/en/acer-iconia-b1-850-156'
+    );
+  });
+
   beforeEach(() => {
     CheckoutHelper.login(customer);
     CheckoutHelper.createCart();
@@ -29,8 +36,8 @@ describe('Checkout By Logged In Customer', () => {
     CheckoutHelper.addProductToCart(firstProduct);
 
     cy.url().should('include', '/en/cart');
-    cy.contains(firstProduct.name, {timeout: 5000});
-    cy.get('a').contains('Checkout').click();
+    cy.get('[data-qa="cart-item-sku"]', {timeout: 5000}).first().contains(firstProduct.sku);
+    cy.get('[data-qa="cart-go-to-checkout"]').click();
 
     cy.url().should('include', '/en/checkout/address');
     CheckoutHelper.fillShippingAddress(customer, address);
@@ -52,9 +59,9 @@ describe('Checkout By Logged In Customer', () => {
     CheckoutHelper.addProductToCart(secondProduct);
 
     cy.url().should('include', '/en/cart');
-    cy.contains(firstProduct.name, {timeout: 5000});
-    cy.contains(secondProduct.name, {timeout: 5000});
-    cy.get('a').contains('Checkout').click();
+    cy.get('[data-qa="cart-item-sku"]', {timeout: 5000}).first().contains(firstProduct.sku);
+    cy.get('[data-qa="cart-item-sku"]').last().contains(secondProduct.sku);
+    cy.get('[data-qa="cart-go-to-checkout"]').click();
 
     cy.url().should('include', '/en/checkout/address');
     CheckoutHelper.fillShippingAddress(customer, address);
