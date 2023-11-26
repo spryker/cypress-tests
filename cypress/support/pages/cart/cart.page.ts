@@ -1,25 +1,24 @@
 import {CartRepository} from "./cart.repository";
+import {Page} from "../shared/page";
 
-export class CartPage
-{
-    private cartRepository: CartRepository;
+export class CartPage extends Page {
+    PAGE_URL = '/cart';
+    repository: CartRepository;
 
-    constructor()
-    {
-        this.cartRepository = new CartRepository();
+    constructor() {
+        super();
+        this.repository = new CartRepository();
     }
 
-    public quickAddToCart(sku: string, quantity?: number): void
-    {
-        this.cartRepository.getQuickAddToCartSkuField().then(elem => elem.val(sku));
-        this.cartRepository.getQuickAddToCartQuantityField().clear().type(String(quantity ?? 1));
+    quickAddToCart = (sku: string, quantity?: number) => {
+        this.repository.getQuickAddToCartSkuField().then(elem => elem.val(sku));
+        this.repository.getQuickAddToCartQuantityField().clear().type(String(quantity ?? 1));
 
-        this.cartRepository.getQuickAddToCartSubmitButton().click();
+        this.repository.getQuickAddToCartSubmitButton().click();
     }
 
-    public removeProduct(sku: string): void
-    {
-        const form = this.cartRepository.findCartItemRemovalForm(sku);
+    removeProduct = (sku: string) => {
+        const form = this.repository.findCartItemRemovalForm(sku);
 
         if (!form) {
             return;
@@ -28,29 +27,27 @@ export class CartPage
         form.submit();
     }
 
-    public changeQuantity(sku: string, newQuantity: number): void
-    {
-        let form = this.cartRepository.findCartItemChangeQuantityForm(sku);
+    changeQuantity = (sku: string, newQuantity: number) => {
+        let form = this.repository.findCartItemChangeQuantityForm(sku);
+        let input = this.repository.getCartItemChangeQuantityField(sku);
 
-        if (!form) {
+        if (!form || !input) {
             return;
         }
 
-        form.find('[data-qa="component formatted-number-input"]').type('{selectall}').type(String(newQuantity));
-        this.cartRepository.findCartItemChangeQuantityForm(sku).submit();
+        input.type('{selectall}').type(String(newQuantity));
+        form.submit();
     }
 
-    public clearCart(): void
-    {
-        const form = this.cartRepository.findClearCartForm();
+    clearCart = () => {
+        const form = this.repository.findClearCartForm();
 
         if (form) {
             form.submit();
         }
     }
 
-    public checkout(): void
-    {
-        this.cartRepository.getCheckoutButton().click();
+    startCheckout = () => {
+        this.repository.getCheckoutButton().click();
     }
 }

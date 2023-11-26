@@ -1,23 +1,11 @@
 import {ProductRepository} from "./product.repository";
+import {Page} from "../shared/page";
 
-export class ProductPage
-{
-    private productRepository: ProductRepository;
+export class ProductPage extends Page {
+    repository: ProductRepository;
 
-    constructor(productRepository: ProductRepository)
-    {
-        this.productRepository = productRepository;
-    }
-
-    public addToCart(): void
-    {
-    }
-
-    public addToWishlist(): void
-    {
-    }
-
-    public addToShoppingList(): void
-    {
+    constructor() {
+        super();
+        this.repository = new ProductRepository();
     }
 }
