@@ -13,8 +13,8 @@ export class CartRepository {
 
     findCartItemRemovalForm = (sku: string) => {
         return cy.get('[action]').filter((index, element) => {
-            // Construct a regex that includes the SKU
             const regex = new RegExp(`^/\\w+/cart/remove/${sku}/\\w+$`);
+            // @ts-ignore
             return regex.test(element.getAttribute('action'));
         });
     }
@@ -22,6 +22,7 @@ export class CartRepository {
     findCartItemChangeQuantityForm = (sku: string) => {
         return cy.get('[action]').filter((index, element) => {
             const regex = new RegExp(`^/\\w+/cart/change/${sku}$`);
+            // @ts-ignore
             return regex.test(element.getAttribute('action'));
         });
     }
