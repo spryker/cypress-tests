@@ -17,12 +17,7 @@ describe('Checkout By Logged In Customer', () => {
     const summaryStepPage = new SummaryPage();
 
     beforeEach(() => {
-        cy.clearCookies();
-        cy.visit('/', {
-            onBeforeLoad(win) {
-                win.sessionStorage.clear();
-            }
-        });
+        cy.resetCookies();
     });
 
     beforeEach(() => {

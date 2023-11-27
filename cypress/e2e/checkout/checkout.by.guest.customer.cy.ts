@@ -14,12 +14,7 @@ describe('Checkout By Guest Customer', () => {
     const summaryStepPage = new SummaryPage();
 
     beforeEach(() => {
-        cy.clearCookies();
-        cy.visit('/', {
-            onBeforeLoad(win) {
-                win.sessionStorage.clear();
-            }
-        });
+        cy.resetCookies();
     });
 
     it('should place order with with one concrete product', () => {
