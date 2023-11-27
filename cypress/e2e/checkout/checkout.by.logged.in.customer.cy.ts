@@ -18,9 +18,6 @@ describe('Checkout By Logged In Customer', () => {
 
     beforeEach(() => {
         cy.resetCookies();
-    });
-
-    beforeEach(() => {
         loginPage.login('spencor.hopkin@spryker.com', 'change123');
         multiCartPage.createNewCart();
     });
