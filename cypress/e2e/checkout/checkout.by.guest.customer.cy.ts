@@ -5,14 +5,14 @@ import {ShipmentPage} from "../../support/pages/checkout/shipment/shipment.page"
 import {PaymentPage} from "../../support/pages/checkout/payment/payment.page";
 import {SummaryPage} from "../../support/pages/checkout/summary/summary.page";
 
-const cartPage = new CartPage();
-const customerStepPage = new CustomerPage();
-const addressStepPage = new AddressPage();
-const shipmentStepPage = new ShipmentPage();
-const paymentStepPage = new PaymentPage();
-const summaryStepPage = new SummaryPage();
-
 describe('Checkout By Guest Customer', () => {
+    const cartPage = new CartPage();
+    const customerStepPage = new CustomerPage();
+    const addressStepPage = new AddressPage();
+    const shipmentStepPage = new ShipmentPage();
+    const paymentStepPage = new PaymentPage();
+    const summaryStepPage = new SummaryPage();
+
     beforeEach(() => {
         cy.clearCookies();
         cy.visit('/', {

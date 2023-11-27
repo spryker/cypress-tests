@@ -4,8 +4,8 @@ import {ShipmentPage} from "../pages/checkout/shipment/shipment.page";
 import {PaymentPage} from "../pages/checkout/payment/payment.page";
 import {SummaryPage} from "../pages/checkout/summary/summary.page";
 
-export class PlaceOrderScenario {
-    execute = () => {
+export class PlaceDummyOrderScenario {
+    static execute = () => {
         const cartPage = new CartPage();
         const addressStepPage = new AddressPage();
         const shipmentStepPage = new ShipmentPage();
