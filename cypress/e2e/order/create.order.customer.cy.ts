@@ -13,7 +13,7 @@ describe('Create order', () => {
         cy.contains('Your order has been placed successfully!');
     });
 
-    it('existing registered customer should be able to create an order', () => {
+    it('existing customer should be able to create an order', () => {
         LoginAsCustomerScenario.execute('spencor.hopkin@spryker.com', 'change123');
         PlaceDummyOrderScenario.execute();
 

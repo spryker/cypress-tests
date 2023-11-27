@@ -25,7 +25,7 @@ describe('Checkout By Logged In Customer', () => {
         multiCartPage.createNewCart();
     });
 
-    it('should place order with with one concrete product', () => {
+    it('should place order with one concrete product', () => {
         cy.visit(cartPage.getPageLocation());
         cartPage.quickAddToCart('169_25880805');
 
@@ -38,7 +38,7 @@ describe('Checkout By Logged In Customer', () => {
         cy.contains('Your order has been placed successfully!');
     });
 
-    it('should place order with with two concrete products (with quantity 2)', () => {
+    it('should place order with two concrete products to single shipment', () => {
         cy.visit(cartPage.getPageLocation());
         cartPage.quickAddToCart('169_25880805', 2);
         cartPage.quickAddToCart('156_32018944', 2);
@@ -46,6 +46,21 @@ describe('Checkout By Logged In Customer', () => {
         cartPage.startCheckout();
         addressStepPage.fillShippingAddress();
         shipmentStepPage.setStandardShippingMethod();
+        paymentStepPage.setDummyPaymentMethod();
+        summaryStepPage.placeOrder();
+
+        cy.contains('Your order has been placed successfully!');
+    });
+
+    it('should place order to multi shipment address', () => {
+        cy.visit(cartPage.getPageLocation());
+        cartPage.quickAddToCart('169_25880805', 2);
+        cartPage.quickAddToCart('156_32018944', 2);
+
+        cartPage.startCheckout();
+        addressStepPage.fillMultiShippingAddress();
+        shipmentStepPage.setStandardShippingMethod();
+
         paymentStepPage.setDummyPaymentMethod();
         summaryStepPage.placeOrder();
 

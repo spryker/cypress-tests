@@ -1,6 +1,10 @@
 export class ShipmentRepository {
-    getStandardShipmentRadio = () => {
-        return cy.get('#shipmentCollectionForm_shipmentGroups_0_shipment_shipmentSelection_0');
+    getMultiShipmentItemElement = () => {
+        return cy.get('.form__fields.grid.grid--bottom');
+    }
+
+    getStandardShipmentRadio = ($shipmentItem: JQuery<HTMLElement>, index: number) => {
+        return cy.wrap($shipmentItem).get(`#shipmentCollectionForm_shipmentGroups_${index}_shipment_shipmentSelection_0`);
     }
 
     getNextButton = () => {
