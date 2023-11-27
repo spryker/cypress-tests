@@ -55,7 +55,6 @@ describe('Checkout By Guest Customer', () => {
         customerStepPage.checkoutAsGuest();
         addressStepPage.fillMultiShippingAddress();
         shipmentStepPage.setStandardShippingMethod();
-
         paymentStepPage.setDummyPaymentMethod();
         summaryStepPage.placeOrder();
 

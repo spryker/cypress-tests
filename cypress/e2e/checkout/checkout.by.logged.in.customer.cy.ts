@@ -57,7 +57,6 @@ describe('Checkout By Logged In Customer', () => {
         cartPage.startCheckout();
         addressStepPage.fillMultiShippingAddress();
         shipmentStepPage.setStandardShippingMethod();
-
         paymentStepPage.setDummyPaymentMethod();
         summaryStepPage.placeOrder();
 
