@@ -11,9 +11,9 @@ export class MultiCartPage extends Page {
         this.repository = new MultiCartRepository();
     }
 
-    createNewCart = () => {
+    createCart = (name?: string) => {
         cy.visit(`${this.PAGE_URL}/create`);
-        this.repository.getCreateCartNameInput().clear().type(`Cart #${faker.string.uuid()}`);
+        this.repository.getCreateCartNameInput().clear().type(name ?? `Cart #${faker.string.uuid()}`);
         this.repository.getCreateCartForm().submit();
     };
 }

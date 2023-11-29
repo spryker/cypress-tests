@@ -1,10 +1,10 @@
-import {CartPage} from "../pages/cart/cart.page";
-import {AddressPage} from "../pages/checkout/address/address.page";
-import {ShipmentPage} from "../pages/checkout/shipment/shipment.page";
-import {PaymentPage} from "../pages/checkout/payment/payment.page";
-import {SummaryPage} from "../pages/checkout/summary/summary.page";
+import {CartPage} from "../../pages/cart/cart.page";
+import {AddressPage} from "../../pages/checkout/address/address.page";
+import {ShipmentPage} from "../../pages/checkout/shipment/shipment.page";
+import {PaymentPage} from "../../pages/checkout/payment/payment.page";
+import {SummaryPage} from "../../pages/checkout/summary/summary.page";
 
-export class PlaceDummyOrderScenario {
+export class PlaceCustomerOrderScenario {
     static execute = (productSkus: string[]) => {
         const cartPage = new CartPage();
         const addressStepPage = new AddressPage();

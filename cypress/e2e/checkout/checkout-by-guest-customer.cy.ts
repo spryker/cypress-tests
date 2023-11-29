@@ -5,7 +5,7 @@ import {ShipmentPage} from "../../support/pages/checkout/shipment/shipment.page"
 import {PaymentPage} from "../../support/pages/checkout/payment/payment.page";
 import {SummaryPage} from "../../support/pages/checkout/summary/summary.page";
 
-describe('Checkout By Guest Customer', () => {
+describe('checkout by guest customer', () => {
     const cartPage = new CartPage();
     const customerStepPage = new CustomerPage();
     const addressStepPage = new AddressPage();
@@ -22,7 +22,7 @@ describe('Checkout By Guest Customer', () => {
         cy.resetCookies();
     });
 
-    it('should place order with one concrete product', () => {
+    it('should checkout with one concrete product', () => {
         cy.visit(cartPage.getPageLocation());
         cartPage.quickAddToCart(fixtures.concreteProductSkus[0]);
 
@@ -36,7 +36,7 @@ describe('Checkout By Guest Customer', () => {
         cy.contains('Your order has been placed successfully!');
     });
 
-    it('should place order with two concrete products to single shipment', () => {
+    it('should checkout with two concrete products to single shipment', () => {
         cy.visit(cartPage.getPageLocation());
         cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
         cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
@@ -51,7 +51,7 @@ describe('Checkout By Guest Customer', () => {
         cy.contains('Your order has been placed successfully!');
     });
 
-    it('should place order to multi shipment address', () => {
+    it('should checkout to multi shipment address', () => {
         cy.visit(cartPage.getPageLocation());
         cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
         cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
@@ -64,5 +64,30 @@ describe('Checkout By Guest Customer', () => {
         summaryStepPage.placeOrder();
 
         cy.contains('Your order has been placed successfully!');
+    });
+
+    it('should checkout with strict checkout step redirects', () => {
+        cy.visit(cartPage.getPageLocation());
+        cartPage.quickAddToCart(fixtures.concreteProductSkus[0]);
+
+        cartPage.assertPageLocation();
+        cartPage.startCheckout();
+
+        customerStepPage.assertPageLocation();
+        customerStepPage.checkoutAsGuest();
+
+        addressStepPage.assertPageLocation();
+        addressStepPage.fillShippingAddress();
+
+        shipmentStepPage.assertPageLocation();
+        shipmentStepPage.setStandardShippingMethod();
+
+        paymentStepPage.assertPageLocation();
+        paymentStepPage.setDummyPaymentMethod();
+
+        summaryStepPage.assertPageLocation();
+        summaryStepPage.placeOrder();
+
+        cy.url().should('include', '/checkout/success');
     });
 });

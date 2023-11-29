@@ -1,11 +1,12 @@
 import { defineConfig } from 'cypress'
+import dotenv from "dotenv";
+dotenv.config();
 
 export default defineConfig({
-  e2e: {
-    baseUrl: 'http://yves.de.spryker.local',
-    // baseUrl: 'https://cloud:cloud@www.de.scos.demo-spryker.com',
+  env: {
+    mailCatcherUrl: process.env.ENV_MAIL_CATCHER_URL,
   },
-  service: {
-    mailCatcherUrl: 'http://mail.spryker.local',
+  e2e: {
+    baseUrl: process.env.E2E_BASE_URL,
   },
 });

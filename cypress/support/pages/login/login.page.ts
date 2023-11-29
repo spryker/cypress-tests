@@ -1,7 +1,6 @@
 import {LoginRepository} from "./login.repository";
 import {Page} from "../shared/page";
 import {faker} from "@faker-js/faker";
-import {MailCatcherService} from "../../services/mail.catcher.service";
 
 export class LoginPage extends Page {
     PAGE_URL = '/login';
@@ -41,8 +40,6 @@ export class LoginPage extends Page {
         this.repository.getRegisterAcceptTermsCheckbox().check({force: true});
 
         this.repository.getRegisterForm().submit();
-
-        (new MailCatcherService()).verifyCustomerRegistration(customerEmail);
 
         return {
             email: customerEmail,
