@@ -1,4 +1,4 @@
-import {PlaceGuestOrderScenario} from "../../support/scenarios/order/place-guest-order.scenario";
+import { PlaceGuestOrderScenario } from "../../support/scenarios/order/place-guest-order.scenario";
 
 describe('create order by guest', () => {
     let fixtures: OrderFixtures;

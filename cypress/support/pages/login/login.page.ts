@@ -1,6 +1,6 @@
-import {LoginRepository} from "./login.repository";
-import {Page} from "../shared/page";
-import {faker} from "@faker-js/faker";
+import { LoginRepository } from "./login.repository";
+import { Page } from "../shared/page";
+import { faker } from "@faker-js/faker";
 
 export class LoginPage extends Page {
     PAGE_URL = '/login';
@@ -15,7 +15,7 @@ export class LoginPage extends Page {
     }
 
     login = (email: string, password: string) => {
-        cy.visit(this.getPageLocation());
+        cy.visit(this.PAGE_URL);
         this.repository.getLoginEmailInput().clear().type(email);
         this.repository.getLoginPasswordInput().clear().type(password)
 
@@ -26,13 +26,16 @@ export class LoginPage extends Page {
         email?: string, password?: string,
         salutation?: string, firstName?: string, lastName?: string,
     ) => {
-        cy.visit(this.getPageLocation());
+        cy.visit(this.PAGE_URL);
         this.repository.getRegisterSalutationSelect().select(salutation ?? this.DEFAULT_SALUTATION);
         this.repository.getRegisterFirstNameInput().clear().type(firstName ?? faker.person.firstName());
         this.repository.getRegisterLastNameInput().clear().type(lastName ?? faker.person.lastName());
 
         const customerEmail = email ?? faker.internet.email();
-        const customerPassword = password ?? faker.internet.password({ length: 20, prefix: this.DEFAULT_PASSWORD_PREFIX });
+        const customerPassword = password ?? faker.internet.password({
+            length: 20,
+            prefix: this.DEFAULT_PASSWORD_PREFIX
+        });
 
         this.repository.getRegisterEmailInput().clear().type(customerEmail);
         this.repository.getRegisterPasswordInput().clear().type(customerPassword);

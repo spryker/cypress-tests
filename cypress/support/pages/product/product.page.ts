@@ -1,5 +1,5 @@
-import {ProductRepository} from "./product.repository";
-import {Page} from "../shared/page";
+import { ProductRepository } from "./product.repository";
+import { Page } from "../shared/page";
 
 export class ProductPage extends Page {
     repository: ProductRepository;

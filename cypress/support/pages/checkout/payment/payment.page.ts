@@ -1,13 +1,11 @@
-import {PaymentRepository} from "./payment.repository";
-import {Page} from "../../shared/page";
+import { PaymentRepository } from "./payment.repository";
+import { Page } from "../../shared/page";
 
-export class PaymentPage extends Page
-{
+export class PaymentPage extends Page {
     PAGE_URL = '/checkout/payment';
     repository: PaymentRepository;
 
-    constructor()
-    {
+    constructor() {
         super();
         this.repository = new PaymentRepository();
     }

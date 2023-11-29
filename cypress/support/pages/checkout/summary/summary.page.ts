@@ -1,13 +1,11 @@
-import {SummaryRepository} from "./summary.repository";
-import {Page} from "../../shared/page";
+import { SummaryRepository } from "./summary.repository";
+import { Page } from "../../shared/page";
 
-export class SummaryPage extends Page
-{
+export class SummaryPage extends Page {
     PAGE_URL = '/checkout/summary';
     repository: SummaryRepository;
 
-    constructor()
-    {
+    constructor() {
         super();
         this.repository = new SummaryRepository();
     }

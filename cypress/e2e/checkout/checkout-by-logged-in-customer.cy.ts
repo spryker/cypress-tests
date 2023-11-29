@@ -1,10 +1,10 @@
-import {LoginPage} from "../../support/pages/login/login.page";
-import {MultiCartPage} from "../../support/pages/multi-cart/multi.cart.page";
-import {CartPage} from "../../support/pages/cart/cart.page";
-import {AddressPage} from "../../support/pages/checkout/address/address.page";
-import {ShipmentPage} from "../../support/pages/checkout/shipment/shipment.page";
-import {PaymentPage} from "../../support/pages/checkout/payment/payment.page";
-import {SummaryPage} from "../../support/pages/checkout/summary/summary.page";
+import { LoginPage } from "../../support/pages/login/login.page";
+import { MultiCartPage } from "../../support/pages/multi-cart/multi.cart.page";
+import { CartPage } from "../../support/pages/cart/cart.page";
+import { AddressPage } from "../../support/pages/checkout/address/address.page";
+import { ShipmentPage } from "../../support/pages/checkout/shipment/shipment.page";
+import { PaymentPage } from "../../support/pages/checkout/payment/payment.page";
+import { SummaryPage } from "../../support/pages/checkout/summary/summary.page";
 
 describe('checkout by logged in customer', () => {
     const loginPage = new LoginPage();
@@ -28,7 +28,7 @@ describe('checkout by logged in customer', () => {
     });
 
     it('should checkout with one concrete product', () => {
-        cy.visit(cartPage.getPageLocation());
+        cy.visit(cartPage.PAGE_URL);
         cartPage.quickAddToCart(fixtures.concreteProductSkus[0]);
 
         cartPage.startCheckout();
@@ -41,7 +41,7 @@ describe('checkout by logged in customer', () => {
     });
 
     it('should checkout with two concrete products to single shipment', () => {
-        cy.visit(cartPage.getPageLocation());
+        cy.visit(cartPage.PAGE_URL);
         cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
         cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
 
@@ -55,7 +55,7 @@ describe('checkout by logged in customer', () => {
     });
 
     it('should checkout to multi shipment address', () => {
-        cy.visit(cartPage.getPageLocation());
+        cy.visit(cartPage.PAGE_URL);
         cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
         cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
 
@@ -69,7 +69,7 @@ describe('checkout by logged in customer', () => {
     });
 
     it('should checkout with strict checkout step redirects', () => {
-        cy.visit(cartPage.getPageLocation());
+        cy.visit(cartPage.PAGE_URL);
         cartPage.quickAddToCart(fixtures.concreteProductSkus[0]);
 
         cartPage.assertPageLocation();

@@ -1,5 +1,5 @@
-import {CartRepository} from "./cart.repository";
-import {Page} from "../shared/page";
+import { CartRepository } from "./cart.repository";
+import { Page } from "../shared/page";
 
 export class CartPage extends Page {
     PAGE_URL = '/cart';

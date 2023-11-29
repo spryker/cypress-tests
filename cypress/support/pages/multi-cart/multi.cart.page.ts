@@ -1,6 +1,6 @@
-import {MultiCartRepository} from "./multi.cart.repository";
-import {Page} from "../shared/page";
-import {faker} from "@faker-js/faker";
+import { MultiCartRepository } from "./multi.cart.repository";
+import { Page } from "../shared/page";
+import { faker } from "@faker-js/faker";
 
 export class MultiCartPage extends Page {
     PAGE_URL = '/multi-cart';

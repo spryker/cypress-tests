@@ -1,13 +1,11 @@
-import {ShipmentRepository} from "./shipment.repository";
-import {Page} from "../../shared/page";
+import { ShipmentRepository } from "./shipment.repository";
+import { Page } from "../../shared/page";
 
-export class ShipmentPage extends Page
-{
+export class ShipmentPage extends Page {
     PAGE_URL = '/checkout/shipment';
     repository: ShipmentRepository;
 
-    constructor()
-    {
+    constructor() {
         super();
         this.repository = new ShipmentRepository();
     }
@@ -17,7 +15,7 @@ export class ShipmentPage extends Page
             .filter(':contains("Spryker Dummy Shipment")')
             .each(($shipmentItem, index) => {
                 this.repository.getStandardShipmentRadio($shipmentItem, index).click({force: true});
-        });
+            });
 
         this.repository.getNextButton().click();
     };

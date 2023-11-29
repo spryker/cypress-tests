@@ -1,7 +1,7 @@
-import {RegisterCustomerScenario} from "../../support/scenarios/customer/register-customer.scenario";
-import {LoginCustomerScenario} from "../../support/scenarios/customer/login-customer.scenario";
-import {CreateMultiCartScenario} from "../../support/scenarios/cart/create-multi-cart.scenario";
-import {PlaceCustomerOrderScenario} from "../../support/scenarios/order/place-customer-order.scenario";
+import { RegisterCustomerScenario } from "../../support/scenarios/customer/register-customer.scenario";
+import { LoginCustomerScenario } from "../../support/scenarios/customer/login-customer.scenario";
+import { CreateMultiCartScenario } from "../../support/scenarios/cart/create-multi-cart.scenario";
+import { PlaceCustomerOrderScenario } from "../../support/scenarios/order/place-customer-order.scenario";
 
 describe('create order by customer', () => {
     let fixtures: OrderFixtures;

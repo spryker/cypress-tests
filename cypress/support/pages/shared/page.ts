@@ -1,11 +1,7 @@
 export class Page {
-    PAGE_URL = '/';
-
-    getPageLocation = () => {
-        return this.PAGE_URL;
-    }
+    PAGE_URL = '';
 
     assertPageLocation = () => {
-        cy.url().should('include', this.getPageLocation());
+        cy.url().should('include', this.PAGE_URL);
     }
 }

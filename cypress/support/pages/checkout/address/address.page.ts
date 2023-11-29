@@ -1,6 +1,6 @@
-import {AddressRepository} from "./address.repository";
-import {Page} from "../../shared/page";
-import {faker} from "@faker-js/faker";
+import { AddressRepository } from "./address.repository";
+import { Page } from "../../shared/page";
+import { faker } from "@faker-js/faker";
 
 export class AddressPage extends Page {
     PAGE_URL = '/checkout/address';
