@@ -15,16 +15,21 @@ describe('Checkout By Logged In Customer', () => {
     const shipmentStepPage = new ShipmentPage();
     const paymentStepPage = new PaymentPage();
     const summaryStepPage = new SummaryPage();
+    let fixtures: CheckoutFixtures;
+
+    before(() => {
+        cy.fixture('checkout/data').then((data: OrderFixtures) => fixtures = data);
+    });
 
     beforeEach(() => {
         cy.resetCookies();
-        loginPage.login('spencor.hopkin@spryker.com', 'change123');
+        loginPage.login(fixtures.customer.email, fixtures.customer.password);
         multiCartPage.createNewCart();
     });
 
     it('should place order with one concrete product', () => {
         cy.visit(cartPage.getPageLocation());
-        cartPage.quickAddToCart('169_25880805');
+        cartPage.quickAddToCart(fixtures.concreteProductSkus[0]);
 
         cartPage.startCheckout();
         addressStepPage.fillShippingAddress();
@@ -37,8 +42,8 @@ describe('Checkout By Logged In Customer', () => {
 
     it('should place order with two concrete products to single shipment', () => {
         cy.visit(cartPage.getPageLocation());
-        cartPage.quickAddToCart('169_25880805', 2);
-        cartPage.quickAddToCart('156_32018944', 2);
+        cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
+        cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
 
         cartPage.startCheckout();
         addressStepPage.fillShippingAddress();
@@ -51,8 +56,8 @@ describe('Checkout By Logged In Customer', () => {
 
     it('should place order to multi shipment address', () => {
         cy.visit(cartPage.getPageLocation());
-        cartPage.quickAddToCart('169_25880805', 2);
-        cartPage.quickAddToCart('156_32018944', 2);
+        cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
+        cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
 
         cartPage.startCheckout();
         addressStepPage.fillMultiShippingAddress();

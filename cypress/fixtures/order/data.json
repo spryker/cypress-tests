@@ -1,0 +1,10 @@
+{
+  "concreteProductSkus": [
+    "156_32018944",
+    "159_29885260"
+  ],
+  "customer": {
+    "email": "spencor.hopkin@spryker.com",
+    "password": "change123"
+  }
+}
