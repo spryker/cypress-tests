@@ -1,5 +1,5 @@
 import { PaymentRepository } from "./payment.repository";
-import { Page } from "../../shared/page";
+import { Page } from "../../../page";
 
 export class PaymentPage extends Page {
     PAGE_URL = '/checkout/payment';

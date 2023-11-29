@@ -1,6 +1,5 @@
 import { MultiCartRepository } from "./multi.cart.repository";
-import { Page } from "../shared/page";
-import { faker } from "@faker-js/faker";
+import { Page } from "../../page";
 
 export class MultiCartPage extends Page {
     PAGE_URL = '/multi-cart';
@@ -13,7 +12,7 @@ export class MultiCartPage extends Page {
 
     createCart = (name?: string) => {
         cy.visit(`${this.PAGE_URL}/create`);
-        this.repository.getCreateCartNameInput().clear().type(name ?? `Cart #${faker.string.uuid()}`);
+        this.repository.getCreateCartNameInput().clear().type(name ?? `Cart #${this.faker.string.uuid()}`);
         this.repository.getCreateCartForm().submit();
     };
 }

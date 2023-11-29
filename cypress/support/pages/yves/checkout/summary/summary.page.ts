@@ -1,5 +1,5 @@
 import { SummaryRepository } from "./summary.repository";
-import { Page } from "../../shared/page";
+import { Page } from "../../../page";
 
 export class SummaryPage extends Page {
     PAGE_URL = '/checkout/summary';

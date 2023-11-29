@@ -10,5 +10,9 @@ declare namespace Cypress {
          * @example cy.iframe()
          */
         iframe(): Chainable<Element>;
+        /**
+         * @example cy.visitBackoffice(url)
+         */
+        visitBackoffice(url: string): Chainable<Element>;
     }
 }

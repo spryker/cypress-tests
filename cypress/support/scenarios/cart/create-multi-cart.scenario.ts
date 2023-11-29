@@ -1,4 +1,4 @@
-import { MultiCartPage } from "../../pages/multi-cart/multi.cart.page";
+import { MultiCartPage } from "../../pages/yves/multi-cart/multi.cart.page";
 
 export class CreateMultiCartScenario {
     static execute = () => {

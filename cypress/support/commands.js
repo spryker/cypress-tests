@@ -31,6 +31,10 @@ Cypress.Commands.add('iframe', { prevSubject: 'element' }, $iframe => {
     });
 });
 
+Cypress.Commands.add('visitBackoffice', (url) => {
+    return cy.visit(Cypress.env().backofficeUrl + url);
+});
+
 Cypress.Commands.add('resetCookies', () => {
     cy.clearCookies();
     cy.visit('/', {

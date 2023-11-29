@@ -1,6 +1,5 @@
 import { CustomerRepository } from "./customer.repository";
-import { Page } from "../../shared/page";
-import { faker } from "@faker-js/faker";
+import { Page } from "../../../page";
 
 export class CustomerPage extends Page {
     PAGE_URL = '/checkout/customer';
@@ -14,9 +13,9 @@ export class CustomerPage extends Page {
     checkoutAsGuest = (firstName?: string, lastName?: string, email?: string) => {
         this.repository.getGuestRadioButton().click();
 
-        this.repository.getGuestFirstNameField().clear().type(firstName ?? faker.person.firstName());
-        this.repository.getGuestLastNameField().clear().type(lastName ?? faker.person.lastName());
-        this.repository.getGuestEmailField().clear().type(email ?? faker.internet.email());
+        this.repository.getGuestFirstNameField().clear().type(firstName ?? this.faker.person.firstName());
+        this.repository.getGuestLastNameField().clear().type(lastName ?? this.faker.person.lastName());
+        this.repository.getGuestEmailField().clear().type(email ?? this.faker.internet.email());
         this.repository.getGuestTermsCheckbox().click();
 
         this.repository.getGuestSubmitButton().click();

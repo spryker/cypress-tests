@@ -1,9 +1,9 @@
-import { CartPage } from "../../support/pages/cart/cart.page";
-import { CustomerPage } from "../../support/pages/checkout/customer/customer.page";
-import { AddressPage } from "../../support/pages/checkout/address/address.page";
-import { ShipmentPage } from "../../support/pages/checkout/shipment/shipment.page";
-import { PaymentPage } from "../../support/pages/checkout/payment/payment.page";
-import { SummaryPage } from "../../support/pages/checkout/summary/summary.page";
+import { CartPage } from "../../support/pages/yves/cart/cart.page";
+import { CustomerPage } from "../../support/pages/yves/checkout/customer/customer.page";
+import { AddressPage } from "../../support/pages/yves/checkout/address/address.page";
+import { ShipmentPage } from "../../support/pages/yves/checkout/shipment/shipment.page";
+import { PaymentPage } from "../../support/pages/yves/checkout/payment/payment.page";
+import { SummaryPage } from "../../support/pages/yves/checkout/summary/summary.page";
 
 describe('checkout by guest customer', () => {
     const cartPage = new CartPage();

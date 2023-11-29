@@ -107,3 +107,6 @@ temp
 # JetBrains IDEs (PhpStorm, WebStorm, etc.)
 .idea/
 *.iml
+
+# Cypress files
+cypress/screenshots/*

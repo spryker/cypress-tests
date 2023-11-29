@@ -1,6 +1,5 @@
 import { LoginRepository } from "./login.repository";
-import { Page } from "../shared/page";
-import { faker } from "@faker-js/faker";
+import { Page } from "../../page";
 
 export class LoginPage extends Page {
     PAGE_URL = '/login';
@@ -28,11 +27,11 @@ export class LoginPage extends Page {
     ) => {
         cy.visit(this.PAGE_URL);
         this.repository.getRegisterSalutationSelect().select(salutation ?? this.DEFAULT_SALUTATION);
-        this.repository.getRegisterFirstNameInput().clear().type(firstName ?? faker.person.firstName());
-        this.repository.getRegisterLastNameInput().clear().type(lastName ?? faker.person.lastName());
+        this.repository.getRegisterFirstNameInput().clear().type(firstName ?? this.faker.person.firstName());
+        this.repository.getRegisterLastNameInput().clear().type(lastName ?? this.faker.person.lastName());
 
-        const customerEmail = email ?? faker.internet.email();
-        const customerPassword = password ?? faker.internet.password({
+        const customerEmail = email ?? this.faker.internet.email();
+        const customerPassword = password ?? this.faker.internet.password({
             length: 20,
             prefix: this.DEFAULT_PASSWORD_PREFIX
         });
