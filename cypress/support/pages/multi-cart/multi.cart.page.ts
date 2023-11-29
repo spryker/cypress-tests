@@ -12,7 +12,7 @@ export class MultiCartPage extends Page {
     }
 
     createNewCart = () => {
-        cy.visit('/multi-cart/create');
+        cy.visit(`${this.PAGE_URL}/create`);
         this.repository.getCreateCartNameInput().clear().type(`Cart #${faker.string.uuid()}`);
         this.repository.getCreateCartForm().submit();
     };
