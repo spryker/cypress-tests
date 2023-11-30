@@ -39,7 +39,7 @@ describe("create return by user", () => {
     salesDetailPage.triggerOms("Pay");
     salesDetailPage.triggerOms("Skip timeout");
     salesDetailPage.triggerOms("skip picking");
-    salesDetailPage.triggerOms("Ship");
+    salesDetailPage.triggerOms('Ship');
 
     salesDetailPage.createReturn();
     createReturnPage.createReturnForAllOrderItems();
