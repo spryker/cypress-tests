@@ -1,9 +1,9 @@
 export class SummaryRepository {
-    getaAcceptTermsAndConditionsCheckbox = () => {
-        return cy.get('[name="acceptTermsAndConditions"]');
-    }
+  getaAcceptTermsAndConditionsCheckbox = () => {
+    return cy.get('[name="acceptTermsAndConditions"]');
+  };
 
-    getSummaryForm = () => {
-        return cy.get('form[name=summaryForm]');
-    }
+  getSummaryForm = () => {
+    return cy.get("form[name=summaryForm]");
+  };
 }
