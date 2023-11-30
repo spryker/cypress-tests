@@ -7,23 +7,8 @@
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-Cypress.Commands.add('iframe', { prevSubject: 'element' }, $iframe => {
+
+Cypress.Commands.add('iframe', {prevSubject: 'element'}, $iframe => {
     return new Cypress.Promise(resolve => {
         $iframe.on('load', () => {
             resolve($iframe.contents().find('body'));
@@ -40,6 +25,24 @@ Cypress.Commands.add('resetCookies', () => {
     cy.visit('/', {
         onBeforeLoad(win) {
             win.sessionStorage.clear();
+        }
+    });
+});
+
+Cypress.Commands.add('reloadUntilFound', (url, findSelector, getSelector = 'body', retries = 3, retryWait = 1000) => {
+    if (retries === 0) {
+        throw `exhausted retries looking for ${selector} on ${url}`
+    }
+
+    cy.visit(url);
+    cy.get(getSelector).then(body => {
+        let msg = `url:${url} getSelector:${getSelector} findSelector:${findSelector} retries:${retries} retryWait:${retryWait}`
+        if (body.find(findSelector).length === 1) {
+            console.log(`found ${msg}`)
+        } else {
+            console.log(`NOT found ${msg}`)
+            cy.wait(retryWait)
+            cy.reloadUntilFound(url, findSelector, getSelector, retries - 1, retryWait)
         }
     });
 });

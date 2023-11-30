@@ -10,4 +10,6 @@ export default defineConfig({
   e2e: {
     baseUrl: process.env.E2E_BASE_URL,
   },
+  viewportWidth: parseInt(process.env.VIEWPORT_WIDGTH ?? '1000', 10),
+  viewportHeight: parseInt(process.env.VIEWPORT_HEIGHT ?? '660', 10),
 });
