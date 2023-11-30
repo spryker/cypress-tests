@@ -3,35 +3,37 @@ import { LoginCustomerScenario } from "../../support/scenarios/customer/login-cu
 import { CreateMultiCartScenario } from "../../support/scenarios/cart/create-multi-cart.scenario";
 import { PlaceCustomerOrderScenario } from "../../support/scenarios/order/place-customer-order.scenario";
 
-describe('create order by customer', () => {
-    let fixtures: OrderFixtures;
+describe("create order by customer", () => {
+  let fixtures: OrderFixtures;
 
-    before(() => {
-        cy.fixture('checkout/data').then((data: OrderFixtures) => fixtures = data);
-    });
+  before(() => {
+    cy.fixture("checkout/data").then(
+      (data: OrderFixtures) => (fixtures = data),
+    );
+  });
 
-    beforeEach(() => {
-        cy.resetCookies();
-    });
+  beforeEach(() => {
+    cy.resetCookies();
+  });
 
-    it('should be able to create an order by new registered customer', () => {
-        const customer = RegisterCustomerScenario.execute();
-        LoginCustomerScenario.execute(customer.email, customer.password);
-        CreateMultiCartScenario.execute();
+  it("should be able to create an order by new registered customer", () => {
+    const customer = RegisterCustomerScenario.execute();
+    LoginCustomerScenario.execute(customer.email, customer.password);
+    CreateMultiCartScenario.execute();
 
-        PlaceCustomerOrderScenario.execute([fixtures.concreteProductSkus[0]]);
+    PlaceCustomerOrderScenario.execute([fixtures.concreteProductSkus[0]]);
 
-        cy.contains('Your order has been placed successfully!');
-    });
+    cy.contains("Your order has been placed successfully!");
+  });
 
-    it('should be able to create an order by existing customer', () => {
-        LoginCustomerScenario.execute(fixtures.customer.email, fixtures.customer.password);
-        CreateMultiCartScenario.execute();
-        PlaceCustomerOrderScenario.execute([
-            fixtures.concreteProductSkus[0],
-            fixtures.concreteProductSkus[1]
-        ]);
+  it("should be able to create an order by existing customer", () => {
+    LoginCustomerScenario.execute(
+      fixtures.customer.email,
+      fixtures.customer.password,
+    );
+    CreateMultiCartScenario.execute();
+    PlaceCustomerOrderScenario.execute(fixtures.concreteProductSkus);
 
-        cy.contains('Your order has been placed successfully!');
-    });
+    cy.contains("Your order has been placed successfully!");
+  });
 });

@@ -1,14 +1,14 @@
 import { Faker, faker } from "@faker-js/faker";
 
 export class Page {
-    PAGE_URL = '';
-    protected faker: Faker;
+  PAGE_URL = "";
+  protected faker: Faker;
 
-    constructor() {
-        this.faker = faker;
-    }
+  constructor() {
+    this.faker = faker;
+  }
 
-    assertPageLocation = () => {
-        cy.url().should('include', this.PAGE_URL);
-    }
+  assertPageLocation = () => {
+    cy.url().should("include", this.PAGE_URL);
+  };
 }

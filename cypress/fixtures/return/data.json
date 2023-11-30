@@ -1,7 +1,5 @@
 {
-  "concreteProductSkus": [
-    "159_29885260"
-  ],
+  "concreteProductSkus": ["159_29885260"],
   "user": {
     "email": "admin@spryker.com",
     "password": "change123"

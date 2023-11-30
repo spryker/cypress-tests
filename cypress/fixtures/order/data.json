@@ -1,8 +1,5 @@
 {
-  "concreteProductSkus": [
-    "156_32018944",
-    "159_29885260"
-  ],
+  "concreteProductSkus": ["156_32018944", "159_29885260"],
   "customer": {
     "email": "maria.williams@spryker.com",
     "password": "change123"

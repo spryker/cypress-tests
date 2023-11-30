@@ -1,42 +1,43 @@
 export class CartRepository {
-    getQuickAddToCartSkuField = () => {
-        return cy.get('[name="sku"]');
-    }
+  getQuickAddToCartSkuField = () => {
+    return cy.get('[name="sku"]');
+  };
 
-    getQuickAddToCartQuantityField = () => {
-        return cy.get('#quantity');
-    }
+  getQuickAddToCartQuantityField = () => {
+    return cy.get("#quantity");
+  };
 
-    getQuickAddToCartSubmitButton = () => {
-        return cy.get('.js-product-quick-add-form__submit-button');
-    }
+  getQuickAddToCartSubmitButton = () => {
+    return cy.get(".js-product-quick-add-form__submit-button");
+  };
 
-    findCartItemRemovalForm = (sku: string) => {
-        return cy.get('[action]').filter((index, element) => {
-            const regex = new RegExp(`^/\\w+/cart/remove/${sku}/\\w+$`);
-            // @ts-ignore
-            return regex.test(element.getAttribute('action'));
-        });
-    }
+  findCartItemRemovalForm = (sku: string) => {
+    return cy.get("[action]").filter((index, element) => {
+      const regex = new RegExp(`^/\\w+/cart/remove/${sku}/\\w+$`);
+      // @ts-ignore
+      return regex.test(element.getAttribute("action"));
+    });
+  };
 
-    findCartItemChangeQuantityForm = (sku: string) => {
-        return cy.get('[action]').filter((index, element) => {
-            const regex = new RegExp(`^/\\w+/cart/change/${sku}$`);
-            // @ts-ignore
-            return regex.test(element.getAttribute('action'));
-        });
-    }
+  findCartItemChangeQuantityForm = (sku: string) => {
+    return cy.get("[action]").filter((index, element) => {
+      const regex = new RegExp(`^/\\w+/cart/change/${sku}$`);
+      // @ts-ignore
+      return regex.test(element.getAttribute("action"));
+    });
+  };
 
-    getCartItemChangeQuantityField = (sku: string) => {
-        return this.findCartItemChangeQuantityForm(sku)
-            .find('[data-qa="component formatted-number-input"]');
-    }
+  getCartItemChangeQuantityField = (sku: string) => {
+    return this.findCartItemChangeQuantityForm(sku).find(
+      '[data-qa="component formatted-number-input"]',
+    );
+  };
 
-    findClearCartForm = () => {
-        return cy.get('form[name=multi_cart_clear_form]');
-    }
+  findClearCartForm = () => {
+    return cy.get("form[name=multi_cart_clear_form]");
+  };
 
-    getCheckoutButton = () => {
-        return cy.get('[data-qa="cart-go-to-checkout"]');
-    }
+  getCheckoutButton = () => {
+    return cy.get('[data-qa="cart-go-to-checkout"]');
+  };
 }
