@@ -1,0 +1,11 @@
+{
+  "concreteProductSku": "159_29885260",
+  "comments": [
+    "Had a great experience shopping from your app. It's user-friendly and makes shopping on the go so easy!",
+    "The loyalty program is fantastic. It really makes me feel appreciated as a regular customer."
+  ],
+  "customer": {
+    "email": "maria.williams@spryker.com",
+    "password": "change123"
+  }
+}
