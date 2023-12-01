@@ -1,7 +1,6 @@
 import { RegisterCustomerScenario } from "../../support/scenarios/customer/register-customer.scenario";
-import { LoginCustomerScenario } from "../../support/scenarios/customer/login-customer.scenario";
-import { CreateMultiCartScenario } from "../../support/scenarios/cart/create-multi-cart.scenario";
 import { PlaceCustomerOrderScenario } from "../../support/scenarios/order/place-customer-order.scenario";
+import { LoginAsCustomerWithNewCartScenario } from "../../support/scenarios/cart/login-as-customer-with-new-cart.scenario";
 
 describe("create order by customer", () => {
   let fixtures: OrderFixtures;
@@ -18,20 +17,20 @@ describe("create order by customer", () => {
 
   it("should be able to create an order by new registered customer", () => {
     const customer = RegisterCustomerScenario.execute();
-    LoginCustomerScenario.execute(customer.email, customer.password);
-    CreateMultiCartScenario.execute();
-
-    PlaceCustomerOrderScenario.execute([fixtures.concreteProductSkus[0]]);
+    LoginAsCustomerWithNewCartScenario.execute(
+      customer.email,
+      customer.password,
+    );
+    PlaceCustomerOrderScenario.execute(fixtures.concreteProductSkus);
 
     cy.contains("Your order has been placed successfully!");
   });
 
   it("should be able to create an order by existing customer", () => {
-    LoginCustomerScenario.execute(
+    LoginAsCustomerWithNewCartScenario.execute(
       fixtures.customer.email,
       fixtures.customer.password,
     );
-    CreateMultiCartScenario.execute();
     PlaceCustomerOrderScenario.execute(fixtures.concreteProductSkus);
 
     cy.contains("Your order has been placed successfully!");

@@ -1,15 +1,11 @@
-import { LoginPage } from "../../support/pages/yves/login/login.page";
-import { MultiCartPage } from "../../support/pages/yves/multi-cart/multi.cart.page";
 import { CartPage } from "../../support/pages/yves/cart/cart.page";
 import { AddressPage } from "../../support/pages/yves/checkout/address/address.page";
 import { ShipmentPage } from "../../support/pages/yves/checkout/shipment/shipment.page";
 import { PaymentPage } from "../../support/pages/yves/checkout/payment/payment.page";
 import { SummaryPage } from "../../support/pages/yves/checkout/summary/summary.page";
+import { LoginAsCustomerWithNewCartScenario } from "../../support/scenarios/cart/login-as-customer-with-new-cart.scenario";
 
 describe("checkout by logged in customer", () => {
-  const loginPage = new LoginPage();
-  const multiCartPage = new MultiCartPage();
-
   const cartPage = new CartPage();
   const addressStepPage = new AddressPage();
   const shipmentStepPage = new ShipmentPage();
@@ -25,8 +21,11 @@ describe("checkout by logged in customer", () => {
 
   beforeEach(() => {
     cy.resetCookies();
-    loginPage.login(fixtures.customer.email, fixtures.customer.password);
-    multiCartPage.createCart();
+
+    LoginAsCustomerWithNewCartScenario.execute(
+      fixtures.customer.email,
+      fixtures.customer.password,
+    );
   });
 
   it("should checkout with one concrete product", () => {

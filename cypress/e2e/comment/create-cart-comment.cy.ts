@@ -2,7 +2,7 @@ import { LoginPage } from "../../support/pages/yves/login/login.page";
 import { MultiCartPage } from "../../support/pages/yves/multi-cart/multi.cart.page";
 import { CommentPage } from "../../support/pages/yves/comment/cart/comment.page";
 import { CartPage } from "../../support/pages/yves/cart/cart.page";
-import { LoggedInCustomerWithNewCartScenario } from "../../support/scenarios/cart/logged-in-customer-with-new-cart.scenario";
+import { LoginAsCustomerWithNewCartScenario } from "../../support/scenarios/cart/login-as-customer-with-new-cart.scenario";
 
 describe("create cart comment", () => {
   const commentPage = new CommentPage();
@@ -19,7 +19,7 @@ describe("create cart comment", () => {
   beforeEach(() => {
     cy.resetCookies();
 
-    LoggedInCustomerWithNewCartScenario.execute(
+    LoginAsCustomerWithNewCartScenario.execute(
       fixtures.customer.email,
       fixtures.customer.password,
     );
