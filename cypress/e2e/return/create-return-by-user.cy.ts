@@ -1,17 +1,17 @@
-import { RegisterCustomerScenario } from '../../support/scenarios/customer/register-customer.scenario';
-import { PlaceCustomerOrderScenario } from '../../support/scenarios/order/place-customer-order.scenario';
-import { LoginPage } from '../../support/pages/backoffice/login/login.page';
-import { SalesPage } from '../../support/pages/backoffice/sales/sales.page';
-import { LoginCustomerScenario } from '../../support/scenarios/customer/login-customer.scenario';
-import { DetailPage } from '../../support/pages/backoffice/sales/detail/detail.page';
-import { CreatePage } from '../../support/pages/backoffice/sales-return-gui/create/create.page';
+import { RegisterCustomerScenario } from '../../support/scenarios/register-customer.scenario';
+import { PlaceCustomerOrderScenario } from '../../support/scenarios/place-customer-order.scenario';
+import { Page } from '../../support/pages/backoffice/login/page';
+import { Page } from '../../support/pages/backoffice/sales/page';
+import { LoginCustomerScenario } from '../../support/scenarios/login-customer.scenario';
+import { Page } from '../../support/pages/backoffice/sales/detail/page';
+import { Page } from '../../support/pages/backoffice/sales-return-gui/create/page';
 import { ReturnFixtures } from '../../support';
 
 describe('create return by user', () => {
-  const loginPage = new LoginPage();
-  const salesPage = new SalesPage();
-  const salesDetailPage = new DetailPage();
-  const createReturnPage = new CreatePage();
+  const loginPage = new Page();
+  const salesPage = new Page();
+  const salesDetailPage = new Page();
+  const createReturnPage = new Page();
 
   beforeEach(() => {
     cy.resetCookies();

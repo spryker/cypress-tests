@@ -1,6 +1,6 @@
 import { CommentPage } from '../../support/pages/yves/comment/cart/comment.page';
 import { CartPage } from '../../support/pages/yves/cart/cart.page';
-import { LoginAsCustomerWithNewCartScenario } from '../../support/scenarios/cart/login-as-customer-with-new-cart.scenario';
+import { LoginCustomerScenario } from '../../support/scenarios/login-customer-scenario';
 import { CommentFixture } from '../../support';
 
 describe('create cart comment', () => {
@@ -11,7 +11,7 @@ describe('create cart comment', () => {
     cy.resetCookies();
 
     cy.fixture('comment').then((fixtures: CommentFixture) => {
-      LoginAsCustomerWithNewCartScenario.execute(fixtures.customer);
+      LoginCustomerScenario.execute(fixtures.customer);
     });
   });
 
