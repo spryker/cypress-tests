@@ -1,8 +1,8 @@
-import { CustomerRepository } from "./customer.repository";
-import { Page } from "../../../page";
+import { CustomerRepository } from './customer.repository';
+import { Page } from '../../../page';
 
 export class CustomerPage extends Page {
-  PAGE_URL = "/checkout/customer";
+  PAGE_URL = '/checkout/customer';
   repository: CustomerRepository;
 
   constructor() {
@@ -10,7 +10,11 @@ export class CustomerPage extends Page {
     this.repository = new CustomerRepository();
   }
 
-  checkoutAsGuest = (firstName?: string, lastName?: string, email?: string) => {
+  checkoutAsGuest = (
+    firstName?: string,
+    lastName?: string,
+    email?: string
+  ): void => {
     this.repository.getGuestRadioButton().click();
 
     this.repository

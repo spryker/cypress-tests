@@ -1,8 +1,8 @@
-import { Page } from "../../../page";
-import { CommentRepository } from "./comment.repository";
+import { Page } from '../../../page';
+import { CommentRepository } from './comment.repository';
 
 export class CommentPage extends Page {
-  PAGE_URL = "/cart";
+  PAGE_URL = '/cart';
   repository: CommentRepository;
 
   constructor() {
@@ -10,11 +10,11 @@ export class CommentPage extends Page {
     this.repository = new CommentRepository();
   }
 
-  addComment = (commentMessage: string) => {
+  addComment = (commentMessage: string): void => {
     this.repository
       .getAddCommentForm()
       .last()
-      .find("textarea")
+      .find('textarea')
       .clear()
       .type(commentMessage);
     this.repository
@@ -24,11 +24,11 @@ export class CommentPage extends Page {
       .click();
   };
 
-  updateFirstComment = (commentMessage: string) => {
+  updateFirstComment = (commentMessage: string): void => {
     this.repository
       .getAddCommentForm()
       .first()
-      .find("textarea")
+      .find('textarea')
       .clear()
       .type(commentMessage);
     this.repository
@@ -38,7 +38,7 @@ export class CommentPage extends Page {
       .click();
   };
 
-  removeFirstComment = () => {
+  removeFirstComment = (): void => {
     this.repository
       .getAddCommentForm()
       .first()
@@ -46,14 +46,14 @@ export class CommentPage extends Page {
       .click();
   };
 
-  assertCommentMessage = (commentMessage: string) => {
+  assertCommentMessage = (commentMessage: string): void => {
     this.repository
       .getCommentThreadListSection()
       .contains(commentMessage)
-      .should("exist");
+      .should('exist');
   };
 
-  assertEmptyCommentThreadList = () => {
-    this.repository.getCommentThreadListSection().should("not.exist");
+  assertEmptyCommentThreadList = (): void => {
+    this.repository.getCommentThreadListSection().should('not.exist');
   };
 }

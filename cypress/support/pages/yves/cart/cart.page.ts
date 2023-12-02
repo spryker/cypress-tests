@@ -1,8 +1,8 @@
-import { CartRepository } from "./cart.repository";
-import { Page } from "../../page";
+import { CartRepository } from './cart.repository';
+import { Page } from '../../page';
 
 export class CartPage extends Page {
-  PAGE_URL = "/cart";
+  PAGE_URL = '/cart';
   repository: CartRepository;
 
   constructor() {
@@ -10,7 +10,7 @@ export class CartPage extends Page {
     this.repository = new CartRepository();
   }
 
-  quickAddToCart = (sku: string, quantity?: number) => {
+  quickAddToCart = (sku: string, quantity?: number): void => {
     this.repository.getQuickAddToCartSkuField().then((elem) => elem.val(sku));
     this.repository
       .getQuickAddToCartQuantityField()
@@ -20,7 +20,7 @@ export class CartPage extends Page {
     this.repository.getQuickAddToCartSubmitButton().click();
   };
 
-  removeProduct = (sku: string) => {
+  removeProduct = (sku: string): void => {
     const form = this.repository.findCartItemRemovalForm(sku);
 
     if (!form) {
@@ -30,19 +30,19 @@ export class CartPage extends Page {
     form.submit();
   };
 
-  changeQuantity = (sku: string, newQuantity: number) => {
-    let form = this.repository.findCartItemChangeQuantityForm(sku);
-    let input = this.repository.getCartItemChangeQuantityField(sku);
+  changeQuantity = (sku: string, newQuantity: number): void => {
+    const form = this.repository.findCartItemChangeQuantityForm(sku);
+    const input = this.repository.getCartItemChangeQuantityField(sku);
 
     if (!form || !input) {
       return;
     }
 
-    input.type("{selectall}").type(String(newQuantity));
+    input.type('{selectall}').type(String(newQuantity));
     form.submit();
   };
 
-  clearCart = () => {
+  clearCart = (): void => {
     const form = this.repository.findClearCartForm();
 
     if (form) {
@@ -50,7 +50,7 @@ export class CartPage extends Page {
     }
   };
 
-  startCheckout = () => {
+  startCheckout = (): void => {
     this.repository.getCheckoutButton().click();
   };
 }

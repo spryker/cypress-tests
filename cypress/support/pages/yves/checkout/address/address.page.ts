@@ -1,8 +1,8 @@
-import { AddressRepository } from "./address.repository";
-import { Page } from "../../../page";
+import { AddressRepository } from './address.repository';
+import { Page } from '../../../page';
 
 export class AddressPage extends Page {
-  PAGE_URL = "/checkout/address";
+  PAGE_URL = '/checkout/address';
   repository: AddressRepository;
 
   constructor() {
@@ -18,9 +18,9 @@ export class AddressPage extends Page {
     zipCode?: string,
     city?: string,
     company?: string,
-    phone?: string,
-  ) => {
-    this.repository.getSelectShippingAddressField().select("0");
+    phone?: string
+  ): void => {
+    this.repository.getSelectShippingAddressField().select('0');
 
     // Setting mandatory fields
     this.repository
@@ -65,18 +65,18 @@ export class AddressPage extends Page {
     this.repository.getNextButton().click();
   };
 
-  fillMultiShippingAddress = () => {
+  fillMultiShippingAddress = (): void => {
     this.repository.getMultiShipmentTriggerButton().click();
     this.repository
       .getMultiShipmentAddressItemElement()
       .children()
       .each(($addressItem, index) => {
         this.repository
-          .getMultiShipmentAddressItemDeliveryRadio($addressItem, index)
+          .getMultiShipmentAddressItemDeliveryRadio($addressItem)
           .click({ force: true });
         this.repository
-          .getMultiShipmentAddressItemAddressField($addressItem, index)
-          .select("0", { force: true });
+          .getMultiShipmentAddressItemAddressField($addressItem)
+          .select('0', { force: true });
 
         // Setting mandatory fields
         this.repository
@@ -126,9 +126,9 @@ export class AddressPage extends Page {
     zipCode?: string,
     city?: string,
     company?: string,
-    phone?: string,
-  ) => {
-    this.repository.getSelectBillingAddressField().select("0");
+    phone?: string
+  ): void => {
+    this.repository.getSelectBillingAddressField().select('0');
 
     // Setting mandatory fields
     this.repository

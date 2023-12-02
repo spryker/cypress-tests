@@ -8,21 +8,21 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
-Cypress.Commands.add("iframe", { prevSubject: "element" }, ($iframe) => {
+Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe) => {
   return new Cypress.Promise((resolve) => {
-    $iframe.on("load", () => {
-      resolve($iframe.contents().find("body"));
+    $iframe.on('load', () => {
+      resolve($iframe.contents().find('body'));
     });
   });
 });
 
-Cypress.Commands.add("visitBackoffice", (url) => {
+Cypress.Commands.add('visitBackoffice', (url) => {
   return cy.visit(Cypress.env().backofficeUrl + url);
 });
 
-Cypress.Commands.add("resetCookies", () => {
+Cypress.Commands.add('resetCookies', () => {
   cy.clearCookies();
-  cy.visit("/", {
+  cy.visit('/', {
     onBeforeLoad(win) {
       win.sessionStorage.clear();
     },
@@ -30,8 +30,8 @@ Cypress.Commands.add("resetCookies", () => {
 });
 
 Cypress.Commands.add(
-  "reloadUntilFound",
-  (url, findSelector, getSelector = "body", retries = 3, retryWait = 1000) => {
+  'reloadUntilFound',
+  (url, findSelector, getSelector = 'body', retries = 3, retryWait = 1000) => {
     if (retries === 0) {
       throw `exhausted retries looking for ${selector} on ${url}`;
     }
@@ -49,9 +49,9 @@ Cypress.Commands.add(
           findSelector,
           getSelector,
           retries - 1,
-          retryWait,
+          retryWait
         );
       }
     });
-  },
+  }
 );

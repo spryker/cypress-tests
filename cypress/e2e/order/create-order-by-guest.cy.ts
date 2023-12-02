@@ -1,21 +1,16 @@
-import { PlaceGuestOrderScenario } from "../../support/scenarios/order/place-guest-order.scenario";
+import { PlaceGuestOrderScenario } from '../../support/scenarios/order/place-guest-order.scenario';
+import { OrderFixtures } from '../../support';
 
-describe("create order by guest", () => {
-  let fixtures: OrderFixtures;
-
-  before(() => {
-    cy.fixture("checkout/data").then(
-      (data: OrderFixtures) => (fixtures = data),
-    );
-  });
-
+describe('create order by guest', () => {
   beforeEach(() => {
     cy.resetCookies();
   });
 
-  it("should be able to create an order by guest", () => {
-    PlaceGuestOrderScenario.execute(fixtures.concreteProductSkus);
+  it('should be able to create an order by guest', () => {
+    cy.fixture('order').then((fixtures: OrderFixtures) => {
+      PlaceGuestOrderScenario.execute(fixtures.concreteProductSkus);
+    });
 
-    cy.contains("Your order has been placed successfully!");
+    cy.contains('Your order has been placed successfully!');
   });
 });

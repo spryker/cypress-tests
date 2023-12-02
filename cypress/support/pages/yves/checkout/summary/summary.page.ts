@@ -1,8 +1,8 @@
-import { SummaryRepository } from "./summary.repository";
-import { Page } from "../../../page";
+import { SummaryRepository } from './summary.repository';
+import { Page } from '../../../page';
 
 export class SummaryPage extends Page {
-  PAGE_URL = "/checkout/summary";
+  PAGE_URL = '/checkout/summary';
   repository: SummaryRepository;
 
   constructor() {
@@ -10,7 +10,7 @@ export class SummaryPage extends Page {
     this.repository = new SummaryRepository();
   }
 
-  placeOrder = () => {
+  placeOrder = (): void => {
     this.repository
       .getaAcceptTermsAndConditionsCheckbox()
       .check({ force: true });

@@ -1,9 +1,10 @@
-import { LoginPage } from "../../pages/yves/login/login.page";
+import { LoginPage } from '../../pages/yves/login/login.page';
+import { Customer } from '../../index';
 
 export class LoginCustomerScenario {
-  static execute = (email: string, password: string) => {
+  static execute = (customer: Customer): void => {
     const loginPage = new LoginPage();
 
-    loginPage.login(email, password);
+    loginPage.login(customer);
   };
 }

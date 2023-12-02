@@ -1,6 +1,6 @@
 export class DetailRepository {
   getTriggerOmsDivSelector = () => {
-    return ".col-md-12 > .row > .col-lg-12 > .ibox > .ibox-content";
+    return '.col-md-12 > .row > .col-lg-12 > .ibox > .ibox-content';
   };
 
   getOmsButtonSelector = (action: string) => {
@@ -8,6 +8,6 @@ export class DetailRepository {
   };
 
   getReturnButton = () => {
-    return cy.get(".title-action").find('a:contains("Return")');
+    return cy.get('.title-action').find('a:contains("Return")');
   };
 }

@@ -1,45 +1,45 @@
 export class LoginRepository {
   getLoginEmailInput = () => {
-    return cy.get("#loginForm_email");
+    return cy.get('#loginForm_email');
   };
 
   getLoginPasswordInput = () => {
-    return cy.get("#loginForm_password");
+    return cy.get('#loginForm_password');
   };
 
   getLoginForm = () => {
-    return cy.get("form[name=loginForm]");
+    return cy.get('form[name=loginForm]');
   };
 
   getRegisterSalutationSelect = () => {
-    return cy.get("#registerForm_salutation");
+    return cy.get('#registerForm_salutation');
   };
 
   getRegisterFirstNameInput = () => {
-    return cy.get("#registerForm_first_name");
+    return cy.get('#registerForm_first_name');
   };
 
   getRegisterLastNameInput = () => {
-    return cy.get("#registerForm_last_name");
+    return cy.get('#registerForm_last_name');
   };
 
   getRegisterEmailInput = () => {
-    return cy.get("#registerForm_email");
+    return cy.get('#registerForm_email');
   };
 
   getRegisterPasswordInput = () => {
-    return cy.get("#registerForm_password_pass");
+    return cy.get('#registerForm_password_pass');
   };
 
   getRegisterConfirmPasswordInput = () => {
-    return cy.get("#registerForm_password_confirm");
+    return cy.get('#registerForm_password_confirm');
   };
 
   getRegisterAcceptTermsCheckbox = () => {
-    return cy.get("#registerForm_accept_terms");
+    return cy.get('#registerForm_accept_terms');
   };
 
   getRegisterForm = () => {
-    return cy.get("form[name=registerForm]");
+    return cy.get('form[name=registerForm]');
   };
 }

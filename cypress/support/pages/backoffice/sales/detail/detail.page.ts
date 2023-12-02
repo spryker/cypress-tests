@@ -1,8 +1,8 @@
-import { DetailRepository } from "./detail.repository";
-import { Page } from "../../../page";
+import { DetailRepository } from './detail.repository';
+import { Page } from '../../../page';
 
 export class DetailPage extends Page {
-  PAGE_URL = "/sales/detail";
+  PAGE_URL = '/sales/detail';
   repository: DetailRepository;
 
   constructor() {
@@ -17,7 +17,7 @@ export class DetailPage extends Page {
         this.repository.getOmsButtonSelector(state),
         this.repository.getTriggerOmsDivSelector(),
         30,
-        2000,
+        2000
       );
 
       cy.get(this.repository.getTriggerOmsDivSelector())

@@ -1,8 +1,8 @@
-import { ShipmentRepository } from "./shipment.repository";
-import { Page } from "../../../page";
+import { ShipmentRepository } from './shipment.repository';
+import { Page } from '../../../page';
 
 export class ShipmentPage extends Page {
-  PAGE_URL = "/checkout/shipment";
+  PAGE_URL = '/checkout/shipment';
   repository: ShipmentRepository;
 
   constructor() {
@@ -10,7 +10,7 @@ export class ShipmentPage extends Page {
     this.repository = new ShipmentRepository();
   }
 
-  setStandardShippingMethod = () => {
+  setStandardShippingMethod = (): void => {
     this.repository
       .getMultiShipmentItemElement()
       .children()

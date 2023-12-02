@@ -1,8 +1,8 @@
-import { LoginRepository } from "./login.repository";
-import { Page } from "../../page";
+import { LoginRepository } from './login.repository';
+import { Page } from '../../page';
 
 export class LoginPage extends Page {
-  PAGE_URL = "/security-gui/login";
+  PAGE_URL = '/security-gui/login';
   repository: LoginRepository;
 
   constructor() {
