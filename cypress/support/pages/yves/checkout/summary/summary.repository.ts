@@ -4,6 +4,6 @@ export class SummaryRepository {
   };
 
   getSummaryForm = () => {
-    return cy.get("form[name=summaryForm]");
+    return cy.get('form[name=summaryForm]');
   };
 }

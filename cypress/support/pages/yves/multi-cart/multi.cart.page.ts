@@ -1,8 +1,8 @@
-import { MultiCartRepository } from "./multi.cart.repository";
-import { Page } from "../../page";
+import { MultiCartRepository } from './multi.cart.repository';
+import { Page } from '../../page';
 
 export class MultiCartPage extends Page {
-  PAGE_URL = "/multi-cart";
+  PAGE_URL = '/multi-cart';
   repository: MultiCartRepository;
 
   constructor() {
@@ -10,7 +10,7 @@ export class MultiCartPage extends Page {
     this.repository = new MultiCartRepository();
   }
 
-  createCart = (name?: string) => {
+  createCart = (name?: string): void => {
     cy.visit(`${this.PAGE_URL}/create`);
     this.repository
       .getCreateCartNameInput()

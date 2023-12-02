@@ -1,8 +1,8 @@
-import { CreateRepository } from "./create.repository";
-import { Page } from "../../../page";
+import { CreateRepository } from './create.repository';
+import { Page } from '../../../page';
 
 export class CreatePage extends Page {
-  PAGE_URL = "/sales-return-gui/create";
+  PAGE_URL = '/sales-return-gui/create';
   repository: CreateRepository;
 
   constructor() {

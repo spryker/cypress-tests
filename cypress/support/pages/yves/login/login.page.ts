@@ -1,10 +1,10 @@
-import { LoginRepository } from "./login.repository";
-import { Page } from "../../page";
+import { LoginRepository } from './login.repository';
+import { Page } from '../../page';
 
 export class LoginPage extends Page {
-  PAGE_URL = "/login";
-  DEFAULT_SALUTATION = "Mr";
-  DEFAULT_PASSWORD_PREFIX = "Change123@_";
+  PAGE_URL = '/login';
+  DEFAULT_SALUTATION = 'Mr';
+  DEFAULT_PASSWORD_PREFIX = 'Change123@_';
 
   repository: LoginRepository;
 
@@ -13,10 +13,10 @@ export class LoginPage extends Page {
     this.repository = new LoginRepository();
   }
 
-  login = (email: string, password: string) => {
+  login = (customer: CustomerInterface): void => {
     cy.visit(this.PAGE_URL);
-    this.repository.getLoginEmailInput().clear().type(email);
-    this.repository.getLoginPasswordInput().clear().type(password);
+    this.repository.getLoginEmailInput().clear().type(customer.email);
+    this.repository.getLoginPasswordInput().clear().type(customer.password);
 
     this.repository.getLoginForm().submit();
   };
@@ -26,8 +26,8 @@ export class LoginPage extends Page {
     password?: string,
     salutation?: string,
     firstName?: string,
-    lastName?: string,
-  ) => {
+    lastName?: string
+  ): CustomerInterface => {
     cy.visit(this.PAGE_URL);
     this.repository
       .getRegisterSalutationSelect()

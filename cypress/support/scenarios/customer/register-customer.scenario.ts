@@ -1,8 +1,9 @@
-import { LoginPage } from "../../pages/yves/login/login.page";
-import { MailCatcherHelper } from "../../helpers/mail-catcher-helper";
+import { LoginPage } from '../../pages/yves/login/login.page';
+import { MailCatcherHelper } from '../../helpers/mail-catcher-helper';
+import { Customer } from '../../index';
 
 export class RegisterCustomerScenario {
-  static execute = () => {
+  static execute = (): Customer => {
     const loginPage = new LoginPage();
     const mailCatcherHelper = new MailCatcherHelper();
 

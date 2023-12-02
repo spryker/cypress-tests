@@ -1,32 +1,28 @@
-import { CartPage } from "../../support/pages/yves/cart/cart.page";
-import { CustomerPage } from "../../support/pages/yves/checkout/customer/customer.page";
-import { AddressPage } from "../../support/pages/yves/checkout/address/address.page";
-import { ShipmentPage } from "../../support/pages/yves/checkout/shipment/shipment.page";
-import { PaymentPage } from "../../support/pages/yves/checkout/payment/payment.page";
-import { SummaryPage } from "../../support/pages/yves/checkout/summary/summary.page";
+import { CartPage } from '../../support/pages/yves/cart/cart.page';
+import { CustomerPage } from '../../support/pages/yves/checkout/customer/customer.page';
+import { AddressPage } from '../../support/pages/yves/checkout/address/address.page';
+import { ShipmentPage } from '../../support/pages/yves/checkout/shipment/shipment.page';
+import { PaymentPage } from '../../support/pages/yves/checkout/payment/payment.page';
+import { SummaryPage } from '../../support/pages/yves/checkout/summary/summary.page';
+import { CheckoutFixture } from '../../support';
 
-describe("checkout by guest customer", () => {
+describe('checkout by guest customer', () => {
   const cartPage = new CartPage();
   const customerStepPage = new CustomerPage();
   const addressStepPage = new AddressPage();
   const shipmentStepPage = new ShipmentPage();
   const paymentStepPage = new PaymentPage();
   const summaryStepPage = new SummaryPage();
-  let fixtures: CheckoutFixtures;
-
-  before(() => {
-    cy.fixture("checkout/data").then(
-      (data: OrderFixtures) => (fixtures = data),
-    );
-  });
 
   beforeEach(() => {
     cy.resetCookies();
   });
 
-  it("should checkout with one concrete product", () => {
+  it('should checkout with one concrete product', () => {
     cy.visit(cartPage.PAGE_URL);
-    cartPage.quickAddToCart(fixtures.concreteProductSkus[0]);
+    cy.fixture('checkout').then((fixtures: CheckoutFixture) => {
+      cartPage.quickAddToCart(fixtures.concreteProductSkus[0]);
+    });
 
     cartPage.startCheckout();
     customerStepPage.checkoutAsGuest();
@@ -35,13 +31,15 @@ describe("checkout by guest customer", () => {
     paymentStepPage.setDummyPaymentMethod();
     summaryStepPage.placeOrder();
 
-    cy.contains("Your order has been placed successfully!");
+    cy.contains('Your order has been placed successfully!');
   });
 
-  it("should checkout with two concrete products to single shipment", () => {
+  it('should checkout with two concrete products to single shipment', () => {
     cy.visit(cartPage.PAGE_URL);
-    cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
-    cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
+    cy.fixture('checkout').then((fixtures: CheckoutFixture) => {
+      cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
+      cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
+    });
 
     cartPage.startCheckout();
     customerStepPage.checkoutAsGuest();
@@ -50,13 +48,15 @@ describe("checkout by guest customer", () => {
     paymentStepPage.setDummyPaymentMethod();
     summaryStepPage.placeOrder();
 
-    cy.contains("Your order has been placed successfully!");
+    cy.contains('Your order has been placed successfully!');
   });
 
-  it("should checkout to multi shipment address", () => {
+  it('should checkout to multi shipment address', () => {
     cy.visit(cartPage.PAGE_URL);
-    cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
-    cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
+    cy.fixture('checkout').then((fixtures: CheckoutFixture) => {
+      cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
+      cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
+    });
 
     cartPage.startCheckout();
     customerStepPage.checkoutAsGuest();
@@ -65,12 +65,14 @@ describe("checkout by guest customer", () => {
     paymentStepPage.setDummyPaymentMethod();
     summaryStepPage.placeOrder();
 
-    cy.contains("Your order has been placed successfully!");
+    cy.contains('Your order has been placed successfully!');
   });
 
-  it("should checkout with strict checkout step redirects", () => {
+  it('should checkout with strict checkout step redirects', () => {
     cy.visit(cartPage.PAGE_URL);
-    cartPage.quickAddToCart(fixtures.concreteProductSkus[0]);
+    cy.fixture('checkout').then((fixtures: CheckoutFixture) => {
+      cartPage.quickAddToCart(fixtures.concreteProductSkus[0]);
+    });
 
     cartPage.assertPageLocation();
     cartPage.startCheckout();
@@ -90,6 +92,6 @@ describe("checkout by guest customer", () => {
     summaryStepPage.assertPageLocation();
     summaryStepPage.placeOrder();
 
-    cy.url().should("include", "/checkout/success");
+    cy.url().should('include', '/checkout/success');
   });
 });

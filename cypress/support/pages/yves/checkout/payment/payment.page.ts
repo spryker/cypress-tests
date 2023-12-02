@@ -1,8 +1,8 @@
-import { PaymentRepository } from "./payment.repository";
-import { Page } from "../../../page";
+import { PaymentRepository } from './payment.repository';
+import { Page } from '../../../page';
 
 export class PaymentPage extends Page {
-  PAGE_URL = "/checkout/payment";
+  PAGE_URL = '/checkout/payment';
   repository: PaymentRepository;
 
   constructor() {
@@ -10,12 +10,12 @@ export class PaymentPage extends Page {
     this.repository = new PaymentRepository();
   }
 
-  setDummyPaymentMethod = () => {
+  setDummyPaymentMethod = (): void => {
     this.repository.getDummyPaymentInvoiceRadio().click({ force: true });
     this.repository
       .getDummyPaymentInvoiceDateField()
       .clear()
-      .type("12.12.1999");
+      .type('12.12.1999');
 
     this.repository.getGoToSummaryButton().click();
   };
