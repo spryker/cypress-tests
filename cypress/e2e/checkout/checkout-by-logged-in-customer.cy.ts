@@ -1,17 +1,17 @@
-import { CartPage } from '../../support/pages/yves/cart/cart.page';
-import { Page } from '../../support/pages/yves/checkout/address/page';
-import { ShipmentPage } from '../../support/pages/yves/checkout/shipment/shipment.page';
-import { PaymentPage } from '../../support/pages/yves/checkout/payment/payment.page';
-import { SummaryPage } from '../../support/pages/yves/checkout/summary/summary.page';
+import { Page as CheckoutAddressPage } from '../../support/pages/yves/checkout/address/page';
+import { Page as CheckoutShipmentPage } from '../../support/pages/yves/checkout/shipment/page';
+import { Page as CheckoutPaymentPage } from '../../support/pages/yves/checkout/payment/page';
+import { Page as CheckoutSummaryPage } from '../../support/pages/yves/checkout/summary/page';
+import { Page as CartPage } from '../../support/pages/yves/cart/page';
 import { LoginCustomerScenario } from '../../support/scenarios/login-customer-scenario';
 import { CheckoutFixture } from '../../support';
 
 describe('checkout by logged in customer', () => {
   const cartPage = new CartPage();
-  const addressStepPage = new Page();
-  const shipmentStepPage = new ShipmentPage();
-  const paymentStepPage = new PaymentPage();
-  const summaryStepPage = new SummaryPage();
+  const checkoutAddressPage = new CheckoutAddressPage();
+  const checkoutShipmentPage = new CheckoutShipmentPage();
+  const checkoutPaymentPage = new CheckoutPaymentPage();
+  const checkoutSummaryPage = new CheckoutSummaryPage();
 
   beforeEach(() => {
     cy.resetCookies();
@@ -28,10 +28,10 @@ describe('checkout by logged in customer', () => {
     });
 
     cartPage.startCheckout();
-    addressStepPage.fillShippingAddress();
-    shipmentStepPage.setStandardShippingMethod();
-    paymentStepPage.setDummyPaymentMethod();
-    summaryStepPage.placeOrder();
+    checkoutAddressPage.fillShippingAddress();
+    checkoutShipmentPage.setStandardShippingMethod();
+    checkoutPaymentPage.setDummyPaymentMethod();
+    checkoutSummaryPage.placeOrder();
 
     cy.contains('Your order has been placed successfully!');
   });
@@ -44,10 +44,10 @@ describe('checkout by logged in customer', () => {
     });
 
     cartPage.startCheckout();
-    addressStepPage.fillShippingAddress();
-    shipmentStepPage.setStandardShippingMethod();
-    paymentStepPage.setDummyPaymentMethod();
-    summaryStepPage.placeOrder();
+    checkoutAddressPage.fillShippingAddress();
+    checkoutShipmentPage.setStandardShippingMethod();
+    checkoutPaymentPage.setDummyPaymentMethod();
+    checkoutSummaryPage.placeOrder();
 
     cy.contains('Your order has been placed successfully!');
   });
@@ -60,10 +60,10 @@ describe('checkout by logged in customer', () => {
     });
 
     cartPage.startCheckout();
-    addressStepPage.fillMultiShippingAddress();
-    shipmentStepPage.setStandardShippingMethod();
-    paymentStepPage.setDummyPaymentMethod();
-    summaryStepPage.placeOrder();
+    checkoutAddressPage.fillMultiShippingAddress();
+    checkoutShipmentPage.setStandardShippingMethod();
+    checkoutPaymentPage.setDummyPaymentMethod();
+    checkoutSummaryPage.placeOrder();
 
     cy.contains('Your order has been placed successfully!');
   });
@@ -77,17 +77,17 @@ describe('checkout by logged in customer', () => {
     cartPage.assertPageLocation();
     cartPage.startCheckout();
 
-    addressStepPage.assertPageLocation();
-    addressStepPage.fillShippingAddress();
+    checkoutAddressPage.assertPageLocation();
+    checkoutAddressPage.fillShippingAddress();
 
-    shipmentStepPage.assertPageLocation();
-    shipmentStepPage.setStandardShippingMethod();
+    checkoutShipmentPage.assertPageLocation();
+    checkoutShipmentPage.setStandardShippingMethod();
 
-    paymentStepPage.assertPageLocation();
-    paymentStepPage.setDummyPaymentMethod();
+    checkoutPaymentPage.assertPageLocation();
+    checkoutPaymentPage.setDummyPaymentMethod();
 
-    summaryStepPage.assertPageLocation();
-    summaryStepPage.placeOrder();
+    checkoutSummaryPage.assertPageLocation();
+    checkoutSummaryPage.placeOrder();
 
     cy.url().should('include', '/checkout/success');
   });

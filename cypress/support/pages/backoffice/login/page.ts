@@ -1,5 +1,6 @@
 import { AbstractPage } from '../../abstract-page';
 import { Repository } from './repository';
+import { User } from '../../../index';
 
 export class Page extends AbstractPage {
   PAGE_URL = '/security-gui/login';
@@ -10,10 +11,10 @@ export class Page extends AbstractPage {
     this.repository = new Repository();
   }
 
-  login = (email: string, password: string) => {
+  login = (user: User) => {
     cy.visitBackoffice(this.PAGE_URL);
-    this.repository.getEmailInput().clear().type(email);
-    this.repository.getPasswordInput().clear().type(password);
+    this.repository.getEmailInput().clear().type(user.email);
+    this.repository.getPasswordInput().clear().type(user.password);
 
     this.repository.getSubmitButton().click();
   };
