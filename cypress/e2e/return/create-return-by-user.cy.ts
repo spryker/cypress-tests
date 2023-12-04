@@ -6,20 +6,27 @@ import { Page as SalesReturnGuiCreatePage } from '../../support/pages/backoffice
 import { LoginCustomerScenario } from '../../support/scenarios/login-customer-scenario';
 import { RegisterCustomerScenario } from '../../support/scenarios/register-customer-scenario';
 import { PlaceCustomerOrderScenario } from '../../support/scenarios/place-customer-order-scenario';
+import { CliHelper } from '../../support/helpers/cli-helper';
 
 describe('create return by user', () => {
   const loginPage = new LoginPage();
   const salesPage = new SalesPage();
   const salesDetailPage = new SalesDetailPage();
   const salesReturnGuiCreatePage = new SalesReturnGuiCreatePage();
+  const cliHelper = new CliHelper();
 
   beforeEach(() => {
     cy.resetCookies();
 
     cy.fixture('return').then((fixtures: ReturnFixtures) => {
-      LoginCustomerScenario.execute(RegisterCustomerScenario.execute());
+      const customer = RegisterCustomerScenario.execute();
+      LoginCustomerScenario.execute(customer);
+
       PlaceCustomerOrderScenario.execute(fixtures.concreteProductSkus);
     });
+
+    cliHelper.run('console oms:check-condition');
+    cliHelper.run('console oms:check-timeout');
   });
 
   // ignore uncaught exceptions
@@ -27,7 +34,7 @@ describe('create return by user', () => {
     return false;
   });
 
-  it('should be able to create return from Backoffice (from shipped order state)', () => {
+  it('should be able to create return from Backoffice (from shipped order state) [@regression]', () => {
     cy.fixture('return').then((fixtures: ReturnFixtures) => {
       loginPage.login(fixtures.user);
     });

@@ -34,7 +34,7 @@ describe('checkout by guest customer', () => {
     cy.contains('Your order has been placed successfully!');
   });
 
-  it('should checkout with two concrete products to single shipment', () => {
+  it('should checkout with two concrete products to single shipment [@regression]', () => {
     cy.visit(cartPage.PAGE_URL);
     cy.fixture('checkout').then((fixtures: CheckoutFixture) => {
       cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
@@ -51,7 +51,7 @@ describe('checkout by guest customer', () => {
     cy.contains('Your order has been placed successfully!');
   });
 
-  it('should checkout to multi shipment address', () => {
+  it('should checkout to multi shipment address [@regression]', () => {
     cy.visit(cartPage.PAGE_URL);
     cy.fixture('checkout').then((fixtures: CheckoutFixture) => {
       cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);

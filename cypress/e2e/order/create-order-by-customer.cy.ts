@@ -18,7 +18,7 @@ describe('create order by customer', () => {
     cy.contains('Your order has been placed successfully!');
   });
 
-  it('should be able to create an order by existing customer', () => {
+  it('should be able to create an order by existing customer [@regression]', () => {
     cy.fixture('order').then((fixtures: OrderFixtures) => {
       LoginCustomerScenario.execute(fixtures.customer);
       PlaceCustomerOrderScenario.execute(fixtures.concreteProductSkus);

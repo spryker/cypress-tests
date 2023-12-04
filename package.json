@@ -10,7 +10,8 @@
     "cy:run": "cypress run",
     "lint": "eslint . --ext .ts",
     "prettier:check": "npx prettier . --check",
-    "prettier:write": "npx prettier . --write"
+    "prettier:write": "npx prettier . --write",
+    "test:regression": "cypress_tagName=\"@regression\" npm run cy:run"
   },
   "engines": {
     "node": ">=18.0.0",
