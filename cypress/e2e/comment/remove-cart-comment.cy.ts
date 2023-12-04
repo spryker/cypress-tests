@@ -1,7 +1,8 @@
-import { CommentPage } from '../../support/pages/yves/comment/cart/comment.page';
-import { CartPage } from '../../support/pages/yves/cart/cart.page';
-import { LoginAsCustomerWithNewCartScenario } from '../../support/scenarios/cart/login-as-customer-with-new-cart.scenario';
+import { Page as CommentPage } from '../../support/pages/yves/comment/cart/page';
+import { Page as CartPage } from '../../support/pages/yves/cart/page';
+import { LoginCustomerScenario } from '../../support/scenarios/login-customer-scenario';
 import { CommentFixture } from '../../support';
+import { CreateCartScenario } from '../../support/scenarios/create-cart-scenario';
 
 describe('remove cart comment', () => {
   const commentPage = new CommentPage();
@@ -11,7 +12,8 @@ describe('remove cart comment', () => {
     cy.resetCookies();
 
     cy.fixture('comment').then((fixtures: CommentFixture) => {
-      LoginAsCustomerWithNewCartScenario.execute(fixtures.customer);
+      LoginCustomerScenario.execute(fixtures.customer);
+      CreateCartScenario.execute();
     });
   });
 

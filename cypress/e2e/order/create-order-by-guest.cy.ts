@@ -1,5 +1,5 @@
-import { PlaceGuestOrderScenario } from '../../support/scenarios/order/place-guest-order.scenario';
 import { OrderFixtures } from '../../support';
+import { PlaceGuestOrderScenario } from '../../support/scenarios/place-guest-order-scenario';
 
 describe('create order by guest', () => {
   beforeEach(() => {
