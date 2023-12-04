@@ -2,7 +2,7 @@ import { Page as CommentPage } from '../../support/pages/yves/comment/cart/page'
 import { Page as CartPage } from '../../support/pages/yves/cart/page';
 import { LoginCustomerScenario } from '../../support/scenarios/login-customer-scenario';
 import { CommentFixture } from '../../support';
-import { CreateCartScenario } from "../../support/scenarios/create-cart-scenario";
+import { CreateCartScenario } from '../../support/scenarios/create-cart-scenario';
 
 describe('create cart comment', () => {
   const commentPage = new CommentPage();
