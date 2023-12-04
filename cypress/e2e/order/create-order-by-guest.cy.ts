@@ -6,7 +6,7 @@ describe('create order by guest', () => {
     cy.resetCookies();
   });
 
-  it('should be able to create an order by guest', () => {
+  it('should be able to create an order by guest [@regression]', () => {
     cy.fixture('order').then((fixtures: OrderFixtures) => {
       PlaceGuestOrderScenario.execute(fixtures.concreteProductSkus);
     });
