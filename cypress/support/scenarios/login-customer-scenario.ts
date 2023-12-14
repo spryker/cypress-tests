@@ -1,8 +1,14 @@
 import { Customer } from '../index';
 import { Page as LoginPage } from '../pages/yves/login/page';
+import { inject, injectable } from 'inversify';
+import { autoProvide } from '../utils/auto-provide';
 
+@injectable()
+@autoProvide
 export class LoginCustomerScenario {
-  static execute = (customer: Customer): void => {
-    new LoginPage().login(customer);
+  constructor(@inject(LoginPage) private loginPage: LoginPage) {}
+
+  execute = (customer: Customer): void => {
+    this.loginPage.login(customer);
   };
 }

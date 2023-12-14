@@ -1,3 +1,8 @@
+import { injectable } from 'inversify';
+import { autoProvide } from '../utils/auto-provide';
+
+@injectable()
+@autoProvide
 export class CliHelper {
   private readonly store: string;
   private readonly containerPath: string;

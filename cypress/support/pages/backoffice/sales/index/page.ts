@@ -1,5 +1,5 @@
-import { Repository } from './repository';
 import { AbstractPage } from '../../../abstract-page';
+import { Repository } from './repository';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { autoProvide } from '../../../../utils/auto-provide';
@@ -7,7 +7,7 @@ import { autoProvide } from '../../../../utils/auto-provide';
 @injectable()
 @autoProvide
 export class Page extends AbstractPage {
-  PAGE_URL = '/sales-return-gui/create';
+  PAGE_URL = '/sales';
   repository: Repository;
 
   constructor(@inject(Repository) repository: Repository) {
@@ -15,8 +15,8 @@ export class Page extends AbstractPage {
     this.repository = repository;
   }
 
-  createReturnForAllOrderItems = () => {
-    this.repository.getAllItemsCheckbox().check();
-    this.repository.getCreateReturnButton().click();
+  viewLastPlacedOrder = () => {
+    cy.visitBackoffice(this.PAGE_URL);
+    this.repository.getViewButtons().first().click();
   };
 }

@@ -1,3 +1,8 @@
+import { injectable } from 'inversify';
+import { autoProvide } from '../utils/auto-provide';
+
+@injectable()
+@autoProvide
 export class MailCatcherHelper {
   private readonly url: string;
 

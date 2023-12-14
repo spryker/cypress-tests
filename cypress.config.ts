@@ -4,7 +4,7 @@ dotenv.config();
 
 export default defineConfig({
   env: {
-    projectName: process.env.ENV_PROJECT_NAME,
+    repositoryId: process.env.ENV_REPOSITORY_ID,
     backofficeUrl: process.env.ENV_BACKOFFICE_URL,
     mailCatcherUrl: process.env.ENV_MAIL_CATCHER_URL,
     cli: {

@@ -1,45 +1,23 @@
-export class Repository {
-  getLoginEmailInput = () => {
-    return cy.get('#loginForm_email');
-  };
+export interface Repository {
+  getLoginEmailInput(): Cypress.Chainable;
 
-  getLoginPasswordInput = () => {
-    return cy.get('#loginForm_password');
-  };
+  getLoginPasswordInput(): Cypress.Chainable;
 
-  getLoginForm = () => {
-    return cy.get('form[name=loginForm]');
-  };
+  getLoginForm(): Cypress.Chainable;
 
-  getRegisterSalutationSelect = () => {
-    return cy.get('#registerForm_salutation');
-  };
+  getRegisterSalutationSelect(): Cypress.Chainable;
 
-  getRegisterFirstNameInput = () => {
-    return cy.get('#registerForm_first_name');
-  };
+  getRegisterFirstNameInput(): Cypress.Chainable;
 
-  getRegisterLastNameInput = () => {
-    return cy.get('#registerForm_last_name');
-  };
+  getRegisterLastNameInput(): Cypress.Chainable;
 
-  getRegisterEmailInput = () => {
-    return cy.get('#registerForm_email');
-  };
+  getRegisterEmailInput(): Cypress.Chainable;
 
-  getRegisterPasswordInput = () => {
-    return cy.get('#registerForm_password_pass');
-  };
+  getRegisterPasswordInput(): Cypress.Chainable;
 
-  getRegisterConfirmPasswordInput = () => {
-    return cy.get('#registerForm_password_confirm');
-  };
+  getRegisterConfirmPasswordInput(): Cypress.Chainable;
 
-  getRegisterAcceptTermsCheckbox = () => {
-    return cy.get('#registerForm_accept_terms');
-  };
+  getRegisterAcceptTermsCheckbox(): Cypress.Chainable;
 
-  getRegisterForm = () => {
-    return cy.get('form[name=registerForm]');
-  };
+  getRegisterForm(): Cypress.Chainable;
 }

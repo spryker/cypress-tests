@@ -2,16 +2,16 @@ import 'reflect-metadata';
 import { AbstractPage } from '../../abstract-page';
 import { Repository } from './repository';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../types';
+import { TYPES } from '../../../utils/types';
+import { autoProvide } from '../../../utils/auto-provide';
 
 @injectable()
+@autoProvide
 export class Page extends AbstractPage {
   PAGE_URL = '/cart';
-  repository: Repository;
 
-  constructor(@inject(TYPES.CartRepository) repository: Repository) {
+  constructor(@inject(TYPES.CartRepository) private repository: Repository) {
     super();
-    this.repository = repository;
   }
 
   quickAddToCart = (sku: string, quantity?: number): void => {
