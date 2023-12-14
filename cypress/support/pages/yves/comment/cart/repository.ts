@@ -1,9 +1,4 @@
-export class Repository {
-  getAddCommentForm = () => {
-    return cy.get('[data-qa="component comment-form"]');
-  };
-
-  getCommentThreadListSection = () => {
-    return cy.get('[data-qa="component comment-thread-list"]');
-  };
+export interface Repository {
+  getAddCommentForm(): Cypress.Chainable<JQuery<HTMLElement>>;
+  getCommentThreadListSection(): Cypress.Chainable<JQuery<HTMLElement>>;
 }

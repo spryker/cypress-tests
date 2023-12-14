@@ -1,13 +1,17 @@
+import 'reflect-metadata';
 import { AbstractPage } from '../../../abstract-page';
 import { Repository } from './repository';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '../../../../types';
 
+@injectable()
 export class Page extends AbstractPage {
   PAGE_URL = '/cart';
   repository: Repository;
 
-  constructor() {
+  constructor(@inject(TYPES.CommentCartRepository) repository: Repository) {
     super();
-    this.repository = new Repository();
+    this.repository = repository;
   }
 
   addComment = (commentMessage: string): void => {
