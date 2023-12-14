@@ -22,6 +22,7 @@ export class Page extends AbstractPage {
       .type(String(quantity ?? 1));
 
     this.repository.getQuickAddToCartSubmitButton().click();
+    cy.contains('Items added successfully').should('exist');
   };
 
   removeProduct = (sku: string): void => {

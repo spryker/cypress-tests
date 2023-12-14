@@ -2,7 +2,9 @@ import 'reflect-metadata';
 import { Container } from 'inversify';
 import { TYPES } from './types';
 
+import { B2bRepository as B2bLoginRepository } from '../pages/yves/login/repositories/b2b-repository';
 import { B2bRepository as B2bCartRepository } from '../pages/yves/cart/repositories/b2b-repository';
+import { B2bRepository as B2bMultiCartRepository } from '../pages/yves/multi-cart/repositories/b2b-repository';
 import { B2bRepository as B2bCommentCartRepository } from '../pages/yves/comment/cart/repositories/b2b-repository';
 
 import { SuiteRepository as SuiteLoginRepository } from '../pages/yves/login/repositories/suite-repository';
@@ -32,7 +34,9 @@ const suiteMappings: BindingsMap = {
 };
 
 const b2bMappings: BindingsMap = {
+  [TYPES.LoginRepository]: B2bLoginRepository,
   [TYPES.CartRepository]: B2bCartRepository,
+  [TYPES.MultiCartRepository]: B2bMultiCartRepository,
   [TYPES.CommentCartRepository]: B2bCommentCartRepository,
 };
 

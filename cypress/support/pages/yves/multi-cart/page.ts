@@ -18,10 +18,11 @@ export class Page extends AbstractPage {
 
   createCart = (name?: string): void => {
     cy.visit(`${this.PAGE_URL}/create`);
-    this.repository
-      .getCreateCartNameInput()
-      .clear()
-      .type(name ?? `Cart #${this.faker.string.uuid()}`);
+    const cartName = name ?? `Cart # ${this.faker.string.uuid()}`;
+
+    this.repository.getCreateCartNameInput().clear().type(cartName);
     this.repository.getCreateCartForm().submit();
+
+    cy.contains(`Cart '${cartName}' was created successfully`).should('exist');
   };
 }

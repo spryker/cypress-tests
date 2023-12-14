@@ -26,29 +26,26 @@ export class Page extends AbstractPage {
     this.repository
       .getAddCommentForm()
       .last()
-      .find('button:contains("Add")')
+      .find(this.repository.getAddCommentButtonSelector())
       .click();
   };
 
   updateFirstComment = (commentMessage: string): void => {
+    const textarea = this.repository.getFirstCommentTextarea();
+    textarea.clear().type(commentMessage);
+
     this.repository
-      .getAddCommentForm()
+      .getCommentThreadListSection()
       .first()
-      .find('textarea')
-      .clear()
-      .type(commentMessage);
-    this.repository
-      .getAddCommentForm()
-      .first()
-      .find('button:contains("Update")')
+      .find(this.repository.getUpdateCommentButtonSelector())
       .click();
   };
 
   removeFirstComment = (): void => {
     this.repository
-      .getAddCommentForm()
+      .getCommentThreadListSection()
       .first()
-      .find('button:contains("Remove")')
+      .find(this.repository.getRemoveCommentButtonSelector())
       .click();
   };
 

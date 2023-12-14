@@ -17,7 +17,7 @@ export class B2bRepository implements Repository {
   getQuickAddToCartSubmitButton = (): Cypress.Chainable<
     JQuery<HTMLElement>
   > => {
-    return cy.get('.js-product-quick-add-form__submit-button');
+    return cy.get('.product-quick-add-form__button');
   };
 
   findCartItemRemovalForm = (sku: string): Cypress.Chainable => {

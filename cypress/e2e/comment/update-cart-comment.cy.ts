@@ -8,39 +8,40 @@ import { container } from '../../support/utils/inversify.config';
 describe('update cart comment', (): void => {
   let cartPage: CartPage;
   let commentCartPage: CommentCartPage;
+  let fixtures: CommentFixture;
 
   before((): void => {
     commentCartPage = container.get(CommentCartPage);
     cartPage = container.get(CartPage);
+
+    cy.fixture('comment.' + Cypress.env('repositoryId')).then(
+      (commentFixtures: CommentFixture) => {
+        fixtures = commentFixtures;
+      }
+    );
   });
 
   beforeEach((): void => {
     cy.resetCookies();
 
-    cy.fixture('comment').then((fixtures: CommentFixture) => {
-      container.get(LoginCustomerScenario).execute(fixtures.customer);
-      container.get(CreateCartScenario).execute();
-    });
+    container.get(LoginCustomerScenario).execute(fixtures.customer);
+    container.get(CreateCartScenario).execute();
   });
 
   it('customer should be able to modify comment in empty cart [@comment]', (): void => {
-    cy.fixture('comment').then((fixtures: CommentFixture) => {
-      commentCartPage.addComment(fixtures.comments[0]);
-      commentCartPage.updateFirstComment(fixtures.comments[1]);
+    commentCartPage.addComment(fixtures.comments[0]);
+    commentCartPage.updateFirstComment(fixtures.comments[1]);
 
-      commentCartPage.assertCommentMessage(fixtures.comments[1]);
-    });
+    commentCartPage.assertCommentMessage(fixtures.comments[1]);
   });
 
   it('customer should be able to modify comment in cart [@comment]', (): void => {
     cy.visit(cartPage.PAGE_URL);
-    cy.fixture('comment').then((fixtures: CommentFixture) => {
-      cartPage.quickAddToCart(fixtures.concreteProductSku);
+    cartPage.quickAddToCart(fixtures.concreteProductSku);
 
-      commentCartPage.addComment(fixtures.comments[0]);
-      commentCartPage.updateFirstComment(fixtures.comments[1]);
+    commentCartPage.addComment(fixtures.comments[0]);
+    commentCartPage.updateFirstComment(fixtures.comments[1]);
 
-      commentCartPage.assertCommentMessage(fixtures.comments[1]);
-    });
+    commentCartPage.assertCommentMessage(fixtures.comments[1]);
   });
 });
