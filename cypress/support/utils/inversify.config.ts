@@ -15,16 +15,9 @@ import { SuiteRepository as SuiteCheckoutShipmentRepository } from '../pages/yve
 import { SuiteRepository as SuiteCheckoutPaymentRepository } from '../pages/yves/checkout/payment/repositories/suite-repository';
 import { SuiteRepository as SuiteCheckoutSummaryRepository } from '../pages/yves/checkout/summary/repositories/suite-repository';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ClassConstructor = new (...args: any[]) => any;
 type BindingsMap = { [key: string]: ClassConstructor };
-
-function applyRepositoryBindings(bindings: BindingsMap) {
-  for (const [type, implementation] of Object.entries(bindings)) {
-    container.bind(type).to(implementation as ClassConstructor);
-  }
-}
-/* eslint-enable @typescript-eslint/no-explicit-any */
 
 const suiteMappings: BindingsMap = {
   [TYPES.LoginRepository]: SuiteLoginRepository,
@@ -51,6 +44,12 @@ if (repositoryId === 'suite') {
 }
 if (repositoryId === 'b2b') {
   applyRepositoryBindings(b2bMappings);
+}
+
+function applyRepositoryBindings(bindings: BindingsMap) {
+  for (const [type, implementation] of Object.entries(bindings)) {
+    container.bind(type).to(implementation as ClassConstructor);
+  }
 }
 
 export { container };

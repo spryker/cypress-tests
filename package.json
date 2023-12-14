@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "cy:open": "cypress open",
-    "cy:run": "cypress run",
+    "cy:run": "cypress run --headless --browser chrome",
     "lint": "eslint . --ext .ts",
     "prettier:check": "npx prettier . --check",
     "prettier:write": "npx prettier . --write",
