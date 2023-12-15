@@ -1,14 +1,19 @@
 import { AbstractPage } from '../../abstract-page';
 import { Repository } from './repository';
 import { User } from '../../../index';
+import { inject, injectable } from 'inversify';
+import 'reflect-metadata';
+import { autoProvide } from '../../../utils/auto-provide';
 
+@injectable()
+@autoProvide
 export class Page extends AbstractPage {
   PAGE_URL = '/security-gui/login';
   repository: Repository;
 
-  constructor() {
+  constructor(@inject(Repository) repository: Repository) {
     super();
-    this.repository = new Repository();
+    this.repository = repository;
   }
 
   login = (user: User) => {

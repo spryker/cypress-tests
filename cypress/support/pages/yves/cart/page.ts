@@ -1,13 +1,17 @@
+import 'reflect-metadata';
 import { AbstractPage } from '../../abstract-page';
 import { Repository } from './repository';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '../../../utils/types';
+import { autoProvide } from '../../../utils/auto-provide';
 
+@injectable()
+@autoProvide
 export class Page extends AbstractPage {
   PAGE_URL = '/cart';
-  repository: Repository;
 
-  constructor() {
+  constructor(@inject(TYPES.CartRepository) private repository: Repository) {
     super();
-    this.repository = new Repository();
   }
 
   quickAddToCart = (sku: string, quantity?: number): void => {
@@ -18,6 +22,7 @@ export class Page extends AbstractPage {
       .type(String(quantity ?? 1));
 
     this.repository.getQuickAddToCartSubmitButton().click();
+    cy.contains('Items added successfully').should('exist');
   };
 
   removeProduct = (sku: string): void => {

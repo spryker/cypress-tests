@@ -1,13 +1,19 @@
+import 'reflect-metadata';
 import { AbstractPage } from '../../../abstract-page';
 import { Repository } from './repository';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '../../../../utils/types';
+import { autoProvide } from '../../../../utils/auto-provide';
 
+@injectable()
+@autoProvide
 export class Page extends AbstractPage {
   PAGE_URL = '/cart';
   repository: Repository;
 
-  constructor() {
+  constructor(@inject(TYPES.CommentCartRepository) repository: Repository) {
     super();
-    this.repository = new Repository();
+    this.repository = repository;
   }
 
   addComment = (commentMessage: string): void => {
@@ -20,29 +26,26 @@ export class Page extends AbstractPage {
     this.repository
       .getAddCommentForm()
       .last()
-      .find('button:contains("Add")')
+      .find(this.repository.getAddCommentButtonSelector())
       .click();
   };
 
   updateFirstComment = (commentMessage: string): void => {
+    const textarea = this.repository.getFirstCommentTextarea();
+    textarea.clear().type(commentMessage);
+
     this.repository
-      .getAddCommentForm()
+      .getCommentThreadListSection()
       .first()
-      .find('textarea')
-      .clear()
-      .type(commentMessage);
-    this.repository
-      .getAddCommentForm()
-      .first()
-      .find('button:contains("Update")')
+      .find(this.repository.getUpdateCommentButtonSelector())
       .click();
   };
 
   removeFirstComment = (): void => {
     this.repository
-      .getAddCommentForm()
+      .getCommentThreadListSection()
       .first()
-      .find('button:contains("Remove")')
+      .find(this.repository.getRemoveCommentButtonSelector())
       .click();
   };
 

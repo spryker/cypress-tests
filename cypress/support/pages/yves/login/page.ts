@@ -1,17 +1,24 @@
 import { AbstractPage } from '../../abstract-page';
 import { Repository } from './repository';
 import { Customer } from '../../../index';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '../../../utils/types';
+import 'reflect-metadata';
+import { autoProvide } from '../../../utils/auto-provide';
 
+@injectable()
+@autoProvide
 export class Page extends AbstractPage {
   PAGE_URL = '/login';
+
   DEFAULT_SALUTATION = 'Mr';
   DEFAULT_PASSWORD_PREFIX = 'Change123@_';
 
   repository: Repository;
 
-  constructor() {
+  constructor(@inject(TYPES.LoginRepository) repository: Repository) {
     super();
-    this.repository = new Repository();
+    this.repository = repository;
   }
 
   login = (customer: Customer): void => {

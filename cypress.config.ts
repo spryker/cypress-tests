@@ -4,14 +4,15 @@ dotenv.config();
 
 export default defineConfig({
   env: {
+    repositoryId: process.env.ENV_REPOSITORY_ID,
+    backofficeUrl: process.env.ENV_BACKOFFICE_URL,
+    mailCatcherUrl: process.env.ENV_MAIL_CATCHER_URL,
     cli: {
       // TODO: move to .env
       store: 'DE',
       containerPath: '../suite-nonsplit',
       containerName: 'spryker_cli_1',
     },
-    backofficeUrl: process.env.ENV_BACKOFFICE_URL,
-    mailCatcherUrl: process.env.ENV_MAIL_CATCHER_URL,
   },
   e2e: {
     baseUrl: process.env.E2E_BASE_URL,

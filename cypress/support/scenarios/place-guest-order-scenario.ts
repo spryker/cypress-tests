@@ -4,22 +4,39 @@ import { Page as CheckoutAddressPage } from '../pages/yves/checkout/address/page
 import { Page as CheckoutShipmentPage } from '../pages/yves/checkout/shipment/page';
 import { Page as CheckoutPaymentPage } from '../pages/yves/checkout/payment/page';
 import { Page as CheckoutSummaryPage } from '../pages/yves/checkout/summary/page';
+import { inject, injectable } from 'inversify';
+import { autoProvide } from '../utils/auto-provide';
+import 'reflect-metadata';
 
+@injectable()
+@autoProvide
 export class PlaceGuestOrderScenario {
-  static execute = (productSkus: string[]): void => {
-    const cartPage = new CartPage();
+  constructor(
+    @inject(CartPage) private cartPage: CartPage,
+    @inject(CheckoutCustomerPage)
+    private checkoutCustomerPage: CheckoutCustomerPage,
+    @inject(CheckoutAddressPage)
+    private checkoutAddressPage: CheckoutAddressPage,
+    @inject(CheckoutShipmentPage)
+    private checkoutShipmentPage: CheckoutShipmentPage,
+    @inject(CheckoutPaymentPage)
+    private checkoutPaymentPage: CheckoutPaymentPage,
+    @inject(CheckoutSummaryPage)
+    private checkoutSummaryPage: CheckoutSummaryPage
+  ) {}
 
-    cy.visit(cartPage.PAGE_URL);
+  execute = (productSkus: string[]): void => {
+    cy.visit(this.cartPage.PAGE_URL);
     productSkus.forEach((productSku: string) => {
-      cartPage.quickAddToCart(productSku, 1);
+      this.cartPage.quickAddToCart(productSku, 1);
     });
 
-    cartPage.startCheckout();
+    this.cartPage.startCheckout();
 
-    new CheckoutCustomerPage().checkoutAsGuest();
-    new CheckoutAddressPage().fillShippingAddress();
-    new CheckoutShipmentPage().setStandardShippingMethod();
-    new CheckoutPaymentPage().setDummyPaymentMethod();
-    new CheckoutSummaryPage().placeOrder();
+    this.checkoutCustomerPage.checkoutAsGuest();
+    this.checkoutAddressPage.fillShippingAddress();
+    this.checkoutShipmentPage.setStandardShippingMethod();
+    this.checkoutPaymentPage.setDummyPaymentMethod();
+    this.checkoutSummaryPage.placeOrder();
   };
 }

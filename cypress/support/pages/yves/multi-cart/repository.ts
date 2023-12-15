@@ -1,9 +1,5 @@
-export class Repository {
-  getCreateCartNameInput = () => {
-    return cy.get('#quoteForm_name');
-  };
+export interface Repository {
+  getCreateCartNameInput(): Cypress.Chainable;
 
-  getCreateCartForm = () => {
-    return cy.get('form[name=quoteForm]');
-  };
+  getCreateCartForm(): Cypress.Chainable;
 }

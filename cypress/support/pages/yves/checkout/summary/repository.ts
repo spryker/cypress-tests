@@ -1,9 +1,5 @@
-export class Repository {
-  getaAcceptTermsAndConditionsCheckbox = () => {
-    return cy.get('[name="acceptTermsAndConditions"]');
-  };
+export interface Repository {
+  getaAcceptTermsAndConditionsCheckbox(): Cypress.Chainable;
 
-  getSummaryForm = () => {
-    return cy.get('form[name=summaryForm]');
-  };
+  getSummaryForm(): Cypress.Chainable;
 }

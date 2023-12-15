@@ -1,189 +1,93 @@
-export class Repository {
-  getSelectShippingAddressField = () => {
-    return cy.get('.select__select.js-address__form-select-shippingAddress');
-  };
+export interface Repository {
+  getSelectShippingAddressField(): Cypress.Chainable;
 
-  getShippingAddressFirstNameField = () => {
-    return cy.get('#addressesForm_shippingAddress_first_name');
-  };
+  getShippingAddressFirstNameField(): Cypress.Chainable;
 
-  getShippingAddressLastNameField = () => {
-    return cy.get('#addressesForm_shippingAddress_last_name');
-  };
+  getShippingAddressLastNameField(): Cypress.Chainable;
 
-  getShippingAddressAddress1Field = () => {
-    return cy.get('#addressesForm_shippingAddress_address1');
-  };
+  getShippingAddressAddress1Field(): Cypress.Chainable;
 
-  getShippingAddressAddress2Field = () => {
-    return cy.get('#addressesForm_shippingAddress_address2');
-  };
+  getShippingAddressAddress2Field(): Cypress.Chainable;
 
-  getShippingAddressZipCodeField = () => {
-    return cy.get('#addressesForm_shippingAddress_zip_code');
-  };
+  getShippingAddressZipCodeField(): Cypress.Chainable;
 
-  getShippingAddressCityField = () => {
-    return cy.get('#addressesForm_shippingAddress_city');
-  };
+  getShippingAddressCityField(): Cypress.Chainable;
 
-  getShippingAddressCompanyField = () => {
-    return cy.get('#addressesForm_shippingAddress_company');
-  };
+  getShippingAddressCompanyField(): Cypress.Chainable;
 
-  getShippingAddressPhoneField = () => {
-    return cy.get('#addressesForm_shippingAddress_phone');
-  };
+  getShippingAddressPhoneField(): Cypress.Chainable;
 
-  getShippingAddressBillingSameAsShippingCheckbox = () => {
-    return cy.get('#addressesForm_billingSameAsShipping');
-  };
+  getShippingAddressBillingSameAsShippingCheckbox(): Cypress.Chainable;
 
-  getNextButton = () => {
-    return cy.contains('button', 'Next');
-  };
+  getNextButton(): Cypress.Chainable;
 
-  getSelectBillingAddressField = () => {
-    return cy.get('#addressesForm_billingAddress_id_customer_address');
-  };
+  getSelectBillingAddressField(): Cypress.Chainable;
 
-  getBillingAddressFirstNameField = () => {
-    return cy.get('#addressesForm_billingAddress_first_name');
-  };
+  getBillingAddressFirstNameField(): Cypress.Chainable;
 
-  getBillingAddressLastNameField = () => {
-    return cy.get('#addressesForm_billingAddress_last_name');
-  };
+  getBillingAddressLastNameField(): Cypress.Chainable;
 
-  getBillingAddressAddress1Field = () => {
-    return cy.get('#addressesForm_billingAddress_address1');
-  };
+  getBillingAddressAddress1Field(): Cypress.Chainable;
 
-  getBillingAddressAddress2Field = () => {
-    return cy.get('#addressesForm_billingAddress_address2');
-  };
+  getBillingAddressAddress2Field(): Cypress.Chainable;
 
-  getBillingAddressZipCodeField = () => {
-    return cy.get('#addressesForm_billingAddress_zip_code');
-  };
+  getBillingAddressZipCodeField(): Cypress.Chainable;
 
-  getBillingAddressCityField = () => {
-    return cy.get('#addressesForm_billingAddress_city');
-  };
+  getBillingAddressCityField(): Cypress.Chainable;
 
-  getBillingAddressCompanyField = () => {
-    return cy.get('#addressesForm_billingAddress_company');
-  };
+  getBillingAddressCompanyField(): Cypress.Chainable;
 
-  getBillingAddressPhoneField = () => {
-    return cy.get('#addressesForm_billingAddress_phone');
-  };
+  getBillingAddressPhoneField(): Cypress.Chainable;
 
-  getMultiShipmentTriggerButton = () => {
-    return cy.get('.js-multiple-shipment-toggler__multiple-shipment-trigger');
-  };
+  getMultiShipmentTriggerButton(): Cypress.Chainable;
 
-  getMultiShipmentAddressItemElement = () => {
-    return cy.get('[data-qa="component address-item-form-field-list"]');
-  };
+  getMultiShipmentAddressItemElement(): Cypress.Chainable;
 
-  getMultiShipmentAddressItemDeliveryRadio = (
+  getMultiShipmentAddressItemDeliveryRadio(
     $addressItem: JQuery<HTMLElement>
-  ) => {
-    return cy.wrap($addressItem).contains('span', 'Delivery');
-  };
+  ): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressField = (
+  getMultiShipmentAddressItemAddressField(
     $addressItem: JQuery<HTMLElement>
-  ) => {
-    return cy.wrap($addressItem).contains('select', 'Select an address');
-  };
+  ): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressFirstNameField = (
+  getMultiShipmentAddressItemAddressFirstNameField(
     $addressItem: JQuery<HTMLElement>,
     index: number
-  ) => {
-    return cy
-      .wrap($addressItem)
-      .get(
-        `#addressesForm_multiShippingAddresses_${index}_shippingAddress_first_name`
-      );
-  };
+  ): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressLastNameField = (
+  getMultiShipmentAddressItemAddressLastNameField(
     $addressItem: JQuery<HTMLElement>,
     index: number
-  ) => {
-    return cy
-      .wrap($addressItem)
-      .get(
-        `#addressesForm_multiShippingAddresses_${index}_shippingAddress_last_name`
-      );
-  };
+  ): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressAddress1Field = (
+  getMultiShipmentAddressItemAddressAddress1Field(
     $addressItem: JQuery<HTMLElement>,
     index: number
-  ) => {
-    return cy
-      .wrap($addressItem)
-      .get(
-        `#addressesForm_multiShippingAddresses_${index}_shippingAddress_address1`
-      );
-  };
+  ): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressAddress2Field = (
+  getMultiShipmentAddressItemAddressAddress2Field(
     $addressItem: JQuery<HTMLElement>,
     index: number
-  ) => {
-    return cy
-      .wrap($addressItem)
-      .get(
-        `#addressesForm_multiShippingAddresses_${index}_shippingAddress_address2`
-      );
-  };
+  ): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressCityField = (
+  getMultiShipmentAddressItemAddressCityField(
     $addressItem: JQuery<HTMLElement>,
     index: number
-  ) => {
-    return cy
-      .wrap($addressItem)
-      .get(
-        `#addressesForm_multiShippingAddresses_${index}_shippingAddress_city`
-      );
-  };
+  ): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressZipCodeField = (
+  getMultiShipmentAddressItemAddressZipCodeField(
     $addressItem: JQuery<HTMLElement>,
     index: number
-  ) => {
-    return cy
-      .wrap($addressItem)
-      .get(
-        `#addressesForm_multiShippingAddresses_${index}_shippingAddress_zip_code`
-      );
-  };
+  ): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressCompanyField = (
+  getMultiShipmentAddressItemAddressCompanyField(
     $addressItem: JQuery<HTMLElement>,
     index: number
-  ) => {
-    return cy
-      .wrap($addressItem)
-      .get(
-        `#addressesForm_multiShippingAddresses_${index}_shippingAddress_company`
-      );
-  };
+  ): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressPhoneField = (
+  getMultiShipmentAddressItemAddressPhoneField(
     $addressItem: JQuery<HTMLElement>,
     index: number
-  ) => {
-    return cy
-      .wrap($addressItem)
-      .get(
-        `#addressesForm_multiShippingAddresses_${index}_shippingAddress_phone`
-      );
-  };
+  ): Cypress.Chainable;
 }

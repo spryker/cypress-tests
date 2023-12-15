@@ -1,39 +1,46 @@
-import { Page as CommentPage } from '../../support/pages/yves/comment/cart/page';
+import { Page as CommentCartPage } from '../../support/pages/yves/comment/cart/page';
 import { Page as CartPage } from '../../support/pages/yves/cart/page';
 import { LoginCustomerScenario } from '../../support/scenarios/login-customer-scenario';
 import { CommentFixture } from '../../support';
 import { CreateCartScenario } from '../../support/scenarios/create-cart-scenario';
+import { container } from '../../support/utils/inversify.config';
 
-describe('remove cart comment', () => {
-  const commentPage = new CommentPage();
-  const cartPage = new CartPage();
+describe('remove cart comment', (): void => {
+  let cartPage: CartPage;
+  let commentCartPage: CommentCartPage;
+  let fixtures: CommentFixture;
 
-  beforeEach(() => {
+  before((): void => {
+    commentCartPage = container.get(CommentCartPage);
+    cartPage = container.get(CartPage);
+
+    cy.fixture('comment.' + Cypress.env('repositoryId')).then(
+      (commentFixtures: CommentFixture) => {
+        fixtures = commentFixtures;
+      }
+    );
+  });
+
+  beforeEach((): void => {
     cy.resetCookies();
 
-    cy.fixture('comment').then((fixtures: CommentFixture) => {
-      LoginCustomerScenario.execute(fixtures.customer);
-      CreateCartScenario.execute();
-    });
+    container.get(LoginCustomerScenario).execute(fixtures.customer);
+    container.get(CreateCartScenario).execute();
   });
 
-  it('customer should be able to remove comment in empty cart', () => {
-    cy.fixture('comment').then((fixtures: CommentFixture) => {
-      commentPage.addComment(fixtures.comments[0]);
-    });
+  it('customer should be able to remove comment in empty cart [@comment]', (): void => {
+    commentCartPage.addComment(fixtures.comments[0]);
 
-    commentPage.removeFirstComment();
-    commentPage.assertEmptyCommentThreadList();
+    commentCartPage.removeFirstComment();
+    commentCartPage.assertEmptyCommentThreadList();
   });
 
-  it('customer should be able to remove comment in cart', () => {
+  it('customer should be able to remove comment in cart [@comment]', (): void => {
     cy.visit(cartPage.PAGE_URL);
-    cy.fixture('comment').then((fixtures: CommentFixture) => {
-      cartPage.quickAddToCart(fixtures.concreteProductSku);
-      commentPage.addComment(fixtures.comments[0]);
-    });
+    cartPage.quickAddToCart(fixtures.concreteProductSku);
+    commentCartPage.addComment(fixtures.comments[0]);
 
-    commentPage.removeFirstComment();
-    commentPage.assertEmptyCommentThreadList();
+    commentCartPage.removeFirstComment();
+    commentCartPage.assertEmptyCommentThreadList();
   });
 });

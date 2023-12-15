@@ -1,13 +1,7 @@
-export class Repository {
-  getDummyPaymentInvoiceRadio = () => {
-    return cy.get('#paymentForm_paymentSelection_dummyPaymentInvoice');
-  };
+export interface Repository {
+  getDummyPaymentInvoiceRadio(): Cypress.Chainable;
 
-  getDummyPaymentInvoiceDateField = () => {
-    return cy.get('#paymentForm_dummyPaymentInvoice_date_of_birth');
-  };
+  getDummyPaymentInvoiceDateField(): Cypress.Chainable;
 
-  getGoToSummaryButton = () => {
-    return cy.contains('button', 'Go to Summary');
-  };
+  getGoToSummaryButton(): Cypress.Chainable;
 }

@@ -1,29 +1,13 @@
-export class Repository {
-  getGuestRadioButton = () => {
-    return cy.get(
-      '[data-qa="component toggler-radio checkoutProceedAs guest"]'
-    );
-  };
+export interface Repository {
+  getGuestRadioButton(): Cypress.Chainable;
 
-  getGuestFirstNameField = () => {
-    return cy.get('#guestForm_customer_first_name');
-  };
+  getGuestFirstNameField(): Cypress.Chainable;
 
-  getGuestLastNameField = () => {
-    return cy.get('#guestForm_customer_last_name');
-  };
+  getGuestLastNameField(): Cypress.Chainable;
 
-  getGuestEmailField = () => {
-    return cy.get('#guestForm_customer_email');
-  };
+  getGuestEmailField(): Cypress.Chainable;
 
-  getGuestTermsCheckbox = () => {
-    return cy.get(
-      '[data-qa="component checkbox guestForm[customer][accept_terms] guestForm_customer_accept_terms"]'
-    );
-  };
+  getGuestTermsCheckbox(): Cypress.Chainable;
 
-  getGuestSubmitButton = () => {
-    return cy.contains('button', 'Submit');
-  };
+  getGuestSubmitButton(): Cypress.Chainable;
 }

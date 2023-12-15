@@ -16,18 +16,23 @@
 import './commands';
 
 beforeEach(function () {
-  // get tags passed from command
-  const tags = Cypress.env('tagName').split(',');
+  // get groups passed from command
+  const cypressGroups = Cypress.env('groups');
+  if (!cypressGroups) {
+    return;
+  }
+
+  const groups = cypressGroups.split(',');
 
   // exit if no tag or filter defined - we have nothing to do here
-  if (!tags) return;
+  if (!groups) return;
 
   // get current test's title (which also contains tag/s)
   const testName = Cypress.mocha.getRunner().suite.ctx.currentTest.title;
 
   // check if current test contains at least 1 targetted tag
-  for (let i = 0; i < tags.length; i++) {
-    if (testName.includes(tags[i])) return;
+  for (let i = 0; i < groups.length; i++) {
+    if (testName.includes(groups[i])) return;
   }
 
   // skip current test run if test doesn't contain targetted tag/s

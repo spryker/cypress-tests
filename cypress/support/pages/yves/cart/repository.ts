@@ -1,41 +1,17 @@
-export class Repository {
-  getQuickAddToCartSkuField = () => {
-    return cy.get('[name="sku"]');
-  };
+export interface Repository {
+  getQuickAddToCartSkuField(): Cypress.Chainable;
 
-  getQuickAddToCartQuantityField = () => {
-    return cy.get('#quantity');
-  };
+  getQuickAddToCartQuantityField(): Cypress.Chainable;
 
-  getQuickAddToCartSubmitButton = () => {
-    return cy.get('.js-product-quick-add-form__submit-button');
-  };
+  getQuickAddToCartSubmitButton(): Cypress.Chainable;
 
-  findCartItemRemovalForm = (sku: string) => {
-    return cy.get('[action]').filter((index, element) => {
-      const regex = new RegExp(`^/\\w+/cart/remove/${sku}/\\w+$`);
-      return regex.test(element.getAttribute('action') ?? '');
-    });
-  };
+  findCartItemRemovalForm(sku: string): Cypress.Chainable;
 
-  findCartItemChangeQuantityForm = (sku: string) => {
-    return cy.get('[action]').filter((index, element) => {
-      const regex = new RegExp(`^/\\w+/cart/change/${sku}$`);
-      return regex.test(element.getAttribute('action') ?? '');
-    });
-  };
+  findCartItemChangeQuantityForm(sku: string): Cypress.Chainable;
 
-  getCartItemChangeQuantityField = (sku: string) => {
-    return this.findCartItemChangeQuantityForm(sku).find(
-      '[data-qa="component formatted-number-input"]'
-    );
-  };
+  getCartItemChangeQuantityField(sku: string): Cypress.Chainable;
 
-  findClearCartForm = () => {
-    return cy.get('form[name=multi_cart_clear_form]');
-  };
+  findClearCartForm(): Cypress.Chainable;
 
-  getCheckoutButton = () => {
-    return cy.get('[data-qa="cart-go-to-checkout"]');
-  };
+  getCheckoutButton(): Cypress.Chainable;
 }

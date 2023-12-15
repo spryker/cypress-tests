@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["es5", "dom"],
-    "types": ["cypress", "node"],
+    "lib": ["es5", "es6", "dom"],
+    "types": ["cypress", "node", "reflect-metadata"],
+    "module": "commonjs",
     "strict": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "module": "commonjs"
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["cypress/**/*.ts"]
 }
