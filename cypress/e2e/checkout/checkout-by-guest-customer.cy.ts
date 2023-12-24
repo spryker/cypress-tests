@@ -4,10 +4,11 @@ import { Page as CheckoutShipmentPage } from '../../support/pages/yves/checkout/
 import { Page as CheckoutPaymentPage } from '../../support/pages/yves/checkout/payment/page';
 import { Page as CheckoutSummaryPage } from '../../support/pages/yves/checkout/summary/page';
 import { Page as CartPage } from '../../support/pages/yves/cart/page';
-import { CheckoutFixture } from '../../support';
-import { container } from '../../support/utils/inversify.config';
+import { container } from '../../support/utils/inversify/inversify.config';
 
 describe('checkout by guest customer', (): void => {
+  let fixtures: CheckoutByGuestCustomerFixtures;
+
   let cartPage: CartPage;
   let checkoutCustomerPage: CheckoutCustomerPage;
   let checkoutAddressPage: CheckoutAddressPage;
@@ -16,6 +17,8 @@ describe('checkout by guest customer', (): void => {
   let checkoutSummaryPage: CheckoutSummaryPage;
 
   before((): void => {
+    fixtures = Cypress.env('fixtures');
+
     cartPage = container.get(CartPage);
     checkoutCustomerPage = container.get(CheckoutCustomerPage);
     checkoutAddressPage = container.get(CheckoutAddressPage);
@@ -25,14 +28,12 @@ describe('checkout by guest customer', (): void => {
   });
 
   beforeEach((): void => {
-    cy.resetCookies();
+    cy.resetYvesCookies();
   });
 
   it('should checkout with one concrete product', (): void => {
     cy.visit(cartPage.PAGE_URL);
-    cy.fixture('checkout').then((fixtures: CheckoutFixture) => {
-      cartPage.quickAddToCart(fixtures.concreteProductSkus[0]);
-    });
+    cartPage.quickAddToCart(fixtures.concreteProductSkus[0]);
 
     cartPage.startCheckout();
     checkoutCustomerPage.checkoutAsGuest();
@@ -46,10 +47,9 @@ describe('checkout by guest customer', (): void => {
 
   it('should checkout with two concrete products to single shipment [@regression]', (): void => {
     cy.visit(cartPage.PAGE_URL);
-    cy.fixture('checkout').then((fixtures: CheckoutFixture) => {
-      cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
-      cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
-    });
+
+    cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
+    cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
 
     cartPage.startCheckout();
     checkoutCustomerPage.checkoutAsGuest();
@@ -63,10 +63,9 @@ describe('checkout by guest customer', (): void => {
 
   it('should checkout to multi shipment address [@regression]', (): void => {
     cy.visit(cartPage.PAGE_URL);
-    cy.fixture('checkout').then((fixtures: CheckoutFixture) => {
-      cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
-      cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
-    });
+
+    cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
+    cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
 
     cartPage.startCheckout();
     checkoutCustomerPage.checkoutAsGuest();
@@ -80,9 +79,8 @@ describe('checkout by guest customer', (): void => {
 
   it('should checkout with strict checkout step redirects', (): void => {
     cy.visit(cartPage.PAGE_URL);
-    cy.fixture('checkout').then((fixtures: CheckoutFixture) => {
-      cartPage.quickAddToCart(fixtures.concreteProductSkus[0]);
-    });
+
+    cartPage.quickAddToCart(fixtures.concreteProductSkus[0]);
 
     cartPage.assertPageLocation();
     cartPage.startCheckout();

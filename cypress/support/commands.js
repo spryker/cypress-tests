@@ -20,7 +20,7 @@ Cypress.Commands.add('visitBackoffice', (url) => {
   return cy.visit(Cypress.env().backofficeUrl + url);
 });
 
-Cypress.Commands.add('resetCookies', () => {
+Cypress.Commands.add('resetYvesCookies', () => {
   cy.clearCookies();
   cy.visit('/', {
     onBeforeLoad(win) {

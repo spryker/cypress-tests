@@ -4,7 +4,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 export class AbstractPage {
-  PAGE_URL = '';
+  PAGE_URL: string = '';
   protected faker: Faker;
 
   constructor() {

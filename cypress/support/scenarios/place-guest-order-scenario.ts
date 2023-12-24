@@ -5,7 +5,7 @@ import { Page as CheckoutShipmentPage } from '../pages/yves/checkout/shipment/pa
 import { Page as CheckoutPaymentPage } from '../pages/yves/checkout/payment/page';
 import { Page as CheckoutSummaryPage } from '../pages/yves/checkout/summary/page';
 import { inject, injectable } from 'inversify';
-import { autoProvide } from '../utils/auto-provide';
+import { autoProvide } from '../utils/inversify/auto-provide';
 import 'reflect-metadata';
 
 @injectable()

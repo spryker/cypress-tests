@@ -1,6 +1,6 @@
 import { Page as MultiCartPage } from '../pages/yves/multi-cart/page';
 import { inject, injectable } from 'inversify';
-import { autoProvide } from '../utils/auto-provide';
+import { autoProvide } from '../utils/inversify/auto-provide';
 
 @injectable()
 @autoProvide

@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { autoProvide } from '../utils/auto-provide';
+import { autoProvide } from '../utils/inversify/auto-provide';
 
 @injectable()
 @autoProvide
@@ -14,7 +14,7 @@ export class CliHelper {
     this.containerName = Cypress.env().cli.containerName;
   }
 
-  run = (command: string) => {
+  run = (command: string): void => {
     cy.exec(`docker ps -a -q -f name=${this.containerName}`).then((result) => {
       if (result.stdout) {
         cy.exec(

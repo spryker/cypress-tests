@@ -1,7 +1,6 @@
-import { User } from '../index';
 import { Page as LoginPage } from '../pages/backoffice/login/page';
 import { inject, injectable } from 'inversify';
-import { autoProvide } from '../utils/auto-provide';
+import { autoProvide } from '../utils/inversify/auto-provide';
 
 @injectable()
 @autoProvide

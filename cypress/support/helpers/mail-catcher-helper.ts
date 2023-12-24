@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { autoProvide } from '../utils/auto-provide';
+import { autoProvide } from '../utils/inversify/auto-provide';
 
 @injectable()
 @autoProvide
@@ -10,7 +10,7 @@ export class MailCatcherHelper {
     this.url = Cypress.env().mailCatcherUrl;
   }
 
-  verifyCustomerEmail = (email: string) => {
+  verifyCustomerEmail = (email: string): void => {
     cy.request({
       url: this.url,
       failOnStatusCode: false,

@@ -2,12 +2,12 @@ import { AbstractPage } from '../../../abstract-page';
 import { UserIndexRepository } from './user-index-repository';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { autoProvide } from '../../../../utils/auto-provide';
+import { autoProvide } from '../../../../utils/inversify/auto-provide';
 
 @injectable()
 @autoProvide
 export class UserIndexPage extends AbstractPage {
-  PAGE_URL = '/user';
+  PAGE_URL: string = '/user';
   repository: UserIndexRepository;
 
   constructor(@inject(UserIndexRepository) repository: UserIndexRepository) {

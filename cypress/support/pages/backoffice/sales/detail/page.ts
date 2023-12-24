@@ -2,12 +2,12 @@ import { Repository } from './repository';
 import { AbstractPage } from '../../../abstract-page';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { autoProvide } from '../../../../utils/auto-provide';
+import { autoProvide } from '../../../../utils/inversify/auto-provide';
 
 @injectable()
 @autoProvide
 export class Page extends AbstractPage {
-  PAGE_URL = '/sales/detail';
+  PAGE_URL: string = '/sales/detail';
   repository: Repository;
 
   constructor(@inject(Repository) repository: Repository) {
@@ -15,7 +15,7 @@ export class Page extends AbstractPage {
     this.repository = repository;
   }
 
-  triggerOms = (state: string) => {
+  triggerOms = (state: string): void => {
     cy.url().then((url) => {
       cy.reloadUntilFound(
         url,
@@ -31,7 +31,7 @@ export class Page extends AbstractPage {
     });
   };
 
-  createReturn = () => {
+  createReturn = (): void => {
     this.repository.getReturnButton().click();
   };
 }

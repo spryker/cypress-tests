@@ -1,18 +1,17 @@
 import { AbstractPage } from '../../abstract-page';
 import { Repository } from './repository';
-import { Customer } from '../../../index';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../utils/types';
+import { TYPES } from '../../../utils/inversify/types';
 import 'reflect-metadata';
-import { autoProvide } from '../../../utils/auto-provide';
+import { autoProvide } from '../../../utils/inversify/auto-provide';
 
 @injectable()
 @autoProvide
 export class Page extends AbstractPage {
-  PAGE_URL = '/login';
+  PAGE_URL: string = '/login';
 
-  DEFAULT_SALUTATION = 'Mr';
-  DEFAULT_PASSWORD_PREFIX = 'Change123@_';
+  DEFAULT_SALUTATION: string = 'Mr';
+  DEFAULT_PASSWORD_PREFIX: string = 'Change123@_';
 
   repository: Repository;
 

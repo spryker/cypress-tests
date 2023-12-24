@@ -1,14 +1,14 @@
 import { AbstractPage } from '../../../abstract-page';
 import { Repository } from './repository';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../../utils/types';
+import { TYPES } from '../../../../utils/inversify/types';
 import 'reflect-metadata';
-import { autoProvide } from '../../../../utils/auto-provide';
+import { autoProvide } from '../../../../utils/inversify/auto-provide';
 
 @injectable()
 @autoProvide
 export class Page extends AbstractPage {
-  PAGE_URL = '/checkout/summary';
+  PAGE_URL: string = '/checkout/summary';
   repository: Repository;
 
   constructor(@inject(TYPES.CheckoutSummaryRepository) repository: Repository) {

@@ -2,13 +2,13 @@ import 'reflect-metadata';
 import { AbstractPage } from '../../../abstract-page';
 import { Repository } from './repository';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../../utils/types';
-import { autoProvide } from '../../../../utils/auto-provide';
+import { TYPES } from '../../../../utils/inversify/types';
+import { autoProvide } from '../../../../utils/inversify/auto-provide';
 
 @injectable()
 @autoProvide
 export class Page extends AbstractPage {
-  PAGE_URL = '/cart';
+  PAGE_URL: string = '/cart';
   repository: Repository;
 
   constructor(@inject(TYPES.CommentCartRepository) repository: Repository) {

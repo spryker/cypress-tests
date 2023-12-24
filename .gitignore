@@ -110,3 +110,4 @@ temp
 
 # Cypress files
 cypress/screenshots/*
+cypress/downloads/*

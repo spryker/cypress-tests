@@ -1,37 +1,37 @@
-import { container } from '../../support/utils/inversify.config';
+import { container } from '../../support/utils/inversify/inversify.config';
 import { UserIndexPage } from '../../support/pages/backoffice/user/index/user-index-page';
 import { LoginUserScenario } from '../../support/scenarios/login-user-scenario';
-import { BackofficeMerchantAgentFixtures } from '../../support';
 import { UserUpdatePage } from '../../support/pages/backoffice/user/update/user-update-page';
 import { UserCreatePage } from '../../support/pages/backoffice/user/create/user-create-page';
+import { CreateRootUserScenario } from '../../support/scenarios/create-root-user-scenario';
 
 describe('backoffice merchant agent', (): void => {
+  let fixtures: BackofficeMerchantAgentFixtures;
+
   let userIndexPage: UserIndexPage;
   let userUpdatePage: UserUpdatePage;
   let userCreatePage: UserCreatePage;
-
-  let fixtures: BackofficeMerchantAgentFixtures;
+  let createRootUserScenario: CreateRootUserScenario;
+  let loginUserScenario: LoginUserScenario;
 
   before((): void => {
+    fixtures = Cypress.env('fixtures');
+
     userIndexPage = container.get(UserIndexPage);
     userUpdatePage = container.get(UserUpdatePage);
     userCreatePage = container.get(UserCreatePage);
-
-    cy.fixture('backoffice-merchant-agent.' + Cypress.env('repositoryId')).then(
-      (backofficeMerchantAgentFixtures: BackofficeMerchantAgentFixtures) => {
-        fixtures = backofficeMerchantAgentFixtures;
-      }
-    );
+    createRootUserScenario = container.get(CreateRootUserScenario);
+    loginUserScenario = container.get(LoginUserScenario);
   });
 
   beforeEach((): void => {
     cy.resetBackofficeCookies();
-    container.get(LoginUserScenario).execute(fixtures.user);
+    loginUserScenario.execute(fixtures.user);
   });
 
   it('backoffice user should be able to see new merchant agent permission checkbox [@merchant-agent-assist]', (): void => {
     cy.visitBackoffice(userIndexPage.PAGE_URL);
-    userIndexPage.editUser(fixtures.user.email);
+    userIndexPage.editUser(fixtures.user.username);
 
     userUpdatePage.repository
       .getAgentMerchantCheckbox()
@@ -42,7 +42,7 @@ describe('backoffice merchant agent', (): void => {
 
   it('backoffice user should be able to see renamed customer agent permission checkbox [@merchant-agent-assist]', (): void => {
     cy.visitBackoffice(userIndexPage.PAGE_URL);
-    userIndexPage.editUser(fixtures.user.email);
+    userIndexPage.editUser(fixtures.user.username);
 
     userUpdatePage.repository
       .getAgentCustomerCheckbox()
@@ -53,43 +53,8 @@ describe('backoffice merchant agent', (): void => {
 
   it('backoffice user should be able to see existing user with merchant agent permission [@merchant-agent-assist]', (): void => {
     cy.visitBackoffice(userIndexPage.PAGE_URL);
-    userIndexPage.editUser(fixtures.merchantAgent.email);
+    userIndexPage.editUser(fixtures.merchantAgentUser.username);
 
-    userUpdatePage.repository.getAgentMerchantCheckbox().should('be.checked');
-  });
-
-  it('backoffice user should be able to create new user without checked merchant agent permission by default [@merchant-agent-assist]', (): void => {
-    cy.visitBackoffice(userIndexPage.PAGE_URL);
-    userIndexPage.createNewUser();
-    const user = userCreatePage.createRootUser();
-
-    userIndexPage.editUser(user.email);
-    userUpdatePage.repository
-      .getAgentMerchantCheckbox()
-      .should('not.be.checked');
-  });
-
-  it('backoffice user should be able to create new user with merchant agent permission [@merchant-agent-assist]', (): void => {
-    cy.visitBackoffice(userIndexPage.PAGE_URL);
-    userIndexPage.createNewUser();
-    const user = userCreatePage.createAgentMerchantUser();
-
-    userIndexPage.editUser(user.email);
-    userUpdatePage.repository.getAgentMerchantCheckbox().should('be.checked');
-  });
-
-  it('backoffice user should be able to modify existing user by setting merchant agent permission [@merchant-agent-assist]', (): void => {
-    cy.visitBackoffice(userIndexPage.PAGE_URL);
-    userIndexPage.createNewUser();
-
-    const user = userCreatePage.createRootUser();
-    userIndexPage.editUser(user.email);
-    userUpdatePage.repository
-      .getAgentMerchantCheckbox()
-      .should('not.be.checked');
-
-    userUpdatePage.checkMerchantAgentCheckbox();
-    userIndexPage.editUser(user.email);
     userUpdatePage.repository.getAgentMerchantCheckbox().should('be.checked');
   });
 
@@ -107,7 +72,7 @@ describe('backoffice merchant agent', (): void => {
     cy.visitBackoffice(userIndexPage.PAGE_URL);
 
     userIndexPage
-      .findUser(fixtures.customerAgent.email)
+      .findUser(fixtures.customerAgentUser.username)
       .contains('Agent')
       .should('have.length', 1);
   });
@@ -116,8 +81,39 @@ describe('backoffice merchant agent', (): void => {
     cy.visitBackoffice(userIndexPage.PAGE_URL);
 
     userIndexPage
-      .findUser(fixtures.merchantAgent.email)
+      .findUser(fixtures.merchantAgentUser.username)
       .contains('Agent')
       .should('have.length', 1);
+  });
+
+  it('backoffice user should be able to create new user without checked merchant agent permission by default [@merchant-agent-assist]', (): void => {
+    const user: User = createRootUserScenario.execute();
+
+    userIndexPage.editUser(user.username);
+    userUpdatePage.repository
+      .getAgentMerchantCheckbox()
+      .should('not.be.checked');
+  });
+
+  it('backoffice user should be able to create new user with merchant agent permission [@merchant-agent-assist]', (): void => {
+    cy.visitBackoffice(userIndexPage.PAGE_URL);
+    userIndexPage.createNewUser();
+    const user: User = userCreatePage.createAgentMerchantUser();
+
+    userIndexPage.editUser(user.username);
+    userUpdatePage.repository.getAgentMerchantCheckbox().should('be.checked');
+  });
+
+  it('backoffice user should be able to modify existing user by setting merchant agent permission [@merchant-agent-assist]', (): void => {
+    const user: User = createRootUserScenario.execute();
+
+    userIndexPage.editUser(user.username);
+    userUpdatePage.repository
+      .getAgentMerchantCheckbox()
+      .should('not.be.checked');
+
+    userUpdatePage.checkMerchantAgentCheckbox();
+    userIndexPage.editUser(user.username);
+    userUpdatePage.repository.getAgentMerchantCheckbox().should('be.checked');
   });
 });
