@@ -1,15 +1,17 @@
 // cypress/support/index.d.ts
 
 import type CheckoutFixtures from '../fixtures/checkout.json';
-import type CommentFixtures from '../fixtures/comment.json';
+import type CommentFixtures from '../fixtures/comment.suite.json';
 import type OrderFixtures from '../fixtures/order.json';
 import type ReturnFixtures from '../fixtures/return.json';
+import type BackofficeMerchantAgentFixtures from '../fixtures/backoffice-merchant-agent.suite.json';
 
 interface FixtureTypes {
   checkoutFixtures: typeof CheckoutFixtures;
   commentFixtures: typeof CommentFixtures;
   orderFixtures: typeof OrderFixtures;
   returnFixtures: typeof ReturnFixtures;
+  backofficeMerchantAgentFixtures: typeof BackofficeMerchantAgentFixtures;
 }
 
 declare global {
@@ -29,12 +31,17 @@ declare global {
         getSelector: string,
         retries: number,
         retryWait: number
-      ): Chainable<Element>;
+      ): void;
 
       /**
        * @example cy.resetCookies()
        */
-      resetCookies(): Chainable<Element>;
+      resetCookies(): void;
+
+      /**
+       * @example cy.resetBackofficeCookies()
+       */
+      resetBackofficeCookies(): void;
 
       /**
        * @example cy.visitBackoffice('/security-gui/login')
@@ -48,33 +55,39 @@ declare global {
   }
 }
 
-interface CheckoutFixture {
+type CheckoutFixture = {
   concreteProductSkus: string[];
   customer: Customer;
-}
+};
 
-interface CommentFixture {
+type CommentFixture = {
   concreteProductSku: string;
   comments: string[];
   customer: Customer;
-}
+};
 
-interface OrderFixtures {
+type OrderFixtures = {
   concreteProductSkus: string[];
   customer: Customer;
-}
+};
 
-interface ReturnFixtures {
+type ReturnFixtures = {
   concreteProductSkus: string[];
   user: User;
-}
+};
 
-interface Customer {
+type BackofficeMerchantAgentFixtures = {
+  user: User;
+  merchantAgent: User;
+  customerAgent: User;
+};
+
+type Customer = {
   email: string;
   password: string;
-}
+};
 
-interface User {
+type User = {
   email: string;
   password: string;
-}
+};

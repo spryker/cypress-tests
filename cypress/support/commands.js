@@ -29,6 +29,15 @@ Cypress.Commands.add('resetCookies', () => {
   });
 });
 
+Cypress.Commands.add('resetBackofficeCookies', () => {
+  cy.clearCookies();
+  cy.visitBackoffice('/', {
+    onBeforeLoad(win) {
+      win.sessionStorage.clear();
+    },
+  });
+});
+
 Cypress.Commands.add(
   'reloadUntilFound',
   (url, findSelector, getSelector = 'body', retries = 3, retryWait = 1000) => {

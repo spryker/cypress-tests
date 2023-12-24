@@ -1,0 +1,14 @@
+{
+  "user": {
+    "email": "admin@spryker.com",
+    "password": "change123"
+  },
+  "merchantAgent": {
+    "email": "agent-merchant@spryker.com",
+    "password": "change123"
+  },
+  "customerAgent": {
+    "email": "agent123@spryker.com",
+    "password": "change123"
+  }
+}
