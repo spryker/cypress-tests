@@ -1,16 +1,18 @@
 import { AbstractPage } from '../../abstract-page';
-import { Repository } from './repository';
+import { BackofficeLoginRepository } from './backoffice-login-repository';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { autoProvide } from '../../../utils/inversify/auto-provide';
 
 @injectable()
 @autoProvide
-export class Page extends AbstractPage {
+export class BackofficeLoginPage extends AbstractPage {
   PAGE_URL: string = '/security-gui/login';
-  repository: Repository;
+  repository: BackofficeLoginRepository;
 
-  constructor(@inject(Repository) repository: Repository) {
+  constructor(
+    @inject(BackofficeLoginRepository) repository: BackofficeLoginRepository
+  ) {
     super();
     this.repository = repository;
   }

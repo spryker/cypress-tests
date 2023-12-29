@@ -1,5 +1,5 @@
 const TYPES = {
-  LoginRepository: 'LoginRepository',
+  YvesLoginRepository: 'YvesLoginRepository',
   CartRepository: 'CartRepository',
   CommentCartRepository: 'CommentCartRepository',
   MultiCartRepository: 'MultiCartRepository',
@@ -8,6 +8,7 @@ const TYPES = {
   CheckoutShipmentRepository: 'CheckoutShipmentRepository',
   CheckoutPaymentRepository: 'CheckoutPaymentRepository',
   CheckoutSummaryRepository: 'CheckoutSummaryRepository',
+  LoginYvesAgentLoginRepository: 'LoginYvesAgentLoginRepository',
 };
 
 export { TYPES };

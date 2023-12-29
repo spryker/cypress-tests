@@ -4,7 +4,7 @@ import 'reflect-metadata';
 
 @injectable()
 @autoProvide
-export class Repository {
+export class BackofficeLoginRepository {
   getEmailInput = (): Cypress.Chainable => {
     return cy.get('#auth_username');
   };

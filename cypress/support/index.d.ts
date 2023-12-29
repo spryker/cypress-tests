@@ -18,9 +18,19 @@ declare namespace Cypress {
     resetBackofficeCookies(): void;
 
     /**
+     * @example cy.resetMerchantPortalCookies()
+     */
+    resetMerchantPortalCookies(): void;
+
+    /**
      * @example cy.visitBackoffice('/security-gui/login')
      */
     visitBackoffice(url: string): Chainable<Element>;
+
+    /**
+     * @example cy.visitMerchantPortal('/security-merchant-portal-gui/login')
+     */
+    visitMerchantPortal(url: string): Chainable<Element>;
 
     /**
      * @example cy.reloadUntilFound('/transactions', 'td:contains($4.44)')

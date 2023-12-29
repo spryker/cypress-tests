@@ -1,9 +1,9 @@
-import { Repository } from '../repository';
 import { injectable } from 'inversify';
 import 'reflect-metadata';
+import { YvesLoginRepository } from '../yves-login-repository';
 
 @injectable()
-export class SuiteRepository implements Repository {
+export class B2bYvesLoginRepository implements YvesLoginRepository {
   getLoginEmailInput = (): Cypress.Chainable => {
     return cy.get('#loginForm_email');
   };
@@ -46,5 +46,9 @@ export class SuiteRepository implements Repository {
 
   getRegisterForm = (): Cypress.Chainable => {
     return cy.get('form[name=registerForm]');
+  };
+
+  getFailedAuthenticationText = (): string => {
+    return 'Authentication failed';
   };
 }

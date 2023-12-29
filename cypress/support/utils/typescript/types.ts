@@ -30,6 +30,12 @@ type BackofficeMerchantAgentFixtures = {
   merchantAgentUser: User;
 };
 
+type MerchantPortalAgentLoginFixtures = {
+  customerAgentUser: User;
+  merchantAgentUser: User;
+  merchantUser: User;
+};
+
 type CreateOrderByCustomerFixtures = {
   concreteProductSkus: string[];
   customer: Customer;

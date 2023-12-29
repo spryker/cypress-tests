@@ -1,21 +1,23 @@
 import { AbstractPage } from '../../abstract-page';
-import { Repository } from './repository';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../utils/inversify/types';
 import 'reflect-metadata';
 import { autoProvide } from '../../../utils/inversify/auto-provide';
+import { YvesLoginRepository } from './yves-login-repository';
 
 @injectable()
 @autoProvide
-export class Page extends AbstractPage {
+export class YvesLoginPage extends AbstractPage {
   PAGE_URL: string = '/login';
 
   DEFAULT_SALUTATION: string = 'Mr';
   DEFAULT_PASSWORD_PREFIX: string = 'Change123@_';
 
-  repository: Repository;
+  repository: YvesLoginRepository;
 
-  constructor(@inject(TYPES.LoginRepository) repository: Repository) {
+  constructor(
+    @inject(TYPES.YvesLoginRepository) repository: YvesLoginRepository
+  ) {
     super();
     this.repository = repository;
   }
@@ -70,5 +72,10 @@ export class Page extends AbstractPage {
       email: customerEmail,
       password: customerPassword,
     };
+  };
+
+  assertFailedAuthentication = (): void => {
+    cy.contains(this.repository.getFailedAuthenticationText());
+    this.assertPageLocation();
   };
 }

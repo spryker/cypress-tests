@@ -6,6 +6,7 @@ export default defineConfig({
   env: {
     repositoryId: process.env.ENV_REPOSITORY_ID,
     backofficeUrl: process.env.ENV_BACKOFFICE_URL,
+    merchantPortalUrl: process.env.ENV_MERCHANT_PORTAL_URL,
     mailCatcherUrl: process.env.ENV_MAIL_CATCHER_URL,
     cli: {
       // TODO: move to .env
