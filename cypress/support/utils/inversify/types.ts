@@ -1,14 +1,14 @@
 const TYPES = {
   YvesLoginRepository: 'YvesLoginRepository',
-  CartRepository: 'CartRepository',
-  CommentCartRepository: 'CommentCartRepository',
-  MultiCartRepository: 'MultiCartRepository',
-  CheckoutAddressRepository: 'CheckoutAddressRepository',
-  CheckoutCustomerRepository: 'CheckoutCustomerRepository',
-  CheckoutShipmentRepository: 'CheckoutShipmentRepository',
-  CheckoutPaymentRepository: 'CheckoutPaymentRepository',
-  CheckoutSummaryRepository: 'CheckoutSummaryRepository',
-  LoginYvesAgentLoginRepository: 'LoginYvesAgentLoginRepository',
+  YvesCartRepository: 'YvesCartRepository',
+  YvesCommentCartRepository: 'YvesCommentCartRepository',
+  YvesMultiCartRepository: 'YvesMultiCartRepository',
+  YvesCheckoutAddressRepository: 'YvesCheckoutAddressRepository',
+  YvesCheckoutCustomerRepository: 'YvesCheckoutCustomerRepository',
+  YvesCheckoutShipmentRepository: 'YvesCheckoutShipmentRepository',
+  YvesCheckoutPaymentRepository: 'YvesCheckoutPaymentRepository',
+  YvesCheckoutSummaryRepository: 'YvesCheckoutSummaryRepository',
+  YvesAgentLoginRepository: 'YvesAgentLoginRepository',
 };
 
 export { TYPES };

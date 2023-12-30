@@ -8,15 +8,13 @@ import { YvesAgentLoginRepository } from './yves-agent-login-repository';
 @injectable()
 @autoProvide
 export class YvesAgentLoginPage extends AbstractPage {
-  PAGE_URL: string = '/agent/login';
-  repository: YvesAgentLoginRepository;
+  public PAGE_URL: string = '/agent/login';
 
   constructor(
-    @inject(TYPES.LoginYvesAgentLoginRepository)
-    repository: YvesAgentLoginRepository
+    @inject(TYPES.YvesAgentLoginRepository)
+    private repository: YvesAgentLoginRepository
   ) {
     super();
-    this.repository = repository;
   }
 
   login = (user: User): void => {

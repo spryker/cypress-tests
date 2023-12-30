@@ -1,5 +1,5 @@
-import { PlaceGuestOrderScenario } from '../../../support/scenarios/place-guest-order-scenario';
 import { container } from '../../../support/utils/inversify/inversify.config';
+import { PlaceGuestOrderScenario } from '../../../support/scenarios/yves/place-guest-order-scenario';
 
 describe('create order by guest', (): void => {
   let fixtures: CreateOrderByGuestFixtures;

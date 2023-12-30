@@ -7,12 +7,12 @@ import { MpLoginRepository } from './mp-login-repository';
 @injectable()
 @autoProvide
 export class MpLoginPage extends AbstractPage {
-  PAGE_URL: string = '/security-merchant-portal-gui/login';
-  repository: MpLoginRepository;
+  public PAGE_URL: string = '/security-merchant-portal-gui/login';
 
-  constructor(@inject(MpLoginRepository) repository: MpLoginRepository) {
+  constructor(
+    @inject(MpLoginRepository) private repository: MpLoginRepository
+  ) {
     super();
-    this.repository = repository;
   }
 
   login = (user: User): void => {

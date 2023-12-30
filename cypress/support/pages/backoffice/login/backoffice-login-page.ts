@@ -7,14 +7,13 @@ import { autoProvide } from '../../../utils/inversify/auto-provide';
 @injectable()
 @autoProvide
 export class BackofficeLoginPage extends AbstractPage {
-  PAGE_URL: string = '/security-gui/login';
-  repository: BackofficeLoginRepository;
+  public PAGE_URL: string = '/security-gui/login';
 
   constructor(
-    @inject(BackofficeLoginRepository) repository: BackofficeLoginRepository
+    @inject(BackofficeLoginRepository)
+    private repository: BackofficeLoginRepository
   ) {
     super();
-    this.repository = repository;
   }
 
   login = (user: User): void => {

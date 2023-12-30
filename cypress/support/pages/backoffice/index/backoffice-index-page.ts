@@ -7,13 +7,12 @@ import { BackofficeIndexRepository } from './backoffice-index-repository';
 @injectable()
 @autoProvide
 export class BackofficeIndexPage extends AbstractPage {
-  PAGE_URL: string = '/';
-  repository: BackofficeIndexRepository;
+  public PAGE_URL: string = '/';
 
   constructor(
-    @inject(BackofficeIndexRepository) repository: BackofficeIndexRepository
+    @inject(BackofficeIndexRepository)
+    private repository: BackofficeIndexRepository
   ) {
     super();
-    this.repository = repository;
   }
 }

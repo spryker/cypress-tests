@@ -8,18 +8,15 @@ import { YvesLoginRepository } from './yves-login-repository';
 @injectable()
 @autoProvide
 export class YvesLoginPage extends AbstractPage {
-  PAGE_URL: string = '/login';
+  public PAGE_URL: string = '/login';
 
-  DEFAULT_SALUTATION: string = 'Mr';
-  DEFAULT_PASSWORD_PREFIX: string = 'Change123@_';
-
-  repository: YvesLoginRepository;
+  private DEFAULT_SALUTATION: string = 'Mr';
+  private DEFAULT_PASSWORD_PREFIX: string = 'Change123@_';
 
   constructor(
-    @inject(TYPES.YvesLoginRepository) repository: YvesLoginRepository
+    @inject(TYPES.YvesLoginRepository) private repository: YvesLoginRepository
   ) {
     super();
-    this.repository = repository;
   }
 
   login = (customer: Customer): void => {

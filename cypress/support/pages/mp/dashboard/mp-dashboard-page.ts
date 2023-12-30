@@ -7,13 +7,11 @@ import { MpDashboardRepository } from './mp-dashboard-repository';
 @injectable()
 @autoProvide
 export class MpDashboardPage extends AbstractPage {
-  PAGE_URL: string = '/dashboard-merchant-portal-gui/dashboard';
-  repository: MpDashboardRepository;
+  public PAGE_URL: string = '/dashboard-merchant-portal-gui/dashboard';
 
   constructor(
-    @inject(MpDashboardRepository) repository: MpDashboardRepository
+    @inject(MpDashboardRepository) private repository: MpDashboardRepository
   ) {
     super();
-    this.repository = repository;
   }
 }

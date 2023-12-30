@@ -1,30 +1,30 @@
-import { Page as CheckoutAddressPage } from '../../support/pages/yves/checkout/address/page';
-import { Page as CheckoutShipmentPage } from '../../support/pages/yves/checkout/shipment/page';
-import { Page as CheckoutPaymentPage } from '../../support/pages/yves/checkout/payment/page';
-import { Page as CheckoutSummaryPage } from '../../support/pages/yves/checkout/summary/page';
-import { Page as CartPage } from '../../support/pages/yves/cart/page';
-import { LoginCustomerScenario } from '../../support/scenarios/login-customer-scenario';
 import { container } from '../../support/utils/inversify/inversify.config';
+import { YvesCartPage } from '../../support/pages/yves/cart/yves-cart-page';
+import { YvesCheckoutAddressPage } from '../../support/pages/yves/checkout/address/yves-checkout-address-page';
+import { YvesCheckoutShipmentPage } from '../../support/pages/yves/checkout/shipment/yves-checkout-shipment-page';
+import { YvesCheckoutPaymentPage } from '../../support/pages/yves/checkout/payment/yves-checkout-payment-page';
+import { YvesCheckoutSummaryPage } from '../../support/pages/yves/checkout/summary/yves-checkout-summary-page';
+import { YvesLoginCustomerScenario } from '../../support/scenarios/yves/yves-login-customer-scenario';
 
 describe('checkout by logged in customer', (): void => {
   let fixtures: CheckoutByLoggedInCustomerFixtures;
 
-  let cartPage: CartPage;
-  let checkoutAddressPage: CheckoutAddressPage;
-  let checkoutShipmentPage: CheckoutShipmentPage;
-  let checkoutPaymentPage: CheckoutPaymentPage;
-  let checkoutSummaryPage: CheckoutSummaryPage;
-  let loginCustomerScenario: LoginCustomerScenario;
+  let cartPage: YvesCartPage;
+  let checkoutAddressPage: YvesCheckoutAddressPage;
+  let checkoutShipmentPage: YvesCheckoutShipmentPage;
+  let checkoutPaymentPage: YvesCheckoutPaymentPage;
+  let checkoutSummaryPage: YvesCheckoutSummaryPage;
+  let loginCustomerScenario: YvesLoginCustomerScenario;
 
   before((): void => {
     fixtures = Cypress.env('fixtures');
 
-    cartPage = container.get(CartPage);
-    checkoutAddressPage = container.get(CheckoutAddressPage);
-    checkoutShipmentPage = container.get(CheckoutShipmentPage);
-    checkoutPaymentPage = container.get(CheckoutPaymentPage);
-    checkoutSummaryPage = container.get(CheckoutSummaryPage);
-    loginCustomerScenario = container.get(LoginCustomerScenario);
+    cartPage = container.get(YvesCartPage);
+    checkoutAddressPage = container.get(YvesCheckoutAddressPage);
+    checkoutShipmentPage = container.get(YvesCheckoutShipmentPage);
+    checkoutPaymentPage = container.get(YvesCheckoutPaymentPage);
+    checkoutSummaryPage = container.get(YvesCheckoutSummaryPage);
+    loginCustomerScenario = container.get(YvesLoginCustomerScenario);
   });
 
   beforeEach((): void => {

@@ -1,19 +1,19 @@
-import { LoginCustomerScenario } from '../../../support/scenarios/login-customer-scenario';
-import { RegisterCustomerScenario } from '../../../support/scenarios/register-customer-scenario';
-import { PlaceCustomerOrderScenario } from '../../../support/scenarios/place-customer-order-scenario';
 import { container } from '../../../support/utils/inversify/inversify.config';
+import { YvesLoginCustomerScenario } from '../../../support/scenarios/yves/yves-login-customer-scenario';
+import { RegisterCustomerScenario } from '../../../support/scenarios/yves/register-customer-scenario';
+import { PlaceCustomerOrderScenario } from '../../../support/scenarios/yves/place-customer-order-scenario';
 
 describe('create order by customer', (): void => {
   let fixtures: CreateOrderByCustomerFixtures;
 
-  let loginCustomerScenario: LoginCustomerScenario;
+  let loginCustomerScenario: YvesLoginCustomerScenario;
   let registerCustomerScenario: RegisterCustomerScenario;
   let placeCustomerOrderScenario: PlaceCustomerOrderScenario;
 
   before((): void => {
     fixtures = Cypress.env('fixtures');
 
-    loginCustomerScenario = container.get(LoginCustomerScenario);
+    loginCustomerScenario = container.get(YvesLoginCustomerScenario);
     registerCustomerScenario = container.get(RegisterCustomerScenario);
     placeCustomerOrderScenario = container.get(PlaceCustomerOrderScenario);
   });

@@ -1,23 +1,23 @@
-import { Page as CommentCartPage } from '../../support/pages/yves/comment/cart/page';
-import { Page as CartPage } from '../../support/pages/yves/cart/page';
-import { LoginCustomerScenario } from '../../support/scenarios/login-customer-scenario';
-import { CreateCartScenario } from '../../support/scenarios/create-cart-scenario';
 import { container } from '../../support/utils/inversify/inversify.config';
+import { YvesCartPage } from '../../support/pages/yves/cart/yves-cart-page';
+import { YvesCommentCartPage } from '../../support/pages/yves/comment/cart/yves-comment-cart-page';
+import { YvesLoginCustomerScenario } from '../../support/scenarios/yves/yves-login-customer-scenario';
+import { CreateCartScenario } from '../../support/scenarios/yves/create-cart-scenario';
 
 describe('cart comment', (): void => {
   let fixtures: CartCommentFixtures;
 
-  let cartPage: CartPage;
-  let commentCartPage: CommentCartPage;
-  let loginCustomerScenario: LoginCustomerScenario;
+  let cartPage: YvesCartPage;
+  let commentCartPage: YvesCommentCartPage;
+  let loginCustomerScenario: YvesLoginCustomerScenario;
   let createCartScenario: CreateCartScenario;
 
   before((): void => {
     fixtures = Cypress.env('fixtures');
 
-    commentCartPage = container.get(CommentCartPage);
-    cartPage = container.get(CartPage);
-    loginCustomerScenario = container.get(LoginCustomerScenario);
+    cartPage = container.get(YvesCartPage);
+    commentCartPage = container.get(YvesCommentCartPage);
+    loginCustomerScenario = container.get(YvesLoginCustomerScenario);
     createCartScenario = container.get(CreateCartScenario);
   });
 
