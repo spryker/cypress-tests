@@ -11,24 +11,15 @@ export class YvesCommentCartPage extends AbstractPage {
   public PAGE_URL: string = '/cart';
 
   constructor(
-    @inject(TYPES.CommentCartRepository)
+    @inject(TYPES.YvesCommentCartRepository)
     private repository: YvesCommentCartRepository
   ) {
     super();
   }
 
   addComment = (commentMessage: string): void => {
-    this.repository
-      .getAddCommentForm()
-      .last()
-      .find('textarea')
-      .clear()
-      .type(commentMessage);
-    this.repository
-      .getAddCommentForm()
-      .last()
-      .find(this.repository.getAddCommentButtonSelector())
-      .click();
+    this.repository.getAddCommentForm().last().find('textarea').clear().type(commentMessage);
+    this.repository.getAddCommentForm().last().find(this.repository.getAddCommentButtonSelector()).click();
   };
 
   updateFirstComment = (commentMessage: string): void => {
@@ -51,10 +42,7 @@ export class YvesCommentCartPage extends AbstractPage {
   };
 
   assertCommentMessage = (commentMessage: string): void => {
-    this.repository
-      .getCommentThreadListSection()
-      .contains(commentMessage)
-      .should('exist');
+    this.repository.getCommentThreadListSection().contains(commentMessage).should('exist');
   };
 
   assertEmptyCommentThreadList = (): void => {

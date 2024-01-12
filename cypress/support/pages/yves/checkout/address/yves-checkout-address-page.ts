@@ -55,9 +55,7 @@ export class YvesCheckoutAddressPage extends AbstractPage {
       .getShippingAddressCityField()
       .clear()
       .type(city ?? this.faker.location.city());
-    this.repository
-      .getShippingAddressBillingSameAsShippingCheckbox()
-      .check({ force: true });
+    this.repository.getShippingAddressBillingSameAsShippingCheckbox().check({ force: true });
 
     // Setting optional fields
     this.repository
@@ -78,12 +76,8 @@ export class YvesCheckoutAddressPage extends AbstractPage {
       .getMultiShipmentAddressItemElement()
       .children()
       .each(($addressItem, index) => {
-        this.repository
-          .getMultiShipmentAddressItemDeliveryRadio($addressItem)
-          .click({ force: true });
-        this.repository
-          .getMultiShipmentAddressItemAddressField($addressItem)
-          .select('0', { force: true });
+        this.repository.getMultiShipmentAddressItemDeliveryRadio($addressItem).click({ force: true });
+        this.repository.getMultiShipmentAddressItemAddressField($addressItem).select('0', { force: true });
 
         // Setting mandatory fields
         this.repository

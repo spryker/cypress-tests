@@ -13,9 +13,7 @@ export class YvesLoginPage extends AbstractPage {
   private DEFAULT_SALUTATION: string = 'Mr';
   private DEFAULT_PASSWORD_PREFIX: string = 'Change123@_';
 
-  constructor(
-    @inject(TYPES.YvesLoginRepository) private repository: YvesLoginRepository
-  ) {
+  constructor(@inject(TYPES.YvesLoginRepository) private repository: YvesLoginRepository) {
     super();
   }
 
@@ -35,9 +33,7 @@ export class YvesLoginPage extends AbstractPage {
     lastName?: string
   ): Customer => {
     cy.visit(this.PAGE_URL);
-    this.repository
-      .getRegisterSalutationSelect()
-      .select(salutation ?? this.DEFAULT_SALUTATION);
+    this.repository.getRegisterSalutationSelect().select(salutation ?? this.DEFAULT_SALUTATION);
     this.repository
       .getRegisterFirstNameInput()
       .clear()
@@ -57,10 +53,7 @@ export class YvesLoginPage extends AbstractPage {
 
     this.repository.getRegisterEmailInput().clear().type(customerEmail);
     this.repository.getRegisterPasswordInput().clear().type(customerPassword);
-    this.repository
-      .getRegisterConfirmPasswordInput()
-      .clear()
-      .type(customerPassword);
+    this.repository.getRegisterConfirmPasswordInput().clear().type(customerPassword);
     this.repository.getRegisterAcceptTermsCheckbox().check({ force: true });
 
     this.repository.getRegisterForm().submit();

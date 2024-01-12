@@ -3,9 +3,7 @@ import 'reflect-metadata';
 import { YvesCheckoutPaymentRepository } from '../yves-checkout-payment-repository';
 
 @injectable()
-export class SuiteYvesCheckoutPaymentRepository
-  implements YvesCheckoutPaymentRepository
-{
+export class SuiteYvesCheckoutPaymentRepository implements YvesCheckoutPaymentRepository {
   getDummyPaymentInvoiceRadio = (): Cypress.Chainable => {
     return cy.get('#paymentForm_paymentSelection_dummyPaymentInvoice');
   };

@@ -21,14 +21,9 @@ export class B2bYvesCommentCartRepository implements YvesCommentCartRepository {
   }
 
   getFirstCommentTextarea(): Cypress.Chainable {
-    this.getCommentThreadListSection()
-      .first()
-      .find('button:contains("Edit")')
-      .click();
+    this.getCommentThreadListSection().first().find('button:contains("Edit")').click();
 
-    return this.getCommentThreadListSection()
-      .first()
-      .find('.textarea--cart-comment');
+    return this.getCommentThreadListSection().first().find('.textarea--cart-comment');
   }
 
   getUpdateCommentButtonSelector(): string {

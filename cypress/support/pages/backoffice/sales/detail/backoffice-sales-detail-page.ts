@@ -26,9 +26,7 @@ export class BackofficeSalesDetailPage extends AbstractPage {
         2000
       );
 
-      cy.get(this.repository.getTriggerOmsDivSelector())
-        .find(this.repository.getOmsButtonSelector(state))
-        .click();
+      cy.get(this.repository.getTriggerOmsDivSelector()).find(this.repository.getOmsButtonSelector(state)).click();
     });
   };
 

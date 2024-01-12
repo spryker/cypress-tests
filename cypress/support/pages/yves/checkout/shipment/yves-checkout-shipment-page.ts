@@ -23,9 +23,7 @@ export class YvesCheckoutShipmentPage extends AbstractPage {
       .children()
       .filter(':contains("Spryker Dummy Shipment")')
       .each(($shipmentItem, index) => {
-        this.repository
-          .getStandardShipmentRadio($shipmentItem, index)
-          .click({ force: true });
+        this.repository.getStandardShipmentRadio($shipmentItem, index).click({ force: true });
       });
 
     this.repository.getNextButton().click();

@@ -9,9 +9,7 @@ import { MpAgentLoginRepository } from './mp-agent-login-repository';
 export class MpAgentLoginPage extends AbstractPage {
   public PAGE_URL: string = '/agent-security-merchant-portal-gui/login';
 
-  constructor(
-    @inject(MpAgentLoginRepository) private repository: MpAgentLoginRepository
-  ) {
+  constructor(@inject(MpAgentLoginRepository) private repository: MpAgentLoginRepository) {
     super();
   }
 

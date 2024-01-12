@@ -9,9 +9,7 @@ import { MpDashboardRepository } from './mp-dashboard-repository';
 export class MpDashboardPage extends AbstractPage {
   public PAGE_URL: string = '/dashboard-merchant-portal-gui/dashboard';
 
-  constructor(
-    @inject(MpDashboardRepository) private repository: MpDashboardRepository
-  ) {
+  constructor(@inject(MpDashboardRepository) private repository: MpDashboardRepository) {
     super();
   }
 }

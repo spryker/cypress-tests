@@ -8,15 +8,11 @@ export class B2bYvesCartRepository implements YvesCartRepository {
     return cy.get('[name="sku"]');
   };
 
-  getQuickAddToCartQuantityField = (): Cypress.Chainable<
-    JQuery<HTMLElement>
-  > => {
+  getQuickAddToCartQuantityField = (): Cypress.Chainable<JQuery<HTMLElement>> => {
     return cy.get('#quantity');
   };
 
-  getQuickAddToCartSubmitButton = (): Cypress.Chainable<
-    JQuery<HTMLElement>
-  > => {
+  getQuickAddToCartSubmitButton = (): Cypress.Chainable<JQuery<HTMLElement>> => {
     return cy.get('.product-quick-add-form__button');
   };
 
@@ -35,9 +31,7 @@ export class B2bYvesCartRepository implements YvesCartRepository {
   };
 
   getCartItemChangeQuantityField = (sku: string): Cypress.Chainable => {
-    return this.findCartItemChangeQuantityForm(sku).find(
-      '[data-qa="component formatted-number-input"]'
-    );
+    return this.findCartItemChangeQuantityForm(sku).find('[data-qa="component formatted-number-input"]');
   };
 
   findClearCartForm = (): Cypress.Chainable => {

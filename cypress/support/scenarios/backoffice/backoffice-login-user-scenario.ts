@@ -5,9 +5,7 @@ import { BackofficeLoginPage } from '../../pages/backoffice/login/backoffice-log
 @injectable()
 @autoProvide
 export class BackofficeLoginUserScenario {
-  constructor(
-    @inject(BackofficeLoginPage) private loginPage: BackofficeLoginPage
-  ) {}
+  constructor(@inject(BackofficeLoginPage) private loginPage: BackofficeLoginPage) {}
 
   execute = (user: User): void => {
     this.loginPage.login(user);

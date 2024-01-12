@@ -14,9 +14,7 @@ export class MpLoginRepository {
   };
 
   getSubmitButton = (): Cypress.Chainable => {
-    return cy
-      .get('[name="security-merchant-portal-gui"]')
-      .find('button[type="submit"]');
+    return cy.get('[name="security-merchant-portal-gui"]').find('button[type="submit"]');
   };
 
   getFailedAuthenticationText = (): string => {

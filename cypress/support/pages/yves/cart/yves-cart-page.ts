@@ -10,9 +10,7 @@ import { YvesCartRepository } from './yves-cart-repository';
 export class YvesCartPage extends AbstractPage {
   public PAGE_URL: string = '/cart';
 
-  constructor(
-    @inject(TYPES.YvesCartRepository) private repository: YvesCartRepository
-  ) {
+  constructor(@inject(TYPES.YvesCartRepository) private repository: YvesCartRepository) {
     super();
   }
 

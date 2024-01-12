@@ -3,9 +3,7 @@ import 'reflect-metadata';
 import { YvesCheckoutSummaryRepository } from '../yves-checkout-summary-repository';
 
 @injectable()
-export class SuiteYvesCheckoutSummaryRepository
-  implements YvesCheckoutSummaryRepository
-{
+export class SuiteYvesCheckoutSummaryRepository implements YvesCheckoutSummaryRepository {
   getaAcceptTermsAndConditionsCheckbox = (): Cypress.Chainable => {
     return cy.get('[name="acceptTermsAndConditions"]');
   };

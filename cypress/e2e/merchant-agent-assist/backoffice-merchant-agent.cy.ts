@@ -63,19 +63,13 @@ describe('backoffice merchant agent', (): void => {
   it('backoffice user should be able to see imported user with "Agent Customer" permission [@merchant-agent-assist]', (): void => {
     cy.visitBackoffice(userIndexPage.PAGE_URL);
 
-    userIndexPage
-      .findUser(fixtures.customerAgentUser.username)
-      .contains('Agent')
-      .should('have.length', 1);
+    userIndexPage.findUser(fixtures.customerAgentUser.username).contains('Agent').should('have.length', 1);
   });
 
   it('backoffice user should be able to see imported user with "Agent Merchant" permission [@merchant-agent-assist]', (): void => {
     cy.visitBackoffice(userIndexPage.PAGE_URL);
 
-    userIndexPage
-      .findUser(fixtures.merchantAgentUser.username)
-      .contains('Agent')
-      .should('have.length', 1);
+    userIndexPage.findUser(fixtures.merchantAgentUser.username).contains('Agent').should('have.length', 1);
   });
 
   it('backoffice user should be able to create new user without checked merchant agent permission by default [@merchant-agent-assist]', (): void => {

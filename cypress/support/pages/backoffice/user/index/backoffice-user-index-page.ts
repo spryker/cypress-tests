@@ -29,9 +29,7 @@ export class BackofficeUserIndexPage extends AbstractPage {
 
     const interceptAlias = this.faker.string.uuid();
     cy.intercept('GET', '/user/index/table**').as(interceptAlias);
-    cy.wait(`@${interceptAlias}`)
-      .its('response.body.recordsFiltered')
-      .should('eq', 1);
+    cy.wait(`@${interceptAlias}`).its('response.body.recordsFiltered').should('eq', 1);
 
     return this.repository.getFirstUserRow();
   };

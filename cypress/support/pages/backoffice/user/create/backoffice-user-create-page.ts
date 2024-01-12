@@ -54,14 +54,8 @@ export class BackofficeUserCreatePage extends AbstractPage {
     this.repository.getUsernameInput().clear().type(user.username);
     this.repository.getPasswordInput().clear().type(user.password);
     this.repository.getRepeatPasswordInput().clear().type(user.password);
-    this.repository
-      .getFirstNameInput()
-      .clear()
-      .type(this.faker.person.firstName());
-    this.repository
-      .getLastNameInput()
-      .clear()
-      .type(this.faker.person.lastName());
+    this.repository.getFirstNameInput().clear().type(this.faker.person.firstName());
+    this.repository.getLastNameInput().clear().type(this.faker.person.lastName());
     this.repository.getInterfaceLanguageSelect().select(this.EN_LOCALE_VALUE);
   };
 }

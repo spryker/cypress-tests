@@ -18,9 +18,7 @@ export class YvesCheckoutSummaryPage extends AbstractPage {
   }
 
   placeOrder = (): void => {
-    this.repository
-      .getaAcceptTermsAndConditionsCheckbox()
-      .check({ force: true });
+    this.repository.getaAcceptTermsAndConditionsCheckbox().check({ force: true });
     this.repository.getSummaryForm().submit();
   };
 }

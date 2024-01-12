@@ -3,13 +3,9 @@ import 'reflect-metadata';
 import { YvesCheckoutCustomerRepository } from '../yves-checkout-customer-repository';
 
 @injectable()
-export class SuiteYvesCheckoutCustomerRepository
-  implements YvesCheckoutCustomerRepository
-{
+export class SuiteYvesCheckoutCustomerRepository implements YvesCheckoutCustomerRepository {
   getGuestRadioButton = (): Cypress.Chainable => {
-    return cy.get(
-      '[data-qa="component toggler-radio checkoutProceedAs guest"]'
-    );
+    return cy.get('[data-qa="component toggler-radio checkoutProceedAs guest"]');
   };
 
   getGuestFirstNameField = (): Cypress.Chainable => {
@@ -25,9 +21,7 @@ export class SuiteYvesCheckoutCustomerRepository
   };
 
   getGuestTermsCheckbox = (): Cypress.Chainable => {
-    return cy.get(
-      '[data-qa="component checkbox guestForm[customer][accept_terms] guestForm_customer_accept_terms"]'
-    );
+    return cy.get('[data-qa="component checkbox guestForm[customer][accept_terms] guestForm_customer_accept_terms"]');
   };
 
   getGuestSubmitButton = (): Cypress.Chainable => {

@@ -26,9 +26,7 @@ describe('create return by user', (): void => {
     loginPage = container.get(BackofficeLoginPage);
     salesIndexPage = container.get(BackofficeSalesIndexPage);
     salesDetailPage = container.get(BackofficeSalesDetailPage);
-    salesReturnGuiCreatePage = container.get(
-      BackofficeSalesReturnGuiCreatePage
-    );
+    salesReturnGuiCreatePage = container.get(BackofficeSalesReturnGuiCreatePage);
     registerCustomerScenario = container.get(RegisterCustomerScenario);
     loginCustomerScenario = container.get(YvesLoginCustomerScenario);
     placeCustomerOrderScenario = container.get(PlaceCustomerOrderScenario);

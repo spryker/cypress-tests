@@ -43,51 +43,23 @@ export interface YvesCheckoutAddressRepository {
 
   getMultiShipmentAddressItemElement(): Cypress.Chainable;
 
-  getMultiShipmentAddressItemDeliveryRadio(
-    $addressItem: JQuery<HTMLElement>
-  ): Cypress.Chainable;
+  getMultiShipmentAddressItemDeliveryRadio($addressItem: JQuery<HTMLElement>): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressField(
-    $addressItem: JQuery<HTMLElement>
-  ): Cypress.Chainable;
+  getMultiShipmentAddressItemAddressField($addressItem: JQuery<HTMLElement>): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressFirstNameField(
-    $addressItem: JQuery<HTMLElement>,
-    index: number
-  ): Cypress.Chainable;
+  getMultiShipmentAddressItemAddressFirstNameField($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressLastNameField(
-    $addressItem: JQuery<HTMLElement>,
-    index: number
-  ): Cypress.Chainable;
+  getMultiShipmentAddressItemAddressLastNameField($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressAddress1Field(
-    $addressItem: JQuery<HTMLElement>,
-    index: number
-  ): Cypress.Chainable;
+  getMultiShipmentAddressItemAddressAddress1Field($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressAddress2Field(
-    $addressItem: JQuery<HTMLElement>,
-    index: number
-  ): Cypress.Chainable;
+  getMultiShipmentAddressItemAddressAddress2Field($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressCityField(
-    $addressItem: JQuery<HTMLElement>,
-    index: number
-  ): Cypress.Chainable;
+  getMultiShipmentAddressItemAddressCityField($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressZipCodeField(
-    $addressItem: JQuery<HTMLElement>,
-    index: number
-  ): Cypress.Chainable;
+  getMultiShipmentAddressItemAddressZipCodeField($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressCompanyField(
-    $addressItem: JQuery<HTMLElement>,
-    index: number
-  ): Cypress.Chainable;
+  getMultiShipmentAddressItemAddressCompanyField($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable;
 
-  getMultiShipmentAddressItemAddressPhoneField(
-    $addressItem: JQuery<HTMLElement>,
-    index: number
-  ): Cypress.Chainable;
+  getMultiShipmentAddressItemAddressPhoneField($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable;
 }

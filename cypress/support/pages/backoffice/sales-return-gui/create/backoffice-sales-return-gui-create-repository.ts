@@ -10,8 +10,6 @@ export class BackofficeSalesReturnGuiCreateRepository {
   };
 
   getCreateReturnButton = (): Cypress.Chainable => {
-    return cy
-      .get('form[name=return_create_form]')
-      .find('button:contains("Create return")');
+    return cy.get('form[name=return_create_form]').find('button:contains("Create return")');
   };
 }

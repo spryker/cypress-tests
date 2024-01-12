@@ -7,8 +7,7 @@ import { MpAgentDashboardRepository } from './mp-agent-dashboard-repository';
 @injectable()
 @autoProvide
 export class MpAgentDashboardPage extends AbstractPage {
-  public PAGE_URL: string =
-    '/agent-dashboard-merchant-portal-gui/merchant-users';
+  public PAGE_URL: string = '/agent-dashboard-merchant-portal-gui/merchant-users';
 
   constructor(
     @inject(MpAgentDashboardRepository)

@@ -5,9 +5,7 @@ import { YvesMultiCartPage } from '../../pages/yves/multi-cart/yves-multi-cart-p
 @injectable()
 @autoProvide
 export class CreateCartScenario {
-  constructor(
-    @inject(YvesMultiCartPage) private multiCartPage: YvesMultiCartPage
-  ) {}
+  constructor(@inject(YvesMultiCartPage) private multiCartPage: YvesMultiCartPage) {}
 
   execute = (): void => {
     this.multiCartPage.createCart();

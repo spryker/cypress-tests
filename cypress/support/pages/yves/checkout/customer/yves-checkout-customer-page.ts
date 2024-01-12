@@ -17,11 +17,7 @@ export class YvesCheckoutCustomerPage extends AbstractPage {
     super();
   }
 
-  checkoutAsGuest = (
-    firstName?: string,
-    lastName?: string,
-    email?: string
-  ): void => {
+  checkoutAsGuest = (firstName?: string, lastName?: string, email?: string): void => {
     this.repository.getGuestRadioButton().click();
 
     this.repository

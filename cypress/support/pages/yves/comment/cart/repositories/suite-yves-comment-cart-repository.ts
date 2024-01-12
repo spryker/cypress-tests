@@ -3,9 +3,7 @@ import { injectable } from 'inversify';
 import { YvesCommentCartRepository } from '../yves-comment-cart-repository';
 
 @injectable()
-export class SuiteYvesCommentCartRepository
-  implements YvesCommentCartRepository
-{
+export class SuiteYvesCommentCartRepository implements YvesCommentCartRepository {
   getAddCommentForm = (): Cypress.Chainable => {
     return cy.get('[data-qa="component comment-form"]');
   };

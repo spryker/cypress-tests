@@ -17,9 +17,7 @@ export class CliHelper {
   run = (command: string): void => {
     cy.exec(`docker ps -a -q -f name=${this.containerName}`).then((result) => {
       if (result.stdout) {
-        cy.exec(
-          `cd ${this.containerPath} && APPLICATION_STORE=${this.store} docker/sdk ${command}`
-        );
+        cy.exec(`cd ${this.containerPath} && APPLICATION_STORE=${this.store} docker/sdk ${command}`);
       }
     });
   };

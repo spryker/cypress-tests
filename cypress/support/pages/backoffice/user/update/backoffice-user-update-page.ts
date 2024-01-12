@@ -30,11 +30,7 @@ export class BackofficeUserUpdatePage extends AbstractPage {
   };
 
   assertAgentCustomerCheckbox = (): void => {
-    this.repository
-      .getAgentCustomerCheckbox()
-      .should('exist')
-      .parent()
-      .contains('This user is an agent in Storefront');
+    this.repository.getAgentCustomerCheckbox().should('exist').parent().contains('This user is an agent in Storefront');
   };
 
   assertAgentMerchantCheckbox = (): void => {
