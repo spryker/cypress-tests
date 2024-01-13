@@ -9,43 +9,33 @@ type User = {
   password: string;
 };
 
-type CheckoutByGuestCustomerFixtures = {
-  concreteProductSkus: string[];
+type CheckoutAddress = {
+  firstName: string;
+  lastName: string;
+  address1: string;
+  address2: string;
+  zipCode: string;
+  city: string;
+  company: string;
+  phone: string;
 };
 
-type CheckoutByLoggedInCustomerFixtures = {
-  concreteProductSkus: string[];
-  customer: Customer;
+type CustomerGuestForm = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
 };
 
-type CartCommentFixtures = {
-  concreteProductSku: string;
-  comments: string[];
-  customer: Customer;
+type CustomerGuest = {
+  firstName: string;
+  lastName: string;
+  email: string;
 };
 
-type BackofficeMerchantAgentFixtures = {
-  user: User;
-  customerAgentUser: User;
-  merchantAgentUser: User;
-};
-
-type MerchantPortalAgentLoginFixtures = {
-  customerAgentUser: User;
-  merchantAgentUser: User;
-  merchantUser: User;
-};
-
-type CreateOrderByCustomerFixtures = {
-  concreteProductSkus: string[];
-  customer: Customer;
-};
-
-type CreateOrderByGuestFixtures = {
-  concreteProductSkus: string[];
-};
-
-type CreateReturnByUserFixtures = {
-  concreteProductSkus: string[];
-  user: User;
+type CustomerRegistration = {
+  email: string;
+  password: string;
+  salutation: string;
+  firstName: string;
+  lastName: string;
 };

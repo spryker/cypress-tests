@@ -10,28 +10,22 @@ import { YvesCheckoutCustomerRepository } from './yves-checkout-customer-reposit
 export class YvesCheckoutCustomerPage extends AbstractPage {
   public PAGE_URL: string = '/checkout/customer';
 
-  constructor(
-    @inject(TYPES.CheckoutCustomerRepository)
-    private repository: YvesCheckoutCustomerRepository
-  ) {
+  constructor(@inject(TYPES.YvesCheckoutCustomerRepository) private repository: YvesCheckoutCustomerRepository) {
     super();
   }
 
-  checkoutAsGuest = (firstName?: string, lastName?: string, email?: string): void => {
+  public checkoutAsGuest = (customerGuestForm?: CustomerGuestForm): void => {
+    const customerGuest: CustomerGuest = {
+      firstName: customerGuestForm?.firstName ?? this.faker.person.firstName(),
+      lastName: customerGuestForm?.lastName ?? this.faker.person.lastName(),
+      email: customerGuestForm?.email ?? this.faker.internet.email(),
+    };
+
     this.repository.getGuestRadioButton().click();
 
-    this.repository
-      .getGuestFirstNameField()
-      .clear()
-      .type(firstName ?? this.faker.person.firstName());
-    this.repository
-      .getGuestLastNameField()
-      .clear()
-      .type(lastName ?? this.faker.person.lastName());
-    this.repository
-      .getGuestEmailField()
-      .clear()
-      .type(email ?? this.faker.internet.email());
+    this.repository.getGuestFirstNameField().clear().type(customerGuest.firstName);
+    this.repository.getGuestLastNameField().clear().type(customerGuest.lastName);
+    this.repository.getGuestEmailField().clear().type(customerGuest.email);
     this.repository.getGuestTermsCheckbox().click();
 
     this.repository.getGuestSubmitButton().click();

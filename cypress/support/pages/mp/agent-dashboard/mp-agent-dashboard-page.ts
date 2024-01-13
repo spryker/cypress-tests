@@ -9,10 +9,7 @@ import { MpAgentDashboardRepository } from './mp-agent-dashboard-repository';
 export class MpAgentDashboardPage extends AbstractPage {
   public PAGE_URL: string = '/agent-dashboard-merchant-portal-gui/merchant-users';
 
-  constructor(
-    @inject(MpAgentDashboardRepository)
-    private repository: MpAgentDashboardRepository
-  ) {
+  constructor(@inject(MpAgentDashboardRepository) private repository: MpAgentDashboardRepository) {
     super();
   }
 }

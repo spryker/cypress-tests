@@ -7,7 +7,7 @@ import { YvesLoginPage } from '../../pages/yves/login/yves-login-page';
 export class YvesLoginCustomerScenario {
   constructor(@inject(YvesLoginPage) private loginPage: YvesLoginPage) {}
 
-  execute = (customer: Customer): void => {
+  public execute = (customer: Customer): void => {
     this.loginPage.login(customer);
   };
 }

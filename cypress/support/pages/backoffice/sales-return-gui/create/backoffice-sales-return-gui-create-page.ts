@@ -10,13 +10,12 @@ export class BackofficeSalesReturnGuiCreatePage extends AbstractPage {
   public PAGE_URL: string = '/sales-return-gui/create';
 
   constructor(
-    @inject(BackofficeSalesReturnGuiCreateRepository)
-    private repository: BackofficeSalesReturnGuiCreateRepository
+    @inject(BackofficeSalesReturnGuiCreateRepository) private repository: BackofficeSalesReturnGuiCreateRepository
   ) {
     super();
   }
 
-  createReturnForAllOrderItems = (): void => {
+  public createReturnForAllOrderItems = (): void => {
     this.repository.getAllItemsCheckbox().check();
     this.repository.getCreateReturnButton().click();
   };

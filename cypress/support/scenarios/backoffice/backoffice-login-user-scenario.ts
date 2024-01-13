@@ -7,7 +7,7 @@ import { BackofficeLoginPage } from '../../pages/backoffice/login/backoffice-log
 export class BackofficeLoginUserScenario {
   constructor(@inject(BackofficeLoginPage) private loginPage: BackofficeLoginPage) {}
 
-  execute = (user: User): void => {
+  public execute = (user: User): void => {
     this.loginPage.login(user);
   };
 }

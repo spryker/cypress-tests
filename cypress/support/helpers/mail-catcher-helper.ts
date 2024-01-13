@@ -10,7 +10,7 @@ export class MailCatcherHelper {
     this.url = Cypress.env().mailCatcherUrl;
   }
 
-  verifyCustomerEmail = (email: string): void => {
+  public verifyCustomerEmail = (email: string): void => {
     cy.request({
       url: this.url,
       failOnStatusCode: false,

@@ -10,14 +10,11 @@ import { YvesCheckoutPaymentRepository } from './yves-checkout-payment-repositor
 export class YvesCheckoutPaymentPage extends AbstractPage {
   public PAGE_URL: string = '/checkout/payment';
 
-  constructor(
-    @inject(TYPES.CheckoutPaymentRepository)
-    private repository: YvesCheckoutPaymentRepository
-  ) {
+  constructor(@inject(TYPES.YvesCheckoutPaymentRepository) private repository: YvesCheckoutPaymentRepository) {
     super();
   }
 
-  setDummyPaymentMethod = (): void => {
+  public setDummyPaymentMethod = (): void => {
     this.repository.getDummyPaymentInvoiceRadio().click({ force: true });
     this.repository.getDummyPaymentInvoiceDateField().clear().type('12.12.1999');
 

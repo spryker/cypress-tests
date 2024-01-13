@@ -10,42 +10,27 @@ import { YvesCommentCartRepository } from './yves-comment-cart-repository';
 export class YvesCommentCartPage extends AbstractPage {
   public PAGE_URL: string = '/cart';
 
-  constructor(
-    @inject(TYPES.YvesCommentCartRepository)
-    private repository: YvesCommentCartRepository
-  ) {
+  constructor(@inject(TYPES.YvesCommentCartRepository) private repository: YvesCommentCartRepository) {
     super();
   }
 
-  addComment = (commentMessage: string): void => {
+  public addComment = (commentMessage: string): void => {
     this.repository.getAddCommentForm().last().find('textarea').clear().type(commentMessage);
     this.repository.getAddCommentForm().last().find(this.repository.getAddCommentButtonSelector()).click();
   };
 
-  updateFirstComment = (commentMessage: string): void => {
+  public updateFirstComment = (commentMessage: string): void => {
     const textarea = this.repository.getFirstCommentTextarea();
     textarea.clear().type(commentMessage);
 
-    this.repository
-      .getCommentThreadListSection()
-      .first()
-      .find(this.repository.getUpdateCommentButtonSelector())
-      .click();
+    this.getCommentThreadListSection().first().find(this.repository.getUpdateCommentButtonSelector()).click();
   };
 
-  removeFirstComment = (): void => {
-    this.repository
-      .getCommentThreadListSection()
-      .first()
-      .find(this.repository.getRemoveCommentButtonSelector())
-      .click();
+  public removeFirstComment = (): void => {
+    this.getCommentThreadListSection().first().find(this.repository.getRemoveCommentButtonSelector()).click();
   };
 
-  assertCommentMessage = (commentMessage: string): void => {
-    this.repository.getCommentThreadListSection().contains(commentMessage).should('exist');
-  };
-
-  assertEmptyCommentThreadList = (): void => {
-    this.repository.getCommentThreadListSection().should('not.exist');
+  public getCommentThreadListSection = (): Cypress.Chainable => {
+    return this.repository.getCommentThreadListSection();
   };
 }

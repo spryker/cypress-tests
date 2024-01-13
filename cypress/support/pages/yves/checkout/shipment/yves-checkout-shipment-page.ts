@@ -10,14 +10,11 @@ import { YvesCheckoutShipmentRepository } from './yves-checkout-shipment-reposit
 export class YvesCheckoutShipmentPage extends AbstractPage {
   public PAGE_URL: string = '/checkout/shipment';
 
-  constructor(
-    @inject(TYPES.CheckoutShipmentRepository)
-    private repository: YvesCheckoutShipmentRepository
-  ) {
+  constructor(@inject(TYPES.YvesCheckoutShipmentRepository) private repository: YvesCheckoutShipmentRepository) {
     super();
   }
 
-  setStandardShippingMethod = (): void => {
+  public setStandardShippingMethod = (): void => {
     this.repository
       .getMultiShipmentItemElement()
       .children()

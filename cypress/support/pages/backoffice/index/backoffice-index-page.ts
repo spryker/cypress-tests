@@ -9,10 +9,7 @@ import { BackofficeIndexRepository } from './backoffice-index-repository';
 export class BackofficeIndexPage extends AbstractPage {
   public PAGE_URL: string = '/';
 
-  constructor(
-    @inject(BackofficeIndexRepository)
-    private repository: BackofficeIndexRepository
-  ) {
+  constructor(@inject(BackofficeIndexRepository) private repository: BackofficeIndexRepository) {
     super();
   }
 }

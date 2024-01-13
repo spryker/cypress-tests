@@ -9,14 +9,11 @@ import { BackofficeSalesDetailRepository } from './backoffice-sales-detail-repos
 export class BackofficeSalesDetailPage extends AbstractPage {
   public PAGE_URL: string = '/sales/detail';
 
-  constructor(
-    @inject(BackofficeSalesDetailRepository)
-    private repository: BackofficeSalesDetailRepository
-  ) {
+  constructor(@inject(BackofficeSalesDetailRepository) private repository: BackofficeSalesDetailRepository) {
     super();
   }
 
-  triggerOms = (state: string): void => {
+  public triggerOms = (state: string): void => {
     cy.url().then((url) => {
       cy.reloadUntilFound(
         url,
@@ -30,7 +27,7 @@ export class BackofficeSalesDetailPage extends AbstractPage {
     });
   };
 
-  createReturn = (): void => {
+  public createReturn = (): void => {
     this.repository.getReturnButton().click();
   };
 }

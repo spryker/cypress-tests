@@ -10,14 +10,11 @@ import { YvesCheckoutSummaryRepository } from './yves-checkout-summary-repositor
 export class YvesCheckoutSummaryPage extends AbstractPage {
   public PAGE_URL: string = '/checkout/summary';
 
-  constructor(
-    @inject(TYPES.CheckoutSummaryRepository)
-    private repository: YvesCheckoutSummaryRepository
-  ) {
+  constructor(@inject(TYPES.YvesCheckoutSummaryRepository) private repository: YvesCheckoutSummaryRepository) {
     super();
   }
 
-  placeOrder = (): void => {
+  public placeOrder = (): void => {
     this.repository.getaAcceptTermsAndConditionsCheckbox().check({ force: true });
     this.repository.getSummaryForm().submit();
   };

@@ -9,14 +9,11 @@ import { autoProvide } from '../../../utils/inversify/auto-provide';
 export class BackofficeLoginPage extends AbstractPage {
   public PAGE_URL: string = '/security-gui/login';
 
-  constructor(
-    @inject(BackofficeLoginRepository)
-    private repository: BackofficeLoginRepository
-  ) {
+  constructor(@inject(BackofficeLoginRepository) private repository: BackofficeLoginRepository) {
     super();
   }
 
-  login = (user: User): void => {
+  public login = (user: User): void => {
     cy.visitBackoffice(this.PAGE_URL);
     this.repository.getEmailInput().clear().type(user.username);
     this.repository.getPasswordInput().clear().type(user.password);

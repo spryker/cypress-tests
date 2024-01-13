@@ -13,7 +13,7 @@ export class MpLoginPage extends AbstractPage {
     super();
   }
 
-  login = (user: User): void => {
+  public login = (user: User): void => {
     cy.visitMerchantPortal(this.PAGE_URL);
     this.repository.getEmailInput().clear().type(user.username);
     this.repository.getPasswordInput().clear().type(user.password);
@@ -21,12 +21,7 @@ export class MpLoginPage extends AbstractPage {
     this.repository.getSubmitButton().click();
   };
 
-  assertFailedAuthentication = (): void => {
-    cy.contains(this.repository.getFailedAuthenticationText());
-    this.assertPageLocation();
-  };
-
-  assertSuccessfulAuthentication = (): void => {
-    cy.contains('Dashboard');
+  public getFailedAuthenticationText = (): string => {
+    return this.repository.getFailedAuthenticationText();
   };
 }

@@ -12,7 +12,7 @@ export class RegisterCustomerScenario {
     @inject(MailCatcherHelper) private mailCatcherHelper: MailCatcherHelper
   ) {}
 
-  execute = (): Customer => {
+  public execute = (): Customer => {
     const customer: Customer = this.loginPage.register();
     this.mailCatcherHelper.verifyCustomerEmail(customer.email);
 

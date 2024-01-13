@@ -10,14 +10,11 @@ import { YvesMultiCartRepository } from './yves-multi-cart-repository';
 export class YvesMultiCartPage extends AbstractPage {
   public PAGE_URL: string = '/multi-cart';
 
-  constructor(
-    @inject(TYPES.MultiCartRepository)
-    private repository: YvesMultiCartRepository
-  ) {
+  constructor(@inject(TYPES.YvesMultiCartRepository) private repository: YvesMultiCartRepository) {
     super();
   }
 
-  createCart = (name?: string): void => {
+  public createCart = (name?: string): void => {
     cy.visit(`${this.PAGE_URL}/create`);
     const cartName = name ?? `Cart #${this.faker.string.uuid()}`;
 

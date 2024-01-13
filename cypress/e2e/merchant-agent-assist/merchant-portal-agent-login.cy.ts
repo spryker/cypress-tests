@@ -38,7 +38,9 @@ describe('merchant portal agent login', (): void => {
     cy.visitMerchantPortal(mpLoginPage.PAGE_URL);
 
     mpLoginPage.login(fixtures.customerAgentUser);
-    mpLoginPage.assertFailedAuthentication();
+
+    cy.contains(mpLoginPage.getFailedAuthenticationText());
+    mpLoginPage.assertPageLocation();
   });
 
   it('agent (merchant user) should not be able to login to MP dashboard [@merchant-agent-assist]', (): void => {
@@ -46,7 +48,9 @@ describe('merchant portal agent login', (): void => {
     cy.visitMerchantPortal(mpLoginPage.PAGE_URL);
 
     mpLoginPage.login(fixtures.merchantAgentUser);
-    mpLoginPage.assertFailedAuthentication();
+
+    cy.contains(mpLoginPage.getFailedAuthenticationText());
+    mpLoginPage.assertPageLocation();
   });
 
   it('merchant user should not be able to login to MP dashboard [@merchant-agent-assist]', (): void => {
@@ -55,7 +59,7 @@ describe('merchant portal agent login', (): void => {
 
     mpLoginPage.login(fixtures.merchantUser);
 
-    mpLoginPage.assertSuccessfulAuthentication();
+    cy.contains('Dashboard');
     mpDashboardPage.assertPageLocation();
   });
 
@@ -64,7 +68,9 @@ describe('merchant portal agent login', (): void => {
     cy.visitMerchantPortal(mpAgentLoginPage.PAGE_URL);
 
     mpAgentLoginPage.login(fixtures.customerAgentUser);
-    mpAgentLoginPage.assertFailedAuthentication();
+
+    cy.contains(mpAgentLoginPage.getFailedAuthenticationText());
+    mpAgentLoginPage.assertPageLocation();
   });
 
   it('merchant user should not be able to login to MP agent dashboard [@merchant-agent-assist]', (): void => {
@@ -72,7 +78,9 @@ describe('merchant portal agent login', (): void => {
     cy.visitMerchantPortal(mpAgentLoginPage.PAGE_URL);
 
     mpAgentLoginPage.login(fixtures.merchantUser);
-    mpAgentLoginPage.assertFailedAuthentication();
+
+    cy.contains(mpAgentLoginPage.getFailedAuthenticationText());
+    mpAgentLoginPage.assertPageLocation();
   });
 
   it('agent (merchant user) should be able to login to MP agent dashboard [@merchant-agent-assist]', (): void => {
@@ -116,7 +124,9 @@ describe('merchant portal agent login', (): void => {
     cy.visit(yvesAgentLoginPage.PAGE_URL);
 
     yvesAgentLoginPage.login(fixtures.merchantAgentUser);
-    yvesAgentLoginPage.assertFailedAuthentication();
+
+    cy.contains(yvesAgentLoginPage.getFailedAuthenticationText());
+    yvesAgentLoginPage.assertPageLocation();
   });
 
   it('merchant user should not be able to login to storefront agent dashboard [@merchant-agent-assist]', (): void => {
@@ -124,7 +134,9 @@ describe('merchant portal agent login', (): void => {
     cy.visit(yvesAgentLoginPage.PAGE_URL);
 
     yvesAgentLoginPage.login(fixtures.merchantUser);
-    yvesAgentLoginPage.assertFailedAuthentication();
+
+    cy.contains(yvesAgentLoginPage.getFailedAuthenticationText());
+    yvesAgentLoginPage.assertPageLocation();
   });
 
   it('agent (merchant user) should not be able to login to storefront [@merchant-agent-assist]', (): void => {
@@ -137,7 +149,9 @@ describe('merchant portal agent login', (): void => {
     };
 
     yvesLoginPage.login(customer);
-    yvesLoginPage.assertFailedAuthentication();
+
+    cy.contains(yvesLoginPage.getFailedAuthenticationText());
+    yvesLoginPage.assertPageLocation();
   });
 
   it('agent (customer) should not be able to login to storefront [@merchant-agent-assist]', (): void => {
@@ -150,7 +164,9 @@ describe('merchant portal agent login', (): void => {
     };
 
     yvesLoginPage.login(customer);
-    yvesLoginPage.assertFailedAuthentication();
+
+    cy.contains(yvesLoginPage.getFailedAuthenticationText());
+    yvesLoginPage.assertPageLocation();
   });
 
   it('merchant user should not be able to login to storefront [@merchant-agent-assist]', (): void => {
@@ -163,6 +179,8 @@ describe('merchant portal agent login', (): void => {
     };
 
     yvesLoginPage.login(customer);
-    yvesLoginPage.assertFailedAuthentication();
+
+    cy.contains(yvesLoginPage.getFailedAuthenticationText());
+    yvesLoginPage.assertPageLocation();
   });
 });

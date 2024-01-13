@@ -9,22 +9,19 @@ import { autoProvide } from '../../../../utils/inversify/auto-provide';
 export class BackofficeUserIndexPage extends AbstractPage {
   public PAGE_URL: string = '/user';
 
-  constructor(
-    @inject(BackofficeUserIndexRepository)
-    private repository: BackofficeUserIndexRepository
-  ) {
+  constructor(@inject(BackofficeUserIndexRepository) private repository: BackofficeUserIndexRepository) {
     super();
   }
 
-  createNewUser = (): void => {
+  public createNewUser = (): void => {
     this.repository.getCreateNewUserButton().click();
   };
 
-  editUser = (email: string): void => {
+  public editUser = (email: string): void => {
     this.findUser(email).find(this.repository.getEditButtonSelector()).click();
   };
 
-  findUser = (email: string): Cypress.Chainable => {
+  public findUser = (email: string): Cypress.Chainable => {
     cy.get(this.repository.getUserSearchSelector()).clear().type(email);
 
     const interceptAlias = this.faker.string.uuid();
@@ -34,11 +31,7 @@ export class BackofficeUserIndexPage extends AbstractPage {
     return this.repository.getFirstUserRow();
   };
 
-  ensureUserTableHasAgentMerchantColumn = (): void => {
-    this.repository.getUserTableHeader().contains('Agent Merchant');
-  };
-
-  ensureUserTableHasAgentCustomerColumn = (): void => {
-    this.repository.getUserTableHeader().contains('Agent Customer');
+  public getUserTableHeader = (): Cypress.Chainable => {
+    return this.repository.getUserTableHeader();
   };
 }

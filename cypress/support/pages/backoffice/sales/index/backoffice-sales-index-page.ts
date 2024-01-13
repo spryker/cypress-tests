@@ -9,14 +9,11 @@ import { BackofficeSalesIndexRepository } from './backoffice-sales-index-reposit
 export class BackofficeSalesIndexPage extends AbstractPage {
   public PAGE_URL: string = '/sales';
 
-  constructor(
-    @inject(BackofficeSalesIndexRepository)
-    private repository: BackofficeSalesIndexRepository
-  ) {
+  constructor(@inject(BackofficeSalesIndexRepository) private repository: BackofficeSalesIndexRepository) {
     super();
   }
 
-  viewLastPlacedOrder = (): void => {
+  public viewLastPlacedOrder = (): void => {
     cy.visitBackoffice(this.PAGE_URL);
     this.repository.getViewButtons().first().click();
   };

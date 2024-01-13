@@ -33,31 +33,35 @@ describe('backoffice merchant agent', (): void => {
     cy.visitBackoffice(userIndexPage.PAGE_URL);
     userIndexPage.editUser(fixtures.user.username);
 
-    userUpdatePage.assertAgentMerchantCheckbox();
+    userUpdatePage
+      .getAgentMerchantCheckbox()
+      .should('exist')
+      .parent()
+      .contains('This user is an agent in Merchant Portal');
   });
 
   it('backoffice user should be able to see renamed customer agent permission checkbox [@merchant-agent-assist]', (): void => {
     cy.visitBackoffice(userIndexPage.PAGE_URL);
     userIndexPage.editUser(fixtures.user.username);
 
-    userUpdatePage.assertAgentCustomerCheckbox();
+    userUpdatePage.getAgentCustomerCheckbox().should('exist').parent().contains('This user is an agent in Storefront');
   });
 
   it('backoffice user should be able to see existing user with merchant agent permission [@merchant-agent-assist]', (): void => {
     cy.visitBackoffice(userIndexPage.PAGE_URL);
     userIndexPage.editUser(fixtures.merchantAgentUser.username);
 
-    userUpdatePage.ensureAgentMerchantCheckboxIsChecked();
+    userUpdatePage.getAgentMerchantCheckbox().should('be.checked');
   });
 
   it('backoffice user should be able to see "Agent Customer" column in user table [@merchant-agent-assist]', (): void => {
     cy.visitBackoffice(userIndexPage.PAGE_URL);
-    userIndexPage.ensureUserTableHasAgentCustomerColumn();
+    userIndexPage.getUserTableHeader().contains('Agent Customer');
   });
 
   it('backoffice user should be able to see "Agent Merchant" column in user table [@merchant-agent-assist]', (): void => {
     cy.visitBackoffice(userIndexPage.PAGE_URL);
-    userIndexPage.ensureUserTableHasAgentMerchantColumn();
+    userIndexPage.getUserTableHeader().contains('Agent Merchant');
   });
 
   it('backoffice user should be able to see imported user with "Agent Customer" permission [@merchant-agent-assist]', (): void => {
@@ -76,7 +80,7 @@ describe('backoffice merchant agent', (): void => {
     const user: User = createRootUserScenario.execute();
 
     userIndexPage.editUser(user.username);
-    userUpdatePage.ensureAgentMerchantCheckboxIsNotChecked();
+    userUpdatePage.getAgentMerchantCheckbox().should('not.be.checked');
   });
 
   it('backoffice user should be able to create new user with merchant agent permission [@merchant-agent-assist]', (): void => {
@@ -85,18 +89,18 @@ describe('backoffice merchant agent', (): void => {
     const user: User = userCreatePage.createAgentMerchantUser();
 
     userIndexPage.editUser(user.username);
-    userUpdatePage.ensureAgentMerchantCheckboxIsChecked();
+    userUpdatePage.getAgentMerchantCheckbox().should('be.checked');
   });
 
   it('backoffice user should be able to modify existing user by setting merchant agent permission [@merchant-agent-assist]', (): void => {
     const user: User = createRootUserScenario.execute();
 
     userIndexPage.editUser(user.username);
-    userUpdatePage.ensureAgentMerchantCheckboxIsNotChecked();
+    userUpdatePage.getAgentMerchantCheckbox().should('not.be.checked');
 
     userUpdatePage.checkMerchantAgentCheckbox();
 
     userIndexPage.editUser(user.username);
-    userUpdatePage.ensureAgentMerchantCheckboxIsChecked();
+    userUpdatePage.getAgentMerchantCheckbox().should('be.checked');
   });
 });

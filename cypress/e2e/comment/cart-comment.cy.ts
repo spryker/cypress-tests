@@ -31,7 +31,8 @@ describe('cart comment', (): void => {
   it('customer should be able to add comments to empty cart [@comment]', (): void => {
     fixtures.comments.forEach((commentMessage) => {
       commentCartPage.addComment(commentMessage);
-      commentCartPage.assertCommentMessage(commentMessage);
+
+      commentCartPage.getCommentThreadListSection().contains(commentMessage).should('exist');
     });
   });
 
@@ -41,7 +42,7 @@ describe('cart comment', (): void => {
 
     fixtures.comments.forEach((commentMessage) => {
       commentCartPage.addComment(commentMessage);
-      commentCartPage.assertCommentMessage(commentMessage);
+      commentCartPage.getCommentThreadListSection().contains(commentMessage).should('exist');
     });
   });
 
@@ -49,7 +50,7 @@ describe('cart comment', (): void => {
     commentCartPage.addComment(fixtures.comments[0]);
     commentCartPage.updateFirstComment(fixtures.comments[1]);
 
-    commentCartPage.assertCommentMessage(fixtures.comments[1]);
+    commentCartPage.getCommentThreadListSection().contains(fixtures.comments[1]).should('exist');
   });
 
   it('customer should be able to modify comment in cart [@comment]', (): void => {
@@ -59,14 +60,14 @@ describe('cart comment', (): void => {
     commentCartPage.addComment(fixtures.comments[0]);
     commentCartPage.updateFirstComment(fixtures.comments[1]);
 
-    commentCartPage.assertCommentMessage(fixtures.comments[1]);
+    commentCartPage.getCommentThreadListSection().contains(fixtures.comments[1]).should('exist');
   });
 
   it('customer should be able to remove comment in empty cart [@comment]', (): void => {
     commentCartPage.addComment(fixtures.comments[0]);
 
     commentCartPage.removeFirstComment();
-    commentCartPage.assertEmptyCommentThreadList();
+    commentCartPage.getCommentThreadListSection().should('not.exist');
   });
 
   it('customer should be able to remove comment in cart [@comment]', (): void => {
@@ -75,6 +76,6 @@ describe('cart comment', (): void => {
     commentCartPage.addComment(fixtures.comments[0]);
 
     commentCartPage.removeFirstComment();
-    commentCartPage.assertEmptyCommentThreadList();
+    commentCartPage.getCommentThreadListSection().should('not.exist');
   });
 });

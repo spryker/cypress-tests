@@ -17,7 +17,7 @@ export class YvesLoginPage extends AbstractPage {
     super();
   }
 
-  login = (customer: Customer): void => {
+  public login = (customer: Customer): void => {
     cy.visit(this.PAGE_URL);
     this.repository.getLoginEmailInput().clear().type(customer.email);
     this.repository.getLoginPasswordInput().clear().type(customer.password);
@@ -25,47 +25,36 @@ export class YvesLoginPage extends AbstractPage {
     this.repository.getLoginForm().submit();
   };
 
-  register = (
-    email?: string,
-    password?: string,
-    salutation?: string,
-    firstName?: string,
-    lastName?: string
-  ): Customer => {
+  public register = (customerRegistration?: CustomerRegistration): Customer => {
+    if (!customerRegistration) {
+      customerRegistration = {
+        email: this.faker.internet.email(),
+        password: this.faker.internet.password({ length: 20, prefix: this.DEFAULT_PASSWORD_PREFIX }),
+        salutation: this.DEFAULT_SALUTATION,
+        firstName: this.faker.person.firstName(),
+        lastName: this.faker.person.lastName(),
+      };
+    }
+
     cy.visit(this.PAGE_URL);
-    this.repository.getRegisterSalutationSelect().select(salutation ?? this.DEFAULT_SALUTATION);
-    this.repository
-      .getRegisterFirstNameInput()
-      .clear()
-      .type(firstName ?? this.faker.person.firstName());
-    this.repository
-      .getRegisterLastNameInput()
-      .clear()
-      .type(lastName ?? this.faker.person.lastName());
+    this.repository.getRegisterSalutationSelect().select(customerRegistration.salutation);
+    this.repository.getRegisterFirstNameInput().clear().type(customerRegistration.firstName);
+    this.repository.getRegisterLastNameInput().clear().type(customerRegistration.lastName);
 
-    const customerEmail = email ?? this.faker.internet.email();
-    const customerPassword =
-      password ??
-      this.faker.internet.password({
-        length: 20,
-        prefix: this.DEFAULT_PASSWORD_PREFIX,
-      });
-
-    this.repository.getRegisterEmailInput().clear().type(customerEmail);
-    this.repository.getRegisterPasswordInput().clear().type(customerPassword);
-    this.repository.getRegisterConfirmPasswordInput().clear().type(customerPassword);
+    this.repository.getRegisterEmailInput().clear().type(customerRegistration.email);
+    this.repository.getRegisterPasswordInput().clear().type(customerRegistration.password);
+    this.repository.getRegisterConfirmPasswordInput().clear().type(customerRegistration.password);
     this.repository.getRegisterAcceptTermsCheckbox().check({ force: true });
 
     this.repository.getRegisterForm().submit();
 
     return {
-      email: customerEmail,
-      password: customerPassword,
+      email: customerRegistration.email,
+      password: customerRegistration.password,
     };
   };
 
-  assertFailedAuthentication = (): void => {
-    cy.contains(this.repository.getFailedAuthenticationText());
-    this.assertPageLocation();
+  public getFailedAuthenticationText = (): string => {
+    return this.repository.getFailedAuthenticationText();
   };
 }

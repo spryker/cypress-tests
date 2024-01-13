@@ -12,17 +12,13 @@ import { YvesCheckoutSummaryPage } from '../../pages/yves/checkout/summary/yves-
 export class PlaceCustomerOrderScenario {
   constructor(
     @inject(YvesCartPage) private cartPage: YvesCartPage,
-    @inject(YvesCheckoutAddressPage)
-    private checkoutAddressPage: YvesCheckoutAddressPage,
-    @inject(YvesCheckoutShipmentPage)
-    private checkoutShipmentPage: YvesCheckoutShipmentPage,
-    @inject(YvesCheckoutPaymentPage)
-    private checkoutPaymentPage: YvesCheckoutPaymentPage,
-    @inject(YvesCheckoutSummaryPage)
-    private checkoutSummaryPage: YvesCheckoutSummaryPage
+    @inject(YvesCheckoutAddressPage) private checkoutAddressPage: YvesCheckoutAddressPage,
+    @inject(YvesCheckoutShipmentPage) private checkoutShipmentPage: YvesCheckoutShipmentPage,
+    @inject(YvesCheckoutPaymentPage) private checkoutPaymentPage: YvesCheckoutPaymentPage,
+    @inject(YvesCheckoutSummaryPage) private checkoutSummaryPage: YvesCheckoutSummaryPage
   ) {}
 
-  execute = (productSkus: string[]): void => {
+  public execute = (productSkus: string[]): void => {
     cy.visit(this.cartPage.PAGE_URL);
     productSkus.forEach((productSku: string) => {
       this.cartPage.quickAddToCart(productSku, 1);

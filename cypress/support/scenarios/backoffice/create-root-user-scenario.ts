@@ -7,13 +7,11 @@ import { BackofficeUserIndexPage } from '../../pages/backoffice/user/index/backo
 @autoProvide
 export class CreateRootUserScenario {
   constructor(
-    @inject(BackofficeUserCreatePage)
-    private userCreatePage: BackofficeUserCreatePage,
-    @inject(BackofficeUserIndexPage)
-    private userIndexPage: BackofficeUserIndexPage
+    @inject(BackofficeUserCreatePage) private userCreatePage: BackofficeUserCreatePage,
+    @inject(BackofficeUserIndexPage) private userIndexPage: BackofficeUserIndexPage
   ) {}
 
-  execute = (): User => {
+  public execute = (): User => {
     cy.visitBackoffice(this.userIndexPage.PAGE_URL);
     this.userIndexPage.createNewUser();
 

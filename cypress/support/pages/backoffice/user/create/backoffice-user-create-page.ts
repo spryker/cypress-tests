@@ -12,14 +12,11 @@ export class BackofficeUserCreatePage extends AbstractPage {
   private DEFAULT_PASSWORD: string = 'Change123@_';
   private EN_LOCALE_VALUE: string = '66';
 
-  constructor(
-    @inject(BackofficeUserCreateRepository)
-    private repository: BackofficeUserCreateRepository
-  ) {
+  constructor(@inject(BackofficeUserCreateRepository) private repository: BackofficeUserCreateRepository) {
     super();
   }
 
-  createRootUser = (): User => {
+  public createRootUser = (): User => {
     const user: User = {
       username: this.faker.internet.email(),
       password: this.DEFAULT_PASSWORD,
@@ -34,7 +31,7 @@ export class BackofficeUserCreatePage extends AbstractPage {
     return user;
   };
 
-  createAgentMerchantUser = (): User => {
+  public createAgentMerchantUser = (): User => {
     const user: User = {
       username: this.faker.internet.email(),
       password: this.DEFAULT_PASSWORD,
