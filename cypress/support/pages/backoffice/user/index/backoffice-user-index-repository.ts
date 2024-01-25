@@ -5,7 +5,7 @@ import 'reflect-metadata';
 @injectable()
 @autoProvide
 export class BackofficeUserIndexRepository {
-  getFirstUserRow = (): Cypress.Chainable => {
+  getFirstTableRow = (): Cypress.Chainable => {
     return cy.get('tbody > :nth-child(1)');
   };
 
@@ -13,15 +13,27 @@ export class BackofficeUserIndexRepository {
     return 'a:contains("Edit")';
   };
 
-  getUserSearchSelector = (): string => {
+  getDeactivateButtonSelector = (): string => {
+    return 'button:contains("Deactivate")';
+  };
+
+  getDeleteButtonSelector = (): string => {
+    return 'button:contains("Delete")';
+  };
+
+  getActivateButtonSelector = (): string => {
+    return 'button:contains("Activate")';
+  };
+
+  getSearchSelector = (): string => {
     return '[type="search"]';
   };
 
-  getCreateNewUserButton = (): Cypress.Chainable => {
+  getAddNewUserButton = (): Cypress.Chainable => {
     return cy.get('body').find('a:contains("Add New User")');
   };
 
-  getUserTableHeader = (): Cypress.Chainable => {
+  getTableHeader = (): Cypress.Chainable => {
     return cy.get('.dataTables_scrollHead');
   };
 }

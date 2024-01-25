@@ -39,3 +39,8 @@ type CreateReturnByUserFixtures = {
   concreteProductSkus: string[];
   user: User;
 };
+
+type AgentDashboardFixtures = {
+  merchantAgentUser: User;
+  backofficeUser: User;
+};

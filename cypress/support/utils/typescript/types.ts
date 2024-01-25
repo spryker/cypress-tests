@@ -9,6 +9,20 @@ type User = {
   password: string;
 };
 
+type MerchantUser = {
+  username: string;
+  firstName: string;
+  lastName: string;
+  user?: User;
+};
+
+type Merchant = {
+  name: string;
+  reference: string;
+  email: string;
+  url: string;
+};
+
 type CheckoutAddress = {
   firstName: string;
   lastName: string;

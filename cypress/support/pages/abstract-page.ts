@@ -12,6 +12,6 @@ export class AbstractPage {
   }
 
   assertPageLocation = (): void => {
-    cy.url().should('include', this.PAGE_URL);
+    cy.url({ timeout: 10000 }).should('include', this.PAGE_URL);
   };
 }
