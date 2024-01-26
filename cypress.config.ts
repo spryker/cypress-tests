@@ -9,7 +9,7 @@ export default defineConfig({
     merchantPortalUrl: process.env.ENV_MERCHANT_PORTAL_URL,
     mailCatcherUrl: process.env.ENV_MAIL_CATCHER_URL,
     cli: {
-      // TODO: move to .env
+      // TODO: TEMPORARILY SOLUTION: rework + move to .env
       store: 'DE',
       containerPath: '../suite-nonsplit',
       containerName: 'spryker_cli_1',

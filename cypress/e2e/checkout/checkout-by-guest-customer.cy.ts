@@ -7,24 +7,17 @@ import { YvesCheckoutPaymentPage } from '../../support/pages/yves/checkout/payme
 import { YvesCheckoutSummaryPage } from '../../support/pages/yves/checkout/summary/yves-checkout-summary-page';
 
 describe('checkout by guest customer', (): void => {
-  let fixtures: CheckoutByGuestCustomerFixtures;
+  const cartPage: YvesCartPage = container.get(YvesCartPage);
+  const checkoutCustomerPage: YvesCheckoutCustomerPage = container.get(YvesCheckoutCustomerPage);
+  const checkoutAddressPage: YvesCheckoutAddressPage = container.get(YvesCheckoutAddressPage);
+  const checkoutShipmentPage: YvesCheckoutShipmentPage = container.get(YvesCheckoutShipmentPage);
+  const checkoutPaymentPage: YvesCheckoutPaymentPage = container.get(YvesCheckoutPaymentPage);
+  const checkoutSummaryPage: YvesCheckoutSummaryPage = container.get(YvesCheckoutSummaryPage);
 
-  let cartPage: YvesCartPage;
-  let checkoutCustomerPage: YvesCheckoutCustomerPage;
-  let checkoutAddressPage: YvesCheckoutAddressPage;
-  let checkoutShipmentPage: YvesCheckoutShipmentPage;
-  let checkoutPaymentPage: YvesCheckoutPaymentPage;
-  let checkoutSummaryPage: YvesCheckoutSummaryPage;
+  let fixtures: CheckoutByGuestCustomerFixtures;
 
   before((): void => {
     fixtures = Cypress.env('fixtures');
-
-    cartPage = container.get(YvesCartPage);
-    checkoutCustomerPage = container.get(YvesCheckoutCustomerPage);
-    checkoutAddressPage = container.get(YvesCheckoutAddressPage);
-    checkoutShipmentPage = container.get(YvesCheckoutShipmentPage);
-    checkoutPaymentPage = container.get(YvesCheckoutPaymentPage);
-    checkoutSummaryPage = container.get(YvesCheckoutSummaryPage);
   });
 
   beforeEach((): void => {

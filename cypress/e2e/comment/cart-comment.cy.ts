@@ -5,20 +5,16 @@ import { YvesLoginCustomerScenario } from '../../support/scenarios/yves/yves-log
 import { CreateCartScenario } from '../../support/scenarios/yves/create-cart-scenario';
 
 describe('cart comment', (): void => {
-  let fixtures: CartCommentFixtures;
+  const cartPage: YvesCartPage = container.get(YvesCartPage);
+  const commentCartPage: YvesCommentCartPage = container.get(YvesCommentCartPage);
 
-  let cartPage: YvesCartPage;
-  let commentCartPage: YvesCommentCartPage;
-  let loginCustomerScenario: YvesLoginCustomerScenario;
-  let createCartScenario: CreateCartScenario;
+  const loginCustomerScenario: YvesLoginCustomerScenario = container.get(YvesLoginCustomerScenario);
+  const createCartScenario: CreateCartScenario = container.get(CreateCartScenario);
+
+  let fixtures: CartCommentFixtures;
 
   before((): void => {
     fixtures = Cypress.env('fixtures');
-
-    cartPage = container.get(YvesCartPage);
-    commentCartPage = container.get(YvesCommentCartPage);
-    loginCustomerScenario = container.get(YvesLoginCustomerScenario);
-    createCartScenario = container.get(CreateCartScenario);
   });
 
   beforeEach((): void => {

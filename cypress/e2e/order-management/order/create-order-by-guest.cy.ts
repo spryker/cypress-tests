@@ -2,8 +2,9 @@ import { container } from '../../../support/utils/inversify/inversify.config';
 import { PlaceGuestOrderScenario } from '../../../support/scenarios/yves/place-guest-order-scenario';
 
 describe('create order by guest', (): void => {
+  const placeGuestOrderScenario: PlaceGuestOrderScenario = container.get(PlaceGuestOrderScenario);
+
   let fixtures: CreateOrderByGuestFixtures;
-  let placeGuestOrderScenario: PlaceGuestOrderScenario;
 
   beforeEach((): void => {
     cy.resetYvesCookies();
@@ -11,7 +12,6 @@ describe('create order by guest', (): void => {
 
   before((): void => {
     fixtures = Cypress.env('fixtures');
-    placeGuestOrderScenario = container.get(PlaceGuestOrderScenario);
   });
 
   it('should be able to create an order by guest', (): void => {

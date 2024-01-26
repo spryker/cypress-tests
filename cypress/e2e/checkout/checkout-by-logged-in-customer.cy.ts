@@ -5,31 +5,28 @@ import { YvesCheckoutShipmentPage } from '../../support/pages/yves/checkout/ship
 import { YvesCheckoutPaymentPage } from '../../support/pages/yves/checkout/payment/yves-checkout-payment-page';
 import { YvesCheckoutSummaryPage } from '../../support/pages/yves/checkout/summary/yves-checkout-summary-page';
 import { YvesLoginCustomerScenario } from '../../support/scenarios/yves/yves-login-customer-scenario';
+import { CreateCartScenario } from '../../support/scenarios/yves/create-cart-scenario';
 
 describe('checkout by logged in customer', (): void => {
-  let fixtures: CheckoutByLoggedInCustomerFixtures;
+  const cartPage: YvesCartPage = container.get(YvesCartPage);
+  const checkoutAddressPage: YvesCheckoutAddressPage = container.get(YvesCheckoutAddressPage);
+  const checkoutShipmentPage: YvesCheckoutShipmentPage = container.get(YvesCheckoutShipmentPage);
+  const checkoutPaymentPage: YvesCheckoutPaymentPage = container.get(YvesCheckoutPaymentPage);
+  const checkoutSummaryPage: YvesCheckoutSummaryPage = container.get(YvesCheckoutSummaryPage);
 
-  let cartPage: YvesCartPage;
-  let checkoutAddressPage: YvesCheckoutAddressPage;
-  let checkoutShipmentPage: YvesCheckoutShipmentPage;
-  let checkoutPaymentPage: YvesCheckoutPaymentPage;
-  let checkoutSummaryPage: YvesCheckoutSummaryPage;
-  let loginCustomerScenario: YvesLoginCustomerScenario;
+  const loginCustomerScenario: YvesLoginCustomerScenario = container.get(YvesLoginCustomerScenario);
+  const createCartScenario: CreateCartScenario = container.get(CreateCartScenario);
+
+  let fixtures: CheckoutByLoggedInCustomerFixtures;
 
   before((): void => {
     fixtures = Cypress.env('fixtures');
-
-    cartPage = container.get(YvesCartPage);
-    checkoutAddressPage = container.get(YvesCheckoutAddressPage);
-    checkoutShipmentPage = container.get(YvesCheckoutShipmentPage);
-    checkoutPaymentPage = container.get(YvesCheckoutPaymentPage);
-    checkoutSummaryPage = container.get(YvesCheckoutSummaryPage);
-    loginCustomerScenario = container.get(YvesLoginCustomerScenario);
   });
 
   beforeEach((): void => {
     cy.resetYvesCookies();
     loginCustomerScenario.execute(fixtures.customer);
+    createCartScenario.execute();
   });
 
   it('should checkout with one concrete product', (): void => {

@@ -4,18 +4,14 @@ import { RegisterCustomerScenario } from '../../../support/scenarios/yves/regist
 import { PlaceCustomerOrderScenario } from '../../../support/scenarios/yves/place-customer-order-scenario';
 
 describe('create order by customer', (): void => {
-  let fixtures: CreateOrderByCustomerFixtures;
+  const loginCustomerScenario: YvesLoginCustomerScenario = container.get(YvesLoginCustomerScenario);
+  const registerCustomerScenario: RegisterCustomerScenario = container.get(RegisterCustomerScenario);
+  const placeCustomerOrderScenario: PlaceCustomerOrderScenario = container.get(PlaceCustomerOrderScenario);
 
-  let loginCustomerScenario: YvesLoginCustomerScenario;
-  let registerCustomerScenario: RegisterCustomerScenario;
-  let placeCustomerOrderScenario: PlaceCustomerOrderScenario;
+  let fixtures: CreateOrderByCustomerFixtures;
 
   before((): void => {
     fixtures = Cypress.env('fixtures');
-
-    loginCustomerScenario = container.get(YvesLoginCustomerScenario);
-    registerCustomerScenario = container.get(RegisterCustomerScenario);
-    placeCustomerOrderScenario = container.get(PlaceCustomerOrderScenario);
   });
 
   beforeEach((): void => {

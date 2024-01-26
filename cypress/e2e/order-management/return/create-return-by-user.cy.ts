@@ -9,28 +9,23 @@ import { PlaceCustomerOrderScenario } from '../../../support/scenarios/yves/plac
 import { YvesLoginCustomerScenario } from '../../../support/scenarios/yves/yves-login-customer-scenario';
 
 describe('create return by user', (): void => {
-  let fixtures: CreateReturnByUserFixtures;
+  const loginPage: BackofficeLoginPage = container.get(BackofficeLoginPage);
+  const salesIndexPage: BackofficeSalesIndexPage = container.get(BackofficeSalesIndexPage);
+  const salesDetailPage: BackofficeSalesDetailPage = container.get(BackofficeSalesDetailPage);
+  const salesReturnGuiCreatePage: BackofficeSalesReturnGuiCreatePage = container.get(
+    BackofficeSalesReturnGuiCreatePage
+  );
 
-  let loginPage: BackofficeLoginPage;
-  let salesIndexPage: BackofficeSalesIndexPage;
-  let salesDetailPage: BackofficeSalesDetailPage;
-  let salesReturnGuiCreatePage: BackofficeSalesReturnGuiCreatePage;
-  let registerCustomerScenario: RegisterCustomerScenario;
-  let loginCustomerScenario: YvesLoginCustomerScenario;
-  let placeCustomerOrderScenario: PlaceCustomerOrderScenario;
-  let cliHelper: CliHelper;
+  const registerCustomerScenario: RegisterCustomerScenario = container.get(RegisterCustomerScenario);
+  const loginCustomerScenario: YvesLoginCustomerScenario = container.get(YvesLoginCustomerScenario);
+  const placeCustomerOrderScenario: PlaceCustomerOrderScenario = container.get(PlaceCustomerOrderScenario);
+
+  const cliHelper: CliHelper = container.get(CliHelper);
+
+  let fixtures: CreateReturnByUserFixtures;
 
   before((): void => {
     fixtures = Cypress.env('fixtures');
-
-    loginPage = container.get(BackofficeLoginPage);
-    salesIndexPage = container.get(BackofficeSalesIndexPage);
-    salesDetailPage = container.get(BackofficeSalesDetailPage);
-    salesReturnGuiCreatePage = container.get(BackofficeSalesReturnGuiCreatePage);
-    registerCustomerScenario = container.get(RegisterCustomerScenario);
-    loginCustomerScenario = container.get(YvesLoginCustomerScenario);
-    placeCustomerOrderScenario = container.get(PlaceCustomerOrderScenario);
-    cliHelper = container.get(CliHelper);
   });
 
   beforeEach((): void => {
