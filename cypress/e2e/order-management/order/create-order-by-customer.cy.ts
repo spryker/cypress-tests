@@ -31,7 +31,7 @@ describe('create order by customer', (): void => {
     cy.contains('Your order has been placed successfully!');
   });
 
-  it('should be able to create an order by existing customer [@order, @regression]', (): void => {
+  it('should be able to create an order by existing customer', (): void => {
     loginCustomerScenario.execute(fixtures.customer);
 
     placeCustomerOrderScenario.execute(fixtures.concreteProductSkus);

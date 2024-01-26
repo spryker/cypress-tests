@@ -20,10 +20,6 @@ before(function () {
   loadFixture();
 });
 
-beforeEach(function () {
-  skipTestIfNotInGroup();
-});
-
 const loadFixture = () => {
   const repositoryId = Cypress.env('repositoryId');
   const testFileName = getTestFileName();
@@ -42,22 +38,4 @@ const getTestFileName = () => {
   fileName = fileName.replace('.cy', '');
 
   return fileName;
-};
-
-const skipTestIfNotInGroup = () => {
-  const cypressGroups = Cypress.env('groups');
-  if (!cypressGroups) {
-    return;
-  }
-
-  const groups = cypressGroups.split(',');
-
-  if (!groups) return;
-
-  const testName = Cypress.mocha.getRunner().suite.ctx.currentTest.title;
-  for (let i = 0; i < groups.length; i++) {
-    if (testName.includes(groups[i])) return;
-  }
-
-  this.skip();
 };

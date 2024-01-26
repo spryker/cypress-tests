@@ -14,7 +14,7 @@ describe('create order by guest', (): void => {
     placeGuestOrderScenario = container.get(PlaceGuestOrderScenario);
   });
 
-  it('should be able to create an order by guest [@regression]', (): void => {
+  it('should be able to create an order by guest', (): void => {
     placeGuestOrderScenario.execute(fixtures.concreteProductSkus);
 
     cy.contains('Your order has been placed successfully!');

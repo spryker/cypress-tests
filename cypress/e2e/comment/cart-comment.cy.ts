@@ -28,7 +28,7 @@ describe('cart comment', (): void => {
     createCartScenario.execute();
   });
 
-  it('customer should be able to add comments to empty cart [@comment]', (): void => {
+  it('customer should be able to add comments to empty cart', (): void => {
     fixtures.comments.forEach((commentMessage) => {
       commentCartPage.addComment(commentMessage);
 
@@ -36,7 +36,7 @@ describe('cart comment', (): void => {
     });
   });
 
-  it('customer should be able to add comments to cart [@comment]', (): void => {
+  it('customer should be able to add comments to cart', (): void => {
     cy.visit(cartPage.PAGE_URL);
     cartPage.quickAddToCart(fixtures.concreteProductSku);
 
@@ -46,14 +46,14 @@ describe('cart comment', (): void => {
     });
   });
 
-  it('customer should be able to modify comment in empty cart [@comment]', (): void => {
+  it('customer should be able to modify comment in empty cart', (): void => {
     commentCartPage.addComment(fixtures.comments[0]);
     commentCartPage.updateFirstComment(fixtures.comments[1]);
 
     commentCartPage.getCommentThreadListSection().contains(fixtures.comments[1]).should('exist');
   });
 
-  it('customer should be able to modify comment in cart [@comment]', (): void => {
+  it('customer should be able to modify comment in cart', (): void => {
     cy.visit(cartPage.PAGE_URL);
     cartPage.quickAddToCart(fixtures.concreteProductSku);
 
@@ -63,14 +63,14 @@ describe('cart comment', (): void => {
     commentCartPage.getCommentThreadListSection().contains(fixtures.comments[1]).should('exist');
   });
 
-  it('customer should be able to remove comment in empty cart [@comment]', (): void => {
+  it('customer should be able to remove comment in empty cart', (): void => {
     commentCartPage.addComment(fixtures.comments[0]);
 
     commentCartPage.removeFirstComment();
     commentCartPage.getCommentThreadListSection().should('not.exist');
   });
 
-  it('customer should be able to remove comment in cart [@comment]', (): void => {
+  it('customer should be able to remove comment in cart', (): void => {
     cy.visit(cartPage.PAGE_URL);
     cartPage.quickAddToCart(fixtures.concreteProductSku);
     commentCartPage.addComment(fixtures.comments[0]);

@@ -6,12 +6,15 @@
   "author": "dmiseev@gmail.com",
   "license": "MIT",
   "scripts": {
-    "cy:open": "cypress open",
-    "cy:run": "cypress run --headless --browser chrome",
     "lint": "eslint . --ext .ts",
     "prettier:check": "npx prettier . --check",
     "prettier:write": "npx prettier . --write",
-    "test:merchant-agent-assist": "cypress_groups=\"@merchant-agent-assist\" npm run cy:run"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run --headless --browser chrome",
+    "test:checkout": "npx cypress run --spec \"cypress/e2e/checkout/*\" --headless --browser chrome",
+    "test:comment": "npx cypress run --spec \"cypress/e2e/comment/*\" --headless --browser chrome",
+    "test:merchant-agent-assist": "npx cypress run --spec \"cypress/e2e/merchant-agent-assist/*\" --headless --browser chrome",
+    "test:order-management": "npx cypress run --spec \"cypress/e2e/order-management/*\" --headless --browser chrome"
   },
   "engines": {
     "node": ">=18.0.0",

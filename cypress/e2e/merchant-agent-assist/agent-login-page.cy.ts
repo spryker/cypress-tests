@@ -24,7 +24,7 @@ describe('agent login page', (): void => {
     fixtures = Cypress.env('fixtures');
   });
 
-  it('agent (customer) should not be able to login to MP dashboard [@merchant-agent-assist]', (): void => {
+  it('agent (customer) should not be able to login to MP dashboard', (): void => {
     cy.resetMerchantPortalCookies();
     cy.visitMerchantPortal(mpLoginPage.PAGE_URL);
 
@@ -34,7 +34,7 @@ describe('agent login page', (): void => {
     mpLoginPage.assertPageLocation();
   });
 
-  it('agent (merchant user) should not be able to login to MP dashboard [@merchant-agent-assist]', (): void => {
+  it('agent (merchant user) should not be able to login to MP dashboard', (): void => {
     cy.resetMerchantPortalCookies();
     cy.visitMerchantPortal(mpLoginPage.PAGE_URL);
 
@@ -44,7 +44,7 @@ describe('agent login page', (): void => {
     mpLoginPage.assertPageLocation();
   });
 
-  it('merchant user should not be able to login to MP dashboard [@merchant-agent-assist]', (): void => {
+  it('merchant user should not be able to login to MP dashboard', (): void => {
     cy.resetMerchantPortalCookies();
     cy.visitMerchantPortal(mpLoginPage.PAGE_URL);
 
@@ -54,7 +54,7 @@ describe('agent login page', (): void => {
     mpDashboardPage.assertPageLocation();
   });
 
-  it('agent (customer) should not be able to login to MP agent dashboard [@merchant-agent-assist]', (): void => {
+  it('agent (customer) should not be able to login to MP agent dashboard', (): void => {
     cy.resetMerchantPortalCookies();
     cy.visitMerchantPortal(mpAgentLoginPage.PAGE_URL);
 
@@ -64,7 +64,7 @@ describe('agent login page', (): void => {
     mpAgentLoginPage.assertPageLocation();
   });
 
-  it('merchant user should not be able to login to MP agent dashboard [@merchant-agent-assist]', (): void => {
+  it('merchant user should not be able to login to MP agent dashboard', (): void => {
     cy.resetMerchantPortalCookies();
     cy.visitMerchantPortal(mpAgentLoginPage.PAGE_URL);
 
@@ -74,7 +74,7 @@ describe('agent login page', (): void => {
     mpAgentLoginPage.assertPageLocation();
   });
 
-  it('agent (merchant user) should be able to login to MP agent dashboard [@merchant-agent-assist]', (): void => {
+  it('agent (merchant user) should be able to login to MP agent dashboard', (): void => {
     cy.resetMerchantPortalCookies();
     cy.visitMerchantPortal(mpAgentLoginPage.PAGE_URL);
 
@@ -82,7 +82,7 @@ describe('agent login page', (): void => {
     mpAgentDashboardPage.assertPageLocation();
   });
 
-  it('agent (merchant user) should be able to login to MP agent dashboard [@merchant-agent-assist]', (): void => {
+  it('agent (merchant user) should be able to login to MP agent dashboard', (): void => {
     cy.resetMerchantPortalCookies();
     cy.visitMerchantPortal(mpAgentLoginPage.PAGE_URL);
 
@@ -93,7 +93,7 @@ describe('agent login page', (): void => {
     mpAgentDashboardPage.assertPageLocation();
   });
 
-  it('agent (customer) should be able to login to backoffice [@merchant-agent-assist]', (): void => {
+  it('agent (customer) should be able to login to backoffice', (): void => {
     cy.resetBackofficeCookies();
     cy.visitBackoffice(backofficeLoginPage.PAGE_URL);
 
@@ -101,7 +101,7 @@ describe('agent login page', (): void => {
     backofficeIndexPage.assertPageLocation();
   });
 
-  it('agent (merchant user) should be able to login to backoffice [@merchant-agent-assist]', (): void => {
+  it('agent (merchant user) should be able to login to backoffice', (): void => {
     cy.resetBackofficeCookies();
     cy.visitBackoffice(backofficeLoginPage.PAGE_URL);
 
@@ -110,7 +110,7 @@ describe('agent login page', (): void => {
     backofficeIndexPage.assertPageLocation();
   });
 
-  it('agent (merchant user) should not be able to login to storefront agent dashboard [@merchant-agent-assist]', (): void => {
+  it('agent (merchant user) should not be able to login to storefront agent dashboard', (): void => {
     cy.resetYvesCookies();
     cy.visit(yvesAgentLoginPage.PAGE_URL);
 
@@ -120,7 +120,7 @@ describe('agent login page', (): void => {
     yvesAgentLoginPage.assertPageLocation();
   });
 
-  it('merchant user should not be able to login to storefront agent dashboard [@merchant-agent-assist]', (): void => {
+  it('merchant user should not be able to login to storefront agent dashboard', (): void => {
     cy.resetYvesCookies();
     cy.visit(yvesAgentLoginPage.PAGE_URL);
 
@@ -130,7 +130,7 @@ describe('agent login page', (): void => {
     yvesAgentLoginPage.assertPageLocation();
   });
 
-  it('agent (merchant user) should not be able to login to storefront [@merchant-agent-assist]', (): void => {
+  it('agent (merchant user) should not be able to login to storefront', (): void => {
     cy.resetYvesCookies();
     cy.visit(yvesLoginPage.PAGE_URL);
 
@@ -145,7 +145,7 @@ describe('agent login page', (): void => {
     yvesLoginPage.assertPageLocation();
   });
 
-  it('agent (customer) should not be able to login to storefront [@merchant-agent-assist]', (): void => {
+  it('agent (customer) should not be able to login to storefront', (): void => {
     cy.resetYvesCookies();
     cy.visit(yvesLoginPage.PAGE_URL);
 
@@ -160,7 +160,7 @@ describe('agent login page', (): void => {
     yvesLoginPage.assertPageLocation();
   });
 
-  it('merchant user should not be able to login to storefront [@merchant-agent-assist]', (): void => {
+  it('merchant user should not be able to login to storefront', (): void => {
     cy.resetYvesCookies();
     cy.visit(yvesLoginPage.PAGE_URL);
 

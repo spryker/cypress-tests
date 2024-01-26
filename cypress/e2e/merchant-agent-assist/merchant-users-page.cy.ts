@@ -37,7 +37,7 @@ describe('merchant users page', (): void => {
     defaultMerchantUser = createMerchantUserScenario.execute(defaultMerchant.name);
   });
 
-  it('agent should be able to see "Merchant Users" table [@merchant-agent-assist]', (): void => {
+  it('agent should be able to see "Merchant Users" table', (): void => {
     cy.resetMerchantPortalCookies();
     mpAgentLoginUserScenario.execute(fixtures.merchantAgentUser);
 
@@ -52,14 +52,14 @@ describe('merchant users page', (): void => {
     cy.contains('User Status');
   });
 
-  it('agent should be able to see active merchant user in a table [@merchant-agent-assist]', (): void => {
+  it('agent should be able to see active merchant user in a table', (): void => {
     cy.resetMerchantPortalCookies();
     mpAgentLoginUserScenario.execute(fixtures.merchantAgentUser);
 
     mpAgentDashboardPage.findMerchantUser(defaultMerchantUser.username).should('exist');
   });
 
-  it('agent should be able to filter by merchant user properties [@merchant-agent-assist]', (): void => {
+  it('agent should be able to filter by merchant user properties', (): void => {
     cy.resetMerchantPortalCookies();
     mpAgentLoginUserScenario.execute(fixtures.merchantAgentUser);
 
@@ -68,7 +68,7 @@ describe('merchant users page', (): void => {
     mpAgentDashboardPage.findMerchantUser(defaultMerchantUser.lastName).should('exist');
   });
 
-  it('agent should be able to see agent assist buttons during impersonation [@merchant-agent-assist]', (): void => {
+  it('agent should be able to see agent assist buttons during impersonation', (): void => {
     cy.resetMerchantPortalCookies();
     mpAgentLoginUserScenario.execute(fixtures.merchantAgentUser);
 
@@ -77,7 +77,7 @@ describe('merchant users page', (): void => {
     cy.get('body').find('a:contains("Log out Agent")').should('exist');
   });
 
-  it('agent should be able to finish impersonation [@merchant-agent-assist]', (): void => {
+  it('agent should be able to finish impersonation', (): void => {
     cy.resetMerchantPortalCookies();
     mpAgentLoginUserScenario.execute(fixtures.merchantAgentUser);
 
@@ -87,7 +87,7 @@ describe('merchant users page', (): void => {
     mpAgentDashboardPage.assertPageLocation();
   });
 
-  it('agent should be able to fully logout from all sessions [@merchant-agent-assist]', (): void => {
+  it('agent should be able to fully logout from all sessions', (): void => {
     cy.resetMerchantPortalCookies();
     mpAgentLoginUserScenario.execute(fixtures.merchantAgentUser);
 
@@ -97,7 +97,7 @@ describe('merchant users page', (): void => {
     mpAgentLoginPage.assertPageLocation();
   });
 
-  it('agent should be able to see/assist inactive merchant user in a table [@merchant-agent-assist]', (): void => {
+  it('agent should be able to see/assist inactive merchant user in a table', (): void => {
     cy.resetBackofficeCookies();
     backofficeLoginUserScenario.execute(fixtures.backofficeUser);
 
@@ -114,7 +114,7 @@ describe('merchant users page', (): void => {
     mpDashboardPage.assertPageLocation();
   });
 
-  it('agent should be able to see/assist deleted merchant user in a table [@merchant-agent-assist]', (): void => {
+  it('agent should be able to see/assist deleted merchant user in a table', (): void => {
     cy.resetBackofficeCookies();
     backofficeLoginUserScenario.execute(fixtures.backofficeUser);
 
@@ -132,7 +132,7 @@ describe('merchant users page', (): void => {
     mpDashboardPage.assertPageLocation();
   });
 
-  it('agent should be able to see/assist merchant users from active (with approved access) merchant [@merchant-agent-assist]', (): void => {
+  it('agent should be able to see/assist merchant users from active (with approved access) merchant', (): void => {
     cy.resetBackofficeCookies();
     backofficeLoginUserScenario.execute(fixtures.backofficeUser);
 
@@ -151,7 +151,7 @@ describe('merchant users page', (): void => {
     mpDashboardPage.assertPageLocation();
   });
 
-  it('agent should be able to see/assist merchant users from active (without approved access) merchant [@merchant-agent-assist]', (): void => {
+  it('agent should be able to see/assist merchant users from active (without approved access) merchant', (): void => {
     cy.resetBackofficeCookies();
     backofficeLoginUserScenario.execute(fixtures.backofficeUser);
 
@@ -170,7 +170,7 @@ describe('merchant users page', (): void => {
     mpDashboardPage.assertPageLocation();
   });
 
-  it('agent should be able to see/assist merchant users from inactive (with approved access) merchant [@merchant-agent-assist]', (): void => {
+  it('agent should be able to see/assist merchant users from inactive (with approved access) merchant', (): void => {
     cy.resetBackofficeCookies();
     backofficeLoginUserScenario.execute(fixtures.backofficeUser);
 
@@ -189,7 +189,7 @@ describe('merchant users page', (): void => {
     mpDashboardPage.assertPageLocation();
   });
 
-  it('agent should be able to see/assist merchant users from inactive (without approved access) merchant [@merchant-agent-assist]', (): void => {
+  it('agent should be able to see/assist merchant users from inactive (without approved access) merchant', (): void => {
     cy.resetBackofficeCookies();
     backofficeLoginUserScenario.execute(fixtures.backofficeUser);
 

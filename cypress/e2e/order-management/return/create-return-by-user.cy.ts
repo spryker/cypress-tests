@@ -45,7 +45,7 @@ describe('create return by user', (): void => {
     cliHelper.run('console oms:check-timeout');
   });
 
-  it('should be able to create return from Backoffice (from shipped order state) [@regression]', (): void => {
+  it('should be able to create return from Backoffice (from shipped order state)', (): void => {
     loginPage.login(fixtures.user);
 
     salesIndexPage.viewLastPlacedOrder();
