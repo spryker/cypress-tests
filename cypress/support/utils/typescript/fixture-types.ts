@@ -14,13 +14,13 @@ type CartCommentFixtures = {
   customer: Customer;
 };
 
-type BackofficeMerchantAgentFixtures = {
+type AgentPermissionInBackofficeFixtures = {
   user: User;
   customerAgentUser: User;
   merchantAgentUser: User;
 };
 
-type MerchantPortalAgentLoginFixtures = {
+type AgentLoginPageFixtures = {
   customerAgentUser: User;
   merchantAgentUser: User;
   merchantUser: User;
@@ -40,7 +40,7 @@ type CreateReturnByUserFixtures = {
   user: User;
 };
 
-type AgentDashboardFixtures = {
+type MerchantUsersPageFixtures = {
   merchantAgentUser: User;
   backofficeUser: User;
 };

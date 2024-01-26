@@ -5,23 +5,18 @@ import { BackofficeUserCreatePage } from '../../support/pages/backoffice/user/cr
 import { CreateRootUserScenario } from '../../support/scenarios/backoffice/create-root-user-scenario';
 import { BackofficeLoginUserScenario } from '../../support/scenarios/backoffice/backoffice-login-user-scenario';
 
-describe('backoffice merchant agent', (): void => {
-  let fixtures: BackofficeMerchantAgentFixtures;
+describe('agent permission in backoffice', (): void => {
+  const userIndexPage: BackofficeUserIndexPage = container.get(BackofficeUserIndexPage);
+  const userUpdatePage: BackofficeUserUpdatePage = container.get(BackofficeUserUpdatePage);
+  const userCreatePage: BackofficeUserCreatePage = container.get(BackofficeUserCreatePage);
 
-  let userIndexPage: BackofficeUserIndexPage;
-  let userUpdatePage: BackofficeUserUpdatePage;
-  let userCreatePage: BackofficeUserCreatePage;
-  let loginUserScenario: BackofficeLoginUserScenario;
-  let createRootUserScenario: CreateRootUserScenario;
+  const loginUserScenario: BackofficeLoginUserScenario = container.get(BackofficeLoginUserScenario);
+  const createRootUserScenario: CreateRootUserScenario = container.get(CreateRootUserScenario);
+
+  let fixtures: AgentPermissionInBackofficeFixtures;
 
   before((): void => {
     fixtures = Cypress.env('fixtures');
-
-    userIndexPage = container.get(BackofficeUserIndexPage);
-    userUpdatePage = container.get(BackofficeUserUpdatePage);
-    userCreatePage = container.get(BackofficeUserCreatePage);
-    loginUserScenario = container.get(BackofficeLoginUserScenario);
-    createRootUserScenario = container.get(CreateRootUserScenario);
   });
 
   beforeEach((): void => {

@@ -8,29 +8,20 @@ import { BackofficeIndexPage } from '../../support/pages/backoffice/index/backof
 import { YvesAgentLoginPage } from '../../support/pages/yves/agent-login/yves-agent-login-page';
 import { YvesLoginPage } from '../../support/pages/yves/login/yves-login-page';
 
-describe('merchant portal agent login', (): void => {
-  let fixtures: MerchantPortalAgentLoginFixtures;
+describe('agent login page', (): void => {
+  const mpLoginPage: MpLoginPage = container.get(MpLoginPage);
+  const mpDashboardPage: MpDashboardPage = container.get(MpDashboardPage);
+  const mpAgentLoginPage: MpAgentLoginPage = container.get(MpAgentLoginPage);
+  const mpAgentDashboardPage: MpAgentDashboardPage = container.get(MpAgentDashboardPage);
+  const backofficeLoginPage: BackofficeLoginPage = container.get(BackofficeLoginPage);
+  const backofficeIndexPage: BackofficeIndexPage = container.get(BackofficeIndexPage);
+  const yvesAgentLoginPage: YvesAgentLoginPage = container.get(YvesAgentLoginPage);
+  const yvesLoginPage: YvesLoginPage = container.get(YvesLoginPage);
 
-  let mpLoginPage: MpLoginPage;
-  let mpDashboardPage: MpDashboardPage;
-  let mpAgentLoginPage: MpAgentLoginPage;
-  let mpAgentDashboardPage: MpAgentDashboardPage;
-  let backofficeLoginPage: BackofficeLoginPage;
-  let backofficeIndexPage: BackofficeIndexPage;
-  let yvesAgentLoginPage: YvesAgentLoginPage;
-  let yvesLoginPage: YvesLoginPage;
+  let fixtures: AgentLoginPageFixtures;
 
   before((): void => {
     fixtures = Cypress.env('fixtures');
-
-    mpLoginPage = container.get(MpLoginPage);
-    mpDashboardPage = container.get(MpDashboardPage);
-    mpAgentLoginPage = container.get(MpAgentLoginPage);
-    mpAgentDashboardPage = container.get(MpAgentDashboardPage);
-    backofficeLoginPage = container.get(BackofficeLoginPage);
-    backofficeIndexPage = container.get(BackofficeIndexPage);
-    yvesAgentLoginPage = container.get(YvesAgentLoginPage);
-    yvesLoginPage = container.get(YvesLoginPage);
   });
 
   it('agent (customer) should not be able to login to MP dashboard [@merchant-agent-assist]', (): void => {

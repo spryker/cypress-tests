@@ -10,7 +10,7 @@ import { BackofficeMerchantListPage } from '../../support/pages/backoffice/merch
 import { MpDashboardPage } from '../../support/pages/mp/dashboard/mp-dashboard-page';
 import { MpAgentLoginPage } from '../../support/pages/mp/agent-login/mp-agent-login-page';
 
-describe('agent dashboard', (): void => {
+describe('merchant users page', (): void => {
   const mpAgentLoginPage: MpAgentLoginPage = container.get(MpAgentLoginPage);
   const mpAgentDashboardPage: MpAgentDashboardPage = container.get(MpAgentDashboardPage);
   const backofficeUserIndexPage: BackofficeUserIndexPage = container.get(BackofficeUserIndexPage);
@@ -23,7 +23,7 @@ describe('agent dashboard', (): void => {
   const createMerchantUserScenario: CreateMerchantUserScenario = container.get(CreateMerchantUserScenario);
   const createMerchantScenario: CreateMerchantScenario = container.get(CreateMerchantScenario);
 
-  let fixtures: AgentDashboardFixtures;
+  let fixtures: MerchantUsersPageFixtures;
   let defaultMerchant: Merchant;
   let defaultMerchantUser: MerchantUser;
 
