@@ -57,7 +57,7 @@ describe('checkout by logged in customer', (): void => {
     cy.contains('Your order has been placed successfully!');
   });
 
-  it('should checkout to multi shipment address', (): void => {
+  it('should checkout to multi shipment address', { tags: ['@smoke'] }, (): void => {
     cy.visit(cartPage.PAGE_URL);
 
     cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);

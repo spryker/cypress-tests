@@ -1,4 +1,5 @@
 // cypress/support/index.d.ts
+/// <reference types="@cypress/grep" />
 
 declare namespace Cypress {
   interface Chainable {

@@ -5,6 +5,9 @@ import { MpAgentDashboardPage } from '../../support/pages/mp/agent-dashboard/mp-
 import { MpAgentLoginPage } from '../../support/pages/mp/agent-login/mp-agent-login-page';
 import { MpLoginPage } from '../../support/pages/mp/login/mp-login-page';
 
+/**
+ * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
+ */
 describe('merchant user header bar', (): void => {
   const mpDashboardPage: MpDashboardPage = container.get(MpDashboardPage);
   const mpAgentDashboardPage: MpAgentDashboardPage = container.get(MpAgentDashboardPage);

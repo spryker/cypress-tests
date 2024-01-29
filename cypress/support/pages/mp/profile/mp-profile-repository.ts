@@ -1,15 +1,11 @@
 import { injectable } from 'inversify';
-import { autoProvide } from '../../../utils/inversify/auto-provide';
 import 'reflect-metadata';
+import { autoWired } from '../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class MpProfileRepository {
-  getPhoneNumberInput = (): Cypress.Chainable => {
-    return cy.get('#merchantProfile_businessInfoMerchantProfile_contact_person_phone');
-  };
-
-  getProfileForm = (): Cypress.Chainable => {
-    return cy.get('form[name=merchantProfile]');
-  };
+  getPhoneNumberInput = (): Cypress.Chainable =>
+    cy.get('#merchantProfile_businessInfoMerchantProfile_contact_person_phone');
+  getProfileForm = (): Cypress.Chainable => cy.get('form[name=merchantProfile]');
 }

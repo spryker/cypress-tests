@@ -1,15 +1,15 @@
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { autoProvide } from '../../utils/inversify/auto-provide';
 import { YvesCartPage } from '../../pages/yves/cart/yves-cart-page';
 import { YvesCheckoutCustomerPage } from '../../pages/yves/checkout/customer/yves-checkout-customer-page';
 import { YvesCheckoutAddressPage } from '../../pages/yves/checkout/address/yves-checkout-address-page';
 import { YvesCheckoutShipmentPage } from '../../pages/yves/checkout/shipment/yves-checkout-shipment-page';
 import { YvesCheckoutPaymentPage } from '../../pages/yves/checkout/payment/yves-checkout-payment-page';
 import { YvesCheckoutSummaryPage } from '../../pages/yves/checkout/summary/yves-checkout-summary-page';
+import { autoWired } from '../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class PlaceGuestMpOrderScenario {
   constructor(
     @inject(YvesCartPage) private cartPage: YvesCartPage,

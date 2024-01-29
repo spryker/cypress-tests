@@ -1,13 +1,13 @@
 import { inject, injectable } from 'inversify';
-import { autoProvide } from '../../utils/inversify/auto-provide';
 import { BackofficeMerchantListPage } from '../../pages/backoffice/merchant/list/backoffice-merchant-list-page';
 import { BackofficeMerchantUserCreatePage } from '../../pages/backoffice/merchant-user/create/backoffice-merchant-user-create-page';
 import { BackofficeUserIndexPage } from '../../pages/backoffice/user/index/backoffice-user-index-page';
 import { BackofficeUserUpdatePage } from '../../pages/backoffice/user/update/backoffice-user-update-page';
 import { BackofficeMerchantUpdatePage } from '../../pages/backoffice/merchant/update/backoffice-merchant-update-page';
+import { autoWired } from '../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class CreateMerchantUserScenario {
   constructor(
     @inject(BackofficeMerchantListPage) private merchantListPage: BackofficeMerchantListPage,

@@ -1,11 +1,11 @@
 import { AbstractPage } from '../../../abstract-page';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { autoProvide } from '../../../../utils/inversify/auto-provide';
 import { BackofficeMerchantListRepository } from './backoffice-merchant-list-repository';
+import { autoWired } from '../../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class BackofficeMerchantListPage extends AbstractPage {
   public PAGE_URL: string = '/merchant-gui/list-merchant';
 

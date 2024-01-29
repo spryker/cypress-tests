@@ -1,10 +1,10 @@
 import { inject, injectable } from 'inversify';
-import { autoProvide } from '../../utils/inversify/auto-provide';
 import { BackofficeMerchantCreatePage } from '../../pages/backoffice/merchant/create/backoffice-merchant-create-page';
 import { BackofficeMerchantListPage } from '../../pages/backoffice/merchant/list/backoffice-merchant-list-page';
+import { autoWired } from '../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class CreateMerchantScenario {
   constructor(
     @inject(BackofficeMerchantCreatePage) private merchantCreatePage: BackofficeMerchantCreatePage,

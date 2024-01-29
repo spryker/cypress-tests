@@ -4,11 +4,6 @@ import { YvesCheckoutSummaryRepository } from '../yves-checkout-summary-reposito
 
 @injectable()
 export class SuiteYvesCheckoutSummaryRepository implements YvesCheckoutSummaryRepository {
-  getaAcceptTermsAndConditionsCheckbox = (): Cypress.Chainable => {
-    return cy.get('[name="acceptTermsAndConditions"]');
-  };
-
-  getSummaryForm = (): Cypress.Chainable => {
-    return cy.get('form[name=summaryForm]');
-  };
+  getaAcceptTermsAndConditionsCheckbox = (): Cypress.Chainable => cy.get('[name="acceptTermsAndConditions"]');
+  getSummaryForm = (): Cypress.Chainable => cy.get('form[name=summaryForm]');
 }

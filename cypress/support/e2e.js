@@ -15,6 +15,8 @@
 
 import './commands';
 import * as path from 'path';
+import registerCypressGrep from '@cypress/grep';
+registerCypressGrep();
 
 before(function () {
   loadFixture();

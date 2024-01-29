@@ -1,11 +1,11 @@
 import { AbstractPage } from '../../../abstract-page';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { autoProvide } from '../../../../utils/inversify/auto-provide';
 import { BackofficeMerchantUserCreateRepository } from './backoffice-merchant-user-create-repository';
+import { autoWired } from '../../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class BackofficeMerchantUserCreatePage extends AbstractPage {
   public PAGE_URL: string = '/merchant-user-gui/edit-merchant-user';
 
@@ -17,10 +17,12 @@ export class BackofficeMerchantUserCreatePage extends AbstractPage {
 
   public createMerchantUser = (merchantUser?: MerchantUser): MerchantUser => {
     if (!merchantUser) {
+      const identifier: string = this.faker.string.uuid();
+
       merchantUser = {
         username: this.faker.internet.email(),
-        firstName: this.faker.person.firstName(),
-        lastName: this.faker.person.lastName(),
+        firstName: this.faker.person.firstName() + ' - ' + identifier,
+        lastName: this.faker.person.lastName() + ' - ' + identifier,
       };
     }
 

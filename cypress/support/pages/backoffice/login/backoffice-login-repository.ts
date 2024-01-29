@@ -1,19 +1,11 @@
 import { injectable } from 'inversify';
-import { autoProvide } from '../../../utils/inversify/auto-provide';
 import 'reflect-metadata';
+import { autoWired } from '../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class BackofficeLoginRepository {
-  getEmailInput = (): Cypress.Chainable => {
-    return cy.get('#auth_username');
-  };
-
-  getPasswordInput = (): Cypress.Chainable => {
-    return cy.get('#auth_password');
-  };
-
-  getSubmitButton = (): Cypress.Chainable => {
-    return cy.get('.btn');
-  };
+  getEmailInput = (): Cypress.Chainable => cy.get('#auth_username');
+  getPasswordInput = (): Cypress.Chainable => cy.get('#auth_password');
+  getSubmitButton = (): Cypress.Chainable => cy.get('.btn');
 }

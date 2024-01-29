@@ -8,6 +8,9 @@ import { BackofficeIndexPage } from '../../support/pages/backoffice/index/backof
 import { YvesAgentLoginPage } from '../../support/pages/yves/agent-login/yves-agent-login-page';
 import { YvesLoginPage } from '../../support/pages/yves/login/yves-login-page';
 
+/**
+ * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
+ */
 describe('agent login page', (): void => {
   const mpLoginPage: MpLoginPage = container.get(MpLoginPage);
   const mpDashboardPage: MpDashboardPage = container.get(MpDashboardPage);

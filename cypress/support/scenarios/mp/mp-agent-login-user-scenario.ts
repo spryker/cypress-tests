@@ -1,9 +1,9 @@
 import { inject, injectable } from 'inversify';
-import { autoProvide } from '../../utils/inversify/auto-provide';
 import { MpAgentLoginPage } from '../../pages/mp/agent-login/mp-agent-login-page';
+import { autoWired } from '../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class MpAgentLoginUserScenario {
   constructor(@inject(MpAgentLoginPage) private loginPage: MpAgentLoginPage) {}
 

@@ -2,10 +2,10 @@ import { BackofficeUserUpdateRepository } from './backoffice-user-update-reposit
 import { AbstractPage } from '../../../abstract-page';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { autoProvide } from '../../../../utils/inversify/auto-provide';
+import { autoWired } from '../../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class BackofficeUserUpdatePage extends AbstractPage {
   public PAGE_URL: string = '/user/edit/update';
   public DEFAULT_PASSWORD: string = 'Change123@_';

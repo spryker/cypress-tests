@@ -1,19 +1,11 @@
 import { injectable } from 'inversify';
-import { autoProvide } from '../../../utils/inversify/auto-provide';
 import 'reflect-metadata';
+import { autoWired } from '../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class MpSalesOrdersRepository {
-  getFirstTableRow = (): Cypress.Chainable => {
-    return cy.get('tbody > :nth-child(1)');
-  };
-
-  getSearchSelector = (): string => {
-    return '.spy-table-search-feature input[type="text"]';
-  };
-
-  getDrawer = (): Cypress.Chainable => {
-    return cy.get('.spy-drawer-wrapper');
-  };
+  getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1)');
+  getSearchSelector = (): string => '.spy-table-search-feature input[type="text"]';
+  getDrawer = (): Cypress.Chainable => cy.get('.spy-drawer-wrapper');
 }

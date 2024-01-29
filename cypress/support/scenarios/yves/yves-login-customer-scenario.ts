@@ -1,9 +1,9 @@
 import { inject, injectable } from 'inversify';
-import { autoProvide } from '../../utils/inversify/auto-provide';
 import { YvesLoginPage } from '../../pages/yves/login/yves-login-page';
+import { autoWired } from '../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class YvesLoginCustomerScenario {
   constructor(@inject(YvesLoginPage) private loginPage: YvesLoginPage) {}
 

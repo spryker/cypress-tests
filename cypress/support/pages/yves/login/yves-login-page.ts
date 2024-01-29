@@ -2,11 +2,11 @@ import { AbstractPage } from '../../abstract-page';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../utils/inversify/types';
 import 'reflect-metadata';
-import { autoProvide } from '../../../utils/inversify/auto-provide';
 import { YvesLoginRepository } from './yves-login-repository';
+import { autoWired } from '../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class YvesLoginPage extends AbstractPage {
   public PAGE_URL: string = '/login';
 

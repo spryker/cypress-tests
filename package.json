@@ -11,16 +11,18 @@
     "prettier:write": "npx prettier . --write",
     "cy:open": "cypress open",
     "cy:run": "cypress run --headless --browser chrome",
-    "test:checkout": "npx cypress run --spec \"cypress/e2e/checkout/*\" --headless --browser chrome",
-    "test:comment": "npx cypress run --spec \"cypress/e2e/comment/*\" --headless --browser chrome",
-    "test:merchant-agent-assist": "npx cypress run --spec \"cypress/e2e/merchant-agent-assist/*\" --headless --browser chrome",
-    "test:order-management": "npx cypress run --spec \"cypress/e2e/order-management/*\" --headless --browser chrome"
+    "test:tag:smoke": "npx cypress run --env grepTags=@smoke --headless --browser chrome",
+    "test:feture:checkout": "npx cypress run --spec \"cypress/e2e/checkout/*\" --headless --browser chrome",
+    "test:feture:comment": "npx cypress run --spec \"cypress/e2e/comment/*\" --headless --browser chrome",
+    "test:feture:merchant-agent-assist": "npx cypress run --spec \"cypress/e2e/merchant-agent-assist/*\" --headless --browser chrome",
+    "test:feture:order-management": "npx cypress run --spec \"cypress/e2e/order-management/*\" --headless --browser chrome"
   },
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=10.0.0"
   },
   "devDependencies": {
+    "@cypress/grep": "^4.0.1",
     "@faker-js/faker": "^8.3.1",
     "@types/dotenv": "^8.2.0",
     "@typescript-eslint/eslint-plugin": "^6.13.1",

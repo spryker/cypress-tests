@@ -2,10 +2,10 @@ import { AbstractPage } from '../../../abstract-page';
 import { BackofficeUserIndexRepository } from './backoffice-user-index-repository';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { autoProvide } from '../../../../utils/inversify/auto-provide';
+import { autoWired } from '../../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class BackofficeUserIndexPage extends AbstractPage {
   public PAGE_URL: string = '/user';
 

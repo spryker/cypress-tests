@@ -1,11 +1,11 @@
 import { AbstractPage } from '../../abstract-page';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { autoProvide } from '../../../utils/inversify/auto-provide';
 import { MpSalesOrdersRepository } from './mp-sales-orders-repository';
+import { autoWired } from '../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class MpSalesOrdersPage extends AbstractPage {
   public PAGE_URL: string = '/sales-merchant-portal-gui/orders';
 

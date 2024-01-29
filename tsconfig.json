@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["es5", "es6", "dom"],
-    "types": ["cypress", "node", "reflect-metadata"],
+    "types": ["cypress", "node", "reflect-metadata", "@cypress/grep"],
     "module": "commonjs",
     "strict": true,
     "resolveJsonModule": true,

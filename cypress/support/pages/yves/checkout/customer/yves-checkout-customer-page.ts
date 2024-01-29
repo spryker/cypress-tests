@@ -2,11 +2,11 @@ import { AbstractPage } from '../../../abstract-page';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { TYPES } from '../../../../utils/inversify/types';
-import { autoProvide } from '../../../../utils/inversify/auto-provide';
 import { YvesCheckoutCustomerRepository } from './yves-checkout-customer-repository';
+import { autoWired } from '../../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class YvesCheckoutCustomerPage extends AbstractPage {
   public PAGE_URL: string = '/checkout/customer';
 

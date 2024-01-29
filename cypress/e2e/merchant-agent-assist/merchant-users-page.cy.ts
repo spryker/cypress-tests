@@ -9,6 +9,9 @@ import { CreateMerchantScenario } from '../../support/scenarios/backoffice/creat
 import { BackofficeMerchantListPage } from '../../support/pages/backoffice/merchant/list/backoffice-merchant-list-page';
 import { MpDashboardPage } from '../../support/pages/mp/dashboard/mp-dashboard-page';
 
+/**
+ * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
+ */
 describe('merchant users page', (): void => {
   const mpAgentDashboardPage: MpAgentDashboardPage = container.get(MpAgentDashboardPage);
   const backofficeUserIndexPage: BackofficeUserIndexPage = container.get(BackofficeUserIndexPage);

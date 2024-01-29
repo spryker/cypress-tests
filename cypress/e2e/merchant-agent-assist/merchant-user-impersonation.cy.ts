@@ -10,6 +10,9 @@ import { MpProfilePage } from '../../support/pages/mp/profile/mp-profile-page';
 import { MpProductsPage } from '../../support/pages/mp/products/mp-products-page';
 import { MpOffersPage } from '../../support/pages/mp/offers/mp-offers-page';
 
+/**
+ * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
+ */
 describe('merchant user impersonation', (): void => {
   const backofficeSalesIndexPage: BackofficeSalesIndexPage = container.get(BackofficeSalesIndexPage);
   const backofficeSalesDetailPage: BackofficeSalesDetailPage = container.get(BackofficeSalesDetailPage);

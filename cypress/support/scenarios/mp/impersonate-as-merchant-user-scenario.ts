@@ -1,10 +1,10 @@
 import { inject, injectable } from 'inversify';
-import { autoProvide } from '../../utils/inversify/auto-provide';
 import { MpAgentLoginUserScenario } from './mp-agent-login-user-scenario';
 import { MpAgentDashboardPage } from '../../pages/mp/agent-dashboard/mp-agent-dashboard-page';
+import { autoWired } from '../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class ImpersonateAsMerchantUserScenario {
   constructor(
     @inject(MpAgentLoginUserScenario) private mpAgentLoginUserScenario: MpAgentLoginUserScenario,

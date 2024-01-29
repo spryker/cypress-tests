@@ -5,6 +5,9 @@ import { BackofficeUserCreatePage } from '../../support/pages/backoffice/user/cr
 import { CreateRootUserScenario } from '../../support/scenarios/backoffice/create-root-user-scenario';
 import { BackofficeLoginUserScenario } from '../../support/scenarios/backoffice/backoffice-login-user-scenario';
 
+/**
+ * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
+ */
 describe('agent permission in backoffice', (): void => {
   const userIndexPage: BackofficeUserIndexPage = container.get(BackofficeUserIndexPage);
   const userUpdatePage: BackofficeUserUpdatePage = container.get(BackofficeUserUpdatePage);
