@@ -15,4 +15,12 @@ export class SuiteYvesCheckoutPaymentRepository implements YvesCheckoutPaymentRe
   getGoToSummaryButton = (): Cypress.Chainable => {
     return cy.contains('button', 'Go to Summary');
   };
+
+  getDummyMarketplacePaymentInvoiceRadio = (): Cypress.Chainable => {
+    return cy.get('#paymentForm_paymentSelection_dummyMarketplacePaymentInvoice');
+  };
+
+  getDummyMarketplacePaymentInvoiceDateField = (): Cypress.Chainable => {
+    return cy.get('#paymentForm_dummyMarketplacePaymentInvoice_dateOfBirth');
+  };
 }

@@ -25,12 +25,12 @@ declare namespace Cypress {
     /**
      * @example cy.visitBackoffice('/security-gui/login')
      */
-    visitBackoffice(url: string): Chainable<Element>;
+    visitBackoffice(url: string, options?: Partial<VisitOptions>): Chainable<Element>;
 
     /**
      * @example cy.visitMerchantPortal('/security-merchant-portal-gui/login')
      */
-    visitMerchantPortal(url: string): Chainable<Element>;
+    visitMerchantPortal(url: string, options?: Partial<VisitOptions>): Chainable<Element>;
 
     /**
      * @example cy.reloadUntilFound('/transactions', 'td:contains($4.44)')

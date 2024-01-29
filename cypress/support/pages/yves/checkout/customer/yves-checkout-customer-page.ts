@@ -14,7 +14,7 @@ export class YvesCheckoutCustomerPage extends AbstractPage {
     super();
   }
 
-  public checkoutAsGuest = (customerGuestForm?: CustomerGuestForm): void => {
+  public checkoutAsGuest = (customerGuestForm?: CustomerGuestForm): CustomerGuest => {
     const customerGuest: CustomerGuest = {
       firstName: customerGuestForm?.firstName ?? this.faker.person.firstName(),
       lastName: customerGuestForm?.lastName ?? this.faker.person.lastName(),
@@ -29,5 +29,7 @@ export class YvesCheckoutCustomerPage extends AbstractPage {
     this.repository.getGuestTermsCheckbox().click();
 
     this.repository.getGuestSubmitButton().click();
+
+    return customerGuest;
   };
 }

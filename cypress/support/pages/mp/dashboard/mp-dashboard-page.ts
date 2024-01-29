@@ -12,4 +12,9 @@ export class MpDashboardPage extends AbstractPage {
   constructor(@inject(MpDashboardRepository) private repository: MpDashboardRepository) {
     super();
   }
+
+  public logout = (): void => {
+    cy.get('.spy-user-menu').click();
+    cy.get('.spy-user-menu__content.ng-star-inserted').find('a:contains("Logout")').click();
+  };
 }

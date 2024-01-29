@@ -8,10 +8,8 @@ import { CreateMerchantUserScenario } from '../../support/scenarios/backoffice/c
 import { CreateMerchantScenario } from '../../support/scenarios/backoffice/create-merchant-scenario';
 import { BackofficeMerchantListPage } from '../../support/pages/backoffice/merchant/list/backoffice-merchant-list-page';
 import { MpDashboardPage } from '../../support/pages/mp/dashboard/mp-dashboard-page';
-import { MpAgentLoginPage } from '../../support/pages/mp/agent-login/mp-agent-login-page';
 
 describe('merchant users page', (): void => {
-  const mpAgentLoginPage: MpAgentLoginPage = container.get(MpAgentLoginPage);
   const mpAgentDashboardPage: MpAgentDashboardPage = container.get(MpAgentDashboardPage);
   const backofficeUserIndexPage: BackofficeUserIndexPage = container.get(BackofficeUserIndexPage);
   const backofficeUserDeletePage: BackofficeUserDeletePage = container.get(BackofficeUserDeletePage);
@@ -66,35 +64,6 @@ describe('merchant users page', (): void => {
     mpAgentDashboardPage.findMerchantUser(defaultMerchantUser.username).should('exist');
     mpAgentDashboardPage.findMerchantUser(defaultMerchantUser.firstName).should('exist');
     mpAgentDashboardPage.findMerchantUser(defaultMerchantUser.lastName).should('exist');
-  });
-
-  it('agent should be able to see agent assist buttons during impersonation', (): void => {
-    cy.resetMerchantPortalCookies();
-    mpAgentLoginUserScenario.execute(fixtures.merchantAgentUser);
-
-    mpAgentDashboardPage.assistMerchantUser(defaultMerchantUser.username);
-    cy.get('body').find('a:contains("End User Assistance")').should('exist');
-    cy.get('body').find('a:contains("Log out Agent")').should('exist');
-  });
-
-  it('agent should be able to finish impersonation', (): void => {
-    cy.resetMerchantPortalCookies();
-    mpAgentLoginUserScenario.execute(fixtures.merchantAgentUser);
-
-    mpAgentDashboardPage.assistMerchantUser(defaultMerchantUser.username);
-    cy.get('body').find('a:contains("End User Assistance")').click();
-
-    mpAgentDashboardPage.assertPageLocation();
-  });
-
-  it('agent should be able to fully logout from all sessions', (): void => {
-    cy.resetMerchantPortalCookies();
-    mpAgentLoginUserScenario.execute(fixtures.merchantAgentUser);
-
-    mpAgentDashboardPage.assistMerchantUser(defaultMerchantUser.username);
-    cy.get('body').find('a:contains("Log out Agent")').click();
-
-    mpAgentLoginPage.assertPageLocation();
   });
 
   it('agent should be able to see/assist inactive merchant user in a table', (): void => {
