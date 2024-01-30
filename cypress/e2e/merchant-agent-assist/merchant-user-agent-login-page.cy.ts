@@ -42,7 +42,7 @@ describe('merchant user agent login page', (): void => {
     loginPage.assertPageLocation();
   });
 
-  it('merchant user should not be able to login to MP dashboard', (): void => {
+  it('merchant user should be able to login to MP dashboard', (): void => {
     loginUserScenario.execute(fixtures.merchantUser);
 
     cy.contains('Dashboard');

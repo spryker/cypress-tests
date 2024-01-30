@@ -1,4 +1,3 @@
-import { CliHelper } from '../../../support/helpers/cli-helper';
 import { container } from '../../../support/utils/inversify/inversify.config';
 import { BackofficeLoginPage } from '../../../support/pages/backoffice/login/backoffice-login-page';
 import { BackofficeSalesIndexPage } from '../../../support/pages/backoffice/sales/index/backoffice-sales-index-page';
@@ -20,8 +19,6 @@ describe('create return by user', (): void => {
   const loginCustomerScenario: YvesLoginCustomerScenario = container.get(YvesLoginCustomerScenario);
   const placeCustomerOrderScenario: PlaceCustomerOrderScenario = container.get(PlaceCustomerOrderScenario);
 
-  const cliHelper: CliHelper = container.get(CliHelper);
-
   let fixtures: CreateReturnByUserFixtures;
 
   before((): void => {
@@ -35,9 +32,6 @@ describe('create return by user', (): void => {
     const customer = registerCustomerScenario.execute();
     loginCustomerScenario.execute(customer);
     placeCustomerOrderScenario.execute(fixtures.concreteProductSkus);
-
-    cliHelper.run('console oms:check-condition');
-    cliHelper.run('console oms:check-timeout');
   });
 
   it('should be able to create return from Backoffice (from shipped order state)', (): void => {
