@@ -23,6 +23,12 @@ type Merchant = {
   url: string;
 };
 
+type Guest = {
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
 type CheckoutAddress = {
   firstName: string;
   lastName: string;
@@ -38,12 +44,6 @@ type CustomerGuestForm = {
   firstName?: string;
   lastName?: string;
   email?: string;
-};
-
-type CustomerGuest = {
-  firstName: string;
-  lastName: string;
-  email: string;
 };
 
 type CustomerRegistration = {

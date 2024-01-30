@@ -20,7 +20,13 @@ type AgentPermissionInBackofficeFixtures = {
   merchantAgentUser: User;
 };
 
-type AgentLoginPageFixtures = {
+type MerchantUserAgentLoginPageFixtures = {
+  customerAgentUser: User;
+  merchantAgentUser: User;
+  merchantUser: User;
+};
+
+type CustomerAgentLoginPageFixtures = {
   customerAgentUser: User;
   merchantAgentUser: User;
   merchantUser: User;
@@ -40,7 +46,7 @@ type CreateReturnByUserFixtures = {
   user: User;
 };
 
-type MerchantUsersPageFixtures = {
+type MerchantUserAgentDashboardFixtures = {
   merchantAgentUser: User;
   backofficeUser: User;
 };

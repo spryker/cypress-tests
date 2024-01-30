@@ -8,6 +8,7 @@ export class YvesLoginCustomerScenario {
   constructor(@inject(YvesLoginPage) private loginPage: YvesLoginPage) {}
 
   public execute = (customer: Customer): void => {
+    cy.visit(this.loginPage.PAGE_URL);
     this.loginPage.login(customer);
   };
 }

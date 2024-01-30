@@ -9,14 +9,12 @@ import { MpLoginPage } from '../../support/pages/mp/login/mp-login-page';
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
 describe('merchant user header bar', (): void => {
-  const mpDashboardPage: MpDashboardPage = container.get(MpDashboardPage);
-  const mpAgentDashboardPage: MpAgentDashboardPage = container.get(MpAgentDashboardPage);
-  const mpAgentLoginPage: MpAgentLoginPage = container.get(MpAgentLoginPage);
-  const mpLoginPage: MpLoginPage = container.get(MpLoginPage);
+  const loginPage: MpLoginPage = container.get(MpLoginPage);
+  const agentLoginPage: MpAgentLoginPage = container.get(MpAgentLoginPage);
+  const dashboardPage: MpDashboardPage = container.get(MpDashboardPage);
+  const agentDashboardPage: MpAgentDashboardPage = container.get(MpAgentDashboardPage);
 
-  const impersonateAsMerchantUserScenario: ImpersonateAsMerchantUserScenario = container.get(
-    ImpersonateAsMerchantUserScenario
-  );
+  const impersonateScenario: ImpersonateAsMerchantUserScenario = container.get(ImpersonateAsMerchantUserScenario);
 
   let fixtures: MerchantUserHeaderBarFixtures;
 
@@ -26,19 +24,20 @@ describe('merchant user header bar', (): void => {
 
   beforeEach((): void => {
     cy.resetMerchantPortalCookies();
-    impersonateAsMerchantUserScenario.execute(fixtures.merchantAgentUser, fixtures.impersonatedMerchantUser.username);
+    impersonateScenario.execute(fixtures.merchantAgentUser, fixtures.impersonatedMerchantUser.username);
   });
 
   it('agent should be able to see merchant user information during impersonation', (): void => {
-    cy.visitMerchantPortal(mpDashboardPage.PAGE_URL);
+    cy.visitMerchantPortal(dashboardPage.PAGE_URL);
 
     cy.get('body').find(`div:contains("${fixtures.impersonatedMerchantName}")`).should('exist');
+    cy.get('body').find(`div:contains("${fixtures.impersonatedMerchantUser.username}")`).should('exist');
+
     cy.get('body')
       .find(
         `div:contains("${fixtures.impersonatedMerchantUser.firstName} ${fixtures.impersonatedMerchantUser.lastName}")`
       )
       .should('exist');
-    cy.get('body').find(`div:contains("${fixtures.impersonatedMerchantUser.username}")`).should('exist');
   });
 
   it('agent should be able to see agent assist buttons during impersonation', (): void => {
@@ -48,25 +47,26 @@ describe('merchant user header bar', (): void => {
 
   it('agent should be able to finish impersonation', (): void => {
     cy.get('body').find('a:contains("End User Assistance")').click();
-    mpAgentDashboardPage.assertPageLocation();
+    agentDashboardPage.assertPageLocation();
 
-    cy.visitMerchantPortal(mpDashboardPage.PAGE_URL, { failOnStatusCode: false });
+    // Ensure that agent finished assistant session and don't have access to MP dashboard
+    cy.visitMerchantPortal(dashboardPage.PAGE_URL, { failOnStatusCode: false });
     cy.get('body').contains('Access Denied.');
   });
 
   it('agent should be able to fully logout from all sessions', (): void => {
     cy.get('body').find('a:contains("Log out Agent")').click();
-    mpAgentLoginPage.assertPageLocation();
+    agentLoginPage.assertPageLocation();
 
-    cy.visitMerchantPortal(mpAgentDashboardPage.PAGE_URL);
-    mpAgentLoginPage.assertPageLocation();
+    cy.visitMerchantPortal(agentDashboardPage.PAGE_URL);
+    agentLoginPage.assertPageLocation();
 
-    cy.visitMerchantPortal(mpDashboardPage.PAGE_URL);
-    mpLoginPage.assertPageLocation();
+    cy.visitMerchantPortal(dashboardPage.PAGE_URL);
+    loginPage.assertPageLocation();
   });
 
   it('agent should be able to fully logout from user profile menu', (): void => {
-    mpDashboardPage.logout();
-    mpLoginPage.assertPageLocation();
+    dashboardPage.logout();
+    loginPage.assertPageLocation();
   });
 });

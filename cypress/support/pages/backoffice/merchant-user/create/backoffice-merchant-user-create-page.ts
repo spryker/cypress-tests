@@ -17,12 +17,12 @@ export class BackofficeMerchantUserCreatePage extends AbstractPage {
 
   public createMerchantUser = (merchantUser?: MerchantUser): MerchantUser => {
     if (!merchantUser) {
-      const identifier: string = this.faker.string.uuid();
+      const uniquePrefix: string = this.faker.number.int({ min: 1000, max: 9999 }).toString();
 
       merchantUser = {
         username: this.faker.internet.email(),
-        firstName: this.faker.person.firstName() + ' - ' + identifier,
-        lastName: this.faker.person.lastName() + ' - ' + identifier,
+        firstName: uniquePrefix + '_' + this.faker.person.firstName(),
+        lastName: uniquePrefix + '_' + this.faker.person.lastName(),
       };
     }
 

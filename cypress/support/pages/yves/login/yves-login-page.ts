@@ -18,7 +18,6 @@ export class YvesLoginPage extends AbstractPage {
   }
 
   public login = (customer: Customer): void => {
-    cy.visit(this.PAGE_URL);
     this.repository.getLoginEmailInput().clear().type(customer.email);
     this.repository.getLoginPasswordInput().clear().type(customer.password);
 

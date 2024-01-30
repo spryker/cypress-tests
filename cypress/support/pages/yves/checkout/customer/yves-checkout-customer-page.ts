@@ -14,8 +14,8 @@ export class YvesCheckoutCustomerPage extends AbstractPage {
     super();
   }
 
-  public checkoutAsGuest = (customerGuestForm?: CustomerGuestForm): CustomerGuest => {
-    const customerGuest: CustomerGuest = {
+  public checkoutAsGuest = (customerGuestForm?: CustomerGuestForm): Guest => {
+    const guest: Guest = {
       firstName: customerGuestForm?.firstName ?? this.faker.person.firstName(),
       lastName: customerGuestForm?.lastName ?? this.faker.person.lastName(),
       email: customerGuestForm?.email ?? this.faker.internet.email(),
@@ -23,13 +23,13 @@ export class YvesCheckoutCustomerPage extends AbstractPage {
 
     this.repository.getGuestRadioButton().click();
 
-    this.repository.getGuestFirstNameField().clear().type(customerGuest.firstName);
-    this.repository.getGuestLastNameField().clear().type(customerGuest.lastName);
-    this.repository.getGuestEmailField().clear().type(customerGuest.email);
+    this.repository.getGuestFirstNameField().clear().type(guest.firstName);
+    this.repository.getGuestLastNameField().clear().type(guest.lastName);
+    this.repository.getGuestEmailField().clear().type(guest.email);
     this.repository.getGuestTermsCheckbox().click();
 
     this.repository.getGuestSubmitButton().click();
 
-    return customerGuest;
+    return guest;
   };
 }

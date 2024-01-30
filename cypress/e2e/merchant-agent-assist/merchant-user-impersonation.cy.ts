@@ -1,7 +1,6 @@
 import { container } from '../../support/utils/inversify/inversify.config';
 import { PlaceGuestMpOrderScenario } from '../../support/scenarios/yves/place-guest-mp-order-scenario';
 import { ImpersonateAsMerchantUserScenario } from '../../support/scenarios/mp/impersonate-as-merchant-user-scenario';
-import { CliHelper } from '../../support/helpers/cli-helper';
 import { BackofficeLoginUserScenario } from '../../support/scenarios/backoffice/backoffice-login-user-scenario';
 import { BackofficeSalesIndexPage } from '../../support/pages/backoffice/sales/index/backoffice-sales-index-page';
 import { BackofficeSalesDetailPage } from '../../support/pages/backoffice/sales/detail/backoffice-sales-detail-page';
@@ -14,20 +13,16 @@ import { MpOffersPage } from '../../support/pages/mp/offers/mp-offers-page';
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
 describe('merchant user impersonation', (): void => {
-  const backofficeSalesIndexPage: BackofficeSalesIndexPage = container.get(BackofficeSalesIndexPage);
-  const backofficeSalesDetailPage: BackofficeSalesDetailPage = container.get(BackofficeSalesDetailPage);
+  const salesIndexPage: BackofficeSalesIndexPage = container.get(BackofficeSalesIndexPage);
+  const salesDetailPage: BackofficeSalesDetailPage = container.get(BackofficeSalesDetailPage);
   const mpSalesOrdersPage: MpSalesOrdersPage = container.get(MpSalesOrdersPage);
   const mpProfilePage: MpProfilePage = container.get(MpProfilePage);
   const mpProductsPage: MpProductsPage = container.get(MpProductsPage);
   const mpOffersPage: MpOffersPage = container.get(MpOffersPage);
 
-  const backofficeLoginUserScenario: BackofficeLoginUserScenario = container.get(BackofficeLoginUserScenario);
+  const loginUserScenario: BackofficeLoginUserScenario = container.get(BackofficeLoginUserScenario);
+  const impersonateScenario: ImpersonateAsMerchantUserScenario = container.get(ImpersonateAsMerchantUserScenario);
   const placeGuestMpOrderScenario: PlaceGuestMpOrderScenario = container.get(PlaceGuestMpOrderScenario);
-  const impersonateAsMerchantUserScenario: ImpersonateAsMerchantUserScenario = container.get(
-    ImpersonateAsMerchantUserScenario
-  );
-
-  const cliHelper: CliHelper = container.get(CliHelper);
 
   let fixtures: MerchantUserImpersonationFixtures;
 
@@ -37,32 +32,29 @@ describe('merchant user impersonation', (): void => {
 
   it('agent should be able to change order status during impersonation', (): void => {
     cy.resetYvesCookies();
-    const customerGuest: CustomerGuest = placeGuestMpOrderScenario.execute(fixtures.productConcreteSkus);
-    cliHelper.run('console oms:check-condition');
-    cliHelper.run('console oms:check-timeout');
+    const guest: Guest = placeGuestMpOrderScenario.execute(fixtures.productConcreteSkus);
 
     cy.resetBackofficeCookies();
-    backofficeLoginUserScenario.execute(fixtures.backofficeUser);
+    loginUserScenario.execute(fixtures.backofficeUser);
 
-    backofficeSalesIndexPage.viewLastPlacedOrder();
-    backofficeSalesDetailPage.triggerOms('Pay');
-    cliHelper.run('console oms:check-condition');
-    cliHelper.run('console oms:check-timeout');
-    backofficeSalesDetailPage.triggerOms('skip picking');
+    salesIndexPage.viewLastPlacedOrder();
+    salesDetailPage.triggerOms('Pay');
+    salesDetailPage.triggerOms('skip picking', true);
 
     cy.resetMerchantPortalCookies();
-    impersonateAsMerchantUserScenario.execute(fixtures.merchantAgentUser, fixtures.merchantUsername);
+    impersonateScenario.execute(fixtures.merchantAgentUser, fixtures.merchantUsername);
 
     cy.visitMerchantPortal(mpSalesOrdersPage.PAGE_URL);
-    mpSalesOrdersPage.cancelOrder(customerGuest.email);
+    mpSalesOrdersPage.cancelOrder(guest.email);
 
+    // Ensure that order was canceled
     cy.visitMerchantPortal(mpSalesOrdersPage.PAGE_URL);
-    mpSalesOrdersPage.findOrder(customerGuest.email).contains('canceled');
+    mpSalesOrdersPage.findOrder(guest.email).contains('canceled');
   });
 
   it('agent should be able to modify merchant profile information during impersonation', (): void => {
     cy.resetMerchantPortalCookies();
-    impersonateAsMerchantUserScenario.execute(fixtures.merchantAgentUser, fixtures.merchantUsername);
+    impersonateScenario.execute(fixtures.merchantAgentUser, fixtures.merchantUsername);
 
     cy.visitMerchantPortal(mpProfilePage.PAGE_URL);
     mpProfilePage.updateMerchantPhoneNumber();
@@ -72,7 +64,7 @@ describe('merchant user impersonation', (): void => {
 
   it('agent should be able to modify product information during impersonation', (): void => {
     cy.resetMerchantPortalCookies();
-    impersonateAsMerchantUserScenario.execute(fixtures.merchantAgentUser, fixtures.merchantUsername);
+    impersonateScenario.execute(fixtures.merchantAgentUser, fixtures.merchantUsername);
 
     cy.visitMerchantPortal(mpProductsPage.PAGE_URL);
     mpProductsPage.findProduct(fixtures.productAbstractSku).click();
@@ -83,7 +75,7 @@ describe('merchant user impersonation', (): void => {
 
   it('agent should be able to modify offer information during impersonation', (): void => {
     cy.resetMerchantPortalCookies();
-    impersonateAsMerchantUserScenario.execute(fixtures.merchantAgentUser, fixtures.merchantUsername);
+    impersonateScenario.execute(fixtures.merchantAgentUser, fixtures.merchantUsername);
 
     cy.visitMerchantPortal(mpOffersPage.PAGE_URL);
     mpOffersPage.findOffer(fixtures.offerReference).click();
