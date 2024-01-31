@@ -1,9 +1,8 @@
 {
-  "name": "cypress-spryker-poc",
+  "name": "cypress-tests",
   "version": "0.1.0",
-  "description": "",
+  "description": "Automated e2e tests for the Cypress",
   "main": "index.js",
-  "author": "dmiseev@gmail.com",
   "license": "MIT",
   "scripts": {
     "lint": "eslint . --ext .ts",

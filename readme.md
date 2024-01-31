@@ -1,35 +1,47 @@
-# Cypress Spryker [POC]
+## Description
 
-_This project serves as a proof of concept to evaluate Cypress as an effective tool for end-to-end (E2E) testing. It aims to demonstrate the capabilities, ease of use, and integration features of Cypress within a typical web application development workflow._
-
-_By implementing a variety of test cases, the project showcases how Cypress can be utilized for comprehensive E2E testing, highlighting its strengths in terms of readability, maintainability, and robustness in handling various testing scenarios._
-
-_The insights gained from this project will guide decisions on whether Cypress is the suitable choice for future web application testing needs._
+This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using
+Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all
+interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser
+automation capabilities, this suite provides an efficient and effective means of validating the user experience,
+confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous
+UI testing helps maintain the high standard of quality and reliability that Spryker users expect.
 
 ## Setup
 
-- **Install Dependencies:** `npm install`
-- **Environment Configuration:**
-  - Copy the `.env.example` file to a new file named `.env`.
-  - Open the `.env` file and fill in the necessary environment variables. These variables will be used by Cypress for various configurations.
+To get started with these tests, follow these setup steps:
+
+1. **Install Dependencies:**
+
+- Install all necessary dependencies required for running the tests.
+  ```bash
+  npm install
+  ```
+
+2. **Environment Configuration:**
+
+- Set up your environment variables for Cypress.
+    - Copy the `.env.example` file to a new file named `.env`.
+    - Open the `.env` file and fill in the necessary environment variables.
+    - These variables are crucial for Cypress to connect with your Spryker application and perform tests effectively.
 
 ## Running Tests
 
-Run Cypress tests with:
+To run the Cypress tests, use the following command:
 
 ```bash
 npm run cy:open
 ```
 
+This command opens the Cypress Test Runner, a powerful interface that allows you to see tests running in real time.
+
 ## Environment Variables
 
-Ensure to specify the required environment variables in the `.env` file. For example:
+Ensure to specify the required environment variables in the `.env` file for the tests to run correctly. For instance:
 
-- `ENV_MAIL_CATCHER_URL`: URL for the mail catcher service.
-- `E2E_BASE_URL`: The base URL for your E2E tests.
+- `ENV_MAIL_CATCHER_URL`: This is the URL for the mail catcher service. It's used to test email functionality within the
+  application.
+- `E2E_BASE_URL`: The base URL for your end-to-end tests. This should be the URL of the Spryker application you are
+  testing against.
 
-These variables will be loaded into Cypress's configuration as per the setup in the Cypress configuration file.
-
-## Contributing
-
-Feel free to fork and submit pull requests.
+These variables are essential for configuring the Cypress environment to suit your specific testing requirements.
