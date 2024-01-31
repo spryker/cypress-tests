@@ -1,8 +1,8 @@
 import { injectable } from 'inversify';
-import { autoProvide } from '../utils/auto-provide';
+import { autoWired } from '../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class MailCatcherHelper {
   private readonly url: string;
 
@@ -10,7 +10,7 @@ export class MailCatcherHelper {
     this.url = Cypress.env().mailCatcherUrl;
   }
 
-  verifyCustomerEmail = (email: string) => {
+  public verifyCustomerEmail = (email: string): void => {
     cy.request({
       url: this.url,
       failOnStatusCode: false,
@@ -24,10 +24,6 @@ export class MailCatcherHelper {
     cy.get('#search').type(email + '{enter}');
     cy.contains('span', 'Thank you for signing up with Spryker Shop!').click();
     cy.get('.active > a').click();
-    cy.get('#preview-html')
-      .iframe()
-      .contains('Validate your email address')
-      .invoke('removeAttr', 'target')
-      .click();
+    cy.get('#preview-html').iframe().contains('Validate your email address').invoke('removeAttr', 'target').click();
   };
 }

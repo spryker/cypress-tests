@@ -16,11 +16,15 @@ Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe) => {
   });
 });
 
-Cypress.Commands.add('visitBackoffice', (url) => {
-  return cy.visit(Cypress.env().backofficeUrl + url);
+Cypress.Commands.add('visitBackoffice', (url, options) => {
+  return cy.visit(Cypress.env().backofficeUrl + url, options);
 });
 
-Cypress.Commands.add('resetCookies', () => {
+Cypress.Commands.add('visitMerchantPortal', (url, options) => {
+  return cy.visit(Cypress.env().merchantPortalUrl + url, options);
+});
+
+Cypress.Commands.add('resetYvesCookies', () => {
   cy.clearCookies();
   cy.visit('/', {
     onBeforeLoad(win) {
@@ -29,29 +33,38 @@ Cypress.Commands.add('resetCookies', () => {
   });
 });
 
-Cypress.Commands.add(
-  'reloadUntilFound',
-  (url, findSelector, getSelector = 'body', retries = 3, retryWait = 1000) => {
-    if (retries === 0) {
-      throw `exhausted retries looking for ${selector} on ${url}`;
-    }
+Cypress.Commands.add('resetBackofficeCookies', () => {
+  cy.clearCookies();
+  cy.visitBackoffice('/security-gui/login', {
+    onBeforeLoad(win) {
+      win.sessionStorage.clear();
+    },
+  });
+});
 
-    cy.visit(url);
-    cy.get(getSelector).then((body) => {
-      let msg = `url:${url} getSelector:${getSelector} findSelector:${findSelector} retries:${retries} retryWait:${retryWait}`;
-      if (body.find(findSelector).length === 1) {
-        console.log(`found ${msg}`);
-      } else {
-        console.log(`NOT found ${msg}`);
-        cy.wait(retryWait);
-        cy.reloadUntilFound(
-          url,
-          findSelector,
-          getSelector,
-          retries - 1,
-          retryWait
-        );
-      }
-    });
+Cypress.Commands.add('resetMerchantPortalCookies', () => {
+  cy.clearCookies();
+  cy.visitMerchantPortal('/security-merchant-portal-gui/login', {
+    onBeforeLoad(win) {
+      win.sessionStorage.clear();
+    },
+  });
+});
+
+Cypress.Commands.add('reloadUntilFound', (url, findSelector, getSelector = 'body', retries = 3, retryWait = 1000) => {
+  if (retries === 0) {
+    throw `exhausted retries looking for ${selector} on ${url}`;
   }
-);
+
+  cy.visit(url);
+  cy.get(getSelector).then((body) => {
+    let msg = `url:${url} getSelector:${getSelector} findSelector:${findSelector} retries:${retries} retryWait:${retryWait}`;
+    if (body.find(findSelector).length === 1) {
+      console.log(`found ${msg}`);
+    } else {
+      console.log(`NOT found ${msg}`);
+      cy.wait(retryWait);
+      cy.reloadUntilFound(url, findSelector, getSelector, retries - 1, retryWait);
+    }
+  });
+});

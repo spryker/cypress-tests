@@ -4,7 +4,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 export class AbstractPage {
-  PAGE_URL = '';
+  public PAGE_URL: string = '';
   protected faker: Faker;
 
   constructor() {
@@ -12,6 +12,6 @@ export class AbstractPage {
   }
 
   assertPageLocation = (): void => {
-    cy.url().should('include', this.PAGE_URL);
+    cy.url({ timeout: 10000 }).should('include', this.PAGE_URL);
   };
 }

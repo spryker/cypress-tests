@@ -6,23 +6,28 @@
   "author": "dmiseev@gmail.com",
   "license": "MIT",
   "scripts": {
-    "cy:open": "cypress open",
-    "cy:run": "cypress run --headless --browser chrome",
     "lint": "eslint . --ext .ts",
     "prettier:check": "npx prettier . --check",
     "prettier:write": "npx prettier . --write",
-    "test:regression": "cypress_groups=\"@regression\" npm run cy:run"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run --headless --browser chrome",
+    "test:tag:smoke": "npx cypress run --env grepTags=@smoke --headless --browser chrome",
+    "test:feture:checkout": "npx cypress run --spec \"cypress/e2e/checkout/*\" --headless --browser chrome",
+    "test:feture:comment": "npx cypress run --spec \"cypress/e2e/comment/*\" --headless --browser chrome",
+    "test:feture:merchant-agent-assist": "npx cypress run --spec \"cypress/e2e/merchant-agent-assist/*\" --headless --browser chrome",
+    "test:feture:order-management": "npx cypress run --spec \"cypress/e2e/order-management/*\" --headless --browser chrome"
   },
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=10.0.0"
   },
   "devDependencies": {
+    "@cypress/grep": "^4.0.1",
     "@faker-js/faker": "^8.3.1",
     "@types/dotenv": "^8.2.0",
     "@typescript-eslint/eslint-plugin": "^6.13.1",
     "@typescript-eslint/parser": "^6.13.1",
-    "cypress": "^13.6.1",
+    "cypress": "^13.6.3",
     "eslint": "^8.55.0",
     "inversify": "^6.0.2",
     "prettier": "3.1.0",

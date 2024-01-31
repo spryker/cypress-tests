@@ -1,80 +1,47 @@
 // cypress/support/index.d.ts
+/// <reference types="@cypress/grep" />
 
-import type CheckoutFixtures from '../fixtures/checkout.json';
-import type CommentFixtures from '../fixtures/comment.json';
-import type OrderFixtures from '../fixtures/order.json';
-import type ReturnFixtures from '../fixtures/return.json';
+declare namespace Cypress {
+  interface Chainable {
+    /**
+     * @example cy.iframe()
+     */
+    iframe(): Chainable<Element>;
 
-interface FixtureTypes {
-  checkoutFixtures: typeof CheckoutFixtures;
-  commentFixtures: typeof CommentFixtures;
-  orderFixtures: typeof OrderFixtures;
-  returnFixtures: typeof ReturnFixtures;
-}
+    /**
+     * @example cy.resetYvesCookies()
+     */
+    resetYvesCookies(): void;
 
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      /**
-       * @example cy.iframe()
-       */
-      iframe(): Chainable<Element>;
+    /**
+     * @example cy.resetBackofficeCookies()
+     */
+    resetBackofficeCookies(): void;
 
-      /**
-       * @example cy.reloadUntilFound('/transactions', 'td:contains($4.44)')
-       */
-      reloadUntilFound(
-        url: string,
-        findSelector: string,
-        getSelector: string,
-        retries: number,
-        retryWait: number
-      ): Chainable<Element>;
+    /**
+     * @example cy.resetMerchantPortalCookies()
+     */
+    resetMerchantPortalCookies(): void;
 
-      /**
-       * @example cy.resetCookies()
-       */
-      resetCookies(): Chainable<Element>;
+    /**
+     * @example cy.visitBackoffice('/security-gui/login')
+     */
+    visitBackoffice(url: string, options?: Partial<VisitOptions>): Chainable<Element>;
 
-      /**
-       * @example cy.visitBackoffice('/security-gui/login')
-       */
-      visitBackoffice(url: string): Chainable<Element>;
+    /**
+     * @example cy.visitMerchantPortal('/security-merchant-portal-gui/login')
+     */
+    visitMerchantPortal(url: string, options?: Partial<VisitOptions>): Chainable<Element>;
 
-      fixture<K extends keyof FixtureTypes>(
-        fixtureName: K
-      ): Chainable<FixtureTypes[K]>;
-    }
+    /**
+     * @example cy.reloadUntilFound('/transactions', 'td:contains($4.44)')
+     */
+    reloadUntilFound(
+      url: string,
+      findSelector: string,
+      getSelector: string | null,
+      retries: number | null,
+      retryWait: number | null
+    ): void;
   }
-}
-
-interface CheckoutFixture {
-  concreteProductSkus: string[];
-  customer: Customer;
-}
-
-interface CommentFixture {
-  concreteProductSku: string;
-  comments: string[];
-  customer: Customer;
-}
-
-interface OrderFixtures {
-  concreteProductSkus: string[];
-  customer: Customer;
-}
-
-interface ReturnFixtures {
-  concreteProductSkus: string[];
-  user: User;
-}
-
-interface Customer {
-  email: string;
-  password: string;
-}
-
-interface User {
-  email: string;
-  password: string;
 }
