@@ -4,6 +4,7 @@ import { TYPES } from '../../../utils/inversify/types';
 import 'reflect-metadata';
 import { autoProvide } from '../../../utils/inversify/auto-provide';
 import { YvesAgentLoginRepository } from './yves-agent-login-repository';
+import {User} from "../../../types/user";
 
 @injectable()
 @autoProvide

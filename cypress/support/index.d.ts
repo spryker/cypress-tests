@@ -13,6 +13,11 @@ declare namespace Cypress {
     resetYvesCookies(): void;
 
     /**
+     * @example cy.runFixtureHelpers()
+     */
+    loadDynamicFixturesByPayload(dynamicFixturesDefaultFilePath: string): Chainable;
+
+    /**
      * @example cy.resetBackofficeCookies()
      */
     resetBackofficeCookies(): void;

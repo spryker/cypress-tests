@@ -14,6 +14,10 @@ export class YvesCommentCartPage extends AbstractPage {
     super();
   }
 
+  public visit = (): void => {
+    cy.visit(this.PAGE_URL);
+  }
+
   public addComment = (commentMessage: string): void => {
     this.repository.getAddCommentForm().last().find('textarea').clear().type(commentMessage);
     this.repository.getAddCommentForm().last().find(this.repository.getAddCommentButtonSelector()).click();
@@ -25,9 +29,22 @@ export class YvesCommentCartPage extends AbstractPage {
 
     this.getCommentThreadListSection().first().find(this.repository.getUpdateCommentButtonSelector()).click();
   };
+  public updateCommentByCommentText = (initialCommentMessage: string, newCommentMessage: string): void => {
+    const textarea = this.repository.getCommentTextareaByCommentText(initialCommentMessage);
+
+    textarea.clear().type(newCommentMessage);
+    textarea.parent().find(this.repository.getUpdateCommentButtonSelector()).click();
+  };
+  public removeCommentByCommentText = (commentMessage: string): void => {
+    this.repository
+      .getCommentTextareaByCommentText(commentMessage)
+      .parent()
+      .find(this.repository.getRemoveCommentButtonSelector())
+      .click();
+  };
 
   public removeFirstComment = (): void => {
-    this.getCommentThreadListSection().first().find(this.repository.getRemoveCommentButtonSelector()).click();
+    this.getCommentThreadListSection().find(this.repository.getRemoveCommentButtonSelector()).click();
   };
 
   public getCommentThreadListSection = (): Cypress.Chainable => {

@@ -4,6 +4,8 @@ import 'reflect-metadata';
 import { TYPES } from '../../../../utils/inversify/types';
 import { autoProvide } from '../../../../utils/inversify/auto-provide';
 import { YvesCheckoutCustomerRepository } from './yves-checkout-customer-repository';
+import {Customer} from "../../../../types";
+
 
 @injectable()
 @autoProvide
@@ -14,11 +16,11 @@ export class YvesCheckoutCustomerPage extends AbstractPage {
     super();
   }
 
-  public checkoutAsGuest = (customerGuestForm?: CustomerGuestForm): void => {
-    const customerGuest: CustomerGuest = {
-      firstName: customerGuestForm?.firstName ?? this.faker.person.firstName(),
-      lastName: customerGuestForm?.lastName ?? this.faker.person.lastName(),
-      email: customerGuestForm?.email ?? this.faker.internet.email(),
+  public checkoutAsGuest = (): void => {
+    const customerGuest: Customer = {
+      firstName: this.faker.person.firstName(),
+      lastName: this.faker.person.lastName(),
+      email: this.faker.internet.email(),
     };
 
     this.repository.getGuestRadioButton().click();

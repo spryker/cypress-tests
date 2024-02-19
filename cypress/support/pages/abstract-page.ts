@@ -4,6 +4,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 export class AbstractPage {
+  // make protected to allow access from child classes only and use visit only
   public PAGE_URL: string = '';
   protected faker: Faker;
 

@@ -9,5 +9,7 @@ export interface YvesCommentCartRepository {
 
   getFirstCommentTextarea(): Cypress.Chainable;
 
+  getCommentTextareaByCommentText(commentText: string): Cypress.Chainable;
+
   getUpdateCommentButtonSelector(): string;
 }

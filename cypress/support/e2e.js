@@ -27,14 +27,27 @@ beforeEach(function () {
 const loadFixture = () => {
   const repositoryId = Cypress.env('repositoryId');
   const testFileName = getTestFileName();
+  const dynamicFixturesDefaultFilePath = `${repositoryId}/dynamic/${testFileName}`;
+  const staticFixturesDefaultFilePath = `${repositoryId}/static/${testFileName}`;
 
-  cy.fixture(`${repositoryId}/${testFileName}`).then((fixtureData) => {
-    if (fixtureData) {
-      Cypress.env('fixtures', fixtureData);
+  cy.task('isFileExists', `${Cypress.config('fixturesFolder')}/${staticFixturesDefaultFilePath}.json`).then((isFileExists) => {
+    if (isFileExists) {
+      cy.fixture(staticFixturesDefaultFilePath).then((staticFixtures) => {
+        if (staticFixtures) {
+          Cypress.env('staticFixtures', staticFixtures);
+        }
+      });
+    }
+  });
+
+  cy.task('isFileExists', `${Cypress.config('fixturesFolder')}/${dynamicFixturesDefaultFilePath}.json`).then((isFileExists) => {
+    if (isFileExists) {
+      cy.loadDynamicFixturesByPayload(dynamicFixturesDefaultFilePath).then((dynamicFixturesData) => {
+        Cypress.env('dynamicFixtures', dynamicFixturesData);
+      });
     }
   });
 };
-
 const getTestFileName = () => {
   const filePath = Cypress.spec.relative;
   let fileName = path.basename(filePath, path.extname(filePath));

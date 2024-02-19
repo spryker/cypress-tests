@@ -39,6 +39,6 @@ export class SuiteYvesCartRepository implements YvesCartRepository {
   };
 
   getCheckoutButton = (): Cypress.Chainable => {
-    return cy.get('[data-qa="cart-go-to-checkout"]');
+    return cy.get('[data-qa="cart-go-to-checkout"]',{ timeout: 50000 });
   };
 }

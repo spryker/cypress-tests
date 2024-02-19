@@ -10,6 +10,7 @@ import { YvesCheckoutSummaryPage } from '../../pages/yves/checkout/summary/yves-
 @injectable()
 @autoProvide
 export class PlaceCustomerOrderScenario {
+  // should be moved to the order folder (helper MUST be used instead of scenario)
   constructor(
     @inject(YvesCartPage) private cartPage: YvesCartPage,
     @inject(YvesCheckoutAddressPage) private checkoutAddressPage: YvesCheckoutAddressPage,

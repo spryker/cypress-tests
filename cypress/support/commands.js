@@ -33,6 +33,34 @@ Cypress.Commands.add('resetYvesCookies', () => {
   });
 });
 
+Cypress.Commands.add('loadDynamicFixturesByPayload', (dynamicFixturesFilePath) => {
+  cy.fixture(dynamicFixturesFilePath).then((operationRequestPayload) => {
+    return cy
+      .request({
+        method: 'POST',
+        url: Cypress.env().operationRunnerUrl,
+        headers: {
+          'Content-Type': 'application/vnd.api+json',
+        },
+        body: operationRequestPayload,
+      })
+      .then((response) => {
+        if (Array.isArray(response.body.data)) {
+          // If the response data is an array, map over it and create an object with dynamic keys
+          return response.body.data.reduce((acc, item) => {
+            acc[item.type] = item.attributes;
+            return acc;
+          }, {});
+        } else {
+          // If the response data is a single item, create an object with a dynamic key
+          return {
+            [response.body.data.type]: response.body.data.attributes.properties,
+          };
+        }
+      });
+  });
+});
+
 Cypress.Commands.add('resetBackofficeCookies', () => {
   cy.clearCookies();
   cy.visitBackoffice('/security-gui/login', {

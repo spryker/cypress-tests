@@ -29,4 +29,8 @@ export class B2bYvesCommentCartRepository implements YvesCommentCartRepository {
   getUpdateCommentButtonSelector(): string {
     return 'button:contains("Update")';
   }
+
+  getCommentTextareaByCommentText(commentText: string): Cypress.Chainable {
+    return this.getCommentThreadListSection().first().contains(commentText);
+  }
 }

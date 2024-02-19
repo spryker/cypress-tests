@@ -13,11 +13,13 @@ export class BackofficeLoginPage extends AbstractPage {
     super();
   }
 
-  public login = (user: User): void => {
-    cy.visitBackoffice(this.PAGE_URL);
-    this.repository.getEmailInput().clear().type(user.username);
-    this.repository.getPasswordInput().clear().type(user.password);
+  public login = (username: string, password: string): void => {
+    cy.session([username, password], () => {
+      cy.visitBackoffice(this.PAGE_URL);
+      this.repository.getEmailInput().clear().type(username);
+      this.repository.getPasswordInput().clear().type(password);
 
-    this.repository.getSubmitButton().click();
+      this.repository.getSubmitButton().click();
+    });
   };
 }
