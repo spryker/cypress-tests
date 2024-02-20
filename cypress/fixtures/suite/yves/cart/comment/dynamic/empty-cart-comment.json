@@ -1,6 +1,6 @@
 {
   "data": {
-    "type": "test-helper-runner",
+    "type": "test-operation-runner",
     "attributes": {
       "synchronize": true,
       "operations": [

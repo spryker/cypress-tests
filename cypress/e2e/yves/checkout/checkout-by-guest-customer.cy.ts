@@ -1,15 +1,15 @@
-import { container } from '../../support/utils/inversify/inversify.config';
-import { YvesCartPage } from '../../support/pages/yves/cart/yves-cart-page';
-import { YvesCheckoutCustomerPage } from '../../support/pages/yves/checkout/customer/yves-checkout-customer-page';
-import { YvesCheckoutAddressPage } from '../../support/pages/yves/checkout/address/yves-checkout-address-page';
-import { YvesCheckoutShipmentPage } from '../../support/pages/yves/checkout/shipment/yves-checkout-shipment-page';
-import { YvesCheckoutPaymentPage } from '../../support/pages/yves/checkout/payment/yves-checkout-payment-page';
-import { YvesCheckoutSummaryPage } from '../../support/pages/yves/checkout/summary/yves-checkout-summary-page';
-import {CheckoutByGuestCustomerFixtures} from "../../support/types";
+import { container } from '../../../support/utils/inversify/inversify.config';
+import {CheckoutByGuestCustomerDynamicFixtures} from "../../../support/types/yves/checkout";
+import {
+  YvesCartPage,
+  YvesCheckoutAddressPage,
+  YvesCheckoutCustomerPage, YvesCheckoutPaymentPage,
+  YvesCheckoutShipmentPage, YvesCheckoutSummaryPage
+} from "../../../support/pages/yves";
+
 
 describe('checkout by guest customer', (): void => {
-  let fixtures: CheckoutByGuestCustomerFixtures;
-
+  let dynamicFixtures: CheckoutByGuestCustomerDynamicFixtures;
   let cartPage: YvesCartPage;
   let checkoutCustomerPage: YvesCheckoutCustomerPage;
   let checkoutAddressPage: YvesCheckoutAddressPage;
@@ -18,7 +18,7 @@ describe('checkout by guest customer', (): void => {
   let checkoutSummaryPage: YvesCheckoutSummaryPage;
 
   before((): void => {
-    fixtures = Cypress.env('fixtures');
+    dynamicFixtures = Cypress.env('dynamicFixtures');
 
     cartPage = container.get(YvesCartPage);
     checkoutCustomerPage = container.get(YvesCheckoutCustomerPage);
@@ -34,7 +34,7 @@ describe('checkout by guest customer', (): void => {
 
   it('should checkout with one concrete product', (): void => {
     cy.visit(cartPage.PAGE_URL);
-    cartPage.quickAddToCart(fixtures.concreteProductSkus[0]);
+    cartPage.quickAddToCart(dynamicFixtures.productOne.sku);
 
     cartPage.startCheckout();
     checkoutCustomerPage.checkoutAsGuest();
@@ -49,8 +49,8 @@ describe('checkout by guest customer', (): void => {
   it('should checkout with two concrete products to single shipment [@regression]', (): void => {
     cy.visit(cartPage.PAGE_URL);
 
-    cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
-    cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
+    cartPage.quickAddToCart(dynamicFixtures.productOne.sku, 2);
+    cartPage.quickAddToCart(dynamicFixtures.productTwo.sku, 2);
 
     cartPage.startCheckout();
     checkoutCustomerPage.checkoutAsGuest();
@@ -65,8 +65,8 @@ describe('checkout by guest customer', (): void => {
   it('should checkout to multi shipment address [@regression]', (): void => {
     cy.visit(cartPage.PAGE_URL);
 
-    cartPage.quickAddToCart(fixtures.concreteProductSkus[0], 2);
-    cartPage.quickAddToCart(fixtures.concreteProductSkus[1], 2);
+    cartPage.quickAddToCart(dynamicFixtures.productOne.sku, 2);
+    cartPage.quickAddToCart(dynamicFixtures.productTwo.sku, 2);
 
     cartPage.startCheckout();
     checkoutCustomerPage.checkoutAsGuest();
@@ -81,7 +81,7 @@ describe('checkout by guest customer', (): void => {
   it('should checkout with strict checkout step redirects', (): void => {
     cy.visit(cartPage.PAGE_URL);
 
-    cartPage.quickAddToCart(fixtures.concreteProductSkus[0]);
+    cartPage.quickAddToCart(dynamicFixtures.productOne.sku);
 
     cartPage.assertPageLocation();
     cartPage.startCheckout();

@@ -39,6 +39,10 @@ export class YvesCartPage extends AbstractPage {
     form.submit();
   };
 
+  public visit = (): void => {
+    cy.visit(this.PAGE_URL);
+  }
+
   public changeQuantity = (sku: string, newQuantity: number): void => {
     const form = this.repository.findCartItemChangeQuantityForm(sku);
     const input = this.repository.getCartItemChangeQuantityField(sku);

@@ -4,7 +4,8 @@ import { TYPES } from '../../../../utils/inversify/types';
 import 'reflect-metadata';
 import { autoProvide } from '../../../../utils/inversify/auto-provide';
 import { YvesCheckoutAddressRepository } from './yves-checkout-address-repository';
-import {CheckoutAddress} from "../../../../types/common/address";
+import {CheckoutAddress} from "../../../../types/yves/checkout";
+
 
 @injectable()
 @autoProvide

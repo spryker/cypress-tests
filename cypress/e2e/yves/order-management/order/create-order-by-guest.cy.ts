@@ -6,13 +6,13 @@ describe('create order by guest', (): void => {
   let dynamicFixtures: CreateOrderByGuestDynamicFixtures;
   let placeGuestOrderScenario: PlaceGuestOrderScenario;
 
-  beforeEach((): void => {
-    cy.resetYvesCookies();
-  });
-
   before((): void => {
     dynamicFixtures = Cypress.env('dynamicFixtures');
     placeGuestOrderScenario = container.get(PlaceGuestOrderScenario);
+  });
+
+  beforeEach((): void => {
+    cy.resetYvesCookies();
   });
 
   it('should be able to create an order by guest [@regression]', (): void => {

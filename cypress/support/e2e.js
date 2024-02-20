@@ -26,9 +26,9 @@ beforeEach(function () {
 
 const loadFixture = () => {
   const repositoryId = Cypress.env('repositoryId');
-  const testFileName = getTestFileName();
-  const dynamicFixturesDefaultFilePath = `${repositoryId}/dynamic/${testFileName}`;
-  const staticFixturesDefaultFilePath = `${repositoryId}/static/${testFileName}`;
+  const fixtureFilePath = getFixtureFilePath();
+  const dynamicFixturesDefaultFilePath = `${repositoryId}/${fixtureFilePath.directoryPart}/dynamic/${fixtureFilePath.filePart}`;
+  const staticFixturesDefaultFilePath = `${repositoryId}/${fixtureFilePath.directoryPart}/static/${fixtureFilePath.filePart}`;
 
   cy.task('isFileExists', `${Cypress.config('fixturesFolder')}/${staticFixturesDefaultFilePath}.json`).then((isFileExists) => {
     if (isFileExists) {
@@ -48,13 +48,21 @@ const loadFixture = () => {
     }
   });
 };
-const getTestFileName = () => {
-  const filePath = Cypress.spec.relative;
-  let fileName = path.basename(filePath, path.extname(filePath));
 
-  fileName = fileName.replace('.cy', '');
+const getFixtureFilePath = () => {
+  const fullFilePath = Cypress.spec.relative;
+  const basePath = 'cypress/e2e/';
 
-  return fileName;
+  const relativePath = path.relative(basePath, fullFilePath);
+
+  const directoryPart = path.dirname(relativePath);
+  const filePartWithExtension = path.parse(relativePath).name;
+  const filePartWithoutExtension = filePartWithExtension.replace('.cy', '');
+
+  return {
+    directoryPart: directoryPart,
+    filePart: filePartWithoutExtension
+  };
 };
 
 const skipTestIfNotInGroup = () => {
