@@ -1,19 +1,28 @@
 import { AbstractPage } from '../../../abstract-page';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { autoProvide } from '../../../../utils/inversify/auto-provide';
 import { BackofficeSalesDetailRepository } from './backoffice-sales-detail-repository';
+import { autoWired } from '../../../../utils/inversify/auto-wired';
+import { CliHelper } from '../../../../helpers/cli-helper';
 
 @injectable()
-@autoProvide
+@autoWired
 export class BackofficeSalesDetailPage extends AbstractPage {
   public PAGE_URL: string = '/sales/detail';
 
-  constructor(@inject(BackofficeSalesDetailRepository) private repository: BackofficeSalesDetailRepository) {
+  constructor(
+    @inject(BackofficeSalesDetailRepository) private repository: BackofficeSalesDetailRepository,
+    @inject(CliHelper) private cliHelper: CliHelper
+  ) {
     super();
   }
 
-  public triggerOms = (state: string): void => {
+  public triggerOms = (state: string, shouldTriggerOmsInCli: boolean = false): void => {
+    if (shouldTriggerOmsInCli) {
+      this.cliHelper.run('console oms:check-condition');
+      this.cliHelper.run('console oms:check-timeout');
+    }
+
     cy.url().then((url) => {
       cy.reloadUntilFound(
         url,

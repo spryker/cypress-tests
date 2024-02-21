@@ -4,11 +4,6 @@ import { YvesMultiCartRepository } from '../yves-multi-cart-repository';
 
 @injectable()
 export class B2bYvesMultiCartRepository implements YvesMultiCartRepository {
-  getCreateCartNameInput = (): Cypress.Chainable => {
-    return cy.get('#quoteForm_name');
-  };
-
-  getCreateCartForm = (): Cypress.Chainable => {
-    return cy.get('form[name=quoteForm]');
-  };
+  getCreateCartNameInput = (): Cypress.Chainable => cy.get('#quoteForm_name');
+  getCreateCartForm = (): Cypress.Chainable => cy.get('form[name=quoteForm]');
 }

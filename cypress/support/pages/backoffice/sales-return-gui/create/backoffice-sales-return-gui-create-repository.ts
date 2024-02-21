@@ -1,15 +1,11 @@
 import { injectable } from 'inversify';
-import { autoProvide } from '../../../../utils/inversify/auto-provide';
 import 'reflect-metadata';
+import { autoWired } from '../../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class BackofficeSalesReturnGuiCreateRepository {
-  getAllItemsCheckbox = (): Cypress.Chainable => {
-    return cy.get('.js-check-all-items');
-  };
-
-  getCreateReturnButton = (): Cypress.Chainable => {
-    return cy.get('form[name=return_create_form]').find('button:contains("Create return")');
-  };
+  getAllItemsCheckbox = (): Cypress.Chainable => cy.get('.js-check-all-items');
+  getCreateReturnButton = (): Cypress.Chainable =>
+    cy.get('form[name=return_create_form]').find('button:contains("Create return")');
 }

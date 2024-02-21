@@ -1,11 +1,11 @@
 import { AbstractPage } from '../../abstract-page';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { autoProvide } from '../../../utils/inversify/auto-provide';
 import { MpLoginRepository } from './mp-login-repository';
+import { autoWired } from '../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class MpLoginPage extends AbstractPage {
   public PAGE_URL: string = '/security-merchant-portal-gui/login';
 

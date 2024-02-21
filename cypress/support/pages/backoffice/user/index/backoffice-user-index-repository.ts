@@ -1,27 +1,16 @@
 import { injectable } from 'inversify';
-import { autoProvide } from '../../../../utils/inversify/auto-provide';
 import 'reflect-metadata';
+import { autoWired } from '../../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class BackofficeUserIndexRepository {
-  getFirstUserRow = (): Cypress.Chainable => {
-    return cy.get('tbody > :nth-child(1)');
-  };
-
-  getEditButtonSelector = (): string => {
-    return 'a:contains("Edit")';
-  };
-
-  getUserSearchSelector = (): string => {
-    return '[type="search"]';
-  };
-
-  getCreateNewUserButton = (): Cypress.Chainable => {
-    return cy.get('body').find('a:contains("Add New User")');
-  };
-
-  getUserTableHeader = (): Cypress.Chainable => {
-    return cy.get('.dataTables_scrollHead');
-  };
+  getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1)');
+  getEditButtonSelector = (): string => 'a:contains("Edit")';
+  getDeactivateButtonSelector = (): string => 'button:contains("Deactivate")';
+  getDeleteButtonSelector = (): string => 'button:contains("Delete")';
+  getActivateButtonSelector = (): string => 'button:contains("Activate")';
+  getSearchSelector = (): string => '[type="search"]';
+  getAddNewUserButton = (): Cypress.Chainable => cy.get('body').find('a:contains("Add New User")');
+  getTableHeader = (): Cypress.Chainable => cy.get('.dataTables_scrollHead');
 }

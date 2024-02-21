@@ -11,7 +11,7 @@ export default defineConfig({
     mailCatcherUrl: process.env.ENV_MAIL_CATCHER_URL,
     operationRunnerUrl: process.env.OPERATION_RUNNER_URL,
     cli: {
-      // TODO: move to .env
+      // TODO: TEMPORARILY SOLUTION: rework + move to .env
       store: 'DE',
       containerPath: '../suite-nonsplit',
       containerName: 'spryker_cli_1',
@@ -29,6 +29,10 @@ export default defineConfig({
           return false;
         },
       });
+    },
+    retries: {
+      runMode: 2,
+      openMode: 0,
     },
   },
   viewportWidth: parseInt(process.env.VIEWPORT_WIDGTH ?? '1000', 10),

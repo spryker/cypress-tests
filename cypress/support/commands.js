@@ -16,12 +16,12 @@ Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe) => {
   });
 });
 
-Cypress.Commands.add('visitBackoffice', (url) => {
-  return cy.visit(Cypress.env().backofficeUrl + url);
+Cypress.Commands.add('visitBackoffice', (url, options) => {
+  return cy.visit(Cypress.env().backofficeUrl + url, options);
 });
 
-Cypress.Commands.add('visitMerchantPortal', (url) => {
-  return cy.visit(Cypress.env().merchantPortalUrl + url);
+Cypress.Commands.add('visitMerchantPortal', (url, options) => {
+  return cy.visit(Cypress.env().merchantPortalUrl + url, options);
 });
 
 Cypress.Commands.add('resetYvesCookies', () => {

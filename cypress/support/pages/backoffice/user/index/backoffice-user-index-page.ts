@@ -2,10 +2,10 @@ import { AbstractPage } from '../../../abstract-page';
 import { BackofficeUserIndexRepository } from './backoffice-user-index-repository';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { autoProvide } from '../../../../utils/inversify/auto-provide';
+import { autoWired } from '../../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class BackofficeUserIndexPage extends AbstractPage {
   public PAGE_URL: string = '/user';
 
@@ -14,24 +14,54 @@ export class BackofficeUserIndexPage extends AbstractPage {
   }
 
   public createNewUser = (): void => {
-    this.repository.getCreateNewUserButton().click();
+    this.repository.getAddNewUserButton().click();
   };
 
-  public editUser = (email: string): void => {
-    this.findUser(email).find(this.repository.getEditButtonSelector()).click();
+  public editUser = (query: string): void => {
+    this.findUser(query).find(this.repository.getEditButtonSelector()).click();
   };
 
-  public findUser = (email: string): Cypress.Chainable => {
-    cy.get(this.repository.getUserSearchSelector()).clear().type(email);
+  public deactivateUser = (query: string): void => {
+    this.findUser(query).then((merchantRow) => {
+      const button = merchantRow.find(this.repository.getDeactivateButtonSelector());
+
+      if (button.length) {
+        button.click();
+      }
+    });
+  };
+
+  public deleteUser = (query: string): void => {
+    this.findUser(query).then((merchantRow) => {
+      const button = merchantRow.find(this.repository.getDeleteButtonSelector());
+
+      if (button.length) {
+        button.click();
+      }
+    });
+  };
+
+  public activateUser = (query: string): void => {
+    this.findUser(query).then((merchantRow) => {
+      const button = merchantRow.find(this.repository.getActivateButtonSelector());
+
+      if (button.length) {
+        button.click();
+      }
+    });
+  };
+
+  public findUser = (query: string): Cypress.Chainable => {
+    cy.get(this.repository.getSearchSelector()).clear().type(query);
 
     const interceptAlias = this.faker.string.uuid();
     cy.intercept('GET', '/user/index/table**').as(interceptAlias);
     cy.wait(`@${interceptAlias}`).its('response.body.recordsFiltered').should('eq', 1);
 
-    return this.repository.getFirstUserRow();
+    return this.repository.getFirstTableRow();
   };
 
   public getUserTableHeader = (): Cypress.Chainable => {
-    return this.repository.getUserTableHeader();
+    return this.repository.getTableHeader();
   };
 }

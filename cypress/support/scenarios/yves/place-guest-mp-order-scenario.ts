@@ -1,26 +1,28 @@
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { autoProvide } from '../../utils/inversify/auto-provide';
 import { YvesCartPage } from '../../pages/yves/cart/yves-cart-page';
 import { YvesCheckoutCustomerPage } from '../../pages/yves/checkout/customer/yves-checkout-customer-page';
 import { YvesCheckoutAddressPage } from '../../pages/yves/checkout/address/yves-checkout-address-page';
 import { YvesCheckoutShipmentPage } from '../../pages/yves/checkout/shipment/yves-checkout-shipment-page';
 import { YvesCheckoutPaymentPage } from '../../pages/yves/checkout/payment/yves-checkout-payment-page';
 import { YvesCheckoutSummaryPage } from '../../pages/yves/checkout/summary/yves-checkout-summary-page';
+import { autoWired } from '../../utils/inversify/auto-wired';
+import { CliHelper } from '../../helpers/cli-helper';
 
 @injectable()
-@autoProvide
-export class PlaceGuestOrderScenario {
+@autoWired
+export class PlaceGuestMpOrderScenario {
   constructor(
     @inject(YvesCartPage) private cartPage: YvesCartPage,
     @inject(YvesCheckoutCustomerPage) private checkoutCustomerPage: YvesCheckoutCustomerPage,
     @inject(YvesCheckoutAddressPage) private checkoutAddressPage: YvesCheckoutAddressPage,
     @inject(YvesCheckoutShipmentPage) private checkoutShipmentPage: YvesCheckoutShipmentPage,
     @inject(YvesCheckoutPaymentPage) private checkoutPaymentPage: YvesCheckoutPaymentPage,
-    @inject(YvesCheckoutSummaryPage) private checkoutSummaryPage: YvesCheckoutSummaryPage
+    @inject(YvesCheckoutSummaryPage) private checkoutSummaryPage: YvesCheckoutSummaryPage,
+    @inject(CliHelper) private cliHelper: CliHelper
   ) {}
 
-  public execute = (productSkus: string[]): void => {
+  public execute = (productSkus: string[]): Guest => {
     cy.visit(this.cartPage.PAGE_URL);
     productSkus.forEach((productSku: string) => {
       this.cartPage.quickAddToCart(productSku, 1);
@@ -28,10 +30,15 @@ export class PlaceGuestOrderScenario {
 
     this.cartPage.startCheckout();
 
-    this.checkoutCustomerPage.checkoutAsGuest();
+    const guest: Guest = this.checkoutCustomerPage.checkoutAsGuest();
     this.checkoutAddressPage.fillShippingAddress();
     this.checkoutShipmentPage.setStandardShippingMethod();
-    this.checkoutPaymentPage.setDummyPaymentMethod();
+    this.checkoutPaymentPage.setDummyMarketplacePaymentMethod();
     this.checkoutSummaryPage.placeOrder();
+
+    this.cliHelper.run('console oms:check-condition');
+    this.cliHelper.run('console oms:check-timeout');
+
+    return guest;
   };
 }

@@ -15,13 +15,11 @@
 
 import './commands';
 import * as path from 'path';
+import registerCypressGrep from '@cypress/grep';
+registerCypressGrep();
 
 before(function () {
   loadFixture();
-});
-
-beforeEach(function () {
-  skipTestIfNotInGroup();
 });
 
 const loadFixture = () => {
@@ -63,22 +61,4 @@ const getFixtureFilePath = () => {
     directoryPart: directoryPart,
     filePart: filePartWithoutExtension
   };
-};
-
-const skipTestIfNotInGroup = () => {
-  const cypressGroups = Cypress.env('groups');
-  if (!cypressGroups) {
-    return;
-  }
-
-  const groups = cypressGroups.split(',');
-
-  if (!groups) return;
-
-  const testName = Cypress.mocha.getRunner().suite.ctx.currentTest.title;
-  for (let i = 0; i < groups.length; i++) {
-    if (testName.includes(groups[i])) return;
-  }
-
-  this.skip();
 };

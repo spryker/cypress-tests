@@ -1,0 +1,10 @@
+{
+  "merchantAgentUser": {
+    "username": "agent-merchant@spryker.com",
+    "password": "change123"
+  },
+  "backofficeUser": {
+    "username": "admin@spryker.com",
+    "password": "change123"
+  }
+}

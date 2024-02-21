@@ -2,11 +2,11 @@ import 'reflect-metadata';
 import { AbstractPage } from '../../../abstract-page';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../../utils/inversify/types';
-import { autoProvide } from '../../../../utils/inversify/auto-provide';
 import { YvesCommentCartRepository } from './yves-comment-cart-repository';
+import { autoWired } from '../../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class YvesCommentCartPage extends AbstractPage {
   public PAGE_URL: string = '/cart';
 

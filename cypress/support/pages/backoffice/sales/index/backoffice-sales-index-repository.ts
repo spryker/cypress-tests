@@ -1,11 +1,9 @@
 import { injectable } from 'inversify';
-import { autoProvide } from '../../../../utils/inversify/auto-provide';
 import 'reflect-metadata';
+import { autoWired } from '../../../../utils/inversify/auto-wired';
 
 @injectable()
-@autoProvide
+@autoWired
 export class BackofficeSalesIndexRepository {
-  getViewButtons = (): Cypress.Chainable => {
-    return cy.get('.btn-view');
-  };
+  getViewButtons = (): Cypress.Chainable => cy.get('.btn-view');
 }
