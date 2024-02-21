@@ -10,7 +10,7 @@ import {
   YvesCheckoutShipmentPage,
   YvesCheckoutSummaryPage
 } from "../../../support/pages/yves";
-import {YvesLoginCustomerScenario} from "../../../support/scenarios/yves";
+import {YvesCustomerLoginScenario} from "../../../support/scenarios/yves";
 
 
 describe('checkout by logged in customer', (): void => {
@@ -22,7 +22,7 @@ describe('checkout by logged in customer', (): void => {
   let checkoutShipmentPage: YvesCheckoutShipmentPage;
   let checkoutPaymentPage: YvesCheckoutPaymentPage;
   let checkoutSummaryPage: YvesCheckoutSummaryPage;
-  let loginCustomerScenario: YvesLoginCustomerScenario;
+  let loginCustomerScenario: YvesCustomerLoginScenario;
 
   before((): void => {
     cy.resetYvesCookies();
@@ -33,7 +33,7 @@ describe('checkout by logged in customer', (): void => {
     checkoutShipmentPage = container.get(YvesCheckoutShipmentPage);
     checkoutPaymentPage = container.get(YvesCheckoutPaymentPage);
     checkoutSummaryPage = container.get(YvesCheckoutSummaryPage);
-    loginCustomerScenario = container.get(YvesLoginCustomerScenario);
+    loginCustomerScenario = container.get(YvesCustomerLoginScenario);
   });
 
   beforeEach((): void => {

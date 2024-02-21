@@ -1,6 +1,6 @@
 import { container } from '../../../../support/utils/inversify/inversify.config';
 import {CreateOrderByCustomerDynamicFixtures, CreateOrderByCustomerStaticFixtures} from "../../../../support/types/yves/order-managment/order";
-import {YvesLoginCustomerScenario} from "../../../../support/scenarios/yves";
+import {YvesCustomerLoginScenario} from "../../../../support/scenarios/yves";
 import {
   YvesCartPage, YvesCheckoutAddressPage, YvesCheckoutPaymentPage, YvesCheckoutShipmentPage, YvesCheckoutSummaryPage,
 } from "../../../../support/pages/yves";
@@ -8,7 +8,7 @@ import {
 describe('create order by customer', (): void => {
   let staticFixtures: CreateOrderByCustomerStaticFixtures;
   let dynamicFixtures: CreateOrderByCustomerDynamicFixtures;
-  let loginCustomerScenario: YvesLoginCustomerScenario;
+  let loginCustomerScenario: YvesCustomerLoginScenario;
   let cartPage: YvesCartPage;
   let checkoutAddressPage: YvesCheckoutAddressPage;
   let checkoutShipmentPage: YvesCheckoutShipmentPage;
@@ -18,7 +18,7 @@ describe('create order by customer', (): void => {
   before((): void => {
     cy.resetYvesCookies();
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
-    loginCustomerScenario = container.get(YvesLoginCustomerScenario);
+    loginCustomerScenario = container.get(YvesCustomerLoginScenario);
     cartPage = container.get(YvesCartPage);
     checkoutAddressPage = container.get(YvesCheckoutAddressPage);
     checkoutShipmentPage = container.get(YvesCheckoutShipmentPage);
