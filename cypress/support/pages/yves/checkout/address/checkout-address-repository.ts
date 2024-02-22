@@ -1,4 +1,4 @@
-export interface YvesCheckoutAddressRepository {
+export interface CheckoutAddressRepository {
   getSelectShippingAddressField(): Cypress.Chainable;
   getShippingAddressFirstNameField(): Cypress.Chainable;
   getShippingAddressLastNameField(): Cypress.Chainable;

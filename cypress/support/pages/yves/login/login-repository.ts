@@ -1,4 +1,4 @@
-export interface YvesLoginRepository {
+export interface LoginRepository {
   getLoginEmailInput(): Cypress.Chainable;
   getLoginPasswordInput(): Cypress.Chainable;
   getLoginForm(): Cypress.Chainable;

@@ -1,37 +1,37 @@
 import { container } from '../../../../support/utils/inversify/inversify.config';
 import {CreateOrderByCustomerDynamicFixtures, CreateOrderByCustomerStaticFixtures} from "../../../../support/types/yves/order-managment/order";
-import {YvesCustomerLoginScenario} from "../../../../support/scenarios/yves";
+import {CustomerLoginScenario} from "../../../../support/scenarios/yves";
 import {
-  YvesCartPage, YvesCheckoutAddressPage, YvesCheckoutPaymentPage, YvesCheckoutShipmentPage, YvesCheckoutSummaryPage,
+  CartPage, CheckoutAddressPage, CheckoutPaymentPage, CheckoutShipmentPage, CheckoutSummaryPage,
 } from "../../../../support/pages/yves";
 
 describe('create order by customer', (): void => {
   let staticFixtures: CreateOrderByCustomerStaticFixtures;
   let dynamicFixtures: CreateOrderByCustomerDynamicFixtures;
-  let loginCustomerScenario: YvesCustomerLoginScenario;
-  let cartPage: YvesCartPage;
-  let checkoutAddressPage: YvesCheckoutAddressPage;
-  let checkoutShipmentPage: YvesCheckoutShipmentPage;
-  let checkoutPaymentPage: YvesCheckoutPaymentPage;
-  let checkoutSummaryPage: YvesCheckoutSummaryPage;
+  let loginCustomerScenario: CustomerLoginScenario;
+  let cartPage: CartPage;
+  let checkoutAddressPage: CheckoutAddressPage;
+  let checkoutShipmentPage: CheckoutShipmentPage;
+  let checkoutPaymentPage: CheckoutPaymentPage;
+  let checkoutSummaryPage: CheckoutSummaryPage;
 
   before((): void => {
     cy.resetYvesCookies();
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
-    loginCustomerScenario = container.get(YvesCustomerLoginScenario);
-    cartPage = container.get(YvesCartPage);
-    checkoutAddressPage = container.get(YvesCheckoutAddressPage);
-    checkoutShipmentPage = container.get(YvesCheckoutShipmentPage);
-    checkoutPaymentPage = container.get(YvesCheckoutPaymentPage);
-    checkoutSummaryPage = container.get(YvesCheckoutSummaryPage);
+    loginCustomerScenario = container.get(CustomerLoginScenario);
+    cartPage = container.get(CartPage);
+    checkoutAddressPage = container.get(CheckoutAddressPage);
+    checkoutShipmentPage = container.get(CheckoutShipmentPage);
+    checkoutPaymentPage = container.get(CheckoutPaymentPage);
+    checkoutSummaryPage = container.get(CheckoutSummaryPage);
   });
 
   beforeEach((): void => {
     loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.customer.password);
+    cartPage.visit();
   });
 
   it('should be able to create an order by existing customer [@order, @regression]', (): void => {
-    cartPage.visit();
     cartPage.quickAddToCart(dynamicFixtures.product.sku, 1);
     cartPage.startCheckout();
     checkoutAddressPage.fillShippingAddress();

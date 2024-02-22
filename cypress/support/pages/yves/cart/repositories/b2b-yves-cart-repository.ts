@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { injectable } from 'inversify';
-import { YvesCartRepository } from '../yves-cart-repository';
+import { CartRepository } from '../cart-repository';
 
 @injectable()
-export class B2bYvesCartRepository implements YvesCartRepository {
+export class B2bYvesCartRepository implements CartRepository {
   getQuickAddToCartSkuField = (): Cypress.Chainable => cy.get('[name="sku"]');
   getQuickAddToCartQuantityField = (): Cypress.Chainable<JQuery<HTMLElement>> => cy.get('#quantity');
   getQuickAddToCartSubmitButton = (): Cypress.Chainable<JQuery<HTMLElement>> =>

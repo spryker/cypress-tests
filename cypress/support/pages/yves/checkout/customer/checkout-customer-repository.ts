@@ -1,4 +1,4 @@
-export interface YvesCheckoutCustomerRepository {
+export interface CheckoutCustomerRepository {
   getGuestRadioButton(): Cypress.Chainable;
   getGuestFirstNameField(): Cypress.Chainable;
   getGuestLastNameField(): Cypress.Chainable;

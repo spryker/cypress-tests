@@ -1,11 +1,11 @@
 import { inject, injectable } from 'inversify';
 import { autoWired } from '../../utils/inversify/auto-wired';
-import { YvesAgentLoginPage } from '../../pages/yves/agent-login/yves-agent-login-page';
+import { AgentLoginPage } from '../../pages/yves/agent-login/agent-login-page';
 
 @injectable()
 @autoWired
-export class YvesAgentLoginScenario {
-  constructor(@inject(YvesAgentLoginPage) private loginPage: YvesAgentLoginPage) {}
+export class AgentLoginScenario {
+  constructor(@inject(AgentLoginPage) private loginPage: AgentLoginPage) {}
 
   public execute = (user: User): void => {
     cy.visit(this.loginPage.PAGE_URL);

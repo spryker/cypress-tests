@@ -1,4 +1,4 @@
-export interface YvesCommentCartRepository {
+export interface CommentCartRepository {
   getAddCommentForm(): Cypress.Chainable;
   getCommentThreadListSection(): Cypress.Chainable;
   getAddCommentButtonSelector(): string;

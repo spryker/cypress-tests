@@ -1,3 +1,3 @@
-export * from './yves-customer-login-scenario';
-export * from './yves-agent-login-scenario';
+export * from './customer-login-scenario';
+export * from './agent-login-scenario';
 

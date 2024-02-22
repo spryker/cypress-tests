@@ -1,4 +1,4 @@
-export interface YvesCartRepository {
+export interface CartRepository {
   getQuickAddToCartSkuField(): Cypress.Chainable;
   getQuickAddToCartQuantityField(): Cypress.Chainable;
   getQuickAddToCartSubmitButton(): Cypress.Chainable;

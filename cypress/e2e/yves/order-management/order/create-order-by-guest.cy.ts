@@ -1,33 +1,30 @@
 import { container } from '../../../../support/utils/inversify/inversify.config';
 import {CreateOrderByGuestDynamicFixtures} from "../../../../support/types/yves/order-managment/order";
 import {
-  YvesCartPage,
-  YvesCheckoutAddressPage, YvesCheckoutCustomerPage,
-  YvesCheckoutPaymentPage,
-  YvesCheckoutShipmentPage, YvesCheckoutSummaryPage
+  CartPage,
+  CheckoutAddressPage, CheckoutCustomerPage,
+  CheckoutPaymentPage,
+  CheckoutShipmentPage, CheckoutSummaryPage
 } from "../../../../support/pages/yves";
 
 describe('create order by guest', (): void => {
   let dynamicFixtures: CreateOrderByGuestDynamicFixtures;
-  let cartPage: YvesCartPage;
-  let checkoutCustomerPage: YvesCheckoutCustomerPage;
-  let checkoutAddressPage: YvesCheckoutAddressPage;
-  let checkoutShipmentPage: YvesCheckoutShipmentPage;
-  let checkoutPaymentPage: YvesCheckoutPaymentPage;
-  let checkoutSummaryPage: YvesCheckoutSummaryPage;
+  let cartPage: CartPage;
+  let checkoutCustomerPage: CheckoutCustomerPage;
+  let checkoutAddressPage: CheckoutAddressPage;
+  let checkoutShipmentPage: CheckoutShipmentPage;
+  let checkoutPaymentPage: CheckoutPaymentPage;
+  let checkoutSummaryPage: CheckoutSummaryPage;
 
   before((): void => {
-    dynamicFixtures = Cypress.env('dynamicFixtures');
-    cartPage = container.get(YvesCartPage);
-    checkoutCustomerPage = container.get(YvesCheckoutCustomerPage);
-    checkoutAddressPage = container.get(YvesCheckoutAddressPage);
-    checkoutShipmentPage = container.get(YvesCheckoutShipmentPage);
-    checkoutPaymentPage = container.get(YvesCheckoutPaymentPage);
-    checkoutSummaryPage = container.get(YvesCheckoutSummaryPage);
-  });
-
-  beforeEach((): void => {
     cy.resetYvesCookies();
+    dynamicFixtures = Cypress.env('dynamicFixtures');
+    cartPage = container.get(CartPage);
+    checkoutCustomerPage = container.get(CheckoutCustomerPage);
+    checkoutAddressPage = container.get(CheckoutAddressPage);
+    checkoutShipmentPage = container.get(CheckoutShipmentPage);
+    checkoutPaymentPage = container.get(CheckoutPaymentPage);
+    checkoutSummaryPage = container.get(CheckoutSummaryPage);
   });
 
   it('should be able to create an order by guest [@regression]', (): void => {

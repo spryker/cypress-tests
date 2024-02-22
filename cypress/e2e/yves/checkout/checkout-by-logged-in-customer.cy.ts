@@ -4,70 +4,56 @@ import {
   CheckoutByLoggedInCustomerStaticFixtures
 } from "../../../support/types/yves/checkout";
 import {
-  YvesCartPage,
-  YvesCheckoutAddressPage,
-  YvesCheckoutPaymentPage,
-  YvesCheckoutShipmentPage,
-  YvesCheckoutSummaryPage
+  CartPage,
+  CheckoutAddressPage,
+  CheckoutPaymentPage,
+  CheckoutShipmentPage,
+  CheckoutSummaryPage
 } from "../../../support/pages/yves";
-import {YvesCustomerLoginScenario} from "../../../support/scenarios/yves";
+import {CustomerLoginScenario} from "../../../support/scenarios/yves";
 
+let staticFixtures: CheckoutByLoggedInCustomerStaticFixtures;
+let dynamicFixtures: CheckoutByLoggedInCustomerDynamicFixtures;
+let cartPage: CartPage;
+let checkoutAddressPage: CheckoutAddressPage;
+let checkoutShipmentPage: CheckoutShipmentPage;
+let checkoutPaymentPage: CheckoutPaymentPage;
+let checkoutSummaryPage: CheckoutSummaryPage;
+let loginCustomerScenario: CustomerLoginScenario;
 
 describe('checkout by logged in customer', (): void => {
-  let staticFixtures: CheckoutByLoggedInCustomerStaticFixtures;
-  let dynamicFixtures: CheckoutByLoggedInCustomerDynamicFixtures;
-
-  let cartPage: YvesCartPage;
-  let checkoutAddressPage: YvesCheckoutAddressPage;
-  let checkoutShipmentPage: YvesCheckoutShipmentPage;
-  let checkoutPaymentPage: YvesCheckoutPaymentPage;
-  let checkoutSummaryPage: YvesCheckoutSummaryPage;
-  let loginCustomerScenario: YvesCustomerLoginScenario;
-
   before((): void => {
     cy.resetYvesCookies();
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
-    cartPage = container.get(YvesCartPage);
-    checkoutAddressPage = container.get(YvesCheckoutAddressPage);
-    checkoutShipmentPage = container.get(YvesCheckoutShipmentPage);
-    checkoutPaymentPage = container.get(YvesCheckoutPaymentPage);
-    checkoutSummaryPage = container.get(YvesCheckoutSummaryPage);
-    loginCustomerScenario = container.get(YvesCustomerLoginScenario);
+    cartPage = container.get(CartPage);
+    checkoutAddressPage = container.get(CheckoutAddressPage);
+    checkoutShipmentPage = container.get(CheckoutShipmentPage);
+    checkoutPaymentPage = container.get(CheckoutPaymentPage);
+    checkoutSummaryPage = container.get(CheckoutSummaryPage);
+    loginCustomerScenario = container.get(CustomerLoginScenario);
   });
 
   beforeEach((): void => {
     loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.customer.password);
     cartPage.visit();
+    cartPage.quickAddToCart(dynamicFixtures.productOne.sku);
   });
 
   it('should checkout with one concrete product', (): void => {
-    cartPage.quickAddToCart(dynamicFixtures.productOne.sku);
-
-    cartPage.startCheckout();
-    checkoutAddressPage.fillShippingAddress();
-    checkoutShipmentPage.setStandardShippingMethod();
-    checkoutPaymentPage.setDummyPaymentMethod();
-    checkoutSummaryPage.placeOrder();
+    completeCustomerCheckoutProcessWithSingleShipment();
 
     cy.contains('Your order has been placed successfully!');
   });
 
   it('should checkout with two concrete products to single shipment', (): void => {
-    cartPage.quickAddToCart(dynamicFixtures.productOne.sku, 2);
     cartPage.quickAddToCart(dynamicFixtures.productTwo.sku, 2);
-
-    cartPage.startCheckout();
-    checkoutAddressPage.fillShippingAddress();
-    checkoutShipmentPage.setStandardShippingMethod();
-    checkoutPaymentPage.setDummyPaymentMethod();
-    checkoutSummaryPage.placeOrder();
+    completeCustomerCheckoutProcessWithSingleShipment();
 
     cy.contains('Your order has been placed successfully!');
   });
 
   it('should checkout to multi shipment address', (): void => {
-    cartPage.quickAddToCart(dynamicFixtures.productOne.sku, 2);
     cartPage.quickAddToCart(dynamicFixtures.productTwo.sku, 2);
 
     cartPage.startCheckout();
@@ -80,8 +66,6 @@ describe('checkout by logged in customer', (): void => {
   });
 
   it('should checkout with strict checkout step redirects', (): void => {
-    cartPage.quickAddToCart(dynamicFixtures.productOne.sku);
-
     cartPage.assertPageLocation();
     cartPage.startCheckout();
 
@@ -100,3 +84,11 @@ describe('checkout by logged in customer', (): void => {
     cy.url().should('include', '/checkout/success');
   });
 });
+
+const completeCustomerCheckoutProcessWithSingleShipment = () => {
+  cartPage.startCheckout();
+  checkoutAddressPage.fillShippingAddress();
+  checkoutShipmentPage.setStandardShippingMethod();
+  checkoutPaymentPage.setDummyPaymentMethod();
+  checkoutSummaryPage.placeOrder();
+}

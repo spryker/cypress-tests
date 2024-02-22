@@ -1,4 +1,4 @@
-export interface YvesCheckoutPaymentRepository {
+export interface CheckoutPaymentRepository {
   getDummyPaymentInvoiceRadio(): Cypress.Chainable;
   getDummyPaymentInvoiceDateField(): Cypress.Chainable;
   getGoToSummaryButton(): Cypress.Chainable;

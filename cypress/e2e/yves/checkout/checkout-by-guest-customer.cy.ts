@@ -1,88 +1,60 @@
 import { container } from '../../../support/utils/inversify/inversify.config';
 import {CheckoutByGuestCustomerDynamicFixtures} from "../../../support/types/yves/checkout";
 import {
-  YvesCartPage,
-  YvesCheckoutAddressPage,
-  YvesCheckoutCustomerPage, YvesCheckoutPaymentPage,
-  YvesCheckoutShipmentPage, YvesCheckoutSummaryPage
+  CartPage,
+  CheckoutAddressPage,
+  CheckoutCustomerPage, CheckoutPaymentPage,
+  CheckoutShipmentPage, CheckoutSummaryPage
 } from "../../../support/pages/yves";
 
+let cartPage: CartPage;
+let checkoutCustomerPage: CheckoutCustomerPage;
+let checkoutAddressPage: CheckoutAddressPage;
+let checkoutShipmentPage: CheckoutShipmentPage;
+let checkoutPaymentPage: CheckoutPaymentPage;
+let checkoutSummaryPage: CheckoutSummaryPage;
+let dynamicFixtures: CheckoutByGuestCustomerDynamicFixtures;
 
 describe('checkout by guest customer', (): void => {
-  let dynamicFixtures: CheckoutByGuestCustomerDynamicFixtures;
-  let cartPage: YvesCartPage;
-  let checkoutCustomerPage: YvesCheckoutCustomerPage;
-  let checkoutAddressPage: YvesCheckoutAddressPage;
-  let checkoutShipmentPage: YvesCheckoutShipmentPage;
-  let checkoutPaymentPage: YvesCheckoutPaymentPage;
-  let checkoutSummaryPage: YvesCheckoutSummaryPage;
-
   before((): void => {
+    cy.resetYvesCookies();
     dynamicFixtures = Cypress.env('dynamicFixtures');
 
-    cartPage = container.get(YvesCartPage);
-    checkoutCustomerPage = container.get(YvesCheckoutCustomerPage);
-    checkoutAddressPage = container.get(YvesCheckoutAddressPage);
-    checkoutShipmentPage = container.get(YvesCheckoutShipmentPage);
-    checkoutPaymentPage = container.get(YvesCheckoutPaymentPage);
-    checkoutSummaryPage = container.get(YvesCheckoutSummaryPage);
+    cartPage = container.get(CartPage);
+    checkoutCustomerPage = container.get(CheckoutCustomerPage);
+    checkoutAddressPage = container.get(CheckoutAddressPage);
+    checkoutShipmentPage = container.get(CheckoutShipmentPage);
+    checkoutPaymentPage = container.get(CheckoutPaymentPage);
+    checkoutSummaryPage = container.get(CheckoutSummaryPage);
   });
 
   beforeEach((): void => {
-    cy.resetYvesCookies();
+    cartPage.visit();
+    cartPage.quickAddToCart(dynamicFixtures.productOne.sku, 2);
   });
 
   it('should checkout with one concrete product', (): void => {
-    cy.visit(cartPage.PAGE_URL);
     cartPage.quickAddToCart(dynamicFixtures.productOne.sku);
-
-    cartPage.startCheckout();
-    checkoutCustomerPage.checkoutAsGuest();
-    checkoutAddressPage.fillShippingAddress();
-    checkoutShipmentPage.setStandardShippingMethod();
-    checkoutPaymentPage.setDummyPaymentMethod();
-    checkoutSummaryPage.placeOrder();
+    completeGuestCheckoutProcess();
 
     cy.contains('Your order has been placed successfully!');
   });
 
   it('should checkout with two concrete products to single shipment [@regression]', (): void => {
-    cy.visit(cartPage.PAGE_URL);
-
-    cartPage.quickAddToCart(dynamicFixtures.productOne.sku, 2);
     cartPage.quickAddToCart(dynamicFixtures.productTwo.sku, 2);
-
-    cartPage.startCheckout();
-    checkoutCustomerPage.checkoutAsGuest();
-    checkoutAddressPage.fillShippingAddress();
-    checkoutShipmentPage.setStandardShippingMethod();
-    checkoutPaymentPage.setDummyPaymentMethod();
-    checkoutSummaryPage.placeOrder();
+    completeGuestCheckoutProcess();
 
     cy.contains('Your order has been placed successfully!');
   });
 
   it('should checkout to multi shipment address [@regression]', (): void => {
-    cy.visit(cartPage.PAGE_URL);
-
-    cartPage.quickAddToCart(dynamicFixtures.productOne.sku, 2);
     cartPage.quickAddToCart(dynamicFixtures.productTwo.sku, 2);
-
-    cartPage.startCheckout();
-    checkoutCustomerPage.checkoutAsGuest();
-    checkoutAddressPage.fillShippingAddress();
-    checkoutShipmentPage.setStandardShippingMethod();
-    checkoutPaymentPage.setDummyPaymentMethod();
-    checkoutSummaryPage.placeOrder();
+    completeGuestCheckoutProcess();
 
     cy.contains('Your order has been placed successfully!');
   });
 
   it('should checkout with strict checkout step redirects', (): void => {
-    cy.visit(cartPage.PAGE_URL);
-
-    cartPage.quickAddToCart(dynamicFixtures.productOne.sku);
-
     cartPage.assertPageLocation();
     cartPage.startCheckout();
 
@@ -104,3 +76,12 @@ describe('checkout by guest customer', (): void => {
     cy.url().should('include', '/checkout/success');
   });
 });
+
+const completeGuestCheckoutProcess = () => {
+  cartPage.startCheckout();
+  checkoutCustomerPage.checkoutAsGuest();
+  checkoutAddressPage.fillShippingAddress();
+  checkoutShipmentPage.setStandardShippingMethod();
+  checkoutPaymentPage.setDummyPaymentMethod();
+  checkoutSummaryPage.placeOrder();
+}

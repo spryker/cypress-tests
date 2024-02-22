@@ -40,3 +40,8 @@ export interface User {
     username: string;
     password: string;
 }
+export interface Guest {
+    firstName: string;
+    lastName: string;
+    email: string;
+}

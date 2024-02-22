@@ -2,15 +2,15 @@ import { AbstractPage } from '../../abstract-page';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../utils/inversify/types';
 import 'reflect-metadata';
-import { YvesMultiCartRepository } from './yves-multi-cart-repository';
+import { MultiCartRepository } from './multi-cart-repository';
 import { autoWired } from '../../../utils/inversify/auto-wired';
 
 @injectable()
 @autoWired
-export class YvesMultiCartPage extends AbstractPage {
+export class MultiCartPage extends AbstractPage {
   public PAGE_URL: string = '/multi-cart';
 
-  constructor(@inject(TYPES.YvesMultiCartRepository) private repository: YvesMultiCartRepository) {
+  constructor(@inject(TYPES.YvesMultiCartRepository) private repository: MultiCartRepository) {
     super();
   }
 

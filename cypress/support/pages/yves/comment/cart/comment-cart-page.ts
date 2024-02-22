@@ -2,15 +2,15 @@ import 'reflect-metadata';
 import { AbstractPage } from '../../../abstract-page';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../../utils/inversify/types';
-import { YvesCommentCartRepository } from './yves-comment-cart-repository';
+import { CommentCartRepository } from './comment-cart-repository';
 import { autoWired } from '../../../../utils/inversify/auto-wired';
 
 @injectable()
 @autoWired
-export class YvesCommentCartPage extends AbstractPage {
+export class CommentCartPage extends AbstractPage {
   public PAGE_URL: string = '/cart';
 
-  constructor(@inject(TYPES.YvesCommentCartRepository) private repository: YvesCommentCartRepository) {
+  constructor(@inject(TYPES.YvesCommentCartRepository) private repository: CommentCartRepository) {
     super();
   }
 

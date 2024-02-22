@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { injectable } from 'inversify';
-import { YvesCommentCartRepository } from '../yves-comment-cart-repository';
+import { CommentCartRepository } from '../comment-cart-repository';
 
 @injectable()
-export class SuiteYvesCommentCartRepository implements YvesCommentCartRepository {
+export class SuiteYvesCommentCartRepository implements CommentCartRepository {
   getAddCommentForm = (): Cypress.Chainable => cy.get('[data-qa="component comment-form"]');
   getCommentThreadListSection = (): Cypress.Chainable => cy.get('[data-qa="component comment-thread-list"]');
   getAddCommentButtonSelector = (): string => 'button:contains("Add")';

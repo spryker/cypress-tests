@@ -1,11 +1,11 @@
 import { inject, injectable } from 'inversify';
-import { YvesLoginPage } from '../../pages/yves';
+import { LoginPage } from '../../pages/yves';
 import { autoWired } from '../../utils/inversify/auto-wired';
 
 @injectable()
 @autoWired
-export class YvesCustomerLoginScenario {
-  constructor(@inject(YvesLoginPage) private loginPage: YvesLoginPage) {}
+export class CustomerLoginScenario {
+  constructor(@inject(LoginPage) private loginPage: LoginPage) {}
 
   public execute = (email: string, password: string): void => {
     this.loginPage.login(email, password);

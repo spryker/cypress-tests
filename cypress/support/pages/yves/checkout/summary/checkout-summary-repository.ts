@@ -1,4 +1,4 @@
-export interface YvesCheckoutSummaryRepository {
+export interface CheckoutSummaryRepository {
   getaAcceptTermsAndConditionsCheckbox(): Cypress.Chainable;
   getSummaryForm(): Cypress.Chainable;
 }

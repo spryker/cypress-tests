@@ -1,19 +1,19 @@
 import { container } from '../../../../support/utils/inversify/inversify.config';
 import {CartCommentDynamicFixtures, CartCommentStaticFixtures} from "../../../../support/types/yves/cart/comment";
-import {YvesCommentCartPage} from "../../../../support/pages/yves";
-import {YvesCustomerLoginScenario} from "../../../../support/scenarios/yves";
+import {CommentCartPage} from "../../../../support/pages/yves";
+import {CustomerLoginScenario} from "../../../../support/scenarios/yves";
 
 describe('cart comment', (): void => {
   let dynamicFixtures: CartCommentDynamicFixtures;
   let staticFixtures: CartCommentStaticFixtures;
-  let commentCartPage: YvesCommentCartPage;
-  let loginCustomerScenario: YvesCustomerLoginScenario;
+  let commentCartPage: CommentCartPage;
+  let loginCustomerScenario: CustomerLoginScenario;
 
   before((): void => {
     cy.resetYvesCookies();
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
-    commentCartPage = container.get(YvesCommentCartPage);
-    loginCustomerScenario = container.get(YvesCustomerLoginScenario);
+    commentCartPage = container.get(CommentCartPage);
+    loginCustomerScenario = container.get(CustomerLoginScenario);
   });
 
   beforeEach((): void => {

@@ -1,9 +1,9 @@
 import { injectable } from 'inversify';
 import 'reflect-metadata';
-import { YvesCheckoutAddressRepository } from '../yves-checkout-address-repository';
+import { CheckoutAddressRepository } from '../checkout-address-repository';
 
 @injectable()
-export class SuiteYvesCheckoutAddressRepository implements YvesCheckoutAddressRepository {
+export class SuiteYvesCheckoutAddressRepository implements CheckoutAddressRepository {
   getSelectShippingAddressField = (): Cypress.Chainable =>
     cy.get('.select__select.js-address__form-select-shippingAddress');
   getShippingAddressFirstNameField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_first_name');
