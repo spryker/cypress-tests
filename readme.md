@@ -1,16 +1,36 @@
+## Description
+
+This repository is dedicated to housing an extensive collection of UI end-to-end tests, meticulously crafted using
+Cypress for Spryker applications. These tests are designed to thoroughly evaluate the user interface, ensuring that all
+interactions and visual elements function as intended in real-world scenarios. By leveraging Cypress's advanced browser
+automation capabilities, this suite provides an efficient and effective means of validating the user experience,
+confirming the seamless operation and aesthetic integrity of Spryker's front-end components. Our commitment to rigorous
+UI testing helps maintain the high standard of quality and reliability that Spryker users expect.
+
 ## Setup
 
-- **Install Dependencies:** To get started, run `npm install` to install all necessary dependencies.
-- **Environment Configuration:** Copy the `.env.example` file to a new file named `.env`.
+To get started with these tests, follow these setup steps:
 
-## About This Package
+1. **Install Dependencies:**
 
-This package is used for end-to-end (E2E) testing with Cypress at Spryker. It provides a robust and
-efficient way to ensure the quality of our web applications by automating the testing process. By
-using this package, we can simulate real user interactions and catch potential issues before they
-reach production.
+- Install all necessary dependencies required for running the tests.
+  ```bash
+  npm install
+  ```
 
-## Contributing
+2. **Environment Configuration:**
 
-While this package is primarily for internal use at Spryker, we welcome contributions that can
-improve its functionality and efficiency. Feel free to fork the repository and submit pull requests.
+- Set up your environment variables for Cypress.
+    - Copy the `.env.example` file to a new file named `.env`.
+    - Open the `.env` file and fill in the necessary environment variables.
+    - These variables are crucial for Cypress to connect with your Spryker application and perform tests effectively.
+
+## Running Tests
+
+To run the Cypress tests, use the following command:
+
+```bash
+npm run cy:open
+```
+
+This command opens the Cypress Test Runner, a powerful interface that allows you to see tests running in real time.
