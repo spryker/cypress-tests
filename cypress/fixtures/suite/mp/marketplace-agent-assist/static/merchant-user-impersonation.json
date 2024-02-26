@@ -1,0 +1,14 @@
+{
+  "backofficeUser": {
+    "username": "admin@spryker.com",
+    "password": "change123"
+  },
+  "merchantAgentUser": {
+    "username": "agent-merchant@spryker.com",
+    "password": "change123"
+  },
+  "merchantUsername": "harald@spryker.com",
+  "productConcreteSkus": ["005_30663301"],
+  "productAbstractSku": "090",
+  "offerReference": "offer423"
+}

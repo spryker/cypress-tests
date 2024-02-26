@@ -1,23 +1,22 @@
-import { AbstractPage } from '../../abstract-page';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../utils/inversify/types';
 import 'reflect-metadata';
 import { AgentLoginRepository } from './agent-login-repository';
 import { autoWired } from '../../../utils/inversify/auto-wired';
-import {User} from "../../../types/user";
+import { YvesPage } from '../yves-page';
 
 @injectable()
 @autoWired
-export class AgentLoginPage extends AbstractPage {
-  public PAGE_URL: string = '/agent/login';
+export class AgentLoginPage extends YvesPage {
+  protected PAGE_URL: string = '/agent/login';
 
   constructor(@inject(TYPES.YvesAgentLoginRepository) private repository: AgentLoginRepository) {
     super();
   }
 
-  public login = (user: User): void => {
-    this.repository.getLoginEmailInput().clear().type(user.username);
-    this.repository.getLoginPasswordInput().clear().type(user.password);
+  public login = (username: string, password: string): void => {
+    this.repository.getLoginEmailInput().clear().type(username);
+    this.repository.getLoginPasswordInput().clear().type(password);
 
     this.repository.getLoginForm().submit();
   };

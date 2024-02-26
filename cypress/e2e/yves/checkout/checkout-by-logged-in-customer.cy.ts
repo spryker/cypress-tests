@@ -12,26 +12,20 @@ import {
 } from "../../../support/pages/yves";
 import {CustomerLoginScenario} from "../../../support/scenarios/yves";
 
-let staticFixtures: CheckoutByLoggedInCustomerStaticFixtures;
-let dynamicFixtures: CheckoutByLoggedInCustomerDynamicFixtures;
-let cartPage: CartPage;
-let checkoutAddressPage: CheckoutAddressPage;
-let checkoutShipmentPage: CheckoutShipmentPage;
-let checkoutPaymentPage: CheckoutPaymentPage;
-let checkoutSummaryPage: CheckoutSummaryPage;
-let loginCustomerScenario: CustomerLoginScenario;
+describe('checkout by logged in customer', {tags: ['@checkout']}, (): void => {
+  const cartPage: CartPage = container.get(CartPage);
+  const checkoutAddressPage: CheckoutAddressPage = container.get(CheckoutAddressPage);
+  const checkoutShipmentPage: CheckoutShipmentPage = container.get(CheckoutShipmentPage);
+  const checkoutPaymentPage: CheckoutPaymentPage = container.get(CheckoutPaymentPage);
+  const checkoutSummaryPage: CheckoutSummaryPage = container.get(CheckoutSummaryPage);
+  const loginCustomerScenario: CustomerLoginScenario = container.get(CustomerLoginScenario);
 
-describe('checkout by logged in customer', (): void => {
+  let staticFixtures: CheckoutByLoggedInCustomerStaticFixtures;
+  let dynamicFixtures: CheckoutByLoggedInCustomerDynamicFixtures;
+
   before((): void => {
     cy.resetYvesCookies();
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
-
-    cartPage = container.get(CartPage);
-    checkoutAddressPage = container.get(CheckoutAddressPage);
-    checkoutShipmentPage = container.get(CheckoutShipmentPage);
-    checkoutPaymentPage = container.get(CheckoutPaymentPage);
-    checkoutSummaryPage = container.get(CheckoutSummaryPage);
-    loginCustomerScenario = container.get(CustomerLoginScenario);
   });
 
   beforeEach((): void => {
@@ -53,7 +47,7 @@ describe('checkout by logged in customer', (): void => {
     cy.contains('Your order has been placed successfully!');
   });
 
-  it('should checkout to multi shipment address', (): void => {
+  it('should checkout to multi shipment address', { tags: ['@smoke'] }, (): void => {
     cartPage.quickAddToCart(dynamicFixtures.productTwo.sku, 2);
 
     cartPage.startCheckout();
@@ -83,12 +77,12 @@ describe('checkout by logged in customer', (): void => {
 
     cy.url().should('include', '/checkout/success');
   });
-});
 
-const completeCustomerCheckoutProcessWithSingleShipment = () => {
-  cartPage.startCheckout();
-  checkoutAddressPage.fillShippingAddress();
-  checkoutShipmentPage.setStandardShippingMethod();
-  checkoutPaymentPage.setDummyPaymentMethod();
-  checkoutSummaryPage.placeOrder();
-}
+  const completeCustomerCheckoutProcessWithSingleShipment = () => {
+    cartPage.startCheckout();
+    checkoutAddressPage.fillShippingAddress();
+    checkoutShipmentPage.setStandardShippingMethod();
+    checkoutPaymentPage.setDummyPaymentMethod();
+    checkoutSummaryPage.placeOrder();
+  }
+});

@@ -1,21 +1,17 @@
 import 'reflect-metadata';
-import { AbstractPage } from '../../../abstract-page';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../../utils/inversify/types';
 import { CommentCartRepository } from './comment-cart-repository';
 import { autoWired } from '../../../../utils/inversify/auto-wired';
+import { YvesPage } from '../../yves-page';
 
 @injectable()
 @autoWired
-export class CommentCartPage extends AbstractPage {
-  public PAGE_URL: string = '/cart';
+export class CommentCartPage extends YvesPage {
+  protected PAGE_URL: string = '/cart';
 
   constructor(@inject(TYPES.YvesCommentCartRepository) private repository: CommentCartRepository) {
     super();
-  }
-
-  public visit = (): void => {
-    cy.visit(this.PAGE_URL);
   }
 
   public addComment = (commentMessage: string): void => {
@@ -29,12 +25,14 @@ export class CommentCartPage extends AbstractPage {
 
     this.getCommentThreadListSection().first().find(this.repository.getUpdateCommentButtonSelector()).click();
   };
+  
   public updateCommentByCommentText = (initialCommentMessage: string, newCommentMessage: string): void => {
     const textarea = this.repository.getCommentTextareaByCommentText(initialCommentMessage);
 
     textarea.clear().type(newCommentMessage);
     textarea.parent().find(this.repository.getUpdateCommentButtonSelector()).click();
   };
+  
   public removeCommentByCommentText = (commentMessage: string): void => {
     this.repository
       .getCommentTextareaByCommentText(commentMessage)

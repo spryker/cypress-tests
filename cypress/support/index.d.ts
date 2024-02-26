@@ -13,7 +13,7 @@ declare namespace Cypress {
     resetYvesCookies(): void;
 
     /**
-     * @example cy.runFixtureHelpers()
+     * @example cy.loadDynamicFixturesByPayload('suite/yves/checkout/dynamic/checkout-by-guest-customer')
      */
     loadDynamicFixturesByPayload(dynamicFixturesDefaultFilePath: string): Chainable;
 

@@ -5,25 +5,20 @@ import {
   CartPage, CheckoutAddressPage, CheckoutPaymentPage, CheckoutShipmentPage, CheckoutSummaryPage,
 } from "../../../../support/pages/yves";
 
-describe('create order by customer', (): void => {
+describe('create order by customer',{tags: ['@order-management']}, (): void => {
+  const cartPage: CartPage = container.get(CartPage);
+  const loginCustomerScenario: CustomerLoginScenario = container.get(CustomerLoginScenario);
+  const checkoutAddressPage: CheckoutAddressPage = container.get(CheckoutAddressPage);
+  const checkoutShipmentPage: CheckoutShipmentPage = container.get(CheckoutShipmentPage);
+  const checkoutPaymentPage: CheckoutPaymentPage = container.get(CheckoutPaymentPage);
+  const checkoutSummaryPage: CheckoutSummaryPage = container.get(CheckoutSummaryPage);
+
   let staticFixtures: CreateOrderByCustomerStaticFixtures;
   let dynamicFixtures: CreateOrderByCustomerDynamicFixtures;
-  let loginCustomerScenario: CustomerLoginScenario;
-  let cartPage: CartPage;
-  let checkoutAddressPage: CheckoutAddressPage;
-  let checkoutShipmentPage: CheckoutShipmentPage;
-  let checkoutPaymentPage: CheckoutPaymentPage;
-  let checkoutSummaryPage: CheckoutSummaryPage;
 
   before((): void => {
     cy.resetYvesCookies();
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
-    loginCustomerScenario = container.get(CustomerLoginScenario);
-    cartPage = container.get(CartPage);
-    checkoutAddressPage = container.get(CheckoutAddressPage);
-    checkoutShipmentPage = container.get(CheckoutShipmentPage);
-    checkoutPaymentPage = container.get(CheckoutPaymentPage);
-    checkoutSummaryPage = container.get(CheckoutSummaryPage);
   });
 
   beforeEach((): void => {
@@ -31,7 +26,7 @@ describe('create order by customer', (): void => {
     cartPage.visit();
   });
 
-  it('should be able to create an order by existing customer [@order, @regression]', (): void => {
+  it('should be able to create an order by existing customer', (): void => {
     cartPage.quickAddToCart(dynamicFixtures.product.sku, 1);
     cartPage.startCheckout();
     checkoutAddressPage.fillShippingAddress();

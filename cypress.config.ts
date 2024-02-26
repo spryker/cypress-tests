@@ -8,25 +8,15 @@ export default defineConfig({
     repositoryId: process.env.ENV_REPOSITORY_ID,
     backofficeUrl: process.env.ENV_BACKOFFICE_URL,
     merchantPortalUrl: process.env.ENV_MERCHANT_PORTAL_URL,
+    glueBackendUrl: process.env.ENV_GLUE_BACKEND_URL,
     mailCatcherUrl: process.env.ENV_MAIL_CATCHER_URL,
-    operationRunnerUrl: process.env.OPERATION_RUNNER_URL,
-    cli: {
-      // TODO: TEMPORARILY SOLUTION: rework + move to .env
-      store: 'DE',
-      containerPath: '../suite-nonsplit',
-      containerName: 'spryker_cli_1',
-    },
   },
   e2e: {
     baseUrl: process.env.E2E_BASE_URL,
-    defaultCommandTimeout: 8000,
-    setupNodeEvents(on, config) {
+    setupNodeEvents(on) {
       on('task', {
         isFileExists(filename): boolean {
-          if (fs.existsSync(filename)) {
-            return true;
-          }
-          return false;
+          return fs.existsSync(filename);
         },
       });
     },

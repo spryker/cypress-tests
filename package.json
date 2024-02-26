@@ -1,9 +1,13 @@
 {
-  "name": "cypress-spryker-poc",
+  "name": "spryker-cypress-tests",
   "version": "0.1.0",
-  "description": "",
+  "description": "End-to-end tests for Spryker applications.",
   "main": "index.js",
-  "author": "dmiseev@gmail.com",
+  "author": {
+    "name": "Spryker Systems GmbH",
+    "email": "info@spryker.com",
+    "url": "https://spryker.com/"
+  },
   "license": "MIT",
   "scripts": {
     "lint": "eslint . --ext .ts",
@@ -11,18 +15,17 @@
     "prettier:write": "npx prettier . --write",
     "cy:open": "cypress open",
     "cy:run": "cypress run --headless --browser chrome",
-    "test:tag:smoke": "npx cypress run --env grepTags=@smoke --headless --browser chrome",
-    "test:feture:checkout": "npx cypress run --spec \"cypress/e2e/checkout/*\" --headless --browser chrome",
-    "test:feture:comment": "npx cypress run --spec \"cypress/e2e/comment/*\" --headless --browser chrome",
-    "test:feture:merchant-agent-assist": "npx cypress run --spec \"cypress/e2e/merchant-agent-assist/*\" --headless --browser chrome",
-    "test:feture:order-management": "npx cypress run --spec \"cypress/e2e/order-management/*\" --headless --browser chrome"
+    "cy:yves": "npx cypress run --spec cypress/e2e/yves/* --headless --browser chrome",
+    "cy:backoffice": "npx cypress run --spec cypress/e2e/backoffice/* --headless --browser chrome",
+    "cy:mp": "npx cypress run --spec cypress/e2e/mp/* --headless --browser chrome",
+    "cy:smoke": "npx cypress run --env grepTags=@smoke --headless --browser chrome"
   },
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=10.0.0"
   },
   "devDependencies": {
-    "cypress": "^13.6.3",
+    "cypress": "^13.6.6",
     "@cypress/grep": "^4.0.1",
     "@faker-js/faker": "^8.3.1",
     "@types/dotenv": "^8.2.0",

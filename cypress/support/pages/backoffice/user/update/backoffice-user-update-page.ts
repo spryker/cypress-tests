@@ -1,13 +1,13 @@
 import { BackofficeUserUpdateRepository } from './backoffice-user-update-repository';
-import { AbstractPage } from '../../../abstract-page';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { autoWired } from '../../../../utils/inversify/auto-wired';
+import { BackofficePage } from '../../backoffice-page';
 
 @injectable()
 @autoWired
-export class BackofficeUserUpdatePage extends AbstractPage {
-  public PAGE_URL: string = '/user/edit/update';
+export class BackofficeUserUpdatePage extends BackofficePage {
+  protected PAGE_URL: string = '/user/edit/update';
   public DEFAULT_PASSWORD: string = 'Change123@_';
 
   constructor(@inject(BackofficeUserUpdateRepository) private repository: BackofficeUserUpdateRepository) {

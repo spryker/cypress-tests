@@ -1,14 +1,14 @@
-import { AbstractPage } from '../../../abstract-page';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../../utils/inversify/types';
 import 'reflect-metadata';
 import { CheckoutSummaryRepository } from './checkout-summary-repository';
 import { autoWired } from '../../../../utils/inversify/auto-wired';
+import { YvesPage } from '../../yves-page';
 
 @injectable()
 @autoWired
-export class CheckoutSummaryPage extends AbstractPage {
-  public PAGE_URL: string = '/checkout/summary';
+export class CheckoutSummaryPage extends YvesPage {
+  protected PAGE_URL: string = '/checkout/summary';
 
   constructor(@inject(TYPES.YvesCheckoutSummaryRepository) private repository: CheckoutSummaryRepository) {
     super();

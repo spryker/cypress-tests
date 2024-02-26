@@ -1,13 +1,13 @@
-import { AbstractPage } from '../../abstract-page';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { MpOffersRepository } from './mp-offers-repository';
 import { autoWired } from '../../../utils/inversify/auto-wired';
+import { MpPage } from '../mp-page';
 
 @injectable()
 @autoWired
-export class MpOffersPage extends AbstractPage {
-  public PAGE_URL: string = '/product-offer-merchant-portal-gui/product-offers';
+export class MpOffersPage extends MpPage {
+  protected PAGE_URL: string = '/product-offer-merchant-portal-gui/product-offers';
 
   constructor(@inject(MpOffersRepository) private repository: MpOffersRepository) {
     super();

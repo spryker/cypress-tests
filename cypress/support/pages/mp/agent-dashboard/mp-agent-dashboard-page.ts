@@ -1,13 +1,13 @@
-import { AbstractPage } from '../../abstract-page';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { MpAgentDashboardRepository } from './mp-agent-dashboard-repository';
 import { autoWired } from '../../../utils/inversify/auto-wired';
+import { MpPage } from '../mp-page';
 
 @injectable()
 @autoWired
-export class MpAgentDashboardPage extends AbstractPage {
-  public PAGE_URL: string = '/agent-dashboard-merchant-portal-gui/merchant-users';
+export class MpAgentDashboardPage extends MpPage {
+  protected PAGE_URL: string = '/agent-dashboard-merchant-portal-gui/merchant-users';
 
   constructor(@inject(MpAgentDashboardRepository) private repository: MpAgentDashboardRepository) {
     super();

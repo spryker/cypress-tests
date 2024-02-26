@@ -1,14 +1,14 @@
 import 'reflect-metadata';
-import { AbstractPage } from '../../abstract-page';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../utils/inversify/types';
 import { CartRepository } from './cart-repository';
 import { autoWired } from '../../../utils/inversify/auto-wired';
+import { YvesPage } from '../yves-page';
 
 @injectable()
 @autoWired
-export class CartPage extends AbstractPage {
-  public PAGE_URL: string = '/cart';
+export class CartPage extends YvesPage {
+  protected PAGE_URL: string = '/cart';
 
   constructor(@inject(TYPES.YvesCartRepository) private repository: CartRepository) {
     super();
@@ -38,10 +38,6 @@ export class CartPage extends AbstractPage {
 
     form.submit();
   };
-
-  public visit = (): void => {
-    cy.visit(this.PAGE_URL);
-  }
 
   public changeQuantity = (sku: string, newQuantity: number): void => {
     const form = this.repository.findCartItemChangeQuantityForm(sku);

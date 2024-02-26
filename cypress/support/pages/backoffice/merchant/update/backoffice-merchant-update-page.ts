@@ -1,13 +1,13 @@
-import { AbstractPage } from '../../../abstract-page';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { BackofficeMerchantUpdateRepository } from './backoffice-merchant-update-repository';
 import { autoWired } from '../../../../utils/inversify/auto-wired';
+import { BackofficePage } from '../../backoffice-page';
 
 @injectable()
 @autoWired
-export class BackofficeMerchantUpdatePage extends AbstractPage {
-  public PAGE_URL: string = '/merchant-gui/edit-merchant';
+export class BackofficeMerchantUpdatePage extends BackofficePage {
+  protected PAGE_URL: string = '/merchant-gui/edit-merchant';
 
   constructor(@inject(BackofficeMerchantUpdateRepository) private repository: BackofficeMerchantUpdateRepository) {
     super();

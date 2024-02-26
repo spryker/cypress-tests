@@ -1,13 +1,13 @@
-import { AbstractPage } from '../../../abstract-page';
 import { BackofficeUserIndexRepository } from './backoffice-user-index-repository';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { autoWired } from '../../../../utils/inversify/auto-wired';
+import { BackofficePage } from '../../backoffice-page';
 
 @injectable()
 @autoWired
-export class BackofficeUserIndexPage extends AbstractPage {
-  public PAGE_URL: string = '/user';
+export class BackofficeUserIndexPage extends BackofficePage {
+  protected PAGE_URL: string = '/user';
 
   constructor(@inject(BackofficeUserIndexRepository) private repository: BackofficeUserIndexRepository) {
     super();

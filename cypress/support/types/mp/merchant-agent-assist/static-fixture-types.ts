@@ -1,7 +1,11 @@
-export interface CheckoutByLoggedInCustomerStaticFixtures {
-  customer: Customer;
+export interface CustomerAgentLoginPageStaticFixtures {
+  rootUser: User;
+  merchantAgentUser: User;
+  customerAgentUser: User;
+  merchantUser: User;
 }
 
-interface Customer {
+interface User {
+  username: string;
   password: string;
 }

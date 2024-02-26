@@ -7,27 +7,22 @@ import {
   CheckoutShipmentPage, CheckoutSummaryPage
 } from "../../../../support/pages/yves";
 
-describe('create order by guest', (): void => {
+describe('create order by guest',{tags: ['@order-management']}, (): void => {
+  const cartPage: CartPage = container.get(CartPage);
+  const checkoutCustomerPage: CheckoutCustomerPage = container.get(CheckoutCustomerPage);
+  const checkoutAddressPage: CheckoutAddressPage = container.get(CheckoutAddressPage);
+  const checkoutShipmentPage: CheckoutShipmentPage = container.get(CheckoutShipmentPage);
+  const checkoutPaymentPage: CheckoutPaymentPage = container.get(CheckoutPaymentPage);
+  const checkoutSummaryPage: CheckoutSummaryPage = container.get(CheckoutSummaryPage);
+
   let dynamicFixtures: CreateOrderByGuestDynamicFixtures;
-  let cartPage: CartPage;
-  let checkoutCustomerPage: CheckoutCustomerPage;
-  let checkoutAddressPage: CheckoutAddressPage;
-  let checkoutShipmentPage: CheckoutShipmentPage;
-  let checkoutPaymentPage: CheckoutPaymentPage;
-  let checkoutSummaryPage: CheckoutSummaryPage;
 
   before((): void => {
     cy.resetYvesCookies();
     dynamicFixtures = Cypress.env('dynamicFixtures');
-    cartPage = container.get(CartPage);
-    checkoutCustomerPage = container.get(CheckoutCustomerPage);
-    checkoutAddressPage = container.get(CheckoutAddressPage);
-    checkoutShipmentPage = container.get(CheckoutShipmentPage);
-    checkoutPaymentPage = container.get(CheckoutPaymentPage);
-    checkoutSummaryPage = container.get(CheckoutSummaryPage);
   });
 
-  it('should be able to create an order by guest [@regression]', (): void => {
+  it('should be able to create an order by guest', (): void => {
     cartPage.visit();
     cartPage.quickAddToCart(dynamicFixtures.product.sku, 1);
     cartPage.startCheckout();

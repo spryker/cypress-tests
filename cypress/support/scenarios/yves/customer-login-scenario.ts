@@ -8,6 +8,9 @@ export class CustomerLoginScenario {
   constructor(@inject(LoginPage) private loginPage: LoginPage) {}
 
   public execute = (email: string, password: string): void => {
-    this.loginPage.login(email, password);
+    cy.session([email, password], () => {
+      this.loginPage.visit();
+      this.loginPage.login(email, password);
+    });
   };
 }

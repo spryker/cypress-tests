@@ -4,8 +4,6 @@ export interface CommentCartRepository {
   getAddCommentButtonSelector(): string;
   getRemoveCommentButtonSelector(): string;
   getFirstCommentTextarea(): Cypress.Chainable;
-
   getCommentTextareaByCommentText(commentText: string): Cypress.Chainable;
-
   getUpdateCommentButtonSelector(): string;
 }

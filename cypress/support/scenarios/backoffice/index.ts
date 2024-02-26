@@ -1,3 +1,3 @@
-export * from './backoffice-login-user-scenario';
+export * from './user-login-scenario';
 export * from './create-root-user-scenario';
 

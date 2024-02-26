@@ -38,11 +38,12 @@ Cypress.Commands.add('loadDynamicFixturesByPayload', (dynamicFixturesFilePath) =
     return cy
       .request({
         method: 'POST',
-        url: Cypress.env().operationRunnerUrl,
+        url: Cypress.env().glueBackendUrl + '/test-operation-runner',
         headers: {
           'Content-Type': 'application/vnd.api+json',
         },
         body: operationRequestPayload,
+        timeout: 20000,
       })
       .then((response) => {
         if (Array.isArray(response.body.data)) {
