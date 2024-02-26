@@ -1,20 +1,20 @@
 import { inject, injectable } from 'inversify';
-import { BackofficeMerchantListPage } from '../../pages/backoffice/merchant/list/backoffice-merchant-list-page';
-import { BackofficeMerchantUserCreatePage } from '../../pages/backoffice/merchant-user/create/backoffice-merchant-user-create-page';
-import { BackofficeUserIndexPage } from '../../pages/backoffice/user/index/backoffice-user-index-page';
-import { BackofficeUserUpdatePage } from '../../pages/backoffice/user/update/backoffice-user-update-page';
-import { BackofficeMerchantUpdatePage } from '../../pages/backoffice/merchant/update/backoffice-merchant-update-page';
+import { MerchantListPage } from '../../pages/backoffice/merchant/list/merchant-list-page';
+import { MerchantUserCreatePage } from '../../pages/backoffice/merchant-user/create/merchant-user-create-page';
+import { UserIndexPage } from '../../pages/backoffice/user/index/user-index-page';
+import { UserUpdatePage } from '../../pages/backoffice/user/update/user-update-page';
+import { MerchantUpdatePage } from '../../pages/backoffice/merchant/update/merchant-update-page';
 import { autoWired } from '../../utils/inversify/auto-wired';
 
 @injectable()
 @autoWired
 export class CreateMerchantUserScenario {
   constructor(
-    @inject(BackofficeMerchantListPage) private merchantListPage: BackofficeMerchantListPage,
-    @inject(BackofficeMerchantUpdatePage) private merchantUpdatePage: BackofficeMerchantUpdatePage,
-    @inject(BackofficeMerchantUserCreatePage) private merchantUserCreatePage: BackofficeMerchantUserCreatePage,
-    @inject(BackofficeUserIndexPage) private userIndexPage: BackofficeUserIndexPage,
-    @inject(BackofficeUserUpdatePage) private userUpdatePage: BackofficeUserUpdatePage
+    @inject(MerchantListPage) private merchantListPage: MerchantListPage,
+    @inject(MerchantUpdatePage) private merchantUpdatePage: MerchantUpdatePage,
+    @inject(MerchantUserCreatePage) private merchantUserCreatePage: MerchantUserCreatePage,
+    @inject(UserIndexPage) private userIndexPage: UserIndexPage,
+    @inject(UserUpdatePage) private userUpdatePage: UserUpdatePage
   ) {}
 
   public execute = (merchantName: string): MerchantUser => {

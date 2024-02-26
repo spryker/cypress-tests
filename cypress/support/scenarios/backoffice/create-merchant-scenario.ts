@@ -1,14 +1,14 @@
 import { inject, injectable } from 'inversify';
-import { BackofficeMerchantCreatePage } from '../../pages/backoffice/merchant/create/backoffice-merchant-create-page';
-import { BackofficeMerchantListPage } from '../../pages/backoffice/merchant/list/backoffice-merchant-list-page';
+import { MerchantCreatePage } from '../../pages/backoffice/merchant/create/merchant-create-page';
+import { MerchantListPage } from '../../pages/backoffice/merchant/list/merchant-list-page';
 import { autoWired } from '../../utils/inversify/auto-wired';
 
 @injectable()
 @autoWired
 export class CreateMerchantScenario {
   constructor(
-    @inject(BackofficeMerchantCreatePage) private merchantCreatePage: BackofficeMerchantCreatePage,
-    @inject(BackofficeMerchantListPage) private merchantListPage: BackofficeMerchantListPage
+    @inject(MerchantCreatePage) private merchantCreatePage: MerchantCreatePage,
+    @inject(MerchantListPage) private merchantListPage: MerchantListPage
   ) {}
 
   public execute = (): Merchant => {

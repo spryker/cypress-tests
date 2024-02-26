@@ -1,8 +1,8 @@
 import { container } from '../../../support/utils/inversify/inversify.config';
-import { IndexPage } from '../../../support/pages/backoffice/index/index-page';
+import { IndexPage } from '../../../support/pages/backoffice';
 import { UserLoginScenario } from '../../../support/scenarios/backoffice';
 import { AgentLoginPage, LoginPage } from '../../../support/pages/yves';
-import { CustomerAgentLoginPageStaticFixtures } from '../../../support/types/mp/merchant-agent-assist';
+import { CustomerAgentLoginPageStaticFixtures } from '../../../support/types/mp/marketplace-agent-assist';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
