@@ -8,11 +8,11 @@ RUN mkdir -p ${CYPRESS_TESTS_WORK_DIR}
 # Set the working directory
 WORKDIR ${CYPRESS_TESTS_WORK_DIR}
 
-# Copy the package.json and package-lock.json files to the working directory
-COPY package.json package-lock.json ./
+# Copy the cypress tests to the working directory
+COPY . .
 
-# Install dependencies
+# Install the dependencies
 RUN npm install
 
-# Source the .env file to export the variables
+# Starts a bash shell in the container that ignores termination signals and keeps the container running indefinitely.
 ENTRYPOINT ["/bin/bash", "-c", "trap : TERM INT; sleep infinity & wait"]

@@ -16,10 +16,10 @@ services:
         'spryker.app.type': cypress-tests
         'spryker.project': ${SPRYKER_DOCKER_PREFIX}:${SPRYKER_DOCKER_TAG}
     volumes:
-      - ./vendor/spryker/cypress-tests:/opt/cypress-tests:rw
+      - ./vendor/spryker/cypress-tests/cypress/e2e:/opt/cypress-tests/cypress/e2e:rw
+      - ./vendor/spryker/cypress-tests/cypress/fixtures:/opt/cypress-tests/cypress/fixtures:rw
+      - ./vendor/spryker/cypress-tests/cypress/support:/opt/cypress-tests/cypress/support:rw
       - ./.cypress/screenshots:/opt/cypress-tests/cypress/screenshots:rw
       - ./.cypress/videos:/opt/cypress-tests/cypress/videos:rw
       - ./.cypress/logs:/opt/cypress-tests/cypress/logs:rw
       - /tmp/.X11-unix:/tmp/.X11-unix
-#    environment:
-#      - DISPLAY=${DISPLAY_IP}
