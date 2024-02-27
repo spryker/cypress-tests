@@ -1,19 +1,20 @@
 import { inject, injectable } from 'inversify';
 import { autoWired } from '../../utils/inversify/auto-wired';
-import { AgentDashboardPage } from '../../pages/mp';
-import { MerchantAgentLoginUserScenario } from './merchant-agent-login-user-scenario';
+import { AgentDashboardPage, AgentLoginPage } from '../../pages/mp';
 
 @injectable()
 @autoWired
 export class ImpersonateAsMerchantUserScenario {
   constructor(
-    @inject(MerchantAgentLoginUserScenario) private merchantAgentLoginUserScenario: MerchantAgentLoginUserScenario,
+    @inject(AgentLoginPage) private agentLoginPage: AgentLoginPage,
     @inject(AgentDashboardPage) private mpAgentDashboardPage: AgentDashboardPage
   ) {}
 
   public execute = (username: string, password: string, merchantUsername: string): void => {
-    this.merchantAgentLoginUserScenario.execute(username, password);
+    this.agentLoginPage.visit();
+    this.agentLoginPage.login(username, password);
 
+    this.mpAgentDashboardPage.visit();
     this.mpAgentDashboardPage.assistMerchantUser(merchantUsername);
   };
 }

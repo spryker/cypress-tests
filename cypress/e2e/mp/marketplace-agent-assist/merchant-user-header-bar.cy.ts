@@ -1,41 +1,45 @@
-import { container } from '../../support/utils/inversify/inversify.config';
-import { ImpersonateAsMerchantUserScenario } from '../../support/scenarios/mp/impersonate-as-merchant-user-scenario';
-import { MpDashboardPage } from '../../support/pages/mp/dashboard/mp-dashboard-page';
-import { MpAgentDashboardPage } from '../../support/pages/mp/agent-dashboard/mp-agent-dashboard-page';
-import { MpAgentLoginPage } from '../../support/pages/mp/agent-login/mp-agent-login-page';
-import { MpLoginPage } from '../../support/pages/mp/login/mp-login-page';
+import { container } from '../../../support/utils/inversify/inversify.config';
+import { AgentDashboardPage, AgentLoginPage, DashboardPage, LoginPage } from '../../../support/pages/mp';
+import { ImpersonateAsMerchantUserScenario } from '../../../support/scenarios/mp';
+import {
+  MerchantUserHeaderBarDynamicFixtures,
+  MerchantUserHeaderBarStaticFixtures,
+} from '../../../support/types/mp/merchant-user-header-bar';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
-describe('merchant user header bar', (): void => {
-  const loginPage: MpLoginPage = container.get(MpLoginPage);
-  const agentLoginPage: MpAgentLoginPage = container.get(MpAgentLoginPage);
-  const dashboardPage: MpDashboardPage = container.get(MpDashboardPage);
-  const agentDashboardPage: MpAgentDashboardPage = container.get(MpAgentDashboardPage);
-
+describe('merchant user header bar', {tags: ['@marketplace-agent-assist']}, (): void => {
+  const loginPage: LoginPage = container.get(LoginPage);
+  const agentLoginPage: AgentLoginPage = container.get(AgentLoginPage);
+  const dashboardPage: DashboardPage = container.get(DashboardPage);
+  const agentDashboardPage: AgentDashboardPage = container.get(AgentDashboardPage);
   const impersonateScenario: ImpersonateAsMerchantUserScenario = container.get(ImpersonateAsMerchantUserScenario);
 
-  let fixtures: MerchantUserHeaderBarFixtures;
+  let dynamicFixtures: MerchantUserHeaderBarDynamicFixtures;
+  let staticFixtures: MerchantUserHeaderBarStaticFixtures;
 
   before((): void => {
-    fixtures = Cypress.env('fixtures');
+    ({ dynamicFixtures, staticFixtures } = Cypress.env());
   });
 
   beforeEach((): void => {
-    cy.resetMerchantPortalCookies();
-    impersonateScenario.execute(fixtures.merchantAgentUser, fixtures.impersonatedMerchantUser.username);
+    impersonateScenario.execute(
+      dynamicFixtures.merchantAgentUser.username,
+      staticFixtures.defaultPassword,
+      dynamicFixtures.merchantUser.username,
+    );
   });
 
-  it('agent should be able to see merchant user information during impersonation', (): void => {
-    cy.visitMerchantPortal(dashboardPage.PAGE_URL);
+  it.only('agent should be able to see merchant user information during impersonation', (): void => {
+    dashboardPage.visit();
 
-    cy.get('body').find(`div:contains("${fixtures.impersonatedMerchantName}")`).should('exist');
-    cy.get('body').find(`div:contains("${fixtures.impersonatedMerchantUser.username}")`).should('exist');
+    cy.get('body').find(`div:contains("${dynamicFixtures.merchant.name}")`).should('exist');
+    cy.get('body').find(`div:contains("${dynamicFixtures.merchantUser.username}")`).should('exist');
 
     cy.get('body')
       .find(
-        `div:contains("${fixtures.impersonatedMerchantUser.firstName} ${fixtures.impersonatedMerchantUser.lastName}")`
+        `div:contains("${dynamicFixtures.merchantUser.first_name} ${dynamicFixtures.merchantUser.last_name}")`
       )
       .should('exist');
   });
@@ -50,7 +54,7 @@ describe('merchant user header bar', (): void => {
     agentDashboardPage.assertPageLocation();
 
     // Ensure that agent finished assistant session and don't have access to MP dashboard
-    cy.visitMerchantPortal(dashboardPage.PAGE_URL, { failOnStatusCode: false });
+    dashboardPage.visit({ failOnStatusCode: false });
     cy.get('body').contains('Access Denied.');
   });
 
@@ -58,10 +62,10 @@ describe('merchant user header bar', (): void => {
     cy.get('body').find('a:contains("Log out Agent")').click();
     agentLoginPage.assertPageLocation();
 
-    cy.visitMerchantPortal(agentDashboardPage.PAGE_URL);
+    agentDashboardPage.visit();
     agentLoginPage.assertPageLocation();
 
-    cy.visitMerchantPortal(dashboardPage.PAGE_URL);
+    dashboardPage.visit();
     loginPage.assertPageLocation();
   });
 
