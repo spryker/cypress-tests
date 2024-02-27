@@ -1,75 +1,75 @@
-import { container } from '../../support/utils/inversify/inversify.config';
-import { MpLoginPage } from '../../support/pages/mp/login/mp-login-page';
-import { MpAgentLoginPage } from '../../support/pages/mp/agent-login/mp-agent-login-page';
-import { MpDashboardPage } from '../../support/pages/mp/dashboard/mp-dashboard-page';
-import { MpAgentDashboardPage } from '../../support/pages/mp/agent-dashboard/mp-agent-dashboard-page';
-import { MpLoginUserScenario } from '../../support/scenarios/mp/mp-login-user-scenario';
-import { MpAgentLoginUserScenario } from '../../support/scenarios/mp/mp-agent-login-user-scenario';
+import { container } from '../../../support/utils/inversify/inversify.config';
+import { AgentDashboardPage, AgentLoginPage, DashboardPage, LoginPage } from '../../../support/pages/mp';
+import {
+  MerchantUserAgentLoginPageDynamicFixtures,
+  MerchantUserAgentLoginPageStaticFixtures,
+} from '../../../support/types/mp/merchant-user-agent-login-page';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
-describe('merchant user agent login page', (): void => {
-  const loginPage: MpLoginPage = container.get(MpLoginPage);
-  const dashboardPage: MpDashboardPage = container.get(MpDashboardPage);
-  const agentLoginPage: MpAgentLoginPage = container.get(MpAgentLoginPage);
-  const agentDashboardPage: MpAgentDashboardPage = container.get(MpAgentDashboardPage);
+describe('merchant user agent login page', {tags: ['@marketplace-agent-assist']}, (): void => {
+  const loginPage: LoginPage = container.get(LoginPage);
+  const dashboardPage: DashboardPage = container.get(DashboardPage);
+  const agentLoginPage: AgentLoginPage = container.get(AgentLoginPage);
+  const agentDashboardPage: AgentDashboardPage = container.get(AgentDashboardPage);
 
-  const loginUserScenario: MpLoginUserScenario = container.get(MpLoginUserScenario);
-  const agentLoginUserScenario: MpAgentLoginUserScenario = container.get(MpAgentLoginUserScenario);
-
-  let fixtures: MerchantUserAgentLoginPageFixtures;
+  let dynamicFixtures: MerchantUserAgentLoginPageDynamicFixtures;
+  let staticFixtures: MerchantUserAgentLoginPageStaticFixtures;
 
   before((): void => {
-    fixtures = Cypress.env('fixtures');
-  });
-
-  beforeEach((): void => {
-    cy.resetMerchantPortalCookies();
+    ({ dynamicFixtures, staticFixtures } = Cypress.env());
   });
 
   it('agent (customer) should not be able to login to MP dashboard', (): void => {
-    loginUserScenario.execute(fixtures.customerAgentUser);
+    loginPage.visit();
+    loginPage.login(dynamicFixtures.customerAgentUser.username, staticFixtures.defaultPassword);
 
     cy.contains(loginPage.getFailedAuthenticationText());
     loginPage.assertPageLocation();
   });
 
   it('agent (merchant user) should not be able to login to MP dashboard', (): void => {
-    loginUserScenario.execute(fixtures.merchantAgentUser);
+    loginPage.visit();
+    loginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
 
     cy.contains(loginPage.getFailedAuthenticationText());
     loginPage.assertPageLocation();
   });
 
   it('merchant user should be able to login to MP dashboard', (): void => {
-    loginUserScenario.execute(fixtures.merchantUser);
+    loginPage.visit();
+    loginPage.login(dynamicFixtures.merchantUser.username, staticFixtures.defaultPassword);
 
     cy.contains('Dashboard');
     dashboardPage.assertPageLocation();
   });
 
   it('agent (customer) should not be able to login to MP agent dashboard', (): void => {
-    agentLoginUserScenario.execute(fixtures.customerAgentUser);
+    agentLoginPage.visit();
+    agentLoginPage.login(dynamicFixtures.customerAgentUser.username, staticFixtures.defaultPassword);
 
     cy.contains(agentLoginPage.getFailedAuthenticationText());
     agentLoginPage.assertPageLocation();
   });
 
   it('merchant user should not be able to login to MP agent dashboard', (): void => {
-    agentLoginUserScenario.execute(fixtures.merchantUser);
+    agentLoginPage.visit();
+    agentLoginPage.login(dynamicFixtures.merchantUser.username, staticFixtures.defaultPassword);
 
     cy.contains(agentLoginPage.getFailedAuthenticationText());
     agentLoginPage.assertPageLocation();
   });
 
   it('agent (merchant user) should be able to login to MP agent dashboard', (): void => {
-    agentLoginUserScenario.execute(fixtures.merchantAgentUser);
+    agentLoginPage.visit();
+    agentLoginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
+
     agentDashboardPage.assertPageLocation();
   });
 
   it('agent assist login page in MP should not contain "Forgot password" button', (): void => {
-    cy.visitMerchantPortal(agentLoginPage.PAGE_URL);
+    agentLoginPage.visit();
 
     cy.contains('Agent Assist Login');
     cy.get('body').contains('Forgot password').should('not.exist');

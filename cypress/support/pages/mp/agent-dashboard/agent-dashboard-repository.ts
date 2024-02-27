@@ -4,7 +4,7 @@ import { autoWired } from '../../../utils/inversify/auto-wired';
 
 @injectable()
 @autoWired
-export class MpAgentDashboardRepository {
+export class AgentDashboardRepository {
   getDashboardSidebarSelector = (): Cypress.Chainable => cy.get('spy-sidebar.spy-sidebar');
   getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1)');
   getSearchSelector = (): string => '.spy-table-search-feature input[type="text"]';

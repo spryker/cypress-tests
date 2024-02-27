@@ -1,15 +1,15 @@
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { MpSalesOrdersRepository } from './mp-sales-orders-repository';
+import { SalesOrdersRepository } from './sales-orders-repository';
 import { autoWired } from '../../../utils/inversify/auto-wired';
 import { MpPage } from '../mp-page';
 
 @injectable()
 @autoWired
-export class MpSalesOrdersPage extends MpPage {
+export class SalesOrdersPage extends MpPage {
   protected PAGE_URL: string = '/sales-merchant-portal-gui/orders';
 
-  constructor(@inject(MpSalesOrdersRepository) private repository: MpSalesOrdersRepository) {
+  constructor(@inject(SalesOrdersRepository) private repository: SalesOrdersRepository) {
     super();
   }
 

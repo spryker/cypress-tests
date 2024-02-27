@@ -1,14 +1,3 @@
 {
-  "customerAgentUser": {
-    "username": "agent123@spryker.com",
-    "password": "change123"
-  },
-  "merchantAgentUser": {
-    "username": "agent-merchant@spryker.com",
-    "password": "change123"
-  },
-  "merchantUser": {
-    "username": "harald@spryker.com",
-    "password": "change123"
-  }
+  "defaultPassword": "change123"
 }

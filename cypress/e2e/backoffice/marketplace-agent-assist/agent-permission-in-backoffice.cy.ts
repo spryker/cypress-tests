@@ -9,7 +9,7 @@ import {
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
-describe('agent permission in backoffice', (): void => {
+describe('agent permission in backoffice', {tags: ['@marketplace-agent-assist']}, (): void => {
   const userIndexPage: UserIndexPage = container.get(UserIndexPage);
   const userUpdatePage: UserUpdatePage = container.get(UserUpdatePage);
   const userLoginScenario: UserLoginScenario = container.get(UserLoginScenario);

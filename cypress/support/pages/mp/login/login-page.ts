@@ -1,15 +1,15 @@
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { MpAgentLoginRepository } from './mp-agent-login-repository';
+import { LoginRepository } from './login-repository';
 import { autoWired } from '../../../utils/inversify/auto-wired';
 import { MpPage } from '../mp-page';
 
 @injectable()
 @autoWired
-export class MpAgentLoginPage extends MpPage {
-  protected PAGE_URL: string = '/agent-security-merchant-portal-gui/login';
+export class LoginPage extends MpPage {
+  protected PAGE_URL: string = '/security-merchant-portal-gui/login';
 
-  constructor(@inject(MpAgentLoginRepository) private repository: MpAgentLoginRepository) {
+  constructor(@inject(LoginRepository) private repository: LoginRepository) {
     super();
   }
 

@@ -1,15 +1,15 @@
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { MpDashboardRepository } from './mp-dashboard-repository';
+import { DashboardRepository } from './dashboard-repository';
 import { autoWired } from '../../../utils/inversify/auto-wired';
 import { MpPage } from '../mp-page';
 
 @injectable()
 @autoWired
-export class MpDashboardPage extends MpPage {
+export class DashboardPage extends MpPage {
   protected PAGE_URL: string = '/dashboard-merchant-portal-gui/dashboard';
 
-  constructor(@inject(MpDashboardRepository) private repository: MpDashboardRepository) {
+  constructor(@inject(DashboardRepository) private repository: DashboardRepository) {
     super();
   }
 

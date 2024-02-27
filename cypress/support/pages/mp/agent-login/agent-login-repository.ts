@@ -4,7 +4,7 @@ import { autoWired } from '../../../utils/inversify/auto-wired';
 
 @injectable()
 @autoWired
-export class MpAgentLoginRepository {
+export class AgentLoginRepository {
   getEmailInput = (): Cypress.Chainable => cy.get('#agent-security-merchant-portal-gui_username');
   getPasswordInput = (): Cypress.Chainable => cy.get('#agent-security-merchant-portal-gui_password');
   getSubmitButton = (): Cypress.Chainable =>
