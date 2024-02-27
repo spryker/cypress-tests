@@ -1,4 +1,4 @@
-export interface StaticFixtures {
+export interface CartCommentStaticFixtures {
   commentsToAdd: string[];
   commentToModify: string;
   modifiedComment: string;

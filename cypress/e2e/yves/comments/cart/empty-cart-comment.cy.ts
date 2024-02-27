@@ -1,17 +1,16 @@
 import { container } from '../../../../support/utils/inversify/inversify.config';
-import {DynamicFixtures, StaticFixtures} from "../../../../support/types/yves/comments/cart";
 import {CommentCartPage} from "../../../../support/pages/yves";
 import {CustomerLoginScenario} from "../../../../support/scenarios/yves";
+import { CartCommentDynamicFixtures, CartCommentStaticFixtures } from '../../../../support/types/yves/comments/cart';
 
 describe('empty cart comment',{tags: ['@comments']} , (): void => {
   const commentCartPage: CommentCartPage = container.get(CommentCartPage);
   const loginCustomerScenario: CustomerLoginScenario = container.get(CustomerLoginScenario);
 
-  let dynamicFixtures: DynamicFixtures;
-  let staticFixtures: StaticFixtures;
+  let dynamicFixtures: CartCommentDynamicFixtures;
+  let staticFixtures: CartCommentStaticFixtures;
 
   before((): void => {
-    cy.resetYvesCookies();
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 

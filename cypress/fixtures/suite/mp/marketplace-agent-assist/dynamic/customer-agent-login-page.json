@@ -49,6 +49,36 @@
           "type": "helper",
           "name": "addUserToGroup",
           "arguments": ["#customerAgentUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantUser",
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "name": "MerchantProfileTransfer",
+          "key": "merchantProfile"
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchant",
+          "key": "merchant",
+          "arguments": [{
+            "merchant_profile": "#merchantProfile",
+            "is_active": true,
+            "status": "approved"
+          }]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#merchant", "#merchantUser"]
         }
       ]
     }

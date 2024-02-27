@@ -116,9 +116,11 @@ export class CheckoutAddressPage extends YvesPage {
   };
 
   private createDummyCheckoutAddress = (): CheckoutAddress => {
+    const prefix = '[e2e] ';
+
     return {
-      firstName: this.faker.person.firstName(),
-      lastName: this.faker.person.lastName(),
+      firstName: prefix + '' + this.faker.person.firstName(),
+      lastName: prefix + '' + this.faker.person.lastName(),
       address1: this.faker.location.secondaryAddress(),
       address2: this.faker.location.buildingNumber(),
       zipCode: this.faker.location.zipCode(),

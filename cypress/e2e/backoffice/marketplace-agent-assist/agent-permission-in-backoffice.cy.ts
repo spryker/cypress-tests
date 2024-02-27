@@ -1,7 +1,10 @@
 import { UserIndexPage, UserUpdatePage } from '../../../support/pages/backoffice';
 import { UserLoginScenario } from '../../../support/scenarios/backoffice';
 import { container } from '../../../support/utils/inversify/inversify.config';
-import { DynamicFixtures, StaticFixtures } from '../../../support/types/backoffice/marketplace-agent-assist';
+import {
+  AgentPermissionInBackofficeDynamicFixtures,
+  AgentPermissionInBackofficeStaticFixtures,
+} from '../../../support/types/backoffice/marketplace-agent-assist';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
@@ -11,21 +14,21 @@ describe('agent permission in backoffice', (): void => {
   const userUpdatePage: UserUpdatePage = container.get(UserUpdatePage);
   const userLoginScenario: UserLoginScenario = container.get(UserLoginScenario);
 
-  let staticFixtures: StaticFixtures;
-  let dynamicFixtures: DynamicFixtures;
+  let dynamicFixtures: AgentPermissionInBackofficeDynamicFixtures;
+  let staticFixtures: AgentPermissionInBackofficeStaticFixtures;
 
   before((): void => {
-    ({ staticFixtures, dynamicFixtures } = Cypress.env());
+    ({ dynamicFixtures, staticFixtures } = Cypress.env());
     cy.resetBackofficeCookies();
   });
 
   beforeEach((): void => {
-    userLoginScenario.execute(staticFixtures.rootUser.username, staticFixtures.rootUser.password);
+    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
   });
 
   it('backoffice user should be able to see new merchant agent permission checkbox', (): void => {
     userIndexPage.visit();
-    userIndexPage.editUser(staticFixtures.rootUser.username);
+    userIndexPage.editUser(dynamicFixtures.rootUser.username);
 
     userUpdatePage
       .getAgentMerchantCheckbox()
@@ -36,14 +39,14 @@ describe('agent permission in backoffice', (): void => {
 
   it('backoffice user should be able to see renamed customer agent permission checkbox', (): void => {
     userIndexPage.visit();
-    userIndexPage.editUser(staticFixtures.rootUser.username);
+    userIndexPage.editUser(dynamicFixtures.rootUser.username);
 
     userUpdatePage.getAgentCustomerCheckbox().should('exist').parent().contains('This user is an agent in Storefront');
   });
 
   it('backoffice user should be able to see existing user with merchant agent permission', (): void => {
     userIndexPage.visit();
-    userIndexPage.editUser(staticFixtures.merchantAgentUser.username);
+    userIndexPage.editUser(dynamicFixtures.merchantAgentUser.username);
 
     userUpdatePage.getAgentMerchantCheckbox().should('be.checked');
   });
@@ -61,7 +64,7 @@ describe('agent permission in backoffice', (): void => {
   it('backoffice user should be able to see imported user with "Agent Customer" permission', (): void => {
     userIndexPage.visit();
 
-    userIndexPage.findUser(staticFixtures.customerAgentUser.username)
+    userIndexPage.findUser(dynamicFixtures.customerAgentUser.username)
       .contains('Agent')
       .should('have.length', 1);
   });
@@ -69,7 +72,7 @@ describe('agent permission in backoffice', (): void => {
   it('backoffice user should be able to see imported user with "Agent Merchant" permission', (): void => {
     userIndexPage.visit();
 
-    userIndexPage.findUser(staticFixtures.merchantAgentUser.username)
+    userIndexPage.findUser(dynamicFixtures.merchantAgentUser.username)
       .contains('Agent')
       .should('have.length', 1);
   });

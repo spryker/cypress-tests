@@ -1,10 +1,3 @@
-export interface StaticFixtures {
-  rootUser: User;
-  merchantAgentUser: User;
-  customerAgentUser: User;
-}
-
-interface User {
-  username: string;
-  password: string;
+export interface AgentPermissionInBackofficeStaticFixtures {
+  defaultPassword: string;
 }
