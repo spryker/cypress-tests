@@ -8,7 +8,7 @@ function getEnvVar(primary: string, fallback: string): string {
     return process.env[primary] || process.env[fallback];
 }
 
-const protocolMap = {
+const protocolMap: { [key: string]: 'http' | 'https' } = {
     '1': 'https',
     '0': 'http',
     'http': 'http',
