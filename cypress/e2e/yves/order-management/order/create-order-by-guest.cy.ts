@@ -1,13 +1,15 @@
 import { container } from '../../../../support/utils/inversify/inversify.config';
-import {CreateOrderByGuestDynamicFixtures} from "../../../../support/types/yves/order-managment/order";
+import { CreateOrderByGuestDynamicFixtures } from '../../../../support/types/yves/order-managment/order';
 import {
   CartPage,
-  CheckoutAddressPage, CheckoutCustomerPage,
+  CheckoutAddressPage,
+  CheckoutCustomerPage,
   CheckoutPaymentPage,
-  CheckoutShipmentPage, CheckoutSummaryPage
-} from "../../../../support/pages/yves";
+  CheckoutShipmentPage,
+  CheckoutSummaryPage,
+} from '../../../../support/pages/yves';
 
-describe('create order by guest',{tags: ['@order-management']}, (): void => {
+describe('create order by guest', { tags: ['@order-management'] }, (): void => {
   const cartPage: CartPage = container.get(CartPage);
   const checkoutCustomerPage: CheckoutCustomerPage = container.get(CheckoutCustomerPage);
   const checkoutAddressPage: CheckoutAddressPage = container.get(CheckoutAddressPage);

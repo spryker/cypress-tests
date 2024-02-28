@@ -7,5 +7,5 @@ import VisitOptions = Cypress.VisitOptions;
 export class BackofficePage extends AbstractPage {
   public visit = (options?: Partial<VisitOptions>): void => {
     cy.visitBackoffice(this.PAGE_URL, options);
-  }
+  };
 }

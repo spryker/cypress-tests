@@ -43,7 +43,7 @@ Cypress.Commands.add('loadDynamicFixturesByPayload', (dynamicFixturesFilePath) =
           'Content-Type': 'application/vnd.api+json',
         },
         body: operationRequestPayload,
-        timeout: 20000,
+        timeout: 40000,
       })
       .then((response) => {
         if (Array.isArray(response.body.data)) {

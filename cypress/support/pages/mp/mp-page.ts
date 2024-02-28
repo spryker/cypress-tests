@@ -7,5 +7,5 @@ import VisitOptions = Cypress.VisitOptions;
 export class MpPage extends AbstractPage {
   public visit = (options?: Partial<VisitOptions>): void => {
     cy.visitMerchantPortal(this.PAGE_URL, options);
-  }
+  };
 }

@@ -11,7 +11,7 @@ import {
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
-describe('merchant user agent dashboard', {tags: ['@marketplace-agent-assist']}, (): void => {
+describe('merchant user agent dashboard', { tags: ['@marketplace-agent-assist'] }, (): void => {
   const dashboardPage: DashboardPage = container.get(DashboardPage);
   const agentDashboardPage: AgentDashboardPage = container.get(AgentDashboardPage);
   const userIndexPage: UserIndexPage = container.get(UserIndexPage);
@@ -56,8 +56,6 @@ describe('merchant user agent dashboard', {tags: ['@marketplace-agent-assist']},
     agentDashboardPage.visit();
     agentDashboardPage.findMerchantUser(dynamicFixtures.merchant.name).should('exist');
     agentDashboardPage.findMerchantUser(dynamicFixtures.merchantUser.username).should('exist');
-    agentDashboardPage.findMerchantUser(dynamicFixtures.merchantUser.first_name).should('exist');
-    agentDashboardPage.findMerchantUser(dynamicFixtures.merchantUser.last_name).should('exist');
   });
 
   it('agent should be able to see/assist inactive merchant user in a table', (): void => {

@@ -2,18 +2,18 @@ version: '3'
 services:
   cypress-tests:
     build:
-        context: ./vendor/spryker/cypress-tests
-        dockerfile: Dockerfile
+      context: ./vendor/spryker/cypress-tests
+      dockerfile: Dockerfile
     networks:
-        - private
+      - private
     env_file:
-        - ${DEPLOYMENT_PATH}/env/cli/testing.env # depends on application setup
-        - ${DEPLOYMENT_PATH}/env/cli/de.env
-        - ${DEPLOYMENT_PATH}/terraform/cli/de.env
+      - ${DEPLOYMENT_PATH}/env/cli/testing.env # depends on application setup
+      - ${DEPLOYMENT_PATH}/env/cli/de.env
+      - ${DEPLOYMENT_PATH}/terraform/cli/de.env
     labels:
-        'spryker.app.name': cypress-tests
-        'spryker.app.type': cypress-tests
-        'spryker.project': ${SPRYKER_DOCKER_PREFIX}:${SPRYKER_DOCKER_TAG}
+      'spryker.app.name': cypress-tests
+      'spryker.app.type': cypress-tests
+      'spryker.project': ${SPRYKER_DOCKER_PREFIX}:${SPRYKER_DOCKER_TAG}
     volumes:
       - ./vendor/spryker/cypress-tests/cypress/e2e:/opt/cypress-tests/cypress/e2e:rw
       - ./vendor/spryker/cypress-tests/cypress/fixtures:/opt/cypress-tests/cypress/fixtures:rw

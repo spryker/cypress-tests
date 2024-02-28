@@ -21,9 +21,9 @@ To get started with these tests, follow these setup steps:
 2. **Environment Configuration:**
 
 - Set up your environment variables for Cypress.
-    - Copy the `.env.example` file to a new file named `.env`.
-    - Open the `.env` file and fill in the necessary environment variables.
-    - These variables are crucial for Cypress to connect with your Spryker application and perform tests effectively.
+  - Copy the `.env.example` file to a new file named `.env`.
+  - Open the `.env` file and fill in the necessary environment variables.
+  - These variables are crucial for Cypress to connect with your Spryker application and perform tests effectively.
 
 ## Running Tests
 

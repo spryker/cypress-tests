@@ -24,6 +24,13 @@ export class ProductsPage extends MpPage {
   };
 
   public getDrawer = (): Cypress.Chainable => {
-    return this.repository.getDrawer();
+    const drawer = this.repository.getDrawer();
+
+    // Wait for the drawer to be visible
+    const interceptAlias = this.faker.string.uuid();
+    cy.intercept('GET', '/product-merchant-portal-gui/products-concrete/table-data**').as(interceptAlias);
+    cy.wait(`@${interceptAlias}`).its('response.body.total').should('eq', 1);
+
+    return drawer;
   };
 }

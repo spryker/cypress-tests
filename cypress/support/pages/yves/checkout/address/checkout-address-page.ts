@@ -3,7 +3,7 @@ import { TYPES } from '../../../../utils/inversify/types';
 import 'reflect-metadata';
 import { CheckoutAddressRepository } from './checkout-address-repository';
 import { autoWired } from '../../../../utils/inversify/auto-wired';
-import {CheckoutAddress} from "../../../../types/yves/checkout";
+import { CheckoutAddress } from '../../../../types/yves/checkout';
 import { YvesPage } from '../../yves-page';
 
 @injectable()

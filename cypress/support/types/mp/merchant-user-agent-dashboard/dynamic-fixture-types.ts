@@ -7,8 +7,6 @@ export interface MerchantUserAgentDashboardDynamicFixtures {
 
 interface User {
   username: string;
-  first_name: string;
-  last_name: string;
 }
 
 interface Merchant {

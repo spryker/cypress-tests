@@ -9,9 +9,7 @@ import { BackofficePage } from '../../backoffice-page';
 export class SalesReturnGuiCreatePage extends BackofficePage {
   protected PAGE_URL: string = '/sales-return-gui/create';
 
-  constructor(
-    @inject(SalesReturnGuiCreateRepository) private repository: SalesReturnGuiCreateRepository
-  ) {
+  constructor(@inject(SalesReturnGuiCreateRepository) private repository: SalesReturnGuiCreateRepository) {
     super();
   }
 

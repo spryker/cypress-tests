@@ -1,9 +1,9 @@
 import { container } from '../../../../support/utils/inversify/inversify.config';
-import {CommentCartPage} from "../../../../support/pages/yves";
-import {CustomerLoginScenario} from "../../../../support/scenarios/yves";
+import { CommentCartPage } from '../../../../support/pages/yves';
+import { CustomerLoginScenario } from '../../../../support/scenarios/yves';
 import { CartCommentDynamicFixtures, CartCommentStaticFixtures } from '../../../../support/types/yves/comments/cart';
 
-describe('empty cart comment',{tags: ['@comments']} , (): void => {
+describe('empty cart comment', { tags: ['@comments'] }, (): void => {
   const commentCartPage: CommentCartPage = container.get(CommentCartPage);
   const loginCustomerScenario: CustomerLoginScenario = container.get(CustomerLoginScenario);
 

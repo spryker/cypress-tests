@@ -1,5 +1,5 @@
-import {Quote} from "./common/quote";
-import {Product} from "./common/product";
+import { Quote } from './common/quote';
+import { Product } from './common/product';
 
 export interface CartCommentDynamicFixtures {
   quote: Quote;

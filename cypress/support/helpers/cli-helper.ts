@@ -4,21 +4,29 @@ import { autoWired } from '../utils/inversify/auto-wired';
 @injectable()
 @autoWired
 export class CliHelper {
-  private readonly store: string;
-  private readonly containerPath: string;
-  private readonly containerName: string;
+  public run = (commands: string[]): void => {
+    const operations = commands.map((command) => {
+      return {
+        type: 'cli-command',
+        name: command,
+      };
+    });
 
-  constructor() {
-    this.store = Cypress.env().cli.store;
-    this.containerPath = Cypress.env().cli.containerPath;
-    this.containerName = Cypress.env().cli.containerName;
-  }
-
-  public run = (command: string): void => {
-    cy.exec(`docker ps -a -q -f name=${this.containerName}`).then((result) => {
-      if (result.stdout) {
-        cy.exec(`cd ${this.containerPath} && APPLICATION_STORE=${this.store} docker/sdk ${command}`);
-      }
+    cy.request({
+      method: 'POST',
+      url: Cypress.env().glueBackendUrl + '/test-operation-runner',
+      headers: {
+        'Content-Type': 'application/vnd.api+json',
+      },
+      body: {
+        data: {
+          type: 'test-operation-runner',
+          attributes: {
+            operations: operations,
+          },
+        },
+        timeout: 20000,
+      },
     });
   };
 }

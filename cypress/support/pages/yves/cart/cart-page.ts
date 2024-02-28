@@ -15,7 +15,9 @@ export class CartPage extends YvesPage {
   }
 
   public quickAddToCart = (sku: string, quantity?: number): void => {
-    this.repository.getQuickAddToCartSkuField().then((elem) => elem.val(sku));
+    this.repository.getQuickAddToCartSkuField().clear().type(sku);
+    this.repository.getQuickAddToCartProductListField().click();
+
     this.repository
       .getQuickAddToCartQuantityField()
       .clear()

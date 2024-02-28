@@ -1,18 +1,18 @@
-import {container} from '../../../support/utils/inversify/inversify.config';
+import { container } from '../../../support/utils/inversify/inversify.config';
 import {
   CheckoutByLoggedInCustomerDynamicFixtures,
-  CheckoutByLoggedInCustomerStaticFixtures
-} from "../../../support/types/yves/checkout";
+  CheckoutByLoggedInCustomerStaticFixtures,
+} from '../../../support/types/yves/checkout';
 import {
   CartPage,
   CheckoutAddressPage,
   CheckoutPaymentPage,
   CheckoutShipmentPage,
-  CheckoutSummaryPage
-} from "../../../support/pages/yves";
-import {CustomerLoginScenario} from "../../../support/scenarios/yves";
+  CheckoutSummaryPage,
+} from '../../../support/pages/yves';
+import { CustomerLoginScenario } from '../../../support/scenarios/yves';
 
-describe('checkout by logged in customer', {tags: ['@checkout']}, (): void => {
+describe('checkout by logged in customer', { tags: ['@checkout'] }, (): void => {
   const cartPage: CartPage = container.get(CartPage);
   const checkoutAddressPage: CheckoutAddressPage = container.get(CheckoutAddressPage);
   const checkoutShipmentPage: CheckoutShipmentPage = container.get(CheckoutShipmentPage);
@@ -84,5 +84,5 @@ describe('checkout by logged in customer', {tags: ['@checkout']}, (): void => {
     checkoutShipmentPage.setStandardShippingMethod();
     checkoutPaymentPage.setDummyPaymentMethod();
     checkoutSummaryPage.placeOrder();
-  }
+  };
 });

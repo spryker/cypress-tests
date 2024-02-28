@@ -53,11 +53,13 @@
           "type": "helper",
           "name": "haveMerchant",
           "key": "merchant",
-          "arguments": [{
-            "merchant_profile": "#merchantProfile",
-            "is_active": true,
-            "status": "approved"
-          }]
+          "arguments": [
+            {
+              "merchant_profile": "#merchantProfile",
+              "is_active": true,
+              "status": "approved"
+            }
+          ]
         },
         {
           "type": "helper",

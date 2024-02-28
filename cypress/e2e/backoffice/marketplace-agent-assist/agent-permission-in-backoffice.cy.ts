@@ -9,7 +9,7 @@ import {
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
-describe('agent permission in backoffice', {tags: ['@marketplace-agent-assist']}, (): void => {
+describe('agent permission in backoffice', { tags: ['@marketplace-agent-assist'] }, (): void => {
   const userIndexPage: UserIndexPage = container.get(UserIndexPage);
   const userUpdatePage: UserUpdatePage = container.get(UserUpdatePage);
   const userLoginScenario: UserLoginScenario = container.get(UserLoginScenario);
@@ -64,17 +64,13 @@ describe('agent permission in backoffice', {tags: ['@marketplace-agent-assist']}
   it('backoffice user should be able to see imported user with "Agent Customer" permission', (): void => {
     userIndexPage.visit();
 
-    userIndexPage.findUser(dynamicFixtures.customerAgentUser.username)
-      .contains('Agent')
-      .should('have.length', 1);
+    userIndexPage.findUser(dynamicFixtures.customerAgentUser.username).contains('Agent').should('have.length', 1);
   });
 
   it('backoffice user should be able to see imported user with "Agent Merchant" permission', (): void => {
     userIndexPage.visit();
 
-    userIndexPage.findUser(dynamicFixtures.merchantAgentUser.username)
-      .contains('Agent')
-      .should('have.length', 1);
+    userIndexPage.findUser(dynamicFixtures.merchantAgentUser.username).contains('Agent').should('have.length', 1);
   });
 
   it('backoffice user should be able to create new user without checked merchant agent permission by default', (): void => {

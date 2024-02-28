@@ -28,23 +28,27 @@ const loadFixture = () => {
   const dynamicFixturesDefaultFilePath = `${repositoryId}/${fixtureFilePath.directoryPart}/dynamic/${fixtureFilePath.filePart}`;
   const staticFixturesDefaultFilePath = `${repositoryId}/${fixtureFilePath.directoryPart}/static/${fixtureFilePath.filePart}`;
 
-  cy.task('isFileExists', `${Cypress.config('fixturesFolder')}/${staticFixturesDefaultFilePath}.json`).then((isFileExists) => {
-    if (isFileExists) {
-      cy.fixture(staticFixturesDefaultFilePath).then((staticFixtures) => {
-        if (staticFixtures) {
-          Cypress.env('staticFixtures', staticFixtures);
-        }
-      });
+  cy.task('isFileExists', `${Cypress.config('fixturesFolder')}/${staticFixturesDefaultFilePath}.json`).then(
+    (isFileExists) => {
+      if (isFileExists) {
+        cy.fixture(staticFixturesDefaultFilePath).then((staticFixtures) => {
+          if (staticFixtures) {
+            Cypress.env('staticFixtures', staticFixtures);
+          }
+        });
+      }
     }
-  });
+  );
 
-  cy.task('isFileExists', `${Cypress.config('fixturesFolder')}/${dynamicFixturesDefaultFilePath}.json`).then((isFileExists) => {
-    if (isFileExists) {
-      cy.loadDynamicFixturesByPayload(dynamicFixturesDefaultFilePath).then((dynamicFixturesData) => {
-        Cypress.env('dynamicFixtures', dynamicFixturesData);
-      });
+  cy.task('isFileExists', `${Cypress.config('fixturesFolder')}/${dynamicFixturesDefaultFilePath}.json`).then(
+    (isFileExists) => {
+      if (isFileExists) {
+        cy.loadDynamicFixturesByPayload(dynamicFixturesDefaultFilePath).then((dynamicFixturesData) => {
+          Cypress.env('dynamicFixtures', dynamicFixturesData);
+        });
+      }
     }
-  });
+  );
 };
 
 const getFixtureFilePath = () => {
@@ -59,6 +63,6 @@ const getFixtureFilePath = () => {
 
   return {
     directoryPart: directoryPart,
-    filePart: filePartWithoutExtension
+    filePart: filePartWithoutExtension,
   };
 };

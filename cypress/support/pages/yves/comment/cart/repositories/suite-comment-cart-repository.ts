@@ -10,7 +10,7 @@ export class SuiteCommentCartRepository implements CommentCartRepository {
   getRemoveCommentButtonSelector = (): string => 'button:contains("Remove")';
   getFirstCommentTextarea = (): Cypress.Chainable => this.getCommentThreadListSection().first().find('textarea');
   getUpdateCommentButtonSelector = (): string => 'button:contains("Update")';
-    getCommentTextareaByCommentText(commentText: string): Cypress.Chainable {
-        return this.getCommentThreadListSection().first().contains(commentText);
-    }
+  getCommentTextareaByCommentText(commentText: string): Cypress.Chainable {
+    return this.getCommentThreadListSection().first().contains(commentText);
+  }
 }

@@ -1,11 +1,18 @@
 import { container } from '../../../../support/utils/inversify/inversify.config';
-import {CreateOrderByCustomerDynamicFixtures, CreateOrderByCustomerStaticFixtures} from "../../../../support/types/yves/order-managment/order";
-import {CustomerLoginScenario} from "../../../../support/scenarios/yves";
 import {
-  CartPage, CheckoutAddressPage, CheckoutPaymentPage, CheckoutShipmentPage, CheckoutSummaryPage,
-} from "../../../../support/pages/yves";
+  CreateOrderByCustomerDynamicFixtures,
+  CreateOrderByCustomerStaticFixtures,
+} from '../../../../support/types/yves/order-managment/order';
+import { CustomerLoginScenario } from '../../../../support/scenarios/yves';
+import {
+  CartPage,
+  CheckoutAddressPage,
+  CheckoutPaymentPage,
+  CheckoutShipmentPage,
+  CheckoutSummaryPage,
+} from '../../../../support/pages/yves';
 
-describe('create order by customer',{tags: ['@order-management']}, (): void => {
+describe('create order by customer', { tags: ['@order-management'] }, (): void => {
   const cartPage: CartPage = container.get(CartPage);
   const loginCustomerScenario: CustomerLoginScenario = container.get(CustomerLoginScenario);
   const checkoutAddressPage: CheckoutAddressPage = container.get(CheckoutAddressPage);

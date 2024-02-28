@@ -4,7 +4,8 @@ import { CartRepository } from '../cart-repository';
 
 @injectable()
 export class SuiteCartRepository implements CartRepository {
-  getQuickAddToCartSkuField = (): Cypress.Chainable => cy.get('[name="sku"]');
+  getQuickAddToCartSkuField = (): Cypress.Chainable => cy.get('[data-qa="component autocomplete-form"] .input');
+  getQuickAddToCartProductListField = (): Cypress.Chainable => cy.get('[data-qa="component products-list"]');
   getQuickAddToCartQuantityField = (): Cypress.Chainable<JQuery<HTMLElement>> => cy.get('#quantity');
   getQuickAddToCartSubmitButton = (): Cypress.Chainable<JQuery<HTMLElement>> =>
     cy.get('.js-product-quick-add-form__submit-button');

@@ -1,4 +1,4 @@
-import {Product} from "./common/product";
+import { Product } from './common/product';
 
 export interface CreateOrderByCustomerDynamicFixtures {
   customer: Customer;

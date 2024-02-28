@@ -1,13 +1,15 @@
 import { container } from '../../../support/utils/inversify/inversify.config';
-import {CheckoutByGuestCustomerDynamicFixtures} from "../../../support/types/yves/checkout";
+import { CheckoutByGuestCustomerDynamicFixtures } from '../../../support/types/yves/checkout';
 import {
   CartPage,
   CheckoutAddressPage,
-  CheckoutCustomerPage, CheckoutPaymentPage,
-  CheckoutShipmentPage, CheckoutSummaryPage
-} from "../../../support/pages/yves";
+  CheckoutCustomerPage,
+  CheckoutPaymentPage,
+  CheckoutShipmentPage,
+  CheckoutSummaryPage,
+} from '../../../support/pages/yves';
 
-describe('checkout by guest customer', {tags: ['@checkout']}, (): void => {
+describe('checkout by guest customer', { tags: ['@checkout'] }, (): void => {
   const cartPage: CartPage = container.get(CartPage);
   const checkoutCustomerPage: CheckoutCustomerPage = container.get(CheckoutCustomerPage);
   const checkoutAddressPage: CheckoutAddressPage = container.get(CheckoutAddressPage);
@@ -77,5 +79,5 @@ describe('checkout by guest customer', {tags: ['@checkout']}, (): void => {
     checkoutShipmentPage.setStandardShippingMethod();
     checkoutPaymentPage.setDummyPaymentMethod();
     checkoutSummaryPage.placeOrder();
-  }
+  };
 });

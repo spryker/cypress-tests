@@ -9,7 +9,7 @@ import {
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
-describe('merchant user header bar', {tags: ['@marketplace-agent-assist']}, (): void => {
+describe('merchant user header bar', { tags: ['@marketplace-agent-assist'] }, (): void => {
   const loginPage: LoginPage = container.get(LoginPage);
   const agentLoginPage: AgentLoginPage = container.get(AgentLoginPage);
   const dashboardPage: DashboardPage = container.get(DashboardPage);
@@ -27,7 +27,7 @@ describe('merchant user header bar', {tags: ['@marketplace-agent-assist']}, (): 
     impersonateScenario.execute(
       dynamicFixtures.merchantAgentUser.username,
       staticFixtures.defaultPassword,
-      dynamicFixtures.merchantUser.username,
+      dynamicFixtures.merchantUser.username
     );
   });
 
@@ -38,9 +38,7 @@ describe('merchant user header bar', {tags: ['@marketplace-agent-assist']}, (): 
     cy.get('body').find(`div:contains("${dynamicFixtures.merchantUser.username}")`).should('exist');
 
     cy.get('body')
-      .find(
-        `div:contains("${dynamicFixtures.merchantUser.first_name} ${dynamicFixtures.merchantUser.last_name}")`
-      )
+      .find(`div:contains("${dynamicFixtures.merchantUser.first_name} ${dynamicFixtures.merchantUser.last_name}")`)
       .should('exist');
   });
 

@@ -9,9 +9,7 @@ import { BackofficePage } from '../../backoffice-page';
 export class MerchantUserCreatePage extends BackofficePage {
   protected PAGE_URL: string = '/merchant-user-gui/edit-merchant-user';
 
-  constructor(
-    @inject(MerchantUserCreateRepository) private repository: MerchantUserCreateRepository
-  ) {
+  constructor(@inject(MerchantUserCreateRepository) private repository: MerchantUserCreateRepository) {
     super();
   }
 

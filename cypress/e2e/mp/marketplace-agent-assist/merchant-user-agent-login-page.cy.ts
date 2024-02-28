@@ -8,7 +8,7 @@ import {
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
-describe('merchant user agent login page', {tags: ['@marketplace-agent-assist']}, (): void => {
+describe('merchant user agent login page', { tags: ['@marketplace-agent-assist'] }, (): void => {
   const loginPage: LoginPage = container.get(LoginPage);
   const dashboardPage: DashboardPage = container.get(DashboardPage);
   const agentLoginPage: AgentLoginPage = container.get(AgentLoginPage);

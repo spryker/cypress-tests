@@ -25,14 +25,14 @@ export class CommentCartPage extends YvesPage {
 
     this.getCommentThreadListSection().first().find(this.repository.getUpdateCommentButtonSelector()).click();
   };
-  
+
   public updateCommentByCommentText = (initialCommentMessage: string, newCommentMessage: string): void => {
     const textarea = this.repository.getCommentTextareaByCommentText(initialCommentMessage);
 
     textarea.clear().type(newCommentMessage);
     textarea.parent().find(this.repository.getUpdateCommentButtonSelector()).click();
   };
-  
+
   public removeCommentByCommentText = (commentMessage: string): void => {
     this.repository
       .getCommentTextareaByCommentText(commentMessage)
