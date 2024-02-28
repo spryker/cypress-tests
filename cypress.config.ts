@@ -8,7 +8,13 @@ function getEnvVar(primary: string, fallback: string): string {
     return process.env[primary] || process.env[fallback];
 }
 
-const protocol = getEnvVar('ENV_PROTOCOL', 'SPRYKER_SSL_ENABLE') == '1' ? 'https' : 'http';
+const protocolMap = {
+    '1': 'https',
+    '0': 'http',
+    'http': 'http',
+    'https': 'https',
+};
+const protocol = protocolMap[getEnvVar('ENV_PROTOCOL', 'SPRYKER_SSL_ENABLE')];
 const backofficeHost = getEnvVar('ENV_BACKOFFICE_HOST', 'SPRYKER_BE_HOST');
 const merchantPortalHost = getEnvVar('ENV_MERCHANT_PORTAL_HOST', 'SPRYKER_MP_HOST');
 const glueBackendHost = getEnvVar('ENV_GLUE_BACKEND_HOST', 'SPRYKER_GLUE_BACKEND_HOST');
