@@ -6,4 +6,5 @@ import { MultiCartRepository } from '../multi-cart-repository';
 export class B2bMultiCartRepository implements MultiCartRepository {
   getCreateCartNameInput = (): Cypress.Chainable => cy.get('#quoteForm_name');
   getCreateCartForm = (): Cypress.Chainable => cy.get('form[name=quoteForm]');
+  getQuoteTable = (): Cypress.Chainable => cy.get('[data-qa="component quote-table"]');
 }

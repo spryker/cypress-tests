@@ -31,7 +31,7 @@ describe('merchant user header bar', { tags: ['@marketplace-agent-assist'] }, ()
     );
   });
 
-  it.only('agent should be able to see merchant user information during impersonation', (): void => {
+  it('agent should be able to see merchant user information during impersonation', (): void => {
     dashboardPage.visit();
 
     cy.get('body').find(`div:contains("${dynamicFixtures.merchant.name}")`).should('exist');

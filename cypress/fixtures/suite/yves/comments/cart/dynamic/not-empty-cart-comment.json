@@ -31,10 +31,108 @@
           "arguments": ["#customer"]
         },
         {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": {
+            "id_store": 1
+          }
+        },
+        {
           "type": "helper",
           "name": "haveFullProduct",
-          "key": "product",
+          "key": "productOne",
           "arguments": []
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productTwo",
+          "arguments": []
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productOne.abstract_sku",
+              "skuProduct": "#productOne.sku",
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productTwo.abstract_sku",
+              "skuProduct": "#productTwo.sku",
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#productOne.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#productTwo.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "builder",
+          "name": "ProductImageBuilder",
+          "key": "productImageOne"
+        },
+        {
+          "type": "builder",
+          "name": "ProductImageBuilder",
+          "key": "productImageTwo"
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#productOne.id_product_concrete",
+              "idProductAbstract": "#productOne.fk_product_abstract",
+              "productImages": ["#productImageOne"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#productTwo.id_product_concrete",
+              "idProductAbstract": "#productTwo.fk_product_abstract",
+              "productImages": ["#productImageTwo"]
+            }
+          ]
         },
         {
           "type": "helper",
@@ -45,8 +143,14 @@
               "customer": "#customer",
               "items": [
                 {
-                  "sku": "#product.sku",
+                  "sku": "#productOne.sku",
+                  "abstractSku": "#productOne.abstract_sku",
                   "quantity": 1
+                },
+                {
+                  "sku": "#productTwo.sku",
+                  "abstractSku": "#productTwo.abstract_sku",
+                  "quantity": 2
                 }
               ]
             }

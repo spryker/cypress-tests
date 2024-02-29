@@ -24,7 +24,6 @@ describe('create order by customer', { tags: ['@order-management'] }, (): void =
   let dynamicFixtures: CreateOrderByCustomerDynamicFixtures;
 
   before((): void => {
-    cy.resetYvesCookies();
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 

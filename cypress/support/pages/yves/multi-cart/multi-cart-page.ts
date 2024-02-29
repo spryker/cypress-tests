@@ -23,4 +23,8 @@ export class MultiCartPage extends YvesPage {
 
     cy.contains(`Cart '${cartName}' was created successfully`).should('exist');
   };
+
+  public selectCart = (name: string): void => {
+    this.repository.getQuoteTable().contains(name).click();
+  };
 }

@@ -5,6 +5,21 @@
       "synchronize": true,
       "operations": [
         {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
@@ -89,6 +104,44 @@
             {
               "sku": "#product.sku",
               "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "quoteOne",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "name": "#product.name",
+                  "quantity": 1,
+                  "unitPrice": 30000
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "quoteTwo",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "name": "#product.name",
+                  "quantity": 1,
+                  "unitPrice": 30000
+                }
+              ]
             }
           ]
         }

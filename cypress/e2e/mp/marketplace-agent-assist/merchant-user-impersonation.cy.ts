@@ -7,12 +7,14 @@ import {
   MerchantUserImpersonationDynamicFixtures,
   MerchantUserImpersonationStaticFixtures,
 } from '../../../support/types/mp/merchant-user-impersonation';
-import { CustomerLoginScenario, PlaceMpOrderScenario } from '../../../support/scenarios/yves';
+import { CheckoutMpScenario, CustomerLoginScenario } from '../../../support/scenarios/yves';
+import { CartPage } from '../../../support/pages/yves';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
-describe('merchant user impersonation', (): void => {
+describe('merchant user impersonation', { tags: ['@marketplace-agent-assist'] }, (): void => {
+  const cartPage: CartPage = container.get(CartPage);
   const salesIndexPage: SalesIndexPage = container.get(SalesIndexPage);
   const salesDetailPage: SalesDetailPage = container.get(SalesDetailPage);
   const salesOrdersPage: SalesOrdersPage = container.get(SalesOrdersPage);
@@ -23,7 +25,7 @@ describe('merchant user impersonation', (): void => {
   const userLoginScenario: UserLoginScenario = container.get(UserLoginScenario);
   const impersonateScenario: ImpersonateAsMerchantUserScenario = container.get(ImpersonateAsMerchantUserScenario);
   const customerLoginScenario: CustomerLoginScenario = container.get(CustomerLoginScenario);
-  const placeMpOrderScenario: PlaceMpOrderScenario = container.get(PlaceMpOrderScenario);
+  const checkoutMpScenario: CheckoutMpScenario = container.get(CheckoutMpScenario);
 
   let dynamicFixtures: MerchantUserImpersonationDynamicFixtures;
   let staticFixtures: MerchantUserImpersonationStaticFixtures;
@@ -34,7 +36,10 @@ describe('merchant user impersonation', (): void => {
 
   it('agent should be able to change order status during impersonation', (): void => {
     customerLoginScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
-    placeMpOrderScenario.execute(dynamicFixtures.productConcreteForOffer.sku);
+
+    cartPage.visit();
+    cartPage.quickAddToCart(dynamicFixtures.productConcreteForOffer.sku);
+    checkoutMpScenario.execute();
 
     userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
 

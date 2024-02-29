@@ -19,6 +19,27 @@
           "arguments": []
         },
         {
+          "type": "transfer",
+          "name": "ProductImageTransfer",
+          "key": "productImage",
+          "arguments": {
+            "externalUrlSmall": "https://images.icecat.biz/img/gallery_mediums/30691822_1486.jpg",
+            "externalUrlLarge": "https://images.icecat.biz/img/gallery/30691822_1486.jpg"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#product.id_product_concrete",
+              "idProductAbstract": "#product.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
           "type": "helper",
           "name": "havePriceProduct",
           "key": "productWithPrice",
