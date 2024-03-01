@@ -10,7 +10,7 @@ import { YvesPage } from '../yves-page';
 export class AgentLoginPage extends YvesPage {
   protected PAGE_URL: string = '/agent/login';
 
-  constructor(@inject(TYPES.YvesAgentLoginRepository) private repository: AgentLoginRepository) {
+  constructor(@inject(TYPES.AgentLoginRepository) private repository: AgentLoginRepository) {
     super();
   }
 

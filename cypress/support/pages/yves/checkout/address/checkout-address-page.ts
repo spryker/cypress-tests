@@ -11,7 +11,7 @@ import { YvesPage } from '../../yves-page';
 export class CheckoutAddressPage extends YvesPage {
   protected PAGE_URL: string = '/checkout/address';
 
-  constructor(@inject(TYPES.YvesCheckoutAddressRepository) private repository: CheckoutAddressRepository) {
+  constructor(@inject(TYPES.CheckoutAddressRepository) private repository: CheckoutAddressRepository) {
     super();
   }
 

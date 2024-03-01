@@ -10,7 +10,7 @@ import { YvesPage } from '../yves-page';
 export class LoginPage extends YvesPage {
   protected PAGE_URL: string = '/login';
 
-  constructor(@inject(TYPES.YvesLoginRepository) private repository: LoginRepository) {
+  constructor(@inject(TYPES.LoginRepository) private repository: LoginRepository) {
     super();
   }
 

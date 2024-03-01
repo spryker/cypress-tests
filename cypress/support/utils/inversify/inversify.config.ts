@@ -22,23 +22,23 @@ type ClassConstructor = new (...args: any[]) => any;
 type BindingsMap = { [key: string]: ClassConstructor };
 
 const suiteMappings: BindingsMap = {
-  [TYPES.YvesLoginRepository]: SuiteLoginRepository,
-  [TYPES.YvesCartRepository]: SuiteCartRepository,
-  [TYPES.YvesMultiCartRepository]: SuiteMultiCartRepository,
-  [TYPES.YvesCommentCartRepository]: SuiteCommentCartRepository,
-  [TYPES.YvesCheckoutCustomerRepository]: SuiteCheckoutCustomerRepository,
-  [TYPES.YvesCheckoutAddressRepository]: SuiteCheckoutAddressRepository,
-  [TYPES.YvesCheckoutShipmentRepository]: SuiteCheckoutShipmentRepository,
-  [TYPES.YvesCheckoutPaymentRepository]: SuiteCheckoutPaymentRepository,
-  [TYPES.YvesCheckoutSummaryRepository]: SuiteCheckoutSummaryRepository,
-  [TYPES.YvesAgentLoginRepository]: SuiteAgentLoginRepository,
+  [TYPES.LoginRepository]: SuiteLoginRepository,
+  [TYPES.CartRepository]: SuiteCartRepository,
+  [TYPES.MultiCartRepository]: SuiteMultiCartRepository,
+  [TYPES.CommentCartRepository]: SuiteCommentCartRepository,
+  [TYPES.CheckoutCustomerRepository]: SuiteCheckoutCustomerRepository,
+  [TYPES.CheckoutAddressRepository]: SuiteCheckoutAddressRepository,
+  [TYPES.CheckoutShipmentRepository]: SuiteCheckoutShipmentRepository,
+  [TYPES.CheckoutPaymentRepository]: SuiteCheckoutPaymentRepository,
+  [TYPES.CheckoutSummaryRepository]: SuiteCheckoutSummaryRepository,
+  [TYPES.AgentLoginRepository]: SuiteAgentLoginRepository,
 };
 
 const b2bMappings: BindingsMap = {
-  [TYPES.YvesLoginRepository]: B2bLoginRepository,
-  [TYPES.YvesCartRepository]: B2bCartRepository,
-  [TYPES.YvesMultiCartRepository]: B2bMultiCartRepository,
-  [TYPES.YvesCommentCartRepository]: B2bCommentCartRepository,
+  [TYPES.LoginRepository]: B2bLoginRepository,
+  [TYPES.CartRepository]: B2bCartRepository,
+  [TYPES.MultiCartRepository]: B2bMultiCartRepository,
+  [TYPES.CommentCartRepository]: B2bCommentCartRepository,
 };
 
 const container = new Container();

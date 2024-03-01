@@ -10,7 +10,7 @@ import { YvesPage } from '../../yves-page';
 export class CommentCartPage extends YvesPage {
   protected PAGE_URL: string = '/cart';
 
-  constructor(@inject(TYPES.YvesCommentCartRepository) private repository: CommentCartRepository) {
+  constructor(@inject(TYPES.CommentCartRepository) private repository: CommentCartRepository) {
     super();
   }
 

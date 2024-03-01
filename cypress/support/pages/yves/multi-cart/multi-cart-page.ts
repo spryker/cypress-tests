@@ -10,7 +10,7 @@ import { YvesPage } from '../yves-page';
 export class MultiCartPage extends YvesPage {
   protected PAGE_URL: string = '/multi-cart';
 
-  constructor(@inject(TYPES.YvesMultiCartRepository) private repository: MultiCartRepository) {
+  constructor(@inject(TYPES.MultiCartRepository) private repository: MultiCartRepository) {
     super();
   }
 
