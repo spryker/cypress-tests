@@ -4,8 +4,8 @@ import { AgentLoginRepository } from '../agent-login-repository';
 
 @injectable()
 export class SuiteAgentLoginRepository implements AgentLoginRepository {
-  getLoginEmailInput = (): Cypress.Chainable => cy.get('#loginForm_email');
-  getLoginPasswordInput = (): Cypress.Chainable => cy.get('#loginForm_password');
-  getLoginForm = (): Cypress.Chainable => cy.get('form[name=loginForm]');
+  getLoginEmailInput = (): Cypress.Chainable => cy.get('[data-qa="agent-login-form-email-input"]');
+  getLoginPasswordInput = (): Cypress.Chainable => cy.get('[data-qa="agent-login-form-password-input"]');
+  getLoginForm = (): Cypress.Chainable => cy.get('[data-qa="agent-login-form"]');
   getFailedAuthenticationText = (): string => 'Authentication failed';
 }
