@@ -10,5 +10,5 @@ export class SuiteCheckoutCustomerRepository implements CheckoutCustomerReposito
   getGuestEmailField = (): Cypress.Chainable => cy.get('#guestForm_customer_email');
   getGuestTermsCheckbox = (): Cypress.Chainable =>
     cy.get('[data-qa="component checkbox guestForm[customer][accept_terms] guestForm_customer_accept_terms"]');
-  getGuestSubmitButton = (): Cypress.Chainable => cy.contains('button', 'Submit');
+  getGuestSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="guest-form-submit-button"]');
 }

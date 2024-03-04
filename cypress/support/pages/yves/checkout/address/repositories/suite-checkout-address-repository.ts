@@ -4,8 +4,7 @@ import { CheckoutAddressRepository } from '../checkout-address-repository';
 
 @injectable()
 export class SuiteCheckoutAddressRepository implements CheckoutAddressRepository {
-  getSelectShippingAddressField = (): Cypress.Chainable =>
-    cy.get('.select__select.js-address__form-select-shippingAddress');
+  getSelectShippingAddressField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_id_customer_address');
   getShippingAddressFirstNameField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_first_name');
   getShippingAddressLastNameField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_last_name');
   getShippingAddressAddress1Field = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_address1');
@@ -16,7 +15,7 @@ export class SuiteCheckoutAddressRepository implements CheckoutAddressRepository
   getShippingAddressPhoneField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_phone');
   getShippingAddressBillingSameAsShippingCheckbox = (): Cypress.Chainable =>
     cy.get('#addressesForm_billingSameAsShipping');
-  getNextButton = (): Cypress.Chainable => cy.contains('button', 'Next');
+  getNextButton = (): Cypress.Chainable => cy.get('[data-qa="submit-address-form-button"]');
   getSelectBillingAddressField = (): Cypress.Chainable => cy.get('#addressesForm_billingAddress_id_customer_address');
   getBillingAddressFirstNameField = (): Cypress.Chainable => cy.get('#addressesForm_billingAddress_first_name');
   getBillingAddressLastNameField = (): Cypress.Chainable => cy.get('#addressesForm_billingAddress_last_name');
@@ -26,14 +25,13 @@ export class SuiteCheckoutAddressRepository implements CheckoutAddressRepository
   getBillingAddressCityField = (): Cypress.Chainable => cy.get('#addressesForm_billingAddress_city');
   getBillingAddressCompanyField = (): Cypress.Chainable => cy.get('#addressesForm_billingAddress_company');
   getBillingAddressPhoneField = (): Cypress.Chainable => cy.get('#addressesForm_billingAddress_phone');
-  getMultiShipmentTriggerButton = (): Cypress.Chainable =>
-    cy.get('.js-multiple-shipment-toggler__multiple-shipment-trigger');
+  getMultiShipmentTriggerButton = (): Cypress.Chainable => cy.get('[data-qa="multiple-shipment-trigger-button"]');
   getMultiShipmentAddressItemElement = (): Cypress.Chainable =>
     cy.get('[data-qa="component address-item-form-field-list"]');
-  getMultiShipmentAddressItemDeliveryRadio = ($addressItem: JQuery<HTMLElement>): Cypress.Chainable =>
-    cy.wrap($addressItem).contains('span', 'Delivery');
-  getMultiShipmentAddressItemAddressField = ($addressItem: JQuery<HTMLElement>): Cypress.Chainable =>
-    cy.wrap($addressItem).contains('select', 'Select an address');
+  getMultiShipmentAddressItemDeliveryRadio = ($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable =>
+    cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shipmentType_key_1`);
+  getMultiShipmentAddressItemAddressField = ($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable =>
+    cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shippingAddress_id_customer_address`);
   getMultiShipmentAddressItemAddressFirstNameField = (
     $addressItem: JQuery<HTMLElement>,
     index: number

@@ -15,13 +15,9 @@ export class CheckoutShipmentPage extends YvesPage {
   }
 
   public setStandardShippingMethod = (): void => {
-    this.repository
-      .getMultiShipmentItemElement()
-      .children()
-      .filter(':contains("Spryker Dummy Shipment")')
-      .each(($shipmentItem, index) => {
-        this.repository.getStandardShipmentRadio($shipmentItem, index).click({ force: true });
-      });
+    this.repository.getMultiShipmentGroups().each(($shipmentItem, index) => {
+      this.repository.getStandardShipmentRadio($shipmentItem, index).click({ force: true });
+    });
 
     this.repository.getNextButton().click();
   };

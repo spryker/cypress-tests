@@ -6,7 +6,7 @@ import { CheckoutPaymentRepository } from '../checkout-payment-repository';
 export class SuiteCheckoutPaymentRepository implements CheckoutPaymentRepository {
   getDummyPaymentInvoiceRadio = (): Cypress.Chainable => cy.get('#paymentForm_paymentSelection_dummyPaymentInvoice');
   getDummyPaymentInvoiceDateField = (): Cypress.Chainable => cy.get('#paymentForm_dummyPaymentInvoice_date_of_birth');
-  getGoToSummaryButton = (): Cypress.Chainable => cy.contains('button', 'Go to Summary');
+  getGoToSummaryButton = (): Cypress.Chainable => cy.get('[data-qa="submit-button"]');
   getDummyMarketplacePaymentInvoiceRadio = (): Cypress.Chainable =>
     cy.get('#paymentForm_paymentSelection_dummyMarketplacePaymentInvoice');
   getDummyMarketplacePaymentInvoiceDateField = (): Cypress.Chainable =>

@@ -43,8 +43,8 @@ export class CheckoutAddressPage extends YvesPage {
       .each(($addressItem, index) => {
         const checkoutAddress = this.createDummyCheckoutAddress();
 
-        this.repository.getMultiShipmentAddressItemDeliveryRadio($addressItem).click({ force: true });
-        this.repository.getMultiShipmentAddressItemAddressField($addressItem).select('0', { force: true });
+        this.repository.getMultiShipmentAddressItemDeliveryRadio($addressItem, index).click({ force: true });
+        this.repository.getMultiShipmentAddressItemAddressField($addressItem, index).select('0', { force: true });
 
         // Setting mandatory fields
         this.repository
