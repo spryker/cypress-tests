@@ -4,10 +4,6 @@ import * as fs from 'fs';
 
 dotenv.config();
 
-function getEnvVar(primary: string, fallback: string): string {
-  return process.env[primary] || process.env[fallback];
-}
-
 const protocolMap: { [key: string]: 'http' | 'https' } = {
   '1': 'https',
   '0': 'http',
@@ -46,3 +42,10 @@ export default defineConfig({
   viewportWidth: parseInt(process.env.VIEWPORT_WIDGTH ?? '1000', 10),
   viewportHeight: parseInt(process.env.VIEWPORT_HEIGHT ?? '660', 10),
 });
+
+function getEnvVar(primary: string, fallback: string): string {
+  const primaryValue = process.env[primary];
+  const fallbackValue = process.env[fallback];
+
+  return primaryValue !== undefined ? primaryValue : fallbackValue !== undefined ? fallbackValue : '';
+}
