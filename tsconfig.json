@@ -12,5 +12,5 @@
     "emitDecoratorMetadata": true,
     "baseUrl": "./"
   },
-  "include": ["cypress/**/*.ts"]
+  "include": ["cypress/**/*.ts", "cypress.config.ts", "cypress/support/commands.js", "cypress/support/e2e.js"]
 }

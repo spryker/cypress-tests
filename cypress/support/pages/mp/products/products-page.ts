@@ -14,7 +14,9 @@ export class ProductsPage extends MpPage {
   }
 
   public findProduct = (query: string): Cypress.Chainable => {
-    cy.get(this.repository.getSearchSelector()).clear().type(query);
+    const searchSelector = this.repository.getSearchSelector();
+    cy.get(searchSelector).clear();
+    cy.get(searchSelector).type(query);
 
     const interceptAlias = this.faker.string.uuid();
     cy.intercept('GET', '/product-merchant-portal-gui/products/table-data**').as(interceptAlias);

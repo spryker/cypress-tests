@@ -14,7 +14,9 @@ export class SalesOrdersPage extends MpPage {
   }
 
   public findOrder = (query: string): Cypress.Chainable => {
-    cy.get(this.repository.getSearchSelector()).clear().type(query);
+    const searchSelector = this.repository.getSearchSelector();
+    cy.get(searchSelector).clear();
+    cy.get(searchSelector).type(query);
 
     const interceptAlias = this.faker.string.uuid();
     cy.intercept('GET', '/sales-merchant-portal-gui/orders/table-data**').as(interceptAlias);

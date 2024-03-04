@@ -37,7 +37,6 @@ export class CheckoutMpScenario {
     this.checkoutPaymentPage.setDummyMarketplacePaymentMethod();
     this.checkoutSummaryPage.placeOrder();
 
-    cy.wait(1000); // Wait for OMS to process the order
     this.cliHelper.run(['console oms:check-condition', 'console oms:check-timeout']);
   };
 

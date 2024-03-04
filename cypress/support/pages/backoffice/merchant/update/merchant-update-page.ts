@@ -14,7 +14,9 @@ export class MerchantUpdatePage extends BackofficePage {
   }
 
   public findUser = (email: string): Cypress.Chainable => {
-    cy.get(this.repository.getSearchSelector()).clear().type(email);
+    const searchSelector = this.repository.getSearchSelector();
+    cy.get(searchSelector).clear();
+    cy.get(searchSelector).type(email);
 
     const interceptAlias = this.faker.string.uuid();
     cy.intercept('GET', '/merchant-user-gui/index/table**').as(interceptAlias);

@@ -29,7 +29,9 @@ export class AgentDashboardPage extends MpPage {
   };
 
   public findMerchantUser = (query: string, counter: number = 1): Cypress.Chainable => {
-    cy.get(this.repository.getSearchSelector()).clear().type(query);
+    const searchSelector = this.repository.getSearchSelector();
+    cy.get(searchSelector).clear();
+    cy.get(searchSelector).type(query);
 
     const interceptAlias = this.faker.string.uuid();
     cy.intercept('GET', '/agent-dashboard-merchant-portal-gui/merchant-users/table-data**').as(interceptAlias);
