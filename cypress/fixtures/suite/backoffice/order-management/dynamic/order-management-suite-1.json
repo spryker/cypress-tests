@@ -8,29 +8,19 @@
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
-          "arguments": {
-            "id_store": 1
-          }
+          "arguments": { "id_store": 1 }
         },
         {
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "locale",
-          "arguments": {
-            "id_locale": 66,
-            "locale_name": "en_US"
-          }
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
         },
         {
           "type": "helper",
           "name": "haveCustomer",
           "key": "customer",
-          "arguments": [
-            {
-              "locale": "#locale",
-              "password": "change123"
-            }
-          ]
+          "arguments": [{ "locale": "#locale", "password": "change123" }]
         },
         {
           "type": "helper",
@@ -41,8 +31,7 @@
         {
           "type": "helper",
           "name": "haveFullProduct",
-          "key": "product",
-          "arguments": []
+          "key": "product"
         },
         {
           "type": "transfer",
@@ -84,13 +73,7 @@
           "type": "helper",
           "name": "haveProductInStockForStore",
           "key": "productWithPriceAndStore",
-          "arguments": [
-            "#store",
-            {
-              "sku": "#product.sku",
-              "isNeverOutOfStock": "1"
-            }
-          ]
+          "arguments": ["#store", { "sku": "#product.sku", "isNeverOutOfStock": "1" }]
         },
         {
           "type": "helper",
@@ -115,11 +98,7 @@
           "type": "helper",
           "name": "haveUser",
           "key": "rootUser",
-          "arguments": [
-            {
-              "password": "change123"
-            }
-          ]
+          "arguments": [{ "password": "change123" }]
         },
         {
           "type": "helper",

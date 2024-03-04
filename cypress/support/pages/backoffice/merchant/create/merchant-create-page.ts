@@ -13,10 +13,10 @@ export class MerchantCreatePage extends BackofficePage {
     super();
   }
 
-  public createMerchant = (): Merchant => {
+  public createMerchant = () => {
     const identifier: string = this.faker.string.uuid();
 
-    const merchant: Merchant = {
+    const merchant = {
       name: 'Name: ' + identifier,
       reference: 'ref-' + identifier,
       email: this.faker.internet.email(),

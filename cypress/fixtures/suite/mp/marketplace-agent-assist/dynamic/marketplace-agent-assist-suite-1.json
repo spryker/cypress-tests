@@ -8,11 +8,7 @@
           "type": "helper",
           "name": "haveUser",
           "key": "rootUser",
-          "arguments": [
-            {
-              "password": "change123"
-            }
-          ]
+          "arguments": [{ "password": "change123" }]
         },
         {
           "type": "helper",
@@ -23,12 +19,7 @@
           "type": "helper",
           "name": "haveUser",
           "key": "merchantAgentUser",
-          "arguments": [
-            {
-              "password": "change123",
-              "isMerchantAgent": true
-            }
-          ]
+          "arguments": [{ "password": "change123", "isMerchantAgent": true }]
         },
         {
           "type": "helper",
@@ -39,12 +30,7 @@
           "type": "helper",
           "name": "haveUser",
           "key": "customerAgentUser",
-          "arguments": [
-            {
-              "password": "change123",
-              "isAgent": true
-            }
-          ]
+          "arguments": [{ "password": "change123", "isAgent": true }]
         },
         {
           "type": "helper",
@@ -55,33 +41,19 @@
           "type": "helper",
           "name": "haveUser",
           "key": "merchantUser",
-          "arguments": [
-            {
-              "password": "change123"
-            }
-          ]
+          "arguments": [{ "password": "change123" }]
         },
         {
           "type": "helper",
           "name": "haveUser",
           "key": "deactivatedMerchantUser",
-          "arguments": [
-            {
-              "password": "change123",
-              "status": "blocked"
-            }
-          ]
+          "arguments": [{ "password": "change123", "status": "blocked" }]
         },
         {
           "type": "helper",
           "name": "haveUser",
           "key": "deletedMerchantUser",
-          "arguments": [
-            {
-              "password": "change123",
-              "status": "deleted"
-            }
-          ]
+          "arguments": [{ "password": "change123", "status": "deleted" }]
         },
         {
           "type": "builder",
@@ -92,10 +64,7 @@
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
-          "arguments": {
-            "id_store": 1,
-            "name": "DE"
-          }
+          "arguments": { "id_store": 1, "name": "DE" }
         },
         {
           "type": "arrayObject",
@@ -106,19 +75,13 @@
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "localeEN",
-          "arguments": {
-            "id_locale": 66,
-            "locale_name": "en_US"
-          }
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
         },
         {
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "localeDE",
-          "arguments": {
-            "id_locale": 46,
-            "locale_name": "de_DE"
-          }
+          "arguments": { "id_locale": 46, "locale_name": "de_DE" }
         },
         {
           "type": "helper",
@@ -198,11 +161,7 @@
           "type": "helper",
           "name": "haveUser",
           "key": "merchantUserFromInactiveApprovedMerchant",
-          "arguments": [
-            {
-              "password": "change123"
-            }
-          ]
+          "arguments": [{ "password": "change123" }]
         },
         {
           "type": "helper",
@@ -233,11 +192,7 @@
           "type": "helper",
           "name": "haveUser",
           "key": "merchantUserFromActiveDeniedMerchant",
-          "arguments": [
-            {
-              "password": "change123"
-            }
-          ]
+          "arguments": [{ "password": "change123" }]
         },
         {
           "type": "helper",
@@ -268,11 +223,7 @@
           "type": "helper",
           "name": "haveUser",
           "key": "merchantUserFromInactiveDeniedMerchant",
-          "arguments": [
-            {
-              "password": "change123"
-            }
-          ]
+          "arguments": [{ "password": "change123" }]
         },
         {
           "type": "helper",

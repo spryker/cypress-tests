@@ -8,29 +8,19 @@
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
-          "arguments": {
-            "id_store": 1
-          }
+          "arguments": { "id_store": 1 }
         },
         {
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "locale",
-          "arguments": {
-            "id_locale": 66,
-            "locale_name": "en_US"
-          }
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
         },
         {
           "type": "helper",
           "name": "haveCustomer",
           "key": "customer",
-          "arguments": [
-            {
-              "locale": "#locale",
-              "password": "change123"
-            }
-          ]
+          "arguments": [{ "locale": "#locale", "password": "change123" }]
         },
         {
           "type": "helper",
@@ -41,8 +31,7 @@
         {
           "type": "helper",
           "name": "haveFullProduct",
-          "key": "productOne",
-          "arguments": []
+          "key": "productOne"
         },
         {
           "type": "transfer",
@@ -68,8 +57,7 @@
         {
           "type": "helper",
           "name": "haveFullProduct",
-          "key": "productTwo",
-          "arguments": []
+          "key": "productTwo"
         },
         {
           "type": "helper",
@@ -106,10 +94,7 @@
             {
               "skuProductAbstract": "#productTwo.abstract_sku",
               "skuProduct": "#productTwo.sku",
-              "moneyValue": {
-                "netAmount": 30000,
-                "grossAmount": 30000
-              }
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
             }
           ]
         },
@@ -117,25 +102,13 @@
           "type": "helper",
           "name": "haveProductInStockForStore",
           "key": "productOneWithPriceAndStore",
-          "arguments": [
-            "#store",
-            {
-              "sku": "#productOne.sku",
-              "isNeverOutOfStock": "1"
-            }
-          ]
+          "arguments": ["#store", { "sku": "#productOne.sku", "isNeverOutOfStock": "1" }]
         },
         {
           "type": "helper",
           "name": "haveProductInStockForStore",
           "key": "productTwoWithPriceAndStore",
-          "arguments": [
-            "#store",
-            {
-              "sku": "#productTwo.sku",
-              "isNeverOutOfStock": "1"
-            }
-          ]
+          "arguments": ["#store", { "sku": "#productTwo.sku", "isNeverOutOfStock": "1" }]
         },
         {
           "type": "helper",

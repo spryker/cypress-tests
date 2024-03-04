@@ -16,13 +16,13 @@ export class UserCreatePage extends BackofficePage {
     super();
   }
 
-  public createRootUser = (): User => {
-    const user: User = {
+  public createRootUser = () => {
+    const user = {
       username: this.faker.internet.email(),
       password: this.DEFAULT_PASSWORD,
     };
 
-    this.fillCreateUserForm(user);
+    this.fillCreateUserForm(user.username, user.password);
 
     this.repository.getRootGroupCheckbox().check();
     this.repository.getCreateUserButton().click();
@@ -31,13 +31,13 @@ export class UserCreatePage extends BackofficePage {
     return user;
   };
 
-  public createAgentMerchantUser = (): User => {
-    const user: User = {
+  public createAgentMerchantUser = () => {
+    const user = {
       username: this.faker.internet.email(),
       password: this.DEFAULT_PASSWORD,
     };
 
-    this.fillCreateUserForm(user);
+    this.fillCreateUserForm(user.username, user.password);
 
     this.repository.getRootGroupCheckbox().check();
     this.repository.getAgentMerchantCheckbox().check();
@@ -47,10 +47,10 @@ export class UserCreatePage extends BackofficePage {
     return user;
   };
 
-  private fillCreateUserForm = (user: User): void => {
-    this.repository.getUsernameInput().clear().type(user.username);
-    this.repository.getPasswordInput().clear().type(user.password);
-    this.repository.getRepeatPasswordInput().clear().type(user.password);
+  private fillCreateUserForm = (username: string, password: string): void => {
+    this.repository.getUsernameInput().clear().type(username);
+    this.repository.getPasswordInput().clear().type(password);
+    this.repository.getRepeatPasswordInput().clear().type(password);
     this.repository.getFirstNameInput().clear().type(this.faker.person.firstName());
     this.repository.getLastNameInput().clear().type(this.faker.person.lastName());
     this.repository.getInterfaceLanguageSelect().select(this.EN_LOCALE_VALUE);

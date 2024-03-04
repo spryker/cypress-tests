@@ -13,16 +13,14 @@ export class MerchantUserCreatePage extends BackofficePage {
     super();
   }
 
-  public createMerchantUser = (merchantUser?: MerchantUser): MerchantUser => {
-    if (!merchantUser) {
-      const uniquePrefix: string = this.faker.number.int({ min: 1000, max: 9999 }).toString();
+  public createMerchantUser = () => {
+    const uniquePrefix: string = this.faker.number.int({ min: 1000, max: 9999 }).toString();
 
-      merchantUser = {
-        username: this.faker.internet.email(),
-        firstName: uniquePrefix + '_' + this.faker.person.firstName(),
-        lastName: uniquePrefix + '_' + this.faker.person.lastName(),
-      };
-    }
+    const merchantUser = {
+      username: this.faker.internet.email(),
+      firstName: uniquePrefix + '_' + this.faker.person.firstName(),
+      lastName: uniquePrefix + '_' + this.faker.person.lastName(),
+    };
 
     this.repository.getEmailInput().clear().type(merchantUser.username);
     this.repository.getFirstNameInput().clear().type(merchantUser.firstName);

@@ -3,7 +3,6 @@ import { TYPES } from '../../../../utils/inversify/types';
 import 'reflect-metadata';
 import { CheckoutAddressRepository } from './checkout-address-repository';
 import { autoWired } from '../../../../utils/inversify/auto-wired';
-import { CheckoutAddress } from '../../../../types/yves/checkout';
 import { YvesPage } from '../../yves-page';
 
 @injectable()
@@ -15,12 +14,9 @@ export class CheckoutAddressPage extends YvesPage {
     super();
   }
 
-  public fillShippingAddress = (checkoutAddress?: CheckoutAddress): void => {
+  public fillShippingAddress = (): void => {
+    const checkoutAddress = this.createDummyCheckoutAddress();
     this.repository.getSelectShippingAddressField().select('0');
-
-    if (!checkoutAddress) {
-      checkoutAddress = this.createDummyCheckoutAddress();
-    }
 
     // Setting mandatory fields
     this.repository.getShippingAddressFirstNameField().clear().type(checkoutAddress.firstName);
@@ -38,20 +34,17 @@ export class CheckoutAddressPage extends YvesPage {
     this.repository.getNextButton().click();
   };
 
-  public fillMultiShippingAddress = (checkoutAddresses?: CheckoutAddress[]): void => {
+  public fillMultiShippingAddress = (): void => {
     this.repository.getMultiShipmentTriggerButton().click();
 
     this.repository
       .getMultiShipmentAddressItemElement()
       .children()
       .each(($addressItem, index) => {
+        const checkoutAddress = this.createDummyCheckoutAddress();
+
         this.repository.getMultiShipmentAddressItemDeliveryRadio($addressItem).click({ force: true });
         this.repository.getMultiShipmentAddressItemAddressField($addressItem).select('0', { force: true });
-
-        let checkoutAddress: CheckoutAddress | null = checkoutAddresses ? checkoutAddresses[index] : null;
-        if (!checkoutAddress) {
-          checkoutAddress = this.createDummyCheckoutAddress();
-        }
 
         // Setting mandatory fields
         this.repository
@@ -93,12 +86,9 @@ export class CheckoutAddressPage extends YvesPage {
     this.fillBillingAddress();
   };
 
-  public fillBillingAddress = (checkoutAddress?: CheckoutAddress): void => {
+  public fillBillingAddress = (): void => {
+    const checkoutAddress = this.createDummyCheckoutAddress();
     this.repository.getSelectBillingAddressField().select('0');
-
-    if (!checkoutAddress) {
-      checkoutAddress = this.createDummyCheckoutAddress();
-    }
 
     // Setting mandatory fields
     this.repository.getBillingAddressFirstNameField().clear().type(checkoutAddress.firstName);
@@ -115,7 +105,7 @@ export class CheckoutAddressPage extends YvesPage {
     this.repository.getNextButton().click();
   };
 
-  private createDummyCheckoutAddress = (): CheckoutAddress => {
+  private createDummyCheckoutAddress = () => {
     const prefix = '[e2e] ';
 
     return {
