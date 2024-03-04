@@ -31,20 +31,20 @@
         {
           "type": "helper",
           "name": "haveFullProduct",
-          "key": "productOne"
+          "key": "product1"
         },
         {
           "type": "helper",
           "name": "haveFullProduct",
-          "key": "productTwo"
+          "key": "product2"
         },
         {
           "type": "helper",
           "name": "havePriceProduct",
           "arguments": [
             {
-              "skuProductAbstract": "#productOne.abstract_sku",
-              "skuProduct": "#productOne.sku",
+              "skuProductAbstract": "#product1.abstract_sku",
+              "skuProduct": "#product1.sku",
               "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
             }
           ]
@@ -54,8 +54,8 @@
           "name": "havePriceProduct",
           "arguments": [
             {
-              "skuProductAbstract": "#productTwo.abstract_sku",
-              "skuProduct": "#productTwo.sku",
+              "skuProductAbstract": "#product2.abstract_sku",
+              "skuProduct": "#product2.sku",
               "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
             }
           ]
@@ -63,12 +63,12 @@
         {
           "type": "helper",
           "name": "haveProductInStockForStore",
-          "arguments": ["#store", { "sku": "#productOne.sku", "isNeverOutOfStock": "1" }]
+          "arguments": ["#store", { "sku": "#product1.sku", "isNeverOutOfStock": "1" }]
         },
         {
           "type": "helper",
           "name": "haveProductInStockForStore",
-          "arguments": ["#store", { "sku": "#productTwo.sku", "isNeverOutOfStock": "1" }]
+          "arguments": ["#store", { "sku": "#product2.sku", "isNeverOutOfStock": "1" }]
         },
         {
           "type": "transfer",
@@ -85,8 +85,8 @@
           "arguments": [
             {
               "name": "default",
-              "idProduct": "#productOne.id_product_concrete",
-              "idProductAbstract": "#productOne.fk_product_abstract",
+              "idProduct": "#product1.id_product_concrete",
+              "idProductAbstract": "#product1.fk_product_abstract",
               "productImages": ["#productImage"]
             }
           ]
@@ -97,8 +97,8 @@
           "arguments": [
             {
               "name": "default",
-              "idProduct": "#productTwo.id_product_concrete",
-              "idProductAbstract": "#productTwo.fk_product_abstract",
+              "idProduct": "#product2.id_product_concrete",
+              "idProductAbstract": "#product2.fk_product_abstract",
               "productImages": ["#productImage"]
             }
           ]
@@ -112,13 +112,13 @@
               "customer": "#customer",
               "items": [
                 {
-                  "sku": "#productOne.sku",
-                  "abstractSku": "#productOne.abstract_sku",
+                  "sku": "#product1.sku",
+                  "abstractSku": "#product1.abstract_sku",
                   "quantity": 1
                 },
                 {
-                  "sku": "#productTwo.sku",
-                  "abstractSku": "#productTwo.abstract_sku",
+                  "sku": "#product2.sku",
+                  "abstractSku": "#product2.abstract_sku",
                   "quantity": 2
                 }
               ]

@@ -9,3 +9,7 @@ export interface Product {
 export interface Quote {
   name: string;
 }
+
+export interface Address {
+  id_customer_address: number;
+}

@@ -24,7 +24,7 @@ export class CheckoutScenario {
     @inject(CliHelper) private cliHelper: CliHelper
   ) {}
 
-  public execute = (isGuest: boolean = false, isMultiShipment: boolean = false): void => {
+  public execute = (isGuest: boolean = false, isMultiShipment: boolean = false, idCustomerAddress?: number): void => {
     this.cartPage.visit();
     this.cartPage.startCheckout();
 
@@ -32,7 +32,7 @@ export class CheckoutScenario {
       this.checkoutCustomerPage.checkoutAsGuest();
     }
 
-    this.fillShippingAddress(isMultiShipment);
+    this.fillShippingAddress(isMultiShipment, idCustomerAddress);
     this.checkoutShipmentPage.setStandardShippingMethod();
     this.checkoutPaymentPage.setDummyPaymentMethod();
     this.checkoutSummaryPage.placeOrder();
@@ -41,13 +41,13 @@ export class CheckoutScenario {
     this.cliHelper.run(['console oms:check-condition', 'console oms:check-timeout']);
   };
 
-  private fillShippingAddress = (isMultiShipment: boolean = false): void => {
+  private fillShippingAddress = (isMultiShipment: boolean = false, idCustomerAddress?: number): void => {
     if (isMultiShipment) {
-      this.checkoutAddressPage.fillMultiShippingAddress();
+      this.checkoutAddressPage.fillMultiShippingAddress(idCustomerAddress);
 
       return;
     }
 
-    this.checkoutAddressPage.fillShippingAddress();
+    this.checkoutAddressPage.fillShippingAddress(idCustomerAddress);
   };
 }

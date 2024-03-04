@@ -25,7 +25,7 @@ describe('order management suite 1', { tags: ['@order-management'] }, (): void =
   it('should be able to create an order by existing customer', (): void => {
     loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
 
-    checkoutScenario.execute();
+    checkoutScenario.execute(false, false, dynamicFixtures.address.id_customer_address);
     cy.contains('Your order has been placed successfully!');
 
     userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);

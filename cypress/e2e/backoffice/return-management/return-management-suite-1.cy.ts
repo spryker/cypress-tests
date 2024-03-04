@@ -1,4 +1,3 @@
-import { MultiCartPage } from '../../../support/pages/yves';
 import { container } from '../../../support/utils/inversify/inversify.config';
 import { SalesDetailPage, SalesIndexPage, SalesReturnGuiCreatePage } from '../../../support/pages/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '../../../support/scenarios/yves';
@@ -9,7 +8,6 @@ import {
 } from '../../../support/types/backoffice/return-managment/fixture-types';
 
 describe('return management suite 1', { tags: ['@return-management'] }, (): void => {
-  const multiCartPage: MultiCartPage = container.get(MultiCartPage);
   const salesIndexPage: SalesIndexPage = container.get(SalesIndexPage);
   const salesDetailPage: SalesDetailPage = container.get(SalesDetailPage);
   const salesReturnGuiCreatePage: SalesReturnGuiCreatePage = container.get(SalesReturnGuiCreatePage);
@@ -26,13 +24,10 @@ describe('return management suite 1', { tags: ['@return-management'] }, (): void
 
   beforeEach((): void => {
     customerLoginScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
-    multiCartPage.visit();
   });
 
   it('should be able to create return from (from shipped order state)', (): void => {
-    multiCartPage.selectCart(dynamicFixtures.quoteOne.name);
-    checkoutScenario.execute();
-
+    checkoutScenario.execute(false, false, dynamicFixtures.address.id_customer_address);
     userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
 
     salesIndexPage.visit();
@@ -49,9 +44,7 @@ describe('return management suite 1', { tags: ['@return-management'] }, (): void
   });
 
   it('should be able to create return from (from delivery order state)', (): void => {
-    multiCartPage.selectCart(dynamicFixtures.quoteTwo.name);
-    checkoutScenario.execute();
-
+    checkoutScenario.execute(false, false, dynamicFixtures.address.id_customer_address);
     userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
 
     salesIndexPage.visit();

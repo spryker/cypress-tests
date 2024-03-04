@@ -14,7 +14,16 @@ export class CheckoutAddressPage extends YvesPage {
     super();
   }
 
-  public fillShippingAddress = (): void => {
+  public fillShippingAddress = (idCustomerAddress?: number): void => {
+    if (idCustomerAddress) {
+      this.repository.getSelectShippingAddressField().select(idCustomerAddress.toString());
+      this.repository.getShippingAddressBillingSameAsShippingCheckbox().check({ force: true });
+
+      this.repository.getNextButton().click();
+
+      return;
+    }
+
     const checkoutAddress = this.createDummyCheckoutAddress();
     this.repository.getSelectShippingAddressField().select('0');
 
@@ -34,7 +43,7 @@ export class CheckoutAddressPage extends YvesPage {
     this.repository.getNextButton().click();
   };
 
-  public fillMultiShippingAddress = (): void => {
+  public fillMultiShippingAddress = (idCustomerAddress?: number): void => {
     this.repository.getMultiShipmentTriggerButton().click();
 
     this.repository
@@ -44,6 +53,15 @@ export class CheckoutAddressPage extends YvesPage {
         const checkoutAddress = this.createDummyCheckoutAddress();
 
         this.repository.getMultiShipmentAddressItemDeliveryRadio($addressItem, index).click({ force: true });
+
+        if (idCustomerAddress) {
+          this.repository
+            .getMultiShipmentAddressItemAddressField($addressItem, index)
+            .select(idCustomerAddress.toString(), { force: true });
+
+          return;
+        }
+
         this.repository.getMultiShipmentAddressItemAddressField($addressItem, index).select('0', { force: true });
 
         // Setting mandatory fields
