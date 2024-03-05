@@ -1,6 +1,6 @@
 {
   "data": {
-    "type": "test-operation-runner",
+    "type": "dynamic-fixtures",
     "attributes": {
       "synchronize": true,
       "operations": [

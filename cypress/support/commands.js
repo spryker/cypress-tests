@@ -38,7 +38,7 @@ Cypress.Commands.add('loadDynamicFixturesByPayload', (dynamicFixturesFilePath) =
     return cy
       .request({
         method: 'POST',
-        url: Cypress.env().glueBackendUrl + '/test-operation-runner',
+        url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
         headers: {
           'Content-Type': 'application/vnd.api+json',
         },
@@ -47,15 +47,13 @@ Cypress.Commands.add('loadDynamicFixturesByPayload', (dynamicFixturesFilePath) =
       })
       .then((response) => {
         if (Array.isArray(response.body.data)) {
-          // If the response data is an array, map over it and create an object with dynamic keys
           return response.body.data.reduce((acc, item) => {
-            acc[item.type] = item.attributes;
+            acc[item.attributes.key] = item.attributes.data;
             return acc;
           }, {});
         } else {
-          // If the response data is a single item, create an object with a dynamic key
           return {
-            [response.body.data.type]: response.body.data.attributes.properties,
+            [response.body.data.attributes.key]: response.body.data.attributes.data,
           };
         }
       });

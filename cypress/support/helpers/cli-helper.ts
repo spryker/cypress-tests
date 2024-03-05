@@ -14,13 +14,13 @@ export class CliHelper {
 
     cy.request({
       method: 'POST',
-      url: Cypress.env().glueBackendUrl + '/test-operation-runner',
+      url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
       headers: {
         'Content-Type': 'application/vnd.api+json',
       },
       body: {
         data: {
-          type: 'test-operation-runner',
+          type: 'dynamic-fixtures',
           attributes: {
             operations: operations,
           },
