@@ -1,6 +1,3 @@
-import { autoWired, CliHelper } from '@utils';
-import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
 import {
   CartPage,
   CheckoutAddressPage,
@@ -8,7 +5,10 @@ import {
   CheckoutPaymentPage,
   CheckoutShipmentPage,
   CheckoutSummaryPage,
-} from '../../pages/yves';
+} from '@pages/yves';
+import { autoWired, CliHelper } from '@utils';
+import { inject, injectable } from 'inversify';
+import 'reflect-metadata';
 
 @injectable()
 @autoWired

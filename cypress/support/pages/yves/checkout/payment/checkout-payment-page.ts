@@ -1,4 +1,4 @@
-import { TYPES, autoWired } from '@utils';
+import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { YvesPage } from '../../yves-page';
@@ -7,7 +7,7 @@ import { CheckoutPaymentRepository } from './checkout-payment-repository';
 @injectable()
 @autoWired
 export class CheckoutPaymentPage extends YvesPage {
-  @inject(TYPES.CheckoutPaymentRepository) private repository: CheckoutPaymentRepository;
+  @inject(REPOSITORIES.CheckoutPaymentRepository) private repository: CheckoutPaymentRepository;
 
   protected PAGE_URL = '/checkout/payment';
 

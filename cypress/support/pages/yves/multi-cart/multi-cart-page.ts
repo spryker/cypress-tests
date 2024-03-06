@@ -1,4 +1,4 @@
-import { TYPES, autoWired } from '@utils';
+import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { YvesPage } from '../yves-page';
@@ -7,7 +7,7 @@ import { MultiCartRepository } from './multi-cart-repository';
 @injectable()
 @autoWired
 export class MultiCartPage extends YvesPage {
-  @inject(TYPES.MultiCartRepository) private repository: MultiCartRepository;
+  @inject(REPOSITORIES.MultiCartRepository) private repository: MultiCartRepository;
 
   protected PAGE_URL = '/multi-cart';
 

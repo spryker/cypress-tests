@@ -1,6 +1,6 @@
+import { AgentLoginPage } from '@pages/yves';
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { AgentLoginPage } from '../../pages/yves';
 
 @injectable()
 @autoWired

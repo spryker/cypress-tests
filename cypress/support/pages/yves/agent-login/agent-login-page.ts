@@ -1,4 +1,4 @@
-import { TYPES, autoWired } from '@utils';
+import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { YvesPage } from '../yves-page';
@@ -7,7 +7,7 @@ import { AgentLoginRepository } from './agent-login-repository';
 @injectable()
 @autoWired
 export class AgentLoginPage extends YvesPage {
-  @inject(TYPES.AgentLoginRepository) private repository: AgentLoginRepository;
+  @inject(REPOSITORIES.AgentLoginRepository) private repository: AgentLoginRepository;
 
   protected PAGE_URL = '/agent/login';
 
