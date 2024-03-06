@@ -9,7 +9,7 @@ import { UserDeleteRepository } from './user-delete-repository';
 export class UserDeletePage extends BackofficePage {
   @inject(UserDeleteRepository) private repository: UserDeleteRepository;
 
-  protected PAGE_URL: string = '/user/edit/confirm-delete';
+  protected PAGE_URL = '/user/edit/confirm-delete';
 
   confirmDelete = (): void => {
     this.repository.getDeleteButton().click();

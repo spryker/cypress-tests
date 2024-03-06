@@ -9,7 +9,7 @@ import { SalesReturnGuiCreateRepository } from './sales-return-gui-create-reposi
 export class SalesReturnGuiCreatePage extends BackofficePage {
   @inject(SalesReturnGuiCreateRepository) private repository: SalesReturnGuiCreateRepository;
 
-  protected PAGE_URL: string = '/sales-return-gui/create';
+  protected PAGE_URL = '/sales-return-gui/create';
 
   createReturnForAllOrderItems = (): void => {
     this.repository.getAllItemsCheckbox().check();

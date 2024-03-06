@@ -9,7 +9,7 @@ import { MerchantUserCreateRepository } from './merchant-user-create-repository'
 export class MerchantUserCreatePage extends BackofficePage {
   @inject(MerchantUserCreateRepository) private repository: MerchantUserCreateRepository;
 
-  protected PAGE_URL: string = '/merchant-user-gui/edit-merchant-user';
+  protected PAGE_URL = '/merchant-user-gui/edit-merchant-user';
 
   createMerchantUser = () => {
     const uniquePrefix: string = this.faker.number.int({ min: 1000, max: 9999 }).toString();

@@ -9,7 +9,7 @@ import { ProfileRepository } from './profile-repository';
 export class ProfilePage extends MpPage {
   @inject(ProfileRepository) private repository: ProfileRepository;
 
-  protected PAGE_URL: string = '/merchant-profile-merchant-portal-gui/profile';
+  protected PAGE_URL = '/merchant-profile-merchant-portal-gui/profile';
 
   updateMerchantPhoneNumber = (phone?: string) => {
     this.repository

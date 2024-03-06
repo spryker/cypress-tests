@@ -9,7 +9,7 @@ import { SalesOrdersRepository } from './sales-orders-repository';
 export class SalesOrdersPage extends MpPage {
   @inject(SalesOrdersRepository) private repository: SalesOrdersRepository;
 
-  protected PAGE_URL: string = '/sales-merchant-portal-gui/orders';
+  protected PAGE_URL = '/sales-merchant-portal-gui/orders';
 
   findOrder = (query: string): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();

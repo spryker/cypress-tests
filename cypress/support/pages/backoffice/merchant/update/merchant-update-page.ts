@@ -9,7 +9,7 @@ import { MerchantUpdateRepository } from './merchant-update-repository';
 export class MerchantUpdatePage extends BackofficePage {
   @inject(MerchantUpdateRepository) private repository: MerchantUpdateRepository;
 
-  protected PAGE_URL: string = '/merchant-gui/edit-merchant';
+  protected PAGE_URL = '/merchant-gui/edit-merchant';
 
   findUser = (email: string): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();

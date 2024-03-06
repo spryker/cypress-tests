@@ -9,7 +9,7 @@ import { CartRepository } from './cart-repository';
 export class CartPage extends YvesPage {
   @inject(TYPES.CartRepository) private repository: CartRepository;
 
-  protected PAGE_URL: string = '/cart';
+  protected PAGE_URL = '/cart';
 
   quickAddToCart = (sku: string, quantity?: number): void => {
     this.repository.getQuickAddToCartSkuField().clear().type(sku);

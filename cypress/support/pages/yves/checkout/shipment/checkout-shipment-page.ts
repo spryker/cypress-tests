@@ -9,7 +9,7 @@ import { CheckoutShipmentRepository } from './checkout-shipment-repository';
 export class CheckoutShipmentPage extends YvesPage {
   @inject(TYPES.CheckoutShipmentRepository) private repository: CheckoutShipmentRepository;
 
-  protected PAGE_URL: string = '/checkout/shipment';
+  protected PAGE_URL = '/checkout/shipment';
 
   setStandardShippingMethod = (): void => {
     this.repository.getMultiShipmentGroups().each(($shipmentItem, index) => {

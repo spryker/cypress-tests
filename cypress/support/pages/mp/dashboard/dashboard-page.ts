@@ -9,7 +9,7 @@ import { DashboardRepository } from './dashboard-repository';
 export class DashboardPage extends MpPage {
   @inject(DashboardRepository) private repository: DashboardRepository;
 
-  protected PAGE_URL: string = '/dashboard-merchant-portal-gui/dashboard';
+  protected PAGE_URL = '/dashboard-merchant-portal-gui/dashboard';
 
   logout = (): void => {
     this.repository.getUserProfileMenu().click();

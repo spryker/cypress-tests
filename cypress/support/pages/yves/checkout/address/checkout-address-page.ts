@@ -9,7 +9,7 @@ import { CheckoutAddressRepository } from './checkout-address-repository';
 export class CheckoutAddressPage extends YvesPage {
   @inject(TYPES.CheckoutAddressRepository) private repository: CheckoutAddressRepository;
 
-  protected PAGE_URL: string = '/checkout/address';
+  protected PAGE_URL = '/checkout/address';
 
   fillShippingAddress = (idCustomerAddress?: number): void => {
     if (idCustomerAddress) {

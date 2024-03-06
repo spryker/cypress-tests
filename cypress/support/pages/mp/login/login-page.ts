@@ -9,7 +9,7 @@ import { LoginRepository } from './login-repository';
 export class LoginPage extends MpPage {
   @inject(LoginRepository) private repository: LoginRepository;
 
-  protected PAGE_URL: string = '/security-merchant-portal-gui/login';
+  protected PAGE_URL = '/security-merchant-portal-gui/login';
 
   login = (username: string, password: string): void => {
     cy.visitMerchantPortal(this.PAGE_URL);

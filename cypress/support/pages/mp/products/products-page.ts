@@ -9,7 +9,7 @@ import { ProductsRepository } from './products-repository';
 export class ProductsPage extends MpPage {
   @inject(ProductsRepository) private repository: ProductsRepository;
 
-  protected PAGE_URL: string = '/product-merchant-portal-gui/products';
+  protected PAGE_URL = '/product-merchant-portal-gui/products';
 
   findProduct = (query: string): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();

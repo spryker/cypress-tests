@@ -9,7 +9,7 @@ import { CheckoutPaymentRepository } from './checkout-payment-repository';
 export class CheckoutPaymentPage extends YvesPage {
   @inject(TYPES.CheckoutPaymentRepository) private repository: CheckoutPaymentRepository;
 
-  protected PAGE_URL: string = '/checkout/payment';
+  protected PAGE_URL = '/checkout/payment';
 
   setDummyPaymentMethod = (): void => {
     this.repository.getDummyPaymentInvoiceRadio().click({ force: true });

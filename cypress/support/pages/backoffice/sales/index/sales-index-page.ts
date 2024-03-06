@@ -9,7 +9,7 @@ import { SalesIndexRepository } from './sales-index-repository';
 export class SalesIndexPage extends BackofficePage {
   @inject(SalesIndexRepository) private repository: SalesIndexRepository;
 
-  protected PAGE_URL: string = '/sales';
+  protected PAGE_URL = '/sales';
 
   viewLastPlacedOrder = (): void => {
     cy.visitBackoffice(this.PAGE_URL);

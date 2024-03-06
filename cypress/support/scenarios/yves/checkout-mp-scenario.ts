@@ -1,7 +1,6 @@
-import { autoWired } from '@utils';
+import { autoWired, CliHelper } from '@utils';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { CliHelper } from '../../helpers/cli-helper';
 import {
   CartPage,
   CheckoutAddressPage,
@@ -14,15 +13,13 @@ import {
 @injectable()
 @autoWired
 export class CheckoutMpScenario {
-  constructor(
-    @inject(CartPage) private cartPage: CartPage,
-    @inject(CheckoutAddressPage) private checkoutAddressPage: CheckoutAddressPage,
-    @inject(CheckoutCustomerPage) private checkoutCustomerPage: CheckoutCustomerPage,
-    @inject(CheckoutShipmentPage) private checkoutShipmentPage: CheckoutShipmentPage,
-    @inject(CheckoutPaymentPage) private checkoutPaymentPage: CheckoutPaymentPage,
-    @inject(CheckoutSummaryPage) private checkoutSummaryPage: CheckoutSummaryPage,
-    @inject(CliHelper) private cliHelper: CliHelper
-  ) {}
+  @inject(CartPage) private cartPage: CartPage;
+  @inject(CheckoutAddressPage) private checkoutAddressPage: CheckoutAddressPage;
+  @inject(CheckoutCustomerPage) private checkoutCustomerPage: CheckoutCustomerPage;
+  @inject(CheckoutShipmentPage) private checkoutShipmentPage: CheckoutShipmentPage;
+  @inject(CheckoutPaymentPage) private checkoutPaymentPage: CheckoutPaymentPage;
+  @inject(CheckoutSummaryPage) private checkoutSummaryPage: CheckoutSummaryPage;
+  @inject(CliHelper) private cliHelper: CliHelper;
 
   execute = (isGuest: boolean = false, isMultiShipment: boolean = false): void => {
     this.cartPage.visit();

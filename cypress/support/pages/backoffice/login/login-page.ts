@@ -9,7 +9,7 @@ import { LoginRepository } from './login-repository';
 export class LoginPage extends BackofficePage {
   @inject(LoginRepository) private repository: LoginRepository;
 
-  protected PAGE_URL: string = '/security-gui/login';
+  protected PAGE_URL = '/security-gui/login';
 
   login = (username: string, password: string): void => {
     this.repository.getEmailInput().clear().type(username);

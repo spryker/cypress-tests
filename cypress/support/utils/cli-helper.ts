@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { autoWired } from '../utils/inversify/auto-wired';
+import { autoWired } from './inversify';
 
 @injectable()
 @autoWired

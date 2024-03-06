@@ -9,7 +9,7 @@ import { MultiCartRepository } from './multi-cart-repository';
 export class MultiCartPage extends YvesPage {
   @inject(TYPES.MultiCartRepository) private repository: MultiCartRepository;
 
-  protected PAGE_URL: string = '/multi-cart';
+  protected PAGE_URL = '/multi-cart';
 
   createCart = (name?: string): void => {
     cy.visit(`${this.PAGE_URL}/create`);

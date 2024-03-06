@@ -9,9 +9,9 @@ import { UserCreateRepository } from './user-create-repository';
 export class UserCreatePage extends BackofficePage {
   @inject(UserCreateRepository) private repository: UserCreateRepository;
 
-  protected PAGE_URL: string = '/user/edit/create';
-  private DEFAULT_PASSWORD: string = 'Change123@_';
-  private EN_LOCALE_VALUE: string = '66';
+  protected PAGE_URL = '/user/edit/create';
+  private DEFAULT_PASSWORD = 'Change123@_';
+  private EN_LOCALE_VALUE = '66';
 
   createRootUser = () => {
     const user = {

@@ -9,7 +9,7 @@ import { UserIndexRepository } from './user-index-repository';
 export class UserIndexPage extends BackofficePage {
   @inject(UserIndexRepository) private repository: UserIndexRepository;
 
-  protected PAGE_URL: string = '/user';
+  protected PAGE_URL = '/user';
 
   createNewUser = (): void => {
     this.repository.getAddNewUserButton().click();

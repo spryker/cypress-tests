@@ -6,5 +6,5 @@ import { BackofficePage } from '../backoffice-page';
 @injectable()
 @autoWired
 export class IndexPage extends BackofficePage {
-  protected PAGE_URL: string = '/';
+  protected PAGE_URL = '/';
 }

@@ -9,7 +9,7 @@ import { CheckoutCustomerRepository } from './checkout-customer-repository';
 export class CheckoutCustomerPage extends YvesPage {
   @inject(TYPES.CheckoutCustomerRepository) private repository: CheckoutCustomerRepository;
 
-  protected PAGE_URL: string = '/checkout/customer';
+  protected PAGE_URL = '/checkout/customer';
 
   checkoutAsGuest = (): string => {
     const guest = {

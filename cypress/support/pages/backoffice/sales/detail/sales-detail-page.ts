@@ -1,14 +1,13 @@
-import { autoWired } from '@utils';
+import { autoWired, CliHelper } from '@utils';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { CliHelper } from '../../../../helpers/cli-helper';
 import { BackofficePage } from '../../backoffice-page';
 import { SalesDetailRepository } from './sales-detail-repository';
 
 @injectable()
 @autoWired
 export class SalesDetailPage extends BackofficePage {
-  protected PAGE_URL: string = '/sales/detail';
+  protected PAGE_URL = '/sales/detail';
 
   constructor(
     @inject(SalesDetailRepository) private repository: SalesDetailRepository,

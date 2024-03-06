@@ -9,7 +9,7 @@ import { LoginRepository } from './login-repository';
 export class LoginPage extends YvesPage {
   @inject(TYPES.LoginRepository) private repository: LoginRepository;
 
-  protected PAGE_URL: string = '/login';
+  protected PAGE_URL = '/login';
 
   login = (email: string, password: string): void => {
     this.repository.getLoginEmailInput().clear().type(email);

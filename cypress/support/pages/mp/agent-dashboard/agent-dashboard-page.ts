@@ -9,7 +9,7 @@ import { AgentDashboardRepository } from './agent-dashboard-repository';
 export class AgentDashboardPage extends MpPage {
   @inject(AgentDashboardRepository) private repository: AgentDashboardRepository;
 
-  protected PAGE_URL: string = '/agent-dashboard-merchant-portal-gui/merchant-users';
+  protected PAGE_URL = '/agent-dashboard-merchant-portal-gui/merchant-users';
 
   getDashboardSidebarSelector = (): Cypress.Chainable => {
     return this.repository.getDashboardSidebarSelector();

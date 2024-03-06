@@ -9,7 +9,7 @@ import { MerchantListRepository } from './merchant-list-repository';
 export class MerchantListPage extends BackofficePage {
   @inject(MerchantListRepository) private repository: MerchantListRepository;
 
-  protected PAGE_URL: string = '/merchant-gui/list-merchant';
+  protected PAGE_URL = '/merchant-gui/list-merchant';
 
   editMerchant = (query: string): void => {
     this.findMerchant(query).find(this.repository.getEditButtonSelector()).click();

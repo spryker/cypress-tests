@@ -9,7 +9,7 @@ import { CheckoutSummaryRepository } from './checkout-summary-repository';
 export class CheckoutSummaryPage extends YvesPage {
   @inject(TYPES.CheckoutSummaryRepository) private repository: CheckoutSummaryRepository;
 
-  protected PAGE_URL: string = '/checkout/summary';
+  protected PAGE_URL = '/checkout/summary';
 
   placeOrder = (): void => {
     this.repository.getaAcceptTermsAndConditionsCheckbox().check({ force: true });

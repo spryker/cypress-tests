@@ -9,7 +9,7 @@ import { CommentCartRepository } from './comment-cart-repository';
 export class CommentCartPage extends YvesPage {
   @inject(TYPES.CommentCartRepository) private repository: CommentCartRepository;
 
-  protected PAGE_URL: string = '/cart';
+  protected PAGE_URL = '/cart';
 
   addComment = (commentMessage: string): void => {
     this.repository.getAddCommentForm().last().find('textarea').clear().type(commentMessage);
