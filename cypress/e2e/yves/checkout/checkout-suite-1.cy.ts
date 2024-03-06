@@ -20,7 +20,9 @@ describe('checkout suite 1', { tags: ['@checkout'] }, (): void => {
     cartPage.quickAddToCart(dynamicFixtures.product1.sku, 1);
     cartPage.quickAddToCart(dynamicFixtures.product2.sku, 1);
 
-    checkoutScenario.execute(true);
+    checkoutScenario.execute({
+      isGuest: true,
+    });
 
     cy.contains('Your order has been placed successfully!');
   });
@@ -30,7 +32,10 @@ describe('checkout suite 1', { tags: ['@checkout'] }, (): void => {
     cartPage.quickAddToCart(dynamicFixtures.product1.sku, 1);
     cartPage.quickAddToCart(dynamicFixtures.product2.sku, 1);
 
-    checkoutScenario.execute(true, true);
+    checkoutScenario.execute({
+      isGuest: true,
+      isMultiShipment: true,
+    });
 
     cy.contains('Your order has been placed successfully!');
   });
@@ -38,7 +43,11 @@ describe('checkout suite 1', { tags: ['@checkout'] }, (): void => {
   it('customer should checkout to single shipment (with customer shipping address)', (): void => {
     loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
 
-    checkoutScenario.execute(false, false, dynamicFixtures.address.id_customer_address);
+    checkoutScenario.execute({
+      isGuest: false,
+      isMultiShipment: false,
+      idCustomerAddress: dynamicFixtures.address.id_customer_address,
+    });
 
     cy.contains('Your order has been placed successfully!');
   });
@@ -46,7 +55,10 @@ describe('checkout suite 1', { tags: ['@checkout'] }, (): void => {
   it('customer should checkout to single shipment (with new shipping address)', (): void => {
     loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
 
-    checkoutScenario.execute(false, false);
+    checkoutScenario.execute({
+      isGuest: false,
+      isMultiShipment: false,
+    });
 
     cy.contains('Your order has been placed successfully!');
   });
@@ -57,7 +69,11 @@ describe('checkout suite 1', { tags: ['@checkout'] }, (): void => {
     (): void => {
       loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
 
-      checkoutScenario.execute(false, true, dynamicFixtures.address.id_customer_address);
+      checkoutScenario.execute({
+        isGuest: false,
+        isMultiShipment: true,
+        idCustomerAddress: dynamicFixtures.address.id_customer_address,
+      });
 
       cy.contains('Your order has been placed successfully!');
     }
@@ -69,7 +85,10 @@ describe('checkout suite 1', { tags: ['@checkout'] }, (): void => {
     (): void => {
       loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
 
-      checkoutScenario.execute(false, true);
+      checkoutScenario.execute({
+        isGuest: false,
+        isMultiShipment: true,
+      });
 
       cy.contains('Your order has been placed successfully!');
     }

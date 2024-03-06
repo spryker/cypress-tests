@@ -22,7 +22,11 @@ describe('order management suite 1', { tags: ['@order-management'] }, (): void =
   it('should be able to create an order by existing customer', (): void => {
     loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
 
-    checkoutScenario.execute(false, false, dynamicFixtures.address.id_customer_address);
+    checkoutScenario.execute({
+      isGuest: false,
+      isMultiShipment: false,
+      idCustomerAddress: dynamicFixtures.address.id_customer_address,
+    });
     cy.contains('Your order has been placed successfully!');
 
     userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
@@ -35,7 +39,7 @@ describe('order management suite 1', { tags: ['@order-management'] }, (): void =
     cartPage.visit();
     cartPage.quickAddToCart(dynamicFixtures.product.sku, 1);
 
-    checkoutScenario.execute(true);
+    checkoutScenario.execute({ isGuest: true });
     cy.contains('Your order has been placed successfully!');
 
     userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);

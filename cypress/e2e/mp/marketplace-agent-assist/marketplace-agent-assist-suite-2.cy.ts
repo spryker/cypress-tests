@@ -35,7 +35,7 @@ describe('marketplace agent assist suite 2', { tags: ['@marketplace-agent-assist
 
     cartPage.visit();
     cartPage.quickAddToCart(dynamicFixtures.productConcreteForOffer.sku);
-    checkoutMpScenario.execute();
+    checkoutMpScenario.execute({ isGuest: false });
 
     userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
 

@@ -24,7 +24,11 @@ describe('return management suite 1', { tags: ['@return-management'] }, (): void
   });
 
   it('should be able to create return from (from shipped order state)', (): void => {
-    checkoutScenario.execute(false, false, dynamicFixtures.address.id_customer_address);
+    checkoutScenario.execute({
+      isGuest: false,
+      isMultiShipment: false,
+      idCustomerAddress: dynamicFixtures.address.id_customer_address,
+    });
     userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
 
     salesIndexPage.visit();
@@ -41,7 +45,11 @@ describe('return management suite 1', { tags: ['@return-management'] }, (): void
   });
 
   it('should be able to create return from (from delivery order state)', (): void => {
-    checkoutScenario.execute(false, false, dynamicFixtures.address.id_customer_address);
+    checkoutScenario.execute({
+      isGuest: false,
+      isMultiShipment: false,
+      idCustomerAddress: dynamicFixtures.address.id_customer_address,
+    });
     userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
 
     salesIndexPage.visit();

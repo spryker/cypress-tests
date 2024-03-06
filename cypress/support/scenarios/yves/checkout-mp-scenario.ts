@@ -6,9 +6,14 @@ import {
   CheckoutShipmentPage,
   CheckoutSummaryPage,
 } from '@pages/yves';
-import { autoWired, CliHelper } from '@utils';
+import { CliHelper, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
+
+interface CheckoutMpExecuteParams {
+  isGuest: boolean;
+  isMultiShipment?: boolean;
+}
 
 @injectable()
 @autoWired
@@ -21,7 +26,9 @@ export class CheckoutMpScenario {
   @inject(CheckoutSummaryPage) private checkoutSummaryPage: CheckoutSummaryPage;
   @inject(CliHelper) private cliHelper: CliHelper;
 
-  execute = (isGuest: boolean = false, isMultiShipment: boolean = false): void => {
+  execute = (params: CheckoutMpExecuteParams): void => {
+    const { isGuest, isMultiShipment } = params;
+
     this.cartPage.visit();
     this.cartPage.startCheckout();
 
