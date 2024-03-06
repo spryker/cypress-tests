@@ -8,8 +8,7 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-Cypress.Commands.add('iframe', { prevSubject: 'element' } as any, ($iframe) => {
+Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe) => {
   return new Cypress.Promise((resolve) => {
     $iframe.on('load', () => {
       resolve($iframe.contents().find('body'));
