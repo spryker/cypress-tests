@@ -7,13 +7,11 @@ import { ProfileRepository } from './profile-repository';
 @injectable()
 @autoWired
 export class ProfilePage extends MpPage {
+  @inject(ProfileRepository) private repository: ProfileRepository;
+
   protected PAGE_URL: string = '/merchant-profile-merchant-portal-gui/profile';
 
-  constructor(@inject(ProfileRepository) private repository: ProfileRepository) {
-    super();
-  }
-
-  public updateMerchantPhoneNumber = (phone?: string) => {
+  updateMerchantPhoneNumber = (phone?: string) => {
     this.repository
       .getPhoneNumberInput()
       .clear()

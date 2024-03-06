@@ -7,13 +7,11 @@ import { UserDeleteRepository } from './user-delete-repository';
 @injectable()
 @autoWired
 export class UserDeletePage extends BackofficePage {
+  @inject(UserDeleteRepository) private repository: UserDeleteRepository;
+
   protected PAGE_URL: string = '/user/edit/confirm-delete';
 
-  constructor(@inject(UserDeleteRepository) private repository: UserDeleteRepository) {
-    super();
-  }
-
-  public confirmDelete = (): void => {
+  confirmDelete = (): void => {
     this.repository.getDeleteButton().click();
   };
 }

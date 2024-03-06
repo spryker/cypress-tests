@@ -7,7 +7,7 @@ export class AbstractPage {
   protected PAGE_URL = '';
   protected faker = faker;
 
-  public assertPageLocation = (): void => {
+  assertPageLocation = (): void => {
     cy.url({ timeout: 4000 }).should('include', this.PAGE_URL);
   };
 }

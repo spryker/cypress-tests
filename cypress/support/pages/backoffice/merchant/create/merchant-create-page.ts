@@ -11,7 +11,7 @@ export class MerchantCreatePage extends BackofficePage {
 
   protected PAGE_URL = '/merchant-gui/create-merchant';
 
-  public createMerchant = () => {
+  createMerchant = () => {
     const identifier = this.faker.string.uuid();
 
     const merchant = {

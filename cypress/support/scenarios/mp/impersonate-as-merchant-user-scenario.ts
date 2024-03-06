@@ -8,7 +8,7 @@ export class ImpersonateAsMerchantUserScenario {
   @inject(AgentLoginPage) private agentLoginPage: AgentLoginPage;
   @inject(AgentDashboardPage) private mpAgentDashboardPage: AgentDashboardPage;
 
-  public execute = (username: string, password: string, merchantUsername: string): void => {
+  execute = (username: string, password: string, merchantUsername: string): void => {
     this.agentLoginPage.visit();
     this.agentLoginPage.login(username, password);
 

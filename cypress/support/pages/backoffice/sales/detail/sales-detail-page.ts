@@ -17,7 +17,7 @@ export class SalesDetailPage extends BackofficePage {
     super();
   }
 
-  public triggerOms = (state: string, shouldTriggerOmsInCli: boolean = false): void => {
+  triggerOms = (state: string, shouldTriggerOmsInCli: boolean = false): void => {
     if (shouldTriggerOmsInCli) {
       this.cliHelper.run(['console oms:check-condition', 'console oms:check-timeout']);
     }
@@ -35,7 +35,7 @@ export class SalesDetailPage extends BackofficePage {
     });
   };
 
-  public createReturn = (): void => {
+  createReturn = (): void => {
     this.repository.getReturnButton().click();
   };
 }

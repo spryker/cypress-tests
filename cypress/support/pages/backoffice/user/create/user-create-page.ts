@@ -7,16 +7,13 @@ import { UserCreateRepository } from './user-create-repository';
 @injectable()
 @autoWired
 export class UserCreatePage extends BackofficePage {
-  protected PAGE_URL: string = '/user/edit/create';
+  @inject(UserCreateRepository) private repository: UserCreateRepository;
 
+  protected PAGE_URL: string = '/user/edit/create';
   private DEFAULT_PASSWORD: string = 'Change123@_';
   private EN_LOCALE_VALUE: string = '66';
 
-  constructor(@inject(UserCreateRepository) private repository: UserCreateRepository) {
-    super();
-  }
-
-  public createRootUser = () => {
+  createRootUser = () => {
     const user = {
       username: this.faker.internet.email(),
       password: this.DEFAULT_PASSWORD,
@@ -31,7 +28,7 @@ export class UserCreatePage extends BackofficePage {
     return user;
   };
 
-  public createAgentMerchantUser = () => {
+  createAgentMerchantUser = () => {
     const user = {
       username: this.faker.internet.email(),
       password: this.DEFAULT_PASSWORD,

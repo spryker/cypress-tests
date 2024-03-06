@@ -7,13 +7,11 @@ import { ProductsRepository } from './products-repository';
 @injectable()
 @autoWired
 export class ProductsPage extends MpPage {
+  @inject(ProductsRepository) private repository: ProductsRepository;
+
   protected PAGE_URL: string = '/product-merchant-portal-gui/products';
 
-  constructor(@inject(ProductsRepository) private repository: ProductsRepository) {
-    super();
-  }
-
-  public findProduct = (query: string): Cypress.Chainable => {
+  findProduct = (query: string): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(query);
@@ -25,7 +23,7 @@ export class ProductsPage extends MpPage {
     return this.repository.getFirstTableRow();
   };
 
-  public getDrawer = (): Cypress.Chainable => {
+  getDrawer = (): Cypress.Chainable => {
     const drawer = this.repository.getDrawer();
 
     // Wait for the drawer to be visible

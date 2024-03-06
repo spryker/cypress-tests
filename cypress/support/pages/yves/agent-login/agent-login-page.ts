@@ -7,20 +7,18 @@ import { AgentLoginRepository } from './agent-login-repository';
 @injectable()
 @autoWired
 export class AgentLoginPage extends YvesPage {
+  @inject(TYPES.AgentLoginRepository) private repository: AgentLoginRepository;
+
   protected PAGE_URL: string = '/agent/login';
 
-  constructor(@inject(TYPES.AgentLoginRepository) private repository: AgentLoginRepository) {
-    super();
-  }
-
-  public login = (username: string, password: string): void => {
+  login = (username: string, password: string): void => {
     this.repository.getLoginEmailInput().clear().type(username);
     this.repository.getLoginPasswordInput().clear().type(password);
 
     this.repository.getLoginForm().submit();
   };
 
-  public getFailedAuthenticationText = (): string => {
+  getFailedAuthenticationText = (): string => {
     return this.repository.getFailedAuthenticationText();
   };
 }

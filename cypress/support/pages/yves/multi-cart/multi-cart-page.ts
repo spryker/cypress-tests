@@ -7,13 +7,11 @@ import { MultiCartRepository } from './multi-cart-repository';
 @injectable()
 @autoWired
 export class MultiCartPage extends YvesPage {
+  @inject(TYPES.MultiCartRepository) private repository: MultiCartRepository;
+
   protected PAGE_URL: string = '/multi-cart';
 
-  constructor(@inject(TYPES.MultiCartRepository) private repository: MultiCartRepository) {
-    super();
-  }
-
-  public createCart = (name?: string): void => {
+  createCart = (name?: string): void => {
     cy.visit(`${this.PAGE_URL}/create`);
     const cartName = name ?? `Cart #${this.faker.string.uuid()}`;
 
@@ -23,7 +21,7 @@ export class MultiCartPage extends YvesPage {
     cy.contains(`Cart '${cartName}' was created successfully`).should('exist');
   };
 
-  public selectCart = (name: string): void => {
+  selectCart = (name: string): void => {
     this.repository.getQuoteTable().contains(name).click();
   };
 }

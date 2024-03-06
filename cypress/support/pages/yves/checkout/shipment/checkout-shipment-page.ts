@@ -7,13 +7,11 @@ import { CheckoutShipmentRepository } from './checkout-shipment-repository';
 @injectable()
 @autoWired
 export class CheckoutShipmentPage extends YvesPage {
+  @inject(TYPES.CheckoutShipmentRepository) private repository: CheckoutShipmentRepository;
+
   protected PAGE_URL: string = '/checkout/shipment';
 
-  constructor(@inject(TYPES.CheckoutShipmentRepository) private repository: CheckoutShipmentRepository) {
-    super();
-  }
-
-  public setStandardShippingMethod = (): void => {
+  setStandardShippingMethod = (): void => {
     this.repository.getMultiShipmentGroups().each(($shipmentItem, index) => {
       this.repository.getStandardShipmentRadio($shipmentItem, index).click({ force: true });
     });

@@ -11,7 +11,7 @@ export class SalesIndexPage extends BackofficePage {
 
   protected PAGE_URL: string = '/sales';
 
-  public viewLastPlacedOrder = (): void => {
+  viewLastPlacedOrder = (): void => {
     cy.visitBackoffice(this.PAGE_URL);
     this.repository.getViewButtons().first().click();
   };

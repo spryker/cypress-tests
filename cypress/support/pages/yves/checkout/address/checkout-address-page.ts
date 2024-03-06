@@ -7,13 +7,11 @@ import { CheckoutAddressRepository } from './checkout-address-repository';
 @injectable()
 @autoWired
 export class CheckoutAddressPage extends YvesPage {
+  @inject(TYPES.CheckoutAddressRepository) private repository: CheckoutAddressRepository;
+
   protected PAGE_URL: string = '/checkout/address';
 
-  constructor(@inject(TYPES.CheckoutAddressRepository) private repository: CheckoutAddressRepository) {
-    super();
-  }
-
-  public fillShippingAddress = (idCustomerAddress?: number): void => {
+  fillShippingAddress = (idCustomerAddress?: number): void => {
     if (idCustomerAddress) {
       this.repository.getSelectShippingAddressField().select(idCustomerAddress.toString());
       this.repository.getShippingAddressBillingSameAsShippingCheckbox().check({ force: true });
@@ -42,7 +40,7 @@ export class CheckoutAddressPage extends YvesPage {
     this.repository.getNextButton().click();
   };
 
-  public fillMultiShippingAddress = (idCustomerAddress?: number): void => {
+  fillMultiShippingAddress = (idCustomerAddress?: number): void => {
     this.repository.getMultiShipmentTriggerButton().click();
 
     this.repository
@@ -103,7 +101,7 @@ export class CheckoutAddressPage extends YvesPage {
     this.fillBillingAddress();
   };
 
-  public fillBillingAddress = (): void => {
+  fillBillingAddress = (): void => {
     const checkoutAddress = this.createDummyCheckoutAddress();
     this.repository.getSelectBillingAddressField().select('0');
 

@@ -11,7 +11,7 @@ export class MerchantUpdatePage extends BackofficePage {
 
   protected PAGE_URL: string = '/merchant-gui/edit-merchant';
 
-  public findUser = (email: string): Cypress.Chainable => {
+  findUser = (email: string): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(email);
@@ -23,7 +23,7 @@ export class MerchantUpdatePage extends BackofficePage {
     return this.repository.getFirstTableRow();
   };
 
-  public createNewUser = (): void => {
+  createNewUser = (): void => {
     this.repository.getUsersTab().click();
     this.repository.getAddMerchantUserButton().click();
   };

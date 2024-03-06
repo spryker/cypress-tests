@@ -11,7 +11,7 @@ export class MerchantUserCreatePage extends BackofficePage {
 
   protected PAGE_URL: string = '/merchant-user-gui/edit-merchant-user';
 
-  public createMerchantUser = () => {
+  createMerchantUser = () => {
     const uniquePrefix: string = this.faker.number.int({ min: 1000, max: 9999 }).toString();
 
     const merchantUser = {

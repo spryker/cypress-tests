@@ -24,7 +24,7 @@ export class CheckoutScenario {
     @inject(CliHelper) private cliHelper: CliHelper
   ) {}
 
-  public execute = (isGuest: boolean = false, isMultiShipment: boolean = false, idCustomerAddress?: number): void => {
+  execute = (isGuest: boolean = false, isMultiShipment: boolean = false, idCustomerAddress?: number): void => {
     this.cartPage.visit();
     this.cartPage.startCheckout();
 

@@ -11,7 +11,7 @@ export class LoginPage extends BackofficePage {
 
   protected PAGE_URL: string = '/security-gui/login';
 
-  public login = (username: string, password: string): void => {
+  login = (username: string, password: string): void => {
     this.repository.getEmailInput().clear().type(username);
     this.repository.getPasswordInput().clear().type(password);
 

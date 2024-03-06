@@ -11,7 +11,7 @@ export class CartPage extends YvesPage {
 
   protected PAGE_URL: string = '/cart';
 
-  public quickAddToCart = (sku: string, quantity?: number): void => {
+  quickAddToCart = (sku: string, quantity?: number): void => {
     this.repository.getQuickAddToCartSkuField().clear().type(sku);
     this.repository.getQuickAddToCartProductListField().click();
 
@@ -24,11 +24,11 @@ export class CartPage extends YvesPage {
     cy.contains('Items added successfully').should('exist');
   };
 
-  public startCheckout = (): void => {
+  startCheckout = (): void => {
     this.repository.getCheckoutButton().click();
   };
 
-  public removeProduct = (sku: string): void => {
+  removeProduct = (sku: string): void => {
     const form = this.repository.findCartItemRemovalForm(sku);
 
     if (!form) {
@@ -38,7 +38,7 @@ export class CartPage extends YvesPage {
     form.submit();
   };
 
-  public changeQuantity = (sku: string, newQuantity: number): void => {
+  changeQuantity = (sku: string, newQuantity: number): void => {
     const form = this.repository.findCartItemChangeQuantityForm(sku);
     const input = this.repository.getCartItemChangeQuantityField(sku);
 
@@ -50,7 +50,7 @@ export class CartPage extends YvesPage {
     form.submit();
   };
 
-  public clearCart = (): void => {
+  clearCart = (): void => {
     const form = this.repository.findClearCartForm();
 
     if (form) {
