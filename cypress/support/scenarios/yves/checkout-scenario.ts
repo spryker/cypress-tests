@@ -8,7 +8,6 @@ import {
 } from '@pages/yves';
 import { CliHelper, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
 
 interface CheckoutExecuteParams {
   isGuest: boolean;

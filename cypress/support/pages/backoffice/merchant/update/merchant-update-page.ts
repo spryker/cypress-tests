@@ -1,6 +1,6 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
+
 import { BackofficePage } from '../../backoffice-page';
 import { MerchantUpdateRepository } from './merchant-update-repository';
 

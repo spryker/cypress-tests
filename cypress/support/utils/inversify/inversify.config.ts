@@ -1,5 +1,6 @@
-import { Container, interfaces } from 'inversify';
 import 'reflect-metadata';
+
+import { Container, interfaces } from 'inversify';
 import { REPOSITORIES } from './types';
 
 import { SuiteAgentLoginRepository } from '../../pages/yves/agent-login/repositories/suite-agent-login-repository';

@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import 'reflect-metadata';
+
 import { CheckoutShipmentRepository } from '../checkout-shipment-repository';
 
 @injectable()

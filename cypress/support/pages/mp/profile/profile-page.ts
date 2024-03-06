@@ -1,6 +1,6 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
+
 import { MpPage } from '../mp-page';
 import { ProfileRepository } from './profile-repository';
 

@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import 'reflect-metadata';
+
 import { AbstractPage } from '../abstract-page';
 import VisitOptions = Cypress.VisitOptions;
 

@@ -1,6 +1,5 @@
 import { faker } from '@faker-js/faker';
 import { injectable } from 'inversify';
-import 'reflect-metadata';
 
 @injectable()
 export class AbstractPage {

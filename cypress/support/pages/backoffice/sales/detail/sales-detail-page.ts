@@ -1,6 +1,6 @@
 import { autoWired, CliHelper } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
+
 import { BackofficePage } from '../../backoffice-page';
 import { SalesDetailRepository } from './sales-detail-repository';
 

@@ -1,6 +1,6 @@
 import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
+
 import { YvesPage } from '../../yves-page';
 import { CheckoutPaymentRepository } from './checkout-payment-repository';
 
