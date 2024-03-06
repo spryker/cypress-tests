@@ -1,4 +1,4 @@
-import { MarketplaceAgentAssistStaticFixtures, MarketplaceAgentAssistSuite2DynamicFixtures } from '@intefaces/mp';
+import { MarketplaceAgentAssistStaticFixtures, MarketplaceAgentAssistSuite2DynamicFixtures } from '@interfaces/mp';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import { OffersPage, ProductsPage, ProfilePage, SalesOrdersPage } from '@pages/mp';
 import { CartPage } from '@pages/yves';

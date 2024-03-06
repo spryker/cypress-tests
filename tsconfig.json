@@ -16,7 +16,7 @@
       "@pages/*": ["cypress/support/pages/*/index.ts"],
       "@utils": ["cypress/support/utils/index.ts"],
       "@scenarios/*": ["cypress/support/scenarios/*/index.ts"],
-      "@intefaces/*": ["cypress/support/types/*/index.ts"]
+      "@interfaces/*": ["cypress/support/types/*/index.ts"]
     }
   },
   "include": ["cypress/**/*.ts", "cypress.config.ts"]

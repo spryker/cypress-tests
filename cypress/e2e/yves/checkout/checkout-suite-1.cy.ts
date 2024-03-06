@@ -1,4 +1,4 @@
-import { CheckoutStaticFixtures, CheckoutSuite1DynamicFixtures } from '@intefaces/yves';
+import { CheckoutStaticFixtures, CheckoutSuite1DynamicFixtures } from '@interfaces/yves';
 import { CartPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { container } from '@utils';

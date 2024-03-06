@@ -1,4 +1,4 @@
-import { CommentsSuite1DynamicFixtures, CommentsSuite1StaticFixtures } from '@intefaces/yves';
+import { CommentsSuite1DynamicFixtures, CommentsSuite1StaticFixtures } from '@interfaces/yves';
 import { CommentCartPage, MultiCartPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 import { container } from '@utils';

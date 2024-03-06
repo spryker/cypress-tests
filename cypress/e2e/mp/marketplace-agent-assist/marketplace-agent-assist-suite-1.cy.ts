@@ -1,4 +1,4 @@
-import { MarketplaceAgentAssistStaticFixtures, MarketplaceAgentAssistSuite1DynamicFixtures } from '@intefaces/mp';
+import { MarketplaceAgentAssistStaticFixtures, MarketplaceAgentAssistSuite1DynamicFixtures } from '@interfaces/mp';
 import { IndexPage, UserIndexPage, UserUpdatePage } from '@pages/backoffice';
 import {
   AgentDashboardPage,

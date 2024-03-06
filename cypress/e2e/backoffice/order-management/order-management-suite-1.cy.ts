@@ -1,4 +1,4 @@
-import { OrderManagementStaticFixtures, OrderManagementSuite1DynamicFixtures } from '@intefaces/backoffice';
+import { OrderManagementStaticFixtures, OrderManagementSuite1DynamicFixtures } from '@interfaces/backoffice';
 import { SalesIndexPage } from '@pages/backoffice';
 import { CartPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';

@@ -1,4 +1,4 @@
-import { ReturnManagementStaticFixtures, ReturnManagementSuite1DynamicFixtures } from '@intefaces/backoffice';
+import { ReturnManagementStaticFixtures, ReturnManagementSuite1DynamicFixtures } from '@interfaces/backoffice';
 import { SalesDetailPage, SalesIndexPage, SalesReturnGuiCreatePage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
