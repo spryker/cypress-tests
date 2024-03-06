@@ -11,18 +11,17 @@ import { container } from '@utils';
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
 describe('marketplace agent assist suite 2', { tags: ['@marketplace-agent-assist'] }, (): void => {
-  const cartPage: CartPage = container.get(CartPage);
-  const salesIndexPage: SalesIndexPage = container.get(SalesIndexPage);
-  const salesDetailPage: SalesDetailPage = container.get(SalesDetailPage);
-  const salesOrdersPage: SalesOrdersPage = container.get(SalesOrdersPage);
-  const profilePage: ProfilePage = container.get(ProfilePage);
-  const productsPage: ProductsPage = container.get(ProductsPage);
-  const offersPage: OffersPage = container.get(OffersPage);
-
-  const userLoginScenario: UserLoginScenario = container.get(UserLoginScenario);
-  const impersonateScenario: ImpersonateAsMerchantUserScenario = container.get(ImpersonateAsMerchantUserScenario);
-  const customerLoginScenario: CustomerLoginScenario = container.get(CustomerLoginScenario);
-  const checkoutMpScenario: CheckoutMpScenario = container.get(CheckoutMpScenario);
+  const cartPage = container.get(CartPage);
+  const salesIndexPage = container.get(SalesIndexPage);
+  const salesDetailPage = container.get(SalesDetailPage);
+  const salesOrdersPage = container.get(SalesOrdersPage);
+  const profilePage = container.get(ProfilePage);
+  const productsPage = container.get(ProductsPage);
+  const offersPage = container.get(OffersPage);
+  const userLoginScenario = container.get(UserLoginScenario);
+  const impersonateScenario = container.get(ImpersonateAsMerchantUserScenario);
+  const customerLoginScenario = container.get(CustomerLoginScenario);
+  const checkoutMpScenario = container.get(CheckoutMpScenario);
 
   let dynamicFixtures: MarketplaceAgentAssistSuite2DynamicFixtures;
   let staticFixtures: MarketplaceAgentAssistStaticFixtures;

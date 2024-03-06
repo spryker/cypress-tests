@@ -15,18 +15,18 @@ import { container } from '@utils';
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
 describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist'] }, (): void => {
-  const yvesLoginPage: LoginPage = container.get(LoginPage);
-  const yvesAgentLoginPage: AgentLoginPage = container.get(AgentLoginPage);
-  const backofficeIndexPage: IndexPage = container.get(IndexPage);
-  const backofficeUserIndexPage: UserIndexPage = container.get(UserIndexPage);
-  const backofficeUserUpdatePage: UserUpdatePage = container.get(UserUpdatePage);
-  const mpLoginPage: MpLoginPage = container.get(MpLoginPage);
-  const mpAgentLoginPage: MpAgentLoginPage = container.get(MpAgentLoginPage);
-  const mpDashboardPage: DashboardPage = container.get(DashboardPage);
-  const mpAgentDashboardPage: AgentDashboardPage = container.get(AgentDashboardPage);
-  const userLoginScenario: UserLoginScenario = container.get(UserLoginScenario);
-  const impersonateScenario: ImpersonateAsMerchantUserScenario = container.get(ImpersonateAsMerchantUserScenario);
-  const merchantAgentLoginUserScenario: MerchantAgentLoginUserScenario = container.get(MerchantAgentLoginUserScenario);
+  const yvesLoginPage = container.get(LoginPage);
+  const yvesAgentLoginPage = container.get(AgentLoginPage);
+  const backofficeIndexPage = container.get(IndexPage);
+  const backofficeUserIndexPage = container.get(UserIndexPage);
+  const backofficeUserUpdatePage = container.get(UserUpdatePage);
+  const mpLoginPage = container.get(MpLoginPage);
+  const mpAgentLoginPage = container.get(MpAgentLoginPage);
+  const mpDashboardPage = container.get(DashboardPage);
+  const mpAgentDashboardPage = container.get(AgentDashboardPage);
+  const userLoginScenario = container.get(UserLoginScenario);
+  const impersonateScenario = container.get(ImpersonateAsMerchantUserScenario);
+  const merchantAgentLoginUserScenario = container.get(MerchantAgentLoginUserScenario);
 
   let dynamicFixtures: MarketplaceAgentAssistSuite1DynamicFixtures;
   let staticFixtures: MarketplaceAgentAssistStaticFixtures;

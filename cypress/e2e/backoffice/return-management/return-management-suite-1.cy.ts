@@ -5,12 +5,12 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { container } from '@utils';
 
 describe('return management suite 1', { tags: ['@return-management'] }, (): void => {
-  const salesIndexPage: SalesIndexPage = container.get(SalesIndexPage);
-  const salesDetailPage: SalesDetailPage = container.get(SalesDetailPage);
-  const salesReturnGuiCreatePage: SalesReturnGuiCreatePage = container.get(SalesReturnGuiCreatePage);
-  const customerLoginScenario: CustomerLoginScenario = container.get(CustomerLoginScenario);
-  const userLoginScenario: UserLoginScenario = container.get(UserLoginScenario);
-  const checkoutScenario: CheckoutScenario = container.get(CheckoutScenario);
+  const salesIndexPage = container.get(SalesIndexPage);
+  const salesDetailPage = container.get(SalesDetailPage);
+  const salesReturnGuiCreatePage = container.get(SalesReturnGuiCreatePage);
+  const customerLoginScenario = container.get(CustomerLoginScenario);
+  const userLoginScenario = container.get(UserLoginScenario);
+  const checkoutScenario = container.get(CheckoutScenario);
 
   let dynamicFixtures: ReturnManagementSuite1DynamicFixtures;
   let staticFixtures: ReturnManagementStaticFixtures;

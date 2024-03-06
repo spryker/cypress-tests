@@ -4,9 +4,9 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { container } from '@utils';
 
 describe('checkout suite 1', { tags: ['@checkout'] }, (): void => {
-  const cartPage: CartPage = container.get(CartPage);
-  const loginCustomerScenario: CustomerLoginScenario = container.get(CustomerLoginScenario);
-  const checkoutScenario: CheckoutScenario = container.get(CheckoutScenario);
+  const cartPage = container.get(CartPage);
+  const loginCustomerScenario = container.get(CustomerLoginScenario);
+  const checkoutScenario = container.get(CheckoutScenario);
 
   let staticFixtures: CheckoutStaticFixtures;
   let dynamicFixtures: CheckoutSuite1DynamicFixtures;
