@@ -1,11 +1,8 @@
+import { ReturnManagementStaticFixtures, ReturnManagementSuite1DynamicFixtures } from '@intefaces/backoffice';
 import { SalesDetailPage, SalesIndexPage, SalesReturnGuiCreatePage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { container } from '@utils';
-import {
-  ReturnManagementStaticFixtures,
-  ReturnManagementSuite1DynamicFixtures,
-} from '../../../support/types/backoffice/return-managment/fixture-types';
 
 describe('return management suite 1', { tags: ['@return-management'] }, (): void => {
   const salesIndexPage: SalesIndexPage = container.get(SalesIndexPage);

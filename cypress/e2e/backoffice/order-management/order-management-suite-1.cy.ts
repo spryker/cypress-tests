@@ -1,12 +1,9 @@
+import { OrderManagementStaticFixtures, OrderManagementSuite1DynamicFixtures } from '@intefaces/backoffice';
 import { SalesIndexPage } from '@pages/backoffice';
 import { CartPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { container } from '@utils';
-import {
-  OrderManagementStaticFixtures,
-  OrderManagementSuite1DynamicFixtures,
-} from '../../../support/types/backoffice/order-managment/fixture-types';
 
 describe('order management suite 1', { tags: ['@order-management'] }, (): void => {
   const cartPage = container.get(CartPage);
@@ -25,25 +22,25 @@ describe('order management suite 1', { tags: ['@order-management'] }, (): void =
   it('should be able to create an order by existing customer', (): void => {
     loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
 
-    // checkoutScenario.execute(false, false, dynamicFixtures.address.id_customer_address);
-    // cy.contains('Your order has been placed successfully!');
+    checkoutScenario.execute(false, false, dynamicFixtures.address.id_customer_address);
+    cy.contains('Your order has been placed successfully!');
 
-    // userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
-    // salesIndexPage.viewLastPlacedOrder();
+    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    salesIndexPage.viewLastPlacedOrder();
 
-    // cy.get('body').contains(dynamicFixtures.product.name);
+    cy.get('body').contains(dynamicFixtures.product.name);
   });
 
-  // it('should be able to create an order by guest', (): void => {
-  //   cartPage.visit();
-  //   cartPage.quickAddToCart(dynamicFixtures.product.sku, 1);
+  it('should be able to create an order by guest', (): void => {
+    cartPage.visit();
+    cartPage.quickAddToCart(dynamicFixtures.product.sku, 1);
 
-  //   checkoutScenario.execute(true);
-  //   cy.contains('Your order has been placed successfully!');
+    checkoutScenario.execute(true);
+    cy.contains('Your order has been placed successfully!');
 
-  //   userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
-  //   salesIndexPage.viewLastPlacedOrder();
+    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    salesIndexPage.viewLastPlacedOrder();
 
-  //   cy.get('body').contains(dynamicFixtures.product.name);
-  // });
+    cy.get('body').contains(dynamicFixtures.product.name);
+  });
 });

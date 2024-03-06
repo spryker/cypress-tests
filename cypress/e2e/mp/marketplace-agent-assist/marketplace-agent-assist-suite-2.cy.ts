@@ -1,14 +1,11 @@
+import { MarketplaceAgentAssistStaticFixtures, MarketplaceAgentAssistSuite2DynamicFixtures } from '@intefaces/mp';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
+import { OffersPage, ProductsPage, ProfilePage, SalesOrdersPage } from '@pages/mp';
 import { CartPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
+import { ImpersonateAsMerchantUserScenario } from '@scenarios/mp';
 import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { container } from '@utils';
-import { OffersPage, ProductsPage, ProfilePage, SalesOrdersPage } from '../../../support/pages/mp';
-import { ImpersonateAsMerchantUserScenario } from '../../../support/scenarios/mp';
-import {
-  MarketplaceAgentAssistStaticFixtures,
-  MarketplaceAgentAssistSuite2DynamicFixtures,
-} from '../../../support/types/mp/marketplace-agent-assist/fixture-types';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}

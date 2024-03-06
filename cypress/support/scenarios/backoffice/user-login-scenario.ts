@@ -1,6 +1,6 @@
+import { LoginPage } from '@pages/backoffice';
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { LoginPage } from '../../pages/backoffice';
 
 @injectable()
 @autoWired

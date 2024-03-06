@@ -1,10 +1,7 @@
+import { CommentsSuite1DynamicFixtures, CommentsSuite1StaticFixtures } from '@intefaces/yves';
 import { CommentCartPage, MultiCartPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 import { container } from '@utils';
-import {
-  CommentsSuite1DynamicFixtures,
-  CommentsSuite1StaticFixtures,
-} from '../../../support/types/yves/comments/fixture-types';
 
 describe('comments suite 1', { tags: ['@comments'] }, (): void => {
   const multiCartPage: MultiCartPage = container.get(MultiCartPage);
