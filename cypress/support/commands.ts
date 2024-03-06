@@ -8,7 +8,8 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
-Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+Cypress.Commands.add('iframe', { prevSubject: 'element' } as any, ($iframe) => {
   return new Cypress.Promise((resolve) => {
     $iframe.on('load', () => {
       resolve($iframe.contents().find('body'));
@@ -47,10 +48,13 @@ Cypress.Commands.add('loadDynamicFixturesByPayload', (dynamicFixturesFilePath) =
       })
       .then((response) => {
         if (Array.isArray(response.body.data)) {
-          return response.body.data.reduce((acc, item) => {
-            acc[item.attributes.key] = item.attributes.data;
-            return acc;
-          }, {});
+          return response.body.data.reduce(
+            (acc: Record<string, unknown>, item: Record<string, { key: string; data: unknown }>) => {
+              acc[item.attributes.key] = item.attributes.data;
+              return acc;
+            },
+            {}
+          );
         } else {
           return {
             [response.body.data.attributes.key]: response.body.data.attributes.data,
@@ -85,7 +89,8 @@ Cypress.Commands.add('reloadUntilFound', (url, findSelector, getSelector = 'body
 
   cy.visit(url);
   cy.get(getSelector).then((body) => {
-    let msg = `url:${url} getSelector:${getSelector} findSelector:${findSelector} retries:${retries} retryWait:${retryWait}`;
+    const msg = `url:${url} getSelector:${getSelector} findSelector:${findSelector} retries:${retries} retryWait:${retryWait}`;
+
     if (body.find(findSelector).length === 1) {
       console.log(`found ${msg}`);
     } else {

@@ -19,5 +19,5 @@
       "@intefaces/*": ["cypress/support/types/*/index.ts"]
     }
   },
-  "include": ["cypress/**/*.ts", "cypress.config.ts", "cypress/support/commands.js", "cypress/support/e2e.js"]
+  "include": ["cypress/**/*.ts", "cypress.config.ts"]
 }
