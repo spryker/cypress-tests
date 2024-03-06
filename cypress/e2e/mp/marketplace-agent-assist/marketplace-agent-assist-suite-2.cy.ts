@@ -1,10 +1,10 @@
-import { container } from '../../../support/utils/inversify/inversify.config';
+import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
+import { CartPage } from '@pages/yves';
+import { UserLoginScenario } from '@scenarios/backoffice';
+import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
+import { container } from '@utils';
 import { OffersPage, ProductsPage, ProfilePage, SalesOrdersPage } from '../../../support/pages/mp';
-import { SalesDetailPage, SalesIndexPage } from '../../../support/pages/backoffice';
-import { UserLoginScenario } from '../../../support/scenarios/backoffice';
 import { ImpersonateAsMerchantUserScenario } from '../../../support/scenarios/mp';
-import { CheckoutMpScenario, CustomerLoginScenario } from '../../../support/scenarios/yves';
-import { CartPage } from '../../../support/pages/yves';
 import {
   MarketplaceAgentAssistStaticFixtures,
   MarketplaceAgentAssistSuite2DynamicFixtures,

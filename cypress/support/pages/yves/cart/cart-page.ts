@@ -1,18 +1,15 @@
-import 'reflect-metadata';
+import { TYPES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../utils/inversify/types';
-import { CartRepository } from './cart-repository';
-import { autoWired } from '../../../utils/inversify/auto-wired';
+import 'reflect-metadata';
 import { YvesPage } from '../yves-page';
+import { CartRepository } from './cart-repository';
 
 @injectable()
 @autoWired
 export class CartPage extends YvesPage {
-  protected PAGE_URL: string = '/cart';
+  @inject(TYPES.CartRepository) private repository: CartRepository;
 
-  constructor(@inject(TYPES.CartRepository) private repository: CartRepository) {
-    super();
-  }
+  protected PAGE_URL: string = '/cart';
 
   public quickAddToCart = (sku: string, quantity?: number): void => {
     this.repository.getQuickAddToCartSkuField().clear().type(sku);

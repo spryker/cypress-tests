@@ -1,6 +1,6 @@
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { autoWired } from '../../utils/inversify/auto-wired';
 import { CliHelper } from '../../helpers/cli-helper';
 import {
   CartPage,

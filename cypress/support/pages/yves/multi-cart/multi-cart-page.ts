@@ -1,9 +1,8 @@
+import { TYPES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../utils/inversify/types';
 import 'reflect-metadata';
-import { MultiCartRepository } from './multi-cart-repository';
-import { autoWired } from '../../../utils/inversify/auto-wired';
 import { YvesPage } from '../yves-page';
+import { MultiCartRepository } from './multi-cart-repository';
 
 @injectable()
 @autoWired

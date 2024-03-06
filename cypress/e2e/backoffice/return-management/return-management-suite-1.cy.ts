@@ -1,7 +1,7 @@
-import { container } from '../../../support/utils/inversify/inversify.config';
-import { SalesDetailPage, SalesIndexPage, SalesReturnGuiCreatePage } from '../../../support/pages/backoffice';
-import { CheckoutScenario, CustomerLoginScenario } from '../../../support/scenarios/yves';
-import { UserLoginScenario } from '../../../support/scenarios/backoffice';
+import { SalesDetailPage, SalesIndexPage, SalesReturnGuiCreatePage } from '@pages/backoffice';
+import { UserLoginScenario } from '@scenarios/backoffice';
+import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
+import { container } from '@utils';
 import {
   ReturnManagementStaticFixtures,
   ReturnManagementSuite1DynamicFixtures,

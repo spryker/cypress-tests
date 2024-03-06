@@ -80,7 +80,7 @@ Cypress.Commands.add('resetMerchantPortalCookies', () => {
 
 Cypress.Commands.add('reloadUntilFound', (url, findSelector, getSelector = 'body', retries = 3, retryWait = 1000) => {
   if (retries === 0) {
-    throw `exhausted retries looking for ${selector} on ${url}`;
+    throw `exhausted retries looking for ${getSelector} on ${url}`;
   }
 
   cy.visit(url);

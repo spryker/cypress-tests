@@ -1,10 +1,10 @@
-import { container } from '../../../support/utils/inversify/inversify.config';
-import { CartPage } from '../../../support/pages/yves';
+import { CartPage } from '@pages/yves';
+import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
+import { container } from '@utils';
 import {
   CheckoutStaticFixtures,
   CheckoutSuite1DynamicFixtures,
 } from '../../../support/types/yves/checkout/fixture-types';
-import { CheckoutScenario, CustomerLoginScenario } from '../../../support/scenarios/yves';
 
 describe('checkout suite 1', { tags: ['@checkout'] }, (): void => {
   const cartPage: CartPage = container.get(CartPage);

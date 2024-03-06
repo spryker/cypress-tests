@@ -1,8 +1,8 @@
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { SalesOrdersRepository } from './sales-orders-repository';
-import { autoWired } from '../../../utils/inversify/auto-wired';
 import { MpPage } from '../mp-page';
+import { SalesOrdersRepository } from './sales-orders-repository';
 
 @injectable()
 @autoWired

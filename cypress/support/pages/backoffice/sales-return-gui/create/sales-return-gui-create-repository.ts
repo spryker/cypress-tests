@@ -1,6 +1,6 @@
+import { autoWired } from '@utils';
 import { injectable } from 'inversify';
 import 'reflect-metadata';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
 
 @injectable()
 @autoWired

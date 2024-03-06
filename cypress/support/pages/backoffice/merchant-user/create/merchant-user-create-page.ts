@@ -1,17 +1,15 @@
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { MerchantUserCreateRepository } from './merchant-user-create-repository';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
 import { BackofficePage } from '../../backoffice-page';
+import { MerchantUserCreateRepository } from './merchant-user-create-repository';
 
 @injectable()
 @autoWired
 export class MerchantUserCreatePage extends BackofficePage {
-  protected PAGE_URL: string = '/merchant-user-gui/edit-merchant-user';
+  @inject(MerchantUserCreateRepository) private repository: MerchantUserCreateRepository;
 
-  constructor(@inject(MerchantUserCreateRepository) private repository: MerchantUserCreateRepository) {
-    super();
-  }
+  protected PAGE_URL: string = '/merchant-user-gui/edit-merchant-user';
 
   public createMerchantUser = () => {
     const uniquePrefix: string = this.faker.number.int({ min: 1000, max: 9999 }).toString();

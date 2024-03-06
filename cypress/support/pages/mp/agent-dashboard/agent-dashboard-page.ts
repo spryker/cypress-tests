@@ -1,8 +1,8 @@
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { AgentDashboardRepository } from './agent-dashboard-repository';
-import { autoWired } from '../../../utils/inversify/auto-wired';
 import { MpPage } from '../mp-page';
+import { AgentDashboardRepository } from './agent-dashboard-repository';
 
 @injectable()
 @autoWired

@@ -1,17 +1,15 @@
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { MerchantListRepository } from './merchant-list-repository';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
 import { BackofficePage } from '../../backoffice-page';
+import { MerchantListRepository } from './merchant-list-repository';
 
 @injectable()
 @autoWired
 export class MerchantListPage extends BackofficePage {
-  protected PAGE_URL: string = '/merchant-gui/list-merchant';
+  @inject(MerchantListRepository) private repository: MerchantListRepository;
 
-  constructor(@inject(MerchantListRepository) private repository: MerchantListRepository) {
-    super();
-  }
+  protected PAGE_URL: string = '/merchant-gui/list-merchant';
 
   public editMerchant = (query: string): void => {
     this.findMerchant(query).find(this.repository.getEditButtonSelector()).click();

@@ -1,6 +1,6 @@
-import { CommentCartPage, MultiCartPage } from '../../../support/pages/yves';
-import { CustomerLoginScenario } from '../../../support/scenarios/yves';
-import { container } from '../../../support/utils/inversify/inversify.config';
+import { CommentCartPage, MultiCartPage } from '@pages/yves';
+import { CustomerLoginScenario } from '@scenarios/yves';
+import { container } from '@utils';
 import {
   CommentsSuite1DynamicFixtures,
   CommentsSuite1StaticFixtures,

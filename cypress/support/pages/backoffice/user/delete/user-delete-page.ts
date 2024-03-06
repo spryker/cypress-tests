@@ -1,8 +1,8 @@
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { UserDeleteRepository } from './user-delete-repository';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
 import { BackofficePage } from '../../backoffice-page';
+import { UserDeleteRepository } from './user-delete-repository';
 
 @injectable()
 @autoWired

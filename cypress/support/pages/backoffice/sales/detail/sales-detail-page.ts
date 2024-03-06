@@ -1,9 +1,9 @@
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
-import { SalesDetailRepository } from './sales-detail-repository';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
 import { CliHelper } from '../../../../helpers/cli-helper';
 import { BackofficePage } from '../../backoffice-page';
+import { SalesDetailRepository } from './sales-detail-repository';
 
 @injectable()
 @autoWired

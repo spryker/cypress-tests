@@ -1,18 +1,18 @@
-import { container } from '../../../support/utils/inversify/inversify.config';
-import { IndexPage, UserIndexPage, UserUpdatePage } from '../../../support/pages/backoffice';
-import { UserLoginScenario } from '../../../support/scenarios/backoffice';
-import { AgentLoginPage, LoginPage } from '../../../support/pages/yves';
+import { IndexPage, UserIndexPage, UserUpdatePage } from '@pages/backoffice';
+import { AgentLoginPage, LoginPage } from '@pages/yves';
+import { UserLoginScenario } from '@scenarios/backoffice';
+import { container } from '@utils';
+import {
+  AgentDashboardPage,
+  DashboardPage,
+  AgentLoginPage as MpAgentLoginPage,
+  LoginPage as MpLoginPage,
+} from '../../../support/pages/mp';
+import { ImpersonateAsMerchantUserScenario, MerchantAgentLoginUserScenario } from '../../../support/scenarios/mp';
 import {
   MarketplaceAgentAssistStaticFixtures,
   MarketplaceAgentAssistSuite1DynamicFixtures,
 } from '../../../support/types/mp/marketplace-agent-assist/fixture-types';
-import {
-  AgentDashboardPage,
-  DashboardPage,
-  LoginPage as MpLoginPage,
-  AgentLoginPage as MpAgentLoginPage,
-} from '../../../support/pages/mp';
-import { ImpersonateAsMerchantUserScenario, MerchantAgentLoginUserScenario } from '../../../support/scenarios/mp';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
