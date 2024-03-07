@@ -29,7 +29,7 @@ export class SuiteCheckoutAddressRepository implements CheckoutAddressRepository
   getMultiShipmentAddressItemElement = (): Cypress.Chainable =>
     cy.get('[data-qa="component address-item-form-field-list"]');
   getMultiShipmentAddressItemDeliveryRadio = ($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable =>
-    cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shipmentType_key_1`);
+    cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shipmentType_key_0`);
   getMultiShipmentAddressItemAddressField = ($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable =>
     cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shippingAddress_id_customer_address`);
   getMultiShipmentAddressItemAddressFirstNameField = (
