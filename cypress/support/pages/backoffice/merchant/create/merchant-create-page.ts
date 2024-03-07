@@ -1,20 +1,24 @@
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
-import { MerchantCreateRepository } from './merchant-create-repository';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
 import { BackofficePage } from '../../backoffice-page';
+import { MerchantCreateRepository } from './merchant-create-repository';
+
+interface Merchant {
+  name: string;
+  reference: string;
+  email: string;
+  url: string;
+}
 
 @injectable()
 @autoWired
 export class MerchantCreatePage extends BackofficePage {
-  protected PAGE_URL: string = '/merchant-gui/create-merchant';
+  @inject(MerchantCreateRepository) private repository: MerchantCreateRepository;
 
-  constructor(@inject(MerchantCreateRepository) private repository: MerchantCreateRepository) {
-    super();
-  }
+  protected PAGE_URL = '/merchant-gui/create-merchant';
 
-  public createMerchant = () => {
-    const identifier: string = this.faker.string.uuid();
+  createMerchant = (): Merchant => {
+    const identifier = this.faker.string.uuid();
 
     const merchant = {
       name: 'Name: ' + identifier,

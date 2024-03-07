@@ -1,15 +1,12 @@
-import { CommentCartPage, MultiCartPage } from '../../../support/pages/yves';
-import { CustomerLoginScenario } from '../../../support/scenarios/yves';
-import { container } from '../../../support/utils/inversify/inversify.config';
-import {
-  CommentsSuite1DynamicFixtures,
-  CommentsSuite1StaticFixtures,
-} from '../../../support/types/yves/comments/fixture-types';
+import { CommentsSuite1DynamicFixtures, CommentsSuite1StaticFixtures } from '@interfaces/yves';
+import { CommentCartPage, MultiCartPage } from '@pages/yves';
+import { CustomerLoginScenario } from '@scenarios/yves';
+import { container } from '@utils';
 
 describe('comments suite 1', { tags: ['@comments'] }, (): void => {
-  const multiCartPage: MultiCartPage = container.get(MultiCartPage);
-  const commentCartPage: CommentCartPage = container.get(CommentCartPage);
-  const loginCustomerScenario: CustomerLoginScenario = container.get(CustomerLoginScenario);
+  const multiCartPage = container.get(MultiCartPage);
+  const commentCartPage = container.get(CommentCartPage);
+  const loginCustomerScenario = container.get(CustomerLoginScenario);
 
   let dynamicFixtures: CommentsSuite1DynamicFixtures;
   let staticFixtures: CommentsSuite1StaticFixtures;
@@ -19,7 +16,10 @@ describe('comments suite 1', { tags: ['@comments'] }, (): void => {
   });
 
   beforeEach((): void => {
-    loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
+    loginCustomerScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+    });
   });
 
   it('customer should be able to add comments to cart with items', (): void => {

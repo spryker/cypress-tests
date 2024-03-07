@@ -1,31 +1,27 @@
-import { container } from '../../../support/utils/inversify/inversify.config';
-import { OffersPage, ProductsPage, ProfilePage, SalesOrdersPage } from '../../../support/pages/mp';
-import { SalesDetailPage, SalesIndexPage } from '../../../support/pages/backoffice';
-import { UserLoginScenario } from '../../../support/scenarios/backoffice';
-import { ImpersonateAsMerchantUserScenario } from '../../../support/scenarios/mp';
-import { CheckoutMpScenario, CustomerLoginScenario } from '../../../support/scenarios/yves';
-import { CartPage } from '../../../support/pages/yves';
-import {
-  MarketplaceAgentAssistStaticFixtures,
-  MarketplaceAgentAssistSuite2DynamicFixtures,
-} from '../../../support/types/mp/marketplace-agent-assist/fixture-types';
+import { MarketplaceAgentAssistStaticFixtures, MarketplaceAgentAssistSuite2DynamicFixtures } from '@interfaces/mp';
+import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
+import { OffersPage, ProductsPage, ProfilePage, SalesOrdersPage } from '@pages/mp';
+import { CartPage } from '@pages/yves';
+import { UserLoginScenario } from '@scenarios/backoffice';
+import { ImpersonateAsMerchantUserScenario } from '@scenarios/mp';
+import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
+import { container } from '@utils';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
 describe('marketplace agent assist suite 2', { tags: ['@marketplace-agent-assist'] }, (): void => {
-  const cartPage: CartPage = container.get(CartPage);
-  const salesIndexPage: SalesIndexPage = container.get(SalesIndexPage);
-  const salesDetailPage: SalesDetailPage = container.get(SalesDetailPage);
-  const salesOrdersPage: SalesOrdersPage = container.get(SalesOrdersPage);
-  const profilePage: ProfilePage = container.get(ProfilePage);
-  const productsPage: ProductsPage = container.get(ProductsPage);
-  const offersPage: OffersPage = container.get(OffersPage);
-
-  const userLoginScenario: UserLoginScenario = container.get(UserLoginScenario);
-  const impersonateScenario: ImpersonateAsMerchantUserScenario = container.get(ImpersonateAsMerchantUserScenario);
-  const customerLoginScenario: CustomerLoginScenario = container.get(CustomerLoginScenario);
-  const checkoutMpScenario: CheckoutMpScenario = container.get(CheckoutMpScenario);
+  const cartPage = container.get(CartPage);
+  const salesIndexPage = container.get(SalesIndexPage);
+  const salesDetailPage = container.get(SalesDetailPage);
+  const salesOrdersPage = container.get(SalesOrdersPage);
+  const profilePage = container.get(ProfilePage);
+  const productsPage = container.get(ProductsPage);
+  const offersPage = container.get(OffersPage);
+  const userLoginScenario = container.get(UserLoginScenario);
+  const impersonateScenario = container.get(ImpersonateAsMerchantUserScenario);
+  const customerLoginScenario = container.get(CustomerLoginScenario);
+  const checkoutMpScenario = container.get(CheckoutMpScenario);
 
   let dynamicFixtures: MarketplaceAgentAssistSuite2DynamicFixtures;
   let staticFixtures: MarketplaceAgentAssistStaticFixtures;
@@ -35,13 +31,16 @@ describe('marketplace agent assist suite 2', { tags: ['@marketplace-agent-assist
   });
 
   it('agent should be able to change order status during impersonation', (): void => {
-    customerLoginScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
+    customerLoginScenario.execute({ email: dynamicFixtures.customer.email, password: staticFixtures.defaultPassword });
 
     cartPage.visit();
     cartPage.quickAddToCart(dynamicFixtures.productConcreteForOffer.sku);
-    checkoutMpScenario.execute();
+    checkoutMpScenario.execute({ isGuest: false });
 
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     salesIndexPage.viewLastPlacedOrder();
     salesDetailPage.triggerOms('Pay');

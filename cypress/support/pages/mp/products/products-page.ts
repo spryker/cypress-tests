@@ -1,19 +1,17 @@
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
-import { ProductsRepository } from './products-repository';
-import { autoWired } from '../../../utils/inversify/auto-wired';
+
 import { MpPage } from '../mp-page';
+import { ProductsRepository } from './products-repository';
 
 @injectable()
 @autoWired
 export class ProductsPage extends MpPage {
-  protected PAGE_URL: string = '/product-merchant-portal-gui/products';
+  @inject(ProductsRepository) private repository: ProductsRepository;
 
-  constructor(@inject(ProductsRepository) private repository: ProductsRepository) {
-    super();
-  }
+  protected PAGE_URL = '/product-merchant-portal-gui/products';
 
-  public findProduct = (query: string): Cypress.Chainable => {
+  findProduct = (query: string): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(query);
@@ -25,7 +23,7 @@ export class ProductsPage extends MpPage {
     return this.repository.getFirstTableRow();
   };
 
-  public getDrawer = (): Cypress.Chainable => {
+  getDrawer = (): Cypress.Chainable => {
     const drawer = this.repository.getDrawer();
 
     // Wait for the drawer to be visible

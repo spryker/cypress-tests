@@ -1,20 +1,17 @@
+import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../utils/inversify/types';
-import 'reflect-metadata';
-import { MultiCartRepository } from './multi-cart-repository';
-import { autoWired } from '../../../utils/inversify/auto-wired';
+
 import { YvesPage } from '../yves-page';
+import { MultiCartRepository } from './multi-cart-repository';
 
 @injectable()
 @autoWired
 export class MultiCartPage extends YvesPage {
-  protected PAGE_URL: string = '/multi-cart';
+  @inject(REPOSITORIES.MultiCartRepository) private repository: MultiCartRepository;
 
-  constructor(@inject(TYPES.MultiCartRepository) private repository: MultiCartRepository) {
-    super();
-  }
+  protected PAGE_URL = '/multi-cart';
 
-  public createCart = (name?: string): void => {
+  createCart = (name?: string): void => {
     cy.visit(`${this.PAGE_URL}/create`);
     const cartName = name ?? `Cart #${this.faker.string.uuid()}`;
 
@@ -24,7 +21,7 @@ export class MultiCartPage extends YvesPage {
     cy.contains(`Cart '${cartName}' was created successfully`).should('exist');
   };
 
-  public selectCart = (name: string): void => {
+  selectCart = (name: string): void => {
     this.repository.getQuoteTable().contains(name).click();
   };
 }

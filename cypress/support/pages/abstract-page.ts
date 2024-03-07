@@ -1,17 +1,12 @@
-import 'reflect-metadata';
-import { Faker, faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 import { injectable } from 'inversify';
 
 @injectable()
 export class AbstractPage {
-  protected PAGE_URL: string = '';
-  protected faker: Faker;
+  protected PAGE_URL = '';
+  protected faker = faker;
 
-  constructor() {
-    this.faker = faker;
-  }
-
-  public assertPageLocation = (): void => {
+  assertPageLocation = (): void => {
     cy.url({ timeout: 4000 }).should('include', this.PAGE_URL);
   };
 }

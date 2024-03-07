@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import 'reflect-metadata';
+
 import { CheckoutSummaryRepository } from '../checkout-summary-repository';
 
 @injectable()

@@ -1,19 +1,17 @@
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
-import { OffersRepository } from './offers-repository';
-import { autoWired } from '../../../utils/inversify/auto-wired';
+
 import { MpPage } from '../mp-page';
+import { OffersRepository } from './offers-repository';
 
 @injectable()
 @autoWired
 export class OffersPage extends MpPage {
-  protected PAGE_URL: string = '/product-offer-merchant-portal-gui/product-offers';
+  @inject(OffersRepository) private repository: OffersRepository;
 
-  constructor(@inject(OffersRepository) private repository: OffersRepository) {
-    super();
-  }
+  protected PAGE_URL = '/product-offer-merchant-portal-gui/product-offers';
 
-  public findOffer = (query: string): Cypress.Chainable => {
+  findOffer = (query: string): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(query);
@@ -25,7 +23,7 @@ export class OffersPage extends MpPage {
     return this.repository.getFirstTableRow();
   };
 
-  public getDrawer = (): Cypress.Chainable => {
+  getDrawer = (): Cypress.Chainable => {
     return this.repository.getDrawer();
   };
 }

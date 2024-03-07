@@ -1,19 +1,17 @@
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
-import { ProfileRepository } from './profile-repository';
-import { autoWired } from '../../../utils/inversify/auto-wired';
+
 import { MpPage } from '../mp-page';
+import { ProfileRepository } from './profile-repository';
 
 @injectable()
 @autoWired
 export class ProfilePage extends MpPage {
-  protected PAGE_URL: string = '/merchant-profile-merchant-portal-gui/profile';
+  @inject(ProfileRepository) private repository: ProfileRepository;
 
-  constructor(@inject(ProfileRepository) private repository: ProfileRepository) {
-    super();
-  }
+  protected PAGE_URL = '/merchant-profile-merchant-portal-gui/profile';
 
-  public updateMerchantPhoneNumber = (phone?: string) => {
+  updateMerchantPhoneNumber = (phone?: string): void => {
     this.repository
       .getPhoneNumberInput()
       .clear()

@@ -1,19 +1,17 @@
-import { LoginRepository } from './login-repository';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
-import { autoWired } from '../../../utils/inversify/auto-wired';
+
 import { BackofficePage } from '../backoffice-page';
+import { LoginRepository } from './login-repository';
 
 @injectable()
 @autoWired
 export class LoginPage extends BackofficePage {
-  protected PAGE_URL: string = '/security-gui/login';
+  @inject(LoginRepository) private repository: LoginRepository;
 
-  constructor(@inject(LoginRepository) private repository: LoginRepository) {
-    super();
-  }
+  protected PAGE_URL = '/security-gui/login';
 
-  public login = (username: string, password: string): void => {
+  login = (username: string, password: string): void => {
     this.repository.getEmailInput().clear().type(username);
     this.repository.getPasswordInput().clear().type(password);
 

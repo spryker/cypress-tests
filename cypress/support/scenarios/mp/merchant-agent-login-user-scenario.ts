@@ -1,13 +1,20 @@
+import { AgentLoginPage } from '@pages/mp';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { autoWired } from '../../utils/inversify/auto-wired';
-import { AgentLoginPage } from '../../pages/mp';
+
+interface MerchantAgentLoginExecuteParams {
+  username: string;
+  password: string;
+}
 
 @injectable()
 @autoWired
 export class MerchantAgentLoginUserScenario {
-  constructor(@inject(AgentLoginPage) private agentLoginPage: AgentLoginPage) {}
+  @inject(AgentLoginPage) private agentLoginPage: AgentLoginPage;
 
-  public execute = (username: string, password: string): void => {
+  execute = (params: MerchantAgentLoginExecuteParams): void => {
+    const { username, password } = params;
+
     cy.session([username, password], () => {
       this.agentLoginPage.visit();
       this.agentLoginPage.login(username, password);

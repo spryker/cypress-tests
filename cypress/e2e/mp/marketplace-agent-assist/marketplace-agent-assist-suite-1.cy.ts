@@ -1,35 +1,32 @@
-import { container } from '../../../support/utils/inversify/inversify.config';
-import { IndexPage, UserIndexPage, UserUpdatePage } from '../../../support/pages/backoffice';
-import { UserLoginScenario } from '../../../support/scenarios/backoffice';
-import { AgentLoginPage, LoginPage } from '../../../support/pages/yves';
-import {
-  MarketplaceAgentAssistStaticFixtures,
-  MarketplaceAgentAssistSuite1DynamicFixtures,
-} from '../../../support/types/mp/marketplace-agent-assist/fixture-types';
+import { MarketplaceAgentAssistStaticFixtures, MarketplaceAgentAssistSuite1DynamicFixtures } from '@interfaces/mp';
+import { IndexPage, UserIndexPage, UserUpdatePage } from '@pages/backoffice';
 import {
   AgentDashboardPage,
   DashboardPage,
-  LoginPage as MpLoginPage,
   AgentLoginPage as MpAgentLoginPage,
-} from '../../../support/pages/mp';
-import { ImpersonateAsMerchantUserScenario, MerchantAgentLoginUserScenario } from '../../../support/scenarios/mp';
+  LoginPage as MpLoginPage,
+} from '@pages/mp';
+import { AgentLoginPage, LoginPage } from '@pages/yves';
+import { UserLoginScenario } from '@scenarios/backoffice';
+import { ImpersonateAsMerchantUserScenario, MerchantAgentLoginUserScenario } from '@scenarios/mp';
+import { container } from '@utils';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
 describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist'] }, (): void => {
-  const yvesLoginPage: LoginPage = container.get(LoginPage);
-  const yvesAgentLoginPage: AgentLoginPage = container.get(AgentLoginPage);
-  const backofficeIndexPage: IndexPage = container.get(IndexPage);
-  const backofficeUserIndexPage: UserIndexPage = container.get(UserIndexPage);
-  const backofficeUserUpdatePage: UserUpdatePage = container.get(UserUpdatePage);
-  const mpLoginPage: MpLoginPage = container.get(MpLoginPage);
-  const mpAgentLoginPage: MpAgentLoginPage = container.get(MpAgentLoginPage);
-  const mpDashboardPage: DashboardPage = container.get(DashboardPage);
-  const mpAgentDashboardPage: AgentDashboardPage = container.get(AgentDashboardPage);
-  const userLoginScenario: UserLoginScenario = container.get(UserLoginScenario);
-  const impersonateScenario: ImpersonateAsMerchantUserScenario = container.get(ImpersonateAsMerchantUserScenario);
-  const merchantAgentLoginUserScenario: MerchantAgentLoginUserScenario = container.get(MerchantAgentLoginUserScenario);
+  const yvesLoginPage = container.get(LoginPage);
+  const yvesAgentLoginPage = container.get(AgentLoginPage);
+  const backofficeIndexPage = container.get(IndexPage);
+  const backofficeUserIndexPage = container.get(UserIndexPage);
+  const backofficeUserUpdatePage = container.get(UserUpdatePage);
+  const mpLoginPage = container.get(MpLoginPage);
+  const mpAgentLoginPage = container.get(MpAgentLoginPage);
+  const mpDashboardPage = container.get(DashboardPage);
+  const mpAgentDashboardPage = container.get(AgentDashboardPage);
+  const userLoginScenario = container.get(UserLoginScenario);
+  const impersonateScenario = container.get(ImpersonateAsMerchantUserScenario);
+  const merchantAgentLoginUserScenario = container.get(MerchantAgentLoginUserScenario);
 
   let dynamicFixtures: MarketplaceAgentAssistSuite1DynamicFixtures;
   let staticFixtures: MarketplaceAgentAssistStaticFixtures;
@@ -39,14 +36,20 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('agent (customer) should be able to login to backoffice', (): void => {
-    userLoginScenario.execute(dynamicFixtures.customerAgentUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.customerAgentUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     backofficeIndexPage.visit();
     backofficeIndexPage.assertPageLocation();
   });
 
   it('agent (merchant user) should be able to login to backoffice', (): void => {
-    merchantAgentLoginUserScenario.execute(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
+    merchantAgentLoginUserScenario.execute({
+      username: dynamicFixtures.merchantAgentUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     backofficeIndexPage.visit();
     backofficeIndexPage.assertPageLocation();
@@ -93,7 +96,10 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('agent should be able to see "Merchant Users" table', (): void => {
-    merchantAgentLoginUserScenario.execute(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
+    merchantAgentLoginUserScenario.execute({
+      username: dynamicFixtures.merchantAgentUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     mpAgentDashboardPage.visit();
     mpAgentDashboardPage.assertPageLocation();
@@ -108,14 +114,20 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('agent should be able to see active merchant user in a table', (): void => {
-    merchantAgentLoginUserScenario.execute(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
+    merchantAgentLoginUserScenario.execute({
+      username: dynamicFixtures.merchantAgentUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     mpAgentDashboardPage.visit();
     mpAgentDashboardPage.findMerchantUser(dynamicFixtures.merchantUser.username).should('exist');
   });
 
   it('agent should be able to filter by merchant user properties', (): void => {
-    merchantAgentLoginUserScenario.execute(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
+    merchantAgentLoginUserScenario.execute({
+      username: dynamicFixtures.merchantAgentUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     mpAgentDashboardPage.visit();
     mpAgentDashboardPage.findMerchantUser(dynamicFixtures.merchant.name, 3).should('exist');
@@ -149,7 +161,10 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('agent should be able to see/assist merchant users from active (without approved access) merchant', (): void => {
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     mpAgentLoginPage.visit();
     mpAgentLoginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
@@ -166,7 +181,10 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('agent should be able to see/assist merchant users from inactive (with approved access) merchant', (): void => {
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     mpAgentLoginPage.visit();
     mpAgentLoginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
@@ -183,7 +201,10 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('agent should be able to see/assist merchant users from inactive (without approved access) merchant', (): void => {
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     mpAgentLoginPage.visit();
     mpAgentLoginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
@@ -200,7 +221,10 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('agent should be able to see/assist merchant users from active (with approved access) merchant', (): void => {
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     mpAgentLoginPage.visit();
     mpAgentLoginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
@@ -271,7 +295,10 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('agent (merchant user) should be able to login to MP agent dashboard', (): void => {
-    merchantAgentLoginUserScenario.execute(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
+    merchantAgentLoginUserScenario.execute({
+      username: dynamicFixtures.merchantAgentUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     mpAgentDashboardPage.visit();
     mpAgentDashboardPage.assertPageLocation();
@@ -355,7 +382,10 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('backoffice user should be able to see new merchant agent permission checkbox', (): void => {
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     backofficeUserIndexPage.visit();
     backofficeUserIndexPage.editUser(dynamicFixtures.rootUser.username);
@@ -368,7 +398,10 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('backoffice user should be able to see renamed customer agent permission checkbox', (): void => {
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     backofficeUserIndexPage.visit();
     backofficeUserIndexPage.editUser(dynamicFixtures.rootUser.username);
@@ -381,7 +414,10 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('backoffice user should be able to see existing user with merchant agent permission', (): void => {
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     backofficeUserIndexPage.visit();
     backofficeUserIndexPage.editUser(dynamicFixtures.merchantAgentUser.username);
@@ -389,21 +425,30 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('backoffice user should be able to see "Agent Customer" column in user table', (): void => {
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     backofficeUserIndexPage.visit();
     backofficeUserIndexPage.getUserTableHeader().contains('Agent Customer');
   });
 
   it('backoffice user should be able to see "Agent Merchant" column in user table', (): void => {
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     backofficeUserIndexPage.visit();
     backofficeUserIndexPage.getUserTableHeader().contains('Agent Merchant');
   });
 
   it('backoffice user should be able to see imported user with "Agent Customer" permission', (): void => {
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     backofficeUserIndexPage.visit();
     backofficeUserIndexPage
@@ -413,7 +458,10 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('backoffice user should be able to see imported user with "Agent Merchant" permission', (): void => {
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     backofficeUserIndexPage.visit();
     backofficeUserIndexPage
@@ -423,7 +471,10 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('backoffice user should be able to create new user without checked merchant agent permission by default', (): void => {
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     backofficeUserIndexPage.visit();
     backofficeUserIndexPage.editUser(dynamicFixtures.rootUser.username);
@@ -431,7 +482,10 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('backoffice user should be able to create new user with merchant agent permission', (): void => {
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     backofficeUserIndexPage.visit();
     backofficeUserIndexPage.editUser(dynamicFixtures.merchantAgentUser.username);
@@ -439,7 +493,10 @@ describe('marketplace agent assist suite 1', { tags: ['@marketplace-agent-assist
   });
 
   it('backoffice user should be able to modify existing user by setting merchant agent permission', (): void => {
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     backofficeUserIndexPage.visit();
     backofficeUserIndexPage.editUser(dynamicFixtures.rootUser.username);

@@ -1,20 +1,17 @@
+import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../../utils/inversify/types';
-import 'reflect-metadata';
-import { CheckoutSummaryRepository } from './checkout-summary-repository';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
+
 import { YvesPage } from '../../yves-page';
+import { CheckoutSummaryRepository } from './checkout-summary-repository';
 
 @injectable()
 @autoWired
 export class CheckoutSummaryPage extends YvesPage {
-  protected PAGE_URL: string = '/checkout/summary';
+  @inject(REPOSITORIES.CheckoutSummaryRepository) private repository: CheckoutSummaryRepository;
 
-  constructor(@inject(TYPES.CheckoutSummaryRepository) private repository: CheckoutSummaryRepository) {
-    super();
-  }
+  protected PAGE_URL = '/checkout/summary';
 
-  public placeOrder = (): void => {
+  placeOrder = (): void => {
     this.repository.getaAcceptTermsAndConditionsCheckbox().check({ force: true });
     this.repository.getSummaryForm().submit();
   };

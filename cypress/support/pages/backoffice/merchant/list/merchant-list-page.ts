@@ -1,23 +1,21 @@
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
-import { MerchantListRepository } from './merchant-list-repository';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
+
 import { BackofficePage } from '../../backoffice-page';
+import { MerchantListRepository } from './merchant-list-repository';
 
 @injectable()
 @autoWired
 export class MerchantListPage extends BackofficePage {
-  protected PAGE_URL: string = '/merchant-gui/list-merchant';
+  @inject(MerchantListRepository) private repository: MerchantListRepository;
 
-  constructor(@inject(MerchantListRepository) private repository: MerchantListRepository) {
-    super();
-  }
+  protected PAGE_URL = '/merchant-gui/list-merchant';
 
-  public editMerchant = (query: string): void => {
+  editMerchant = (query: string): void => {
     this.findMerchant(query).find(this.repository.getEditButtonSelector()).click();
   };
 
-  public activateMerchant = (query: string): void => {
+  activateMerchant = (query: string): void => {
     this.findMerchant(query).then((merchantRow) => {
       const button = merchantRow.find(this.repository.getActivateButtonSelector());
 
@@ -27,7 +25,7 @@ export class MerchantListPage extends BackofficePage {
     });
   };
 
-  public deactivateMerchant = (query: string): void => {
+  deactivateMerchant = (query: string): void => {
     this.findMerchant(query).then((merchantRow) => {
       const button = merchantRow.find(this.repository.getDeactivateButtonSelector());
 
@@ -37,7 +35,7 @@ export class MerchantListPage extends BackofficePage {
     });
   };
 
-  public approveAccessMerchant = (query: string): void => {
+  approveAccessMerchant = (query: string): void => {
     this.findMerchant(query).then((merchantRow) => {
       const button = merchantRow.find(this.repository.getApproveAccessButtonSelector());
 
@@ -47,7 +45,7 @@ export class MerchantListPage extends BackofficePage {
     });
   };
 
-  public denyAccessMerchant = (query: string): void => {
+  denyAccessMerchant = (query: string): void => {
     this.findMerchant(query).then((merchantRow) => {
       const button = merchantRow.find(this.repository.getDenyAccessButtonSelector());
 
@@ -57,7 +55,7 @@ export class MerchantListPage extends BackofficePage {
     });
   };
 
-  public findMerchant = (query: string): Cypress.Chainable => {
+  findMerchant = (query: string): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(query);

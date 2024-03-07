@@ -1,19 +1,16 @@
-import { container } from '../../../support/utils/inversify/inversify.config';
-import { SalesDetailPage, SalesIndexPage, SalesReturnGuiCreatePage } from '../../../support/pages/backoffice';
-import { CheckoutScenario, CustomerLoginScenario } from '../../../support/scenarios/yves';
-import { UserLoginScenario } from '../../../support/scenarios/backoffice';
-import {
-  ReturnManagementStaticFixtures,
-  ReturnManagementSuite1DynamicFixtures,
-} from '../../../support/types/backoffice/return-managment/fixture-types';
+import { ReturnManagementStaticFixtures, ReturnManagementSuite1DynamicFixtures } from '@interfaces/backoffice';
+import { SalesDetailPage, SalesIndexPage, SalesReturnGuiCreatePage } from '@pages/backoffice';
+import { UserLoginScenario } from '@scenarios/backoffice';
+import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
+import { container } from '@utils';
 
 describe('return management suite 1', { tags: ['@return-management'] }, (): void => {
-  const salesIndexPage: SalesIndexPage = container.get(SalesIndexPage);
-  const salesDetailPage: SalesDetailPage = container.get(SalesDetailPage);
-  const salesReturnGuiCreatePage: SalesReturnGuiCreatePage = container.get(SalesReturnGuiCreatePage);
-  const customerLoginScenario: CustomerLoginScenario = container.get(CustomerLoginScenario);
-  const userLoginScenario: UserLoginScenario = container.get(UserLoginScenario);
-  const checkoutScenario: CheckoutScenario = container.get(CheckoutScenario);
+  const salesIndexPage = container.get(SalesIndexPage);
+  const salesDetailPage = container.get(SalesDetailPage);
+  const salesReturnGuiCreatePage = container.get(SalesReturnGuiCreatePage);
+  const customerLoginScenario = container.get(CustomerLoginScenario);
+  const userLoginScenario = container.get(UserLoginScenario);
+  const checkoutScenario = container.get(CheckoutScenario);
 
   let dynamicFixtures: ReturnManagementSuite1DynamicFixtures;
   let staticFixtures: ReturnManagementStaticFixtures;
@@ -23,12 +20,22 @@ describe('return management suite 1', { tags: ['@return-management'] }, (): void
   });
 
   beforeEach((): void => {
-    customerLoginScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
+    customerLoginScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+    });
   });
 
   it('should be able to create return from (from shipped order state)', (): void => {
-    checkoutScenario.execute(false, false, dynamicFixtures.address.id_customer_address);
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    checkoutScenario.execute({
+      isGuest: false,
+      isMultiShipment: false,
+      idCustomerAddress: dynamicFixtures.address.id_customer_address,
+    });
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     salesIndexPage.visit();
     salesIndexPage.viewLastPlacedOrder();
@@ -44,8 +51,15 @@ describe('return management suite 1', { tags: ['@return-management'] }, (): void
   });
 
   it('should be able to create return from (from delivery order state)', (): void => {
-    checkoutScenario.execute(false, false, dynamicFixtures.address.id_customer_address);
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    checkoutScenario.execute({
+      isGuest: false,
+      isMultiShipment: false,
+      idCustomerAddress: dynamicFixtures.address.id_customer_address,
+    });
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     salesIndexPage.visit();
     salesIndexPage.viewLastPlacedOrder();

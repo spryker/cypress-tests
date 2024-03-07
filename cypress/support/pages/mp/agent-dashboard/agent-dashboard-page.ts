@@ -1,23 +1,21 @@
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
-import { AgentDashboardRepository } from './agent-dashboard-repository';
-import { autoWired } from '../../../utils/inversify/auto-wired';
+
 import { MpPage } from '../mp-page';
+import { AgentDashboardRepository } from './agent-dashboard-repository';
 
 @injectable()
 @autoWired
 export class AgentDashboardPage extends MpPage {
-  protected PAGE_URL: string = '/agent-dashboard-merchant-portal-gui/merchant-users';
+  @inject(AgentDashboardRepository) private repository: AgentDashboardRepository;
 
-  constructor(@inject(AgentDashboardRepository) private repository: AgentDashboardRepository) {
-    super();
-  }
+  protected PAGE_URL = '/agent-dashboard-merchant-portal-gui/merchant-users';
 
-  public getDashboardSidebarSelector = (): Cypress.Chainable => {
+  getDashboardSidebarSelector = (): Cypress.Chainable => {
     return this.repository.getDashboardSidebarSelector();
   };
 
-  public assistMerchantUser = (query: string): void => {
+  assistMerchantUser = (query: string): void => {
     this.findMerchantUser(query).then((merchantUserRow) => {
       const button = merchantUserRow.find(this.repository.getAssistUserButtonSelector());
 
@@ -28,7 +26,7 @@ export class AgentDashboardPage extends MpPage {
     });
   };
 
-  public findMerchantUser = (query: string, counter: number = 1): Cypress.Chainable => {
+  findMerchantUser = (query: string, counter = 1): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(query);

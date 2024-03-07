@@ -1,39 +1,36 @@
-import 'reflect-metadata';
+import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../../utils/inversify/types';
-import { CommentCartRepository } from './comment-cart-repository';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
+
 import { YvesPage } from '../../yves-page';
+import { CommentCartRepository } from './comment-cart-repository';
 
 @injectable()
 @autoWired
 export class CommentCartPage extends YvesPage {
-  protected PAGE_URL: string = '/cart';
+  @inject(REPOSITORIES.CommentCartRepository) private repository: CommentCartRepository;
 
-  constructor(@inject(TYPES.CommentCartRepository) private repository: CommentCartRepository) {
-    super();
-  }
+  protected PAGE_URL = '/cart';
 
-  public addComment = (commentMessage: string): void => {
+  addComment = (commentMessage: string): void => {
     this.repository.getAddCommentForm().last().find('textarea').clear().type(commentMessage);
     this.repository.getAddCommentForm().last().find(this.repository.getAddCommentButtonSelector()).click();
   };
 
-  public updateFirstComment = (commentMessage: string): void => {
+  updateFirstComment = (commentMessage: string): void => {
     const textarea = this.repository.getFirstCommentTextarea();
     textarea.clear().type(commentMessage);
 
     this.getCommentThreadListSection().first().find(this.repository.getUpdateCommentButtonSelector()).click();
   };
 
-  public updateCommentByCommentText = (initialCommentMessage: string, newCommentMessage: string): void => {
+  updateCommentByCommentText = (initialCommentMessage: string, newCommentMessage: string): void => {
     const textarea = this.repository.getCommentTextareaByCommentText(initialCommentMessage);
 
     textarea.clear().type(newCommentMessage);
     textarea.parent().find(this.repository.getUpdateCommentButtonSelector()).click();
   };
 
-  public removeCommentByCommentText = (commentMessage: string): void => {
+  removeCommentByCommentText = (commentMessage: string): void => {
     this.repository
       .getCommentTextareaByCommentText(commentMessage)
       .parent()
@@ -41,11 +38,11 @@ export class CommentCartPage extends YvesPage {
       .click();
   };
 
-  public removeFirstComment = (): void => {
+  removeFirstComment = (): void => {
     this.getCommentThreadListSection().find(this.repository.getRemoveCommentButtonSelector()).click();
   };
 
-  public getCommentThreadListSection = (): Cypress.Chainable => {
+  getCommentThreadListSection = (): Cypress.Chainable => {
     return this.repository.getCommentThreadListSection();
   };
 }

@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import 'reflect-metadata';
+
 import { MultiCartRepository } from '../multi-cart-repository';
 
 @injectable()

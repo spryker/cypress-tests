@@ -1,27 +1,24 @@
+import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../utils/inversify/types';
-import 'reflect-metadata';
-import { AgentLoginRepository } from './agent-login-repository';
-import { autoWired } from '../../../utils/inversify/auto-wired';
+
 import { YvesPage } from '../yves-page';
+import { AgentLoginRepository } from './agent-login-repository';
 
 @injectable()
 @autoWired
 export class AgentLoginPage extends YvesPage {
-  protected PAGE_URL: string = '/agent/login';
+  @inject(REPOSITORIES.AgentLoginRepository) private repository: AgentLoginRepository;
 
-  constructor(@inject(TYPES.AgentLoginRepository) private repository: AgentLoginRepository) {
-    super();
-  }
+  protected PAGE_URL = '/agent/login';
 
-  public login = (username: string, password: string): void => {
+  login = (username: string, password: string): void => {
     this.repository.getLoginEmailInput().clear().type(username);
     this.repository.getLoginPasswordInput().clear().type(password);
 
     this.repository.getLoginForm().submit();
   };
 
-  public getFailedAuthenticationText = (): string => {
+  getFailedAuthenticationText = (): string => {
     return this.repository.getFailedAuthenticationText();
   };
 }

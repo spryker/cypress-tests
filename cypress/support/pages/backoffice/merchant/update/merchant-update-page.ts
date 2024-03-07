@@ -1,19 +1,17 @@
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
-import { MerchantUpdateRepository } from './merchant-update-repository';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
+
 import { BackofficePage } from '../../backoffice-page';
+import { MerchantUpdateRepository } from './merchant-update-repository';
 
 @injectable()
 @autoWired
 export class MerchantUpdatePage extends BackofficePage {
-  protected PAGE_URL: string = '/merchant-gui/edit-merchant';
+  @inject(MerchantUpdateRepository) private repository: MerchantUpdateRepository;
 
-  constructor(@inject(MerchantUpdateRepository) private repository: MerchantUpdateRepository) {
-    super();
-  }
+  protected PAGE_URL = '/merchant-gui/edit-merchant';
 
-  public findUser = (email: string): Cypress.Chainable => {
+  findUser = (email: string): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(email);
@@ -25,7 +23,7 @@ export class MerchantUpdatePage extends BackofficePage {
     return this.repository.getFirstTableRow();
   };
 
-  public createNewUser = (): void => {
+  createNewUser = (): void => {
     this.repository.getUsersTab().click();
     this.repository.getAddMerchantUserButton().click();
   };

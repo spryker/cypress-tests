@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import 'reflect-metadata';
+
 import { AgentLoginRepository } from '../agent-login-repository';
 
 @injectable()

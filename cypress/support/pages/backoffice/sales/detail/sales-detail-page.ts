@@ -1,14 +1,13 @@
+import { autoWired, CliHelper } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
-import { SalesDetailRepository } from './sales-detail-repository';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
-import { CliHelper } from '../../../../helpers/cli-helper';
+
 import { BackofficePage } from '../../backoffice-page';
+import { SalesDetailRepository } from './sales-detail-repository';
 
 @injectable()
 @autoWired
 export class SalesDetailPage extends BackofficePage {
-  protected PAGE_URL: string = '/sales/detail';
+  protected PAGE_URL = '/sales/detail';
 
   constructor(
     @inject(SalesDetailRepository) private repository: SalesDetailRepository,
@@ -17,7 +16,7 @@ export class SalesDetailPage extends BackofficePage {
     super();
   }
 
-  public triggerOms = (state: string, shouldTriggerOmsInCli: boolean = false): void => {
+  triggerOms = (state: string, shouldTriggerOmsInCli = false): void => {
     if (shouldTriggerOmsInCli) {
       this.cliHelper.run(['console oms:check-condition', 'console oms:check-timeout']);
     }
@@ -35,7 +34,7 @@ export class SalesDetailPage extends BackofficePage {
     });
   };
 
-  public createReturn = (): void => {
+  createReturn = (): void => {
     this.repository.getReturnButton().click();
   };
 }

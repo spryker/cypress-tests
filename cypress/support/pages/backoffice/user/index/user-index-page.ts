@@ -1,27 +1,25 @@
-import { UserIndexRepository } from './user-index-repository';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
+
 import { BackofficePage } from '../../backoffice-page';
+import { UserIndexRepository } from './user-index-repository';
 
 @injectable()
 @autoWired
 export class UserIndexPage extends BackofficePage {
-  protected PAGE_URL: string = '/user';
+  @inject(UserIndexRepository) private repository: UserIndexRepository;
 
-  constructor(@inject(UserIndexRepository) private repository: UserIndexRepository) {
-    super();
-  }
+  protected PAGE_URL = '/user';
 
-  public createNewUser = (): void => {
+  createNewUser = (): void => {
     this.repository.getAddNewUserButton().click();
   };
 
-  public editUser = (query: string): void => {
+  editUser = (query: string): void => {
     this.findUser(query).find(this.repository.getEditButtonSelector()).click();
   };
 
-  public deactivateUser = (query: string): void => {
+  deactivateUser = (query: string): void => {
     this.findUser(query).then((merchantRow) => {
       const button = merchantRow.find(this.repository.getDeactivateButtonSelector());
 
@@ -31,7 +29,7 @@ export class UserIndexPage extends BackofficePage {
     });
   };
 
-  public deleteUser = (query: string): void => {
+  deleteUser = (query: string): void => {
     this.findUser(query).then((merchantRow) => {
       const button = merchantRow.find(this.repository.getDeleteButtonSelector());
 
@@ -41,7 +39,7 @@ export class UserIndexPage extends BackofficePage {
     });
   };
 
-  public activateUser = (query: string): void => {
+  activateUser = (query: string): void => {
     this.findUser(query).then((merchantRow) => {
       const button = merchantRow.find(this.repository.getActivateButtonSelector());
 
@@ -51,7 +49,7 @@ export class UserIndexPage extends BackofficePage {
     });
   };
 
-  public findUser = (query: string): Cypress.Chainable => {
+  findUser = (query: string): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(query);
@@ -63,7 +61,7 @@ export class UserIndexPage extends BackofficePage {
     return this.repository.getFirstTableRow();
   };
 
-  public getUserTableHeader = (): Cypress.Chainable => {
+  getUserTableHeader = (): Cypress.Chainable => {
     return this.repository.getTableHeader();
   };
 }

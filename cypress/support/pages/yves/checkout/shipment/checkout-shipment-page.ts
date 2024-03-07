@@ -1,20 +1,17 @@
+import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../../utils/inversify/types';
-import 'reflect-metadata';
-import { CheckoutShipmentRepository } from './checkout-shipment-repository';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
+
 import { YvesPage } from '../../yves-page';
+import { CheckoutShipmentRepository } from './checkout-shipment-repository';
 
 @injectable()
 @autoWired
 export class CheckoutShipmentPage extends YvesPage {
-  protected PAGE_URL: string = '/checkout/shipment';
+  @inject(REPOSITORIES.CheckoutShipmentRepository) private repository: CheckoutShipmentRepository;
 
-  constructor(@inject(TYPES.CheckoutShipmentRepository) private repository: CheckoutShipmentRepository) {
-    super();
-  }
+  protected PAGE_URL = '/checkout/shipment';
 
-  public setStandardShippingMethod = (): void => {
+  setStandardShippingMethod = (): void => {
     this.repository.getMultiShipmentGroups().each(($shipmentItem, index) => {
       this.repository.getStandardShipmentRadio($shipmentItem, index).click({ force: true });
     });

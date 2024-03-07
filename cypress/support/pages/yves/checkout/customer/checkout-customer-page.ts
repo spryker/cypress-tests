@@ -1,20 +1,17 @@
+import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
-import { TYPES } from '../../../../utils/inversify/types';
-import { CheckoutCustomerRepository } from './checkout-customer-repository';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
+
 import { YvesPage } from '../../yves-page';
+import { CheckoutCustomerRepository } from './checkout-customer-repository';
 
 @injectable()
 @autoWired
 export class CheckoutCustomerPage extends YvesPage {
-  protected PAGE_URL: string = '/checkout/customer';
+  @inject(REPOSITORIES.CheckoutCustomerRepository) private repository: CheckoutCustomerRepository;
 
-  constructor(@inject(TYPES.CheckoutCustomerRepository) private repository: CheckoutCustomerRepository) {
-    super();
-  }
+  protected PAGE_URL = '/checkout/customer';
 
-  public checkoutAsGuest = (): string => {
+  checkoutAsGuest = (): string => {
     const guest = {
       firstName: this.faker.person.firstName(),
       lastName: this.faker.person.lastName(),

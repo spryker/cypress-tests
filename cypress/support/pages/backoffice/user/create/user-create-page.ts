@@ -1,22 +1,23 @@
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
-import { UserCreateRepository } from './user-create-repository';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
 import { BackofficePage } from '../../backoffice-page';
+import { UserCreateRepository } from './user-create-repository';
+
+interface User {
+  username: string;
+  password: string;
+}
 
 @injectable()
 @autoWired
 export class UserCreatePage extends BackofficePage {
-  protected PAGE_URL: string = '/user/edit/create';
+  @inject(UserCreateRepository) private repository: UserCreateRepository;
 
-  private DEFAULT_PASSWORD: string = 'Change123@_';
-  private EN_LOCALE_VALUE: string = '66';
+  protected PAGE_URL = '/user/edit/create';
+  private DEFAULT_PASSWORD = 'Change123@_';
+  private EN_LOCALE_VALUE = '66';
 
-  constructor(@inject(UserCreateRepository) private repository: UserCreateRepository) {
-    super();
-  }
-
-  public createRootUser = () => {
+  createRootUser = (): User => {
     const user = {
       username: this.faker.internet.email(),
       password: this.DEFAULT_PASSWORD,
@@ -31,7 +32,7 @@ export class UserCreatePage extends BackofficePage {
     return user;
   };
 
-  public createAgentMerchantUser = () => {
+  createAgentMerchantUser = (): User => {
     const user = {
       username: this.faker.internet.email(),
       password: this.DEFAULT_PASSWORD,

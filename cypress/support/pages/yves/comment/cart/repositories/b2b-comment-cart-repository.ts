@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { injectable } from 'inversify';
 import { CommentCartRepository } from '../comment-cart-repository';
 

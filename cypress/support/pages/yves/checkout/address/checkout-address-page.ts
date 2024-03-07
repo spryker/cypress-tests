@@ -1,20 +1,27 @@
+import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../../../utils/inversify/types';
-import 'reflect-metadata';
-import { CheckoutAddressRepository } from './checkout-address-repository';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
 import { YvesPage } from '../../yves-page';
+import { CheckoutAddressRepository } from './checkout-address-repository';
+
+interface Address {
+  firstName: string;
+  lastName: string;
+  address1: string;
+  address2: string;
+  zipCode: string;
+  city: string;
+  company: string;
+  phone: string;
+}
 
 @injectable()
 @autoWired
 export class CheckoutAddressPage extends YvesPage {
-  protected PAGE_URL: string = '/checkout/address';
+  @inject(REPOSITORIES.CheckoutAddressRepository) private repository: CheckoutAddressRepository;
 
-  constructor(@inject(TYPES.CheckoutAddressRepository) private repository: CheckoutAddressRepository) {
-    super();
-  }
+  protected PAGE_URL = '/checkout/address';
 
-  public fillShippingAddress = (idCustomerAddress?: number): void => {
+  fillShippingAddress = (idCustomerAddress?: number): void => {
     if (idCustomerAddress) {
       this.repository.getSelectShippingAddressField().select(idCustomerAddress.toString());
       this.repository.getShippingAddressBillingSameAsShippingCheckbox().check({ force: true });
@@ -43,7 +50,7 @@ export class CheckoutAddressPage extends YvesPage {
     this.repository.getNextButton().click();
   };
 
-  public fillMultiShippingAddress = (idCustomerAddress?: number): void => {
+  fillMultiShippingAddress = (idCustomerAddress?: number): void => {
     this.repository.getMultiShipmentTriggerButton().click();
 
     this.repository
@@ -104,7 +111,7 @@ export class CheckoutAddressPage extends YvesPage {
     this.fillBillingAddress();
   };
 
-  public fillBillingAddress = (): void => {
+  fillBillingAddress = (): void => {
     const checkoutAddress = this.createDummyCheckoutAddress();
     this.repository.getSelectBillingAddressField().select('0');
 
@@ -123,7 +130,7 @@ export class CheckoutAddressPage extends YvesPage {
     this.repository.getNextButton().click();
   };
 
-  private createDummyCheckoutAddress = () => {
+  private createDummyCheckoutAddress = (): Omit<Address, 'id_customer_address'> => {
     const prefix = '[e2e] ';
 
     return {

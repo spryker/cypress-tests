@@ -1,6 +1,6 @@
 import { defineConfig } from 'cypress';
 import dotenv from 'dotenv';
-import * as fs from 'fs';
+import { existsSync } from 'fs';
 
 dotenv.config();
 
@@ -30,7 +30,7 @@ export default defineConfig({
     setupNodeEvents(on) {
       on('task', {
         isFileExists(filename: string): boolean {
-          return fs.existsSync(filename);
+          return existsSync(filename);
         },
       });
     },

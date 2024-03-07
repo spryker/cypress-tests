@@ -1,33 +1,31 @@
-import { UserUpdateRepository } from './user-update-repository';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
-import { autoWired } from '../../../../utils/inversify/auto-wired';
+
 import { BackofficePage } from '../../backoffice-page';
+import { UserUpdateRepository } from './user-update-repository';
 
 @injectable()
 @autoWired
 export class UserUpdatePage extends BackofficePage {
-  protected PAGE_URL: string = '/user/edit/update';
-  public DEFAULT_PASSWORD: string = 'Change123@_';
+  @inject(UserUpdateRepository) private repository: UserUpdateRepository;
 
-  constructor(@inject(UserUpdateRepository) private repository: UserUpdateRepository) {
-    super();
-  }
+  protected PAGE_URL = '/user/edit/update';
+  protected DEFAULT_PASSWORD = 'Change123@_';
 
-  public checkMerchantAgentCheckbox = (): void => {
+  checkMerchantAgentCheckbox = (): void => {
     this.getAgentMerchantCheckbox().check();
     this.repository.getUpdateUserButton().click();
   };
 
-  public getAgentMerchantCheckbox = (): Cypress.Chainable => {
+  getAgentMerchantCheckbox = (): Cypress.Chainable => {
     return this.repository.getAgentMerchantCheckbox();
   };
 
-  public getAgentCustomerCheckbox = (): Cypress.Chainable => {
+  getAgentCustomerCheckbox = (): Cypress.Chainable => {
     return this.repository.getAgentCustomerCheckbox();
   };
 
-  public setDefaultPassword = (): void => {
+  setDefaultPassword = (): void => {
     this.repository.getPasswordInput().clear().type(this.DEFAULT_PASSWORD);
     this.repository.getRepeatPasswordInput().clear().type(this.DEFAULT_PASSWORD);
     this.repository.getUpdateUserButton().click();

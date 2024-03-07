@@ -1,13 +1,20 @@
+import { LoginPage } from '@pages/backoffice';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { autoWired } from '../../utils/inversify/auto-wired';
-import { LoginPage } from '../../pages/backoffice';
+
+interface UserLoginExecuteParams {
+  username: string;
+  password: string;
+}
 
 @injectable()
 @autoWired
 export class UserLoginScenario {
-  constructor(@inject(LoginPage) private loginPage: LoginPage) {}
+  @inject(LoginPage) private loginPage: LoginPage;
 
-  public execute = (username: string, password: string): void => {
+  execute = (params: UserLoginExecuteParams): void => {
+    const { username, password } = params;
+
     cy.session([username, password], () => {
       this.loginPage.visit();
       this.loginPage.login(username, password);
