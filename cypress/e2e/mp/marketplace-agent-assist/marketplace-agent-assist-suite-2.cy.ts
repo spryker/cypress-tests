@@ -31,13 +31,16 @@ describe('marketplace agent assist suite 2', { tags: ['@marketplace-agent-assist
   });
 
   it('agent should be able to change order status during impersonation', (): void => {
-    customerLoginScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
+    customerLoginScenario.execute({ email: dynamicFixtures.customer.email, password: staticFixtures.defaultPassword });
 
     cartPage.visit();
     cartPage.quickAddToCart(dynamicFixtures.productConcreteForOffer.sku);
     checkoutMpScenario.execute({ isGuest: false });
 
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     salesIndexPage.viewLastPlacedOrder();
     salesDetailPage.triggerOms('Pay');

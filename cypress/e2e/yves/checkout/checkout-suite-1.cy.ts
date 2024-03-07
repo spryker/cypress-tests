@@ -41,7 +41,10 @@ describe('checkout suite 1', { tags: ['@checkout'] }, (): void => {
   });
 
   it('customer should checkout to single shipment (with customer shipping address)', (): void => {
-    loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
+    loginCustomerScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+    });
 
     checkoutScenario.execute({
       isGuest: false,
@@ -53,7 +56,10 @@ describe('checkout suite 1', { tags: ['@checkout'] }, (): void => {
   });
 
   it('customer should checkout to single shipment (with new shipping address)', (): void => {
-    loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
+    loginCustomerScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+    });
 
     checkoutScenario.execute({
       isGuest: false,
@@ -67,7 +73,10 @@ describe('checkout suite 1', { tags: ['@checkout'] }, (): void => {
     'customer should checkout to multi shipment address (with customer shipping address)',
     { tags: ['@smoke'] },
     (): void => {
-      loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
+      loginCustomerScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+      });
 
       checkoutScenario.execute({
         isGuest: false,
@@ -83,7 +92,10 @@ describe('checkout suite 1', { tags: ['@checkout'] }, (): void => {
     'customer should checkout to multi shipment address (with new shipping address)',
     { tags: ['@smoke'] },
     (): void => {
-      loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
+      loginCustomerScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+      });
 
       checkoutScenario.execute({
         isGuest: false,

@@ -20,7 +20,10 @@ describe('return management suite 1', { tags: ['@return-management'] }, (): void
   });
 
   beforeEach((): void => {
-    customerLoginScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
+    customerLoginScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+    });
   });
 
   it('should be able to create return from (from shipped order state)', (): void => {
@@ -29,7 +32,10 @@ describe('return management suite 1', { tags: ['@return-management'] }, (): void
       isMultiShipment: false,
       idCustomerAddress: dynamicFixtures.address.id_customer_address,
     });
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     salesIndexPage.visit();
     salesIndexPage.viewLastPlacedOrder();
@@ -50,7 +56,10 @@ describe('return management suite 1', { tags: ['@return-management'] }, (): void
       isMultiShipment: false,
       idCustomerAddress: dynamicFixtures.address.id_customer_address,
     });
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     salesIndexPage.visit();
     salesIndexPage.viewLastPlacedOrder();

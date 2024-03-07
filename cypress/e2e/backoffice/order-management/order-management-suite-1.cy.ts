@@ -20,7 +20,7 @@ describe('order management suite 1', { tags: ['@order-management'] }, (): void =
   });
 
   it('should be able to create an order by existing customer', (): void => {
-    loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
+    loginCustomerScenario.execute({ email: dynamicFixtures.customer.email, password: staticFixtures.defaultPassword });
 
     checkoutScenario.execute({
       isGuest: false,
@@ -29,7 +29,10 @@ describe('order management suite 1', { tags: ['@order-management'] }, (): void =
     });
     cy.contains('Your order has been placed successfully!');
 
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
     salesIndexPage.viewLastPlacedOrder();
 
     cy.get('body').contains(dynamicFixtures.product.name);
@@ -42,7 +45,10 @@ describe('order management suite 1', { tags: ['@order-management'] }, (): void =
     checkoutScenario.execute({ isGuest: true });
     cy.contains('Your order has been placed successfully!');
 
-    userLoginScenario.execute(dynamicFixtures.rootUser.username, staticFixtures.defaultPassword);
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
     salesIndexPage.viewLastPlacedOrder();
 
     cy.get('body').contains(dynamicFixtures.product.name);

@@ -16,7 +16,10 @@ describe('comments suite 1', { tags: ['@comments'] }, (): void => {
   });
 
   beforeEach((): void => {
-    loginCustomerScenario.execute(dynamicFixtures.customer.email, staticFixtures.defaultPassword);
+    loginCustomerScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+    });
   });
 
   it('customer should be able to add comments to cart with items', (): void => {

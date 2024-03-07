@@ -1,8 +1,14 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-
 import { BackofficePage } from '../../backoffice-page';
 import { MerchantCreateRepository } from './merchant-create-repository';
+
+interface Merchant {
+  name: string;
+  reference: string;
+  email: string;
+  url: string;
+}
 
 @injectable()
 @autoWired
@@ -11,7 +17,7 @@ export class MerchantCreatePage extends BackofficePage {
 
   protected PAGE_URL = '/merchant-gui/create-merchant';
 
-  createMerchant = () => {
+  createMerchant = (): Merchant => {
     const identifier = this.faker.string.uuid();
 
     const merchant = {

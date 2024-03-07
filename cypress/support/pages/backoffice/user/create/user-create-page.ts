@@ -1,8 +1,12 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-
 import { BackofficePage } from '../../backoffice-page';
 import { UserCreateRepository } from './user-create-repository';
+
+interface User {
+  username: string;
+  password: string;
+}
 
 @injectable()
 @autoWired
@@ -13,7 +17,7 @@ export class UserCreatePage extends BackofficePage {
   private DEFAULT_PASSWORD = 'Change123@_';
   private EN_LOCALE_VALUE = '66';
 
-  createRootUser = () => {
+  createRootUser = (): User => {
     const user = {
       username: this.faker.internet.email(),
       password: this.DEFAULT_PASSWORD,
@@ -28,7 +32,7 @@ export class UserCreatePage extends BackofficePage {
     return user;
   };
 
-  createAgentMerchantUser = () => {
+  createAgentMerchantUser = (): User => {
     const user = {
       username: this.faker.internet.email(),
       password: this.DEFAULT_PASSWORD,

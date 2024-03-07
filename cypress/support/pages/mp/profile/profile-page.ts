@@ -11,7 +11,7 @@ export class ProfilePage extends MpPage {
 
   protected PAGE_URL = '/merchant-profile-merchant-portal-gui/profile';
 
-  updateMerchantPhoneNumber = (phone?: string) => {
+  updateMerchantPhoneNumber = (phone?: string): void => {
     this.repository
       .getPhoneNumberInput()
       .clear()

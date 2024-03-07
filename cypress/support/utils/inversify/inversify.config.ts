@@ -50,7 +50,7 @@ if (repositoryId === 'b2b') {
   applyRepositoryBindings(b2bMappings);
 }
 
-function applyRepositoryBindings(bindings: BindingsMap) {
+function applyRepositoryBindings(bindings: BindingsMap): void {
   for (const [type, implementation] of Object.entries(bindings)) {
     container.bind(type).to(implementation);
   }

@@ -1,8 +1,18 @@
 import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-
 import { YvesPage } from '../../yves-page';
 import { CheckoutAddressRepository } from './checkout-address-repository';
+
+interface Address {
+  firstName: string;
+  lastName: string;
+  address1: string;
+  address2: string;
+  zipCode: string;
+  city: string;
+  company: string;
+  phone: string;
+}
 
 @injectable()
 @autoWired
@@ -120,7 +130,7 @@ export class CheckoutAddressPage extends YvesPage {
     this.repository.getNextButton().click();
   };
 
-  private createDummyCheckoutAddress = () => {
+  private createDummyCheckoutAddress = (): Omit<Address, 'id_customer_address'> => {
     const prefix = '[e2e] ';
 
     return {
