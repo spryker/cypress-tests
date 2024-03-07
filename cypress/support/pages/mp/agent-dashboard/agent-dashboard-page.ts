@@ -26,7 +26,7 @@ export class AgentDashboardPage extends MpPage {
     });
   };
 
-  findMerchantUser = (query: string, counter: number = 1): Cypress.Chainable => {
+  findMerchantUser = (query: string, counter = 1): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(query);

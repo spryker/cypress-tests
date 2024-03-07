@@ -44,7 +44,7 @@ export class CheckoutScenario {
     this.cliHelper.run(['console oms:check-condition', 'console oms:check-timeout']);
   };
 
-  private fillShippingAddress = (isMultiShipment: boolean = false, idCustomerAddress?: number): void => {
+  private fillShippingAddress = (isMultiShipment = false, idCustomerAddress?: number): void => {
     if (isMultiShipment) {
       this.checkoutAddressPage.fillMultiShippingAddress(idCustomerAddress);
 

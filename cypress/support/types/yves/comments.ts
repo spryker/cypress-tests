@@ -1,5 +1,9 @@
 import { Customer, Product, Quote } from './shared';
 
+const test: string = 4;
+
+console.log(test, 'test');
+
 export interface CommentsSuite1DynamicFixtures {
   customer: Customer;
   product: Product;

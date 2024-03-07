@@ -16,7 +16,7 @@ export class SalesDetailPage extends BackofficePage {
     super();
   }
 
-  triggerOms = (state: string, shouldTriggerOmsInCli: boolean = false): void => {
+  triggerOms = (state: string, shouldTriggerOmsInCli = false): void => {
     if (shouldTriggerOmsInCli) {
       this.cliHelper.run(['console oms:check-condition', 'console oms:check-timeout']);
     }

@@ -29,8 +29,8 @@ before(() => {
 const loadFixture = () => {
   const repositoryId = Cypress.env('repositoryId');
   const fixtureFilePath = getFixtureFilePath();
-  const dynamicFixturesDefaultFilePath = `${repositoryId}/${fixtureFilePath.directoryPart}/dynamic/${fixtureFilePath.filePart}`;
-  const staticFixturesDefaultFilePath = `${repositoryId}/${fixtureFilePath.directoryPart}/static/${fixtureFilePath.filePart}`;
+  const dynamicFixturesDefaultFilePath = `${repositoryId}/${fixtureFilePath.directoryPart}/dynamic-${fixtureFilePath.filePart}`;
+  const staticFixturesDefaultFilePath = `${repositoryId}/${fixtureFilePath.directoryPart}/static-${fixtureFilePath.filePart}`;
 
   cy.task('isFileExists', `${Cypress.config('fixturesFolder')}/${staticFixturesDefaultFilePath}.json`).then(
     (isFileExists) => {
@@ -46,6 +46,8 @@ const loadFixture = () => {
 
   cy.task('isFileExists', `${Cypress.config('fixturesFolder')}/${dynamicFixturesDefaultFilePath}.json`).then(
     (isFileExists) => {
+      console.log(isFileExists, dynamicFixturesDefaultFilePath, 'dynamicFixturesDefaultFilePath');
+
       if (isFileExists) {
         cy.loadDynamicFixturesByPayload(dynamicFixturesDefaultFilePath).then((dynamicFixturesData) => {
           Cypress.env('dynamicFixtures', dynamicFixturesData);
