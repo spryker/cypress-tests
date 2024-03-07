@@ -1,4 +1,4 @@
-import { Address, Customer, Product, User } from './transfer/transfer-types';
+import { Address, Customer, Product, User } from './shared';
 
 export interface OrderManagementSuite1DynamicFixtures {
   customer: Customer;

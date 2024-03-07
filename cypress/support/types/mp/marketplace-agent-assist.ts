@@ -1,4 +1,4 @@
-import { Customer, Merchant, ProductConcrete, ProductOffer, User } from './transfer/transfer-types';
+import { Customer, Merchant, ProductConcrete, ProductOffer, User } from './shared';
 
 export interface MarketplaceAgentAssistSuite1DynamicFixtures {
   rootUser: User;

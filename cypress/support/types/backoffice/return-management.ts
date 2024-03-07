@@ -1,4 +1,4 @@
-import { Address, Customer, Product, Quote, User } from './transfer/transfer-types';
+import { Address, Customer, Product, Quote, User } from './shared';
 
 export interface ReturnManagementSuite1DynamicFixtures {
   rootUser: User;

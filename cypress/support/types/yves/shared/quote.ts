@@ -1,9 +1,3 @@
-export interface Product {
-  id_product_concrete: number;
-  sku: string;
-  abstract_sku: string;
-}
-
 export interface Quote {
   id_quote: number;
   name: string;
@@ -11,8 +5,4 @@ export interface Quote {
   uuid: string;
   totals: string;
   price_mode: string;
-}
-
-export interface Customer {
-  email: string;
 }

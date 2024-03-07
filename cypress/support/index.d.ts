@@ -5,9 +5,7 @@ declare namespace Cypress {
     /**
      * @example cy.iframe()
      */
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    iframe($iframe: JQueryWithSelector<HTMLElement>): any;
+    iframe($iframe: JQueryWithSelector<HTMLElement>): unknown;
 
     /**
      * @example cy.resetYvesCookies()

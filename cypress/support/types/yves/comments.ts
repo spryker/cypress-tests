@@ -1,4 +1,4 @@
-import { Customer, Product, Quote } from './transfer/transfer-types';
+import { Customer, Product, Quote } from './shared';
 
 export interface CommentsSuite1DynamicFixtures {
   customer: Customer;
