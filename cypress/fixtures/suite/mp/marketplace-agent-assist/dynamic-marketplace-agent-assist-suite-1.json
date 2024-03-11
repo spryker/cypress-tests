@@ -67,7 +67,7 @@
           "arguments": { "id_store": 1, "name": "DE" }
         },
         {
-          "type": "arrayObject",
+          "type": "array-object",
           "key": "stores",
           "arguments": ["#store"]
         },
