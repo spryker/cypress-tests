@@ -1,6 +1,5 @@
-import { autoWired, CliHelper } from '@utils';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-
 import { BackofficePage } from '../../backoffice-page';
 import { SalesDetailRepository } from './sales-detail-repository';
 
@@ -9,16 +8,11 @@ import { SalesDetailRepository } from './sales-detail-repository';
 export class SalesDetailPage extends BackofficePage {
   protected PAGE_URL = '/sales/detail';
 
-  constructor(
-    @inject(SalesDetailRepository) private repository: SalesDetailRepository,
-    @inject(CliHelper) private cliHelper: CliHelper
-  ) {
-    super();
-  }
+  @inject(SalesDetailRepository) private repository: SalesDetailRepository;
 
   triggerOms = (state: string, shouldTriggerOmsInCli = false): void => {
     if (shouldTriggerOmsInCli) {
-      this.cliHelper.run(['console oms:check-condition', 'console oms:check-timeout']);
+      cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
     }
 
     cy.url().then((url) => {

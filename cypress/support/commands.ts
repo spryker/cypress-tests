@@ -99,3 +99,29 @@ Cypress.Commands.add('reloadUntilFound', (url, findSelector, getSelector = 'body
     }
   });
 });
+
+Cypress.Commands.add('runCliCommands', (commands) => {
+  const operations = commands.map((command) => {
+    return {
+      type: 'cli-command',
+      name: command,
+    };
+  });
+
+  cy.request({
+    method: 'POST',
+    url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
+    headers: {
+      'Content-Type': 'application/vnd.api+json',
+    },
+    body: {
+      data: {
+        type: 'dynamic-fixtures',
+        attributes: {
+          operations: operations,
+        },
+      },
+      timeout: 20000,
+    },
+  });
+});

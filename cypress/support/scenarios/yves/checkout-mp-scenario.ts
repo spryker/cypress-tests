@@ -6,7 +6,7 @@ import {
   CheckoutShipmentPage,
   CheckoutSummaryPage,
 } from '@pages/yves';
-import { CliHelper, autoWired } from '@utils';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
 interface CheckoutMpExecuteParams {
@@ -23,7 +23,6 @@ export class CheckoutMpScenario {
   @inject(CheckoutShipmentPage) private checkoutShipmentPage: CheckoutShipmentPage;
   @inject(CheckoutPaymentPage) private checkoutPaymentPage: CheckoutPaymentPage;
   @inject(CheckoutSummaryPage) private checkoutSummaryPage: CheckoutSummaryPage;
-  @inject(CliHelper) private cliHelper: CliHelper;
 
   execute = (params: CheckoutMpExecuteParams): void => {
     const { isGuest, isMultiShipment } = params;
@@ -40,7 +39,7 @@ export class CheckoutMpScenario {
     this.checkoutPaymentPage.setDummyMarketplacePaymentMethod();
     this.checkoutSummaryPage.placeOrder();
 
-    this.cliHelper.run(['console oms:check-condition', 'console oms:check-timeout']);
+    cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
   };
 
   private fillShippingAddress = (isMultiShipment = false): void => {
