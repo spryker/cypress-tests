@@ -1,17 +1,21 @@
 // cypress/support/index.d.ts
-/// <reference types="@cypress/grep" />
 
 declare namespace Cypress {
   interface Chainable {
     /**
      * @example cy.iframe()
      */
-    iframe(): Chainable<Element>;
+    iframe($iframe: JQueryWithSelector<HTMLElement>): unknown;
 
     /**
      * @example cy.resetYvesCookies()
      */
     resetYvesCookies(): void;
+
+    /**
+     * @example cy.loadDynamicFixturesByPayload('suite/yves/checkout/dynamic-checkout-by-guest-customer')
+     */
+    loadDynamicFixturesByPayload(dynamicFixturesDefaultFilePath: string): Chainable;
 
     /**
      * @example cy.resetBackofficeCookies()
@@ -26,22 +30,21 @@ declare namespace Cypress {
     /**
      * @example cy.visitBackoffice('/security-gui/login')
      */
-    visitBackoffice(url: string, options?: Partial<VisitOptions>): Chainable<Element>;
+    visitBackoffice(url: string, options?: Partial<VisitOptions>): Chainable<AUTWindow>;
 
     /**
      * @example cy.visitMerchantPortal('/security-merchant-portal-gui/login')
      */
-    visitMerchantPortal(url: string, options?: Partial<VisitOptions>): Chainable<Element>;
+    visitMerchantPortal(url: string, options?: Partial<VisitOptions>): Chainable<AUTWindow>;
 
     /**
      * @example cy.reloadUntilFound('/transactions', 'td:contains($4.44)')
      */
-    reloadUntilFound(
-      url: string,
-      findSelector: string,
-      getSelector: string | null,
-      retries: number | null,
-      retryWait: number | null
-    ): void;
+    reloadUntilFound(url: string, findSelector: string, getSelector: string, retries: number, retryWait: number): void;
+
+    /**
+     * @example cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout'])
+     */
+    runCliCommands(commands: string[]): void;
   }
 }

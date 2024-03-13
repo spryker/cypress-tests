@@ -1,33 +1,39 @@
 {
   "name": "cypress-tests",
   "version": "0.1.0",
-  "description": "Automated e2e tests for the Cypress",
+  "description": "End-to-end tests for Spryker applications.",
   "main": "index.js",
+  "author": {
+    "name": "Spryker Systems GmbH",
+    "email": "info@spryker.com",
+    "url": "https://spryker.com/"
+  },
   "license": "MIT",
   "scripts": {
+    "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext .ts",
-    "prettier:check": "npx prettier . --check",
-    "prettier:write": "npx prettier . --write",
+    "prettier:check": "prettier . --check",
+    "prettier:write": "prettier . --write",
     "cy:open": "cypress open",
-    "cy:run": "cypress run --headless --browser chrome",
-    "test:tag:smoke": "npx cypress run --env grepTags=@smoke --headless --browser chrome",
-    "test:feture:checkout": "npx cypress run --spec \"cypress/e2e/checkout/*\" --headless --browser chrome",
-    "test:feture:comment": "npx cypress run --spec \"cypress/e2e/comment/*\" --headless --browser chrome",
-    "test:feture:merchant-agent-assist": "npx cypress run --spec \"cypress/e2e/merchant-agent-assist/*\" --headless --browser chrome",
-    "test:feture:order-management": "npx cypress run --spec \"cypress/e2e/order-management/*\" --headless --browser chrome"
+    "cy:run": "cypress run --headless --browser electron",
+    "cy:yves": "cypress run --spec cypress/e2e/yves/* --headless --browser electron",
+    "cy:backoffice": "cypress run --spec cypress/e2e/backoffice/* --headless --browser electron",
+    "cy:mp": "cypress run --spec cypress/e2e/mp/* --headless --browser electron",
+    "cy:feature:comments": "cypress run --env grepTags=@comments --headless --browser electron"
   },
   "engines": {
     "node": ">=18.0.0",
-    "npm": ">=10.0.0"
+    "npm": ">=9.0.0"
   },
   "devDependencies": {
     "@cypress/grep": "^4.0.1",
     "@faker-js/faker": "^8.3.1",
     "@types/dotenv": "^8.2.0",
-    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.13.1",
-    "cypress": "^13.6.3",
-    "eslint": "^8.55.0",
+    "cypress": "^13.6.6",
+    "eslint": "^8.57.0",
+    "eslint-plugin-cypress": "^2.15.1",
     "inversify": "^6.0.2",
     "prettier": "3.1.0",
     "reflect-metadata": "^0.2.0",
