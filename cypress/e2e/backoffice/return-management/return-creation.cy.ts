@@ -1,10 +1,10 @@
-import { ReturnManagementStaticFixtures, ReturnManagementSuite1DynamicFixtures } from '@interfaces/backoffice';
+import { ReturnCreationDynamicFixtures, ReturnManagementStaticFixtures } from '@interfaces/backoffice';
 import { SalesDetailPage, SalesIndexPage, SalesReturnGuiCreatePage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { container } from '@utils';
 
-describe('return management suite 1', { tags: ['@return-management'] }, (): void => {
+describe('return creation', { tags: ['@return-management'] }, (): void => {
   const salesIndexPage = container.get(SalesIndexPage);
   const salesDetailPage = container.get(SalesDetailPage);
   const salesReturnGuiCreatePage = container.get(SalesReturnGuiCreatePage);
@@ -12,7 +12,7 @@ describe('return management suite 1', { tags: ['@return-management'] }, (): void
   const userLoginScenario = container.get(UserLoginScenario);
   const checkoutScenario = container.get(CheckoutScenario);
 
-  let dynamicFixtures: ReturnManagementSuite1DynamicFixtures;
+  let dynamicFixtures: ReturnCreationDynamicFixtures;
   let staticFixtures: ReturnManagementStaticFixtures;
 
   before((): void => {
@@ -39,7 +39,7 @@ describe('return management suite 1', { tags: ['@return-management'] }, (): void
 
     salesIndexPage.visit();
     salesIndexPage.viewLastPlacedOrder();
-    salesDetailPage.triggerOms('Pay');
+    salesDetailPage.triggerOms('Pay', true);
     salesDetailPage.triggerOms('Skip timeout');
     salesDetailPage.triggerOms('skip picking');
     salesDetailPage.triggerOms('Ship');
@@ -63,7 +63,7 @@ describe('return management suite 1', { tags: ['@return-management'] }, (): void
 
     salesIndexPage.visit();
     salesIndexPage.viewLastPlacedOrder();
-    salesDetailPage.triggerOms('Pay');
+    salesDetailPage.triggerOms('Pay', true);
     salesDetailPage.triggerOms('Skip timeout');
     salesDetailPage.triggerOms('skip picking');
     salesDetailPage.triggerOms('Ship');

@@ -1,15 +1,15 @@
-import { CheckoutStaticFixtures, CheckoutSuite1DynamicFixtures } from '@interfaces/yves';
+import { CheckoutStaticFixtures, BasicCheckoutDynamicFixtures } from '@interfaces/yves';
 import { CartPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { container } from '@utils';
 
-describe('checkout suite 1', { tags: ['@checkout'] }, (): void => {
+describe('basic checkout', { tags: ['@checkout'] }, (): void => {
   const cartPage = container.get(CartPage);
   const loginCustomerScenario = container.get(CustomerLoginScenario);
   const checkoutScenario = container.get(CheckoutScenario);
 
   let staticFixtures: CheckoutStaticFixtures;
-  let dynamicFixtures: CheckoutSuite1DynamicFixtures;
+  let dynamicFixtures: BasicCheckoutDynamicFixtures;
 
   before((): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());

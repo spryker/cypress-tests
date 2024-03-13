@@ -1,6 +1,6 @@
 import { Address, Customer, Product, User } from './shared';
 
-export interface OrderManagementSuite1DynamicFixtures {
+export interface OrderCreationDynamicFixtures {
   customer: Customer;
   address: Address;
   product: Product;

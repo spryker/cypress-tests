@@ -1,4 +1,4 @@
-import { MarketplaceAgentAssistStaticFixtures, MarketplaceAgentAssistSuite2DynamicFixtures } from '@interfaces/mp';
+import { AgentMerchantPortalDynamicFixtures, MarketplaceAgentAssistStaticFixtures } from '@interfaces/mp';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import { OffersPage, ProductsPage, ProfilePage, SalesOrdersPage } from '@pages/mp';
 import { CartPage } from '@pages/yves';
@@ -10,7 +10,7 @@ import { container } from '@utils';
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
-describe('marketplace agent assist suite 2', { tags: ['@marketplace-agent-assist'] }, (): void => {
+describe('agent merchant portal', { tags: ['@marketplace-agent-assist'] }, (): void => {
   const cartPage = container.get(CartPage);
   const salesIndexPage = container.get(SalesIndexPage);
   const salesDetailPage = container.get(SalesDetailPage);
@@ -23,7 +23,7 @@ describe('marketplace agent assist suite 2', { tags: ['@marketplace-agent-assist
   const customerLoginScenario = container.get(CustomerLoginScenario);
   const checkoutMpScenario = container.get(CheckoutMpScenario);
 
-  let dynamicFixtures: MarketplaceAgentAssistSuite2DynamicFixtures;
+  let dynamicFixtures: AgentMerchantPortalDynamicFixtures;
   let staticFixtures: MarketplaceAgentAssistStaticFixtures;
 
   before((): void => {

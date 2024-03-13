@@ -1,6 +1,6 @@
 import { Address, Customer, Product, Quote, User } from './shared';
 
-export interface ReturnManagementSuite1DynamicFixtures {
+export interface ReturnCreationDynamicFixtures {
   rootUser: User;
   customer: Customer;
   address: Address;

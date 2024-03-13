@@ -1,13 +1,13 @@
 import { Customer, Product, Quote } from './shared';
 
-export interface CommentsSuite1DynamicFixtures {
+export interface CartCommentsDynamicFixtures {
   customer: Customer;
   product: Product;
   quote: Quote;
   emptyQuote: Quote;
 }
 
-export interface CommentsSuite1StaticFixtures {
+export interface CartCommentsStaticFixtures {
   defaultPassword: string;
   commentsToAdd: string[];
   commentToModify: string;

@@ -1,15 +1,15 @@
-import { CommentsSuite1DynamicFixtures, CommentsSuite1StaticFixtures } from '@interfaces/yves';
+import { CartCommentsDynamicFixtures, CartCommentsStaticFixtures } from '@interfaces/yves';
 import { CommentCartPage, MultiCartPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 import { container } from '@utils';
 
-describe('comments suite 1', { tags: ['@comments'] }, (): void => {
+describe('cart comments', { tags: ['@comments'] }, (): void => {
   const multiCartPage = container.get(MultiCartPage);
   const commentCartPage = container.get(CommentCartPage);
   const loginCustomerScenario = container.get(CustomerLoginScenario);
 
-  let dynamicFixtures: CommentsSuite1DynamicFixtures;
-  let staticFixtures: CommentsSuite1StaticFixtures;
+  let dynamicFixtures: CartCommentsDynamicFixtures;
+  let staticFixtures: CartCommentsStaticFixtures;
 
   before((): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());

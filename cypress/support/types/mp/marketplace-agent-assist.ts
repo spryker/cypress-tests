@@ -1,9 +1,14 @@
 import { Customer, Merchant, ProductConcrete, ProductOffer, User } from './shared';
 
-export interface MarketplaceAgentAssistSuite1DynamicFixtures {
-  rootUser: User;
+export interface AgentAuthorizationDynamicFixtures {
   merchantAgentUser: User;
   customerAgentUser: User;
+  merchantUser: User;
+}
+
+export interface AgentDashboardDynamicFixtures {
+  rootUser: User;
+  merchantAgentUser: User;
   merchant: Merchant;
   merchantUser: User;
   deletedMerchantUser: User;
@@ -13,7 +18,27 @@ export interface MarketplaceAgentAssistSuite1DynamicFixtures {
   merchantUserFromInactiveDeniedMerchant: User;
 }
 
-export interface MarketplaceAgentAssistSuite2DynamicFixtures {
+export interface AgentLoginDynamicFixtures {
+  merchantAgentUser: User;
+  customerAgentUser: User;
+  merchantUser: User;
+  deletedMerchantUser: User;
+  deactivatedMerchantUser: User;
+}
+
+export interface AgentImpersonationDynamicFixtures {
+  merchantAgentUser: User;
+  merchant: Merchant;
+  merchantUser: User;
+}
+
+export interface AgentPermissionDynamicFixtures {
+  rootUser: User;
+  merchantAgentUser: User;
+  customerAgentUser: User;
+}
+
+export interface AgentMerchantPortalDynamicFixtures {
   rootUser: User;
   merchantAgentUser: User;
   merchantUser: User;

@@ -1,6 +1,6 @@
 import { Address, Customer, Product, Quote } from './shared';
 
-export interface CheckoutSuite1DynamicFixtures {
+export interface BasicCheckoutDynamicFixtures {
   customer: Customer;
   address: Address;
   product1: Product;

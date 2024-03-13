@@ -7,17 +7,6 @@
         {
           "type": "helper",
           "name": "haveUser",
-          "key": "rootUser",
-          "arguments": [{ "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "addUserToGroup",
-          "arguments": ["#rootUser.id_user", 1]
-        },
-        {
-          "type": "helper",
-          "name": "haveUser",
           "key": "merchantAgentUser",
           "arguments": [{ "password": "change123", "isMerchantAgent": true }]
         },
@@ -136,99 +125,6 @@
           "type": "helper",
           "name": "haveMerchantUserWithAclEntities",
           "arguments": ["#merchant", "#deletedMerchantUser"]
-        },
-        {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "inactiveApprovedMerchantProfile"
-        },
-        {
-          "type": "helper",
-          "name": "haveMerchant",
-          "key": "inactiveApprovedMerchant",
-          "arguments": [
-            {
-              "merchantProfile": "#inactiveApprovedMerchantProfile",
-              "isActive": false,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveUser",
-          "key": "merchantUserFromInactiveApprovedMerchant",
-          "arguments": [{ "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveMerchantUserWithAclEntities",
-          "arguments": ["#inactiveApprovedMerchant", "#merchantUserFromInactiveApprovedMerchant"]
-        },
-        {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "activeDeniedMerchantProfile"
-        },
-        {
-          "type": "helper",
-          "name": "haveMerchant",
-          "key": "activeDeniedMerchant",
-          "arguments": [
-            {
-              "merchantProfile": "#activeDeniedMerchantProfile",
-              "isActive": true,
-              "status": "denied",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveUser",
-          "key": "merchantUserFromActiveDeniedMerchant",
-          "arguments": [{ "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveMerchantUserWithAclEntities",
-          "arguments": ["#activeDeniedMerchant", "#merchantUserFromActiveDeniedMerchant"]
-        },
-        {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "inactiveDeniedMerchantProfile"
-        },
-        {
-          "type": "helper",
-          "name": "haveMerchant",
-          "key": "inactiveDeniedMerchant",
-          "arguments": [
-            {
-              "merchantProfile": "#inactiveDeniedMerchantProfile",
-              "isActive": false,
-              "status": "denied",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveUser",
-          "key": "merchantUserFromInactiveDeniedMerchant",
-          "arguments": [{ "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveMerchantUserWithAclEntities",
-          "arguments": ["#inactiveDeniedMerchant", "#merchantUserFromInactiveDeniedMerchant"]
         }
       ]
     }
