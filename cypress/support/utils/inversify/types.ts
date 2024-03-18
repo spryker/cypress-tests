@@ -9,4 +9,10 @@ export const enum REPOSITORIES {
   CheckoutPaymentRepository = 'CheckoutPaymentRepository',
   CheckoutSummaryRepository = 'CheckoutSummaryRepository',
   AgentLoginRepository = 'AgentLoginRepository',
+  CatalogRepository = 'CatalogRepository',
+  CompanyUserSelectRepository = 'CompanyUserSelectRepository',
+  MerchantRelationRequestCreateRepository = 'MerchantRelationRequestCreateRepository',
+  MerchantRelationRequestDetailsRepository = 'MerchantRelationRequestDetailsRepository',
+  MerchantRelationRequestIndexRepository = 'MerchantRelationRequestIndexRepository',
+  MerchantRepository = 'MerchantRepository',
 }
