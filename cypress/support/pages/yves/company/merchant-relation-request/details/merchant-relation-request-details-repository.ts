@@ -1,1 +1,3 @@
-export interface MerchantRelationRequestDetailsRepository {}
+export interface MerchantRelationRequestDetailsRepository {
+  getCancelButton(): Cypress.Chainable;
+}

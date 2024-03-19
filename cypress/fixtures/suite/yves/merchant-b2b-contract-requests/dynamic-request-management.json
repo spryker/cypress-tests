@@ -405,6 +405,128 @@
               "fkCompanyBusinessUnit": "#businessUnit1FromCompany2.id_company_business_unit"
             }
           ]
+        },
+        {
+          "type": "array-object",
+          "key": "assigneeCompanyBusinessUnitsFromCompany1",
+          "arguments": ["#businessUnit1FromCompany1", "#businessUnit2FromCompany1"]
+        },
+        {
+          "type": "array-object",
+          "key": "assigneeCompanyBusinessUnitsFromCompany2",
+          "arguments": ["#businessUnit1FromCompany2", "#businessUnit2FromCompany2"]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantRelationRequest",
+          "key": "pendingRequest",
+          "arguments": [
+            {
+              "status": "pending",
+              "merchant": "#merchant1",
+              "companyUser": "#companyUser1FromCompany1",
+              "ownerCompanyBusinessUnit": "#businessUnit1FromCompany1",
+              "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantRelationRequest",
+          "key": "canceledRequest",
+          "arguments": [
+            {
+              "status": "canceled",
+              "merchant": "#merchant1",
+              "companyUser": "#companyUser1FromCompany1",
+              "ownerCompanyBusinessUnit": "#businessUnit1FromCompany1",
+              "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantRelationRequest",
+          "key": "approvedRequest",
+          "arguments": [
+            {
+              "status": "approved",
+              "merchant": "#merchant1",
+              "companyUser": "#companyUser1FromCompany1",
+              "ownerCompanyBusinessUnit": "#businessUnit1FromCompany1",
+              "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantRelationRequest",
+          "key": "rejectedRequest",
+          "arguments": [
+            {
+              "status": "rejected",
+              "merchant": "#merchant1",
+              "companyUser": "#companyUser1FromCompany1",
+              "ownerCompanyBusinessUnit": "#businessUnit1FromCompany1",
+              "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantRelationRequest",
+          "key": "requestFromMerchant1",
+          "arguments": [
+            {
+              "status": "canceled",
+              "merchant": "#merchant1",
+              "companyUser": "#companyUser1FromCompany2",
+              "ownerCompanyBusinessUnit": "#businessUnit1FromCompany2",
+              "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany2"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantRelationRequest",
+          "key": "requestFromMerchant2",
+          "arguments": [
+            {
+              "status": "canceled",
+              "merchant": "#merchant2",
+              "companyUser": "#companyUser1FromCompany2",
+              "ownerCompanyBusinessUnit": "#businessUnit1FromCompany2",
+              "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany2"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantRelationRequest",
+          "key": "requestFromUnit1",
+          "arguments": [
+            {
+              "status": "approved",
+              "merchant": "#merchant3",
+              "companyUser": "#companyUser1FromCompany2",
+              "ownerCompanyBusinessUnit": "#businessUnit1FromCompany2",
+              "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany2"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantRelationRequest",
+          "key": "requestFromUnit2",
+          "arguments": [
+            {
+              "status": "approved",
+              "merchant": "#merchant3",
+              "companyUser": "#companyUser1FromCompany2",
+              "ownerCompanyBusinessUnit": "#businessUnit2FromCompany2",
+              "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany2"
+            }
+          ]
         }
       ]
     }

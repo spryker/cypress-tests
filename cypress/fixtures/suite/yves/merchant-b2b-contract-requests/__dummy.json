@@ -33,6 +33,18 @@
           "arguments": ["#store"]
         },
         {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantUser1FromMerchant1",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantUser2FromMerchant1",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
           "type": "builder",
           "name": "MerchantProfileBuilder",
           "key": "merchantProfile1"
@@ -77,6 +89,22 @@
               "url": "#merchant1.name"
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#merchant1", "#merchantUser1FromMerchant1"]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#merchant1", "#merchantUser2FromMerchant1"]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantUserFromMerchant2",
+          "arguments": [{ "password": "change123" }]
         },
         {
           "type": "builder",
@@ -125,6 +153,17 @@
           ]
         },
         {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#merchant2", "#merchantUserFromMerchant2"]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantUserFromMerchant3",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
           "type": "builder",
           "name": "MerchantProfileBuilder",
           "key": "merchantProfile3"
@@ -169,6 +208,11 @@
               "url": "#merchant3.name"
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#merchant3", "#merchantUserFromMerchant3"]
         },
         {
           "type": "transfer",
