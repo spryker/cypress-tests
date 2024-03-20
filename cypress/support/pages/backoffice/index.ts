@@ -11,3 +11,6 @@ export * from './user/create/user-create-page';
 export * from './user/delete/user-delete-page';
 export * from './user/index/user-index-page';
 export * from './user/update/user-update-page';
+export * from './merchant-relation-request-gui/list/merchant-relation-request-gui-list-page';
+export * from './merchant-relation-request-gui/edit/merchant-relation-request-gui-edit-page';
+export * from './merchant-relationship-gui/list/merchant-relationship-gui-list-page';
