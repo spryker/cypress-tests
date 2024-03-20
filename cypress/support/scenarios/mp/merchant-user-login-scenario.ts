@@ -2,15 +2,20 @@ import { LoginPage } from '@pages/mp';
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
+interface MerchantUserLoginExecuteParams {
+  username: string;
+  password: string;
+}
+
 @injectable()
 @autoWired
 export class MerchantUserLoginScenario {
   @inject(LoginPage) private loginPage: LoginPage;
 
-  execute = (username: string, password: string): void => {
-    cy.session([username, password], () => {
+  execute = (params: MerchantUserLoginExecuteParams): void => {
+    cy.session([params.username, params.password], () => {
       this.loginPage.visit();
-      this.loginPage.login(username, password);
+      this.loginPage.login(params.username, params.password);
     });
   };
 }
