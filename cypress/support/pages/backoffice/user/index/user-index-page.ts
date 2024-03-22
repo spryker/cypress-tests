@@ -1,7 +1,6 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-
-import { BackofficePage } from '../../backoffice-page';
+import { BackofficePage, ActionEnum } from '@pages/backoffice';
 import { UserIndexRepository } from './user-index-repository';
 
 @injectable()
@@ -11,52 +10,38 @@ export class UserIndexPage extends BackofficePage {
 
   protected PAGE_URL = '/user';
 
-  createNewUser = (): void => {
+  add = (): void => {
     this.repository.getAddNewUserButton().click();
   };
 
-  editUser = (query: string): void => {
-    this.findUser(query).find(this.repository.getEditButtonSelector()).click();
-  };
+  update = (params: UpdateParams): void => {
+    const findParams = { query: params.query, expectedCount: 1 };
 
-  deactivateUser = (query: string): void => {
-    this.findUser(query).then((merchantRow) => {
-      const button = merchantRow.find(this.repository.getDeactivateButtonSelector());
+    this.find(findParams).then(($userRow) => {
+      if (params.action === ActionEnum.edit) {
+        cy.wrap($userRow).find(this.repository.getEditButtonSelector()).should('exist').click();
+      }
 
-      if (button.length) {
-        button.click();
+      if (params.action === ActionEnum.deactivate) {
+        cy.wrap($userRow).find(this.repository.getDeactivateButtonSelector()).should('exist').click();
+      }
+
+      if (params.action === ActionEnum.activate) {
+        cy.wrap($userRow).find(this.repository.getActivateButtonSelector()).should('exist').click();
+      }
+
+      if (params.action === ActionEnum.delete) {
+        cy.wrap($userRow).find(this.repository.getDeleteButtonSelector()).should('exist').click();
       }
     });
   };
 
-  deleteUser = (query: string): void => {
-    this.findUser(query).then((merchantRow) => {
-      const button = merchantRow.find(this.repository.getDeleteButtonSelector());
-
-      if (button.length) {
-        button.click();
-      }
-    });
-  };
-
-  activateUser = (query: string): void => {
-    this.findUser(query).then((merchantRow) => {
-      const button = merchantRow.find(this.repository.getActivateButtonSelector());
-
-      if (button.length) {
-        button.click();
-      }
-    });
-  };
-
-  findUser = (query: string): Cypress.Chainable => {
+  find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(query);
+    cy.get(searchSelector).type(params.query);
 
-    const interceptAlias = this.faker.string.uuid();
-    cy.intercept('GET', '/user/index/table**').as(interceptAlias);
-    cy.wait(`@${interceptAlias}`).its('response.body.recordsFiltered').should('eq', 1);
+    this.interceptTable({ url: '/user/index/table**', expectedCount: params.expectedCount });
 
     return this.repository.getFirstTableRow();
   };
@@ -64,4 +49,14 @@ export class UserIndexPage extends BackofficePage {
   getUserTableHeader = (): Cypress.Chainable => {
     return this.repository.getTableHeader();
   };
+}
+
+interface FindParams {
+  query: string;
+  expectedCount?: number;
+}
+
+interface UpdateParams {
+  action: ActionEnum;
+  query: string;
 }

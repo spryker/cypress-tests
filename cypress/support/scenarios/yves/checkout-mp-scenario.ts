@@ -9,11 +9,6 @@ import {
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-interface CheckoutMpExecuteParams {
-  isGuest: boolean;
-  isMultiShipment?: boolean;
-}
-
 @injectable()
 @autoWired
 export class CheckoutMpScenario {
@@ -24,17 +19,15 @@ export class CheckoutMpScenario {
   @inject(CheckoutPaymentPage) private checkoutPaymentPage: CheckoutPaymentPage;
   @inject(CheckoutSummaryPage) private checkoutSummaryPage: CheckoutSummaryPage;
 
-  execute = (params: CheckoutMpExecuteParams): void => {
-    const { isGuest, isMultiShipment } = params;
-
+  execute = (params: ExecuteParams): void => {
     this.cartPage.visit();
     this.cartPage.startCheckout();
 
-    if (isGuest) {
+    if (params?.isGuest) {
       this.checkoutCustomerPage.checkoutAsGuest();
     }
 
-    this.fillShippingAddress(isMultiShipment);
+    this.fillShippingAddress(params?.isMultiShipment);
     this.checkoutShipmentPage.setStandardShippingMethod();
     this.checkoutPaymentPage.setDummyMarketplacePaymentMethod();
     this.checkoutSummaryPage.placeOrder();
@@ -51,4 +44,9 @@ export class CheckoutMpScenario {
 
     this.checkoutAddressPage.fillShippingAddress();
   };
+}
+
+interface ExecuteParams {
+  isGuest?: boolean;
+  isMultiShipment?: boolean;
 }

@@ -1,7 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-import { MpPage } from '../mp-page';
+import { MpPage } from '@pages/mp';
 import { OffersRepository } from './offers-repository';
 
 @injectable()
@@ -11,14 +11,15 @@ export class OffersPage extends MpPage {
 
   protected PAGE_URL = '/product-offer-merchant-portal-gui/product-offers';
 
-  findOffer = (query: string): Cypress.Chainable => {
+  find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(query);
+    cy.get(searchSelector).type(params.query);
 
-    const interceptAlias = this.faker.string.uuid();
-    cy.intercept('GET', '/product-offer-merchant-portal-gui/product-offers/table-data**').as(interceptAlias);
-    cy.wait(`@${interceptAlias}`).its('response.body.total').should('eq', 1);
+    this.interceptTable({
+      url: '/product-offer-merchant-portal-gui/product-offers/table-data**',
+      expectedCount: params.expectedCount,
+    });
 
     return this.repository.getFirstTableRow();
   };
@@ -26,4 +27,13 @@ export class OffersPage extends MpPage {
   getDrawer = (): Cypress.Chainable => {
     return this.repository.getDrawer();
   };
+
+  getSaveButtonSelector = (): string => {
+    return this.repository.getSaveButtonSelector();
+  };
+}
+
+interface FindParams {
+  query: string;
+  expectedCount?: number;
 }

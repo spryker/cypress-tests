@@ -1,3 +1,4 @@
+import { container } from '@utils';
 import { AgentMerchantPortalDynamicFixtures, MarketplaceAgentAssistStaticFixtures } from '@interfaces/mp';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import { OffersPage, ProductsPage, ProfilePage, SalesOrdersPage } from '@pages/mp';
@@ -5,7 +6,6 @@ import { CartPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ImpersonateAsMerchantUserScenario } from '@scenarios/mp';
 import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
-import { container } from '@utils';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
@@ -34,7 +34,7 @@ describe('agent merchant portal', { tags: ['@marketplace-agent-assist'] }, (): v
     customerLoginScenario.execute({ email: dynamicFixtures.customer.email, password: staticFixtures.defaultPassword });
 
     cartPage.visit();
-    cartPage.quickAddToCart(dynamicFixtures.productConcreteForOffer.sku);
+    cartPage.quickAddToCart({ sku: dynamicFixtures.productConcreteForOffer.sku, quantity: 1 });
     checkoutMpScenario.execute({ isGuest: false });
 
     userLoginScenario.execute({
@@ -42,61 +42,62 @@ describe('agent merchant portal', { tags: ['@marketplace-agent-assist'] }, (): v
       password: staticFixtures.defaultPassword,
     });
 
-    salesIndexPage.viewLastPlacedOrder();
-    salesDetailPage.triggerOms('Pay');
-    salesDetailPage.triggerOms('skip picking', true);
+    salesIndexPage.visit();
+    salesIndexPage.view();
+    salesDetailPage.triggerOms({ state: 'Pay' });
+    salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
 
-    impersonateScenario.execute(
-      dynamicFixtures.merchantAgentUser.username,
-      staticFixtures.defaultPassword,
-      dynamicFixtures.merchantUser.username
-    );
+    impersonateScenario.execute({
+      username: dynamicFixtures.merchantAgentUser.username,
+      password: staticFixtures.defaultPassword,
+      query: dynamicFixtures.merchantUser.username,
+    });
 
     salesOrdersPage.visit();
-    salesOrdersPage.cancelOrder(dynamicFixtures.customer.email);
+    salesOrdersPage.cancel({ query: dynamicFixtures.customer.email });
 
     // Ensure that order was canceled
     salesOrdersPage.visit();
-    salesOrdersPage.findOrder(dynamicFixtures.customer.email).contains('canceled');
+    salesOrdersPage.find({ query: dynamicFixtures.customer.email }).contains('canceled');
   });
 
   it('agent should be able to modify merchant profile information during impersonation', (): void => {
-    impersonateScenario.execute(
-      dynamicFixtures.merchantAgentUser.username,
-      staticFixtures.defaultPassword,
-      dynamicFixtures.merchantUser.username
-    );
+    impersonateScenario.execute({
+      username: dynamicFixtures.merchantAgentUser.username,
+      password: staticFixtures.defaultPassword,
+      query: dynamicFixtures.merchantUser.username,
+    });
 
     profilePage.visit();
-    profilePage.updateMerchantPhoneNumber();
+    profilePage.updatePhone();
 
     cy.get('body').contains('The Profile has been changed successfully.');
   });
 
   it('agent should be able to modify product information during impersonation', (): void => {
-    impersonateScenario.execute(
-      dynamicFixtures.merchantAgentUser.username,
-      staticFixtures.defaultPassword,
-      dynamicFixtures.merchantUser.username
-    );
+    impersonateScenario.execute({
+      username: dynamicFixtures.merchantAgentUser.username,
+      password: staticFixtures.defaultPassword,
+      query: dynamicFixtures.merchantUser.username,
+    });
 
     productsPage.visit();
-    productsPage.findProduct(dynamicFixtures.productConcreteForMerchant.abstract_sku).click();
-    productsPage.getDrawer().find('button:contains("Save")').click();
+    productsPage.find({ query: dynamicFixtures.productConcreteForMerchant.abstract_sku }).click();
+    productsPage.getDrawer().find(productsPage.getSaveButtonSelector()).click();
 
     cy.get('body').contains('The Product is saved.');
   });
 
   it('agent should be able to modify offer information during impersonation', (): void => {
-    impersonateScenario.execute(
-      dynamicFixtures.merchantAgentUser.username,
-      staticFixtures.defaultPassword,
-      dynamicFixtures.merchantUser.username
-    );
+    impersonateScenario.execute({
+      username: dynamicFixtures.merchantAgentUser.username,
+      password: staticFixtures.defaultPassword,
+      query: dynamicFixtures.merchantUser.username,
+    });
 
     offersPage.visit();
-    offersPage.findOffer(dynamicFixtures.productOffer.product_offer_reference).click();
-    offersPage.getDrawer().find('button:contains("Save")').click();
+    offersPage.find({ query: dynamicFixtures.productOffer.product_offer_reference }).click();
+    offersPage.getDrawer().find(offersPage.getSaveButtonSelector()).click();
 
     cy.get('body').contains('The Offer is saved.');
   });

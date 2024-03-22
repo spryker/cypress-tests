@@ -1,12 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { BackofficePage } from '../../backoffice-page';
+import { BackofficePage } from '@pages/backoffice';
 import { UserCreateRepository } from './user-create-repository';
-
-interface User {
-  username: string;
-  password: string;
-}
 
 @injectable()
 @autoWired
@@ -17,43 +12,41 @@ export class UserCreatePage extends BackofficePage {
   private DEFAULT_PASSWORD = 'Change123@_';
   private EN_LOCALE_VALUE = '66';
 
-  createRootUser = (): User => {
+  create = (params: CreateParams): User => {
     const user = {
-      username: this.faker.internet.email(),
-      password: this.DEFAULT_PASSWORD,
+      username: params.username || this.faker.internet.email(),
+      password: params.password || this.DEFAULT_PASSWORD,
     };
 
-    this.fillCreateUserForm(user.username, user.password);
-
-    this.repository.getRootGroupCheckbox().check();
-    this.repository.getCreateUserButton().click();
-    cy.contains('User was created successfully.').should('exist');
-
-    return user;
-  };
-
-  createAgentMerchantUser = (): User => {
-    const user = {
-      username: this.faker.internet.email(),
-      password: this.DEFAULT_PASSWORD,
-    };
-
-    this.fillCreateUserForm(user.username, user.password);
-
-    this.repository.getRootGroupCheckbox().check();
-    this.repository.getAgentMerchantCheckbox().check();
-    this.repository.getCreateUserButton().click();
-    cy.contains('User was created successfully.').should('exist');
-
-    return user;
-  };
-
-  private fillCreateUserForm = (username: string, password: string): void => {
-    this.repository.getUsernameInput().clear().type(username);
-    this.repository.getPasswordInput().clear().type(password);
-    this.repository.getRepeatPasswordInput().clear().type(password);
+    this.repository.getUsernameInput().clear().type(user.username);
+    this.repository.getPasswordInput().clear().type(user.password);
+    this.repository.getRepeatPasswordInput().clear().type(user.password);
     this.repository.getFirstNameInput().clear().type(this.faker.person.firstName());
     this.repository.getLastNameInput().clear().type(this.faker.person.lastName());
     this.repository.getInterfaceLanguageSelect().select(this.EN_LOCALE_VALUE);
+
+    if (params.isRootUser) {
+      this.repository.getRootGroupCheckbox().check();
+    }
+
+    if (params.isAgentMerchant) {
+      this.repository.getAgentMerchantCheckbox().check();
+    }
+
+    this.repository.getCreateUserButton().click();
+
+    return user;
   };
+}
+
+interface CreateParams {
+  username?: string;
+  password?: string;
+  isRootUser?: boolean;
+  isAgentMerchant?: boolean;
+}
+
+interface User {
+  username: string;
+  password: string;
 }

@@ -1,7 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-import { MpPage } from '../mp-page';
+import { MpPage } from '@pages/mp';
 import { AgentLoginRepository } from './agent-login-repository';
 
 @injectable()
@@ -11,9 +11,9 @@ export class AgentLoginPage extends MpPage {
 
   protected PAGE_URL = '/agent-security-merchant-portal-gui/login';
 
-  login = (username: string, password: string): void => {
-    this.repository.getEmailInput().clear().type(username);
-    this.repository.getPasswordInput().clear().type(password);
+  login = (params: LoginParams): void => {
+    this.repository.getEmailInput().clear().type(params.username);
+    this.repository.getPasswordInput().clear().type(params.password);
 
     this.repository.getSubmitButton().click();
   };
@@ -21,4 +21,9 @@ export class AgentLoginPage extends MpPage {
   getFailedAuthenticationText = (): string => {
     return this.repository.getFailedAuthenticationText();
   };
+}
+
+interface LoginParams {
+  username: string;
+  password: string;
 }

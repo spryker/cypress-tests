@@ -1,7 +1,6 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-
-import { BackofficePage } from '../../backoffice-page';
+import { BackofficePage, ActionEnum } from '@pages/backoffice';
 import { MerchantListRepository } from './merchant-list-repository';
 
 @injectable()
@@ -11,59 +10,49 @@ export class MerchantListPage extends BackofficePage {
 
   protected PAGE_URL = '/merchant-gui/list-merchant';
 
-  editMerchant = (query: string): void => {
-    this.findMerchant(query).find(this.repository.getEditButtonSelector()).click();
-  };
+  update = (params: UpdateParams): void => {
+    const findParams = { query: params.query, expectedCount: 1 };
 
-  activateMerchant = (query: string): void => {
-    this.findMerchant(query).then((merchantRow) => {
-      const button = merchantRow.find(this.repository.getActivateButtonSelector());
+    this.find(findParams).then(($merchantRow) => {
+      if (params.action === ActionEnum.edit) {
+        cy.wrap($merchantRow).find(this.repository.getEditButtonSelector()).should('exist').click();
+      }
 
-      if (button.length) {
-        button.click();
+      if (params.action === ActionEnum.activate) {
+        cy.wrap($merchantRow).find(this.repository.getActivateButtonSelector()).should('exist').click();
+      }
+
+      if (params.action === ActionEnum.deactivate) {
+        cy.wrap($merchantRow).find(this.repository.getDeactivateButtonSelector()).should('exist').click();
+      }
+
+      if (params.action === ActionEnum.approveAccess) {
+        cy.wrap($merchantRow).find(this.repository.getDeactivateButtonSelector()).should('exist').click();
+      }
+
+      if (params.action === ActionEnum.denyAccess) {
+        cy.wrap($merchantRow).find(this.repository.getDeactivateButtonSelector()).should('exist').click();
       }
     });
   };
 
-  deactivateMerchant = (query: string): void => {
-    this.findMerchant(query).then((merchantRow) => {
-      const button = merchantRow.find(this.repository.getDeactivateButtonSelector());
-
-      if (button.length) {
-        button.click();
-      }
-    });
-  };
-
-  approveAccessMerchant = (query: string): void => {
-    this.findMerchant(query).then((merchantRow) => {
-      const button = merchantRow.find(this.repository.getApproveAccessButtonSelector());
-
-      if (button.length) {
-        button.click();
-      }
-    });
-  };
-
-  denyAccessMerchant = (query: string): void => {
-    this.findMerchant(query).then((merchantRow) => {
-      const button = merchantRow.find(this.repository.getDenyAccessButtonSelector());
-
-      if (button.length) {
-        button.click();
-      }
-    });
-  };
-
-  findMerchant = (query: string): Cypress.Chainable => {
+  find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(query);
+    cy.get(searchSelector).type(params.query);
 
-    const interceptAlias = this.faker.string.uuid();
-    cy.intercept('GET', '/merchant-gui/list-merchant/table**').as(interceptAlias);
-    cy.wait(`@${interceptAlias}`).its('response.body.recordsFiltered').should('eq', 1);
+    this.interceptTable({ url: '/merchant-gui/list-merchant/table**', expectedCount: params.expectedCount });
 
     return this.repository.getFirstTableRow();
   };
+}
+
+interface UpdateParams {
+  action: ActionEnum;
+  query: string;
+}
+
+interface FindParams {
+  query: string;
+  expectedCount?: number;
 }

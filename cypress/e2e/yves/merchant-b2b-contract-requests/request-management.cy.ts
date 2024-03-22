@@ -1,14 +1,11 @@
 import { container } from '@utils';
+import { MerchantB2bContractRequestsStaticFixtures, RequestManagementDynamicFixtures } from '@interfaces/yves';
 import {
   CompanyUserSelectPage,
   MerchantRelationRequestDetailsPage,
   MerchantRelationRequestIndexPage,
-} from '../../../support/pages/yves';
-import { CustomerLoginScenario } from '../../../support/scenarios/yves';
-import {
-  MerchantB2bContractRequestsStaticFixtures,
-  RequestManagementDynamicFixtures,
-} from '../../../support/types/yves';
+} from '@pages/yves';
+import { CustomerLoginScenario } from '@scenarios/yves';
 
 /**
  * Merchant Relation Requests & Enhanced Merchant Relations checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4105896492/Business+Journey+B2B+Marketplace+-+to+automate}
@@ -35,7 +32,9 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
   });
 
   it('company user should be able to filter MR requests by status', (): void => {
-    companyUserSelectPage.selectBusinessUnit(dynamicFixtures.companyUser1FromCompany1.id_company_user);
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser1FromCompany1.id_company_user,
+    });
     const statuses = ['Pending', 'Canceled', 'Approved', 'Rejected'];
 
     statuses.forEach((status: string): void => {
@@ -51,7 +50,9 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
   });
 
   it('company user should be able to filter MR requests by merchant', (): void => {
-    companyUserSelectPage.selectBusinessUnit(dynamicFixtures.companyUser1FromCompany2.id_company_user);
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser1FromCompany2.id_company_user,
+    });
     const merchants = [dynamicFixtures.merchant1, dynamicFixtures.merchant2];
 
     merchants.forEach((merchant): void => {
@@ -67,7 +68,9 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
   });
 
   it('company user should be able to filter MR requests by business unit owner', (): void => {
-    companyUserSelectPage.selectBusinessUnit(dynamicFixtures.companyUser1FromCompany2.id_company_user);
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser1FromCompany2.id_company_user,
+    });
     const businessUnits = [dynamicFixtures.businessUnit1FromCompany2, dynamicFixtures.businessUnit2FromCompany2];
 
     businessUnits.forEach((businessUnit): void => {
@@ -87,14 +90,18 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
   });
 
   it('company user from same company should be able to see requests from another user', (): void => {
-    companyUserSelectPage.selectBusinessUnit(dynamicFixtures.companyUser2FromCompany1.id_company_user);
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser2FromCompany1.id_company_user,
+    });
 
     merchantRelationRequestIndexPage.visit();
     merchantRelationRequestIndexPage.getFirstRequest().should('exist');
   });
 
   it('company user from same company should not be able to cancel request from another user', (): void => {
-    companyUserSelectPage.selectBusinessUnit(dynamicFixtures.companyUser2FromCompany1.id_company_user);
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser2FromCompany1.id_company_user,
+    });
 
     merchantRelationRequestIndexPage.visit();
     merchantRelationRequestIndexPage.filterRequests({ status: 'pending' });
@@ -104,7 +111,9 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
   });
 
   it('company user should not be able to cancel request from canceled status', (): void => {
-    companyUserSelectPage.selectBusinessUnit(dynamicFixtures.companyUser1FromCompany1.id_company_user);
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser1FromCompany1.id_company_user,
+    });
 
     merchantRelationRequestIndexPage.visit();
     merchantRelationRequestIndexPage.filterRequests({ status: 'canceled' });
@@ -114,7 +123,9 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
   });
 
   it('company user should not be able to cancel request from approved status', (): void => {
-    companyUserSelectPage.selectBusinessUnit(dynamicFixtures.companyUser1FromCompany1.id_company_user);
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser1FromCompany1.id_company_user,
+    });
 
     merchantRelationRequestIndexPage.visit();
     merchantRelationRequestIndexPage.filterRequests({ status: 'approved' });
@@ -124,7 +135,9 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
   });
 
   it('company user should not be able to cancel request from rejected status', (): void => {
-    companyUserSelectPage.selectBusinessUnit(dynamicFixtures.companyUser1FromCompany1.id_company_user);
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser1FromCompany1.id_company_user,
+    });
 
     merchantRelationRequestIndexPage.visit();
     merchantRelationRequestIndexPage.filterRequests({ status: 'rejected' });
@@ -134,7 +147,9 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
   });
 
   it('company user should be able to cancel request from pending status', (): void => {
-    companyUserSelectPage.selectBusinessUnit(dynamicFixtures.companyUser1FromCompany1.id_company_user);
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser1FromCompany1.id_company_user,
+    });
 
     merchantRelationRequestIndexPage.visit();
     merchantRelationRequestIndexPage.filterRequests({ status: 'pending' });

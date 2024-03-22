@@ -1,7 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-import { MpPage } from '../mp-page';
+import { MpPage } from '@pages/mp';
 import { MerchantRelationRequestsRepository } from './merchant-relation-requests-repository';
 
 @injectable()
@@ -11,16 +11,15 @@ export class MerchantRelationRequestsPage extends MpPage {
 
   protected PAGE_URL = '/merchant-relation-request-merchant-portal-gui/merchant-relation-requests';
 
-  findRequest = (query: string): Cypress.Chainable => {
+  find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(query);
+    cy.get(searchSelector).type(params.query);
 
-    const interceptAlias = this.faker.string.uuid();
-    cy.intercept('GET', '/merchant-relation-request-merchant-portal-gui/merchant-relation-requests/table-data**').as(
-      interceptAlias
-    );
-    cy.wait(`@${interceptAlias}`).its('response.body.total').should('eq', 1);
+    this.interceptTable({
+      url: '/merchant-relation-request-merchant-portal-gui/merchant-relation-requests/table-data**',
+      expectedCount: params.expectedCount,
+    });
 
     return this.repository.getFirstTableRow();
   };
@@ -29,34 +28,52 @@ export class MerchantRelationRequestsPage extends MpPage {
     return this.repository.getDrawer();
   };
 
-  addInternalComment = (comment: string): void => {
-    this.repository.getInternalCommentTextarea().type(comment);
+  addInternalComment = (params: AddInternalCommentParams): void => {
+    this.repository.getInternalCommentTextarea().type(params.comment);
     this.repository.getInternalCommentAddCommentButton().click();
   };
 
-  approveRequest = (isSplitEnabled: boolean): void => {
-    if (isSplitEnabled) {
+  approve = (params?: ApproveParams): void => {
+    if (params?.isSplitEnabled) {
       this.repository.getDrawer().find(this.repository.getIsSplitEnabledCheckboxSelector()).click();
     }
 
-    this.repository.getDrawer().find('button:contains("Approve")').click();
+    this.repository.getDrawer().find(this.repository.getApproveButtonSelector()).click();
     this.repository.getApprovalModalConfirmButton().click();
   };
 
-  rejectRequest = (): void => {
-    this.repository.getDrawer().find('button:contains("Reject")').click();
+  reject = (): void => {
+    this.repository.getDrawer().find(this.repository.getRejectButtonSelector()).click();
     this.repository.getRejectionModalConfirmButton().click();
   };
 
-  uncheckBusinessUnits = (businessUnitIds: number[]): void => {
+  uncheckBusinessUnits = (params: UncheckBusinessUnitsParams): void => {
     this.getDrawer()
-      .find('[id="assigneeCompanyBusinessUnits[]"]')
+      .find(this.repository.getBusinessUnitsCheckboxSelector())
       .each(($businessUnitCheckbox) => {
-        const idBusinessUnit = $businessUnitCheckbox.find('[type="checkbox"]').last().attr('value') ?? '';
+        const checkboxSelector = this.repository.getBusinessUnitCheckboxSelector();
+        const idBusinessUnit = $businessUnitCheckbox.find(checkboxSelector).last().attr('value') ?? '';
 
-        if (businessUnitIds.includes(parseInt(idBusinessUnit))) {
-          cy.wrap($businessUnitCheckbox.find('[type="checkbox"]').first()).uncheck();
+        if (params.businessUnitIds.includes(parseInt(idBusinessUnit))) {
+          cy.wrap($businessUnitCheckbox.find(checkboxSelector).first()).uncheck();
         }
       });
   };
+}
+
+interface FindParams {
+  query: string;
+  expectedCount?: number;
+}
+
+interface AddInternalCommentParams {
+  comment: string;
+}
+
+interface ApproveParams {
+  isSplitEnabled: boolean;
+}
+
+interface UncheckBusinessUnitsParams {
+  businessUnitIds: number[];
 }

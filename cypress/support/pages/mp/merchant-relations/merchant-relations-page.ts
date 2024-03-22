@@ -1,7 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-import { MpPage } from '../mp-page';
+import { MpPage } from '@pages/mp';
 import { MerchantRelationsRepository } from './merchant-relations-repository';
 
 @injectable()
@@ -11,16 +11,15 @@ export class MerchantRelationsPage extends MpPage {
 
   protected PAGE_URL = '/merchant-relationship-merchant-portal-gui/merchant-relationship';
 
-  findRelation = (query: string, counter = 1): Cypress.Chainable => {
+  find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(query);
+    cy.get(searchSelector).type(params.query);
 
-    const interceptAlias = this.faker.string.uuid();
-    cy.intercept('GET', '/merchant-relationship-merchant-portal-gui/merchant-relationship/table-data**').as(
-      interceptAlias
-    );
-    cy.wait(`@${interceptAlias}`).its('response.body.total').should('eq', counter);
+    this.interceptTable({
+      url: '/merchant-relationship-merchant-portal-gui/merchant-relationship/table-data**',
+      expectedCount: params.expectedCount,
+    });
 
     return this.repository.getFirstTableRow();
   };
@@ -28,4 +27,9 @@ export class MerchantRelationsPage extends MpPage {
   getDrawer = (): Cypress.Chainable => {
     return this.repository.getDrawer();
   };
+}
+
+interface FindParams {
+  query: string;
+  expectedCount?: number;
 }

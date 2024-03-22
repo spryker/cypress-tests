@@ -1,14 +1,7 @@
 import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { YvesPage } from '../../../yves-page';
+import { YvesPage } from '@pages/yves';
 import { MerchantRelationRequestCreateRepository } from './merchant-relation-request-create-repository';
-
-interface CreateMerchantRelationRequestParams {
-  merchantReference?: string;
-  ownerBusinessUnitId: number;
-  businessUnitIds: number[];
-  messageToMerchant?: string;
-}
 
 @injectable()
 @autoWired
@@ -18,7 +11,7 @@ export class MerchantRelationRequestCreatePage extends YvesPage {
 
   protected PAGE_URL = '/company/merchant-relation-request/create';
 
-  create = (params: CreateMerchantRelationRequestParams): void => {
+  create = (params: CreateParams): void => {
     if (params.merchantReference) {
       this.repository.getMerchantSelect().select(params.merchantReference);
     }
@@ -35,4 +28,11 @@ export class MerchantRelationRequestCreatePage extends YvesPage {
 
     this.repository.getSubmitButton().click();
   };
+}
+
+interface CreateParams {
+  merchantReference?: string;
+  ownerBusinessUnitId: number;
+  businessUnitIds: number[];
+  messageToMerchant?: string;
 }

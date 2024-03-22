@@ -1,6 +1,6 @@
 import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { YvesPage } from '../../../yves-page';
+import { YvesPage } from '@pages/yves';
 import { CompanyUserSelectRepository } from './company-user-select-repository';
 
 @injectable()
@@ -10,8 +10,12 @@ export class CompanyUserSelectPage extends YvesPage {
 
   protected PAGE_URL = '/company/user/select';
 
-  selectBusinessUnit = (idCompanyUser: number): void => {
-    this.repository.getBusinessUnitSelect().select(idCompanyUser.toString());
+  selectBusinessUnit = (params: SelectBusinessUnitParams): void => {
+    this.repository.getBusinessUnitSelect().select(params.idCompanyUser.toString());
     this.repository.getSubmitButton().click();
   };
+}
+
+interface SelectBusinessUnitParams {
+  idCompanyUser: number;
 }

@@ -1,7 +1,6 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-
-import { BackofficePage } from '../backoffice-page';
+import { BackofficePage } from '@pages/backoffice';
 import { LoginRepository } from './login-repository';
 
 @injectable()
@@ -11,10 +10,15 @@ export class LoginPage extends BackofficePage {
 
   protected PAGE_URL = '/security-gui/login';
 
-  login = (username: string, password: string): void => {
-    this.repository.getEmailInput().clear().type(username);
-    this.repository.getPasswordInput().clear().type(password);
+  login = (params: LoginParams): void => {
+    this.repository.getEmailInput().clear().type(params.username);
+    this.repository.getPasswordInput().clear().type(params.password);
 
     this.repository.getSubmitButton().click();
   };
+}
+
+interface LoginParams {
+  username: string;
+  password: string;
 }

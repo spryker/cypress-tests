@@ -1,3 +1,4 @@
+import { container } from '@utils';
 import { AgentLoginDynamicFixtures, MarketplaceAgentAssistStaticFixtures } from '@interfaces/mp';
 import {
   AgentDashboardPage,
@@ -6,7 +7,6 @@ import {
   LoginPage as MpLoginPage,
 } from '@pages/mp';
 import { MerchantAgentLoginUserScenario } from '@scenarios/mp';
-import { container } from '@utils';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
@@ -27,7 +27,10 @@ describe('agent login', { tags: ['@marketplace-agent-assist'] }, (): void => {
 
   it('agent (customer) should not be able to login to MP dashboard', (): void => {
     mpLoginPage.visit();
-    mpLoginPage.login(dynamicFixtures.customerAgentUser.username, staticFixtures.defaultPassword);
+    mpLoginPage.login({
+      username: dynamicFixtures.customerAgentUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     cy.contains(mpLoginPage.getFailedAuthenticationText());
     mpLoginPage.assertPageLocation();
@@ -35,7 +38,10 @@ describe('agent login', { tags: ['@marketplace-agent-assist'] }, (): void => {
 
   it('agent (merchant user) should not be able to login to MP dashboard', (): void => {
     mpLoginPage.visit();
-    mpLoginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
+    mpLoginPage.login({
+      username: dynamicFixtures.merchantAgentUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     cy.contains(mpLoginPage.getFailedAuthenticationText());
     mpLoginPage.assertPageLocation();
@@ -43,7 +49,10 @@ describe('agent login', { tags: ['@marketplace-agent-assist'] }, (): void => {
 
   it('merchant user should be able to login to MP dashboard', (): void => {
     mpLoginPage.visit();
-    mpLoginPage.login(dynamicFixtures.merchantUser.username, staticFixtures.defaultPassword);
+    mpLoginPage.login({
+      username: dynamicFixtures.merchantUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     cy.contains('Dashboard');
     mpDashboardPage.assertPageLocation();
@@ -51,7 +60,10 @@ describe('agent login', { tags: ['@marketplace-agent-assist'] }, (): void => {
 
   it('deactivated merchant user should not be able to login to MP dashboard', (): void => {
     mpLoginPage.visit();
-    mpLoginPage.login(dynamicFixtures.deactivatedMerchantUser.username, staticFixtures.defaultPassword);
+    mpLoginPage.login({
+      username: dynamicFixtures.deactivatedMerchantUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     cy.contains(mpLoginPage.getFailedAuthenticationText());
     mpLoginPage.assertPageLocation();
@@ -59,7 +71,10 @@ describe('agent login', { tags: ['@marketplace-agent-assist'] }, (): void => {
 
   it('deleted merchant user should not be able to login to MP dashboard', (): void => {
     mpLoginPage.visit();
-    mpLoginPage.login(dynamicFixtures.deletedMerchantUser.username, staticFixtures.defaultPassword);
+    mpLoginPage.login({
+      username: dynamicFixtures.deletedMerchantUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     cy.contains(mpLoginPage.getFailedAuthenticationText());
     mpLoginPage.assertPageLocation();
@@ -67,7 +82,10 @@ describe('agent login', { tags: ['@marketplace-agent-assist'] }, (): void => {
 
   it('agent (customer) should not be able to login to MP agent dashboard', (): void => {
     mpAgentLoginPage.visit();
-    mpAgentLoginPage.login(dynamicFixtures.customerAgentUser.username, staticFixtures.defaultPassword);
+    mpAgentLoginPage.login({
+      username: dynamicFixtures.customerAgentUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     cy.contains(mpAgentLoginPage.getFailedAuthenticationText());
     mpAgentLoginPage.assertPageLocation();
@@ -75,7 +93,10 @@ describe('agent login', { tags: ['@marketplace-agent-assist'] }, (): void => {
 
   it('merchant user should not be able to login to MP agent dashboard', (): void => {
     mpAgentLoginPage.visit();
-    mpAgentLoginPage.login(dynamicFixtures.merchantUser.username, staticFixtures.defaultPassword);
+    mpAgentLoginPage.login({
+      username: dynamicFixtures.merchantUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     cy.contains(mpAgentLoginPage.getFailedAuthenticationText());
     mpAgentLoginPage.assertPageLocation();

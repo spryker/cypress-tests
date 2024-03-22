@@ -1,4 +1,5 @@
 import { container } from '@utils';
+import { MerchantB2bContractRequestsStaticFixtures, RequestCreationDynamicFixtures } from '@interfaces/yves';
 import {
   CatalogPage,
   CompanyUserSelectPage,
@@ -6,15 +7,16 @@ import {
   MerchantRelationRequestCreatePage,
   MerchantRelationRequestDetailsPage,
   MerchantRelationRequestIndexPage,
-} from '../../../support/pages/yves';
-import { CustomerLoginScenario } from '../../../support/scenarios/yves';
-import { MerchantB2bContractRequestsStaticFixtures, RequestCreationDynamicFixtures } from '../../../support/types/yves';
+  ProductPage,
+} from '@pages/yves';
+import { CustomerLoginScenario } from '@scenarios/yves';
 
 /**
  * Merchant Relation Requests & Enhanced Merchant Relations checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4105896492/Business+Journey+B2B+Marketplace+-+to+automate}
  */
 describe('request creation', { tags: ['@merchant-b2b-contract-requests'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
+  const productPage = container.get(ProductPage);
   const companyUserSelectPage = container.get(CompanyUserSelectPage);
   const merchantRelationRequestCreatePage = container.get(MerchantRelationRequestCreatePage);
   const merchantRelationRequestDetailsPage = container.get(MerchantRelationRequestDetailsPage);
@@ -38,10 +40,14 @@ describe('request creation', { tags: ['@merchant-b2b-contract-requests'] }, (): 
   });
 
   it('company user should be able to create request from PDP', (): void => {
-    companyUserSelectPage.selectBusinessUnit(dynamicFixtures.companyUser1FromCompany1.id_company_user);
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser1FromCompany1.id_company_user,
+    });
 
-    catalogPage.openFirstSuggestedProduct(dynamicFixtures.concreteProduct.abstract_sku);
-    catalogPage.createMerchantRelationRequest(dynamicFixtures.productOfferFromMerchant2.product_offer_reference);
+    catalogPage.search({ query: dynamicFixtures.concreteProduct.abstract_sku });
+    productPage.createMerchantRelationRequest({
+      productOfferReference: dynamicFixtures.productOfferFromMerchant2.product_offer_reference,
+    });
 
     merchantRelationRequestCreatePage.create({
       ownerBusinessUnitId: dynamicFixtures.businessUnit1FromCompany1.id_company_business_unit,
@@ -55,7 +61,9 @@ describe('request creation', { tags: ['@merchant-b2b-contract-requests'] }, (): 
   });
 
   it('company user should not be able to create request from merchant profile without business units', (): void => {
-    companyUserSelectPage.selectBusinessUnit(dynamicFixtures.companyUser2FromCompany1.id_company_user);
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser2FromCompany1.id_company_user,
+    });
 
     cy.visit(dynamicFixtures.merchantUrl2.url);
     merchantPage.sendMerchantRelationRequest();
@@ -70,7 +78,9 @@ describe('request creation', { tags: ['@merchant-b2b-contract-requests'] }, (): 
   });
 
   it('company user should be able to create request from merchant profile page', (): void => {
-    companyUserSelectPage.selectBusinessUnit(dynamicFixtures.companyUser2FromCompany1.id_company_user);
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser2FromCompany1.id_company_user,
+    });
 
     cy.visit(dynamicFixtures.merchantUrl2.url);
     merchantPage.sendMerchantRelationRequest();
@@ -87,10 +97,12 @@ describe('request creation', { tags: ['@merchant-b2b-contract-requests'] }, (): 
   });
 
   it('company user should be able to create request from MR request create page', (): void => {
-    companyUserSelectPage.selectBusinessUnit(dynamicFixtures.companyUser1FromCompany2.id_company_user);
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser1FromCompany2.id_company_user,
+    });
 
     merchantRelationRequestIndexPage.visit();
-    merchantRelationRequestIndexPage.createMerchantRelationRequest();
+    merchantRelationRequestIndexPage.create();
 
     merchantRelationRequestCreatePage.create({
       merchantReference: dynamicFixtures.merchant1.merchant_reference,
@@ -105,7 +117,9 @@ describe('request creation', { tags: ['@merchant-b2b-contract-requests'] }, (): 
   });
 
   it('company user should be able to create request with only one business unit', (): void => {
-    companyUserSelectPage.selectBusinessUnit(dynamicFixtures.companyUser1FromCompany2.id_company_user);
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser1FromCompany2.id_company_user,
+    });
 
     merchantRelationRequestCreatePage.visit();
     merchantRelationRequestCreatePage.create({
@@ -118,14 +132,16 @@ describe('request creation', { tags: ['@merchant-b2b-contract-requests'] }, (): 
   });
 
   it('sold by merchant contains MR request links', (): void => {
-    companyUserSelectPage.selectBusinessUnit(dynamicFixtures.companyUser1FromCompany1.id_company_user);
-    catalogPage.openFirstSuggestedProduct(dynamicFixtures.concreteProduct.abstract_sku);
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser1FromCompany1.id_company_user,
+    });
+    catalogPage.search({ query: dynamicFixtures.concreteProduct.abstract_sku });
 
-    const productOffers = catalogPage.getSoldByProductOffers();
-    const createRequestLink = catalogPage.getMerchantRelationRequestLinkAttribute();
+    const productOffers = productPage.getSoldByProductOffers();
+    const createRequestLink = productPage.getMerchantRelationRequestLinkAttribute();
 
     productOffers.children().each(($productOffer) => {
-      const productOfferReference = $productOffer.find('input[type="radio"]').attr('value');
+      const productOfferReference = $productOffer.find(productPage.getInputRadioSelector()).attr('value');
 
       if (
         productOfferReference === dynamicFixtures.productOfferFromMerchant1.product_offer_reference ||

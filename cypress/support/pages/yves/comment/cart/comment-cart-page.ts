@@ -1,7 +1,7 @@
 import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-import { YvesPage } from '../../yves-page';
+import { YvesPage } from '@pages/yves';
 import { CommentCartRepository } from './comment-cart-repository';
 
 @injectable()
@@ -11,38 +11,55 @@ export class CommentCartPage extends YvesPage {
 
   protected PAGE_URL = '/cart';
 
-  addComment = (commentMessage: string): void => {
-    this.repository.getAddCommentForm().last().find('textarea').clear().type(commentMessage);
+  add = (params: AddParams): void => {
+    this.repository.getAddCommentForm().last().find('textarea').clear().type(params.message);
     this.repository.getAddCommentForm().last().find(this.repository.getAddCommentButtonSelector()).click();
   };
 
-  updateFirstComment = (commentMessage: string): void => {
-    const textarea = this.repository.getFirstCommentTextarea();
-    textarea.clear().type(commentMessage);
+  update = (params: UpdateParams): void => {
+    const textarea = this.repository.getCommentTextareaByCommentText(params.oldMessage);
 
-    this.getCommentThreadListSection().first().find(this.repository.getUpdateCommentButtonSelector()).click();
-  };
-
-  updateCommentByCommentText = (initialCommentMessage: string, newCommentMessage: string): void => {
-    const textarea = this.repository.getCommentTextareaByCommentText(initialCommentMessage);
-
-    textarea.clear().type(newCommentMessage);
+    textarea.clear().type(params.newMessage);
     textarea.parent().find(this.repository.getUpdateCommentButtonSelector()).click();
   };
 
-  removeCommentByCommentText = (commentMessage: string): void => {
+  remove = (params: RemoveParams): void => {
     this.repository
-      .getCommentTextareaByCommentText(commentMessage)
+      .getCommentTextareaByCommentText(params.message)
       .parent()
       .find(this.repository.getRemoveCommentButtonSelector())
       .click();
   };
 
-  removeFirstComment = (): void => {
+  updateFirst = (params: UpdateFirstParams): void => {
+    const textarea = this.repository.getFirstCommentTextarea();
+    textarea.clear().type(params.message);
+
+    this.getCommentThreadListSection().first().find(this.repository.getUpdateCommentButtonSelector()).click();
+  };
+
+  removeFirst = (): void => {
     this.getCommentThreadListSection().find(this.repository.getRemoveCommentButtonSelector()).click();
   };
 
   getCommentThreadListSection = (): Cypress.Chainable => {
     return this.repository.getCommentThreadListSection();
   };
+}
+
+interface AddParams {
+  message: string;
+}
+
+interface UpdateParams {
+  oldMessage: string;
+  newMessage: string;
+}
+
+interface RemoveParams {
+  message: string;
+}
+
+interface UpdateFirstParams {
+  message: string;
 }

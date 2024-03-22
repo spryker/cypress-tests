@@ -3,7 +3,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 @autoWired
-export class MerchantRelationRequestGuiEditRepository {
+export class MerchantRelationRequestEditRepository {
   getInternalCommentTextarea = (): Cypress.Chainable => cy.get('[action="/comment-gui/comment/add"] textarea');
   getInternalCommentSubmitButton = (): Cypress.Chainable =>
     cy.get('[action="/comment-gui/comment/add"] [type="submit"]');

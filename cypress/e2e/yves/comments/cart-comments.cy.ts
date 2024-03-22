@@ -1,7 +1,7 @@
+import { container } from '@utils';
 import { CartCommentsDynamicFixtures, CartCommentsStaticFixtures } from '@interfaces/yves';
 import { CommentCartPage, MultiCartPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
-import { container } from '@utils';
 
 describe('cart comments', { tags: ['@comments'] }, (): void => {
   const multiCartPage = container.get(MultiCartPage);
@@ -24,54 +24,54 @@ describe('cart comments', { tags: ['@comments'] }, (): void => {
 
   it('customer should be able to add comments to cart with items', (): void => {
     multiCartPage.visit();
-    multiCartPage.selectCart(dynamicFixtures.quote.name);
+    multiCartPage.selectCart({ name: dynamicFixtures.quote.name });
 
     commentCartPage.visit();
     staticFixtures.commentsToAdd.forEach((commentMessage) => {
-      commentCartPage.addComment(commentMessage);
+      commentCartPage.add({ message: commentMessage });
       commentCartPage.getCommentThreadListSection().contains(commentMessage).should('exist');
     });
   });
 
   it('customer should be able to modify comment in cart with items', (): void => {
     commentCartPage.visit();
-    commentCartPage.addComment(staticFixtures.commentToModify);
-    commentCartPage.updateCommentByCommentText(staticFixtures.commentToModify, staticFixtures.modifiedComment);
+    commentCartPage.add({ message: staticFixtures.commentToModify });
+    commentCartPage.update({ oldMessage: staticFixtures.commentToModify, newMessage: staticFixtures.modifiedComment });
 
     commentCartPage.getCommentThreadListSection().contains(staticFixtures.modifiedComment).should('exist');
   });
 
   it('customer should be able to remove comment in cart with items', (): void => {
     commentCartPage.visit();
-    commentCartPage.addComment(staticFixtures.commentsToRemove);
-    commentCartPage.removeCommentByCommentText(staticFixtures.commentsToRemove);
+    commentCartPage.add({ message: staticFixtures.commentsToRemove });
+    commentCartPage.remove({ message: staticFixtures.commentsToRemove });
 
     commentCartPage.getCommentThreadListSection().contains(staticFixtures.commentsToRemove).should('not.exist');
   });
 
   it('customer should be able to add comments to empty cart', (): void => {
     multiCartPage.visit();
-    multiCartPage.selectCart(dynamicFixtures.emptyQuote.name);
+    multiCartPage.selectCart({ name: dynamicFixtures.emptyQuote.name });
 
     commentCartPage.visit();
     staticFixtures.commentsToAdd.forEach((commentMessage) => {
-      commentCartPage.addComment(commentMessage);
+      commentCartPage.add({ message: commentMessage });
       commentCartPage.getCommentThreadListSection().contains(commentMessage).should('exist');
     });
   });
 
   it('customer should be able to modify comment in empty cart', (): void => {
     commentCartPage.visit();
-    commentCartPage.addComment(staticFixtures.commentToModify);
-    commentCartPage.updateCommentByCommentText(staticFixtures.commentToModify, staticFixtures.modifiedComment);
+    commentCartPage.add({ message: staticFixtures.commentToModify });
+    commentCartPage.update({ oldMessage: staticFixtures.commentToModify, newMessage: staticFixtures.modifiedComment });
 
     commentCartPage.getCommentThreadListSection().contains(staticFixtures.modifiedComment).should('exist');
   });
 
   it('customer should be able to remove comment in empty cart', (): void => {
     commentCartPage.visit();
-    commentCartPage.addComment(staticFixtures.commentsToRemove);
-    commentCartPage.removeCommentByCommentText(staticFixtures.commentsToRemove);
+    commentCartPage.add({ message: staticFixtures.commentsToRemove });
+    commentCartPage.remove({ message: staticFixtures.commentsToRemove });
 
     commentCartPage.getCommentThreadListSection().contains(staticFixtures.commentsToRemove).should('not.exist');
   });

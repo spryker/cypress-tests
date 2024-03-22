@@ -1,7 +1,6 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-
-import { BackofficePage } from '../../backoffice-page';
+import { BackofficePage } from '@pages/backoffice';
 import { UserDeleteRepository } from './user-delete-repository';
 
 @injectable()
@@ -11,7 +10,7 @@ export class UserDeletePage extends BackofficePage {
 
   protected PAGE_URL = '/user/edit/confirm-delete';
 
-  confirmDelete = (): void => {
+  confirm = (): void => {
     this.repository.getDeleteButton().click();
   };
 }

@@ -9,12 +9,6 @@ import {
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-interface CheckoutExecuteParams {
-  isGuest: boolean;
-  isMultiShipment?: boolean;
-  idCustomerAddress?: number;
-}
-
 @injectable()
 @autoWired
 export class CheckoutScenario {
@@ -25,17 +19,15 @@ export class CheckoutScenario {
   @inject(CheckoutPaymentPage) private checkoutPaymentPage: CheckoutPaymentPage;
   @inject(CheckoutSummaryPage) private checkoutSummaryPage: CheckoutSummaryPage;
 
-  execute = (params: CheckoutExecuteParams): void => {
-    const { isGuest, isMultiShipment, idCustomerAddress } = params;
-
+  execute = (params?: ExecuteParams): void => {
     this.cartPage.visit();
     this.cartPage.startCheckout();
 
-    if (isGuest) {
+    if (params?.isGuest) {
       this.checkoutCustomerPage.checkoutAsGuest();
     }
 
-    this.fillShippingAddress(isMultiShipment, idCustomerAddress);
+    this.fillShippingAddress(params);
     this.checkoutShipmentPage.setStandardShippingMethod();
     this.checkoutPaymentPage.setDummyPaymentMethod();
     this.checkoutSummaryPage.placeOrder();
@@ -43,13 +35,21 @@ export class CheckoutScenario {
     cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
   };
 
-  private fillShippingAddress = (isMultiShipment = false, idCustomerAddress?: number): void => {
-    if (isMultiShipment) {
-      this.checkoutAddressPage.fillMultiShippingAddress(idCustomerAddress);
+  private fillShippingAddress = (params?: ExecuteParams): void => {
+    const fillShippingAddressParams = { idCustomerAddress: params?.idCustomerAddress };
+
+    if (params?.isMultiShipment) {
+      this.checkoutAddressPage.fillMultiShippingAddress(fillShippingAddressParams);
 
       return;
     }
 
-    this.checkoutAddressPage.fillShippingAddress(idCustomerAddress);
+    this.checkoutAddressPage.fillShippingAddress(fillShippingAddressParams);
   };
+}
+
+interface ExecuteParams {
+  isGuest?: boolean;
+  isMultiShipment?: boolean;
+  idCustomerAddress?: number;
 }

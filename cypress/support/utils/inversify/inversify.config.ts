@@ -23,6 +23,7 @@ import { SuiteMerchantRelationRequestCreateRepository } from '../../pages/yves/c
 import { SuiteMerchantRelationRequestDetailsRepository } from '../../pages/yves/company/merchant-relation-request/details/repositories/suite-merchant-relation-request-details-repository';
 import { SuiteMerchantRepository } from '../../pages/yves/merchant/repositories/suite-merchant-repository';
 import { SuiteMerchantRelationRequestIndexRepository } from '../../pages/yves/company/merchant-relation-request/index/repositories/suite-merchant-relation-request-index-repository';
+import { SuiteProductRepository } from '../../pages/yves/product/repositories/suite-product-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -38,6 +39,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.CheckoutSummaryRepository]: SuiteCheckoutSummaryRepository,
   [REPOSITORIES.AgentLoginRepository]: SuiteAgentLoginRepository,
   [REPOSITORIES.CatalogRepository]: SuiteCatalogRepository,
+  [REPOSITORIES.ProductRepository]: SuiteProductRepository,
   [REPOSITORIES.CompanyUserSelectRepository]: SuiteCompanyUserSelectRepository,
   [REPOSITORIES.MerchantRelationRequestCreateRepository]: SuiteMerchantRelationRequestCreateRepository,
   [REPOSITORIES.MerchantRelationRequestDetailsRepository]: SuiteMerchantRelationRequestDetailsRepository,

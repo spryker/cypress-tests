@@ -1,7 +1,7 @@
 import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-import { YvesPage } from '../yves-page';
+import { YvesPage } from '@pages/yves';
 import { CatalogRepository } from './catalog-repository';
 
 @injectable()
@@ -11,31 +11,12 @@ export class CatalogPage extends YvesPage {
 
   protected PAGE_URL = '/search';
 
-  openFirstSuggestedProduct = (query: string): void => {
-    this.repository.getSearchInput().clear().type(query);
+  search = (params: SearchParams): void => {
+    this.repository.getSearchInput().clear().type(params.query);
     this.repository.getFirstSuggestedProduct().click();
   };
+}
 
-  selectSoldByProductOffer = (productOfferReference: string): void => {
-    this.repository.getSoldByProductOfferRadios().check(productOfferReference, { force: true });
-  };
-
-  createMerchantRelationRequest = (productOfferReference: string): void => {
-    this.repository
-      .getSoldByProductOffers()
-      .children()
-      .each(($productOffer) => {
-        if ($productOffer.find('input[type="radio"]').attr('value') === productOfferReference) {
-          cy.wrap($productOffer).find(this.repository.getMerchantRelationRequestLinkAttribute()).click();
-        }
-      });
-  };
-
-  getSoldByProductOffers = (): Cypress.Chainable => {
-    return this.repository.getSoldByProductOffers();
-  };
-
-  getMerchantRelationRequestLinkAttribute = (): string => {
-    return this.repository.getMerchantRelationRequestLinkAttribute();
-  };
+interface SearchParams {
+  query: string;
 }

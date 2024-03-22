@@ -1,7 +1,7 @@
 import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-import { YvesPage } from '../yves-page';
+import { YvesPage } from '@pages/yves';
 import { CartRepository } from './cart-repository';
 
 @injectable()
@@ -11,25 +11,24 @@ export class CartPage extends YvesPage {
 
   protected PAGE_URL = '/cart';
 
-  quickAddToCart = (sku: string, quantity?: number): void => {
-    this.repository.getQuickAddToCartSkuField().clear().type(sku);
+  quickAddToCart = (params: QuickAddToCartParams): void => {
+    this.repository.getQuickAddToCartSkuField().clear().type(params.sku);
     this.repository.getQuickAddToCartProductListField().click();
 
     this.repository
       .getQuickAddToCartQuantityField()
       .clear()
-      .type(String(quantity ?? 1));
+      .type(String(params?.quantity || 1));
 
     this.repository.getQuickAddToCartSubmitButton().click();
-    cy.contains('Items added successfully').should('exist');
   };
 
   startCheckout = (): void => {
     this.repository.getCheckoutButton().click();
   };
 
-  removeProduct = (sku: string): void => {
-    const form = this.repository.findCartItemRemovalForm(sku);
+  removeProduct = (params: RemoveProductParams): void => {
+    const form = this.repository.findCartItemRemovalForm(params.sku);
 
     if (!form) {
       return;
@@ -38,15 +37,15 @@ export class CartPage extends YvesPage {
     form.submit();
   };
 
-  changeQuantity = (sku: string, newQuantity: number): void => {
-    const form = this.repository.findCartItemChangeQuantityForm(sku);
-    const input = this.repository.getCartItemChangeQuantityField(sku);
+  changeQuantity = (params: ChangeQuantityParams): void => {
+    const form = this.repository.findCartItemChangeQuantityForm(params.sku);
+    const input = this.repository.getCartItemChangeQuantityField(params.sku);
 
     if (!form || !input) {
       return;
     }
 
-    input.type('{selectall}').type(String(newQuantity));
+    input.type('{selectall}').type(String(params.quantity));
     form.submit();
   };
 
@@ -57,4 +56,18 @@ export class CartPage extends YvesPage {
       form.submit();
     }
   };
+}
+
+interface QuickAddToCartParams {
+  sku: string;
+  quantity?: number;
+}
+
+interface RemoveProductParams {
+  sku: string;
+}
+
+interface ChangeQuantityParams {
+  sku: string;
+  quantity: number;
 }

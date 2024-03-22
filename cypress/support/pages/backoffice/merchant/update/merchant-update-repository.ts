@@ -5,7 +5,7 @@ import { injectable } from 'inversify';
 @autoWired
 export class MerchantUpdateRepository {
   getUsersTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-merchant-user"]');
-  getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1)');
+  getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1):visible');
   getSearchSelector = (): string => '.dataTables_filter input[type="search"]';
   getAddMerchantUserButton = (): Cypress.Chainable => cy.get('body').find('a:contains("Add Merchant User")');
 }

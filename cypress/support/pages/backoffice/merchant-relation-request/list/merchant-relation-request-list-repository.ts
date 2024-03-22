@@ -3,7 +3,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 @autoWired
-export class MerchantRelationRequestGuiListRepository {
+export class MerchantRelationRequestListRepository {
   getFilterMerchantSelect = (): Cypress.Chainable => cy.get('#idMerchant');
   getFilterCompanySelect = (): Cypress.Chainable => cy.get('#idCompany');
   getEditButtons = (): Cypress.Chainable => cy.get('.btn-edit');

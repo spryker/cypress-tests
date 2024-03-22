@@ -1,7 +1,7 @@
 import { container } from '@utils';
-import { MerchantUserLoginScenario } from '../../../support/scenarios/mp';
-import { RequestManagementDynamicFixtures, RequestManagementStaticFixtures } from '../../../support/types/mp';
-import { MerchantRelationRequestsPage, MerchantRelationsPage } from '../../../support/pages/mp';
+import { RequestManagementDynamicFixtures, RequestManagementStaticFixtures } from '@interfaces/mp';
+import { MerchantRelationRequestsPage, MerchantRelationsPage } from '@pages/mp';
+import { MerchantUserLoginScenario } from '@scenarios/mp';
 
 /**
  * Merchant Relation Requests & Enhanced Merchant Relations checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4105896492/Business+Journey+B2B+Marketplace+-+to+automate}
@@ -25,7 +25,7 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     });
 
     merchantRelationRequestsPage.visit();
-    merchantRelationRequestsPage.findRequest(dynamicFixtures.businessUnit1FromCompany1.name).should('exist');
+    merchantRelationRequestsPage.find({ query: dynamicFixtures.businessUnit1FromCompany1.name }).should('exist');
 
     merchantUserLoginScenario.execute({
       username: dynamicFixtures.merchantUser2FromMerchant1.username,
@@ -33,7 +33,7 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     });
 
     merchantRelationRequestsPage.visit();
-    merchantRelationRequestsPage.findRequest(dynamicFixtures.businessUnit1FromCompany1.name).should('exist');
+    merchantRelationRequestsPage.find({ query: dynamicFixtures.businessUnit1FromCompany1.name }).should('exist');
   });
 
   it('merchant user should be able to left internal comments', (): void => {
@@ -43,9 +43,9 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     });
 
     merchantRelationRequestsPage.visit();
-    merchantRelationRequestsPage.findRequest(dynamicFixtures.businessUnit1FromCompany1.name).click();
+    merchantRelationRequestsPage.find({ query: dynamicFixtures.businessUnit1FromCompany1.name }).click();
     merchantRelationRequestsPage.getDrawer();
-    merchantRelationRequestsPage.addInternalComment(staticFixtures.internalComment);
+    merchantRelationRequestsPage.addInternalComment({ comment: staticFixtures.internalComment });
 
     merchantUserLoginScenario.execute({
       username: dynamicFixtures.merchantUser2FromMerchant1.username,
@@ -53,7 +53,7 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     });
 
     merchantRelationRequestsPage.visit();
-    merchantRelationRequestsPage.findRequest(dynamicFixtures.businessUnit1FromCompany1.name).click();
+    merchantRelationRequestsPage.find({ query: dynamicFixtures.businessUnit1FromCompany1.name }).click();
     merchantRelationRequestsPage.getDrawer().contains(staticFixtures.internalComment);
   });
 
@@ -64,17 +64,17 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     });
 
     merchantRelationRequestsPage.visit();
-    merchantRelationRequestsPage.findRequest(dynamicFixtures.businessUnit2FromCompany1.name).click();
+    merchantRelationRequestsPage.find({ query: dynamicFixtures.businessUnit2FromCompany1.name }).click();
     merchantRelationRequestsPage.getDrawer();
-    merchantRelationRequestsPage.addInternalComment(staticFixtures.internalComment);
-    merchantRelationRequestsPage.approveRequest(true);
+    merchantRelationRequestsPage.addInternalComment({ comment: staticFixtures.internalComment });
+    merchantRelationRequestsPage.approve({ isSplitEnabled: true });
 
     merchantRelationsPage.visit();
-    merchantRelationsPage.findRelation(dynamicFixtures.businessUnit6FromCompany1.name).click();
+    merchantRelationsPage.find({ query: dynamicFixtures.businessUnit6FromCompany1.name }).click();
     merchantRelationsPage.getDrawer().contains(staticFixtures.internalComment);
 
     merchantRelationsPage.visit();
-    merchantRelationsPage.findRelation(dynamicFixtures.businessUnit7FromCompany1.name).click();
+    merchantRelationsPage.find({ query: dynamicFixtures.businessUnit7FromCompany1.name }).click();
     merchantRelationsPage.getDrawer().contains(staticFixtures.internalComment);
   });
 
@@ -85,12 +85,12 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     });
 
     merchantRelationRequestsPage.visit();
-    merchantRelationRequestsPage.findRequest(dynamicFixtures.businessUnit1FromCompany1.name).click();
+    merchantRelationRequestsPage.find({ query: dynamicFixtures.businessUnit1FromCompany1.name }).click();
     merchantRelationRequestsPage.getDrawer();
-    merchantRelationRequestsPage.rejectRequest();
+    merchantRelationRequestsPage.reject();
 
     merchantRelationRequestsPage.visit();
-    merchantRelationRequestsPage.findRequest(dynamicFixtures.businessUnit1FromCompany1.name).click();
+    merchantRelationRequestsPage.find({ query: dynamicFixtures.businessUnit1FromCompany1.name }).click();
     merchantRelationRequestsPage.getDrawer().contains('Rejected');
   });
 
@@ -101,17 +101,19 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     });
 
     merchantRelationRequestsPage.visit();
-    merchantRelationRequestsPage.findRequest(dynamicFixtures.businessUnit2FromCompany1.name).click();
+    merchantRelationRequestsPage.find({ query: dynamicFixtures.businessUnit2FromCompany1.name }).click();
     merchantRelationRequestsPage.getDrawer();
 
-    merchantRelationRequestsPage.uncheckBusinessUnits([
-      dynamicFixtures.businessUnit6FromCompany1.id_company_business_unit,
-      dynamicFixtures.businessUnit7FromCompany1.id_company_business_unit,
-    ]);
-    merchantRelationRequestsPage.approveRequest(false);
+    merchantRelationRequestsPage.uncheckBusinessUnits({
+      businessUnitIds: [
+        dynamicFixtures.businessUnit6FromCompany1.id_company_business_unit,
+        dynamicFixtures.businessUnit7FromCompany1.id_company_business_unit,
+      ],
+    });
+    merchantRelationRequestsPage.approve();
 
     merchantRelationRequestsPage.visit();
-    merchantRelationRequestsPage.findRequest(dynamicFixtures.businessUnit2FromCompany1.name).click();
+    merchantRelationRequestsPage.find({ query: dynamicFixtures.businessUnit2FromCompany1.name }).click();
     merchantRelationRequestsPage.getDrawer().contains('Pending');
   });
 
@@ -122,17 +124,17 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     });
 
     merchantRelationRequestsPage.visit();
-    merchantRelationRequestsPage.findRequest(dynamicFixtures.businessUnit2FromCompany1.name).click();
+    merchantRelationRequestsPage.find({ query: dynamicFixtures.businessUnit2FromCompany1.name }).click();
 
     merchantRelationRequestsPage.getDrawer();
-    merchantRelationRequestsPage.uncheckBusinessUnits([
-      dynamicFixtures.businessUnit6FromCompany1.id_company_business_unit,
-    ]);
-    merchantRelationRequestsPage.approveRequest(false);
+    merchantRelationRequestsPage.uncheckBusinessUnits({
+      businessUnitIds: [dynamicFixtures.businessUnit6FromCompany1.id_company_business_unit],
+    });
+    merchantRelationRequestsPage.approve();
 
     merchantRelationsPage.visit();
-    merchantRelationsPage.findRelation(dynamicFixtures.businessUnit6FromCompany1.name, 0);
-    merchantRelationsPage.findRelation(dynamicFixtures.businessUnit7FromCompany1.name).click();
+    merchantRelationsPage.find({ query: dynamicFixtures.businessUnit6FromCompany1.name, expectedCount: 0 });
+    merchantRelationsPage.find({ query: dynamicFixtures.businessUnit7FromCompany1.name }).click();
     merchantRelationsPage.getDrawer().contains(dynamicFixtures.businessUnit7FromCompany1.name);
   });
 });

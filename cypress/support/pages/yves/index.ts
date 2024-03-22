@@ -1,3 +1,4 @@
+export * from './yves-page';
 export * from './cart/cart-page';
 export * from './agent-login/agent-login-page';
 export * from './checkout/address/checkout-address-page';
@@ -14,3 +15,4 @@ export * from './company/merchant-relation-request/create/merchant-relation-requ
 export * from './company/merchant-relation-request/details/merchant-relation-request-details-page';
 export * from './company/merchant-relation-request/index/merchant-relation-request-index-page';
 export * from './merchant/merchant-page';
+export * from './product/product-page';

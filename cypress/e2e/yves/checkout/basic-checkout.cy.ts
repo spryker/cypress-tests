@@ -1,7 +1,7 @@
+import { container } from '@utils';
 import { CheckoutStaticFixtures, BasicCheckoutDynamicFixtures } from '@interfaces/yves';
 import { CartPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
-import { container } from '@utils';
 
 describe('basic checkout', { tags: ['@checkout'] }, (): void => {
   const cartPage = container.get(CartPage);
@@ -17,20 +17,18 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
 
   it('guest customer should checkout to single shipment', (): void => {
     cartPage.visit();
-    cartPage.quickAddToCart(dynamicFixtures.product1.sku, 1);
-    cartPage.quickAddToCart(dynamicFixtures.product2.sku, 1);
+    cartPage.quickAddToCart({ sku: dynamicFixtures.product1.sku, quantity: 1 });
+    cartPage.quickAddToCart({ sku: dynamicFixtures.product2.sku, quantity: 1 });
 
-    checkoutScenario.execute({
-      isGuest: true,
-    });
+    checkoutScenario.execute({ isGuest: true });
 
     cy.contains('Your order has been placed successfully!');
   });
 
   it('guest customer should checkout to multi shipment address', { tags: ['@smoke'] }, (): void => {
     cartPage.visit();
-    cartPage.quickAddToCart(dynamicFixtures.product1.sku, 1);
-    cartPage.quickAddToCart(dynamicFixtures.product2.sku, 1);
+    cartPage.quickAddToCart({ sku: dynamicFixtures.product1.sku, quantity: 1 });
+    cartPage.quickAddToCart({ sku: dynamicFixtures.product2.sku, quantity: 1 });
 
     checkoutScenario.execute({
       isGuest: true,
@@ -46,11 +44,7 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
       password: staticFixtures.defaultPassword,
     });
 
-    checkoutScenario.execute({
-      isGuest: false,
-      isMultiShipment: false,
-      idCustomerAddress: dynamicFixtures.address.id_customer_address,
-    });
+    checkoutScenario.execute({ idCustomerAddress: dynamicFixtures.address.id_customer_address });
 
     cy.contains('Your order has been placed successfully!');
   });
@@ -61,10 +55,7 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
       password: staticFixtures.defaultPassword,
     });
 
-    checkoutScenario.execute({
-      isGuest: false,
-      isMultiShipment: false,
-    });
+    checkoutScenario.execute();
 
     cy.contains('Your order has been placed successfully!');
   });
@@ -79,7 +70,6 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
       });
 
       checkoutScenario.execute({
-        isGuest: false,
         isMultiShipment: true,
         idCustomerAddress: dynamicFixtures.address.id_customer_address,
       });
@@ -97,10 +87,7 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
         password: staticFixtures.defaultPassword,
       });
 
-      checkoutScenario.execute({
-        isGuest: false,
-        isMultiShipment: true,
-      });
+      checkoutScenario.execute({ isMultiShipment: true });
 
       cy.contains('Your order has been placed successfully!');
     }

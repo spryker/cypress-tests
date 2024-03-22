@@ -1,3 +1,4 @@
+export * from './mp-page';
 export * from './agent-dashboard/agent-dashboard-page';
 export * from './agent-login/agent-login-page';
 export * from './dashboard/dashboard-page';

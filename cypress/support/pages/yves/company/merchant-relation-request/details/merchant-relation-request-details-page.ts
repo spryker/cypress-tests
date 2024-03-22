@@ -1,6 +1,6 @@
 import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { YvesPage } from '../../../yves-page';
+import { YvesPage } from '@pages/yves';
 import { MerchantRelationRequestDetailsRepository } from './merchant-relation-request-details-repository';
 
 @injectable()
