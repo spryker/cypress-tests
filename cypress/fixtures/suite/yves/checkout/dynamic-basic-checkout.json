@@ -8,7 +8,7 @@
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
-          "arguments": { "id_store": 1 }
+          "arguments": { "id_store": 1, "name": "DE" }
         },
         {
           "type": "transfer",
@@ -127,6 +127,7 @@
           "key": "quote1",
           "arguments": [
             {
+              "store": { "idStore": "#store.id_store", "name": "#store.name" },
               "customer": "#customer",
               "items": [
                 {
@@ -153,6 +154,7 @@
           "key": "quote2",
           "arguments": [
             {
+              "store": { "idStore": "#store.id_store", "name": "#store.name" },
               "customer": "#customer",
               "items": [
                 {
@@ -179,6 +181,7 @@
           "key": "quote3",
           "arguments": [
             {
+              "store": { "idStore": "#store.id_store", "name": "#store.name" },
               "customer": "#customer",
               "items": [
                 {
@@ -205,6 +208,7 @@
           "key": "quote4",
           "arguments": [
             {
+              "store": { "idStore": "#store.id_store", "name": "#store.name" },
               "customer": "#customer",
               "items": [
                 {
