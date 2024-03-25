@@ -15,11 +15,11 @@
     "prettier:check": "prettier . --check",
     "prettier:write": "prettier . --write",
     "cy:open": "cypress open",
-    "cy:run": "cypress run --headless --browser electron",
-    "cy:yves": "cypress run --spec cypress/e2e/yves/* --headless --browser electron",
-    "cy:backoffice": "cypress run --spec cypress/e2e/backoffice/* --headless --browser electron",
-    "cy:mp": "cypress run --spec cypress/e2e/mp/* --headless --browser electron",
-    "cy:feature:comments": "cypress run --env grepTags=@comments --headless --browser electron"
+    "cy:run": "cypress run --headless --browser chrome",
+    "cy:yves": "cypress run --spec cypress/e2e/yves/* --headless --browser chrome",
+    "cy:backoffice": "cypress run --spec cypress/e2e/backoffice/* --headless --browser chrome",
+    "cy:mp": "cypress run --spec cypress/e2e/mp/* --headless --browser chrome",
+    "cy:feature:comments": "cypress run --env grepTags=@comments --headless --browser chrome"
   },
   "engines": {
     "node": ">=18.0.0",
