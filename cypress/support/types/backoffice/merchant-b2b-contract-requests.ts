@@ -46,4 +46,5 @@ export interface RequestManagementStaticFixtures {
   internalCommentFromMerchantUser1: string;
   internalCommentFromMerchantUser2: string;
   internalCommentFromRootUser: string;
+  internalCommentFromRootUserWithEmoji: string;
 }

@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { MerchantB2bContractRequestsStaticFixtures, RequestManagementDynamicFixtures } from '@interfaces/yves';
+import { RequestManagementDynamicFixtures, RequestManagementStaticFixtures } from '@interfaces/yves';
 import {
   CompanyUserSelectPage,
   MerchantRelationRequestDetailsPage,
@@ -17,7 +17,7 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
   const customerLoginScenario = container.get(CustomerLoginScenario);
 
   let dynamicFixtures: RequestManagementDynamicFixtures;
-  let staticFixtures: MerchantB2bContractRequestsStaticFixtures;
+  let staticFixtures: RequestManagementStaticFixtures;
 
   before((): void => {
     ({ dynamicFixtures, staticFixtures } = Cypress.env());
@@ -29,6 +29,18 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
       password: staticFixtures.defaultPassword,
     });
     companyUserSelectPage.visit();
+  });
+
+  it('company user should be able to see decision note from rejected request', (): void => {
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser1FromCompany1.id_company_user,
+    });
+
+    merchantRelationRequestIndexPage.visit();
+    merchantRelationRequestIndexPage.filterRequests({ status: 'rejected' });
+    merchantRelationRequestIndexPage.openFirstRequest();
+
+    cy.contains(staticFixtures.decisionNote);
   });
 
   it('company user should be able to filter MR requests by status', (): void => {

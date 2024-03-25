@@ -19,4 +19,5 @@ export class MerchantRelationRequestsRepository {
     cy.get('[ng-reflect-ng-class="ant-modal--confirmation"]').find('button:contains("Confirm approval")');
   getRejectionModalConfirmButton = (): Cypress.Chainable =>
     cy.get('[ng-reflect-ng-class="ant-modal--confirmation"]').find('button:contains("Confirm reject")');
+  getMessageFromCompanyValue = (): Cypress.Chainable<string> => cy.get('[spy-id="requestNote"]').invoke('val');
 }

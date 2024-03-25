@@ -59,6 +59,10 @@ export class MerchantRelationRequestsPage extends MpPage {
         }
       });
   };
+
+  getMessageFromCompanyValue = (): Cypress.Chainable => {
+    return this.repository.getMessageFromCompanyValue();
+  };
 }
 
 interface FindParams {

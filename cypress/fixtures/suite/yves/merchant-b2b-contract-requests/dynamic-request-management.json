@@ -468,7 +468,8 @@
               "merchant": "#merchant1",
               "companyUser": "#companyUser1FromCompany1",
               "ownerCompanyBusinessUnit": "#businessUnit1FromCompany1",
-              "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany1"
+              "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany1",
+              "decisionNote": "Rejected due to some reason"
             }
           ]
         },

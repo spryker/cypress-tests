@@ -97,6 +97,11 @@ export interface Dummy {
   companyUser1FromCompany2: CompanyUser;
 }
 
+export interface RequestManagementStaticFixtures {
+  defaultPassword: string;
+  decisionNote: string;
+}
+
 export interface MerchantB2bContractRequestsStaticFixtures {
   defaultPassword: string;
 }

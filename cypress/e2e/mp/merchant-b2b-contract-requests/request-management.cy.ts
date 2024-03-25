@@ -18,7 +18,20 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     ({ dynamicFixtures, staticFixtures } = Cypress.env());
   });
 
-  it('all merchant user should be able see merchant relation requests', (): void => {
+  it('merchant user should be able to see request note from company user', (): void => {
+    merchantUserLoginScenario.execute({
+      username: dynamicFixtures.merchantUserFromMerchant2.username,
+      password: staticFixtures.defaultPassword,
+    });
+
+    merchantRelationRequestsPage.visit();
+    merchantRelationRequestsPage.find({ query: dynamicFixtures.businessUnit1FromCompany1.name }).click();
+    merchantRelationRequestsPage.getDrawer();
+
+    merchantRelationRequestsPage.getMessageFromCompanyValue().should('eq', staticFixtures.requestNote);
+  });
+
+  it('all merchant users should be able see merchant relation requests', (): void => {
     merchantUserLoginScenario.execute({
       username: dynamicFixtures.merchantUser1FromMerchant1.username,
       password: staticFixtures.defaultPassword,

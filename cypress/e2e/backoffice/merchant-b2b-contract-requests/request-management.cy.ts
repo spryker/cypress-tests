@@ -74,6 +74,26 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     cy.contains(staticFixtures.internalCommentFromRootUser);
   });
 
+  it.skip('operator should be able to add internal comment with emoji', (): void => {
+    merchantRelationRequestListPage.visit();
+    merchantRelationRequestListPage.update({
+      action: ActionEnum.edit,
+      idMerchant: dynamicFixtures.merchant1.id_merchant,
+    });
+
+    merchantRelationRequestEditPage.addInternalComment({
+      comment: staticFixtures.internalCommentFromRootUserWithEmoji,
+    });
+
+    merchantRelationRequestListPage.visit();
+    merchantRelationRequestListPage.update({
+      action: ActionEnum.edit,
+      idMerchant: dynamicFixtures.merchant1.id_merchant,
+    });
+
+    cy.contains(staticFixtures.internalCommentFromRootUserWithEmoji);
+  });
+
   it('operator should be able to reject request', (): void => {
     merchantRelationRequestListPage.visit();
     merchantRelationRequestListPage.update({

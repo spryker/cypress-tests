@@ -1,4 +1,5 @@
 {
   "defaultPassword": "change123",
-  "internalComment": "This is dummy company user data, please replace with real data."
+  "internalComment": "This is dummy company user data, please replace with real data.",
+  "requestNote": "This is request note from company user."
 }

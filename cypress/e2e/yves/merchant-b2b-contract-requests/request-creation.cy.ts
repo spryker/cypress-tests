@@ -69,7 +69,7 @@ describe('request creation', { tags: ['@merchant-b2b-contract-requests'] }, (): 
     merchantPage.sendMerchantRelationRequest();
 
     merchantRelationRequestCreatePage.create({
-      merchantReference: dynamicFixtures.merchant1.merchant_reference,
+      // merchantReference: dynamicFixtures.merchant1.merchant_reference,
       ownerBusinessUnitId: dynamicFixtures.businessUnit2FromCompany1.id_company_business_unit,
       businessUnitIds: [],
     });

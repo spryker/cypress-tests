@@ -58,4 +58,5 @@ export interface RequestManagementDynamicFixtures {
 export interface RequestManagementStaticFixtures {
   defaultPassword: string;
   internalComment: string;
+  requestNote: string;
 }

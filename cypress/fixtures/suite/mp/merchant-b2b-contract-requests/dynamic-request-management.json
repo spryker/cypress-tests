@@ -570,7 +570,8 @@
               "merchant": "#merchant2",
               "companyUser": "#companyUser1FromCompany1",
               "ownerCompanyBusinessUnit": "#businessUnit1FromCompany1",
-              "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany1"
+              "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany1",
+              "requestNote": "This is request note from company user."
             }
           ]
         },
