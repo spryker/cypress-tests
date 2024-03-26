@@ -74,7 +74,7 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     cy.contains(staticFixtures.internalCommentFromRootUser);
   });
 
-  it.skip('operator should be able to add internal comment with emoji', (): void => {
+  it('operator should be able to add internal comment with emoji', (): void => {
     merchantRelationRequestListPage.visit();
     merchantRelationRequestListPage.update({
       action: ActionEnum.edit,
