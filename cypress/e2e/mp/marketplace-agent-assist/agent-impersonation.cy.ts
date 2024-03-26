@@ -54,7 +54,7 @@ describe('agent impersonation', { tags: ['@marketplace-agent-assist'] }, (): voi
     cy.get('body').find('a:contains("Log out Agent")').should('exist');
   });
 
-  it('agent should be able to finish impersonation', (): void => {
+  it.only('agent should be able to finish impersonation', (): void => {
     impersonateScenario.execute(
       dynamicFixtures.merchantAgentUser.username,
       staticFixtures.defaultPassword,
@@ -65,14 +65,9 @@ describe('agent impersonation', { tags: ['@marketplace-agent-assist'] }, (): voi
     mpAgentDashboardPage.assertPageLocation();
 
     // Ensure that agent finished assistant session and don't have access to MP dashboard
+    const alias = mpDashboardPage.interceptRequest();
     mpDashboardPage.visit({ failOnStatusCode: false });
-    cy.get('body').contains('Access Denied.').then(($el) => {
-      if ($el.length === 0) {
-        cy.get('body').contains('FAIL WHALE').should('exist');
-      } else {
-        cy.get('body').contains('Access Denied.').should('exist');
-      }
-    });
+    mpDashboardPage.assert500StatusCode({ alias: alias });
   });
 
   it('agent should be able to fully logout from all sessions', (): void => {

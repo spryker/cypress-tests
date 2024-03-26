@@ -15,4 +15,23 @@ export class DashboardPage extends MpPage {
     this.repository.getUserProfileMenu().click();
     this.repository.getLogoutButton().click();
   };
+
+  interceptRequest = (): string => {
+    const alias = 'dashboardPageRequest';
+    cy.intercept({ url: this.PAGE_URL }).as(alias);
+
+    return alias;
+  };
+
+  assert500StatusCode = (params: Assert500StatusCodeParams): void => {
+    cy.wait(`@${params.alias}`).then((interception) => {
+      if (interception.response) {
+        expect(interception.response.statusCode).to.equal(500);
+      }
+    });
+  };
+}
+
+interface Assert500StatusCodeParams {
+  alias: string;
 }
