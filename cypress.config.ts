@@ -33,11 +33,11 @@ export default defineConfig({
           return existsSync(filename);
         },
       });
-    }
-    // retries: {
-    //   runMode: 2,
-    //   openMode: 0,
-    // },
+    },
+    retries: {
+      runMode: 2,
+      openMode: 0,
+    },
   },
   viewportWidth: parseInt(process.env.VIEWPORT_WIDGTH ?? '1000', 10),
   viewportHeight: parseInt(process.env.VIEWPORT_HEIGHT ?? '660', 10),

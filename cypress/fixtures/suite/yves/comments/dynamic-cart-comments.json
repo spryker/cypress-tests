@@ -26,7 +26,7 @@
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
-          "arguments": { "id_store": 1, "name": "DE" }
+          "arguments": { "id_store": 1 }
         },
         {
           "type": "helper",
@@ -109,7 +109,6 @@
           "key": "quote",
           "arguments": [
             {
-              "store": { "idStore": "#store.id_store", "name": "#store.name" },
               "customer": "#customer",
               "items": [
                 {
