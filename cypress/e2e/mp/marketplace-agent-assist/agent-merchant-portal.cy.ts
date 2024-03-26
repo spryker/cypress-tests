@@ -30,7 +30,7 @@ describe('agent merchant portal', { tags: ['@marketplace-agent-assist'] }, (): v
     ({ dynamicFixtures, staticFixtures } = Cypress.env());
   });
 
-  it.only('agent should be able to change order status during impersonation', (): void => {
+  it('agent should be able to change order status during impersonation', (): void => {
     customerLoginScenario.execute({ email: dynamicFixtures.customer.email, password: staticFixtures.defaultPassword });
 
     cartPage.visit();
