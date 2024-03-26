@@ -93,7 +93,6 @@
           "arguments": [
             {
               "customer": "#customer",
-              "store": [{ "idStore": "#store.id_store", "name": "#store.name" }],
               "items": [
                 {
                   "sku": "#product.sku",
