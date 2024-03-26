@@ -54,7 +54,7 @@ describe('agent impersonation', { tags: ['@marketplace-agent-assist'] }, (): voi
     cy.get('body').find('a:contains("Log out Agent")').should('exist');
   });
 
-  it.only('agent should be able to finish impersonation', (): void => {
+  it('agent should be able to finish impersonation', (): void => {
     impersonateScenario.execute(
       dynamicFixtures.merchantAgentUser.username,
       staticFixtures.defaultPassword,
