@@ -82,7 +82,7 @@ describe('agent merchant portal', { tags: ['@marketplace-agent-assist'] }, (): v
     });
 
     productsPage.visit();
-    productsPage.find({ query: dynamicFixtures.productConcreteForMerchant.abstract_sku }).click();
+    productsPage.find({ query: dynamicFixtures.productConcreteForMerchant.abstract_sku }).click({ force: true });
     productsPage.getDrawer().find(productsPage.getSaveButtonSelector()).click();
 
     cy.get('body').contains('The Product is saved.');
@@ -96,7 +96,7 @@ describe('agent merchant portal', { tags: ['@marketplace-agent-assist'] }, (): v
     });
 
     offersPage.visit();
-    offersPage.find({ query: dynamicFixtures.productOffer.product_offer_reference }).click();
+    offersPage.find({ query: dynamicFixtures.productOffer.product_offer_reference }).click({ force: true });
     offersPage.getDrawer().find(offersPage.getSaveButtonSelector()).click();
 
     cy.get('body').contains('The Offer is saved.');

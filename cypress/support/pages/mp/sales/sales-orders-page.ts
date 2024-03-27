@@ -25,7 +25,7 @@ export class SalesOrdersPage extends MpPage {
   };
 
   cancel = (params: CancelParams): void => {
-    this.find({ query: params.query }).click();
+    this.find({ query: params.query }).click({ force: true });
     this.repository.getDrawer().find(this.repository.getCancelButtonSelector()).click();
   };
 }

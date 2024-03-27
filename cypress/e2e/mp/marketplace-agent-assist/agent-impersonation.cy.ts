@@ -55,8 +55,9 @@ describe('agent impersonation', { tags: ['@marketplace-agent-assist'] }, (): voi
     mpAgentDashboardPage.assertPageLocation();
 
     // Ensure that agent finished assistant session and don't have access to MP dashboard
+    const alias = mpDashboardPage.interceptRequest();
     mpDashboardPage.visit({ failOnStatusCode: false });
-    cy.get('body').contains('Access Denied.');
+    mpDashboardPage.assert500StatusCode({ alias: alias });
   });
 
   it('agent should be able to fully logout from all sessions', (): void => {
