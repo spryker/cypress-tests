@@ -7,10 +7,15 @@ import { inject, injectable } from 'inversify';
 export class MerchantUserLoginScenario {
   @inject(LoginPage) private loginPage: LoginPage;
 
-  execute = (username: string, password: string): void => {
-    cy.session([username, password], () => {
+  execute = (params: ExecuteParams): void => {
+    cy.session([params.username, params.password], () => {
       this.loginPage.visit();
-      this.loginPage.login(username, password);
+      this.loginPage.login(params);
     });
   };
+}
+
+interface ExecuteParams {
+  username: string;
+  password: string;
 }

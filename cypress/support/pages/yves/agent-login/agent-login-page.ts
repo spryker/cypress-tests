@@ -1,7 +1,7 @@
 import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-import { YvesPage } from '../yves-page';
+import { YvesPage } from '@pages/yves';
 import { AgentLoginRepository } from './agent-login-repository';
 
 @injectable()
@@ -11,9 +11,9 @@ export class AgentLoginPage extends YvesPage {
 
   protected PAGE_URL = '/agent/login';
 
-  login = (username: string, password: string): void => {
-    this.repository.getLoginEmailInput().clear().type(username);
-    this.repository.getLoginPasswordInput().clear().type(password);
+  login = (params: LoginParams): void => {
+    this.repository.getLoginEmailInput().clear().type(params.username);
+    this.repository.getLoginPasswordInput().clear().type(params.password);
 
     this.repository.getLoginForm().submit();
   };
@@ -21,4 +21,9 @@ export class AgentLoginPage extends YvesPage {
   getFailedAuthenticationText = (): string => {
     return this.repository.getFailedAuthenticationText();
   };
+}
+
+interface LoginParams {
+  username: string;
+  password: string;
 }

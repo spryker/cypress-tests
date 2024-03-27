@@ -1,7 +1,7 @@
 import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-import { YvesPage } from '../yves-page';
+import { YvesPage } from '@pages/yves';
 import { MultiCartRepository } from './multi-cart-repository';
 
 @injectable()
@@ -11,9 +11,9 @@ export class MultiCartPage extends YvesPage {
 
   protected PAGE_URL = '/multi-cart';
 
-  createCart = (name?: string): void => {
+  createCart = (params?: CreateCartParams): void => {
     cy.visit(`${this.PAGE_URL}/create`);
-    const cartName = name ?? `Cart #${this.faker.string.uuid()}`;
+    const cartName = params?.name ?? `Cart #${this.faker.string.uuid()}`;
 
     this.repository.getCreateCartNameInput().clear().type(cartName);
     this.repository.getCreateCartForm().submit();
@@ -21,7 +21,15 @@ export class MultiCartPage extends YvesPage {
     cy.contains(`Cart '${cartName}' was created successfully`).should('exist');
   };
 
-  selectCart = (name: string): void => {
-    this.repository.getQuoteTable().contains(name).click();
+  selectCart = (params: SelectCartParams): void => {
+    this.repository.getQuoteTable().contains(params.name).click();
   };
+}
+
+interface CreateCartParams {
+  name?: string;
+}
+
+interface SelectCartParams {
+  name: string;
 }

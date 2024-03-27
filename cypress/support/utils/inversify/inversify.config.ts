@@ -17,6 +17,13 @@ import { B2bLoginRepository } from '../../pages/yves/login/repositories/b2b-logi
 import { SuiteLoginRepository } from '../../pages/yves/login/repositories/suite-login-repository';
 import { B2bMultiCartRepository } from '../../pages/yves/multi-cart/repositories/b2b-multi-cart-repository';
 import { SuiteMultiCartRepository } from '../../pages/yves/multi-cart/repositories/suite-multi-cart-repository';
+import { SuiteCatalogRepository } from '../../pages/yves/catalog/repositories/suite-catalog-repository';
+import { SuiteCompanyUserSelectRepository } from '../../pages/yves/company/user/select/repositories/suite-company-user-select-repository';
+import { SuiteMerchantRelationRequestCreateRepository } from '../../pages/yves/company/merchant-relation-request/create/repositories/suite-merchant-relation-request-create-repository';
+import { SuiteMerchantRelationRequestDetailsRepository } from '../../pages/yves/company/merchant-relation-request/details/repositories/suite-merchant-relation-request-details-repository';
+import { SuiteMerchantRepository } from '../../pages/yves/merchant/repositories/suite-merchant-repository';
+import { SuiteMerchantRelationRequestIndexRepository } from '../../pages/yves/company/merchant-relation-request/index/repositories/suite-merchant-relation-request-index-repository';
+import { SuiteProductRepository } from '../../pages/yves/product/repositories/suite-product-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -31,6 +38,13 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.CheckoutPaymentRepository]: SuiteCheckoutPaymentRepository,
   [REPOSITORIES.CheckoutSummaryRepository]: SuiteCheckoutSummaryRepository,
   [REPOSITORIES.AgentLoginRepository]: SuiteAgentLoginRepository,
+  [REPOSITORIES.CatalogRepository]: SuiteCatalogRepository,
+  [REPOSITORIES.ProductRepository]: SuiteProductRepository,
+  [REPOSITORIES.CompanyUserSelectRepository]: SuiteCompanyUserSelectRepository,
+  [REPOSITORIES.MerchantRelationRequestCreateRepository]: SuiteMerchantRelationRequestCreateRepository,
+  [REPOSITORIES.MerchantRelationRequestDetailsRepository]: SuiteMerchantRelationRequestDetailsRepository,
+  [REPOSITORIES.MerchantRelationRequestIndexRepository]: SuiteMerchantRelationRequestIndexRepository,
+  [REPOSITORIES.MerchantRepository]: SuiteMerchantRepository,
 };
 
 const b2bMappings: BindingsMap = {

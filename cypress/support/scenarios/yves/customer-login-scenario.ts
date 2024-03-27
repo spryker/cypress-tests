@@ -2,22 +2,20 @@ import { LoginPage } from '@pages/yves';
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-interface CustomerLoginExecuteParams {
-  email: string;
-  password: string;
-}
-
 @injectable()
 @autoWired
 export class CustomerLoginScenario {
   @inject(LoginPage) private loginPage: LoginPage;
 
-  execute = (params: CustomerLoginExecuteParams): void => {
-    const { email, password } = params;
-
-    cy.session([email, password], () => {
+  execute = (params: ExecuteParams): void => {
+    cy.session([params.email, params.password], () => {
       this.loginPage.visit();
-      this.loginPage.login(email, password);
+      this.loginPage.login(params);
     });
   };
+}
+
+interface ExecuteParams {
+  email: string;
+  password: string;
 }

@@ -1,9 +1,9 @@
+import { container } from '@utils';
 import { AgentAuthorizationDynamicFixtures, MarketplaceAgentAssistStaticFixtures } from '@interfaces/mp';
 import { IndexPage } from '@pages/backoffice';
 import { AgentLoginPage, LoginPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { MerchantAgentLoginUserScenario } from '@scenarios/mp';
-import { container } from '@utils';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
@@ -44,7 +44,10 @@ describe('agent authorization', { tags: ['@marketplace-agent-assist'] }, (): voi
 
   it('agent (merchant user) should not be able to login to storefront agent dashboard', (): void => {
     yvesAgentLoginPage.visit();
-    yvesAgentLoginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
+    yvesAgentLoginPage.login({
+      username: dynamicFixtures.merchantAgentUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     cy.contains(yvesAgentLoginPage.getFailedAuthenticationText());
     yvesAgentLoginPage.assertPageLocation();
@@ -52,7 +55,10 @@ describe('agent authorization', { tags: ['@marketplace-agent-assist'] }, (): voi
 
   it('merchant user should not be able to login to storefront agent dashboard', (): void => {
     yvesAgentLoginPage.visit();
-    yvesAgentLoginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
+    yvesAgentLoginPage.login({
+      username: dynamicFixtures.merchantUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     cy.contains(yvesAgentLoginPage.getFailedAuthenticationText());
     yvesAgentLoginPage.assertPageLocation();
@@ -60,7 +66,10 @@ describe('agent authorization', { tags: ['@marketplace-agent-assist'] }, (): voi
 
   it('agent (merchant user) should not be able to login to storefront', (): void => {
     yvesLoginPage.visit();
-    yvesLoginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
+    yvesLoginPage.login({
+      email: dynamicFixtures.merchantAgentUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     cy.contains(yvesLoginPage.getFailedAuthenticationText());
     yvesLoginPage.assertPageLocation();
@@ -68,7 +77,10 @@ describe('agent authorization', { tags: ['@marketplace-agent-assist'] }, (): voi
 
   it('agent (customer) should not be able to login to storefront', (): void => {
     yvesLoginPage.visit();
-    yvesLoginPage.login(dynamicFixtures.customerAgentUser.username, staticFixtures.defaultPassword);
+    yvesLoginPage.login({
+      email: dynamicFixtures.customerAgentUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     cy.contains(yvesLoginPage.getFailedAuthenticationText());
     yvesLoginPage.assertPageLocation();
@@ -76,7 +88,10 @@ describe('agent authorization', { tags: ['@marketplace-agent-assist'] }, (): voi
 
   it('merchant user should not be able to login to storefront', (): void => {
     yvesLoginPage.visit();
-    yvesLoginPage.login(dynamicFixtures.merchantUser.username, staticFixtures.defaultPassword);
+    yvesLoginPage.login({
+      email: dynamicFixtures.merchantUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     cy.contains(yvesLoginPage.getFailedAuthenticationText());
     yvesLoginPage.assertPageLocation();

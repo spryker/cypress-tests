@@ -4,7 +4,7 @@ import { injectable } from 'inversify';
 @injectable()
 @autoWired
 export class UserIndexRepository {
-  getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1)');
+  getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1):visible');
   getEditButtonSelector = (): string => 'a:contains("Edit")';
   getDeactivateButtonSelector = (): string => 'button:contains("Deactivate")';
   getDeleteButtonSelector = (): string => 'button:contains("Delete")';

@@ -1,7 +1,6 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-
-import { BackofficePage } from '../../backoffice-page';
+import { BackofficePage } from '@pages/backoffice';
 import { SalesIndexRepository } from './sales-index-repository';
 
 @injectable()
@@ -11,8 +10,7 @@ export class SalesIndexPage extends BackofficePage {
 
   protected PAGE_URL = '/sales';
 
-  viewLastPlacedOrder = (): void => {
-    cy.visitBackoffice(this.PAGE_URL);
+  view = (): void => {
     this.repository.getViewButtons().first().click();
   };
 }

@@ -1,7 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-import { MpPage } from '../mp-page';
+import { MpPage } from '@pages/mp';
 import { DashboardRepository } from './dashboard-repository';
 
 @injectable()

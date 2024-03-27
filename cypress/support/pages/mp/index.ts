@@ -1,3 +1,4 @@
+export * from './mp-page';
 export * from './agent-dashboard/agent-dashboard-page';
 export * from './agent-login/agent-login-page';
 export * from './dashboard/dashboard-page';
@@ -6,3 +7,5 @@ export * from './offers/offers-page';
 export * from './products/products-page';
 export * from './profile/profile-page';
 export * from './sales/sales-orders-page';
+export * from './merchant-relation-requests/merchant-relation-requests-page';
+export * from './merchant-relations/merchant-relations-page';

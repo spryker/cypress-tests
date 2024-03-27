@@ -1,8 +1,8 @@
-import { Customer, Product, Quote } from './shared';
+import { Customer, ProductConcrete, Quote } from './shared';
 
 export interface CartCommentsDynamicFixtures {
   customer: Customer;
-  product: Product;
+  product: ProductConcrete;
   quote: Quote;
   emptyQuote: Quote;
 }

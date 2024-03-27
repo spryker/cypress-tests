@@ -1,7 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-import { MpPage } from '../mp-page';
+import { MpPage } from '@pages/mp';
 import { ProductsRepository } from './products-repository';
 
 @injectable()
@@ -11,14 +11,15 @@ export class ProductsPage extends MpPage {
 
   protected PAGE_URL = '/product-merchant-portal-gui/products';
 
-  findProduct = (query: string): Cypress.Chainable => {
+  find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(query);
+    cy.get(searchSelector).type(params.query);
 
-    const interceptAlias = this.faker.string.uuid();
-    cy.intercept('GET', '/product-merchant-portal-gui/products/table-data**').as(interceptAlias);
-    cy.wait(`@${interceptAlias}`).its('response.body.total').should('eq', 1);
+    this.interceptTable({
+      url: '/product-merchant-portal-gui/products/table-data**',
+      expectedCount: params.expectedCount,
+    });
 
     return this.repository.getFirstTableRow();
   };
@@ -27,10 +28,20 @@ export class ProductsPage extends MpPage {
     const drawer = this.repository.getDrawer();
 
     // Wait for the drawer to be visible
-    const interceptAlias = this.faker.string.uuid();
-    cy.intercept('GET', '/product-merchant-portal-gui/products-concrete/table-data**').as(interceptAlias);
-    cy.wait(`@${interceptAlias}`).its('response.body.total').should('eq', 1);
+    this.interceptTable({
+      url: '/product-merchant-portal-gui/products-concrete/table-data**',
+      expectedCount: 1,
+    });
 
     return drawer;
   };
+
+  getSaveButtonSelector = (): string => {
+    return this.repository.getSaveButtonSelector();
+  };
+}
+
+interface FindParams {
+  query: string;
+  expectedCount?: number;
 }

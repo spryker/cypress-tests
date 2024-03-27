@@ -1,3 +1,4 @@
+import { container } from '@utils';
 import { AgentImpersonationDynamicFixtures, MarketplaceAgentAssistStaticFixtures } from '@interfaces/mp';
 import {
   AgentDashboardPage,
@@ -7,7 +8,6 @@ import {
 } from '@pages/mp';
 import { LoginPage } from '@pages/yves';
 import { ImpersonateAsMerchantUserScenario } from '@scenarios/mp';
-import { container } from '@utils';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
@@ -27,13 +27,15 @@ describe('agent impersonation', { tags: ['@marketplace-agent-assist'] }, (): voi
     ({ dynamicFixtures, staticFixtures } = Cypress.env());
   });
 
-  it('agent should be able to see merchant user information during impersonation', (): void => {
-    impersonateScenario.execute(
-      dynamicFixtures.merchantAgentUser.username,
-      staticFixtures.defaultPassword,
-      dynamicFixtures.merchantUser.username
-    );
+  beforeEach((): void => {
+    impersonateScenario.execute({
+      username: dynamicFixtures.merchantAgentUser.username,
+      password: staticFixtures.defaultPassword,
+      query: dynamicFixtures.merchantUser.username,
+    });
+  });
 
+  it('agent should be able to see merchant user information during impersonation', (): void => {
     mpDashboardPage.visit();
     cy.get('body').find(`div:contains("${dynamicFixtures.merchant.name}")`).should('exist');
     cy.get('body').find(`div:contains("${dynamicFixtures.merchantUser.username}")`).should('exist');
@@ -44,24 +46,12 @@ describe('agent impersonation', { tags: ['@marketplace-agent-assist'] }, (): voi
   });
 
   it('agent should be able to see agent assist buttons during impersonation', (): void => {
-    impersonateScenario.execute(
-      dynamicFixtures.merchantAgentUser.username,
-      staticFixtures.defaultPassword,
-      dynamicFixtures.merchantUser.username
-    );
-
-    cy.get('body').find('a:contains("End User Assistance")').should('exist');
-    cy.get('body').find('a:contains("Log out Agent")').should('exist');
+    cy.get('body').find(mpAgentDashboardPage.getEndUserAssistanceSelector()).should('exist');
+    cy.get('body').find(mpAgentDashboardPage.getLogoutAgentSelector()).should('exist');
   });
 
   it('agent should be able to finish impersonation', (): void => {
-    impersonateScenario.execute(
-      dynamicFixtures.merchantAgentUser.username,
-      staticFixtures.defaultPassword,
-      dynamicFixtures.merchantUser.username
-    );
-
-    cy.get('body').find('a:contains("End User Assistance")').click();
+    cy.get('body').find(mpAgentDashboardPage.getEndUserAssistanceSelector()).click();
     mpAgentDashboardPage.assertPageLocation();
 
     // Ensure that agent finished assistant session and don't have access to MP dashboard
@@ -71,13 +61,7 @@ describe('agent impersonation', { tags: ['@marketplace-agent-assist'] }, (): voi
   });
 
   it('agent should be able to fully logout from all sessions', (): void => {
-    impersonateScenario.execute(
-      dynamicFixtures.merchantAgentUser.username,
-      staticFixtures.defaultPassword,
-      dynamicFixtures.merchantUser.username
-    );
-
-    cy.get('body').find('a:contains("Log out Agent")').click();
+    cy.get('body').find(mpAgentDashboardPage.getLogoutAgentSelector()).click();
     mpAgentLoginPage.assertPageLocation();
 
     mpAgentDashboardPage.visit();
@@ -88,12 +72,6 @@ describe('agent impersonation', { tags: ['@marketplace-agent-assist'] }, (): voi
   });
 
   it('agent should be able to fully logout from user profile menu', (): void => {
-    impersonateScenario.execute(
-      dynamicFixtures.merchantAgentUser.username,
-      staticFixtures.defaultPassword,
-      dynamicFixtures.merchantUser.username
-    );
-
     mpDashboardPage.logout();
     yvesLoginPage.assertPageLocation();
   });

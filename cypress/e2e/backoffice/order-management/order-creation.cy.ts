@@ -1,9 +1,9 @@
+import { container } from '@utils';
 import { OrderCreationDynamicFixtures, OrderManagementStaticFixtures } from '@interfaces/backoffice';
 import { SalesIndexPage } from '@pages/backoffice';
 import { CartPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
-import { container } from '@utils';
 
 describe('order creation', { tags: ['@order-management'] }, (): void => {
   const cartPage = container.get(CartPage);
@@ -33,14 +33,16 @@ describe('order creation', { tags: ['@order-management'] }, (): void => {
       username: dynamicFixtures.rootUser.username,
       password: staticFixtures.defaultPassword,
     });
-    salesIndexPage.viewLastPlacedOrder();
+
+    salesIndexPage.visit();
+    salesIndexPage.view();
 
     cy.get('body').contains(dynamicFixtures.product.name);
   });
 
   it('should be able to create an order by guest', (): void => {
     cartPage.visit();
-    cartPage.quickAddToCart(dynamicFixtures.product.sku, 1);
+    cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 1 });
 
     checkoutScenario.execute({ isGuest: true });
     cy.contains('Your order has been placed successfully!');
@@ -49,7 +51,9 @@ describe('order creation', { tags: ['@order-management'] }, (): void => {
       username: dynamicFixtures.rootUser.username,
       password: staticFixtures.defaultPassword,
     });
-    salesIndexPage.viewLastPlacedOrder();
+
+    salesIndexPage.visit();
+    salesIndexPage.view();
 
     cy.get('body').contains(dynamicFixtures.product.name);
   });

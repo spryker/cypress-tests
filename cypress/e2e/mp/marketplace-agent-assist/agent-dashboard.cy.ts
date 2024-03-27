@@ -1,8 +1,7 @@
+import { container } from '@utils';
 import { AgentDashboardDynamicFixtures, MarketplaceAgentAssistStaticFixtures } from '@interfaces/mp';
 import { AgentDashboardPage, DashboardPage, AgentLoginPage as MpAgentLoginPage } from '@pages/mp';
-import { UserLoginScenario } from '@scenarios/backoffice';
 import { MerchantAgentLoginUserScenario } from '@scenarios/mp';
-import { container } from '@utils';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
@@ -11,7 +10,6 @@ describe('agent dashboard', { tags: ['@marketplace-agent-assist'] }, (): void =>
   const mpAgentLoginPage = container.get(MpAgentLoginPage);
   const mpDashboardPage = container.get(DashboardPage);
   const mpAgentDashboardPage = container.get(AgentDashboardPage);
-  const userLoginScenario = container.get(UserLoginScenario);
   const merchantAgentLoginUserScenario = container.get(MerchantAgentLoginUserScenario);
 
   let dynamicFixtures: AgentDashboardDynamicFixtures;
@@ -46,7 +44,7 @@ describe('agent dashboard', { tags: ['@marketplace-agent-assist'] }, (): void =>
     });
 
     mpAgentDashboardPage.visit();
-    mpAgentDashboardPage.findMerchantUser(dynamicFixtures.merchantUser.username).should('exist');
+    mpAgentDashboardPage.find({ query: dynamicFixtures.merchantUser.username }).should('exist');
   });
 
   it('agent should be able to filter by merchant user properties', (): void => {
@@ -56,110 +54,106 @@ describe('agent dashboard', { tags: ['@marketplace-agent-assist'] }, (): void =>
     });
 
     mpAgentDashboardPage.visit();
-    mpAgentDashboardPage.findMerchantUser(dynamicFixtures.merchant.name, 3).should('exist');
-    mpAgentDashboardPage.findMerchantUser(dynamicFixtures.merchantUser.username).should('exist');
+    mpAgentDashboardPage.find({ query: dynamicFixtures.merchant.name, expectedCount: 3 }).should('exist');
+    mpAgentDashboardPage.find({ query: dynamicFixtures.merchantUser.username }).should('exist');
   });
 
   it('agent should be able to see/assist inactive merchant user in a table', (): void => {
     mpAgentLoginPage.visit();
-    mpAgentLoginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
+    mpAgentLoginPage.login({
+      username: dynamicFixtures.merchantAgentUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     mpAgentDashboardPage.visit();
-    mpAgentDashboardPage.findMerchantUser(dynamicFixtures.deactivatedMerchantUser.username).should('exist');
+    mpAgentDashboardPage.find({ query: dynamicFixtures.deactivatedMerchantUser.username }).should('exist');
 
     mpAgentDashboardPage.visit();
-    mpAgentDashboardPage.assistMerchantUser(dynamicFixtures.deactivatedMerchantUser.username);
+    mpAgentDashboardPage.assist({ query: dynamicFixtures.deactivatedMerchantUser.username });
 
     mpDashboardPage.assertPageLocation();
   });
 
   it('agent should be able to see/assist deleted merchant user in a table', (): void => {
     mpAgentLoginPage.visit();
-    mpAgentLoginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
+    mpAgentLoginPage.login({
+      username: dynamicFixtures.merchantAgentUser.username,
+      password: staticFixtures.defaultPassword,
+    });
 
     mpAgentDashboardPage.visit();
-    mpAgentDashboardPage.findMerchantUser(dynamicFixtures.deletedMerchantUser.username).should('exist');
+    mpAgentDashboardPage.find({ query: dynamicFixtures.deletedMerchantUser.username }).should('exist');
 
     mpAgentDashboardPage.visit();
-    mpAgentDashboardPage.assistMerchantUser(dynamicFixtures.deletedMerchantUser.username);
+    mpAgentDashboardPage.assist({ query: dynamicFixtures.deletedMerchantUser.username });
 
     mpDashboardPage.assertPageLocation();
   });
 
   it('agent should be able to see/assist merchant users from active (without approved access) merchant', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
+    mpAgentLoginPage.visit();
+    mpAgentLoginPage.login({
+      username: dynamicFixtures.merchantAgentUser.username,
       password: staticFixtures.defaultPassword,
     });
 
-    mpAgentLoginPage.visit();
-    mpAgentLoginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
+    mpAgentDashboardPage.visit();
+    mpAgentDashboardPage.find({ query: dynamicFixtures.merchantUserFromActiveDeniedMerchant.username }).should('exist');
 
     mpAgentDashboardPage.visit();
-    mpAgentDashboardPage
-      .findMerchantUser(dynamicFixtures.merchantUserFromActiveDeniedMerchant.username)
-      .should('exist');
-
-    mpAgentDashboardPage.visit();
-    mpAgentDashboardPage.assistMerchantUser(dynamicFixtures.merchantUserFromActiveDeniedMerchant.username);
+    mpAgentDashboardPage.assist({ query: dynamicFixtures.merchantUserFromActiveDeniedMerchant.username });
 
     mpDashboardPage.assertPageLocation();
   });
 
   it('agent should be able to see/assist merchant users from inactive (with approved access) merchant', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
+    mpAgentLoginPage.visit();
+    mpAgentLoginPage.login({
+      username: dynamicFixtures.merchantAgentUser.username,
       password: staticFixtures.defaultPassword,
     });
 
-    mpAgentLoginPage.visit();
-    mpAgentLoginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
-
     mpAgentDashboardPage.visit();
     mpAgentDashboardPage
-      .findMerchantUser(dynamicFixtures.merchantUserFromInactiveApprovedMerchant.username)
+      .find({ query: dynamicFixtures.merchantUserFromInactiveApprovedMerchant.username })
       .should('exist');
 
     mpAgentDashboardPage.visit();
-    mpAgentDashboardPage.assistMerchantUser(dynamicFixtures.merchantUserFromInactiveApprovedMerchant.username);
+    mpAgentDashboardPage.assist({ query: dynamicFixtures.merchantUserFromInactiveApprovedMerchant.username });
 
     mpDashboardPage.assertPageLocation();
   });
 
   it('agent should be able to see/assist merchant users from inactive (without approved access) merchant', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
+    mpAgentLoginPage.visit();
+    mpAgentLoginPage.login({
+      username: dynamicFixtures.merchantAgentUser.username,
       password: staticFixtures.defaultPassword,
     });
 
-    mpAgentLoginPage.visit();
-    mpAgentLoginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
-
     mpAgentDashboardPage.visit();
     mpAgentDashboardPage
-      .findMerchantUser(dynamicFixtures.merchantUserFromInactiveDeniedMerchant.username)
+      .find({ query: dynamicFixtures.merchantUserFromInactiveDeniedMerchant.username })
       .should('exist');
 
     mpAgentDashboardPage.visit();
-    mpAgentDashboardPage.assistMerchantUser(dynamicFixtures.merchantUserFromInactiveDeniedMerchant.username);
+    mpAgentDashboardPage.assist({ query: dynamicFixtures.merchantUserFromInactiveDeniedMerchant.username });
 
     mpDashboardPage.assertPageLocation();
   });
 
   it('agent should be able to see/assist merchant users from active (with approved access) merchant', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
+    mpAgentLoginPage.visit();
+    mpAgentLoginPage.login({
+      username: dynamicFixtures.merchantAgentUser.username,
       password: staticFixtures.defaultPassword,
     });
 
-    mpAgentLoginPage.visit();
-    mpAgentLoginPage.login(dynamicFixtures.merchantAgentUser.username, staticFixtures.defaultPassword);
+    mpAgentDashboardPage.visit();
+    mpAgentDashboardPage.find({ query: dynamicFixtures.merchantUser.username }).should('exist');
 
     mpAgentDashboardPage.visit();
-    mpAgentDashboardPage.findMerchantUser(dynamicFixtures.merchantUser.username).should('exist');
-
-    mpAgentDashboardPage.visit();
-    mpAgentDashboardPage.assistMerchantUser(dynamicFixtures.merchantUser.username);
+    mpAgentDashboardPage.assist({ query: dynamicFixtures.merchantUser.username });
 
     mpDashboardPage.assertPageLocation();
   });

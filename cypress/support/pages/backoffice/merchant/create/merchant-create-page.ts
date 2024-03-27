@@ -1,14 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { BackofficePage } from '../../backoffice-page';
+import { BackofficePage } from '@pages/backoffice';
 import { MerchantCreateRepository } from './merchant-create-repository';
-
-interface Merchant {
-  name: string;
-  reference: string;
-  email: string;
-  url: string;
-}
 
 @injectable()
 @autoWired
@@ -17,7 +10,7 @@ export class MerchantCreatePage extends BackofficePage {
 
   protected PAGE_URL = '/merchant-gui/create-merchant';
 
-  createMerchant = (): Merchant => {
+  create = (): Merchant => {
     const identifier = this.faker.string.uuid();
 
     const merchant = {
@@ -35,8 +28,14 @@ export class MerchantCreatePage extends BackofficePage {
     this.repository.getENUrlInput().clear().type(merchant.url);
 
     this.repository.getSaveButton().click();
-    cy.contains('Merchant created successfully.').should('exist');
 
     return merchant;
   };
+}
+
+interface Merchant {
+  name: string;
+  reference: string;
+  email: string;
+  url: string;
 }

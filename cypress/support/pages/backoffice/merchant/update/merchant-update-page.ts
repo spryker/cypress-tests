@@ -1,7 +1,6 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-
-import { BackofficePage } from '../../backoffice-page';
+import { BackofficePage } from '@pages/backoffice';
 import { MerchantUpdateRepository } from './merchant-update-repository';
 
 @injectable()
@@ -11,20 +10,23 @@ export class MerchantUpdatePage extends BackofficePage {
 
   protected PAGE_URL = '/merchant-gui/edit-merchant';
 
-  findUser = (email: string): Cypress.Chainable => {
+  find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(email);
+    cy.get(searchSelector).type(params.query);
 
-    const interceptAlias = this.faker.string.uuid();
-    cy.intercept('GET', '/merchant-user-gui/index/table**').as(interceptAlias);
-    cy.wait(`@${interceptAlias}`).its('response.body.recordsFiltered').should('eq', 1);
+    this.interceptTable({ url: '/merchant-user-gui/index/table**', expectedCount: params.expectedCount });
 
     return this.repository.getFirstTableRow();
   };
 
-  createNewUser = (): void => {
+  create = (): void => {
     this.repository.getUsersTab().click();
     this.repository.getAddMerchantUserButton().click();
   };
+}
+
+interface FindParams {
+  query: string;
+  expectedCount?: number;
 }

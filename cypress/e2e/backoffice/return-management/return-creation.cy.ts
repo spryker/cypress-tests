@@ -1,13 +1,13 @@
+import { container } from '@utils';
 import { ReturnCreationDynamicFixtures, ReturnManagementStaticFixtures } from '@interfaces/backoffice';
-import { SalesDetailPage, SalesIndexPage, SalesReturnGuiCreatePage } from '@pages/backoffice';
+import { SalesDetailPage, SalesIndexPage, SalesReturnCreatePage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
-import { container } from '@utils';
 
 describe('return creation', { tags: ['@return-management'] }, (): void => {
   const salesIndexPage = container.get(SalesIndexPage);
   const salesDetailPage = container.get(SalesDetailPage);
-  const salesReturnGuiCreatePage = container.get(SalesReturnGuiCreatePage);
+  const salesReturnCreatePage = container.get(SalesReturnCreatePage);
   const customerLoginScenario = container.get(CustomerLoginScenario);
   const userLoginScenario = container.get(UserLoginScenario);
   const checkoutScenario = container.get(CheckoutScenario);
@@ -24,53 +24,46 @@ describe('return creation', { tags: ['@return-management'] }, (): void => {
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
     });
-  });
 
-  it('should be able to create return from (from shipped order state)', (): void => {
     checkoutScenario.execute({
       isGuest: false,
       isMultiShipment: false,
       idCustomerAddress: dynamicFixtures.address.id_customer_address,
     });
+
     userLoginScenario.execute({
       username: dynamicFixtures.rootUser.username,
       password: staticFixtures.defaultPassword,
     });
+  });
 
+  it('should be able to create return from (from shipped order state)', (): void => {
     salesIndexPage.visit();
-    salesIndexPage.viewLastPlacedOrder();
-    salesDetailPage.triggerOms('Pay', true);
-    salesDetailPage.triggerOms('Skip timeout');
-    salesDetailPage.triggerOms('skip picking');
-    salesDetailPage.triggerOms('Ship');
+    salesIndexPage.view();
 
-    salesDetailPage.createReturn();
-    salesReturnGuiCreatePage.createReturnForAllOrderItems();
+    salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
+    salesDetailPage.triggerOms({ state: 'Skip timeout' });
+    salesDetailPage.triggerOms({ state: 'skip picking' });
+    salesDetailPage.triggerOms({ state: 'Ship' });
+
+    salesDetailPage.create();
+    salesReturnCreatePage.create();
 
     cy.contains('Return was successfully created.');
   });
 
   it('should be able to create return from (from delivery order state)', (): void => {
-    checkoutScenario.execute({
-      isGuest: false,
-      isMultiShipment: false,
-      idCustomerAddress: dynamicFixtures.address.id_customer_address,
-    });
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
-    });
-
     salesIndexPage.visit();
-    salesIndexPage.viewLastPlacedOrder();
-    salesDetailPage.triggerOms('Pay', true);
-    salesDetailPage.triggerOms('Skip timeout');
-    salesDetailPage.triggerOms('skip picking');
-    salesDetailPage.triggerOms('Ship');
-    salesDetailPage.triggerOms('Stock update');
+    salesIndexPage.view();
 
-    salesDetailPage.createReturn();
-    salesReturnGuiCreatePage.createReturnForAllOrderItems();
+    salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
+    salesDetailPage.triggerOms({ state: 'Skip timeout' });
+    salesDetailPage.triggerOms({ state: 'skip picking' });
+    salesDetailPage.triggerOms({ state: 'Ship' });
+    salesDetailPage.triggerOms({ state: 'Stock update' });
+
+    salesDetailPage.create();
+    salesReturnCreatePage.create();
 
     cy.contains('Return was successfully created.');
   });

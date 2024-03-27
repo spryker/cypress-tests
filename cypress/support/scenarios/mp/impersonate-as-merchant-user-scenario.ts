@@ -8,11 +8,17 @@ export class ImpersonateAsMerchantUserScenario {
   @inject(AgentLoginPage) private agentLoginPage: AgentLoginPage;
   @inject(AgentDashboardPage) private mpAgentDashboardPage: AgentDashboardPage;
 
-  execute = (username: string, password: string, merchantUsername: string): void => {
+  execute = (params: ExecuteParams): void => {
     this.agentLoginPage.visit();
-    this.agentLoginPage.login(username, password);
+    this.agentLoginPage.login({ username: params.username, password: params.password });
 
     this.mpAgentDashboardPage.visit();
-    this.mpAgentDashboardPage.assistMerchantUser(merchantUsername);
+    this.mpAgentDashboardPage.assist({ query: params.query });
   };
+}
+
+interface ExecuteParams {
+  username: string;
+  password: string;
+  query: string;
 }

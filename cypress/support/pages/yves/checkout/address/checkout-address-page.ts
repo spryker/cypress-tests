@@ -1,18 +1,7 @@
 import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { YvesPage } from '../../yves-page';
+import { YvesPage } from '@pages/yves';
 import { CheckoutAddressRepository } from './checkout-address-repository';
-
-interface Address {
-  firstName: string;
-  lastName: string;
-  address1: string;
-  address2: string;
-  zipCode: string;
-  city: string;
-  company: string;
-  phone: string;
-}
 
 @injectable()
 @autoWired
@@ -21,9 +10,9 @@ export class CheckoutAddressPage extends YvesPage {
 
   protected PAGE_URL = '/checkout/address';
 
-  fillShippingAddress = (idCustomerAddress?: number): void => {
-    if (idCustomerAddress) {
-      this.repository.getSelectShippingAddressField().select(idCustomerAddress.toString());
+  fillShippingAddress = (params?: FillShippingAddressParams): void => {
+    if (params?.idCustomerAddress) {
+      this.repository.getSelectShippingAddressField().select(params.idCustomerAddress.toString());
       this.repository.getShippingAddressBillingSameAsShippingCheckbox().check({ force: true });
 
       this.repository.getNextButton().click();
@@ -50,7 +39,7 @@ export class CheckoutAddressPage extends YvesPage {
     this.repository.getNextButton().click();
   };
 
-  fillMultiShippingAddress = (idCustomerAddress?: number): void => {
+  fillMultiShippingAddress = (params?: FillShippingAddressParams): void => {
     this.repository.getMultiShipmentTriggerButton().click();
 
     this.repository
@@ -61,10 +50,10 @@ export class CheckoutAddressPage extends YvesPage {
 
         this.repository.getMultiShipmentAddressItemDeliveryRadio($addressItem, index).click({ force: true });
 
-        if (idCustomerAddress) {
+        if (params?.idCustomerAddress) {
           this.repository
             .getMultiShipmentAddressItemAddressField($addressItem, index)
-            .select(idCustomerAddress.toString(), { force: true });
+            .select(params.idCustomerAddress.toString(), { force: true });
 
           return;
         }
@@ -144,4 +133,19 @@ export class CheckoutAddressPage extends YvesPage {
       phone: this.faker.phone.number(),
     };
   };
+}
+
+interface FillShippingAddressParams {
+  idCustomerAddress?: number;
+}
+
+interface Address {
+  firstName: string;
+  lastName: string;
+  address1: string;
+  address2: string;
+  zipCode: string;
+  city: string;
+  company: string;
+  phone: string;
 }

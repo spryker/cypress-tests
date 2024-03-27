@@ -1,7 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-import { MpPage } from '../mp-page';
+import { MpPage } from '@pages/mp';
 import { LoginRepository } from './login-repository';
 
 @injectable()
@@ -11,10 +11,9 @@ export class LoginPage extends MpPage {
 
   protected PAGE_URL = '/security-merchant-portal-gui/login';
 
-  login = (username: string, password: string): void => {
-    cy.visitMerchantPortal(this.PAGE_URL);
-    this.repository.getEmailInput().clear().type(username);
-    this.repository.getPasswordInput().clear().type(password);
+  login = (params: LoginParams): void => {
+    this.repository.getEmailInput().clear().type(params.username);
+    this.repository.getPasswordInput().clear().type(params.password);
 
     this.repository.getSubmitButton().click();
   };
@@ -22,4 +21,9 @@ export class LoginPage extends MpPage {
   getFailedAuthenticationText = (): string => {
     return this.repository.getFailedAuthenticationText();
   };
+}
+
+interface LoginParams {
+  username: string;
+  password: string;
 }

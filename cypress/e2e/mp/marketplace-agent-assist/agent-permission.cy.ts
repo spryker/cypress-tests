@@ -1,7 +1,7 @@
-import { AgentPermissionDynamicFixtures, MarketplaceAgentAssistStaticFixtures } from '@interfaces/mp';
-import { UserIndexPage, UserUpdatePage } from '@pages/backoffice';
-import { UserLoginScenario } from '@scenarios/backoffice';
 import { container } from '@utils';
+import { AgentPermissionDynamicFixtures, MarketplaceAgentAssistStaticFixtures } from '@interfaces/mp';
+import { ActionEnum, UserIndexPage, UserUpdatePage } from '@pages/backoffice';
+import { UserLoginScenario } from '@scenarios/backoffice';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
@@ -18,14 +18,16 @@ describe('agent permission', { tags: ['@marketplace-agent-assist'] }, (): void =
     ({ dynamicFixtures, staticFixtures } = Cypress.env());
   });
 
-  it('backoffice user should be able to see new merchant agent permission checkbox', (): void => {
+  beforeEach((): void => {
     userLoginScenario.execute({
       username: dynamicFixtures.rootUser.username,
       password: staticFixtures.defaultPassword,
     });
+  });
 
+  it('backoffice user should be able to see new merchant agent permission checkbox', (): void => {
     backofficeUserIndexPage.visit();
-    backofficeUserIndexPage.editUser(dynamicFixtures.rootUser.username);
+    backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.rootUser.username });
 
     backofficeUserUpdatePage
       .getAgentMerchantCheckbox()
@@ -35,13 +37,8 @@ describe('agent permission', { tags: ['@marketplace-agent-assist'] }, (): void =
   });
 
   it('backoffice user should be able to see renamed customer agent permission checkbox', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
-    });
-
     backofficeUserIndexPage.visit();
-    backofficeUserIndexPage.editUser(dynamicFixtures.rootUser.username);
+    backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.rootUser.username });
 
     backofficeUserUpdatePage
       .getAgentCustomerCheckbox()
@@ -51,97 +48,57 @@ describe('agent permission', { tags: ['@marketplace-agent-assist'] }, (): void =
   });
 
   it('backoffice user should be able to see existing user with merchant agent permission', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
-    });
-
     backofficeUserIndexPage.visit();
-    backofficeUserIndexPage.editUser(dynamicFixtures.merchantAgentUser.username);
+    backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.merchantAgentUser.username });
     backofficeUserUpdatePage.getAgentMerchantCheckbox().should('be.checked');
   });
 
   it('backoffice user should be able to see "Agent Customer" column in user table', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
-    });
-
     backofficeUserIndexPage.visit();
     backofficeUserIndexPage.getUserTableHeader().contains('Agent Customer');
   });
 
   it('backoffice user should be able to see "Agent Merchant" column in user table', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
-    });
-
     backofficeUserIndexPage.visit();
     backofficeUserIndexPage.getUserTableHeader().contains('Agent Merchant');
   });
 
   it('backoffice user should be able to see imported user with "Agent Customer" permission', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
-    });
-
     backofficeUserIndexPage.visit();
     backofficeUserIndexPage
-      .findUser(dynamicFixtures.customerAgentUser.username)
+      .find({ query: dynamicFixtures.customerAgentUser.username })
       .contains('Agent')
       .should('have.length', 1);
   });
 
   it('backoffice user should be able to see imported user with "Agent Merchant" permission', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
-    });
-
     backofficeUserIndexPage.visit();
     backofficeUserIndexPage
-      .findUser(dynamicFixtures.merchantAgentUser.username)
+      .find({ query: dynamicFixtures.merchantAgentUser.username })
       .contains('Agent')
       .should('have.length', 1);
   });
 
   it('backoffice user should be able to create new user without checked merchant agent permission by default', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
-    });
-
     backofficeUserIndexPage.visit();
-    backofficeUserIndexPage.editUser(dynamicFixtures.rootUser.username);
+    backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.rootUser.username });
     backofficeUserUpdatePage.getAgentMerchantCheckbox().should('not.be.checked');
   });
 
   it('backoffice user should be able to create new user with merchant agent permission', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
-    });
-
     backofficeUserIndexPage.visit();
-    backofficeUserIndexPage.editUser(dynamicFixtures.merchantAgentUser.username);
+    backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.merchantAgentUser.username });
     backofficeUserUpdatePage.getAgentMerchantCheckbox().should('be.checked');
   });
 
   it('backoffice user should be able to modify existing user by setting merchant agent permission', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
-    });
-
     backofficeUserIndexPage.visit();
-    backofficeUserIndexPage.editUser(dynamicFixtures.rootUser.username);
+    backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.rootUser.username });
     backofficeUserUpdatePage.getAgentMerchantCheckbox().should('not.be.checked');
 
     backofficeUserUpdatePage.checkMerchantAgentCheckbox();
 
-    backofficeUserIndexPage.editUser(dynamicFixtures.rootUser.username);
+    backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.rootUser.username });
     backofficeUserUpdatePage.getAgentMerchantCheckbox().should('be.checked');
   });
 });
