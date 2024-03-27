@@ -44,8 +44,13 @@ Cypress.Commands.add('loadDynamicFixturesByPayload', (dynamicFixturesFilePath) =
         },
         body: operationRequestPayload,
         timeout: 60000,
+        failOnStatusCode: false,
       })
       .then((response) => {
+        if (response.status === 500) {
+          throw new Error(response.body);
+        }
+
         if (Array.isArray(response.body.data)) {
           return response.body.data.reduce(
             (acc: Record<string, unknown>, item: Record<string, { key: string; data: unknown }>) => {

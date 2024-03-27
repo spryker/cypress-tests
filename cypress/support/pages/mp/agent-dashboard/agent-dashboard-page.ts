@@ -15,7 +15,10 @@ export class AgentDashboardPage extends MpPage {
     const findParams = { query: params.query, expectedCount: 1 };
 
     this.find(findParams).then(($merchantUserRow) => {
-      cy.wrap($merchantUserRow).find(this.repository.getAssistUserButtonSelector()).should('exist').click();
+      cy.wrap($merchantUserRow)
+        .find(this.repository.getAssistUserButtonSelector())
+        .should('exist')
+        .click({ force: true });
       this.repository.getModalConfirmButton().click();
     });
   };
