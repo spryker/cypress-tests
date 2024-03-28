@@ -216,18 +216,6 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
-          "key": "customer",
-          "arguments": [{ "locale": "#localeEN", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomer",
-          "arguments": ["#customer"]
-        },
-        {
-          "type": "helper",
           "name": "haveCompany",
           "key": "company1",
           "arguments": [{ "isActive": true, "status": "approved" }]
@@ -237,6 +225,18 @@
           "name": "haveCompany",
           "key": "company2",
           "arguments": [{ "isActive": true, "status": "approved" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer",
+          "arguments": [{ "locale": "#localeEN", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "key": "confirmedCustomer",
+          "arguments": ["#customer"]
         },
         {
           "type": "helper",

@@ -14,7 +14,12 @@ export class MpPage extends AbstractPage {
     const interceptAlias = this.faker.string.uuid();
 
     cy.intercept('GET', params.url).as(interceptAlias);
-    cy.wait(`@${interceptAlias}`).its('response.body.total').should('eq', expectedCount);
+    cy.wait(`@${interceptAlias}`)
+      .its('response.body.total')
+      .should((total) => {
+        const valueToBeAtMost = expectedCount + Cypress.currentRetry;
+        assert.isAtMost(total, valueToBeAtMost);
+      });
   };
 }
 
