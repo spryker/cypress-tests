@@ -17,7 +17,8 @@ export class MpPage extends AbstractPage {
     cy.wait(`@${interceptAlias}`)
       .its('response.body.total')
       .should((total) => {
-        assert.isAtMost(total, expectedCount + Cypress.currentRetry);
+        const valueToBeAtMost = expectedCount + Cypress.currentRetry;
+        assert.isAtMost(total, valueToBeAtMost);
       });
   };
 }

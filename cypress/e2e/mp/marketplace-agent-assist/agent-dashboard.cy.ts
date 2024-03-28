@@ -58,7 +58,7 @@ describe('agent dashboard', { tags: ['@marketplace-agent-assist'] }, (): void =>
     mpAgentDashboardPage.find({ query: dynamicFixtures.merchantUser.username }).should('exist');
   });
 
-  it('agent should be able to see/assist inactive merchant user in a table', (): void => {
+  it('agent should be able to see and assist inactive merchant user in a table', (): void => {
     mpAgentLoginPage.visit();
     mpAgentLoginPage.login({
       username: dynamicFixtures.merchantAgentUser.username,
@@ -69,12 +69,14 @@ describe('agent dashboard', { tags: ['@marketplace-agent-assist'] }, (): void =>
     mpAgentDashboardPage.find({ query: dynamicFixtures.deactivatedMerchantUser.username }).should('exist');
 
     mpAgentDashboardPage.visit();
+    const alias = mpDashboardPage.interceptRequest();
     mpAgentDashboardPage.assist({ query: dynamicFixtures.deactivatedMerchantUser.username });
 
+    cy.wait(`@${alias}`);
     mpDashboardPage.assertPageLocation();
   });
 
-  it('agent should be able to see/assist deleted merchant user in a table', (): void => {
+  it('agent should be able to see and assist deleted merchant user in a table', (): void => {
     mpAgentLoginPage.visit();
     mpAgentLoginPage.login({
       username: dynamicFixtures.merchantAgentUser.username,
@@ -85,12 +87,14 @@ describe('agent dashboard', { tags: ['@marketplace-agent-assist'] }, (): void =>
     mpAgentDashboardPage.find({ query: dynamicFixtures.deletedMerchantUser.username }).should('exist');
 
     mpAgentDashboardPage.visit();
+    const alias = mpDashboardPage.interceptRequest();
     mpAgentDashboardPage.assist({ query: dynamicFixtures.deletedMerchantUser.username });
 
+    cy.wait(`@${alias}`);
     mpDashboardPage.assertPageLocation();
   });
 
-  it('agent should be able to see/assist merchant users from active (without approved access) merchant', (): void => {
+  it('agent should be able to see and assist merchant users from active (without approved access) merchant', (): void => {
     mpAgentLoginPage.visit();
     mpAgentLoginPage.login({
       username: dynamicFixtures.merchantAgentUser.username,
@@ -101,12 +105,14 @@ describe('agent dashboard', { tags: ['@marketplace-agent-assist'] }, (): void =>
     mpAgentDashboardPage.find({ query: dynamicFixtures.merchantUserFromActiveDeniedMerchant.username }).should('exist');
 
     mpAgentDashboardPage.visit();
+    const alias = mpDashboardPage.interceptRequest();
     mpAgentDashboardPage.assist({ query: dynamicFixtures.merchantUserFromActiveDeniedMerchant.username });
 
+    cy.wait(`@${alias}`);
     mpDashboardPage.assertPageLocation();
   });
 
-  it('agent should be able to see/assist merchant users from inactive (with approved access) merchant', (): void => {
+  it('agent should be able to see and assist merchant users from inactive (with approved access) merchant', (): void => {
     mpAgentLoginPage.visit();
     mpAgentLoginPage.login({
       username: dynamicFixtures.merchantAgentUser.username,
@@ -119,12 +125,14 @@ describe('agent dashboard', { tags: ['@marketplace-agent-assist'] }, (): void =>
       .should('exist');
 
     mpAgentDashboardPage.visit();
+    const alias = mpDashboardPage.interceptRequest();
     mpAgentDashboardPage.assist({ query: dynamicFixtures.merchantUserFromInactiveApprovedMerchant.username });
 
+    cy.wait(`@${alias}`);
     mpDashboardPage.assertPageLocation();
   });
 
-  it('agent should be able to see/assist merchant users from inactive (without approved access) merchant', (): void => {
+  it('agent should be able to see and assist merchant users from inactive (without approved access) merchant', (): void => {
     mpAgentLoginPage.visit();
     mpAgentLoginPage.login({
       username: dynamicFixtures.merchantAgentUser.username,
@@ -137,12 +145,14 @@ describe('agent dashboard', { tags: ['@marketplace-agent-assist'] }, (): void =>
       .should('exist');
 
     mpAgentDashboardPage.visit();
+    const alias = mpDashboardPage.interceptRequest();
     mpAgentDashboardPage.assist({ query: dynamicFixtures.merchantUserFromInactiveDeniedMerchant.username });
 
+    cy.wait(`@${alias}`);
     mpDashboardPage.assertPageLocation();
   });
 
-  it('agent should be able to see/assist merchant users from active (with approved access) merchant', (): void => {
+  it('agent should be able to see and assist merchant users from active (with approved access) merchant', (): void => {
     mpAgentLoginPage.visit();
     mpAgentLoginPage.login({
       username: dynamicFixtures.merchantAgentUser.username,
@@ -153,8 +163,10 @@ describe('agent dashboard', { tags: ['@marketplace-agent-assist'] }, (): void =>
     mpAgentDashboardPage.find({ query: dynamicFixtures.merchantUser.username }).should('exist');
 
     mpAgentDashboardPage.visit();
+    const alias = mpDashboardPage.interceptRequest();
     mpAgentDashboardPage.assist({ query: dynamicFixtures.merchantUser.username });
 
+    cy.wait(`@${alias}`);
     mpDashboardPage.assertPageLocation();
   });
 });
