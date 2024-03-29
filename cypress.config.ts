@@ -10,7 +10,7 @@ const protocolMap: { [key: string]: 'http' | 'https' } = {
   http: 'http',
   https: 'https',
 };
-const protocol = protocolMap[getEnvVar('ENV_PROTOCOL', 'SPRYKER_SSL_ENABLE')];
+const protocol = protocolMap[getEnvVar('ENV_PROTOCOL', 'SPRYKER_SSL_ENABLED')];
 const backofficeHost = getEnvVar('ENV_BACKOFFICE_HOST', 'SPRYKER_BE_HOST');
 const merchantPortalHost = getEnvVar('ENV_MERCHANT_PORTAL_HOST', 'SPRYKER_MP_HOST');
 const glueBackendHost = getEnvVar('ENV_GLUE_BACKEND_HOST', 'SPRYKER_GLUE_BACKEND_HOST');
@@ -39,8 +39,8 @@ export default defineConfig({
       openMode: 0,
     },
   },
-  viewportWidth: parseInt(process.env.VIEWPORT_WIDGTH ?? '1000', 10),
-  viewportHeight: parseInt(process.env.VIEWPORT_HEIGHT ?? '660', 10),
+  viewportWidth: parseInt(process.env.VIEWPORT_WIDGTH ?? '1920', 10),
+  viewportHeight: parseInt(process.env.VIEWPORT_HEIGHT ?? '1080', 10),
 });
 
 function getEnvVar(primary: string, fallback: string): string {
