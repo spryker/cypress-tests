@@ -97,7 +97,6 @@
         {
           "type": "helper",
           "name": "havePersistentQuote",
-          "key": "quote1",
           "arguments": [
             {
               "customer": "#customer",
@@ -116,7 +115,42 @@
         {
           "type": "helper",
           "name": "havePersistentQuote",
-          "key": "quote2",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "name": "#product.name",
+                  "quantity": 1,
+                  "unitPrice": 30000
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "name": "#product.name",
+                  "quantity": 1,
+                  "unitPrice": 30000
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
           "arguments": [
             {
               "customer": "#customer",
