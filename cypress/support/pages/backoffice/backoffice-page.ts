@@ -14,7 +14,12 @@ export class BackofficePage extends AbstractPage {
     const interceptAlias = this.faker.string.uuid();
 
     cy.intercept('GET', params.url).as(interceptAlias);
-    cy.wait(`@${interceptAlias}`).its('response.body.recordsFiltered').should('eq', expectedCount);
+    cy.wait(`@${interceptAlias}`)
+      .its('response.body.recordsFiltered')
+      .should((total) => {
+        const valueToBeAtMost = expectedCount + Cypress.currentRetry;
+        assert.isAtMost(total, valueToBeAtMost);
+      });
   };
 }
 

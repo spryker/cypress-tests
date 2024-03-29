@@ -1,6 +1,7 @@
 import { defineConfig } from 'cypress';
 import dotenv from 'dotenv';
 import { existsSync } from 'fs';
+import * as process from 'process';
 
 dotenv.config();
 
@@ -10,12 +11,13 @@ const protocolMap: { [key: string]: 'http' | 'https' } = {
   http: 'http',
   https: 'https',
 };
-const protocol = protocolMap[getEnvVar('ENV_PROTOCOL', 'SPRYKER_SSL_ENABLE')];
-const backofficeHost = getEnvVar('ENV_BACKOFFICE_HOST', 'SPRYKER_BE_HOST');
-const merchantPortalHost = getEnvVar('ENV_MERCHANT_PORTAL_HOST', 'SPRYKER_MP_HOST');
-const glueBackendHost = getEnvVar('ENV_GLUE_BACKEND_HOST', 'SPRYKER_GLUE_BACKEND_HOST');
-const mailCatcherHost = getEnvVar('ENV_MAIL_CATCHER_HOST', 'SPRYKER_SMTP_HOST');
-const baseHost = getEnvVar('E2E_BASE_HOST', 'SPRYKER_FE_HOST');
+const protocol = protocolMap[getEnvVar('ENV_PROTOCOL', 'SPRYKER_SSL_ENABLED')] ?? 'http';
+const backofficeHost = getEnvVar('ENV_BACKOFFICE_HOST', 'SPRYKER_BE_HOST') ?? 'backoffice.de.spryker.local';
+const merchantPortalHost = getEnvVar('ENV_MERCHANT_PORTAL_HOST', 'SPRYKER_MP_HOST') ?? 'mp.de.spryker.local';
+const glueBackendHost =
+  getEnvVar('ENV_GLUE_BACKEND_HOST', 'SPRYKER_GLUE_BACKEND_HOST') ?? 'glue-backend.de.spryker.local';
+const mailCatcherHost = getEnvVar('ENV_MAIL_CATCHER_HOST', 'SPRYKER_SMTP_HOST') ?? 'mail.spryker.local';
+const baseHost = getEnvVar('E2E_BASE_HOST', 'SPRYKER_FE_HOST') ?? 'yves.de.spryker.local';
 
 export default defineConfig({
   env: {
