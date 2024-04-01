@@ -13,10 +13,10 @@ export class MerchantRelationRequestCreatePage extends YvesPage {
 
   create = (params: CreateParams): void => {
     if (params.merchantReference) {
-      this.repository.getMerchantSelect().select(params.merchantReference);
+      this.repository.getMerchantSelect().select(params.merchantReference, { force: true });
     }
 
-    this.repository.getBusinessUnitOwnerSelect().select(params.ownerBusinessUnitId.toString());
+    this.repository.getBusinessUnitOwnerSelect().select(params.ownerBusinessUnitId.toString(), { force: true });
 
     if (params.businessUnitIds.length > 0) {
       this.repository.getBusinessUnitCheckboxes().check(params.businessUnitIds.map(String), { force: true });

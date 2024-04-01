@@ -17,15 +17,15 @@ export class MerchantRelationRequestIndexPage extends YvesPage {
 
   filterRequests = (params: FilterRequestsParams): void => {
     if (params.idMerchant) {
-      this.repository.getFilterMerchantSelect().select(params.idMerchant.toString());
+      this.repository.getFilterMerchantSelect().select(params.idMerchant.toString(), { force: true });
     }
 
     if (params.idBusinessUnitOwner) {
-      this.repository.getFilterBusinessUnitOwnerSelect().select(params.idBusinessUnitOwner.toString());
+      this.repository.getFilterBusinessUnitOwnerSelect().select(params.idBusinessUnitOwner.toString(), { force: true });
     }
 
     if (params.status) {
-      this.repository.getFilterStatusSelect().select(params.status);
+      this.repository.getFilterStatusSelect().select(params.status, { force: true });
     }
 
     this.repository.getApplyButton().click();
