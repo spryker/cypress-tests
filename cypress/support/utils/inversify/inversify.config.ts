@@ -24,6 +24,15 @@ import { SuiteMerchantRelationRequestDetailsRepository } from '../../pages/yves/
 import { SuiteMerchantRepository } from '../../pages/yves/merchant/repositories/suite-merchant-repository';
 import { SuiteMerchantRelationRequestIndexRepository } from '../../pages/yves/company/merchant-relation-request/index/repositories/suite-merchant-relation-request-index-repository';
 import { SuiteProductRepository } from '../../pages/yves/product/repositories/suite-product-repository';
+import { B2bMpMerchantRepository } from '../../pages/yves/merchant/repositories/b2b-mp-merchant-repository';
+import { B2bMpLoginRepository } from '../../pages/yves/login/repositories/b2b-mp-login-repository';
+import { B2bMpCartRepository } from '../../pages/yves/cart/repositories/b2b-mp-cart-repository';
+import { B2bMpCatalogRepository } from '../../pages/yves/catalog/repositories/b2b-mp-catalog-repository';
+import { B2bMpProductRepository } from '../../pages/yves/product/repositories/b2b-mp-product-repository';
+import { B2bMpCompanyUserSelectRepository } from '../../pages/yves/company/user/select/repositories/b2b-mp-company-user-select-repository';
+import { B2bMpMerchantRelationRequestCreateRepository } from '../../pages/yves/company/merchant-relation-request/create/repositories/b2b-mp-merchant-relation-request-create-repository';
+import { B2bMpMerchantRelationRequestDetailsRepository } from '../../pages/yves/company/merchant-relation-request/details/repositories/b2b-mp-merchant-relation-request-details-repository';
+import { B2bMpMerchantRelationRequestIndexRepository } from '../../pages/yves/company/merchant-relation-request/index/repositories/b2b-mp-merchant-relation-request-index-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -54,6 +63,18 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.CommentCartRepository]: B2bCommentCartRepository,
 };
 
+const b2bMpMappings: BindingsMap = {
+  [REPOSITORIES.LoginRepository]: B2bMpLoginRepository,
+  [REPOSITORIES.CartRepository]: B2bMpCartRepository,
+  [REPOSITORIES.CatalogRepository]: B2bMpCatalogRepository,
+  [REPOSITORIES.ProductRepository]: B2bMpProductRepository,
+  [REPOSITORIES.CompanyUserSelectRepository]: B2bMpCompanyUserSelectRepository,
+  [REPOSITORIES.MerchantRelationRequestCreateRepository]: B2bMpMerchantRelationRequestCreateRepository,
+  [REPOSITORIES.MerchantRelationRequestDetailsRepository]: B2bMpMerchantRelationRequestDetailsRepository,
+  [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2bMpMerchantRelationRequestIndexRepository,
+  [REPOSITORIES.MerchantRepository]: B2bMpMerchantRepository,
+};
+
 const container = new Container();
 const repositoryId = Cypress.env('repositoryId');
 
@@ -62,6 +83,9 @@ if (repositoryId === 'suite') {
 }
 if (repositoryId === 'b2b') {
   applyRepositoryBindings(b2bMappings);
+}
+if (repositoryId === 'b2b-mp') {
+  applyRepositoryBindings(b2bMpMappings);
 }
 
 function applyRepositoryBindings(bindings: BindingsMap): void {

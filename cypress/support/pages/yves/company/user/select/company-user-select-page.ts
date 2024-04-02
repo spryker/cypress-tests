@@ -11,7 +11,7 @@ export class CompanyUserSelectPage extends YvesPage {
   protected PAGE_URL = '/company/user/select';
 
   selectBusinessUnit = (params: SelectBusinessUnitParams): void => {
-    this.repository.getBusinessUnitSelect().select(params.idCompanyUser.toString());
+    this.repository.getBusinessUnitSelect().select(params.idCompanyUser.toString(), { force: true });
     this.repository.getSubmitButton().click();
   };
 }
