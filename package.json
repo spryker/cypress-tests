@@ -1,5 +1,6 @@
 {
   "name": "cypress-tests",
+  "version": "0.1.0",
   "description": "End-to-end tests for Spryker applications.",
   "main": "index.js",
   "author": {
