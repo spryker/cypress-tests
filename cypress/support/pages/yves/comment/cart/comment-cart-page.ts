@@ -17,7 +17,7 @@ export class CommentCartPage extends YvesPage {
   };
 
   update = (params: UpdateParams): void => {
-    const textarea = this.repository.getCommentTextareaByCommentText(params.oldMessage);
+    const textarea = this.repository.getCommentTextareaForUpdateByCommentText(params.oldMessage);
 
     textarea.clear().type(params.newMessage);
     textarea.parent().find(this.repository.getUpdateCommentButtonSelector()).click();
@@ -25,7 +25,7 @@ export class CommentCartPage extends YvesPage {
 
   remove = (params: RemoveParams): void => {
     this.repository
-      .getCommentTextareaByCommentText(params.message)
+      .getCommentTextareaForDeleteByCommentText(params.message)
       .parent()
       .find(this.repository.getRemoveCommentButtonSelector())
       .click();

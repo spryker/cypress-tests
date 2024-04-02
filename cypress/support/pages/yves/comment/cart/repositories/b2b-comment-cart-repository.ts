@@ -4,9 +4,10 @@ import { CommentCartRepository } from '../comment-cart-repository';
 @injectable()
 export class B2bCommentCartRepository implements CommentCartRepository {
   getAddCommentForm = (): Cypress.Chainable => cy.get('[data-qa="component add-comment-form"]');
-  getCommentThreadListSection = (): Cypress.Chainable => cy.get('[data-qa="component comment-thread-list"]');
+  getCommentThreadListSection = (): Cypress.Chainable =>
+    cy.get('[data-qa="component cart-sidebar-item"]').find('[data-qa="component add-comment-form"]').parent();
   getAddCommentButtonSelector = (): string => '[data-qa="component icon"]';
-  getRemoveCommentButtonSelector = (): string => '.js-comment-form__remove-button';
+  getRemoveCommentButtonSelector = (): string => '[action="/en/comment/remove"]';
   getFirstCommentTextarea = (): Cypress.Chainable => {
     this.getCommentThreadListSection().first().find('button:contains("Edit")').click();
 
@@ -14,7 +15,19 @@ export class B2bCommentCartRepository implements CommentCartRepository {
   };
   getUpdateCommentButtonSelector = (): string => 'button:contains("Update")';
 
-  getCommentTextareaByCommentText(commentText: string): Cypress.Chainable {
-    return this.getCommentThreadListSection().first().contains(commentText);
+  getCommentTextareaForUpdateByCommentText(commentText: string): Cypress.Chainable {
+    return cy
+      .get('[data-qa="component comment-form"]')
+      .contains(commentText)
+      .parent()
+      .then(($commentForm) => {
+        cy.wrap($commentForm).find('button:contains("Edit")').click();
+
+        return cy.get('[data-qa="component comment-form"] textarea').contains(commentText);
+      });
+  }
+
+  getCommentTextareaForDeleteByCommentText(commentText: string): Cypress.Chainable {
+    return cy.get('[data-qa="component comment-form"]').contains(commentText);
   }
 }

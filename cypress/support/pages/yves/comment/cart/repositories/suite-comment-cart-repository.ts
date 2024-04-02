@@ -9,7 +9,10 @@ export class SuiteCommentCartRepository implements CommentCartRepository {
   getRemoveCommentButtonSelector = (): string => '[data-qa="comment-form-remove-button"]';
   getFirstCommentTextarea = (): Cypress.Chainable => this.getCommentThreadListSection().first().find('textarea');
   getUpdateCommentButtonSelector = (): string => '[data-qa="comment-form-update-button"]';
-  getCommentTextareaByCommentText(commentText: string): Cypress.Chainable {
+  getCommentTextareaForUpdateByCommentText(commentText: string): Cypress.Chainable {
+    return this.getCommentThreadListSection().first().contains(commentText);
+  }
+  getCommentTextareaForDeleteByCommentText(commentText: string): Cypress.Chainable {
     return this.getCommentThreadListSection().first().contains(commentText);
   }
 }
