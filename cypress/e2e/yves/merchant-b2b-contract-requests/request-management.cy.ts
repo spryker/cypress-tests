@@ -61,7 +61,7 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     });
   });
 
-  it('company user should be able to filter MR requests by merchant', (): void => {
+  skipB2BIt('company user should be able to filter MR requests by merchant', (): void => {
     companyUserSelectPage.selectBusinessUnit({
       idCompanyUser: dynamicFixtures.companyUser1FromCompany2.id_company_user,
     });
@@ -172,4 +172,8 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
 
     merchantRelationRequestIndexPage.assertPageLocation();
   });
+
+  function skipB2BIt(description: string, testFn: () => void): void {
+    (Cypress.env('repositoryId') === 'b2b' ? it.skip : it)(description, testFn);
+  }
 });

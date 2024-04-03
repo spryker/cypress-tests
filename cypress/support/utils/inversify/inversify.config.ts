@@ -49,6 +49,13 @@ import { B2bMpCheckoutShipmentRepository } from '../../pages/yves/checkout/shipm
 import { B2bMpCheckoutSummaryRepository } from '../../pages/yves/checkout/summary/repositories/b2b-mp-checkout-summary-repository';
 import { B2bMpMultiCartRepository } from '../../pages/yves/multi-cart/repositories/b2b-mp-multi-cart-repository';
 import { B2bMpCommentCartRepository } from '../../pages/yves/comment/cart/repositories/b2b-mp-comment-cart-repository';
+import { B2bCatalogRepository } from '../../pages/yves/catalog/repositories/b2b-catalog-repository';
+import { B2bProductRepository } from '../../pages/yves/product/repositories/b2b-product-repository';
+import { B2bCompanyUserSelectRepository } from '../../pages/yves/company/user/select/repositories/b2b-company-user-select-repository';
+import { B2bMerchantRelationRequestCreateRepository } from '../../pages/yves/company/merchant-relation-request/create/repositories/b2b-merchant-relation-request-create-repository';
+import { B2bMerchantRelationRequestDetailsRepository } from '../../pages/yves/company/merchant-relation-request/details/repositories/b2b-merchant-relation-request-details-repository';
+import { B2bMerchantRelationRequestIndexRepository } from '../../pages/yves/company/merchant-relation-request/index/repositories/b2b-merchant-relation-request-index-repository';
+import { B2bMerchantRepository } from '../../pages/yves/merchant/repositories/b2b-merchant-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -77,6 +84,13 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.CartRepository]: B2bCartRepository,
   [REPOSITORIES.MultiCartRepository]: B2bMultiCartRepository,
   [REPOSITORIES.CommentCartRepository]: B2bCommentCartRepository,
+  [REPOSITORIES.CatalogRepository]: B2bCatalogRepository,
+  [REPOSITORIES.ProductRepository]: B2bProductRepository,
+  [REPOSITORIES.CompanyUserSelectRepository]: B2bCompanyUserSelectRepository,
+  [REPOSITORIES.MerchantRelationRequestCreateRepository]: B2bMerchantRelationRequestCreateRepository,
+  [REPOSITORIES.MerchantRelationRequestDetailsRepository]: B2bMerchantRelationRequestDetailsRepository,
+  [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2bMerchantRelationRequestIndexRepository,
+  [REPOSITORIES.MerchantRepository]: B2bMerchantRepository,
 };
 
 const b2cMpMappings: BindingsMap = {

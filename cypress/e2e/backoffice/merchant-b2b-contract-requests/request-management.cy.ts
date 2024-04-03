@@ -50,6 +50,7 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     merchantRelationRequestListPage.update({
       action: ActionEnum.edit,
       idMerchant: dynamicFixtures.merchant1.id_merchant,
+      idRelationRequest: dynamicFixtures.requestFromMerchant1.id_merchant_relation_request,
     });
 
     cy.contains(staticFixtures.internalCommentFromMerchantUser1);
@@ -61,6 +62,7 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     merchantRelationRequestListPage.update({
       action: ActionEnum.edit,
       idMerchant: dynamicFixtures.merchant1.id_merchant,
+      idRelationRequest: dynamicFixtures.requestFromMerchant1.id_merchant_relation_request,
     });
 
     merchantRelationRequestEditPage.addInternalComment({ comment: staticFixtures.internalCommentFromRootUser });
@@ -69,6 +71,7 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     merchantRelationRequestListPage.update({
       action: ActionEnum.edit,
       idMerchant: dynamicFixtures.merchant1.id_merchant,
+      idRelationRequest: dynamicFixtures.requestFromMerchant1.id_merchant_relation_request,
     });
 
     cy.contains(staticFixtures.internalCommentFromRootUser);
@@ -121,6 +124,7 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     merchantRelationRequestListPage.update({
       action: ActionEnum.edit,
       idMerchant: dynamicFixtures.merchant1.id_merchant,
+      idRelationRequest: dynamicFixtures.requestFromMerchant1.id_merchant_relation_request,
     });
 
     merchantRelationRequestEditPage.approve({ isSplitEnabled: false });
@@ -129,6 +133,7 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     merchantRelationRequestListPage.update({
       action: ActionEnum.view,
       idMerchant: dynamicFixtures.merchant1.id_merchant,
+      idRelationRequest: dynamicFixtures.requestFromMerchant1.id_merchant_relation_request,
     });
     cy.contains('Approved');
 
@@ -144,6 +149,7 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     merchantRelationRequestListPage.update({
       action: ActionEnum.edit,
       idMerchant: dynamicFixtures.merchant2.id_merchant,
+      idRelationRequest: dynamicFixtures.requestFromMerchant2.id_merchant_relation_request,
     });
 
     merchantRelationRequestEditPage.approve({ isSplitEnabled: true });
@@ -152,6 +158,7 @@ describe('request management', { tags: ['@merchant-b2b-contract-requests'] }, ()
     merchantRelationRequestListPage.update({
       action: ActionEnum.view,
       idMerchant: dynamicFixtures.merchant2.id_merchant,
+      idRelationRequest: dynamicFixtures.requestFromMerchant2.id_merchant_relation_request,
     });
     cy.contains('Approved');
 
