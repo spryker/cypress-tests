@@ -41,6 +41,12 @@ import { B2cMpCheckoutCustomerRepository } from '../../pages/yves/checkout/custo
 import { B2cMpCheckoutPaymentRepository } from '../../pages/yves/checkout/payment/repositories/b2c-mp-checkout-payment-repository';
 import { B2cMpCheckoutShipmentRepository } from '../../pages/yves/checkout/shipment/repositories/b2c-mp-checkout-shipment-repository';
 import { B2cMpCheckoutSummaryRepository } from '../../pages/yves/checkout/summary/repositories/b2c-mp-checkout-summary-repository';
+import { B2bMpAgentLoginRepository } from '../../pages/yves/agent-login/repositories/b2b-mp-agent-login-repository';
+import { B2bMpCheckoutAddressRepository } from '../../pages/yves/checkout/address/repositories/b2b-mp-checkout-address-repository';
+import { B2bMpCheckoutCustomerRepository } from '../../pages/yves/checkout/customer/repositories/b2b-mp-checkout-customer-repository';
+import { B2bMpCheckoutPaymentRepository } from '../../pages/yves/checkout/payment/repositories/b2b-mp-checkout-payment-repository';
+import { B2bMpCheckoutShipmentRepository } from '../../pages/yves/checkout/shipment/repositories/b2b-mp-checkout-shipment-repository';
+import { B2bMpCheckoutSummaryRepository } from '../../pages/yves/checkout/summary/repositories/b2b-mp-checkout-summary-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -92,6 +98,12 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.MerchantRelationRequestDetailsRepository]: B2bMpMerchantRelationRequestDetailsRepository,
   [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2bMpMerchantRelationRequestIndexRepository,
   [REPOSITORIES.MerchantRepository]: B2bMpMerchantRepository,
+  [REPOSITORIES.AgentLoginRepository]: B2bMpAgentLoginRepository,
+  [REPOSITORIES.CheckoutAddressRepository]: B2bMpCheckoutAddressRepository,
+  [REPOSITORIES.CheckoutCustomerRepository]: B2bMpCheckoutCustomerRepository,
+  [REPOSITORIES.CheckoutPaymentRepository]: B2bMpCheckoutPaymentRepository,
+  [REPOSITORIES.CheckoutShipmentRepository]: B2bMpCheckoutShipmentRepository,
+  [REPOSITORIES.CheckoutSummaryRepository]: B2bMpCheckoutSummaryRepository,
 };
 
 const container = new Container();
