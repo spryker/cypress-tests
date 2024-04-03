@@ -2,7 +2,6 @@ import { container } from '@utils';
 import { AgentMerchantPortalDynamicFixtures, MarketplaceAgentAssistStaticFixtures } from '@interfaces/mp';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import { OffersPage, ProductsPage, ProfilePage, SalesOrdersPage } from '@pages/mp';
-import { CartPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ImpersonateAsMerchantUserScenario } from '@scenarios/mp';
 import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
@@ -11,7 +10,6 @@ import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
 describe('agent merchant portal', { tags: ['@marketplace-agent-assist'] }, (): void => {
-  const cartPage = container.get(CartPage);
   const salesIndexPage = container.get(SalesIndexPage);
   const salesDetailPage = container.get(SalesDetailPage);
   const salesOrdersPage = container.get(SalesOrdersPage);
@@ -32,9 +30,6 @@ describe('agent merchant portal', { tags: ['@marketplace-agent-assist'] }, (): v
 
   it('agent should be able to change order status during impersonation', (): void => {
     customerLoginScenario.execute({ email: dynamicFixtures.customer.email, password: staticFixtures.defaultPassword });
-
-    cartPage.visit();
-    cartPage.quickAddToCart({ sku: dynamicFixtures.productConcreteForOffer.sku, quantity: 1 });
     checkoutMpScenario.execute({ isGuest: false });
 
     userLoginScenario.execute({

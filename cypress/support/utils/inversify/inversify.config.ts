@@ -33,6 +33,14 @@ import { B2bMpCompanyUserSelectRepository } from '../../pages/yves/company/user/
 import { B2bMpMerchantRelationRequestCreateRepository } from '../../pages/yves/company/merchant-relation-request/create/repositories/b2b-mp-merchant-relation-request-create-repository';
 import { B2bMpMerchantRelationRequestDetailsRepository } from '../../pages/yves/company/merchant-relation-request/details/repositories/b2b-mp-merchant-relation-request-details-repository';
 import { B2bMpMerchantRelationRequestIndexRepository } from '../../pages/yves/company/merchant-relation-request/index/repositories/b2b-mp-merchant-relation-request-index-repository';
+import { B2cMpLoginRepository } from '../../pages/yves/login/repositories/b2c-mp-login-repository';
+import { B2cMpAgentLoginRepository } from '../../pages/yves/agent-login/repositories/b2c-mp-agent-login-repository';
+import { B2cMpCartRepository } from '../../pages/yves/cart/repositories/b2c-mp-cart-repository';
+import { B2cMpCheckoutAddressRepository } from '../../pages/yves/checkout/address/repositories/b2c-mp-checkout-address-repository';
+import { B2cMpCheckoutCustomerRepository } from '../../pages/yves/checkout/customer/repositories/b2c-mp-checkout-customer-repository';
+import { B2cMpCheckoutPaymentRepository } from '../../pages/yves/checkout/payment/repositories/b2c-mp-checkout-payment-repository';
+import { B2cMpCheckoutShipmentRepository } from '../../pages/yves/checkout/shipment/repositories/b2c-mp-checkout-shipment-repository';
+import { B2cMpCheckoutSummaryRepository } from '../../pages/yves/checkout/summary/repositories/b2c-mp-checkout-summary-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -63,6 +71,17 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.CommentCartRepository]: B2bCommentCartRepository,
 };
 
+const b2cMpMappings: BindingsMap = {
+  [REPOSITORIES.LoginRepository]: B2cMpLoginRepository,
+  [REPOSITORIES.AgentLoginRepository]: B2cMpAgentLoginRepository,
+  [REPOSITORIES.CartRepository]: B2cMpCartRepository,
+  [REPOSITORIES.CheckoutAddressRepository]: B2cMpCheckoutAddressRepository,
+  [REPOSITORIES.CheckoutCustomerRepository]: B2cMpCheckoutCustomerRepository,
+  [REPOSITORIES.CheckoutPaymentRepository]: B2cMpCheckoutPaymentRepository,
+  [REPOSITORIES.CheckoutShipmentRepository]: B2cMpCheckoutShipmentRepository,
+  [REPOSITORIES.CheckoutSummaryRepository]: B2cMpCheckoutSummaryRepository,
+};
+
 const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.LoginRepository]: B2bMpLoginRepository,
   [REPOSITORIES.CartRepository]: B2bMpCartRepository,
@@ -83,6 +102,9 @@ if (repositoryId === 'suite') {
 }
 if (repositoryId === 'b2b') {
   applyRepositoryBindings(b2bMappings);
+}
+if (repositoryId === 'b2c-mp') {
+  applyRepositoryBindings(b2cMpMappings);
 }
 if (repositoryId === 'b2b-mp') {
   applyRepositoryBindings(b2bMpMappings);

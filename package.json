@@ -16,13 +16,14 @@
     "prettier:write": "prettier . --write",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "cy:ci": "cypress run --headless --browser chrome",
     "cy:yves": "cypress run --spec cypress/e2e/yves/* --headless --browser chrome",
     "cy:backoffice": "cypress run --spec cypress/e2e/backoffice/* --headless --browser chrome",
     "cy:mp": "cypress run --spec cypress/e2e/mp/* --headless --browser chrome",
     "cy:smoke": "cypress run --env grepTags=@smoke --headless --browser chrome",
-    "cy:feature:comments": "cypress run --spec cypress/e2e/*/comments/* --headless --browser chrome",
-    "cy:feature:merchant-b2b-contract-requests": "cypress run --spec cypress/e2e/*/merchant-b2b-contract-requests/* --headless --browser chrome"
+    "cy:ci": "cypress run --headless --browser chrome",
+    "cy:ci:b2b": "cypress run --spec \"cypress/e2e/*/{merchant-b2b-contract-requests,comments}/*\" --headless --browser chrome",
+    "cy:ci:b2c-mp": "cypress run --spec \"cypress/e2e/*/{marketplace-agent-assist}/*\" --headless --browser chrome",
+    "cy:ci:b2b-mp": "cypress run --spec \"cypress/e2e/*/{marketplace-agent-assist,merchant-b2b-contract-requests}/*\" --headless --browser chrome"
   },
   "engines": {
     "node": ">=18.0.0",
