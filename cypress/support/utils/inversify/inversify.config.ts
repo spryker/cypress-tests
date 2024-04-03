@@ -47,6 +47,8 @@ import { B2bMpCheckoutCustomerRepository } from '../../pages/yves/checkout/custo
 import { B2bMpCheckoutPaymentRepository } from '../../pages/yves/checkout/payment/repositories/b2b-mp-checkout-payment-repository';
 import { B2bMpCheckoutShipmentRepository } from '../../pages/yves/checkout/shipment/repositories/b2b-mp-checkout-shipment-repository';
 import { B2bMpCheckoutSummaryRepository } from '../../pages/yves/checkout/summary/repositories/b2b-mp-checkout-summary-repository';
+import { B2bMpMultiCartRepository } from '../../pages/yves/multi-cart/repositories/b2b-mp-multi-cart-repository';
+import { B2bMpCommentCartRepository } from '../../pages/yves/comment/cart/repositories/b2b-mp-comment-cart-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -104,6 +106,8 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.CheckoutPaymentRepository]: B2bMpCheckoutPaymentRepository,
   [REPOSITORIES.CheckoutShipmentRepository]: B2bMpCheckoutShipmentRepository,
   [REPOSITORIES.CheckoutSummaryRepository]: B2bMpCheckoutSummaryRepository,
+  [REPOSITORIES.MultiCartRepository]: B2bMpMultiCartRepository,
+  [REPOSITORIES.CommentCartRepository]: B2bMpCommentCartRepository,
 };
 
 const container = new Container();

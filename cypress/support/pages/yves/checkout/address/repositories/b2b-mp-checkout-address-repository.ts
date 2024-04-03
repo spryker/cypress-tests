@@ -14,7 +14,7 @@ export class B2bMpCheckoutAddressRepository implements CheckoutAddressRepository
   getShippingAddressCompanyField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_company');
   getShippingAddressPhoneField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_phone');
   getShippingAddressBillingSameAsShippingCheckbox = (): Cypress.Chainable =>
-    cy.get('#addressesForm_billingSameAsShipping');
+    cy.get('#addressesForm_billingSameAsShipping input');
   getNextButton = (): Cypress.Chainable => cy.get('[data-qa="submit-button"]');
   getSelectBillingAddressField = (): Cypress.Chainable => cy.get('#addressesForm_billingAddress_id_customer_address');
   getBillingAddressFirstNameField = (): Cypress.Chainable => cy.get('#addressesForm_billingAddress_first_name');

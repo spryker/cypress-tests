@@ -8,7 +8,7 @@ export class B2bMpCheckoutPaymentRepository implements CheckoutPaymentRepository
   getDummyPaymentInvoiceDateField = (): Cypress.Chainable => cy.get('#paymentForm_dummyPaymentInvoice_date_of_birth');
   getGoToSummaryButton = (): Cypress.Chainable => cy.get('[data-qa="submit-button"]');
   getDummyMarketplacePaymentInvoiceRadio = (): Cypress.Chainable =>
-    cy.get('#paymentForm_paymentSelection_dummyMarketplacePaymentInvoice');
+    cy.get('#paymentForm_paymentSelection_dummyMarketplacePaymentInvoice input');
   getDummyMarketplacePaymentInvoiceDateField = (): Cypress.Chainable =>
     cy.get('#paymentForm_dummyMarketplacePaymentInvoice_dateOfBirth');
 }

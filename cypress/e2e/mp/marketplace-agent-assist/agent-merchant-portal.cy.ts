@@ -40,7 +40,10 @@ describe('agent merchant portal', { tags: ['@marketplace-agent-assist'] }, (): v
     salesIndexPage.visit();
     salesIndexPage.view();
     salesDetailPage.triggerOms({ state: 'Pay' });
-    salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
+
+    if (Cypress.env('repositoryId') === 'suite' || Cypress.env('repositoryId') === 'b2c-mp') {
+      salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
+    }
 
     impersonateScenario.execute({
       username: dynamicFixtures.merchantAgentUser.username,
