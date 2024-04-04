@@ -39,7 +39,7 @@ describe('request creation', { tags: ['@merchant-b2b-contract-requests'] }, (): 
     companyUserSelectPage.visit();
   });
 
-  it('company user should be able to create request from PDP', (): void => {
+  skipB2BIt('company user should be able to create request from PDP', (): void => {
     companyUserSelectPage.selectBusinessUnit({
       idCompanyUser: dynamicFixtures.companyUser1FromCompany1.id_company_user,
     });
@@ -60,24 +60,7 @@ describe('request creation', { tags: ['@merchant-b2b-contract-requests'] }, (): 
     merchantRelationRequestDetailsPage.assertPageLocation();
   });
 
-  it('company user should not be able to create request from merchant profile without business units', (): void => {
-    companyUserSelectPage.selectBusinessUnit({
-      idCompanyUser: dynamicFixtures.companyUser2FromCompany1.id_company_user,
-    });
-
-    cy.visit(dynamicFixtures.merchantUrl2.url);
-    merchantPage.sendMerchantRelationRequest();
-
-    merchantRelationRequestCreatePage.create({
-      // merchantReference: dynamicFixtures.merchant1.merchant_reference,
-      ownerBusinessUnitId: dynamicFixtures.businessUnit2FromCompany1.id_company_business_unit,
-      businessUnitIds: [],
-    });
-
-    merchantRelationRequestCreatePage.assertPageLocation();
-  });
-
-  it('company user should be able to create request from merchant profile page', (): void => {
+  skipB2BIt('company user should be able to create request from merchant profile page', (): void => {
     companyUserSelectPage.selectBusinessUnit({
       idCompanyUser: dynamicFixtures.companyUser2FromCompany1.id_company_user,
     });
@@ -94,6 +77,23 @@ describe('request creation', { tags: ['@merchant-b2b-contract-requests'] }, (): 
     });
 
     merchantRelationRequestDetailsPage.assertPageLocation();
+  });
+
+  it('company user should not be able to create request without business units', (): void => {
+    companyUserSelectPage.selectBusinessUnit({
+      idCompanyUser: dynamicFixtures.companyUser2FromCompany1.id_company_user,
+    });
+
+    merchantRelationRequestIndexPage.visit();
+    merchantRelationRequestIndexPage.create();
+
+    merchantRelationRequestCreatePage.create({
+      merchantReference: dynamicFixtures.merchant1.merchant_reference,
+      ownerBusinessUnitId: dynamicFixtures.businessUnit2FromCompany1.id_company_business_unit,
+      businessUnitIds: [],
+    });
+
+    merchantRelationRequestCreatePage.assertPageLocation();
   });
 
   it('company user should be able to create request from MR request create page', (): void => {
@@ -131,7 +131,7 @@ describe('request creation', { tags: ['@merchant-b2b-contract-requests'] }, (): 
     merchantRelationRequestDetailsPage.assertPageLocation();
   });
 
-  it('sold by merchant contains MR request links', (): void => {
+  skipB2BIt('sold by merchant contains MR request links', (): void => {
     companyUserSelectPage.selectBusinessUnit({
       idCompanyUser: dynamicFixtures.companyUser1FromCompany1.id_company_user,
     });
@@ -153,4 +153,8 @@ describe('request creation', { tags: ['@merchant-b2b-contract-requests'] }, (): 
       }
     });
   });
+
+  function skipB2BIt(description: string, testFn: () => void): void {
+    (Cypress.env('repositoryId') === 'b2b' ? it.skip : it)(description, testFn);
+  }
 });

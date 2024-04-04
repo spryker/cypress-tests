@@ -11,6 +11,10 @@ export class MerchantRelationRequestListPage extends BackofficePage {
   protected PAGE_URL = '/merchant-relation-request-gui/list';
 
   update = (params: UpdateParams): void => {
+    if (params.idRelationRequest) {
+      return this.visitRequest(params.idRelationRequest);
+    }
+
     if (params.idMerchant) {
       this.repository.getFilterMerchantSelect().select(params.idMerchant.toString());
     }
@@ -30,10 +34,15 @@ export class MerchantRelationRequestListPage extends BackofficePage {
         break;
     }
   };
+
+  visitRequest = (idMerchantRelationRequest: number): void => {
+    cy.visitBackoffice(`/merchant-relation-request-gui/edit?id-merchant-relation-request=${idMerchantRelationRequest}`);
+  };
 }
 
 interface UpdateParams {
   action: ActionEnum;
+  idRelationRequest?: number;
   idMerchant?: number;
   idCompany?: number;
 }

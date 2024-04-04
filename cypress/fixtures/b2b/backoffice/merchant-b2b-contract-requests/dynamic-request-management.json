@@ -1,0 +1,225 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeEN",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantUser1FromMerchant1",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantUser2FromMerchant1",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "transfer",
+          "name": "MerchantTransfer",
+          "key": "merchant1",
+          "arguments": { "id_merchant": 6, "name": "Sugar Monster", "merchant_reference": "MER000006" }
+        },
+        {
+          "type": "transfer",
+          "name": "MerchantTransfer",
+          "key": "merchant2",
+          "arguments": { "id_merchant": 6, "name": "Sugar Monster", "merchant_reference": "MER000006" }
+        },
+        {
+          "type": "transfer",
+          "name": "MerchantTransfer",
+          "key": "merchant3",
+          "arguments": { "id_merchant": 6, "name": "Sugar Monster", "merchant_reference": "MER000006" }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company1",
+          "arguments": [{ "isActive": true, "status": "approved" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company2",
+          "arguments": [{ "isActive": true, "status": "approved" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer",
+          "arguments": [{ "locale": "#localeEN", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "key": "confirmedCustomer",
+          "arguments": ["#customer"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit1FromCompany1",
+          "arguments": [{ "fkCompany": "#company1.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit2FromCompany1",
+          "arguments": [{ "fkCompany": "#company1.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit1FromCompany2",
+          "arguments": [{ "fkCompany": "#company2.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit2FromCompany2",
+          "arguments": [{ "fkCompany": "#company2.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser1FromCompany1",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "fkCustomer": "#customer.id_customer",
+              "fkCompany": "#company1.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit1FromCompany1.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser2FromCompany1",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "fkCustomer": "#customer.id_customer",
+              "fkCompany": "#company1.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit2FromCompany1.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser1FromCompany2",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "fkCustomer": "#customer.id_customer",
+              "fkCompany": "#company2.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit1FromCompany2.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "array-object",
+          "key": "assigneeCompanyBusinessUnitsFromCompany1",
+          "arguments": ["#businessUnit1FromCompany1", "#businessUnit2FromCompany1"]
+        },
+        {
+          "type": "array-object",
+          "key": "assigneeCompanyBusinessUnitsFromCompany2",
+          "arguments": ["#businessUnit1FromCompany2", "#businessUnit2FromCompany2"]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantRelationRequest",
+          "key": "requestFromMerchant1",
+          "arguments": [
+            {
+              "status": "pending",
+              "merchant": "#merchant1",
+              "companyUser": "#companyUser1FromCompany1",
+              "ownerCompanyBusinessUnit": "#businessUnit1FromCompany1",
+              "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantRelationRequest",
+          "key": "requestFromMerchant2",
+          "arguments": [
+            {
+              "status": "pending",
+              "merchant": "#merchant2",
+              "companyUser": "#companyUser1FromCompany2",
+              "ownerCompanyBusinessUnit": "#businessUnit1FromCompany2",
+              "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany2"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantRelationRequest",
+          "key": "requestFromMerchant3",
+          "arguments": [
+            {
+              "status": "pending",
+              "merchant": "#merchant3",
+              "companyUser": "#companyUser1FromCompany2",
+              "ownerCompanyBusinessUnit": "#businessUnit1FromCompany2",
+              "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany2"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveComment",
+          "arguments": [
+            {
+              "comment": {
+                "message": "This is dummy message from merchant user 1.",
+                "fkUser": "#merchantUser1FromMerchant1.id_user"
+              },
+              "ownerType": "merchant_relation_request",
+              "ownerId": "#requestFromMerchant1.id_merchant_relation_request"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveComment",
+          "key": "commentFromMerchantUser2",
+          "arguments": [
+            {
+              "comment": {
+                "message": "This is dummy message from merchant user 2.",
+                "fkUser": "#merchantUser2FromMerchant1.id_user"
+              },
+              "ownerType": "merchant_relation_request",
+              "ownerId": "#requestFromMerchant1.id_merchant_relation_request"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

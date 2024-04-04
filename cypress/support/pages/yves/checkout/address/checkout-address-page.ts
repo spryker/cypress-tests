@@ -12,7 +12,7 @@ export class CheckoutAddressPage extends YvesPage {
 
   fillShippingAddress = (params?: FillShippingAddressParams): void => {
     if (params?.idCustomerAddress) {
-      this.repository.getSelectShippingAddressField().select(params.idCustomerAddress.toString());
+      this.repository.getSelectShippingAddressField().select(params.idCustomerAddress.toString(), { force: true });
       this.repository.getShippingAddressBillingSameAsShippingCheckbox().check({ force: true });
 
       this.repository.getNextButton().click();
@@ -21,7 +21,7 @@ export class CheckoutAddressPage extends YvesPage {
     }
 
     const checkoutAddress = this.createDummyCheckoutAddress();
-    this.repository.getSelectShippingAddressField().select('0');
+    this.repository.getSelectShippingAddressField().select('0', { force: true });
 
     // Setting mandatory fields
     this.repository.getShippingAddressFirstNameField().clear().type(checkoutAddress.firstName);
@@ -102,7 +102,7 @@ export class CheckoutAddressPage extends YvesPage {
 
   fillBillingAddress = (): void => {
     const checkoutAddress = this.createDummyCheckoutAddress();
-    this.repository.getSelectBillingAddressField().select('0');
+    this.repository.getSelectBillingAddressField().select('0', { force: true });
 
     // Setting mandatory fields
     this.repository.getBillingAddressFirstNameField().clear().type(checkoutAddress.firstName);

@@ -2,7 +2,7 @@ import { injectable } from 'inversify';
 import { CommentCartRepository } from '../comment-cart-repository';
 
 @injectable()
-export class B2bCommentCartRepository implements CommentCartRepository {
+export class B2bMpCommentCartRepository implements CommentCartRepository {
   getAddCommentForm = (): Cypress.Chainable => cy.get('[data-qa="component add-comment-form"]');
   getCommentThreadListSection = (): Cypress.Chainable =>
     cy.get('[data-qa="component cart-sidebar-item"]').find('[data-qa="component add-comment-form"]').parent();
