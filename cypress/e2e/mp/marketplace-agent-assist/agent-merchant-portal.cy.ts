@@ -45,6 +45,8 @@ describe('agent merchant portal', { tags: ['@marketplace-agent-assist'] }, (): v
       salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
     }
 
+    cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+
     impersonateScenario.execute({
       username: dynamicFixtures.merchantAgentUser.username,
       password: staticFixtures.defaultPassword,
