@@ -3,4 +3,5 @@ export interface ProductRepository {
   getSoldByProductOfferRadios(): Cypress.Chainable;
   getMerchantRelationRequestLinkAttribute(): string;
   getInputRadioSelector(): string;
+  getProductConfigurator(): Cypress.Chainable;
 }

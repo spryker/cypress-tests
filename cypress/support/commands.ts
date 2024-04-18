@@ -130,3 +130,28 @@ Cypress.Commands.add('runCliCommands', (commands) => {
     },
   });
 });
+
+Cypress.Commands.add('confirmCustomerByEmail', (email) => {
+  const operation = {
+    type: 'helper',
+    name: 'confirmCustomerByEmail',
+    arguments: { email },
+  };
+
+  cy.request({
+    method: 'POST',
+    url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
+    headers: {
+      'Content-Type': 'application/vnd.api+json',
+    },
+    body: {
+      data: {
+        type: 'dynamic-fixtures',
+        attributes: {
+          operations: [operation],
+        },
+      },
+      timeout: 20000,
+    },
+  });
+});

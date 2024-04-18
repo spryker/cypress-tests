@@ -3,7 +3,7 @@ import { CheckoutStaticFixtures, BasicCheckoutDynamicFixtures } from '@interface
 import { CartPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
-describe('basic checkout', { tags: ['@checkout'] }, (): void => {
+describe('basic checkout', { tags: ['@checkout', '@smoke'] }, (): void => {
   const cartPage = container.get(CartPage);
   const loginCustomerScenario = container.get(CustomerLoginScenario);
   const checkoutScenario = container.get(CheckoutScenario);
@@ -60,36 +60,28 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
     cy.contains('Your order has been placed successfully!');
   });
 
-  it(
-    'customer should checkout to multi shipment address (with customer shipping address)',
-    { tags: ['@smoke'] },
-    (): void => {
-      loginCustomerScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-      });
+  it('customer should checkout to multi shipment address (with customer shipping address)', (): void => {
+    loginCustomerScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+    });
 
-      checkoutScenario.execute({
-        isMultiShipment: true,
-        idCustomerAddress: dynamicFixtures.address.id_customer_address,
-      });
+    checkoutScenario.execute({
+      isMultiShipment: true,
+      idCustomerAddress: dynamicFixtures.address.id_customer_address,
+    });
 
-      cy.contains('Your order has been placed successfully!');
-    }
-  );
+    cy.contains('Your order has been placed successfully!');
+  });
 
-  it(
-    'customer should checkout to multi shipment address (with new shipping address)',
-    { tags: ['@smoke'] },
-    (): void => {
-      loginCustomerScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-      });
+  it('customer should checkout to multi shipment address (with new shipping address)', (): void => {
+    loginCustomerScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+    });
 
-      checkoutScenario.execute({ isMultiShipment: true });
+    checkoutScenario.execute({ isMultiShipment: true });
 
-      cy.contains('Your order has been placed successfully!');
-    }
-  );
+    cy.contains('Your order has been placed successfully!');
+  });
 });

@@ -11,6 +11,13 @@ export class SalesDetailPage extends BackofficePage {
   protected PAGE_URL = '/sales/detail';
 
   triggerOms = (params: TriggerOmsParams): void => {
+    const repositoryId = Cypress.env('repositoryId');
+
+    // skip picking is only available for suite and b2c-mp repositories
+    if (params.state === 'skip picking' && !['suite', 'b2c-mp'].includes(repositoryId)) {
+      return;
+    }
+
     if (params.shouldTriggerOmsInCli) {
       cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
     }

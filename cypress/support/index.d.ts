@@ -46,5 +46,10 @@ declare namespace Cypress {
      * @example cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout'])
      */
     runCliCommands(commands: string[]): void;
+
+    /**
+     * @example cy.confirmCustomerByEmail('test@spryker.com')
+     */
+    confirmCustomerByEmail(email: string): void;
   }
 }

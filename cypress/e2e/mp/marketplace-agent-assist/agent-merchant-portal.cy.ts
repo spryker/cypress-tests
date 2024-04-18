@@ -1,7 +1,7 @@
 import { container } from '@utils';
 import { AgentMerchantPortalDynamicFixtures, MarketplaceAgentAssistStaticFixtures } from '@interfaces/mp';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
-import { OffersPage, ProductsPage, ProfilePage, SalesOrdersPage } from '@pages/mp';
+import { ActionEnum, OffersPage, ProductsPage, ProfilePage, SalesOrdersPage } from '@pages/mp';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ImpersonateAsMerchantUserScenario } from '@scenarios/mp';
 import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
@@ -40,10 +40,7 @@ describe('agent merchant portal', { tags: ['@marketplace-agent-assist'] }, (): v
     salesIndexPage.visit();
     salesIndexPage.view();
     salesDetailPage.triggerOms({ state: 'Pay' });
-
-    if (Cypress.env('repositoryId') === 'suite' || Cypress.env('repositoryId') === 'b2c-mp') {
-      salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
-    }
+    salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
 
     cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
 
@@ -54,7 +51,7 @@ describe('agent merchant portal', { tags: ['@marketplace-agent-assist'] }, (): v
     });
 
     salesOrdersPage.visit();
-    salesOrdersPage.cancel({ query: dynamicFixtures.customer.email });
+    salesOrdersPage.update({ query: dynamicFixtures.customer.email, action: ActionEnum.cancel });
 
     // Ensure that order was canceled
     salesOrdersPage.visit();

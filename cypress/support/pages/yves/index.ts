@@ -16,3 +16,4 @@ export * from './company/merchant-relation-request/details/merchant-relation-req
 export * from './company/merchant-relation-request/index/merchant-relation-request-index-page';
 export * from './merchant/merchant-page';
 export * from './product/product-page';
+export * from './customer/overview/customer-overview-page';

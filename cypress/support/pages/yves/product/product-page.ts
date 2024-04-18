@@ -37,6 +37,10 @@ export class ProductPage extends YvesPage {
   getInputRadioSelector = (): string => {
     return this.repository.getInputRadioSelector();
   };
+
+  getProductConfigurator = (): Cypress.Chainable => {
+    return this.repository.getProductConfigurator();
+  };
 }
 
 interface SelectSoldByProductOfferParams {

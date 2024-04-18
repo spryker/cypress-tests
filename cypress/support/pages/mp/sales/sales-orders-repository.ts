@@ -7,5 +7,7 @@ export class SalesOrdersRepository {
   getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1):visible');
   getSearchSelector = (): string => '.spy-table-search-feature input[type="text"]';
   getCancelButtonSelector = (): string => 'button:contains("Cancel")';
+  getShipButtonSelector = (): string => 'button:contains("Ship")';
+  getDeliverButtonSelector = (): string => 'button:contains("Deliver")';
   getDrawer = (): Cypress.Chainable => cy.get('.spy-drawer-wrapper');
 }

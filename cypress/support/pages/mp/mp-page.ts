@@ -23,6 +23,12 @@ export class MpPage extends AbstractPage {
   };
 }
 
+export enum ActionEnum {
+  cancel,
+  ship,
+  deliver,
+}
+
 interface InterceptMpGuiTableParams {
   url: string;
   expectedCount?: number;

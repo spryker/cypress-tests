@@ -11,4 +11,5 @@ export interface LoginRepository {
   getRegisterAcceptTermsCheckbox(): Cypress.Chainable;
   getRegisterForm(): Cypress.Chainable;
   getFailedAuthenticationText(): string;
+  getRegistrationCompletedMessage(): string;
 }

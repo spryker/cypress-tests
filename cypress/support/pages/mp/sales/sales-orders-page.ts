@@ -1,7 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-import { MpPage } from '@pages/mp';
+import { MpPage, ActionEnum } from '@pages/mp';
 import { SalesOrdersRepository } from './sales-orders-repository';
 
 @injectable()
@@ -24,9 +24,20 @@ export class SalesOrdersPage extends MpPage {
     return this.repository.getFirstTableRow();
   };
 
-  cancel = (params: CancelParams): void => {
+  update = (params: UpdateParams): void => {
     this.find({ query: params.query }).click({ force: true });
-    this.repository.getDrawer().find(this.repository.getCancelButtonSelector()).click();
+
+    if (params.action === ActionEnum.cancel) {
+      this.repository.getDrawer().find(this.repository.getCancelButtonSelector()).click();
+    }
+
+    if (params.action === ActionEnum.ship) {
+      this.repository.getDrawer().find(this.repository.getShipButtonSelector()).click();
+    }
+
+    if (params.action === ActionEnum.deliver) {
+      this.repository.getDrawer().find(this.repository.getDeliverButtonSelector()).click();
+    }
   };
 }
 
@@ -35,6 +46,7 @@ interface FindParams {
   expectedCount?: number;
 }
 
-interface CancelParams {
+interface UpdateParams {
+  action: ActionEnum;
   query: string;
 }
