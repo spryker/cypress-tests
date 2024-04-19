@@ -13,7 +13,9 @@ const protocolMap: { [key: string]: 'http' | 'https' } = {
 const protocol = protocolMap[getEnvVar('ENV_PROTOCOL', 'SPRYKER_SSL_ENABLED')];
 const backofficeHost = getEnvVar('ENV_BACKOFFICE_HOST', 'SPRYKER_BE_HOST');
 const merchantPortalHost = getEnvVar('ENV_MERCHANT_PORTAL_HOST', 'SPRYKER_MP_HOST');
+const glueHost = getEnvVar('ENV_GLUE_HOST', 'SPRYKER_API_HOST');
 const glueBackendHost = getEnvVar('ENV_GLUE_BACKEND_HOST', 'SPRYKER_GLUE_BACKEND_HOST');
+const glueStorefrontHost = getEnvVar('ENV_GLUE_STOREFRONT_HOST', 'SPRYKER_GLUE_STOREFRONT_HOST');
 const mailCatcherHost = getEnvVar('ENV_MAIL_CATCHER_HOST', 'SPRYKER_SMTP_HOST');
 const baseHost = getEnvVar('E2E_BASE_HOST', 'SPRYKER_FE_HOST');
 
@@ -22,7 +24,9 @@ export default defineConfig({
     repositoryId: process.env.ENV_REPOSITORY_ID,
     backofficeUrl: `${protocol}://${backofficeHost}`,
     merchantPortalUrl: `${protocol}://${merchantPortalHost}`,
+    glueUrl: `${protocol}://${glueHost}`,
     glueBackendUrl: `${protocol}://${glueBackendHost}`,
+    glueStorefrontUrl: `${protocol}://${glueStorefrontHost}`,
     mailCatcherUrl: `${protocol}://${mailCatcherHost}`,
   },
   e2e: {
