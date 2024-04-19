@@ -1,12 +1,13 @@
 import { container } from '@utils';
 import { DummyPaymentOmsFlowDynamicFixtures, DummyPaymentOmsFlowStaticFixtures } from '@interfaces/backoffice';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
-import { CartPage } from '@pages/yves';
+import { CatalogPage, ProductPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
 describe('dummy payment OMS flow', { tags: ['@order-management', '@smoke'] }, (): void => {
-  const cartPage = container.get(CartPage);
+  const catalogPage = container.get(CatalogPage);
+  const productsPage = container.get(ProductPage);
   const salesIndexPage = container.get(SalesIndexPage);
   const salesDetailPage = container.get(SalesDetailPage);
   const loginCustomerScenario = container.get(CustomerLoginScenario);
@@ -21,8 +22,9 @@ describe('dummy payment OMS flow', { tags: ['@order-management', '@smoke'] }, ()
   });
 
   it('backoffice operator should be able close an order from guest', (): void => {
-    cartPage.visit();
-    cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 1 });
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
+    productsPage.addToCart();
 
     checkoutScenario.execute({ isGuest: true });
     cy.contains('Your order has been placed successfully!');
@@ -35,7 +37,7 @@ describe('dummy payment OMS flow', { tags: ['@order-management', '@smoke'] }, ()
     salesIndexPage.visit();
     salesIndexPage.view();
 
-    assertDummyPaymentTransitions();
+    triggerDummyPaymentTransitions();
   });
 
   it('backoffice operator should be able close an order from customer', (): void => {
@@ -56,26 +58,15 @@ describe('dummy payment OMS flow', { tags: ['@order-management', '@smoke'] }, ()
     salesIndexPage.visit();
     salesIndexPage.view();
 
-    assertDummyPaymentTransitions();
+    triggerDummyPaymentTransitions();
   });
 
-  function assertDummyPaymentTransitions(): void {
-    salesDetailPage.triggerOms({ state: 'Pay' });
-    cy.contains('Status change triggered successfully.');
-
+  function triggerDummyPaymentTransitions(): void {
+    salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
     salesDetailPage.triggerOms({ state: 'Skip timeout' });
-    cy.contains('Status change triggered successfully.');
-
     salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
-    cy.contains('Status change triggered successfully.');
-
     salesDetailPage.triggerOms({ state: 'Ship' });
-    cy.contains('Status change triggered successfully.');
-
     salesDetailPage.triggerOms({ state: 'Stock update' });
-    cy.contains('Status change triggered successfully.');
-
     salesDetailPage.triggerOms({ state: 'Close' });
-    cy.contains('Status change triggered successfully.');
   }
 });

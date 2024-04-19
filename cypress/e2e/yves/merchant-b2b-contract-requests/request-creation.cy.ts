@@ -44,7 +44,7 @@ describe('request creation', { tags: ['@merchant-b2b-contract-requests'] }, (): 
       idCompanyUser: dynamicFixtures.companyUser1FromCompany1.id_company_user,
     });
 
-    catalogPage.search({ query: dynamicFixtures.concreteProduct.abstract_sku });
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.concreteProduct.abstract_sku });
     productPage.createMerchantRelationRequest({
       productOfferReference: dynamicFixtures.productOfferFromMerchant2.product_offer_reference,
     });
@@ -135,7 +135,7 @@ describe('request creation', { tags: ['@merchant-b2b-contract-requests'] }, (): 
     companyUserSelectPage.selectBusinessUnit({
       idCompanyUser: dynamicFixtures.companyUser1FromCompany1.id_company_user,
     });
-    catalogPage.search({ query: dynamicFixtures.concreteProduct.abstract_sku });
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.concreteProduct.abstract_sku });
 
     const productOffers = productPage.getSoldByProductOffers();
     const createRequestLink = productPage.getMerchantRelationRequestLinkAttribute();

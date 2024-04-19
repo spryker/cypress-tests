@@ -15,3 +15,7 @@ export * from './user/update/user-update-page';
 export * from './merchant-relation-request/list/merchant-relation-request-list-page';
 export * from './merchant-relation-request/edit/merchant-relation-request-edit-page';
 export * from './merchant-relationship/list/merchant-relationship-list-page';
+export * from './product-management/add/product-management-add-page';
+export * from './product-management/edit/product-management-edit-page';
+export * from './product-management/list/product-management-list-page';
+export * from './product-management/edit/variant/product-management-edit-variant-page';

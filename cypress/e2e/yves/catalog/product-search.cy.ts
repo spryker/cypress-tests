@@ -17,7 +17,7 @@ describe('product search', { tags: ['@catalog', '@smoke'] }, (): void => {
 
   it('guest should be able to find product in catalog', (): void => {
     catalogPage.visit();
-    catalogPage.search({ query: dynamicFixtures.concreteProduct.abstract_sku });
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.concreteProduct.abstract_sku });
 
     assertProductDetails();
   });
@@ -29,7 +29,7 @@ describe('product search', { tags: ['@catalog', '@smoke'] }, (): void => {
     });
 
     catalogPage.visit();
-    catalogPage.search({ query: dynamicFixtures.concreteProduct.abstract_sku });
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.concreteProduct.abstract_sku });
 
     assertProductDetails();
   });

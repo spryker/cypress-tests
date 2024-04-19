@@ -96,9 +96,9 @@ Cypress.Commands.add('reloadUntilFound', (url, findSelector, getSelector = 'body
     const msg = `url:${url} getSelector:${getSelector} findSelector:${findSelector} retries:${retries} retryWait:${retryWait}`;
 
     if (body.find(findSelector).length === 1) {
-      console.log(`found ${msg}`);
+      cy.log(`found ${msg}`);
     } else {
-      console.log(`NOT found ${msg}`);
+      cy.log(`NOT found ${msg}`);
       cy.wait(retryWait);
       cy.reloadUntilFound(url, findSelector, getSelector, retries - 1, retryWait);
     }

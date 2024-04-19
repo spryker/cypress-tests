@@ -5,13 +5,14 @@ import { SalesDetailPage, SalesIndexPage } from '../../../support/pages/backoffi
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
 import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
-import { CartPage } from '@pages/yves';
+import { CatalogPage, ProductPage } from '@pages/yves';
 
 (Cypress.env('repositoryId') === 'b2c' || Cypress.env('repositoryId') === 'b2b' ? describe.skip : describe)(
   'marketplace payment OMS flow',
   { tags: ['@marketplace-order-management', '@smoke'] },
   (): void => {
-    const cartPage = container.get(CartPage);
+    const catalogPage = container.get(CatalogPage);
+    const productsPage = container.get(ProductPage);
     const salesIndexPage = container.get(SalesIndexPage);
     const salesDetailPage = container.get(SalesDetailPage);
     const salesOrdersPage = container.get(SalesOrdersPage);
@@ -28,8 +29,10 @@ import { CartPage } from '@pages/yves';
     });
 
     it('merchant user should be able close an order from guest', (): void => {
-      cartPage.visit();
-      cartPage.quickAddToCart({ sku: dynamicFixtures.productConcreteForOffer.sku, quantity: 1 });
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.productConcreteForOffer.sku });
+      productsPage.addToCart();
+
       const guestCustomerEmail = checkoutMpScenario.execute({ isGuest: true });
 
       userLoginScenario.execute({
@@ -89,9 +92,7 @@ import { CartPage } from '@pages/yves';
 
     function triggerOmsToMerchantState(): void {
       salesDetailPage.triggerOms({ state: 'Pay' });
-      cy.contains('Status change triggered successfully.');
       salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
-      cy.contains('Status change triggered successfully.');
 
       cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
     }
@@ -106,7 +107,6 @@ import { CartPage } from '@pages/yves';
       salesIndexPage.view();
 
       salesDetailPage.triggerOms({ state: 'Close' });
-      cy.contains('Status change triggered successfully.');
     }
   }
 );

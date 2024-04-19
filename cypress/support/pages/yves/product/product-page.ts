@@ -11,6 +11,14 @@ export class ProductPage extends YvesPage {
 
   protected PAGE_URL = '';
 
+  addToCart = (): void => {
+    this.repository.getAddToCartButton().click();
+  };
+
+  getAddToCartSuccessMessage = (): string => {
+    return this.repository.getAddToCartSuccessMessage();
+  };
+
   selectSoldByProductOffer = (params: SelectSoldByProductOfferParams): void => {
     this.repository.getSoldByProductOfferRadios().check(params.productOfferReference, { force: true });
   };

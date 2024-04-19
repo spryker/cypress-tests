@@ -10,4 +10,6 @@ export class SuiteProductRepository implements ProductRepository {
   getMerchantRelationRequestLinkAttribute = (): string => '[data-qa="merchant-relation-request-create-link"]';
   getInputRadioSelector = (): string => 'input[type="radio"]';
   getProductConfigurator = (): Cypress.Chainable => cy.get('[data-qa="component product-configurator"]');
+  getAddToCartButton = (): Cypress.Chainable => cy.get('[data-qa="add-to-cart-button"]');
+  getAddToCartSuccessMessage = (): string => 'Items added successfully';
 }

@@ -11,9 +11,26 @@ export class CatalogPage extends YvesPage {
 
   protected PAGE_URL = '/search';
 
-  search = (params: SearchParams): void => {
+  searchProductFromSuggestions = (params: SearchParams): void => {
     this.repository.getSearchInput().clear().type(params.query);
     this.repository.getFirstSuggestedProduct().click();
+  };
+
+  search = (params: SearchParams): void => {
+    this.repository.getSearchInput().clear().type(params.query);
+    this.repository.getSearchButton().click();
+
+    cy.url().then((url) => {
+      cy.reloadUntilFound(
+        url,
+        `span:contains("${params.query}")`, // Is working with product's name only
+        this.repository.getFirstProductItemBlockSelector(),
+        10,
+        5000
+      );
+
+      this.repository.getProductItemBlocks().first().find(this.repository.getViewButtonSelector()).click();
+    });
   };
 }
 
