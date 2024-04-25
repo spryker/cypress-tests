@@ -24,4 +24,6 @@ export class B2bCartRepository implements CartRepository {
     this.findCartItemChangeQuantityForm(sku).find('[data-qa="component formatted-number-input"]');
   findClearCartForm = (): Cypress.Chainable => cy.get('form[name=multi_cart_clear_form]');
   getCheckoutButton = (): Cypress.Chainable => cy.get('[data-qa="cart-go-to-checkout"]');
+  getQuickAddToCartAction = (): Cypress.Chainable<string> =>
+    cy.get('[data-qa="component product-quick-add-form"] form').invoke('attr', 'action');
 }

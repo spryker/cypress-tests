@@ -10,8 +10,21 @@ export class CartPage extends YvesPage {
   @inject(REPOSITORIES.CartRepository) private repository: CartRepository;
 
   protected PAGE_URL = '/cart';
+  protected GET_ITEMS_URL = '/en/cart/get-cart-items';
+  protected QUICK_ADD_AJAX_REQUEST_ALIAS: string = 'quickAddAjaxRequest';
+  protected GET_ITEMS_AJAX_REQUEST_ALIAS: string = 'getItemsAjaxRequest';
+
+  visitCartWithItems = (): void => {
+      cy.intercept('GET', this.GET_ITEMS_URL).as(this.GET_ITEMS_AJAX_REQUEST_ALIAS);
+      this.visit();
+      cy.wait(`@${this.GET_ITEMS_AJAX_REQUEST_ALIAS}`);
+  };
 
   quickAddToCart = (params: QuickAddToCartParams): void => {
+    this.repository.getQuickAddToCartAction().then(action => {
+      cy.intercept('POST', action).as(this.QUICK_ADD_AJAX_REQUEST_ALIAS);
+    });
+
     this.repository.getQuickAddToCartSkuField().clear().type(params.sku);
     this.repository.getQuickAddToCartProductListField().click();
 
@@ -21,6 +34,8 @@ export class CartPage extends YvesPage {
       .type(String(params?.quantity || 1));
 
     this.repository.getQuickAddToCartSubmitButton().click();
+
+    cy.wait(`@${this.QUICK_ADD_AJAX_REQUEST_ALIAS}`);
   };
 
   startCheckout = (): void => {

@@ -20,7 +20,7 @@ export class CheckoutMpScenario {
   @inject(CheckoutSummaryPage) private checkoutSummaryPage: CheckoutSummaryPage;
 
   execute = (params: ExecuteParams): void => {
-    this.cartPage.visit();
+    this.cartPage.visitCartWithItems();
     this.cartPage.startCheckout();
 
     if (params?.isGuest) {
