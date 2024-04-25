@@ -11,8 +11,8 @@ export class CartPage extends YvesPage {
 
   protected PAGE_URL = '/cart';
   protected GET_ITEMS_URL = '/en/cart/get-cart-items';
-  protected QUICK_ADD_AJAX_REQUEST_ALIAS: string = 'quickAddAjaxRequest';
-  protected GET_ITEMS_AJAX_REQUEST_ALIAS: string = 'getItemsAjaxRequest';
+  protected QUICK_ADD_AJAX_REQUEST_ALIAS = 'quickAddAjaxRequest';
+  protected GET_ITEMS_AJAX_REQUEST_ALIAS = 'getItemsAjaxRequest';
 
   visitCartWithItems = (): void => {
     cy.intercept('GET', this.GET_ITEMS_URL).as(this.GET_ITEMS_AJAX_REQUEST_ALIAS);
