@@ -15,13 +15,13 @@ export class CartPage extends YvesPage {
   protected GET_ITEMS_AJAX_REQUEST_ALIAS: string = 'getItemsAjaxRequest';
 
   visitCartWithItems = (): void => {
-      cy.intercept('GET', this.GET_ITEMS_URL).as(this.GET_ITEMS_AJAX_REQUEST_ALIAS);
-      this.visit();
-      cy.wait(`@${this.GET_ITEMS_AJAX_REQUEST_ALIAS}`);
+    cy.intercept('GET', this.GET_ITEMS_URL).as(this.GET_ITEMS_AJAX_REQUEST_ALIAS);
+    this.visit();
+    cy.wait(`@${this.GET_ITEMS_AJAX_REQUEST_ALIAS}`);
   };
 
   quickAddToCart = (params: QuickAddToCartParams): void => {
-    this.repository.getQuickAddToCartAction().then(action => {
+    this.repository.getQuickAddToCartAction().then((action) => {
       cy.intercept('POST', action).as(this.QUICK_ADD_AJAX_REQUEST_ALIAS);
     });
 
