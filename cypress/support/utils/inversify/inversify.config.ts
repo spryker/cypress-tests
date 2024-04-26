@@ -71,6 +71,8 @@ import { B2cCustomerOverviewRepository } from '../../pages/yves/customer/overvie
 import { B2bCustomerOverviewRepository } from '../../pages/yves/customer/overview/repositories/b2b-customer-overview-repository';
 import { B2cMpCustomerOverviewRepository } from '../../pages/yves/customer/overview/repositories/b2c-mp-customer-overview-repository';
 import { B2bMpCustomerOverviewRepository } from '../../pages/yves/customer/overview/repositories/b2b-mp-customer-overview-repository';
+import { B2cMpCatalogRepository } from '../../pages/yves/catalog/repositories/b2c-mp-catalog-repository';
+import { B2cMpProductRepository } from '../../pages/yves/product/repositories/b2c-mp-product-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -126,6 +128,8 @@ const b2bMappings: BindingsMap = {
 
 const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.LoginRepository]: B2cMpLoginRepository,
+  [REPOSITORIES.CatalogRepository]: B2cMpCatalogRepository,
+  [REPOSITORIES.ProductRepository]: B2cMpProductRepository,
   [REPOSITORIES.AgentLoginRepository]: B2cMpAgentLoginRepository,
   [REPOSITORIES.CartRepository]: B2cMpCartRepository,
   [REPOSITORIES.CheckoutAddressRepository]: B2cMpCheckoutAddressRepository,

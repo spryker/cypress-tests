@@ -33,6 +33,9 @@ import { CatalogPage, ProductPage } from '@pages/yves';
     it('merchant user should be able close an order from guest', (): void => {
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: staticFixtures.productConcreteForOffer.sku });
+      productsPage.selectSoldByProductOffer({
+        productOfferReference: staticFixtures.productOffer.product_offer_reference,
+      });
       productsPage.addToCart();
 
       const guestCustomerEmail = checkoutMpScenario.execute({ isGuest: true });
@@ -63,6 +66,9 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: staticFixtures.productConcreteForOffer.sku });
+      productsPage.selectSoldByProductOffer({
+        productOfferReference: staticFixtures.productOffer.product_offer_reference,
+      });
       productsPage.addToCart();
 
       checkoutMpScenario.execute();

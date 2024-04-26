@@ -10,5 +10,5 @@ export class B2cMpCheckoutCustomerRepository implements CheckoutCustomerReposito
   getGuestEmailField = (): Cypress.Chainable => cy.get('#guestForm_customer_email');
   getGuestTermsCheckbox = (): Cypress.Chainable =>
     cy.get('[data-qa="component checkbox guestForm[customer][accept_terms] guestForm_customer_accept_terms"]');
-  getGuestSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="guest-form-submit-button"]');
+  getGuestSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="submit-button"]:visible');
 }

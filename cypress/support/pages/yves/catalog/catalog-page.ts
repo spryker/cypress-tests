@@ -12,7 +12,7 @@ export class CatalogPage extends YvesPage {
   protected PAGE_URL = '/search';
 
   searchProductFromSuggestions = (params: SearchParams): void => {
-    if (this.isRepository('b2c')) {
+    if (this.isRepository('b2c', 'b2c-mp')) {
       cy.get('.header__search-open').click();
     }
 
@@ -21,7 +21,7 @@ export class CatalogPage extends YvesPage {
   };
 
   search = (params: SearchParams): void => {
-    if (this.isRepository('b2c')) {
+    if (this.isRepository('b2c', 'b2c-mp')) {
       cy.get('.header__search-open').click();
     }
 

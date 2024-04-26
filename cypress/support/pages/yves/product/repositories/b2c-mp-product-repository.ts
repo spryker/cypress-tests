@@ -3,7 +3,7 @@ import { ProductRepository } from '../product-repository';
 import * as Cypress from 'cypress';
 
 @injectable()
-export class B2cProductRepository implements ProductRepository {
+export class B2cMpProductRepository implements ProductRepository {
   getSoldByProductOffers = (): Cypress.Chainable => cy.get('[data-qa="component merchant-product-offer-item"]');
   getSoldByProductOfferRadios = (): Cypress.Chainable =>
     cy.get('[data-qa="component merchant-product-offer-item"] input[type="radio"]');

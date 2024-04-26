@@ -55,13 +55,6 @@ describe('product search smoke', { tags: ['@catalog', '@smoke'] }, (): void => {
   function assertProductDetails(): void {
     cy.contains(staticFixtures.concreteProduct.name);
     productPage.getProductConfigurator().should('contain', staticFixtures.productPrice);
-
-    if (!isB2cRepository()) {
-      productPage.getProductConfigurator().should('contain', staticFixtures.concreteProduct.sku);
-    }
-  }
-
-  function isB2cRepository(): boolean {
-    return Cypress.env('repositoryId') === 'b2c';
+    productPage.getProductConfigurator().should('contain', staticFixtures.concreteProduct.sku);
   }
 });
