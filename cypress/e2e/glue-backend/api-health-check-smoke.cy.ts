@@ -2,32 +2,16 @@
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
 describe('API health check smoke', { tags: '@smoke' }, () => {
-  it('should return 201', () => {
-    const dummyBody = {
-      data: {
-        type: 'dynamic-fixtures',
-        attributes: {
-          operations: [
-            {
-              type: 'transfer',
-              name: 'LocaleTransfer',
-              key: 'localeDE',
-              arguments: { locale_name: 'de_DE' },
-            },
-          ],
-        },
-      },
-    };
-
+  it('should return 200', () => {
     cy.request({
       method: 'POST',
-      url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
+      url: Cypress.env().glueBackendUrl + '/token',
       headers: {
-        'Content-Type': 'application/vnd.api+json',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: dummyBody,
+      body: `grantType=password&username=admin@spryker.com&password=change123`,
     })
       .its('status')
-      .should('eq', 201);
+      .should('eq', 200);
   });
 });

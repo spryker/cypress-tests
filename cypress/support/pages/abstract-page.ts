@@ -9,4 +9,6 @@ export class AbstractPage {
   assertPageLocation = (): void => {
     cy.url({ timeout: 4000 }).should('include', this.PAGE_URL);
   };
+
+  isRepository = (...ids: string[]): boolean => ids.includes(Cypress.env('repositoryId'));
 }

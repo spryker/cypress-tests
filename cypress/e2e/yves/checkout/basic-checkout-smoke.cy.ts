@@ -1,15 +1,15 @@
 import { container } from '@utils';
 import { CheckoutStaticSmokeFixtures } from '@interfaces/yves';
-import { CartPage, CatalogPage, ProductPage } from '@pages/yves';
+import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
 describe('basic checkout smoke', { tags: ['@checkout', '@smoke'] }, (): void => {
-  const cartPage = container.get(CartPage);
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);
+  const customerOverviewPage = container.get(CustomerOverviewPage);
   const loginCustomerScenario = container.get(CustomerLoginScenario);
   const checkoutScenario = container.get(CheckoutScenario);
 
@@ -30,7 +30,7 @@ describe('basic checkout smoke', { tags: ['@checkout', '@smoke'] }, (): void => 
 
     checkoutScenario.execute({ isGuest: true });
 
-    cy.contains('Your order has been placed successfully!');
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
   it('guest customer should checkout to multi shipment address', (): void => {
@@ -47,7 +47,7 @@ describe('basic checkout smoke', { tags: ['@checkout', '@smoke'] }, (): void => 
       isMultiShipment: true,
     });
 
-    cy.contains('Your order has been placed successfully!');
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
   it('customer should checkout to single shipment (with new shipping address)', (): void => {
@@ -56,12 +56,17 @@ describe('basic checkout smoke', { tags: ['@checkout', '@smoke'] }, (): void => 
       password: staticFixtures.defaultPassword,
     });
 
-    cartPage.visit();
-    cartPage.quickAddToCart({ sku: staticFixtures.product1.sku, quantity: 1 });
-    cartPage.quickAddToCart({ sku: staticFixtures.product2.sku, quantity: 1 });
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: staticFixtures.product1.sku });
+    productPage.addToCart();
+
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: staticFixtures.product2.sku });
+    productPage.addToCart();
+
     checkoutScenario.execute();
 
-    cy.contains('Your order has been placed successfully!');
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
   it('customer should checkout to multi shipment address (with new shipping address)', (): void => {
@@ -70,11 +75,16 @@ describe('basic checkout smoke', { tags: ['@checkout', '@smoke'] }, (): void => 
       password: staticFixtures.defaultPassword,
     });
 
-    cartPage.visit();
-    cartPage.quickAddToCart({ sku: staticFixtures.product1.sku, quantity: 1 });
-    cartPage.quickAddToCart({ sku: staticFixtures.product2.sku, quantity: 1 });
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: staticFixtures.product1.sku });
+    productPage.addToCart();
+
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: staticFixtures.product2.sku });
+    productPage.addToCart();
+
     checkoutScenario.execute({ isMultiShipment: true });
 
-    cy.contains('Your order has been placed successfully!');
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 });

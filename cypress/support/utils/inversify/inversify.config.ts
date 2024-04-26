@@ -56,6 +56,21 @@ import { B2bMerchantRelationRequestCreateRepository } from '../../pages/yves/com
 import { B2bMerchantRelationRequestDetailsRepository } from '../../pages/yves/company/merchant-relation-request/details/repositories/b2b-merchant-relation-request-details-repository';
 import { B2bMerchantRelationRequestIndexRepository } from '../../pages/yves/company/merchant-relation-request/index/repositories/b2b-merchant-relation-request-index-repository';
 import { B2bMerchantRepository } from '../../pages/yves/merchant/repositories/b2b-merchant-repository';
+import { B2cLoginRepository } from '../../pages/yves/login/repositories/b2c-login-repository';
+import { B2cAgentLoginRepository } from '../../pages/yves/agent-login/repositories/b2c-agent-login-repository';
+import { B2cCartRepository } from '../../pages/yves/cart/repositories/b2c-cart-repository';
+import { B2cCheckoutAddressRepository } from '../../pages/yves/checkout/address/repositories/b2c-checkout-address-repository';
+import { B2cCheckoutCustomerRepository } from '../../pages/yves/checkout/customer/repositories/b2c-checkout-customer-repository';
+import { B2cCheckoutPaymentRepository } from '../../pages/yves/checkout/payment/repositories/b2c-checkout-payment-repository';
+import { B2cCheckoutShipmentRepository } from '../../pages/yves/checkout/shipment/repositories/b2c-checkout-shipment-repository';
+import { B2cCheckoutSummaryRepository } from '../../pages/yves/checkout/summary/repositories/b2c-checkout-summary-repository';
+import { B2cCatalogRepository } from '../../pages/yves/catalog/repositories/b2c-catalog-repository';
+import { B2cProductRepository } from '../../pages/yves/product/repositories/b2c-product-repository';
+import { SuiteCustomerOverviewRepository } from '../../pages/yves/customer/overview/repositories/suite-customer-overview-repository';
+import { B2cCustomerOverviewRepository } from '../../pages/yves/customer/overview/repositories/b2c-customer-overview-repository';
+import { B2bCustomerOverviewRepository } from '../../pages/yves/customer/overview/repositories/b2b-customer-overview-repository';
+import { B2cMpCustomerOverviewRepository } from '../../pages/yves/customer/overview/repositories/b2c-mp-customer-overview-repository';
+import { B2bMpCustomerOverviewRepository } from '../../pages/yves/customer/overview/repositories/b2b-mp-customer-overview-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -77,6 +92,21 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.MerchantRelationRequestDetailsRepository]: SuiteMerchantRelationRequestDetailsRepository,
   [REPOSITORIES.MerchantRelationRequestIndexRepository]: SuiteMerchantRelationRequestIndexRepository,
   [REPOSITORIES.MerchantRepository]: SuiteMerchantRepository,
+  [REPOSITORIES.CustomerOverviewRepository]: SuiteCustomerOverviewRepository,
+};
+
+const b2cMappings: BindingsMap = {
+  [REPOSITORIES.LoginRepository]: B2cLoginRepository,
+  [REPOSITORIES.CatalogRepository]: B2cCatalogRepository,
+  [REPOSITORIES.ProductRepository]: B2cProductRepository,
+  [REPOSITORIES.AgentLoginRepository]: B2cAgentLoginRepository,
+  [REPOSITORIES.CartRepository]: B2cCartRepository,
+  [REPOSITORIES.CheckoutAddressRepository]: B2cCheckoutAddressRepository,
+  [REPOSITORIES.CheckoutCustomerRepository]: B2cCheckoutCustomerRepository,
+  [REPOSITORIES.CheckoutPaymentRepository]: B2cCheckoutPaymentRepository,
+  [REPOSITORIES.CheckoutShipmentRepository]: B2cCheckoutShipmentRepository,
+  [REPOSITORIES.CheckoutSummaryRepository]: B2cCheckoutSummaryRepository,
+  [REPOSITORIES.CustomerOverviewRepository]: B2cCustomerOverviewRepository,
 };
 
 const b2bMappings: BindingsMap = {
@@ -91,6 +121,7 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.MerchantRelationRequestDetailsRepository]: B2bMerchantRelationRequestDetailsRepository,
   [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2bMerchantRelationRequestIndexRepository,
   [REPOSITORIES.MerchantRepository]: B2bMerchantRepository,
+  [REPOSITORIES.CustomerOverviewRepository]: B2bCustomerOverviewRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
@@ -102,6 +133,7 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.CheckoutPaymentRepository]: B2cMpCheckoutPaymentRepository,
   [REPOSITORIES.CheckoutShipmentRepository]: B2cMpCheckoutShipmentRepository,
   [REPOSITORIES.CheckoutSummaryRepository]: B2cMpCheckoutSummaryRepository,
+  [REPOSITORIES.CustomerOverviewRepository]: B2cMpCustomerOverviewRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
@@ -122,6 +154,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.CheckoutSummaryRepository]: B2bMpCheckoutSummaryRepository,
   [REPOSITORIES.MultiCartRepository]: B2bMpMultiCartRepository,
   [REPOSITORIES.CommentCartRepository]: B2bMpCommentCartRepository,
+  [REPOSITORIES.CustomerOverviewRepository]: B2bMpCustomerOverviewRepository,
 };
 
 const container = new Container();
@@ -129,6 +162,9 @@ const repositoryId = Cypress.env('repositoryId');
 
 if (repositoryId === 'suite') {
   applyRepositoryBindings(suiteMappings);
+}
+if (repositoryId === 'b2c') {
+  applyRepositoryBindings(b2cMappings);
 }
 if (repositoryId === 'b2b') {
   applyRepositoryBindings(b2bMappings);

@@ -1,11 +1,12 @@
 import { container } from '@utils';
 import { CheckoutStaticFixtures, BasicCheckoutDynamicFixtures } from '@interfaces/yves';
-import { CatalogPage, ProductPage } from '@pages/yves';
+import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
 describe('basic checkout', { tags: ['@checkout'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);
+  const customerOverviewPage = container.get(CustomerOverviewPage);
   const loginCustomerScenario = container.get(CustomerLoginScenario);
   const checkoutScenario = container.get(CheckoutScenario);
 
@@ -27,7 +28,7 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
 
     checkoutScenario.execute({ isGuest: true, shouldTriggerOmsInCli: true });
 
-    cy.contains('Your order has been placed successfully!');
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
   it('guest customer should checkout to multi shipment address', (): void => {
@@ -45,7 +46,7 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
       shouldTriggerOmsInCli: true,
     });
 
-    cy.contains('Your order has been placed successfully!');
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
   it('customer should checkout to single shipment (with customer shipping address)', (): void => {
@@ -59,7 +60,7 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
       shouldTriggerOmsInCli: true,
     });
 
-    cy.contains('Your order has been placed successfully!');
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
   it('customer should checkout to single shipment (with new shipping address)', (): void => {
@@ -70,7 +71,7 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
 
     checkoutScenario.execute({ shouldTriggerOmsInCli: true });
 
-    cy.contains('Your order has been placed successfully!');
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
   it('customer should checkout to multi shipment address (with customer shipping address)', (): void => {
@@ -85,7 +86,7 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
       shouldTriggerOmsInCli: true,
     });
 
-    cy.contains('Your order has been placed successfully!');
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
   it('customer should checkout to multi shipment address (with new shipping address)', (): void => {
@@ -96,6 +97,6 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
 
     checkoutScenario.execute({ isMultiShipment: true, shouldTriggerOmsInCli: true });
 
-    cy.contains('Your order has been placed successfully!');
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 });

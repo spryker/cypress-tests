@@ -1,7 +1,7 @@
 import { container } from '@utils';
 import { DummyPaymentOmsFlowSmokeStaticFixtures } from '@interfaces/backoffice';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
-import { CatalogPage, ProductPage } from '@pages/yves';
+import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
@@ -11,6 +11,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 describe('dummy payment OMS flow smoke', { tags: ['@order-management', '@smoke'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
   const productsPage = container.get(ProductPage);
+  const customerOverviewPage = container.get(CustomerOverviewPage);
   const salesIndexPage = container.get(SalesIndexPage);
   const salesDetailPage = container.get(SalesDetailPage);
   const loginCustomerScenario = container.get(CustomerLoginScenario);
@@ -29,7 +30,7 @@ describe('dummy payment OMS flow smoke', { tags: ['@order-management', '@smoke']
     productsPage.addToCart();
 
     checkoutScenario.execute({ isGuest: true });
-    cy.contains('Your order has been placed successfully!');
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
     userLoginScenario.execute({
       username: staticFixtures.rootUser.username,
@@ -50,7 +51,7 @@ describe('dummy payment OMS flow smoke', { tags: ['@order-management', '@smoke']
     productsPage.addToCart();
 
     checkoutScenario.execute();
-    cy.contains('Your order has been placed successfully!');
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
     userLoginScenario.execute({
       username: staticFixtures.rootUser.username,

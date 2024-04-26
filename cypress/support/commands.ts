@@ -33,45 +33,48 @@ Cypress.Commands.add('resetYvesCookies', () => {
   });
 });
 
-Cypress.Commands.add('loadDynamicFixturesByPayload', function loadDynamicFixturesByPayload(dynamicFixturesFilePath, retries = 2) {
-  cy.fixture(dynamicFixturesFilePath).then((operationRequestPayload) => {
-    return cy
-      .request({
-        method: 'POST',
-        url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
-        headers: {
-          'Content-Type': 'application/vnd.api+json',
-        },
-        body: operationRequestPayload,
-        timeout: 60000,
-        failOnStatusCode: false,
-      })
-      .then((response) => {
-        if (response.status === 500 || response.status === 408) {
-          if (retries > 0) {
-            cy.log('Retrying due to error or timeout...');
-            return cy.loadDynamicFixturesByPayload(dynamicFixturesFilePath, retries - 1);
-          } else {
-            throw new Error(response.body);
+Cypress.Commands.add(
+  'loadDynamicFixturesByPayload',
+  function loadDynamicFixturesByPayload(dynamicFixturesFilePath, retries = 2) {
+    cy.fixture(dynamicFixturesFilePath).then((operationRequestPayload) => {
+      return cy
+        .request({
+          method: 'POST',
+          url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
+          headers: {
+            'Content-Type': 'application/vnd.api+json',
+          },
+          body: operationRequestPayload,
+          timeout: 60000,
+          failOnStatusCode: false,
+        })
+        .then((response) => {
+          if (response.status === 500 || response.status === 408) {
+            if (retries > 0) {
+              cy.log('Retrying due to error or timeout...');
+              return cy.loadDynamicFixturesByPayload(dynamicFixturesFilePath, retries - 1);
+            } else {
+              throw new Error(response.body);
+            }
           }
-        }
 
-        if (Array.isArray(response.body.data)) {
-          return response.body.data.reduce(
-            (acc: Record<string, unknown>, item: Record<string, { key: string; data: unknown }>) => {
-              acc[item.attributes.key] = item.attributes.data;
-              return acc;
-            },
-            {}
-          );
-        } else {
-          return {
-            [response.body.data.attributes.key]: response.body.data.attributes.data,
-          };
-        }
-      });
-  });
-});
+          if (Array.isArray(response.body.data)) {
+            return response.body.data.reduce(
+              (acc: Record<string, unknown>, item: Record<string, { key: string; data: unknown }>) => {
+                acc[item.attributes.key] = item.attributes.data;
+                return acc;
+              },
+              {}
+            );
+          } else {
+            return {
+              [response.body.data.attributes.key]: response.body.data.attributes.data,
+            };
+          }
+        });
+    });
+  }
+);
 
 Cypress.Commands.add('resetBackofficeCookies', () => {
   cy.clearCookies();

@@ -1,0 +1,12 @@
+{
+  "defaultPassword": "change123",
+  "productPrice": "195.68",
+  "customer": {
+    "email": "spencor.hopkin@spryker.com"
+  },
+  "concreteProduct": {
+    "name": "Toshiba CAMILEO S20",
+    "sku": "209_12554247",
+    "abstract_sku": "209"
+  }
+}

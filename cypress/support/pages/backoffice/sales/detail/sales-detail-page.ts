@@ -13,8 +13,8 @@ export class SalesDetailPage extends BackofficePage {
   triggerOms = (params: TriggerOmsParams): void => {
     const repositoryId = Cypress.env('repositoryId');
 
-    // skip picking is only available for suite and b2c-mp repositories
-    if (params.state === 'skip picking' && !['suite', 'b2c-mp'].includes(repositoryId)) {
+    // skip picking is only available for suite, b2c and b2c-mp repositories
+    if (params.state === 'skip picking' && !['suite', 'b2c', 'b2c-mp'].includes(repositoryId)) {
       return;
     }
 

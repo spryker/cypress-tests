@@ -40,7 +40,11 @@ export class CheckoutAddressPage extends YvesPage {
   };
 
   fillMultiShippingAddress = (params?: FillShippingAddressParams): void => {
-    this.repository.getMultiShipmentTriggerButton().click();
+    if (this.isRepository('b2c')) {
+      this.repository.getSelectShippingAddressField().select('-1', { force: true });
+    } else {
+      this.repository.getMultiShipmentTriggerButton().click();
+    }
 
     this.repository
       .getMultiShipmentAddressItemElement()
@@ -48,7 +52,9 @@ export class CheckoutAddressPage extends YvesPage {
       .each(($addressItem, index) => {
         const checkoutAddress = this.createDummyCheckoutAddress();
 
-        this.repository.getMultiShipmentAddressItemDeliveryRadio($addressItem, index).click({ force: true });
+        if (!this.isRepository('b2c')) {
+          this.repository.getMultiShipmentAddressItemDeliveryRadio($addressItem, index).click({ force: true });
+        }
 
         if (params?.idCustomerAddress) {
           this.repository
