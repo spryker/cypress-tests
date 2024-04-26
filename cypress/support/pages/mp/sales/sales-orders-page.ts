@@ -27,8 +27,12 @@ export class SalesOrdersPage extends MpPage {
   update = (params: UpdateParams): void => {
     this.find({ query: params.query }).click({ force: true });
 
-    if (params.action === ActionEnum.cancel) {
-      this.repository.getDrawer().find(this.repository.getCancelButtonSelector()).click();
+    if (params.action === ActionEnum.sendToDistribution) {
+      this.repository.getDrawer().find(this.repository.getSendToDistributionButtonSelector()).click();
+    }
+
+    if (params.action === ActionEnum.confirmAtCenter) {
+      this.repository.getDrawer().find(this.repository.getConfirmAtCenterButtonSelector()).click();
     }
 
     if (params.action === ActionEnum.ship) {
@@ -37,6 +41,10 @@ export class SalesOrdersPage extends MpPage {
 
     if (params.action === ActionEnum.deliver) {
       this.repository.getDrawer().find(this.repository.getDeliverButtonSelector()).click();
+    }
+
+    if (params.action === ActionEnum.cancel) {
+      this.repository.getDrawer().find(this.repository.getCancelButtonSelector()).click();
     }
   };
 }

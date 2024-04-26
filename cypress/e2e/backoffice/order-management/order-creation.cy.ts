@@ -26,6 +26,7 @@ describe('order creation', { tags: ['@order-management'] }, (): void => {
       isGuest: false,
       isMultiShipment: false,
       idCustomerAddress: dynamicFixtures.address.id_customer_address,
+      shouldTriggerOmsInCli: true,
     });
     cy.contains('Your order has been placed successfully!');
 
@@ -44,7 +45,7 @@ describe('order creation', { tags: ['@order-management'] }, (): void => {
     cartPage.visit();
     cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 1 });
 
-    checkoutScenario.execute({ isGuest: true });
+    checkoutScenario.execute({ isGuest: true, shouldTriggerOmsInCli: true });
     cy.contains('Your order has been placed successfully!');
 
     userLoginScenario.execute({

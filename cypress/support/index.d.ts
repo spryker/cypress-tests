@@ -15,7 +15,7 @@ declare namespace Cypress {
     /**
      * @example cy.loadDynamicFixturesByPayload('suite/yves/checkout/dynamic-checkout-by-guest-customer')
      */
-    loadDynamicFixturesByPayload(dynamicFixturesDefaultFilePath: string): Chainable;
+    loadDynamicFixturesByPayload(dynamicFixturesDefaultFilePath: string, retries?: number): Chainable;
 
     /**
      * @example cy.resetBackofficeCookies()

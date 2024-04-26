@@ -16,7 +16,7 @@ export class CreateProductScenario {
   @inject(ProductManagementListPage) private productManagementListPage: ProductManagementListPage;
   @inject(ProductManagementEditVariantPage) private productManagementEditVariantPage: ProductManagementEditVariantPage;
 
-  execute = (): ProductAbstract => {
+  execute = (params?: ExecuteParams): ProductAbstract => {
     this.productManagementAddPage.visit();
     const productAbstract = this.productManagementAddPage.create();
     this.productManagementEditPage.approve();
@@ -27,10 +27,16 @@ export class CreateProductScenario {
 
     this.productManagementEditVariantPage.activateFirstConcreteProduct();
 
-    cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+    if (params?.shouldTriggerPublishAndSync) {
+      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+    }
 
     return productAbstract;
   };
+}
+
+interface ExecuteParams {
+  shouldTriggerPublishAndSync?: boolean;
 }
 
 interface ProductAbstract {

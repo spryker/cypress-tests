@@ -1,10 +1,7 @@
 import { Customer, User } from './shared';
 
-export interface PublishAndSynchronizeDynamicFixtures {
+export interface PublishAndSynchronizeSmokeStaticFixtures {
+  defaultPassword: string;
   customer: Customer;
   rootUser: User;
-}
-
-export interface ProductStaticFixtures {
-  defaultPassword: string;
 }

@@ -29,6 +29,7 @@ describe('return creation', { tags: ['@return-management'] }, (): void => {
       isGuest: false,
       isMultiShipment: false,
       idCustomerAddress: dynamicFixtures.address.id_customer_address,
+      shouldTriggerOmsInCli: true,
     });
 
     userLoginScenario.execute({

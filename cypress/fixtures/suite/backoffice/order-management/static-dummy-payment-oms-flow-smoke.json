@@ -1,0 +1,13 @@
+{
+  "defaultPassword": "change123",
+  "customer": {
+    "email": "spencor.hopkin@spryker.com"
+  },
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "product": {
+    "name": "Canon IXUS 285",
+    "sku": "009_30692991"
+  }
+}

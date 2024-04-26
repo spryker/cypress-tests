@@ -1,4 +1,7 @@
-describe('API health check', { tags: '@smoke' }, () => {
+/**
+ * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
+ */
+describe('API health check smoke', { tags: '@smoke' }, () => {
   it('should return 200', () => {
     cy.request({
       method: 'GET',

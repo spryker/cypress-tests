@@ -1,10 +1,11 @@
 import { container } from '@utils';
 import { CheckoutStaticFixtures, BasicCheckoutDynamicFixtures } from '@interfaces/yves';
-import { CartPage } from '@pages/yves';
+import { CatalogPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
-describe('basic checkout', { tags: ['@checkout', '@smoke'] }, (): void => {
-  const cartPage = container.get(CartPage);
+describe('basic checkout', { tags: ['@checkout'] }, (): void => {
+  const catalogPage = container.get(CatalogPage);
+  const productPage = container.get(ProductPage);
   const loginCustomerScenario = container.get(CustomerLoginScenario);
   const checkoutScenario = container.get(CheckoutScenario);
 
@@ -16,23 +17,32 @@ describe('basic checkout', { tags: ['@checkout', '@smoke'] }, (): void => {
   });
 
   it('guest customer should checkout to single shipment', (): void => {
-    cartPage.visit();
-    cartPage.quickAddToCart({ sku: dynamicFixtures.product1.sku, quantity: 1 });
-    cartPage.quickAddToCart({ sku: dynamicFixtures.product2.sku, quantity: 1 });
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product1.sku });
+    productPage.addToCart();
 
-    checkoutScenario.execute({ isGuest: true });
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product2.sku });
+    productPage.addToCart();
+
+    checkoutScenario.execute({ isGuest: true, shouldTriggerOmsInCli: true });
 
     cy.contains('Your order has been placed successfully!');
   });
 
-  it('guest customer should checkout to multi shipment address', { tags: ['@smoke'] }, (): void => {
-    cartPage.visit();
-    cartPage.quickAddToCart({ sku: dynamicFixtures.product1.sku, quantity: 1 });
-    cartPage.quickAddToCart({ sku: dynamicFixtures.product2.sku, quantity: 1 });
+  it('guest customer should checkout to multi shipment address', (): void => {
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product1.sku });
+    productPage.addToCart();
+
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product2.sku });
+    productPage.addToCart();
 
     checkoutScenario.execute({
       isGuest: true,
       isMultiShipment: true,
+      shouldTriggerOmsInCli: true,
     });
 
     cy.contains('Your order has been placed successfully!');
@@ -44,7 +54,10 @@ describe('basic checkout', { tags: ['@checkout', '@smoke'] }, (): void => {
       password: staticFixtures.defaultPassword,
     });
 
-    checkoutScenario.execute({ idCustomerAddress: dynamicFixtures.address.id_customer_address });
+    checkoutScenario.execute({
+      idCustomerAddress: dynamicFixtures.address.id_customer_address,
+      shouldTriggerOmsInCli: true,
+    });
 
     cy.contains('Your order has been placed successfully!');
   });
@@ -55,7 +68,7 @@ describe('basic checkout', { tags: ['@checkout', '@smoke'] }, (): void => {
       password: staticFixtures.defaultPassword,
     });
 
-    checkoutScenario.execute();
+    checkoutScenario.execute({ shouldTriggerOmsInCli: true });
 
     cy.contains('Your order has been placed successfully!');
   });
@@ -69,6 +82,7 @@ describe('basic checkout', { tags: ['@checkout', '@smoke'] }, (): void => {
     checkoutScenario.execute({
       isMultiShipment: true,
       idCustomerAddress: dynamicFixtures.address.id_customer_address,
+      shouldTriggerOmsInCli: true,
     });
 
     cy.contains('Your order has been placed successfully!');
@@ -80,7 +94,7 @@ describe('basic checkout', { tags: ['@checkout', '@smoke'] }, (): void => {
       password: staticFixtures.defaultPassword,
     });
 
-    checkoutScenario.execute({ isMultiShipment: true });
+    checkoutScenario.execute({ isMultiShipment: true, shouldTriggerOmsInCli: true });
 
     cy.contains('Your order has been placed successfully!');
   });

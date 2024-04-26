@@ -26,7 +26,7 @@ export class CheckoutMpScenario {
     const customerEmail = this.checkoutGuest(params);
 
     this.processCheckout(params);
-    this.runOmsCommands();
+    this.runOmsCommands(params);
 
     return customerEmail;
   };
@@ -42,8 +42,10 @@ export class CheckoutMpScenario {
     this.checkoutSummaryPage.placeOrder();
   };
 
-  private runOmsCommands = (): void => {
-    cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+  private runOmsCommands = (params?: ExecuteParams): void => {
+    if (params?.shouldTriggerOmsInCli) {
+      cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+    }
   };
 
   private fillShippingAddress = (params?: ExecuteParams): void => {
@@ -63,4 +65,5 @@ interface ExecuteParams {
   isGuest?: boolean;
   isMultiShipment?: boolean;
   idCustomerAddress?: number;
+  shouldTriggerOmsInCli?: boolean;
 }

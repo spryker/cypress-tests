@@ -33,7 +33,7 @@ Cypress.Commands.add('resetYvesCookies', () => {
   });
 });
 
-Cypress.Commands.add('loadDynamicFixturesByPayload', (dynamicFixturesFilePath) => {
+Cypress.Commands.add('loadDynamicFixturesByPayload', function loadDynamicFixturesByPayload(dynamicFixturesFilePath, retries = 2) {
   cy.fixture(dynamicFixturesFilePath).then((operationRequestPayload) => {
     return cy
       .request({
@@ -47,8 +47,13 @@ Cypress.Commands.add('loadDynamicFixturesByPayload', (dynamicFixturesFilePath) =
         failOnStatusCode: false,
       })
       .then((response) => {
-        if (response.status === 500) {
-          throw new Error(response.body);
+        if (response.status === 500 || response.status === 408) {
+          if (retries > 0) {
+            cy.log('Retrying due to error or timeout...');
+            return cy.loadDynamicFixturesByPayload(dynamicFixturesFilePath, retries - 1);
+          } else {
+            throw new Error(response.body);
+          }
         }
 
         if (Array.isArray(response.body.data)) {

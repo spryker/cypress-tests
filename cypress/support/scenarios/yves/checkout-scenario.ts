@@ -32,7 +32,9 @@ export class CheckoutScenario {
     this.checkoutPaymentPage.setDummyPaymentMethod();
     this.checkoutSummaryPage.placeOrder();
 
-    cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+    if (params?.shouldTriggerOmsInCli) {
+      cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+    }
   };
 
   private fillShippingAddress = (params?: ExecuteParams): void => {
@@ -52,4 +54,5 @@ interface ExecuteParams {
   isGuest?: boolean;
   isMultiShipment?: boolean;
   idCustomerAddress?: number;
+  shouldTriggerOmsInCli?: boolean;
 }

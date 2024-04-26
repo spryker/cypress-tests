@@ -1,11 +1,14 @@
 import { container } from '@utils';
-import { DummyPaymentOmsFlowDynamicFixtures, DummyPaymentOmsFlowStaticFixtures } from '@interfaces/backoffice';
+import { DummyPaymentOmsFlowSmokeStaticFixtures } from '@interfaces/backoffice';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import { CatalogPage, ProductPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
-describe('dummy payment OMS flow', { tags: ['@order-management', '@smoke'] }, (): void => {
+/**
+ * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
+ */
+describe('dummy payment OMS flow smoke', { tags: ['@order-management', '@smoke'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
   const productsPage = container.get(ProductPage);
   const salesIndexPage = container.get(SalesIndexPage);
@@ -14,23 +17,22 @@ describe('dummy payment OMS flow', { tags: ['@order-management', '@smoke'] }, ()
   const checkoutScenario = container.get(CheckoutScenario);
   const userLoginScenario = container.get(UserLoginScenario);
 
-  let dynamicFixtures: DummyPaymentOmsFlowDynamicFixtures;
-  let staticFixtures: DummyPaymentOmsFlowStaticFixtures;
+  let staticFixtures: DummyPaymentOmsFlowSmokeStaticFixtures;
 
   before((): void => {
-    ({ staticFixtures, dynamicFixtures } = Cypress.env());
+    staticFixtures = Cypress.env('staticFixtures');
   });
 
   it('backoffice operator should be able close an order from guest', (): void => {
     catalogPage.visit();
-    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
+    catalogPage.searchProductFromSuggestions({ query: staticFixtures.product.sku });
     productsPage.addToCart();
 
     checkoutScenario.execute({ isGuest: true });
     cy.contains('Your order has been placed successfully!');
 
     userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
+      username: staticFixtures.rootUser.username,
       password: staticFixtures.defaultPassword,
     });
 
@@ -41,17 +43,17 @@ describe('dummy payment OMS flow', { tags: ['@order-management', '@smoke'] }, ()
   });
 
   it('backoffice operator should be able close an order from customer', (): void => {
-    loginCustomerScenario.execute({ email: dynamicFixtures.customer.email, password: staticFixtures.defaultPassword });
+    loginCustomerScenario.execute({ email: staticFixtures.customer.email, password: staticFixtures.defaultPassword });
 
-    checkoutScenario.execute({
-      isGuest: false,
-      isMultiShipment: false,
-      idCustomerAddress: dynamicFixtures.address.id_customer_address,
-    });
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: staticFixtures.product.sku });
+    productsPage.addToCart();
+
+    checkoutScenario.execute();
     cy.contains('Your order has been placed successfully!');
 
     userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
+      username: staticFixtures.rootUser.username,
       password: staticFixtures.defaultPassword,
     });
 
@@ -62,9 +64,9 @@ describe('dummy payment OMS flow', { tags: ['@order-management', '@smoke'] }, ()
   });
 
   function triggerDummyPaymentTransitions(): void {
-    salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
+    salesDetailPage.triggerOms({ state: 'Pay' });
     salesDetailPage.triggerOms({ state: 'Skip timeout' });
-    salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
+    salesDetailPage.triggerOms({ state: 'skip picking' });
     salesDetailPage.triggerOms({ state: 'Ship' });
     salesDetailPage.triggerOms({ state: 'Stock update' });
     salesDetailPage.triggerOms({ state: 'Close' });

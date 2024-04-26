@@ -7,3 +7,8 @@ export interface CustomerAuthDynamicFixtures {
 export interface CustomerAuthStaticFixtures {
   defaultPassword: string;
 }
+
+export interface CustomerAuthSmokeStaticFixtures {
+  defaultPassword: string;
+  customer: Customer;
+}

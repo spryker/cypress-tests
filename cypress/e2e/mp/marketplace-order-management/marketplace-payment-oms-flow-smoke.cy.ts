@@ -1,14 +1,17 @@
 import { container } from '@utils';
-import { MarketplaceOrderManagementStaticFixtures, MarketplacePaymentOmsFlowDynamicFixtures } from '@interfaces/mp';
+import { MarketplaceOrderManagementSmokeStaticFixtures } from '@interfaces/mp';
 import { ActionEnum, SalesOrdersPage } from '@pages/mp';
-import { SalesDetailPage, SalesIndexPage } from '../../../support/pages/backoffice';
+import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
 import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { CatalogPage, ProductPage } from '@pages/yves';
 
+/**
+ * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
+ */
 (Cypress.env('repositoryId') === 'b2c' || Cypress.env('repositoryId') === 'b2b' ? describe.skip : describe)(
-  'marketplace payment OMS flow',
+  'marketplace payment OMS flow smoke',
   { tags: ['@marketplace-order-management', '@smoke'] },
   (): void => {
     const catalogPage = container.get(CatalogPage);
@@ -21,22 +24,21 @@ import { CatalogPage, ProductPage } from '@pages/yves';
     const checkoutMpScenario = container.get(CheckoutMpScenario);
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
 
-    let dynamicFixtures: MarketplacePaymentOmsFlowDynamicFixtures;
-    let staticFixtures: MarketplaceOrderManagementStaticFixtures;
+    let staticFixtures: MarketplaceOrderManagementSmokeStaticFixtures;
 
     before((): void => {
-      ({ dynamicFixtures, staticFixtures } = Cypress.env());
+      staticFixtures = Cypress.env('staticFixtures');
     });
 
     it('merchant user should be able close an order from guest', (): void => {
       catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.productConcreteForOffer.sku });
+      catalogPage.searchProductFromSuggestions({ query: staticFixtures.productConcreteForOffer.sku });
       productsPage.addToCart();
 
       const guestCustomerEmail = checkoutMpScenario.execute({ isGuest: true });
 
       userLoginScenario.execute({
-        username: dynamicFixtures.rootUser.username,
+        username: staticFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
 
@@ -45,30 +47,28 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       triggerOmsToMerchantState();
 
       merchantUserLoginScenario.execute({
-        username: dynamicFixtures.merchantUser.username,
+        username: staticFixtures.merchantUser.username,
         password: staticFixtures.defaultPassword,
       });
 
-      salesOrdersPage.visit();
-      salesOrdersPage.update({ query: guestCustomerEmail, action: ActionEnum.ship });
-
-      salesOrdersPage.visit();
-      salesOrdersPage.update({ query: guestCustomerEmail, action: ActionEnum.deliver });
-
+      closeOrderFromMerchantPortal(guestCustomerEmail);
       closeOrderFromBackoffice();
     });
 
     it('merchant user should be able close an order from customer', (): void => {
       customerLoginScenario.execute({
-        email: dynamicFixtures.customer.email,
+        email: staticFixtures.customer.email,
         password: staticFixtures.defaultPassword,
       });
-      checkoutMpScenario.execute({
-        idCustomerAddress: dynamicFixtures.address.id_customer_address,
-      });
+
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: staticFixtures.productConcreteForOffer.sku });
+      productsPage.addToCart();
+
+      checkoutMpScenario.execute();
 
       userLoginScenario.execute({
-        username: dynamicFixtures.rootUser.username,
+        username: staticFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
 
@@ -77,29 +77,22 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       triggerOmsToMerchantState();
 
       merchantUserLoginScenario.execute({
-        username: dynamicFixtures.merchantUser.username,
+        username: staticFixtures.merchantUser.username,
         password: staticFixtures.defaultPassword,
       });
 
-      salesOrdersPage.visit();
-      salesOrdersPage.update({ query: dynamicFixtures.customer.email, action: ActionEnum.ship });
-
-      salesOrdersPage.visit();
-      salesOrdersPage.update({ query: dynamicFixtures.customer.email, action: ActionEnum.deliver });
-
+      closeOrderFromMerchantPortal(staticFixtures.customer.email);
       closeOrderFromBackoffice();
     });
 
     function triggerOmsToMerchantState(): void {
       salesDetailPage.triggerOms({ state: 'Pay' });
-      salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
-
-      cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+      salesDetailPage.triggerOms({ state: 'skip picking' });
     }
 
     function closeOrderFromBackoffice(): void {
       userLoginScenario.execute({
-        username: dynamicFixtures.rootUser.username,
+        username: staticFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
 
@@ -107,6 +100,20 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       salesIndexPage.view();
 
       salesDetailPage.triggerOms({ state: 'Close' });
+    }
+
+    function closeOrderFromMerchantPortal(email: string): void {
+      salesOrdersPage.visit();
+      salesOrdersPage.update({ query: email, action: ActionEnum.sendToDistribution });
+
+      salesOrdersPage.visit();
+      salesOrdersPage.update({ query: email, action: ActionEnum.confirmAtCenter });
+
+      salesOrdersPage.visit();
+      salesOrdersPage.update({ query: email, action: ActionEnum.ship });
+
+      salesOrdersPage.visit();
+      salesOrdersPage.update({ query: email, action: ActionEnum.deliver });
     }
   }
 );

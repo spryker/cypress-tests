@@ -30,7 +30,7 @@ describe('agent merchant portal', { tags: ['@marketplace-agent-assist'] }, (): v
 
   it('agent should be able to change order status during impersonation', (): void => {
     customerLoginScenario.execute({ email: dynamicFixtures.customer.email, password: staticFixtures.defaultPassword });
-    checkoutMpScenario.execute({ isGuest: false });
+    checkoutMpScenario.execute({ isGuest: false, shouldTriggerOmsInCli: true });
 
     userLoginScenario.execute({
       username: dynamicFixtures.rootUser.username,

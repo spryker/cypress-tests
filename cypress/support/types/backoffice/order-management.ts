@@ -7,17 +7,13 @@ export interface OrderCreationDynamicFixtures {
   rootUser: User;
 }
 
-export interface DummyPaymentOmsFlowDynamicFixtures {
-  customer: Customer;
-  address: Address;
-  product: Product;
-  rootUser: User;
-}
-
 export interface OrderManagementStaticFixtures {
   defaultPassword: string;
 }
 
-export interface DummyPaymentOmsFlowStaticFixtures {
+export interface DummyPaymentOmsFlowSmokeStaticFixtures {
   defaultPassword: string;
+  customer: Customer;
+  product: Product;
+  rootUser: User;
 }

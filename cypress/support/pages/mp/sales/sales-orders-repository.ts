@@ -8,6 +8,8 @@ export class SalesOrdersRepository {
   getSearchSelector = (): string => '.spy-table-search-feature input[type="text"]';
   getCancelButtonSelector = (): string => 'button:contains("Cancel")';
   getShipButtonSelector = (): string => 'button:contains("Ship")';
+  getSendToDistributionButtonSelector = (): string => 'button:contains("send to distribution")';
+  getConfirmAtCenterButtonSelector = (): string => 'button:contains("confirm at center")';
   getDeliverButtonSelector = (): string => 'button:contains("Deliver")';
   getDrawer = (): Cypress.Chainable => cy.get('.spy-drawer-wrapper');
 }

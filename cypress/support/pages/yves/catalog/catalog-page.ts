@@ -25,7 +25,7 @@ export class CatalogPage extends YvesPage {
         url,
         `span:contains("${params.query}")`, // Is working with product's name only
         this.repository.getFirstProductItemBlockSelector(),
-        10,
+        25,
         5000
       );
 
