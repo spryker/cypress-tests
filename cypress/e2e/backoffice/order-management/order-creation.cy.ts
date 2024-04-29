@@ -21,7 +21,7 @@ describe('order creation', { tags: ['@order-management'] }, (): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 
-  it('should be able to create an order by existing customer', (): void => {
+  it('should be able to create an order by existing customer (credit card)', (): void => {
     loginCustomerScenario.execute({ email: dynamicFixtures.customer.email, password: staticFixtures.defaultPassword });
 
     checkoutScenario.execute({
@@ -29,6 +29,7 @@ describe('order creation', { tags: ['@order-management'] }, (): void => {
       isMultiShipment: false,
       idCustomerAddress: dynamicFixtures.address.id_customer_address,
       shouldTriggerOmsInCli: true,
+      paymentMethod: 'dummyPaymentCreditCard',
     });
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
@@ -43,12 +44,18 @@ describe('order creation', { tags: ['@order-management'] }, (): void => {
     cy.get('body').contains(dynamicFixtures.product.sku);
   });
 
-  it('should be able to create an order by guest', (): void => {
+  it('should be able to create an order by guest (invoice)', (): void => {
     catalogPage.visit();
     catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
     productsPage.addToCart();
 
-    checkoutScenario.execute({ isGuest: true, shouldTriggerOmsInCli: true });
+    checkoutScenario.execute({
+      isGuest: true,
+      shouldTriggerOmsInCli: true,
+      paymentMethod: ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
+        ? 'dummyMarketplacePaymentInvoice'
+        : 'dummyPaymentInvoice',
+    });
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
     userLoginScenario.execute({

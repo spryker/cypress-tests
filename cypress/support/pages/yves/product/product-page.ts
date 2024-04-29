@@ -12,7 +12,7 @@ export class ProductPage extends YvesPage {
   protected PAGE_URL = '';
 
   addToCart = (): void => {
-    this.repository.getAddToCartButton().click();
+    this.repository.getAddToCartButton().click({ force: true });
   };
 
   getAddToCartSuccessMessage = (): string => {

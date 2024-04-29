@@ -17,9 +17,6 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "cy:ci": "cypress run --spec \"cypress/e2e/**/!(*-smoke.cy.ts)\" --headless --browser chrome",
-    "cy:ci:b2b": "cypress run --spec \"cypress/e2e/*/{merchant-b2b-contract-requests,comments}/*\" --headless --browser chrome",
-    "cy:ci:b2c-mp": "cypress run --spec \"cypress/e2e/*/marketplace-agent-assist/*\" --headless --browser chrome",
-    "cy:ci:b2b-mp": "cypress run --spec \"cypress/e2e/*/{marketplace-agent-assist,merchant-b2b-contract-requests,comments}/*\" --headless --browser chrome",
     "cy:smoke": "cypress run --spec \"cypress/e2e/**/*-smoke.cy.ts\" --headless --browser chrome"
   },
   "engines": {

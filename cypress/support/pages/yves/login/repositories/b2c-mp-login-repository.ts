@@ -18,4 +18,6 @@ export class B2cMpLoginRepository implements LoginRepository {
   getFailedAuthenticationText = (): string => 'Authentication failed';
   getRegistrationCompletedMessage = (): string =>
     'Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.';
+  getRegistrationToggleRadio = (): Cypress.Chainable =>
+    cy.get('[data-qa="component toggler-radio accountLoginSwitcher register"]');
 }

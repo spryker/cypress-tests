@@ -29,7 +29,8 @@ export class CheckoutScenario {
 
     this.fillShippingAddress(params);
     this.checkoutShipmentPage.setStandardShippingMethod();
-    this.checkoutPaymentPage.setDummyPaymentMethod();
+    this.fillPaymentCheckoutStep(params);
+
     this.checkoutSummaryPage.placeOrder();
 
     if (params?.shouldTriggerOmsInCli) {
@@ -48,6 +49,20 @@ export class CheckoutScenario {
 
     this.checkoutAddressPage.fillShippingAddress(fillShippingAddressParams);
   };
+
+  private fillPaymentCheckoutStep = (params?: ExecuteParams): void => {
+    const paymentMethods = {
+      dummyPaymentInvoice: () => this.checkoutPaymentPage.setDummyPaymentMethod(),
+      dummyPaymentCreditCard: () => this.checkoutPaymentPage.setDummyPaymentCreditCardMethod(),
+      dummyMarketplacePaymentInvoice: () => this.checkoutPaymentPage.setDummyMarketplacePaymentMethod(),
+      default: () => this.checkoutPaymentPage.setDummyPaymentMethod(),
+    };
+
+    const paymentMethod = params?.paymentMethod || 'default';
+    const paymentFunction = paymentMethods[paymentMethod as keyof typeof paymentMethods] || paymentMethods['default'];
+
+    paymentFunction();
+  };
 }
 
 interface ExecuteParams {
@@ -55,4 +70,5 @@ interface ExecuteParams {
   isMultiShipment?: boolean;
   idCustomerAddress?: number;
   shouldTriggerOmsInCli?: boolean;
+  paymentMethod?: string;
 }

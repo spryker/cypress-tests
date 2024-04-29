@@ -80,6 +80,19 @@ import { B2cMerchantRelationRequestCreateRepository } from '../../pages/yves/com
 import { B2cMerchantRelationRequestDetailsRepository } from '../../pages/yves/company/merchant-relation-request/details/repositories/b2c-merchant-relation-request-details-repository';
 import { B2cMerchantRelationRequestIndexRepository } from '../../pages/yves/company/merchant-relation-request/index/repositories/b2c-merchant-relation-request-index-repository';
 import { B2cMerchantRepository } from '../../pages/yves/merchant/repositories/b2c-merchant-repository';
+import { B2bCheckoutCustomerRepository } from '../../pages/yves/checkout/customer/repositories/b2b-checkout-customer-repository';
+import { B2bCheckoutAddressRepository } from '../../pages/yves/checkout/address/repositories/b2b-checkout-address-repository';
+import { B2bCheckoutShipmentRepository } from '../../pages/yves/checkout/shipment/repositories/b2b-checkout-shipment-repository';
+import { B2bCheckoutPaymentRepository } from '../../pages/yves/checkout/payment/repositories/b2b-checkout-payment-repository';
+import { B2bCheckoutSummaryRepository } from '../../pages/yves/checkout/summary/repositories/b2b-checkout-summary-repository';
+import { B2bAgentLoginRepository } from '../../pages/yves/agent-login/repositories/b2b-agent-login-repository';
+import { B2cMpMultiCartRepository } from '../../pages/yves/multi-cart/repositories/b2c-mp-multi-cart-repository';
+import { B2cMpCommentCartRepository } from '../../pages/yves/comment/cart/repositories/b2c-mp-comment-cart-repository';
+import { B2cMpCompanyUserSelectRepository } from '../../pages/yves/company/user/select/repositories/b2c-mp-company-user-select-repository';
+import { B2cMpMerchantRelationRequestCreateRepository } from '../../pages/yves/company/merchant-relation-request/create/repositories/b2c-mp-merchant-relation-request-create-repository';
+import { B2cMpMerchantRelationRequestDetailsRepository } from '../../pages/yves/company/merchant-relation-request/details/repositories/b2c-mp-merchant-relation-request-details-repository';
+import { B2cMpMerchantRelationRequestIndexRepository } from '../../pages/yves/company/merchant-relation-request/index/repositories/b2c-mp-merchant-relation-request-index-repository';
+import { B2cMpMerchantRepository } from '../../pages/yves/merchant/repositories/b2c-mp-merchant-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -106,22 +119,22 @@ const suiteMappings: BindingsMap = {
 
 const b2cMappings: BindingsMap = {
   [REPOSITORIES.LoginRepository]: B2cLoginRepository,
-  [REPOSITORIES.CatalogRepository]: B2cCatalogRepository,
-  [REPOSITORIES.ProductRepository]: B2cProductRepository,
+  [REPOSITORIES.CartRepository]: B2cCartRepository,
   [REPOSITORIES.MultiCartRepository]: B2cMultiCartRepository,
   [REPOSITORIES.CommentCartRepository]: B2cCommentCartRepository,
+  [REPOSITORIES.CheckoutCustomerRepository]: B2cCheckoutCustomerRepository,
+  [REPOSITORIES.CheckoutAddressRepository]: B2cCheckoutAddressRepository,
+  [REPOSITORIES.CheckoutShipmentRepository]: B2cCheckoutShipmentRepository,
+  [REPOSITORIES.CheckoutPaymentRepository]: B2cCheckoutPaymentRepository,
+  [REPOSITORIES.CheckoutSummaryRepository]: B2cCheckoutSummaryRepository,
+  [REPOSITORIES.AgentLoginRepository]: B2cAgentLoginRepository,
+  [REPOSITORIES.CatalogRepository]: B2cCatalogRepository,
+  [REPOSITORIES.ProductRepository]: B2cProductRepository,
   [REPOSITORIES.CompanyUserSelectRepository]: B2cCompanyUserSelectRepository,
   [REPOSITORIES.MerchantRelationRequestCreateRepository]: B2cMerchantRelationRequestCreateRepository,
   [REPOSITORIES.MerchantRelationRequestDetailsRepository]: B2cMerchantRelationRequestDetailsRepository,
   [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2cMerchantRelationRequestIndexRepository,
   [REPOSITORIES.MerchantRepository]: B2cMerchantRepository,
-  [REPOSITORIES.AgentLoginRepository]: B2cAgentLoginRepository,
-  [REPOSITORIES.CartRepository]: B2cCartRepository,
-  [REPOSITORIES.CheckoutAddressRepository]: B2cCheckoutAddressRepository,
-  [REPOSITORIES.CheckoutCustomerRepository]: B2cCheckoutCustomerRepository,
-  [REPOSITORIES.CheckoutPaymentRepository]: B2cCheckoutPaymentRepository,
-  [REPOSITORIES.CheckoutShipmentRepository]: B2cCheckoutShipmentRepository,
-  [REPOSITORIES.CheckoutSummaryRepository]: B2cCheckoutSummaryRepository,
   [REPOSITORIES.CustomerOverviewRepository]: B2cCustomerOverviewRepository,
 };
 
@@ -130,6 +143,12 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.CartRepository]: B2bCartRepository,
   [REPOSITORIES.MultiCartRepository]: B2bMultiCartRepository,
   [REPOSITORIES.CommentCartRepository]: B2bCommentCartRepository,
+  [REPOSITORIES.CheckoutCustomerRepository]: B2bCheckoutCustomerRepository,
+  [REPOSITORIES.CheckoutAddressRepository]: B2bCheckoutAddressRepository,
+  [REPOSITORIES.CheckoutShipmentRepository]: B2bCheckoutShipmentRepository,
+  [REPOSITORIES.CheckoutPaymentRepository]: B2bCheckoutPaymentRepository,
+  [REPOSITORIES.CheckoutSummaryRepository]: B2bCheckoutSummaryRepository,
+  [REPOSITORIES.AgentLoginRepository]: B2bAgentLoginRepository,
   [REPOSITORIES.CatalogRepository]: B2bCatalogRepository,
   [REPOSITORIES.ProductRepository]: B2bProductRepository,
   [REPOSITORIES.CompanyUserSelectRepository]: B2bCompanyUserSelectRepository,
@@ -142,21 +161,36 @@ const b2bMappings: BindingsMap = {
 
 const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.LoginRepository]: B2cMpLoginRepository,
+  [REPOSITORIES.CartRepository]: B2cMpCartRepository,
+  [REPOSITORIES.MultiCartRepository]: B2cMpMultiCartRepository,
+  [REPOSITORIES.CommentCartRepository]: B2cMpCommentCartRepository,
+  [REPOSITORIES.CheckoutCustomerRepository]: B2cMpCheckoutCustomerRepository,
+  [REPOSITORIES.CheckoutAddressRepository]: B2cMpCheckoutAddressRepository,
+  [REPOSITORIES.CheckoutShipmentRepository]: B2cMpCheckoutShipmentRepository,
+  [REPOSITORIES.CheckoutPaymentRepository]: B2cMpCheckoutPaymentRepository,
+  [REPOSITORIES.CheckoutSummaryRepository]: B2cMpCheckoutSummaryRepository,
+  [REPOSITORIES.AgentLoginRepository]: B2cMpAgentLoginRepository,
   [REPOSITORIES.CatalogRepository]: B2cMpCatalogRepository,
   [REPOSITORIES.ProductRepository]: B2cMpProductRepository,
-  [REPOSITORIES.AgentLoginRepository]: B2cMpAgentLoginRepository,
-  [REPOSITORIES.CartRepository]: B2cMpCartRepository,
-  [REPOSITORIES.CheckoutAddressRepository]: B2cMpCheckoutAddressRepository,
-  [REPOSITORIES.CheckoutCustomerRepository]: B2cMpCheckoutCustomerRepository,
-  [REPOSITORIES.CheckoutPaymentRepository]: B2cMpCheckoutPaymentRepository,
-  [REPOSITORIES.CheckoutShipmentRepository]: B2cMpCheckoutShipmentRepository,
-  [REPOSITORIES.CheckoutSummaryRepository]: B2cMpCheckoutSummaryRepository,
+  [REPOSITORIES.CompanyUserSelectRepository]: B2cMpCompanyUserSelectRepository,
+  [REPOSITORIES.MerchantRelationRequestCreateRepository]: B2cMpMerchantRelationRequestCreateRepository,
+  [REPOSITORIES.MerchantRelationRequestDetailsRepository]: B2cMpMerchantRelationRequestDetailsRepository,
+  [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2cMpMerchantRelationRequestIndexRepository,
+  [REPOSITORIES.MerchantRepository]: B2cMpMerchantRepository,
   [REPOSITORIES.CustomerOverviewRepository]: B2cMpCustomerOverviewRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.LoginRepository]: B2bMpLoginRepository,
   [REPOSITORIES.CartRepository]: B2bMpCartRepository,
+  [REPOSITORIES.MultiCartRepository]: B2bMpMultiCartRepository,
+  [REPOSITORIES.CommentCartRepository]: B2bMpCommentCartRepository,
+  [REPOSITORIES.CheckoutCustomerRepository]: B2bMpCheckoutCustomerRepository,
+  [REPOSITORIES.CheckoutAddressRepository]: B2bMpCheckoutAddressRepository,
+  [REPOSITORIES.CheckoutShipmentRepository]: B2bMpCheckoutShipmentRepository,
+  [REPOSITORIES.CheckoutPaymentRepository]: B2bMpCheckoutPaymentRepository,
+  [REPOSITORIES.CheckoutSummaryRepository]: B2bMpCheckoutSummaryRepository,
+  [REPOSITORIES.AgentLoginRepository]: B2bMpAgentLoginRepository,
   [REPOSITORIES.CatalogRepository]: B2bMpCatalogRepository,
   [REPOSITORIES.ProductRepository]: B2bMpProductRepository,
   [REPOSITORIES.CompanyUserSelectRepository]: B2bMpCompanyUserSelectRepository,
@@ -164,35 +198,19 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.MerchantRelationRequestDetailsRepository]: B2bMpMerchantRelationRequestDetailsRepository,
   [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2bMpMerchantRelationRequestIndexRepository,
   [REPOSITORIES.MerchantRepository]: B2bMpMerchantRepository,
-  [REPOSITORIES.AgentLoginRepository]: B2bMpAgentLoginRepository,
-  [REPOSITORIES.CheckoutAddressRepository]: B2bMpCheckoutAddressRepository,
-  [REPOSITORIES.CheckoutCustomerRepository]: B2bMpCheckoutCustomerRepository,
-  [REPOSITORIES.CheckoutPaymentRepository]: B2bMpCheckoutPaymentRepository,
-  [REPOSITORIES.CheckoutShipmentRepository]: B2bMpCheckoutShipmentRepository,
-  [REPOSITORIES.CheckoutSummaryRepository]: B2bMpCheckoutSummaryRepository,
-  [REPOSITORIES.MultiCartRepository]: B2bMpMultiCartRepository,
-  [REPOSITORIES.CommentCartRepository]: B2bMpCommentCartRepository,
   [REPOSITORIES.CustomerOverviewRepository]: B2bMpCustomerOverviewRepository,
 };
 
-const container = new Container();
-const repositoryId = Cypress.env('repositoryId');
+const mappings = {
+  suite: suiteMappings,
+  b2c: b2cMappings,
+  b2b: b2bMappings,
+  'b2c-mp': b2cMpMappings,
+  'b2b-mp': b2bMpMappings,
+};
 
-if (repositoryId === 'suite') {
-  applyRepositoryBindings(suiteMappings);
-}
-if (repositoryId === 'b2c') {
-  applyRepositoryBindings(b2cMappings);
-}
-if (repositoryId === 'b2b') {
-  applyRepositoryBindings(b2bMappings);
-}
-if (repositoryId === 'b2c-mp') {
-  applyRepositoryBindings(b2cMpMappings);
-}
-if (repositoryId === 'b2b-mp') {
-  applyRepositoryBindings(b2bMpMappings);
-}
+const container = new Container();
+applyRepositoryBindings(mappings[Cypress.env('repositoryId') as keyof typeof mappings]);
 
 function applyRepositoryBindings(bindings: BindingsMap): void {
   for (const [type, implementation] of Object.entries(bindings)) {

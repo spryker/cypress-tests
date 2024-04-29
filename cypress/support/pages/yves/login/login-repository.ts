@@ -12,4 +12,5 @@ export interface LoginRepository {
   getRegisterForm(): Cypress.Chainable;
   getFailedAuthenticationText(): string;
   getRegistrationCompletedMessage(): string;
+  getRegistrationToggleRadio(): Cypress.Chainable;
 }

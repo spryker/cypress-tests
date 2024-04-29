@@ -25,8 +25,8 @@ export class LoginPage extends YvesPage {
   };
 
   register = (params?: RegisterParams): RegisteredCustomer => {
-    if (['b2c'].includes(Cypress.env('repositoryId'))) {
-      cy.get('[data-qa="component toggler-radio accountLoginSwitcher register"]').click();
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      this.repository.getRegistrationToggleRadio().click();
     }
 
     this.repository

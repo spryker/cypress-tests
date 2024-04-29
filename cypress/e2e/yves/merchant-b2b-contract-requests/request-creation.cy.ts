@@ -14,7 +14,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 /**
  * Merchant Relation Requests & Enhanced Merchant Relations checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4105896492/Business+Journey+B2B+Marketplace+-+to+automate}
  */
-(['b2c'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+(['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'request creation',
   { tags: ['@merchant-b2b-contract-requests'] },
   (): void => {

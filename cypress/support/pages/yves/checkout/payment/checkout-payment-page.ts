@@ -18,6 +18,15 @@ export class CheckoutPaymentPage extends YvesPage {
     this.repository.getGoToSummaryButton().click();
   };
 
+  setDummyPaymentCreditCardMethod = (): void => {
+    this.repository.getDummyPaymentCreditCardRadio().click({ force: true });
+    this.repository.getDummyPaymentCreditCardNameInput().clear().type(this.faker.person.fullName());
+    this.repository.getDummyPaymentCreditCardNumberInput().clear().type('4000000000001000');
+    this.repository.getDummyPaymentCreditCardSecurityCodeNumberInput().clear().type('901');
+
+    this.repository.getGoToSummaryButton().click();
+  };
+
   setDummyMarketplacePaymentMethod = (): void => {
     this.repository.getDummyMarketplacePaymentInvoiceRadio().click({ force: true });
     this.repository.getDummyMarketplacePaymentInvoiceDateField().clear().type('12.12.1999');

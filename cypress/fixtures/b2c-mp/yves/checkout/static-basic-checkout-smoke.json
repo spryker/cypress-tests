@@ -1,0 +1,12 @@
+{
+  "defaultPassword": "change123",
+  "customer": {
+    "email": "spencor.hopkin@spryker.com"
+  },
+  "product1": {
+    "sku": "008_30692992"
+  },
+  "product2": {
+    "sku": "009_30692991"
+  }
+}
