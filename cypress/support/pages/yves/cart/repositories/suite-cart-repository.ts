@@ -6,6 +6,10 @@ export class SuiteCartRepository implements CartRepository {
   getQuickAddToCartSkuField = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-quick-add-form"] input').first();
   getQuickAddToCartProductListField = (): Cypress.Chainable => cy.get('[data-qa="component products-list"]');
+  getLastCartItemNoteField = (): Cypress.Chainable =>
+    cy.get('[data-qa="component form quote-item-cart-note-form"]').last().find('textarea').first();
+  getLastCartItemNoteSubmitButton = (): Cypress.Chainable =>
+    cy.get('[data-qa="component form quote-item-cart-note-form"] [data-qa="submit-button"]').last();
   getQuickAddToCartQuantityField = (): Cypress.Chainable<JQuery<HTMLElement>> =>
     cy.get('[data-qa="product-quick-add-form-quantity-input"]');
   getQuickAddToCartSubmitButton = (): Cypress.Chainable<JQuery<HTMLElement>> =>
@@ -26,6 +30,8 @@ export class SuiteCartRepository implements CartRepository {
     this.findCartItemChangeQuantityForm(sku).find('[data-qa="cart-item-quantity-input"]');
   findClearCartForm = (): Cypress.Chainable => cy.get('[data-qa="multi-cart-clear-form"]');
   getCheckoutButton = (): Cypress.Chainable => cy.get('[data-qa="cart-go-to-checkout"]');
-  getQuickAddToCartAction = (): Cypress.Chainable<string> =>
-    cy.get('[data-qa="component product-quick-add-form"] form').invoke('attr', 'action');
+  getCartUpsellingAjaxLoader = (): Cypress.Chainable =>
+    cy.get('[data-qa="component cart-upselling"] [data-qa="component ajax-loader"]', { timeout: 10000 });
+  getPageLayoutCartAjaxLoader = (): Cypress.Chainable =>
+    cy.get('[data-qa="page-layout-cart-ajax-loader-container"] [data-qa="component ajax-loader"]', { timeout: 10000 });
 }

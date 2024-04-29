@@ -10,21 +10,14 @@ export class CartPage extends YvesPage {
   @inject(REPOSITORIES.CartRepository) private repository: CartRepository;
 
   protected PAGE_URL = '/cart';
-  protected GET_ITEMS_URL = '/en/cart/get-cart-items';
-  protected QUICK_ADD_AJAX_REQUEST_ALIAS = 'quickAddAjaxRequest';
-  protected GET_ITEMS_AJAX_REQUEST_ALIAS = 'getItemsAjaxRequest';
 
   visitCartWithItems = (): void => {
-    cy.intercept('GET', this.GET_ITEMS_URL).as(this.GET_ITEMS_AJAX_REQUEST_ALIAS);
     this.visit();
-    cy.wait(`@${this.GET_ITEMS_AJAX_REQUEST_ALIAS}`);
+    this.repository.getCartUpsellingAjaxLoader().should('be.visible');
+    this.repository.getCartUpsellingAjaxLoader().should('be.not.visible');
   };
 
   quickAddToCart = (params: QuickAddToCartParams): void => {
-    this.repository.getQuickAddToCartAction().then((action) => {
-      cy.intercept('POST', action).as(this.QUICK_ADD_AJAX_REQUEST_ALIAS);
-    });
-
     this.repository.getQuickAddToCartSkuField().clear().type(params.sku);
     this.repository.getQuickAddToCartProductListField().click();
 
@@ -35,7 +28,7 @@ export class CartPage extends YvesPage {
 
     this.repository.getQuickAddToCartSubmitButton().click();
 
-    cy.wait(`@${this.QUICK_ADD_AJAX_REQUEST_ALIAS}`);
+    this.repository.getPageLayoutCartAjaxLoader().should('be.not.visible');
   };
 
   startCheckout = (): void => {
@@ -71,6 +64,27 @@ export class CartPage extends YvesPage {
       form.submit();
     }
   };
+
+  addLastCartItemNote = (params: CartItemNoteAddParams): void => {
+    this.repository.getLastCartItemNoteField().type(params.message);
+  };
+
+  clearLastCartItemNote = (): void => {
+    this.repository.getLastCartItemNoteField().clear();
+  };
+
+  submitLastCartItemNote = (): void => {
+    this.repository.getLastCartItemNoteSubmitButton().click();
+    this.repository.getPageLayoutCartAjaxLoader().should('be.not.visible');
+  };
+
+  getLastCartItemNoteField = (): Cypress.Chainable => {
+    return this.repository.getLastCartItemNoteField();
+  };
+
+  getCheckoutButton(): Cypress.Chainable {
+    return this.repository.getCheckoutButton();
+  }
 }
 
 interface QuickAddToCartParams {
@@ -85,4 +99,8 @@ interface RemoveProductParams {
 interface ChangeQuantityParams {
   sku: string;
   quantity: number;
+}
+
+interface CartItemNoteAddParams {
+  message: string;
 }

@@ -26,7 +26,7 @@ describe('cart comments', { tags: ['@comments'] }, (): void => {
     multiCartPage.visit();
     multiCartPage.selectCart({ name: dynamicFixtures.quote.name });
 
-    commentCartPage.visit();
+    commentCartPage.visitCartWithItems();
     staticFixtures.commentsToAdd.forEach((commentMessage) => {
       commentCartPage.add({ message: commentMessage });
       commentCartPage.getCommentThreadListSection().contains(commentMessage).should('exist');
@@ -34,7 +34,7 @@ describe('cart comments', { tags: ['@comments'] }, (): void => {
   });
 
   it('customer should be able to modify comment in cart with items', (): void => {
-    commentCartPage.visit();
+    commentCartPage.visitCartWithItems();
     commentCartPage.add({ message: staticFixtures.commentToModify });
     commentCartPage.update({ oldMessage: staticFixtures.commentToModify, newMessage: staticFixtures.modifiedComment });
 
@@ -42,7 +42,7 @@ describe('cart comments', { tags: ['@comments'] }, (): void => {
   });
 
   it('customer should be able to remove comment in cart with items', (): void => {
-    commentCartPage.visit();
+    commentCartPage.visitCartWithItems();
     commentCartPage.add({ message: staticFixtures.commentsToRemove });
     commentCartPage.remove({ message: staticFixtures.commentsToRemove });
 

@@ -7,4 +7,5 @@ export interface CommentCartRepository {
   getCommentTextareaForUpdateByCommentText(commentText: string): Cypress.Chainable;
   getCommentTextareaForDeleteByCommentText(commentText: string): Cypress.Chainable;
   getUpdateCommentButtonSelector(): string;
+  getCartUpsellingAjaxLoader(): Cypress.Chainable;
 }
