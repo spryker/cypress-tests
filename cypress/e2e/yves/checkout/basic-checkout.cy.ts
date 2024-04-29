@@ -18,28 +18,14 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
   });
 
   it('guest customer should checkout to single shipment', (): void => {
-    catalogPage.visit();
-    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product1.sku });
-    productPage.addToCart();
-
-    catalogPage.visit();
-    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product2.sku });
-    productPage.addToCart();
-
+    addTwoProductsToCart();
     checkoutScenario.execute({ isGuest: true, shouldTriggerOmsInCli: true });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
   it('guest customer should checkout to multi shipment address', (): void => {
-    catalogPage.visit();
-    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product1.sku });
-    productPage.addToCart();
-
-    catalogPage.visit();
-    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product2.sku });
-    productPage.addToCart();
-
+    addTwoProductsToCart();
     checkoutScenario.execute({
       isGuest: true,
       isMultiShipment: true,
@@ -55,6 +41,10 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
       password: staticFixtures.defaultPassword,
     });
 
+    if (['b2c'].includes(Cypress.env('repositoryId'))) {
+      addTwoProductsToCart();
+    }
+
     checkoutScenario.execute({
       idCustomerAddress: dynamicFixtures.address.id_customer_address,
       shouldTriggerOmsInCli: true,
@@ -69,6 +59,10 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
       password: staticFixtures.defaultPassword,
     });
 
+    if (['b2c'].includes(Cypress.env('repositoryId'))) {
+      addTwoProductsToCart();
+    }
+
     checkoutScenario.execute({ shouldTriggerOmsInCli: true });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
@@ -79,6 +73,10 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
     });
+
+    if (['b2c'].includes(Cypress.env('repositoryId'))) {
+      addTwoProductsToCart();
+    }
 
     checkoutScenario.execute({
       isMultiShipment: true,
@@ -95,8 +93,22 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
       password: staticFixtures.defaultPassword,
     });
 
+    if (['b2c'].includes(Cypress.env('repositoryId'))) {
+      addTwoProductsToCart();
+    }
+
     checkoutScenario.execute({ isMultiShipment: true, shouldTriggerOmsInCli: true });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
+
+  function addTwoProductsToCart(): void {
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product1.sku });
+    productPage.addToCart();
+
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product2.sku });
+    productPage.addToCart();
+  }
 });

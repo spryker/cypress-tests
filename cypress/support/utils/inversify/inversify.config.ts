@@ -73,6 +73,13 @@ import { B2cMpCustomerOverviewRepository } from '../../pages/yves/customer/overv
 import { B2bMpCustomerOverviewRepository } from '../../pages/yves/customer/overview/repositories/b2b-mp-customer-overview-repository';
 import { B2cMpCatalogRepository } from '../../pages/yves/catalog/repositories/b2c-mp-catalog-repository';
 import { B2cMpProductRepository } from '../../pages/yves/product/repositories/b2c-mp-product-repository';
+import { B2cMultiCartRepository } from '../../pages/yves/multi-cart/repositories/b2c-multi-cart-repository';
+import { B2cCommentCartRepository } from '../../pages/yves/comment/cart/repositories/b2c-comment-cart-repository';
+import { B2cCompanyUserSelectRepository } from '../../pages/yves/company/user/select/repositories/b2c-company-user-select-repository';
+import { B2cMerchantRelationRequestCreateRepository } from '../../pages/yves/company/merchant-relation-request/create/repositories/b2c-merchant-relation-request-create-repository';
+import { B2cMerchantRelationRequestDetailsRepository } from '../../pages/yves/company/merchant-relation-request/details/repositories/b2c-merchant-relation-request-details-repository';
+import { B2cMerchantRelationRequestIndexRepository } from '../../pages/yves/company/merchant-relation-request/index/repositories/b2c-merchant-relation-request-index-repository';
+import { B2cMerchantRepository } from '../../pages/yves/merchant/repositories/b2c-merchant-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -101,6 +108,13 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.LoginRepository]: B2cLoginRepository,
   [REPOSITORIES.CatalogRepository]: B2cCatalogRepository,
   [REPOSITORIES.ProductRepository]: B2cProductRepository,
+  [REPOSITORIES.MultiCartRepository]: B2cMultiCartRepository,
+  [REPOSITORIES.CommentCartRepository]: B2cCommentCartRepository,
+  [REPOSITORIES.CompanyUserSelectRepository]: B2cCompanyUserSelectRepository,
+  [REPOSITORIES.MerchantRelationRequestCreateRepository]: B2cMerchantRelationRequestCreateRepository,
+  [REPOSITORIES.MerchantRelationRequestDetailsRepository]: B2cMerchantRelationRequestDetailsRepository,
+  [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2cMerchantRelationRequestIndexRepository,
+  [REPOSITORIES.MerchantRepository]: B2cMerchantRepository,
   [REPOSITORIES.AgentLoginRepository]: B2cAgentLoginRepository,
   [REPOSITORIES.CartRepository]: B2cCartRepository,
   [REPOSITORIES.CheckoutAddressRepository]: B2cCheckoutAddressRepository,

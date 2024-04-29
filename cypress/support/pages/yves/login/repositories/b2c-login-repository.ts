@@ -7,7 +7,7 @@ export class B2cLoginRepository implements LoginRepository {
   getLoginEmailInput = (): Cypress.Chainable => cy.get('#loginForm_email');
   getLoginPasswordInput = (): Cypress.Chainable => cy.get('#loginForm_password');
   getLoginForm = (): Cypress.Chainable => cy.get('form[name=loginForm]');
-  getRegisterSalutationSelect = (): Cypress.Chainable => cy.get('#registerForm_salutation');
+  getRegisterSalutationSelect = (): Cypress.Chainable => cy.get('[name="registerForm[salutation]"]');
   getRegisterFirstNameInput = (): Cypress.Chainable => cy.get('#registerForm_first_name');
   getRegisterLastNameInput = (): Cypress.Chainable => cy.get('#registerForm_last_name');
   getRegisterEmailInput = (): Cypress.Chainable => cy.get('#registerForm_email');

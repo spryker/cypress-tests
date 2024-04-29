@@ -8,7 +8,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
-(Cypress.env('repositoryId') === 'b2c-mp' || Cypress.env('repositoryId') === 'b2b-mp' ? describe.skip : describe)(
+(['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'dummy payment OMS flow smoke',
   { tags: ['@order-management', '@smoke'] },
   (): void => {

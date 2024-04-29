@@ -3,8 +3,11 @@ import { ReturnCreationDynamicFixtures, ReturnManagementStaticFixtures } from '@
 import { SalesDetailPage, SalesIndexPage, SalesReturnCreatePage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
+import { CatalogPage, ProductPage } from '@pages/yves';
 
 describe('return creation', { tags: ['@return-management'] }, (): void => {
+  const catalogPage = container.get(CatalogPage);
+  const productsPage = container.get(ProductPage);
   const salesIndexPage = container.get(SalesIndexPage);
   const salesDetailPage = container.get(SalesDetailPage);
   const salesReturnCreatePage = container.get(SalesReturnCreatePage);
@@ -24,6 +27,12 @@ describe('return creation', { tags: ['@return-management'] }, (): void => {
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
     });
+
+    if (['b2c'].includes(Cypress.env('repositoryId'))) {
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
+      productsPage.addToCart();
+    }
 
     checkoutScenario.execute({
       isGuest: false,

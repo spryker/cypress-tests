@@ -10,7 +10,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
-(Cypress.env('repositoryId') === 'b2c' || Cypress.env('repositoryId') === 'b2b' ? describe.skip : describe)(
+(['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'marketplace payment OMS flow smoke',
   { tags: ['@marketplace-order-management', '@smoke'] },
   (): void => {
