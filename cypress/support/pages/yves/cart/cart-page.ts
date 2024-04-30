@@ -28,6 +28,7 @@ export class CartPage extends YvesPage {
 
     this.repository.getQuickAddToCartSubmitButton().click();
 
+    this.repository.getPageLayoutCartAjaxLoader().should('be.visible');
     this.repository.getPageLayoutCartAjaxLoader().should('be.not.visible');
   };
 

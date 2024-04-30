@@ -56,6 +56,7 @@ import { B2bMerchantRelationRequestCreateRepository } from '../../pages/yves/com
 import { B2bMerchantRelationRequestDetailsRepository } from '../../pages/yves/company/merchant-relation-request/details/repositories/b2b-merchant-relation-request-details-repository';
 import { B2bMerchantRelationRequestIndexRepository } from '../../pages/yves/company/merchant-relation-request/index/repositories/b2b-merchant-relation-request-index-repository';
 import { B2bMerchantRepository } from '../../pages/yves/merchant/repositories/b2b-merchant-repository';
+import { SuiteCustomOrderReferenceCartRepository } from '../../pages/yves/order-management/cart/repositories/suite-custom-order-reference-cart-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -77,6 +78,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.MerchantRelationRequestDetailsRepository]: SuiteMerchantRelationRequestDetailsRepository,
   [REPOSITORIES.MerchantRelationRequestIndexRepository]: SuiteMerchantRelationRequestIndexRepository,
   [REPOSITORIES.MerchantRepository]: SuiteMerchantRepository,
+  [REPOSITORIES.CustomOrderReferenceCartRepository]: SuiteCustomOrderReferenceCartRepository,
 };
 
 const b2bMappings: BindingsMap = {
