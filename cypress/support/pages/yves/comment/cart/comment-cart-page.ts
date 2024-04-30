@@ -19,10 +19,10 @@ export class CommentCartPage extends YvesPage {
 
   add = (params: AddParams): void => {
     this.repository.getAddCommentForm().last().find('textarea').clear();
-      this.repository.getAddCommentForm().last().find('textarea').type(params.message);
+    this.repository.getAddCommentForm().last().find('textarea').type(params.message);
     this.repository.getAddCommentForm().last().find(this.repository.getAddCommentButtonSelector()).click();
 
-      this.repository.getCommentThreadAjaxLoader().should('be.not.visible');
+    this.repository.getCommentThreadAjaxLoader().should('be.not.visible');
   };
 
   update = (params: UpdateParams): void => {
@@ -31,7 +31,7 @@ export class CommentCartPage extends YvesPage {
     textarea.clear().type(params.newMessage);
     textarea.parent().find(this.repository.getUpdateCommentButtonSelector()).click();
 
-      this.repository.getCommentThreadAjaxLoader().should('be.not.visible');
+    this.repository.getCommentThreadAjaxLoader().should('be.not.visible');
   };
 
   remove = (params: RemoveParams): void => {
@@ -41,7 +41,7 @@ export class CommentCartPage extends YvesPage {
       .find(this.repository.getRemoveCommentButtonSelector())
       .click();
 
-      this.repository.getCommentThreadAjaxLoader().should('be.not.visible');
+    this.repository.getCommentThreadAjaxLoader().should('be.not.visible');
   };
 
   updateFirst = (params: UpdateFirstParams): void => {
@@ -50,13 +50,13 @@ export class CommentCartPage extends YvesPage {
 
     this.getCommentThreadListSection().first().find(this.repository.getUpdateCommentButtonSelector()).click();
 
-      this.repository.getCommentThreadAjaxLoader().should('be.not.visible');
+    this.repository.getCommentThreadAjaxLoader().should('be.not.visible');
   };
 
   removeFirst = (): void => {
     this.getCommentThreadListSection().find(this.repository.getRemoveCommentButtonSelector()).click();
 
-      this.repository.getCommentThreadAjaxLoader().should('be.not.visible');
+    this.repository.getCommentThreadAjaxLoader().should('be.not.visible');
   };
 
   getCommentThreadListSection = (): Cypress.Chainable => {

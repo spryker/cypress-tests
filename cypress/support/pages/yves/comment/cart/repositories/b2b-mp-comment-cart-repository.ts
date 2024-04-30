@@ -32,6 +32,6 @@ export class B2bMpCommentCartRepository implements CommentCartRepository {
   }
   getCartUpsellingAjaxLoader = (): Cypress.Chainable =>
     cy.get('[data-qa="component cart-upselling"] [data-qa="component ajax-loader"]', { timeout: 10000 });
-    getCommentThreadAjaxLoader = (): Cypress.Chainable =>
-        cy.get('[data-qa="component ajax-loader comment-thread-ajax-loader"]', { timeout: 10000 });
+  getCommentThreadAjaxLoader = (): Cypress.Chainable =>
+    cy.get('[data-qa="component ajax-loader comment-thread-ajax-loader"]', { timeout: 10000 });
 }

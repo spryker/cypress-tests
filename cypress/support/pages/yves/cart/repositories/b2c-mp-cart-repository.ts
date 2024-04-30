@@ -20,6 +20,7 @@ export class B2cMpCartRepository implements CartRepository {
       return regex.test(element.getAttribute('action') ?? '');
     });
   };
+  findCartItemRemovalSubmit = (sku: string): Cypress.Chainable => this.findCartItemRemovalForm(sku).find('button');
   findCartItemChangeQuantityForm = (sku: string): Cypress.Chainable => {
     return cy.get('[action]').filter((index, element) => {
       const regex = new RegExp(`^/\\w+/cart/change/${sku}$`);
@@ -28,14 +29,14 @@ export class B2cMpCartRepository implements CartRepository {
   };
   getCartItemChangeQuantityField = (sku: string): Cypress.Chainable =>
     this.findCartItemChangeQuantityForm(sku).find('[data-qa="cart-item-quantity-input"]');
-    getCartItemChangeQuantitySubmit = (sku: string): Cypress.Chainable =>
-        this.findCartItemChangeQuantityForm(sku).find('[data-qa="quantity-input-submit"]');
+  getCartItemChangeQuantitySubmit = (sku: string): Cypress.Chainable =>
+    this.findCartItemChangeQuantityForm(sku).find('[data-qa="quantity-input-submit"]');
   findClearCartForm = (): Cypress.Chainable => cy.get('[data-qa="multi-cart-clear-form"]');
   getCheckoutButton = (): Cypress.Chainable => cy.get('[data-qa="cart-go-to-checkout"]:visible');
   getCartUpsellingAjaxLoader = (): Cypress.Chainable =>
     cy.get('[data-qa="component cart-upselling"] [data-qa="component ajax-loader"]', { timeout: 10000 });
   getPageLayoutCartAjaxLoader = (): Cypress.Chainable =>
-      cy.get('[data-qa="component ajax-loader page-layout-cart-ajax-loader"]', { timeout: 10000 });
-    getCartSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-summary"]');
-    getCartCounter = (): Cypress.Chainable => cy.get('[data-qa="component cart-counter"]');
+    cy.get('[data-qa="component ajax-loader page-layout-cart-ajax-loader"]', { timeout: 10000 });
+  getCartSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-summary"]');
+  getCartCounter = (): Cypress.Chainable => cy.get('[data-qa="component cart-counter"]');
 }

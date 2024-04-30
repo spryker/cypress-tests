@@ -35,14 +35,18 @@ export class CartPage extends YvesPage {
     this.repository.getCheckoutButton().click();
   };
 
-  removeProduct = (params: RemoveProductParams): void => {
-    const form = this.repository.findCartItemRemovalForm(params.sku);
+  removeProduct = (params: RemoveProductParams, waitForAjaxLoader = true): void => {
+    const cartItemRemovalButton = this.repository.findCartItemRemovalSubmit(params.sku);
 
-    if (!form) {
+    if (!cartItemRemovalButton) {
       return;
     }
 
-    form.submit();
+    cartItemRemovalButton.click();
+
+    if (waitForAjaxLoader) {
+      this.repository.getPageLayoutCartAjaxLoader().should('be.not.visible');
+    }
   };
 
   changeQuantity = (params: ChangeQuantityParams, waitForAjaxLoader = true): void => {

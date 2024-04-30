@@ -16,10 +16,11 @@ export class SuiteCartRepository implements CartRepository {
     cy.get('[data-qa="product-quick-add-form-submit-button"]');
   findCartItemRemovalForm = (sku: string): Cypress.Chainable => {
     return cy.get('[action]').filter((index, element) => {
-      const regex = new RegExp(`^/\\w+/cart/remove/${sku}/\\w+$`);
+      const regex = new RegExp(`^/\\w+/cart/async/remove/${sku}/\\w+$`);
       return regex.test(element.getAttribute('action') ?? '');
     });
   };
+  findCartItemRemovalSubmit = (sku: string): Cypress.Chainable => this.findCartItemRemovalForm(sku).find('button');
   findCartItemChangeQuantityForm = (sku: string): Cypress.Chainable => {
     return cy.get('[action]').filter((index, element) => {
       const regex = new RegExp(`^/\\w+/cart/async/change-quantity/${sku}$`);

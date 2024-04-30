@@ -22,3 +22,15 @@ export interface CartItemQuantityDynamicFixtures {
 export interface CartItemQuantityStaticFixtures {
   defaultPassword: string;
 }
+
+export interface CartItemRemoveDynamicFixtures {
+  customer: Customer;
+  product1: ProductConcrete;
+  product2: ProductConcrete;
+  quote1: Quote;
+  quote2: Quote;
+}
+
+export interface CartItemRemoveStaticFixtures {
+  defaultPassword: string;
+}

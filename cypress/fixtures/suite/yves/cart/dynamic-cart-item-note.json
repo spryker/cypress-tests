@@ -40,27 +40,6 @@
           "arguments": ["#customer"]
         },
         {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfile1"
-        },
-        {
-          "type": "helper",
-          "name": "haveMerchant",
-          "key": "merchant1",
-          "arguments": [
-            {
-              "merchantProfile": "#merchantProfile1",
-              "isActive": true,
-              "isOpenForRelationRequest": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
-            }
-          ]
-        },
-        {
           "type": "helper",
           "name": "haveFullProduct",
           "key": "product1"
@@ -141,28 +120,6 @@
           "name": "haveProductInStockForStore",
           "key": "product2WithPriceAndStore",
           "arguments": ["#store", { "sku": "#product2.sku", "isNeverOutOfStock": "1" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveMerchantProduct",
-          "key": "merchantProduct1",
-          "arguments": [
-            {
-              "idProductAbstract": "#product1.fk_product_abstract",
-              "idMerchant": "#merchant1.id_merchant"
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveMerchantProduct",
-          "key": "merchantProduct2",
-          "arguments": [
-            {
-              "idProductAbstract": "#product2.fk_product_abstract",
-              "idMerchant": "#merchant1.id_merchant"
-            }
-          ]
         }
       ]
     }
