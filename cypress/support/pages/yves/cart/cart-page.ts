@@ -73,9 +73,12 @@ export class CartPage extends YvesPage {
     this.repository.getLastCartItemNoteField().clear();
   };
 
-  submitLastCartItemNote = (): void => {
+  submitLastCartItemNote = (waitForAjaxLoader = true): void => {
     this.repository.getLastCartItemNoteSubmitButton().click();
-    this.repository.getPageLayoutCartAjaxLoader().should('be.not.visible');
+
+    if (waitForAjaxLoader) {
+      this.repository.getPageLayoutCartAjaxLoader().should('be.not.visible');
+    }
   };
 
   getLastCartItemNoteField = (): Cypress.Chainable => {

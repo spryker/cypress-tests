@@ -72,13 +72,44 @@ describe('cart item note', { tags: ['@cart'] }, (): void => {
     visitCartWithProducts();
 
     cartPage.addLastCartItemNote({ message: staticFixtures.addCartItemNote });
-    cartPage.submitLastCartItemNote();
+    cartPage.submitLastCartItemNote(false);
 
-    expect(cartPage.getCheckoutButton());
+    Cypress.on('fail', (error) => {
+      if (!error.message.includes('is being covered by another element')) {
+        throw error;
+      }
+      cy.log('Button click failed as expected. The button is not clickable.');
+    });
+
+    cartPage
+      .getCheckoutButton()
+      .click()
+      .then(() => {
+        throw new Error('Button clicked successfully.');
+      });
+  });
+
+  it('adding cart item note should reload the whole cart block', (): void => {
+    customerLoginScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+    });
+    visitCartWithProducts();
+
+    cartPage
+      .getCheckoutButton()
+      .invoke('append', '<div class="added-html">Added HTML</div>')
+      .then(() => {
+        cartPage.addLastCartItemNote({ message: staticFixtures.addCartItemNote });
+        cartPage.submitLastCartItemNote();
+        cartPage.getCheckoutButton().then(($button) => {
+          expect($button.find('.added-html')).to.not.exist;
+        });
+      });
   });
 
   function visitCartWithProducts(): void {
-    cartPage.visit();
+    cartPage.visitCartWithItems();
     cartPage.quickAddToCart({ sku: dynamicFixtures.product1.sku, quantity: 1 });
     cartPage.quickAddToCart({ sku: dynamicFixtures.product2.sku, quantity: 1 });
   }

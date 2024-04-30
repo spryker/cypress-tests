@@ -1,4 +1,4 @@
-import { Address, Customer, ProductConcrete, Quote } from './shared';
+import { Address, Customer, ProductConcrete } from './shared';
 
 export interface CartItemNoteDynamicFixtures {
   customer: Customer;
