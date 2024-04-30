@@ -35,7 +35,7 @@ export class SuiteCartRepository implements CartRepository {
   getCartUpsellingAjaxLoader = (): Cypress.Chainable =>
     cy.get('[data-qa="component cart-upselling"] [data-qa="component ajax-loader"]', { timeout: 10000 });
   getPageLayoutCartAjaxLoader = (): Cypress.Chainable =>
-    cy.get('[data-qa="page-layout-cart-ajax-loader-container"] [data-qa="component ajax-loader"]', { timeout: 10000 });
+    cy.get('[data-qa="component ajax-loader page-layout-cart-ajax-loader"]', { timeout: 10000 });
   getCartSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-summary"]');
   getCartCounter = (): Cypress.Chainable => cy.get('[data-qa="component cart-counter"]');
 }
