@@ -45,16 +45,20 @@ export class CartPage extends YvesPage {
     form.submit();
   };
 
-  changeQuantity = (params: ChangeQuantityParams): void => {
-    const form = this.repository.findCartItemChangeQuantityForm(params.sku);
+  changeQuantity = (params: ChangeQuantityParams, waitForAjaxLoader = true): void => {
     const input = this.repository.getCartItemChangeQuantityField(params.sku);
 
-    if (!form || !input) {
+    if (!input) {
       return;
     }
 
     input.type('{selectall}').type(String(params.quantity));
-    form.submit();
+
+    this.repository.getCartItemChangeQuantitySubmit(params.sku).click();
+
+    if (waitForAjaxLoader) {
+      this.repository.getPageLayoutCartAjaxLoader().should('be.not.visible');
+    }
   };
 
   clearCart = (): void => {
@@ -87,6 +91,18 @@ export class CartPage extends YvesPage {
 
   getCheckoutButton(): Cypress.Chainable {
     return this.repository.getCheckoutButton();
+  }
+
+  getCartSummary(): Cypress.Chainable {
+    return this.repository.getCartSummary();
+  }
+
+  getCartCounter(): Cypress.Chainable {
+    return this.repository.getCartCounter();
+  }
+
+  getCartItemChangeQuantityField(sku: string): Cypress.Chainable {
+    return this.repository.getCartItemChangeQuantityField(sku);
   }
 }
 

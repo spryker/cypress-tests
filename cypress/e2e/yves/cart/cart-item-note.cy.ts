@@ -21,17 +21,17 @@ describe('cart item note', { tags: ['@cart'] }, (): void => {
     });
     visitCartWithProducts();
 
-    cartPage.addLastCartItemNote({ message: staticFixtures.addCartItemNote });
+    cartPage.addLastCartItemNote({ message: staticFixtures.cartItemNote });
     cartPage.submitLastCartItemNote();
-    cartPage.getLastCartItemNoteField().contains(staticFixtures.addCartItemNote).should('exist');
+    cartPage.getLastCartItemNoteField().contains(staticFixtures.cartItemNote).should('exist');
   });
 
   it('guest customer should be able to add a cart item note', (): void => {
     visitCartWithProducts();
 
-    cartPage.addLastCartItemNote({ message: staticFixtures.addCartItemNote });
+    cartPage.addLastCartItemNote({ message: staticFixtures.cartItemNote });
     cartPage.submitLastCartItemNote();
-    cartPage.getLastCartItemNoteField().contains(staticFixtures.addCartItemNote).should('exist');
+    cartPage.getLastCartItemNoteField().contains(staticFixtures.cartItemNote).should('exist');
   });
 
   it('customer should be able to remove a cart item note', (): void => {
@@ -41,7 +41,7 @@ describe('cart item note', { tags: ['@cart'] }, (): void => {
     });
     visitCartWithProducts();
 
-    cartPage.addLastCartItemNote({ message: staticFixtures.addCartItemNote });
+    cartPage.addLastCartItemNote({ message: staticFixtures.cartItemNote });
     cartPage.submitLastCartItemNote();
     cartPage.clearLastCartItemNote();
     cartPage.getLastCartItemNoteField().should('have.value', '');
@@ -56,7 +56,7 @@ describe('cart item note', { tags: ['@cart'] }, (): void => {
     });
     visitCartWithProducts();
 
-    cartPage.addLastCartItemNote({ message: staticFixtures.addCartItemNote });
+    cartPage.addLastCartItemNote({ message: staticFixtures.cartItemNote });
     cartPage.submitLastCartItemNote();
 
     cy.window().then((win) => {
@@ -71,7 +71,7 @@ describe('cart item note', { tags: ['@cart'] }, (): void => {
     });
     visitCartWithProducts();
 
-    cartPage.addLastCartItemNote({ message: staticFixtures.addCartItemNote });
+    cartPage.addLastCartItemNote({ message: staticFixtures.cartItemNote });
     cartPage.submitLastCartItemNote(false);
 
     Cypress.on('fail', (error) => {
@@ -83,7 +83,7 @@ describe('cart item note', { tags: ['@cart'] }, (): void => {
 
     cartPage
       .getCheckoutButton()
-      .click()
+      .click({ timeout: 100 })
       .then(() => {
         throw new Error('Button clicked successfully.');
       });
@@ -100,7 +100,7 @@ describe('cart item note', { tags: ['@cart'] }, (): void => {
       .getCheckoutButton()
       .invoke('append', '<div class="added-html">Added HTML</div>')
       .then(() => {
-        cartPage.addLastCartItemNote({ message: staticFixtures.addCartItemNote });
+        cartPage.addLastCartItemNote({ message: staticFixtures.cartItemNote });
         cartPage.submitLastCartItemNote();
         cartPage.getCheckoutButton().then(($button) => {
           expect($button.find('.added-html')).to.not.exist;
