@@ -27,7 +27,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
       staticFixtures = Cypress.env('staticFixtures');
     });
 
-    it('backoffice operator should be able close an order from guest', (): void => {
+    skipB2BIt('backoffice operator should be able close an order from guest', (): void => {
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: staticFixtures.product.sku });
       productsPage.addToCart();
@@ -74,6 +74,10 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
       salesDetailPage.triggerOms({ state: 'Ship' });
       salesDetailPage.triggerOms({ state: 'Stock update' });
       salesDetailPage.triggerOms({ state: 'Close' });
+    }
+
+    function skipB2BIt(description: string, testFn: () => void): void {
+      (Cypress.env('repositoryId') === 'b2b' ? it.skip : it)(description, testFn);
     }
   }
 );

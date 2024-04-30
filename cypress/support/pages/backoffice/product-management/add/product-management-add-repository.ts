@@ -36,4 +36,6 @@ export class ProductManagementAddRepository {
   getLargeImageUrlInput = (): Cypress.Chainable =>
     cy.get('#product_form_add_image_set_default_0_product_images_0_external_url_large');
   getSaveButton = (): Cypress.Chainable => cy.get('[type="submit"]');
+  getVariantSuperSizeCheckbox = (): Cypress.Chainable => cy.get('#product_form_add_attribute_super_size_name');
+  getVariantSuperSizeSelect = (): Cypress.Chainable => cy.get('#product_form_add_attribute_super_size_value');
 }

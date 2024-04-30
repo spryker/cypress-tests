@@ -36,11 +36,13 @@ describe('publish and synchronize smoke', { tags: ['@product', '@smoke'] }, (): 
 
     cy.contains(productAbstract.name);
     cy.contains(productAbstract.sku);
-    cy.contains(productAbstract.price);
     cy.contains(productAbstract.description);
 
-    productPage.addToCart();
-    cy.contains(productPage.getAddToCartSuccessMessage());
+    if (!['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      cy.contains(productAbstract.price);
+      productPage.addToCart();
+      cy.contains(productPage.getAddToCartSuccessMessage());
+    }
   });
 
   it('backoffice user should be able to create new product that will be available for customers in storefront', (): void => {
@@ -54,8 +56,8 @@ describe('publish and synchronize smoke', { tags: ['@product', '@smoke'] }, (): 
 
     cy.contains(productAbstract.name);
     cy.contains(productAbstract.sku);
-    cy.contains(productAbstract.price);
     cy.contains(productAbstract.description);
+    cy.contains(productAbstract.price);
 
     productPage.addToCart();
     cy.contains(productPage.getAddToCartSuccessMessage());

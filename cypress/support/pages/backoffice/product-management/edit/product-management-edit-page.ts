@@ -12,7 +12,7 @@ export class ProductManagementEditPage extends BackofficePage {
   protected PAGE_URL = '/product-management/edit';
 
   approve = (): void => {
-    if (!this.isRepository('b2c')) {
+    if (!this.isRepository('b2c', 'b2b')) {
       this.repository.getApproveButton().click();
     }
   };

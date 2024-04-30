@@ -25,13 +25,12 @@ export class CatalogPage extends YvesPage {
       cy.get('.header__search-open').click();
     }
 
-    this.repository.getSearchInput().clear().type(params.query);
-    this.repository.getSearchButton().click();
+    this.repository.getSearchInput().clear().type(`${params.query}{enter}`);
 
     cy.url().then((url) => {
       cy.reloadUntilFound(
         url,
-        `span:contains("${params.query}")`, // Is working with product's name only
+        this.repository.getItemBlockSearchQuery(params.query), // Is working with product's name only
         this.repository.getFirstProductItemBlockSelector(),
         25,
         5000

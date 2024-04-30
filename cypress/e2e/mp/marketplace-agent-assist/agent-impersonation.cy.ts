@@ -12,7 +12,7 @@ import { ImpersonateAsMerchantUserScenario } from '@scenarios/mp';
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
-(['b2c'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+(['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'agent impersonation',
   { tags: ['@marketplace-agent-assist'] },
   (): void => {

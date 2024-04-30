@@ -10,4 +10,5 @@ export class SuiteCatalogRepository implements CatalogRepository {
   getProductItemBlocks = (): Cypress.Chainable => cy.get('[data-qa="component product-item"]');
   getFirstProductItemBlockSelector = (): string => '[data-qa="component product-item"]:first';
   getViewButtonSelector = (): string => 'a:contains("View")';
+  getItemBlockSearchQuery = (query: string): string => `span:contains("${query}")`;
 }

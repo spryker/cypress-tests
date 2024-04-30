@@ -55,11 +55,10 @@ export class CheckoutScenario {
       dummyPaymentInvoice: () => this.checkoutPaymentPage.setDummyPaymentMethod(),
       dummyPaymentCreditCard: () => this.checkoutPaymentPage.setDummyPaymentCreditCardMethod(),
       dummyMarketplacePaymentInvoice: () => this.checkoutPaymentPage.setDummyMarketplacePaymentMethod(),
-      default: () => this.checkoutPaymentPage.setDummyPaymentMethod(),
     };
 
-    const paymentMethod = params?.paymentMethod || 'default';
-    const paymentFunction = paymentMethods[paymentMethod as keyof typeof paymentMethods] || paymentMethods['default'];
+    const paymentMethod = params?.paymentMethod || 'dummyPaymentInvoice';
+    const paymentFunction = paymentMethods[paymentMethod as keyof typeof paymentMethods];
 
     paymentFunction();
   };

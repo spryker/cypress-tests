@@ -13,7 +13,7 @@ describe('customer auth', { tags: ['@customer-account-management'] }, (): void =
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 
-  it('guest should be able to register and login as new customer', (): void => {
+  skipB2BIt('guest should be able to register and login as new customer', (): void => {
     loginPage.visit();
     const registeredCustomer = loginPage.register();
     cy.contains(loginPage.getRegistrationCompletedMessage());
@@ -28,4 +28,8 @@ describe('customer auth', { tags: ['@customer-account-management'] }, (): void =
 
     customerOverviewPage.assertPageLocation();
   });
+
+  function skipB2BIt(description: string, testFn: () => void): void {
+    (Cypress.env('repositoryId') === 'b2b' ? it.skip : it)(description, testFn);
+  }
 });

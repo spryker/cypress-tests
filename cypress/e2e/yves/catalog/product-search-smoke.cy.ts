@@ -14,14 +14,14 @@ describe('product search smoke', { tags: ['@catalog', '@smoke'] }, (): void => {
     staticFixtures = Cypress.env('staticFixtures');
   });
 
-  it('guest should be able to find product abstract in catalog', (): void => {
+  skipB2BIt('guest should be able to find product abstract in catalog', (): void => {
     catalogPage.visit();
     catalogPage.searchProductFromSuggestions({ query: staticFixtures.concreteProduct.abstract_sku });
 
     assertProductDetails();
   });
 
-  it('guest should be able to find product concrete in catalog', (): void => {
+  skipB2BIt('guest should be able to find product concrete in catalog', (): void => {
     catalogPage.visit();
     catalogPage.searchProductFromSuggestions({ query: staticFixtures.concreteProduct.sku });
 
@@ -56,5 +56,9 @@ describe('product search smoke', { tags: ['@catalog', '@smoke'] }, (): void => {
     cy.contains(staticFixtures.concreteProduct.name);
     productPage.getProductConfigurator().should('contain', staticFixtures.productPrice);
     productPage.getProductConfigurator().should('contain', staticFixtures.concreteProduct.sku);
+  }
+
+  function skipB2BIt(description: string, testFn: () => void): void {
+    (Cypress.env('repositoryId') === 'b2b' ? it.skip : it)(description, testFn);
   }
 });

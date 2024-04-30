@@ -12,7 +12,9 @@ export class CheckoutPaymentPage extends YvesPage {
   protected PAGE_URL = '/checkout/payment';
 
   setDummyPaymentMethod = (): void => {
-    this.repository.getDummyPaymentInvoiceRadio().click({ force: true });
+    this.repository
+      .getDummyPaymentInvoiceRadio()
+      .click(['b2b'].includes(Cypress.env('repositoryId')) ? {} : { force: true });
     this.repository.getDummyPaymentInvoiceDateField().clear().type('12.12.1999');
 
     this.repository.getGoToSummaryButton().click();

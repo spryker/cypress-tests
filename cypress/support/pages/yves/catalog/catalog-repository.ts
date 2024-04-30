@@ -5,4 +5,5 @@ export interface CatalogRepository {
   getProductItemBlocks(): Cypress.Chainable;
   getFirstProductItemBlockSelector(): string;
   getViewButtonSelector(): string;
+  getItemBlockSearchQuery(query: string): string;
 }

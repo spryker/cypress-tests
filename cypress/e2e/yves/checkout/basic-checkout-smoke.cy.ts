@@ -19,7 +19,7 @@ describe('basic checkout smoke', { tags: ['@checkout', '@smoke'] }, (): void => 
     staticFixtures = Cypress.env('staticFixtures');
   });
 
-  it('guest customer should checkout to single shipment', (): void => {
+  skipB2BIt('guest customer should checkout to single shipment', (): void => {
     catalogPage.visit();
     catalogPage.searchProductFromSuggestions({ query: staticFixtures.product1.sku });
     productPage.addToCart();
@@ -38,7 +38,7 @@ describe('basic checkout smoke', { tags: ['@checkout', '@smoke'] }, (): void => 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
-  it('guest customer should checkout to multi shipment address', (): void => {
+  skipB2BIt('guest customer should checkout to multi shipment address', (): void => {
     catalogPage.visit();
     catalogPage.searchProductFromSuggestions({ query: staticFixtures.product1.sku });
     productPage.addToCart();
@@ -104,4 +104,8 @@ describe('basic checkout smoke', { tags: ['@checkout', '@smoke'] }, (): void => 
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
+
+  function skipB2BIt(description: string, testFn: () => void): void {
+    (Cypress.env('repositoryId') === 'b2b' ? it.skip : it)(description, testFn);
+  }
 });

@@ -34,12 +34,20 @@ export class ProductManagementAddPage extends BackofficePage {
     this.repository.getOriginalGrossPriceInput().type(productAbstract.price);
     this.repository.getDefaultNetPriceInput().type(productAbstract.price);
     this.repository.getOriginalNetPriceInput().type(productAbstract.price);
-    this.repository.getTaxSelect().select('Smart Electronics', { force: true });
 
-    this.repository.getVariantsTab().click();
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      this.repository.getTaxSelect().select('Standard Taxes', { force: true });
+      this.repository.getVariantsTab().click();
 
-    this.repository.getVariantStorageCapacityCheckbox().click();
-    this.repository.getVariantStorageCapacitySelect().select('16 GB', { force: true });
+      this.repository.getVariantSuperSizeCheckbox().click();
+      this.repository.getVariantSuperSizeSelect().select('800 x 800', { force: true });
+    } else {
+      this.repository.getTaxSelect().select('Smart Electronics', { force: true });
+      this.repository.getVariantsTab().click();
+
+      this.repository.getVariantStorageCapacityCheckbox().click();
+      this.repository.getVariantStorageCapacitySelect().select('16 GB', { force: true });
+    }
 
     this.repository.getImageTab().click();
 
