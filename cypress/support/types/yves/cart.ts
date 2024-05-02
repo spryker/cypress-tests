@@ -1,36 +1,13 @@
-import { Address, Customer, ProductConcrete, Quote } from './shared';
+import { Customer, ProductConcrete, Quote } from './shared';
 
-export interface CartItemNoteDynamicFixtures {
+export interface CartItemDynamicFixtures {
   customer: Customer;
-  address: Address;
   product1: ProductConcrete;
   product2: ProductConcrete;
+  quote: Quote;
 }
 
-export interface CartItemNoteStaticFixtures {
+export interface CartItemStaticFixtures {
   defaultPassword: string;
   cartItemNote: string;
-}
-
-export interface CartItemQuantityDynamicFixtures {
-  customer: Customer;
-  product: ProductConcrete;
-  quote1: Quote;
-  quote2: Quote;
-}
-
-export interface CartItemQuantityStaticFixtures {
-  defaultPassword: string;
-}
-
-export interface CartItemRemoveDynamicFixtures {
-  customer: Customer;
-  product1: ProductConcrete;
-  product2: ProductConcrete;
-  quote1: Quote;
-  quote2: Quote;
-}
-
-export interface CartItemRemoveStaticFixtures {
-  defaultPassword: string;
 }

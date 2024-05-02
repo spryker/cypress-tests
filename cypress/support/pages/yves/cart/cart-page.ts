@@ -36,7 +36,7 @@ export class CartPage extends YvesPage {
     this.repository.getCheckoutButton().click();
   };
 
-  removeProduct = (params: RemoveProductParams, waitForAjaxLoader = true): void => {
+  removeProduct = (params: RemoveProductParams): void => {
     const cartItemRemovalButton = this.repository.findCartItemRemovalSubmit(params.sku);
 
     if (!cartItemRemovalButton) {
@@ -45,12 +45,10 @@ export class CartPage extends YvesPage {
 
     cartItemRemovalButton.click();
 
-    if (waitForAjaxLoader) {
-      this.repository.getPageLayoutCartAjaxLoader().should('be.not.visible');
-    }
+    this.repository.getPageLayoutCartAjaxLoader().should('be.not.visible');
   };
 
-  changeQuantity = (params: ChangeQuantityParams, waitForAjaxLoader = true): void => {
+  changeQuantity = (params: ChangeQuantityParams): void => {
     const input = this.repository.getCartItemChangeQuantityField(params.sku);
 
     if (!input) {
@@ -61,9 +59,7 @@ export class CartPage extends YvesPage {
 
     this.repository.getCartItemChangeQuantitySubmit(params.sku).click();
 
-    if (waitForAjaxLoader) {
-      this.repository.getPageLayoutCartAjaxLoader().should('be.not.visible');
-    }
+    this.repository.getPageLayoutCartAjaxLoader().should('be.not.visible');
   };
 
   clearCart = (): void => {
@@ -82,21 +78,15 @@ export class CartPage extends YvesPage {
     this.repository.getLastCartItemNoteField().clear();
   };
 
-  submitLastCartItemNote = (waitForAjaxLoader = true): void => {
+  submitLastCartItemNote = (): void => {
     this.repository.getLastCartItemNoteSubmitButton().click();
 
-    if (waitForAjaxLoader) {
-      this.repository.getPageLayoutCartAjaxLoader().should('be.not.visible');
-    }
+    this.repository.getPageLayoutCartAjaxLoader().should('be.not.visible');
   };
 
   getLastCartItemNoteField = (): Cypress.Chainable => {
     return this.repository.getLastCartItemNoteField();
   };
-
-  getCheckoutButton(): Cypress.Chainable {
-    return this.repository.getCheckoutButton();
-  }
 
   getCartSummary(): Cypress.Chainable {
     return this.repository.getCartSummary();

@@ -23,6 +23,9 @@ export class MultiCartPage extends YvesPage {
 
   selectCart = (params: SelectCartParams): void => {
     this.repository.getQuoteTable().contains(params.name).click();
+
+    this.repository.getCartUpsellingAjaxLoader().should('be.visible');
+    this.repository.getCartUpsellingAjaxLoader().should('be.not.visible');
   };
 }
 
