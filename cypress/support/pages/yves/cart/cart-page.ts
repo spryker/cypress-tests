@@ -70,22 +70,22 @@ export class CartPage extends YvesPage {
     }
   };
 
-  addLastCartItemNote = (params: CartItemNoteAddParams): void => {
-    this.repository.getLastCartItemNoteField().type(params.message);
+  addFirstCartItemNote = (params: CartItemNoteAddParams): void => {
+    this.repository.getFirstCartItemNoteField().type(params.message);
   };
 
-  clearLastCartItemNote = (): void => {
-    this.repository.getLastCartItemNoteField().clear();
+  clearFirstCartItemNote = (): void => {
+    this.repository.getFirstCartItemNoteField().clear();
   };
 
-  submitLastCartItemNote = (): void => {
-    this.repository.getLastCartItemNoteSubmitButton().click();
+  submitFirstCartItemNote = (): void => {
+    this.repository.getFirstCartItemNoteSubmitButton().click();
 
     this.repository.getPageLayoutCartAjaxLoader().should('be.not.visible');
   };
 
-  getLastCartItemNoteField = (): Cypress.Chainable => {
-    return this.repository.getLastCartItemNoteField();
+  getFirstCartItemNoteField = (): Cypress.Chainable => {
+    return this.repository.getFirstCartItemNoteField();
   };
 
   getCartSummary(): Cypress.Chainable {

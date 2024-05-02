@@ -90,19 +90,19 @@ describe('cart item quantity', { tags: ['@cart'] }, (): void => {
       password: staticFixtures.defaultPassword,
     });
     cartPage.visitCartWithItems();
-    cartPage.addLastCartItemNote({ message: staticFixtures.cartItemNote });
-    cartPage.submitLastCartItemNote();
+    cartPage.addFirstCartItemNote({ message: staticFixtures.cartItemNote });
+    cartPage.submitFirstCartItemNote();
 
-    cartPage.getLastCartItemNoteField().contains(staticFixtures.cartItemNote).should('exist');
+    cartPage.getFirstCartItemNoteField().contains(staticFixtures.cartItemNote).should('exist');
   });
 
   it('guest customer should be able to add a cart item note', (): void => {
     cartPage.visitCartWithItems();
     cartPage.quickAddToCart({ sku: dynamicFixtures.product1.sku, quantity: 2 });
-    cartPage.addLastCartItemNote({ message: staticFixtures.cartItemNote });
-    cartPage.submitLastCartItemNote();
+    cartPage.addFirstCartItemNote({ message: staticFixtures.cartItemNote });
+    cartPage.submitFirstCartItemNote();
 
-    cartPage.getLastCartItemNoteField().contains(staticFixtures.cartItemNote).should('exist');
+    cartPage.getFirstCartItemNoteField().contains(staticFixtures.cartItemNote).should('exist');
   });
 
   it('customer should be able to remove a cart item note', (): void => {
@@ -111,10 +111,10 @@ describe('cart item quantity', { tags: ['@cart'] }, (): void => {
       password: staticFixtures.defaultPassword,
     });
     cartPage.visitCartWithItems();
-    cartPage.addLastCartItemNote({ message: staticFixtures.cartItemNote });
-    cartPage.submitLastCartItemNote();
-    cartPage.clearLastCartItemNote();
+    cartPage.addFirstCartItemNote({ message: staticFixtures.cartItemNote });
+    cartPage.submitFirstCartItemNote();
+    cartPage.clearFirstCartItemNote();
 
-    cartPage.getLastCartItemNoteField().should('have.value', '');
+    cartPage.getFirstCartItemNoteField().should('have.value', '');
   });
 });

@@ -6,10 +6,10 @@ export class SuiteCartRepository implements CartRepository {
   getQuickAddToCartSkuField = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-quick-add-form"] input').first();
   getQuickAddToCartProductListField = (): Cypress.Chainable => cy.get('[data-qa="component products-list"]');
-  getLastCartItemNoteField = (): Cypress.Chainable =>
-    cy.get('[data-qa="component form quote-item-cart-note-form"]').last().find('textarea').first();
-  getLastCartItemNoteSubmitButton = (): Cypress.Chainable =>
-    cy.get('[data-qa="component form quote-item-cart-note-form"] [data-qa="submit-button"]').last();
+  getFirstCartItemNoteField = (): Cypress.Chainable =>
+    cy.get('[data-qa="component form quote-item-cart-note-form"]').first().find('textarea').first();
+  getFirstCartItemNoteSubmitButton = (): Cypress.Chainable =>
+    cy.get('[data-qa="component form quote-item-cart-note-form"] [data-qa="submit-button"]').first();
   getQuickAddToCartQuantityField = (): Cypress.Chainable<JQuery<HTMLElement>> =>
     cy.get('[data-qa="product-quick-add-form-quantity-input"]');
   getQuickAddToCartSubmitButton = (): Cypress.Chainable<JQuery<HTMLElement>> =>

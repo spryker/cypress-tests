@@ -1,8 +1,8 @@
 export interface CartRepository {
   getQuickAddToCartSkuField(): Cypress.Chainable;
   getQuickAddToCartProductListField(): Cypress.Chainable;
-  getLastCartItemNoteField(): Cypress.Chainable;
-  getLastCartItemNoteSubmitButton(): Cypress.Chainable;
+  getFirstCartItemNoteField(): Cypress.Chainable;
+  getFirstCartItemNoteSubmitButton(): Cypress.Chainable;
   getQuickAddToCartQuantityField(): Cypress.Chainable;
   getQuickAddToCartSubmitButton(): Cypress.Chainable;
   findCartItemRemovalForm(sku: string): Cypress.Chainable;

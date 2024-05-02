@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { CartCustomOrderReferenceStaticFixtures, CartCustomOrderReferenceDynamicFixtures } from '@interfaces/yves';
-import { CartPage, MultiCartPage, CustomOrderReferenceCartPage } from '@pages/yves';
+import { MultiCartPage, CustomOrderReferenceCartPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
 describe('cart item quantity', { tags: ['@order-management'] }, (): void => {

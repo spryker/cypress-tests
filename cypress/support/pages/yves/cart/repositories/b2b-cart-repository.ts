@@ -5,9 +5,9 @@ import { CartRepository } from '../cart-repository';
 export class B2bCartRepository implements CartRepository {
   getQuickAddToCartSkuField = (): Cypress.Chainable => cy.get('[data-qa="component autocomplete-form"] .input');
   getQuickAddToCartProductListField = (): Cypress.Chainable => cy.get('[data-qa="component products-list"]');
-  getLastCartItemNoteField = (): Cypress.Chainable =>
+  getFirstCartItemNoteField = (): Cypress.Chainable =>
     cy.get('[data-qa="component form quote-item-cart-note-form"]').last().find('textarea').first();
-  getLastCartItemNoteSubmitButton = (): Cypress.Chainable =>
+  getFirstCartItemNoteSubmitButton = (): Cypress.Chainable =>
     cy.get('[data-qa="component form quote-item-cart-note-form"] [data-qa="submit-button"]').last();
   getQuickAddToCartQuantityField = (): Cypress.Chainable<JQuery<HTMLElement>> => cy.get('#quantity');
   getQuickAddToCartSubmitButton = (): Cypress.Chainable<JQuery<HTMLElement>> =>

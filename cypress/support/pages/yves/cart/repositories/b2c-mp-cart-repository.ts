@@ -6,9 +6,9 @@ export class B2cMpCartRepository implements CartRepository {
   getQuickAddToCartSkuField = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-quick-add-form"] input').first();
   getQuickAddToCartProductListField = (): Cypress.Chainable => cy.get('[data-qa="component products-list"]');
-  getLastCartItemNoteField = (): Cypress.Chainable =>
+  getFirstCartItemNoteField = (): Cypress.Chainable =>
     cy.get('[data-qa="component form quote-item-cart-note-form"]').last().find('textarea').first();
-  getLastCartItemNoteSubmitButton = (): Cypress.Chainable =>
+  getFirstCartItemNoteSubmitButton = (): Cypress.Chainable =>
     cy.get('[data-qa="component form quote-item-cart-note-form"] [data-qa="submit-button"]').last();
   getQuickAddToCartQuantityField = (): Cypress.Chainable<JQuery<HTMLElement>> =>
     cy.get('[data-qa="product-quick-add-form-quantity-input"]');
