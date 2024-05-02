@@ -47,11 +47,22 @@ export class SalesOrdersPage extends MpPage {
       this.repository.getDrawer().find(this.repository.getCancelButtonSelector()).click();
     }
   };
+
+  hasOrderByOrderReference = (query: string): Cypress.Chainable<boolean> => {
+    return cy.get('tbody').then((body) => {
+      if (body.find(`tr:contains("${query}")`).length > 0) {
+        return cy.wrap(true);
+      } else {
+        return cy.wrap(false);
+      }
+    });
+  };
 }
 
 interface FindParams {
   query: string;
   expectedCount?: number;
+  waitUntilOrderIsVisible?: boolean;
 }
 
 interface UpdateParams {

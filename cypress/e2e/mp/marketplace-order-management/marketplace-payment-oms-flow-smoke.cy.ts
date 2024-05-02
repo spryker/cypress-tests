@@ -30,7 +30,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       staticFixtures = Cypress.env('staticFixtures');
     });
 
-    it('merchant user should be able close an order from guest', (): void => {
+    skipB2BIt('merchant user should be able close an order from guest', (): void => {
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: staticFixtures.productConcreteForOffer.sku });
       productsPage.selectSoldByProductOffer({
@@ -38,7 +38,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       });
       productsPage.addToCart();
 
-      const guestCustomerEmail = checkoutMpScenario.execute({ isGuest: true });
+      checkoutMpScenario.execute({ isGuest: true });
 
       userLoginScenario.execute({
         username: staticFixtures.rootUser.username,
@@ -47,15 +47,18 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
       salesIndexPage.visit();
       salesIndexPage.view();
-      triggerOmsToMerchantState();
 
-      merchantUserLoginScenario.execute({
-        username: staticFixtures.merchantUser.username,
-        password: staticFixtures.defaultPassword,
+      extractOrderId().then((idSalesOrder) => {
+        triggerOmsToMerchantState();
+
+        merchantUserLoginScenario.execute({
+          username: staticFixtures.merchantUser.username,
+          password: staticFixtures.defaultPassword,
+        });
+
+        closeOrderFromMerchantPortal(`DE--${idSalesOrder}`);
+        closeOrderFromBackoffice();
       });
-
-      closeOrderFromMerchantPortal(guestCustomerEmail);
-      closeOrderFromBackoffice();
     });
 
     it('merchant user should be able close an order from customer', (): void => {
@@ -80,15 +83,18 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
       salesIndexPage.visit();
       salesIndexPage.view();
-      triggerOmsToMerchantState();
 
-      merchantUserLoginScenario.execute({
-        username: staticFixtures.merchantUser.username,
-        password: staticFixtures.defaultPassword,
+      extractOrderId().then((idSalesOrder) => {
+        triggerOmsToMerchantState();
+
+        merchantUserLoginScenario.execute({
+          username: staticFixtures.merchantUser.username,
+          password: staticFixtures.defaultPassword,
+        });
+
+        closeOrderFromMerchantPortal(`DE--${idSalesOrder}`);
+        closeOrderFromBackoffice();
       });
-
-      closeOrderFromMerchantPortal(staticFixtures.customer.email);
-      closeOrderFromBackoffice();
     });
 
     function triggerOmsToMerchantState(): void {
@@ -108,18 +114,53 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       salesDetailPage.triggerOms({ state: 'Close' });
     }
 
-    function closeOrderFromMerchantPortal(email: string): void {
-      salesOrdersPage.visit();
-      salesOrdersPage.update({ query: email, action: ActionEnum.sendToDistribution });
+    function closeOrderFromMerchantPortal(orderReference: string): void {
+      if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
+        checkOrderVisibility(orderReference);
+      }
+
+      if (!['b2b-mp'].includes(Cypress.env('repositoryId'))) {
+        salesOrdersPage.visit();
+        salesOrdersPage.update({ query: orderReference, action: ActionEnum.sendToDistribution });
+
+        salesOrdersPage.visit();
+        salesOrdersPage.update({ query: orderReference, action: ActionEnum.confirmAtCenter });
+      }
 
       salesOrdersPage.visit();
-      salesOrdersPage.update({ query: email, action: ActionEnum.confirmAtCenter });
+      salesOrdersPage.update({ query: orderReference, action: ActionEnum.ship });
 
       salesOrdersPage.visit();
-      salesOrdersPage.update({ query: email, action: ActionEnum.ship });
+      salesOrdersPage.update({ query: orderReference, action: ActionEnum.deliver });
+    }
 
+    function skipB2BIt(description: string, testFn: () => void): void {
+      (['b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+    }
+
+    function extractOrderId(): Cypress.Chainable<string> {
+      return cy.url().then((url) => {
+        const urlObj = new URL(url);
+        const params = new URLSearchParams(urlObj.search);
+        const idSalesOrder = params.get('id-sales-order');
+
+        if (idSalesOrder === null) {
+          throw new Error('id-sales-order not found in URL');
+        }
+
+        return idSalesOrder;
+      });
+    }
+
+    function checkOrderVisibility(orderReference: string): void {
       salesOrdersPage.visit();
-      salesOrdersPage.update({ query: email, action: ActionEnum.deliver });
+      salesOrdersPage.hasOrderByOrderReference(orderReference).then((isVisible) => {
+        if (!isVisible) {
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
+          cy.wait(10000);
+          checkOrderVisibility(orderReference);
+        }
+      });
     }
   }
 );

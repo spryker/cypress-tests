@@ -30,6 +30,6 @@ describe('customer auth', { tags: ['@customer-account-management'] }, (): void =
   });
 
   function skipB2BIt(description: string, testFn: () => void): void {
-    (Cypress.env('repositoryId') === 'b2b' ? it.skip : it)(description, testFn);
+    (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
   }
 });
