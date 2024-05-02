@@ -26,7 +26,13 @@
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
-          "arguments": { "id_store": 1 }
+          "arguments": { "id_store": 1, "name": "DE" }
+        },
+        {
+          "type": "transfer",
+          "name": "CurrencyTransfer",
+          "key": "currency",
+          "arguments": { "id_currency": 93, "code": "EUR" }
         },
         {
           "type": "helper",
@@ -122,6 +128,36 @@
                   "quantity": 1
                 }
               ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveDiscountWithMinimumItemAmount",
+          "key": "discount",
+          "arguments": [
+            {
+              "decisionRuleQueryString": "item-quantity = \"4\"",
+              "collectorQueryString": "item-quantity = \"4\"",
+              "discountType": "cart_rule"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveDiscountStore",
+          "key": "discountStore",
+          "arguments": ["#store", "#discount"]
+        },
+        {
+          "type": "helper",
+          "name": "haveDiscountAmount",
+          "key": "discountMoneyAmount",
+          "arguments": [
+            {
+              "fkCurrency": "#currency.id_currency",
+              "grossAmount": "#discount.amount",
+              "fkDiscount": "#discount.id_discount"
             }
           ]
         }

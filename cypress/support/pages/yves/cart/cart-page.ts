@@ -92,8 +92,8 @@ export class CartPage extends YvesPage {
     return this.repository.getCartSummary();
   }
 
-  getCartCounter(): Cypress.Chainable {
-    return this.repository.getCartCounter();
+  getCartDiscountSummary(): Cypress.Chainable {
+    return this.repository.getCartDiscountSummary();
   }
 
   getCartItemChangeQuantityField(sku: string): Cypress.Chainable {

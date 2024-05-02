@@ -15,5 +15,5 @@ export interface CartRepository {
   getCartUpsellingAjaxLoader(): Cypress.Chainable;
   getPageLayoutCartAjaxLoader(): Cypress.Chainable;
   getCartSummary(): Cypress.Chainable;
-  getCartCounter(): Cypress.Chainable;
+  getCartDiscountSummary(): Cypress.Chainable;
 }

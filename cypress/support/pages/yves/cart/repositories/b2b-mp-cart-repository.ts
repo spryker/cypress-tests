@@ -36,5 +36,5 @@ export class B2bMpCartRepository implements CartRepository {
   getPageLayoutCartAjaxLoader = (): Cypress.Chainable =>
     cy.get('[data-qa="component ajax-loader page-layout-cart-ajax-loader"]', { timeout: 10000 });
   getCartSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-summary"]');
-  getCartCounter = (): Cypress.Chainable => cy.get('[data-qa="component cart-counter"]');
+  getCartDiscountSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-discount-summary"]');
 }
