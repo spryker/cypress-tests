@@ -26,7 +26,6 @@ describe('cart comments', { tags: ['@comments'] }, (): void => {
     multiCartPage.visit();
     multiCartPage.selectCart({ name: dynamicFixtures.quote.name });
 
-    commentCartPage.visit();
     staticFixtures.commentsToAdd.forEach((commentMessage) => {
       commentCartPage.add({ message: commentMessage });
       commentCartPage.getCommentThreadListSection().contains(commentMessage).should('exist');
@@ -53,7 +52,6 @@ describe('cart comments', { tags: ['@comments'] }, (): void => {
     multiCartPage.visit();
     multiCartPage.selectCart({ name: dynamicFixtures.emptyQuote.name });
 
-    commentCartPage.visit();
     staticFixtures.commentsToAdd.forEach((commentMessage) => {
       commentCartPage.add({ message: commentMessage });
       commentCartPage.getCommentThreadListSection().contains(commentMessage).should('exist');

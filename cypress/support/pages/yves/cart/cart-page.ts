@@ -12,7 +12,8 @@ export class CartPage extends YvesPage {
   protected PAGE_URL = '/cart';
 
   quickAddToCart = (params: QuickAddToCartParams): void => {
-    this.repository.getQuickAddToCartSkuField().clear().type(params.sku);
+    this.repository.getQuickAddToCartSkuField().clear();
+    this.repository.getQuickAddToCartSkuField().type(params.sku);
     this.repository.getQuickAddToCartProductListField().click();
 
     this.repository
@@ -28,25 +29,25 @@ export class CartPage extends YvesPage {
   };
 
   removeProduct = (params: RemoveProductParams): void => {
-    const form = this.repository.findCartItemRemovalForm(params.sku);
+    const cartItemRemovalButton = this.repository.findCartItemRemovalSubmit(params.sku);
 
-    if (!form) {
+    if (!cartItemRemovalButton) {
       return;
     }
 
-    form.submit();
+    cartItemRemovalButton.click();
   };
 
   changeQuantity = (params: ChangeQuantityParams): void => {
-    const form = this.repository.findCartItemChangeQuantityForm(params.sku);
     const input = this.repository.getCartItemChangeQuantityField(params.sku);
 
-    if (!form || !input) {
+    if (!input) {
       return;
     }
 
     input.type('{selectall}').type(String(params.quantity));
-    form.submit();
+
+    this.repository.getCartItemChangeQuantitySubmit(params.sku).click();
   };
 
   clearCart = (): void => {
@@ -55,6 +56,39 @@ export class CartPage extends YvesPage {
     if (form) {
       form.submit();
     }
+  };
+
+  addFirstCartItemNote = (params: CartItemNoteAddParams): void => {
+    this.repository.getFirstCartItemNoteField().type(params.message);
+  };
+
+  clearFirstCartItemNote = (): void => {
+    this.repository.getFirstCartItemNoteField().clear();
+  };
+
+  submitFirstCartItemNote = (): void => {
+    this.repository.getFirstCartItemNoteSubmitButton().click();
+  };
+
+  getFirstCartItemNoteField = (): Cypress.Chainable => {
+    return this.repository.getFirstCartItemNoteField();
+  };
+
+  getCartSummary = (): Cypress.Chainable => {
+    return this.repository.getCartSummary();
+  };
+
+  getCartDiscountSummary = (): Cypress.Chainable => {
+    return this.repository.getCartDiscountSummary();
+  };
+
+  getCartItemChangeQuantityField = (sku: string): Cypress.Chainable => {
+    return this.repository.getCartItemChangeQuantityField(sku);
+  };
+
+  addCustomOrderReferenceInput = (reference: string): void => {
+    this.repository.getCustomOrderReferenceInput().type(reference);
+    this.repository.getCustomOrderReferenceSubmitButton().click();
   };
 }
 
@@ -70,4 +104,8 @@ interface RemoveProductParams {
 interface ChangeQuantityParams {
   sku: string;
   quantity: number;
+}
+
+interface CartItemNoteAddParams {
+  message: string;
 }
