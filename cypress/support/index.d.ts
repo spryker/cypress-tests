@@ -1,6 +1,10 @@
 // cypress/support/index.d.ts
 
 declare namespace Cypress {
+  interface Cypress {
+    mocha: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  }
+
   interface Chainable {
     /**
      * @example cy.iframe()

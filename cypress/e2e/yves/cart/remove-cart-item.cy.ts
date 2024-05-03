@@ -3,7 +3,10 @@ import { RemoveCartItemStaticFixtures, RemoveCartItemDynamicFixtures } from '@in
 import { CartPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
-describe('remove cart item', { tags: ['@cart'] }, (): void => {
+/**
+ * Yves Cart Update Without Reload checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4147904521/Yves+Cart+Update+Without+Reload+Checklist}
+ */
+describe.skip('remove cart item [skip]', { tags: ['@cart'] }, (): void => {
   const cartPage = container.get(CartPage);
   const customerLoginScenario = container.get(CustomerLoginScenario);
 
