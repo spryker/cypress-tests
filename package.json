@@ -15,9 +15,9 @@
     "prettier:check": "prettier . --check",
     "prettier:write": "prettier . --write",
     "cy:open": "cypress open",
-    "cy:run": "cypress run",
-    "cy:ci": "cypress run --spec \"cypress/e2e/**/!(*-smoke.cy.ts)\" --headless --browser chrome",
-    "cy:smoke": "cypress run --spec \"cypress/e2e/**/*-smoke.cy.ts\" --headless --browser chrome"
+    "cy:run": "cypress run --spec \"cypress/e2e/!(smoke)/**/*.ts\"",
+    "cy:ci": "cypress run --spec \"cypress/e2e/!(smoke)/**/*.ts\" --headless --browser chrome",
+    "cy:smoke": "cypress run --spec \"cypress/e2e/smoke/**/*.ts\" --headless --browser chrome"
   },
   "engines": {
     "node": ">=18.0.0",

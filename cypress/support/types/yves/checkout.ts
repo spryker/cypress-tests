@@ -14,10 +14,3 @@ export interface BasicCheckoutDynamicFixtures {
 export interface CheckoutStaticFixtures {
   defaultPassword: string;
 }
-
-export interface CheckoutStaticSmokeFixtures {
-  defaultPassword: string;
-  customer: Customer;
-  product1: ProductConcrete;
-  product2: ProductConcrete;
-}

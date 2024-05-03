@@ -19,13 +19,10 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
 
   skipB2BIt('guest customer should checkout to single shipment', (): void => {
     addTwoProductsToCart();
-
     checkoutScenario.execute({
       isGuest: true,
       shouldTriggerOmsInCli: true,
-      paymentMethod: ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice',
+      paymentMethod: getPaymentMethodBasedOnEnv(),
     });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
@@ -33,14 +30,11 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
 
   skipB2BIt('guest customer should checkout to multi shipment address', (): void => {
     addTwoProductsToCart();
-
     checkoutScenario.execute({
       isGuest: true,
       isMultiShipment: true,
       shouldTriggerOmsInCli: true,
-      paymentMethod: ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice',
+      paymentMethod: getPaymentMethodBasedOnEnv(),
     });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
@@ -60,9 +54,7 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
     checkoutScenario.execute({
       idCustomerAddress: dynamicFixtures.address.id_customer_address,
       shouldTriggerOmsInCli: true,
-      paymentMethod: ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice',
+      paymentMethod: getPaymentMethodBasedOnEnv(),
     });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
@@ -81,9 +73,7 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
 
     checkoutScenario.execute({
       shouldTriggerOmsInCli: true,
-      paymentMethod: ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice',
+      paymentMethod: getPaymentMethodBasedOnEnv(),
     });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
@@ -104,9 +94,7 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
       isMultiShipment: true,
       idCustomerAddress: dynamicFixtures.address.id_customer_address,
       shouldTriggerOmsInCli: true,
-      paymentMethod: ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice',
+      paymentMethod: getPaymentMethodBasedOnEnv(),
     });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
@@ -126,13 +114,17 @@ describe('basic checkout', { tags: ['@checkout'] }, (): void => {
     checkoutScenario.execute({
       isMultiShipment: true,
       shouldTriggerOmsInCli: true,
-      paymentMethod: ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice',
+      paymentMethod: getPaymentMethodBasedOnEnv(),
     });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
+
+  function getPaymentMethodBasedOnEnv(): string {
+    return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
+      ? 'dummyMarketplacePaymentInvoice'
+      : 'dummyPaymentInvoice';
+  }
 
   function addTwoProductsToCart(): void {
     catalogPage.visit();

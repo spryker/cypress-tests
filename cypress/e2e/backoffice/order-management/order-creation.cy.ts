@@ -23,16 +23,14 @@ describe('order creation', { tags: ['@order-management'] }, (): void => {
 
   it('should be able to create an order by existing customer (invoice)', (): void => {
     loginCustomerScenario.execute({ email: dynamicFixtures.customer.email, password: staticFixtures.defaultPassword });
-
     checkoutScenario.execute({
       isGuest: false,
       isMultiShipment: false,
       idCustomerAddress: dynamicFixtures.address.id_customer_address,
       shouldTriggerOmsInCli: true,
-      paymentMethod: ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice',
+      paymentMethod: getPaymentMethodBasedOnEnv(),
     });
+
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
     userLoginScenario.execute({
@@ -47,15 +45,13 @@ describe('order creation', { tags: ['@order-management'] }, (): void => {
   });
 
   skipB2BIt('should be able to create an order by guest (credit card)', (): void => {
-    catalogPage.visit();
-    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
-    productsPage.addToCart();
-
+    addOneProductToCart();
     checkoutScenario.execute({
       isGuest: true,
       shouldTriggerOmsInCli: true,
       paymentMethod: 'dummyPaymentCreditCard',
     });
+
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
     userLoginScenario.execute({
@@ -68,6 +64,18 @@ describe('order creation', { tags: ['@order-management'] }, (): void => {
 
     cy.get('body').contains(dynamicFixtures.product.sku);
   });
+
+  function getPaymentMethodBasedOnEnv(): string {
+    return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
+      ? 'dummyMarketplacePaymentInvoice'
+      : 'dummyPaymentInvoice';
+  }
+
+  function addOneProductToCart(): void {
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
+    productsPage.addToCart();
+  }
 
   function skipB2BIt(description: string, testFn: () => void): void {
     (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);

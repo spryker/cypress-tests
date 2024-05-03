@@ -31,10 +31,9 @@ import { CatalogPage, ProductPage } from '@pages/yves';
         password: staticFixtures.defaultPassword,
       });
 
+      // Multi-cart feature available only in B2B demo shops
       if (['b2c'].includes(Cypress.env('repositoryId'))) {
-        catalogPage.visit();
-        catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
-        productsPage.addToCart();
+        addOneProductToCart();
       }
 
       checkoutScenario.execute({
@@ -80,5 +79,11 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
       cy.contains('Return was successfully created.');
     });
+
+    function addOneProductToCart(): void {
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
+      productsPage.addToCart();
+    }
   }
 );
