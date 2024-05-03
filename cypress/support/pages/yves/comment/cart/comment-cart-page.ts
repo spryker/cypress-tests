@@ -11,12 +11,6 @@ export class CommentCartPage extends YvesPage {
 
   protected PAGE_URL = '/cart';
 
-  visitCartWithItems = (): void => {
-    this.visit();
-    this.repository.getCartUpsellingAjaxLoader().should('be.visible');
-    this.repository.getCartUpsellingAjaxLoader().should('be.not.visible');
-  };
-
   add = (params: AddParams): void => {
     this.repository.getAddCommentForm().last().find('textarea').clear();
     this.repository.getAddCommentForm().last().find('textarea').type(params.message);

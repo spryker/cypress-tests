@@ -31,10 +31,10 @@ export class B2bMpCartRepository implements CartRepository {
     this.findCartItemChangeQuantityForm(sku).find('[data-qa="quantity-input-submit"]');
   findClearCartForm = (): Cypress.Chainable => cy.get('form[name=multi_cart_clear_form]');
   getCheckoutButton = (): Cypress.Chainable => cy.get('[data-qa="cart-go-to-checkout"]');
-  getCartUpsellingAjaxLoader = (): Cypress.Chainable =>
-    cy.get('[data-qa="component cart-upselling"] [data-qa="component ajax-loader"]', { timeout: 10000 });
-  getPageLayoutCartAjaxLoader = (): Cypress.Chainable =>
-    cy.get('[data-qa="component ajax-loader page-layout-cart-ajax-loader"]', { timeout: 10000 });
   getCartSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-summary"]');
   getCartDiscountSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-discount-summary"]');
+  getCustomOrderReferenceInput = (): Cypress.Chainable =>
+    cy.get('[data-qa="component order-custom-reference-form"] input[type=text]');
+  getCustomOrderReferenceSubmitButton = (): Cypress.Chainable =>
+    cy.get('[data-qa="component order-custom-reference-form"] button[type=submit]');
 }

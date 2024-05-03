@@ -15,6 +15,4 @@ export class SuiteCommentCartRepository implements CommentCartRepository {
   getCommentTextareaForDeleteByCommentText(commentText: string): Cypress.Chainable {
     return this.getCommentThreadListSection().first().contains(commentText);
   }
-  getCartUpsellingAjaxLoader = (): Cypress.Chainable =>
-    cy.get('[data-qa="component cart-upselling"] [data-qa="component ajax-loader"]', { timeout: 10000 });
 }

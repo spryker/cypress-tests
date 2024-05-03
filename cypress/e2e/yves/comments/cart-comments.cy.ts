@@ -33,7 +33,7 @@ describe('cart comments', { tags: ['@comments'] }, (): void => {
   });
 
   it('customer should be able to modify comment in cart with items', (): void => {
-    commentCartPage.visitCartWithItems();
+    commentCartPage.visit();
     commentCartPage.add({ message: staticFixtures.commentToModify });
     commentCartPage.update({ oldMessage: staticFixtures.commentToModify, newMessage: staticFixtures.modifiedComment });
 
@@ -41,7 +41,7 @@ describe('cart comments', { tags: ['@comments'] }, (): void => {
   });
 
   it('customer should be able to remove comment in cart with items', (): void => {
-    commentCartPage.visitCartWithItems();
+    commentCartPage.visit();
     commentCartPage.add({ message: staticFixtures.commentsToRemove });
     commentCartPage.remove({ message: staticFixtures.commentsToRemove });
 

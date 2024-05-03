@@ -30,6 +30,4 @@ export class B2bMpCommentCartRepository implements CommentCartRepository {
   getCommentTextareaForDeleteByCommentText(commentText: string): Cypress.Chainable {
     return cy.get('[data-qa="component comment-form"]').contains(commentText);
   }
-  getCartUpsellingAjaxLoader = (): Cypress.Chainable =>
-    cy.get('[data-qa="component cart-upselling"] [data-qa="component ajax-loader"]', { timeout: 10000 });
 }
