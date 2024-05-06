@@ -34,6 +34,10 @@ describe('publish and synchronize', { tags: ['@smoke'] }, (): void => {
     catalogPage.visit();
     catalogPage.search({ query: productAbstract.name });
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(5000); // For some reason URL still not synced in Redis, and after search, we need to wait a bit
+    catalogPage.search({ query: productAbstract.name });
+
     cy.contains(productAbstract.name);
     cy.contains(productAbstract.sku);
     cy.contains(productAbstract.description);
@@ -52,6 +56,10 @@ describe('publish and synchronize', { tags: ['@smoke'] }, (): void => {
     });
 
     catalogPage.visit();
+    catalogPage.search({ query: productAbstract.name });
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(5000); // For some reason URL still not synced in Redis, and after search, we need to wait a bit
     catalogPage.search({ query: productAbstract.name });
 
     cy.contains(productAbstract.name);
