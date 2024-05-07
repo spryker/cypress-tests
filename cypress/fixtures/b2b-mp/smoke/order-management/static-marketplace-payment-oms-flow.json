@@ -1,0 +1,19 @@
+{
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "merchantUser": {
+    "username": "martha@office-king.nl"
+  },
+  "customer": {
+    "email": "andrew@ottom.de"
+  },
+  "productConcreteForOffer": {
+    "name": "HSM document shredder CLASSIC - HxWxD 423 x 326 x 240 mm - gray, 7 – 9 sheets, 225 mm work width",
+    "sku": "100683"
+  },
+  "productOffer": {
+    "product_offer_reference": "offer65"
+  }
+}

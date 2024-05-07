@@ -33,40 +33,48 @@ Cypress.Commands.add('resetYvesCookies', () => {
   });
 });
 
-Cypress.Commands.add('loadDynamicFixturesByPayload', (dynamicFixturesFilePath) => {
-  cy.fixture(dynamicFixturesFilePath).then((operationRequestPayload) => {
-    return cy
-      .request({
-        method: 'POST',
-        url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
-        headers: {
-          'Content-Type': 'application/vnd.api+json',
-        },
-        body: operationRequestPayload,
-        timeout: 60000,
-        failOnStatusCode: false,
-      })
-      .then((response) => {
-        if (response.status === 500) {
-          throw new Error(response.body);
-        }
+Cypress.Commands.add(
+  'loadDynamicFixturesByPayload',
+  function loadDynamicFixturesByPayload(dynamicFixturesFilePath, retries = 2) {
+    cy.fixture(dynamicFixturesFilePath).then((operationRequestPayload) => {
+      return cy
+        .request({
+          method: 'POST',
+          url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
+          headers: {
+            'Content-Type': 'application/vnd.api+json',
+          },
+          body: operationRequestPayload,
+          timeout: 60000,
+          failOnStatusCode: false,
+        })
+        .then((response) => {
+          if (response.status === 500 || response.status === 408) {
+            if (retries > 0) {
+              cy.log('Retrying due to error or timeout...');
+              return cy.loadDynamicFixturesByPayload(dynamicFixturesFilePath, retries - 1);
+            } else {
+              throw new Error(response.body);
+            }
+          }
 
-        if (Array.isArray(response.body.data)) {
-          return response.body.data.reduce(
-            (acc: Record<string, unknown>, item: Record<string, { key: string; data: unknown }>) => {
-              acc[item.attributes.key] = item.attributes.data;
-              return acc;
-            },
-            {}
-          );
-        } else {
-          return {
-            [response.body.data.attributes.key]: response.body.data.attributes.data,
-          };
-        }
-      });
-  });
-});
+          if (Array.isArray(response.body.data)) {
+            return response.body.data.reduce(
+              (acc: Record<string, unknown>, item: Record<string, { key: string; data: unknown }>) => {
+                acc[item.attributes.key] = item.attributes.data;
+                return acc;
+              },
+              {}
+            );
+          } else {
+            return {
+              [response.body.data.attributes.key]: response.body.data.attributes.data,
+            };
+          }
+        });
+    });
+  }
+);
 
 Cypress.Commands.add('resetBackofficeCookies', () => {
   cy.clearCookies();
@@ -96,9 +104,9 @@ Cypress.Commands.add('reloadUntilFound', (url, findSelector, getSelector = 'body
     const msg = `url:${url} getSelector:${getSelector} findSelector:${findSelector} retries:${retries} retryWait:${retryWait}`;
 
     if (body.find(findSelector).length === 1) {
-      console.log(`found ${msg}`);
+      cy.log(`found ${msg}`);
     } else {
-      console.log(`NOT found ${msg}`);
+      cy.log(`NOT found ${msg}`);
       cy.wait(retryWait);
       cy.reloadUntilFound(url, findSelector, getSelector, retries - 1, retryWait);
     }
@@ -124,6 +132,31 @@ Cypress.Commands.add('runCliCommands', (commands) => {
         type: 'dynamic-fixtures',
         attributes: {
           operations: operations,
+        },
+      },
+      timeout: 20000,
+    },
+  });
+});
+
+Cypress.Commands.add('confirmCustomerByEmail', (email) => {
+  const operation = {
+    type: 'helper',
+    name: 'confirmCustomerByEmail',
+    arguments: { email },
+  };
+
+  cy.request({
+    method: 'POST',
+    url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
+    headers: {
+      'Content-Type': 'application/vnd.api+json',
+    },
+    body: {
+      data: {
+        type: 'dynamic-fixtures',
+        attributes: {
+          operations: [operation],
         },
       },
       timeout: 20000,

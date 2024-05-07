@@ -1,0 +1,12 @@
+{
+  "defaultPassword": "change123",
+  "customer": {
+    "email": "andrew@ottom.de"
+  },
+  "product1": {
+    "sku": "101102"
+  },
+  "product2": {
+    "sku": "100907"
+  }
+}

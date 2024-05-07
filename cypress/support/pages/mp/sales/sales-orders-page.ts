@@ -1,7 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
-import { MpPage } from '@pages/mp';
+import { MpPage, ActionEnum } from '@pages/mp';
 import { SalesOrdersRepository } from './sales-orders-repository';
 
 @injectable()
@@ -24,17 +24,48 @@ export class SalesOrdersPage extends MpPage {
     return this.repository.getFirstTableRow();
   };
 
-  cancel = (params: CancelParams): void => {
+  update = (params: UpdateParams): void => {
     this.find({ query: params.query }).click({ force: true });
-    this.repository.getDrawer().find(this.repository.getCancelButtonSelector()).click();
+
+    if (params.action === ActionEnum.sendToDistribution) {
+      this.repository.getDrawer().find(this.repository.getSendToDistributionButtonSelector()).click();
+    }
+
+    if (params.action === ActionEnum.confirmAtCenter) {
+      this.repository.getDrawer().find(this.repository.getConfirmAtCenterButtonSelector()).click();
+    }
+
+    if (params.action === ActionEnum.ship) {
+      this.repository.getDrawer().find(this.repository.getShipButtonSelector()).click();
+    }
+
+    if (params.action === ActionEnum.deliver) {
+      this.repository.getDrawer().find(this.repository.getDeliverButtonSelector()).click();
+    }
+
+    if (params.action === ActionEnum.cancel) {
+      this.repository.getDrawer().find(this.repository.getCancelButtonSelector()).click();
+    }
+  };
+
+  hasOrderByOrderReference = (query: string): Cypress.Chainable<boolean> => {
+    return cy.get('tbody').then((body) => {
+      if (body.find(`tr:contains("${query}")`).length > 0) {
+        return cy.wrap(true);
+      } else {
+        return cy.wrap(false);
+      }
+    });
   };
 }
 
 interface FindParams {
   query: string;
   expectedCount?: number;
+  waitUntilOrderIsVisible?: boolean;
 }
 
-interface CancelParams {
+interface UpdateParams {
+  action: ActionEnum;
   query: string;
 }

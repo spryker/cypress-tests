@@ -1,0 +1,12 @@
+{
+  "defaultPassword": "change123",
+  "productPrice": "227.50",
+  "customer": {
+    "email": "sonia@spryker.com"
+  },
+  "concreteProduct": {
+    "name": "Club chair - Leather covering - black",
+    "sku": "100907",
+    "abstract_sku": "M53238"
+  }
+}

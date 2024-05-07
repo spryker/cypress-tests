@@ -1,12 +1,14 @@
 import { container } from '@utils';
 import { OrderCreationDynamicFixtures, OrderManagementStaticFixtures } from '@interfaces/backoffice';
 import { SalesIndexPage } from '@pages/backoffice';
-import { CartPage } from '@pages/yves';
+import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
 describe('order creation', { tags: ['@order-management'] }, (): void => {
-  const cartPage = container.get(CartPage);
+  const catalogPage = container.get(CatalogPage);
+  const productsPage = container.get(ProductPage);
+  const customerOverviewPage = container.get(CustomerOverviewPage);
   const salesIndexPage = container.get(SalesIndexPage);
   const loginCustomerScenario = container.get(CustomerLoginScenario);
   const checkoutScenario = container.get(CheckoutScenario);
@@ -19,15 +21,17 @@ describe('order creation', { tags: ['@order-management'] }, (): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 
-  it('should be able to create an order by existing customer', (): void => {
+  it('should be able to create an order by existing customer (invoice)', (): void => {
     loginCustomerScenario.execute({ email: dynamicFixtures.customer.email, password: staticFixtures.defaultPassword });
-
     checkoutScenario.execute({
       isGuest: false,
       isMultiShipment: false,
       idCustomerAddress: dynamicFixtures.address.id_customer_address,
+      shouldTriggerOmsInCli: true,
+      paymentMethod: getPaymentMethodBasedOnEnv(),
     });
-    cy.contains('Your order has been placed successfully!');
+
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
     userLoginScenario.execute({
       username: dynamicFixtures.rootUser.username,
@@ -37,15 +41,18 @@ describe('order creation', { tags: ['@order-management'] }, (): void => {
     salesIndexPage.visit();
     salesIndexPage.view();
 
-    cy.get('body').contains(dynamicFixtures.product.name);
+    cy.get('body').contains(dynamicFixtures.product.sku);
   });
 
-  it('should be able to create an order by guest', (): void => {
-    cartPage.visit();
-    cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 1 });
+  skipB2BIt('should be able to create an order by guest (credit card)', (): void => {
+    addOneProductToCart();
+    checkoutScenario.execute({
+      isGuest: true,
+      shouldTriggerOmsInCli: true,
+      paymentMethod: 'dummyPaymentCreditCard',
+    });
 
-    checkoutScenario.execute({ isGuest: true });
-    cy.contains('Your order has been placed successfully!');
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
     userLoginScenario.execute({
       username: dynamicFixtures.rootUser.username,
@@ -55,6 +62,22 @@ describe('order creation', { tags: ['@order-management'] }, (): void => {
     salesIndexPage.visit();
     salesIndexPage.view();
 
-    cy.get('body').contains(dynamicFixtures.product.name);
+    cy.get('body').contains(dynamicFixtures.product.sku);
   });
+
+  function getPaymentMethodBasedOnEnv(): string {
+    return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
+      ? 'dummyMarketplacePaymentInvoice'
+      : 'dummyPaymentInvoice';
+  }
+
+  function addOneProductToCart(): void {
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
+    productsPage.addToCart();
+  }
+
+  function skipB2BIt(description: string, testFn: () => void): void {
+    (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+  }
 });

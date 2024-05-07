@@ -1,6 +1,10 @@
 // cypress/support/index.d.ts
 
 declare namespace Cypress {
+  interface Cypress {
+    mocha: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  }
+
   interface Chainable {
     /**
      * @example cy.iframe()
@@ -15,7 +19,7 @@ declare namespace Cypress {
     /**
      * @example cy.loadDynamicFixturesByPayload('suite/yves/checkout/dynamic-checkout-by-guest-customer')
      */
-    loadDynamicFixturesByPayload(dynamicFixturesDefaultFilePath: string): Chainable;
+    loadDynamicFixturesByPayload(dynamicFixturesDefaultFilePath: string, retries?: number): Chainable;
 
     /**
      * @example cy.resetBackofficeCookies()
@@ -46,5 +50,10 @@ declare namespace Cypress {
      * @example cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout'])
      */
     runCliCommands(commands: string[]): void;
+
+    /**
+     * @example cy.confirmCustomerByEmail('test@spryker.com')
+     */
+    confirmCustomerByEmail(email: string): void;
   }
 }

@@ -29,10 +29,13 @@ export class CheckoutScenario {
 
     this.fillShippingAddress(params);
     this.checkoutShipmentPage.setStandardShippingMethod();
-    this.checkoutPaymentPage.setDummyPaymentMethod();
+    this.fillPaymentCheckoutStep(params);
+
     this.checkoutSummaryPage.placeOrder();
 
-    cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+    if (params?.shouldTriggerOmsInCli) {
+      cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+    }
   };
 
   private fillShippingAddress = (params?: ExecuteParams): void => {
@@ -46,10 +49,25 @@ export class CheckoutScenario {
 
     this.checkoutAddressPage.fillShippingAddress(fillShippingAddressParams);
   };
+
+  private fillPaymentCheckoutStep = (params?: ExecuteParams): void => {
+    const paymentMethods = {
+      dummyPaymentInvoice: () => this.checkoutPaymentPage.setDummyPaymentMethod(),
+      dummyPaymentCreditCard: () => this.checkoutPaymentPage.setDummyPaymentCreditCardMethod(),
+      dummyMarketplacePaymentInvoice: () => this.checkoutPaymentPage.setDummyMarketplacePaymentMethod(),
+    };
+
+    const paymentMethod = params?.paymentMethod || 'dummyPaymentInvoice';
+    const paymentFunction = paymentMethods[paymentMethod as keyof typeof paymentMethods];
+
+    paymentFunction();
+  };
 }
 
 interface ExecuteParams {
   isGuest?: boolean;
   isMultiShipment?: boolean;
   idCustomerAddress?: number;
+  shouldTriggerOmsInCli?: boolean;
+  paymentMethod?: string;
 }

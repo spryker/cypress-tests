@@ -16,4 +16,8 @@ export class B2bMpLoginRepository implements LoginRepository {
   getRegisterAcceptTermsCheckbox = (): Cypress.Chainable => cy.get('#registerForm_accept_terms');
   getRegisterForm = (): Cypress.Chainable => cy.get('form[name=registerForm]');
   getFailedAuthenticationText = (): string => 'Authentication failed';
+  getRegistrationCompletedMessage = (): string =>
+    'Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.';
+  getRegistrationToggleRadio = (): Cypress.Chainable =>
+    cy.get('[data-qa="component toggler-radio accountLoginSwitcher register"]');
 }

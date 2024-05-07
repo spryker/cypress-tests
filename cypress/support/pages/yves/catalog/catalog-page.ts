@@ -11,9 +11,33 @@ export class CatalogPage extends YvesPage {
 
   protected PAGE_URL = '/search';
 
-  search = (params: SearchParams): void => {
+  searchProductFromSuggestions = (params: SearchParams): void => {
+    if (this.isRepository('b2c', 'b2c-mp')) {
+      cy.get('.header__search-open').click();
+    }
+
     this.repository.getSearchInput().clear().type(params.query);
     this.repository.getFirstSuggestedProduct().click();
+  };
+
+  search = (params: SearchParams): void => {
+    if (this.isRepository('b2c', 'b2c-mp')) {
+      cy.get('.header__search-open').click();
+    }
+
+    this.repository.getSearchInput().clear().type(`${params.query}{enter}`);
+
+    cy.url().then((url) => {
+      cy.reloadUntilFound(
+        url,
+        this.repository.getItemBlockSearchQuery(params.query), // Is working with product's name only
+        this.repository.getFirstProductItemBlockSelector(),
+        25,
+        5000
+      );
+
+      this.repository.getProductItemBlocks().first().find(this.repository.getViewButtonSelector()).click();
+    });
   };
 }
 

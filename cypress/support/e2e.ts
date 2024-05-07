@@ -27,6 +27,11 @@ before(() => {
 });
 
 const loadFixture = (): void => {
+  const currentSuite = Cypress.mocha.getRunner().suite.suites[0];
+  if (currentSuite.title.includes('[skip]')) {
+    return;
+  }
+
   const repositoryId = Cypress.env('repositoryId');
   const fixtureFilePath = getFixtureFilePath();
   const dynamicFixturesDefaultFilePath = `${repositoryId}/${fixtureFilePath.directoryPart}/dynamic-${fixtureFilePath.filePart}`;

@@ -1,0 +1,12 @@
+{
+  "defaultPassword": "change123",
+  "productPrice": "37.50",
+  "customer": {
+    "email": "spencor.hopkin@spryker.com"
+  },
+  "concreteProduct": {
+    "name": "Canon IXUS 285",
+    "sku": "009_30692991",
+    "abstract_sku": "009"
+  }
+}

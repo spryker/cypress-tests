@@ -6,4 +6,9 @@ import * as Cypress from 'cypress';
 export class B2bCatalogRepository implements CatalogRepository {
   getSearchInput = (): Cypress.Chainable => cy.get('[data-qa="component search-form"] input').first();
   getFirstSuggestedProduct = (): Cypress.Chainable => cy.get('[data-qa="component suggestion-product"] a').first();
+  getSearchButton = (): Cypress.Chainable => cy.get('[data-qa="component search-form"] [type="submit"]:visible');
+  getProductItemBlocks = (): Cypress.Chainable => cy.get('[data-qa="component product-item"]');
+  getFirstProductItemBlockSelector = (): string => '[data-qa="component product-item"]:first';
+  getViewButtonSelector = (): string => 'a:contains("View")';
+  getItemBlockSearchQuery = (query: string): string => `a:contains("${query}")`;
 }

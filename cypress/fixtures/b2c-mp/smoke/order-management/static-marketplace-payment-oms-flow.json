@@ -1,0 +1,19 @@
+{
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "merchantUser": {
+    "username": "harald@spryker.com"
+  },
+  "customer": {
+    "email": "henry.tudor@spryker.com"
+  },
+  "productConcreteForOffer": {
+    "name": "Sony HDR-AS20",
+    "sku": "197_21421718"
+  },
+  "productOffer": {
+    "product_offer_reference": "offer420"
+  }
+}

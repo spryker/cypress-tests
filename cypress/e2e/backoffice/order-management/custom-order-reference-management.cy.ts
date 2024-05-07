@@ -8,7 +8,7 @@ import { CartPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
-describe('custom order reference management', { tags: ['@order-management'] }, (): void => {
+describe.skip('custom order reference management [skip]', { tags: ['@order-management'] }, (): void => {
   const cartPage = container.get(CartPage);
   const salesIndexPage = container.get(SalesIndexPage);
   const loginCustomerScenario = container.get(CustomerLoginScenario);

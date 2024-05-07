@@ -1,0 +1,13 @@
+{
+  "defaultPassword": "change123",
+  "customer": {
+    "email": "andrew@ottom.de"
+  },
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "product": {
+    "name": "Club chair - Leather covering - black",
+    "sku": "100907"
+  }
+}

@@ -11,6 +11,14 @@ export class ProductPage extends YvesPage {
 
   protected PAGE_URL = '';
 
+  addToCart = (): void => {
+    this.repository.getAddToCartButton().click({ force: true });
+  };
+
+  getAddToCartSuccessMessage = (): string => {
+    return this.repository.getAddToCartSuccessMessage();
+  };
+
   selectSoldByProductOffer = (params: SelectSoldByProductOfferParams): void => {
     this.repository.getSoldByProductOfferRadios().check(params.productOfferReference, { force: true });
   };
@@ -36,6 +44,10 @@ export class ProductPage extends YvesPage {
 
   getInputRadioSelector = (): string => {
     return this.repository.getInputRadioSelector();
+  };
+
+  getProductConfigurator = (): Cypress.Chainable => {
+    return this.repository.getProductConfigurator();
   };
 }
 

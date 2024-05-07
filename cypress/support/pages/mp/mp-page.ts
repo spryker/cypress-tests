@@ -18,9 +18,17 @@ export class MpPage extends AbstractPage {
       .its('response.body.total')
       .should((total) => {
         const valueToBeAtMost = expectedCount + Cypress.currentRetry;
-        assert.isAtMost(total, valueToBeAtMost);
+        assert.isTrue(total === expectedCount || total >= valueToBeAtMost);
       });
   };
+}
+
+export enum ActionEnum {
+  cancel,
+  ship,
+  deliver,
+  sendToDistribution,
+  confirmAtCenter,
 }
 
 interface InterceptMpGuiTableParams {

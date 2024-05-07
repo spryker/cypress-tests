@@ -19,34 +19,51 @@ export class CheckoutMpScenario {
   @inject(CheckoutPaymentPage) private checkoutPaymentPage: CheckoutPaymentPage;
   @inject(CheckoutSummaryPage) private checkoutSummaryPage: CheckoutSummaryPage;
 
-  execute = (params: ExecuteParams): void => {
+  execute = (params?: ExecuteParams): string => {
     this.cartPage.visit();
     this.cartPage.startCheckout();
 
-    if (params?.isGuest) {
-      this.checkoutCustomerPage.checkoutAsGuest();
-    }
+    const customerEmail = this.checkoutGuest(params);
 
-    this.fillShippingAddress(params?.isMultiShipment);
+    this.processCheckout(params);
+    this.runOmsCommands(params);
+
+    return customerEmail;
+  };
+
+  private checkoutGuest = (params?: ExecuteParams): string => {
+    return params?.isGuest ? this.checkoutCustomerPage.checkoutAsGuest() : '';
+  };
+
+  private processCheckout = (params?: ExecuteParams): void => {
+    this.fillShippingAddress(params);
     this.checkoutShipmentPage.setStandardShippingMethod();
     this.checkoutPaymentPage.setDummyMarketplacePaymentMethod();
     this.checkoutSummaryPage.placeOrder();
-
-    cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
   };
 
-  private fillShippingAddress = (isMultiShipment = false): void => {
-    if (isMultiShipment) {
-      this.checkoutAddressPage.fillMultiShippingAddress();
+  private runOmsCommands = (params?: ExecuteParams): void => {
+    if (params?.shouldTriggerOmsInCli) {
+      cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+    }
+  };
+
+  private fillShippingAddress = (params?: ExecuteParams): void => {
+    const fillShippingAddressParams = { idCustomerAddress: params?.idCustomerAddress };
+
+    if (params?.isMultiShipment) {
+      this.checkoutAddressPage.fillMultiShippingAddress(fillShippingAddressParams);
 
       return;
     }
 
-    this.checkoutAddressPage.fillShippingAddress();
+    this.checkoutAddressPage.fillShippingAddress(fillShippingAddressParams);
   };
 }
 
 interface ExecuteParams {
   isGuest?: boolean;
   isMultiShipment?: boolean;
+  idCustomerAddress?: number;
+  shouldTriggerOmsInCli?: boolean;
 }
