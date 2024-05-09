@@ -42,6 +42,7 @@ export default defineConfig({
       runMode: 2,
       openMode: 0,
     },
+    experimentalMemoryManagement: true,
   },
   viewportWidth: parseInt(process.env.VIEWPORT_WIDGTH ?? '1920', 10),
   viewportHeight: parseInt(process.env.VIEWPORT_HEIGHT ?? '1080', 10),

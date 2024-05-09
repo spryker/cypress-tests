@@ -8,7 +8,6 @@ services:
       - private
     env_file:
       - ${DEPLOYMENT_PATH}/env/cli/testing.env # depends on application setup
-      - ${DEPLOYMENT_PATH}/env/cli/de.env
     labels:
       'spryker.app.name': cypress-tests
       'spryker.app.type': cypress-tests
