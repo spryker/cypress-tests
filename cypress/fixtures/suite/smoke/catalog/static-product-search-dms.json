@@ -1,0 +1,17 @@
+{
+  "defaultPassword": "change123",
+  "defaultStore": "SMOKE_STORE",
+  "defaultWarehouse": "Spryker MER000001 Warehouse 1",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "productPrice": "99.99",
+  "customer": {
+    "email": "spencor.hopkin@spryker.com"
+  },
+  "concreteProduct": {
+    "name": "Canon IXUS 285",
+    "sku": "009_30692991",
+    "abstract_sku": "009"
+  }
+}

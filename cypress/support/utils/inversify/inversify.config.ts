@@ -93,10 +93,16 @@ import { B2cMpMerchantRelationRequestCreateRepository } from '../../pages/yves/c
 import { B2cMpMerchantRelationRequestDetailsRepository } from '../../pages/yves/company/merchant-relation-request/details/repositories/b2c-mp-merchant-relation-request-details-repository';
 import { B2cMpMerchantRelationRequestIndexRepository } from '../../pages/yves/company/merchant-relation-request/index/repositories/b2c-mp-merchant-relation-request-index-repository';
 import { B2cMpMerchantRepository } from '../../pages/yves/merchant/repositories/b2c-mp-merchant-repository';
+import { SuiteHomeRepository } from '../../pages/yves/home/repositories/suite-home-repository';
+import { B2cHomeRepository } from '../../pages/yves/home/repositories/b2c-home-repository';
+import { B2bHomeRepository } from '../../pages/yves/home/repositories/b2b-home-repository';
+import { B2cMpHomeRepository } from '../../pages/yves/home/repositories/b2c-mp-home-repository';
+import { B2bMpHomeRepository } from '../../pages/yves/home/repositories/b2b-mp-home-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
 const suiteMappings: BindingsMap = {
+  [REPOSITORIES.HomeRepository]: SuiteHomeRepository,
   [REPOSITORIES.LoginRepository]: SuiteLoginRepository,
   [REPOSITORIES.CartRepository]: SuiteCartRepository,
   [REPOSITORIES.MultiCartRepository]: SuiteMultiCartRepository,
@@ -118,6 +124,7 @@ const suiteMappings: BindingsMap = {
 };
 
 const b2cMappings: BindingsMap = {
+  [REPOSITORIES.HomeRepository]: B2cHomeRepository,
   [REPOSITORIES.LoginRepository]: B2cLoginRepository,
   [REPOSITORIES.CartRepository]: B2cCartRepository,
   [REPOSITORIES.MultiCartRepository]: B2cMultiCartRepository,
@@ -139,6 +146,7 @@ const b2cMappings: BindingsMap = {
 };
 
 const b2bMappings: BindingsMap = {
+  [REPOSITORIES.HomeRepository]: B2bHomeRepository,
   [REPOSITORIES.LoginRepository]: B2bLoginRepository,
   [REPOSITORIES.CartRepository]: B2bCartRepository,
   [REPOSITORIES.MultiCartRepository]: B2bMultiCartRepository,
@@ -160,6 +168,7 @@ const b2bMappings: BindingsMap = {
 };
 
 const b2cMpMappings: BindingsMap = {
+  [REPOSITORIES.HomeRepository]: B2cMpHomeRepository,
   [REPOSITORIES.LoginRepository]: B2cMpLoginRepository,
   [REPOSITORIES.CartRepository]: B2cMpCartRepository,
   [REPOSITORIES.MultiCartRepository]: B2cMpMultiCartRepository,
@@ -181,6 +190,7 @@ const b2cMpMappings: BindingsMap = {
 };
 
 const b2bMpMappings: BindingsMap = {
+  [REPOSITORIES.HomeRepository]: B2bMpHomeRepository,
   [REPOSITORIES.LoginRepository]: B2bMpLoginRepository,
   [REPOSITORIES.CartRepository]: B2bMpCartRepository,
   [REPOSITORIES.MultiCartRepository]: B2bMpMultiCartRepository,
