@@ -1,17 +1,22 @@
 {
   "defaultPassword": "change123",
-  "defaultStore": "SMOKE_STORE",
-  "defaultWarehouse": "Spryker MER000001 Warehouse 1",
+  "store": {
+    "name": "SMOKE_STORE",
+    "currency": "EUR",
+    "locale": "en_US",
+    "country": "DE"
+  },
+  "warehouse": "Warehouse2",
   "rootUser": {
     "username": "admin@spryker.com"
   },
-  "productPrice": "99.99",
+  "productPrice": "77.99",
   "customer": {
     "email": "spencor.hopkin@spryker.com"
   },
   "concreteProduct": {
-    "name": "Canon IXUS 285",
-    "sku": "009_30692991",
-    "abstract_sku": "009"
+    "name": "Acer Aspire Switch 10 E",
+    "sku": "132_30619567",
+    "abstract_sku": "132"
   }
 }

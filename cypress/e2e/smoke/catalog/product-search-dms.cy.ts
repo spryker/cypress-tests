@@ -1,20 +1,20 @@
 import { container } from '@utils';
-import { CatalogPage, HomePage, ProductPage } from '@pages/yves';
+import { CatalogPage, ProductPage } from '@pages/yves';
 import { ProductSearchDmsStaticFixtures } from '@interfaces/smoke';
-import { CustomerLoginScenario } from '@scenarios/yves';
+import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 import { AssignExistingProductToStoreScenario, CreateStoreScenario, UserLoginScenario } from '@scenarios/backoffice';
 
 (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(
   'product search dms',
   { tags: ['@smoke'] },
   (): void => {
-    const homePage = container.get(HomePage);
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const userLoginScenario = container.get(UserLoginScenario);
     const createStoreScenario = container.get(CreateStoreScenario);
     const assignExistingProductToStoreScenario = container.get(AssignExistingProductToStoreScenario);
+    const selectStoreScenario = container.get(SelectStoreScenario);
 
     let staticFixtures: ProductSearchDmsStaticFixtures;
 
@@ -26,17 +26,19 @@ import { AssignExistingProductToStoreScenario, CreateStoreScenario, UserLoginSce
         password: staticFixtures.defaultPassword,
       });
 
-      createStoreScenario.execute({ store: staticFixtures.defaultStore });
+      createStoreScenario.execute({ store: staticFixtures.store });
       assignExistingProductToStoreScenario.execute({
         abstractProductSku: staticFixtures.concreteProduct.abstract_sku,
-        warehouse: staticFixtures.defaultWarehouse,
+        warehouse: staticFixtures.warehouse,
         productPrice: staticFixtures.productPrice,
       });
+
+      selectStoreScenario.execute(staticFixtures.store.name);
+      checkCatalogVisibility();
     });
 
     beforeEach((): void => {
-      homePage.visit();
-      homePage.selectStore(staticFixtures.defaultStore);
+      selectStoreScenario.execute(staticFixtures.store.name);
     });
 
     skipB2BIt('guest should be able to find product abstract in catalog', (): void => {
@@ -59,8 +61,9 @@ import { AssignExistingProductToStoreScenario, CreateStoreScenario, UserLoginSce
         password: staticFixtures.defaultPassword,
       });
 
+      selectStoreScenario.execute(staticFixtures.store.name);
+
       catalogPage.visit();
-      homePage.selectStore(staticFixtures.defaultStore);
       catalogPage.searchProductFromSuggestions({ query: staticFixtures.concreteProduct.abstract_sku });
 
       assertProductDetailInformation();
@@ -72,8 +75,9 @@ import { AssignExistingProductToStoreScenario, CreateStoreScenario, UserLoginSce
         password: staticFixtures.defaultPassword,
       });
 
+      selectStoreScenario.execute(staticFixtures.store.name);
+
       catalogPage.visit();
-      homePage.selectStore(staticFixtures.defaultStore);
       catalogPage.searchProductFromSuggestions({ query: staticFixtures.concreteProduct.sku });
 
       assertProductDetailInformation();
@@ -88,6 +92,17 @@ import { AssignExistingProductToStoreScenario, CreateStoreScenario, UserLoginSce
 
     function skipB2BIt(description: string, testFn: () => void): void {
       (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+    }
+
+    function checkCatalogVisibility(): void {
+      catalogPage.visit();
+      catalogPage.hasProductsInCatalog().then((isVisible) => {
+        if (!isVisible) {
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
+          cy.wait(3000);
+          checkCatalogVisibility();
+        }
+      });
     }
   }
 );

@@ -1,4 +1,4 @@
-import { Customer, ProductConcrete, User } from './shared';
+import { Customer, ProductConcrete, Store, User } from './shared';
 
 export interface ProductSearchStaticFixtures {
   defaultPassword: string;
@@ -9,8 +9,8 @@ export interface ProductSearchStaticFixtures {
 
 export interface ProductSearchDmsStaticFixtures {
   defaultPassword: string;
-  defaultStore: string;
-  defaultWarehouse: string;
+  store: Store;
+  warehouse: string;
   rootUser: User;
   productPrice: string;
   customer: Customer;

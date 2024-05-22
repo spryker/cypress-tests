@@ -10,12 +10,12 @@ export class CreateStoreScenario {
 
   execute = (params: ExecuteParams): Store => {
     this.storeListPage.visit();
-    const store = this.storeCreatePage.generateStore(params.store);
+    const store = params.store;
 
-    this.storeListPage.hasStoreByStoreName(params.store).then((isVisible) => {
+    this.storeListPage.hasStoreByStoreName(store.name).then((isVisible) => {
       if (!isVisible) {
         this.storeListPage.createStore();
-        this.storeCreatePage.create({ store: store });
+        this.storeCreatePage.create(store);
 
         if (params?.shouldTriggerPublishAndSync) {
           cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
@@ -28,12 +28,13 @@ export class CreateStoreScenario {
 }
 
 interface ExecuteParams {
-  store: string;
+  store: Store;
   shouldTriggerPublishAndSync?: boolean;
 }
 
 interface Store {
   name: string;
-  defaultLocale: string;
-  defaultCurrency: string;
+  locale: string;
+  currency: string;
+  country: string;
 }

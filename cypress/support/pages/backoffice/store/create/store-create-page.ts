@@ -11,43 +11,32 @@ export class StoreCreatePage extends BackofficePage {
 
   protected PAGE_URL = '/store-gui/create';
 
-  create = (params: CreateParams): void => {
-    this.repository.getNameInput().type(params.store.name);
+  create = (store: Store): void => {
+    this.repository.getNameInput().type(store.name);
 
     this.repository.getLocalesTab().click();
     this.repository.getDefaultLocaleSelect().click();
-    this.repository.getDefaultLocaleSearchInput().type(`${params.store.defaultLocale}{enter}`);
-    this.repository.getLocaleSearchInput().type(params.store.defaultLocale);
-    this.repository.getAvailableEnUsLocaleInput().click({ force: true });
+    this.repository.getDefaultLocaleSearchInput().type(`${store.locale}{enter}`);
+    this.repository.getLocaleSearchInput().type(store.locale);
+    this.repository.getAvailableLocaleInput(store.locale).click({ force: true });
 
     this.repository.getCurrenciesTab().click();
     this.repository.getDefaultCurrencySelect().click();
-    this.repository.getDefaultCurrencySearchInput().type(`${params.store.defaultCurrency}{downarrow}{enter}`);
-    this.repository.getCurrencySearchInput().type(params.store.defaultCurrency);
-    this.repository.getAvailableEuroCurrencyInput().click({ force: true });
+    this.repository.getDefaultCurrencySearchInput().type(`${store.currency}{downarrow}{enter}`);
+    this.repository.getCurrencySearchInput().type(store.currency);
+    this.repository.getAvailableCurrencyInput(store.currency).click({ force: true });
+
+    this.repository.getDisplayRegionsTab().click();
+    this.repository.getCountrySearchInput().type(store.country);
+    this.repository.getAvailableCountryInput(store.country).click({ force: true });
 
     this.repository.getSaveButton().click();
   };
-
-  generateStore = (name?: string): Store => {
-    let storeName = name ?? this.faker.commerce.department();
-    storeName = storeName.replace(/[\s-]/g, '_');
-    storeName = storeName.toUpperCase();
-
-    return {
-      name: storeName,
-      defaultLocale: 'en_US',
-      defaultCurrency: 'Euro',
-    };
-  };
-}
-
-interface CreateParams {
-  store: Store;
 }
 
 interface Store {
   name: string;
-  defaultLocale: string;
-  defaultCurrency: string;
+  locale: string;
+  currency: string;
+  country: string;
 }
