@@ -20,21 +20,7 @@ import { AssignExistingProductToStoreScenario, CreateStoreScenario, UserLoginSce
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
-
-      userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
-
-      createStoreScenario.execute({ store: staticFixtures.store });
-      assignExistingProductToStoreScenario.execute({
-        abstractProductSku: staticFixtures.concreteProduct.abstract_sku,
-        warehouse: staticFixtures.warehouse,
-        productPrice: staticFixtures.productPrice,
-      });
-
-      selectStoreScenario.execute(staticFixtures.store.name);
-      checkCatalogVisibility();
+      createSmokeStore();
     });
 
     beforeEach((): void => {
@@ -92,6 +78,23 @@ import { AssignExistingProductToStoreScenario, CreateStoreScenario, UserLoginSce
 
     function skipB2BIt(description: string, testFn: () => void): void {
       (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+    }
+
+    function createSmokeStore(): void {
+      userLoginScenario.execute({
+        username: staticFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      createStoreScenario.execute({ store: staticFixtures.store });
+      assignExistingProductToStoreScenario.execute({
+        abstractProductSku: staticFixtures.concreteProduct.abstract_sku,
+        warehouse: staticFixtures.warehouse,
+        productPrice: staticFixtures.productPrice,
+      });
+
+      selectStoreScenario.execute(staticFixtures.store.name);
+      checkCatalogVisibility();
     }
 
     function checkCatalogVisibility(): void {
