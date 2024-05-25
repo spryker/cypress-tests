@@ -12,7 +12,7 @@ export class EnableProductForAllStoresScenario {
     this.productManagementListPage.visit();
     this.productManagementListPage.update({ query: params.abstractProductSku, action: ActionEnum.edit });
 
-    this.productManagementEditPage.checkAllStores();
+    this.productManagementEditPage.assignAllPossibleStores();
     this.productManagementEditPage.bulkPriceUpdate(params.productPrice);
     this.productManagementEditPage.save();
 

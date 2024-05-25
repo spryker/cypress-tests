@@ -25,7 +25,7 @@ export class ProductManagementEditPage extends BackofficePage {
     });
   };
 
-  checkAllStores = (): void => {
+  assignAllPossibleStores = (): void => {
     this.repository.getGeneralTab().click({ force: true });
     this.repository.getAllStockInputs().check();
   };
