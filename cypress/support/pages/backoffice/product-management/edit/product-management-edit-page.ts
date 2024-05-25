@@ -30,7 +30,7 @@ export class ProductManagementEditPage extends BackofficePage {
     this.repository.getAllStockInputs().check();
   };
 
-  setPriceForAllStores = (productPrice: string): void => {
+  bulkPriceUpdate = (productPrice: string): void => {
     this.repository.getPriceTaxTab().click();
     this.repository.getAllPriceInputs().each(($el) => {
       cy.wrap($el).type(productPrice, { force: true });

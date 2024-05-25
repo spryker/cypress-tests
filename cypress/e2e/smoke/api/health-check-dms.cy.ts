@@ -13,7 +13,7 @@ import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
 
   before((): void => {
     staticFixtures = Cypress.env('staticFixtures');
-    createSmokeStore();
+    createNewStoreInBackoffice();
   });
 
   it('GLUE endpoint should return 200', () => {
@@ -55,7 +55,7 @@ import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
       .should('eq', 200);
   });
 
-  function createSmokeStore(): void {
+  function createNewStoreInBackoffice(): void {
     userLoginScenario.execute({
       username: staticFixtures.rootUser.username,
       password: staticFixtures.defaultPassword,

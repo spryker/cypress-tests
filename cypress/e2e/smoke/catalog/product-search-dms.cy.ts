@@ -2,7 +2,12 @@ import { container } from '@utils';
 import { CatalogPage, ProductPage } from '@pages/yves';
 import { ProductSearchDmsStaticFixtures } from '@interfaces/smoke';
 import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
-import { AssignExistingProductToStoreScenario, CreateStoreScenario, UserLoginScenario } from '@scenarios/backoffice';
+import {
+  CreateStoreScenario,
+  EnableProductForAllStoresScenario,
+  EnableWarehouseForAllStoresScenario,
+  UserLoginScenario,
+} from '@scenarios/backoffice';
 
 (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(
   'product search dms',
@@ -13,14 +18,18 @@ import { AssignExistingProductToStoreScenario, CreateStoreScenario, UserLoginSce
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const userLoginScenario = container.get(UserLoginScenario);
     const createStoreScenario = container.get(CreateStoreScenario);
-    const assignExistingProductToStoreScenario = container.get(AssignExistingProductToStoreScenario);
     const selectStoreScenario = container.get(SelectStoreScenario);
+    const enableWarehouseForAllStoresScenario = container.get(EnableWarehouseForAllStoresScenario);
+    const enableProductForAllStoresScenario = container.get(EnableProductForAllStoresScenario);
 
     let staticFixtures: ProductSearchDmsStaticFixtures;
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
-      createSmokeStore();
+
+      assignStoreRelationToExistingProduct();
+      selectStoreScenario.execute(staticFixtures.store.name);
+      ensureCatalogVisibility();
     });
 
     beforeEach((): void => {
@@ -80,30 +89,27 @@ import { AssignExistingProductToStoreScenario, CreateStoreScenario, UserLoginSce
       (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
     }
 
-    function createSmokeStore(): void {
+    function assignStoreRelationToExistingProduct(): void {
       userLoginScenario.execute({
         username: staticFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
 
       createStoreScenario.execute({ store: staticFixtures.store });
-      assignExistingProductToStoreScenario.execute({
+      enableWarehouseForAllStoresScenario.execute({ warehouse: staticFixtures.warehouse });
+      enableProductForAllStoresScenario.execute({
         abstractProductSku: staticFixtures.concreteProduct.abstract_sku,
-        warehouse: staticFixtures.warehouse,
         productPrice: staticFixtures.productPrice,
       });
-
-      selectStoreScenario.execute(staticFixtures.store.name);
-      checkCatalogVisibility();
     }
 
-    function checkCatalogVisibility(): void {
+    function ensureCatalogVisibility(): void {
       catalogPage.visit();
       catalogPage.hasProductsInCatalog().then((isVisible) => {
         if (!isVisible) {
           // eslint-disable-next-line cypress/no-unnecessary-waiting
           cy.wait(3000);
-          checkCatalogVisibility();
+          ensureCatalogVisibility();
         }
       });
     }

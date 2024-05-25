@@ -1,31 +1,19 @@
-import {
-  ActionEnum,
-  ProductManagementEditPage,
-  ProductManagementListPage,
-  StockEditPage,
-  StockListPage,
-} from '@pages/backoffice';
+import { ActionEnum, ProductManagementEditPage, ProductManagementListPage } from '@pages/backoffice';
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
 @injectable()
 @autoWired
-export class AssignExistingProductToStoreScenario {
-  @inject(StockEditPage) private stockEditPage: StockEditPage;
-  @inject(StockListPage) private stockListPage: StockListPage;
+export class EnableProductForAllStoresScenario {
   @inject(ProductManagementEditPage) private productManagementEditPage: ProductManagementEditPage;
   @inject(ProductManagementListPage) private productManagementListPage: ProductManagementListPage;
 
   execute = (params: ExecuteParams): void => {
-    this.stockListPage.visit();
-    this.stockListPage.update({ query: params.warehouse, action: ActionEnum.edit });
-    this.stockEditPage.assignAllAvailableStore();
-
     this.productManagementListPage.visit();
     this.productManagementListPage.update({ query: params.abstractProductSku, action: ActionEnum.edit });
 
     this.productManagementEditPage.checkAllStores();
-    this.productManagementEditPage.setPriceForAllStores(params.productPrice);
+    this.productManagementEditPage.bulkPriceUpdate(params.productPrice);
     this.productManagementEditPage.save();
 
     if (params?.shouldTriggerPublishAndSync) {
@@ -36,7 +24,6 @@ export class AssignExistingProductToStoreScenario {
 
 interface ExecuteParams {
   abstractProductSku: string;
-  warehouse: string;
   productPrice: string;
   shouldTriggerPublishAndSync?: boolean;
 }
