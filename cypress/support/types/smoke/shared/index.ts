@@ -11,3 +11,4 @@ export * from './url';
 export * from './merchant';
 export * from './user';
 export * from './merchant-relation-request';
+export * from './store';
