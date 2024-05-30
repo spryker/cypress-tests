@@ -17,9 +17,9 @@ jobs:
       SPRYKER_GLUE_BACKEND_HOST: ${{ github.event.client_payload.SPRYKER_GLUE_BACKEND_HOST }}
       SPRYKER_GLUE_STOREFRONT_HOST: ${{ github.event.client_payload.SPRYKER_GLUE_STOREFRONT_HOST }}
       SPRYKER_FE_HOST: ${{ github.event.client_payload.SPRYKER_FE_HOST }}
-      SPRYKER_SMTP_HOST: ${{ github.event.client_payload.SPRYKER_SMTP_HOST }}
-      SPRYKER_SSL_ENABLED: ${{ github.event.client_payload.SPRYKER_SSL_ENABLED }}
+      SPRYKER_SSL_ENABLED: true
       AWS_DEFAULT_REGION: eu-west-1
+      SPRYKER_SMTP_HOST: null
       AWS_ACCESS_KEY_ID: ${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }}
       ROBOT_TESTS_ARTIFACTS_BUCKET: ${{ vars.ROBOT_TESTS_ARTIFACTS_BUCKET }}
