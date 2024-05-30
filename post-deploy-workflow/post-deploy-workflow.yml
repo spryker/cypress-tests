@@ -7,11 +7,31 @@ on:
 jobs:
   run-workflow:
     runs-on: ubuntu-22.04
+    env:
+      CODEBUILD_BUILD_ID: ${{ github.event.client_payload.CODEBUILD_BUILD_ID }}
+      DEMO_SHOP_TYPE: ${{ github.event.client_payload.DEMO_SHOP_TYPE }}
+      NPM_COMMAND: ${{ github.event.client_payload.NPM_COMMAND }}
+      SPRYKER_BE_HOST: ${{ github.event.client_payload.SPRYKER_BE_HOST }}
+      SPRYKER_MP_HOST: ${{ github.event.client_payload.SPRYKER_MP_HOST }}
+      SPRYKER_API_HOST: ${{ github.event.client_payload.SPRYKER_API_HOST }}
+      SPRYKER_GLUE_BACKEND_HOST: ${{ github.event.client_payload.SPRYKER_GLUE_BACKEND_HOST }}
+      SPRYKER_GLUE_STOREFRONT_HOST: ${{ github.event.client_payload.SPRYKER_GLUE_STOREFRONT_HOST }}
+      SPRYKER_FE_HOST: ${{ github.event.client_payload.SPRYKER_FE_HOST }}
+      SPRYKER_SMTP_HOST: ${{ github.event.client_payload.SPRYKER_SMTP_HOST }}
+      SPRYKER_SSL_ENABLED: ${{ github.event.client_payload.SPRYKER_SSL_ENABLED }}
+      AWS_DEFAULT_REGION: eu-west-1
+      AWS_ACCESS_KEY_ID: ${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }}
+      ROBOT_TESTS_ARTIFACTS_BUCKET: ${{ vars.ROBOT_TESTS_ARTIFACTS_BUCKET }}
 
     steps:
+      - name: Install AWS CLI
+        run: |
+          sudo apt install awscli -q
+
       - name: Install Docker Compose
         run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo curl -L "https://github.com/docker/compose/releases/download/2.12.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
 
       - name: Install Composer
@@ -20,7 +40,7 @@ jobs:
           sudo mv composer.phar /usr/local/bin/composer
 
       - name: Download spryker/cypress-tests package
-        run: composer require spryker/cypress-tests:dev-master
+        run: composer require spryker/cypress-tests:dev-feature/cc-33306/dev-autonomous-release-post-hook
 
       - name: Execute post-deploy-workflow-trigger.sh script
         run: bash vendor/spryker/cypress-tests/post-deploy-workflow/post-deploy-workflow-trigger.sh
