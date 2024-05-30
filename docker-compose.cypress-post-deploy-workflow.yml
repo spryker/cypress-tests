@@ -1,0 +1,17 @@
+services:
+  cypress-tests:
+    build:
+      dockerfile: Dockerfile
+    environment:
+        - SPRYKER_SSL_ENABLED=${SPRYKER_SSL_ENABLED}
+        - SPRYKER_BE_HOST=${SPRYKER_BE_HOST}
+        - SPRYKER_MP_HOST=${SPRYKER_MP_HOST}
+        - SPRYKER_API_HOST=${SPRYKER_API_HOST}
+        - SPRYKER_GLUE_BACKEND_HOST=${SPRYKER_GLUE_BACKEND_HOST}
+        - SPRYKER_GLUE_STOREFRONT_HOST=${SPRYKER_GLUE_STOREFRONT_HOST}
+        - SPRYKER_SMTP_HOST=${SPRYKER_SMTP_HOST}
+        - SPRYKER_FE_HOST=${SPRYKER_FE_HOST}
+    volumes:
+      - ./artifacts/screenshots:/opt/cypress-tests/cypress/screenshots:rw
+      - ./artifacts/videos:/opt/cypress-tests/cypress/videos:rw
+      - ./artifacts/logs:/opt/cypress-tests/cypress/logs:rw
