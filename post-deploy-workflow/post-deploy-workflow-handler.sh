@@ -3,7 +3,7 @@
 
 mkdir -p artifacts
 
-docker-compose -f docker-compose.cypress-post-deploy.yml up -d
+docker-compose -f docker-compose.cypress-post-deploy-workflow.yml up -d
 
 # Run the cypress smoke tests in the cypress-tests service's container
 # If the tests fail, upload the artifacts to the specified AWS S3 bucket
