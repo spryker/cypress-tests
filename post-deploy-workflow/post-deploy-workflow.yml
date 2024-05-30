@@ -1,26 +1,26 @@
 name: Post Deploy Workflow
 
 on:
-    repository_dispatch:
-        types: [post-deploy-workflow]
+  repository_dispatch:
+    types: [post-deploy-workflow]
 
 jobs:
-    run-workflow:
-        runs-on: ubuntu-22.04
+  run-workflow:
+    runs-on: ubuntu-22.04
 
-        steps:
-            - name: Install Docker Compose
-              run: |
-                  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                  sudo chmod +x /usr/local/bin/docker-compose
+    steps:
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
 
-            - name: Install Composer
-              run: |
-                  curl -sS https://getcomposer.org/installer | php
-                  sudo mv composer.phar /usr/local/bin/composer
+      - name: Install Composer
+        run: |
+          curl -sS https://getcomposer.org/installer | php
+          sudo mv composer.phar /usr/local/bin/composer
 
-            - name: Download spryker/cypress-tests package
-              run: composer require spryker/cypress-tests:dev-master
+      - name: Download spryker/cypress-tests package
+        run: composer require spryker/cypress-tests:dev-master
 
-            - name: Execute post-deploy-workflow-trigger.sh script
-              run: bash vendor/spryker/cypress-tests/post-deploy-workflow/post-deploy-workflow-trigger.sh
+      - name: Execute post-deploy-workflow-trigger.sh script
+        run: bash vendor/spryker/cypress-tests/post-deploy-workflow/post-deploy-workflow-trigger.sh
