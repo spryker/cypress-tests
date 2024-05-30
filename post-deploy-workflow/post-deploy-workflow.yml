@@ -42,5 +42,5 @@ jobs:
       - name: Download spryker/cypress-tests package
         run: composer require spryker/cypress-tests:dev-feature/cc-33306/dev-autonomous-release-post-hook
 
-      - name: Execute post-deploy-workflow-trigger.sh script
-        run: bash vendor/spryker/cypress-tests/post-deploy-workflow/post-deploy-workflow-trigger.sh
+      - name: Execute post-deploy-workflow-handler.sh script
+        run: bash vendor/spryker/cypress-tests/post-deploy-workflow/post-deploy-workflow-handler.sh
