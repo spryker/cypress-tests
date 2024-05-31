@@ -16,22 +16,52 @@ do
         NPM_COMMAND="${arg#*=}"
         shift
         ;;
+        --github-workflow-runner-bearer-token=*)
+        GITHUB_WORKFLOW_RUNNER_BEARER_TOKEN="${arg#*=}"
+        shift
+        ;;
+        --github-workflow-runner-org-name=*)
+        GITHUB_WORKFLOW_RUNNER_ORG_NAME="${arg#*=}"
+        shift
+        ;;
+        --github-workflow-runner-repository=*)
+        GITHUB_WORKFLOW_RUNNER_REPOSITORY="${arg#*=}"
+        shift
+        ;;
     esac
 done
 
-# Check if demo shop type is specified
+if [ -z "$DEPLOY_FILE" ]; then
+    echo "Error: --deploy-file is not specified"
+    exit 1
+fi
+
 if [ -z "$DEMO_SHOP_TYPE" ]; then
     echo "Error: --demo-shop-type is not specified"
     exit 1
 fi
 
-# Check if npm command is specified
 if [ -z "$NPM_COMMAND" ]; then
     echo "Error: --npm-command is not specified"
     exit 1
 fi
 
-# Function to extract host by application type using sed
+if [ -z "$GITHUB_WORKFLOW_RUNNER_BEARER_TOKEN" ]; then
+    echo "Error: --github-workflow-runner-bearer-token is not specified"
+    exit 1
+fi
+
+if [ -z "$GITHUB_WORKFLOW_RUNNER_ORG_NAME" ]; then
+    echo "Error: --github-workflow-runner-org-name is not specified"
+    exit 1
+fi
+
+if [ -z "$GITHUB_WORKFLOW_RUNNER_REPOSITORY" ]; then
+    echo "Error: --github-workflow-runner-repository is not specified"
+    exit 1
+fi
+
+
 extract_host() {
     local app_type="$1"
     awk -v app="$app_type" '
@@ -49,7 +79,6 @@ SPRYKER_GLUE_STOREFRONT_HOST=$(extract_host "glue-storefront")
 SPRYKER_FE_HOST=$(extract_host "yves")
 CODEBUILD_BUILD_ID=${CODEBUILD_BUILD_ID}
 
-# List of variable names
 SPRYKER_VARS="CODEBUILD_BUILD_ID DEMO_SHOP_TYPE NPM_COMMAND SPRYKER_BE_HOST SPRYKER_MP_HOST SPRYKER_API_HOST SPRYKER_GLUE_BACKEND_HOST SPRYKER_GLUE_STOREFRONT_HOST SPRYKER_FE_HOST"
 
 # Prepare the client payload
@@ -68,5 +97,5 @@ curl -L \
   -H "Accept: application/vnd.github+json" \
   -H "Authorization: Bearer ${GITHUB_WORKFLOW_RUNNER_BEARER_TOKEN}" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  https://api.github.com/repos/${GITHUB_WORKFLOW_RUNNER_GITHUB_ORG_NAME}/${GITHUB_WORKFLOW_RUNNER_GITHUB_REPOSITORY}/dispatches \
+  https://api.github.com/repos/${GITHUB_WORKFLOW_RUNNER_ORG_NAME}/${GITHUB_WORKFLOW_RUNNER_REPOSITORY}/dispatches \
   -d '{"event_type":"post-deploy-workflow","client_payload":'"$client_payload"'}'

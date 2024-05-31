@@ -4,6 +4,8 @@ on:
   repository_dispatch:
     types: [post-deploy-workflow]
 
+run-name: Post Deploy Workflow:${{ github.event.client_payload.SPRYKER_FE_HOST }}
+
 jobs:
   run-workflow:
     runs-on: ubuntu-22.04
@@ -44,5 +46,4 @@ jobs:
 
       - name: Execute post-deploy-workflow-handler.sh script
         run: |
-          cd vendor/spryker/cypress-tests/post-deploy-workflow
-          bash post-deploy-workflow-handler.sh
+          bash vendor/spryker/cypress-tests/post-deploy-workflow/post-deploy-workflow-handler.sh
