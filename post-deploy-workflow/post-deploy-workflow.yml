@@ -27,10 +27,6 @@ jobs:
       ROBOT_TESTS_ARTIFACTS_BUCKET: ${{ vars.ROBOT_TESTS_ARTIFACTS_BUCKET }}
 
     steps:
-      - name: Install AWS CLI
-        run: |
-          sudo apt install awscli -q
-
       - name: Install Docker Compose
         run: |
           sudo curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
@@ -42,8 +38,9 @@ jobs:
           sudo mv composer.phar /usr/local/bin/composer
 
       - name: Download spryker/cypress-tests package
-        run: composer require spryker/cypress-tests:dev-feature/cc-33306/dev-autonomous-release-post-hook
+        run: composer require spryker/cypress-tests:dev-master
 
       - name: Execute post-deploy-workflow-handler.sh script
         run: |
-          bash vendor/spryker/cypress-tests/post-deploy-workflow/post-deploy-workflow-handler.sh
+          cd vendor/spryker/cypress-tests/post-deploy-workflow
+          bash post-deploy-workflow-handler.sh
