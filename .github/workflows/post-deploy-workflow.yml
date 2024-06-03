@@ -1,0 +1,48 @@
+name: Post Deploy Workflow
+
+on:
+  repository_dispatch:
+    types: [post-deploy-workflow]
+
+run-name: Post Deploy Workflow:${{ github.event.client_payload.SPRYKER_FE_HOST }}
+
+jobs:
+  run-workflow:
+    runs-on: ubuntu-22.04
+    env:
+      CODEBUILD_BUILD_ID: ${{ github.event.client_payload.CODEBUILD_BUILD_ID }}
+      DEMO_SHOP_TYPE: ${{ github.event.client_payload.DEMO_SHOP_TYPE }}
+      NPM_COMMAND: ${{ github.event.client_payload.NPM_COMMAND }}
+      SPRYKER_BE_HOST: ${{ github.event.client_payload.SPRYKER_BE_HOST }}
+      SPRYKER_MP_HOST: ${{ github.event.client_payload.SPRYKER_MP_HOST }}
+      SPRYKER_API_HOST: ${{ github.event.client_payload.SPRYKER_API_HOST }}
+      SPRYKER_GLUE_BACKEND_HOST: ${{ github.event.client_payload.SPRYKER_GLUE_BACKEND_HOST }}
+      SPRYKER_GLUE_STOREFRONT_HOST: ${{ github.event.client_payload.SPRYKER_GLUE_STOREFRONT_HOST }}
+      SPRYKER_FE_HOST: ${{ github.event.client_payload.SPRYKER_FE_HOST }}
+      SPRYKER_SSL_ENABLED: https
+      SPRYKER_SMTP_HOST: false
+      AWS_DEFAULT_REGION: eu-west-1
+      AWS_ACCESS_KEY_ID: ${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }}
+      ROBOT_TESTS_ARTIFACTS_BUCKET: ${{ secrets.ROBOT_TESTS_ARTIFACTS_BUCKET }}
+      BASIC_AUTH_CREDENTIALS: ${{ secrets.BASIC_AUTH_CREDENTIALS }}
+
+    steps:
+      - name: Install Docker Compose
+        run: |
+          sudo curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+
+      - name: Install Composer
+        run: |
+          curl -sS https://getcomposer.org/installer | php
+          sudo mv composer.phar /usr/local/bin/composer
+
+      - name: Download spryker/cypress-tests package
+        run: composer require spryker/cypress-tests:dev-master
+
+      - name: Execute post-deploy-workflow-handler.sh script
+        run: |
+          export SPRYKER_FE_HOST="${BASIC_AUTH_CREDENTIALS}${SPRYKER_FE_HOST}"
+          cd vendor/spryker/cypress-tests/post-deploy-workflow
+          bash post-deploy-workflow-handler.sh
