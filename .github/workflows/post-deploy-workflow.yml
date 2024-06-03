@@ -25,6 +25,7 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }}
       ROBOT_TESTS_ARTIFACTS_BUCKET: ${{ vars.ROBOT_TESTS_ARTIFACTS_BUCKET }}
+      BASIC_AUTH_CREDENTIALS: ${{ vars.BASIC_AUTH_CREDENTIALS }}
 
     steps:
       - name: Install Docker Compose
@@ -42,5 +43,6 @@ jobs:
 
       - name: Execute post-deploy-workflow-handler.sh script
         run: |
+          export SPRYKER_FE_HOST="${BASIC_AUTH_CREDENTIALS}${SPRYKER_FE_HOST}"
           cd vendor/spryker/cypress-tests/post-deploy-workflow
           bash post-deploy-workflow-handler.sh
