@@ -7,7 +7,7 @@ on:
 run-name: Post Deploy Workflow:${{ github.event.client_payload.SPRYKER_FE_HOST }}
 
 jobs:
-  run-workflow:
+  post-deploy-e2e-tests:
     runs-on: ubuntu-22.04
     env:
       CODEBUILD_BUILD_ID: ${{ github.event.client_payload.CODEBUILD_BUILD_ID }}
@@ -24,8 +24,9 @@ jobs:
       AWS_DEFAULT_REGION: eu-west-1
       AWS_ACCESS_KEY_ID: ${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }}
-      ROBOT_TESTS_ARTIFACTS_BUCKET: ${{ secrets.ROBOT_TESTS_ARTIFACTS_BUCKET }}
+      ROBOT_TESTS_ARTIFACTS_BUCKET: ${{ vars.ROBOT_TESTS_ARTIFACTS_BUCKET }}
       BASIC_AUTH_CREDENTIALS: ${{ secrets.BASIC_AUTH_CREDENTIALS }}
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
     steps:
       - name: Install Docker Compose
@@ -38,11 +39,47 @@ jobs:
           curl -sS https://getcomposer.org/installer | php
           sudo mv composer.phar /usr/local/bin/composer
 
-      - name: Download spryker/cypress-tests package
+      - name: Download Cypress Tests Package
         run: composer require spryker/cypress-tests:dev-master
 
-      - name: Execute post-deploy-workflow-handler.sh script
+      - name: Execute Post-Deploy-e2e Tests
         run: |
           export SPRYKER_FE_HOST="${BASIC_AUTH_CREDENTIALS}${SPRYKER_FE_HOST}"
           cd vendor/spryker/cypress-tests/post-deploy-workflow
           bash post-deploy-workflow-handler.sh
+
+      - name: Notify Slack on Success
+        if: ${{ success() }}
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Deploy post hook for the environment with the domain name ${SPRYKER_FE_HOST} has been successful."
+                  }
+                }
+              ]
+            }
+
+      - name: Notify Slack on Failure
+        if: ${{ failure() }}
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Deploy post hook for the environment with the domain name ${SPRYKER_FE_HOST} has failed. Check the details [here](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}). Artifacts are available [here](https://s3.amazonaws.com/$ROBOT_TESTS_ARTIFACTS_BUCKET/cypress-ui/$DEMO_SHOP_TYPE/post-deploy/$CODEBUILD_BUILD_ID/)."
+                  }
+                }
+              ]
+            }
