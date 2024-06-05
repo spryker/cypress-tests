@@ -60,7 +60,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Deploy post hook for the environment with the domain name ${SPRYKER_FE_HOST} has been successful."
+                    "text": "✅ Deployment succeeded for the environment: https://www.${{ env.SPRYKER_FE_HOST }}."
                   }
                 }
               ]
@@ -78,7 +78,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Deploy post hook for the environment with the domain name ${SPRYKER_FE_HOST} has failed. Check the details [here](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}). Artifacts are available [here](https://s3.amazonaws.com/$ROBOT_TESTS_ARTIFACTS_BUCKET/cypress-ui/$DEMO_SHOP_TYPE/post-deploy/$CODEBUILD_BUILD_ID/)."
+                    "text": "❌ Deployment failed for the environment: https://www.${{ env.SPRYKER_FE_HOST }}. \n*Details*: [GitHub Actions Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) \n*Artifacts*: [S3 Bucket](https://s3.amazonaws.com/${{ env.ROBOT_TESTS_ARTIFACTS_BUCKET }}/cypress-ui/${{ env.DEMO_SHOP_TYPE }}/post-deploy/${{ env.CODEBUILD_BUILD_ID }}/)"
                   }
                 }
               ]
