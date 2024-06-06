@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       CODEBUILD_BUILD_ID: ${{ github.event.client_payload.CODEBUILD_BUILD_ID }}
-      DEMO_SHOP_TYPE: ${{ github.event.client_payload.DEMO_SHOP_TYPE }}
+      ENV_REPOSITORY_ID: ${{ github.event.client_payload.DEMO_SHOP_TYPE }}
       NPM_COMMAND: ${{ github.event.client_payload.NPM_COMMAND }}
       SPRYKER_BE_HOST: ${{ github.event.client_payload.SPRYKER_BE_HOST }}
       SPRYKER_MP_HOST: ${{ github.event.client_payload.SPRYKER_MP_HOST }}

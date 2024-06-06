@@ -11,6 +11,7 @@ services:
       - SPRYKER_GLUE_STOREFRONT_HOST=${SPRYKER_GLUE_STOREFRONT_HOST}
       - SPRYKER_SMTP_HOST=${SPRYKER_SMTP_HOST}
       - SPRYKER_FE_HOST=${SPRYKER_FE_HOST}
+      - ENV_REPOSITORY_ID=${ENV_REPOSITORY_ID}
     volumes:
       - ./artifacts/screenshots:/opt/cypress-tests/cypress/screenshots:rw
       - ./artifacts/videos:/opt/cypress-tests/cypress/videos:rw
