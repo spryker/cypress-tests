@@ -44,7 +44,9 @@ jobs:
 
       - name: Execute Post-Deploy-e2e Tests
         run: |
-          export SPRYKER_FE_HOST="${BASIC_AUTH_CREDENTIALS}${SPRYKER_FE_HOST}"
+          if [ -n "${BASIC_AUTH_CREDENTIALS}" ]; then
+            export SPRYKER_FE_HOST="${BASIC_AUTH_CREDENTIALS}@${SPRYKER_FE_HOST}"
+          fi
           cd vendor/spryker/cypress-tests/post-deploy-workflow
           bash post-deploy-workflow-handler.sh
 
@@ -60,7 +62,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "✅ Deployment succeeded for the environment: https://www.${{ env.SPRYKER_FE_HOST }}."
+                    "text": "✅ Deployment succeeded for the environment: https://${{ env.SPRYKER_FE_HOST }}."
                   }
                 }
               ]
@@ -78,7 +80,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "❌ Deployment failed for the environment: https://www.${{ env.SPRYKER_FE_HOST }}. \n*Details*: [GitHub Actions Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) \n*Artifacts*: [S3 Bucket](https://s3.amazonaws.com/${{ env.ROBOT_TESTS_ARTIFACTS_BUCKET }}/cypress-ui/${{ env.DEMO_SHOP_TYPE }}/post-deploy/${{ env.CODEBUILD_BUILD_ID }}/)"
+                    "text": "❌ Deployment failed for the environment: https://${{ env.SPRYKER_FE_HOST }}. \n*Details*: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} \n*Artifacts*: https://s3.amazonaws.com/${{ env.ROBOT_TESTS_ARTIFACTS_BUCKET }}/cypress-ui/${{ env.DEMO_SHOP_TYPE }}/post-deploy/${{ env.CODEBUILD_BUILD_ID }}"
                   }
                 }
               ]
