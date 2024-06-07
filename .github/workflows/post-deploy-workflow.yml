@@ -80,7 +80,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "❌ Deployment failed for the environment: https://${{ env.SPRYKER_FE_HOST }}. \n*Details*: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} \n*Artifacts*: https://s3.amazonaws.com/${{ env.ROBOT_TESTS_ARTIFACTS_BUCKET }}/cypress-ui/${{ env.DEMO_SHOP_TYPE }}/post-deploy/${{ env.CODEBUILD_BUILD_ID }}"
+                    "text": "❌ Deployment failed for the environment: https://${{ env.SPRYKER_FE_HOST }}. \n*Details*: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} \n*Artifacts*: https://s3.amazonaws.com/${{ env.ROBOT_TESTS_ARTIFACTS_BUCKET }}/cypress-ui/${{ env.ENV_REPOSITORY_ID }}/post-deploy/${{ env.CODEBUILD_BUILD_ID }}"
                   }
                 }
               ]
