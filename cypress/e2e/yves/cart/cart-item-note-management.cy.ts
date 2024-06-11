@@ -6,7 +6,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 /**
  * Yves Cart Update Without Reload checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4147904521/Yves+Cart+Update+Without+Reload+Checklist}
  */
-describe.skip('cart item note management [skip]', { tags: ['@cart'] }, (): void => {
+describe('cart item note management', { tags: ['@cart'] }, (): void => {
   const cartPage = container.get(CartPage);
   const customerLoginScenario = container.get(CustomerLoginScenario);
 
@@ -14,7 +14,6 @@ describe.skip('cart item note management [skip]', { tags: ['@cart'] }, (): void 
   let dynamicFixtures: CartItemNoteManagementDynamicFixtures;
 
   before((): void => {
-    cy.pause();
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 
