@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { RemoveCartItemStaticFixtures, RemoveCartItemDynamicFixtures } from '@interfaces/yves';
-import { CartPage } from '@pages/yves';
+import { CartPage, CatalogPage, ProductPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
 /**
@@ -8,6 +8,8 @@ import { CustomerLoginScenario } from '@scenarios/yves';
  */
 describe('remove cart item', { tags: ['@cart'] }, (): void => {
   const cartPage = container.get(CartPage);
+  const catalogPage = container.get(CatalogPage);
+  const productPage = container.get(ProductPage);
   const customerLoginScenario = container.get(CustomerLoginScenario);
 
   let staticFixtures: RemoveCartItemStaticFixtures;
@@ -18,12 +20,12 @@ describe('remove cart item', { tags: ['@cart'] }, (): void => {
   });
 
   it('guest customer should be able to remove a cart item', (): void => {
+    addTwoProductsToCart();
+
     cartPage.visit();
-    cartPage.quickAddToCart({ sku: dynamicFixtures.product1.sku, quantity: 1 });
-    cartPage.quickAddToCart({ sku: dynamicFixtures.product2.sku, quantity: 2 });
     cartPage.removeProduct({ sku: dynamicFixtures.product2.sku });
 
-    cartPage.getCartSummary().contains('€300.00');
+    cartPage.getCartSummary().contains(staticFixtures.total1);
   });
 
   it('customer should be able to remove a cart item', (): void => {
@@ -31,9 +33,30 @@ describe('remove cart item', { tags: ['@cart'] }, (): void => {
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
     });
+
     cartPage.visit();
     cartPage.removeProduct({ sku: dynamicFixtures.product1.sku });
 
-    cartPage.getCartSummary().contains('€300.00');
+    cartPage.getCartSummary().contains(staticFixtures.total1);
   });
+
+  function addTwoProductsToCart(): void {
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product1.sku });
+      productPage.addToCart();
+
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product2.sku });
+      productPage.addToCart({ quantity: 2 });
+
+      return;
+    }
+
+    cartPage.visit();
+    cartPage.quickAddToCart({ sku: dynamicFixtures.product1.sku, quantity: 1 });
+
+    cartPage.visit();
+    cartPage.quickAddToCart({ sku: dynamicFixtures.product2.sku, quantity: 2 });
+  }
 });

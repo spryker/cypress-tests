@@ -12,4 +12,5 @@ export class B2cProductRepository implements ProductRepository {
   getProductConfigurator = (): Cypress.Chainable => cy.get('.page-layout-main');
   getAddToCartButton = (): Cypress.Chainable => cy.get('[data-qa="add-to-cart-button"]:visible');
   getAddToCartSuccessMessage = (): string => 'Items added successfully';
+  getQuantityInput = (): Cypress.Chainable => cy.get('[data-qa="quantity-counter"]');
 }
