@@ -6,4 +6,5 @@ export interface ProductRepository {
   getProductConfigurator(): Cypress.Chainable;
   getAddToCartButton(): Cypress.Chainable;
   getAddToCartSuccessMessage(): string;
+  getQuantityInput(): Cypress.Chainable;
 }

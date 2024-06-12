@@ -12,4 +12,5 @@ export class SuiteProductRepository implements ProductRepository {
   getProductConfigurator = (): Cypress.Chainable => cy.get('[data-qa="component product-configurator"]');
   getAddToCartButton = (): Cypress.Chainable => cy.get('[data-qa="add-to-cart-button"]');
   getAddToCartSuccessMessage = (): string => 'Items added successfully';
+  getQuantityInput = (): Cypress.Chainable => cy.get('[data-qa="quantity-counter"]');
 }

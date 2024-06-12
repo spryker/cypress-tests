@@ -17,7 +17,7 @@ describe('cart item note management', { tags: ['@cart'] }, (): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 
-  it('guest customer should be able to add a cart item note', (): void => {
+  skipB2cIt('guest customer should be able to add a cart item note', (): void => {
     cartPage.visit();
     cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 2 });
     cartPage.addFirstCartItemNote({ message: staticFixtures.cartItemNote });
@@ -26,7 +26,7 @@ describe('cart item note management', { tags: ['@cart'] }, (): void => {
     cartPage.getFirstCartItemNoteField().should('have.value', staticFixtures.cartItemNote);
   });
 
-  it('guest customer should be able to remove a cart item note', (): void => {
+  skipB2cIt('guest customer should be able to remove a cart item note', (): void => {
     cartPage.visit();
     cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 2 });
     cartPage.addFirstCartItemNote({ message: staticFixtures.cartItemNote });
@@ -36,7 +36,7 @@ describe('cart item note management', { tags: ['@cart'] }, (): void => {
     cartPage.getFirstCartItemNoteField().should('have.value', '');
   });
 
-  it('customer should be able to add a cart item note', (): void => {
+  skipB2cIt('customer should be able to add a cart item note', (): void => {
     customerLoginScenario.execute({
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
@@ -48,7 +48,7 @@ describe('cart item note management', { tags: ['@cart'] }, (): void => {
     cartPage.getFirstCartItemNoteField().should('have.value', staticFixtures.cartItemNote);
   });
 
-  it('customer should be able to remove a cart item note', (): void => {
+  skipB2cIt('customer should be able to remove a cart item note', (): void => {
     customerLoginScenario.execute({
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
@@ -60,4 +60,8 @@ describe('cart item note management', { tags: ['@cart'] }, (): void => {
 
     cartPage.getFirstCartItemNoteField().should('have.value', '');
   });
+
+  function skipB2cIt(description: string, testFn: () => void): void {
+    (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+  }
 });

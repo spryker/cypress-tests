@@ -19,6 +19,8 @@ export interface ChangeCartItemQuantityDynamicFixtures {
 
 export interface ChangeCartItemQuantityStaticFixtures {
   defaultPassword: string;
+  total1: string;
+  total3: string;
 }
 
 export interface RemoveCartItemDynamicFixtures {
@@ -29,4 +31,5 @@ export interface RemoveCartItemDynamicFixtures {
 
 export interface RemoveCartItemStaticFixtures {
   defaultPassword: string;
+  total1: string;
 }
