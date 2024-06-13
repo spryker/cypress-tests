@@ -17,7 +17,7 @@ describe('cart item note management', { tags: ['@cart'] }, (): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 
-  skipB2cIt('guest customer should be able to add a cart item note', (): void => {
+  onlySuiteIt('guest customer should be able to add a cart item note', (): void => {
     cartPage.visit();
     cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 2 });
     cartPage.addFirstCartItemNote({ message: staticFixtures.cartItemNote });
@@ -26,12 +26,14 @@ describe('cart item note management', { tags: ['@cart'] }, (): void => {
     cartPage.getFirstCartItemNoteField().should('have.value', staticFixtures.cartItemNote);
   });
 
-  skipB2cIt('guest customer should be able to remove a cart item note', (): void => {
+  onlySuiteIt('guest customer should be able to remove a cart item note', (): void => {
     cartPage.visit();
     cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 2 });
     cartPage.addFirstCartItemNote({ message: staticFixtures.cartItemNote });
     cartPage.submitFirstCartItemNote();
+
     cartPage.clearFirstCartItemNote();
+    cartPage.submitFirstCartItemNote();
 
     cartPage.getFirstCartItemNoteField().should('have.value', '');
   });
@@ -56,12 +58,18 @@ describe('cart item note management', { tags: ['@cart'] }, (): void => {
     cartPage.visit();
     cartPage.addFirstCartItemNote({ message: staticFixtures.cartItemNote });
     cartPage.submitFirstCartItemNote();
+
     cartPage.clearFirstCartItemNote();
+    cartPage.submitFirstCartItemNote();
 
     cartPage.getFirstCartItemNoteField().should('have.value', '');
   });
 
   function skipB2cIt(description: string, testFn: () => void): void {
     (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+  }
+
+  function onlySuiteIt(description: string, testFn: () => void): void {
+    (['suite'].includes(Cypress.env('repositoryId')) ? it : it.skip)(description, testFn);
   }
 });
