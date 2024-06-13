@@ -19,7 +19,7 @@ describe('change cart item quantity', { tags: ['@cart'] }, (): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 
-  it('guest customer should be able to increase a cart item quantity', (): void => {
+  skipB2bIt('guest customer should be able to increase a cart item quantity', (): void => {
     addProductToCart();
 
     cartPage.visit();
@@ -29,7 +29,7 @@ describe('change cart item quantity', { tags: ['@cart'] }, (): void => {
     cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).should('have.value', '3');
   });
 
-  it('guest customer should be able to decrease a cart item quantity', (): void => {
+  skipB2bIt('guest customer should be able to decrease a cart item quantity', (): void => {
     addProductToCart();
 
     cartPage.visit();
@@ -88,5 +88,9 @@ describe('change cart item quantity', { tags: ['@cart'] }, (): void => {
 
     cartPage.visit();
     cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 2 });
+  }
+
+  function skipB2bIt(description: string, testFn: () => void): void {
+    (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
   }
 });

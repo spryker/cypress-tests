@@ -12,7 +12,7 @@ export class B2cCartRepository implements CartRepository {
     cy.get('[data-qa="product-quick-add-form-submit-button"]');
   findCartItemRemovalForm = (sku: string): Cypress.Chainable => {
     return cy.get('[action]').filter((index, element) => {
-      const regex = new RegExp(`^/\\w+/cart/async/remove/${sku}/\\w+$`);
+      const regex = new RegExp(`^/\\w+/cart/async/remove/${sku}/\\w+`);
       return regex.test(element.getAttribute('action') ?? '');
     });
   };
@@ -39,4 +39,7 @@ export class B2cCartRepository implements CartRepository {
     cy.get('[data-qa="component form quote-item-cart-note-form"]').last().find('textarea').first();
   getFirstCartItemNoteSubmitButton = (): Cypress.Chainable =>
     cy.get('[data-qa="component form quote-item-cart-note-form"] [data-qa="submit-button"]').last();
+  submitCartItemChangeQuantity = (sku: string): void => {
+    this.getCartItemChangeQuantityField(sku).type('{enter}', { force: true });
+  };
 }

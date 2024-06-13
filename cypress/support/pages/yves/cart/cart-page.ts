@@ -46,12 +46,7 @@ export class CartPage extends YvesPage {
     }
 
     input.type('{selectall}', { force: true }).type(String(params.quantity), { force: true });
-
-    if (this.isRepository('b2c', 'b2c-mp')) {
-      input.type('{enter}', { force: true });
-    } else {
-      this.repository.getCartItemChangeQuantitySubmit(params.sku).click();
-    }
+    this.repository.submitCartItemChangeQuantity(params.sku);
   };
 
   clearCart = (): void => {

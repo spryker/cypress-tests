@@ -19,7 +19,7 @@ describe('remove cart item', { tags: ['@cart'] }, (): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 
-  it('guest customer should be able to remove a cart item', (): void => {
+  skipB2bIt('guest customer should be able to remove a cart item', (): void => {
     addTwoProductsToCart();
 
     cartPage.visit();
@@ -58,5 +58,9 @@ describe('remove cart item', { tags: ['@cart'] }, (): void => {
 
     cartPage.visit();
     cartPage.quickAddToCart({ sku: dynamicFixtures.product2.sku, quantity: 2 });
+  }
+
+  function skipB2bIt(description: string, testFn: () => void): void {
+    (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
   }
 });
