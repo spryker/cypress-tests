@@ -54,8 +54,11 @@ export class B2bCartRepository implements CartRepository {
   getCheckoutButton = (): Cypress.Chainable => cy.get('[data-qa="cart-go-to-checkout"]');
   getCartSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-summary"]');
   getCartDiscountSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-code-summary"]');
-  getCustomOrderReferenceInput = (): Cypress.Chainable =>
-    cy.get('[data-qa="component order-custom-reference-form"] input[type=text]');
+  getCustomOrderReferenceInput = (): Cypress.Chainable => {
+    cy.get('[data-qa="component order-custom-reference-form"]').parent().parent().parent().click();
+
+    return cy.get('[data-qa="component order-custom-reference-form"] input[type=text]');
+  };
   getCustomOrderReferenceSubmitButton = (): Cypress.Chainable =>
     cy.get('[data-qa="component order-custom-reference-form"] button[type=submit]');
   submitCartItemChangeQuantity = (sku: string): void => {
