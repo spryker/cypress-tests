@@ -32,7 +32,6 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
     before((): void => {
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
-      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
     });
 
     beforeEach((): void => {
