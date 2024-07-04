@@ -9,3 +9,4 @@ export * from './company-business-unit';
 export * from './company-user';
 export * from './merchant-relation-request';
 export * from './url';
+export * from './address';

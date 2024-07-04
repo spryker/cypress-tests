@@ -29,6 +29,7 @@ export enum ActionEnum {
   deliver,
   sendToDistribution,
   confirmAtCenter,
+  refund,
 }
 
 interface InterceptMpGuiTableParams {
