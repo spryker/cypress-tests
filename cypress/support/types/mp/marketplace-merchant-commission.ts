@@ -9,6 +9,8 @@ export interface CommissionCalculationDynamicFixtures {
   concreteProduct1: ProductConcrete;
   concreteProduct2: ProductConcrete;
   concreteProduct3: ProductConcrete;
+  concreteProduct4: ProductConcrete; // product without category assigment
+  concreteProduct5: ProductConcrete; // product from merchant that is not part of item conditions
   customer: Customer;
   address: Address;
 }

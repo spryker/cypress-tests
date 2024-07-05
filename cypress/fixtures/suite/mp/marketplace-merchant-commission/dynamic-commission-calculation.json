@@ -158,6 +158,52 @@
           "arguments": ["#merchant2", "#merchantUserFromMerchant2"]
         },
         {
+          "type": "builder",
+          "name": "MerchantProfileBuilder",
+          "key": "merchantProfile3"
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchant",
+          "key": "merchant3",
+          "arguments": [
+            {
+              "merchantProfile": "#merchantProfile3",
+              "isActive": true,
+              "isOpenForRelationRequest": true,
+              "status": "approved",
+              "storeRelation": {
+                "idStores": ["#store.id_store"]
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveUrl",
+          "key": "merchantUrl3",
+          "arguments": [
+            {
+              "fkLocale": "#localeEN.id_locale",
+              "fkResourceMerchant": "#merchant3.id_merchant",
+              "urlPrefix": "/en/merchant/dummy-en-prefix-",
+              "url": "#merchant3.name"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveUrl",
+          "arguments": [
+            {
+              "fkLocale": "#localeDE.id_locale",
+              "fkResourceMerchant": "#merchant3.id_merchant",
+              "urlPrefix": "/de/merchant/dummy-de-prefix-",
+              "url": "#merchant3.name"
+            }
+          ]
+        },
+        {
           "type": "transfer",
           "name": "ProductImageTransfer",
           "key": "productImage",
@@ -333,6 +379,116 @@
         },
         {
           "type": "helper",
+          "name": "haveFullProduct",
+          "key": "concreteProduct4",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                { "locale": "#localeEN", "name": "#localizedAttribute.name" },
+                { "locale": "#localeDE", "name": "#localizedAttribute.name" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#concreteProduct4.id_product_concrete",
+              "idProductAbstract": "#concreteProduct4.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#concreteProduct4.abstract_sku",
+              "skuProduct": "#concreteProduct4.sku",
+              "moneyValue": { "netAmount": 5000, "grossAmount": 10000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "key": "productWithPriceAndStore",
+          "arguments": ["#store", { "sku": "#concreteProduct4.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "key": "merchantProduct4",
+          "arguments": [
+            {
+              "idProductAbstract": "#concreteProduct4.fk_product_abstract",
+              "idMerchant": "#merchant2.id_merchant"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "concreteProduct5",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                { "locale": "#localeEN", "name": "#localizedAttribute.name" },
+                { "locale": "#localeDE", "name": "#localizedAttribute.name" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#concreteProduct5.id_product_concrete",
+              "idProductAbstract": "#concreteProduct5.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#concreteProduct5.abstract_sku",
+              "skuProduct": "#concreteProduct5.sku",
+              "moneyValue": { "netAmount": 5000, "grossAmount": 10000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "key": "productWithPriceAndStore",
+          "arguments": ["#store", { "sku": "#concreteProduct5.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "key": "merchantProduct5",
+          "arguments": [
+            {
+              "idProductAbstract": "#concreteProduct5.fk_product_abstract",
+              "idMerchant": "#merchant3.id_merchant"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveLocalizedCategory",
           "key": "category1",
           "arguments": [
@@ -388,6 +544,16 @@
             "#category2.id_category",
             {
               "fkProductAbstract": "#concreteProduct3.fk_product_abstract"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductCategoryForCategory",
+          "arguments": [
+            "#category2.id_category",
+            {
+              "fkProductAbstract": "#concreteProduct5.fk_product_abstract"
             }
           ]
         },

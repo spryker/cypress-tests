@@ -31,8 +31,36 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
     });
 
+    it('merchant commissions for product without category should not be calculated', (): void => {
+      placeGuestOrder([dynamicFixtures.concreteProduct4.sku]);
+
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      triggerLatestOrderToPayState();
+      assertCommissionTotalsInBackoffice('€0.00');
+    });
+
+    it('merchant commissions for product from another merchant should not be calculated', (): void => {
+      placeGuestOrder([dynamicFixtures.concreteProduct5.sku]);
+
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      triggerLatestOrderToPayState();
+      assertCommissionTotalsInBackoffice('€0.00');
+    });
+
     it('merchant commissions should be calculated based on price/category conditions in Backoffice', (): void => {
-      placeGuestOrder();
+      placeGuestOrder([
+        dynamicFixtures.concreteProduct1.sku,
+        dynamicFixtures.concreteProduct2.sku,
+        dynamicFixtures.concreteProduct3.sku,
+      ]);
 
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
@@ -44,7 +72,11 @@ import { CatalogPage, ProductPage } from '@pages/yves';
     });
 
     it('merchant commissions should be calculated based on price/category conditions in Merchant Portal', (): void => {
-      placeGuestOrder();
+      placeGuestOrder([
+        dynamicFixtures.concreteProduct1.sku,
+        dynamicFixtures.concreteProduct2.sku,
+        dynamicFixtures.concreteProduct3.sku,
+      ]);
 
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
@@ -119,6 +151,9 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
       salesOrdersPage.visit();
       salesOrdersPage.update({ query: orderReference, action: ActionEnum.refund });
+
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(1000); // Refund (per-item) operation takes time to be processed
     }
 
     function placeCustomerOrder(): void {
@@ -134,10 +169,8 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       });
     }
 
-    function placeGuestOrder(): void {
-      addProductToCart(dynamicFixtures.concreteProduct1.sku, 2);
-      addProductToCart(dynamicFixtures.concreteProduct2.sku, 2);
-      addProductToCart(dynamicFixtures.concreteProduct3.sku, 2);
+    function placeGuestOrder(skus: string[]): void {
+      skus.forEach((sku) => addProductToCart(sku, 2));
 
       checkoutMpScenario.execute({
         isGuest: true,
@@ -170,9 +203,6 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       totalCommission: string,
       totalRefundedCommission = '€0.00'
     ): void {
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(1000);
-
       salesOrdersPage.visit();
       salesOrdersPage.find({ query: `DE--${idSalesOrder}` }).click();
 
