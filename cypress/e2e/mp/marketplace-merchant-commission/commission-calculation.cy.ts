@@ -153,7 +153,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       salesOrdersPage.update({ query: orderReference, action: ActionEnum.refund });
 
       // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(1000); // Refund (per-item) operation takes time to be processed
+      cy.wait(2000); // Refund (per-item) operation takes time to be processed
     }
 
     function placeCustomerOrder(): void {
