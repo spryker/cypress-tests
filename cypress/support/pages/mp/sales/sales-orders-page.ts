@@ -46,6 +46,10 @@ export class SalesOrdersPage extends MpPage {
     if (params.action === ActionEnum.cancel) {
       this.repository.getDrawer().find(this.repository.getCancelButtonSelector()).click();
     }
+
+    if (params.action === ActionEnum.refund) {
+      this.repository.getDrawer().find(this.repository.getRefundButtonSelector()).click();
+    }
   };
 
   hasOrderByOrderReference = (query: string): Cypress.Chainable<boolean> => {
@@ -56,6 +60,14 @@ export class SalesOrdersPage extends MpPage {
         return cy.wrap(false);
       }
     });
+  };
+
+  getTotalCommissionBlock = (): Cypress.Chainable<JQuery<HTMLElement>> => {
+    return this.repository.getDrawer().contains('Total Commission').parent();
+  };
+
+  getTotalRefundedCommissionBlock = (): Cypress.Chainable<JQuery<HTMLElement>> => {
+    return this.repository.getDrawer().contains('Total Refunded Commission').parent();
   };
 }
 
