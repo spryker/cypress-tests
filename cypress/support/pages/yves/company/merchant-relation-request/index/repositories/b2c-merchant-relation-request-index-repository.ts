@@ -11,7 +11,6 @@ export class B2cMerchantRelationRequestIndexRepository implements MerchantRelati
   getFilterStatusSelect = (): Cypress.Chainable => cy.get('#merchantRelationRequestSearchForm_filters_status');
   getApplyButton = (): Cypress.Chainable =>
     cy.get('form[name=merchantRelationRequestSearchForm]').find('[name="buttonSubmit"]');
-  getFirstTableRaw = (): Cypress.Chainable =>
-    cy.get('[data-qa="component merchant-relation-request-view-table"] tbody tr:first-child');
+  getFirstTableRaw = (): Cypress.Chainable => cy.get('[data-qa="component view-table"] tbody tr:first-child');
   getViewLinkSelector = (): string => '[data-qa="merchant-relation-request-view-link"]';
 }
