@@ -5,7 +5,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
 import { ActionEnum, SalesOrdersPage } from '@pages/mp';
-import { CatalogPage, ProductPage } from '@pages/yves';
+import { CatalogPage, MultiCartPage, ProductPage } from '@pages/yves';
 
 /**
  * Marketplace Merchant Commission checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4260298796/Commissions+Cypress+Tests}
@@ -16,6 +16,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
   (): void => {
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
+    const multiCartPage = container.get(MultiCartPage);
     const salesIndexPage = container.get(SalesIndexPage);
     const salesDetailPage = container.get(SalesDetailPage);
     const salesOrdersPage = container.get(SalesOrdersPage);
@@ -170,10 +171,21 @@ import { CatalogPage, ProductPage } from '@pages/yves';
     }
 
     function placeGuestOrder(skus: string[]): void {
+      const isB2bMp = ['b2b-mp'].includes(Cypress.env('repositoryId'));
+      if (isB2bMp) {
+        customerLoginScenario.execute({
+          email: dynamicFixtures.customer.email,
+          password: staticFixtures.defaultPassword,
+        });
+
+        multiCartPage.visit();
+        multiCartPage.createCart();
+      }
+
       skus.forEach((sku) => addProductToCart(sku, 2));
 
       checkoutMpScenario.execute({
-        isGuest: true,
+        isGuest: !isB2bMp,
         shouldTriggerOmsInCli: true,
       });
     }
