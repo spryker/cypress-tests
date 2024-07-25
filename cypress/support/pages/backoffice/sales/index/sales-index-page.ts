@@ -14,17 +14,9 @@ export class SalesIndexPage extends BackofficePage {
     this.repository.getViewButtons().first().click();
   };
 
-  extractOrderIdFromUrl = (): Cypress.Chainable<string> => {
-    return cy.url().then((url) => {
-      const urlObj = new URL(url);
-      const params = new URLSearchParams(urlObj.search);
-      const idSalesOrder = params.get('id-sales-order');
+  getOrderReference = (): Cypress.Chainable => {
+    cy.get('dt').contains('Order Reference').next('dd').invoke('text').as('orderReference');
 
-      if (idSalesOrder === null) {
-        throw new Error('id-sales-order not found in URL');
-      }
-
-      return idSalesOrder;
-    });
+    return cy.get('@orderReference');
   };
 }
