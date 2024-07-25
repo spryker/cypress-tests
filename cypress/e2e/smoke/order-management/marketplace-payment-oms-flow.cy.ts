@@ -73,7 +73,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       salesIndexPage.visit();
       salesIndexPage.view();
 
-      salesIndexPage.extractOrderIdFromUrl().then((idSalesOrder) => {
+      salesIndexPage.getOrderReference().then((orderReference) => {
         salesDetailPage.triggerOms({ state: 'Pay' });
         salesDetailPage.triggerOms({ state: 'skip picking' });
 
@@ -82,7 +82,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
           password: staticFixtures.defaultPassword,
         });
 
-        closeOrderFromMerchantPortal(`DE--${idSalesOrder}`);
+        closeOrderFromMerchantPortal(orderReference);
         closeOrderFromBackoffice();
       });
     }

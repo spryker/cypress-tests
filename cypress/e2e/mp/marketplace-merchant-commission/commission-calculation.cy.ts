@@ -87,20 +87,20 @@ import { CatalogPage, MultiCartPage, ProductPage } from '@pages/yves';
       triggerLatestOrderToPayState();
       assertCommissionTotalsInBackoffice(staticFixtures.totalCommission);
 
-      salesIndexPage.extractOrderIdFromUrl().then((idSalesOrder) => {
+      salesIndexPage.getOrderReference().then((orderReference) => {
         merchantUserLoginScenario.execute({
           username: dynamicFixtures.merchantUserFromMerchant1.username,
           password: staticFixtures.defaultPassword,
         });
 
-        assertCommissionTotalsInMerchantPortal(idSalesOrder, staticFixtures.merchant1TotalCommission);
+        assertCommissionTotalsInMerchantPortal(orderReference, staticFixtures.merchant1TotalCommission);
 
         merchantUserLoginScenario.execute({
           username: dynamicFixtures.merchantUserFromMerchant2.username,
           password: staticFixtures.defaultPassword,
         });
 
-        assertCommissionTotalsInMerchantPortal(idSalesOrder, staticFixtures.merchant2TotalCommission);
+        assertCommissionTotalsInMerchantPortal(orderReference, staticFixtures.merchant2TotalCommission);
       });
     });
 
@@ -115,22 +115,22 @@ import { CatalogPage, MultiCartPage, ProductPage } from '@pages/yves';
       triggerLatestOrderToPayState();
       assertCommissionTotalsInBackoffice(staticFixtures.totalCommission);
 
-      salesIndexPage.extractOrderIdFromUrl().then((idSalesOrder) => {
+      salesIndexPage.getOrderReference().then((orderReference) => {
         merchantUserLoginScenario.execute({
           username: dynamicFixtures.merchantUserFromMerchant1.username,
           password: staticFixtures.defaultPassword,
         });
 
-        refundMerchantOrder(`DE--${idSalesOrder}`);
-        assertCommissionTotalsInMerchantPortal(idSalesOrder, '€0.00', staticFixtures.merchant1TotalCommission);
+        refundMerchantOrder(orderReference);
+        assertCommissionTotalsInMerchantPortal(orderReference, '€0.00', staticFixtures.merchant1TotalCommission);
 
         merchantUserLoginScenario.execute({
           username: dynamicFixtures.merchantUserFromMerchant2.username,
           password: staticFixtures.defaultPassword,
         });
 
-        refundMerchantOrder(`DE--${idSalesOrder}`);
-        assertCommissionTotalsInMerchantPortal(idSalesOrder, '€0.00', staticFixtures.merchant2TotalCommission);
+        refundMerchantOrder(orderReference);
+        assertCommissionTotalsInMerchantPortal(orderReference, '€0.00', staticFixtures.merchant2TotalCommission);
       });
 
       userLoginScenario.execute({
@@ -211,12 +211,12 @@ import { CatalogPage, MultiCartPage, ProductPage } from '@pages/yves';
     }
 
     function assertCommissionTotalsInMerchantPortal(
-      idSalesOrder: string,
+      orderReference: string,
       totalCommission: string,
       totalRefundedCommission = '€0.00'
     ): void {
       salesOrdersPage.visit();
-      salesOrdersPage.find({ query: `DE--${idSalesOrder}` }).click();
+      salesOrdersPage.find({ query: orderReference }).click();
 
       salesOrdersPage.getTotalCommissionBlock().should('contains.text', totalCommission);
       salesOrdersPage.getTotalRefundedCommissionBlock().should('contains.text', totalRefundedCommission);
