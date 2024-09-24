@@ -3,7 +3,7 @@ import { ProductConcreteManagementDynamicFixtures, ProductConcreteManagementStat
 import { VariantsPage } from '@pages/mp';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
 
-(['b2b-mp', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+(['b2b', 'b2c'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'product concretes management',
   { tags: ['@merchant-product-concretes'] },
   (): void => {
