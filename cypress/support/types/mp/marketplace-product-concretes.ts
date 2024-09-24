@@ -1,8 +1,4 @@
-import {
-  Merchant,
-  ProductConcrete,
-  User,
-} from './shared';
+import { Merchant, ProductConcrete, User } from './shared';
 
 export interface ProductConcreteManagementDynamicFixtures {
   merchant: Merchant;
