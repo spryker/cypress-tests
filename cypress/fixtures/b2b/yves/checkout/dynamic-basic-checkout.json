@@ -111,7 +111,8 @@
         {
           "type": "helper",
           "name": "haveFullProduct",
-          "key": "product1"
+          "key": "product1",
+          "arguments": [{}, { "idTaxSet": 1 }]
         },
         {
           "type": "transfer",
@@ -137,7 +138,8 @@
         {
           "type": "helper",
           "name": "haveFullProduct",
-          "key": "product2"
+          "key": "product2",
+          "arguments": [{}, { "idTaxSet": 1 }]
         },
         {
           "type": "helper",
