@@ -7,4 +7,8 @@ export interface ProductRepository {
   getAddToCartButton(): Cypress.Chainable;
   getAddToCartSuccessMessage(): string;
   getQuantityInput(): Cypress.Chainable;
+  getAddToComparisonListButton(): Cypress.Chainable;
+  getAddToComparisonListSuccessMessage(): string;
+  getAddToComparisonListAlreadyExistsErrorMessage(): string;
+  getAddToComparisonListLimitExceededErrorMessage(): string;
 }

@@ -53,6 +53,22 @@ export class ProductPage extends YvesPage {
   getProductConfigurator = (): Cypress.Chainable => {
     return this.repository.getProductConfigurator();
   };
+
+  addToComparisonList = (): void => {
+    this.repository.getAddToComparisonListButton().click();
+  }
+
+  getAddToComparisonListSuccessMessage = (): string => {
+    return this.repository.getAddToComparisonListSuccessMessage();
+  }
+
+  getAddToComparisonListAlreadyExistsErrorMessage = (): string => {
+    return this.repository.getAddToComparisonListAlreadyExistsErrorMessage();
+  }
+
+  getAddToComparisonListLimitExceededErrorMessage = (): string => {
+    return this.repository.getAddToComparisonListLimitExceededErrorMessage();
+  }
 }
 
 interface SelectSoldByProductOfferParams {
