@@ -7,5 +7,5 @@ export class B2cAgentLoginRepository implements AgentLoginRepository {
   getLoginEmailInput = (): Cypress.Chainable => cy.get('#loginForm_email');
   getLoginPasswordInput = (): Cypress.Chainable => cy.get('#loginForm_password');
   getLoginForm = (): Cypress.Chainable => cy.get('form[name=loginForm]');
-  getFailedAuthenticationText = (): string => 'Authentication failed';
+  getFailedAuthenticationText = (): string => 'Please check that your E-mail address and password are correct and that you have confirmed your E-mail address by clicking the link in the registration message';
 }

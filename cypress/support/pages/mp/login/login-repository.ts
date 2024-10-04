@@ -8,5 +8,5 @@ export class LoginRepository {
   getPasswordInput = (): Cypress.Chainable => cy.get('#security-merchant-portal-gui_password');
   getSubmitButton = (): Cypress.Chainable =>
     cy.get('[name="security-merchant-portal-gui"]').find('button[type="submit"]');
-  getFailedAuthenticationText = (): string => 'Authentication failed!';
+  getFailedAuthenticationText = (): string => 'Please check that your E-mail address and password are correct and that you have confirmed your E-mail address by clicking the link in the registration message';
 }
