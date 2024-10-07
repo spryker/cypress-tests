@@ -70,15 +70,15 @@ import { CatalogPage, ProductPage, ProductComparisonPage } from '@pages/yves';
       cy.contains(productComparisonPage.getProductComparisonListIsEmptyMessage());
     });
 
-    it('customer should be able to add product to comparison list only once', (): void => {
+    it('customer should be able to remove product from comparison from PDP', (): void => {
       addProductToComparisonList(dynamicFixtures.product1.abstract_sku);
       cy.contains(productPage.getAddToComparisonListSuccessMessage());
 
-      addProductToComparisonList(dynamicFixtures.product1.abstract_sku);
-      cy.contains(productPage.getAddToComparisonListAlreadyExistsErrorMessage());
+      productPage.toggleProductComparisonList();
+      cy.contains(productPage.getRemoveFromComparisonListSuccessMessage());
 
-      cy.get(productComparisonPage.getComparisonPageNavigationLinkSelector()).click();
-      cy.get(productComparisonPage.getProductItemsSelector()).should('have.length', 1);
+      cy.get(productComparisonPage.getComparisonPageNavigationLinkSelector()).click({force: true});
+      cy.contains(productComparisonPage.getProductComparisonListIsEmptyMessage());
     });
 
     it('customer should be able to add configured number of items to compare list', (): void => {
@@ -87,7 +87,7 @@ import { CatalogPage, ProductPage, ProductComparisonPage } from '@pages/yves';
       addProductToComparisonList(dynamicFixtures.product3.abstract_sku);
 
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product4.abstract_sku });
-      productPage.addToComparisonList();
+      productPage.toggleProductComparisonList();
 
       cy.contains(productPage.getAddToComparisonListLimitExceededErrorMessage());
 
@@ -97,7 +97,7 @@ import { CatalogPage, ProductPage, ProductComparisonPage } from '@pages/yves';
 
     function addProductToComparisonList(abstractSku: string): void {
       catalogPage.searchProductFromSuggestions({ query: abstractSku });
-      productPage.addToComparisonList();
+      productPage.toggleProductComparisonList();
     }
   }
 );

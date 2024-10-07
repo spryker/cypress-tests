@@ -54,16 +54,16 @@ export class ProductPage extends YvesPage {
     return this.repository.getProductConfigurator();
   };
 
-  addToComparisonList = (): void => {
-    this.repository.getAddToComparisonListButton().click();
+  toggleProductComparisonList = (): void => {
+    this.repository.getToggleComparisonListButton().click();
   }
 
   getAddToComparisonListSuccessMessage = (): string => {
     return this.repository.getAddToComparisonListSuccessMessage();
   }
 
-  getAddToComparisonListAlreadyExistsErrorMessage = (): string => {
-    return this.repository.getAddToComparisonListAlreadyExistsErrorMessage();
+  getRemoveFromComparisonListSuccessMessage = (): string => {
+    return this.repository.getRemoveFromComparisonListSuccessMessage();
   }
 
   getAddToComparisonListLimitExceededErrorMessage = (): string => {

@@ -13,8 +13,8 @@ export class B2bMpProductRepository implements ProductRepository {
   getAddToCartButton = (): Cypress.Chainable => cy.get('[data-qa="add-to-cart-button"]');
   getAddToCartSuccessMessage = (): string => 'Items added successfully';
   getQuantityInput = (): Cypress.Chainable => cy.get('[data-qa="quantity-input"]');
-  getAddToComparisonListButton = (): Cypress.Chainable => cy.get('[data-qa="add-to-compare-list-button"]');
+  getToggleComparisonListButton = (): Cypress.Chainable => cy.get('[data-qa="add-to-compare-list-button"]');
   getAddToComparisonListSuccessMessage = (): string => 'Added to comparison';
-  getAddToComparisonListAlreadyExistsErrorMessage = (): string => 'Already exist';
+  getRemoveFromComparisonListSuccessMessage = (): string => 'Product was removed from the comparison list.';
   getAddToComparisonListLimitExceededErrorMessage = (): string => 'The limit has already been reached';
 }
