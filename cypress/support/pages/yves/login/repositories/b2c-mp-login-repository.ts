@@ -15,8 +15,7 @@ export class B2cMpLoginRepository implements LoginRepository {
   getRegisterConfirmPasswordInput = (): Cypress.Chainable => cy.get('#registerForm_password_confirm');
   getRegisterAcceptTermsCheckbox = (): Cypress.Chainable => cy.get('#registerForm_accept_terms');
   getRegisterForm = (): Cypress.Chainable => cy.get('form[name=registerForm]');
-  getFailedAuthenticationText = (): string =>
-    'Please check that your E-mail address and password are correct and that you have confirmed your E-mail address by clicking the link in the registration message';
+  getFailedAuthenticationText = (): string => 'Authentication failed';
   getRegistrationCompletedMessage = (): string =>
     'Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.';
   getRegistrationToggleRadio = (): Cypress.Chainable =>
