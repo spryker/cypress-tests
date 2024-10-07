@@ -93,21 +93,11 @@ import { B2cMpMerchantRelationRequestCreateRepository } from '../../pages/yves/c
 import { B2cMpMerchantRelationRequestDetailsRepository } from '../../pages/yves/company/merchant-relation-request/details/repositories/b2c-mp-merchant-relation-request-details-repository';
 import { B2cMpMerchantRelationRequestIndexRepository } from '../../pages/yves/company/merchant-relation-request/index/repositories/b2c-mp-merchant-relation-request-index-repository';
 import { B2cMpMerchantRepository } from '../../pages/yves/merchant/repositories/b2c-mp-merchant-repository';
-import {
-  SuiteProductComparisonRepository
-} from '../../pages/yves/product-comparison/repositories/suite-product-comparison-repository';
-import {
-  B2cProductComparisonRepository
-} from '../../pages/yves/product-comparison/repositories/b2c-product-comparison-repository';
-import {
-  B2bProductComparisonRepository
-} from '../../pages/yves/product-comparison/repositories/b2b-product-comparison-repository';
-import {
-  B2cMpProductComparisonRepository
-} from '../../pages/yves/product-comparison/repositories/b2c-mp-product-comparison-repository';
-import {
-  B2bMpProductComparisonRepository
-} from '../../pages/yves/product-comparison/repositories/b2b-mp-product-comparison-repository';
+import { SuiteProductComparisonRepository } from '../../pages/yves/product-comparison/repositories/suite-product-comparison-repository';
+import { B2cProductComparisonRepository } from '../../pages/yves/product-comparison/repositories/b2c-product-comparison-repository';
+import { B2bProductComparisonRepository } from '../../pages/yves/product-comparison/repositories/b2b-product-comparison-repository';
+import { B2cMpProductComparisonRepository } from '../../pages/yves/product-comparison/repositories/b2c-mp-product-comparison-repository';
+import { B2bMpProductComparisonRepository } from '../../pages/yves/product-comparison/repositories/b2b-mp-product-comparison-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 

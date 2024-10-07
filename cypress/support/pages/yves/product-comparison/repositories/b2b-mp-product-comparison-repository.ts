@@ -4,7 +4,8 @@ import * as Cypress from 'cypress';
 
 @injectable()
 export class B2bMpProductComparisonRepository implements ProductComparisonRepository {
-  getDeleteFromComparisonButton = (sku: string): Cypress.Chainable => cy.get(`.delete-from-comparison[sku="${sku}"] > button`);
+  getDeleteFromComparisonButton = (sku: string): Cypress.Chainable =>
+    cy.get(`.delete-from-comparison[sku="${sku}"] > button`);
   getClearComparisonListButton = (): Cypress.Chainable => cy.get('[data-qa="clear-comparison-list-button"]');
   getComparisonPageNavigationLinkSelector = (): string => 'div.header__navigation-top comparison-link > a';
   getProductItemSelector = (): string => '[data-qa="component product-item"]';

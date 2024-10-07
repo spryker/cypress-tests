@@ -77,7 +77,7 @@ import { CatalogPage, ProductPage, ProductComparisonPage } from '@pages/yves';
       productPage.toggleProductComparisonList();
       cy.contains(productPage.getRemoveFromComparisonListSuccessMessage());
 
-      cy.get(productComparisonPage.getComparisonPageNavigationLinkSelector()).click({force: true});
+      cy.get(productComparisonPage.getComparisonPageNavigationLinkSelector()).click({ force: true });
       cy.contains(productComparisonPage.getProductComparisonListIsEmptyMessage());
     });
 
@@ -91,7 +91,7 @@ import { CatalogPage, ProductPage, ProductComparisonPage } from '@pages/yves';
 
       cy.contains(productPage.getAddToComparisonListLimitExceededErrorMessage());
 
-      cy.get(productComparisonPage.getComparisonPageNavigationLinkSelector()).click({force: true});
+      cy.get(productComparisonPage.getComparisonPageNavigationLinkSelector()).click({ force: true });
       cy.get(productComparisonPage.getProductItemsSelector()).should('have.length', 3);
     });
 
