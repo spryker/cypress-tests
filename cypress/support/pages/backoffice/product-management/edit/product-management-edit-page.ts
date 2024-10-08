@@ -24,4 +24,20 @@ export class ProductManagementEditPage extends BackofficePage {
       cy.get('@editVariantButton').click();
     });
   };
+
+  assignAllPossibleStores = (): void => {
+    this.repository.getGeneralTab().click({ force: true });
+    this.repository.getAllStockInputs().check();
+  };
+
+  bulkPriceUpdate = (productPrice: string): void => {
+    this.repository.getPriceTaxTab().click();
+    this.repository.getAllPriceInputs().each(($el) => {
+      cy.wrap($el).type(productPrice, { force: true });
+    });
+  };
+
+  save = (): void => {
+    this.repository.getSaveButton().click();
+  };
 }
