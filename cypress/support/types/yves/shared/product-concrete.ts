@@ -3,4 +3,5 @@ export interface ProductConcrete {
   sku: string;
   abstract_sku: string;
   name: string;
+  attributes: object;
 }
