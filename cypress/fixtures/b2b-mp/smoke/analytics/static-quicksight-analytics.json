@@ -1,6 +1,6 @@
 {
-    "defaultPassword": "change123",
-    "rootUser": {
-        "username": "admin@spryker.com"
-    }
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  }
 }
