@@ -1,4 +1,3 @@
-export * from './analytics';
 export * from './checkout';
 export * from './customer-account-management';
 export * from './catalog';

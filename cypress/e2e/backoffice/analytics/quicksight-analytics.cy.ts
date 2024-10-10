@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { QuicksightAnalyticsStaticFixtures } from '@interfaces/smoke';
+import { QuicksightAnalyticsStaticFixtures } from '@interfaces/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { AnalyticsPage } from '@pages/backoffice';
 
