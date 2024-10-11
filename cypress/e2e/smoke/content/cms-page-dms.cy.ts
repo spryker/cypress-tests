@@ -14,6 +14,8 @@ import { ContentStaticFixtures } from '@interfaces/smoke';
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
+      staticFixtures.store.name = staticFixtures.store.name + '_' + Math.random();
+      staticFixtures.cmsPageName = staticFixtures.cmsPageName + '_' + Math.random();
 
       userLoginScenario.execute({
         username: staticFixtures.rootUser.username,
