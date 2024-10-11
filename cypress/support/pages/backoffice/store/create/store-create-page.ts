@@ -23,7 +23,7 @@ export class StoreCreatePage extends BackofficePage {
     this.repository.getCurrenciesTab().click();
     this.repository.getDefaultCurrencySelect().click();
     this.repository.getDefaultCurrencySearchInput().type(`${store.currency}{downarrow}{enter}`);
-    this.repository.getCurrencySearchInput().type(store.currency);
+    this.repository.getCurrencySearchInput().clear().type(store.currency);
     this.repository.getAvailableCurrencyInput(store.currency).click({ force: true });
 
     this.repository.getDisplayRegionsTab().click();
