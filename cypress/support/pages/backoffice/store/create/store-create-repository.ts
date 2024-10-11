@@ -22,5 +22,6 @@ export class StoreCreateRepository {
   getDisplayRegionsTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-country_store_relation"]');
   getCountrySearchInput = (): Cypress.Chainable => cy.get('#available-country-table_filter').find('input');
   getAvailableCountryInput = (country: string): Cypress.Chainable =>
+    cy.get(`#available-country-table [value="${country}"]`);
   getSaveButton = (): Cypress.Chainable => cy.get('[type="submit"]');
 }
