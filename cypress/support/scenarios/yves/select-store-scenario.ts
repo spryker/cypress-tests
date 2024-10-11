@@ -4,10 +4,8 @@ import { injectable } from 'inversify';
 @injectable()
 @autoWired
 export class SelectStoreScenario {
-  execute = (store: string): void => {
-    const url = `/?_store=${store}`;
-    cy.visit(url);
-
-    cy.url({ timeout: 4000 }).should('include', url);
+  execute = (storeName: string): void => {
+    cy.visit('/');
+    cy.get('header [data-qa="component select _store"] select[name="_store"]').select('Store: ' + storeName);
   };
 }
