@@ -22,11 +22,15 @@ import { ContentStaticFixtures } from '@interfaces/smoke';
         password: staticFixtures.defaultPassword,
       });
 
-      createStoreScenario.execute({ store: staticFixtures.store });
+      createStoreScenario.execute({
+          store: staticFixtures.store,
+          shouldTriggerPublishAndSync: true,
+      });
 
       createCmsPageScenario.execute({
         storeName: staticFixtures.store.name,
         cmsPageName: staticFixtures.cmsPageName,
+        shouldTriggerPublishAndSync: true,
       });
     });
 

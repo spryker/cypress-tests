@@ -3,4 +3,5 @@ export interface Store {
   locale: string;
   currency: string;
   country: string;
+  timezone: string
 }

@@ -17,7 +17,7 @@ export class StoreCreatePage extends BackofficePage {
     this.repository.getLocalesTab().click();
     this.repository.getDefaultLocaleSelect().click();
     this.repository.getDefaultLocaleSearchInput().type(`${store.locale}{enter}`);
-    this.repository.getLocaleSearchInput().type(store.locale);
+    this.repository.getLocaleSearchInput().clear().type(store.locale);
     this.repository.getAvailableLocaleInput(store.locale).click({ force: true });
 
     this.repository.getCurrenciesTab().click();
@@ -27,12 +27,12 @@ export class StoreCreatePage extends BackofficePage {
     this.repository.getAvailableCurrencyInput(store.currency).click({ force: true });
 
     this.repository.getDisplayRegionsTab().click();
-    this.repository.getCountrySearchInput().type(store.country);
+    this.repository.getCountrySearchInput().clear().type(store.country);
     this.repository.getAvailableCountryInput(store.country).click({ force: true });
 
-    this.repository.getStoreContextTabButton().click({ force: true });
-    this.repository.getAddStoreContextButton().click({ force: true });
-    this.repository.getTimezoneSelector().select('Africa/Abidjan');
+    this.repository.getStoreContextTabButton().click();
+    this.repository.getAddStoreContextButton().click();
+    this.repository.getTimezoneSelector().select(store.timezone);
 
     this.repository.getSaveButton().click();
   };
@@ -43,4 +43,5 @@ interface Store {
   locale: string;
   currency: string;
   country: string;
+  timezone: string;
 }
