@@ -1,6 +1,6 @@
 import { autoWired } from '@utils';
-import { inject, injectable } from 'inversify';
 import { BackofficePage } from '@pages/backoffice';
+import { inject, injectable } from 'inversify';
 import { PageCreateRepository } from './page-create-repository';
 
 @injectable()

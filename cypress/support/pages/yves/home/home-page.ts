@@ -1,4 +1,4 @@
-import { REPOSITORIES, autoWired } from '@utils';
+import { autoWired, REPOSITORIES } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { YvesPage } from '@pages/yves';
@@ -12,6 +12,6 @@ export class HomePage extends YvesPage {
   protected PAGE_URL = '/';
 
   selectStore = (store: string): void => {
-    this.repository.getStoreSelect().select(store);
+    this.repository.getStoreSelect().select('Store: ' + store);
   };
 }

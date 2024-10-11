@@ -6,7 +6,6 @@ export * from './merchant/list/merchant-list-page';
 export * from './merchant/update/merchant-update-page';
 export * from './merchant-user/create/merchant-user-create-page';
 export * from './page/create/page-create-page';
-export * from './page/list/page-list-page';
 export * from './placeholders/edit/placeholders-edit-page';
 export * from './sales/detail/sales-detail-page';
 export * from './sales/index/sales-index-page';

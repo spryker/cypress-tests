@@ -1,8 +1,8 @@
+import { faker } from '@faker-js/faker';
 import { container } from '@utils';
+import { ContentStaticFixtures } from '@interfaces/smoke';
 import { CreateCmsPageScenario, CreateStoreScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { SelectStoreScenario } from '@scenarios/yves';
-import { ContentStaticFixtures } from '@interfaces/smoke';
-import { faker } from '@faker-js/faker';
 
 (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(
   'cms page assignment to store',

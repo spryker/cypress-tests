@@ -1,6 +1,6 @@
-import { StoreCreatePage, StoreListPage } from '@pages/backoffice';
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
+import { StoreCreatePage, StoreListPage } from '@pages/backoffice';
 
 @injectable()
 @autoWired

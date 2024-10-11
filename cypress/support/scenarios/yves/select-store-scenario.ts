@@ -1,11 +1,14 @@
 import { autoWired } from '@utils';
-import { injectable } from 'inversify';
+import { HomePage } from '@pages/yves';
+import { inject, injectable } from 'inversify';
 
 @injectable()
 @autoWired
 export class SelectStoreScenario {
+  @inject(HomePage) private HomePage: HomePage;
+
   execute = (storeName: string): void => {
-    cy.visit('/');
-    cy.get('header [data-qa="component select _store"] select[name="_store"]').select('Store: ' + storeName);
+    this.HomePage.visit();
+    this.HomePage.selectStore(storeName);
   };
 }
