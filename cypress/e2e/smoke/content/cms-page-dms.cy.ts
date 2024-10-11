@@ -17,7 +17,7 @@ import { faker } from '@faker-js/faker';
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
-      staticFixtures.store.name = staticFixtures.store.name + '_' + faker.string.alpha({casing: 'upper'});
+      staticFixtures.store.name = staticFixtures.store.name + '_' + faker.string.alpha({ casing: 'upper' });
       staticFixtures.cmsPageName = staticFixtures.cmsPageName + '_' + faker.string.alpha();
 
       userLoginScenario.execute({
@@ -26,8 +26,8 @@ import { faker } from '@faker-js/faker';
       });
 
       createStoreScenario.execute({
-          store: staticFixtures.store,
-          shouldTriggerPublishAndSync: true,
+        store: staticFixtures.store,
+        shouldTriggerPublishAndSync: true,
       });
 
       createCmsPageScenario.execute({
