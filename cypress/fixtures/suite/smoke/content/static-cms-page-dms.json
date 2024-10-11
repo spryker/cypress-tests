@@ -1,13 +1,13 @@
 {
-    "defaultPassword": "change123",
-    "rootUser": {
-        "username": "admin@spryker.com"
-    },
-    "store": {
-        "name": "SMOKE_STORE",
-        "currency": "EUR",
-        "locale": "en_US",
-        "country": "DE"
-    },
-    "cmsPageName": "test-cms-page-dms"
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "store": {
+    "name": "SMOKE_STORE",
+    "currency": "EUR",
+    "locale": "en_US",
+    "country": "DE"
+  },
+  "cmsPageName": "test-cms-page-dms"
 }
