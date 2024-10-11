@@ -30,6 +30,11 @@ export class StoreCreatePage extends BackofficePage {
     this.repository.getCountrySearchInput().type(store.country);
     this.repository.getAvailableCountryInput(store.country).click({ force: true });
 
+    // TODO -- refactor
+    cy.get(`[data-tab-content-id="tab-content-store_context"]`).click({ force: true });
+    cy.get(`#tab-content-store_context .btn.add-store-context`).click({ force: true });
+    cy.get(`#store_applicationContextCollection_applicationContexts_1_timezone`).select('Africa/Abidjan', { force: true });
+
     this.repository.getSaveButton().click();
   };
 }
