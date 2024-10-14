@@ -6,7 +6,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 /**
  * Yves Cart Update Without Reload checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4147904521/Yves+Cart+Update+Without+Reload+Checklist}
  */
-describe.skip('cart item note management [skip]', { tags: ['@cart'] }, (): void => {
+describe('cart item note management', { tags: ['@cart'] }, (): void => {
   const cartPage = container.get(CartPage);
   const customerLoginScenario = container.get(CustomerLoginScenario);
 
@@ -14,11 +14,10 @@ describe.skip('cart item note management [skip]', { tags: ['@cart'] }, (): void 
   let dynamicFixtures: CartItemNoteManagementDynamicFixtures;
 
   before((): void => {
-    cy.pause();
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 
-  it('guest customer should be able to add a cart item note', (): void => {
+  onlySuiteIt('guest customer should be able to add a cart item note', (): void => {
     cartPage.visit();
     cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 2 });
     cartPage.addFirstCartItemNote({ message: staticFixtures.cartItemNote });
@@ -27,17 +26,19 @@ describe.skip('cart item note management [skip]', { tags: ['@cart'] }, (): void 
     cartPage.getFirstCartItemNoteField().should('have.value', staticFixtures.cartItemNote);
   });
 
-  it('guest customer should be able to remove a cart item note', (): void => {
+  onlySuiteIt('guest customer should be able to remove a cart item note', (): void => {
     cartPage.visit();
     cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 2 });
     cartPage.addFirstCartItemNote({ message: staticFixtures.cartItemNote });
     cartPage.submitFirstCartItemNote();
+
     cartPage.clearFirstCartItemNote();
+    cartPage.submitFirstCartItemNote();
 
     cartPage.getFirstCartItemNoteField().should('have.value', '');
   });
 
-  it('customer should be able to add a cart item note', (): void => {
+  skipB2cIt('customer should be able to add a cart item note', (): void => {
     customerLoginScenario.execute({
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
@@ -49,7 +50,7 @@ describe.skip('cart item note management [skip]', { tags: ['@cart'] }, (): void 
     cartPage.getFirstCartItemNoteField().should('have.value', staticFixtures.cartItemNote);
   });
 
-  it('customer should be able to remove a cart item note', (): void => {
+  skipB2cIt('customer should be able to remove a cart item note', (): void => {
     customerLoginScenario.execute({
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
@@ -57,8 +58,18 @@ describe.skip('cart item note management [skip]', { tags: ['@cart'] }, (): void 
     cartPage.visit();
     cartPage.addFirstCartItemNote({ message: staticFixtures.cartItemNote });
     cartPage.submitFirstCartItemNote();
+
     cartPage.clearFirstCartItemNote();
+    cartPage.submitFirstCartItemNote();
 
     cartPage.getFirstCartItemNoteField().should('have.value', '');
   });
+
+  function skipB2cIt(description: string, testFn: () => void): void {
+    (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+  }
+
+  function onlySuiteIt(description: string, testFn: () => void): void {
+    (['suite'].includes(Cypress.env('repositoryId')) ? it : it.skip)(description, testFn);
+  }
 });

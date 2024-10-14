@@ -1,14 +1,15 @@
 import { container } from '@utils';
 import { ChangeCartItemQuantityStaticFixtures, ChangeCartItemQuantityDynamicFixtures } from '@interfaces/yves';
-import { CartPage, MultiCartPage } from '@pages/yves';
+import { CartPage, CatalogPage, ProductPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
 /**
  * Yves Cart Update Without Reload checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4147904521/Yves+Cart+Update+Without+Reload+Checklist}
  */
-describe.skip('change cart item quantity [skip]', { tags: ['@cart'] }, (): void => {
+describe('change cart item quantity', { tags: ['@cart'] }, (): void => {
   const cartPage = container.get(CartPage);
-  const multiCartPage = container.get(MultiCartPage);
+  const catalogPage = container.get(CatalogPage);
+  const productPage = container.get(ProductPage);
   const customerLoginScenario = container.get(CustomerLoginScenario);
 
   let staticFixtures: ChangeCartItemQuantityStaticFixtures;
@@ -18,21 +19,23 @@ describe.skip('change cart item quantity [skip]', { tags: ['@cart'] }, (): void 
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 
-  it('guest customer should be able to increase a cart item quantity', (): void => {
+  skipB2bIt('guest customer should be able to increase a cart item quantity', (): void => {
+    addProductToCart();
+
     cartPage.visit();
-    cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 2 });
     cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: 3 });
 
-    cartPage.getCartSummary().contains('€900.00');
+    cartPage.getCartSummary().contains(staticFixtures.total3);
     cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).should('have.value', '3');
   });
 
-  it('guest customer should be able to decrease a cart item quantity', (): void => {
+  skipB2bIt('guest customer should be able to decrease a cart item quantity', (): void => {
+    addProductToCart();
+
     cartPage.visit();
-    cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 2 });
     cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: 1 });
 
-    cartPage.getCartSummary().contains('€300.00');
+    cartPage.getCartSummary().contains(staticFixtures.total1);
     cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).should('have.value', '1');
   });
 
@@ -41,11 +44,11 @@ describe.skip('change cart item quantity [skip]', { tags: ['@cart'] }, (): void 
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
     });
-    multiCartPage.visit();
-    multiCartPage.selectCart({ name: dynamicFixtures.quote.name });
+
+    cartPage.visit();
     cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: 3 });
 
-    cartPage.getCartSummary().contains('€900.00');
+    cartPage.getCartSummary().contains(staticFixtures.total3);
     cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).should('have.value', '3');
   });
 
@@ -54,8 +57,8 @@ describe.skip('change cart item quantity [skip]', { tags: ['@cart'] }, (): void 
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
     });
-    multiCartPage.visit();
-    multiCartPage.selectCart({ name: dynamicFixtures.quote.name });
+
+    cartPage.visit();
     cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: 4 });
 
     cartPage.getCartDiscountSummary().contains(dynamicFixtures.discount.display_name);
@@ -66,10 +69,28 @@ describe.skip('change cart item quantity [skip]', { tags: ['@cart'] }, (): void 
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
     });
+
     cartPage.visit();
     cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: 1 });
 
-    cartPage.getCartSummary().contains('€300.00');
+    cartPage.getCartSummary().contains(staticFixtures.total1);
     cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).should('have.value', '1');
   });
+
+  function addProductToCart(): void {
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
+      productPage.addToCart({ quantity: 2 });
+
+      return;
+    }
+
+    cartPage.visit();
+    cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 2 });
+  }
+
+  function skipB2bIt(description: string, testFn: () => void): void {
+    (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+  }
 });

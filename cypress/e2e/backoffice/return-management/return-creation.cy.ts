@@ -54,7 +54,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       salesIndexPage.view();
 
       salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'Skip timeout' });
+      salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
       salesDetailPage.triggerOms({ state: 'skip picking' });
       salesDetailPage.triggerOms({ state: 'Ship' });
 
@@ -69,7 +69,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       salesIndexPage.view();
 
       salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'Skip timeout' });
+      salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
       salesDetailPage.triggerOms({ state: 'skip picking' });
       salesDetailPage.triggerOms({ state: 'Ship' });
       salesDetailPage.triggerOms({ state: 'Stock update' });

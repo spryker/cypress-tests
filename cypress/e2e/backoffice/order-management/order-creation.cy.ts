@@ -7,7 +7,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
 describe('order creation', { tags: ['@order-management'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
-  const productsPage = container.get(ProductPage);
+  const productPage = container.get(ProductPage);
   const customerOverviewPage = container.get(CustomerOverviewPage);
   const salesIndexPage = container.get(SalesIndexPage);
   const loginCustomerScenario = container.get(CustomerLoginScenario);
@@ -74,7 +74,7 @@ describe('order creation', { tags: ['@order-management'] }, (): void => {
   function addOneProductToCart(): void {
     catalogPage.visit();
     catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
-    productsPage.addToCart();
+    productPage.addToCart();
   }
 
   function skipB2BIt(description: string, testFn: () => void): void {

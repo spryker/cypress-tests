@@ -11,7 +11,11 @@ export class ProductPage extends YvesPage {
 
   protected PAGE_URL = '';
 
-  addToCart = (): void => {
+  addToCart = (params?: AddToCartParams): void => {
+    if (params?.quantity) {
+      this.repository.getQuantityInput().invoke('val', params.quantity.toString());
+    }
+
     this.repository.getAddToCartButton().click({ force: true });
   };
 
@@ -57,4 +61,8 @@ interface SelectSoldByProductOfferParams {
 
 interface CreateMerchantRelationRequestParams {
   productOfferReference: string;
+}
+
+interface AddToCartParams {
+  quantity?: number;
 }

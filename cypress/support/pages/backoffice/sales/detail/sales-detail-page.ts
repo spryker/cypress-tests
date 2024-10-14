@@ -40,6 +40,14 @@ export class SalesDetailPage extends BackofficePage {
   create = (): void => {
     this.repository.getReturnButton().click();
   };
+
+  getTotalCommissionBlock = (): Cypress.Chainable<JQuery<HTMLElement>> => {
+    return cy.contains('Total Commission').parent().parent().parent();
+  };
+
+  getTotalRefundedCommissionBlock = (): Cypress.Chainable<JQuery<HTMLElement>> => {
+    return cy.contains('Total Refunded Commission').parent().parent().parent();
+  };
 }
 
 interface TriggerOmsParams {

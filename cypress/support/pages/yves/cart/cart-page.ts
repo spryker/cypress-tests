@@ -45,9 +45,8 @@ export class CartPage extends YvesPage {
       return;
     }
 
-    input.type('{selectall}').type(String(params.quantity));
-
-    this.repository.getCartItemChangeQuantitySubmit(params.sku).click();
+    input.type('{selectall}', { force: true }).type(String(params.quantity), { force: true });
+    this.repository.submitCartItemChangeQuantity(params.sku);
   };
 
   clearCart = (): void => {

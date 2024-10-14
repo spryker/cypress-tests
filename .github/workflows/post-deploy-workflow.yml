@@ -1,0 +1,87 @@
+name: Post Deploy Workflow
+
+on:
+  repository_dispatch:
+    types: [post-deploy-workflow]
+
+run-name: Post Deploy Workflow:${{ github.event.client_payload.SPRYKER_FE_HOST }}
+
+jobs:
+  post-deploy-e2e-tests:
+    runs-on: ubuntu-22.04
+    env:
+      CODEBUILD_BUILD_ID: ${{ github.event.client_payload.CODEBUILD_BUILD_ID }}
+      ENV_REPOSITORY_ID: ${{ github.event.client_payload.DEMO_SHOP_TYPE }}
+      NPM_COMMAND: ${{ github.event.client_payload.NPM_COMMAND }}
+      SPRYKER_BE_HOST: ${{ github.event.client_payload.SPRYKER_BE_HOST }}
+      SPRYKER_MP_HOST: ${{ github.event.client_payload.SPRYKER_MP_HOST }}
+      SPRYKER_API_HOST: ${{ github.event.client_payload.SPRYKER_API_HOST }}
+      SPRYKER_GLUE_BACKEND_HOST: ${{ github.event.client_payload.SPRYKER_GLUE_BACKEND_HOST }}
+      SPRYKER_GLUE_STOREFRONT_HOST: ${{ github.event.client_payload.SPRYKER_GLUE_STOREFRONT_HOST }}
+      SPRYKER_FE_HOST: ${{ github.event.client_payload.SPRYKER_FE_HOST }}
+      SPRYKER_SSL_ENABLED: https
+      SPRYKER_SMTP_HOST: false
+      AWS_DEFAULT_REGION: eu-west-1
+      AWS_ACCESS_KEY_ID: ${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }}
+      ROBOT_TESTS_ARTIFACTS_BUCKET: ${{ vars.ROBOT_TESTS_ARTIFACTS_BUCKET }}
+      BASIC_AUTH_CREDENTIALS: ${{ secrets.BASIC_AUTH_CREDENTIALS }}
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+    steps:
+      - name: Install Docker Compose
+        run: |
+          sudo curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+
+      - name: Install Composer
+        run: |
+          curl -sS https://getcomposer.org/installer | php
+          sudo mv composer.phar /usr/local/bin/composer
+
+      - name: Download Cypress Tests Package
+        run: composer require spryker/cypress-tests:dev-master
+
+      - name: Execute Post-Deploy-e2e Tests
+        run: |
+          if [ -n "${BASIC_AUTH_CREDENTIALS}" ]; then
+            export SPRYKER_FE_HOST="${BASIC_AUTH_CREDENTIALS}@${SPRYKER_FE_HOST}"
+          fi
+          cd vendor/spryker/cypress-tests/post-deploy-workflow
+          bash post-deploy-workflow-handler.sh
+
+      - name: Notify Slack on Success
+        if: ${{ success() }}
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "✅ Deployment succeeded for the environment: https://${{ env.SPRYKER_FE_HOST }}."
+                  }
+                }
+              ]
+            }
+
+      - name: Notify Slack on Failure
+        if: ${{ failure() }}
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "❌ Deployment failed for the environment: https://${{ env.SPRYKER_FE_HOST }}. \n*Details*: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} \n*Artifacts*: https://s3.amazonaws.com/${{ env.ROBOT_TESTS_ARTIFACTS_BUCKET }}/cypress-ui/${{ env.ENV_REPOSITORY_ID }}/post-deploy/${{ env.CODEBUILD_BUILD_ID }}"
+                  }
+                }
+              ]
+            }
