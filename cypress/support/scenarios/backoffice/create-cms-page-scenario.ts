@@ -1,18 +1,18 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { PageCreatePage, PlaceholdersEditPage } from '@pages/backoffice';
+import { CmsPageCreatePage, CmsPlaceholderEditPage } from '@pages/backoffice';
 
 @injectable()
 @autoWired
 export class CreateCmsPageScenario {
-  @inject(PageCreatePage) private PageCreatePage: PageCreatePage;
-  @inject(PlaceholdersEditPage) private PlaceholdersEditPage: PlaceholdersEditPage;
+  @inject(CmsPageCreatePage) private CmsPageCreatePage: CmsPageCreatePage;
+  @inject(CmsPlaceholderEditPage) private CmsPlaceholderEditPage: CmsPlaceholderEditPage;
 
   execute = (params: ExecuteParams): void => {
-    this.PageCreatePage.visit();
-    this.PageCreatePage.create({ cmsPageName: params.cmsPageName });
+    this.CmsPageCreatePage.visit();
+    this.CmsPageCreatePage.create({ cmsPageName: params.cmsPageName });
 
-    this.PlaceholdersEditPage.update({ cmsPageName: params.cmsPageName });
+    this.CmsPlaceholderEditPage.update({ cmsPageName: params.cmsPageName });
 
     if (params?.shouldTriggerPublishAndSync) {
       cy.runCliCommands(['console queue:worker:start --stop-when-empty']);

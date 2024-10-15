@@ -1,12 +1,12 @@
 import { autoWired } from '@utils';
 import { BackofficePage } from '@pages/backoffice';
 import { inject, injectable } from 'inversify';
-import { PageCreateRepository } from './page-create-repository';
+import { CmsPageCreateRepository } from './cms-page-create-repository';
 
 @injectable()
 @autoWired
-export class PageCreatePage extends BackofficePage {
-  @inject(PageCreateRepository) private repository: PageCreateRepository;
+export class CmsPageCreatePage extends BackofficePage {
+  @inject(CmsPageCreateRepository) private repository: CmsPageCreateRepository;
 
   protected PAGE_URL = '/cms-gui/create-page';
 

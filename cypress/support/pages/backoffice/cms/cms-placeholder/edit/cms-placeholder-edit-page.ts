@@ -1,12 +1,12 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import { BackofficePage } from '@pages/backoffice';
-import { PlaceholdersEditRepository } from './placeholders-edit-repository';
+import { CmsPlaceholderEditRepository } from './cms-placeholder-edit-repository';
 
 @injectable()
 @autoWired
-export class PlaceholdersEditPage extends BackofficePage {
-  @inject(PlaceholdersEditRepository) private repository: PlaceholdersEditRepository;
+export class CmsPlaceholderEditPage extends BackofficePage {
+  @inject(CmsPlaceholderEditRepository) private repository: CmsPlaceholderEditRepository;
 
   protected PAGE_URL = 'cms-gui/create-glossary/index';
 

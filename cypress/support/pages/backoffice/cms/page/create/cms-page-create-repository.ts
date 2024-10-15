@@ -3,7 +3,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 @autoWired
-export class PageCreateRepository {
+export class CmsPageCreateRepository {
   getCollapsedIboxButton = (): Cypress.Chainable =>
     cy.get('#tab-content-general > .panel-body > .collapsed .collapse-link', { timeout: 15000 });
 

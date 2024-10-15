@@ -3,7 +3,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 @autoWired
-export class PlaceholdersEditRepository {
+export class CmsPlaceholderEditRepository {
   getCollapsedIbox = (): Cypress.Chainable =>
     cy.get('#tab-content-title .placeholder-translation-container > .collapsed > .ibox-title .collapse-link', {
       timeout: 15000,
