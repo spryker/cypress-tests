@@ -38,6 +38,8 @@ import { SelectStoreScenario } from '@scenarios/yves';
     it('should be able to see the cms page', (): void => {
       selectStoreScenario.execute(staticFixtures.store.name);
 
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(5000);
       cy.visit('/en/' + staticFixtures.cmsPageName);
 
       cy.get('body h3').contains(staticFixtures.cmsPageName).should('exist');
