@@ -5,10 +5,10 @@ import { inject, injectable } from 'inversify';
 @injectable()
 @autoWired
 export class SelectStoreScenario {
-  @inject(HomePage) private HomePage: HomePage;
+  @inject(HomePage) private homePage: HomePage;
 
   execute = (storeName: string): void => {
-    this.HomePage.visit();
-    this.HomePage.selectStore(storeName);
+    this.homePage.visit();
+    this.homePage.selectStore(storeName);
   };
 }

@@ -5,14 +5,14 @@ import { CmsPageCreatePage, CmsPlaceholderEditPage } from '@pages/backoffice';
 @injectable()
 @autoWired
 export class CreateCmsPageScenario {
-  @inject(CmsPageCreatePage) private CmsPageCreatePage: CmsPageCreatePage;
-  @inject(CmsPlaceholderEditPage) private CmsPlaceholderEditPage: CmsPlaceholderEditPage;
+  @inject(CmsPageCreatePage) private cmsPageCreatePage: CmsPageCreatePage;
+  @inject(CmsPlaceholderEditPage) private cmsPlaceholderEditPage: CmsPlaceholderEditPage;
 
   execute = (params: ExecuteParams): void => {
-    this.CmsPageCreatePage.visit();
-    this.CmsPageCreatePage.create({ cmsPageName: params.cmsPageName });
+    this.cmsPageCreatePage.visit();
+    this.cmsPageCreatePage.create({ cmsPageName: params.cmsPageName });
 
-    this.CmsPlaceholderEditPage.update({ cmsPageName: params.cmsPageName });
+    this.cmsPlaceholderEditPage.update({ cmsPageName: params.cmsPageName });
 
     if (params?.shouldTriggerPublishAndSync) {
       cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
