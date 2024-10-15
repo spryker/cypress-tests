@@ -25,10 +25,8 @@ export class StoreCreateRepository {
     cy.get(`#available-country-table [value="${country}"]`);
   getSaveButton = (): Cypress.Chainable => cy.get('[type="submit"]');
 
-  getStoreContextTabButton = (): Cypress.Chainable =>
-    cy.get('[data-tab-content-id="tab-content-store_context"]');
-  getAddStoreContextButton = (): Cypress.Chainable =>
-    cy.get('#tab-content-store_context .btn.add-store-context');
+  getStoreContextTabButton = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-store_context"]');
+  getAddStoreContextButton = (): Cypress.Chainable => cy.get('#tab-content-store_context .btn.add-store-context');
   getTimezoneSelector = (): Cypress.Chainable =>
     cy.get('#store_applicationContextCollection_applicationContexts_1_timezone');
 }
