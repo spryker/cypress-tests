@@ -5,9 +5,7 @@ import { injectable } from 'inversify';
 @autoWired
 export class CmsPlaceholderEditRepository {
   getCollapsedIbox = (): Cypress.Chainable =>
-    cy.get('#tab-content-title .placeholder-translation-container > .collapsed > .ibox-title .collapse-link', {
-      timeout: 15000,
-    });
+    cy.get('#tab-content-title .placeholder-translation-container > .collapsed > .ibox-title .collapse-link');
 
   getDeLocalizedTextarea = (): Cypress.Chainable =>
     cy.get('#cms_glossary_glossaryAttributes_0_translations_0_translation + .note-editor .note-editable');

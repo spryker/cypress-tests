@@ -5,7 +5,7 @@ import { injectable } from 'inversify';
 @autoWired
 export class CmsPageCreateRepository {
   getCollapsedIboxButton = (): Cypress.Chainable =>
-    cy.get('#tab-content-general > .panel-body > .collapsed .collapse-link', { timeout: 15000 });
+    cy.get('#tab-content-general > .panel-body > .collapsed .collapse-link');
 
   getCreatePageButton = (): Cypress.Chainable => cy.get('form[name=cms_page]').find('[type="submit"]');
 
