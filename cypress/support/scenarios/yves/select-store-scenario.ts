@@ -9,6 +9,7 @@ export class SelectStoreScenario {
 
   execute = (storeName: string): void => {
     this.homePage.visit();
+    this.homePage.waitTillStoreAvailable(storeName);
     this.homePage.selectStore(storeName);
   };
 }

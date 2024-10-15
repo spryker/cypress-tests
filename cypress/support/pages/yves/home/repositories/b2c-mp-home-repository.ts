@@ -6,4 +6,6 @@ import { HomeRepository } from '../home-repository';
 export class B2cMpHomeRepository implements HomeRepository {
   getStoreSelect = (): Cypress.Chainable =>
     cy.get('[data-qa="component header"] [data-qa="component select _store"] [name="_store"]');
+    getStoreSelectorOption = (storeName: string): string => `select[name="_store"] option[value="${storeName}"]`;
+    getStoreSelectorHeader = (): string => `header [data-qa="component select _store"]`;
 }

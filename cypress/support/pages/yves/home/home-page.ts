@@ -11,6 +11,16 @@ export class HomePage extends YvesPage {
 
   protected PAGE_URL = '/';
 
+  waitTillStoreAvailable = (store: string): void => {
+      cy.reloadUntilFound(
+        this.PAGE_URL,
+        this.repository.getStoreSelectorOption(store),
+        this.repository.getStoreSelectorHeader(),
+        25,
+        5000
+      );
+  };
+
   selectStore = (store: string): void => {
     this.repository.getStoreSelect().select('Store: ' + store);
   };
