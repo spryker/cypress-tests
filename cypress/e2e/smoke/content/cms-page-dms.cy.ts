@@ -18,7 +18,7 @@ import { SelectStoreScenario } from '@scenarios/yves';
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
       staticFixtures.store.name = staticFixtures.store.name + '_' + faker.string.alpha({ casing: 'upper' });
-      staticFixtures.cmsPageName = staticFixtures.cmsPageName + '_' + faker.string.alpha();
+      staticFixtures.cmsPageName = staticFixtures.cmsPageName + '_' + faker.string.alpha({ casing: 'lower' });
 
       userLoginScenario.execute({
         username: staticFixtures.rootUser.username,
