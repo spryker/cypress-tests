@@ -135,7 +135,6 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 
     function closeOrderFromBackoffice(): void {
       salesDetailPage.triggerOms({ state: 'Pay' });
-      salesDetailPage.triggerOms({ state: 'Publish' });
       salesDetailPage.triggerOms({ state: 'Skip timeout' });
       salesDetailPage.triggerOms({ state: 'skip picking' });
       salesDetailPage.triggerOms({ state: 'Ship' });
