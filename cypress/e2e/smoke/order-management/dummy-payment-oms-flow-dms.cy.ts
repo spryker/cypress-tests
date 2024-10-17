@@ -87,7 +87,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 
     skipB2BIt('backoffice operator should be able close an order from guest', (): void => {
       addOneProductToCart();
-      checkoutScenario.execute({ isGuest: true });
+      checkoutScenario.execute({ isGuest: true, paymentMethod: 'dummyPaymentCreditCard' });
 
       cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
@@ -135,7 +135,6 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 
     function closeOrderFromBackoffice(): void {
       salesDetailPage.triggerOms({ state: 'Pay' });
-      salesDetailPage.triggerOms({ state: 'Publish' });
       salesDetailPage.triggerOms({ state: 'Skip timeout' });
       salesDetailPage.triggerOms({ state: 'skip picking' });
       salesDetailPage.triggerOms({ state: 'Ship' });
