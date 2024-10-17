@@ -5,7 +5,8 @@ import * as Cypress from 'cypress';
 @injectable()
 export class SuiteCatalogRepository implements CatalogRepository {
   getSearchInput = (): Cypress.Chainable => cy.get('[data-qa="component search-form"] input').first();
-  getFirstSuggestedProduct = (): Cypress.Chainable => cy.get('[data-qa="component suggestion-product"] a').first();
+  getFirstSuggestedProduct = (): Cypress.Chainable =>
+    cy.get('[data-qa="component suggestion-product"] a', { timeout: 15000 }).first();
   getSearchButton = (): Cypress.Chainable => cy.get('[data-qa="component search-form"] [type="submit"]:visible');
   getProductItemBlocks = (): Cypress.Chainable => cy.get('[data-qa="component product-item"]');
   getFirstProductItemBlockSelector = (): string => '[data-qa="component product-item"]:first';

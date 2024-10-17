@@ -1,4 +1,5 @@
 export * from './yves-page';
+export * from './home/home-page';
 export * from './cart/cart-page';
 export * from './agent-login/agent-login-page';
 export * from './checkout/address/checkout-address-page';

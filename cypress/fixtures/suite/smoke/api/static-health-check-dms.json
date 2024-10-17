@@ -1,0 +1,12 @@
+{
+  "defaultPassword": "change123",
+  "store": {
+    "name": "SMOKE_STORE",
+    "currency": "EUR",
+    "locale": "en_US",
+    "country": "DE"
+  },
+  "rootUser": {
+    "username": "admin@spryker.com"
+  }
+}
