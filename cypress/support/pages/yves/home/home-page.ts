@@ -22,6 +22,6 @@ export class HomePage extends YvesPage {
   };
 
   selectStore = (store: string): void => {
-    this.repository.getStoreSelect().select('Store: ' + store);
+    this.repository.getStoreSelect().select(store);
   };
 }
