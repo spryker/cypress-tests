@@ -87,7 +87,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 
     skipB2BIt('backoffice operator should be able close an order from guest', (): void => {
       addOneProductToCart();
-      checkoutScenario.execute({ isGuest: true });
+      checkoutScenario.execute({ isGuest: true, paymentMethod: 'dummyPaymentCreditCard' });
 
       cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
