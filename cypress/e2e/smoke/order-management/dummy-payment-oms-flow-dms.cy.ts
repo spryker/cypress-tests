@@ -55,35 +55,23 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 
       assignStoreRelationToExistingProduct();
 
-      // TODO -- use fixtures
       enableShipmentMethodForAllStoresScenario.execute({
-        shipmentMethod: 'spryker_dummy_shipment',
+        shipmentMethod: staticFixtures.shipmentMethod,
       });
 
-      // TODO -- use fixtures
       enablePaymentMethodForAllStoresScenario.execute({
-        paymentMethod: 'Dummy Payment',
+        paymentMethod: staticFixtures.paymentMethod,
       });
 
-      // TODO -- use fixtures, use loop
-      enableCmsBlockForAllStoresScenario.execute({
-        cmsBlockName: 'order-shipped--html',
-      });
-      enableCmsBlockForAllStoresScenario.execute({
-        cmsBlockName: 'order-shipped--text',
-      });
-      enableCmsBlockForAllStoresScenario.execute({
-        cmsBlockName: 'order-confirmation--text',
-      });
-      enableCmsBlockForAllStoresScenario.execute({
-        cmsBlockName: 'order-confirmation--html',
+      staticFixtures.cmsBlockNames.forEach((cmsBlockName) => {
+        enableCmsBlockForAllStoresScenario.execute({
+            cmsBlockName: cmsBlockName,
+        });
       });
 
       selectStoreScenario.execute(staticFixtures.store.name);
       ensureCatalogVisibility();
     });
-
-    beforeEach((): void => {});
 
     skipB2BIt('backoffice operator should be able close an order from guest', (): void => {
       addOneProductToCart();

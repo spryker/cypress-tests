@@ -1,4 +1,10 @@
 {
+  "cmsBlockNames": [
+        "order-shipped--html",
+        "order-shipped--text",
+        "order-confirmation--text",
+        "order-confirmation--html"
+    ],
   "defaultPassword": "change123",
   "customer": {
     "email": "spencor.hopkin@spryker.com"
@@ -6,11 +12,13 @@
   "rootUser": {
     "username": "admin@spryker.com"
   },
+  "paymentMethod": "Dummy Payment",
   "product": {
     "name": "Asus Transformer Book T200TA",
     "sku": "139_24699831",
     "abstract_sku": "139"
   },
+  "shipmentMethod": "spryker_dummy_shipment",
   "store": {
     "name": "SMOKE_STORE",
     "currency": "EUR",
