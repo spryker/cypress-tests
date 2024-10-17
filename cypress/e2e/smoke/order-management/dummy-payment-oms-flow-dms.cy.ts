@@ -46,28 +46,12 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
         password: staticFixtures.defaultPassword,
       });
 
-      createStoreScenario.execute({
-        store: staticFixtures.store,
-      });
+      createStoreScenario.execute({ store: staticFixtures.store });
 
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(5000);
 
       assignStoreRelationToExistingProduct();
-
-      enableShipmentMethodForAllStoresScenario.execute({
-        shipmentMethod: staticFixtures.shipmentMethod,
-      });
-
-      enablePaymentMethodForAllStoresScenario.execute({
-        paymentMethod: staticFixtures.paymentMethod,
-      });
-
-      staticFixtures.cmsBlockNames.forEach((cmsBlockName) => {
-        enableCmsBlockForAllStoresScenario.execute({
-            cmsBlockName: cmsBlockName,
-        });
-      });
 
       selectStoreScenario.execute(staticFixtures.store.name);
       ensureCatalogVisibility();
@@ -135,20 +119,29 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
     }
 
     function assignStoreRelationToExistingProduct(): void {
-      userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
-
-      createStoreScenario.execute({ store: staticFixtures.store });
       enableWarehouseForAllStoresScenario.execute({ warehouse: staticFixtures.warehouse });
+
       enableProductForAllStoresScenario.execute({
         abstractProductSku: staticFixtures.product.abstract_sku,
         productPrice: staticFixtures.productPrice,
       });
 
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(5000);
+        enableShipmentMethodForAllStoresScenario.execute({
+            shipmentMethod: staticFixtures.shipmentMethod,
+        });
+
+        enablePaymentMethodForAllStoresScenario.execute({
+            paymentMethod: staticFixtures.paymentMethod,
+        });
+
+        staticFixtures.cmsBlockNames.forEach((cmsBlockName) => {
+            enableCmsBlockForAllStoresScenario.execute({
+                cmsBlockName: cmsBlockName,
+            });
+        });
+
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(5000);
     }
 
     function ensureCatalogVisibility(): void {
