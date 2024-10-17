@@ -126,22 +126,22 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
         productPrice: staticFixtures.productPrice,
       });
 
-        enableShipmentMethodForAllStoresScenario.execute({
-            shipmentMethod: staticFixtures.shipmentMethod,
-        });
+      enableShipmentMethodForAllStoresScenario.execute({
+        shipmentMethod: staticFixtures.shipmentMethod,
+      });
 
-        enablePaymentMethodForAllStoresScenario.execute({
-            paymentMethod: staticFixtures.paymentMethod,
-        });
+      enablePaymentMethodForAllStoresScenario.execute({
+        paymentMethod: staticFixtures.paymentMethod,
+      });
 
-        staticFixtures.cmsBlockNames.forEach((cmsBlockName) => {
-            enableCmsBlockForAllStoresScenario.execute({
-                cmsBlockName: cmsBlockName,
-            });
+      staticFixtures.cmsBlockNames.forEach((cmsBlockName) => {
+        enableCmsBlockForAllStoresScenario.execute({
+          cmsBlockName: cmsBlockName,
         });
+      });
 
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(5000);
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(5000);
     }
 
     function ensureCatalogVisibility(): void {

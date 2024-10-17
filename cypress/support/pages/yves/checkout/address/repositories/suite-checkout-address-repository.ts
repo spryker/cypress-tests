@@ -28,8 +28,7 @@ export class SuiteCheckoutAddressRepository implements CheckoutAddressRepository
   getMultiShipmentTriggerButton = (): Cypress.Chainable => cy.get('[data-qa="multiple-shipment-trigger-button"]');
   getMultiShipmentAddressItemElement = (): Cypress.Chainable =>
     cy.get('[data-qa="component address-item-form-field-list"]');
-  getFirstShipmentTypeRadio = (): Cypress.Chainable =>
-    cy.get('#addressesForm_shipmentType_key_0');
+  getFirstShipmentTypeRadio = (): Cypress.Chainable => cy.get('#addressesForm_shipmentType_key_0');
   getMultiShipmentAddressItemDeliveryRadio = ($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable =>
     cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shipmentType_key [value="delivery"]`);
   getMultiShipmentAddressItemAddressField = ($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable =>

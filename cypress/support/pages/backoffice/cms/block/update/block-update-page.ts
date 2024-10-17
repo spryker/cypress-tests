@@ -9,11 +9,11 @@ export class BlockUpdatePage extends BackofficePage {
   @inject(BlockUpdateRepository) private repository: BlockUpdateRepository;
 
   protected PAGE_URL = '/cms-block-gui/edit-block';
-    assignAllAvailableStore = (): void => {
-        this.repository.getAllAvailableStoresInputs().check();
-    };
+  assignAllAvailableStore = (): void => {
+    this.repository.getAllAvailableStoresInputs().check();
+  };
 
-    save = (): void => {
-        this.repository.getSaveButton().click();
-    };
+  save = (): void => {
+    this.repository.getSaveButton().click();
+  };
 }
