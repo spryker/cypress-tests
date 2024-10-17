@@ -4,3 +4,5 @@ export * from './create-product-scenario';
 export * from './create-store-scenario';
 export * from './enable-product-for-all-stores-scenario';
 export * from './enable-warehouse-for-all-stores-scenario';
+export * from './enable-shipment-method-for-all-stores-scenario';
+export * from './enable-payment-method-for-all-stores-scenario';

@@ -35,6 +35,7 @@ export class CheckoutAddressPage extends YvesPage {
     // Setting optional fields
     this.repository.getShippingAddressCompanyField().clear().type(checkoutAddress.company);
     this.repository.getShippingAddressPhoneField().clear().type(checkoutAddress.phone);
+    this.repository.getFirstShipmentTypeRadio().check({ force: true });
 
     this.repository.getNextButton().click();
   };
