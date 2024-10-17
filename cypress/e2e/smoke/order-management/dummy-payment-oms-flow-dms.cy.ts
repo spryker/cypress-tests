@@ -7,6 +7,7 @@ import {
   EnableProductForAllStoresScenario,
   EnableWarehouseForAllStoresScenario,
   UserLoginScenario,
+  EnableCmsBlockForAllStoresScenario,
   EnablePaymentMethodForAllStoresScenario,
   EnableShipmentMethodForAllStoresScenario,
 } from '@scenarios/backoffice';
@@ -29,6 +30,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
     const userLoginScenario = container.get(UserLoginScenario);
     const createStoreScenario = container.get(CreateStoreScenario);
     const selectStoreScenario = container.get(SelectStoreScenario);
+    const enableCmsBlockForAllStoresScenario = container.get(EnableCmsBlockForAllStoresScenario);
     const enableWarehouseForAllStoresScenario = container.get(EnableWarehouseForAllStoresScenario);
     const enableProductForAllStoresScenario = container.get(EnableProductForAllStoresScenario);
     const enableShipmentMethodForAllStoresScenario = container.get(EnableShipmentMethodForAllStoresScenario);
@@ -61,6 +63,20 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
       // TODO -- use fixtures
       enablePaymentMethodForAllStoresScenario.execute({
         paymentMethod: 'Dummy Payment',
+      });
+
+      // TODO -- use fixtures, use loop
+      enableCmsBlockForAllStoresScenario.execute({
+        cmsBlockName: 'order-shipped--html',
+      });
+      enableCmsBlockForAllStoresScenario.execute({
+        cmsBlockName: 'order-shipped--text',
+      });
+      enableCmsBlockForAllStoresScenario.execute({
+        cmsBlockName: 'order-confirmation--text',
+      });
+      enableCmsBlockForAllStoresScenario.execute({
+        cmsBlockName: 'order-confirmation--html',
       });
 
       selectStoreScenario.execute(staticFixtures.store.name);
@@ -117,9 +133,9 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
       productsPage.addToCart();
     }
 
-    // TODO -- need to add placeholders for this to complete
     function closeOrderFromBackoffice(): void {
       salesDetailPage.triggerOms({ state: 'Pay' });
+      salesDetailPage.triggerOms({ state: 'Publish' });
       salesDetailPage.triggerOms({ state: 'Skip timeout' });
       salesDetailPage.triggerOms({ state: 'skip picking' });
       salesDetailPage.triggerOms({ state: 'Ship' });
