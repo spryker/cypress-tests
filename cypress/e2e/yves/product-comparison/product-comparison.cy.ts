@@ -2,7 +2,7 @@ import { container } from '@utils';
 import { ProductComparisonDynamicFixtures } from '@interfaces/yves';
 import { CatalogPage, ProductPage, ProductComparisonPage } from '@pages/yves';
 
-(['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+(['b2c', 'b2c-mp', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'product comparison',
   { tags: ['@product-comparison'] },
   (): void => {
