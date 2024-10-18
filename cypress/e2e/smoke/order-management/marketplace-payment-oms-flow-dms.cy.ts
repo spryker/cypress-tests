@@ -142,7 +142,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: staticFixtures.productConcreteForOffer.sku });
 
-      productsPage.addToCart();
+      productsPage.addToCart({ quantity: 4});
     }
 
     function assertMarketplacePaymentOmsTransitions(): void {
