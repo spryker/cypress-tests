@@ -1,0 +1,35 @@
+{
+  "defaultPassword": "change123",
+  "customer": {
+    "email": "spencor.hopkin@spryker.com"
+  },
+  "product1": {
+    "sku": "139_24699831",
+    "abstract_sku": "139"
+  },
+  "product2": {
+    "sku": "140_22766487",
+    "abstract_sku": "140"
+  },
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "paymentMethods": [
+    "Dummy Marketplace Payment",
+    "Dummy Payment",
+    "Credit Card"
+  ],
+  "shipmentMethods": [
+    "Standard",
+    "Express"
+  ],
+  "store": {
+    "name": "SMOKE_STORE_CHECKOUT",
+    "currency": "EUR",
+    "locale": "en_US",
+    "country": "DE",
+    "timezone": "Europe/Berlin"
+  },
+  "warehouse": "warehouse1",
+  "productPrice": "77.99"
+}
