@@ -19,3 +19,4 @@ export * from './product-management/add/product-management-add-page';
 export * from './product-management/edit/product-management-edit-page';
 export * from './product-management/list/product-management-list-page';
 export * from './product-management/edit/variant/product-management-edit-variant-page';
+export * from './analytics/analytics-page';
