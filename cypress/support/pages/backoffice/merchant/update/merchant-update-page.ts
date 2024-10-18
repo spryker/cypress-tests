@@ -24,6 +24,11 @@ export class MerchantUpdatePage extends BackofficePage {
     this.repository.getUsersTab().click();
     this.repository.getAddMerchantUserButton().click();
   };
+
+    assignAllAvailableStore = (): void => {
+        this.repository.getAllAvailableStoresInputs().check();
+        this.repository.getSaveButton().click();
+    };
 }
 
 interface FindParams {

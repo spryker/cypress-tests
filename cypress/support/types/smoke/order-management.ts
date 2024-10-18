@@ -31,5 +31,15 @@ export interface MarketplacePaymentOmsFlowStaticFixtures {
   address: Address;
   productConcreteForOffer: ProductConcrete;
   productOffer: ProductOffer;
-  warehouse: string;
+
+  store: Store;
+  product: Product;
+  cmsBlockNames: Array<string>;
+  warehouse1: string;
+  warehouse2: string;
+  paymentMethod: string;
+  productPrice: string;
+  shipmentMethod: string;
+    merchantName1: string;
+    merchantName2: string;
 }
