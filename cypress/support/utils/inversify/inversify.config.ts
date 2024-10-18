@@ -98,6 +98,7 @@ import { B2cProductComparisonRepository } from '../../pages/yves/product-compari
 import { B2bProductComparisonRepository } from '../../pages/yves/product-comparison/repositories/b2b-product-comparison-repository';
 import { B2cMpProductComparisonRepository } from '../../pages/yves/product-comparison/repositories/b2c-mp-product-comparison-repository';
 import { B2bMpProductComparisonRepository } from '../../pages/yves/product-comparison/repositories/b2b-mp-product-comparison-repository';
+import {SuiteCmsRepository} from "../../pages/yves/cms/repositories/suite-cms-repository";
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -121,6 +122,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.MerchantRepository]: SuiteMerchantRepository,
   [REPOSITORIES.CustomerOverviewRepository]: SuiteCustomerOverviewRepository,
   [REPOSITORIES.ProductComparisonRepository]: SuiteProductComparisonRepository,
+  [REPOSITORIES.CmsRepository]: SuiteCmsRepository,
 };
 
 const b2cMappings: BindingsMap = {
