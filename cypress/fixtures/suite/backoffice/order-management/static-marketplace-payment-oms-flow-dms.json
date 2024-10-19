@@ -9,10 +9,6 @@
   "customer": {
     "email": "spencor.hopkin@spryker.com"
   },
-  "productConcreteForOffer": {
-    "name": "Sony SmartWatch 3",
-    "sku": "091_25873091"
-  },
   "productOffer": {
     "product_offer_reference": "offer423"
   },

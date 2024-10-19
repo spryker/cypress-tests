@@ -27,10 +27,5 @@
     "timezone": "Europe/Berlin"
   },
   "warehouse": "warehouse1",
-  "productPrice": "77.99",
-  "concreteProduct": {
-    "name": "Asus Transformer Book T200TA",
-    "sku": "139_24699831",
-    "abstract_sku": "139"
-  }
+  "productPrice": "77.99"
 }
