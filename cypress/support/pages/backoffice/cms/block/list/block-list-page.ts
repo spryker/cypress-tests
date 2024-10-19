@@ -14,7 +14,8 @@ export class BlockListPage extends BackofficePage {
     const findParams = { query: params.query, expectedCount: 1 };
 
     this.find(findParams).then(($storeRow) => {
-      cy.wrap($storeRow).find(this.repository.getEditButtonSelector()).should('exist').click();
+        cy.wrap($storeRow).as('row');
+        cy.get('@row').find(this.repository.getEditButtonSelector()).should('exist').click()
     });
   };
 
