@@ -9,7 +9,7 @@ import {
   EnableShipmentMethodForAllStoresScenario,
   EnableWarehouseForAllStoresScenario,
   UserLoginScenario
-} from "../../../support/scenarios/backoffice";
+} from "@scenarios/backoffice";
 import {faker} from "@faker-js/faker";
 
 /**
