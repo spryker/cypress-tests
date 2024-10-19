@@ -28,27 +28,27 @@ export class SalesOrdersPage extends MpPage {
     this.find({ query: params.query }).click({ force: true });
 
     if (params.action === ActionEnum.sendToDistribution) {
-      this.repository.getDrawer().find(this.repository.getSendToDistributionButtonSelector(), {timeout: 15000}).click();
+      this.repository.getDrawer().find(this.repository.getSendToDistributionButtonSelector()).click();
     }
 
     if (params.action === ActionEnum.confirmAtCenter) {
-      this.repository.getDrawer().find(this.repository.getConfirmAtCenterButtonSelector(), {timeout: 15000}).click();
+      this.repository.getDrawer().find(this.repository.getConfirmAtCenterButtonSelector()).click();
     }
 
     if (params.action === ActionEnum.ship) {
-      this.repository.getDrawer().find(this.repository.getShipButtonSelector(), {timeout: 15000}).click();
+      this.repository.getDrawer().find(this.repository.getShipButtonSelector()).click();
     }
 
     if (params.action === ActionEnum.deliver) {
-      this.repository.getDrawer().find(this.repository.getDeliverButtonSelector(), {timeout: 15000}).click();
+      this.repository.getDrawer().find(this.repository.getDeliverButtonSelector()).click();
     }
 
     if (params.action === ActionEnum.cancel) {
-      this.repository.getDrawer().find(this.repository.getCancelButtonSelector(), {timeout: 15000}).click();
+      this.repository.getDrawer().find(this.repository.getCancelButtonSelector()).click();
     }
 
     if (params.action === ActionEnum.refund) {
-      this.repository.getDrawer().find(this.repository.getRefundButtonSelector(), {timeout: 15000}).click();
+      this.repository.getDrawer().find(this.repository.getRefundButtonSelector()).click();
     }
   };
 
