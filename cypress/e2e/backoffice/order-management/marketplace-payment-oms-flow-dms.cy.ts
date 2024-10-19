@@ -140,7 +140,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
     function addOneProductToCart(): void {
       catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: staticFixtures.productConcreteForOffer.sku });
+      catalogPage.searchProductFromSuggestions({ query: staticFixtures.product.sku });
 
       productsPage.addToCart({ quantity: 4});
     }
