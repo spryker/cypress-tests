@@ -20,7 +20,6 @@ describe('customer auth', { tags: ['@customer-account-management'] }, (): void =
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
     staticFixtures = Cypress.env('staticFixtures');
-    staticFixtures.store.name = staticFixtures.store.name + '_' + faker.string.alpha({ casing: 'upper' });
 
     userLoginScenario.execute({
       username: staticFixtures.rootUser.username,
@@ -33,6 +32,9 @@ describe('customer auth', { tags: ['@customer-account-management'] }, (): void =
 
     enableCmsBlockForAllStoresScenario.execute({
       cmsBlockName: 'customer-registration_token--text',
+    });
+    enableCmsBlockForAllStoresScenario.execute({
+      cmsBlockName: 'customer-registration_token--html',
     });
   });
 
