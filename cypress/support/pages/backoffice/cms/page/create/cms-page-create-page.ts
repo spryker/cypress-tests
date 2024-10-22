@@ -13,6 +13,8 @@ export class CmsPageCreatePage extends BackofficePage {
   create = (params: CreateParams): void => {
     this.repository.getCollapsedIboxButton().click({ force: true });
 
+    this.repository.getIsSearchableCheckbox().check();
+
     this.repository.getDeNameInput().type(params.cmsPageName, { force: true });
     this.repository.getDeUrlInput().type(params.cmsPageName, { force: true });
 

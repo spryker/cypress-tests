@@ -13,4 +13,5 @@ export class CmsPageCreateRepository {
   getDeUrlInput = (): Cypress.Chainable => cy.get('#cms_page_pageAttributes_0_url');
   getEnNameInput = (): Cypress.Chainable => cy.get('#cms_page_pageAttributes_1_name');
   getEnUrlInput = (): Cypress.Chainable => cy.get('#cms_page_pageAttributes_1_url');
+  getIsSearchableCheckbox = (): Cypress.Chainable => cy.get('#cms_page_isSearchable');
 }
