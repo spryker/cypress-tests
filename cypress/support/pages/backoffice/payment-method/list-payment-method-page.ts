@@ -10,14 +10,6 @@ export class ListPaymentMethodPage extends BackofficePage {
 
   protected PAGE_URL = '/payment-gui/payment-method';
 
-  update = (params: UpdateParams): void => {
-    const findParams = { query: params.query, expectedCount: 1 };
-
-    this.find(findParams).then(($storeRow) => {
-      cy.wrap($storeRow).find(this.repository.getEditButtonSelector()).should('exist').click();
-    });
-  };
-
   find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
@@ -25,7 +17,7 @@ export class ListPaymentMethodPage extends BackofficePage {
 
     this.interceptTable({ url: 'payment-gui/payment-method/table**', expectedCount: params.expectedCount });
 
-    return this.repository.getFirstTableRow();
+    return cy.get('tbody > tr:visible');
   };
 }
 

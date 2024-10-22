@@ -11,12 +11,20 @@ export class EnableShipmentMethodForAllStoresScenario {
 
   execute = (params: ExecuteParams): void => {
     this.listShipmentMethodPage.visit();
-    this.listShipmentMethodPage.update({ query: params.shipmentMethod });
+      this.listShipmentMethodPage.find({ query: params.shipmentMethod }).its('length').then((count) => {
+          for (let index = 0; index < count; index++) {
+              this.listShipmentMethodPage.find({ query: params.shipmentMethod }).eq(index).then(($storeRow) => {
+                  cy.wrap($storeRow).find('a:contains("Edit")').should('exist').click();
 
-    this.editShipmentMethodPage.assignAllAvailableStore();
-    this.editShipmentMethodPage.addPrices();
+                  // Perform the necessary update actions here
+                  this.editShipmentMethodPage.assignAllAvailableStore();
+                  this.editShipmentMethodPage.save();
 
-    this.editShipmentMethodPage.save();
+                  // Go back to the list page to update the next payment method
+                  this.listShipmentMethodPage.visit();
+              });
+          }
+      });
 
     if (params?.shouldTriggerPublishAndSync) {
       cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
