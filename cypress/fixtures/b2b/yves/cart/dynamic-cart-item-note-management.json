@@ -22,7 +22,7 @@
           "key": "confirmedCustomer",
           "arguments": ["#customer"]
         },
-                {
+        {
           "type": "helper",
           "name": "haveCompany",
           "key": "company",
