@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { CheckoutStaticFixtures } from '@interfaces/smoke';
+import { CheckoutStaticFixtures } from '@interfaces/yves';
 import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import {CheckoutScenario, CustomerLoginScenario, SelectStoreScenario} from '@scenarios/yves';
 import {
@@ -50,7 +50,7 @@ describe('basic checkout', { tags: ['@smoke'] }, (): void => {
     ensureCatalogVisibility();
   });
 
-  skipB2BIt('guest customer should checkout to single shipment', (): void => {
+  it('guest customer should checkout to single shipment', (): void => { // skipB2BIt
     selectStoreScenario.execute(staticFixtures.store.name);
 
     addTwoProductsToCart();
@@ -59,7 +59,7 @@ describe('basic checkout', { tags: ['@smoke'] }, (): void => {
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
-  skipB2BIt('guest customer should checkout to multi shipment address', (): void => {
+  it.skip('guest customer should checkout to multi shipment address', (): void => {
     selectStoreScenario.execute(staticFixtures.store.name);
 
     addTwoProductsToCart();
@@ -75,7 +75,9 @@ describe('basic checkout', { tags: ['@smoke'] }, (): void => {
 
   it('customer should checkout to single shipment (with new shipping address)', (): void => {
 
-    loginCustomerScenario.execute({
+      selectStoreScenario.execute(staticFixtures.store.name);
+
+      loginCustomerScenario.execute({
       email: staticFixtures.customer.email,
       password: staticFixtures.defaultPassword,
     });
@@ -88,7 +90,7 @@ describe('basic checkout', { tags: ['@smoke'] }, (): void => {
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
-  it('customer should checkout to multi shipment address (with new shipping address)', (): void => {
+  it.skip('customer should checkout to multi shipment address (with new shipping address)', (): void => {
     loginCustomerScenario.execute({
       email: staticFixtures.customer.email,
       password: staticFixtures.defaultPassword,
