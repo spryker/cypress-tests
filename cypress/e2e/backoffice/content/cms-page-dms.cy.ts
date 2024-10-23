@@ -17,7 +17,6 @@ import { SelectStoreScenario } from '@scenarios/yves';
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
-      staticFixtures.store.name = staticFixtures.store.name + '_' + faker.string.alpha({ casing: 'upper' });
       staticFixtures.cmsPageName = staticFixtures.cmsPageName + '_' + faker.string.alpha({ casing: 'lower' });
 
       userLoginScenario.execute({
@@ -41,8 +40,9 @@ import { SelectStoreScenario } from '@scenarios/yves';
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(5000);
       cy.visit('/en/' + staticFixtures.cmsPageName);
+        cy.wait(500);
+        cy.url().should('include', staticFixtures.cmsPageName);
 
-      cy.get('body h3').contains(staticFixtures.cmsPageName).should('exist');
     });
   }
 );

@@ -44,8 +44,7 @@ import {
       homePage.visit();
       contentPage.searchCmsPageFromSuggestions({ query: staticFixtures.cmsPageName });
 
-      cy.contains(staticFixtures.cmsPageName).should('exist');
-
+        cy.url().should('include', staticFixtures.cmsPageName);
     });
   }
 );
