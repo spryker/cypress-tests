@@ -18,6 +18,7 @@ export class EnableShipmentMethodForAllStoresScenario {
 
                   // Perform the necessary update actions here
                   this.editShipmentMethodPage.assignAllAvailableStore();
+                  this.editShipmentMethodPage.addPrices();
                   this.editShipmentMethodPage.save();
 
                   // Go back to the list page to update the next payment method
