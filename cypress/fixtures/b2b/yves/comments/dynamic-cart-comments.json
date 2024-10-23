@@ -31,10 +31,7 @@
         {
           "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
-          "arguments": [
-            { "isDefault": true, "fkCompany": "#company.id_company" },
-            ["#permission"]
-          ]
+          "arguments": [{ "isDefault": true, "fkCompany": "#company.id_company" }, ["#permission"]]
         },
         {
           "type": "helper",
