@@ -19,195 +19,199 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
-(['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
-  'marketplace payment OMS flow',
-  { tags: ['@smoke'] },
-  (): void => {
-    const catalogPage = container.get(CatalogPage);
-    const productsPage = container.get(ProductPage);
-    const salesIndexPage = container.get(SalesIndexPage);
-    const salesDetailPage = container.get(SalesDetailPage);
-    const salesOrdersPage = container.get(SalesOrdersPage);
-    const userLoginScenario = container.get(UserLoginScenario);
-    const customerLoginScenario = container.get(CustomerLoginScenario);
-    const checkoutMpScenario = container.get(CheckoutMpScenario);
-    const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
-    const createStoreScenario = container.get(CreateStoreScenario);
-    const selectStoreScenario = container.get(SelectStoreScenario);
-    const enableCmsBlockForAllStoresScenario = container.get(EnableCmsBlockForAllStoresScenario);
-    const enableWarehouseForAllStoresScenario = container.get(EnableWarehouseForAllStoresScenario);
-    const enableProductForAllStoresScenario = container.get(EnableProductForAllStoresScenario);
-    const enableShipmentMethodForAllStoresScenario = container.get(EnableShipmentMethodForAllStoresScenario);
-    const enablePaymentMethodForAllStoresScenario = container.get(EnablePaymentMethodForAllStoresScenario);
-    const enableMerchantForAllStoresScenario = container.get(EnableMerchantForAllStoresScenario);
 
-    let staticFixtures: MarketplacePaymentOmsFlowStaticFixtures;
+(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@smoke' }, () => {
 
-    before((): void => {
-      staticFixtures = Cypress.env('staticFixtures');
+    (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+        'marketplace payment OMS flow',
+        {tags: ['@smoke']},
+        (): void => {
+            const catalogPage = container.get(CatalogPage);
+            const productsPage = container.get(ProductPage);
+            const salesIndexPage = container.get(SalesIndexPage);
+            const salesDetailPage = container.get(SalesDetailPage);
+            const salesOrdersPage = container.get(SalesOrdersPage);
+            const userLoginScenario = container.get(UserLoginScenario);
+            const customerLoginScenario = container.get(CustomerLoginScenario);
+            const checkoutMpScenario = container.get(CheckoutMpScenario);
+            const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
+            const createStoreScenario = container.get(CreateStoreScenario);
+            const selectStoreScenario = container.get(SelectStoreScenario);
+            const enableCmsBlockForAllStoresScenario = container.get(EnableCmsBlockForAllStoresScenario);
+            const enableWarehouseForAllStoresScenario = container.get(EnableWarehouseForAllStoresScenario);
+            const enableProductForAllStoresScenario = container.get(EnableProductForAllStoresScenario);
+            const enableShipmentMethodForAllStoresScenario = container.get(EnableShipmentMethodForAllStoresScenario);
+            const enablePaymentMethodForAllStoresScenario = container.get(EnablePaymentMethodForAllStoresScenario);
+            const enableMerchantForAllStoresScenario = container.get(EnableMerchantForAllStoresScenario);
 
-      userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
+            let staticFixtures: MarketplacePaymentOmsFlowStaticFixtures;
 
-      createStoreScenario.execute({
-        store: staticFixtures.store,
-      });
+            before((): void => {
+                staticFixtures = Cypress.env('staticFixtures');
 
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(5000);
+                userLoginScenario.execute({
+                    username: staticFixtures.rootUser.username,
+                    password: staticFixtures.defaultPassword,
+                });
 
-      assignStoreRelationToExistingProduct();
+                createStoreScenario.execute({
+                    store: staticFixtures.store,
+                });
 
-      selectStoreScenario.execute(staticFixtures.store.name);
-      ensureCatalogVisibility();
-    });
+                // eslint-disable-next-line cypress/no-unnecessary-waiting
+                cy.wait(5000);
 
-    skipB2BIt('merchant user should be able close an order from guest', (): void => {
-      addOneProductToCart();
-      checkoutMpScenario.execute({ isGuest: true });
+                assignStoreRelationToExistingProduct();
 
-      userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
+                selectStoreScenario.execute(staticFixtures.store.name);
+                ensureCatalogVisibility();
+            });
 
-      assertMarketplacePaymentOmsTransitions();
-    });
+            skipB2BIt('merchant user should be able close an order from guest', (): void => {
+                addOneProductToCart();
+                checkoutMpScenario.execute({isGuest: true});
 
-    it('merchant user should be able close an order from customer', (): void => {
-      customerLoginScenario.execute({
-        email: staticFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-      });
+                userLoginScenario.execute({
+                    username: staticFixtures.rootUser.username,
+                    password: staticFixtures.defaultPassword,
+                });
 
-      addOneProductToCart();
-      checkoutMpScenario.execute();
+                assertMarketplacePaymentOmsTransitions();
+            });
 
-      userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
+            it('merchant user should be able close an order from customer', (): void => {
+                customerLoginScenario.execute({
+                    email: staticFixtures.customer.email,
+                    password: staticFixtures.defaultPassword,
+                });
 
-      assertMarketplacePaymentOmsTransitions();
-    });
+                addOneProductToCart();
+                checkoutMpScenario.execute();
 
-      function assignStoreRelationToExistingProduct(): void {
-          enableWarehouseForAllStoresScenario.execute({ warehouse: staticFixtures.warehouse1 });
-          enableWarehouseForAllStoresScenario.execute({ warehouse: staticFixtures.warehouse2 });
-          //
-          enableProductForAllStoresScenario.execute({
-              abstractProductSku: staticFixtures.product.abstract_sku,
-              productPrice: staticFixtures.productPrice,
-          });
+                userLoginScenario.execute({
+                    username: staticFixtures.rootUser.username,
+                    password: staticFixtures.defaultPassword,
+                });
 
-          enableShipmentMethodForAllStoresScenario.execute({
-              shipmentMethod: staticFixtures.shipmentMethod,
-          });
+                assertMarketplacePaymentOmsTransitions();
+            });
 
-          enablePaymentMethodForAllStoresScenario.execute({
-              paymentMethod: staticFixtures.paymentMethod,
-          });
+            function assignStoreRelationToExistingProduct(): void {
+                enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse1});
+                enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse2});
+                //
+                enableProductForAllStoresScenario.execute({
+                    abstractProductSku: staticFixtures.product.abstract_sku,
+                    productPrice: staticFixtures.productPrice,
+                });
 
-          staticFixtures.cmsBlockNames.forEach((cmsBlockName) => {
-              enableCmsBlockForAllStoresScenario.execute({
-                  cmsBlockName: cmsBlockName,
-              });
-          });
+                enableShipmentMethodForAllStoresScenario.execute({
+                    shipmentMethod: staticFixtures.shipmentMethod,
+                });
 
-          enableMerchantForAllStoresScenario.execute({
-            merchantName: staticFixtures.merchantName1,
-          });
-          enableMerchantForAllStoresScenario.execute({
-            merchantName: staticFixtures.merchantName2,
-          });
+                enablePaymentMethodForAllStoresScenario.execute({
+                    paymentMethod: staticFixtures.paymentMethod,
+                });
 
-          // eslint-disable-next-line cypress/no-unnecessary-waiting
-          cy.wait(5000);
-      }
+                staticFixtures.cmsBlockNames.forEach((cmsBlockName) => {
+                    enableCmsBlockForAllStoresScenario.execute({
+                        cmsBlockName: cmsBlockName,
+                    });
+                });
 
-      function ensureCatalogVisibility(): void {
-          catalogPage.visit();
-          catalogPage.hasProductsInCatalog().then((isVisible) => {
-              if (!isVisible) {
-                  // eslint-disable-next-line cypress/no-unnecessary-waiting
-                  cy.wait(3000);
-                  ensureCatalogVisibility();
-              }
-          });
-      }
+                enableMerchantForAllStoresScenario.execute({
+                    merchantName: staticFixtures.merchantName1,
+                });
+                enableMerchantForAllStoresScenario.execute({
+                    merchantName: staticFixtures.merchantName2,
+                });
 
-    function addOneProductToCart(): void {
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: staticFixtures.product.sku });
+                // eslint-disable-next-line cypress/no-unnecessary-waiting
+                cy.wait(5000);
+            }
 
-      productsPage.addToCart({ quantity: 4});
-    }
+            function ensureCatalogVisibility(): void {
+                catalogPage.visit();
+                catalogPage.hasProductsInCatalog().then((isVisible) => {
+                    if (!isVisible) {
+                        // eslint-disable-next-line cypress/no-unnecessary-waiting
+                        cy.wait(3000);
+                        ensureCatalogVisibility();
+                    }
+                });
+            }
 
-    function assertMarketplacePaymentOmsTransitions(): void {
-      salesIndexPage.visit();
-      salesIndexPage.view();
+            function addOneProductToCart(): void {
+                catalogPage.visit();
+                catalogPage.searchProductFromSuggestions({query: staticFixtures.product.sku});
 
-      salesIndexPage.getOrderReference().then((orderReference) => {
-        salesDetailPage.triggerOms({ state: 'Pay' });
-        salesDetailPage.triggerOms({ state: 'skip picking' });
+                productsPage.addToCart({quantity: 4});
+            }
 
-        merchantUserLoginScenario.execute({
-          username: staticFixtures.merchantUser.username,
-          password: staticFixtures.defaultPassword,
-        });
+            function assertMarketplacePaymentOmsTransitions(): void {
+                salesIndexPage.visit();
+                salesIndexPage.view();
 
-        closeOrderFromMerchantPortal(orderReference);
-        closeOrderFromBackoffice();
-      });
-    }
+                salesIndexPage.getOrderReference().then((orderReference) => {
+                    salesDetailPage.triggerOms({state: 'Pay'});
+                    salesDetailPage.triggerOms({state: 'skip picking'});
 
-    function closeOrderFromBackoffice(): void {
-      userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
+                    merchantUserLoginScenario.execute({
+                        username: staticFixtures.merchantUser.username,
+                        password: staticFixtures.defaultPassword,
+                    });
 
-      salesIndexPage.visit();
-      salesIndexPage.view();
+                    closeOrderFromMerchantPortal(orderReference);
+                    closeOrderFromBackoffice();
+                });
+            }
 
-      salesDetailPage.triggerOms({ state: 'Close' });
-    }
+            function closeOrderFromBackoffice(): void {
+                userLoginScenario.execute({
+                    username: staticFixtures.rootUser.username,
+                    password: staticFixtures.defaultPassword,
+                });
 
-    function closeOrderFromMerchantPortal(orderReference: string): void {
-      if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
-        checkOrderVisibility(orderReference);
-      }
+                salesIndexPage.visit();
+                salesIndexPage.view();
 
-      if (!['b2b-mp'].includes(Cypress.env('repositoryId'))) {
-        salesOrdersPage.visit();
-        salesOrdersPage.update({ query: orderReference, action: ActionEnum.sendToDistribution });
+                salesDetailPage.triggerOms({state: 'Close'});
+            }
 
-        salesOrdersPage.visit();
-        salesOrdersPage.update({ query: orderReference, action: ActionEnum.confirmAtCenter });
-      }
+            function closeOrderFromMerchantPortal(orderReference: string): void {
+                if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
+                    checkOrderVisibility(orderReference);
+                }
 
-      salesOrdersPage.visit();
-      salesOrdersPage.update({ query: orderReference, action: ActionEnum.ship });
+                if (!['b2b-mp'].includes(Cypress.env('repositoryId'))) {
+                    salesOrdersPage.visit();
+                    salesOrdersPage.update({query: orderReference, action: ActionEnum.sendToDistribution});
 
-      salesOrdersPage.visit();
-      salesOrdersPage.update({ query: orderReference, action: ActionEnum.deliver });
-    }
+                    salesOrdersPage.visit();
+                    salesOrdersPage.update({query: orderReference, action: ActionEnum.confirmAtCenter});
+                }
 
-    function skipB2BIt(description: string, testFn: () => void): void {
-      (['b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
-    }
+                salesOrdersPage.visit();
+                salesOrdersPage.update({query: orderReference, action: ActionEnum.ship});
 
-    function checkOrderVisibility(orderReference: string): void {
-      salesOrdersPage.visit();
-      salesOrdersPage.hasOrderByOrderReference(orderReference).then((isVisible) => {
-        if (!isVisible) {
-          // eslint-disable-next-line cypress/no-unnecessary-waiting
-          cy.wait(10000);
-          checkOrderVisibility(orderReference);
+                salesOrdersPage.visit();
+                salesOrdersPage.update({query: orderReference, action: ActionEnum.deliver});
+            }
+
+            function skipB2BIt(description: string, testFn: () => void): void {
+                (['b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+            }
+
+            function checkOrderVisibility(orderReference: string): void {
+                salesOrdersPage.visit();
+                salesOrdersPage.hasOrderByOrderReference(orderReference).then((isVisible) => {
+                    if (!isVisible) {
+                        // eslint-disable-next-line cypress/no-unnecessary-waiting
+                        cy.wait(10000);
+                        checkOrderVisibility(orderReference);
+                    }
+                });
+            }
         }
-      });
-    }
-  }
-);
+    );
+})

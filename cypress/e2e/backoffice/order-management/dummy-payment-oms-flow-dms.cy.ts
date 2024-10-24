@@ -16,143 +16,146 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
-(['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
-  'dummy payment OMS flow',
-  { tags: ['@smoke'] },
-  (): void => {
-    const catalogPage = container.get(CatalogPage);
-    const productsPage = container.get(ProductPage);
-    const customerOverviewPage = container.get(CustomerOverviewPage);
-    const salesIndexPage = container.get(SalesIndexPage);
-    const salesDetailPage = container.get(SalesDetailPage);
-    const loginCustomerScenario = container.get(CustomerLoginScenario);
-    const checkoutScenario = container.get(CheckoutScenario);
-    const userLoginScenario = container.get(UserLoginScenario);
-    const createStoreScenario = container.get(CreateStoreScenario);
-    const selectStoreScenario = container.get(SelectStoreScenario);
-    const enableCmsBlockForAllStoresScenario = container.get(EnableCmsBlockForAllStoresScenario);
-    const enableWarehouseForAllStoresScenario = container.get(EnableWarehouseForAllStoresScenario);
-    const enableProductForAllStoresScenario = container.get(EnableProductForAllStoresScenario);
-    const enableShipmentMethodForAllStoresScenario = container.get(EnableShipmentMethodForAllStoresScenario);
-    const enablePaymentMethodForAllStoresScenario = container.get(EnablePaymentMethodForAllStoresScenario);
 
-    let staticFixtures: DummyPaymentOmsFlowStaticFixtures;
+(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@smoke' }, () => {
+    (['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+        'dummy payment OMS flow',
+        {tags: ['@smoke']},
+        (): void => {
+            const catalogPage = container.get(CatalogPage);
+            const productsPage = container.get(ProductPage);
+            const customerOverviewPage = container.get(CustomerOverviewPage);
+            const salesIndexPage = container.get(SalesIndexPage);
+            const salesDetailPage = container.get(SalesDetailPage);
+            const loginCustomerScenario = container.get(CustomerLoginScenario);
+            const checkoutScenario = container.get(CheckoutScenario);
+            const userLoginScenario = container.get(UserLoginScenario);
+            const createStoreScenario = container.get(CreateStoreScenario);
+            const selectStoreScenario = container.get(SelectStoreScenario);
+            const enableCmsBlockForAllStoresScenario = container.get(EnableCmsBlockForAllStoresScenario);
+            const enableWarehouseForAllStoresScenario = container.get(EnableWarehouseForAllStoresScenario);
+            const enableProductForAllStoresScenario = container.get(EnableProductForAllStoresScenario);
+            const enableShipmentMethodForAllStoresScenario = container.get(EnableShipmentMethodForAllStoresScenario);
+            const enablePaymentMethodForAllStoresScenario = container.get(EnablePaymentMethodForAllStoresScenario);
 
-    before((): void => {
-      staticFixtures = Cypress.env('staticFixtures');
+            let staticFixtures: DummyPaymentOmsFlowStaticFixtures;
 
-      userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
+            before((): void => {
+                staticFixtures = Cypress.env('staticFixtures');
 
-      createStoreScenario.execute({ store: staticFixtures.store });
+                userLoginScenario.execute({
+                    username: staticFixtures.rootUser.username,
+                    password: staticFixtures.defaultPassword,
+                });
 
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(5000);
+                createStoreScenario.execute({store: staticFixtures.store});
 
-      assignStoreRelationToExistingProduct();
+                // eslint-disable-next-line cypress/no-unnecessary-waiting
+                cy.wait(5000);
 
-      selectStoreScenario.execute(staticFixtures.store.name);
-      ensureCatalogVisibility();
-    });
+                assignStoreRelationToExistingProduct();
 
-    skipB2BIt('backoffice operator should be able close an order from guest', (): void => {
-      addOneProductToCart();
-      checkoutScenario.execute({ isGuest: true, paymentMethod: 'dummyPaymentCreditCard' });
+                selectStoreScenario.execute(staticFixtures.store.name);
+                ensureCatalogVisibility();
+            });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+            skipB2BIt('backoffice operator should be able close an order from guest', (): void => {
+                addOneProductToCart();
+                checkoutScenario.execute({isGuest: true, paymentMethod: 'dummyPaymentCreditCard'});
 
-      userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
+                cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
-      salesIndexPage.visit();
-      salesIndexPage.view();
+                userLoginScenario.execute({
+                    username: staticFixtures.rootUser.username,
+                    password: staticFixtures.defaultPassword,
+                });
 
-      closeOrderFromBackoffice();
-    });
+                salesIndexPage.visit();
+                salesIndexPage.view();
 
-    it('backoffice operator should be able close an order from customer', (): void => {
-      loginCustomerScenario.execute({
-        email: staticFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-      });
+                closeOrderFromBackoffice();
+            });
 
-      selectStoreScenario.execute(staticFixtures.store.name);
+            it('backoffice operator should be able close an order from customer', (): void => {
+                loginCustomerScenario.execute({
+                    email: staticFixtures.customer.email,
+                    password: staticFixtures.defaultPassword,
+                });
 
-      addOneProductToCart();
+                selectStoreScenario.execute(staticFixtures.store.name);
 
-      checkoutScenario.execute({ paymentMethod: 'dummyPaymentCreditCard' });
+                addOneProductToCart();
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+                checkoutScenario.execute({paymentMethod: 'dummyPaymentCreditCard'});
 
-      userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
+                cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
-      salesIndexPage.visit();
-      salesIndexPage.view();
+                userLoginScenario.execute({
+                    username: staticFixtures.rootUser.username,
+                    password: staticFixtures.defaultPassword,
+                });
 
-      closeOrderFromBackoffice();
-    });
+                salesIndexPage.visit();
+                salesIndexPage.view();
 
-    function addOneProductToCart(): void {
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: staticFixtures.product.sku });
-      productsPage.addToCart();
-    }
+                closeOrderFromBackoffice();
+            });
 
-    function closeOrderFromBackoffice(): void {
-      salesDetailPage.triggerOms({ state: 'Pay' });
-      salesDetailPage.triggerOms({ state: 'Skip timeout' });
-      salesDetailPage.triggerOms({ state: 'skip picking' });
-      salesDetailPage.triggerOms({ state: 'Ship' });
-      salesDetailPage.triggerOms({ state: 'Stock update' });
-      salesDetailPage.triggerOms({ state: 'Close' });
-    }
+            function addOneProductToCart(): void {
+                catalogPage.visit();
+                catalogPage.searchProductFromSuggestions({query: staticFixtures.product.sku});
+                productsPage.addToCart();
+            }
 
-    function skipB2BIt(description: string, testFn: () => void): void {
-      (Cypress.env('repositoryId') === 'b2b' ? it.skip : it)(description, testFn);
-    }
+            function closeOrderFromBackoffice(): void {
+                salesDetailPage.triggerOms({state: 'Pay'});
+                salesDetailPage.triggerOms({state: 'Skip timeout'});
+                salesDetailPage.triggerOms({state: 'skip picking'});
+                salesDetailPage.triggerOms({state: 'Ship'});
+                salesDetailPage.triggerOms({state: 'Stock update'});
+                salesDetailPage.triggerOms({state: 'Close'});
+            }
 
-    function assignStoreRelationToExistingProduct(): void {
-      enableWarehouseForAllStoresScenario.execute({ warehouse: staticFixtures.warehouse });
+            function skipB2BIt(description: string, testFn: () => void): void {
+                (Cypress.env('repositoryId') === 'b2b' ? it.skip : it)(description, testFn);
+            }
 
-      enableProductForAllStoresScenario.execute({
-        abstractProductSku: staticFixtures.product.abstract_sku,
-        productPrice: staticFixtures.productPrice,
-      });
+            function assignStoreRelationToExistingProduct(): void {
+                enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse});
 
-      enableShipmentMethodForAllStoresScenario.execute({
-        shipmentMethod: staticFixtures.shipmentMethod,
-      });
+                enableProductForAllStoresScenario.execute({
+                    abstractProductSku: staticFixtures.product.abstract_sku,
+                    productPrice: staticFixtures.productPrice,
+                });
 
-      enablePaymentMethodForAllStoresScenario.execute({
-        paymentMethod: staticFixtures.paymentMethod,
-      });
+                enableShipmentMethodForAllStoresScenario.execute({
+                    shipmentMethod: staticFixtures.shipmentMethod,
+                });
 
-      staticFixtures.cmsBlockNames.forEach((cmsBlockName) => {
-        enableCmsBlockForAllStoresScenario.execute({
-          cmsBlockName: cmsBlockName,
-        });
-      });
+                enablePaymentMethodForAllStoresScenario.execute({
+                    paymentMethod: staticFixtures.paymentMethod,
+                });
 
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(5000);
-    }
+                staticFixtures.cmsBlockNames.forEach((cmsBlockName) => {
+                    enableCmsBlockForAllStoresScenario.execute({
+                        cmsBlockName: cmsBlockName,
+                    });
+                });
 
-    function ensureCatalogVisibility(): void {
-      catalogPage.visit();
-      catalogPage.hasProductsInCatalog().then((isVisible) => {
-        if (!isVisible) {
-          // eslint-disable-next-line cypress/no-unnecessary-waiting
-          cy.wait(3000);
-          ensureCatalogVisibility();
+                // eslint-disable-next-line cypress/no-unnecessary-waiting
+                cy.wait(5000);
+            }
+
+            function ensureCatalogVisibility(): void {
+                catalogPage.visit();
+                catalogPage.hasProductsInCatalog().then((isVisible) => {
+                    if (!isVisible) {
+                        // eslint-disable-next-line cypress/no-unnecessary-waiting
+                        cy.wait(3000);
+                        ensureCatalogVisibility();
+                    }
+                });
+            }
         }
-      });
-    }
-  }
-);
+    );
+})
