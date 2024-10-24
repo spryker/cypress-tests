@@ -30,6 +30,9 @@ export class ProductManagementAddPage extends BackofficePage {
 
     this.repository.getPriceTaxTab().click();
 
+    this.repository.getAllPriceInputs().each(($el) => {
+        cy.wrap($el).type(productAbstract.price, { force: true });
+    });
     this.repository.getDefaultGrossPriceInput().type(productAbstract.price);
     this.repository.getOriginalGrossPriceInput().type(productAbstract.price);
     this.repository.getDefaultNetPriceInput().type(productAbstract.price);
