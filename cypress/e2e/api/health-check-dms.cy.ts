@@ -14,7 +14,7 @@ import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
-(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@smoke' }, () => {
+(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@dms' }, () => {
   const userLoginScenario = container.get(UserLoginScenario);
   const createStoreScenario = container.get(CreateStoreScenario);
 

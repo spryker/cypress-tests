@@ -6,7 +6,7 @@ import { SelectStoreScenario } from '@scenarios/yves';
 
 (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(
   'cms page assignment to store',
-  { tags: '@smoke' },
+  { tags: '@dms' },
   () => {
     const userLoginScenario = container.get(UserLoginScenario);
     const createStoreScenario = container.get(CreateStoreScenario);

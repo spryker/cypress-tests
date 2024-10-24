@@ -16,7 +16,7 @@ import {faker} from "@faker-js/faker";
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
 
-(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@smoke' }, () => {
+(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@dms' }, () => {
 
     describe('basic checkout', {tags: ['@smoke']}, (): void => {
         const userLoginScenario = container.get(UserLoginScenario);

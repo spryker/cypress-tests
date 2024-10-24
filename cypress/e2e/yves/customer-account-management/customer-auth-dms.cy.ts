@@ -5,7 +5,7 @@ import {CreateStoreScenario, UserLoginScenario, EnableCmsBlockForAllStoresScenar
 import {SelectStoreScenario} from "../../../support/scenarios/yves";
 import {faker} from "@faker-js/faker";
 
-(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@smoke' }, () => {
+(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@dms' }, () => {
 
     describe('customer auth', {tags: ['@customer-account-management']}, (): void => {
         const userLoginScenario = container.get(UserLoginScenario);

@@ -16,7 +16,7 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
 
-(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@smoke' }, () => {
+(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@dms' }, () => {
 
     describe('publish and synchronize', {tags: ['@smoke']}, (): void => {
         const catalogPage = container.get(CatalogPage);
