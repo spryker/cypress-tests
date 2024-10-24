@@ -3,7 +3,10 @@ import { ContentRepository } from '../content-repository';
 
 @injectable()
 export class B2cContentRepository implements ContentRepository {
-  getSearchInput = (): Cypress.Chainable => cy.get('[name="q"]');
+    search(query: string): void {
+        cy.get('header .header__search-open').click();
+        cy.get('[name="q"]').first().clear().invoke('val', query);
+    }
     getFirstSuggestedCmsPage = (cmsPageName: string): Cypress.Chainable =>
         cy.get(`a:contains("${cmsPageName}")`).first();  getSearchButton = (): Cypress.Chainable => cy.get('[data-qa="component search-form"] [type="submit"]:visible');
 }

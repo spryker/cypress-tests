@@ -1,4 +1,4 @@
 export interface ContentRepository {
-    getSearchInput(): Cypress.Chainable;
+    search(query: string): void;
     getFirstSuggestedCmsPage(cmsPageName: string): Cypress.Chainable;
 }
