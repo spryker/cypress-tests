@@ -1,14 +1,13 @@
 {
   "defaultPassword": "change123",
-  "rootUser": {
-    "username": "admin@spryker.com"
-  },
   "store": {
     "name": "TEST_STORE",
     "currency": "EUR",
     "locale": "en_US",
     "country": "DE",
-    "timezone": "Europe/Berlin"
+      "timezone": "Europe/Berlin"
   },
-  "cmsPageName": "test-cms-page-dms-bo"
+  "rootUser": {
+    "username": "admin@spryker.com"
+  }
 }

@@ -1,0 +1,34 @@
+{
+  "defaultPassword": "change123",
+  "customer": {
+    "email": "spencor.hopkin@spryker.com"
+  },
+  "product1": {
+    "sku": "139_24699831",
+    "abstract_sku": "139"
+  },
+  "product2": {
+    "sku": "141_29380410",
+    "abstract_sku": "141"
+  },
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "paymentMethods": [
+    "Dummy Payment",
+    "Credit Card"
+  ],
+  "shipmentMethods": [
+    "Standard",
+    "Express"
+  ],
+  "store": {
+    "name": "TEST_STORE",
+    "currency": "EUR",
+    "locale": "en_US",
+    "country": "DE",
+    "timezone": "Europe/Berlin"
+  },
+  "warehouse": "warehouse1",
+  "productPrice": "77.99"
+}
