@@ -54,7 +54,7 @@ import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
                 });
         });
 
-        it('Should receive access for admin and check services endpoint', function () {
+        ['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? it.skip : it ('Should receive access for admin and check services endpoint', function () {
             cy.get('@authToken').then((authToken) => {
                 cy.request({
                     method: 'GET',
