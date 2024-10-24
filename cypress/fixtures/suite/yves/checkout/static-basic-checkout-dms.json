@@ -24,7 +24,7 @@
     "Express"
   ],
   "store": {
-    "name": "SMOKE_STORE_CHECKOUT",
+    "name": "TEST_STORE",
     "currency": "EUR",
     "locale": "en_US",
     "country": "DE",

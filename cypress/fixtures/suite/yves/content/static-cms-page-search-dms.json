@@ -4,11 +4,11 @@
         "username": "admin@spryker.com"
     },
     "store": {
-        "name": "CMS_PAGE_SEARCH",
+        "name": "TEST_STORE",
         "currency": "EUR",
         "locale": "en_US",
         "country": "DE",
         "timezone": "Europe/Berlin"
     },
-    "cmsPageName": "test-cms-page-dmssssfe"
+    "cmsPageName": "test-cms-page-dms"
 }

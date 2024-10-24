@@ -19,8 +19,6 @@ describe('customer auth', { tags: ['@customer-account-management'] }, (): void =
   before((): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
-    staticFixtures = Cypress.env('staticFixtures');
-
     userLoginScenario.execute({
       username: staticFixtures.rootUser.username,
       password: staticFixtures.defaultPassword,

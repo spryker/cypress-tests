@@ -21,7 +21,7 @@
     },
     "shipmentMethod": "spryker_dummy_shipment",
     "store": {
-        "name": "SMOKE_STORE",
+        "name": "TEST_STORE",
         "currency": "EUR",
         "locale": "en_US",
         "country": "DE",

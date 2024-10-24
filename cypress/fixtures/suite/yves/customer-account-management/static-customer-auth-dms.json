@@ -1,7 +1,7 @@
 {
   "defaultPassword": "change123",
   "store": {
-    "name": "CUSTOMER_AUTH",
+    "name": "TEST_STORE",
     "currency": "EUR",
     "locale": "en_US",
     "country": "DE",
