@@ -18,7 +18,7 @@ import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
   const userLoginScenario = container.get(UserLoginScenario);
   const createStoreScenario = container.get(CreateStoreScenario);
 
-  let staticFixtures: HealthCheckDmsStaticFixtures;
+    let staticFixtures: HealthCheckDmsStaticFixtures;
 
   before((): void => {
     staticFixtures = Cypress.env('staticFixtures');
@@ -54,7 +54,7 @@ import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
                 });
         });
 
-        ['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? it.skip : it ('Should receive access for admin and check services endpoint', function () {
+        ['b2c', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it ('Should receive access for admin and check services endpoint', function () {
             cy.get('@authToken').then((authToken) => {
                 cy.request({
                     method: 'GET',

@@ -14,7 +14,7 @@
   },
   "shipmentMethod": "Standard",
   "store": {
-    "name": "P_S_STORE",
+    "name": "TEST_STORE",
     "currency": "EUR",
     "locale": "en_US",
     "country": "DE",

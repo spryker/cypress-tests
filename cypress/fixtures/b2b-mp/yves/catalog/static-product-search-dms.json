@@ -1,0 +1,23 @@
+{
+    "defaultPassword": "change123",
+    "store": {
+        "name": "SMOKE_STORE",
+        "currency": "EUR",
+        "locale": "en_US",
+        "country": "DE",
+        "timezone": "Europe/Berlin"
+    },
+    "warehouse": "Warehouse2",
+    "rootUser": {
+        "username": "admin@spryker.com"
+    },
+    "productPrice": "77.99",
+    "customer": {
+        "email": "spencor.hopkin@spryker.com"
+    },
+    "concreteProduct": {
+        "name": "Smit visual flip chart - floor model with side arms - magnetic, telescope leg adjustable up to 1800 mm",
+        "sku": "100430",
+        "abstract_sku": "M11222"
+    }
+}

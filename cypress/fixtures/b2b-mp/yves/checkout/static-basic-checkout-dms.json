@@ -3,16 +3,24 @@
     "customer": {
         "email": "sonia@spryker.com"
     },
+    "product1": {
+        "sku": "425097",
+        "abstract_sku": "M26417"
+    },
+    "product2": {
+        "sku": "102920",
+        "abstract_sku": "M769"
+    },
     "rootUser": {
         "username": "admin@spryker.com"
     },
-    "paymentMethod": "Dummy Payment",
-    "product": {
-        "name": "Asus Transformer Book T200TA",
-        "sku": "139_24699831",
-        "abstract_sku": "139"
-    },
-    "shipmentMethod": "Standard",
+    "paymentMethods": [
+        "Dummy Marketplace Payment"
+    ],
+    "shipmentMethods": [
+        "Standard",
+        "Express"
+    ],
     "store": {
         "name": "TEST_STORE",
         "currency": "EUR",
@@ -20,7 +28,6 @@
         "country": "DE",
         "timezone": "Europe/Berlin"
     },
-    "warehouse1": "warehouse1",
-    "warehouse2": "warehouse2",
+    "warehouse": "warehouse1",
     "productPrice": "77.99"
 }

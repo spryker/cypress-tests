@@ -17,9 +17,10 @@ import { SelectStoreScenario } from '@scenarios/yves';
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
-      staticFixtures.cmsPageName = staticFixtures.cmsPageName + '_' + faker.string.alpha({ casing: 'lower' });
+        staticFixtures.cmsPageName = `${staticFixtures.cmsPageName}-${Date.now()}`;
 
-      userLoginScenario.execute({
+
+        userLoginScenario.execute({
         username: staticFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
