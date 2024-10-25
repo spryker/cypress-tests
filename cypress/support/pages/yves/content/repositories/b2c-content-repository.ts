@@ -8,5 +8,4 @@ export class B2cContentRepository implements ContentRepository {
         cy.get('[name="q"]').first().clear().invoke('val', query);
     }
     getFirstSuggestedCmsPage = (cmsPageName: string): Cypress.Chainable =>
-        cy.get(`a:contains("${cmsPageName}")`).first();  getSearchButton = (): Cypress.Chainable => cy.get('[data-qa="component search-form"] [type="submit"]:visible');
-}
+        cy.get(`h6:contains("Pages")`).first().closest('div').find(`a:contains("${cmsPageName}")`).first();}

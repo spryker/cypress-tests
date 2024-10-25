@@ -21,7 +21,7 @@
   },
   "shipmentMethod": "Standard",
   "store": {
-    "name": "SMOKE_STORE",
+    "name": "TEST_STORE",
     "currency": "EUR",
     "locale": "en_US",
     "country": "DE",
