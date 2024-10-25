@@ -86,7 +86,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 
                 addOneProductToCart();
 
-                checkoutScenario.execute({paymentMethod: 'dummyPaymentCreditCard'});
+                checkoutScenario.execute({paymentMethod: staticFixtures.checkoutPaymentMethod ? staticFixtures.checkoutPaymentMethod : 'dummyPaymentCreditCard'});
 
                 cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 

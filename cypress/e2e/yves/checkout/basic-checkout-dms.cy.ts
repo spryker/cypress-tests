@@ -53,7 +53,7 @@ import {faker} from "@faker-js/faker";
             ensureCatalogVisibility();
         });
 
-        it('guest customer should checkout to single shipment', (): void => { // skipB2BIt
+        skipB2BIt('guest customer should checkout to single shipment', (): void => { 
             selectStoreScenario.execute(staticFixtures.store.name);
 
             addTwoProductsToCart();

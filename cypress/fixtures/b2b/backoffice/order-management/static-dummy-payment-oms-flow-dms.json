@@ -1,0 +1,32 @@
+{
+  "cmsBlockNames": [
+    "order-shipped--html",
+    "order-shipped--text",
+    "order-confirmation--text",
+    "order-confirmation--html"
+  ],
+  "defaultPassword": "change123",
+  "customer": {
+    "email": "sonia@spryker.com"
+  },
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "paymentMethod": "Dummy Payment",
+    "checkoutPaymentMethod": "dummyPaymentInvoice",
+  "product": {
+    "name": "Asus Transformer Book T200TA",
+    "sku": "425751",
+    "abstract_sku": "143"
+  },
+  "shipmentMethod": "Standard",
+  "store": {
+    "name": "SMOKE_STORE",
+    "currency": "EUR",
+    "locale": "en_US",
+    "country": "DE",
+    "timezone": "Europe/Berlin"
+  },
+  "warehouse": "warehouse1",
+  "productPrice": "77.99"
+}
