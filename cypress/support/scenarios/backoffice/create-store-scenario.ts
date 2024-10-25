@@ -17,9 +17,7 @@ export class CreateStoreScenario {
         this.storeListPage.createStore();
         this.storeCreatePage.create(store);
 
-        if (params?.shouldTriggerPublishAndSync) {
-          cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-        }
+        cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
       }
     });
 
