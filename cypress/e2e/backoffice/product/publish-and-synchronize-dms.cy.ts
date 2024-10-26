@@ -52,7 +52,7 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
             });
 
             selectStoreScenario.execute(staticFixtures.store.name);
-            productAbstract = createProductScenario.execute();
+            productAbstract = createProductScenario.execute({shouldTriggerPublishAndSync: true});
             assignStoreRelationToExistingProduct();
         });
 

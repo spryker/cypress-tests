@@ -1,23 +1,23 @@
 {
-  "defaultPassword": "change123",
-  "rootUser": {
-    "username": "admin@spryker.com"
-  },
-  "merchantUser": {
-    "username": "harald@spryker.com"
-  },
-  "customer": {
-    "email": "spencor.hopkin@spryker.com"
-  },
-  "productOffer": {
-    "product_offer_reference": "offer423"
-  },
+    "defaultPassword": "change123",
+    "rootUser": {
+        "username": "admin@spryker.com"
+    },
+    "merchantUser": {
+        "username": "harald@spryker.com"
+    },
+    "customer": {
+        "email": "sonia@spryker.com"
+    },
+    "productOffer": {
+        "product_offer_reference": "offer423"
+    },
     "productPrice": "10.15",
     "paymentMethod": "Invoice",
     "product": {
         "name": "Sony SmartWatch 3",
-        "sku": "091_25873091",
-        "abstract_sku": "091"
+        "sku": "420550",
+        "abstract_sku": "M21091"
     },
     "shipmentMethod": "Standard",
     "store": {
@@ -35,6 +35,6 @@
         "order-confirmation--text",
         "order-confirmation--html"
     ],
-    "merchantName1": "Video King",
+    "merchantName1": "Office King",
     "merchantName2": "Spryker"
 }
