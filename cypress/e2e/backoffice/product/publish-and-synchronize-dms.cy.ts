@@ -51,13 +51,14 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
                 password: staticFixtures.defaultPassword,
             });
 
-            // selectStoreScenario.execute(staticFixtures.store.name);
-            // productAbstract = createProductScenario.execute({shouldTriggerPublishAndSync: true});
-            // assignStoreRelationToExistingProduct();
+            productAbstract = createProductScenario.execute({shouldTriggerPublishAndSync: true});
+            assignStoreRelationToExistingProduct();
         });
 
         it('backoffice user should be able to create new product that will be available for guests in storefront', (): void => {
             catalogPage.visit();
+            selectStoreScenario.execute(staticFixtures.store.name);
+
             catalogPage.search({query: productAbstract.name});
 
             // eslint-disable-next-line cypress/no-unnecessary-waiting
