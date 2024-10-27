@@ -98,13 +98,13 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
         });
 
         function assignStoreRelationToExistingProduct(): void {
+            enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse1});
 
-
-
+            enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse2});
 
             enableProductForAllStoresScenario.execute({
-                abstractProductSku: staticFixtures.product.abstract_sku,
-                productPrice: staticFixtures.productPrice,
+                abstractProductSku: productAbstract.sku,
+                productPrice: productAbstract.price,
             });
         }
     });
