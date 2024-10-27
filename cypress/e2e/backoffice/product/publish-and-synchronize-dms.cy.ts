@@ -47,8 +47,7 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 
             cy.log('logged in');
 
-            productAbstract = createProductScenario.execute({shouldTriggerPublishAndSync: true});
-           
+
         });
 
         it('backoffice user should be able to create new product that will be available for guests in storefront', (): void => {
