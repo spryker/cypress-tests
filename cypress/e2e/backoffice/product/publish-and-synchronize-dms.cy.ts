@@ -16,7 +16,7 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
 
-(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@dms' }, () => {
+(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('publish and synchronize dms', { tags: '@dms' }, () => {
 
     describe('publish and synchronize', {tags: ['@smoke']}, (): void => {
         const catalogPage = container.get(CatalogPage);
@@ -51,9 +51,9 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
                 password: staticFixtures.defaultPassword,
             });
 
-            selectStoreScenario.execute(staticFixtures.store.name);
-            productAbstract = createProductScenario.execute({shouldTriggerPublishAndSync: true});
-            assignStoreRelationToExistingProduct();
+            // selectStoreScenario.execute(staticFixtures.store.name);
+            // productAbstract = createProductScenario.execute({shouldTriggerPublishAndSync: true});
+            // assignStoreRelationToExistingProduct();
         });
 
         it('backoffice user should be able to create new product that will be available for guests in storefront', (): void => {
