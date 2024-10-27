@@ -47,7 +47,9 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 
             cy.log('logged in');
 
-
+            productAbstract = createProductScenario.execute({shouldTriggerPublishAndSync: true});
+            cy.log('product is created');
+            assignStoreRelationToExistingProduct();
         });
 
         it('backoffice user should be able to create new product that will be available for guests in storefront', (): void => {
@@ -96,12 +98,8 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
         });
 
         function assignStoreRelationToExistingProduct(): void {
-            enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse1});
 
-            cy.log('warehouse1 is enabled');
-            enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse2});
 
-            cy.log('warehouse2 is enabled');
 
 
             enableProductForAllStoresScenario.execute({
