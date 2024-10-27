@@ -5,8 +5,6 @@ import {
     EnableWarehouseForAllStoresScenario,
     CreateProductScenario,
     UserLoginScenario,
-    EnablePaymentMethodForAllStoresScenario,
-    EnableShipmentMethodForAllStoresScenario
 } from '@scenarios/backoffice';
 import { CatalogPage, ProductPage } from '@pages/yves';
 import { PublishAndSynchronizeDmsStaticFixtures } from '@interfaces/smoke';
@@ -17,7 +15,6 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
  */
 
 (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('publish and synchronize dms', { tags: '@dms' }, () => {
-
     describe('publish and synchronize', {tags: ['@smoke']}, (): void => {
         const catalogPage = container.get(CatalogPage);
         const productPage = container.get(ProductPage);
@@ -28,8 +25,6 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
         const selectStoreScenario = container.get(SelectStoreScenario);
         const enableWarehouseForAllStoresScenario = container.get(EnableWarehouseForAllStoresScenario);
         const enableProductForAllStoresScenario = container.get(EnableProductForAllStoresScenario);
-        const enableShipmentMethodForAllStoresScenario = container.get(EnableShipmentMethodForAllStoresScenario);
-        const enablePaymentMethodForAllStoresScenario = container.get(EnablePaymentMethodForAllStoresScenario);
 
         let staticFixtures: PublishAndSynchronizeDmsStaticFixtures;
         let productAbstract: ProductAbstract;
@@ -41,7 +36,6 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
                 username: staticFixtures.rootUser.username,
                 password: staticFixtures.defaultPassword,
             });
-
             createStoreScenario.execute({store: staticFixtures.store});
         });
 
@@ -59,6 +53,7 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
         });
 
         it('backoffice user should be able to create new product that will be available for guests in storefront', (): void => {
+            selectStoreScenario.execute(staticFixtures.store.name);
             catalogPage.visit();
             selectStoreScenario.execute(staticFixtures.store.name);
 
@@ -115,23 +110,6 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
                 abstractProductSku: staticFixtures.product.abstract_sku,
                 productPrice: staticFixtures.productPrice,
             });
-
-            cy.log('product is enabled');
-
-
-            enableShipmentMethodForAllStoresScenario.execute({
-                shipmentMethod: staticFixtures.shipmentMethod,
-            });
-
-            cy.log('shipment is enabled');
-
-
-            enablePaymentMethodForAllStoresScenario.execute({
-                paymentMethod: staticFixtures.paymentMethod,
-            });
-
-            cy.log('payment is enabled');
-
         }
     });
 

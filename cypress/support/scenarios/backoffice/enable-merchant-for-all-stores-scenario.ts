@@ -13,9 +13,7 @@ export class EnableMerchantForAllStoresScenario {
     this.merchantListPage.update({ query: params.merchantName, action: ActionEnum.edit });
     this.merchantUpdatePage.assignAllAvailableStore();
 
-    if (params?.shouldTriggerPublishAndSync) {
-      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-    }
+    cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
   };
 }
 

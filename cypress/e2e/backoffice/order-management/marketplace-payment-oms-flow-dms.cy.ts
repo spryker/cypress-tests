@@ -21,7 +21,6 @@ import { CatalogPage, ProductPage } from '@pages/yves';
  */
 
 (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@dms' }, () => {
-
     (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
         'marketplace payment OMS flow',
         {tags: ['@smoke']},
@@ -57,9 +56,6 @@ import { CatalogPage, ProductPage } from '@pages/yves';
                 createStoreScenario.execute({
                     store: staticFixtures.store,
                 });
-
-                // eslint-disable-next-line cypress/no-unnecessary-waiting
-                cy.wait(5000);
 
                 assignStoreRelationToExistingProduct();
 
@@ -194,19 +190,21 @@ import { CatalogPage, ProductPage } from '@pages/yves';
                 enableMerchantForAllStoresScenario.execute({
                     merchantName: staticFixtures.merchantName2,
                 });
-
-                // eslint-disable-next-line cypress/no-unnecessary-waiting
-                cy.wait(5000);
             }
 
-            function ensureCatalogVisibility(): void {
+            function ensureCatalogVisibility(attempts: number = 0, maxAttempts: number = 5): void {
                 catalogPage.visit();
                 catalogPage.hasProductsInCatalog().then((isVisible) => {
-                    if (!isVisible) {
-                        // eslint-disable-next-line cypress/no-unnecessary-waiting
-                        cy.wait(3000);
-                        ensureCatalogVisibility();
+                    if (isVisible) {
+                        return;
                     }
+
+                    if (attempts < maxAttempts) {
+                        cy.wait(3000);
+                        ensureCatalogVisibility(attempts + 1, maxAttempts);
+                    }
+
+                    throw new Error("Catalog is not visible after maximum attempts");
                 });
             }
 
@@ -268,15 +266,19 @@ import { CatalogPage, ProductPage } from '@pages/yves';
             function skipB2BIt(description: string, testFn: () => void): void {
                 (['b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
             }
-
-            function checkOrderVisibility(orderReference: string): void {
+            function checkOrderVisibility(orderReference: string, attempts: number = 0, maxAttempts: number = 5): void {
                 salesOrdersPage.visit();
                 salesOrdersPage.hasOrderByOrderReference(orderReference).then((isVisible) => {
-                    if (!isVisible) {
-                        // eslint-disable-next-line cypress/no-unnecessary-waiting
-                        cy.wait(10000);
-                        checkOrderVisibility(orderReference);
+                    if (isVisible) {
+                        return;
                     }
+
+                    if (attempts < maxAttempts) {
+                        cy.wait(10000);
+                        checkOrderVisibility(orderReference, attempts + 1, maxAttempts);
+                    }
+
+                    throw new Error(`Order with reference ${orderReference} is not visible after maximum attempts`);
                 });
             }
         }

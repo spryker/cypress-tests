@@ -21,17 +21,16 @@ export class StoreCreatePage extends BackofficePage {
     cy.wait(5000);
     this.repository.getAvailableLocaleInput(store.locale).click({ force: true });
 
+    // this.repository.getDefaultLocaleSelect().select(store.locale);
+
     this.repository.getCurrenciesTab().click();
-      cy.wait(5000);
     this.repository.getDefaultCurrencySelect().click();
-      cy.wait(5000);
     this.repository.getDefaultCurrencySearchInput().type(`${store.currency}{downarrow}{enter}`);
     this.repository.getCurrencySearchInput().clear().type(store.currency);
     this.repository.getAvailableCurrencyInput(store.currency).click({ force: true });
 
     this.repository.getDisplayRegionsTab().click();
     this.repository.getCountrySearchInput().clear().type(store.country);
-    cy.wait(5000);
     this.repository.getAvailableCountryInput(store.country).click({ force: true });
 
     this.repository.getStoreContextTabButton().click();

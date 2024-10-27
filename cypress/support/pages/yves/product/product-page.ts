@@ -16,8 +16,6 @@ export class ProductPage extends YvesPage {
       this.repository.getQuantityInput().invoke('val', params.quantity.toString());
     }
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
     this.repository.getAddToCartButton().click();
   };
 

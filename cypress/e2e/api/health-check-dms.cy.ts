@@ -1,13 +1,7 @@
 import { container } from '@utils';
 import {
     CreateStoreScenario,
-    EnableProductForAllStoresScenario,
-    EnableWarehouseForAllStoresScenario,
-    CreateProductScenario,
     UserLoginScenario,
-    EnableCmsBlockForAllStoresScenario,
-    EnablePaymentMethodForAllStoresScenario,
-    EnableShipmentMethodForAllStoresScenario
 } from '@scenarios/backoffice';
 import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
 
@@ -43,7 +37,6 @@ import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
                 method: 'POST',
                 url: Cypress.env().glueBackendUrl + '/token',
                 headers: {
-                    Store: staticFixtures.store.name,
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 body: `grantType=password&username=${staticFixtures.rootUser.username}&password=${staticFixtures.defaultPassword}`,
@@ -62,7 +55,6 @@ import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
                     headers: {
                         'Content-Type': 'application/vnd.api+json',
                         Authorization: `Bearer ${authToken}`,
-                        Store: staticFixtures.store.name,
                     },
                     failOnStatusCode: false
                 })
@@ -79,7 +71,6 @@ import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
       method: 'GET',
       url: Cypress.env().glueStorefrontUrl + '/stores',
       headers: {
-        Store: staticFixtures.store.name,
         'Content-Type': 'application/vnd.api+json',
       },
     })

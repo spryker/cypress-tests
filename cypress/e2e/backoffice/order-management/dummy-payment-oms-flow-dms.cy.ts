@@ -50,9 +50,6 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 
                 createStoreScenario.execute({store: staticFixtures.store});
 
-                // eslint-disable-next-line cypress/no-unnecessary-waiting
-                cy.wait(5000);
-
                 assignStoreRelationToExistingProduct();
 
                 selectStoreScenario.execute(staticFixtures.store.name);
@@ -141,19 +138,21 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
                         cmsBlockName: cmsBlockName,
                     });
                 });
-
-                // eslint-disable-next-line cypress/no-unnecessary-waiting
-                cy.wait(5000);
             }
 
-            function ensureCatalogVisibility(): void {
+            function ensureCatalogVisibility(attempts: number = 0, maxAttempts: number = 5): void {
                 catalogPage.visit();
                 catalogPage.hasProductsInCatalog().then((isVisible) => {
-                    if (!isVisible) {
-                        // eslint-disable-next-line cypress/no-unnecessary-waiting
-                        cy.wait(3000);
-                        ensureCatalogVisibility();
+                    if (isVisible) {
+                        return;
                     }
+
+                    if (attempts < maxAttempts) {
+                        cy.wait(3000);
+                        ensureCatalogVisibility(attempts + 1, maxAttempts);
+                    }
+
+                    throw new Error("Catalog is not visible after maximum attempts");
                 });
             }
         }

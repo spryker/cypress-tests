@@ -12,10 +12,10 @@ export class EditShipmentMethodPage extends BackofficePage {
     this.repository.getAllAvailableStoresInputs().check();
   };
 
-  addPrices = (): void => {
+  addPrices = (price: string = '0.00'): void => {
     this.repository.getPricesTab().click();
     this.repository.getPriceInputs().each(($input) => {
-      cy.wrap($input).type('0.00'); // TODO -- use fixtures
+      cy.wrap($input).type(price);
     });
   };
 
