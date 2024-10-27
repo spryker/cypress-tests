@@ -1,13 +1,7 @@
 import { container } from '@utils';
 import {
     CreateStoreScenario,
-    EnableProductForAllStoresScenario,
-    EnableWarehouseForAllStoresScenario,
-    CreateProductScenario,
     UserLoginScenario,
-    EnableCmsBlockForAllStoresScenario,
-    EnablePaymentMethodForAllStoresScenario,
-    EnableShipmentMethodForAllStoresScenario
 } from '@scenarios/backoffice';
 import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
 
