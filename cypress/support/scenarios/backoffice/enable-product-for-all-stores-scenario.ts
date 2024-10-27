@@ -16,9 +16,7 @@ export class EnableProductForAllStoresScenario {
     this.productManagementEditPage.bulkPriceUpdate(params.productPrice);
     this.productManagementEditPage.save();
 
-    if (params?.shouldTriggerPublishAndSync) {
-      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-    }
+    cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
   };
 }
 

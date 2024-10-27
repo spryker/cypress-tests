@@ -22,6 +22,7 @@ import { SuiteContentRepository } from '../../pages/yves/content/repositories/su
 import { B2cContentRepository } from '../../pages/yves/content/repositories/b2c-content-repository';
 import { B2bContentRepository } from '../../pages/yves/content/repositories/b2b-content-repository';
 import { B2cMpContentRepository } from '../../pages/yves/content/repositories/b2c-mp-content-repository';
+import { B2bMpContentRepository } from '../../pages/yves/content/repositories/b2b-mp-content-repository';
 import { SuiteCompanyUserSelectRepository } from '../../pages/yves/company/user/select/repositories/suite-company-user-select-repository';
 import { SuiteMerchantRelationRequestCreateRepository } from '../../pages/yves/company/merchant-relation-request/create/repositories/suite-merchant-relation-request-create-repository';
 import { SuiteMerchantRelationRequestDetailsRepository } from '../../pages/yves/company/merchant-relation-request/details/repositories/suite-merchant-relation-request-details-repository';
@@ -218,6 +219,7 @@ const b2bMpMappings: BindingsMap = {
     [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2bMpMerchantRelationRequestIndexRepository,
     [REPOSITORIES.MerchantRepository]: B2bMpMerchantRepository,
     [REPOSITORIES.CustomerOverviewRepository]: B2bMpCustomerOverviewRepository,
+    [REPOSITORIES.ContentRepository]: B2bMpContentRepository,
 };
 
 const mappings = {

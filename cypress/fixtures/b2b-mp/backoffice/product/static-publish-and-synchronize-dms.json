@@ -6,7 +6,7 @@
     "rootUser": {
         "username": "admin@spryker.com"
     },
-    "paymentMethod": "Dummy Payment",
+    "paymentMethod": "Dummy Marketplace Payment",
     "product": {
         "name": "Asus Transformer Book T200TA",
         "sku": "139_24699831",

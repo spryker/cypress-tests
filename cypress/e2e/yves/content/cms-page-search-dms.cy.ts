@@ -23,6 +23,8 @@ import {
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
+      
+        staticFixtures.cmsPageName = `${staticFixtures.cmsPageName}-${Date.now()}`;
 
         userLoginScenario.execute({
             username: staticFixtures.rootUser.username,

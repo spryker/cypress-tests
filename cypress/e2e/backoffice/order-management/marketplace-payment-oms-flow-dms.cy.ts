@@ -63,7 +63,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
                 ensureCatalogVisibility();
 
 
-                if (!['b2c', 'b2b'].includes(Cypress.env('repositoryId'))) {
+                if (!['b2c', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
 
                     cy.request({
                         method: 'POST',
@@ -143,6 +143,8 @@ import { CatalogPage, ProductPage } from '@pages/yves';
             });
 
             it('merchant user should be able close an order from customer', (): void => {
+                selectStoreScenario.execute(staticFixtures.store.name);
+
                 customerLoginScenario.execute({
                     email: staticFixtures.customer.email,
                     password: staticFixtures.defaultPassword,
@@ -248,13 +250,11 @@ import { CatalogPage, ProductPage } from '@pages/yves';
                     checkOrderVisibility(orderReference);
                 }
 
-                if (!['b2b-mp'].includes(Cypress.env('repositoryId'))) {
-                    salesOrdersPage.visit();
-                    salesOrdersPage.update({query: orderReference, action: ActionEnum.sendToDistribution});
+                salesOrdersPage.visit();
+                salesOrdersPage.update({query: orderReference, action: ActionEnum.sendToDistribution});
 
-                    salesOrdersPage.visit();
-                    salesOrdersPage.update({query: orderReference, action: ActionEnum.confirmAtCenter});
-                }
+                salesOrdersPage.visit();
+                salesOrdersPage.update({query: orderReference, action: ActionEnum.confirmAtCenter});
 
                 salesOrdersPage.visit();
                 salesOrdersPage.update({query: orderReference, action: ActionEnum.ship});

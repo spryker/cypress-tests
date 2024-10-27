@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { CheckoutStaticFixtures } from '@interfaces/yves';
+import {BasicCheckoutDynamicFixtures, CheckoutStaticFixtures} from '@interfaces/yves';
 import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import {CheckoutScenario, CustomerLoginScenario, SelectStoreScenario} from '@scenarios/yves';
 import {
@@ -32,9 +32,10 @@ import {faker} from "@faker-js/faker";
         const enablePaymentMethodForAllStoresScenario = container.get(EnablePaymentMethodForAllStoresScenario);
 
         let staticFixtures: CheckoutStaticFixtures;
+        let dynamicFixtures: BasicCheckoutDynamicFixtures;
 
         before((): void => {
-            staticFixtures = Cypress.env('staticFixtures');
+            ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
             userLoginScenario.execute({
                 username: staticFixtures.rootUser.username,
@@ -45,7 +46,6 @@ import {faker} from "@faker-js/faker";
 
             assignStoreRelationToExistingProduct();
         });
-
 
         beforeEach((): void => {
             selectStoreScenario.execute(staticFixtures.store.name);
@@ -72,7 +72,7 @@ import {faker} from "@faker-js/faker";
 
         it('customer should checkout to single shipment (with new shipping address)', (): void => {
             loginCustomerScenario.execute({
-                email: staticFixtures.customer.email,
+                email: dynamicFixtures.customer.email,
                 password: staticFixtures.defaultPassword,
             });
 
