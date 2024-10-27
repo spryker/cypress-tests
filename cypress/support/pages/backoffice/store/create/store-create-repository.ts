@@ -7,6 +7,7 @@ export class StoreCreateRepository {
   getNameInput = (): Cypress.Chainable => cy.get('#store_name');
   getLocalesTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-locale_store_relation"]');
   getDefaultLocaleSelect = (): Cypress.Chainable => cy.get('#select2-store_defaultLocaleIsoCode-container');
+    // getDefaultLocaleSelect = (): Cypress.Chainable => cy.get('#store_defaultLocaleIsoCode');
   getDefaultLocaleSearchInput = (): Cypress.Chainable =>
     cy.get('[aria-controls="select2-store_defaultLocaleIsoCode-results"]');
   getCurrenciesTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-locale_currency_relation"]');

@@ -17,7 +17,6 @@ import {faker} from "@faker-js/faker";
  */
 
 (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@dms' }, () => {
-
     describe('basic checkout', {tags: ['@smoke']}, (): void => {
         const userLoginScenario = container.get(UserLoginScenario);
         const createStoreScenario = container.get(CreateStoreScenario);
@@ -44,18 +43,15 @@ import {faker} from "@faker-js/faker";
 
             createStoreScenario.execute({store: staticFixtures.store});
 
-            // eslint-disable-next-line cypress/no-unnecessary-waiting
-            cy.wait(5000);
-
             assignStoreRelationToExistingProduct();
-
-            selectStoreScenario.execute(staticFixtures.store.name);
-            ensureCatalogVisibility();
         });
 
-        skipB2BIt('guest customer should checkout to single shipment', (): void => { 
-            selectStoreScenario.execute(staticFixtures.store.name);
 
+        beforeEach((): void => {
+            selectStoreScenario.execute(staticFixtures.store.name);
+        });
+
+        skipB2BIt('guest customer should checkout to single shipment', (): void => {
             addTwoProductsToCart();
             checkoutScenario.execute({isGuest: true, paymentMethod: getPaymentMethodBasedOnEnv()});
 
@@ -63,8 +59,6 @@ import {faker} from "@faker-js/faker";
         });
 
         it.skip('guest customer should checkout to multi shipment address', (): void => {
-            selectStoreScenario.execute(staticFixtures.store.name);
-
             addTwoProductsToCart();
 
             checkoutScenario.execute({
@@ -77,15 +71,10 @@ import {faker} from "@faker-js/faker";
         });
 
         it('customer should checkout to single shipment (with new shipping address)', (): void => {
-
-            selectStoreScenario.execute(staticFixtures.store.name);
-
             loginCustomerScenario.execute({
                 email: staticFixtures.customer.email,
                 password: staticFixtures.defaultPassword,
             });
-
-            selectStoreScenario.execute(staticFixtures.store.name);
 
             addTwoProductsToCart();
             checkoutScenario.execute({paymentMethod: getPaymentMethodBasedOnEnv()});
@@ -98,8 +87,6 @@ import {faker} from "@faker-js/faker";
                 email: staticFixtures.customer.email,
                 password: staticFixtures.defaultPassword,
             });
-
-            selectStoreScenario.execute(staticFixtures.store.name);
 
             addTwoProductsToCart();
             checkoutScenario.execute({isMultiShipment: true, paymentMethod: getPaymentMethodBasedOnEnv()});
@@ -150,20 +137,6 @@ import {faker} from "@faker-js/faker";
                 enablePaymentMethodForAllStoresScenario.execute({
                     paymentMethod: methodName,
                 }));
-
-            // eslint-disable-next-line cypress/no-unnecessary-waiting
-            cy.wait(5000);
-        }
-
-        function ensureCatalogVisibility(): void {
-            catalogPage.visit();
-            catalogPage.hasProductsInCatalog().then((isVisible) => {
-                if (!isVisible) {
-                    // eslint-disable-next-line cypress/no-unnecessary-waiting
-                    cy.wait(3000);
-                    ensureCatalogVisibility();
-                }
-            });
         }
     });
 })

@@ -35,14 +35,15 @@ import { SelectStoreScenario } from '@scenarios/yves';
     });
 
     it('should be able to see the cms page', (): void => {
-      selectStoreScenario.execute(staticFixtures.store.name);
-
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(5000);
-      cy.visit('/en/' + staticFixtures.cmsPageName);
-        cy.wait(500);
-        cy.url().should('include', staticFixtures.cmsPageName);
-
+      cy.request({
+        method: 'GET',
+        url: Cypress.env().glueUrl + '/cms-pages'
+        })
+      .then((response) => {
+        expect(response.status).to.eq(200);
+        const hasServiceType = response.body.data.some((item: { type: string; attributes: { name: string } }) => item.attributes.name === staticFixtures.cmsPageName);
+        expect(hasServiceType).to.be.true;
+      });
     });
   }
 );

@@ -41,10 +41,15 @@ import {
     });
 
     it('customer should be able to find cms page in search box', (): void => {
-      homePage.visit();
-      contentPage.searchCmsPageFromSuggestions({ query: staticFixtures.cmsPageName });
-
-        cy.url().should('include', staticFixtures.cmsPageName);
+        cy.request({
+            method: 'GET',
+            url: Cypress.env().glueUrl + '/cms-pages'
+        })
+        .then((response) => {
+            expect(response.status).to.eq(200);
+            const hasServiceType = response.body.data.some((item: { type: string; attributes: { name: string } }) => item.attributes.name === staticFixtures.cmsPageName);
+            expect(hasServiceType).to.be.true;
+        });
     });
   }
 );

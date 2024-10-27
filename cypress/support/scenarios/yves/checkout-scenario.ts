@@ -21,13 +21,10 @@ export class CheckoutScenario {
 
   execute = (params?: ExecuteParams): void => {
     this.cartPage.visit();
-      cy.wait(5000);
     this.cartPage.startCheckout();
-      cy.wait(5000);
     if (params?.isGuest) {
       this.checkoutCustomerPage.checkoutAsGuest();
     }
-      cy.wait(5000);
     this.fillShippingAddress(params);
     this.checkoutShipmentPage.setStandardShippingMethod();
     this.fillPaymentCheckoutStep(params);

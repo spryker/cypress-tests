@@ -5,8 +5,6 @@ import {
     EnableWarehouseForAllStoresScenario,
     CreateProductScenario,
     UserLoginScenario,
-    EnablePaymentMethodForAllStoresScenario,
-    EnableShipmentMethodForAllStoresScenario
 } from '@scenarios/backoffice';
 import { CatalogPage, ProductPage } from '@pages/yves';
 import { PublishAndSynchronizeDmsStaticFixtures } from '@interfaces/smoke';
@@ -17,7 +15,6 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
  */
 
 (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@dms' }, () => {
-
     describe('publish and synchronize', {tags: ['@smoke']}, (): void => {
         const catalogPage = container.get(CatalogPage);
         const productPage = container.get(ProductPage);
@@ -28,8 +25,6 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
         const selectStoreScenario = container.get(SelectStoreScenario);
         const enableWarehouseForAllStoresScenario = container.get(EnableWarehouseForAllStoresScenario);
         const enableProductForAllStoresScenario = container.get(EnableProductForAllStoresScenario);
-        const enableShipmentMethodForAllStoresScenario = container.get(EnableShipmentMethodForAllStoresScenario);
-        const enablePaymentMethodForAllStoresScenario = container.get(EnablePaymentMethodForAllStoresScenario);
 
         let staticFixtures: PublishAndSynchronizeDmsStaticFixtures;
         let productAbstract: ProductAbstract;
@@ -41,7 +36,6 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
                 username: staticFixtures.rootUser.username,
                 password: staticFixtures.defaultPassword,
             });
-
             createStoreScenario.execute({store: staticFixtures.store});
         });
 
@@ -51,12 +45,12 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
                 password: staticFixtures.defaultPassword,
             });
 
-            selectStoreScenario.execute(staticFixtures.store.name);
             productAbstract = createProductScenario.execute();
             assignStoreRelationToExistingProduct();
         });
 
         it('backoffice user should be able to create new product that will be available for guests in storefront', (): void => {
+            selectStoreScenario.execute(staticFixtures.store.name);
             catalogPage.visit();
             catalogPage.search({query: productAbstract.name});
 
@@ -105,14 +99,6 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
             enableProductForAllStoresScenario.execute({
                 abstractProductSku: staticFixtures.product.abstract_sku,
                 productPrice: staticFixtures.productPrice,
-            });
-
-            enableShipmentMethodForAllStoresScenario.execute({
-                shipmentMethod: staticFixtures.shipmentMethod,
-            });
-
-            enablePaymentMethodForAllStoresScenario.execute({
-                paymentMethod: staticFixtures.paymentMethod,
             });
         }
     });
