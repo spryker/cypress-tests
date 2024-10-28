@@ -11,22 +11,13 @@ export class EnableShipmentMethodForAllStoresScenario {
 
     execute = (params: ExecuteParams): void => {
         this.listShipmentMethodPage.visit();
-        const initialShipments = this.listShipmentMethodPage.find({ query: params.shipmentMethod });
 
-        initialShipments.first().should('exist').then(($storeRow) => {
-            cy.wrap($storeRow).find('a:contains("Edit")').should('exist').click();
+        // Waits for shipments to load
+        this.listShipmentMethodPage.interceptTable({ url: 'shipment-gui/shipment-method/table**' });
 
-            // Perform the necessary update actions here
-            this.editShipmentMethodPage.assignAllAvailableStore();
-            this.editShipmentMethodPage.addPrices();
-            this.editShipmentMethodPage.save();
-
-            this.listShipmentMethodPage.visit();
-        });
-
-        initialShipments.should('exist').its('length').then((count) => {
-            for (let index = 1; index < count; index++) {
-                this.listShipmentMethodPage.find({ query: params.shipmentMethod }).should('exist').eq(index).should('exist').then(($storeRow) => {
+        this.listShipmentMethodPage.find({ query: params.shipmentMethod }).its('length').then((count) => {
+            for (let index = 0; index < count; index++) {
+                this.listShipmentMethodPage.find({ query: params.shipmentMethod }).eq(index).should('exist').then(($storeRow) => {
                     cy.wrap($storeRow).find('a:contains("Edit")').should('exist').click();
 
                     // Perform the necessary update actions here
@@ -34,7 +25,11 @@ export class EnableShipmentMethodForAllStoresScenario {
                     this.editShipmentMethodPage.addPrices();
                     this.editShipmentMethodPage.save();
 
+                    // Go back to the list page to update the next shipment method
                     this.listShipmentMethodPage.visit();
+
+                    // Waits for shipments to load again
+                    this.listShipmentMethodPage.interceptTable({ url: 'shipment-gui/shipment-method/table**' });
                 });
             }
         });
