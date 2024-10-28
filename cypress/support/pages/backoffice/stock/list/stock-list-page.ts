@@ -13,6 +13,8 @@ export class StockListPage extends BackofficePage {
   update = (params: UpdateParams): void => {
     const findParams = { query: params.query, expectedCount: 1 };
 
+
+    cy.wait(10000);
     this.find(findParams).then(($stockRow) => {
       if (params.action === ActionEnum.edit) {
         cy.wrap($stockRow).find(this.repository.getEditButtonSelector()).should('exist').click();
