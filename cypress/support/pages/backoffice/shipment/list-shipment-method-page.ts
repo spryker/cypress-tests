@@ -15,9 +15,9 @@ export class ListShipmentMethodPage extends BackofficePage {
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(params.query);
 
-    this.interceptTable({ url: 'shipment-gui/shipment-method/table**', expectedCount: params.expectedCount });
-
-    return cy.get('tbody > tr:visible');
+    return this.interceptTable(
+        { url: 'shipment-gui/shipment-method/table**', expectedCount: params.expectedCount },
+        () => cy.get('tbody > tr:visible'));
   };
 }
 
