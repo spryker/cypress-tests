@@ -12,9 +12,21 @@ export class EnablePaymentMethodForAllStoresScenario {
     execute = (params: ExecuteParams): void => {
         this.listPaymentMethodPage.visit();
 
-        this.listPaymentMethodPage.find({ query: params.paymentMethod }).its('length').then((count) => {
-            for (let index = 0; index < count; index++) {
-                this.listPaymentMethodPage.find({ query: params.paymentMethod }).eq(index).then(($storeRow) => {
+        const initialShipments = this.listPaymentMethodPage.find({ query: params.paymentMethod });
+
+        initialShipments.first().should('exist').then(($storeRow) => {
+            cy.wrap($storeRow).find('a:contains("Edit")').should('exist').click();
+
+            // Perform the necessary update actions here
+            this.editPaymentMethodPage.assignAllAvailableStore();
+            this.editPaymentMethodPage.save();
+
+            this.listPaymentMethodPage.visit();
+        });
+
+        initialShipments.should('exist').its('length').then((count) => {
+            for (let index = 1; index < count; index++) {
+                this.listPaymentMethodPage.find({ query: params.paymentMethod }).should('exist').eq(index).should('exist').then(($storeRow) => {
                     cy.wrap($storeRow).find('a:contains("Edit")').should('exist').click();
 
                     // Perform the necessary update actions here
