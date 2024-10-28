@@ -17,7 +17,6 @@ import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
   before((): void => {
     staticFixtures = Cypress.env('staticFixtures');
     createNewStoreInBackoffice();
-
     cy.runCliCommands(['glue glue-api:controller:cache:warm-up']);
   });
 
