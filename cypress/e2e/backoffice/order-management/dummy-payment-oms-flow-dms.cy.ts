@@ -17,7 +17,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
 
-(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@dms' }, () => {
+(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('dummy payment OMS flow dms', { tags: '@dms' }, () => {
     (['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
         'dummy payment OMS flow',
         {tags: ['@smoke']},

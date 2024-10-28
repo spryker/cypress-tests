@@ -45,10 +45,7 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
                 password: staticFixtures.defaultPassword,
             });
 
-            cy.log('logged in');
-
             productAbstract = createProductScenario.execute({shouldTriggerPublishAndSync: true});
-            cy.log('product is created');
             assignStoreRelationToExistingProduct();
         });
 
@@ -100,15 +97,11 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
         function assignStoreRelationToExistingProduct(): void {
             enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse1});
 
-            cy.log('warehouse1 is enabled');
             enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse2});
 
-            cy.log('warehouse2 is enabled');
-
-
             enableProductForAllStoresScenario.execute({
-                abstractProductSku: staticFixtures.product.abstract_sku,
-                productPrice: staticFixtures.productPrice,
+                abstractProductSku: productAbstract.sku,
+                productPrice: productAbstract.price,
             });
         }
     });

@@ -20,7 +20,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
 
-(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('health check dms', { tags: '@dms' }, () => {
+(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('marketplace payment OMS flow dms', { tags: '@dms' }, () => {
     (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
         'marketplace payment OMS flow',
         {tags: ['@smoke']},
