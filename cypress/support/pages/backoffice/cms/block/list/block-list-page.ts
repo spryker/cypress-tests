@@ -24,12 +24,10 @@ export class BlockListPage extends BackofficePage {
         cy.get(searchSelector).clear();
         cy.get(searchSelector).type(params.query);
 
-        return this.interceptTable(
-            { url: 'cms-block-gui/list-block/table**', expectedCount: params.expectedCount },
-            () => {
-                return this.repository.getFirstTableRow();
-            })
-    };
+    this.interceptTable({ url: 'cms-block-gui/list-block/table**', expectedCount: params.expectedCount });
+
+    return this.repository.getFirstTableRow();
+  };
 }
 
 interface FindParams {

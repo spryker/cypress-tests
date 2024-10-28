@@ -9,22 +9,17 @@ export class BackofficePage extends AbstractPage {
     cy.visitBackoffice(this.PAGE_URL, options);
   };
 
-  protected interceptTable = (params: InterceptGuiTableParams, callback?: () => void): Cypress.Chainable => {
+  protected interceptTable = (params: InterceptGuiTableParams, callback?: () => void): void => {
     const expectedCount = params.expectedCount ?? 1;
     const interceptAlias = this.faker.string.uuid();
 
     cy.intercept('GET', params.url).as(interceptAlias);
 
-      return cy.wait(`@${interceptAlias}`)
+    cy.wait(`@${interceptAlias}`)
           .its('response.body.recordsFiltered')
           .should((total) => {
               const valueToBeAtMost = expectedCount + Cypress.currentRetry;
               assert.isTrue(total === expectedCount || total >= valueToBeAtMost);
-          })
-          .then(() => {
-              if (callback) {
-                  callback();
-              }
           });
   };
 }
