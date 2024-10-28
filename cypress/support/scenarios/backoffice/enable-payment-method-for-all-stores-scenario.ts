@@ -12,21 +12,12 @@ export class EnablePaymentMethodForAllStoresScenario {
     execute = (params: ExecuteParams): void => {
         this.listPaymentMethodPage.visit();
 
-        const initialShipments = this.listPaymentMethodPage.find({ query: params.paymentMethod });
+        // Waits for payment methods to load
+        this.listPaymentMethodPage.interceptTable({ url: 'payment-gui/payment-method/table**' });
 
-        initialShipments.first().should('exist').then(($storeRow) => {
-            cy.wrap($storeRow).find('a:contains("Edit")').should('exist').click();
-
-            // Perform the necessary update actions here
-            this.editPaymentMethodPage.assignAllAvailableStore();
-            this.editPaymentMethodPage.save();
-
-            this.listPaymentMethodPage.visit();
-        });
-
-        initialShipments.should('exist').its('length').then((count) => {
-            for (let index = 1; index < count; index++) {
-                this.listPaymentMethodPage.find({ query: params.paymentMethod }).should('exist').eq(index).should('exist').then(($storeRow) => {
+        this.listPaymentMethodPage.find({ query: params.paymentMethod }).its('length').then((count) => {
+            for (let index = 0; index < count; index++) {
+                this.listPaymentMethodPage.find({ query: params.paymentMethod }).eq(index).should('exist').then(($storeRow) => {
                     cy.wrap($storeRow).find('a:contains("Edit")').should('exist').click();
 
                     // Perform the necessary update actions here
@@ -35,6 +26,9 @@ export class EnablePaymentMethodForAllStoresScenario {
 
                     // Go back to the list page to update the next payment method
                     this.listPaymentMethodPage.visit();
+
+                    // Waits for payment methods to load again
+                    this.listPaymentMethodPage.interceptTable({ url: 'payment-gui/payment-method/table**' });
                 });
             }
         });
