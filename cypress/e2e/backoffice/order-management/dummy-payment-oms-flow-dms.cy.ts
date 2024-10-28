@@ -129,9 +129,10 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
                     shipmentMethod: staticFixtures.shipmentMethod,
                 });
 
-                enablePaymentMethodForAllStoresScenario.execute({
-                    paymentMethod: staticFixtures.paymentMethod,
-                });
+                cy.log(staticFixtures.paymentMethod);
+                // enablePaymentMethodForAllStoresScenario.execute({
+                //     paymentMethod: staticFixtures.paymentMethod,
+                // });
 
                 staticFixtures.cmsBlockNames.forEach((cmsBlockName) => {
                     enableCmsBlockForAllStoresScenario.execute({
