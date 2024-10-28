@@ -20,6 +20,8 @@ export class EnableShipmentMethodForAllStoresScenario {
                   this.editShipmentMethodPage.assignAllAvailableStore();
                   this.editShipmentMethodPage.addPrices();
                   this.editShipmentMethodPage.save();
+
+                  this.listShipmentMethodPage.visit();
               });
           }
       });
