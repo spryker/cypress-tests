@@ -20,9 +20,6 @@ export class EnablePaymentMethodForAllStoresScenario {
                     // Perform the necessary update actions here
                     this.editPaymentMethodPage.assignAllAvailableStore();
                     this.editPaymentMethodPage.save();
-
-                    // Go back to the list page to update the next payment method
-                    this.listPaymentMethodPage.visit();
                 });
             }
         });
