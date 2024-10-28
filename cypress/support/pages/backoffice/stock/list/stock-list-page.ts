@@ -13,8 +13,6 @@ export class StockListPage extends BackofficePage {
   update = (params: UpdateParams): void => {
     const findParams = { query: params.query, expectedCount: 1 };
 
-
-    cy.wait(10000);
     this.find(findParams).then(($stockRow) => {
       if (params.action === ActionEnum.edit) {
         cy.wrap($stockRow).find(this.repository.getEditButtonSelector()).should('exist').click();
@@ -31,9 +29,10 @@ export class StockListPage extends BackofficePage {
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(params.query);
 
-    this.interceptTable({ url: '/stock-gui/warehouse/table**', expectedCount: params.expectedCount });
-
-    return this.repository.getFirstTableRow();
+      return this.interceptTable({
+        url: '/stock-gui/warehouse/table**',
+        expectedCount: params.expectedCount
+    }, () => this.repository.getFirstTableRow());
   };
 }
 

@@ -20,9 +20,6 @@ export class EnableShipmentMethodForAllStoresScenario {
                   this.editShipmentMethodPage.assignAllAvailableStore();
                   this.editShipmentMethodPage.addPrices();
                   this.editShipmentMethodPage.save();
-
-                  // Go back to the list page to update the next payment method
-                  this.listShipmentMethodPage.visit();
               });
           }
       });

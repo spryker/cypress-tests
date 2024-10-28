@@ -15,9 +15,10 @@ export class ListPaymentMethodPage extends BackofficePage {
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(params.query);
 
-    this.interceptTable({ url: 'payment-gui/payment-method/table**', expectedCount: params.expectedCount });
-
-    return cy.get('tbody > tr:visible');
+      return this.interceptTable({
+          url: 'payment-gui/payment-method/table**',
+          expectedCount: params.expectedCount
+      }, () => cy.get('tbody > tr:visible'));
   };
 }
 
