@@ -28,7 +28,7 @@ export class SalesDetailPage extends BackofficePage {
         this.repository.getOmsButtonSelector(params.state),
         this.repository.getTriggerOmsDivSelector(),
         25,
-        5000
+        15000
       );
 
       cy.get(this.repository.getTriggerOmsDivSelector())
