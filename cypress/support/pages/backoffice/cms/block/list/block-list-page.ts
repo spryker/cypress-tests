@@ -26,7 +26,9 @@ export class BlockListPage extends BackofficePage {
 
         return this.interceptTable(
             { url: 'cms-block-gui/list-block/table**', expectedCount: params.expectedCount },
-            () => this.repository.getFirstTableRow());
+            () => {
+                return this.repository.getFirstTableRow();
+            })
     };
 }
 
