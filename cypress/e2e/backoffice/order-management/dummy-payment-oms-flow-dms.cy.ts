@@ -83,13 +83,12 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 
                 addOneProductToCart();
 
-                checkoutScenario.execute({paymentMethod: staticFixtures.checkoutPaymentMethod ? staticFixtures.checkoutPaymentMethod : 'dummyPaymentCreditCard'});
+                checkoutScenario.execute({
+                    paymentMethod: staticFixtures.checkoutPaymentMethod ? staticFixtures.checkoutPaymentMethod : 'dummyPaymentCreditCard',
+                    shouldTriggerOmsInCli: true,
+                });
 
                 cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
-
-                cy.runCliCommands(['console oms:check-condition']);
-                cy.runCliCommands(['console oms:check-timeout']);
-
 
                 userLoginScenario.execute({
                     username: staticFixtures.rootUser.username,
