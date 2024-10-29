@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { MarketplacePaymentOmsFlowStaticFixtures } from '@interfaces/smoke';
+import { MarketplacePaymentOmsFlowStaticFixtures, MarketplacePaymentOmsFlowDynamicFixtures } from '@interfaces/backoffice';
 import { ActionEnum, SalesOrdersPage } from '@pages/mp';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import {
@@ -46,9 +46,10 @@ import { CatalogPage, ProductPage } from '@pages/yves';
             const enableShipmentTypeForAllStoresScenario = container.get(EnableShipmentTypeForAllStoresScenario);
 
             let staticFixtures: MarketplacePaymentOmsFlowStaticFixtures;
+            let dynamicFixtures: MarketplacePaymentOmsFlowDynamicFixtures;
 
             before((): void => {
-                staticFixtures = Cypress.env('staticFixtures');
+                ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
                 userLoginScenario.execute({
                     username: staticFixtures.rootUser.username,
@@ -75,7 +76,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
             skipB2BIt('merchant user should be able close an order from guest', (): void => {
                 addOneProductToCart();
-                checkoutMpScenario.execute({isGuest: true});
+                checkoutMpScenario.execute({isGuest: true, shouldTriggerOmsInCli: true});
 
                 userLoginScenario.execute({
                     username: staticFixtures.rootUser.username,
@@ -86,15 +87,15 @@ import { CatalogPage, ProductPage } from '@pages/yves';
             });
 
             it('merchant user should be able close an order from customer', (): void => {
-                selectStoreScenario.execute(staticFixtures.store.name);
-
                 customerLoginScenario.execute({
-                    email: staticFixtures.customer.email,
+                    email: dynamicFixtures.customer.email,
                     password: staticFixtures.defaultPassword,
                 });
 
+                selectStoreScenario.execute(staticFixtures.store.name);
+
                 addOneProductToCart();
-                checkoutMpScenario.execute();
+                checkoutMpScenario.execute({shouldTriggerOmsInCli: true});
 
                 userLoginScenario.execute({
                     username: staticFixtures.rootUser.username,
@@ -220,6 +221,8 @@ import { CatalogPage, ProductPage } from '@pages/yves';
                     if (attempts < maxAttempts) {
                         cy.wait(10000);
                         checkOrderVisibility(orderReference, attempts + 1, maxAttempts);
+
+                        return;
                     }
 
                     throw new Error(`Order with reference ${orderReference} is not visible after maximum attempts`);
