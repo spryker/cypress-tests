@@ -106,11 +106,17 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 
             function closeOrderFromBackoffice(): void {
                 salesDetailPage.triggerOms({state: 'Pay'});
+                cy.log('Pay is triggered');
                 salesDetailPage.triggerOms({state: 'Skip timeout'});
+                cy.log('Skip is triggered');
                 salesDetailPage.triggerOms({state: 'skip picking'});
+                cy.log('skip is triggered');
                 salesDetailPage.triggerOms({state: 'Ship'});
+                cy.log('Ship is triggered');
                 salesDetailPage.triggerOms({state: 'Stock update'});
+                cy.log('Stock is triggered');
                 salesDetailPage.triggerOms({state: 'Close'});
+                cy.log('Close is triggered');
             }
 
             function skipB2BIt(description: string, testFn: () => void): void {
