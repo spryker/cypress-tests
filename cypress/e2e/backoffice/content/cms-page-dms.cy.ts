@@ -36,6 +36,7 @@ import { SelectStoreScenario } from '@scenarios/yves';
     });
 
     it('should be able to see the cms page', (): void => {
+        selectStoreScenario.execute(staticFixtures.store.name);
       cy.request({
         method: 'GET',
         url: Cypress.env().glueUrl + '/cms-pages'
