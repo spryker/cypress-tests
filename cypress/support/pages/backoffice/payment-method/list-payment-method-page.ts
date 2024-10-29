@@ -19,6 +19,10 @@ export class ListPaymentMethodPage extends BackofficePage {
 
     return cy.get('tbody > tr:visible');
   };
+
+  clickEditAction = ($row: JQuery<HTMLElement>): void => {
+    cy.wrap($row).find(this.repository.getEditButtonSelector()).click();
+  };
 }
 
 interface FindParams {

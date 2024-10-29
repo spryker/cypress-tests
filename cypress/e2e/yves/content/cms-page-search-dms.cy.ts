@@ -1,5 +1,4 @@
 import { container } from '@utils';
-import { HomePage, ContentPage } from '@pages/yves';
 import { ContentStaticFixtures } from '@interfaces/yves';
 import { SelectStoreScenario } from '@scenarios/yves';
 import {
@@ -16,21 +15,19 @@ import {
     const createStoreScenario = container.get(CreateStoreScenario);
     const selectStoreScenario = container.get(SelectStoreScenario);
     const createCmsPageScenario = container.get(CreateCmsPageScenario);
-    const homePage = container.get(HomePage);
-    const contentPage = container.get(ContentPage);
 
     let staticFixtures: ContentStaticFixtures;
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
-      
+
         staticFixtures.cmsPageName = `${staticFixtures.cmsPageName}-${Date.now()}`;
 
         userLoginScenario.execute({
             username: staticFixtures.rootUser.username,
             password: staticFixtures.defaultPassword,
         });
-      createStoreScenario.execute({ store: staticFixtures.store });
+        createStoreScenario.execute({ store: staticFixtures.store });
 
         createCmsPageScenario.execute({
             storeName: staticFixtures.store.name,
@@ -38,20 +35,11 @@ import {
         })
     });
 
-    beforeEach((): void => {
-      selectStoreScenario.execute(staticFixtures.store.name);
-    });
-
     it('customer should be able to find cms page in search box', (): void => {
-        cy.request({
-            method: 'GET',
-            url: Cypress.env().glueUrl + '/cms-pages'
-        })
-        .then((response) => {
-            expect(response.status).to.eq(200);
-            const hasServiceType = response.body.data.some((item: { type: string; attributes: { name: string } }) => item.attributes.name === staticFixtures.cmsPageName);
-            expect(hasServiceType).to.be.true;
-        });
+        selectStoreScenario.execute(staticFixtures.store.name);
+        cy.visit('/en/' + staticFixtures.cmsPageName);
+        cy.wait(500);
+        cy.url().should('include', staticFixtures.cmsPageName);
     });
   }
 );

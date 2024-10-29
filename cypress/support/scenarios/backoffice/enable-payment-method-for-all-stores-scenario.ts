@@ -18,7 +18,7 @@ export class EnablePaymentMethodForAllStoresScenario {
         this.listPaymentMethodPage.find({ query: params.paymentMethod }).its('length').then((count) => {
             for (let index = 0; index < count; index++) {
                 this.listPaymentMethodPage.find({ query: params.paymentMethod }).eq(index).should('exist').then(($storeRow) => {
-                    cy.wrap($storeRow).find('a:contains("Edit")').should('exist').click();
+                    this.listPaymentMethodPage.clickEditAction($storeRow);
 
                     // Perform the necessary update actions here
                     this.editPaymentMethodPage.assignAllAvailableStore();

@@ -28,12 +28,11 @@ import {
       staticFixtures = Cypress.env('staticFixtures');
 
       assignStoreRelationToExistingProduct();
-      selectStoreScenario.execute(staticFixtures.store.name);
-      ensureCatalogVisibility();
     });
 
     beforeEach((): void => {
       selectStoreScenario.execute(staticFixtures.store.name);
+      ensureCatalogVisibility();
     });
 
     skipB2BIt('guest should be able to find product abstract in catalog', (): void => {
@@ -103,14 +102,19 @@ import {
       });
     }
 
-    function ensureCatalogVisibility(): void {
+    function ensureCatalogVisibility(attempts: number = 0, maxAttempts: number = 5): void {
       catalogPage.visit();
       catalogPage.hasProductsInCatalog().then((isVisible) => {
-        if (!isVisible) {
-          // eslint-disable-next-line cypress/no-unnecessary-waiting
-          cy.wait(3000);
-          ensureCatalogVisibility();
-        }
+      if (isVisible) {
+        return;
+      }
+
+      if (attempts < maxAttempts) {
+        cy.wait(3000);
+        ensureCatalogVisibility(attempts + 1, maxAttempts);
+      }
+
+      throw new Error("Catalog is not visible after maximum attempts");
       });
     }
   }
