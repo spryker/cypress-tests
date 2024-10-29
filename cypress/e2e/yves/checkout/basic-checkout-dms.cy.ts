@@ -131,6 +131,7 @@ import {faker} from "@faker-js/faker";
             staticFixtures.shipmentMethods.forEach((shipmentMethod) =>
                 enableShipmentMethodForAllStoresScenario.execute({
                     shipmentMethod: shipmentMethod,
+                    storeName: staticFixtures.store.name,
                 }));
 
             staticFixtures.paymentMethods.forEach((methodName) =>

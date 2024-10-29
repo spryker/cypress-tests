@@ -130,6 +130,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 
                 enableShipmentMethodForAllStoresScenario.execute({
                     shipmentMethod: staticFixtures.shipmentMethod,
+                    storeName: staticFixtures.store.name,
                 });
 
                 enablePaymentMethodForAllStoresScenario.execute({

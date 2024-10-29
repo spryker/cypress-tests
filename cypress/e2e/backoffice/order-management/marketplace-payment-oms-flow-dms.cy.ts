@@ -115,6 +115,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
                 enableShipmentMethodForAllStoresScenario.execute({
                     shipmentMethod: staticFixtures.shipmentMethod,
+                    storeName: staticFixtures.store.name,
                 });
 
                 enablePaymentMethodForAllStoresScenario.execute({

@@ -18,18 +18,24 @@ export class EnableShipmentMethodForAllStoresScenario {
         this.listShipmentMethodPage.find({ query: params.shipmentMethod }).its('length').then((count) => {
             for (let index = 0; index < count; index++) {
                 this.listShipmentMethodPage.find({ query: params.shipmentMethod }).eq(index).should('exist').then(($storeRow) => {
-                    this.listShipmentMethodPage.clickEditAction($storeRow);
+                    if (
+                      !this.listShipmentMethodPage.rowIsAssignedToStore(
+                          { row: $storeRow, storeName: params.storeName }
+                      )
+                    ) {
+                      this.listShipmentMethodPage.clickEditAction($storeRow);
 
-                    // Perform the necessary update actions here
-                    this.editShipmentMethodPage.assignAllAvailableStore();
-                    this.editShipmentMethodPage.addPrices();
-                    this.editShipmentMethodPage.save();
+                      // Perform the necessary update actions here
+                      this.editShipmentMethodPage.assignAllAvailableStore();
+                      this.editShipmentMethodPage.addPrices();
+                      this.editShipmentMethodPage.save();
 
-                    // Go back to the list page to update the next shipment method
-                    this.listShipmentMethodPage.visit();
+                      // Go back to the list page to update the next shipment method
+                      this.listShipmentMethodPage.visit();
 
-                    // Waits for shipments to load again
-                    this.listShipmentMethodPage.interceptTable({ url: 'shipment-gui/shipment-method/table**' });
+                      // Waits for shipments to load again
+                      this.listShipmentMethodPage.interceptTable({ url: 'shipment-gui/shipment-method/table**' });
+                    }
                 });
             }
         });
@@ -41,6 +47,7 @@ export class EnableShipmentMethodForAllStoresScenario {
 }
 
 interface ExecuteParams {
+  storeName?: string;
   shipmentMethod: string;
   shouldTriggerPublishAndSync?: boolean;
 }

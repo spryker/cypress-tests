@@ -20,12 +20,25 @@ export class ListShipmentMethodPage extends BackofficePage {
     return cy.get('tbody > tr:visible');
   };
 
-  clickEditAction = ($row: JQuery<HTMLElement>): void => {
-    cy.wrap($row).find(this.repository.getEditButtonSelector()).should('exist').click()
+  clickEditAction = (row: JQuery<HTMLElement>): void => {
+    cy.wrap(row).find(this.repository.getEditButtonSelector()).should('exist').click()
+  };
+
+  rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
+      if(typeof params.storeName !== 'string') {
+          return false;
+      }
+
+      return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
   };
 }
 
 interface FindParams {
   query: string;
   expectedCount?: number;
+}
+
+interface IsAssignedParams {
+  row: JQuery<HTMLElement>;
+  storeName?: string;
 }
