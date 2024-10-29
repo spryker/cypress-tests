@@ -4,14 +4,13 @@ import { injectable } from 'inversify';
 @injectable()
 @autoWired
 export class CmsPlaceholderEditRepository {
-  getCollapsedIbox = (): Cypress.Chainable =>
-    cy.get('#tab-content-title .placeholder-translation-container > .collapsed > .ibox-title .collapse-link');
+  getTitleBlock = (): Cypress.Chainable => cy.get('#tab-content-title');
 
-  getDeLocalizedTextarea = (): Cypress.Chainable =>
-    cy.get('#cms_glossary_glossaryAttributes_0_translations_0_translation + .note-editor .note-editable');
+  getAllIboxesSelector = (): string => '.placeholder-translation-container > .ibox.nested';
 
-  getEnLocalizedTextarea = (): Cypress.Chainable =>
-    cy.get('#cms_glossary_glossaryAttributes_0_translations_1_translation + .note-editor .note-editable');
+  getAllCollapsedIboxButtonsSelector = (): string => '.placeholder-translation-container >  .collapsed .collapse-link';
+
+  getLocalizedTextareaSelector = (): string => '.note-editor .note-editable';
 
   getPublishPageButton = (): Cypress.Chainable => cy.get('[name="publish_version_page_form"]').find('.safe-submit');
 

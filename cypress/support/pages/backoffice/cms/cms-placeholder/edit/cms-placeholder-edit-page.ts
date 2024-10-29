@@ -11,11 +11,19 @@ export class CmsPlaceholderEditPage extends BackofficePage {
   protected PAGE_URL = 'cms-gui/create-glossary/index';
 
   update = (params: UpdateParams): void => {
-    this.repository.getCollapsedIbox().click({ force: true });
+      this.repository.getTitleBlock().find(this.repository.getAllCollapsedIboxButtonsSelector()).each(($button) => {
+          cy.wrap($button).click({ force: true });
+      });
 
-    this.repository.getDeLocalizedTextarea().clear({ force: true }).type(params.cmsPageName, { force: true });
+      this.repository.getTitleBlock().find(this.repository.getAllIboxesSelector()).each(($ibox) => {
+          cy.wrap($ibox)
+              .find(this.repository.getLocalizedTextareaSelector())
+              .clear({ force: true })
 
-    this.repository.getEnLocalizedTextarea().clear({ force: true }).type(params.cmsPageName, { force: true });
+          cy.wrap($ibox)
+              .find(this.repository.getLocalizedTextareaSelector())
+              .type(params.cmsPageName, { force: true });
+      });
 
     this.repository.getUpdatePlaceholderButton().click();
 
