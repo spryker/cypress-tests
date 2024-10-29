@@ -87,6 +87,9 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 
                 cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
+                cy.runCliCommands(['console oms:check-condition']);
+
+
                 userLoginScenario.execute({
                     username: staticFixtures.rootUser.username,
                     password: staticFixtures.defaultPassword,
