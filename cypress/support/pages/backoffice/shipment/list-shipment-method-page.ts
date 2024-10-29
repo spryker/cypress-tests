@@ -19,13 +19,13 @@ export class ListShipmentMethodPage extends BackofficePage {
 
     return cy.get('tbody > tr:visible');
   };
+
+  clickEditAction = ($row: JQuery<HTMLElement>): void => {
+    cy.wrap($row).find(this.repository.getEditButtonSelector()).should('exist').click()
+  };
 }
 
 interface FindParams {
   query: string;
   expectedCount?: number;
-}
-
-interface UpdateParams {
-  query: string;
 }

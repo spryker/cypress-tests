@@ -18,7 +18,7 @@ export class EnableShipmentMethodForAllStoresScenario {
         this.listShipmentMethodPage.find({ query: params.shipmentMethod }).its('length').then((count) => {
             for (let index = 0; index < count; index++) {
                 this.listShipmentMethodPage.find({ query: params.shipmentMethod }).eq(index).should('exist').then(($storeRow) => {
-                    cy.wrap($storeRow).find('a:contains("Edit")').should('exist').click();
+                    this.listShipmentMethodPage.clickEditAction($storeRow);
 
                     // Perform the necessary update actions here
                     this.editShipmentMethodPage.assignAllAvailableStore();
