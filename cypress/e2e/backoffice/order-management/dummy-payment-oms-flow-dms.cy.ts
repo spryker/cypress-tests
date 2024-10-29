@@ -3,13 +3,13 @@ import { DummyPaymentOmsFlowStaticFixtures } from '@interfaces/smoke';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import {
-  CreateStoreScenario,
-  EnableProductForAllStoresScenario,
-  EnableWarehouseForAllStoresScenario,
-  UserLoginScenario,
-  EnableCmsBlockForAllStoresScenario,
-  EnablePaymentMethodForAllStoresScenario,
-  EnableShipmentMethodForAllStoresScenario,
+    CreateStoreScenario,
+    EnableProductForAllStoresScenario,
+    EnableWarehouseForAllStoresScenario,
+    UserLoginScenario,
+    EnableCmsBlockForAllStoresScenario,
+    EnablePaymentMethodForAllStoresScenario,
+    EnableShipmentMethodForAllStoresScenario,
 } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 
@@ -88,6 +88,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
                 cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
                 cy.runCliCommands(['console oms:check-condition']);
+                cy.runCliCommands(['console oms:check-timeout']);
 
 
                 userLoginScenario.execute({
@@ -109,17 +110,11 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 
             function closeOrderFromBackoffice(): void {
                 salesDetailPage.triggerOms({state: 'Pay'});
-                cy.log('Pay is triggered');
                 salesDetailPage.triggerOms({state: 'Skip timeout'});
-                cy.log('Skip is triggered');
                 salesDetailPage.triggerOms({state: 'skip picking'});
-                cy.log('skip is triggered');
                 salesDetailPage.triggerOms({state: 'Ship'});
-                cy.log('Ship is triggered');
                 salesDetailPage.triggerOms({state: 'Stock update'});
-                cy.log('Stock is triggered');
                 salesDetailPage.triggerOms({state: 'Close'});
-                cy.log('Close is triggered');
             }
 
             function skipB2BIt(description: string, testFn: () => void): void {
