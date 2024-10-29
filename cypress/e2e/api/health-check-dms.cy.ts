@@ -32,6 +32,20 @@ import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
       .should('eq', 200);
   });
 
+    it('GLUE Backend endpoint should return 200', () => {
+        cy.request({
+            method: 'POST',
+            url: Cypress.env().glueBackendUrl + '/token',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `grantType=password&username=${staticFixtures.rootUser.username}&password=${staticFixtures.defaultPassword}`,
+        })
+        .then((response) => {
+            expect(response.status).to.eq(200);
+        });
+    });
+
     describe('GLUE Backend Tests', () => {
         before(function () {
             cy.request({

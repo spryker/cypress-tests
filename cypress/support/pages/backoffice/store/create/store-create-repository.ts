@@ -6,14 +6,9 @@ import { injectable } from 'inversify';
 export class StoreCreateRepository {
   getNameInput = (): Cypress.Chainable => cy.get('#store_name');
   getLocalesTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-locale_store_relation"]');
-  getDefaultLocaleSelect = (): Cypress.Chainable => cy.get('#select2-store_defaultLocaleIsoCode-container');
-    // getDefaultLocaleSelect = (): Cypress.Chainable => cy.get('#store_defaultLocaleIsoCode');
-  getDefaultLocaleSearchInput = (): Cypress.Chainable =>
-    cy.get('[aria-controls="select2-store_defaultLocaleIsoCode-results"]');
+  getDefaultLocaleSelect = (): Cypress.Chainable => cy.get('[name="store[defaultLocaleIsoCode]"]');
   getCurrenciesTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-locale_currency_relation"]');
-  getDefaultCurrencySelect = (): Cypress.Chainable => cy.get('#select2-store_defaultCurrencyIsoCode-container');
-  getDefaultCurrencySearchInput = (): Cypress.Chainable =>
-    cy.get('[aria-controls="select2-store_defaultCurrencyIsoCode-results"]');
+  getDefaultCurrencySelect = (): Cypress.Chainable => cy.get('[name="store[defaultCurrencyIsoCode]"]');
   getLocaleSearchInput = (): Cypress.Chainable => cy.get('#available-locale-table_filter').find('input');
   getCurrencySearchInput = (): Cypress.Chainable => cy.get('#available-currency-table_filter').find('input');
   getAvailableLocaleInput = (locale: string): Cypress.Chainable =>
