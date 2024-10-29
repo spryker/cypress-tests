@@ -9,3 +9,4 @@ export * from './profile/profile-page';
 export * from './sales/sales-orders-page';
 export * from './merchant-relation-requests/merchant-relation-requests-page';
 export * from './merchant-relations/merchant-relations-page';
+export * from './variants/variants-page';
