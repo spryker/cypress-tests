@@ -11,15 +11,27 @@ export class CmsPageCreatePage extends BackofficePage {
   protected PAGE_URL = '/cms-gui/create-page';
 
   create = (params: CreateParams): void => {
-    this.repository.getCollapsedIboxButton().click({ force: true });
-
     this.repository.getIsSearchableCheckbox().check();
 
-    this.repository.getDeNameInput().type(params.cmsPageName, { force: true });
-    this.repository.getDeUrlInput().type(params.cmsPageName, { force: true });
+    this.repository
+      .getGeneralBlock()
+      .find(this.repository.getAllCollapsedIboxButtonsSelector())
+      .each(($button) => {
+        cy.wrap($button).click({ force: true });
+      });
 
-    this.repository.getEnNameInput().type(params.cmsPageName, { force: true });
-    this.repository.getEnUrlInput().type(params.cmsPageName, { force: true });
+    this.repository
+      .getGeneralBlock()
+      .find(this.repository.getAllIboxesSelector())
+      .each(($ibox) => {
+        cy.wrap($ibox)
+          .find(this.repository.getLocalizedFieldSelector())
+          .each(($field) => {
+            cy.wrap($field).as('field');
+            cy.get('@field').clear({ force: true });
+            cy.get('@field').type(params.cmsPageName, { force: true });
+          });
+      });
 
     this.repository.getCreatePageButton().click();
   };
