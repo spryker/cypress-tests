@@ -75,7 +75,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
             skipB2BIt('merchant user should be able close an order from guest', (): void => {
                 addOneProductToCart();
-                checkoutMpScenario.execute({isGuest: true});
+                checkoutMpScenario.execute({isGuest: true, shouldTriggerOmsInCli: true});
 
                 userLoginScenario.execute({
                     username: staticFixtures.rootUser.username,
@@ -94,7 +94,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
                 });
 
                 addOneProductToCart();
-                checkoutMpScenario.execute();
+                checkoutMpScenario.execute({shouldTriggerOmsInCli: true});
 
                 userLoginScenario.execute({
                     username: staticFixtures.rootUser.username,
