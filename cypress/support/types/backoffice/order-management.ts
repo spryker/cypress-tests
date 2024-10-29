@@ -11,6 +11,10 @@ export interface OrderManagementStaticFixtures {
   defaultPassword: string;
 }
 
+export interface OrderManagementDynamicFixtures {
+    customer: Customer;
+}
+
 export interface CustomOrderReferenceManagementDynamicFixtures {
   customer: Customer;
   rootUser: User;
