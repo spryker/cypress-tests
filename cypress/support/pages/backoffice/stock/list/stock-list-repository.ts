@@ -8,4 +8,5 @@ export class StockListRepository {
   getViewButtonSelector = (): string => 'a:contains("View")';
   getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1):visible');
   getSearchSelector = (): string => '[type="search"]';
+  getStoreCellSelector = (): string => 'div[class*="spy_merchant_store-"]';
 }

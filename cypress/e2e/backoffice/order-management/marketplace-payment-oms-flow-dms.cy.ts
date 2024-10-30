@@ -106,7 +106,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
             });
 
             function assignStoreRelationToExistingProduct(): void {
-                enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse1});
+                enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse1, storeName: staticFixtures.store.name });
 
                 enableProductForAllStoresScenario.execute({
                     abstractProductSku: staticFixtures.product.abstract_sku,

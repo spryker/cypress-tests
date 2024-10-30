@@ -10,17 +10,21 @@ export class EnableWarehouseForAllStoresScenario {
 
   execute = (params: ExecuteParams): void => {
     this.stockListPage.visit();
-    this.stockListPage.waitDataTableIsLoaded();
-    this.stockListPage.update({ query: params.warehouse, action: ActionEnum.edit });
-    this.stockEditPage.assignAllAvailableStore();
+      this.stockListPage.find({ query: params.warehouse, expectedCount: 1 }).then(($row) => {
+          if (!this.stockListPage.rowIsAssignedToStore({ row: $row, storeName: params.storeName })) {
+              this.stockListPage.update({ query: params.warehouse, action: ActionEnum.edit });
+              this.stockEditPage.assignAllAvailableStore();
 
-    if (params?.shouldTriggerPublishAndSync) {
-      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-    }
+              if (params?.shouldTriggerPublishAndSync) {
+                  cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+              }
+          }
+      });
   };
 }
 
 interface ExecuteParams {
   warehouse: string;
+  storeName?: string;
   shouldTriggerPublishAndSync?: boolean;
 }

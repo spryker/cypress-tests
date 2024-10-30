@@ -10,12 +10,24 @@ export class StockListPage extends BackofficePage {
 
   protected PAGE_URL = '/stock-gui/warehouse/list';
 
+    clickEditAction = ($row: JQuery<HTMLElement>): void => {
+        cy.wrap($row).find(this.repository.getEditButtonSelector()).should('exist').click();
+    };
+
+    rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
+        if (typeof params.storeName !== 'string') {
+            return false;
+        }
+
+        return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
+    };
+
   update = (params: UpdateParams): void => {
     const findParams = { query: params.query, expectedCount: 1 };
 
     this.find(findParams).then(($stockRow) => {
       if (params.action === ActionEnum.edit) {
-        cy.wrap($stockRow).find(this.repository.getEditButtonSelector()).should('exist').click();
+        this.clickEditAction($stockRow);
       }
 
       if (params.action === ActionEnum.view) {
@@ -44,3 +56,8 @@ interface FindParams {
   query: string;
   expectedCount?: number;
 }
+interface IsAssignedParams {
+    row: JQuery<HTMLElement>;
+    storeName?: string;
+}
+

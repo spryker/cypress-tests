@@ -95,7 +95,7 @@ import {
       });
 
       createStoreScenario.execute({ store: staticFixtures.store });
-      enableWarehouseForAllStoresScenario.execute({ warehouse: staticFixtures.warehouse });
+      enableWarehouseForAllStoresScenario.execute({ warehouse: staticFixtures.warehouse, storeName: staticFixtures.store.name });
       enableProductForAllStoresScenario.execute({
         abstractProductSku: staticFixtures.concreteProduct.abstract_sku,
         productPrice: staticFixtures.productPrice,

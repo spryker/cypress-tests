@@ -94,9 +94,9 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
         });
 
         function assignStoreRelationToExistingProduct(): void {
-            enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse1});
+            enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse1, storeName: staticFixtures.store.name });
 
-            enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse2});
+            enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse2, storeName: staticFixtures.store.name });
 
             enableProductForAllStoresScenario.execute({
                 abstractProductSku: productAbstract.sku,

@@ -114,7 +114,7 @@ import {
         }
 
         function assignStoreRelationToExistingProduct(): void {
-            enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse});
+            enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse, storeName: staticFixtures.store.name });
 
             enableProductForAllStoresScenario.execute({
                 abstractProductSku: staticFixtures.product1.abstract_sku,
