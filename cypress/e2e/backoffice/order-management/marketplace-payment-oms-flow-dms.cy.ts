@@ -222,6 +222,8 @@ import { CatalogPage, ProductPage } from '@pages/yves';
                         return;
                     }
 
+                    cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+
                     if (attempts < maxAttempts) {
                         // eslint-disable-next-line cypress/no-unnecessary-waiting
                         cy.wait(10000);
