@@ -154,6 +154,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
                     }
 
                     if (attempts < maxAttempts) {
+                        // eslint-disable-next-line cypress/no-unnecessary-waiting
                         cy.wait(3000);
                         ensureCatalogVisibility(attempts + 1, maxAttempts);
                     }

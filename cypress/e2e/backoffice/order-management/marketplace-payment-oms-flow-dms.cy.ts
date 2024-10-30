@@ -107,7 +107,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
             function assignStoreRelationToExistingProduct(): void {
                 enableWarehouseForAllStoresScenario.execute({warehouse: staticFixtures.warehouse1});
-                
+
                 enableProductForAllStoresScenario.execute({
                     abstractProductSku: staticFixtures.product.abstract_sku,
                     productPrice: staticFixtures.productPrice,
@@ -148,6 +148,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
                     }
 
                     if (attempts < maxAttempts) {
+                        // eslint-disable-next-line cypress/no-unnecessary-waiting
                         cy.wait(3000);
                         ensureCatalogVisibility(attempts + 1, maxAttempts);
                     }
@@ -222,6 +223,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
                     }
 
                     if (attempts < maxAttempts) {
+                        // eslint-disable-next-line cypress/no-unnecessary-waiting
                         cy.wait(10000);
                         checkOrderVisibility(orderReference, attempts + 1, maxAttempts);
 
