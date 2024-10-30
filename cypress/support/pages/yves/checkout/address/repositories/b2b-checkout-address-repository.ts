@@ -94,4 +94,5 @@ export class B2bCheckoutAddressRepository implements CheckoutAddressRepository {
     index: number
   ): Cypress.Chainable =>
     cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shippingAddress_phone`);
+    getFirstShipmentTypeRadio = (): Cypress.Chainable => cy.get('#addressesForm_shipmentType_key_0');
 }
