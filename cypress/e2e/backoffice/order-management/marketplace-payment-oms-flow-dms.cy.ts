@@ -111,6 +111,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
                 enableProductForAllStoresScenario.execute({
                     abstractProductSku: staticFixtures.product.abstract_sku,
                     productPrice: staticFixtures.productPrice,
+                    storeName: staticFixtures.store.name,
                 });
 
                 enableShipmentMethodForAllStoresScenario.execute({

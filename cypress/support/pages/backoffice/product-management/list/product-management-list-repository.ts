@@ -7,4 +7,6 @@ export class ProductManagementListRepository {
   getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1):visible');
   getSearchSelector = (): string => '[type="search"]';
   getEditButtonSelector = (): string => 'a:contains("Edit")';
+  getStoreCellSelector = (): string => 'td[class*="column-store_relation"]';
+
 }

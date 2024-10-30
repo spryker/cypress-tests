@@ -101,6 +101,7 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
             enableProductForAllStoresScenario.execute({
                 abstractProductSku: productAbstract.sku,
                 productPrice: productAbstract.price,
+                storeName: staticFixtures.store.name,
             });
         }
     });

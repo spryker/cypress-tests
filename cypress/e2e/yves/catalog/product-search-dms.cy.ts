@@ -99,6 +99,7 @@ import {
       enableProductForAllStoresScenario.execute({
         abstractProductSku: staticFixtures.concreteProduct.abstract_sku,
         productPrice: staticFixtures.productPrice,
+          storeName: staticFixtures.store.name,
       });
     }
 

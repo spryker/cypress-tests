@@ -119,11 +119,13 @@ import {
             enableProductForAllStoresScenario.execute({
                 abstractProductSku: staticFixtures.product1.abstract_sku,
                 productPrice: staticFixtures.productPrice,
+                storeName: staticFixtures.store.name,
             });
 
             enableProductForAllStoresScenario.execute({
                 abstractProductSku: staticFixtures.product2.abstract_sku,
                 productPrice: staticFixtures.productPrice,
+                storeName: staticFixtures.store.name,
             });
 
             staticFixtures.shipmentMethods.forEach((shipmentMethod) =>
