@@ -15,7 +15,7 @@ export class MerchantListPage extends BackofficePage {
 
     this.find(findParams).then(($merchantRow) => {
       if (params.action === ActionEnum.edit) {
-        cy.wrap($merchantRow).find(this.repository.getEditButtonSelector()).should('exist').click();
+        this.clickEditAction($merchantRow);
       }
 
       if (params.action === ActionEnum.activate) {
@@ -36,6 +36,10 @@ export class MerchantListPage extends BackofficePage {
     });
   };
 
+  clickEditAction = ($row: JQuery<HTMLElement>): void => {
+    cy.wrap($row).find(this.repository.getEditButtonSelector()).click();
+  };
+
   find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
@@ -45,11 +49,24 @@ export class MerchantListPage extends BackofficePage {
 
     return this.repository.getFirstTableRow();
   };
+
+    rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
+        if(typeof params.storeName !== 'string') {
+            return false;
+        }
+
+        return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
+    };
 }
 
 interface UpdateParams {
   action: ActionEnum;
   query: string;
+}
+
+interface IsAssignedParams {
+    row: JQuery<HTMLElement>;
+    storeName?: string;
 }
 
 interface FindParams {

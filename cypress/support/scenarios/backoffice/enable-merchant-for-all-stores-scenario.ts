@@ -10,14 +10,25 @@ export class EnableMerchantForAllStoresScenario {
 
   execute = (params: ExecuteParams): void => {
     this.merchantListPage.visit();
-    this.merchantListPage.update({ query: params.merchantName, action: ActionEnum.edit });
-    this.merchantUpdatePage.assignAllAvailableStore();
 
-    cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+    this.merchantListPage.find({ query: params.merchantName, expectedCount: 1 }).then(($row) => {
+      if (
+          !this.merchantListPage.rowIsAssignedToStore(
+              { row: $row, storeName: params.storeName }
+          )
+      ) {
+          this.merchantListPage.clickEditAction($row);
+
+          this.merchantUpdatePage.assignAllAvailableStore();
+
+          cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+      }
+    });
   };
 }
 
 interface ExecuteParams {
   merchantName: string;
   shouldTriggerPublishAndSync?: boolean;
+  storeName?: string;
 }

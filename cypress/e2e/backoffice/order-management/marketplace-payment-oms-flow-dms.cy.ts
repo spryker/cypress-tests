@@ -133,9 +133,11 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
                 enableMerchantForAllStoresScenario.execute({
                     merchantName: staticFixtures.merchantName1,
+                    storeName: staticFixtures.store.name,
                 });
                 enableMerchantForAllStoresScenario.execute({
                     merchantName: staticFixtures.merchantName2,
+                    storeName: staticFixtures.store.name,
                 });
             }
 
