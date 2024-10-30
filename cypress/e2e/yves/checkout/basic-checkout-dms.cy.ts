@@ -4,13 +4,12 @@ import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import {CheckoutScenario, CustomerLoginScenario, SelectStoreScenario} from '@scenarios/yves';
 import {
   CreateStoreScenario,
-  EnableCmsBlockForAllStoresScenario, EnableAllPaymentMethodsForAllStoresScenario,
+  EnableAllPaymentMethodsForAllStoresScenario,
   EnableProductForAllStoresScenario,
   EnableAllShipmentMethodsForAllStoresScenario,
   EnableWarehouseForAllStoresScenario,
   UserLoginScenario
 } from "@scenarios/backoffice";
-import {faker} from "@faker-js/faker";
 
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
