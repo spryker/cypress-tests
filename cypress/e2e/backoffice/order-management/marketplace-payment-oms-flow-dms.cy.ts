@@ -133,7 +133,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
             storeName: staticFixtures.store.name,
           });
 
-          staticFixtures.cmsBlockNames.forEach((cmsBlockName) => {
+          staticFixtures.cmsBlockNames.forEach((cmsBlockName: string) => {
             enableCmsBlockForAllStoresScenario.execute({
               cmsBlockName: cmsBlockName,
               storeName: staticFixtures.store.name,
