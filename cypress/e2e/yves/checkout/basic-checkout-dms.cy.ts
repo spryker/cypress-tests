@@ -137,6 +137,7 @@ import {faker} from "@faker-js/faker";
             staticFixtures.paymentMethods.forEach((methodName) =>
                 enablePaymentMethodForAllStoresScenario.execute({
                     paymentMethod: methodName,
+                    storeName: staticFixtures.store.name,
                 }));
         }
     });

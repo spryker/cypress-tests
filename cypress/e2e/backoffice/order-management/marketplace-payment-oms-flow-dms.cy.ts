@@ -121,6 +121,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
                 enablePaymentMethodForAllStoresScenario.execute({
                     paymentMethod: staticFixtures.paymentMethod,
+                    storeName: staticFixtures.store.name,
                 });
 
                 staticFixtures.cmsBlockNames.forEach((cmsBlockName) => {

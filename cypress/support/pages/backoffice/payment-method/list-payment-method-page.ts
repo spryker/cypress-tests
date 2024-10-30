@@ -23,6 +23,14 @@ export class ListPaymentMethodPage extends BackofficePage {
   clickEditAction = ($row: JQuery<HTMLElement>): void => {
     cy.wrap($row).find(this.repository.getEditButtonSelector()).click();
   };
+
+    rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
+        if(typeof params.storeName !== 'string') {
+            return false;
+        }
+
+        return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
+    };
 }
 
 interface FindParams {
@@ -30,6 +38,7 @@ interface FindParams {
   expectedCount?: number;
 }
 
-interface UpdateParams {
-  query: string;
+interface IsAssignedParams {
+    row: JQuery<HTMLElement>;
+    storeName?: string;
 }

@@ -135,6 +135,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 
                 enablePaymentMethodForAllStoresScenario.execute({
                     paymentMethod: staticFixtures.paymentMethod,
+                    storeName: staticFixtures.store.name,
                 });
 
                 staticFixtures.cmsBlockNames.forEach((cmsBlockName) => {
