@@ -24,13 +24,13 @@ export class ListPaymentMethodPage extends BackofficePage {
     cy.wrap($row).find(this.repository.getEditButtonSelector()).click();
   };
 
-    rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
-        if(typeof params.storeName !== 'string') {
-            return false;
-        }
+  rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
+    if (typeof params.storeName !== 'string') {
+      return false;
+    }
 
-        return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
-    };
+    return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
+  };
 }
 
 interface FindParams {
@@ -39,6 +39,6 @@ interface FindParams {
 }
 
 interface IsAssignedParams {
-    row: JQuery<HTMLElement>;
-    storeName?: string;
+  row: JQuery<HTMLElement>;
+  storeName?: string;
 }

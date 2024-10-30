@@ -50,13 +50,13 @@ export class MerchantListPage extends BackofficePage {
     return this.repository.getFirstTableRow();
   };
 
-    rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
-        if(typeof params.storeName !== 'string') {
-            return false;
-        }
+  rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
+    if (typeof params.storeName !== 'string') {
+      return false;
+    }
 
-        return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
-    };
+    return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
+  };
 }
 
 interface UpdateParams {
@@ -65,8 +65,8 @@ interface UpdateParams {
 }
 
 interface IsAssignedParams {
-    row: JQuery<HTMLElement>;
-    storeName?: string;
+  row: JQuery<HTMLElement>;
+  storeName?: string;
 }
 
 interface FindParams {

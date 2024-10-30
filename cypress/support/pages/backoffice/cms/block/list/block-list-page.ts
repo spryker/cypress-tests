@@ -14,8 +14,8 @@ export class BlockListPage extends BackofficePage {
     const findParams = { query: params.query, expectedCount: 1 };
 
     this.find(findParams).then(($storeRow) => {
-        cy.wrap($storeRow).as('row');
-        cy.get('@row').find(this.repository.getEditButtonSelector()).should('exist').click()
+      cy.wrap($storeRow).as('row');
+      cy.get('@row').find(this.repository.getEditButtonSelector()).should('exist').click();
     });
   };
 
@@ -29,17 +29,17 @@ export class BlockListPage extends BackofficePage {
     return this.repository.getFirstTableRow();
   };
 
-    clickEditAction = (row: JQuery<HTMLElement>): void => {
-        cy.wrap(row).find(this.repository.getEditButtonSelector()).should('exist').click()
-    };
+  clickEditAction = (row: JQuery<HTMLElement>): void => {
+    cy.wrap(row).find(this.repository.getEditButtonSelector()).should('exist').click();
+  };
 
-    rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
-        if(typeof params.storeName !== 'string') {
-            return false;
-        }
+  rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
+    if (typeof params.storeName !== 'string') {
+      return false;
+    }
 
-        return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
-    };
+    return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
+  };
 }
 
 interface FindParams {
@@ -48,8 +48,8 @@ interface FindParams {
 }
 
 interface IsAssignedParams {
-    row: JQuery<HTMLElement>;
-    storeName?: string;
+  row: JQuery<HTMLElement>;
+  storeName?: string;
 }
 
 interface UpdateParams {

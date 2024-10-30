@@ -21,15 +21,15 @@ export class ListShipmentMethodPage extends BackofficePage {
   };
 
   clickEditAction = (row: JQuery<HTMLElement>): void => {
-    cy.wrap(row).find(this.repository.getEditButtonSelector()).should('exist').click()
+    cy.wrap(row).find(this.repository.getEditButtonSelector()).should('exist').click();
   };
 
   rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
-      if(typeof params.storeName !== 'string') {
-          return false;
-      }
+    if (typeof params.storeName !== 'string') {
+      return false;
+    }
 
-      return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
+    return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
   };
 }
 

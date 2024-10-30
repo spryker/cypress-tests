@@ -12,16 +12,12 @@ export class EnableMerchantForAllStoresScenario {
     this.merchantListPage.visit();
 
     this.merchantListPage.find({ query: params.merchantName, expectedCount: 1 }).then(($row) => {
-      if (
-          !this.merchantListPage.rowIsAssignedToStore(
-              { row: $row, storeName: params.storeName }
-          )
-      ) {
-          this.merchantListPage.clickEditAction($row);
+      if (!this.merchantListPage.rowIsAssignedToStore({ row: $row, storeName: params.storeName })) {
+        this.merchantListPage.clickEditAction($row);
 
-          this.merchantUpdatePage.assignAllAvailableStore();
+        this.merchantUpdatePage.assignAllAvailableStore();
 
-          cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+        cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
       }
     });
   };
