@@ -13,7 +13,7 @@ export class EnableAllShipmentMethodsForAllStoresScenario {
     this.listShipmentMethodPage.visit();
 
     // Waits for shipments to load
-    this.listShipmentMethodPage.interceptTable({ url: 'shipment-gui/shipment-method/table**' });
+      this.listShipmentMethodPage.waitDataTableIsLoaded();
 
     this.listShipmentMethodPage
       .find({ query: params.shipmentMethod })
