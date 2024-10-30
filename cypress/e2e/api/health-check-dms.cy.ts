@@ -1,8 +1,5 @@
 import { container } from '@utils';
-import {
-    CreateStoreScenario,
-    UserLoginScenario,
-} from '@scenarios/backoffice';
+import { CreateStoreScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
 
 /**
@@ -12,7 +9,7 @@ import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
   const userLoginScenario = container.get(UserLoginScenario);
   const createStoreScenario = container.get(CreateStoreScenario);
 
-    let staticFixtures: HealthCheckDmsStaticFixtures;
+  let staticFixtures: HealthCheckDmsStaticFixtures;
 
   before((): void => {
     staticFixtures = Cypress.env('staticFixtures');
@@ -32,54 +29,53 @@ import { HealthCheckDmsStaticFixtures } from '@interfaces/smoke';
       .should('eq', 200);
   });
 
-    it('GLUE Backend endpoint should return 200', () => {
-        cy.request({
-            method: 'POST',
-            url: Cypress.env().glueBackendUrl + '/token',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `grantType=password&username=${staticFixtures.rootUser.username}&password=${staticFixtures.defaultPassword}`,
-        })
-        .then((response) => {
-            expect(response.status).to.eq(200);
-        });
+  it('GLUE Backend endpoint should return 200', () => {
+    cy.request({
+      method: 'POST',
+      url: Cypress.env().glueBackendUrl + '/token',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `grantType=password&username=${staticFixtures.rootUser.username}&password=${staticFixtures.defaultPassword}`,
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+    });
+  });
+
+  describe('GLUE Backend Tests', () => {
+    before(function () {
+      cy.request({
+        method: 'POST',
+        url: Cypress.env().glueBackendUrl + '/token',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `grantType=password&username=${staticFixtures.rootUser.username}&password=${staticFixtures.defaultPassword}`,
+      }).then((response) => {
+        expect(response.status).to.eq(200);
+        cy.wrap(response.body.access_token).as('authToken');
+      });
     });
 
-    describe('GLUE Backend Tests', () => {
-        before(function () {
+    ['b2c', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))
+      ? it.skip
+      : it('Should receive access for admin and check services endpoint', function () {
+          cy.get('@authToken').then((authToken) => {
             cy.request({
-                method: 'POST',
-                url: Cypress.env().glueBackendUrl + '/token',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `grantType=password&username=${staticFixtures.rootUser.username}&password=${staticFixtures.defaultPassword}`,
-            })
-                .then((response) => {
-                    expect(response.status).to.eq(200);
-                    cy.wrap(response.body.access_token).as('authToken');
-                });
-        });
-
-        ['b2c', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it ('Should receive access for admin and check services endpoint', function () {
-            cy.get('@authToken').then((authToken) => {
-                cy.request({
-                    method: 'GET',
-                    url: Cypress.env().glueBackendUrl + '/services',
-                    headers: {
-                        'Content-Type': 'application/vnd.api+json',
-                        Authorization: `Bearer ${authToken}`,
-                    },
-                    failOnStatusCode: false
-                })
-                    .then((response) => {
-                        expect(response.status).to.eq(200);
-                        expect(response.body.data[0].type).to.eq('services');
-                    });
+              method: 'GET',
+              url: Cypress.env().glueBackendUrl + '/services',
+              headers: {
+                'Content-Type': 'application/vnd.api+json',
+                Authorization: `Bearer ${authToken}`,
+              },
+              failOnStatusCode: false,
+            }).then((response) => {
+              expect(response.status).to.eq(200);
+              expect(response.body.data[0].type).to.eq('services');
             });
+          });
         });
-    });
+  });
 
   it('GLUE Storefront endpoint should return 200', () => {
     cy.request({

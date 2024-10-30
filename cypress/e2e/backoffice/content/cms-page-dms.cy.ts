@@ -16,7 +16,6 @@ import { CreateCmsPageScenario, CreateStoreScenario, UserLoginScenario } from '@
       staticFixtures = Cypress.env('staticFixtures');
       staticFixtures.cmsPageName = `${staticFixtures.cmsPageName}-${Date.now()}`;
 
-
       userLoginScenario.execute({
         username: staticFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
@@ -37,12 +36,13 @@ import { CreateCmsPageScenario, CreateStoreScenario, UserLoginScenario } from '@
         method: 'GET',
         url: Cypress.env().glueUrl + '/cms-pages',
         headers: {
-          'Store': staticFixtures.store.name,
+          Store: staticFixtures.store.name,
         },
-      })
-      .then((response) => {
+      }).then((response) => {
         expect(response.status).to.eq(200);
-        const hasCmsPage = response.body.data.some((item: { type: string; attributes: { name: string } }) => item.attributes.name === staticFixtures.cmsPageName);
+        const hasCmsPage = response.body.data.some(
+          (item: { type: string; attributes: { name: string } }) => item.attributes.name === staticFixtures.cmsPageName
+        );
         expect(hasCmsPage).to.be.true;
       });
     });

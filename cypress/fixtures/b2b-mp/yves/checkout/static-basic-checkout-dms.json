@@ -1,33 +1,28 @@
 {
-    "defaultPassword": "change123",
-    "customer": {
-        "email": "sonia@spryker.com"
-    },
-    "product1": {
-        "sku": "425097",
-        "abstract_sku": "M26417"
-    },
-    "product2": {
-        "sku": "102920",
-        "abstract_sku": "M769"
-    },
-    "rootUser": {
-        "username": "admin@spryker.com"
-    },
-    "paymentMethods": [
-        "Dummy Marketplace Payment"
-    ],
-    "shipmentMethods": [
-        "Standard",
-        "Express"
-    ],
-    "store": {
-        "name": "TEST_STORE",
-        "currency": "EUR",
-        "locale": "en_US",
-        "country": "DE",
-        "timezone": "Europe/Berlin"
-    },
-    "warehouse": "Spryker MER000008 Warehouse 1",
-    "productPrice": "77.99"
+  "defaultPassword": "change123",
+  "customer": {
+    "email": "sonia@spryker.com"
+  },
+  "product1": {
+    "sku": "425097",
+    "abstract_sku": "M26417"
+  },
+  "product2": {
+    "sku": "102920",
+    "abstract_sku": "M769"
+  },
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "paymentMethods": ["Dummy Marketplace Payment"],
+  "shipmentMethods": ["Standard", "Express"],
+  "store": {
+    "name": "TEST_STORE",
+    "currency": "EUR",
+    "locale": "en_US",
+    "country": "DE",
+    "timezone": "Europe/Berlin"
+  },
+  "warehouse": "Spryker MER000008 Warehouse 1",
+  "productPrice": "77.99"
 }

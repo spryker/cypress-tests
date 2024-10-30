@@ -11,22 +11,22 @@ export class EnableProductForAllStoresScenario {
   execute = (params: ExecuteParams): void => {
     this.productManagementListPage.visit();
 
-      this.productManagementListPage.find({ query: params.abstractProductSku, expectedCount: 1 }).then(($row) => {
-          if (!this.productManagementListPage.rowIsAssignedToStore({ row: $row, storeName: params.storeName })) {
-              this.productManagementListPage.clickEditAction($row);
-              this.productManagementEditPage.assignAllPossibleStores();
-              this.productManagementEditPage.bulkPriceUpdate(params.productPrice);
-              this.productManagementEditPage.save();
+    this.productManagementListPage.find({ query: params.abstractProductSku, expectedCount: 1 }).then(($row) => {
+      if (!this.productManagementListPage.rowIsAssignedToStore({ row: $row, storeName: params.storeName })) {
+        this.productManagementListPage.clickEditAction($row);
+        this.productManagementEditPage.assignAllPossibleStores();
+        this.productManagementEditPage.bulkPriceUpdate(params.productPrice);
+        this.productManagementEditPage.save();
 
-              cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-          }
-      });
+        cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+      }
+    });
   };
 }
 
 interface ExecuteParams {
   abstractProductSku: string;
   productPrice: string;
-    storeName?: string;
+  storeName?: string;
   shouldTriggerPublishAndSync?: boolean;
 }

@@ -1,39 +1,39 @@
 {
-    "defaultPassword": "change123",
-    "rootUser": {
-        "username": "admin@spryker.com"
-    },
-    "merchantUser": {
-        "username": "harald@spryker.com"
-    },
-    "customer": {
-        "email": "sonia@spryker.com"
-    },
-    "productOffer": {
-        "product_offer_reference": "offer423"
-    },
-    "productPrice": "10.15",
-    "paymentMethod": "Invoice",
-    "product": {
-        "name": "FRIWA wood shell chair, VE 2 pieces - beech, natural, grip holes, with upholstery",
-        "sku": "512086",
-        "abstract_sku": "M1014871"
-    },
-    "shipmentMethod": "Standard",
-    "store": {
-        "name": "TEST_STORE",
-        "currency": "EUR",
-        "locale": "en_US",
-        "country": "DE",
-        "timezone": "Europe/Berlin"
-    },
-    "warehouse1": "Spryker MER000008 Warehouse 1",
-    "cmsBlockNames": [
-        "order-shipped--html",
-        "order-shipped--text",
-        "order-confirmation--text",
-        "order-confirmation--html"
-    ],
-    "merchantName1": "Office King",
-    "merchantName2": "Spryker"
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "merchantUser": {
+    "username": "harald@spryker.com"
+  },
+  "customer": {
+    "email": "sonia@spryker.com"
+  },
+  "productOffer": {
+    "product_offer_reference": "offer423"
+  },
+  "productPrice": "10.15",
+  "paymentMethod": "Invoice",
+  "product": {
+    "name": "FRIWA wood shell chair, VE 2 pieces - beech, natural, grip holes, with upholstery",
+    "sku": "512086",
+    "abstract_sku": "M1014871"
+  },
+  "shipmentMethod": "Standard",
+  "store": {
+    "name": "TEST_STORE",
+    "currency": "EUR",
+    "locale": "en_US",
+    "country": "DE",
+    "timezone": "Europe/Berlin"
+  },
+  "warehouse1": "Spryker MER000008 Warehouse 1",
+  "cmsBlockNames": [
+    "order-shipped--html",
+    "order-shipped--text",
+    "order-confirmation--text",
+    "order-confirmation--html"
+  ],
+  "merchantName1": "Office King",
+  "merchantName2": "Spryker"
 }

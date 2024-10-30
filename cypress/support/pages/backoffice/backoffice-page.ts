@@ -22,10 +22,9 @@ export class BackofficePage extends AbstractPage {
       });
   };
 
-    public waitDataTableIsLoaded(): void
-    {
-        cy.get('.dataTables_processing', { timeout: 5000 }).should('not.be.visible');
-    }
+  public waitDataTableIsLoaded(): void {
+    cy.get('.dataTables_processing', { timeout: 5000 }).should('not.be.visible');
+  }
 }
 
 export enum ActionEnum {
@@ -40,6 +39,6 @@ export enum ActionEnum {
 }
 
 interface InterceptGuiTableParams {
-    url: string;
-    expectedCount?: number;
+  url: string;
+  expectedCount?: number;
 }

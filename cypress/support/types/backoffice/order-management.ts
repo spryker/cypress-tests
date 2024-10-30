@@ -12,7 +12,7 @@ export interface OrderManagementStaticFixtures {
 }
 
 export interface OrderManagementDynamicFixtures {
-    customer: Customer;
+  customer: Customer;
 }
 
 export interface CustomOrderReferenceManagementDynamicFixtures {

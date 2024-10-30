@@ -17,9 +17,10 @@ export class CheckoutShipmentPage extends YvesPage {
       this.repository.getStandardShipmentRadio($shipmentItem, index).click({ force: true });
     });
 
-    this.repository.getShipmentDateInput().clear().type(
-        new Date(+new Date().setHours(0, 0, 0,0)+ 86400000).toLocaleDateString('fr-CA')
-    );
+    this.repository
+      .getShipmentDateInput()
+      .clear()
+      .type(new Date(+new Date().setHours(0, 0, 0, 0) + 86400000).toLocaleDateString('fr-CA'));
     this.repository.getNextButton().click();
   };
 }

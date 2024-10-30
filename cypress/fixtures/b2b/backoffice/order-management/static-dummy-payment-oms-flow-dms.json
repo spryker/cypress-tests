@@ -13,7 +13,7 @@
     "username": "admin@spryker.com"
   },
   "paymentMethod": "Dummy Payment",
-    "checkoutPaymentMethod": "dummyPaymentInvoice",
+  "checkoutPaymentMethod": "dummyPaymentInvoice",
   "product": {
     "name": "Asus Transformer Book T200TA",
     "sku": "425751",

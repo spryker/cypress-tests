@@ -14,15 +14,8 @@
   "rootUser": {
     "username": "admin@spryker.com"
   },
-  "paymentMethods": [
-    "Dummy Marketplace Payment",
-    "Dummy Payment",
-    "Credit Card"
-  ],
-  "shipmentMethods": [
-    "Standard",
-    "Express"
-  ],
+  "paymentMethods": ["Dummy Marketplace Payment", "Dummy Payment", "Credit Card"],
+  "shipmentMethods": ["Standard", "Express"],
   "store": {
     "name": "TEST_STORE",
     "currency": "EUR",

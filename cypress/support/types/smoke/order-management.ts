@@ -41,6 +41,6 @@ export interface MarketplacePaymentOmsFlowStaticFixtures {
   paymentMethod: string;
   productPrice: string;
   shipmentMethod: string;
-    merchantName1: string;
-    merchantName2: string;
+  merchantName1: string;
+  merchantName2: string;
 }

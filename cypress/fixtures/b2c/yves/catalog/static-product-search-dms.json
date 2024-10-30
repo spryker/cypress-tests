@@ -5,7 +5,7 @@
     "currency": "EUR",
     "locale": "en_US",
     "country": "DE",
-      "timezone": "Europe/Berlin"
+    "timezone": "Europe/Berlin"
   },
   "warehouse": "Warehouse2",
   "rootUser": {

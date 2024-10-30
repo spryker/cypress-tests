@@ -7,17 +7,16 @@ import { ContentRepository } from './content-repository';
 @injectable()
 @autoWired
 export class ContentPage extends YvesPage {
-    @inject(REPOSITORIES.ContentRepository) private repository: ContentRepository;
+  @inject(REPOSITORIES.ContentRepository) private repository: ContentRepository;
 
-    protected PAGE_URL = '/search';
+  protected PAGE_URL = '/search';
 
-    searchCmsPageFromSuggestions = (params: SearchParams): void => {
-
-        this.repository.search(params.query);
-        this.repository.getFirstSuggestedCmsPage(params.query).click();
-    };
+  searchCmsPageFromSuggestions = (params: SearchParams): void => {
+    this.repository.search(params.query);
+    this.repository.getFirstSuggestedCmsPage(params.query).click();
+  };
 }
 
 interface SearchParams {
-    query: string;
+  query: string;
 }

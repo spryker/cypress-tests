@@ -95,27 +95,30 @@ import {
       });
 
       createStoreScenario.execute({ store: staticFixtures.store });
-      enableWarehouseForAllStoresScenario.execute({ warehouse: staticFixtures.warehouse, storeName: staticFixtures.store.name });
+      enableWarehouseForAllStoresScenario.execute({
+        warehouse: staticFixtures.warehouse,
+        storeName: staticFixtures.store.name,
+      });
       enableProductForAllStoresScenario.execute({
         abstractProductSku: staticFixtures.concreteProduct.abstract_sku,
         productPrice: staticFixtures.productPrice,
-          storeName: staticFixtures.store.name,
+        storeName: staticFixtures.store.name,
       });
     }
 
     function ensureCatalogVisibility(attempts: number = 0, maxAttempts: number = 5): void {
       catalogPage.visit();
       catalogPage.hasProductsInCatalog().then((isVisible) => {
-      if (isVisible) {
-        return;
-      }
+        if (isVisible) {
+          return;
+        }
 
-      if (attempts < maxAttempts) {
-        cy.wait(3000);
-        ensureCatalogVisibility(attempts + 1, maxAttempts);
-      }
+        if (attempts < maxAttempts) {
+          cy.wait(3000);
+          ensureCatalogVisibility(attempts + 1, maxAttempts);
+        }
 
-      throw new Error("Catalog is not visible after maximum attempts");
+        throw new Error('Catalog is not visible after maximum attempts');
       });
     }
   }

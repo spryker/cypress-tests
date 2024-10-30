@@ -10,24 +10,24 @@ export class StockListPage extends BackofficePage {
 
   protected PAGE_URL = '/stock-gui/warehouse/list';
 
-    clickEditAction = ($row: JQuery<HTMLElement>): void => {
-        cy.wrap($row).find(this.repository.getEditButtonSelector()).should('exist').click();
-    };
+  clickEditAction = ($row: JQuery<HTMLElement>): void => {
+    cy.wrap($row).find(this.repository.getEditButtonSelector()).should('exist').click();
+  };
 
-    rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
-        if (typeof params.storeName !== 'string') {
-            return false;
-        }
+  rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
+    if (typeof params.storeName !== 'string') {
+      return false;
+    }
 
-        return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
-    };
+    return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
+  };
 
   update = (params: UpdateParams): void => {
     const findParams = { query: params.query, expectedCount: 1 };
 
     this.find(findParams).then(($stockRow) => {
       this.waitDataTableIsLoaded();
-      
+
       if (params.action === ActionEnum.edit) {
         this.clickEditAction($stockRow);
       }
@@ -59,7 +59,6 @@ interface FindParams {
   expectedCount?: number;
 }
 interface IsAssignedParams {
-    row: JQuery<HTMLElement>;
-    storeName?: string;
+  row: JQuery<HTMLElement>;
+  storeName?: string;
 }
-
