@@ -126,6 +126,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
                 staticFixtures.cmsBlockNames.forEach((cmsBlockName) => {
                     enableCmsBlockForAllStoresScenario.execute({
                         cmsBlockName: cmsBlockName,
+                        storeName: staticFixtures.store.name,
                     });
                 });
 

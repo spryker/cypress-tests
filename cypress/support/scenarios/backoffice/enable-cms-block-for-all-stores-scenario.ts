@@ -11,18 +11,28 @@ export class EnableCmsBlockForAllStoresScenario {
 
   execute = (params: ExecuteParams): void => {
     this.blockListPage.visit();
-    this.blockListPage.update({ query: params.cmsBlockName });
 
-    this.blockUpdatePage.assignAllAvailableStore();
-    this.blockUpdatePage.save();
+      this.blockListPage.find({ query: params.cmsBlockName }).then(($storeRow) => {
+          if (
+              !this.blockListPage.rowIsAssignedToStore(
+                  { row: $storeRow, storeName: params.storeName }
+              )
+          ) {
+              this.blockListPage.clickEditAction($storeRow);
 
-    if (params?.shouldTriggerPublishAndSync) {
-      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-    }
+              this.blockUpdatePage.assignAllAvailableStore();
+              this.blockUpdatePage.save();
+
+              if (params?.shouldTriggerPublishAndSync) {
+                  cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+              }
+          }
+      });
   };
 }
 
 interface ExecuteParams {
   cmsBlockName: string;
   shouldTriggerPublishAndSync?: boolean;
+  storeName?: string;
 }

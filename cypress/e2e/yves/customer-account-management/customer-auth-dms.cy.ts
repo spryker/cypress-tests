@@ -31,9 +31,11 @@ import {faker} from "@faker-js/faker";
 
             enableCmsBlockForAllStoresScenario.execute({
                 cmsBlockName: 'customer-registration_token--text',
+                storeName: staticFixtures.store.name,
             });
             enableCmsBlockForAllStoresScenario.execute({
                 cmsBlockName: 'customer-registration_token--html',
+                storeName: staticFixtures.store.name,
             });
         });
 

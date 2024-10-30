@@ -140,6 +140,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
                 staticFixtures.cmsBlockNames.forEach((cmsBlockName) => {
                     enableCmsBlockForAllStoresScenario.execute({
                         cmsBlockName: cmsBlockName,
+                        storeName: staticFixtures.store.name,
                     });
                 });
             }
