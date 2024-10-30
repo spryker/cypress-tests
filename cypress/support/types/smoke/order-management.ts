@@ -13,6 +13,7 @@ export interface DummyPaymentOmsFlowStaticFixtures {
   productPrice: string;
   shipmentMethod: string;
   concreteProduct: ProductConcrete;
+  checkoutPaymentMethod: string;
 }
 
 export interface Store {

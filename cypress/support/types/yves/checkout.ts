@@ -1,4 +1,5 @@
-import { Address, Customer, ProductConcrete, Quote } from './shared';
+import { Address, Customer, ProductConcrete, Quote, User } from './shared';
+import { Store } from '../smoke/shared';
 
 export interface BasicCheckoutDynamicFixtures {
   customer: Customer;
@@ -12,5 +13,14 @@ export interface BasicCheckoutDynamicFixtures {
 }
 
 export interface CheckoutStaticFixtures {
-  defaultPassword: string;
+    customer: Customer;
+    defaultPassword: string;
+    paymentMethods: Array<string>;
+    product1: ProductConcrete;
+    product2: ProductConcrete;
+    productPrice: string;
+    rootUser: User;
+    shipmentMethods: Array<string>;
+    store: Store;
+    warehouse: string;
 }
