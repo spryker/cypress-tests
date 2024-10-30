@@ -9,7 +9,7 @@ export class BackofficePage extends AbstractPage {
     cy.visitBackoffice(this.PAGE_URL, options);
   };
 
-  public interceptTable = (params: InterceptGuiTableParams, callback?: () => void): void => {
+  public interceptTable = (params: InterceptGuiTableParams): void => {
     const expectedCount = params.expectedCount ?? 1;
     const interceptAlias = this.faker.string.uuid();
 
@@ -35,6 +35,6 @@ export enum ActionEnum {
 }
 
 interface InterceptGuiTableParams {
-  url: string;
-  expectedCount?: number;
+    url: string;
+    expectedCount?: number;
 }

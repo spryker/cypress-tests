@@ -127,7 +127,6 @@ import {faker} from "@faker-js/faker";
                 productPrice: staticFixtures.productPrice,
             });
 
-            //TODO: fix shipment methods, now assignment does not work well because we have several methods with the same name `Standar *`
             staticFixtures.shipmentMethods.forEach((shipmentMethod) =>
                 enableShipmentMethodForAllStoresScenario.execute({
                     shipmentMethod: shipmentMethod,
