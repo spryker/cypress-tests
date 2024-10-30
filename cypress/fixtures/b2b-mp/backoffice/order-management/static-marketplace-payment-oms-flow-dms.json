@@ -15,9 +15,9 @@
     "productPrice": "10.15",
     "paymentMethod": "Invoice",
     "product": {
-        "name": "Refined Rubber Chair",
-        "sku": "978-1-4830-0698-7-size-800x800",
-        "abstract_sku": "978-1-4830-0698-7"
+        "name": "Verbatim storage card SDXC card 44024 64GB Class10",
+        "sku": "420550",
+        "abstract_sku": "M21091"
     },
     "shipmentMethod": "Standard",
     "store": {
@@ -27,8 +27,7 @@
         "country": "DE",
         "timezone": "Europe/Berlin"
     },
-    "warehouse1": "warehouse1",
-    "warehouse2": "warehouse2",
+    "warehouse1": "Spryker MER000008 Warehouse 1",
     "cmsBlockNames": [
         "order-shipped--html",
         "order-shipped--text",

@@ -15,9 +15,9 @@
     "productPrice": "10.15",
     "paymentMethod": "Invoice",
     "product": {
-        "name": "Refined Rubber Chair",
-        "sku": "978-1-4830-0698-7-size-800x800",
-        "abstract_sku": "978-1-4830-0698-7"
+        "name": "Sony SmartWatch 3",
+        "sku": "420550",
+        "abstract_sku": "M21091"
     },
     "shipmentMethod": "Standard",
     "store": {

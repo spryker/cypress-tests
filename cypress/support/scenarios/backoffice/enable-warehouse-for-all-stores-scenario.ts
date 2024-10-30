@@ -10,6 +10,7 @@ export class EnableWarehouseForAllStoresScenario {
 
   execute = (params: ExecuteParams): void => {
     this.stockListPage.visit();
+    this.stockListPage.waitDataTableIsLoaded();
     this.stockListPage.update({ query: params.warehouse, action: ActionEnum.edit });
     this.stockEditPage.assignAllAvailableStore();
 
