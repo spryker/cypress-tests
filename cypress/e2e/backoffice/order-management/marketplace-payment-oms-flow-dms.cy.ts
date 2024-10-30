@@ -8,8 +8,8 @@ import {
     EnableWarehouseForAllStoresScenario,
     UserLoginScenario,
     EnableCmsBlockForAllStoresScenario,
-    EnablePaymentMethodForAllStoresScenario,
-    EnableShipmentMethodForAllStoresScenario,
+    EnableAllPaymentMethodsForAllStoresScenario,
+    EnableAllShipmentMethodsForAllStoresScenario,
     EnableMerchantForAllStoresScenario,
     EnableShipmentTypeForAllStoresScenario
 } from '@scenarios/backoffice';
@@ -40,8 +40,8 @@ import { CatalogPage, ProductPage } from '@pages/yves';
             const enableCmsBlockForAllStoresScenario = container.get(EnableCmsBlockForAllStoresScenario);
             const enableWarehouseForAllStoresScenario = container.get(EnableWarehouseForAllStoresScenario);
             const enableProductForAllStoresScenario = container.get(EnableProductForAllStoresScenario);
-            const enableShipmentMethodForAllStoresScenario = container.get(EnableShipmentMethodForAllStoresScenario);
-            const enablePaymentMethodForAllStoresScenario = container.get(EnablePaymentMethodForAllStoresScenario);
+            const enableShipmentMethodForAllStoresScenario = container.get(EnableAllShipmentMethodsForAllStoresScenario);
+            const enablePaymentMethodForAllStoresScenario = container.get(EnableAllPaymentMethodsForAllStoresScenario);
             const enableMerchantForAllStoresScenario = container.get(EnableMerchantForAllStoresScenario);
             const enableShipmentTypeForAllStoresScenario = container.get(EnableShipmentTypeForAllStoresScenario);
 

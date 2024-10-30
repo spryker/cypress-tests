@@ -5,7 +5,7 @@ import { ListPaymentMethodPage } from '../../pages/backoffice/payment-method/lis
 
 @injectable()
 @autoWired
-export class EnablePaymentMethodForAllStoresScenario {
+export class EnableAllPaymentMethodsForAllStoresScenario {
   @inject(ListPaymentMethodPage) private listPaymentMethodPage: ListPaymentMethodPage;
   @inject(EditPaymentMethodPage) private editPaymentMethodPage: EditPaymentMethodPage;
 

@@ -5,7 +5,7 @@ import { ListShipmentMethodPage } from '../../pages/backoffice/shipment/list-shi
 
 @injectable()
 @autoWired
-export class EnableShipmentMethodForAllStoresScenario {
+export class EnableAllShipmentMethodsForAllStoresScenario {
   @inject(ListShipmentMethodPage) private listShipmentMethodPage: ListShipmentMethodPage;
   @inject(EditShipmentMethodPage) private editShipmentMethodPage: EditShipmentMethodPage;
 

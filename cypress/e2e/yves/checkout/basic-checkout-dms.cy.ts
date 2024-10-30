@@ -4,9 +4,9 @@ import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import {CheckoutScenario, CustomerLoginScenario, SelectStoreScenario} from '@scenarios/yves';
 import {
   CreateStoreScenario,
-  EnableCmsBlockForAllStoresScenario, EnablePaymentMethodForAllStoresScenario,
+  EnableCmsBlockForAllStoresScenario, EnableAllPaymentMethodsForAllStoresScenario,
   EnableProductForAllStoresScenario,
-  EnableShipmentMethodForAllStoresScenario,
+  EnableAllShipmentMethodsForAllStoresScenario,
   EnableWarehouseForAllStoresScenario,
   UserLoginScenario
 } from "@scenarios/backoffice";
@@ -28,8 +28,8 @@ import {faker} from "@faker-js/faker";
         const checkoutScenario = container.get(CheckoutScenario);
         const enableWarehouseForAllStoresScenario = container.get(EnableWarehouseForAllStoresScenario);
         const enableProductForAllStoresScenario = container.get(EnableProductForAllStoresScenario);
-        const enableShipmentMethodForAllStoresScenario = container.get(EnableShipmentMethodForAllStoresScenario);
-        const enablePaymentMethodForAllStoresScenario = container.get(EnablePaymentMethodForAllStoresScenario);
+        const enableShipmentMethodForAllStoresScenario = container.get(EnableAllShipmentMethodsForAllStoresScenario);
+        const enablePaymentMethodForAllStoresScenario = container.get(EnableAllPaymentMethodsForAllStoresScenario);
 
         let staticFixtures: CheckoutStaticFixtures;
         let dynamicFixtures: BasicCheckoutDynamicFixtures;
