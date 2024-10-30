@@ -11,5 +11,5 @@ export class MerchantListRepository {
   getDeactivateButtonSelector = (): string => 'button:contains("Deactivate")';
   getApproveAccessButtonSelector = (): string => 'button:contains("Approve Access")';
   getDenyAccessButtonSelector = (): string => 'button:contains("Deny Access")';
-  getStoreCellSelector = (): string => '.label-info';
+  getStoreCellSelector = (): string => 'td[class*="column-spy_merchant_store"]';
 }
