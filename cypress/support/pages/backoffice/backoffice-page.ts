@@ -21,10 +21,6 @@ export class BackofficePage extends AbstractPage {
         assert.isTrue(total === expectedCount || total >= valueToBeAtMost);
       });
   };
-
-  public waitDataTableIsLoaded(): void {
-    cy.get('.dataTables_processing', { timeout: 5000 }).should('not.be.visible');
-  }
 }
 
 export enum ActionEnum {

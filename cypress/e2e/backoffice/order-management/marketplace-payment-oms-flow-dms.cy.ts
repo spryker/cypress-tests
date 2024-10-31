@@ -218,30 +218,23 @@ import { CatalogPage, ProductPage } from '@pages/yves';
           salesOrdersPage.update({ query: orderReference, action: ActionEnum.deliver });
         }
 
-        function skipB2BIt(description: string, testFn: () => void): void {
-          (['b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
-        }
-        function checkOrderVisibility(orderReference: string, attempts: number = 0, maxAttempts: number = 5): void {
-          salesOrdersPage.visit();
-          salesOrdersPage.hasOrderByOrderReference(orderReference).then((isVisible) => {
-            if (isVisible) {
-              return;
+            function skipB2BIt(description: string, testFn: () => void): void {
+                (['b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
             }
+            
+            function checkOrderVisibility(orderReference: string): void {
+                cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+                salesOrdersPage.visit();
 
-            cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+                salesOrdersPage.hasOrderByOrderReference(orderReference).then((isVisible) => {
+                    if (isVisible) {
+                        return;
+                    }
 
-            if (attempts < maxAttempts) {
-              // eslint-disable-next-line cypress/no-unnecessary-waiting
-              cy.wait(10000);
-              checkOrderVisibility(orderReference, attempts + 1, maxAttempts);
-
-              return;
+                    throw new Error(`Order with reference ${orderReference} is not visible`);
+                });
             }
-
-            throw new Error(`Order with reference ${orderReference} is not visible after maximum attempts`);
-          });
         }
-      }
     );
   }
 );

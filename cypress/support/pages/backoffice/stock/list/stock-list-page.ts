@@ -26,8 +26,6 @@ export class StockListPage extends BackofficePage {
     const findParams = { query: params.query, expectedCount: 1 };
 
     this.find(findParams).then(($stockRow) => {
-      this.waitDataTableIsLoaded();
-
       if (params.action === ActionEnum.edit) {
         this.clickEditAction($stockRow);
       }
