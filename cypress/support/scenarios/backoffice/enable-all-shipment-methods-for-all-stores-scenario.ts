@@ -19,7 +19,7 @@ export class EnableAllShipmentMethodsForAllStoresScenario {
             for (let index = 0; index < count; index++) {
                 this.listShipmentMethodPage.find({ query: params.shipmentMethod }).eq(index).should('exist').then(($storeRow) => {
                     this.listShipmentMethodPage.clickEditAction($storeRow);
-                    
+
                     // Perform the necessary update actions here
                     this.editShipmentMethodPage.assignAllAvailableStore();
                     this.editShipmentMethodPage.addPrices();
