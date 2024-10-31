@@ -41,7 +41,7 @@ export class EnableShipmentTypeForAllStoresScenario {
       });
 
       cy.get('@deliveryIds').then((deliveryIds: any) => {
-        cy.get('@storeNames').then((storeNames: string[]) => {
+        cy.get('@storeNames').then((storeNames) => {
           deliveryIds.forEach((deliveryId: any) => {
             cy.request({
               method: 'PATCH',
