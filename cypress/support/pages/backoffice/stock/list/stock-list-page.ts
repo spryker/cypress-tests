@@ -41,9 +41,10 @@ export class StockListPage extends BackofficePage {
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(params.query);
 
-    this.interceptTable({ url: '/stock-gui/warehouse/table**', expectedCount: params.expectedCount });
-
-    return this.repository.getFirstTableRow();
+      return this.interceptTable(
+        { url: '/stock-gui/warehouse/table**', expectedCount: params.expectedCount },
+        () => this.repository.getFirstTableRow()
+    );
   };
 }
 

@@ -24,9 +24,10 @@ export class BlockListPage extends BackofficePage {
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(params.query);
 
-    this.interceptTable({ url: 'cms-block-gui/list-block/table**', expectedCount: params.expectedCount });
-
-    return this.repository.getFirstTableRow();
+      return this.interceptTable(
+          { url: 'cms-block-gui/list-block/table**', expectedCount: params.expectedCount },
+          () => this.repository.getFirstTableRow()
+      );
   };
 
   clickEditAction = (row: JQuery<HTMLElement>): void => {
