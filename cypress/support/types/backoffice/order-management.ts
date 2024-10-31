@@ -1,4 +1,4 @@
-import { Address, Customer, Product, User } from './shared';
+import { Address, Customer, Product, User, ProductConcrete, ProductOffer, Store } from './shared';
 
 export interface OrderCreationDynamicFixtures {
   customer: Customer;
@@ -23,4 +23,24 @@ export interface CustomOrderReferenceManagementDynamicFixtures {
 export interface CustomOrderReferenceManagementStaticFixtures {
   defaultPassword: string;
   orderReference: string;
+}
+
+export interface MarketplacePaymentOmsFlowStaticFixtures {
+  defaultPassword: string;
+  rootUser: User;
+  merchantUser: User;
+  customer: Customer;
+  address: Address;
+  productConcreteForOffer: ProductConcrete;
+  productOffer: ProductOffer;
+  store: Store;
+  product: Product;
+  cmsBlockNames: Array<string>;
+  warehouse1: string;
+  warehouse2: string;
+  paymentMethod: string;
+  productPrice: string;
+  shipmentMethod: string;
+  merchantName1: string;
+  merchantName2: string;
 }
