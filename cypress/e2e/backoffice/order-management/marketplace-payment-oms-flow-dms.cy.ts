@@ -1,8 +1,5 @@
 import { container } from '@utils';
-import {
-  MarketplacePaymentOmsFlowStaticFixtures,
-  MarketplacePaymentOmsFlowDynamicFixtures,
-} from '@interfaces/backoffice';
+import { MarketplacePaymentOmsFlowStaticFixtures } from '@interfaces/backoffice';
 import { ActionEnum, SalesOrdersPage } from '@pages/mp';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import {
@@ -52,10 +49,9 @@ import { CatalogPage, ProductPage } from '@pages/yves';
         const enableShipmentTypeForAllStoresScenario = container.get(EnableShipmentTypeForAllStoresScenario);
 
         let staticFixtures: MarketplacePaymentOmsFlowStaticFixtures;
-        let dynamicFixtures: MarketplacePaymentOmsFlowDynamicFixtures;
 
         before((): void => {
-          ({ staticFixtures, dynamicFixtures } = Cypress.env());
+          ({ staticFixtures } = Cypress.env());
 
           userLoginScenario.execute({
             username: staticFixtures.rootUser.username,
@@ -94,7 +90,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
         it('merchant user should be able close an order from customer', (): void => {
           customerLoginScenario.execute({
-            email: dynamicFixtures.customer.email,
+            email: staticFixtures.customer.email,
             password: staticFixtures.defaultPassword,
           });
 
