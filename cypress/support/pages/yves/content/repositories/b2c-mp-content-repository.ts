@@ -8,5 +8,5 @@ export class B2cMpContentRepository implements ContentRepository {
     cy.get('[name="q"]').first().clear().invoke('val', query);
   }
   getFirstSuggestedCmsPage = (cmsPageName: string): Cypress.Chainable =>
-    cy.get(`h6:contains("Pages")`).first().closest('div').find(`a:contains("${cmsPageName}")`).first();
+    cy.get(`h4:contains("Pages")`).first().closest('div').find(`a:contains("${cmsPageName}")`).first();
 }
