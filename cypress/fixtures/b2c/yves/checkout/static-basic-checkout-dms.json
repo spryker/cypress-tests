@@ -15,7 +15,7 @@
     "username": "admin@spryker.com"
   },
   "paymentMethods": ["Dummy Payment", "Credit Card"],
-  "shipmentMethods": ["Standard", "Express"],
+  "shipmentMethods": ["Standard"],
   "store": {
     "name": "TEST_STORE",
     "currency": "EUR",
