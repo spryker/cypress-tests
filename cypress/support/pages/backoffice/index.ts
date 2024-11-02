@@ -1,4 +1,5 @@
 export * from './backoffice-page';
+export * from './catalog/category/list/category-list-page';
 export * from './index/index-page';
 export * from './login/login-page';
 export * from './merchant/create/merchant-create-page';
