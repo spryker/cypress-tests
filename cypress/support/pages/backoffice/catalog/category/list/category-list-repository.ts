@@ -4,11 +4,9 @@ import { injectable } from 'inversify';
 @injectable()
 @autoWired
 export class CategoryListRepository {
-    getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1):visible');
-    getSearchSelector = (): string => '[type="search"]';
-    getEditButtonSelector = (): string => 'a:contains("Edit")';
-    getActivateButtonSelector = (): string => 'button:contains("Activate")';
-    getDeactivateButtonSelector = (): string => 'button:contains("Deactivate")';
-    getApproveAccessButtonSelector = (): string => 'button:contains("Approve Access")';
-    getDenyAccessButtonSelector = (): string => 'button:contains("Deny Access")';
+  getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1):visible');
+  getSearchSelector = (): string => '[type="search"]';
+  getEditButtonSelector = (): string => 'a:contains("Edit")';
+  getDropdownToggleButtonSelector = (): string => 'button[data-toggle="dropdown"]';
+  getDropdownMenuSelector = (): string => 'body > .dropdown-menu';
 }

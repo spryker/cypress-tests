@@ -21,8 +21,8 @@ export interface CustomOrderReferenceManagementStaticFixtures {
   orderReference: string;
 }
 export interface OrderCreationDynamicFixtures {
-    customer: Customer;
-    address: Address;
-    product: Product;
-    rootUser: User;
+  customer: Customer;
+  address: Address;
+  product: Product;
+  rootUser: User;
 }
