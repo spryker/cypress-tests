@@ -21,8 +21,7 @@ export class BlockListPage extends BackofficePage {
 
   find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(params.query);
+      cy.get(searchSelector).invoke('val', params.query).trigger('input');
 
       return this.interceptTable(
           { url: 'cms-block-gui/list-block/table**', expectedCount: params.expectedCount },
