@@ -17,7 +17,7 @@ export class CategoryListPage extends BackofficePage {
       cy.wrap($merchantRow).find(this.repository.getDropdownToggleButtonSelector()).should('exist').click();
 
       cy.get(this.repository.getDropdownMenuSelector())
-        .find(this.repository.getEditButtonSelector(), { timeout: 10000 })
+        .find(this.repository.getEditButtonSelector())
         .should('exist')
         .click();
     });
