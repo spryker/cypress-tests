@@ -125,7 +125,6 @@
           "name": "haveFullProduct",
           "key": "productConcreteForOffer",
           "arguments": [
-            {},
             {
               "idTaxSet": 1,
               "localizedAttributes": [
@@ -161,7 +160,6 @@
           "name": "haveFullProduct",
           "key": "productConcreteForMerchant",
           "arguments": [
-            {},
             {
               "idTaxSet": 1,
               "localizedAttributes": [
