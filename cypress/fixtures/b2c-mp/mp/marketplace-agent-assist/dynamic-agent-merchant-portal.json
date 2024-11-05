@@ -274,7 +274,6 @@
                   "sku": "#productConcreteForOffer.sku",
                   "abstractSku": "#productConcreteForOffer.abstract_sku",
                   "idProductAbstract": "#productConcreteForOffer.fk_product_abstract",
-                  "name": "#productConcreteForOffer.name",
                   "productOfferReference": "#productOffer.product_offer_reference",
                   "merchantReference": "#productOffer.merchant_reference",
                   "quantity": 1,
