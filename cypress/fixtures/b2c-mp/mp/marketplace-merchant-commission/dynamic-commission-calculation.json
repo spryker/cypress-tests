@@ -678,7 +678,6 @@
                 {
                   "sku": "#concreteProduct3.sku",
                   "abstractSku": "#concreteProduct3.abstract_sku",
-                  "name": "#concreteProduct3.name",
                   "merchantReference": "#merchant2.merchant_reference",
                   "quantity": 2,
                   "unitPrice": 20000

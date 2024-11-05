@@ -664,7 +664,6 @@
                 {
                   "sku": "#concreteProduct1.sku",
                   "abstractSku": "#concreteProduct1.abstract_sku",
-                  "name": "#concreteProduct1.name",
                   "merchantReference": "#merchant1.merchant_reference",
                   "quantity": 2,
                   "unitPrice": 100000
@@ -672,7 +671,6 @@
                 {
                   "sku": "#concreteProduct2.sku",
                   "abstractSku": "#concreteProduct2.abstract_sku",
-                  "name": "#concreteProduct2.name",
                   "merchantReference": "#merchant1.merchant_reference",
                   "quantity": 2,
                   "unitPrice": 20000
@@ -680,7 +678,6 @@
                 {
                   "sku": "#concreteProduct3.sku",
                   "abstractSku": "#concreteProduct3.abstract_sku",
-                  "name": "#concreteProduct3.name",
                   "merchantReference": "#merchant2.merchant_reference",
                   "quantity": 2,
                   "unitPrice": 20000
@@ -699,7 +696,6 @@
                 {
                   "sku": "#concreteProduct1.sku",
                   "abstractSku": "#concreteProduct1.abstract_sku",
-                  "name": "#concreteProduct1.name",
                   "merchantReference": "#merchant1.merchant_reference",
                   "quantity": 2,
                   "unitPrice": 100000
@@ -707,7 +703,6 @@
                 {
                   "sku": "#concreteProduct2.sku",
                   "abstractSku": "#concreteProduct2.abstract_sku",
-                  "name": "#concreteProduct2.name",
                   "merchantReference": "#merchant1.merchant_reference",
                   "quantity": 2,
                   "unitPrice": 20000
@@ -715,7 +710,6 @@
                 {
                   "sku": "#concreteProduct3.sku",
                   "abstractSku": "#concreteProduct3.abstract_sku",
-                  "name": "#concreteProduct3.name",
                   "merchantReference": "#merchant2.merchant_reference",
                   "quantity": 2,
                   "unitPrice": 20000
@@ -734,7 +728,6 @@
                 {
                   "sku": "#concreteProduct1.sku",
                   "abstractSku": "#concreteProduct1.abstract_sku",
-                  "name": "#concreteProduct1.name",
                   "merchantReference": "#merchant1.merchant_reference",
                   "quantity": 2,
                   "unitPrice": 100000
@@ -742,7 +735,6 @@
                 {
                   "sku": "#concreteProduct2.sku",
                   "abstractSku": "#concreteProduct2.abstract_sku",
-                  "name": "#concreteProduct2.name",
                   "merchantReference": "#merchant1.merchant_reference",
                   "quantity": 2,
                   "unitPrice": 20000
@@ -750,7 +742,6 @@
                 {
                   "sku": "#concreteProduct3.sku",
                   "abstractSku": "#concreteProduct3.abstract_sku",
-                  "name": "#concreteProduct3.name",
                   "merchantReference": "#merchant2.merchant_reference",
                   "quantity": 2,
                   "unitPrice": 20000
