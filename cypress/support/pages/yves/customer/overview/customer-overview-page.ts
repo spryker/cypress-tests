@@ -11,4 +11,7 @@ export class CustomerOverviewPage extends YvesPage {
   protected PAGE_URL = '/customer/overview';
 
   getPlacedOrderSuccessMessage = (): string => this.repository.getPlacedOrderSuccessMessage();
+  viewLastPlacedOrder = (): void => {
+    this.repository.getLastViewOrderButton().click();
+  };
 }

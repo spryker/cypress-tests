@@ -31,6 +31,7 @@ export enum ActionEnum {
   approveAccess,
   denyAccess,
   delete,
+  deny,
 }
 
 interface InterceptGuiTableParams {
