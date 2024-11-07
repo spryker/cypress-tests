@@ -28,9 +28,13 @@ export class BackofficePage extends AbstractPage {
 
     public getEditButton = (params: UpdateParams): Cypress.Chainable => {
         return this.find(params).then(($row) => {
+            if (!$row) {
+                cy.log('No rows found after filtering');
+                return null;
+            }
             return this.getEditButtonFromRow($row).then(($button) => {
                 if ($button.length) {
-                    return cy.wrap($button);
+                    return $button;
                 } else {
                     cy.log('Record is assigned to the store or not found by search criteria');
                     return null;
@@ -41,20 +45,28 @@ export class BackofficePage extends AbstractPage {
 
     public find = (params: UpdateParams): Cypress.Chainable => {
         cy.get('[type="search"]').invoke('val', params.searchQuery).trigger('input');
-        
+
         return this.interceptTable(
             { url: params.tableUrl, expectedCount: params.expectedCount },
             () => {
-                let rows = cy.get('tbody > tr:visible');
+                cy.get('tbody > tr:visible').then(($rows) => {
+                    let rows = Cypress.$($rows);
 
-                if (params.rowFilter && params.rowFilter.length > 0) {
-                    params.rowFilter.forEach(filterFn => {
-                        if (rows.length) {
-                            rows = rows.filter((index, row) => filterFn(Cypress.$(row)));
-                        }
-                    });
-                }
-                return rows.first();
+                    if (params.rowFilter && params.rowFilter.length > 0) {
+                        params.rowFilter.forEach(filterFn => {
+                            if (rows.length > 0) {
+                                rows = rows.filter((index, row) => filterFn(Cypress.$(row)));
+                            }
+                        });
+                    }
+
+                    if (rows.length > 0) {
+                        return cy.wrap(rows.first());
+                    } else {
+                        cy.log('No rows found after filtering');
+                        return null;
+                    }
+                });
             }
         );
     };

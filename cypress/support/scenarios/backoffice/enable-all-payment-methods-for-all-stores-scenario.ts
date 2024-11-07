@@ -16,8 +16,8 @@ export class EnableAllPaymentMethodsForAllStoresScenario {
             searchQuery: params.paymentMethodName,
             tableUrl: 'payment-gui/payment-method/table**',
             rowFilter: [
-                (row) => this.listPaymentMethodPage.rowIsAssignedToStore({ row, storeName: params.storeName }),
-                (row) => row.find('td.shipment_method_key').text().trim() === params.paymentMethodKey
+                (row) => !this.listPaymentMethodPage.rowIsAssignedToStore({ row, storeName: params.storeName }),
+                (row) => row.find('td[class*="payment_method_key"]').text().trim() === params.paymentMethodKey
             ]
         }).then((editButton) => {
             if (editButton === null) {

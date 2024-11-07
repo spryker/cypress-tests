@@ -16,7 +16,7 @@ export class EnableWarehouseForAllStoresScenario {
                 searchQuery: params.warehouse,
                 tableUrl: '/stock-gui/warehouse/table**',
                 rowFilter: [
-                    (row) => this.stockListPage.rowIsAssignedToStore({ row, storeName: params.storeName })
+                    (row) => !this.stockListPage.rowIsAssignedToStore({ row, storeName: params.storeName })
                 ]
             }).then((editButton) => {
                 if (editButton === null) {

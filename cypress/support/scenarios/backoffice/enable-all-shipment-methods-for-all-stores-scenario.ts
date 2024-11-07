@@ -16,8 +16,8 @@ export class EnableAllShipmentMethodsForAllStoresScenario {
             searchQuery: params.shipmentMethod,
             tableUrl: 'shipment-gui/shipment-method/table**',
             rowFilter: [
-                (row) => this.listShipmentMethodPage.rowIsAssignedToStore({ row, storeName: params.storeName }),
-                (row) => row.find('td.shipment_method_key').text().trim() === params.shipmentMethodKey
+                (row) => !this.listShipmentMethodPage.rowIsAssignedToStore({ row, storeName: params.storeName }),
+                (row) => row.find('td[class*="shipment_method_key"]').text().trim() === params.shipmentMethodKey
             ]
         }).then((editButton) => {
             if (editButton === null) {
