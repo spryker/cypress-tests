@@ -6,13 +6,15 @@
   "rootUser": {
     "username": "admin@spryker.com"
   },
-  "paymentMethod": "Dummy Payment",
   "product": {
     "name": "Asus Transformer Book T200TA",
     "sku": "139_24699831",
     "abstract_sku": "139"
   },
-  "shipmentMethod": "Standard",
+  "shipmentMethod": {
+        "key": "spryker_dummy_shipment-standard",
+        "name": "Standard"
+  },
   "store": {
     "name": "TEST_STORE",
     "currency": "EUR",

@@ -24,7 +24,7 @@ export class EnableWarehouseForAllStoresScenario {
                 return;
             }
 
-            editButton.click();
+            cy.wrap(editButton).should('be.visible').click();
 
             this.stockEditPage.assignAllAvailableStore();
 

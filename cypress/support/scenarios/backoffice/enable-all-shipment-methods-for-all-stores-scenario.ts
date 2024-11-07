@@ -24,7 +24,7 @@ export class EnableAllShipmentMethodsForAllStoresScenario {
                 return;
             }
 
-            editButton.click();
+            cy.wrap(editButton).should('be.visible').click();
 
             this.editShipmentMethodPage.assignAllAvailableStore();
             this.editShipmentMethodPage.addPrices();

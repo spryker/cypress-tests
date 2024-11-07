@@ -28,15 +28,14 @@ export class BackofficePage extends AbstractPage {
 
     public getEditButton = (params: UpdateParams): Cypress.Chainable => {
         return this.find(params).then(($row) => {
-            let button = this.getEditButtonFromRow($row);
-
-            button = button.length ? button : null;
-
-            if (button === null) {
-                cy.log('Record is asigned to the store or not found by search criteria')
-            }
-
-            return button;
+            return this.getEditButtonFromRow($row).then(($button) => {
+                if ($button.length) {
+                    return cy.wrap($button);
+                } else {
+                    cy.log('Record is assigned to the store or not found by search criteria');
+                    return null;
+                }
+            });
         });
     };
 

@@ -24,7 +24,7 @@ export class EnableAllPaymentMethodsForAllStoresScenario {
                 return;
             }
 
-            editButton.click();
+            cy.wrap(editButton).should('be.visible').click();
 
             this.editPaymentMethodPage.assignAllAvailableStore();
             this.editPaymentMethodPage.save();
