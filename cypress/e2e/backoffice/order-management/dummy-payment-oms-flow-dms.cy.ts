@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { DummyPaymentOmsFlowStaticFixtures } from '@interfaces/smoke';
+import { DummyPaymentOmsFlowStaticFixtures } from '@interfaces/backoffice';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import {
@@ -141,12 +141,14 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
           });
 
           enableShipmentMethodForAllStoresScenario.execute({
-            shipmentMethod: staticFixtures.shipmentMethod,
+            shipmentMethodKey: staticFixtures.shipmentMethod.key,
+            shipmentMethod: staticFixtures.shipmentMethod.name,
             storeName: staticFixtures.store.name,
           });
 
           enablePaymentMethodForAllStoresScenario.execute({
-            paymentMethod: staticFixtures.paymentMethod,
+            paymentMethodKey: staticFixtures.paymentMethod.key,
+            paymentMethodName: staticFixtures.paymentMethod.name,
             storeName: staticFixtures.store.name,
           });
 

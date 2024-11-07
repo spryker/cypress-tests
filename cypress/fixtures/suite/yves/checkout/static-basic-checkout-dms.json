@@ -14,8 +14,29 @@
   "rootUser": {
     "username": "admin@spryker.com"
   },
-  "paymentMethods": ["Dummy Marketplace Payment", "Dummy Payment", "Credit Card"],
-  "shipmentMethods": ["Standard", "Express"],
+  "paymentMethods": [
+      {
+          "key": "dummyMarketplacePaymentInvoice",
+          "name": "Dummy Marketplace Payment"
+      },
+      {
+            "key": "dummyPaymentInvoice",
+            "name": "Dummy Payment"
+      },
+      {
+            "key": "dummyPaymentCreditCard",
+            "name": "Credit Card"
+      }
+  ],
+  "shipmentMethods": [
+      {
+          "key": "spryker_dummy_shipment-standard",
+          "name": "Standard"
+      }, {
+          "key": "spryker_dummy_shipment-express",
+          "name": "Express"
+      }
+  ],
   "store": {
     "name": "TEST_STORE",
     "currency": "EUR",

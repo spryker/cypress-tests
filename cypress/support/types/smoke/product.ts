@@ -15,7 +15,6 @@ export interface PublishAndSynchronizeDmsStaticFixtures {
   product: Product;
   warehouse1: string;
   warehouse2: string;
-  paymentMethod: string;
   productPrice: string;
   shipmentMethod: string;
 }

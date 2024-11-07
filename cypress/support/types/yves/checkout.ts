@@ -15,12 +15,22 @@ export interface BasicCheckoutDynamicFixtures {
 export interface CheckoutStaticFixtures {
   customer: Customer;
   defaultPassword: string;
-  paymentMethods: Array<string>;
+  paymentMethods: Array<PaymentMethod>;
   product1: ProductConcrete;
   product2: ProductConcrete;
   productPrice: string;
   rootUser: User;
-  shipmentMethods: Array<string>;
+  shipmentMethods: Array<ShipmentMethod>;
   store: Store;
   warehouse: string;
+}
+
+export interface ShipmentMethod {
+    key: string;
+    name: string;
+}
+
+export interface PaymentMethod {
+    key: string;
+    name: string;
 }

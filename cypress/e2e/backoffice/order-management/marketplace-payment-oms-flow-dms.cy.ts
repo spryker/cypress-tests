@@ -120,12 +120,14 @@ import { CatalogPage, ProductPage } from '@pages/yves';
           });
 
           enableShipmentMethodForAllStoresScenario.execute({
-            shipmentMethod: staticFixtures.shipmentMethod,
+            shipmentMethod: staticFixtures.shipmentMethod.name,
+            shipmentMethodKey: staticFixtures.shipmentMethod.key,
             storeName: staticFixtures.store.name,
           });
 
           enablePaymentMethodForAllStoresScenario.execute({
-            paymentMethod: staticFixtures.paymentMethod,
+            paymentMethodName: staticFixtures.paymentMethod.name,
+            paymentMethodKey: staticFixtures.paymentMethod.key,
             storeName: staticFixtures.store.name,
           });
 
@@ -221,7 +223,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
             function skipB2BIt(description: string, testFn: () => void): void {
                 (['b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
             }
-            
+
             function checkOrderVisibility(orderReference: string): void {
                 cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
                 salesOrdersPage.visit();

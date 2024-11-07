@@ -12,36 +12,34 @@ export class EnableAllShipmentMethodsForAllStoresScenario {
     execute = (params: ExecuteParams): void => {
         this.listShipmentMethodPage.visit();
 
-        // Waits for shipments to load
-        this.listShipmentMethodPage.interceptTable({ url: 'shipment-gui/shipment-method/table**' });
+        this.listShipmentMethodPage.getEditButton({
+            searchQuery: params.shipmentMethod,
+            tableUrl: 'shipment-gui/shipment-method/table**',
+            rowFilter: [
+                (row) => this.listShipmentMethodPage.rowIsAssignedToStore({ row, storeName: params.storeName }),
+                (row) => row.find('td.shipment_method_key').text().trim() === params.shipmentMethodKey
+            ]
+        }).then((editButton) => {
+            if (editButton === null) {
+                return;
+            }
 
-        this.listShipmentMethodPage.find({ query: params.shipmentMethod }).its('length').then((count) => {
-            for (let index = 0; index < count; index++) {
-                this.listShipmentMethodPage.find({ query: params.shipmentMethod }).eq(index).should('exist').then(($storeRow) => {
-                    this.listShipmentMethodPage.clickEditAction($storeRow);
+            editButton.click();
 
-                    // Perform the necessary update actions here
-                    this.editShipmentMethodPage.assignAllAvailableStore();
-                    this.editShipmentMethodPage.addPrices();
-                    this.editShipmentMethodPage.save();
+            this.editShipmentMethodPage.assignAllAvailableStore();
+            this.editShipmentMethodPage.addPrices();
+            this.editShipmentMethodPage.save();
 
-                    // Go back to the list page to update the next shipment method
-                    this.listShipmentMethodPage.visit();
-
-                    // Waits for shipments to load again
-                    this.listShipmentMethodPage.interceptTable({ url: 'shipment-gui/shipment-method/table**' });
-                });
+            if (params?.shouldTriggerPublishAndSync) {
+                cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
             }
         });
-
-        if (params?.shouldTriggerPublishAndSync) {
-            cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-        }
     };
 }
 
 interface ExecuteParams {
   storeName?: string;
   shipmentMethod: string;
+  shipmentMethodKey: string;
   shouldTriggerPublishAndSync?: boolean;
 }

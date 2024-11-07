@@ -10,21 +10,6 @@ export class ListShipmentMethodPage extends BackofficePage {
 
   protected PAGE_URL = '/shipment-gui/shipment-method';
 
-  find = (params: FindParams): Cypress.Chainable => {
-    const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(params.query);
-
-      return this.interceptTable(
-          { url: 'shipment-gui/shipment-method/table**', expectedCount: params.expectedCount },
-          () => cy.get('tbody > tr:visible')
-      );
-  };
-
-    clickEditAction = (row: JQuery<HTMLElement>): void => {
-        cy.wrap(row).find(this.repository.getEditButtonSelector()).should('exist').click();
-    };
-
   rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
     if (typeof params.storeName !== 'string') {
       return false;

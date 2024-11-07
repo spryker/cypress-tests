@@ -1,21 +1,5 @@
 import { Address, Customer, Product, ProductConcrete, ProductOffer, User } from './shared';
 
-export interface DummyPaymentOmsFlowStaticFixtures {
-  store: Store;
-  cmsBlockNames: Array<string>;
-  defaultPassword: string;
-  customer: Customer;
-  product: Product;
-  rootUser: User;
-  productConcrete: ProductConcrete;
-  warehouse: string;
-  paymentMethod: string;
-  productPrice: string;
-  shipmentMethod: string;
-  concreteProduct: ProductConcrete;
-  checkoutPaymentMethod: string;
-}
-
 export interface Store {
   name: string;
   locale: string;

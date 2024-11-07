@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { BasicCheckoutDynamicFixtures, CheckoutStaticFixtures } from '@interfaces/yves';
+import {BasicCheckoutDynamicFixtures, CheckoutStaticFixtures} from '@interfaces/yves';
 import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 import {
@@ -133,14 +133,16 @@ import {
 
       staticFixtures.shipmentMethods.forEach((shipmentMethod) =>
         enableShipmentMethodForAllStoresScenario.execute({
-          shipmentMethod: shipmentMethod,
+          shipmentMethod: shipmentMethod.name,
+          shipmentMethodKey: shipmentMethod.key,
           storeName: staticFixtures.store.name,
         })
       );
 
-      staticFixtures.paymentMethods.forEach((methodName) =>
+      staticFixtures.paymentMethods.forEach((PaymentMethod) =>
         enablePaymentMethodForAllStoresScenario.execute({
-          paymentMethod: methodName,
+          paymentMethodKey: PaymentMethod.key,
+          paymentMethodName: PaymentMethod.name,
           storeName: staticFixtures.store.name,
         })
       );

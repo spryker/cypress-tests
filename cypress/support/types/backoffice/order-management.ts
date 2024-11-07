@@ -38,9 +38,35 @@ export interface MarketplacePaymentOmsFlowStaticFixtures {
   cmsBlockNames: Array<string>;
   warehouse1: string;
   warehouse2: string;
-  paymentMethod: string;
+  paymentMethod: PaymentMethod;
   productPrice: string;
-  shipmentMethod: string;
+  shipmentMethod: ShipmentMethod;
   merchantName1: string;
   merchantName2: string;
+}
+
+export interface DummyPaymentOmsFlowStaticFixtures {
+    store: Store;
+    cmsBlockNames: Array<string>;
+    defaultPassword: string;
+    customer: Customer;
+    product: Product;
+    rootUser: User;
+    productConcrete: ProductConcrete;
+    warehouse: string;
+    paymentMethod: PaymentMethod;
+    productPrice: string;
+    shipmentMethod: ShipmentMethod;
+    concreteProduct: ProductConcrete;
+    checkoutPaymentMethod: string;
+}
+
+export interface ShipmentMethod {
+    key: string;
+    name: string;
+}
+
+export interface PaymentMethod {
+    key: string;
+    name: string;
 }

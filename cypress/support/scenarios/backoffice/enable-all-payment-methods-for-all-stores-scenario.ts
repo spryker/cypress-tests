@@ -6,50 +6,39 @@ import { ListPaymentMethodPage } from '../../pages/backoffice/payment-method/lis
 @injectable()
 @autoWired
 export class EnableAllPaymentMethodsForAllStoresScenario {
-  @inject(ListPaymentMethodPage) private listPaymentMethodPage: ListPaymentMethodPage;
-  @inject(EditPaymentMethodPage) private editPaymentMethodPage: EditPaymentMethodPage;
+    @inject(ListPaymentMethodPage) private listPaymentMethodPage: ListPaymentMethodPage;
+    @inject(EditPaymentMethodPage) private editPaymentMethodPage: EditPaymentMethodPage;
 
-  execute = (params: ExecuteParams): void => {
-    this.listPaymentMethodPage.visit();
+    execute = (params: ExecuteParams): void => {
+        this.listPaymentMethodPage.visit();
 
-    // Waits for payment methods to load
-    this.listPaymentMethodPage.interceptTable({ url: 'payment-gui/payment-method/table**' });
+        this.listPaymentMethodPage.getEditButton({
+            searchQuery: params.paymentMethodName,
+            tableUrl: 'payment-gui/payment-method/table**',
+            rowFilter: [
+                (row) => this.listPaymentMethodPage.rowIsAssignedToStore({ row, storeName: params.storeName }),
+                (row) => row.find('td.shipment_method_key').text().trim() === params.paymentMethodKey
+            ]
+        }).then((editButton) => {
+            if (editButton === null) {
+                return;
+            }
 
-    this.listPaymentMethodPage
-      .find({ query: params.paymentMethod })
-      .its('length')
-      .then((count) => {
-        for (let index = 0; index < count; index++) {
-          this.listPaymentMethodPage
-            .find({ query: params.paymentMethod })
-            .eq(index)
-            .should('exist')
-            .then(($storeRow) => {
-              if (!this.listPaymentMethodPage.rowIsAssignedToStore({ row: $storeRow, storeName: params.storeName })) {
-                this.listPaymentMethodPage.clickEditAction($storeRow);
+            editButton.click();
 
-                // Perform the necessary update actions here
-                this.editPaymentMethodPage.assignAllAvailableStore();
-                this.editPaymentMethodPage.save();
+            this.editPaymentMethodPage.assignAllAvailableStore();
+            this.editPaymentMethodPage.save();
 
-                // Go back to the list page to update the next payment method
-                this.listPaymentMethodPage.visit();
-
-                // Waits for payment methods to load again
-                this.listPaymentMethodPage.interceptTable({ url: 'payment-gui/payment-method/table**' });
-
-                if (params?.shouldTriggerPublishAndSync) {
-                  cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-                }
-              }
-            });
-        }
-      });
-  };
+            if (params?.shouldTriggerPublishAndSync) {
+                cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+            }
+        });
+    };
 }
 
 interface ExecuteParams {
-  paymentMethod: string;
-  shouldTriggerPublishAndSync?: boolean;
-  storeName?: string;
+    paymentMethodKey: string;
+    paymentMethodName: string;
+    shouldTriggerPublishAndSync?: boolean;
+    storeName?: string;
 }
