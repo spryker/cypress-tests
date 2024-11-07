@@ -8,4 +8,7 @@ export class B2cMpCustomerOverviewRepository implements CustomerOverviewReposito
   getLastViewOrderButton(): Cypress.Chainable {
     return cy.get('[data-qa="component order-table"]').find('tr').eq(1).contains('a', 'View Order');
   }
+  getOrderedProductSpan(productName: string): string {
+    return `span:contains("${productName}")`;
+  }
 }

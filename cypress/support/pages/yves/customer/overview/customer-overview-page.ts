@@ -14,4 +14,10 @@ export class CustomerOverviewPage extends YvesPage {
   viewLastPlacedOrder = (): void => {
     this.repository.getLastViewOrderButton().click();
   };
+  assertProductQuantity = (productName: string, quantity: number): void => {
+    cy.get('body').then(($body) => {
+      const occurrences = $body.find(this.repository.getOrderedProductSpan(productName));
+      expect(occurrences).to.have.length(quantity);
+    });
+  };
 }

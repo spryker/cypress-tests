@@ -1,11 +1,14 @@
 import { container } from '@utils';
-import { OrderAmendmentCreationDynamicFixtures, OrderAmendmentStaticFixtures } from '@interfaces/yves';
+import { OrderAmendmentStartDynamicFixtures, OrderAmendmentStaticFixtures } from '@interfaces/yves';
 import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { DenyProductScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 
-describe('order amendment creation', { tags: ['@order-amendment'] }, (): void => {
+/**
+ * Order Amendment checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4545871873/Initialisation+Order+Amendment+Process}
+ */
+describe('order amendment start', { tags: ['@order-amendment'] }, (): void => {
   const customerOverviewPage = container.get(CustomerOverviewPage);
   const orderDetailsPage = container.get(OrderDetailsPage);
   const cartPage = container.get(CartPage);
@@ -20,14 +23,14 @@ describe('order amendment creation', { tags: ['@order-amendment'] }, (): void =>
   const userLoginScenario = container.get(UserLoginScenario);
 
   let staticFixtures: OrderAmendmentStaticFixtures;
-  let dynamicFixtures: OrderAmendmentCreationDynamicFixtures;
+  let dynamicFixtures: OrderAmendmentStartDynamicFixtures;
 
   before((): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 
   it('customer should be able to create order amendment and lock previous order', (): void => {
-    placeCustomerOrder(dynamicFixtures.customer1.email);
+    placeCustomerOrder(dynamicFixtures.customer1.email, dynamicFixtures.address1.id_customer_address);
 
     customerOverviewPage.visit();
     customerOverviewPage.viewLastPlacedOrder();
@@ -48,8 +51,8 @@ describe('order amendment creation', { tags: ['@order-amendment'] }, (): void =>
     });
   });
 
-  it('customer should not be able to create order amendment when order was paid', (): void => {
-    placeCustomerOrder(dynamicFixtures.customer2.email);
+  it('customer should not be able to create order amendment when order not in payment-pending state', (): void => {
+    placeCustomerOrder(dynamicFixtures.customer2.email, dynamicFixtures.address2.id_customer_address);
     triggerOmsOrderToPaidState();
 
     customerLoginScenario.execute({
@@ -65,7 +68,7 @@ describe('order amendment creation', { tags: ['@order-amendment'] }, (): void =>
   });
 
   it('customer should be able to replace current cart (quote) with previous order items', (): void => {
-    placeCustomerOrder(dynamicFixtures.customer3.email);
+    placeCustomerOrder(dynamicFixtures.customer3.email, dynamicFixtures.address3.id_customer_address);
 
     catalogPage.visit();
     catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
@@ -78,24 +81,8 @@ describe('order amendment creation', { tags: ['@order-amendment'] }, (): void =>
     cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).should('have.value', '1');
   });
 
-  it('customer should not be able to edit order when item is inactive', (): void => {
-    placeCustomerOrder(dynamicFixtures.customer4.email);
-    denyProductInBackoffice();
-
-    customerLoginScenario.execute({
-      email: dynamicFixtures.customer4.email,
-      password: staticFixtures.defaultPassword,
-    });
-
-    customerOverviewPage.visit();
-    customerOverviewPage.viewLastPlacedOrder();
-
-    orderDetailsPage.editOrder();
-    cy.contains(`Product sku ${dynamicFixtures.product.sku} is not active.`).should('exist');
-  });
-
-  it.only('customer should be able to modify new cart (change quantity, add new items)', (): void => {
-    placeCustomerOrder(dynamicFixtures.customer5.email);
+  it('customer should be able to modify new cart (change quantity, add new items)', (): void => {
+    placeCustomerOrder(dynamicFixtures.customer4.email, dynamicFixtures.address4.id_customer_address);
 
     customerOverviewPage.visit();
     customerOverviewPage.viewLastPlacedOrder();
@@ -114,17 +101,29 @@ describe('order amendment creation', { tags: ['@order-amendment'] }, (): void =>
     });
   });
 
-  function placeCustomerOrder(email: string): void {
+  it('customer should not be able to amend order when item was deactivated', (): void => {
+    placeCustomerOrder(dynamicFixtures.customer5.email, dynamicFixtures.address5.id_customer_address);
+    denyProductInBackoffice();
+
+    customerLoginScenario.execute({
+      email: dynamicFixtures.customer5.email,
+      password: staticFixtures.defaultPassword,
+    });
+
+    customerOverviewPage.visit();
+    customerOverviewPage.viewLastPlacedOrder();
+
+    orderDetailsPage.editOrder();
+    cy.contains(`Product sku ${dynamicFixtures.product.sku} is not active.`).should('exist');
+  });
+
+  function placeCustomerOrder(email: string, idCustomerAddress: number): void {
     customerLoginScenario.execute({
       email: email,
       password: staticFixtures.defaultPassword,
     });
 
-    catalogPage.visit();
-    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
-    productPage.addToCart();
-
-    checkoutScenario.execute({ shouldTriggerOmsInCli: true });
+    checkoutScenario.execute({ idCustomerAddress: idCustomerAddress, shouldTriggerOmsInCli: true });
     cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
   }
 

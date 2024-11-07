@@ -12,6 +12,11 @@
         },
         {
           "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "helper",
           "name": "haveCustomer",
           "key": "customer1",
           "arguments": [{ "locale": "#locale", "password": "change123" }]
@@ -20,18 +25,6 @@
           "type": "helper",
           "name": "haveCustomer",
           "key": "customer2",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveCustomer",
-          "key": "customer3",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveCustomer",
-          "key": "customer4",
           "arguments": [{ "locale": "#locale", "password": "change123" }]
         },
         {
@@ -46,27 +39,6 @@
         },
         {
           "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer3"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer4"]
-        },
-        {
-          "type": "transfer",
-          "name": "StoreTransfer",
-          "key": "store",
-          "arguments": { "id_store": 1, "name": "DE" }
-        },
-        {
-          "type": "helper",
-          "name": "haveCountry",
-          "key": "country"
-        },
-        {
-          "type": "helper",
           "name": "haveCustomerAddress",
           "key": "address1",
           "arguments": [{ "fkCustomer": "#customer1.id_customer", "fkCountry": "#country.id_country" }]
@@ -78,16 +50,10 @@
           "arguments": [{ "fkCustomer": "#customer2.id_customer", "fkCountry": "#country.id_country" }]
         },
         {
-          "type": "helper",
-          "name": "haveCustomerAddress",
-          "key": "address3",
-          "arguments": [{ "fkCustomer": "#customer3.id_customer", "fkCountry": "#country.id_country" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveCustomerAddress",
-          "key": "address4",
-          "arguments": [{ "fkCustomer": "#customer4.id_customer", "fkCountry": "#country.id_country" }]
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 1, "name": "DE" }
         },
         {
           "type": "transfer",
@@ -168,12 +134,6 @@
         },
         {
           "type": "helper",
-          "name": "haveProductOptionValueForAbstractProduct",
-          "key": "productOptionValue",
-          "arguments": ["#product2.abstract_sku"]
-        },
-        {
-          "type": "helper",
           "name": "havePersistentQuote",
           "arguments": [
             {
@@ -182,11 +142,6 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "quantity": 1
-                },
-                {
-                  "sku": "#product2.sku",
-                  "abstractSku": "#product2.abstract_sku",
                   "quantity": 1
                 }
               ]
@@ -204,49 +159,6 @@
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
                   "quantity": 1
-                },
-                {
-                  "sku": "#product2.sku",
-                  "abstractSku": "#product2.abstract_sku",
-                  "quantity": 1
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "havePersistentQuote",
-          "arguments": [
-            {
-              "customer": "#customer3",
-              "items": [
-                {
-                  "sku": "#product1.sku",
-                  "abstractSku": "#product1.abstract_sku",
-                  "quantity": 3
-                },
-                {
-                  "sku": "#product2.sku",
-                  "abstractSku": "#product2.abstract_sku",
-                  "quantity": 2
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "havePersistentQuote",
-          "arguments": [
-            {
-              "customer": "#customer4",
-              "items": [
-                {
-                  "sku": "#product2.sku",
-                  "abstractSku": "#product2.abstract_sku",
-                  "quantity": 1,
-                  "productOptions": [{ "idProductOptionValue": "#productOptionValue.id_product_option_value" }]
                 }
               ]
             }

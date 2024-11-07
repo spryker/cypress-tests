@@ -5,17 +5,6 @@
       "synchronize": true,
       "operations": [
         {
-          "type": "helper",
-          "name": "haveUser",
-          "key": "rootUser",
-          "arguments": [{ "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "addUserToGroup",
-          "arguments": ["#rootUser.id_user", 1]
-        },
-        {
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "locale",
@@ -23,58 +12,25 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
-          "key": "customer1",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
+          "name": "haveCountry",
+          "key": "country"
         },
         {
           "type": "helper",
           "name": "haveCustomer",
-          "key": "customer2",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveCustomer",
-          "key": "customer3",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveCustomer",
-          "key": "customer4",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveCustomer",
-          "key": "customer5",
+          "key": "customer",
           "arguments": [{ "locale": "#locale", "password": "change123" }]
         },
         {
           "type": "helper",
           "name": "confirmCustomer",
-          "arguments": ["#customer1"]
+          "arguments": ["#customer"]
         },
         {
           "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer2"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer3"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer4"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer5"]
+          "name": "haveCustomerAddress",
+          "key": "address",
+          "arguments": [{ "fkCustomer": "#customer1.id_customer", "fkCountry": "#country.id_country" }]
         },
         {
           "type": "transfer",
@@ -122,6 +78,22 @@
               "idProduct": "#product.id_product_concrete",
               "idProductAbstract": "#product.fk_product_abstract",
               "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer1",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "quantity": 1
+                }
+              ]
             }
           ]
         }
