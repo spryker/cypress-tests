@@ -40,8 +40,8 @@ export class BackofficePage extends AbstractPage {
     };
 
     public find = (params: UpdateParams): Cypress.Chainable => {
-        cy.get('[type="search"]').invoke('val', '').type(params.searchQuery);
-
+        cy.get('[type="search"]').invoke('val', params.searchQuery).trigger('input');
+        
         return this.interceptTable(
             { url: params.tableUrl, expectedCount: params.expectedCount },
             () => {
