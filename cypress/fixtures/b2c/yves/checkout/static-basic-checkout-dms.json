@@ -14,8 +14,20 @@
   "rootUser": {
     "username": "admin@spryker.com"
   },
-  "paymentMethods": ["Dummy Payment", "Credit Card"],
-  "shipmentMethods": ["Standard"],
+  "paymentMethods": [
+      {
+          "key": "dummyPaymentInvoice",
+          "name": "Invoice"
+      },
+      {
+          "key": "dummyPaymentCreditCard",
+          "name": "Credit Card"
+      }
+  ],
+  "shipmentMethods": [{
+      "key": "spryker_dummy_shipment-standard",
+      "name": "Standard"
+  }],
   "store": {
     "name": "TEST_STORE",
     "currency": "EUR",
