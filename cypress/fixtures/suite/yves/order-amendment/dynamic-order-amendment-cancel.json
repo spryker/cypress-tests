@@ -30,7 +30,7 @@
           "type": "helper",
           "name": "haveCustomerAddress",
           "key": "address",
-          "arguments": [{ "fkCustomer": "#customer1.id_customer", "fkCountry": "#country.id_country" }]
+          "arguments": [{ "fkCustomer": "#customer.id_customer", "fkCountry": "#country.id_country" }]
         },
         {
           "type": "transfer",
@@ -86,7 +86,7 @@
           "name": "havePersistentQuote",
           "arguments": [
             {
-              "customer": "#customer1",
+              "customer": "#customer",
               "items": [
                 {
                   "sku": "#product.sku",

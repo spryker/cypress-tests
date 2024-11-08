@@ -58,7 +58,7 @@
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
-          "arguments": { "id_store": 1, "name": "DE" }
+          "arguments": { "id_store": 1, "name": "DE", "defaultCurrencyIsoCode": "EUR" }
         },
         {
           "type": "helper",
@@ -170,7 +170,7 @@
           "type": "helper",
           "name": "haveProductOptionValueForAbstractProduct",
           "key": "productOptionValue",
-          "arguments": ["#product2.abstract_sku"]
+          "arguments": ["#product2.abstract_sku", "#store"]
         },
         {
           "type": "helper",
