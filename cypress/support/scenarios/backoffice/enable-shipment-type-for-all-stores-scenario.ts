@@ -65,6 +65,8 @@ export class EnableShipmentTypeForAllStoresScenario {
         });
       });
     });
+
+      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
   };
 }
 

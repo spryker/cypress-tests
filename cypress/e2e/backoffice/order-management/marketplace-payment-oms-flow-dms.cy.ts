@@ -178,7 +178,9 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
           salesIndexPage.getOrderReference().then((orderReference) => {
             salesDetailPage.triggerOms({ state: 'Pay' });
-            salesDetailPage.triggerOms({ state: 'skip picking' });
+              cy.runCliCommands(['console oms:check-condition']);
+
+              salesDetailPage.triggerOms({ state: 'skip picking' });
 
             merchantUserLoginScenario.execute({
               username: staticFixtures.merchantUser.username,
