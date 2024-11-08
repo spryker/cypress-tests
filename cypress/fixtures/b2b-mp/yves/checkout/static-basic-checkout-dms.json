@@ -14,8 +14,17 @@
   "rootUser": {
     "username": "admin@spryker.com"
   },
-  "paymentMethods": ["Dummy Marketplace Payment"],
-  "shipmentMethods": ["Standard", "Express"],
+  "paymentMethods": [{
+      "name": "Dummy Marketplace Payment",
+      "key": "dummyMarketplacePaymentInvoice"
+  }],
+  "shipmentMethods": [{
+      "name": "Standard",
+      "key": "spryker_dummy_shipment-standard"
+  }, {
+        "name": "Express",
+        "key": "spryker_dummy_shipment-express"
+    }],
   "store": {
     "name": "TEST_STORE",
     "currency": "EUR",

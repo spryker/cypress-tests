@@ -12,7 +12,7 @@
     "abstract_sku": "139"
   },
   "shipmentMethod": {
-      name: "Standard",
+      "name": "Standard",
       "key": "spryker_dummy_shipment-standard"
   },
   "store": {

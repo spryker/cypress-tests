@@ -13,13 +13,19 @@
     "product_offer_reference": "offer423"
   },
   "productPrice": "10.15",
-  "paymentMethod": "Invoice",
+  "paymentMethod": {
+        "name": "Dummy Marketplace Payment",
+        "key": "dummyMarketplacePaymentInvoice"
+  },
   "product": {
     "name": "FRIWA wood shell chair, VE 2 pieces - beech, natural, grip holes, with upholstery",
     "sku": "512086",
     "abstract_sku": "M1014871"
   },
-  "shipmentMethod": "Standard",
+  "shipmentMethod": {
+      "name": "Standard",
+      "key": "spryker_dummy_shipment-standard"
+  },
   "store": {
     "name": "TEST_STORE",
     "currency": "EUR",
