@@ -66,7 +66,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
       cartPage.getCartItemChangeQuantityField(dynamicFixtures.product2.sku).should('have.value', '2');
     });
 
-    it.only('customer should be able to reorder item with product option', (): void => {
+    it('customer should be able to reorder item with product option', (): void => {
       placeCustomerOrder(dynamicFixtures.customer4.email, dynamicFixtures.address4.id_customer_address);
 
       customerOverviewPage.visit();
