@@ -13,7 +13,7 @@
     "username": "admin@spryker.com"
   },
   "paymentMethod": {
-    "key": "dummyMarketplacePaymentInvoice",
+    "key": "dummyPaymentInvoice",
     "name": "Invoice"
   },
   "product": {
