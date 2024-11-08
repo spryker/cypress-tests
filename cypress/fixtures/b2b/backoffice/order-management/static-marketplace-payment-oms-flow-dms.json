@@ -13,13 +13,19 @@
     "product_offer_reference": "offer423"
   },
   "productPrice": "10.15",
-  "paymentMethod": "Invoice",
+  "paymentMethod": {
+      "name": "Dummy Payment",
+      "key": "dummyPaymentInvoice"
+  },
   "product": {
     "name": "Sony SmartWatch 3",
     "sku": "420550",
     "abstract_sku": "M21091"
   },
-  "shipmentMethod": "Standard",
+  "shipmentMethod": {
+      "name": "Standard",
+      "key": "spryker_dummy_shipment-standard"
+  },
   "store": {
     "name": "TEST_STORE",
     "currency": "EUR",
