@@ -11,4 +11,7 @@ export class B2cCustomerOverviewRepository implements CustomerOverviewRepository
   getOrderedProductSpan(productName: string): string {
     return `span:contains("${productName}")`;
   }
+  getViewOrderButton(tableRowIndex: number): Cypress.Chainable {
+    return cy.get('[data-qa="component order-table"]').find('tr').eq(tableRowIndex).contains('a', 'View Order');
+  }
 }

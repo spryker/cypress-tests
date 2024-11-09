@@ -27,4 +27,8 @@ export class OrderDetailsPage extends YvesPage {
   editOrder = (): void => {
     this.repository.getEditOrderButton().click();
   };
+
+  containsOrderState = (orderState: string): void => {
+    cy.get('body').contains(orderState).should('exist');
+  };
 }

@@ -22,9 +22,7 @@ describe('reorder product bundles', { tags: ['@order-amendment'] }, (): void => 
   it('customer should be able to reorder product bundle', (): void => {
     placeOrderWithProductBundle();
 
-    customerOverviewPage.visit();
     customerOverviewPage.viewLastPlacedOrder();
-
     orderDetailsPage.reorderAll();
 
     cy.get('body').contains(dynamicFixtures.productBundle.name).should('exist');

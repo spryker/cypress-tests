@@ -26,20 +26,19 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
     it('customer should be able to cancel order amendment', (): void => {
       placeCustomerOrder();
-      customerOverviewPage.visit();
       customerOverviewPage.viewLastPlacedOrder();
 
       orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
         orderDetailsPage.editOrder();
-        cy.get('body').contains(`Editing Order ${orderReference}`).should('exist');
+        cartPage.assertCartName(`Editing Order ${orderReference}`);
+
+        cartPage.clearCart();
 
         cartPage.visit();
-        cartPage.clearCart();
-        cy.get('body').contains(`Editing Order ${orderReference}`).should('not.exist');
+        cartPage.assertCartName('Shopping cart');
 
-        customerOverviewPage.visit();
         customerOverviewPage.viewLastPlacedOrder();
-        cy.get('body').contains('Payment pending').should('exist');
+        orderDetailsPage.containsOrderState('Payment pending');
       });
     });
 
@@ -53,7 +52,6 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
         idCustomerAddress: dynamicFixtures.address.id_customer_address,
         shouldTriggerOmsInCli: true,
       });
-      cy.runCliCommands(['console oms:check-timeout', 'console oms:check-condition']);
     }
   }
 );

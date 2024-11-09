@@ -58,6 +58,12 @@
         },
         {
           "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer6",
+          "arguments": [{ "locale": "#locale", "password": "change123" }]
+        },
+        {
+          "type": "helper",
           "name": "confirmCustomer",
           "arguments": ["#customer1"]
         },
@@ -80,6 +86,11 @@
           "type": "helper",
           "name": "confirmCustomer",
           "arguments": ["#customer5"]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "arguments": ["#customer6"]
         },
         {
           "type": "helper",
@@ -110,6 +121,12 @@
           "name": "haveCustomerAddress",
           "key": "address5",
           "arguments": [{ "fkCustomer": "#customer5.id_customer", "fkCountry": "#country.id_country" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address6",
+          "arguments": [{ "fkCustomer": "#customer6.id_customer", "fkCountry": "#country.id_country" }]
         },
         {
           "type": "transfer",
@@ -156,6 +173,74 @@
               "name": "default",
               "idProduct": "#product.id_product_concrete",
               "idProductAbstract": "#product.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productInActive",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productInActive.abstract_sku",
+              "skuProduct": "#productInActive.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#productInActive.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#productInActive.id_product_concrete",
+              "idProductAbstract": "#productInActive.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productOutOfStock",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productOutOfStock.abstract_sku",
+              "skuProduct": "#productOutOfStock.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#productOutOfStock.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#productOutOfStock.id_product_concrete",
+              "idProductAbstract": "#productOutOfStock.fk_product_abstract",
               "productImages": ["#productImage"]
             }
           ]
@@ -232,8 +317,24 @@
               "customer": "#customer5",
               "items": [
                 {
-                  "sku": "#product.sku",
-                  "abstractSku": "#product.abstract_sku",
+                  "sku": "#productInActive.sku",
+                  "abstractSku": "#productInActive.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer6",
+              "items": [
+                {
+                  "sku": "#productOutOfStock.sku",
+                  "abstractSku": "#productOutOfStock.abstract_sku",
                   "quantity": 1
                 }
               ]

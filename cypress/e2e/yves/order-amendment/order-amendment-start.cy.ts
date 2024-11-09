@@ -2,7 +2,7 @@ import { container } from '@utils';
 import { OrderAmendmentStartDynamicFixtures, OrderAmendmentStaticFixtures } from '@interfaces/yves';
 import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
-import { DenyProductScenario, UserLoginScenario } from '@scenarios/backoffice';
+import { DenyProductScenario, RemoveProductStockScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 
 /**
@@ -21,6 +21,7 @@ describe('order amendment start', { tags: ['@order-amendment'] }, (): void => {
   const checkoutScenario = container.get(CheckoutScenario);
   const denyProductScenario = container.get(DenyProductScenario);
   const userLoginScenario = container.get(UserLoginScenario);
+  const removeProductStockScenario = container.get(RemoveProductStockScenario);
 
   let staticFixtures: OrderAmendmentStaticFixtures;
   let dynamicFixtures: OrderAmendmentStartDynamicFixtures;
@@ -32,22 +33,18 @@ describe('order amendment start', { tags: ['@order-amendment'] }, (): void => {
   it('customer should be able to create order amendment and lock previous order', (): void => {
     placeCustomerOrder(dynamicFixtures.customer1.email, dynamicFixtures.address1.id_customer_address);
 
-    customerOverviewPage.visit();
     customerOverviewPage.viewLastPlacedOrder();
-
-    cy.get('body').contains('Payment pending').should('exist');
+    orderDetailsPage.containsOrderState('Payment pending');
 
     orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
       orderDetailsPage.editOrder();
 
       cartPage.assertPageLocation();
-      cy.get('body').contains(`Editing Order ${orderReference}`);
+      cartPage.assertCartName(`Editing Order ${orderReference}`);
       cy.get('body').contains(dynamicFixtures.product.name).should('exist');
 
-      customerOverviewPage.visit();
       customerOverviewPage.viewLastPlacedOrder();
-
-      cy.get('body').contains('Order amendment').should('exist');
+      orderDetailsPage.containsOrderState('Order amendment');
     });
   });
 
@@ -60,10 +57,9 @@ describe('order amendment start', { tags: ['@order-amendment'] }, (): void => {
       password: staticFixtures.defaultPassword,
     });
 
-    customerOverviewPage.visit();
     customerOverviewPage.viewLastPlacedOrder();
-
     orderDetailsPage.editOrder();
+
     cy.contains('The order cannot be amended.').should('exist');
   });
 
@@ -74,19 +70,16 @@ describe('order amendment start', { tags: ['@order-amendment'] }, (): void => {
     catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
     productPage.addToCart({ quantity: 2 });
 
-    customerOverviewPage.visit();
     customerOverviewPage.viewLastPlacedOrder();
-
     orderDetailsPage.editOrder();
+
     cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).should('have.value', '1');
   });
 
   it('customer should be able to modify new cart (change quantity, add new items)', (): void => {
     placeCustomerOrder(dynamicFixtures.customer4.email, dynamicFixtures.address4.id_customer_address);
 
-    customerOverviewPage.visit();
     customerOverviewPage.viewLastPlacedOrder();
-
     orderDetailsPage.editOrder();
 
     cartPage.visit();
@@ -110,11 +103,25 @@ describe('order amendment start', { tags: ['@order-amendment'] }, (): void => {
       password: staticFixtures.defaultPassword,
     });
 
-    customerOverviewPage.visit();
     customerOverviewPage.viewLastPlacedOrder();
-
     orderDetailsPage.editOrder();
-    cy.contains(`Product sku ${dynamicFixtures.product.sku} is not active.`).should('exist');
+
+    cy.contains(`Product sku ${dynamicFixtures.productInActive.sku} is not active.`).should('exist');
+  });
+
+  it('customer should not be able to amend order when item was out-of-stock', (): void => {
+    placeCustomerOrder(dynamicFixtures.customer6.email, dynamicFixtures.address6.id_customer_address);
+    removeProductStock();
+
+    customerLoginScenario.execute({
+      email: dynamicFixtures.customer6.email,
+      password: staticFixtures.defaultPassword,
+    });
+
+    customerOverviewPage.viewLastPlacedOrder();
+    orderDetailsPage.editOrder();
+
+    cy.contains(`Product ${dynamicFixtures.productOutOfStock.sku} is not available at the moment.`).should('exist');
   });
 
   function placeCustomerOrder(email: string, idCustomerAddress: number): void {
@@ -124,7 +131,6 @@ describe('order amendment start', { tags: ['@order-amendment'] }, (): void => {
     });
 
     checkoutScenario.execute({ idCustomerAddress: idCustomerAddress, shouldTriggerOmsInCli: true });
-    cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
   }
 
   function denyProductInBackoffice(): void {
@@ -134,7 +140,19 @@ describe('order amendment start', { tags: ['@order-amendment'] }, (): void => {
     });
 
     denyProductScenario.execute({
-      abstractSku: dynamicFixtures.product.abstract_sku,
+      abstractSku: dynamicFixtures.productInActive.abstract_sku,
+      shouldTriggerPublishAndSync: true,
+    });
+  }
+
+  function removeProductStock(): void {
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
+
+    removeProductStockScenario.execute({
+      abstractSku: dynamicFixtures.productOutOfStock.abstract_sku,
       shouldTriggerPublishAndSync: true,
     });
   }

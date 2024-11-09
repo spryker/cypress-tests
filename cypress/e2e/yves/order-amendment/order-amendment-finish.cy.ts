@@ -25,16 +25,16 @@ describe('order amendment finish', { tags: ['@order-amendment'] }, (): void => {
 
   it('customer should be able to finish amended order with new item in cart', (): void => {
     placeCustomerOrder(dynamicFixtures.customer1.email, dynamicFixtures.address1.id_customer_address);
-    amendLastOrder();
+
+    customerOverviewPage.viewLastPlacedOrder();
+    orderDetailsPage.editOrder();
 
     catalogPage.visit();
     catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product2.sku });
     productPage.addToCart();
 
     placeCustomerOrder(dynamicFixtures.customer1.email, dynamicFixtures.address1.id_customer_address);
-
-    customerOverviewPage.visit();
-    cy.get('body').contains('Canceled').should('exist');
+    assertOrderCancellationForPrevOrder();
 
     customerOverviewPage.viewLastPlacedOrder();
     customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.name, 1);
@@ -43,25 +43,25 @@ describe('order amendment finish', { tags: ['@order-amendment'] }, (): void => {
 
   it('customer should be able to finish amended order with updated product quantity', (): void => {
     placeCustomerOrder(dynamicFixtures.customer2.email, dynamicFixtures.address2.id_customer_address);
-    amendLastOrder();
+
+    customerOverviewPage.viewLastPlacedOrder();
+    orderDetailsPage.editOrder();
 
     cartPage.visit();
     cartPage.changeQuantity({ sku: dynamicFixtures.product1.sku, quantity: 3 });
 
     placeCustomerOrder(dynamicFixtures.customer2.email, dynamicFixtures.address2.id_customer_address);
-
-    customerOverviewPage.visit();
-    cy.get('body').contains('Canceled').should('exist');
+    assertOrderCancellationForPrevOrder();
 
     customerOverviewPage.viewLastPlacedOrder();
     customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.name, 3);
   });
 
-  function amendLastOrder(): void {
+  function assertOrderCancellationForPrevOrder(): void {
     customerOverviewPage.visit();
-    customerOverviewPage.viewLastPlacedOrder();
+    customerOverviewPage.viewOrder(2);
 
-    orderDetailsPage.editOrder();
+    orderDetailsPage.containsOrderState('Canceled');
   }
 
   function placeCustomerOrder(email: string, idCustomerAddress: number): void {
@@ -71,6 +71,5 @@ describe('order amendment finish', { tags: ['@order-amendment'] }, (): void => {
     });
 
     checkoutScenario.execute({ idCustomerAddress: idCustomerAddress, shouldTriggerOmsInCli: true });
-    cy.runCliCommands(['console oms:check-timeout', 'console oms:check-condition']);
   }
 });

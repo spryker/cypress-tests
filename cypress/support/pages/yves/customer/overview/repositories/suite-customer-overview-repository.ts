@@ -10,4 +10,7 @@ export class SuiteCustomerOverviewRepository implements CustomerOverviewReposito
   getOrderedProductSpan(productName: string): string {
     return `span:contains("${productName}")`;
   }
+  getViewOrderButton(tableRowIndex: number): Cypress.Chainable {
+    return cy.get('[data-qa="component order-table"]').find('tr').eq(tableRowIndex).contains('a', 'View Order');
+  }
 }

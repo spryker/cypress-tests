@@ -23,10 +23,8 @@ describe('reorder random weight products', { tags: ['@order-amendment'] }, (): v
   it('customer should be able to reorder random weight products', (): void => {
     placeOrderWithRandomWeightProducts();
 
-    customerOverviewPage.visit();
     customerOverviewPage.viewLastPlacedOrder();
-
-    orderDetailsPage.editOrder();
+    orderDetailsPage.reorderAll();
 
     cy.get('body').contains(dynamicFixtures.productMUnit.name).should('exist');
     cy.get('body').contains(dynamicFixtures.productPUnit.name).should('exist');

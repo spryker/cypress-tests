@@ -23,14 +23,12 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
     it('customer should be able to reorder all items from previous order', (): void => {
       placeCustomerOrder(dynamicFixtures.customer1.email, dynamicFixtures.address1.id_customer_address);
 
-      customerOverviewPage.visit();
       customerOverviewPage.viewLastPlacedOrder();
-
       orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
         orderDetailsPage.reorderAll();
 
         cartPage.assertPageLocation();
-        cy.get('body').contains(`Reorder from Order ${orderReference}`);
+        cartPage.assertCartName(`Reorder from Order ${orderReference}`);
 
         cy.get('body').contains(dynamicFixtures.product1.name).should('exist');
         cy.get('body').contains(dynamicFixtures.product2.name).should('exist');
@@ -40,14 +38,12 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
     it('customer should be able to reorder selected items from previous order', (): void => {
       placeCustomerOrder(dynamicFixtures.customer2.email, dynamicFixtures.address2.id_customer_address);
 
-      customerOverviewPage.visit();
       customerOverviewPage.viewLastPlacedOrder();
-
       orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
         orderDetailsPage.reorderFirstSalesOrderItem();
 
         cartPage.assertPageLocation();
-        cy.get('body').contains(`Reorder from Order ${orderReference}`);
+        cartPage.assertCartName(`Reorder from Order ${orderReference}`);
 
         cy.get('body').contains(dynamicFixtures.product1.name).should('exist');
         cy.get('body').contains(dynamicFixtures.product2.name).should('not.exist');
@@ -57,9 +53,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
     it('customer should be able to reorder all items with quantity splitting', (): void => {
       placeCustomerOrder(dynamicFixtures.customer3.email, dynamicFixtures.address3.id_customer_address);
 
-      customerOverviewPage.visit();
       customerOverviewPage.viewLastPlacedOrder();
-
       orderDetailsPage.reorderAll();
 
       cartPage.getCartItemChangeQuantityField(dynamicFixtures.product1.sku).should('have.value', '3');
@@ -69,9 +63,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
     it('customer should be able to reorder item with product option', (): void => {
       placeCustomerOrder(dynamicFixtures.customer4.email, dynamicFixtures.address4.id_customer_address);
 
-      customerOverviewPage.visit();
       customerOverviewPage.viewLastPlacedOrder();
-
       orderDetailsPage.reorderAll();
 
       cy.get('body').contains(dynamicFixtures.productOptionValue.value).should('exist');
@@ -83,7 +75,10 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
         password: staticFixtures.defaultPassword,
       });
 
-      checkoutScenario.execute({ idCustomerAddress: idCustomerAddress });
+      checkoutScenario.execute({
+        idCustomerAddress: idCustomerAddress,
+        shouldTriggerOmsInCli: true,
+      });
     }
   }
 );
