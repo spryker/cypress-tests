@@ -14,7 +14,7 @@ export class OffersPage extends MpPage {
   find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
-    cy.get(searchSelector).invoke('val', params.query);
+    cy.get(searchSelector).type(params.query, { delay: 0 });
     cy.get(searchSelector).type('{enter}');
 
     this.interceptTable({

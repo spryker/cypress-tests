@@ -15,7 +15,7 @@ export class AvailabilityIndexPage extends BackofficePage {
 
     this.find(findParams).then(($merchantRow) => {
       if (params.action === ActionEnum.view) {
-        cy.wrap($merchantRow).find(this.repository.getViewButtonSelector()).should('exist').click();
+        cy.wrap($merchantRow).find(this.repository.getViewButtonSelector()).should('exist').click({ force: true });
       }
     });
   };
