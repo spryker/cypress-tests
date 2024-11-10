@@ -35,7 +35,9 @@ export class CheckoutScenario {
 
     if (params?.shouldTriggerOmsInCli) {
       cy.runCliCommands([
-        'console oms:check-timeout && sleep 1 && console oms:check-timeout',
+        'sleep 1',
+        'console oms:check-timeout',
+        'sleep 1',
         'console oms:check-condition',
       ]);
     }
