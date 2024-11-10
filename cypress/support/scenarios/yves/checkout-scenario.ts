@@ -34,12 +34,7 @@ export class CheckoutScenario {
     this.checkoutSummaryPage.placeOrder();
 
     if (params?.shouldTriggerOmsInCli) {
-      cy.runCliCommands([
-        'sleep 1',
-        'console oms:check-timeout',
-        'sleep 1',
-        'console oms:check-condition',
-      ]);
+      cy.runCliCommands(['sleep 1', 'console oms:check-timeout', 'sleep 1', 'console oms:check-condition']);
     }
   };
 
