@@ -15,12 +15,16 @@ export class SalesOrdersPage extends MpPage {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(params.query, { delay: 0 });
-    cy.get(searchSelector).type('{enter}', { delay: 100 }); // Delay to avoid flaky interceptions
 
-    this.interceptTable({
-      url: '/sales-merchant-portal-gui/orders/table-data**',
-      expectedCount: params.expectedCount,
-    });
+    this.interceptTable(
+      {
+        url: '/sales-merchant-portal-gui/orders/table-data**',
+        expectedCount: params.expectedCount,
+      },
+      () => {
+        cy.get(searchSelector).type('{enter}');
+      }
+    );
 
     return this.repository.getFirstTableRow();
   };
