@@ -118,6 +118,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 
         function closeOrderFromBackoffice(): void {
           salesDetailPage.triggerOms({ state: 'Pay' });
+          cy.runCliCommands(['console oms:check-condition']);
           salesDetailPage.triggerOms({ state: 'Skip timeout' });
           salesDetailPage.triggerOms({ state: 'skip picking' });
           salesDetailPage.triggerOms({ state: 'Ship' });
