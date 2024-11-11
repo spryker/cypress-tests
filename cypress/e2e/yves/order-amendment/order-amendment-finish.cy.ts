@@ -7,7 +7,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
  * Order Amendment checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4545871873/Initialisation+Order+Amendment+Process}
  */
 (['b2c', 'b2c-mp', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
-  'order amendment finish [skip]',
+  'order amendment finish',
   { tags: ['@order-amendment'] },
   (): void => {
     const customerOverviewPage = container.get(CustomerOverviewPage);
