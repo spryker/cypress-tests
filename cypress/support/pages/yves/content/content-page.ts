@@ -11,7 +11,7 @@ export class ContentPage extends YvesPage {
 
   protected PAGE_URL = '/search';
 
-  searchCmsPageFromSuggestions = (params: SearchParams): void => {
+  findCmsPageFromSuggestions = (params: SearchParams): void => {
     this.repository.search(params.query);
     this.repository.getFirstSuggestedCmsPage(params.query).click();
   };

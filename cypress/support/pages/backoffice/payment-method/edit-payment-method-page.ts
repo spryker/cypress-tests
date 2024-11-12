@@ -1,6 +1,5 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-// import { ActionEnum, BackofficePage } from '@pages/backoffice';
 import { EditPaymentMethodRepository } from './edit-payment-method-repository';
 import { BackofficePage } from '@pages/backoffice';
 @injectable()
@@ -17,13 +16,3 @@ export class EditPaymentMethodPage extends BackofficePage {
     this.repository.getSaveButton().click();
   };
 }
-//
-// interface FindParams {
-//   query: string;
-//   expectedCount?: number;
-// }
-//
-// interface UpdateParams {
-//   action: ActionEnum;
-//   query: string;
-// }

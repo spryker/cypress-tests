@@ -11,22 +11,10 @@ export class BlockListPage extends BackofficePage {
   protected PAGE_URL = '/cms-block-gui/list-block';
 
   update = (params: UpdateParams): void => {
-    const findParams = { query: params.query, expectedCount: 1 };
-
-    this.find(findParams).then(($storeRow) => {
+    this.find({searchQuery: params.query, tableUrl: 'cms-block-gui/list-block/table**'}).then(($storeRow) => {
       cy.wrap($storeRow).as('row');
       cy.get('@row').find(this.repository.getEditButtonSelector()).should('exist').click();
     });
-  };
-
-  find = (params: FindParams): Cypress.Chainable => {
-    const searchSelector = this.repository.getSearchSelector();
-      cy.get(searchSelector).invoke('val', params.query).trigger('input');
-
-      return this.interceptTable(
-          { url: 'cms-block-gui/list-block/table**', expectedCount: params.expectedCount },
-          () => this.repository.getFirstTableRow()
-      );
   };
 
   clickEditAction = (row: JQuery<HTMLElement>): void => {

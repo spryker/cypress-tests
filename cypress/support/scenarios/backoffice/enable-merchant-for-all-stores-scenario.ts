@@ -11,7 +11,7 @@ export class EnableMerchantForAllStoresScenario {
   execute = (params: ExecuteParams): void => {
     this.merchantListPage.visit();
 
-    this.merchantListPage.find({ query: params.merchantName, expectedCount: 1 }).then(($row) => {
+    this.merchantListPage.find({ searchQuery: params.merchantName, tableUrl: '/merchant-gui/list-merchant/table**' }).then(($row) => {
       if (!this.merchantListPage.rowIsAssignedToStore({ row: $row, storeName: params.storeName })) {
         this.merchantListPage.clickEditAction($row);
 

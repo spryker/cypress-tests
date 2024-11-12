@@ -24,24 +24,12 @@ export class ProductManagementListPage extends BackofficePage {
   };
 
   update = (params: UpdateParams): void => {
-    const findParams = { query: params.query, expectedCount: 1 };
-
-    this.find(findParams).then(($productRow) => {
+    this.find({searchQuery: params.query, tableUrl: '/product-management/index/table**'}).then(($productRow) => {
       if (params.action === ActionEnum.edit) {
         cy.wrap($productRow).find(this.repository.getEditButtonSelector()).as('editButton');
         cy.get('@editButton').click();
       }
     });
-  };
-
-  find = (params: FindParams): Cypress.Chainable => {
-    const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(params.query);
-
-    this.interceptTable({ url: '/product-management/index/table**', expectedCount: params.expectedCount });
-
-    return this.repository.getFirstTableRow();
   };
 }
 

@@ -12,26 +12,28 @@ export class EnableAllPaymentMethodsForAllStoresScenario {
     execute = (params: ExecuteParams): void => {
         this.listPaymentMethodPage.visit();
 
-        this.listPaymentMethodPage.getEditButton({
-            searchQuery: params.paymentMethodName,
-            tableUrl: 'payment-gui/payment-method/table**',
-            rowFilter: [
-                (row) => !this.listPaymentMethodPage.rowIsAssignedToStore({ row, storeName: params.storeName }),
-                (row) => row.find('td[class*="payment_method_key"]').text().trim() === params.paymentMethodKey
-            ]
-        }).then((editButton) => {
-            if (editButton === null) {
-                return;
-            }
+        this.listPaymentMethodPage.interceptTable({ url: '/payment-gui/payment-method/table**'}).then(() => {
+            this.listPaymentMethodPage.getEditButton({
+                searchQuery: params.paymentMethodName,
+                tableUrl: '/payment-gui/payment-method/table**',
+                rowFilter: [
+                    (row) => !this.listPaymentMethodPage.rowIsAssignedToStore({ row, storeName: params.storeName }),
+                    (row) => row.find('td[class*="payment_method_key"]').text().trim() === params.paymentMethodKey
+                ]
+            }).then((editButton) => {
+                if (editButton === null) {
+                    return;
+                }
 
-            cy.wrap(editButton).should('be.visible').click();
+                cy.wrap(editButton).should('be.visible').click();
 
-            this.editPaymentMethodPage.assignAllAvailableStore();
-            this.editPaymentMethodPage.save();
+                this.editPaymentMethodPage.assignAllAvailableStore();
+                this.editPaymentMethodPage.save();
 
-            if (params?.shouldTriggerPublishAndSync) {
-                cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-            }
+                if (params?.shouldTriggerPublishAndSync) {
+                    cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+                }
+            });
         });
     };
 }

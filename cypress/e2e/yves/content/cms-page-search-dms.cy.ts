@@ -40,7 +40,7 @@ import { CreateStoreScenario, CreateCmsPageScenario, UserLoginScenario } from '@
 
     it('customer should be able to find cms page in search box', (): void => {
       homePage.visit();
-      contentPage.searchCmsPageFromSuggestions({ query: staticFixtures.cmsPageName });
+      contentPage.findCmsPageFromSuggestions({ query: staticFixtures.cmsPageName });
 
       cy.url().should(
         'eq',

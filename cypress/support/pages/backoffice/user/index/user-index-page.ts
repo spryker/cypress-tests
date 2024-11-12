@@ -15,9 +15,9 @@ export class UserIndexPage extends BackofficePage {
   };
 
   update = (params: UpdateParams): void => {
-    const findParams = { query: params.query, expectedCount: 1 };
-
-    this.find(findParams).then(($userRow) => {
+    this.find({
+        searchQuery: params.query, tableUrl: '/user/index/table**'
+    }).then(($userRow) => {
       if (params.action === ActionEnum.edit) {
         cy.wrap($userRow).find(this.repository.getEditButtonSelector()).should('exist').click();
       }
@@ -34,16 +34,6 @@ export class UserIndexPage extends BackofficePage {
         cy.wrap($userRow).find(this.repository.getDeleteButtonSelector()).should('exist').click();
       }
     });
-  };
-
-  find = (params: FindParams): Cypress.Chainable => {
-    const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(params.query);
-
-    this.interceptTable({ url: '/user/index/table**', expectedCount: params.expectedCount });
-
-    return this.repository.getFirstTableRow();
   };
 
   getUserTableHeader = (): Cypress.Chainable => {

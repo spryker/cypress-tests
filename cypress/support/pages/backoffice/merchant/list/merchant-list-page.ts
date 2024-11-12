@@ -11,9 +11,7 @@ export class MerchantListPage extends BackofficePage {
   protected PAGE_URL = '/merchant-gui/list-merchant';
 
   update = (params: UpdateParams): void => {
-    const findParams = { query: params.query, expectedCount: 1 };
-
-    this.find(findParams).then(($merchantRow) => {
+    this.find({ tableUrl: '/merchant-gui/list-merchant/table**', searchQuery: params.query }).then(($merchantRow) => {
       if (params.action === ActionEnum.edit) {
         this.clickEditAction($merchantRow);
       }
@@ -38,16 +36,6 @@ export class MerchantListPage extends BackofficePage {
 
   clickEditAction = ($row: JQuery<HTMLElement>): void => {
     cy.wrap($row).find(this.repository.getEditButtonSelector()).click();
-  };
-
-  find = (params: FindParams): Cypress.Chainable => {
-    const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(params.query);
-
-    this.interceptTable({ url: '/merchant-gui/list-merchant/table**', expectedCount: params.expectedCount });
-
-    return this.repository.getFirstTableRow();
   };
 
   rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
