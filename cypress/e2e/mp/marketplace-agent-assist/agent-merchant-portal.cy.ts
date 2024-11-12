@@ -92,7 +92,7 @@ import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
       cy.get('@drawer')
         .find(productsPage.getTaxIdSetOptionSelector())
         .eq(1)
-        .then((el) => cy.get(productsPage.getTaxIdSetSelector()).select(el.val(), { force: true }));
+        .then((el) => cy.get(productsPage.getTaxIdSetSelector()).select(el.val() ?? '' , { force: true }));
 
       cy.get('@drawer').find(productsPage.getSaveButtonSelector()).click();
 
