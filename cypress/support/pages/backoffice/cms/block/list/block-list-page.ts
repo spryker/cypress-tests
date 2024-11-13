@@ -10,6 +10,10 @@ export class BlockListPage extends BackofficePage {
 
   protected PAGE_URL = '/cms-block-gui/list-block';
 
+  getPageUrl(): string {
+      return this.PAGE_URL;
+  }
+
   update = (params: UpdateParams): void => {
     this.find({searchQuery: params.query, tableUrl: 'cms-block-gui/list-block/table**'}).then(($storeRow) => {
       cy.wrap($storeRow).as('row');

@@ -71,13 +71,16 @@ export class BackofficePage extends AbstractPage {
             });
     };
 
-    public findWithretry = (params: UpdateParams): Cypress.Chainable => {
-        const retryCount = 3; 
+    public findWithretry = (params: UpdateWithRetryParams): Cypress.Chainable => {
+        const retryCount = 2;
         let attempts = 0;
 
         const searchAndIntercept = (): Cypress.Chainable => {
             attempts++;
-            return cy.get('[type="search"]').clear().then(() => {
+            cy.get('[type="search"]').clear();
+            cy.visitBackoffice(params.pageUrl);
+            return this.interceptTable(
+                { url: params.tableUrl}).then(() => {
                 cy.get('[type="search"]').invoke('val', params.searchQuery).trigger('input').then(() => {
                     return this.interceptTable(
                         { url: params.tableUrl, expectedCount: params.expectedCount },
@@ -138,4 +141,12 @@ interface UpdateParams {
     tableUrl: string;
     rowFilter?: Array<(row: JQuery<HTMLElement>) => boolean>;
     expectedCount?: number;
+}
+
+interface UpdateWithRetryParams {
+    searchQuery: string;
+    tableUrl: string;
+    rowFilter?: Array<(row: JQuery<HTMLElement>) => boolean>;
+    expectedCount?: number;
+    pageUrl: string;
 }
