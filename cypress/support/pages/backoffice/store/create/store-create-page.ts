@@ -16,8 +16,7 @@ export class StoreCreatePage extends BackofficePage {
 
     this.repository.getLocalesTab().click();
     this.repository.getDefaultLocaleSelect().select(store.locale, { force: true });
-    this.interceptTable({url: '/locale-gui/index/available-locale-table-selectable**'})
-    this.repository.getLocaleSearchInput().clear().type(store.locale);
+    this.repository.getLocaleSearchInput().clear().type(store.locale, {delay: 0});
     this.repository.getAvailableLocaleInput(store.locale).click({ force: true });
 
     this.repository.getCurrenciesTab().click();
