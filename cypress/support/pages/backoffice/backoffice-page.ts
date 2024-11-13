@@ -73,6 +73,47 @@ export class BackofficePage extends AbstractPage {
         });
     };
 
+    public findWithretry = (params: UpdateParams): Cypress.Chainable => {
+        const retryCount = 3; 
+        let attempts = 0;
+
+        const searchAndIntercept = (): Cypress.Chainable => {
+            attempts++;
+            return cy.get('[type="search"]').clear().then(() => {
+                cy.get('[type="search"]').invoke('val', params.searchQuery).trigger('input').then(() => {
+                    return this.interceptTable(
+                        { url: params.tableUrl, expectedCount: params.expectedCount },
+                        () => {
+                            cy.get('tbody > tr:visible').then(($rows) => {
+                                let rows = Cypress.$($rows);
+
+                                if (params.rowFilter && params.rowFilter.length > 0) {
+                                    params.rowFilter.forEach(filterFn => {
+                                        if (rows.length > 0) {
+                                            rows = rows.filter((index, row) => filterFn(Cypress.$(row)));
+                                        }
+                                    });
+                                }
+
+                                if (rows.length > 0) {
+                                    return cy.wrap(rows.first());
+                                } else if (attempts < retryCount) {
+                                    cy.log(`Retrying... Attempt ${attempts}`);
+                                    return searchAndIntercept();
+                                } else {
+                                    cy.log('No rows found after filtering');
+                                    return null;
+                                }
+                            });
+                        }
+                    );
+                });
+            });
+        };
+
+        return searchAndIntercept();
+    };
+
     private getEditButtonFromRow = ($row: JQuery<HTMLElement>): Cypress.Chainable => {
         return cy.wrap($row).find('a:contains("Edit")');
     };

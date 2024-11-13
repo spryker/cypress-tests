@@ -13,7 +13,7 @@ export class EnableCmsBlockForAllStoresScenario {
     this.blockListPage.visit();
 
       this.blockListPage.interceptTable({url: '/cms-block-gui/list-block/table**'}).then(() => {
-          this.blockListPage.find({searchQuery: params.cmsBlockName, tableUrl: '/cms-block-gui/list-block/table**'}).then(($storeRow) => {
+          this.blockListPage.findWithretry({searchQuery: params.cmsBlockName, tableUrl: '/cms-block-gui/list-block/table**'}).then(($storeRow) => {
               if (!this.blockListPage.rowIsAssignedToStore({row: $storeRow, storeName: params.storeName})) {
                   this.blockListPage.clickEditAction($storeRow);
 
