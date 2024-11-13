@@ -69,7 +69,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
     it('backoffice user should be able to see imported user with "Agent Customer" permission', (): void => {
       backofficeUserIndexPage.visit();
       backofficeUserIndexPage
-        .find({ query: dynamicFixtures.customerAgentUser.username })
+        .find({ searchQuery: dynamicFixtures.customerAgentUser.username, tableUrl: '/user/index/table**' })
         .contains('Agent')
         .should('have.length', 1);
     });
@@ -77,7 +77,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
     it('backoffice user should be able to see imported user with "Agent Merchant" permission', (): void => {
       backofficeUserIndexPage.visit();
       backofficeUserIndexPage
-        .find({ query: dynamicFixtures.merchantAgentUser.username })
+        .find({ searchQuery: dynamicFixtures.merchantAgentUser.username, tableUrl: '/user/index/table**' })
         .contains('Agent')
         .should('have.length', 1);
     });
