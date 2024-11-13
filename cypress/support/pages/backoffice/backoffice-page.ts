@@ -44,32 +44,33 @@ export class BackofficePage extends AbstractPage {
     };
 
     public find = (params: UpdateParams): Cypress.Chainable => {
-        cy.get('[type="search"]').clear();
-        cy.get('[type="search"]').invoke('val', params.searchQuery).trigger('input');
+        return cy.get('[type="search"]').clear().then(() => {
+            cy.get('[type="search"]').invoke('val', params.searchQuery).trigger('input').then(() => {
+                return this.interceptTable(
+                    { url: params.tableUrl, expectedCount: params.expectedCount },
+                    () => {
+                        cy.get('tbody > tr:visible').then(($rows) => {
+                            let rows = Cypress.$($rows);
 
-        return this.interceptTable(
-            { url: params.tableUrl, expectedCount: params.expectedCount },
-            () => {
-                cy.get('tbody > tr:visible').then(($rows) => {
-                    let rows = Cypress.$($rows);
+                            if (params.rowFilter && params.rowFilter.length > 0) {
+                                params.rowFilter.forEach(filterFn => {
+                                    if (rows.length > 0) {
+                                        rows = rows.filter((index, row) => filterFn(Cypress.$(row)));
+                                    }
+                                });
+                            }
 
-                    if (params.rowFilter && params.rowFilter.length > 0) {
-                        params.rowFilter.forEach(filterFn => {
                             if (rows.length > 0) {
-                                rows = rows.filter((index, row) => filterFn(Cypress.$(row)));
+                                return cy.wrap(rows.first());
+                            } else {
+                                cy.log('No rows found after filtering');
+                                return null;
                             }
                         });
                     }
-
-                    if (rows.length > 0) {
-                        return cy.wrap(rows.first());
-                    } else {
-                        cy.log('No rows found after filtering');
-                        return null;
-                    }
-                });
-            }
-        );
+                );
+            });
+        });
     };
 
     private getEditButtonFromRow = ($row: JQuery<HTMLElement>): Cypress.Chainable => {
