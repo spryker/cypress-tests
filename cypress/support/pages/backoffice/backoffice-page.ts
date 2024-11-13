@@ -44,8 +44,7 @@ export class BackofficePage extends AbstractPage {
     };
 
     public find = (params: UpdateParams): Cypress.Chainable => {
-        return cy.get('[type="search"]').clear().then(() => {
-            cy.get('[type="search"]').invoke('val', params.searchQuery).trigger('input').then(() => {
+            return cy.get('[type="search"]').clear().invoke('val', params.searchQuery).trigger('input').then(() => {
                 return this.interceptTable(
                     { url: params.tableUrl, expectedCount: params.expectedCount },
                     () => {
@@ -70,7 +69,6 @@ export class BackofficePage extends AbstractPage {
                     }
                 );
             });
-        });
     };
 
     public findWithretry = (params: UpdateParams): Cypress.Chainable => {
