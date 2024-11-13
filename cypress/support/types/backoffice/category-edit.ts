@@ -6,4 +6,5 @@ export interface CategoryEditStaticFixtures {
   helpText: string;
   parentCategoryName: string;
   rootUser: User;
+  storeNameToUnassign: string;
 }
