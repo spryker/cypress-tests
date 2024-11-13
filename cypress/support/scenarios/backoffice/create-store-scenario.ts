@@ -8,21 +8,22 @@ export class CreateStoreScenario {
   @inject(StoreListPage) private storeListPage: StoreListPage;
   @inject(StoreCreatePage) private storeCreatePage: StoreCreatePage;
 
-  execute = (params: ExecuteParams): Store => {
-    this.storeListPage.visit();
-    const store = params.store;
+    execute = (params: ExecuteParams): Store => {
+        this.storeListPage.visit();
+        const store = params.store;
 
-    this.storeListPage.hasStoreByStoreName(store.name).then((isVisible) => {
-      if (!isVisible) {
-        this.storeListPage.createStore();
-        this.storeCreatePage.create(store);
+        return this.storeListPage.hasStoreByStoreName(store.name).then((isVisible) => {
+            if (!isVisible) {
+                this.storeListPage.createStore();
+                this.storeCreatePage.create(store);
 
-        cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-      }
-    });
-
-    return store;
-  };
+                return cy.runCliCommands(['console queue:worker:start --stop-when-empty']).then(() => {
+                    return store;
+                });
+            }
+            return store;
+        });
+    }
 }
 
 interface ExecuteParams {

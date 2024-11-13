@@ -12,27 +12,30 @@ export class EnableAllShipmentMethodsForAllStoresScenario {
     execute = (params: ExecuteParams): void => {
         this.listShipmentMethodPage.visit();
 
-        this.listShipmentMethodPage.getEditButton({
-            searchQuery: params.shipmentMethod,
-            tableUrl: 'shipment-gui/shipment-method/table**',
-            rowFilter: [
-                (row) => !this.listShipmentMethodPage.rowIsAssignedToStore({ row, storeName: params.storeName }),
-                (row) => row.find('td[class*="shipment_method_key"]').text().trim() === params.shipmentMethodKey
-            ]
-        }).then((editButton) => {
-            if (editButton === null) {
-                return;
-            }
+        this.listShipmentMethodPage.interceptTable({ url: '/shipment-gui/shipment-method/table**' }).then(() => {
 
-            cy.wrap(editButton).should('be.visible').click();
+            this.listShipmentMethodPage.getEditButton({
+                searchQuery: params.shipmentMethod,
+                tableUrl: 'shipment-gui/shipment-method/table**',
+                rowFilter: [
+                    (row) => !this.listShipmentMethodPage.rowIsAssignedToStore({row, storeName: params.storeName}),
+                    (row) => row.find('td[class*="shipment_method_key"]').text().trim() === params.shipmentMethodKey
+                ]
+            }).then((editButton) => {
+                if (editButton === null) {
+                    return;
+                }
 
-            this.editShipmentMethodPage.assignAllAvailableStore();
-            this.editShipmentMethodPage.addPrices();
-            this.editShipmentMethodPage.save();
+                cy.wrap(editButton).should('be.visible').click();
 
-            if (params?.shouldTriggerPublishAndSync) {
-                cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-            }
+                this.editShipmentMethodPage.assignAllAvailableStore();
+                this.editShipmentMethodPage.addPrices();
+                this.editShipmentMethodPage.save();
+
+                if (params?.shouldTriggerPublishAndSync) {
+                    cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+                }
+            });
         });
     };
 }
