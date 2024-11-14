@@ -47,7 +47,7 @@ import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
         cy.get('body').contains(dynamicFixtures.product.name).should('exist');
 
         customerOverviewPage.viewLastPlacedOrder();
-        orderDetailsPage.containsOrderState('Order amendment');
+        orderDetailsPage.containsOrderState('Editing in Progress');
       });
     });
 
@@ -109,7 +109,10 @@ import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
       customerOverviewPage.viewLastPlacedOrder();
       orderDetailsPage.editOrder();
 
+      cartPage.assertPageLocation();
       cy.contains(`Product sku ${dynamicFixtures.productInActive.sku} is not active.`).should('exist');
+      cy.get('body').contains(dynamicFixtures.product.name).should('exist');
+      cy.get('body').contains(dynamicFixtures.productInActive.name).should('not.exist');
     });
 
     it('customer should not be able to amend order when item was out-of-stock', (): void => {
@@ -124,7 +127,10 @@ import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
       customerOverviewPage.viewLastPlacedOrder();
       orderDetailsPage.editOrder();
 
+      cartPage.assertPageLocation();
       cy.contains(`Product ${dynamicFixtures.productOutOfStock.sku} is not available at the moment.`).should('exist');
+      cy.get('body').contains(dynamicFixtures.product.name).should('exist');
+      cy.get('body').contains(dynamicFixtures.productOutOfStock.name).should('not.exist');
     });
 
     function placeCustomerOrder(email: string, idCustomerAddress: number): void {
