@@ -14,12 +14,17 @@ export class SalesOrdersPage extends MpPage {
   find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(params.query);
+    cy.get(searchSelector).type(params.query, { delay: 0 });
 
-    this.interceptTable({
-      url: '/sales-merchant-portal-gui/orders/table-data**',
-      expectedCount: params.expectedCount,
-    });
+    this.interceptTable(
+      {
+        url: '/sales-merchant-portal-gui/orders/table-data**',
+        expectedCount: params.expectedCount,
+      },
+      () => {
+        cy.get(searchSelector).type('{enter}');
+      }
+    );
 
     return this.repository.getFirstTableRow();
   };

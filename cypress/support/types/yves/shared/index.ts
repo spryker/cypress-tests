@@ -11,3 +11,4 @@ export * from './merchant';
 export * from './user';
 export * from './merchant-relation-request';
 export * from './discount';
+export * from './product-option-value';

@@ -5,3 +5,5 @@ export * from './merchant-b2b-contract-requests';
 export * from './customer-account-management';
 export * from './product-comparison';
 export * from './product';
+export * from './reorder';
+export * from './order-amendment';

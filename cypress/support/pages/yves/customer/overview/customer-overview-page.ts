@@ -11,4 +11,20 @@ export class CustomerOverviewPage extends YvesPage {
   protected PAGE_URL = '/customer/overview';
 
   getPlacedOrderSuccessMessage = (): string => this.repository.getPlacedOrderSuccessMessage();
+
+  viewLastPlacedOrder = (): void => {
+    this.visit();
+    this.repository.getLastViewOrderButton().click();
+  };
+
+  viewOrder = (tableRowIndex: number): void => {
+    this.repository.getViewOrderButton(tableRowIndex).click();
+  };
+
+  assertProductQuantity = (productName: string, quantity: number): void => {
+    cy.get('body').then(($body) => {
+      const occurrences = $body.find(this.repository.getOrderedProductSpan(productName));
+      expect(occurrences).to.have.length(quantity);
+    });
+  };
 }
