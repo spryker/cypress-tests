@@ -5,6 +5,7 @@ import { injectable } from 'inversify';
 @autoWired
 export class ProductManagementEditVariantRepository {
   getActivateButton = (): Cypress.Chainable => cy.get('a:contains("Activate")');
+  getDeactivateButton = (): Cypress.Chainable => cy.get('a:contains("Deactivate")');
   getSearchableDECheckbox = (): Cypress.Chainable => cy.get('#product_concrete_form_edit_general_de_DE_is_searchable');
   getEnUsCollapsedBlock = (): Cypress.Chainable =>
     cy.get('#tab-content-general > .panel-body > .collapsed > .ibox-title > .collapse-link > .ibox-tools > .fas');

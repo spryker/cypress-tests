@@ -2,8 +2,9 @@ import { container } from '@utils';
 import { OrderAmendmentStartDynamicFixtures, OrderAmendmentStaticFixtures } from '@interfaces/yves';
 import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
-import { DenyProductScenario, RemoveProductStockScenario, UserLoginScenario } from '@scenarios/backoffice';
+import { RemoveProductStockScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
+import { DeactivateProductScenario } from '../../../support/scenarios/backoffice/deactivate-product-scenario';
 
 /**
  * Order Amendment checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4545871873/Initialisation+Order+Amendment+Process}
@@ -22,7 +23,7 @@ import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const checkoutScenario = container.get(CheckoutScenario);
-    const denyProductScenario = container.get(DenyProductScenario);
+    const deactivateProductScenario = container.get(DeactivateProductScenario);
     const userLoginScenario = container.get(UserLoginScenario);
     const removeProductStockScenario = container.get(RemoveProductStockScenario);
 
@@ -99,7 +100,7 @@ import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 
     it('customer should not be able to amend order when item was deactivated', (): void => {
       placeCustomerOrder(dynamicFixtures.customer5.email, dynamicFixtures.address5.id_customer_address);
-      denyProductInBackoffice();
+      deactivateProductInBackoffice();
 
       customerLoginScenario.execute({
         email: dynamicFixtures.customer5.email,
@@ -110,7 +111,9 @@ import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
       orderDetailsPage.editOrder();
 
       cartPage.assertPageLocation();
-      cy.contains(`Product sku ${dynamicFixtures.productInActive.sku} is not active.`).should('exist');
+      cy.contains(`Inactive item ${dynamicFixtures.productInActive.sku} was removed from your shopping cart.`).should(
+        'exist'
+      );
       cy.get('body').contains(dynamicFixtures.product.name).should('exist');
       cy.get('body').contains(dynamicFixtures.productInActive.name).should('not.exist');
     });
@@ -142,13 +145,13 @@ import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
       checkoutScenario.execute({ idCustomerAddress: idCustomerAddress, shouldTriggerOmsInCli: true });
     }
 
-    function denyProductInBackoffice(): void {
+    function deactivateProductInBackoffice(): void {
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
 
-      denyProductScenario.execute({
+      deactivateProductScenario.execute({
         abstractSku: dynamicFixtures.productInActive.abstract_sku,
         shouldTriggerPublishAndSync: true,
       });
