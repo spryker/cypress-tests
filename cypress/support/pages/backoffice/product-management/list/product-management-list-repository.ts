@@ -8,4 +8,5 @@ export class ProductManagementListRepository {
   getSearchSelector = (): string => '[type="search"]';
   getEditButtonSelector = (): string => 'a:contains("Edit")';
   getStoreCellSelector = (): string => 'td[class*="column-store_relation"]';
+  getDenyButtonSelector = (): string => 'a:contains("Deny")';
 }

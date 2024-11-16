@@ -6,4 +6,6 @@ export * from './customer-account-management';
 export * from './content';
 export * from './product-comparison';
 export * from './product';
+export * from './reorder';
+export * from './order-amendment';
 export * from './catalog';

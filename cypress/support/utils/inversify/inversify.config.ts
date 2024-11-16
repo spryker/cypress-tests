@@ -103,6 +103,11 @@ import { B2cProductComparisonRepository } from '../../pages/yves/product-compari
 import { B2bProductComparisonRepository } from '../../pages/yves/product-comparison/repositories/b2b-product-comparison-repository';
 import { B2cMpProductComparisonRepository } from '../../pages/yves/product-comparison/repositories/b2c-mp-product-comparison-repository';
 import { B2bMpProductComparisonRepository } from '../../pages/yves/product-comparison/repositories/b2b-mp-product-comparison-repository';
+import { SuiteOrderDetailsRepository } from '../../pages/yves/customer/order/repositories/suite-order-details-repository';
+import { B2cOrderDetailsRepository } from '../../pages/yves/customer/order/repositories/b2c-order-details-repository';
+import { B2bOrderDetailsRepository } from '../../pages/yves/customer/order/repositories/b2b-order-details-repository';
+import { B2cMpOrderDetailsRepository } from '../../pages/yves/customer/order/repositories/b2c-mp-order-details-repository';
+import { B2bMpOrderDetailsRepository } from '../../pages/yves/customer/order/repositories/b2b-mp-order-details-repository';
 import { SuiteHomeRepository } from '../../pages/yves/home/repositories/suite-home-repository';
 import { B2cHomeRepository } from '../../pages/yves/home/repositories/b2c-home-repository';
 import { B2bHomeRepository } from '../../pages/yves/home/repositories/b2b-home-repository';
@@ -132,6 +137,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.MerchantRepository]: SuiteMerchantRepository,
   [REPOSITORIES.CustomerOverviewRepository]: SuiteCustomerOverviewRepository,
   [REPOSITORIES.ContentRepository]: SuiteContentRepository,
+  [REPOSITORIES.OrderDetailsRepository]: SuiteOrderDetailsRepository,
   [REPOSITORIES.ProductComparisonRepository]: SuiteProductComparisonRepository,
 };
 
@@ -155,6 +161,7 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2cMerchantRelationRequestIndexRepository,
   [REPOSITORIES.MerchantRepository]: B2cMerchantRepository,
   [REPOSITORIES.CustomerOverviewRepository]: B2cCustomerOverviewRepository,
+  [REPOSITORIES.OrderDetailsRepository]: B2cOrderDetailsRepository,
   [REPOSITORIES.ContentRepository]: B2cContentRepository,
   [REPOSITORIES.ProductComparisonRepository]: B2cProductComparisonRepository,
 };
@@ -179,6 +186,7 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2bMerchantRelationRequestIndexRepository,
   [REPOSITORIES.MerchantRepository]: B2bMerchantRepository,
   [REPOSITORIES.CustomerOverviewRepository]: B2bCustomerOverviewRepository,
+  [REPOSITORIES.OrderDetailsRepository]: B2bOrderDetailsRepository,
   [REPOSITORIES.ContentRepository]: B2bContentRepository,
   [REPOSITORIES.ProductComparisonRepository]: B2bProductComparisonRepository,
 };
@@ -203,6 +211,7 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2cMpMerchantRelationRequestIndexRepository,
   [REPOSITORIES.MerchantRepository]: B2cMpMerchantRepository,
   [REPOSITORIES.CustomerOverviewRepository]: B2cMpCustomerOverviewRepository,
+  [REPOSITORIES.OrderDetailsRepository]: B2cMpOrderDetailsRepository,
   [REPOSITORIES.ContentRepository]: B2cMpContentRepository,
   [REPOSITORIES.ProductComparisonRepository]: B2cMpProductComparisonRepository,
 };
@@ -227,6 +236,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2bMpMerchantRelationRequestIndexRepository,
   [REPOSITORIES.MerchantRepository]: B2bMpMerchantRepository,
   [REPOSITORIES.CustomerOverviewRepository]: B2bMpCustomerOverviewRepository,
+  [REPOSITORIES.OrderDetailsRepository]: B2bMpOrderDetailsRepository,
   [REPOSITORIES.ContentRepository]: B2bMpContentRepository,
   [REPOSITORIES.ProductComparisonRepository]: B2bMpProductComparisonRepository,
 };

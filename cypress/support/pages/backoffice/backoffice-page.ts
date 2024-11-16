@@ -123,14 +123,14 @@ export class BackofficePage extends AbstractPage {
 }
 
 export enum ActionEnum {
-    view,
-    edit,
-    activate,
-    deactivate,
-    approveAccess,
-    denyAccess,
-    delete,
-    publish,
+  view,
+  edit,
+  activate,
+  deactivate,
+  approveAccess,
+  denyAccess,
+  delete,
+  deny,
 }
 
 interface InterceptGuiTableParams {

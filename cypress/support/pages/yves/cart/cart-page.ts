@@ -89,6 +89,10 @@ export class CartPage extends YvesPage {
     this.repository.getCustomOrderReferenceInput().type(reference);
     this.repository.getCustomOrderReferenceSubmitButton().click();
   };
+
+  assertCartName = (name: string): void => {
+    cy.get('body').contains(name).should('exist');
+  };
 }
 
 interface QuickAddToCartParams {
