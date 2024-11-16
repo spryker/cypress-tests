@@ -1,7 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { EditShipmentMethodPage } from '../../pages/backoffice/shipment/edit-shipment-method-page';
-import { ListShipmentMethodPage } from '../../pages/backoffice/shipment/list-shipment-method-page';
+import { EditShipmentMethodPage } from '../../pages/backoffice/shipment/edit/edit-shipment-method-page';
+import { ListShipmentMethodPage } from '../../pages/backoffice/shipment/list/list-shipment-method-page';
 
 @injectable()
 @autoWired

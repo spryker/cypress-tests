@@ -1,17 +1,18 @@
 import { container } from '@utils';
 import { CatalogPage, ProductPage } from '@pages/yves';
-import { ProductSearchDmsStaticFixtures } from '@interfaces/smoke';
+import {ProductSearchDmsDynamicFixtures, ProductSearchDmsStaticFixtures} from '@interfaces/yves';
 import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 import {
   CreateStoreScenario,
   EnableProductForAllStoresScenario,
   EnableWarehouseForAllStoresScenario,
   UserLoginScenario,
+    EnsureCatalogVisibilityScenario
 } from '@scenarios/backoffice';
 
 (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(
   'product search dms',
-  { tags: ['@smoke'] },
+  { tags: ['@dms'] },
   (): void => {
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
@@ -21,18 +22,20 @@ import {
     const selectStoreScenario = container.get(SelectStoreScenario);
     const enableWarehouseForAllStoresScenario = container.get(EnableWarehouseForAllStoresScenario);
     const enableProductForAllStoresScenario = container.get(EnableProductForAllStoresScenario);
+    const ensureCatalogVisibilityScenario = container.get(EnsureCatalogVisibilityScenario);
 
     let staticFixtures: ProductSearchDmsStaticFixtures;
+    let dynamicFixtures: ProductSearchDmsDynamicFixtures;
 
     before((): void => {
-      staticFixtures = Cypress.env('staticFixtures');
+        ( {staticFixtures, dynamicFixtures } = Cypress.env());
 
       assignStoreRelationToExistingProduct();
     });
 
     beforeEach((): void => {
       selectStoreScenario.execute(staticFixtures.store.name);
-      ensureCatalogVisibility();
+        ensureCatalogVisibilityScenario.execute();
     });
 
     skipB2BIt('guest should be able to find product abstract in catalog', (): void => {
@@ -90,7 +93,7 @@ import {
 
     function assignStoreRelationToExistingProduct(): void {
       userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
+        username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
 
@@ -103,22 +106,6 @@ import {
         abstractProductSku: staticFixtures.concreteProduct.abstract_sku,
         productPrice: staticFixtures.productPrice,
         storeName: staticFixtures.store.name,
-      });
-    }
-
-    function ensureCatalogVisibility(attempts: number = 0, maxAttempts: number = 5): void {
-      catalogPage.visit();
-      catalogPage.hasProductsInCatalog().then((isVisible) => {
-        if (isVisible) {
-          return;
-        }
-
-        if (attempts < maxAttempts) {
-          cy.wait(3000);
-          ensureCatalogVisibility(attempts + 1, maxAttempts);
-        }
-
-        throw new Error('Catalog is not visible after maximum attempts');
       });
     }
   }

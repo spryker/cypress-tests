@@ -27,7 +27,6 @@ export interface CustomOrderReferenceManagementStaticFixtures {
 
 export interface MarketplacePaymentOmsFlowStaticFixtures {
   defaultPassword: string;
-  rootUser: User;
   merchantUser: User;
   customer: Customer;
   address: Address;
@@ -45,13 +44,16 @@ export interface MarketplacePaymentOmsFlowStaticFixtures {
   merchantName2: string;
 }
 
+export interface MarketplacePaymentOmsFlowDynamicFixtures {
+  rootUser: User;
+}
+
 export interface DummyPaymentOmsFlowStaticFixtures {
     store: Store;
     cmsBlockNames: Array<string>;
     defaultPassword: string;
     customer: Customer;
     product: Product;
-    rootUser: User;
     productConcrete: ProductConcrete;
     warehouse: string;
     paymentMethod: PaymentMethod;
@@ -59,6 +61,10 @@ export interface DummyPaymentOmsFlowStaticFixtures {
     shipmentMethod: ShipmentMethod;
     concreteProduct: ProductConcrete;
     checkoutPaymentMethod: string;
+}
+
+export interface DummyPaymentOmsFlowDynamicFixtures {
+    rootUser: User;
 }
 
 export interface ShipmentMethod {

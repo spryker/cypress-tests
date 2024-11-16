@@ -6,8 +6,5 @@
     "locale": "en_US",
     "country": "DE",
     "timezone": "Europe/Berlin"
-  },
-  "rootUser": {
-    "username": "admin@spryker.com"
   }
 }

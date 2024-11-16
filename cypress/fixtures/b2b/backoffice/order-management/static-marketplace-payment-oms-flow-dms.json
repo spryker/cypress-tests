@@ -1,8 +1,5 @@
 {
   "defaultPassword": "change123",
-  "rootUser": {
-    "username": "admin@spryker.com"
-  },
   "merchantUser": {
     "username": "harald@spryker.com"
   },

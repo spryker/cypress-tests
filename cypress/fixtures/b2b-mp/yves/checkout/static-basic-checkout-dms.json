@@ -11,9 +11,6 @@
     "sku": "102920",
     "abstract_sku": "M769"
   },
-  "rootUser": {
-    "username": "admin@spryker.com"
-  },
   "paymentMethods": [{
       "name": "Dummy Marketplace Payment",
       "key": "dummyMarketplacePaymentInvoice"

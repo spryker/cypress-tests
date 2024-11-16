@@ -9,9 +9,6 @@
   "customer": {
     "email": "spencor.hopkin@spryker.com"
   },
-  "rootUser": {
-    "username": "admin@spryker.com"
-  },
   "paymentMethod": {
       "key": "dummyPaymentCreditCard",
       "name": "Dummy Payment"

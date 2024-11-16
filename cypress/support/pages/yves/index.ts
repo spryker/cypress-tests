@@ -19,4 +19,4 @@ export * from './merchant/merchant-page';
 export * from './product/product-page';
 export * from './customer/overview/customer-overview-page';
 export * from './product-comparison/product-comparison-page';
-export * from './content/content-page';
+export * from './content/cms-content-page';

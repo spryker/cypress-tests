@@ -27,17 +27,18 @@ export class StoreListPage extends BackofficePage {
   };
 
   hasStoreByStoreName = (query: string): Cypress.Chainable<boolean> => {
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
-
-    return this.repository.getStoreDataTable().then((body) => {
-      if (body.text().includes(query)) {
-        return cy.wrap(true);
-      } else {
-        return cy.wrap(false);
+      return this.find({
+          searchQuery: query,
+          tableUrl: '/store-gui/list/table**',
+          expectedCount: null
+      }).then(($storeRow) => {
+          if ($storeRow && $storeRow.length > 0 && $storeRow.find('td.column-name').text().trim() === query) {
+              return cy.wrap(true);
+          } else {
+              return cy.wrap(false);
+          }
+      })
       }
-    });
-  };
 }
 
 interface UpdateParams {

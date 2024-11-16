@@ -5,9 +5,8 @@ import {
   CreateStoreScenario,
   UserLoginScenario,
   EnableCmsBlockForAllStoresScenario,
-} from '../../../support/scenarios/backoffice';
-import { SelectStoreScenario } from '../../../support/scenarios/yves';
-import { faker } from '@faker-js/faker';
+} from '@scenarios/backoffice';
+import { SelectStoreScenario } from '@scenarios/yves';
 
 (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('customer auth dms', { tags: '@dms' }, () => {
   describe('customer auth', { tags: ['@customer-account-management'] }, (): void => {
@@ -25,7 +24,7 @@ import { faker } from '@faker-js/faker';
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
       userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
+        username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
 

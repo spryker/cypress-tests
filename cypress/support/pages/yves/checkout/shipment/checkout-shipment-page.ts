@@ -12,7 +12,6 @@ export class CheckoutShipmentPage extends YvesPage {
   protected PAGE_URL = '/checkout/shipment';
 
   setStandardShippingMethod = (): void => {
-    // TODO -- clarify and add ship type
     this.repository.getMultiShipmentGroups().each(($shipmentItem, index) => {
       this.repository.getStandardShipmentRadio($shipmentItem, index).click({ force: true });
     });

@@ -10,6 +10,7 @@ export interface BasicCheckoutDynamicFixtures {
   quote2: Quote;
   quote3: Quote;
   quote4: Quote;
+    rootUser: User;
 }
 
 export interface CheckoutStaticFixtures {
@@ -19,7 +20,6 @@ export interface CheckoutStaticFixtures {
   product1: ProductConcrete;
   product2: ProductConcrete;
   productPrice: string;
-  rootUser: User;
   shipmentMethods: Array<ShipmentMethod>;
   store: Store;
   warehouse: string;

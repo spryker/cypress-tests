@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { MarketplacePaymentOmsFlowStaticFixtures } from '@interfaces/backoffice';
+import {MarketplacePaymentOmsFlowDynamicFixtures, MarketplacePaymentOmsFlowStaticFixtures} from '@interfaces/backoffice';
 import { ActionEnum, SalesOrdersPage } from '@pages/mp';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import {
@@ -12,14 +12,11 @@ import {
   EnableAllShipmentMethodsForAllStoresScenario,
   EnableMerchantForAllStoresScenario,
   EnableShipmentTypeForAllStoresScenario,
+  EnsureCatalogVisibilityScenario,
 } from '@scenarios/backoffice';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
 import { CheckoutMpScenario, CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 import { CatalogPage, ProductPage } from '@pages/yves';
-
-/**
- * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
- */
 
 (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(
   'marketplace payment OMS flow dms',
@@ -27,7 +24,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
   () => {
     (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
       'marketplace payment OMS flow',
-      { tags: ['@smoke'] },
+      { tags: ['@backoffice'] },
       (): void => {
         const catalogPage = container.get(CatalogPage);
         const productsPage = container.get(ProductPage);
@@ -47,14 +44,16 @@ import { CatalogPage, ProductPage } from '@pages/yves';
         const enablePaymentMethodForAllStoresScenario = container.get(EnableAllPaymentMethodsForAllStoresScenario);
         const enableMerchantForAllStoresScenario = container.get(EnableMerchantForAllStoresScenario);
         const enableShipmentTypeForAllStoresScenario = container.get(EnableShipmentTypeForAllStoresScenario);
+        const ensureCatalogVisibilityScenario = container.get(EnsureCatalogVisibilityScenario);
 
         let staticFixtures: MarketplacePaymentOmsFlowStaticFixtures;
+        let dynamicFixtures: MarketplacePaymentOmsFlowDynamicFixtures;
 
         before((): void => {
-          ({ staticFixtures } = Cypress.env());
+          ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
           userLoginScenario.execute({
-            username: staticFixtures.rootUser.username,
+            username: dynamicFixtures.rootUser.username,
             password: staticFixtures.defaultPassword,
           });
 
@@ -65,12 +64,12 @@ import { CatalogPage, ProductPage } from '@pages/yves';
           assignStoreRelationToExistingProduct();
 
           selectStoreScenario.execute(staticFixtures.store.name);
-          ensureCatalogVisibility();
+            ensureCatalogVisibilityScenario.execute();
 
           if (!['b2c', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
             enableShipmentTypeForAllStoresScenario.execute({
               store: staticFixtures.store.name,
-              username: staticFixtures.rootUser.username,
+              username: dynamicFixtures.rootUser.username,
               password: staticFixtures.defaultPassword,
             });
           }
@@ -81,7 +80,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
           checkoutMpScenario.execute({ isGuest: true, shouldTriggerOmsInCli: true });
 
           userLoginScenario.execute({
-            username: staticFixtures.rootUser.username,
+            username: dynamicFixtures.rootUser.username,
             password: staticFixtures.defaultPassword,
           });
 
@@ -100,7 +99,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
           checkoutMpScenario.execute({ shouldTriggerOmsInCli: true });
 
           userLoginScenario.execute({
-            username: staticFixtures.rootUser.username,
+            username: dynamicFixtures.rootUser.username,
             password: staticFixtures.defaultPassword,
           });
 
@@ -148,23 +147,6 @@ import { CatalogPage, ProductPage } from '@pages/yves';
           });
         }
 
-        function ensureCatalogVisibility(attempts: number = 0, maxAttempts: number = 5): void {
-          catalogPage.visit();
-          catalogPage.hasProductsInCatalog().then((isVisible) => {
-            if (isVisible) {
-              return;
-            }
-
-            if (attempts < maxAttempts) {
-              // eslint-disable-next-line cypress/no-unnecessary-waiting
-              cy.wait(3000);
-              ensureCatalogVisibility(attempts + 1, maxAttempts);
-            }
-
-            throw new Error('Catalog is not visible after maximum attempts');
-          });
-        }
-
         function addOneProductToCart(): void {
           catalogPage.visit();
           catalogPage.searchProductFromSuggestions({ query: staticFixtures.product.sku });
@@ -194,7 +176,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
         function closeOrderFromBackoffice(): void {
           userLoginScenario.execute({
-            username: staticFixtures.rootUser.username,
+            username: dynamicFixtures.rootUser.username,
             password: staticFixtures.defaultPassword,
           });
 

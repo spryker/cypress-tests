@@ -9,3 +9,4 @@ export * from './enable-all-shipment-methods-for-all-stores-scenario';
 export * from './enable-all-payment-methods-for-all-stores-scenario';
 export * from './enable-merchant-for-all-stores-scenario';
 export * from './enable-shipment-type-for-all-stores-scenario';
+export * from './ensure-catalog-visibility-scenario';

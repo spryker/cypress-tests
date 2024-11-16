@@ -1,6 +1,6 @@
 import { container } from '@utils';
-import { HomePage, ContentPage } from '@pages/yves';
-import { ContentStaticFixtures } from '@interfaces/yves';
+import { HomePage, CmsContentPage } from '@pages/yves';
+import {ContentDynamicFixtures, ContentStaticFixtures} from '@interfaces/yves';
 import { SelectStoreScenario } from '@scenarios/yves';
 import { CreateStoreScenario, CreateCmsPageScenario, UserLoginScenario } from '@scenarios/backoffice';
 
@@ -13,17 +13,18 @@ import { CreateStoreScenario, CreateCmsPageScenario, UserLoginScenario } from '@
     const selectStoreScenario = container.get(SelectStoreScenario);
     const createCmsPageScenario = container.get(CreateCmsPageScenario);
     const homePage = container.get(HomePage);
-    const contentPage = container.get(ContentPage);
+    const contentPage = container.get(CmsContentPage);
 
     let staticFixtures: ContentStaticFixtures;
+    let dynamicFixtures: ContentDynamicFixtures;
 
     before((): void => {
-      staticFixtures = Cypress.env('staticFixtures');
+        ( {staticFixtures, dynamicFixtures} = Cypress.env());
 
       staticFixtures.cmsPageName = `${staticFixtures.cmsPageName}-${Date.now()}`;
 
       userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
+        username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
       createStoreScenario.execute({ store: staticFixtures.store });

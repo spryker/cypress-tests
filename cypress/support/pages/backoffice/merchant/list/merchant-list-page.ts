@@ -56,8 +56,3 @@ interface IsAssignedParams {
   row: JQuery<HTMLElement>;
   storeName?: string;
 }
-
-interface FindParams {
-  query: string;
-  expectedCount?: number;
-}

@@ -2,6 +2,7 @@ import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import { BackofficePage, ActionEnum } from '@pages/backoffice';
 import { UserIndexRepository } from './user-index-repository';
+import Chainable = Cypress.Chainable;
 
 @injectable()
 @autoWired
@@ -13,6 +14,10 @@ export class UserIndexPage extends BackofficePage {
   add = (): void => {
     this.repository.getAddNewUserButton().click();
   };
+
+  findUser (params: FindParams): Chainable {
+      return this.find({ searchQuery: params.query, tableUrl: '/user/index/table**' });
+  }
 
   update = (params: UpdateParams): void => {
     this.find({
@@ -41,12 +46,12 @@ export class UserIndexPage extends BackofficePage {
   };
 }
 
-interface FindParams {
-  query: string;
-  expectedCount?: number;
-}
-
 interface UpdateParams {
   action: ActionEnum;
   query: string;
+}
+
+interface FindParams {
+    query: string;
+    expectedCount?: number;
 }

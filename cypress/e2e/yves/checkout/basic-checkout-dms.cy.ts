@@ -11,12 +11,8 @@ import {
   UserLoginScenario,
 } from '@scenarios/backoffice';
 
-/**
- * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
- */
-
 (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('basic checkout dms', { tags: '@dms' }, () => {
-  describe('basic checkout', { tags: ['@smoke'] }, (): void => {
+  describe('basic checkout', { tags: ['@dms'] }, (): void => {
     const userLoginScenario = container.get(UserLoginScenario);
     const createStoreScenario = container.get(CreateStoreScenario);
     const selectStoreScenario = container.get(SelectStoreScenario);
@@ -37,7 +33,7 @@ import {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
       userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
+        username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
 

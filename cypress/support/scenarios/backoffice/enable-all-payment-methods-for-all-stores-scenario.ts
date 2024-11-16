@@ -1,7 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { EditPaymentMethodPage } from '../../pages/backoffice/payment-method/edit-payment-method-page';
-import { ListPaymentMethodPage } from '../../pages/backoffice/payment-method/list-payment-method-page';
+import { EditPaymentMethodPage } from '../../pages/backoffice/payment-method/edit/edit-payment-method-page';
+import { ListPaymentMethodPage } from '../../pages/backoffice/payment-method/list/list-payment-method-page';
 
 @injectable()
 @autoWired

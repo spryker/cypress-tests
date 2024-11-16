@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { DummyPaymentOmsFlowStaticFixtures } from '@interfaces/backoffice';
+import {DummyPaymentOmsFlowDynamicFixtures, DummyPaymentOmsFlowStaticFixtures} from '@interfaces/backoffice';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import {
@@ -10,12 +10,9 @@ import {
   EnableCmsBlockForAllStoresScenario,
   EnableAllPaymentMethodsForAllStoresScenario,
   EnableAllShipmentMethodsForAllStoresScenario,
+    EnsureCatalogVisibilityScenario
 } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
-
-/**
- * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
- */
 
 (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(
   'dummy payment OMS flow dms',
@@ -23,7 +20,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
   () => {
     (['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
       'dummy payment OMS flow',
-      { tags: ['@smoke'] },
+      { tags: ['@backoffice'] },
       (): void => {
         const catalogPage = container.get(CatalogPage);
         const productsPage = container.get(ProductPage);
@@ -40,14 +37,16 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
         const enableProductForAllStoresScenario = container.get(EnableProductForAllStoresScenario);
         const enableShipmentMethodForAllStoresScenario = container.get(EnableAllShipmentMethodsForAllStoresScenario);
         const enablePaymentMethodForAllStoresScenario = container.get(EnableAllPaymentMethodsForAllStoresScenario);
+        const ensureCatalogVisibilityScenario = container.get(EnsureCatalogVisibilityScenario);
 
         let staticFixtures: DummyPaymentOmsFlowStaticFixtures;
+        let dynamicFixtures: DummyPaymentOmsFlowDynamicFixtures;
 
         before((): void => {
-          staticFixtures = Cypress.env('staticFixtures');
+            ({ staticFixtures, dynamicFixtures} = Cypress.env());
 
           userLoginScenario.execute({
-            username: staticFixtures.rootUser.username,
+            username: dynamicFixtures.rootUser.username,
             password: staticFixtures.defaultPassword,
           });
 
@@ -56,7 +55,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
           assignStoreRelationToExistingProduct();
 
           selectStoreScenario.execute(staticFixtures.store.name);
-          ensureCatalogVisibility();
+            ensureCatalogVisibilityScenario.execute();
         });
 
         skipB2BIt('backoffice operator should be able close an order from guest', (): void => {
@@ -70,7 +69,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
           cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
           userLoginScenario.execute({
-            username: staticFixtures.rootUser.username,
+            username: dynamicFixtures.rootUser.username,
             password: staticFixtures.defaultPassword,
           });
 
@@ -100,7 +99,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
           cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
 
           userLoginScenario.execute({
-            username: staticFixtures.rootUser.username,
+            username: dynamicFixtures.rootUser.username,
             password: staticFixtures.defaultPassword,
           });
 
@@ -117,8 +116,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
         }
 
         function closeOrderFromBackoffice(): void {
-          salesDetailPage.triggerOms({ state: 'Pay' });
-          cy.runCliCommands(['console oms:check-condition']);
+          salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
           salesDetailPage.triggerOms({ state: 'Skip timeout' });
           salesDetailPage.triggerOms({ state: 'skip picking' });
           salesDetailPage.triggerOms({ state: 'Ship' });
@@ -158,23 +156,6 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
               cmsBlockName: cmsBlockName,
               storeName: staticFixtures.store.name,
             });
-          });
-        }
-
-        function ensureCatalogVisibility(attempts: number = 0, maxAttempts: number = 5): void {
-          catalogPage.visit();
-          catalogPage.hasProductsInCatalog().then((isVisible) => {
-            if (isVisible) {
-              return;
-            }
-
-            if (attempts < maxAttempts) {
-              // eslint-disable-next-line cypress/no-unnecessary-waiting
-              cy.wait(3000);
-              ensureCatalogVisibility(attempts + 1, maxAttempts);
-            }
-
-            throw new Error('Catalog is not visible after maximum attempts');
           });
         }
       }

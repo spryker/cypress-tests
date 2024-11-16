@@ -8,9 +8,6 @@
     "timezone": "Europe/Berlin"
   },
   "warehouse": "Warehouse2",
-  "rootUser": {
-    "username": "admin@spryker.com"
-  },
   "productPrice": "77.99",
   "customer": {
     "email": "spencor.hopkin@spryker.com"

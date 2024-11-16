@@ -9,9 +9,6 @@
   "customer": {
     "email": "sonia@spryker.com"
   },
-  "rootUser": {
-    "username": "admin@spryker.com"
-  },
   "paymentMethod": {
       "name": "Dummy Payment",
       "key": "dummyPaymentInvoice"

@@ -16,8 +16,10 @@ export class BackofficePage extends AbstractPage {
         return cy.wait(`@${interceptAlias}`)
             .its('response.body.recordsFiltered')
             .should((total) => {
-                const valueToBeAtMost = expectedCount + Cypress.currentRetry;
-                assert.isTrue(total === expectedCount || total >= valueToBeAtMost);
+                if (params.expectedCount !== null) {
+                    const valueToBeAtMost = expectedCount + Cypress.currentRetry;
+                    assert.isTrue(total === expectedCount || total >= valueToBeAtMost);
+                }
             })
             .then(() => {
                 if (callback) {
@@ -147,6 +149,6 @@ interface UpdateWithRetryParams {
     searchQuery: string;
     tableUrl: string;
     rowFilter?: Array<(row: JQuery<HTMLElement>) => boolean>;
-    expectedCount?: number;
+    expectedCount?: number | null;
     pageUrl: string;
 }

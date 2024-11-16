@@ -5,5 +5,7 @@ export interface ContentStaticFixtures {
   store: Store;
   pageName: string;
   defaultPassword: string;
+}
+export interface ContentDynamicFixtures {
   rootUser: User;
 }

@@ -11,9 +11,6 @@
     "sku": "141_29380410",
     "abstract_sku": "141"
   },
-  "rootUser": {
-    "username": "admin@spryker.com"
-  },
   "paymentMethods": [
       {
           "key": "dummyPaymentCreditCard",
