@@ -12,10 +12,10 @@ export interface ProductSearchDmsStaticFixtures {
   store: Store;
   warehouse: string;
   productPrice: string;
-  customer: Customer;
   concreteProduct: ProductConcrete;
 }
 
 export interface ProductSearchDmsDynamicFixtures {
   rootUser: User;
+    customer: Customer;
 }

@@ -71,7 +71,7 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 
       it('backoffice user should be able to create new product that will be available for customers in storefront', (): void => {
         customerLoginScenario.execute({
-          email: staticFixtures.customer.email,
+          email: dynamicFixtures.customer.email,
           password: staticFixtures.defaultPassword,
         });
         selectStoreScenario.execute(staticFixtures.store.name);

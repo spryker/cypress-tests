@@ -1,8 +1,5 @@
 {
   "defaultPassword": "change123",
-  "customer": {
-    "email": "sonia@spryker.com"
-  },
   "product1": {
     "sku": "425097",
     "abstract_sku": "M26417"

@@ -79,8 +79,10 @@ export class BackofficePage extends AbstractPage {
 
         const searchAndIntercept = (): Cypress.Chainable => {
             attempts++;
-            cy.get('[type="search"]').clear();
-            cy.visitBackoffice(params.pageUrl);
+            cy.get('[type="search"]').clear().then(() => {
+                cy.visitBackoffice(params.pageUrl);
+            });
+
             return this.interceptTable(
                 { url: params.tableUrl}).then(() => {
                 cy.get('[type="search"]').invoke('val', params.searchQuery).trigger('input').then(() => {
@@ -135,7 +137,7 @@ export enum ActionEnum {
 
 interface InterceptGuiTableParams {
     url: string;
-    expectedCount?: number;
+    expectedCount?: number | null;
 }
 
 interface UpdateParams {

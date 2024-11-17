@@ -54,7 +54,7 @@ import {
 
     it('customer should be able to find product abstract in catalog', (): void => {
       customerLoginScenario.execute({
-        email: staticFixtures.customer.email,
+        email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
       });
 
@@ -68,7 +68,7 @@ import {
 
     it('customer should be able to find product concrete in catalog', (): void => {
       customerLoginScenario.execute({
-        email: staticFixtures.customer.email,
+        email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
       });
 
@@ -92,10 +92,10 @@ import {
     }
 
     function assignStoreRelationToExistingProduct(): void {
-      userLoginScenario.execute({
-        username: dynamicFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
+        userLoginScenario.execute({
+            username: dynamicFixtures.rootUser.username,
+            password: staticFixtures.defaultPassword,
+        });
 
       createStoreScenario.execute({ store: staticFixtures.store });
       enableWarehouseForAllStoresScenario.execute({

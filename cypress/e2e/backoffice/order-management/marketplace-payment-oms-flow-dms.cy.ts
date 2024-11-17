@@ -88,10 +88,10 @@ import { CatalogPage, ProductPage } from '@pages/yves';
         });
 
         it('merchant user should be able close an order from customer', (): void => {
-          customerLoginScenario.execute({
-            email: staticFixtures.customer.email,
-            password: staticFixtures.defaultPassword,
-          });
+            customerLoginScenario.execute({
+                email: dynamicFixtures.customer.email,
+                password: staticFixtures.defaultPassword,
+            });
 
           selectStoreScenario.execute(staticFixtures.store.name);
 

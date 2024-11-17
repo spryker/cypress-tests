@@ -3,9 +3,6 @@
   "merchantUser": {
     "username": "harald@spryker.com"
   },
-  "customer": {
-    "email": "sonia@spryker.com"
-  },
   "productOffer": {
     "product_offer_reference": "offer423"
   },

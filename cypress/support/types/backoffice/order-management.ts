@@ -46,13 +46,13 @@ export interface MarketplacePaymentOmsFlowStaticFixtures {
 
 export interface MarketplacePaymentOmsFlowDynamicFixtures {
   rootUser: User;
+    customer: Customer;
 }
 
 export interface DummyPaymentOmsFlowStaticFixtures {
     store: Store;
     cmsBlockNames: Array<string>;
     defaultPassword: string;
-    customer: Customer;
     product: Product;
     productConcrete: ProductConcrete;
     warehouse: string;
@@ -65,6 +65,7 @@ export interface DummyPaymentOmsFlowStaticFixtures {
 
 export interface DummyPaymentOmsFlowDynamicFixtures {
     rootUser: User;
+    customer: Customer;
 }
 
 export interface ShipmentMethod {

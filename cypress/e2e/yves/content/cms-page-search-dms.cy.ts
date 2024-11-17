@@ -47,6 +47,8 @@ import { CreateStoreScenario, CreateCmsPageScenario, UserLoginScenario } from '@
         'eq',
         `${Cypress.config('baseUrl')}/${staticFixtures.store.locale.split('_')[0] ? staticFixtures.store.locale.split('_')[0] : 'en'}/${staticFixtures.cmsPageName}`
       );
+
+        cy.contains(staticFixtures.cmsPageName).should('exist');
     });
   }
 );

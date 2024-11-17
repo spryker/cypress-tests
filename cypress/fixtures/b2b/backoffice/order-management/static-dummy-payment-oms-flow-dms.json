@@ -6,9 +6,6 @@
     "order-confirmation--html"
   ],
   "defaultPassword": "change123",
-  "customer": {
-    "email": "sonia@spryker.com"
-  },
   "paymentMethod": {
       "name": "Dummy Payment",
       "key": "dummyPaymentInvoice"

@@ -6,9 +6,6 @@
     "order-confirmation--html"
   ],
   "defaultPassword": "change123",
-  "customer": {
-    "email": "spencor.hopkin@spryker.com"
-  },
   "paymentMethod": {
       "key": "dummyPaymentCreditCard",
       "name": "Dummy Payment"

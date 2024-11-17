@@ -12,7 +12,6 @@ export interface PublishAndSynchronizeDynamicFixtures {
 
 export interface PublishAndSynchronizeDmsStaticFixtures {
     defaultPassword: string;
-    customer: Customer;
     store: Store;
     product: Product;
     warehouse1: string;
@@ -23,4 +22,5 @@ export interface PublishAndSynchronizeDmsStaticFixtures {
 
 export interface PublishAndSynchronizeDmsDynamicFixtures {
     rootUser: User;
+    customer: Customer;
 }

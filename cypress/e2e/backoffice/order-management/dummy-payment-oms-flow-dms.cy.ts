@@ -81,7 +81,7 @@ import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@s
 
         it('backoffice operator should be able close an order from customer', (): void => {
           loginCustomerScenario.execute({
-            email: staticFixtures.customer.email,
+            email: dynamicFixtures.customer.email,
             password: staticFixtures.defaultPassword,
           });
 

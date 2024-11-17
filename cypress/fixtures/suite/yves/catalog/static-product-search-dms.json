@@ -9,9 +9,6 @@
   },
   "warehouse": "Warehouse2",
   "productPrice": "77.99",
-  "customer": {
-    "email": "spencor.hopkin@spryker.com"
-  },
   "concreteProduct": {
     "name": "Acer Aspire Switch 10 E",
     "sku": "132_30619567",
