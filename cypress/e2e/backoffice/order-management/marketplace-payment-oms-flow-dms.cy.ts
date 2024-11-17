@@ -69,7 +69,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
           if (!['b2c', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
             enableShipmentTypeForAllStoresScenario.execute({
               store: staticFixtures.store.name,
-              username: dynamicFixtures.rootUser.username,
+              username: 'admin@spryker.com',
               password: staticFixtures.defaultPassword,
             });
           }

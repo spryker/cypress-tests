@@ -20,7 +20,7 @@ import { HealthCheckDmsDynamicFixtures } from "../../support/types/api";
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: `grantType=password&username=${dynamicFixtures.rootUser.username}&password=${staticFixtures.defaultPassword}`,
+      body: `grantType=password&username=admin@spryker.com&password=${staticFixtures.defaultPassword}`,
     }).then((response) => {
       expect(response.status).to.eq(200);
       cy.wrap(response.body.access_token).as('authToken');
