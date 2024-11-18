@@ -15,7 +15,7 @@ export class CmsPlaceholderEditPage extends BackofficePage {
       .getTitleBlock()
       .find(this.repository.getAllCollapsedIboxButtonsSelector())
       .each(($button) => {
-        cy.wrap($button).click({ force: true });
+        cy.wrap($button).click();
       });
 
     this.repository
