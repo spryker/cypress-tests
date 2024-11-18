@@ -1,4 +1,6 @@
 export * from './backoffice-page';
+export * from './catalog/category/list/category-list-page';
+export * from './catalog/category/edit/category-edit-page';
 export * from './index/index-page';
 export * from './login/login-page';
 export * from './merchant/create/merchant-create-page';
@@ -19,3 +21,6 @@ export * from './product-management/add/product-management-add-page';
 export * from './product-management/edit/product-management-edit-page';
 export * from './product-management/list/product-management-list-page';
 export * from './product-management/edit/variant/product-management-edit-variant-page';
+export * from './availability/view/availability-view-page';
+export * from './availability/edit/availability-edit-page';
+export * from './availability/index/availability-index-page';

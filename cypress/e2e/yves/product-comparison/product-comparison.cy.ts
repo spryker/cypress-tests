@@ -25,7 +25,7 @@ import { CatalogPage, ProductPage, ProductComparisonPage } from '@pages/yves';
       addProductToComparisonList(dynamicFixtures.product1.abstract_sku);
       cy.contains(productPage.getAddToComparisonListSuccessMessage());
 
-      cy.get(productComparisonPage.getComparisonPageNavigationLinkSelector()).click();
+      cy.get(productComparisonPage.getComparisonPageNavigationLinkSelector()).click({ force: true });
       cy.get(productComparisonPage.getProductItemsSelector()).should('have.length', 1);
     });
 
