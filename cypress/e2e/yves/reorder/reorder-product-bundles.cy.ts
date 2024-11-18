@@ -28,7 +28,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
       customerOverviewPage.viewLastPlacedOrder();
       orderDetailsPage.reorderAll();
 
-      cy.get('body').contains(dynamicFixtures.productBundle.name).should('exist');
+      cy.get('body').contains(dynamicFixtures.productBundle.localized_attributes[0].name).should('exist');
     });
 
     function placeOrderWithProductBundle(): void {
@@ -41,10 +41,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.productBundle.sku });
       productPage.addToCart();
 
-      checkoutScenario.execute({
-        idCustomerAddress: dynamicFixtures.address.id_customer_address,
-        shouldTriggerOmsInCli: true,
-      });
+      checkoutScenario.execute({ idCustomerAddress: dynamicFixtures.address.id_customer_address });
     }
   }
 );

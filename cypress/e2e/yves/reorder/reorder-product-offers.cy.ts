@@ -34,10 +34,10 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
         cartPage.assertCartName(`Reorder from Order ${orderReference}`);
 
         cy.get('body').contains(`Sold by ${dynamicFixtures.merchant1.name}`).should('exist');
-        cy.get('body').contains(dynamicFixtures.product1.name).should('exist');
+        cy.get('body').contains(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
 
         cy.get('body').contains(`Sold by ${dynamicFixtures.merchant2.name}`).should('exist');
-        cy.get('body').contains(dynamicFixtures.product2.name).should('exist');
+        cy.get('body').contains(dynamicFixtures.product2.localized_attributes[0].name).should('exist');
       });
     });
 
@@ -55,10 +55,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product2.sku });
       productPage.addToCart();
 
-      checkoutScenario.execute({
-        idCustomerAddress: dynamicFixtures.address.id_customer_address,
-        shouldTriggerOmsInCli: true,
-      });
+      checkoutScenario.execute({ idCustomerAddress: dynamicFixtures.address.id_customer_address });
     }
   }
 );

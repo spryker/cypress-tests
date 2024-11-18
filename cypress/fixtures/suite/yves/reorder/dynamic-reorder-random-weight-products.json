@@ -60,7 +60,7 @@
           "type": "helper",
           "name": "haveFullProduct",
           "key": "productMUnit",
-          "arguments": [{}, { "idTaxSet": 1 }]
+          "arguments": [{ "idTaxSet": 1 }]
         },
         {
           "type": "helper",

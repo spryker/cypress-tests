@@ -60,19 +60,19 @@
           "type": "helper",
           "name": "haveFullProduct",
           "key": "product",
-          "arguments": [{}, { "idTaxSet": 1 }]
+          "arguments": [{ "idTaxSet": 1 }]
         },
         {
           "type": "helper",
           "name": "haveFullProduct",
           "key": "bundledProduct1",
-          "arguments": [{}, { "idTaxSet": 1 }]
+          "arguments": [{ "idTaxSet": 1 }]
         },
         {
           "type": "helper",
           "name": "haveFullProduct",
           "key": "bundledProduct2",
-          "arguments": [{}, { "idTaxSet": 1 }]
+          "arguments": [{ "idTaxSet": 1 }]
         },
         {
           "type": "helper",
