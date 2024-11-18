@@ -136,10 +136,6 @@
             {},
             {
               "idTaxSet": 1,
-              "localizedAttributes": [
-                { "locale": "#localeEN", "name": "#localizedAttribute1.name" },
-                { "locale": "#localeDE", "name": "#localizedAttribute1.name" }
-              ]
             }
           ]
         },
@@ -150,11 +146,7 @@
           "arguments": [
             {},
             {
-              "idTaxSet": 1,
-              "localizedAttributes": [
-                { "locale": "#localeEN", "name": "#localizedAttribute2.name" },
-                { "locale": "#localeDE", "name": "#localizedAttribute2.name" }
-              ]
+              "idTaxSet": 1
             }
           ]
         },
