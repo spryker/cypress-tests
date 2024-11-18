@@ -40,8 +40,8 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
       assertOrderCancellationForPrevOrder();
 
       customerOverviewPage.viewLastPlacedOrder();
-      customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.name, 1);
-      customerOverviewPage.assertProductQuantity(dynamicFixtures.product2.name, 1);
+      customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.localized_attributes[0].name, 1);
+      customerOverviewPage.assertProductQuantity(dynamicFixtures.product2.localized_attributes[0].name, 1);
     });
 
     it('customer should be able to finish amended order with updated product quantity', (): void => {
@@ -57,7 +57,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
       assertOrderCancellationForPrevOrder();
 
       customerOverviewPage.viewLastPlacedOrder();
-      customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.name, 3);
+      customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.localized_attributes[0].name, 3);
     });
 
     function assertOrderCancellationForPrevOrder(): void {

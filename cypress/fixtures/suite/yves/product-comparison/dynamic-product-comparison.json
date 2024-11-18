@@ -8,19 +8,27 @@
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
-          "arguments": { "id_store": 1 }
+          "arguments": {
+            "id_store": 1
+          }
         },
         {
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "localeEN",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+          "arguments": {
+            "id_locale": 66,
+            "locale_name": "en_US"
+          }
         },
         {
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "localeDE",
-          "arguments": { "id_locale": 46, "locale_name": "de_DE" }
+          "arguments": {
+            "id_locale": 46,
+            "locale_name": "de_DE"
+          }
         },
         {
           "type": "builder",
@@ -45,13 +53,17 @@
               "attributes": {
                 "attribute_key_1": "attribute_value_1-1",
                 "attribute_key_2": "attribute_value_2-1"
-              }
-            },
-            {
+              },
               "idTaxSet": 1,
               "localizedAttributes": [
-                { "locale": "#localeEN", "name": "#localizedAttribute.name" },
-                { "locale": "#localeDE", "name": "#localizedAttribute.name" }
+                {
+                  "locale": "#localeEN",
+                  "name": "#localizedAttribute.name"
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#localizedAttribute.name"
+                }
               ]
             }
           ]
@@ -87,7 +99,13 @@
           "type": "helper",
           "name": "haveProductInStockForStore",
           "key": "product1WithPriceAndStore",
-          "arguments": ["#store", { "sku": "#product1.sku", "isNeverOutOfStock": "1" }]
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product1.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
         },
         {
           "type": "helper",
@@ -98,13 +116,17 @@
               "attributes": {
                 "attribute_key_1": "attribute_value_1-2",
                 "attribute_key_2": "attribute_value_2-2"
-              }
-            },
-            {
+              },
               "idTaxSet": 1,
               "localizedAttributes": [
-                { "locale": "#localeEN", "name": "#localizedAttribute.name" },
-                { "locale": "#localeDE", "name": "#localizedAttribute.name" }
+                {
+                  "locale": "#localeEN",
+                  "name": "#localizedAttribute.name"
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#localizedAttribute.name"
+                }
               ]
             }
           ]
@@ -129,7 +151,10 @@
             {
               "skuProductAbstract": "#product2.abstract_sku",
               "skuProduct": "#product2.sku",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
             }
           ]
         },
@@ -137,7 +162,13 @@
           "type": "helper",
           "name": "haveProductInStockForStore",
           "key": "product2WithPriceAndStore",
-          "arguments": ["#store", { "sku": "#product2.sku", "isNeverOutOfStock": "1" }]
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product2.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
         },
         {
           "type": "helper",
@@ -147,13 +178,17 @@
             {
               "attributes": {
                 "attribute_key_1": "attribute_value_1-3"
-              }
-            },
-            {
+              },
               "idTaxSet": 1,
               "localizedAttributes": [
-                { "locale": "#localeEN", "name": "#localizedAttribute.name" },
-                { "locale": "#localeDE", "name": "#localizedAttribute.name" }
+                {
+                  "locale": "#localeEN",
+                  "name": "#localizedAttribute.name"
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#localizedAttribute.name"
+                }
               ]
             }
           ]
@@ -178,7 +213,10 @@
             {
               "skuProductAbstract": "#product3.abstract_sku",
               "skuProduct": "#product3.sku",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
             }
           ]
         },
@@ -186,7 +224,13 @@
           "type": "helper",
           "name": "haveProductInStockForStore",
           "key": "product3WithPriceAndStore",
-          "arguments": ["#store", { "sku": "#product3.sku", "isNeverOutOfStock": "1" }]
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product3.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
         },
         {
           "type": "helper",
@@ -197,13 +241,17 @@
               "attributes": {
                 "attribute_key_1": "attribute_value_1-4",
                 "attribute_key_2": "attribute_value_2-4"
-              }
-            },
-            {
+              },
               "idTaxSet": 1,
               "localizedAttributes": [
-                { "locale": "#localeEN", "name": "#localizedAttribute.name" },
-                { "locale": "#localeDE", "name": "#localizedAttribute.name" }
+                {
+                  "locale": "#localeEN",
+                  "name": "#localizedAttribute.name"
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#localizedAttribute.name"
+                }
               ]
             }
           ]
@@ -228,7 +276,10 @@
             {
               "skuProductAbstract": "#product4.abstract_sku",
               "skuProduct": "#product4.sku",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
             }
           ]
         },
@@ -236,7 +287,13 @@
           "type": "helper",
           "name": "haveProductInStockForStore",
           "key": "product4WithPriceAndStore",
-          "arguments": ["#store", { "sku": "#product4.sku", "isNeverOutOfStock": "1" }]
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product4.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
         }
       ]
     }

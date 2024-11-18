@@ -40,6 +40,14 @@ export class ProductsPage extends MpPage {
   getSaveButtonSelector = (): string => {
     return this.repository.getSaveButtonSelector();
   };
+
+  getTaxIdSetSelector = (): string => {
+    return this.repository.getTaxIdSelector();
+  };
+
+  getTaxIdSetOptionSelector = (): string => {
+    return this.repository.getTaxIdOptionSelector();
+  };
 }
 
 interface FindParams {

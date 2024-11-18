@@ -102,7 +102,7 @@
           "type": "helper",
           "name": "haveFullProduct",
           "key": "product1",
-          "arguments": [{}, { "idTaxSet": 1 }]
+          "arguments": [{ "idTaxSet": 1 }]
         },
         {
           "type": "helper",
@@ -136,7 +136,7 @@
           "type": "helper",
           "name": "haveFullProduct",
           "key": "product2",
-          "arguments": [{}, { "idTaxSet": 1 }]
+          "arguments": [{ "idTaxSet": 1 }]
         },
         {
           "type": "helper",

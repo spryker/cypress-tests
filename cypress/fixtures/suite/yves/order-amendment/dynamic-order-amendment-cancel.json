@@ -51,7 +51,7 @@
           "type": "helper",
           "name": "haveFullProduct",
           "key": "product",
-          "arguments": [{}, { "idTaxSet": 1 }]
+          "arguments": [{ "idTaxSet": 1 }]
         },
         {
           "type": "helper",

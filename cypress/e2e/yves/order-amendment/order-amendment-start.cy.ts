@@ -45,7 +45,7 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
 
         cartPage.assertPageLocation();
         cartPage.assertCartName(`Editing Order ${orderReference}`);
-        cy.get('body').contains(dynamicFixtures.product.name).should('exist');
+        cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
 
         customerOverviewPage.viewLastPlacedOrder();
         orderDetailsPage.containsOrderState('Editing in Progress');
@@ -114,8 +114,8 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
       cy.contains(`Inactive item ${dynamicFixtures.productInActive.sku} was removed from your shopping cart.`).should(
         'exist'
       );
-      cy.get('body').contains(dynamicFixtures.product.name).should('exist');
-      cy.get('body').contains(dynamicFixtures.productInActive.name).should('not.exist');
+      cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
+      cy.get('body').contains(dynamicFixtures.productInActive.localized_attributes[0].name).should('not.exist');
     });
 
     it('customer should not be able to amend order when item was out-of-stock', (): void => {
@@ -132,8 +132,8 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
 
       cartPage.assertPageLocation();
       cy.contains(`Product ${dynamicFixtures.productOutOfStock.sku} is not available at the moment.`).should('exist');
-      cy.get('body').contains(dynamicFixtures.product.name).should('exist');
-      cy.get('body').contains(dynamicFixtures.productOutOfStock.name).should('not.exist');
+      cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
+      cy.get('body').contains(dynamicFixtures.productOutOfStock.localized_attributes[0].name).should('not.exist');
     });
 
     function placeCustomerOrder(email: string, idCustomerAddress: number): void {
