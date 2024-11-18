@@ -12,7 +12,13 @@ export class EnableProductForAllStoresScenario {
     this.productManagementListPage.visit();
 
       this.productManagementListPage.interceptTable({ url: '/product-management/index/table**' }, () => {
-          this.productManagementListPage.find({searchQuery: params.abstractProductSku, tableUrl: '/product-management/index/table**'}).then(($row) => {
+          this.productManagementListPage.find({
+              searchQuery: params.abstractProductSku,
+              tableUrl: '/product-management/index/table**',
+              rowFilter: [
+                  (row) => row.find('td[class*="column-sku"]').text().trim() === params.abstractProductSku
+              ]
+          }).then(($row) => {
               if (!this.productManagementListPage.rowIsAssignedToStore({row: $row, storeName: params.storeName})) {
                   this.productManagementListPage.clickEditAction($row);
                   this.productManagementEditPage.assignAllPossibleStores();
