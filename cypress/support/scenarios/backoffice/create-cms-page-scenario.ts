@@ -14,7 +14,7 @@ export class CreateCmsPageScenario {
 
     this.cmsPlaceholderEditPage.update({ cmsPageName: params.cmsPageName });
 
-    cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+    return cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
   };
 }
 
