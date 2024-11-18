@@ -30,8 +30,8 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
         cartPage.assertPageLocation();
         cartPage.assertCartName(`Reorder from Order ${orderReference}`);
 
-        cy.get('body').contains(dynamicFixtures.product1.name).should('exist');
-        cy.get('body').contains(dynamicFixtures.product2.name).should('exist');
+        cy.get('body').contains(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
+        cy.get('body').contains(dynamicFixtures.product2.localized_attributes[0].name).should('exist');
       });
     });
 
@@ -45,8 +45,8 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
         cartPage.assertPageLocation();
         cartPage.assertCartName(`Reorder from Order ${orderReference}`);
 
-        cy.get('body').contains(dynamicFixtures.product1.name).should('exist');
-        cy.get('body').contains(dynamicFixtures.product2.name).should('not.exist');
+        cy.get('body').contains(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
+        cy.get('body').contains(dynamicFixtures.product2.localized_attributes[0].name).should('not.exist');
       });
     });
 
@@ -75,10 +75,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
         password: staticFixtures.defaultPassword,
       });
 
-      checkoutScenario.execute({
-        idCustomerAddress: idCustomerAddress,
-        shouldTriggerOmsInCli: true,
-      });
+      checkoutScenario.execute({ idCustomerAddress: idCustomerAddress });
     }
   }
 );
