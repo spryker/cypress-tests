@@ -8,8 +8,8 @@
   },
   "productPrice": "10.15",
   "paymentMethod": {
-      "name": "Dummy Payment",
-      "key": "dummyPaymentInvoice"
+    "name": "Dummy Payment",
+    "key": "dummyPaymentInvoice"
   },
   "product": {
     "name": "Sony SmartWatch 3",
@@ -17,8 +17,8 @@
     "abstract_sku": "M21091"
   },
   "shipmentMethod": {
-      "name": "Standard",
-      "key": "spryker_dummy_shipment-standard"
+    "name": "Standard",
+    "key": "spryker_dummy_shipment-standard"
   },
   "store": {
     "name": "TEST_STORE",

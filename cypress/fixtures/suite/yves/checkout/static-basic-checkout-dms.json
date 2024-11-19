@@ -1,36 +1,5 @@
 {
   "defaultPassword": "change123",
-  "product1": {
-    "sku": "139_24699831",
-    "abstract_sku": "139"
-  },
-  "product2": {
-    "sku": "141_29380410",
-    "abstract_sku": "141"
-  },
-  "paymentMethods": [
-      {
-          "key": "dummyMarketplacePaymentInvoice",
-          "name": "Dummy Marketplace Payment"
-      },
-      {
-            "key": "dummyPaymentInvoice",
-            "name": "Dummy Payment"
-      },
-      {
-            "key": "dummyPaymentCreditCard",
-            "name": "Credit Card"
-      }
-  ],
-  "shipmentMethods": [
-      {
-          "key": "spryker_dummy_shipment-standard",
-          "name": "Standard"
-      }, {
-          "key": "spryker_dummy_shipment-express",
-          "name": "Express"
-      }
-  ],
   "store": {
     "name": "TEST_STORE",
     "currency": "EUR",
@@ -38,6 +7,28 @@
     "country": "DE",
     "timezone": "Europe/Berlin"
   },
-  "warehouse": "warehouse1",
-  "productPrice": "77.99"
+  "paymentMethods": [
+    {
+      "key": "dummyMarketplacePaymentInvoice",
+      "name": "Dummy Marketplace Payment"
+    },
+    {
+      "key": "dummyPaymentInvoice",
+      "name": "Dummy Payment"
+    },
+    {
+      "key": "dummyPaymentCreditCard",
+      "name": "Credit Card"
+    }
+  ],
+  "shipmentMethods": [
+    {
+      "key": "spryker_dummy_shipment-standard",
+      "name": "Standard"
+    },
+    {
+      "key": "spryker_dummy_shipment-express",
+      "name": "Express"
+    }
+  ]
 }

@@ -3,7 +3,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 @autoWired
-export class EditPaymentMethodRepository {
+export class PaymentMethodEditRepository {
   getStoreRelationTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-store-relation"]');
   getAllAvailableStoresInputs = (): Cypress.Chainable =>
     cy.get('input[name="payment_method_form[storeRelation][id_stores][]"]');

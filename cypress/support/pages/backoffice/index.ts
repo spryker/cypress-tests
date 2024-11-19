@@ -30,3 +30,7 @@ export * from './store/list/store-list-page';
 export * from './store/create/store-create-page';
 export * from './stock/list/stock-list-page';
 export * from './stock/edit/stock-edit-page';
+export * from './shipment/shipment-method/list/shipment-method-list-page';
+export * from './shipment/shipment-method/edit/shipment-method-edit-page';
+export * from './payment-method/list/payment-method-list-page';
+export * from './payment-method/edit/payment-method-edit-page';

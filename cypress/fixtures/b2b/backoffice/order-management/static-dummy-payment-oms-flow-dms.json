@@ -7,8 +7,8 @@
   ],
   "defaultPassword": "change123",
   "paymentMethod": {
-      "name": "Dummy Payment",
-      "key": "dummyPaymentInvoice"
+    "name": "Dummy Payment",
+    "key": "dummyPaymentInvoice"
   },
   "checkoutPaymentMethod": "dummyPaymentInvoice",
   "product": {
@@ -17,8 +17,8 @@
     "abstract_sku": "M24143"
   },
   "shipmentMethod": {
-      "name": "Standard",
-      "key": "spryker_dummy_shipment-standard"
+    "name": "Standard",
+    "key": "spryker_dummy_shipment-standard"
   },
   "store": {
     "name": "TEST_STORE",

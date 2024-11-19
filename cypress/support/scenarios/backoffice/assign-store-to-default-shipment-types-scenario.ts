@@ -3,7 +3,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 @autoWired
-export class EnableShipmentTypeForAllStoresScenario {
+export class AssignStoreToDefaultShipmentTypesScenario {
   execute = (params: ExecuteParams): void => {
     cy.request({
       method: 'POST',
@@ -14,7 +14,6 @@ export class EnableShipmentTypeForAllStoresScenario {
       },
       body: `grantType=password&username=${params.username}&password=${params.password}`,
     }).then((response) => {
-      expect(response.status).to.eq(200);
       const authToken = response.body.access_token;
       cy.wrap(authToken).as('authToken');
 
@@ -27,7 +26,7 @@ export class EnableShipmentTypeForAllStoresScenario {
         },
       }).then((response) => {
         const deliveryIds = response.body.data
-          .filter((item: any) => item.attributes.name.includes('Delivery'))
+          // .filter((item: any) => item.attributes.name.includes('Delivery'))
           .map((item: any) => item.id);
         cy.wrap(deliveryIds).as('deliveryIds');
       });
@@ -66,7 +65,7 @@ export class EnableShipmentTypeForAllStoresScenario {
       });
     });
 
-      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+    cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
   };
 }
 

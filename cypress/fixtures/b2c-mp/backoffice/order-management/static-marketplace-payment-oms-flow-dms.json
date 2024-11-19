@@ -8,8 +8,8 @@
   },
   "productPrice": "10.15",
   "paymentMethod": {
-        "key": "dummyMarketplacePaymentInvoice",
-        "name": "Invoice"
+    "key": "dummyMarketplacePaymentInvoice",
+    "name": "Invoice"
   },
   "product": {
     "name": "Sony SmartWatch 3",
@@ -17,8 +17,8 @@
     "abstract_sku": "091"
   },
   "shipmentMethod": {
-      "key": "spryker_dummy_shipment-standard",
-      "name": "Standard"
+    "key": "spryker_dummy_shipment-standard",
+    "name": "Standard"
   },
   "store": {
     "name": "TEST_STORE",

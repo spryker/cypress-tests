@@ -8,18 +8,22 @@
     "sku": "102920",
     "abstract_sku": "M769"
   },
-  "paymentMethods": [{
+  "paymentMethods": [
+    {
       "name": "Dummy Payment",
       "key": "dummyPaymentInvoice"
-  }],
-  "shipmentMethods": [{
+    }
+  ],
+  "shipmentMethods": [
+    {
       "name": "Standard",
       "key": "spryker_dummy_shipment-standard"
-  },
-  {
+    },
+    {
       "name": "Express",
       "key": "spryker_dummy_shipment-express"
-  }],
+    }
+  ],
   "store": {
     "name": "TEST_STORE",
     "currency": "EUR",

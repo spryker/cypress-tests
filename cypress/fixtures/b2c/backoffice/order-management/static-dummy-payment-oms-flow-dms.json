@@ -15,10 +15,10 @@
     "sku": "139_24699831",
     "abstract_sku": "139"
   },
-    "shipmentMethod": {
-        "key": "spryker_dummy_shipment-standard",
-        "name": "Standard"
-    },
+  "shipmentMethod": {
+    "key": "spryker_dummy_shipment-standard",
+    "name": "Standard"
+  },
   "store": {
     "name": "TEST_STORE",
     "currency": "EUR",

@@ -3,7 +3,7 @@ import { Store, User } from '../smoke/shared';
 
 export interface CustomerAuthDynamicFixtures {
   customer: Customer;
-    rootUser: User;
+  rootUser: User;
 }
 
 export interface CustomerAuthStaticFixtures {

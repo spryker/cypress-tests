@@ -10,24 +10,30 @@ export class EnableProductForAllStoresScenario {
 
   execute = (params: ExecuteParams): void => {
     this.productManagementListPage.visit();
+    this.productManagementListPage
+      .find({
+        searchQuery: params.abstractProductSku,
+        tableUrl: '/product-management/index/table**',
+      })
+      .then(($row) => {
+        const isStoreAssigned = this.productManagementListPage.rowIsAssignedToStore({
+          row: $row,
+          storeName: params.storeName,
+        });
+        this.productManagementListPage.clickEditAction($row);
+        // Gap in dynamic fixtures
+        this.productManagementEditPage.setDummyDEName();
 
-      this.productManagementListPage.interceptTable({ url: '/product-management/index/table**' }, () => {
-          this.productManagementListPage.find({
-              searchQuery: params.abstractProductSku,
-              tableUrl: '/product-management/index/table**',
-              rowFilter: [
-                  (row) => row.find('td[class*="column-sku"]').text().trim() === params.abstractProductSku
-              ]
-          }).then(($row) => {
-              if (!this.productManagementListPage.rowIsAssignedToStore({row: $row, storeName: params.storeName})) {
-                  this.productManagementListPage.clickEditAction($row);
-                  this.productManagementEditPage.assignAllPossibleStores();
-                  this.productManagementEditPage.bulkPriceUpdate(params.productPrice);
-                  this.productManagementEditPage.save();
+        if (!isStoreAssigned) {
+          this.productManagementEditPage.assignAllPossibleStores();
+        }
 
-                  cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-              }
-          })
+        this.productManagementEditPage.bulkPriceUpdate(params.productPrice);
+        this.productManagementEditPage.save();
+
+        if (params.shouldTriggerPublishAndSync) {
+          cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+        }
       });
   };
 }

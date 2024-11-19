@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { HomePage, CmsContentPage } from '@pages/yves';
-import {ContentDynamicFixtures, ContentStaticFixtures} from '@interfaces/yves';
+import { ContentDynamicFixtures, ContentStaticFixtures } from '@interfaces/yves';
 import { SelectStoreScenario } from '@scenarios/yves';
 import { CreateStoreScenario, CreateCmsPageScenario, UserLoginScenario } from '@scenarios/backoffice';
 
@@ -19,7 +19,7 @@ import { CreateStoreScenario, CreateCmsPageScenario, UserLoginScenario } from '@
     let dynamicFixtures: ContentDynamicFixtures;
 
     before((): void => {
-        ( {staticFixtures, dynamicFixtures} = Cypress.env());
+      ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
       staticFixtures.cmsPageName = `${staticFixtures.cmsPageName}-${Date.now()}`;
 
@@ -28,11 +28,7 @@ import { CreateStoreScenario, CreateCmsPageScenario, UserLoginScenario } from '@
         password: staticFixtures.defaultPassword,
       });
       createStoreScenario.execute({ store: staticFixtures.store });
-
-      createCmsPageScenario.execute({
-        storeName: staticFixtures.store.name,
-        cmsPageName: staticFixtures.cmsPageName,
-      });
+      createCmsPageScenario.execute({ cmsPageName: staticFixtures.cmsPageName, shouldTriggerPublishAndSync: true });
     });
 
     beforeEach((): void => {
@@ -48,7 +44,7 @@ import { CreateStoreScenario, CreateCmsPageScenario, UserLoginScenario } from '@
         `${Cypress.config('baseUrl')}/${staticFixtures.store.locale.split('_')[0] ? staticFixtures.store.locale.split('_')[0] : 'en'}/${staticFixtures.cmsPageName}`
       );
 
-        cy.contains(staticFixtures.cmsPageName).should('exist');
+      cy.contains(staticFixtures.cmsPageName).should('exist');
     });
   }
 );

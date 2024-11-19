@@ -1,7 +1,8 @@
 {
   "defaultPassword": "change123",
+  "cmsPageName": "test-cms-page-dms-bo",
   "store": {
-    "name": "TEST_STORE",
+    "name": "DMS_STORE",
     "currency": "EUR",
     "locale": "en_US",
     "country": "DE",

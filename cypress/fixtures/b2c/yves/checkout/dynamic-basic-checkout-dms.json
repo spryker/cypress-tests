@@ -123,17 +123,17 @@
           "key": "product2WithPriceAndStore",
           "arguments": ["#store", { "sku": "#product2.sku", "isNeverOutOfStock": "1" }]
         },
-          {
-              "type": "helper",
-              "name": "haveUser",
-              "key": "rootUser",
-              "arguments": [{ "password": "change123" }]
-          },
-          {
-              "type": "helper",
-              "name": "addUserToGroup",
-              "arguments": ["#rootUser.id_user", 1]
-          }
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        }
       ]
     }
   }

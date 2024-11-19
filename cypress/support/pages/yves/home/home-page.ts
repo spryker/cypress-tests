@@ -23,5 +23,6 @@ export class HomePage extends YvesPage {
 
   selectStore = (store: string): void => {
     this.repository.getStoreSelect().select(store, { force: true });
+    cy.url().should('include', `?_store=${store}`);
   };
 }

@@ -9,19 +9,21 @@
     "abstract_sku": "141"
   },
   "paymentMethods": [
-      {
-          "key": "dummyPaymentInvoice",
-          "name": "Invoice"
-      },
-      {
-          "key": "dummyPaymentCreditCard",
-          "name": "Credit Card"
-      }
+    {
+      "key": "dummyPaymentInvoice",
+      "name": "Invoice"
+    },
+    {
+      "key": "dummyPaymentCreditCard",
+      "name": "Credit Card"
+    }
   ],
-  "shipmentMethods": [{
+  "shipmentMethods": [
+    {
       "key": "spryker_dummy_shipment-standard",
       "name": "Standard"
-  }],
+    }
+  ],
   "store": {
     "name": "TEST_STORE",
     "currency": "EUR",

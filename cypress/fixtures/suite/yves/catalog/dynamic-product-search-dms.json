@@ -1,50 +1,70 @@
 {
-    "data": {
-        "type": "dynamic-fixtures",
-        "attributes": {
-            "synchronize": true,
-            "operations": [
-                {
-                    "type": "helper",
-                    "name": "haveUser",
-                    "key": "rootUser",
-                    "arguments": [{ "password": "change123" }]
-                },
-                {
-                    "type": "helper",
-                    "name": "addUserToGroup",
-                    "arguments": ["#rootUser.id_user", 1]
-                },
-                {
-                    "type": "transfer",
-                    "name": "LocaleTransfer",
-                    "key": "locale",
-                    "arguments": { "id_locale": 66, "locale_name": "en_US" }
-                },
-                {
-                    "type": "helper",
-                    "name": "haveCountry",
-                    "key": "country"
-                },
-                {
-                    "type": "helper",
-                    "name": "haveCustomer",
-                    "key": "customer",
-                    "arguments": [{ "locale": "#locale", "password": "change123" }]
-                },
-                {
-                    "type": "helper",
-                    "name": "haveCustomerAddress",
-                    "key": "address",
-                    "arguments": [{ "fkCustomer": "#customer.id_customer", "fkCountry": "#country.id_country" }]
-                },
-                {
-                    "type": "helper",
-                    "name": "confirmCustomer",
-                    "key": "confirmedCustomer",
-                    "arguments": ["#customer"]
-                }
-            ]
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "locale",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer",
+          "arguments": [{ "locale": "#locale", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "arguments": ["#customer"]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "transfer",
+          "name": "ProductImageTransfer",
+          "key": "productImage",
+          "arguments": {
+            "externalUrlSmall": "https://images.icecat.biz/img/gallery_mediums/30691822_1486.jpg",
+            "externalUrlLarge": "https://images.icecat.biz/img/gallery/30691822_1486.jpg"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#product.id_product_concrete",
+              "idProductAbstract": "#product.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStock",
+          "arguments": [{ "sku": "#product.sku", "isNeverOutOfStock": "1", "fkStock": 1, "stockType": "Warehouse1" }]
         }
+      ]
     }
+  }
 }

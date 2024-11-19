@@ -1,11 +1,10 @@
 import { Address, Customer, Product, ProductConcrete, ProductOffer, User } from './shared';
 
-export interface Store {
-  name: string;
-  locale: string;
-  currency: string;
-  country: string;
-  timezone: string;
+export interface DummyPaymentOmsFlowStaticFixtures {
+  defaultPassword: string;
+  customer: Customer;
+  product: Product;
+  rootUser: User;
 }
 
 export interface MarketplacePaymentOmsFlowStaticFixtures {
@@ -16,15 +15,4 @@ export interface MarketplacePaymentOmsFlowStaticFixtures {
   address: Address;
   productConcreteForOffer: ProductConcrete;
   productOffer: ProductOffer;
-
-  store: Store;
-  product: Product;
-  cmsBlockNames: Array<string>;
-  warehouse1: string;
-  warehouse2: string;
-  paymentMethod: string;
-  productPrice: string;
-  shipmentMethod: string;
-  merchantName1: string;
-  merchantName2: string;
 }

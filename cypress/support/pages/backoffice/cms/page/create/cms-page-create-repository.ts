@@ -5,16 +5,9 @@ import { injectable } from 'inversify';
 @autoWired
 export class CmsPageCreateRepository {
   getGeneralBlock = (): Cypress.Chainable => cy.get('#tab-content-general');
-
   getAllCollapsedIboxButtonsSelector = (): string => '.collapsed .collapse-link';
-
   getAllIboxesSelector = (): string => '.ibox.nested';
-
   getLocalizedFieldSelector = (): string => 'input[type="text"]';
-
-  getLocalizedUrlFieldSelector = (): string => '.ibox.nested';
-
   getCreatePageButton = (): Cypress.Chainable => cy.get('form[name=cms_page]').find('[type="submit"]');
-
   getIsSearchableCheckbox = (): Cypress.Chainable => cy.get('#cms_page_isSearchable');
 }

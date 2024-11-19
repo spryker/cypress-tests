@@ -11,10 +11,8 @@ export class CategoryListPage extends BackofficePage {
   protected PAGE_URL = '/category-gui/list';
 
   update = (params: UpdateParams): void => {
-    const findParams = { query: params.query, expectedCount: 1 };
-
-    this.find(findParams).then(($merchantRow) => {
-      cy.wrap($merchantRow).find(this.repository.getDropdownToggleButtonSelector()).should('exist').click();
+    this.find({ tableUrl: '/category-gui/list/table**', searchQuery: params.query }).then(($categoryRow) => {
+      cy.wrap($categoryRow).find(this.repository.getDropdownToggleButtonSelector()).should('exist').click();
 
       cy.get(this.repository.getDropdownMenuSelector())
         .find(this.repository.getEditButtonSelector())
@@ -22,24 +20,9 @@ export class CategoryListPage extends BackofficePage {
         .click();
     });
   };
-
-  find = (params: FindParams): Cypress.Chainable => {
-    const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(params.query);
-
-    this.interceptTable({ url: 'category-gui/list/table**', expectedCount: params.expectedCount });
-
-    return this.repository.getFirstTableRow();
-  };
 }
 
 interface UpdateParams {
   action: ActionEnum;
   query: string;
-}
-
-interface FindParams {
-  query: string;
-  expectedCount?: number;
 }

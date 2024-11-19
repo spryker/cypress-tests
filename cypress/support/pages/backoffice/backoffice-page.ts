@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
 import { AbstractPage } from '../abstract-page';
 import VisitOptions = Cypress.VisitOptions;
+import Chainable = Cypress.Chainable;
 
 @injectable()
 export class BackofficePage extends AbstractPage {
@@ -8,120 +9,125 @@ export class BackofficePage extends AbstractPage {
     cy.visitBackoffice(this.PAGE_URL, options);
   };
 
-    public interceptTable = (params: InterceptGuiTableParams, callback?: () => void) => {
-        const expectedCount = params.expectedCount ?? 1;
-        const interceptAlias = this.faker.string.uuid();
+  public interceptTable = (params: InterceptGuiTableParams, callback?: () => void): Chainable => {
+    const expectedCount = params.expectedCount ?? 1;
+    const interceptAlias = this.faker.string.uuid();
 
-        cy.intercept('GET', params.url).as(interceptAlias);
-        return cy.wait(`@${interceptAlias}`)
-            .its('response.body.recordsFiltered')
-            .should((total) => {
-                if (params.expectedCount !== null) {
-                    const valueToBeAtMost = expectedCount + Cypress.currentRetry;
-                    assert.isTrue(total === expectedCount || total >= valueToBeAtMost);
-                }
-            })
-            .then(() => {
-                if (callback) {
-                    return callback();
-                }
-            });
-    };
+    cy.intercept('GET', params.url).as(interceptAlias);
+    return cy
+      .wait(`@${interceptAlias}`)
+      .its('response.body.recordsFiltered')
+      .should((total) => {
+        if (params.expectedCount !== null) {
+          const valueToBeAtMost = expectedCount + Cypress.currentRetry;
+          assert.isTrue(total === expectedCount || total >= valueToBeAtMost);
+        }
+      })
+      .then(() => {
+        if (callback) {
+          return callback();
+        }
+      });
+  };
 
-    public getEditButton = (params: UpdateParams): Cypress.Chainable => {
-        return this.find(params).then(($row) => {
-            if (!$row) {
-                cy.log('No rows found after filtering');
-                return null;
+  public getEditButton = (params: UpdateParams): Cypress.Chainable => {
+    return this.find(params).then(($row) => {
+      if (!$row) {
+        cy.log('No rows found after filtering');
+        return null;
+      }
+      return this.getEditButtonFromRow($row).then(($button) => {
+        if ($button.length) {
+          return $button;
+        } else {
+          cy.log('Record is assigned to the store or not found by search criteria');
+          return null;
+        }
+      });
+    });
+  };
+
+  public find = (params: UpdateParams): Cypress.Chainable => {
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
+    return cy
+      .get('[type="search"]')
+      .clear()
+      .invoke('val', params.searchQuery)
+      .trigger('input')
+      .then(() => {
+        return this.interceptTable({ url: params.tableUrl, expectedCount: params.expectedCount }, () => {
+          cy.get('tbody > tr:visible').then(($rows) => {
+            let rows = Cypress.$($rows);
+
+            if (params.rowFilter && params.rowFilter.length > 0) {
+              params.rowFilter.forEach((filterFn) => {
+                if (rows.length > 0) {
+                  rows = rows.filter((index, row) => filterFn(Cypress.$(row)));
+                }
+              });
             }
-            return this.getEditButtonFromRow($row).then(($button) => {
-                if ($button.length) {
-                    return $button;
-                } else {
-                    cy.log('Record is assigned to the store or not found by search criteria');
-                    return null;
-                }
-            });
+
+            if (rows.length > 0) {
+              return cy.wrap(rows.first());
+            } else {
+              cy.log('No rows found after filtering');
+              return null;
+            }
+          });
         });
-    };
+      });
+  };
 
-    public find = (params: UpdateParams): Cypress.Chainable => {
-            return cy.get('[type="search"]').clear().invoke('val', params.searchQuery).trigger('input').then(() => {
-                return this.interceptTable(
-                    { url: params.tableUrl, expectedCount: params.expectedCount },
-                    () => {
-                        cy.get('tbody > tr:visible').then(($rows) => {
-                            let rows = Cypress.$($rows);
+  public findWithretry = (params: UpdateWithRetryParams): Cypress.Chainable => {
+    const retryCount = 2;
+    let attempts = 0;
 
-                            if (params.rowFilter && params.rowFilter.length > 0) {
-                                params.rowFilter.forEach(filterFn => {
-                                    if (rows.length > 0) {
-                                        rows = rows.filter((index, row) => filterFn(Cypress.$(row)));
-                                    }
-                                });
-                            }
+    const searchAndIntercept = (): Cypress.Chainable => {
+      attempts++;
+      cy.get('[type="search"]')
+        .clear()
+        .then(() => {
+          cy.visitBackoffice(params.pageUrl);
+        });
 
-                            if (rows.length > 0) {
-                                return cy.wrap(rows.first());
-                            } else {
-                                cy.log('No rows found after filtering');
-                                return null;
-                            }
-                        });
+      return this.interceptTable({ url: params.tableUrl }).then(() => {
+        cy.get('[type="search"]')
+          .invoke('val', params.searchQuery)
+          .trigger('input')
+          .then(() => {
+            return this.interceptTable({ url: params.tableUrl, expectedCount: params.expectedCount }, () => {
+              cy.get('tbody > tr:visible').then(($rows) => {
+                let rows = Cypress.$($rows);
+
+                if (params.rowFilter && params.rowFilter.length > 0) {
+                  params.rowFilter.forEach((filterFn) => {
+                    if (rows.length > 0) {
+                      rows = rows.filter((index, row) => filterFn(Cypress.$(row)));
                     }
-                );
+                  });
+                }
+
+                if (rows.length > 0) {
+                  return cy.wrap(rows.first());
+                } else if (attempts < retryCount) {
+                  cy.log(`Retrying... Attempt ${attempts}`);
+                  return searchAndIntercept();
+                } else {
+                  cy.log('No rows found after filtering');
+                  return null;
+                }
+              });
             });
+          });
+      });
     };
 
-    public findWithretry = (params: UpdateWithRetryParams): Cypress.Chainable => {
-        const retryCount = 2;
-        let attempts = 0;
+    return searchAndIntercept();
+  };
 
-        const searchAndIntercept = (): Cypress.Chainable => {
-            attempts++;
-            cy.get('[type="search"]').clear().then(() => {
-                cy.visitBackoffice(params.pageUrl);
-            });
-
-            return this.interceptTable(
-                { url: params.tableUrl}).then(() => {
-                cy.get('[type="search"]').invoke('val', params.searchQuery).trigger('input').then(() => {
-                    return this.interceptTable(
-                        { url: params.tableUrl, expectedCount: params.expectedCount },
-                        () => {
-                            cy.get('tbody > tr:visible').then(($rows) => {
-                                let rows = Cypress.$($rows);
-
-                                if (params.rowFilter && params.rowFilter.length > 0) {
-                                    params.rowFilter.forEach(filterFn => {
-                                        if (rows.length > 0) {
-                                            rows = rows.filter((index, row) => filterFn(Cypress.$(row)));
-                                        }
-                                    });
-                                }
-
-                                if (rows.length > 0) {
-                                    return cy.wrap(rows.first());
-                                } else if (attempts < retryCount) {
-                                    cy.log(`Retrying... Attempt ${attempts}`);
-                                    return searchAndIntercept();
-                                } else {
-                                    cy.log('No rows found after filtering');
-                                    return null;
-                                }
-                            });
-                        }
-                    );
-                });
-            });
-        };
-
-        return searchAndIntercept();
-    };
-
-    private getEditButtonFromRow = ($row: JQuery<HTMLElement>): Cypress.Chainable => {
-        return cy.wrap($row).find('a:contains("Edit")');
-    };
+  private getEditButtonFromRow = ($row: JQuery<HTMLElement>): Cypress.Chainable => {
+    return cy.wrap($row).find('a:contains("Edit")');
+  };
 }
 
 export enum ActionEnum {
@@ -136,21 +142,21 @@ export enum ActionEnum {
 }
 
 interface InterceptGuiTableParams {
-    url: string;
-    expectedCount?: number | null;
+  url: string;
+  expectedCount?: number | null;
 }
 
 interface UpdateParams {
-    searchQuery: string;
-    tableUrl: string;
-    rowFilter?: Array<(row: JQuery<HTMLElement>) => boolean>;
-    expectedCount?: number;
+  searchQuery: string;
+  tableUrl: string;
+  rowFilter?: Array<(row: JQuery<HTMLElement>) => boolean>;
+  expectedCount?: number;
 }
 
 interface UpdateWithRetryParams {
-    searchQuery: string;
-    tableUrl: string;
-    rowFilter?: Array<(row: JQuery<HTMLElement>) => boolean>;
-    expectedCount?: number | null;
-    pageUrl: string;
+  searchQuery: string;
+  tableUrl: string;
+  rowFilter?: Array<(row: JQuery<HTMLElement>) => boolean>;
+  expectedCount?: number | null;
+  pageUrl: string;
 }

@@ -33,8 +33,12 @@ export class ProductManagementEditPage extends BackofficePage {
   bulkPriceUpdate = (productPrice: string): void => {
     this.repository.getPriceTaxTab().click();
     this.repository.getAllPriceInputs().each(($el) => {
-      cy.wrap($el).type(productPrice, { force: true });
+      cy.wrap($el).type(productPrice, { force: true, delay: 0 });
     });
+  };
+
+  setDummyDEName = (): void => {
+    this.repository.getProductNameDEInput().type(this.faker.commerce.productName());
   };
 
   save = (): void => {

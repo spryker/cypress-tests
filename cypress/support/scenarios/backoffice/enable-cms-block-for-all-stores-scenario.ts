@@ -12,20 +12,26 @@ export class EnableCmsBlockForAllStoresScenario {
   execute = (params: ExecuteParams): void => {
     this.blockListPage.visit();
 
-      this.blockListPage.interceptTable({url: '/cms-block-gui/list-block/table**'}).then(() => {
-          this.blockListPage.findWithretry({searchQuery: params.cmsBlockName, tableUrl: '/cms-block-gui/list-block/table**', pageUrl: this.blockListPage.getPageUrl()}).then(($storeRow) => {
-              if (!this.blockListPage.rowIsAssignedToStore({row: $storeRow, storeName: params.storeName})) {
-                  this.blockListPage.clickEditAction($storeRow);
+    this.blockListPage.interceptTable({ url: '/cms-block-gui/list-block/table**' }).then(() => {
+      this.blockListPage
+        .findWithretry({
+          searchQuery: params.cmsBlockName,
+          tableUrl: '/cms-block-gui/list-block/table**',
+          pageUrl: this.blockListPage.getPageUrl(),
+        })
+        .then(($storeRow) => {
+          if (!this.blockListPage.rowIsAssignedToStore({ row: $storeRow, storeName: params.storeName })) {
+            this.blockListPage.clickEditAction($storeRow);
 
-                  this.blockUpdatePage.assignAllAvailableStore();
-                  this.blockUpdatePage.save();
+            this.blockUpdatePage.assignAllAvailableStore();
+            this.blockUpdatePage.save();
 
-                  if (params?.shouldTriggerPublishAndSync) {
-                      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-                  }
-              }
-          });
-      });
+            if (params?.shouldTriggerPublishAndSync) {
+              cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+            }
+          }
+        });
+    });
   };
 }
 

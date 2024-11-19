@@ -1,50 +1,50 @@
 {
-    "data": {
-        "type": "dynamic-fixtures",
-        "attributes": {
-            "synchronize": true,
-            "operations": [
-                {
-                    "type": "helper",
-                    "name": "haveUser",
-                    "key": "rootUser",
-                    "arguments": [{ "password": "change123" }]
-                },
-                {
-                    "type": "helper",
-                    "name": "addUserToGroup",
-                    "arguments": ["#rootUser.id_user", 1]
-                },
-                {
-                    "type": "transfer",
-                    "name": "LocaleTransfer",
-                    "key": "locale",
-                    "arguments": { "id_locale": 66, "locale_name": "en_US" }
-                },
-                {
-                    "type": "helper",
-                    "name": "haveCountry",
-                    "key": "country"
-                },
-                {
-                    "type": "helper",
-                    "name": "haveCustomer",
-                    "key": "customer",
-                    "arguments": [{ "locale": "#locale", "password": "change123" }]
-                },
-                {
-                    "type": "helper",
-                    "name": "haveCustomerAddress",
-                    "key": "address",
-                    "arguments": [{ "fkCustomer": "#customer.id_customer", "fkCountry": "#country.id_country" }]
-                },
-                {
-                    "type": "helper",
-                    "name": "confirmCustomer",
-                    "key": "confirmedCustomer",
-                    "arguments": ["#customer"]
-                }
-            ]
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "locale",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer",
+          "arguments": [{ "locale": "#locale", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address",
+          "arguments": [{ "fkCustomer": "#customer.id_customer", "fkCountry": "#country.id_country" }]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "key": "confirmedCustomer",
+          "arguments": ["#customer"]
         }
+      ]
     }
+  }
 }

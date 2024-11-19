@@ -3,7 +3,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 @autoWired
-export class EditShipmentMethodRepository {
+export class ShipmentMethodEditRepository {
   getStoreRelationTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-store-relation"]');
   getAllAvailableStoresInputs = (): Cypress.Chainable =>
     cy.get('input[name="shipment_method[storeRelation][id_stores][]"]');

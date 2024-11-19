@@ -15,7 +15,7 @@ export class StoreListPage extends BackofficePage {
   };
 
   update = (params: UpdateParams): void => {
-    this.find({searchQuery: params.query, tableUrl: '/store-gui/list/table**'}).then(($storeRow) => {
+    this.find({ searchQuery: params.query, tableUrl: '/store-gui/list/table**' }).then(($storeRow) => {
       if (params.action === ActionEnum.edit) {
         cy.wrap($storeRow).find(this.repository.getEditButtonSelector()).should('exist').click();
       }
@@ -26,27 +26,22 @@ export class StoreListPage extends BackofficePage {
     });
   };
 
-  hasStoreByStoreName = (query: string): Cypress.Chainable<boolean> => {
-      return this.find({
-          searchQuery: query,
-          tableUrl: '/store-gui/list/table**',
-          expectedCount: null
-      }).then(($storeRow) => {
-          if ($storeRow && $storeRow.length > 0 && $storeRow.find('td.column-name').text().trim() === query) {
-              return cy.wrap(true);
-          } else {
-              return cy.wrap(false);
-          }
-      })
+  hasStore = (storeName: string): Cypress.Chainable<boolean> => {
+    const searchSelector = this.repository.getSearchSelector();
+    cy.get(searchSelector).clear();
+    cy.get(searchSelector).type(storeName);
+
+    return this.interceptTable({ url: '/store-gui/list/table**', expectedCount: 0 }).then((recordsFiltered: number) => {
+      if (recordsFiltered > 0) {
+        return cy.wrap(true);
+      } else {
+        return cy.wrap(false);
       }
+    });
+  };
 }
 
 interface UpdateParams {
   action: ActionEnum;
   query: string;
-}
-
-interface FindParams {
-  query: string;
-  expectedCount?: number;
 }

@@ -6,12 +6,5 @@
     "locale": "en_US",
     "country": "DE",
     "timezone": "Europe/Berlin"
-  },
-  "warehouse": "Warehouse2",
-  "productPrice": "77.99",
-  "concreteProduct": {
-    "name": "Acer Aspire Switch 10 E",
-    "sku": "132_30619567",
-    "abstract_sku": "132"
   }
 }

@@ -8,7 +8,7 @@ import { CmsPlaceholderEditRepository } from './cms-placeholder-edit-repository'
 export class CmsPlaceholderEditPage extends BackofficePage {
   @inject(CmsPlaceholderEditRepository) private repository: CmsPlaceholderEditRepository;
 
-  protected PAGE_URL = 'cms-gui/create-glossary/index';
+  protected PAGE_URL = '/cms-gui/create-glossary/index';
 
   update = (params: UpdateParams): void => {
     this.repository

@@ -17,11 +17,10 @@ export class CatalogPage extends YvesPage {
     }
 
     this.repository.getSearchInput().clear().invoke('val', params.query);
-      cy.intercept('**/search/suggestion**').as('searchSuggestion');
-      cy.wait('@searchSuggestion').then(() => {
-          this.repository.getFirstSuggestedProduct().click();
-      });
-
+    cy.intercept('**/search/suggestion**').as('searchSuggestion');
+    cy.wait('@searchSuggestion').then(() => {
+      this.repository.getFirstSuggestedProduct().click();
+    });
   };
 
   search = (params: SearchParams): void => {

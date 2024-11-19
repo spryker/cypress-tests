@@ -1,7 +1,7 @@
 import { container } from '@utils';
 import { CreateProductScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { CatalogPage, ProductPage } from '@pages/yves';
-import { PublishAndSynchronizeStaticFixtures } from '@interfaces/backoffice';
+import { PublishAndSynchronizeStaticFixtures } from '@interfaces/smoke';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
 /**

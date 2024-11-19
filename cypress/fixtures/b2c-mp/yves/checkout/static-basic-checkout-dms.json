@@ -9,21 +9,21 @@
     "abstract_sku": "141"
   },
   "paymentMethods": [
-      {
-          "key": "dummyPaymentCreditCard",
-          "name": "Credit Card"
-      }
+    {
+      "key": "dummyPaymentCreditCard",
+      "name": "Credit Card"
+    }
   ],
   "shipmentMethods": [
-      {
-          "key": "spryker_dummy_shipment-standard",
-          "name": "Standard"
-      },
-        {
-            "key": "spryker_dummy_shipment-express",
-            "name": "Express"
-        }
-      ],
+    {
+      "key": "spryker_dummy_shipment-standard",
+      "name": "Standard"
+    },
+    {
+      "key": "spryker_dummy_shipment-express",
+      "name": "Express"
+    }
+  ],
   "store": {
     "name": "TEST_STORE",
     "currency": "EUR",

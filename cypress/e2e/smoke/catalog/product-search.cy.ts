@@ -3,7 +3,10 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 import { ProductSearchStaticFixtures } from '@interfaces/smoke';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
-describe('product search', { tags: ['@smoke'] }, (): void => {
+/**
+ * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
+ */
+describe('product search', { tags: ['@smoke', '@catalog'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);
   const customerLoginScenario = container.get(CustomerLoginScenario);

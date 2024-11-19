@@ -11,13 +11,13 @@ export class CmsContentPage extends YvesPage {
 
   protected PAGE_URL = '/search';
 
-    findCmsPageFromSuggestions = (params: SearchParams): void => {
-        this.repository.search(params.query);
-        cy.intercept('**/search/suggestion**').as('searchSuggestion');
-        cy.wait('@searchSuggestion').then(() => {
-            this.repository.getFirstSuggestedCmsPage(params.query).click();
-        });
-    };
+  findCmsPageFromSuggestions = (params: SearchParams): void => {
+    this.repository.search(params.query);
+    cy.intercept('**/search/suggestion**').as('searchSuggestion');
+    cy.wait('@searchSuggestion').then(() => {
+      this.repository.getFirstSuggestedCmsPage(params.query).click();
+    });
+  };
 }
 
 interface SearchParams {

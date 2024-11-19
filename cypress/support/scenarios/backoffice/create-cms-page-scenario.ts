@@ -14,12 +14,13 @@ export class CreateCmsPageScenario {
 
     this.cmsPlaceholderEditPage.update({ cmsPageName: params.cmsPageName });
 
-    cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+    if (params.shouldTriggerPublishAndSync) {
+      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+    }
   };
 }
 
 interface ExecuteParams {
   cmsPageName: string;
-  storeName: string;
   shouldTriggerPublishAndSync?: boolean;
 }

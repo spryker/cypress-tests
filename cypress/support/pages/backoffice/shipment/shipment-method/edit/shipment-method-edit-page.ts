@@ -1,21 +1,22 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { EditShipmentMethodRepository } from './edit-shipment-method-repository';
+import { ShipmentMethodEditRepository } from './shipment-method-edit-repository';
 import { BackofficePage } from '@pages/backoffice';
+
 @injectable()
 @autoWired
-export class EditShipmentMethodPage extends BackofficePage {
-  @inject(EditShipmentMethodRepository) private repository: EditShipmentMethodRepository;
+export class ShipmentMethodEditPage extends BackofficePage {
+  @inject(ShipmentMethodEditRepository) private repository: ShipmentMethodEditRepository;
 
   assignAllAvailableStore = (): void => {
     this.repository.getStoreRelationTab().click();
     this.repository.getAllAvailableStoresInputs().check();
   };
 
-  addPrices = (price: string = '0.00'): void => {
+  addPrices = (price = '1.00'): void => {
     this.repository.getPricesTab().click();
     this.repository.getPriceInputs().each(($input) => {
-      cy.wrap($input).type(price);
+      cy.wrap($input).type(price, { delay: 0 });
     });
   };
 

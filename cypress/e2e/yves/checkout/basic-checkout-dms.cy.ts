@@ -1,147 +1,181 @@
 import { container } from '@utils';
-import {BasicCheckoutDynamicFixtures, CheckoutStaticFixtures} from '@interfaces/yves';
+import { BasicCheckoutDmsDynamicFixtures, BasicCheckoutDmsStaticFixtures } from '@interfaces/yves';
 import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 import {
-  CreateStoreScenario,
-  EnableAllPaymentMethodsForAllStoresScenario,
-  EnableProductForAllStoresScenario,
-  EnableAllShipmentMethodsForAllStoresScenario,
-  EnableWarehouseForAllStoresScenario,
-  UserLoginScenario,
+  AssignStoreToDefaultPaymentMethodsScenario,
+  AssignStoreToDefaultShipmentMethodsScenario,
+  AssignStoreToDefaultShipmentTypesScenario,
+  AssignStoreToProductScenario,
 } from '@scenarios/backoffice';
 
-(Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('basic checkout dms', { tags: '@dms' }, () => {
-  describe('basic checkout', { tags: ['@dms'] }, (): void => {
-    const userLoginScenario = container.get(UserLoginScenario);
-    const createStoreScenario = container.get(CreateStoreScenario);
-    const selectStoreScenario = container.get(SelectStoreScenario);
-    const catalogPage = container.get(CatalogPage);
-    const productPage = container.get(ProductPage);
-    const customerOverviewPage = container.get(CustomerOverviewPage);
-    const loginCustomerScenario = container.get(CustomerLoginScenario);
-    const checkoutScenario = container.get(CheckoutScenario);
-    const enableWarehouseForAllStoresScenario = container.get(EnableWarehouseForAllStoresScenario);
-    const enableProductForAllStoresScenario = container.get(EnableProductForAllStoresScenario);
-    const enableShipmentMethodForAllStoresScenario = container.get(EnableAllShipmentMethodsForAllStoresScenario);
-    const enablePaymentMethodForAllStoresScenario = container.get(EnableAllPaymentMethodsForAllStoresScenario);
+describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout', '@dms'] }, (): void => {
+  const catalogPage = container.get(CatalogPage);
+  const productPage = container.get(ProductPage);
+  const customerOverviewPage = container.get(CustomerOverviewPage);
+  const loginCustomerScenario = container.get(CustomerLoginScenario);
+  const checkoutScenario = container.get(CheckoutScenario);
+  const assignStoreToProductScenario = container.get(AssignStoreToProductScenario);
+  const selectStoreScenario = container.get(SelectStoreScenario);
+  const assignStoreToDefaultShipmentMethodsScenario = container.get(AssignStoreToDefaultShipmentMethodsScenario);
+  const assignStoreToDefaultPaymentMethodsScenario = container.get(AssignStoreToDefaultPaymentMethodsScenario);
+  const assignStoreToDefaultShipmentTypesScenario = container.get(AssignStoreToDefaultShipmentTypesScenario);
 
-    let staticFixtures: CheckoutStaticFixtures;
-    let dynamicFixtures: BasicCheckoutDynamicFixtures;
+  let staticFixtures: BasicCheckoutDmsStaticFixtures;
+  let dynamicFixtures: BasicCheckoutDmsDynamicFixtures;
 
-    before((): void => {
-      ({ staticFixtures, dynamicFixtures } = Cypress.env());
+  before((): void => {
+    ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
-      userLoginScenario.execute({
+    assignStoreToProduct(dynamicFixtures.product1.abstract_sku);
+    assignStoreToProduct(dynamicFixtures.product2.abstract_sku);
+
+    assignStoreToDefaultShipmentMethodsScenario.execute({ storeName: staticFixtures.store.name });
+    assignStoreToDefaultPaymentMethodsScenario.execute({ storeName: staticFixtures.store.name });
+
+    if (['suite', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      assignStoreToDefaultShipmentTypesScenario.execute({
+        store: staticFixtures.store.name,
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
-
-      createStoreScenario.execute({ store: staticFixtures.store });
-
-      assignStoreRelationToExistingProduct();
-    });
-
-    beforeEach((): void => {
-      selectStoreScenario.execute(staticFixtures.store.name);
-    });
-
-    skipB2BIt('guest customer should checkout to single shipment', (): void => {
-      addTwoProductsToCart();
-      checkoutScenario.execute({ isGuest: true, paymentMethod: getPaymentMethodBasedOnEnv() });
-
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
-    });
-
-    it.skip('guest customer should checkout to multi shipment address', (): void => {
-      addTwoProductsToCart();
-
-      checkoutScenario.execute({
-        isGuest: true,
-        isMultiShipment: true,
-        paymentMethod: getPaymentMethodBasedOnEnv(),
-      });
-
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
-    });
-
-    it('customer should checkout to single shipment (with new shipping address)', (): void => {
-      loginCustomerScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-      });
-
-      addTwoProductsToCart();
-      checkoutScenario.execute({ paymentMethod: getPaymentMethodBasedOnEnv() });
-
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
-    });
-
-    it.skip('customer should checkout to multi shipment address (with new shipping address)', (): void => {
-      loginCustomerScenario.execute({
-        email: staticFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-      });
-
-      addTwoProductsToCart();
-      checkoutScenario.execute({ isMultiShipment: true, paymentMethod: getPaymentMethodBasedOnEnv() });
-
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
-    });
-
-    function skipB2BIt(description: string, testFn: () => void): void {
-      (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
-    }
-
-    function getPaymentMethodBasedOnEnv(): string {
-      return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice';
-    }
-
-    function addTwoProductsToCart(): void {
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: staticFixtures.product1.sku });
-      productPage.addToCart();
-
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: staticFixtures.product2.sku });
-      productPage.addToCart();
-    }
-
-    function assignStoreRelationToExistingProduct(): void {
-      enableWarehouseForAllStoresScenario.execute({
-        warehouse: staticFixtures.warehouse,
-        storeName: staticFixtures.store.name,
-      });
-
-      enableProductForAllStoresScenario.execute({
-        abstractProductSku: staticFixtures.product1.abstract_sku,
-        productPrice: staticFixtures.productPrice,
-        storeName: staticFixtures.store.name,
-      });
-
-      enableProductForAllStoresScenario.execute({
-        abstractProductSku: staticFixtures.product2.abstract_sku,
-        productPrice: staticFixtures.productPrice,
-        storeName: staticFixtures.store.name,
-      });
-
-      staticFixtures.shipmentMethods.forEach((shipmentMethod) =>
-        enableShipmentMethodForAllStoresScenario.execute({
-          shipmentMethod: shipmentMethod.name,
-          shipmentMethodKey: shipmentMethod.key,
-          storeName: staticFixtures.store.name,
-        })
-      );
-
-      staticFixtures.paymentMethods.forEach((PaymentMethod) =>
-        enablePaymentMethodForAllStoresScenario.execute({
-          paymentMethodKey: PaymentMethod.key,
-          paymentMethodName: PaymentMethod.name,
-          storeName: staticFixtures.store.name,
-        })
-      );
     }
   });
+
+  beforeEach((): void => {
+    selectStoreScenario.execute(staticFixtures.store.name);
+  });
+
+  skipB2BIt('guest customer should checkout to single shipment', (): void => {
+    addTwoProductsToCart();
+
+    checkoutScenario.execute({
+      isGuest: true,
+      shouldTriggerOmsInCli: true,
+      paymentMethod: getPaymentMethodBasedOnEnv(),
+    });
+
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+  });
+
+  skipB2BIt('guest customer should checkout to multi shipment address', (): void => {
+    addTwoProductsToCart();
+
+    checkoutScenario.execute({
+      isGuest: true,
+      isMultiShipment: true,
+      shouldTriggerOmsInCli: true,
+      paymentMethod: getPaymentMethodBasedOnEnv(),
+    });
+
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+  });
+
+  it('customer should checkout to single shipment (with customer shipping address)', (): void => {
+    loginCustomerScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+      withoutSession: true,
+    });
+
+    addTwoProductsToCart();
+
+    checkoutScenario.execute({
+      idCustomerAddress: dynamicFixtures.address.id_customer_address,
+      shouldTriggerOmsInCli: true,
+      paymentMethod: getPaymentMethodBasedOnEnv(),
+    });
+
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+  });
+
+  it('customer should checkout to single shipment (with new shipping address)', (): void => {
+    loginCustomerScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+      withoutSession: true,
+    });
+
+    addTwoProductsToCart();
+
+    checkoutScenario.execute({
+      shouldTriggerOmsInCli: true,
+      paymentMethod: getPaymentMethodBasedOnEnv(),
+    });
+
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+  });
+
+  it('customer should checkout to multi shipment address (with customer shipping address)', (): void => {
+    loginCustomerScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+      withoutSession: true,
+    });
+
+    addTwoProductsToCart();
+
+    checkoutScenario.execute({
+      isMultiShipment: true,
+      idCustomerAddress: dynamicFixtures.address.id_customer_address,
+      shouldTriggerOmsInCli: true,
+      paymentMethod: getPaymentMethodBasedOnEnv(),
+    });
+
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+  });
+
+  it('customer should checkout to multi shipment address (with new shipping address)', (): void => {
+    loginCustomerScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+      withoutSession: true,
+    });
+
+    addTwoProductsToCart();
+
+    checkoutScenario.execute({
+      isMultiShipment: true,
+      shouldTriggerOmsInCli: true,
+      paymentMethod: getPaymentMethodBasedOnEnv(),
+    });
+
+    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+  });
+
+  function getPaymentMethodBasedOnEnv(): string {
+    return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
+      ? 'dummyMarketplacePaymentInvoice'
+      : 'dummyPaymentInvoice';
+  }
+
+  function addTwoProductsToCart(): void {
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product1.sku });
+    productPage.addToCart();
+
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product2.sku });
+    productPage.addToCart();
+  }
+
+  function assignStoreToProduct(abstractSku: string): void {
+    const assignStoreToProductScenarioParams = {
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+      store: staticFixtures.store,
+      abstractSku: abstractSku,
+      shouldTriggerPublishAndSync: true,
+    };
+
+    assignStoreToProductScenario.execute(assignStoreToProductScenarioParams);
+  }
+
+  function skipB2BIt(description: string, testFn: () => void): void {
+    (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+  }
 });
+
+function describeIfDynamicStoreEnabled(title: string, options: { tags: string[] }, fn: () => void): void {
+  (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(title, fn);
+}

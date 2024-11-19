@@ -1,11 +1,7 @@
 import { container } from '@utils';
 import { LoginPage, CustomerOverviewPage } from '@pages/yves';
 import { CustomerAuthDynamicFixtures, CustomerAuthStaticFixtures } from '@interfaces/yves';
-import {
-  CreateStoreScenario,
-  UserLoginScenario,
-  EnableCmsBlockForAllStoresScenario,
-} from '@scenarios/backoffice';
+import { CreateStoreScenario, UserLoginScenario, EnableCmsBlockForAllStoresScenario } from '@scenarios/backoffice';
 import { SelectStoreScenario } from '@scenarios/yves';
 
 (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)('customer auth dms', { tags: '@dms' }, () => {

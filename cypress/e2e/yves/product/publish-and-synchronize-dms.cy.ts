@@ -31,7 +31,7 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
       let productAbstract: ProductAbstract;
 
       before((): void => {
-          ( {staticFixtures, dynamicFixtures} = Cypress.env());
+        ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
         userLoginScenario.execute({
           username: dynamicFixtures.rootUser.username,
@@ -92,12 +92,12 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 
       function assignStoreRelationToExistingProduct(): void {
         enableWarehouseForAllStoresScenario.execute({
-          warehouse: staticFixtures.warehouse1,
+          warehouseName: staticFixtures.warehouse1,
           storeName: staticFixtures.store.name,
         });
 
         enableWarehouseForAllStoresScenario.execute({
-          warehouse: staticFixtures.warehouse2,
+          warehouseName: staticFixtures.warehouse2,
           storeName: staticFixtures.store.name,
         });
 

@@ -1,14 +1,22 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import { BackofficePage } from '@pages/backoffice';
-import { ListShipmentMethodRepository } from './list-shipment-method-repository';
+import { PaymentMethodListRepository } from './payment-method-list-repository';
 
 @injectable()
 @autoWired
-export class ListShipmentMethodPage extends BackofficePage {
-  @inject(ListShipmentMethodRepository) private repository: ListShipmentMethodRepository;
+export class PaymentMethodListPage extends BackofficePage {
+  @inject(PaymentMethodListRepository) private repository: PaymentMethodListRepository;
 
-  protected PAGE_URL = '/shipment-gui/shipment-method';
+  protected PAGE_URL = '/payment-gui/payment-method';
+
+  getEditButtonSelector = (): string => {
+    return this.repository.getEditButtonSelector();
+  };
+
+  getMethodKeyRowSelector = (): string => {
+    return this.repository.getMethodKeyRowSelector();
+  };
 
   rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
     if (typeof params.storeName !== 'string') {
@@ -17,11 +25,6 @@ export class ListShipmentMethodPage extends BackofficePage {
 
     return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
   };
-}
-
-interface FindParams {
-  query: string;
-  expectedCount?: number;
 }
 
 interface IsAssignedParams {

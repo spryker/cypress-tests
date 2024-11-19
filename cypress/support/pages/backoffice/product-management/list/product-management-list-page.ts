@@ -24,7 +24,7 @@ export class ProductManagementListPage extends BackofficePage {
   };
 
   update = (params: UpdateParams): void => {
-    this.find({searchQuery: params.query, tableUrl: '/product-management/index/table**'}).then(($productRow) => {
+    this.find({ searchQuery: params.query, tableUrl: '/product-management/index/table**' }).then(($productRow) => {
       if (params.action === ActionEnum.edit) {
         cy.wrap($productRow).find(this.repository.getEditButtonSelector()).as('editButton');
         cy.get('@editButton').click();
