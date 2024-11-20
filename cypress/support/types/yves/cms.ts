@@ -1,7 +1,8 @@
-import { Store, User } from './shared';
+import { Customer, Store, User } from './shared';
 
 export interface CmsPageSearchDmsDynamicFixtures {
   rootUser: User;
+  customer: Customer;
 }
 
 export interface CmsPageSearchDmsStaticFixtures {

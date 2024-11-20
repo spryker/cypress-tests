@@ -4,6 +4,7 @@ import { ContentRepository } from '../content-repository';
 @injectable()
 export class B2bMpContentRepository implements ContentRepository {
   search(query: string): void {
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get('[name="q"]').first().clear().invoke('val', query);
   }
   getFirstSuggestedCmsPage = (cmsPageName: string): Cypress.Chainable =>

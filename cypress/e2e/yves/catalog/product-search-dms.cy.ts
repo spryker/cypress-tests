@@ -2,7 +2,7 @@ import { container } from '@utils';
 import { CatalogPage, ProductPage } from '@pages/yves';
 import { ProductSearchDmsDynamicFixtures, ProductSearchDmsStaticFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
-import { AssignStoreToProductScenario } from '@scenarios/backoffice';
+import { AssignStoreToProductScenario, CreateStoreScenario, UserLoginScenario } from '@scenarios/backoffice';
 
 describeIfDynamicStoreEnabled('product search dms', { tags: ['@yves', '@catalog', '@dms'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
@@ -10,13 +10,28 @@ describeIfDynamicStoreEnabled('product search dms', { tags: ['@yves', '@catalog'
   const customerLoginScenario = container.get(CustomerLoginScenario);
   const selectStoreScenario = container.get(SelectStoreScenario);
   const assignStoreToProductScenario = container.get(AssignStoreToProductScenario);
+  const userLoginScenario = container.get(UserLoginScenario);
+  const createStoreScenario = container.get(CreateStoreScenario);
 
   let staticFixtures: ProductSearchDmsStaticFixtures;
   let dynamicFixtures: ProductSearchDmsDynamicFixtures;
 
   before((): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
-    assignStoreToProduct();
+
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
+
+    createStoreScenario.execute({ store: staticFixtures.store, shouldTriggerPublishAndSync: true });
+
+    assignStoreToProductScenario.execute({
+      abstractProductSku: dynamicFixtures.product.abstract_sku,
+      storeName: staticFixtures.store.name,
+      bulkProductPrice: staticFixtures.productPrice,
+      shouldTriggerPublishAndSync: true,
+    });
   });
 
   beforeEach((): void => {
@@ -41,9 +56,8 @@ describeIfDynamicStoreEnabled('product search dms', { tags: ['@yves', '@catalog'
     customerLoginScenario.execute({
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
+      withoutSession: true,
     });
-
-    selectStoreScenario.execute(staticFixtures.store.name);
 
     catalogPage.visit();
     catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.abstract_sku });
@@ -55,9 +69,8 @@ describeIfDynamicStoreEnabled('product search dms', { tags: ['@yves', '@catalog'
     customerLoginScenario.execute({
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
+      withoutSession: true,
     });
-
-    selectStoreScenario.execute(staticFixtures.store.name);
 
     catalogPage.visit();
     catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
@@ -67,19 +80,8 @@ describeIfDynamicStoreEnabled('product search dms', { tags: ['@yves', '@catalog'
 
   function assertProductDetailInformation(): void {
     cy.contains(dynamicFixtures.product.localized_attributes[0].name);
+    productPage.getProductConfigurator().should('contain', staticFixtures.productPrice);
     productPage.getProductConfigurator().should('contain', dynamicFixtures.product.sku);
-  }
-
-  function assignStoreToProduct(): void {
-    const assignStoreToProductScenarioParams = {
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
-      store: staticFixtures.store,
-      abstractSku: dynamicFixtures.product.abstract_sku,
-      shouldTriggerPublishAndSync: true,
-    };
-
-    assignStoreToProductScenario.execute(assignStoreToProductScenarioParams);
   }
 
   function skipB2BIt(description: string, testFn: () => void): void {

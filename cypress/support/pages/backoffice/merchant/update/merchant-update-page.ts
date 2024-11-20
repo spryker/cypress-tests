@@ -20,8 +20,3 @@ export class MerchantUpdatePage extends BackofficePage {
     this.repository.getSaveButton().click();
   };
 }
-
-interface FindParams {
-  query: string;
-  expectedCount?: number;
-}

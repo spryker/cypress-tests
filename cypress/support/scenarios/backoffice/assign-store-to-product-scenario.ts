@@ -1,65 +1,48 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import {
-  CreateStoreScenario,
-  EnableProductForAllStoresScenario,
-  EnableWarehouseForAllStoresScenario,
-  UserLoginScenario,
-} from '@scenarios/backoffice';
+import { ProductManagementEditPage, ProductManagementListPage } from '@pages/backoffice';
 
 @injectable()
 @autoWired
 export class AssignStoreToProductScenario {
-  protected DEFAULT_WAREHOUSE_NAME = 'Warehouse1';
-  protected DEFAULT_PRODUCT_PRICE = '300';
+  @inject(ProductManagementEditPage) private productManagementEditPage: ProductManagementEditPage;
+  @inject(ProductManagementListPage) private productManagementListPage: ProductManagementListPage;
 
-  @inject(UserLoginScenario) private userLoginScenario: UserLoginScenario;
-  @inject(CreateStoreScenario) private createStoreScenario: CreateStoreScenario;
-  @inject(EnableWarehouseForAllStoresScenario)
-  private enableWarehouseForAllStoresScenario: EnableWarehouseForAllStoresScenario;
-  @inject(EnableProductForAllStoresScenario)
-  private enableProductForAllStoresScenario: EnableProductForAllStoresScenario;
+  protected DEFAULT_BULK_PRODUCT_PRICE = '300';
 
   execute = (params: ExecuteParams): void => {
-    this.userLoginScenario.execute({
-      username: params.username,
-      password: params.password,
-    });
+    this.productManagementListPage.visit();
+    this.productManagementListPage
+      .find({
+        searchQuery: params.abstractProductSku,
+        tableUrl: '/product-management/index/table**',
+      })
+      .then(($row) => {
+        const isStoreAssigned = this.productManagementListPage.rowIsAssignedToStore({
+          row: $row,
+          storeName: params.storeName,
+        });
 
-    this.createStoreScenario.execute({
-      store: params.store,
-      shouldTriggerPublishAndSync: params.shouldTriggerPublishAndSync,
-    });
+        this.productManagementListPage.clickEditAction($row);
+        this.productManagementEditPage.setDummyDEName(); // Gap in dynamic fixtures
 
-    this.enableWarehouseForAllStoresScenario.execute({
-      warehouseName: params.warehouseName ?? this.DEFAULT_WAREHOUSE_NAME,
-      storeName: params.store.name,
-      shouldTriggerPublishAndSync: params.shouldTriggerPublishAndSync,
-    });
+        if (!isStoreAssigned) {
+          this.productManagementEditPage.assignAllPossibleStores();
+        }
 
-    this.enableProductForAllStoresScenario.execute({
-      abstractProductSku: params.abstractSku,
-      storeName: params.store.name,
-      productPrice: params.productPrice ?? this.DEFAULT_PRODUCT_PRICE,
-      shouldTriggerPublishAndSync: params.shouldTriggerPublishAndSync,
-    });
+        this.productManagementEditPage.bulkPriceUpdate(params.bulkProductPrice ?? this.DEFAULT_BULK_PRODUCT_PRICE);
+        this.productManagementEditPage.save();
+
+        if (params.shouldTriggerPublishAndSync) {
+          cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+        }
+      });
   };
 }
 
 interface ExecuteParams {
-  username: string;
-  password: string;
-  store: Store;
-  abstractSku: string;
-  warehouseName?: string;
-  productPrice?: string;
+  abstractProductSku: string;
+  storeName?: string;
+  bulkProductPrice?: string;
   shouldTriggerPublishAndSync?: boolean;
-}
-
-interface Store {
-  name: string;
-  locale: string;
-  currency: string;
-  country: string;
-  timezone: string;
 }

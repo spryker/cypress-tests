@@ -84,6 +84,7 @@ export class BackofficePage extends AbstractPage {
 
     const searchAndIntercept = (): Cypress.Chainable => {
       attempts++;
+      // eslint-disable-next-line cypress/unsafe-to-chain-command
       cy.get('[type="search"]')
         .clear()
         .then(() => {
@@ -91,6 +92,7 @@ export class BackofficePage extends AbstractPage {
         });
 
       return this.interceptTable({ url: params.tableUrl }).then(() => {
+        // eslint-disable-next-line cypress/unsafe-to-chain-command
         cy.get('[type="search"]')
           .invoke('val', params.searchQuery)
           .trigger('input')

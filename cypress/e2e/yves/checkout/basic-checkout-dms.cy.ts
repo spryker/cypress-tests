@@ -6,7 +6,10 @@ import {
   AssignStoreToDefaultPaymentMethodsScenario,
   AssignStoreToDefaultShipmentMethodsScenario,
   AssignStoreToDefaultShipmentTypesScenario,
+  AssignStoreToDefaultWarehouseScenario,
   AssignStoreToProductScenario,
+  CreateStoreScenario,
+  UserLoginScenario,
 } from '@scenarios/backoffice';
 
 describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout', '@dms'] }, (): void => {
@@ -17,9 +20,12 @@ describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout
   const checkoutScenario = container.get(CheckoutScenario);
   const assignStoreToProductScenario = container.get(AssignStoreToProductScenario);
   const selectStoreScenario = container.get(SelectStoreScenario);
+  const userLoginScenario = container.get(UserLoginScenario);
   const assignStoreToDefaultShipmentMethodsScenario = container.get(AssignStoreToDefaultShipmentMethodsScenario);
   const assignStoreToDefaultPaymentMethodsScenario = container.get(AssignStoreToDefaultPaymentMethodsScenario);
   const assignStoreToDefaultShipmentTypesScenario = container.get(AssignStoreToDefaultShipmentTypesScenario);
+  const assignStoreToDefaultWarehouseScenario = container.get(AssignStoreToDefaultWarehouseScenario);
+  const createStoreScenario = container.get(CreateStoreScenario);
 
   let staticFixtures: BasicCheckoutDmsStaticFixtures;
   let dynamicFixtures: BasicCheckoutDmsDynamicFixtures;
@@ -27,19 +33,17 @@ describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout
   before((): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
+
+    createStoreScenario.execute({ store: staticFixtures.store, shouldTriggerPublishAndSync: true });
+
     assignStoreToProduct(dynamicFixtures.product1.abstract_sku);
     assignStoreToProduct(dynamicFixtures.product2.abstract_sku);
 
-    assignStoreToDefaultShipmentMethodsScenario.execute({ storeName: staticFixtures.store.name });
-    assignStoreToDefaultPaymentMethodsScenario.execute({ storeName: staticFixtures.store.name });
-
-    if (['suite', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
-      assignStoreToDefaultShipmentTypesScenario.execute({
-        store: staticFixtures.store.name,
-        username: dynamicFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
-    }
+    setupDefaultStoreRelations();
   });
 
   beforeEach((): void => {
@@ -160,15 +164,34 @@ describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout
   }
 
   function assignStoreToProduct(abstractSku: string): void {
-    const assignStoreToProductScenarioParams = {
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
-      store: staticFixtures.store,
-      abstractSku: abstractSku,
+    assignStoreToProductScenario.execute({
+      abstractProductSku: abstractSku,
+      storeName: staticFixtures.store.name,
       shouldTriggerPublishAndSync: true,
-    };
+    });
+  }
 
-    assignStoreToProductScenario.execute(assignStoreToProductScenarioParams);
+  function setupDefaultStoreRelations(): void {
+    assignStoreToDefaultWarehouseScenario.execute({
+      storeName: staticFixtures.store.name,
+      shouldTriggerPublishAndSync: true,
+    });
+    assignStoreToDefaultShipmentMethodsScenario.execute({
+      storeName: staticFixtures.store.name,
+      shouldTriggerPublishAndSync: true,
+    });
+    assignStoreToDefaultPaymentMethodsScenario.execute({
+      storeName: staticFixtures.store.name,
+      shouldTriggerPublishAndSync: true,
+    });
+
+    if (['suite', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      assignStoreToDefaultShipmentTypesScenario.execute({
+        store: staticFixtures.store.name,
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+    }
   }
 
   function skipB2BIt(description: string, testFn: () => void): void {

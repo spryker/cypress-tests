@@ -8,7 +8,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
  */
 (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'agent permission',
-  { tags: ['@marketplace-agent-assist'] },
+  { tags: ['@mp', '@marketplace-agent-assist'] },
   (): void => {
     const backofficeUserIndexPage = container.get(UserIndexPage);
     const backofficeUserUpdatePage = container.get(UserUpdatePage);

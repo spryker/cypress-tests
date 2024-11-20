@@ -25,9 +25,8 @@ export class AssignStoreToDefaultShipmentTypesScenario {
           'Content-Type': 'application/vnd.api+json',
         },
       }).then((response) => {
-        const deliveryIds = response.body.data
-          // .filter((item: any) => item.attributes.name.includes('Delivery'))
-          .map((item: any) => item.id);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const deliveryIds = response.body.data.map((item: any) => item.id);
         cy.wrap(deliveryIds).as('deliveryIds');
       });
 
@@ -35,12 +34,15 @@ export class AssignStoreToDefaultShipmentTypesScenario {
         method: 'GET',
         url: Cypress.env().backofficeUrl + '/store-gui/list/table',
       }).then((response) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const storeNames = response.body.data.map((store: any) => store[1]);
         cy.wrap(storeNames).as('storeNames');
       });
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       cy.get('@deliveryIds').then((deliveryIds: any) => {
         cy.get('@storeNames').then((storeNames) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           deliveryIds.forEach((deliveryId: any) => {
             cy.request({
               method: 'PATCH',

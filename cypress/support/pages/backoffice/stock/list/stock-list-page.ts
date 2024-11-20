@@ -1,6 +1,6 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { BackofficePage, ActionEnum } from '@pages/backoffice';
+import { BackofficePage } from '@pages/backoffice';
 import { StockListRepository } from './stock-list-repository';
 
 @injectable()
@@ -10,8 +10,8 @@ export class StockListPage extends BackofficePage {
 
   protected PAGE_URL = '/stock-gui/warehouse/list';
 
-  clickEditAction = ($row: JQuery<HTMLElement>): void => {
-    cy.wrap($row).find(this.repository.getEditButtonSelector()).should('exist').click();
+  getEditButtonSelector = (): string => {
+    return this.repository.getEditButtonSelector();
   };
 
   rowIsAssignedToStore = (params: IsAssignedParams): boolean => {

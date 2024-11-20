@@ -18,7 +18,6 @@
     "cy:run": "cypress run --spec \"cypress/e2e/!(smoke)/**/*.ts\"",
     "cy:ci": "cypress run --spec \"cypress/e2e/!(smoke)/**/*.ts\" --headless --browser chrome",
     "cy:smoke": "cypress run --spec \"cypress/e2e/smoke/**/*.ts\" --headless --browser chrome",
-    "cy:smoke:outdated": "cypress run --spec \"cypress/e2e/smoke/!(checkout|order-management|product)/*.ts\" --headless --browser chrome",
     "cy:dms": "cypress run --spec \"cypress/e2e/!(smoke)/**/*dms.cy.ts\" --headless --browser chrome"
   },
   "engines": {

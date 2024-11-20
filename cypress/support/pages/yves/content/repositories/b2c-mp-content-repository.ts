@@ -5,6 +5,7 @@ import { ContentRepository } from '../content-repository';
 export class B2cMpContentRepository implements ContentRepository {
   search(query: string): void {
     cy.get('header .header__search-open').click();
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get('[name="q"]').first().clear().invoke('val', query);
   }
   getFirstSuggestedCmsPage = (cmsPageName: string): Cypress.Chainable =>

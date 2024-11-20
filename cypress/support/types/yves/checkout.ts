@@ -1,15 +1,10 @@
-import { Address, Customer, PaymentMethod, ProductConcrete, Quote, ShipmentMethod, Store, User } from './shared';
+import { Address, Customer, ProductConcrete, Store, User } from './shared';
 
 export interface BasicCheckoutDynamicFixtures {
   customer: Customer;
   address: Address;
   product1: ProductConcrete;
   product2: ProductConcrete;
-  quote1: Quote;
-  quote2: Quote;
-  quote3: Quote;
-  quote4: Quote;
-  rootUser: User;
 }
 
 export interface BasicCheckoutDmsDynamicFixtures {
@@ -17,10 +12,6 @@ export interface BasicCheckoutDmsDynamicFixtures {
   address: Address;
   product1: ProductConcrete;
   product2: ProductConcrete;
-  quote1: Quote;
-  quote2: Quote;
-  quote3: Quote;
-  quote4: Quote;
   rootUser: User;
 }
 

@@ -34,11 +34,6 @@ export class BlockListPage extends BackofficePage {
   };
 }
 
-interface FindParams {
-  query: string;
-  expectedCount?: number;
-}
-
 interface IsAssignedParams {
   row: JQuery<HTMLElement>;
   storeName?: string;

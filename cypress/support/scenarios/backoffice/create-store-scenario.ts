@@ -8,7 +8,7 @@ export class CreateStoreScenario {
   @inject(StoreListPage) private storeListPage: StoreListPage;
   @inject(StoreCreatePage) private storeCreatePage: StoreCreatePage;
 
-  execute = (params: ExecuteParams): Store => {
+  execute = (params: ExecuteParams): void => {
     this.storeListPage.visit();
     const store = params.store;
 
@@ -22,8 +22,6 @@ export class CreateStoreScenario {
         }
       }
     });
-
-    return store;
   };
 }
 

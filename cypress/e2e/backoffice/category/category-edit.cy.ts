@@ -1,11 +1,9 @@
 import { container } from '@utils';
 import { CategoryEditStaticFixtures } from '@interfaces/backoffice';
-import { CategoryEditPage } from '@pages/backoffice';
-import { CategoryListPage } from '@pages/backoffice';
+import { CategoryEditPage, CategoryListPage, ActionEnum } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
-import { ActionEnum } from '../../../support/pages/backoffice';
 
-describe('category edit', { tags: ['@catalog'] }, (): void => {
+describe('category edit', { tags: ['@backoffice', '@catalog'] }, (): void => {
   const categoryListPage = container.get(CategoryListPage);
   const categoryEditPage = container.get(CategoryEditPage);
   const userLoginScenario = container.get(UserLoginScenario);

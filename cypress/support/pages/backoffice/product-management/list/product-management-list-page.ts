@@ -37,11 +37,6 @@ export class ProductManagementListPage extends BackofficePage {
   };
 }
 
-interface FindParams {
-  query: string;
-  expectedCount?: number;
-}
-
 interface UpdateParams {
   action: ActionEnum;
   query: string;

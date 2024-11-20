@@ -4,7 +4,7 @@ import { inject, injectable } from 'inversify';
 
 @injectable()
 @autoWired
-export class EnableWarehouseForAllStoresScenario {
+export class AssignStoreToWarehouseScenario {
   @inject(StockEditPage) private stockEditPage: StockEditPage;
   @inject(StockListPage) private stockListPage: StockListPage;
 
@@ -14,17 +14,20 @@ export class EnableWarehouseForAllStoresScenario {
       .find({
         searchQuery: params.warehouseName,
         tableUrl: '/stock-gui/warehouse/table**',
+        rowFilter: [
+          (row): boolean => !this.stockListPage.rowIsAssignedToStore({ row: row, storeName: params.storeName }),
+        ],
       })
       .then(($row) => {
-        const isStoreAssigned = this.stockListPage.rowIsAssignedToStore({ row: $row, storeName: params.storeName });
-        if (!isStoreAssigned) {
-          cy.wrap($row).find('a:contains("Edit")').click();
+        if ($row === null) {
+          return;
+        }
 
-          this.stockEditPage.assignAllAvailableStore();
+        cy.wrap($row).find(this.stockListPage.getEditButtonSelector()).click();
+        this.stockEditPage.assignAllAvailableStore();
 
-          if (params.shouldTriggerPublishAndSync) {
-            cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-          }
+        if (params.shouldTriggerPublishAndSync) {
+          cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
         }
       });
   };

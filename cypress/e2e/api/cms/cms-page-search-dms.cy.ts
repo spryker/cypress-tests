@@ -1,14 +1,14 @@
 import { container } from '@utils';
-import { CmsPageCreationDynamicFixtures, CmsPageCreationStaticFixtures } from '@interfaces/api';
+import { CmsPageSearchDmsDynamicFixtures, CmsPageSearchDmsStaticFixtures } from '@interfaces/api';
 import { CreateCmsPageScenario, CreateStoreScenario, UserLoginScenario } from '@scenarios/backoffice';
 
-describeIfDynamicStoreEnabled('cms page creation dms', { tags: ['@api', '@cms', '@dms'] }, () => {
+describeIfDynamicStoreEnabled('cms page search dms', { tags: ['@api', '@cms', '@dms'] }, () => {
   const userLoginScenario = container.get(UserLoginScenario);
   const createStoreScenario = container.get(CreateStoreScenario);
   const createCmsPageScenario = container.get(CreateCmsPageScenario);
 
-  let staticFixtures: CmsPageCreationStaticFixtures;
-  let dynamicFixtures: CmsPageCreationDynamicFixtures;
+  let staticFixtures: CmsPageSearchDmsStaticFixtures;
+  let dynamicFixtures: CmsPageSearchDmsDynamicFixtures;
 
   before((): void => {
     ({ dynamicFixtures, staticFixtures } = Cypress.env());
