@@ -1,7 +1,7 @@
 import { container } from '@utils';
 import { LoginPage, CustomerOverviewPage } from '@pages/yves';
 import { CustomerAuthDmsDynamicFixtures, CustomerAuthDmsStaticFixtures } from '@interfaces/yves';
-import { CreateStoreScenario, UserLoginScenario } from '@scenarios/backoffice';
+import { CreateStoreScenario, EnableCmsBlockForAllStoresScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { SelectStoreScenario } from '@scenarios/yves';
 
 describeIfDynamicStoreEnabled(
@@ -13,6 +13,7 @@ describeIfDynamicStoreEnabled(
     const userLoginScenario = container.get(UserLoginScenario);
     const createStoreScenario = container.get(CreateStoreScenario);
     const selectStoreScenario = container.get(SelectStoreScenario);
+    const enableCmsBlockForAllStoresScenario = container.get(EnableCmsBlockForAllStoresScenario);
 
     let dynamicFixtures: CustomerAuthDmsDynamicFixtures;
     let staticFixtures: CustomerAuthDmsStaticFixtures;
@@ -26,6 +27,17 @@ describeIfDynamicStoreEnabled(
       });
 
       createStoreScenario.execute({ store: staticFixtures.store, shouldTriggerPublishAndSync: true });
+
+      enableCmsBlockForAllStoresScenario.execute({
+        cmsBlockName: 'customer-registration_token--text',
+        storeName: staticFixtures.store.name,
+        shouldTriggerPublishAndSync: true,
+      });
+      enableCmsBlockForAllStoresScenario.execute({
+        cmsBlockName: 'customer-registration_token--html',
+        storeName: staticFixtures.store.name,
+        shouldTriggerPublishAndSync: true,
+      });
     });
 
     beforeEach((): void => {

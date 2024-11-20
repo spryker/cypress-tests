@@ -7,6 +7,8 @@ export * from './merchant/create/merchant-create-page';
 export * from './merchant/list/merchant-list-page';
 export * from './merchant/update/merchant-update-page';
 export * from './merchant-user/create/merchant-user-create-page';
+export * from './cms/block/list/block-list-page';
+export * from './cms/block/update/block-update-page';
 export * from './cms/page/create/cms-page-create-page';
 export * from './cms/cms-placeholder/edit/cms-placeholder-edit-page';
 export * from './sales/detail/sales-detail-page';

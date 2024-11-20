@@ -12,6 +12,6 @@ export class ProductManagementEditVariantRepository {
   getSearchableENCheckbox = (): Cypress.Chainable => cy.get('#product_concrete_form_edit_general_en_US_is_searchable');
   getPriceStockTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-price"]');
   getIsNeverOutOfStockCheckbox = (): Cypress.Chainable =>
-    cy.get('#product_concrete_form_edit_price_and_stock_1_is_never_out_of_stock');
+    cy.get('#product_concrete_form_edit_price_and_stock_0_is_never_out_of_stock');
   getSaveButton = (): Cypress.Chainable => cy.get('[type="submit"]');
 }

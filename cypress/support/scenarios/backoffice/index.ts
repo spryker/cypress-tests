@@ -12,3 +12,4 @@ export * from './assign-store-to-default-shipment-methods-scenario';
 export * from './assign-store-to-default-payment-methods-scenario';
 export * from './assign-store-to-default-shipment-types-scenario';
 export * from './assign-store-to-default-warehouse-scenario';
+export * from './enable-cms-block-for-all-stores-scenario';
