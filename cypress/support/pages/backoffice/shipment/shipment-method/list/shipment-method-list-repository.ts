@@ -8,6 +8,5 @@ export class ShipmentMethodListRepository {
   getMethodKeyRowSelector = (): string => 'td[class*="shipment_method_key"]';
   getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1):visible');
   getSearchSelector = (): string => '[type="search"]';
-
   getStoreCellSelector = (): string => 'td[class*="column-spy_store"]';
 }
