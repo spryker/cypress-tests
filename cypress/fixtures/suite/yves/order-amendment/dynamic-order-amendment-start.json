@@ -308,48 +308,6 @@
               ]
             }
           ]
-        },
-        {
-          "type": "helper",
-          "name": "havePersistentQuote",
-          "arguments": [
-            {
-              "customer": "#customer5",
-              "items": [
-                {
-                  "sku": "#product.sku",
-                  "abstractSku": "#product.abstract_sku",
-                  "quantity": 1
-                },
-                {
-                  "sku": "#productInActive.sku",
-                  "abstractSku": "#productInActive.abstract_sku",
-                  "quantity": 1
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "havePersistentQuote",
-          "arguments": [
-            {
-              "customer": "#customer6",
-              "items": [
-                {
-                  "sku": "#product.sku",
-                  "abstractSku": "#product.abstract_sku",
-                  "quantity": 1
-                },
-                {
-                  "sku": "#productOutOfStock.sku",
-                  "abstractSku": "#productOutOfStock.abstract_sku",
-                  "quantity": 1
-                }
-              ]
-            }
-          ]
         }
       ]
     }
