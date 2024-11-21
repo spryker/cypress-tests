@@ -29,10 +29,13 @@ import { MerchantUserLoginScenario } from '@scenarios/mp';
       cy.intercept('GET', '/product-merchant-portal-gui/update-product-abstract').as('createAttribute');
 
       cy.wait('@dataTable').then(() => {
-        cy.get(productPage.getAttributesTableSelector()).scrollIntoView().should('be.visible').then(() => {
-          productPage.getAddAttributeButton().click();
-          cy.get('@createAttribute.all').should('have.length', 0);
-        });
+        cy.get(productPage.getAttributesTableSelector())
+          .scrollIntoView()
+          .should('be.visible')
+          .then(() => {
+            productPage.getAddAttributeButton().click();
+            cy.get('@createAttribute.all').should('have.length', 0);
+          });
       });
     });
   }

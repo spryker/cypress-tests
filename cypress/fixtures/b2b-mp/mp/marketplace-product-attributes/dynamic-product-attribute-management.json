@@ -79,8 +79,16 @@
             {
               "idTaxSet": 1,
               "localizedAttributes": [
-                { "locale": "#localeEN", "name": "#localizedAttribute1.name", "attributes": ["attribute1", "attribute2"] },
-                { "locale": "#localeDE", "name": "#localizedAttribute1.name", "attributes": ["attribute1", "attribute2"] }
+                {
+                  "locale": "#localeEN",
+                  "name": "#localizedAttribute1.name",
+                  "attributes": ["attribute1", "attribute2"]
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#localizedAttribute1.name",
+                  "attributes": ["attribute1", "attribute2"]
+                }
               ]
             }
           ]
@@ -96,8 +104,16 @@
             {
               "idTaxSet": 1,
               "localizedAttributes": [
-                { "locale": "#localeEN", "name": "#localizedAttribute2.name", "attributes": ["attribute1", "attribute2"] },
-                { "locale": "#localeDE", "name": "#localizedAttribute2.name", "attributes": ["attribute1", "attribute2"] }
+                {
+                  "locale": "#localeEN",
+                  "name": "#localizedAttribute2.name",
+                  "attributes": ["attribute1", "attribute2"]
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#localizedAttribute2.name",
+                  "attributes": ["attribute1", "attribute2"]
+                }
               ]
             }
           ]
