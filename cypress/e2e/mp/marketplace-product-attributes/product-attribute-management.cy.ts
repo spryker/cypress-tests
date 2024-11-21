@@ -25,18 +25,7 @@ import { MerchantUserLoginScenario } from '@scenarios/mp';
 
       productPage.visit();
       productPage.getFirstTableRow().click();
-      cy.intercept('GET', '/product-merchant-portal-gui/update-product-abstract/table-data**').as('dataTable');
-      cy.intercept('GET', '/product-merchant-portal-gui/update-product-abstract').as('createAttribute');
-
-      cy.wait('@dataTable').then(() => {
-        cy.get(productPage.getAttributesTableSelector())
-          .scrollIntoView()
-          .should('be.visible')
-          .then(() => {
-            productPage.getAddAttributeButton().click();
-            cy.get('@createAttribute.all').should('have.length', 0);
-          });
-      });
+      productPage.clickAddAttributeButton();
     });
   }
 );
