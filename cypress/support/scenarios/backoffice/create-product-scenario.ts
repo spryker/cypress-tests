@@ -25,7 +25,7 @@ export class CreateProductScenario {
     this.productManagementListPage.update({ query: productAbstract.sku, action: ActionEnum.edit });
     this.productManagementEditPage.openFirstVariant();
 
-    this.productManagementEditVariantPage.activateFirstConcreteProduct();
+    this.productManagementEditVariantPage.activate();
 
     if (params?.shouldTriggerPublishAndSync) {
       cy.runCliCommands(['console queue:worker:start --stop-when-empty']);

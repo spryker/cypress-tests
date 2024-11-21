@@ -108,7 +108,6 @@
           "name": "haveFullProduct",
           "key": "product1",
           "arguments": [
-            {},
             {
               "idTaxSet": 1,
               "localizedAttributes": [
@@ -123,7 +122,6 @@
           "name": "haveFullProduct",
           "key": "product2",
           "arguments": [
-            {},
             {
               "idTaxSet": 1,
               "localizedAttributes": [

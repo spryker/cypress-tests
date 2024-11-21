@@ -15,23 +15,32 @@ export class MerchantListPage extends BackofficePage {
 
     this.find(findParams).then(($merchantRow) => {
       if (params.action === ActionEnum.edit) {
-        cy.wrap($merchantRow).find(this.repository.getEditButtonSelector()).should('exist').click();
+        cy.wrap($merchantRow).find(this.repository.getEditButtonSelector()).should('exist').click({ force: true });
       }
 
       if (params.action === ActionEnum.activate) {
-        cy.wrap($merchantRow).find(this.repository.getActivateButtonSelector()).should('exist').click();
+        cy.wrap($merchantRow).find(this.repository.getActivateButtonSelector()).should('exist').click({ force: true });
       }
 
       if (params.action === ActionEnum.deactivate) {
-        cy.wrap($merchantRow).find(this.repository.getDeactivateButtonSelector()).should('exist').click();
+        cy.wrap($merchantRow)
+          .find(this.repository.getDeactivateButtonSelector())
+          .should('exist')
+          .click({ force: true });
       }
 
       if (params.action === ActionEnum.approveAccess) {
-        cy.wrap($merchantRow).find(this.repository.getDeactivateButtonSelector()).should('exist').click();
+        cy.wrap($merchantRow)
+          .find(this.repository.getDeactivateButtonSelector())
+          .should('exist')
+          .click({ force: true });
       }
 
       if (params.action === ActionEnum.denyAccess) {
-        cy.wrap($merchantRow).find(this.repository.getDeactivateButtonSelector()).should('exist').click();
+        cy.wrap($merchantRow)
+          .find(this.repository.getDeactivateButtonSelector())
+          .should('exist')
+          .click({ force: true });
       }
     });
   };
@@ -39,7 +48,8 @@ export class MerchantListPage extends BackofficePage {
   find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(params.query);
+    cy.get(searchSelector).invoke('val', params.query);
+    cy.get(searchSelector).type('{enter}');
 
     this.interceptTable({ url: '/merchant-gui/list-merchant/table**', expectedCount: params.expectedCount });
 

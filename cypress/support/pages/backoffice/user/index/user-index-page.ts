@@ -19,19 +19,19 @@ export class UserIndexPage extends BackofficePage {
 
     this.find(findParams).then(($userRow) => {
       if (params.action === ActionEnum.edit) {
-        cy.wrap($userRow).find(this.repository.getEditButtonSelector()).should('exist').click();
+        cy.wrap($userRow).find(this.repository.getEditButtonSelector()).should('exist').click({ force: true });
       }
 
       if (params.action === ActionEnum.deactivate) {
-        cy.wrap($userRow).find(this.repository.getDeactivateButtonSelector()).should('exist').click();
+        cy.wrap($userRow).find(this.repository.getDeactivateButtonSelector()).should('exist').click({ force: true });
       }
 
       if (params.action === ActionEnum.activate) {
-        cy.wrap($userRow).find(this.repository.getActivateButtonSelector()).should('exist').click();
+        cy.wrap($userRow).find(this.repository.getActivateButtonSelector()).should('exist').click({ force: true });
       }
 
       if (params.action === ActionEnum.delete) {
-        cy.wrap($userRow).find(this.repository.getDeleteButtonSelector()).should('exist').click();
+        cy.wrap($userRow).find(this.repository.getDeleteButtonSelector()).should('exist').click({ force: true });
       }
     });
   };
@@ -39,7 +39,8 @@ export class UserIndexPage extends BackofficePage {
   find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(params.query);
+    cy.get(searchSelector).invoke('val', params.query);
+    cy.get(searchSelector).type('{enter}');
 
     this.interceptTable({ url: '/user/index/table**', expectedCount: params.expectedCount });
 

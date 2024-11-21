@@ -85,8 +85,16 @@ import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
       });
 
       productsPage.visit();
-      productsPage.find({ query: dynamicFixtures.productConcreteForMerchant.abstract_sku }).click({ force: true });
-      productsPage.getDrawer().find(productsPage.getSaveButtonSelector()).click();
+      productsPage.find({ query: dynamicFixtures.productConcreteForMerchant.abstract_sku }).click();
+
+      productsPage.getDrawer().as('drawer');
+
+      cy.get('@drawer')
+        .find(productsPage.getTaxIdSetOptionSelector())
+        .eq(1)
+        .then((el) => cy.get(productsPage.getTaxIdSetSelector()).select(el.val() ?? '', { force: true }));
+
+      cy.get('@drawer').find(productsPage.getSaveButtonSelector()).click();
 
       cy.get('body').contains('The Product is saved.');
     });
