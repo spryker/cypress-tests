@@ -13,7 +13,7 @@ export class ProductManagementAddRepository {
   getProductDescriptionENInput = (): Cypress.Chainable => cy.get('#product_form_add_general_en_US_description');
   getNewFromInput = (): Cypress.Chainable => cy.get('#product_form_add_new_from');
   getNewToInput = (): Cypress.Chainable => cy.get('#product_form_add_new_to');
-  getPriceTaxTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-price_and_tax"]');
+  getPriceTaxTab = (): Cypress.Chainable => cy.get('[data-bs-target="tab-content-price_and_tax"]');
   getDefaultGrossPriceInput = (): Cypress.Chainable =>
     cy.get('#product_form_add_prices_1-93-DEFAULT-BOTH_moneyValue_gross_amount');
   getOriginalGrossPriceInput = (): Cypress.Chainable =>
@@ -23,12 +23,12 @@ export class ProductManagementAddRepository {
   getOriginalNetPriceInput = (): Cypress.Chainable =>
     cy.get('#product_form_add_prices_1-93-ORIGINAL-BOTH_moneyValue_net_amount');
   getTaxSelect = (): Cypress.Chainable => cy.get('#product_form_add_tax_rate');
-  getVariantsTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-variants"]');
+  getVariantsTab = (): Cypress.Chainable => cy.get('[data-bs-target="tab-content-variants"]');
   getVariantStorageCapacityCheckbox = (): Cypress.Chainable =>
     cy.get('#product_form_add_attribute_super_storage_capacity_name');
   getVariantStorageCapacitySelect = (): Cypress.Chainable =>
     cy.get('#product_form_add_attribute_super_storage_capacity_value');
-  getImageTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-image"]');
+  getImageTab = (): Cypress.Chainable => cy.get('[data-bs-target="tab-content-image"]');
   getAddImageSetButton = (): Cypress.Chainable => cy.get('a:contains("Add image set")');
   getImageSetName = (): Cypress.Chainable => cy.get('#product_form_add_image_set_default_0_name');
   getSmallImageUrlInput = (): Cypress.Chainable =>
