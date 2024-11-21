@@ -24,6 +24,18 @@ export class ProductsPage extends MpPage {
     return this.repository.getFirstTableRow();
   };
 
+  getFirstTableRow = (): Cypress.Chainable => {
+    return this.repository.getFirstTableRow();
+  }
+
+  getAddAttributeButton = (): Cypress.Chainable => {
+    return this.repository.getAddAttributeButton();
+  }
+
+  getAttributesTableSelector = (): string => {
+    return this.repository.getAttributesTableSelector();
+  }
+
   getDrawer = (): Cypress.Chainable => {
     const drawer = this.repository.getDrawer();
 

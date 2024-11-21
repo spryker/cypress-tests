@@ -8,4 +8,6 @@ export class ProductsRepository {
   getSearchSelector = (): string => '.spy-table-search-feature input[type="text"]';
   getSaveButtonSelector = (): string => 'button:contains("Save")';
   getDrawer = (): Cypress.Chainable => cy.get('.spy-drawer-wrapper');
+  getAddAttributeButton = (): Cypress.Chainable => cy.get('.product-attributes-table button:contains("Add")');
+  getAttributesTableSelector = (): string => '.product-attributes-table';
 }
