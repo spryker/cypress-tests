@@ -47,7 +47,7 @@ export class ProductsPage extends MpPage {
           cy.get('@createAttribute.all').should('have.length', 0);
         });
     });
-  }
+  };
 
   getAttributesTableSelector = (): string => {
     return this.repository.getAttributesTableSelector();
