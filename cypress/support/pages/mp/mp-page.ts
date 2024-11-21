@@ -9,14 +9,19 @@ export class MpPage extends AbstractPage {
     cy.visitMerchantPortal(this.PAGE_URL, options);
   };
 
-  protected interceptTable = (params: InterceptMpGuiTableParams): void => {
+  protected interceptTable = (params: InterceptMpGuiTableParams, customFunction?: () => void): void => {
     const expectedCount = params.expectedCount ?? 1;
     const interceptAlias = this.faker.string.uuid();
 
     cy.intercept('GET', params.url).as(interceptAlias);
+
+    if (customFunction) {
+      customFunction();
+    }
+
     cy.wait(`@${interceptAlias}`)
       .its('response.body.total')
-      .should((total) => {
+      .should((total: number) => {
         const valueToBeAtMost = expectedCount + Cypress.currentRetry;
         assert.isTrue(total === expectedCount || total >= valueToBeAtMost);
       });

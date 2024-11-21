@@ -21,7 +21,7 @@ export class ProductManagementEditPage extends BackofficePage {
     this.repository.getVariantsTab().click();
     this.repository.getVariantFirstTableRow().then(($productVariantRow) => {
       cy.wrap($productVariantRow).find(this.repository.getVariantEditButtonSelector()).as('editVariantButton');
-      cy.get('@editVariantButton').click();
+      cy.get('@editVariantButton').should('be.visible').click({ force: true });
     });
   };
 }

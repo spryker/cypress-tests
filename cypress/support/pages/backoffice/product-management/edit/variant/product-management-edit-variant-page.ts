@@ -11,7 +11,7 @@ export class ProductManagementEditVariantPage extends BackofficePage {
 
   protected PAGE_URL = '/product-management/edit/variant';
 
-  activateFirstConcreteProduct = (): void => {
+  activate = (): void => {
     this.repository.getActivateButton().click();
 
     this.repository.getSearchableDECheckbox().check();
@@ -22,5 +22,9 @@ export class ProductManagementEditVariantPage extends BackofficePage {
     this.repository.getIsNeverOutOfStockCheckbox().check();
 
     this.repository.getSaveButton().click();
+  };
+
+  deactivate = (): void => {
+    this.repository.getDeactivateButton().click();
   };
 }

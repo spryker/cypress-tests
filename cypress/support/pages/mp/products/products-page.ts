@@ -14,7 +14,8 @@ export class ProductsPage extends MpPage {
   find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(params.query);
+    cy.get(searchSelector).type(params.query, { delay: 0 });
+    cy.get(searchSelector).type('{enter}');
 
     this.interceptTable({
       url: '/product-merchant-portal-gui/products/table-data**',
@@ -50,6 +51,14 @@ export class ProductsPage extends MpPage {
 
   getSaveButtonSelector = (): string => {
     return this.repository.getSaveButtonSelector();
+  };
+
+  getTaxIdSetSelector = (): string => {
+    return this.repository.getTaxIdSelector();
+  };
+
+  getTaxIdSetOptionSelector = (): string => {
+    return this.repository.getTaxIdOptionSelector();
   };
 }
 

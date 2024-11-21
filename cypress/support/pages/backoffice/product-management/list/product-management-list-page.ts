@@ -19,13 +19,18 @@ export class ProductManagementListPage extends BackofficePage {
         cy.wrap($productRow).find(this.repository.getEditButtonSelector()).as('editButton');
         cy.get('@editButton').click();
       }
+      if (params.action === ActionEnum.deny) {
+        cy.wrap($productRow).find(this.repository.getDenyButtonSelector()).as('denyButton');
+        cy.get('@denyButton').click();
+      }
     });
   };
 
   find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(params.query);
+    cy.get(searchSelector).invoke('val', params.query);
+    cy.get(searchSelector).type('{enter}');
 
     this.interceptTable({ url: '/product-management/index/table**', expectedCount: params.expectedCount });
 

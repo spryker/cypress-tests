@@ -125,7 +125,6 @@
           "name": "haveFullProduct",
           "key": "productConcreteForOffer",
           "arguments": [
-            {},
             {
               "idTaxSet": 1,
               "localizedAttributes": [
@@ -161,7 +160,6 @@
           "name": "haveFullProduct",
           "key": "productConcreteForMerchant",
           "arguments": [
-            {},
             {
               "idTaxSet": 1,
               "localizedAttributes": [
@@ -274,7 +272,6 @@
                   "sku": "#productConcreteForOffer.sku",
                   "abstractSku": "#productConcreteForOffer.abstract_sku",
                   "idProductAbstract": "#productConcreteForOffer.fk_product_abstract",
-                  "name": "#productConcreteForOffer.name",
                   "productOfferReference": "#productOffer.product_offer_reference",
                   "merchantReference": "#productOffer.merchant_reference",
                   "quantity": 1,

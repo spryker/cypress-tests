@@ -134,14 +134,12 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "name": "#product1.name",
                   "quantity": 1,
                   "unitPrice": 30000
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
-                  "name": "#product2.name",
                   "quantity": 1,
                   "unitPrice": 30000
                 }
@@ -160,14 +158,12 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "name": "#product1.name",
                   "quantity": 1,
                   "unitPrice": 30000
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
-                  "name": "#product2.name",
                   "quantity": 1,
                   "unitPrice": 30000
                 }
@@ -186,14 +182,12 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "name": "#product1.name",
                   "quantity": 1,
                   "unitPrice": 30000
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
-                  "name": "#product2.name",
                   "quantity": 1,
                   "unitPrice": 30000
                 }
@@ -212,14 +206,12 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "name": "#product1.name",
                   "quantity": 1,
                   "unitPrice": 30000
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
-                  "name": "#product2.name",
                   "quantity": 1,
                   "unitPrice": 30000
                 }
