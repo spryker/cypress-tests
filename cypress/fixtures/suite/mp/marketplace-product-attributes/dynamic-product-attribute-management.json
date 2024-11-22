@@ -74,7 +74,6 @@
           "key": "concreteProduct1",
           "arguments": [
             {
-              "attributes": ["attribute1", "attribute2"]
             },
             {
               "idTaxSet": 1,
@@ -99,7 +98,6 @@
           "key": "concreteProduct2",
           "arguments": [
             {
-              "attributes": ["attribute1", "attribute2"]
             },
             {
               "idTaxSet": 1,
@@ -107,12 +105,12 @@
                 {
                   "locale": "#localeEN",
                   "name": "#localizedAttribute2.name",
-                  "attributes": ["attribute1", "attribute2"]
+                  "attributes": ["attribute3", "attribute4"]
                 },
                 {
                   "locale": "#localeDE",
                   "name": "#localizedAttribute2.name",
-                  "attributes": ["attribute1", "attribute2"]
+                  "attributes": ["attribute3", "attribute4"]
                 }
               ]
             }
