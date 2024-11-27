@@ -1,0 +1,204 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeEN",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeDE",
+          "arguments": { "id_locale": 46, "locale_name": "de_DE" }
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 1, "name": "DE" }
+        },
+        {
+          "type": "array-object",
+          "key": "stores",
+          "arguments": ["#store"]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "builder",
+          "name": "MerchantProfileBuilder",
+          "key": "merchantProfile"
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchant",
+          "key": "merchant",
+          "arguments": [
+            {
+              "merchantProfile": "#merchantProfile",
+              "isActive": true,
+              "status": "approved",
+              "storeRelation": {
+                "idStores": ["#store.id_store"]
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#merchant", "#merchantUser"]
+        },
+        {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "localizedAttribute1"
+        },
+        {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "localizedAttribute2"
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "concreteProduct1",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                {
+                  "locale": "#localeEN",
+                  "name": "#localizedAttribute1.name",
+                  "attributes": ["attribute1", "attribute2"]
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#localizedAttribute1.name",
+                  "attributes": ["attribute1", "attribute2"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "concreteProduct2",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                {
+                  "locale": "#localeEN",
+                  "name": "#localizedAttribute2.name",
+                  "attributes": ["attribute3", "attribute4"]
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#localizedAttribute2.name",
+                  "attributes": ["attribute3", "attribute4"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "name": "ProductImageTransfer",
+          "key": "productImage1",
+          "arguments": {
+            "externalUrlSmall": "https://images.icecat.biz/img/gallery_mediums/30691822_1486.jpg",
+            "externalUrlLarge": "https://images.icecat.biz/img/gallery/30691822_1486.jpg"
+          }
+        },
+        {
+          "type": "transfer",
+          "name": "ProductImageTransfer",
+          "key": "productImage2",
+          "arguments": {
+            "externalUrlSmall": "https://images.icecat.biz/img/gallery_mediums/30691822_1486.jpg",
+            "externalUrlLarge": "https://images.icecat.biz/img/gallery/30691822_1486.jpg"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#concreteProduct1.id_product_concrete",
+              "idProductAbstract": "#concreteProduct1.fk_product_abstract",
+              "productImages": ["#productImage1"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#concreteProduct2.id_product_concrete",
+              "idProductAbstract": "#concreteProduct2.fk_product_abstract",
+              "productImages": ["#productImage2"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#concreteProduct1.abstract_sku",
+              "skuProduct": "#concreteProduct1.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#concreteProduct2.abstract_sku",
+              "skuProduct": "#concreteProduct2.sku",
+              "moneyValue": { "netAmount": 20000, "grossAmount": 20000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idMerchant": "#merchant.id_merchant",
+              "idProductAbstract": "#concreteProduct1.fk_product_abstract"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idMerchant": "#merchant.id_merchant",
+              "idProductAbstract": "#concreteProduct2.fk_product_abstract"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
