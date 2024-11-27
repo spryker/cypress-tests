@@ -22,7 +22,7 @@ const baseHost = getEnvVar('E2E_BASE_HOST', 'SPRYKER_FE_HOST');
 export default defineConfig({
   env: {
     repositoryId: process.env.ENV_REPOSITORY_ID,
-    isDynamicStoreEnabled: getEnvVar('ENV_IS_DYNAMIC_STORE_ENABLED', 'SPRYKER_DYNAMIC_STORE_MODE') || false,
+    isDynamicStoreEnabled: process.env.ENV_IS_DYNAMIC_STORE_ENABLED || false,
     backofficeUrl: `${protocol}://${backofficeHost}`,
     merchantPortalUrl: `${protocol}://${merchantPortalHost}`,
     glueUrl: `${protocol}://${glueHost}`,
