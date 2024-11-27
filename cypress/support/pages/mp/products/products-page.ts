@@ -25,6 +25,34 @@ export class ProductsPage extends MpPage {
     return this.repository.getFirstTableRow();
   };
 
+  getFirstTableRow = (): Cypress.Chainable => {
+    return this.repository.getFirstTableRow();
+  };
+
+  getAddAttributeButton = (): Cypress.Chainable => {
+    return this.repository.getAddAttributeButton();
+  };
+
+  clickAddAttributeButton = (): void => {
+    cy.intercept('GET', '/product-merchant-portal-gui/update-product-abstract/table-data**').as('dataTable');
+    cy.intercept('GET', '/product-merchant-portal-gui/update-product-abstract').as('createAttribute');
+
+    cy.wait('@dataTable').then(() => {
+      cy.get(this.repository.getAttributesTableSelector()).as('attributesTable');
+      cy.get('@attributesTable').scrollIntoView();
+      cy.get('@attributesTable')
+        .should('be.visible')
+        .then(() => {
+          this.repository.getAddAttributeButton().click();
+          cy.get('@createAttribute.all').should('have.length', 0);
+        });
+    });
+  };
+
+  getAttributesTableSelector = (): string => {
+    return this.repository.getAttributesTableSelector();
+  };
+
   getDrawer = (): Cypress.Chainable => {
     const drawer = this.repository.getDrawer();
 
