@@ -5,7 +5,7 @@ import { injectable } from 'inversify';
 @autoWired
 export class ProductManagementEditRepository {
   getApproveButton = (): Cypress.Chainable => cy.get('a:contains("Approve")');
-  getVariantsTab = (): Cypress.Chainable => cy.get('[data-bs-target="tab-content-variants"]');
+  getVariantsTab = (): Cypress.Chainable => cy.get('[data-bs-target="#tab-content-variants"]');
   getVariantFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1):visible');
   getVariantEditButtonSelector = (): string => 'a:contains("Edit")';
 }
