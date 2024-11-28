@@ -9,12 +9,8 @@
   },
   "paymentMethods": [
     {
-      "key": "dummyMarketplacePaymentInvoice",
-      "name": "Dummy Marketplace Payment"
-    },
-    {
       "key": "dummyPaymentInvoice",
-      "name": "Dummy Payment"
+      "name": "Invoice"
     },
     {
       "key": "dummyPaymentCreditCard",
@@ -25,10 +21,6 @@
     {
       "key": "spryker_dummy_shipment-standard",
       "name": "Standard"
-    },
-    {
-      "key": "spryker_dummy_shipment-express",
-      "name": "Express"
     }
   ]
 }

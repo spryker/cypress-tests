@@ -18,6 +18,12 @@ export interface BasicCheckoutDmsDynamicFixtures {
 export interface BasicCheckoutDmsStaticFixtures {
   defaultPassword: string;
   store: Store;
+  paymentMethods: PaymentMethod[];
+}
+
+interface PaymentMethod {
+  key: string;
+  name: string;
 }
 
 export interface CheckoutStaticFixtures {

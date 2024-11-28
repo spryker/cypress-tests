@@ -4,27 +4,12 @@ import { AssignStoreToPaymentMethodScenario } from '@scenarios/backoffice';
 
 @injectable()
 @autoWired
-export class AssignStoreToDefaultPaymentMethodsScenario {
+export class AssignStoreToPaymentMethodsScenario {
   @inject(AssignStoreToPaymentMethodScenario)
   private assignStoreToPaymentMethodScenario: AssignStoreToPaymentMethodScenario;
 
-  DEFAULT_PAYMENT_METHODS = [
-    {
-      key: 'dummyMarketplacePaymentInvoice',
-      name: 'Dummy Marketplace Payment',
-    },
-    {
-      key: 'dummyPaymentInvoice',
-      name: 'Dummy Payment',
-    },
-    {
-      key: 'dummyPaymentCreditCard',
-      name: 'Credit Card',
-    },
-  ];
-
   execute = (params: ExecuteParams): void => {
-    this.DEFAULT_PAYMENT_METHODS.forEach((paymentMethod) => {
+    params.paymentMethods.forEach((paymentMethod) => {
       this.assignStoreToPaymentMethodScenario.execute({
         storeName: params.storeName,
         paymentMethodName: paymentMethod.name,
@@ -37,5 +22,11 @@ export class AssignStoreToDefaultPaymentMethodsScenario {
 
 interface ExecuteParams {
   storeName: string;
+  paymentMethods: PaymentMethod[];
   shouldTriggerPublishAndSync?: boolean;
+}
+
+interface PaymentMethod {
+  key: string;
+  name: string;
 }
