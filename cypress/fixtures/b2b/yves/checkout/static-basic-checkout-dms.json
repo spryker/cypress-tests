@@ -1,0 +1,34 @@
+{
+  "defaultPassword": "change123",
+  "store": {
+    "name": "TEST_STORE",
+    "currency": "EUR",
+    "locale": "en_US",
+    "country": "DE",
+    "timezone": "Europe/Berlin"
+  },
+  "paymentMethods": [
+    {
+      "key": "dummyMarketplacePaymentInvoice",
+      "name": "Dummy Marketplace Payment"
+    },
+    {
+      "key": "dummyPaymentInvoice",
+      "name": "Dummy Payment"
+    },
+    {
+      "key": "dummyPaymentCreditCard",
+      "name": "Credit Card"
+    }
+  ],
+  "shipmentMethods": [
+    {
+      "key": "spryker_dummy_shipment-standard",
+      "name": "Standard"
+    },
+    {
+      "key": "spryker_dummy_shipment-express",
+      "name": "Express"
+    }
+  ]
+}
