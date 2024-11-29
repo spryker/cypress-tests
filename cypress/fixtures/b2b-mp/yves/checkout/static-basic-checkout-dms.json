@@ -9,8 +9,8 @@
     },
     "paymentMethods": [
         {
-            "key": "dummyPaymentInvoice",
-            "name": "Dummy Payment"
+            "key": "dummyMarketplacePaymentInvoice",
+            "name": "Dummy Marketplace Payment"
         }
     ],
     "shipmentMethods": [
