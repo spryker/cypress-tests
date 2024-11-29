@@ -1,26 +1,26 @@
 {
-    "defaultPassword": "change123",
-    "store": {
-        "name": "TEST_STORE",
-        "currency": "EUR",
-        "locale": "en_US",
-        "country": "DE",
-        "timezone": "Europe/Berlin"
+  "defaultPassword": "change123",
+  "store": {
+    "name": "TEST_STORE",
+    "currency": "EUR",
+    "locale": "en_US",
+    "country": "DE",
+    "timezone": "Europe/Berlin"
+  },
+  "paymentMethods": [
+    {
+      "key": "dummyMarketplacePaymentInvoice",
+      "name": "Dummy Marketplace Payment"
+    }
+  ],
+  "shipmentMethods": [
+    {
+      "key": "spryker_dummy_shipment-standard",
+      "name": "Standard"
     },
-    "paymentMethods": [
-        {
-            "key": "dummyMarketplacePaymentInvoice",
-            "name": "Dummy Marketplace Payment"
-        }
-    ],
-    "shipmentMethods": [
-        {
-            "key": "spryker_dummy_shipment-standard",
-            "name": "Standard"
-        },
-        {
-            "key": "spryker_dummy_shipment-express",
-            "name": "Express"
-        }
-    ]
+    {
+      "key": "spryker_dummy_shipment-express",
+      "name": "Express"
+    }
+  ]
 }
