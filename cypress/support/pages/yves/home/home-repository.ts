@@ -1,5 +1,5 @@
 export interface HomeRepository {
-  getStoreSelect(): Cypress.Chainable;
+  selectStore(storeName: string): Cypress.Chainable;
   getStoreSelectorOption(storeName: string): string;
   getStoreSelectorHeader(): string;
 }
