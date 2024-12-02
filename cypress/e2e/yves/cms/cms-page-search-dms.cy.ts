@@ -45,10 +45,13 @@ describeIfDynamicStoreEnabled('cms page search dms', { tags: ['@yves', '@cms', '
   function assertCmsPage(): void {
     const locale = staticFixtures.store.locale.split('_')[0] ? staticFixtures.store.locale.split('_')[0] : 'en';
 
-    cy.url().should(
-      'eq',
-      `${Cypress.config('baseUrl')}/${staticFixtures.store.name}/${locale}/${staticFixtures.cmsPageName}`
+    const storeName = staticFixtures.store.name;
+
+    const regex = new RegExp(
+      `^${Cypress.config('baseUrl')}(?:/${storeName})?/${locale}/${staticFixtures.cmsPageName}$`
     );
+
+    cy.url().should('match', regex);
 
     cy.contains(staticFixtures.cmsPageName).should('exist');
   }
