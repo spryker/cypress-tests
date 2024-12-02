@@ -8,5 +8,5 @@ export class CategoryListRepository {
   getSearchSelector = (): string => '[type="search"]';
   getEditButtonSelector = (): string => 'a:contains("Edit")';
   getDropdownToggleButtonSelector = (): string => 'button[data-toggle="dropdown"]';
-  getDropdownMenuSelector = (): string => 'body > .dropdown-menu';
+  getDropdownMenuSelector = (): string => '.dropdown-menu.show';
 }
