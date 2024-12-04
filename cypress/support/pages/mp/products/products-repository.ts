@@ -10,4 +10,6 @@ export class ProductsRepository {
   getTaxIdSelector = (): string => 'select[name="productAbstract[idTaxSet]"]';
   getTaxIdOptionSelector = (): string => 'select[name="productAbstract[idTaxSet]"] > option';
   getDrawer = (): Cypress.Chainable => cy.get('.spy-drawer-wrapper');
+  getAddAttributeButton = (): Cypress.Chainable => cy.get('.product-attributes-table button:contains("Add")');
+  getAttributesTableSelector = (): string => '.product-attributes-table';
 }
