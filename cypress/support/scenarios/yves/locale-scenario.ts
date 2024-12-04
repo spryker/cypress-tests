@@ -6,8 +6,8 @@ import { injectable } from 'inversify';
 export class LocaleScenario {
   getAvailableLocales = (): Cypress.Chainable => {
     return cy.get('[data-qa="language-selector"] option').then((options) => {
-        const values = Array.from(options).map((option) => option.textContent?.trim() || '');
-        return Cypress.Promise.resolve(values);
+      const values = Array.from(options).map((option) => option.textContent?.trim() || '');
+      return Cypress.Promise.resolve(values);
     });
   };
 
