@@ -1,8 +1,5 @@
 {
-  "availableLocales": [
-    "de",
-    "en"
-  ],
+  "availableLocales": ["de", "en"],
   "localeDE": "de_DE",
   "localeEN": "en_US"
 }
