@@ -13,7 +13,13 @@ export class LocaleScenario {
 
   switchLocale = (locale: string): void => {
     cy.get('[data-qa="language-selector"]').last().select(locale);
-    cy.get('[data-qa="language-selector"]').last().find('option:selected').should('have.text', locale);
+    cy.get('[data-qa="language-selector"]')
+      .last()
+      .find('option:selected')
+      .invoke('text')
+      .then((text) => {
+        expect(text.trim()).to.equal(locale);
+      });
   };
 
   getCurrentLocale = (locale: string): Cypress.Chainable => {
