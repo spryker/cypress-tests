@@ -19,3 +19,4 @@ export * from './product/product-page';
 export * from './customer/overview/customer-overview-page';
 export * from './customer/order/order-details-page';
 export * from './product-comparison/product-comparison-page';
+export * from './index/index-page';
