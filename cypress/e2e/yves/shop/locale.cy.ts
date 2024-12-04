@@ -16,7 +16,7 @@ import { LocaleStaticFixtures } from '@interfaces/yves';
         .find('a.js-product-item__link-detail-page')
         .invoke('attr', 'href')
         .then((url) => {
-          cy.visit(url);
+          cy.visit(url as string);
         });
     };
 
