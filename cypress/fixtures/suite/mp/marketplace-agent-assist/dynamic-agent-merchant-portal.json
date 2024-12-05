@@ -280,6 +280,48 @@
               ]
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "totals": "#totals",
+              "items": [
+                {
+                  "sku": "#productConcreteForOffer.sku",
+                  "abstractSku": "#productConcreteForOffer.abstract_sku",
+                  "idProductAbstract": "#productConcreteForOffer.fk_product_abstract",
+                  "productOfferReference": "#productOffer.product_offer_reference",
+                  "merchantReference": "#productOffer.merchant_reference",
+                  "quantity": 1,
+                  "unitPrice": 30000
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "totals": "#totals",
+              "items": [
+                {
+                  "sku": "#productConcreteForOffer.sku",
+                  "abstractSku": "#productConcreteForOffer.abstract_sku",
+                  "idProductAbstract": "#productConcreteForOffer.fk_product_abstract",
+                  "productOfferReference": "#productOffer.product_offer_reference",
+                  "merchantReference": "#productOffer.merchant_reference",
+                  "quantity": 1,
+                  "unitPrice": 30000
+                }
+              ]
+            }
+          ]
         }
       ]
     }

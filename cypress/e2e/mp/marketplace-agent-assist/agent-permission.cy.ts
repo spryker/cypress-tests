@@ -8,7 +8,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
  */
 (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'agent permission',
-  { tags: ['@marketplace-agent-assist'] },
+  { tags: ['@mp', '@marketplace-agent-assist'] },
   (): void => {
     const backofficeUserIndexPage = container.get(UserIndexPage);
     const backofficeUserUpdatePage = container.get(UserUpdatePage);
@@ -69,7 +69,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
     it('backoffice user should be able to see imported user with "Agent Customer" permission', (): void => {
       backofficeUserIndexPage.visit();
       backofficeUserIndexPage
-        .find({ query: dynamicFixtures.customerAgentUser.username })
+        .findUser({ query: dynamicFixtures.customerAgentUser.username })
         .contains('Agent')
         .should('have.length', 1);
     });
@@ -77,7 +77,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
     it('backoffice user should be able to see imported user with "Agent Merchant" permission', (): void => {
       backofficeUserIndexPage.visit();
       backofficeUserIndexPage
-        .find({ query: dynamicFixtures.merchantAgentUser.username })
+        .findUser({ query: dynamicFixtures.merchantAgentUser.username })
         .contains('Agent')
         .should('have.length', 1);
     });

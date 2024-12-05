@@ -11,7 +11,7 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
  */
 (['b2c', 'b2c-mp', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'order amendment start',
-  { tags: ['@order-amendment'] },
+  { tags: ['@yves', '@order-amendment'] },
   (): void => {
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const orderDetailsPage = container.get(OrderDetailsPage);
@@ -69,10 +69,7 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
 
     it('customer should be able to replace current cart (quote) with previous order items', (): void => {
       placeCustomerOrder(dynamicFixtures.customer3.email, dynamicFixtures.address3.id_customer_address);
-
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
-      productPage.addToCart({ quantity: 2 });
+      addProductsToCart(dynamicFixtures.product.sku, 2);
 
       customerOverviewPage.viewLastPlacedOrder();
       orderDetailsPage.editOrder();
@@ -88,10 +85,7 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
 
       cartPage.visit();
       cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: 2 });
-
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
-      productPage.addToCart({ quantity: 2 });
+      addProductsToCart(dynamicFixtures.product.sku, 2);
 
       cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).each(($input) => {
         cy.wrap($input).should('have.value', '2');
@@ -99,7 +93,19 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
     });
 
     it('customer should not be able to amend order when item was deactivated', (): void => {
-      placeCustomerOrder(dynamicFixtures.customer5.email, dynamicFixtures.address5.id_customer_address);
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer5.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      addProductsToCart(dynamicFixtures.product.sku);
+      addProductsToCart(dynamicFixtures.productInActive.sku);
+
+      checkoutScenario.execute({
+        idCustomerAddress: dynamicFixtures.address5.id_customer_address,
+        shouldTriggerOmsInCli: true,
+      });
+
       deactivateProductInBackoffice();
 
       customerLoginScenario.execute({
@@ -119,7 +125,19 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
     });
 
     it('customer should not be able to amend order when item was out-of-stock', (): void => {
-      placeCustomerOrder(dynamicFixtures.customer6.email, dynamicFixtures.address6.id_customer_address);
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer6.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      addProductsToCart(dynamicFixtures.product.sku);
+      addProductsToCart(dynamicFixtures.productOutOfStock.sku);
+
+      checkoutScenario.execute({
+        idCustomerAddress: dynamicFixtures.address6.id_customer_address,
+        shouldTriggerOmsInCli: true,
+      });
+
       removeProductStock();
 
       customerLoginScenario.execute({
@@ -135,6 +153,12 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
       cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
       cy.get('body').contains(dynamicFixtures.productOutOfStock.localized_attributes[0].name).should('not.exist');
     });
+
+    function addProductsToCart(sku: string, quantity?: number): void {
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: sku });
+      productPage.addToCart({ quantity: quantity ?? 1 });
+    }
 
     function placeCustomerOrder(email: string, idCustomerAddress: number): void {
       customerLoginScenario.execute({

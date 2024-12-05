@@ -24,17 +24,17 @@ export class CheckoutAddressPage extends YvesPage {
     this.repository.getSelectShippingAddressField().select('0', { force: true });
 
     // Setting mandatory fields
-    this.repository.getShippingAddressFirstNameField().clear().type(checkoutAddress.firstName);
-    this.repository.getShippingAddressLastNameField().clear().type(checkoutAddress.lastName);
-    this.repository.getShippingAddressAddress1Field().clear().type(checkoutAddress.address1);
-    this.repository.getShippingAddressAddress2Field().clear().type(checkoutAddress.address2);
-    this.repository.getShippingAddressZipCodeField().clear().type(checkoutAddress.zipCode);
-    this.repository.getShippingAddressCityField().clear().type(checkoutAddress.city);
+    this.repository.getShippingAddressFirstNameField().clear().type(checkoutAddress.firstName, { delay: 0 });
+    this.repository.getShippingAddressLastNameField().clear().type(checkoutAddress.lastName, { delay: 0 });
+    this.repository.getShippingAddressAddress1Field().clear().type(checkoutAddress.address1, { delay: 0 });
+    this.repository.getShippingAddressAddress2Field().clear().type(checkoutAddress.address2, { delay: 0 });
+    this.repository.getShippingAddressZipCodeField().clear().type(checkoutAddress.zipCode, { delay: 0 });
+    this.repository.getShippingAddressCityField().clear().type(checkoutAddress.city, { delay: 0 });
     this.repository.getShippingAddressBillingSameAsShippingCheckbox().check({ force: true });
 
     // Setting optional fields
-    this.repository.getShippingAddressCompanyField().clear().type(checkoutAddress.company);
-    this.repository.getShippingAddressPhoneField().clear().type(checkoutAddress.phone);
+    this.repository.getShippingAddressCompanyField().clear().type(checkoutAddress.company, { delay: 0 });
+    this.repository.getShippingAddressPhoneField().clear().type(checkoutAddress.phone, { delay: 0 });
 
     this.repository.getNextButton().click();
   };
@@ -70,37 +70,37 @@ export class CheckoutAddressPage extends YvesPage {
         this.repository
           .getMultiShipmentAddressItemAddressFirstNameField($addressItem, index)
           .clear()
-          .type(checkoutAddress.firstName);
+          .type(checkoutAddress.firstName, { delay: 0 });
         this.repository
           .getMultiShipmentAddressItemAddressLastNameField($addressItem, index)
           .clear()
-          .type(checkoutAddress.lastName);
+          .type(checkoutAddress.lastName, { delay: 0 });
         this.repository
           .getMultiShipmentAddressItemAddressAddress1Field($addressItem, index)
           .clear()
-          .type(checkoutAddress.address1);
+          .type(checkoutAddress.address1, { delay: 0 });
         this.repository
           .getMultiShipmentAddressItemAddressAddress2Field($addressItem, index)
           .clear()
-          .type(checkoutAddress.address2);
+          .type(checkoutAddress.address2, { delay: 0 });
         this.repository
           .getMultiShipmentAddressItemAddressZipCodeField($addressItem, index)
           .clear()
-          .type(checkoutAddress.zipCode);
+          .type(checkoutAddress.zipCode, { delay: 0 });
         this.repository
           .getMultiShipmentAddressItemAddressCityField($addressItem, index)
           .clear()
-          .type(checkoutAddress.city);
+          .type(checkoutAddress.city, { delay: 0 });
 
         // Setting optional fields
         this.repository
           .getMultiShipmentAddressItemAddressCompanyField($addressItem, index)
           .clear()
-          .type(checkoutAddress.company);
+          .type(checkoutAddress.company, { delay: 0 });
         this.repository
           .getMultiShipmentAddressItemAddressPhoneField($addressItem, index)
           .clear()
-          .type(checkoutAddress.phone);
+          .type(checkoutAddress.phone, { delay: 0 });
       });
 
     this.fillBillingAddress();
@@ -111,16 +111,16 @@ export class CheckoutAddressPage extends YvesPage {
     this.repository.getSelectBillingAddressField().select('0', { force: true });
 
     // Setting mandatory fields
-    this.repository.getBillingAddressFirstNameField().clear().type(checkoutAddress.firstName);
-    this.repository.getBillingAddressLastNameField().clear().type(checkoutAddress.lastName);
-    this.repository.getBillingAddressAddress1Field().clear().type(checkoutAddress.address1);
-    this.repository.getBillingAddressAddress2Field().clear().type(checkoutAddress.address2);
-    this.repository.getBillingAddressZipCodeField().clear().type(checkoutAddress.zipCode);
-    this.repository.getBillingAddressCityField().clear().type(checkoutAddress.city);
+    this.repository.getBillingAddressFirstNameField().clear().type(checkoutAddress.firstName, { delay: 0 });
+    this.repository.getBillingAddressLastNameField().clear().type(checkoutAddress.lastName, { delay: 0 });
+    this.repository.getBillingAddressAddress1Field().clear().type(checkoutAddress.address1, { delay: 0 });
+    this.repository.getBillingAddressAddress2Field().clear().type(checkoutAddress.address2, { delay: 0 });
+    this.repository.getBillingAddressZipCodeField().clear().type(checkoutAddress.zipCode, { delay: 0 });
+    this.repository.getBillingAddressCityField().clear().type(checkoutAddress.city, { delay: 0 });
 
     // Setting optional fields
-    this.repository.getBillingAddressCompanyField().clear().type(checkoutAddress.company);
-    this.repository.getBillingAddressPhoneField().clear().type(checkoutAddress.phone);
+    this.repository.getBillingAddressCompanyField().clear().type(checkoutAddress.company, { delay: 0 });
+    this.repository.getBillingAddressPhoneField().clear().type(checkoutAddress.phone, { delay: 0 });
 
     this.repository.getNextButton().click();
   };

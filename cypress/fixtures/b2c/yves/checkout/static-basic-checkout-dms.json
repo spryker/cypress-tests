@@ -1,0 +1,26 @@
+{
+  "defaultPassword": "change123",
+  "store": {
+    "name": "TEST_STORE",
+    "currency": "EUR",
+    "locale": "en_US",
+    "country": "DE",
+    "timezone": "Europe/Berlin"
+  },
+  "paymentMethods": [
+    {
+      "key": "dummyPaymentInvoice",
+      "name": "Invoice"
+    },
+    {
+      "key": "dummyPaymentCreditCard",
+      "name": "Credit Card"
+    }
+  ],
+  "shipmentMethods": [
+    {
+      "key": "spryker_dummy_shipment-standard",
+      "name": "Standard"
+    }
+  ]
+}
