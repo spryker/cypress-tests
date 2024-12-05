@@ -1,4 +1,4 @@
-import { autoWired, REPOSITORIES } from '@utils';
+import { REPOSITORIES } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { AbstractPage } from '../abstract-page';
@@ -6,7 +6,6 @@ import VisitOptions = Cypress.VisitOptions;
 import { YvesRepository } from './yves-repository';
 
 @injectable()
-@autoWired
 export class YvesPage extends AbstractPage {
   @inject(REPOSITORIES.YvesRepository) private yvesRepository: YvesRepository;
 
