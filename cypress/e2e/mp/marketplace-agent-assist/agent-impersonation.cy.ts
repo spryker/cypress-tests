@@ -14,7 +14,7 @@ import { ImpersonateAsMerchantUserScenario } from '@scenarios/mp';
  */
 (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'agent impersonation',
-  { tags: ['@marketplace-agent-assist'] },
+  { tags: ['@mp', '@marketplace-agent-assist'] },
   (): void => {
     const yvesLoginPage = container.get(LoginPage);
     const mpLoginPage = container.get(MpLoginPage);

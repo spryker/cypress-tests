@@ -30,10 +30,9 @@ export class ProductManagementAddPage extends BackofficePage {
 
     this.repository.getPriceTaxTab().click();
 
-    this.repository.getDefaultGrossPriceInput().type(productAbstract.price);
-    this.repository.getOriginalGrossPriceInput().type(productAbstract.price);
-    this.repository.getDefaultNetPriceInput().type(productAbstract.price);
-    this.repository.getOriginalNetPriceInput().type(productAbstract.price);
+    this.repository.getAllPriceInputs().each(($el) => {
+      cy.wrap($el).type(productAbstract.price, { force: true });
+    });
 
     if (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
       this.repository.getTaxSelect().select('Standard Taxes', { force: true });

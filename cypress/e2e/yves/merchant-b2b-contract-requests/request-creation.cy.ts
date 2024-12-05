@@ -16,7 +16,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
  */
 (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'request creation',
-  { tags: ['@merchant-b2b-contract-requests'] },
+  { tags: ['@yves', '@merchant-b2b-contract-requests'] },
   (): void => {
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);

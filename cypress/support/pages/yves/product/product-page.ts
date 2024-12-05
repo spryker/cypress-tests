@@ -16,7 +16,7 @@ export class ProductPage extends YvesPage {
       this.repository.getQuantityInput().invoke('val', params.quantity.toString());
     }
 
-    this.repository.getAddToCartButton().click({ force: true });
+    this.repository.getAddToCartButton().click();
   };
 
   getAddToCartSuccessMessage = (): string => {

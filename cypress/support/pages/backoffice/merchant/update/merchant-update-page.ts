@@ -10,24 +10,13 @@ export class MerchantUpdatePage extends BackofficePage {
 
   protected PAGE_URL = '/merchant-gui/edit-merchant';
 
-  find = (params: FindParams): Cypress.Chainable => {
-    const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector).clear();
-    cy.get(searchSelector).invoke('val', params.query);
-    cy.get(searchSelector).type('{enter}');
-
-    this.interceptTable({ url: '/merchant-user-gui/index/table**', expectedCount: params.expectedCount });
-
-    return this.repository.getFirstTableRow();
-  };
-
   create = (): void => {
     this.repository.getUsersTab().click();
     this.repository.getAddMerchantUserButton().click();
   };
-}
 
-interface FindParams {
-  query: string;
-  expectedCount?: number;
+  assignAllAvailableStore = (): void => {
+    this.repository.getAllAvailableStoresInputs().check();
+    this.repository.getSaveButton().click();
+  };
 }

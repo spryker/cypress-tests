@@ -1,28 +1,20 @@
 import { autoWired } from '@utils';
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
+import { YvesPage, HomePage } from '../../pages/yves';
 
 @injectable()
 @autoWired
 export class LocaleSwitchingScenario {
-  getAvailableLocales = (): Cypress.Chainable => {
-    return cy.get('[data-qa="language-selector"] option').then((options) => {
-      const values = Array.from(options).map((option) => option.textContent?.trim() || '');
-      return Cypress.Promise.resolve(values);
-    });
-  };
+  @inject(HomePage) private yvesPage: YvesPage;
 
-  switchLocale = (locale: string): void => {
-    cy.get('[data-qa="language-selector"]').last().select(locale);
-    cy.get('[data-qa="language-selector"]')
-      .last()
-      .find('option:selected')
-      .invoke('text')
-      .then((text) => {
-        expect(text.trim()).to.equal(locale);
-      });
+  execute = (params: ExecuteParams): void => {
+    this.yvesPage.assertCurrentLocale(params.currentLocale);
+    this.yvesPage.selectLocale(params.selectedLocale.split('_')[0]);
+    this.yvesPage.assertCurrentLocale(params.selectedLocale);
   };
+}
 
-  getCurrentLocale = (locale: string): Cypress.Chainable => {
-    return cy.get('html').should('have.attr', 'data-locale', locale);
-  };
+interface ExecuteParams {
+  currentLocale: string;
+  selectedLocale: string;
 }

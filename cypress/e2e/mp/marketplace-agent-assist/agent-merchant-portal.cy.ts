@@ -11,7 +11,7 @@ import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
  */
 (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'agent merchant portal',
-  { tags: ['@marketplace-agent-assist'] },
+  { tags: ['@mp', '@marketplace-agent-assist'] },
   (): void => {
     const salesIndexPage = container.get(SalesIndexPage);
     const salesDetailPage = container.get(SalesDetailPage);

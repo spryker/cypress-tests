@@ -14,6 +14,7 @@ export class ProductManagementAddRepository {
   getNewFromInput = (): Cypress.Chainable => cy.get('#product_form_add_new_from');
   getNewToInput = (): Cypress.Chainable => cy.get('#product_form_add_new_to');
   getPriceTaxTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-price_and_tax"]');
+  getAllPriceInputs = (): Cypress.Chainable => cy.get('#price-table-collection [data-decimal-rounding="2"]');
   getDefaultGrossPriceInput = (): Cypress.Chainable =>
     cy.get('#product_form_add_prices_1-93-DEFAULT-BOTH_moneyValue_gross_amount');
   getOriginalGrossPriceInput = (): Cypress.Chainable =>

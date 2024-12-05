@@ -8,6 +8,13 @@ export class CustomerLoginScenario {
   @inject(LoginPage) private loginPage: LoginPage;
 
   execute = (params: ExecuteParams): void => {
+    if (params.withoutSession) {
+      this.loginPage.visit();
+      this.loginPage.login(params);
+
+      return;
+    }
+
     cy.session([params.email, params.password], () => {
       this.loginPage.visit();
       this.loginPage.login(params);
@@ -18,4 +25,5 @@ export class CustomerLoginScenario {
 interface ExecuteParams {
   email: string;
   password: string;
+  withoutSession?: boolean;
 }
