@@ -1,7 +1,6 @@
 import { injectable } from 'inversify';
 
 import { HomeRepository } from '../home-repository';
-import * as Cypress from 'cypress';
 
 @injectable()
 export class B2cMpHomeRepository implements HomeRepository {
