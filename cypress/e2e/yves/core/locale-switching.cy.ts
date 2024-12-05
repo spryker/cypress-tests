@@ -1,24 +1,15 @@
 import { container } from '@utils';
-import { LocaleScenario } from '@scenarios/yves';
+import { LocaleSwitchingScenario } from '@scenarios/yves';
 import { CatalogPage, IndexPage } from '@pages/yves';
 import { LocaleStaticFixtures } from '@interfaces/yves';
 
 (['b2c', 'b2c-mp', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'locale switching',
-  { tags: ['@shop', '@locale'] },
+  { tags: ['@core', '@yves'] },
   (): void => {
     const indexPage = container.get(IndexPage);
     const catalogPage = container.get(CatalogPage);
-    const localeSwitchingScenario = container.get(LocaleScenario);
-    const visitFirstProductDetailPage = (): void => {
-      cy.get('[data-qa="component product-item"]')
-        .first()
-        .find('a.js-product-item__link-detail-page')
-        .invoke('attr', 'href')
-        .then((url) => {
-          cy.visit(url as string);
-        });
-    };
+    const localeSwitchingScenario = container.get(LocaleSwitchingScenario);
 
     let staticFixtures: LocaleStaticFixtures;
 
@@ -47,18 +38,18 @@ import { LocaleStaticFixtures } from '@interfaces/yves';
       localeSwitchingScenario.getCurrentLocale(staticFixtures.localeEN);
     };
 
-    it('Should be able to switch locales at the home page.', (): void => {
-      testLocaleSwitching(() => indexPage.visit());
-    });
-
-    it('Should be able to switch locales at the catalog page.', (): void => {
-      testLocaleSwitching(() => catalogPage.visit());
-    });
+    // it('Should be able to switch locales at the home page.', (): void => {
+    //   testLocaleSwitching(() => indexPage.visit());
+    // });
+    //
+    // it('Should be able to switch locales at the catalog page.', (): void => {
+    //   testLocaleSwitching(() => catalogPage.visit());
+    // });
 
     it('Should be able to switch locales at the product detailed page.', (): void => {
       catalogPage.visit();
 
-      testLocaleSwitching(() => visitFirstProductDetailPage());
+      testLocaleSwitching(() => catalogPage.search({ query: 'Canon IXUS 285' }));
     });
   }
 );

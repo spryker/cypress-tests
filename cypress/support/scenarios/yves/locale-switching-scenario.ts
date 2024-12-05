@@ -3,7 +3,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 @autoWired
-export class LocaleScenario {
+export class LocaleSwitchingScenario {
   getAvailableLocales = (): Cypress.Chainable => {
     return cy.get('[data-qa="language-selector"] option').then((options) => {
       const values = Array.from(options).map((option) => option.textContent?.trim() || '');
