@@ -64,7 +64,7 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
       customerOverviewPage.viewLastPlacedOrder();
       orderDetailsPage.editOrder();
 
-      cy.contains('The order cannot be amended.').should('exist');
+      cy.contains('This action cannot be performed.').should('exist');
     });
 
     it('customer should be able to replace current cart (quote) with previous order items', (): void => {
