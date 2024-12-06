@@ -39,7 +39,7 @@ export class CatalogPage extends YvesPage {
         5000
       );
 
-      this.goToFirstItemInCatalogPage();
+      this.repository.getProductItemBlocks().first().find(this.repository.getViewButtonSelector()).click();
     });
   };
 
