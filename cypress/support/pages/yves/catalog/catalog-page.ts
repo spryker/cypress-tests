@@ -39,8 +39,12 @@ export class CatalogPage extends YvesPage {
         5000
       );
 
-      this.repository.getProductItemBlocks().first().find(this.repository.getViewButtonSelector()).click();
+      this.goToFirstItemInCatalogPage();
     });
+  };
+
+  goToFirstItemInCatalogPage = (): void => {
+    this.repository.getProductItemBlocks().first().find(this.repository.getViewButtonSelector()).click();
   };
 
   hasProductsInCatalog = (): Cypress.Chainable<boolean> => {

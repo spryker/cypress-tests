@@ -39,19 +39,19 @@ import { LocaleStaticFixtures } from '@interfaces/yves';
       });
     };
 
-    it('Should be able to switch locales at the home page.', (): void => {
-      testLocaleSwitching(() => homePage.visit(), homePage);
-    });
-
-    it('Should be able to switch locales at the catalog page.', (): void => {
+    it('should be able to switch locales at the catalog page.', (): void => {
       testLocaleSwitching(() => catalogPage.visit(), catalogPage);
     });
 
-    it('Should be able to switch locales at the product detailed page.', (): void => {
+    it('should be able to switch locales at the product detailed page.', (): void => {
       testLocaleSwitching(() => {
         catalogPage.visit();
-        catalogPage.search({ query: staticFixtures.productName });
+        catalogPage.goToFirstItemInCatalogPage();
       }, catalogPage);
+    });
+
+    it('should be able to switch locales at the home page.', (): void => {
+      testLocaleSwitching(() => homePage.visit(), homePage);
     });
   }
 );
