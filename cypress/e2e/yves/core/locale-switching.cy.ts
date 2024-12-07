@@ -15,8 +15,6 @@ import { LocaleStaticFixtures } from '@interfaces/yves';
 
     before((): void => {
       ({ staticFixtures } = Cypress.env());
-
-      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
     });
 
     /**
@@ -41,6 +39,10 @@ import { LocaleStaticFixtures } from '@interfaces/yves';
       });
     };
 
+    it('should be able to switch locales at the home page.', (): void => {
+      testLocaleSwitching(() => homePage.visit(), homePage);
+    });
+
     it('should be able to switch locales at the catalog page.', (): void => {
       testLocaleSwitching(() => catalogPage.visit(), catalogPage);
     });
@@ -50,12 +52,6 @@ import { LocaleStaticFixtures } from '@interfaces/yves';
         catalogPage.visit();
         catalogPage.goToFirstItemInCatalogPage();
       }, catalogPage);
-    });
-
-    it('should be able to switch locales at the home page.', (): void => {
-      homePage.visit();
-      cy.reload();
-      testLocaleSwitching(() => homePage.visit(), homePage);
     });
   }
 );
