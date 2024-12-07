@@ -16,7 +16,7 @@ import { LocaleStaticFixtures } from '@interfaces/yves';
     before((): void => {
       ({ staticFixtures } = Cypress.env());
 
-      // cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
     });
 
     /**
