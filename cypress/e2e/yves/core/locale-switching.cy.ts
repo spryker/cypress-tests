@@ -39,7 +39,7 @@ import { LocaleStaticFixtures } from '@interfaces/yves';
       });
     };
 
-    it('should be able to switch locales at the home page.', (): void => {
+    skipDisabledDynamicStoreIt('should be able to switch locales at the home page.', (): void => {
       testLocaleSwitching(() => homePage.visit(), homePage);
     });
 
@@ -53,5 +53,9 @@ import { LocaleStaticFixtures } from '@interfaces/yves';
         catalogPage.goToFirstItemInCatalogPage();
       }, catalogPage);
     });
+
+    function skipDisabledDynamicStoreIt(description: string, testFn: () => void): void {
+      (Cypress.env('isDynamicStoreEnabled') ? it : it.skip)(description, testFn);
+    }
   }
 );
