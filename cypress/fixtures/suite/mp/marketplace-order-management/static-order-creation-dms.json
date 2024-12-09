@@ -1,0 +1,16 @@
+{
+  "defaultPassword": "change123",
+  "store": {
+    "name": "TEST_STORE",
+    "currency": "EUR",
+    "locale": "en_US",
+    "country": "DE",
+    "timezone": "Europe/Berlin"
+  },
+  "paymentMethods": [
+    {
+      "key": "dummyMarketplacePaymentInvoice",
+      "name": "Dummy Marketplace Payment"
+    }
+  ]
+}
