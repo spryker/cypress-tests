@@ -43,6 +43,10 @@ export class CatalogPage extends YvesPage {
     });
   };
 
+  goToFirstItemInCatalogPage = (): void => {
+    this.repository.getProductItemBlocks().first().find(this.repository.getViewButtonSelector()).click();
+  };
+
   hasProductsInCatalog = (): Cypress.Chainable<boolean> => {
     return cy.get('body').then((body) => {
       if (body.find(this.repository.getFirstProductItemBlockSelector()).length > 0) {

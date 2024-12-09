@@ -8,4 +8,5 @@ export * from './product-comparison';
 export * from './product';
 export * from './reorder';
 export * from './order-amendment';
+export * from './locale';
 export * from './catalog';
