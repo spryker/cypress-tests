@@ -35,6 +35,10 @@ export class B2bMpCartRepository implements CartRepository {
     cy.get('.product-quick-add-form__button');
   findCartItemRemovalForm = (sku: string): Cypress.Chainable => {
     return cy.get('[action]').filter((index, element) => {
+      if (Cypress.env('isDynamicStoreEnabled')) {
+        const regex = new RegExp(`^/\\w+/\\w+/cart/async/remove/${sku}/\\w+`);
+        return regex.test(element.getAttribute('action') ?? '');
+      }
       const regex = new RegExp(`^/\\w+/cart/async/remove/${sku}/\\w+`);
       return regex.test(element.getAttribute('action') ?? '');
     });
@@ -42,6 +46,10 @@ export class B2bMpCartRepository implements CartRepository {
   findCartItemRemovalSubmit = (sku: string): Cypress.Chainable => this.findCartItemRemovalForm(sku).find('button');
   findCartItemChangeQuantityForm = (sku: string): Cypress.Chainable => {
     return cy.get('[action]').filter((index, element) => {
+      if (Cypress.env('isDynamicStoreEnabled')) {
+        const regex = new RegExp(`^/\\w+/\\w+/cart/async/change-quantity/${sku}$`);
+        return regex.test(element.getAttribute('action') ?? '');
+      }
       const regex = new RegExp(`^/\\w+/cart/async/change-quantity/${sku}$`);
       return regex.test(element.getAttribute('action') ?? '');
     });
