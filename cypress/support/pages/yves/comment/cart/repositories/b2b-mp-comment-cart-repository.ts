@@ -7,7 +7,13 @@ export class B2bMpCommentCartRepository implements CommentCartRepository {
   getCommentThreadListSection = (): Cypress.Chainable =>
     cy.get('[data-qa="component cart-sidebar-item"]').find('[data-qa="component add-comment-form"]').parent();
   getAddCommentButtonSelector = (): string => '[data-qa="component icon"]';
-  getRemoveCommentButtonSelector = (): string => '[formaction="/en/comment/async/remove"]';
+  getRemoveCommentButtonSelector = (): string => {
+    if (Cypress.env('isDynamicStoreEnabled')) {
+      return '[formaction="/DE/en/comment/async/remove"]';
+    }
+
+    return '[formaction="/en/comment/async/remove"]';
+  };
   getFirstCommentTextarea = (): Cypress.Chainable => {
     this.getCommentThreadListSection().first().find('button:contains("Edit")').click();
 
