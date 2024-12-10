@@ -3,13 +3,10 @@ import { OrderCreationDmsDynamicFixtures, OrderCreationDmsStaticFixtures } from 
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import { CatalogPage, ProductPage } from '@pages/yves';
 import {
-  AssignStoreToDefaultShipmentMethodsScenario,
-  AssignStoreToDefaultShipmentTypesScenario,
-  AssignStoreToDefaultWarehouseScenario,
   AssignStoreToMerchantScenario,
-  AssignStoreToPaymentMethodsScenario,
   AssignStoreToProductScenario,
   CreateStoreScenario,
+  SetupDefaultStoreRelationsScenario,
   UserLoginScenario,
 } from '@scenarios/backoffice';
 import { CheckoutMpScenario, CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
@@ -28,10 +25,7 @@ describeDmsSuiteAndMp('order creation dms', { tags: ['@mp', '@marketplace-order-
   const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
   const createStoreScenario = container.get(CreateStoreScenario);
   const assignStoreToProductScenario = container.get(AssignStoreToProductScenario);
-  const assignStoreToDefaultWarehouseScenario = container.get(AssignStoreToDefaultWarehouseScenario);
-  const assignStoreToDefaultShipmentMethodsScenario = container.get(AssignStoreToDefaultShipmentMethodsScenario);
-  const assignStoreToPaymentMethodsScenario = container.get(AssignStoreToPaymentMethodsScenario);
-  const assignStoreToDefaultShipmentTypesScenario = container.get(AssignStoreToDefaultShipmentTypesScenario);
+  const setupDefaultStoreRelationsScenario = container.get(SetupDefaultStoreRelationsScenario);
   const assignStoreToMerchantScenario = container.get(AssignStoreToMerchantScenario);
   const selectStoreScenario = container.get(SelectStoreScenario);
 
@@ -50,7 +44,6 @@ describeDmsSuiteAndMp('order creation dms', { tags: ['@mp', '@marketplace-order-
 
     assignStoreToMerchant(dynamicFixtures.merchant.name);
     assignStoreToProduct(dynamicFixtures.merchantProduct.abstract_sku);
-
     setupDefaultStoreRelations();
   });
 
@@ -161,27 +154,14 @@ describeDmsSuiteAndMp('order creation dms', { tags: ['@mp', '@marketplace-order-
   }
 
   function setupDefaultStoreRelations(): void {
-    assignStoreToDefaultWarehouseScenario.execute({
+    setupDefaultStoreRelationsScenario.execute({
       storeName: staticFixtures.store.name,
-      shouldTriggerPublishAndSync: true,
-    });
-    assignStoreToDefaultShipmentMethodsScenario.execute({
-      storeName: staticFixtures.store.name,
-      shouldTriggerPublishAndSync: true,
-    });
-    assignStoreToPaymentMethodsScenario.execute({
-      storeName: staticFixtures.store.name,
-      shouldTriggerPublishAndSync: true,
       paymentMethods: staticFixtures.paymentMethods,
-    });
-
-    if (['suite', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
-      assignStoreToDefaultShipmentTypesScenario.execute({
-        store: staticFixtures.store.name,
+      rootUser: {
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
-      });
-    }
+      },
+    });
   }
 });
 

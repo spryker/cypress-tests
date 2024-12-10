@@ -3,13 +3,10 @@ import { BasicCheckoutDmsDynamicFixtures, BasicCheckoutDmsStaticFixtures } from 
 import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 import {
-  AssignStoreToPaymentMethodsScenario,
-  AssignStoreToDefaultShipmentMethodsScenario,
-  AssignStoreToDefaultShipmentTypesScenario,
-  AssignStoreToDefaultWarehouseScenario,
   AssignStoreToProductScenario,
   CreateStoreScenario,
   UserLoginScenario,
+  SetupDefaultStoreRelationsScenario,
 } from '@scenarios/backoffice';
 
 describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout', '@dms'] }, (): void => {
@@ -21,11 +18,8 @@ describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout
   const assignStoreToProductScenario = container.get(AssignStoreToProductScenario);
   const selectStoreScenario = container.get(SelectStoreScenario);
   const userLoginScenario = container.get(UserLoginScenario);
-  const assignStoreToDefaultShipmentMethodsScenario = container.get(AssignStoreToDefaultShipmentMethodsScenario);
-  const assignStoreToPaymentMethodsScenario = container.get(AssignStoreToPaymentMethodsScenario);
-  const assignStoreToDefaultShipmentTypesScenario = container.get(AssignStoreToDefaultShipmentTypesScenario);
-  const assignStoreToDefaultWarehouseScenario = container.get(AssignStoreToDefaultWarehouseScenario);
   const createStoreScenario = container.get(CreateStoreScenario);
+  const setupDefaultStoreRelationsScenario = container.get(SetupDefaultStoreRelationsScenario);
 
   let staticFixtures: BasicCheckoutDmsStaticFixtures;
   let dynamicFixtures: BasicCheckoutDmsDynamicFixtures;
@@ -42,7 +36,6 @@ describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout
 
     assignStoreToProduct(dynamicFixtures.product1.abstract_sku);
     assignStoreToProduct(dynamicFixtures.product2.abstract_sku);
-
     setupDefaultStoreRelations();
   });
 
@@ -172,27 +165,14 @@ describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout
   }
 
   function setupDefaultStoreRelations(): void {
-    assignStoreToDefaultWarehouseScenario.execute({
+    setupDefaultStoreRelationsScenario.execute({
       storeName: staticFixtures.store.name,
-      shouldTriggerPublishAndSync: true,
-    });
-    assignStoreToDefaultShipmentMethodsScenario.execute({
-      storeName: staticFixtures.store.name,
-      shouldTriggerPublishAndSync: true,
-    });
-    assignStoreToPaymentMethodsScenario.execute({
-      storeName: staticFixtures.store.name,
-      shouldTriggerPublishAndSync: true,
       paymentMethods: staticFixtures.paymentMethods,
-    });
-
-    if (['suite', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
-      assignStoreToDefaultShipmentTypesScenario.execute({
-        store: staticFixtures.store.name,
+      rootUser: {
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
-      });
-    }
+      },
+    });
   }
 
   function skipB2BIt(description: string, testFn: () => void): void {
