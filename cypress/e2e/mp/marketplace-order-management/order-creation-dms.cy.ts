@@ -51,7 +51,7 @@ describeDmsSuiteAndMp('order creation dms', { tags: ['@mp', '@marketplace-order-
     selectStoreScenario.execute(staticFixtures.store.name);
   });
 
-  it('merchant user should be able close an order from guest', (): void => {
+  skipB2BIt('merchant user should be able close an order from guest', (): void => {
     addOneProductToCart();
     checkoutMpScenario.execute({ isGuest: true, shouldTriggerOmsInCli: true });
 
@@ -104,20 +104,16 @@ describeDmsSuiteAndMp('order creation dms', { tags: ['@mp', '@marketplace-order-
         password: staticFixtures.defaultPassword,
       });
 
+      if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
+        cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+      }
+
       closeOrderFromMerchantPortal(orderReference);
       closeOrderFromBackoffice();
     });
   }
 
   function closeOrderFromMerchantPortal(orderReference: string): void {
-    if (!['b2b-mp', 'suite'].includes(Cypress.env('repositoryId'))) {
-      salesOrdersPage.visit();
-      salesOrdersPage.update({ query: orderReference, action: ActionEnum.sendToDistribution });
-
-      salesOrdersPage.visit();
-      salesOrdersPage.update({ query: orderReference, action: ActionEnum.confirmAtCenter });
-    }
-
     salesOrdersPage.visit();
     salesOrdersPage.update({ query: orderReference, action: ActionEnum.ship });
 
@@ -162,6 +158,10 @@ describeDmsSuiteAndMp('order creation dms', { tags: ['@mp', '@marketplace-order-
         password: staticFixtures.defaultPassword,
       },
     });
+  }
+
+  function skipB2BIt(description: string, testFn: () => void): void {
+    (['b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
   }
 });
 

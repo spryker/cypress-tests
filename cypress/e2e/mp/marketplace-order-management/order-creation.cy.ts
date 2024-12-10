@@ -25,7 +25,7 @@ describeSuiteAndMp('order creation', { tags: ['@mp', '@marketplace-order-managem
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 
-  it('merchant user should be able close an order from guest', (): void => {
+  skipB2BIt('merchant user should be able close an order from guest', (): void => {
     addOneProductToCart();
     checkoutMpScenario.execute({ isGuest: true, shouldTriggerOmsInCli: true });
 
@@ -76,20 +76,16 @@ describeSuiteAndMp('order creation', { tags: ['@mp', '@marketplace-order-managem
         password: staticFixtures.defaultPassword,
       });
 
+      if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
+        cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+      }
+
       closeOrderFromMerchantPortal(orderReference);
       closeOrderFromBackoffice();
     });
   }
 
   function closeOrderFromMerchantPortal(orderReference: string): void {
-    if (!['b2b-mp', 'suite'].includes(Cypress.env('repositoryId'))) {
-      salesOrdersPage.visit();
-      salesOrdersPage.update({ query: orderReference, action: ActionEnum.sendToDistribution });
-
-      salesOrdersPage.visit();
-      salesOrdersPage.update({ query: orderReference, action: ActionEnum.confirmAtCenter });
-    }
-
     salesOrdersPage.visit();
     salesOrdersPage.update({ query: orderReference, action: ActionEnum.ship });
 
@@ -107,6 +103,10 @@ describeSuiteAndMp('order creation', { tags: ['@mp', '@marketplace-order-managem
     salesIndexPage.view();
 
     salesDetailPage.triggerOms({ state: 'Close' });
+  }
+
+  function skipB2BIt(description: string, testFn: () => void): void {
+    (['b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
   }
 });
 

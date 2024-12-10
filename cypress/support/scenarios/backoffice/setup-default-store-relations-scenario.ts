@@ -34,7 +34,7 @@ export class SetupDefaultStoreRelationsScenario {
       paymentMethods: params.paymentMethods,
     });
 
-    if (['suite'].includes(Cypress.env('repositoryId'))) {
+    if (['suite', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
       this.assignStoreToDefaultShipmentTypesScenario.execute({
         store: params.storeName,
         username: params.rootUser.username,
