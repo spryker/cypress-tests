@@ -1,4 +1,5 @@
 export const enum REPOSITORIES {
+  YvesRepository = 'YvesRepository',
   HomeRepository = 'HomeRepository',
   LoginRepository = 'LoginRepository',
   CartRepository = 'CartRepository',

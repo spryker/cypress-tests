@@ -113,10 +113,16 @@ import { B2cHomeRepository } from '../../pages/yves/home/repositories/b2c-home-r
 import { B2bHomeRepository } from '../../pages/yves/home/repositories/b2b-home-repository';
 import { B2cMpHomeRepository } from '../../pages/yves/home/repositories/b2c-mp-home-repository';
 import { B2bMpHomeRepository } from '../../pages/yves/home/repositories/b2b-mp-home-repository';
+import { B2cYvesRepository } from '../../pages/yves/repositories/b2c-yves-repository';
+import { B2bYvesRepository } from '../../pages/yves/repositories/b2b-yves-repository';
+import { B2cMpYvesRepository } from '../../pages/yves/repositories/b2c-mp-yves-repository';
+import { B2bMpYvesRepository } from '../../pages/yves/repositories/b2b-mp-yves-repository';
+import { SuiteYvesRepository } from '../../pages/yves/repositories/suite-yves-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
 const suiteMappings: BindingsMap = {
+  [REPOSITORIES.YvesRepository]: SuiteYvesRepository,
   [REPOSITORIES.HomeRepository]: SuiteHomeRepository,
   [REPOSITORIES.LoginRepository]: SuiteLoginRepository,
   [REPOSITORIES.CartRepository]: SuiteCartRepository,
@@ -142,6 +148,7 @@ const suiteMappings: BindingsMap = {
 };
 
 const b2cMappings: BindingsMap = {
+  [REPOSITORIES.YvesRepository]: B2cYvesRepository,
   [REPOSITORIES.HomeRepository]: B2cHomeRepository,
   [REPOSITORIES.LoginRepository]: B2cLoginRepository,
   [REPOSITORIES.CartRepository]: B2cCartRepository,
@@ -167,6 +174,7 @@ const b2cMappings: BindingsMap = {
 };
 
 const b2bMappings: BindingsMap = {
+  [REPOSITORIES.YvesRepository]: B2bYvesRepository,
   [REPOSITORIES.HomeRepository]: B2bHomeRepository,
   [REPOSITORIES.LoginRepository]: B2bLoginRepository,
   [REPOSITORIES.CartRepository]: B2bCartRepository,
@@ -192,6 +200,7 @@ const b2bMappings: BindingsMap = {
 };
 
 const b2cMpMappings: BindingsMap = {
+  [REPOSITORIES.YvesRepository]: B2cMpYvesRepository,
   [REPOSITORIES.HomeRepository]: B2cMpHomeRepository,
   [REPOSITORIES.LoginRepository]: B2cMpLoginRepository,
   [REPOSITORIES.CartRepository]: B2cMpCartRepository,
@@ -217,6 +226,7 @@ const b2cMpMappings: BindingsMap = {
 };
 
 const b2bMpMappings: BindingsMap = {
+  [REPOSITORIES.YvesRepository]: B2bMpYvesRepository,
   [REPOSITORIES.HomeRepository]: B2bMpHomeRepository,
   [REPOSITORIES.LoginRepository]: B2bMpLoginRepository,
   [REPOSITORIES.CartRepository]: B2bMpCartRepository,
