@@ -11,11 +11,9 @@ export class MerchantListPage extends BackofficePage {
   protected PAGE_URL = '/merchant-gui/list-merchant';
 
   update = (params: UpdateParams): void => {
-    const findParams = { query: params.query, expectedCount: 1 };
-
-    this.find(findParams).then(($merchantRow) => {
+    this.find({ tableUrl: '/merchant-gui/list-merchant/table**', searchQuery: params.query }).then(($merchantRow) => {
       if (params.action === ActionEnum.edit) {
-        cy.wrap($merchantRow).find(this.repository.getEditButtonSelector()).should('exist').click({ force: true });
+        this.clickEditAction($merchantRow);
       }
 
       if (params.action === ActionEnum.activate) {
@@ -45,15 +43,16 @@ export class MerchantListPage extends BackofficePage {
     });
   };
 
-  find = (params: FindParams): Cypress.Chainable => {
-    const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector).clear();
-    cy.get(searchSelector).invoke('val', params.query);
-    cy.get(searchSelector).type('{enter}');
+  clickEditAction = ($row: JQuery<HTMLElement>): void => {
+    cy.wrap($row).find(this.repository.getEditButtonSelector()).click();
+  };
 
-    this.interceptTable({ url: '/merchant-gui/list-merchant/table**', expectedCount: params.expectedCount });
+  rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
+    if (typeof params.storeName !== 'string') {
+      return false;
+    }
 
-    return this.repository.getFirstTableRow();
+    return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
   };
 }
 
@@ -62,7 +61,7 @@ interface UpdateParams {
   query: string;
 }
 
-interface FindParams {
-  query: string;
-  expectedCount?: number;
+interface IsAssignedParams {
+  row: JQuery<HTMLElement>;
+  storeName?: string;
 }

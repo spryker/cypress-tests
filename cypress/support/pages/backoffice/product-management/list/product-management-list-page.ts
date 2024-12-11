@@ -11,10 +11,20 @@ export class ProductManagementListPage extends BackofficePage {
 
   protected PAGE_URL = '/product-management';
 
-  update = (params: UpdateParams): void => {
-    const findParams = { query: params.query, expectedCount: 1 };
+  clickEditAction = ($row: JQuery<HTMLElement>): void => {
+    cy.wrap($row).find(this.repository.getEditButtonSelector()).should('exist').click();
+  };
 
-    this.find(findParams).then(($productRow) => {
+  rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
+    if (typeof params.storeName !== 'string') {
+      return false;
+    }
+
+    return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
+  };
+
+  update = (params: UpdateParams): void => {
+    this.find({ searchQuery: params.query, tableUrl: '/product-management/index/table**' }).then(($productRow) => {
       if (params.action === ActionEnum.edit) {
         cy.wrap($productRow).find(this.repository.getEditButtonSelector()).as('editButton');
         cy.get('@editButton').click();
@@ -25,25 +35,14 @@ export class ProductManagementListPage extends BackofficePage {
       }
     });
   };
-
-  find = (params: FindParams): Cypress.Chainable => {
-    const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector).clear();
-    cy.get(searchSelector).invoke('val', params.query);
-    cy.get(searchSelector).type('{enter}');
-
-    this.interceptTable({ url: '/product-management/index/table**', expectedCount: params.expectedCount });
-
-    return this.repository.getFirstTableRow();
-  };
-}
-
-interface FindParams {
-  query: string;
-  expectedCount?: number;
 }
 
 interface UpdateParams {
   action: ActionEnum;
   query: string;
+}
+
+interface IsAssignedParams {
+  row: JQuery<HTMLElement>;
+  storeName?: string;
 }

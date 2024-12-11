@@ -13,3 +13,6 @@ export * from './merchant-relation-request';
 export * from './discount';
 export * from './product-option-value';
 export * from './product-localized-attributes';
+export * from './store';
+export * from './shipment-method';
+export * from './payment-method';

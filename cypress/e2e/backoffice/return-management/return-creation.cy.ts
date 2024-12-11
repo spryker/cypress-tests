@@ -7,7 +7,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
 (['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'return creation',
-  { tags: ['@return-management'] },
+  { tags: ['@backoffice', '@return-management'] },
   (): void => {
     const catalogPage = container.get(CatalogPage);
     const productsPage = container.get(ProductPage);

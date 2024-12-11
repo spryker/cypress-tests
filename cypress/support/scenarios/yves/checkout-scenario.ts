@@ -22,11 +22,9 @@ export class CheckoutScenario {
   execute = (params?: ExecuteParams): void => {
     this.cartPage.visit();
     this.cartPage.startCheckout();
-
     if (params?.isGuest) {
       this.checkoutCustomerPage.checkoutAsGuest();
     }
-
     this.fillShippingAddress(params);
     this.checkoutShipmentPage.setStandardShippingMethod();
     this.fillPaymentCheckoutStep(params);

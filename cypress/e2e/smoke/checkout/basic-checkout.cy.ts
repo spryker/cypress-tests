@@ -6,7 +6,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
-describe('basic checkout', { tags: ['@smoke'] }, (): void => {
+describe('basic checkout', { tags: ['@smoke', '@checkout'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);
   const customerOverviewPage = container.get(CustomerOverviewPage);

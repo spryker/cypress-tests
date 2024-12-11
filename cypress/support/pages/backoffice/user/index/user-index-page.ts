@@ -2,6 +2,7 @@ import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import { BackofficePage, ActionEnum } from '@pages/backoffice';
 import { UserIndexRepository } from './user-index-repository';
+import Chainable = Cypress.Chainable;
 
 @injectable()
 @autoWired
@@ -14,10 +15,15 @@ export class UserIndexPage extends BackofficePage {
     this.repository.getAddNewUserButton().click();
   };
 
-  update = (params: UpdateParams): void => {
-    const findParams = { query: params.query, expectedCount: 1 };
+  findUser(params: FindParams): Chainable {
+    return this.find({ searchQuery: params.query, tableUrl: '/user/index/table**' });
+  }
 
-    this.find(findParams).then(($userRow) => {
+  update = (params: UpdateParams): void => {
+    this.find({
+      searchQuery: params.query,
+      tableUrl: '/user/index/table**',
+    }).then(($userRow) => {
       if (params.action === ActionEnum.edit) {
         cy.wrap($userRow).find(this.repository.getEditButtonSelector()).should('exist').click({ force: true });
       }
@@ -36,28 +42,17 @@ export class UserIndexPage extends BackofficePage {
     });
   };
 
-  find = (params: FindParams): Cypress.Chainable => {
-    const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector).clear();
-    cy.get(searchSelector).invoke('val', params.query);
-    cy.get(searchSelector).type('{enter}');
-
-    this.interceptTable({ url: '/user/index/table**', expectedCount: params.expectedCount });
-
-    return this.repository.getFirstTableRow();
-  };
-
   getUserTableHeader = (): Cypress.Chainable => {
     return this.repository.getTableHeader();
   };
 }
 
-interface FindParams {
-  query: string;
-  expectedCount?: number;
-}
-
 interface UpdateParams {
   action: ActionEnum;
   query: string;
+}
+
+interface FindParams {
+  query: string;
+  expectedCount?: number;
 }

@@ -25,7 +25,7 @@ export class CartPage extends YvesPage {
   };
 
   startCheckout = (): void => {
-    this.repository.getCheckoutButton().click();
+    this.repository.getCheckoutButton().click({ force: true });
   };
 
   removeProduct = (params: RemoveProductParams): void => {
