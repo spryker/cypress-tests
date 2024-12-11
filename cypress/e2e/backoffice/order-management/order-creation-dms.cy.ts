@@ -10,6 +10,7 @@ import {
   SetupDefaultStoreRelationsScenario,
 } from '@scenarios/backoffice';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
+import { retryableBefore } from '../../../support/e2e';
 
 describeIfDynamicStoreEnabled(
   'order creation dms',
@@ -32,7 +33,7 @@ describeIfDynamicStoreEnabled(
     let staticFixtures: OrderManagementDmsStaticFixtures;
     let dynamicFixtures: OrderCreationDmsDynamicFixtures;
 
-    before((): void => {
+    retryableBefore((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
       userLoginScenario.execute({
