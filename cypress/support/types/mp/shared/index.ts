@@ -10,3 +10,5 @@ export * from './company-user';
 export * from './merchant-relation-request';
 export * from './url';
 export * from './address';
+export * from './payment-method';
+export * from './store';

@@ -26,6 +26,25 @@ before(() => {
   loadFixture();
 });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-function-return-type
+export const retryableBefore = (fn: any) => {
+  let shouldRun = true;
+
+  beforeEach(() => {
+    if (!shouldRun) return;
+    shouldRun = false;
+    fn();
+  });
+
+  Cypress.on('test:after:run', (result) => {
+    if (result.state === 'failed') {
+      if (result.currentRetry < result.retries) {
+        shouldRun = true;
+      }
+    }
+  });
+};
+
 const loadFixture = (): void => {
   const currentSuite = Cypress.mocha.getRunner().suite.suites[0];
   if (currentSuite.title.includes('[skip]')) {
