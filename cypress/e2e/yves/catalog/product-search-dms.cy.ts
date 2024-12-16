@@ -3,6 +3,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 import { ProductSearchDmsDynamicFixtures, ProductSearchDmsStaticFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 import { AssignStoreToProductScenario, CreateStoreScenario, UserLoginScenario } from '@scenarios/backoffice';
+import { retryableBefore } from '../../../support/e2e';
 
 describeIfDynamicStoreEnabled('product search dms', { tags: ['@yves', '@catalog', '@dms'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
@@ -16,7 +17,7 @@ describeIfDynamicStoreEnabled('product search dms', { tags: ['@yves', '@catalog'
   let staticFixtures: ProductSearchDmsStaticFixtures;
   let dynamicFixtures: ProductSearchDmsDynamicFixtures;
 
-  before((): void => {
+  retryableBefore((): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
     userLoginScenario.execute({
