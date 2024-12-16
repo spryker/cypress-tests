@@ -3,6 +3,7 @@ import { LoginPage, CustomerOverviewPage } from '@pages/yves';
 import { CustomerAuthDmsDynamicFixtures, CustomerAuthDmsStaticFixtures } from '@interfaces/yves';
 import { CreateStoreScenario, EnableCmsBlockForAllStoresScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { SelectStoreScenario } from '@scenarios/yves';
+import { retryableBefore } from '../../../support/e2e';
 
 describeIfDynamicStoreEnabled(
   'customer auth dms',
@@ -18,7 +19,7 @@ describeIfDynamicStoreEnabled(
     let dynamicFixtures: CustomerAuthDmsDynamicFixtures;
     let staticFixtures: CustomerAuthDmsStaticFixtures;
 
-    before((): void => {
+    retryableBefore((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
       userLoginScenario.execute({
