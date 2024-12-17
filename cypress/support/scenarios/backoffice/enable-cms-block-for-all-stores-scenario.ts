@@ -13,14 +13,13 @@ export class EnableCmsBlockForAllStoresScenario {
 
     this.blockListPage.interceptTable({ url: '/cms-block-gui/list-block/table**' }).then(() => {
       this.blockListPage
-        .findWithRetry({
+        .find({
           searchQuery: params.cmsBlockName,
           tableUrl: '/cms-block-gui/list-block/table**',
-          pageUrl: this.blockListPage.getPageUrl(),
         })
-        .then(($storeRow) => {
-          if (!this.blockListPage.rowIsAssignedToStore({ row: $storeRow, storeName: params.storeName })) {
-            this.blockListPage.clickEditAction($storeRow);
+        .then(($cmsBlockRow) => {
+          if (!this.blockListPage.rowIsAssignedToStore({ row: $cmsBlockRow, storeName: params.storeName })) {
+            this.blockListPage.clickEditAction($cmsBlockRow);
 
             this.blockUpdatePage.assignAllAvailableStore();
             this.blockUpdatePage.save();

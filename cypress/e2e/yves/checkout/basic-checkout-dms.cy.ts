@@ -8,6 +8,7 @@ import {
   UserLoginScenario,
   SetupDefaultStoreRelationsScenario,
 } from '@scenarios/backoffice';
+import { retryableBefore } from '../../../support/e2e';
 
 describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout', '@dms'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
@@ -24,7 +25,7 @@ describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout
   let staticFixtures: BasicCheckoutDmsStaticFixtures;
   let dynamicFixtures: BasicCheckoutDmsDynamicFixtures;
 
-  before((): void => {
+  retryableBefore((): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
     userLoginScenario.execute({
