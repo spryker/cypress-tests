@@ -3,10 +3,7 @@ import { LocaleSwitchingScenario } from '@scenarios/yves';
 import { CatalogPage, HomePage } from '@pages/yves';
 import { LocaleStaticFixtures } from '@interfaces/yves';
 
-(['b2c', 'b2c-mp', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
-  'locale switching',
-  { tags: ['@core', '@yves'] },
-  (): void => {
+describe('locale switching', { tags: ['@core', '@yves'] }, (): void => {
     const homePage = container.get(HomePage);
     const catalogPage = container.get(CatalogPage);
     const localeSwitchingScenario = container.get(LocaleSwitchingScenario);
