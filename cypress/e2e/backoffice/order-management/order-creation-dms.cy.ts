@@ -95,6 +95,7 @@ describeIfDynamicStoreEnabled(
       salesIndexPage.visit();
       salesIndexPage.view();
 
+      salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
       salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
       salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
       salesDetailPage.triggerOms({ state: 'skip picking' });
