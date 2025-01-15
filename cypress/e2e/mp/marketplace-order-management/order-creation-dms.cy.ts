@@ -12,6 +12,7 @@ import {
 import { CheckoutMpScenario, CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 import { ActionEnum, SalesOrdersPage } from '@pages/mp';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
+import { retryableBefore } from '../../../support/e2e';
 
 describeDmsSuiteAndMp('order creation dms', { tags: ['@mp', '@marketplace-order-management', '@dms'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
@@ -32,7 +33,7 @@ describeDmsSuiteAndMp('order creation dms', { tags: ['@mp', '@marketplace-order-
   let staticFixtures: OrderCreationDmsStaticFixtures;
   let dynamicFixtures: OrderCreationDmsDynamicFixtures;
 
-  before((): void => {
+  retryableBefore((): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
     userLoginScenario.execute({
