@@ -28,7 +28,8 @@ export class SalesDetailPage extends BackofficePage {
         this.repository.getOmsButtonSelector(params.state),
         this.repository.getTriggerOmsDivSelector(),
         25,
-        5000
+        5000,
+        params.shouldTriggerOmsInCli ? ['console oms:check-condition', 'console oms:check-timeout'] : []
       );
 
       cy.get(this.repository.getTriggerOmsDivSelector())
