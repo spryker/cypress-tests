@@ -38,7 +38,7 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
       placeCustomerOrder(dynamicFixtures.customer1.email, dynamicFixtures.address1.id_customer_address);
 
       customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.containsOrderState('Payment pending');
+      orderDetailsPage.containsOrderState('New');
 
       orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
         orderDetailsPage.editOrder();
@@ -52,9 +52,9 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
       });
     });
 
-    it('customer should not be able to create order amendment when order not in payment-pending state', (): void => {
+    it('customer should not be able to create order amendment when order not in "grace period started" state', (): void => {
       placeCustomerOrder(dynamicFixtures.customer2.email, dynamicFixtures.address2.id_customer_address);
-      triggerOmsOrderToPaidState();
+      triggerOmsOrderToGracePeriodFinishedState();
 
       customerLoginScenario.execute({
         email: dynamicFixtures.customer2.email,
@@ -62,9 +62,7 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
       });
 
       customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.editOrder();
-
-      cy.contains('The order cannot be amended.').should('exist');
+      orderDetailsPage.doesNotContainEditOrderButton();
     });
 
     it('customer should be able to replace current cart (quote) with previous order items', (): void => {
@@ -193,7 +191,7 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
       });
     }
 
-    function triggerOmsOrderToPaidState(): void {
+    function triggerOmsOrderToGracePeriodFinishedState(): void {
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
@@ -202,7 +200,7 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
       salesIndexPage.visit();
       salesIndexPage.view();
 
-      salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
+      salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
     }
   }
 );

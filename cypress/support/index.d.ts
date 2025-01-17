@@ -44,7 +44,14 @@ declare namespace Cypress {
     /**
      * @example cy.reloadUntilFound('/transactions', 'td:contains($4.44)')
      */
-    reloadUntilFound(url: string, findSelector: string, getSelector: string, retries: number, retryWait: number): void;
+    reloadUntilFound(
+      url: string,
+      findSelector: string,
+      getSelector: string,
+      retries: number,
+      retryWait: number,
+      commands?: string[]
+    ): void;
 
     /**
      * @example cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout'])
