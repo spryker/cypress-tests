@@ -1,0 +1,12 @@
+{
+    "defaultPassword": "change123",
+    "rootUser": {
+        "firstName": "Admin",
+        "lastName": "Spryker",
+        "username": "admin@spryker.com"
+    },
+    "fileNameToUpload": "test-file.pdf",
+    "fileSize": "1MB",
+    "fileType": "application/pdf",
+    "fileUploadPath": "cypress/fixtures/files/test-file.pdf"
+}

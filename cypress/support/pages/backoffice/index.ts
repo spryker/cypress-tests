@@ -36,3 +36,4 @@ export * from './shipment/shipment-method/list/shipment-method-list-page';
 export * from './shipment/shipment-method/edit/shipment-method-edit-page';
 export * from './payment-method/list/payment-method-list-page';
 export * from './payment-method/edit/payment-method-edit-page';
+export * from './file-manager-attachment/list/file-manager-attachment-list-page';
