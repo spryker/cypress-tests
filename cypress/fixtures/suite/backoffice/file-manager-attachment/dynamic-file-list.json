@@ -41,20 +41,42 @@
         {
           "type": "helper",
           "name": "haveCompany",
-          "key": "company",
+          "key": "company1",
           "arguments": [{ "isActive": true, "status": "approved", "name": "Company 1" }]
         },
         {
           "type": "helper",
           "name": "haveCompany",
-          "key": "company",
+          "key": "company2",
           "arguments": [{ "isActive": true, "status": "approved", "name": "Company 2" }]
         },
         {
           "type": "helper",
           "name": "haveCompany",
-          "key": "company",
+          "key": "company3",
           "arguments": [{ "isActive": true, "status": "approved", "name": "Company 3" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveFile",
+          "key": "file1",
+          "arguments":[
+            {
+              "file_reference": "FILE-1",
+              "file_name": "fileName1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFile",
+          "key": "file2",
+          "arguments":[
+            {
+              "file_reference": "FILE-2",
+              "file_name": "fileName2"
+            }
+          ]
         }
       ]
     }
