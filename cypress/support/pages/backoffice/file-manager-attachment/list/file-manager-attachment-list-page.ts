@@ -1,6 +1,6 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { ActionEnum, BackofficePage } from '@pages/backoffice';
+import { BackofficePage } from '@pages/backoffice';
 import { FileManagerAttachmentListRepository } from './file-manager-attachment-list-repository';
 
 @injectable()
@@ -19,41 +19,7 @@ export class FileManagerAttachmentListPage extends BackofficePage {
         cy.get(this.repository.getTableHeaderSelector()).should('contain', 'Actions');
     }
 
-    update = (params: UpdateParams): void => {
-        this.find({ tableUrl: '/file-manager-attachment/list/table**', searchQuery: params.query }).then(($fileRow) => {
-            cy.wrap($fileRow).find(this.repository.getDropdownToggleButtonSelector()).should('exist').click();
-
-            cy.get(this.repository.getDropdownMenuSelector())
-                .find(this.repository.getEditButtonSelector())
-                .should('exist')
-                .click();
-        });
-    };
-
-    delete = (params: UpdateParams): void => {
-        this.find({ tableUrl: '/file-manager-attachment/list/table**', searchQuery: params.query }).then(($fileRow) => {
-            cy.wrap($fileRow).find(this.repository.getDropdownToggleButtonSelector()).should('exist').click();
-
-            cy.get(this.repository.getDropdownMenuSelector())
-                .find(this.repository.getDeleteButtonSelector())
-                .should('exist')
-                .click();
-        });
-    };
-
-    download = (params: UpdateParams): void => {
-        this.find({ tableUrl: '/file-manager-attachment/list/table**', searchQuery: params.query }).then(($fileRow) => {
-            cy.wrap($fileRow).find(this.repository.getDropdownToggleButtonSelector()).should('exist').click();
-
-            cy.get(this.repository.getDropdownMenuSelector())
-                .find(this.repository.getDownloadButtonSelector())
-                .should('exist')
-                .click();
-        });
-    };
-}
-
-interface UpdateParams {
-    action: ActionEnum;
-    query: string;
+    clickViewButton(): void {
+        cy.get(this.repository.getViewButtonSelector()).first().click();
+    }
 }

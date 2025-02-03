@@ -62,8 +62,7 @@
           "key": "file1",
           "arguments":[
             {
-              "file_reference": "FILE-1",
-              "file_name": "fileName1"
+              "file_name": "fileName000.pdf"
             }
           ]
         },
@@ -73,8 +72,7 @@
           "key": "file2",
           "arguments":[
             {
-              "file_reference": "FILE-2",
-              "file_name": "fileName2"
+              "file_name": "fileName001.pdf"
             }
           ]
         }

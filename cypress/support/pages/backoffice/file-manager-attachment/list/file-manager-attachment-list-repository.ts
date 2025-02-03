@@ -9,6 +9,7 @@ export class FileManagerAttachmentListRepository {
     getEditButtonSelector = (): string => '[data-qa="spy-btn edit-button"]';
     getDeleteButtonSelector = (): string => '[data-qa="spy-btn delete-button"]';
     getDownloadButtonSelector = (): string => '[data-qa="spy-btn download-button"]';
+    getViewButtonSelector = (): string => '[data-qa="view-button"]';
     getTableSelector = (): string => '.gui-table-data';
     getTableWrapperSelector = (): string => '.dataTables_wrapper';
     getTableHeaderSelector = (): string => 'th';
