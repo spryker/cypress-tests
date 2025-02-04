@@ -75,6 +75,28 @@
               "file_name": "fileName001.pdf"
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFileAttachment",
+          "arguments":[
+            {
+              "file": "#file1",
+              "entity_id": "#company1.id_company",
+              "entity_name": "company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFileAttachment",
+          "arguments":[
+            {
+              "file": "#file2",
+              "entity_id": "#company1.id_company",
+              "entity_name": "company"
+            }
+          ]
         }
       ]
     }

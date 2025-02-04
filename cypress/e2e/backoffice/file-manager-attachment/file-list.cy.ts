@@ -1,9 +1,9 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { FileManagerAttachmentDynamicFixtures, FileManagerAttachmentStaticFixtures } from '@interfaces/backoffice';
-import { FileManagerAttachmentListPage, FileManagerAttachmentAddPage, FileManagerAttachmentViewPage, FileManagerAttachmentDeletePage } from '@pages/backoffice';
+import { FileManagerAttachmentListPage, FileManagerAttachmentAddPage, FileManagerAttachmentViewPage, FileManagerAttachmentDeletePage, FileManagerAttachmentDetachPage } from '@pages/backoffice';
 
-describeWithoutMp('File Manager Module - Files List', { tags: ['@backoffice', '@fileManager', '@ssp'] }, () => {
+describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fileManager', '@ssp'] }, () => {
     const userLoginScenario = container.get(UserLoginScenario);
     const fileManagerAttachmentListPage = container.get(FileManagerAttachmentListPage);
     
@@ -72,8 +72,18 @@ describeWithoutMp('File Manager Module - Files List', { tags: ['@backoffice', '@
         fileManagerAttachmentListPage.clickViewButton();
         fileManagerAttachmentViewPage.verifyFileDetailsAreVisible();
     });
+
+    it('should successfully detach file from entity', () => {
+        const fileManagerAttachmentDetachPage = container.get(FileManagerAttachmentDetachPage);
+
+        fileManagerAttachmentListPage.visit();
+        fileManagerAttachmentListPage.clickViewButton();
+        
+        fileManagerAttachmentDetachPage.detachFile();
+        fileManagerAttachmentDetachPage.verifySuccessMessage();
+    });
 });
 
-function describeWithoutMp(title: string, options: { tags: string[] }, fn: () => void): void {
-    (['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, fn);
+function describeForSsp(title: string, options: { tags: string[] }, fn: () => void): void {
+    (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, fn);
 }
