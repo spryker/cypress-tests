@@ -118,6 +118,7 @@ import { B2bYvesRepository } from '../../pages/yves/repositories/b2b-yves-reposi
 import { B2cMpYvesRepository } from '../../pages/yves/repositories/b2c-mp-yves-repository';
 import { B2bMpYvesRepository } from '../../pages/yves/repositories/b2b-mp-yves-repository';
 import { SuiteYvesRepository } from '../../pages/yves/repositories/suite-yves-repository';
+import {SuiteClaimRepository} from "../../pages/yves/claim/repositories/suite-claim-repository";
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -145,6 +146,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.ContentRepository]: SuiteContentRepository,
   [REPOSITORIES.OrderDetailsRepository]: SuiteOrderDetailsRepository,
   [REPOSITORIES.ProductComparisonRepository]: SuiteProductComparisonRepository,
+  [REPOSITORIES.ClaimRepository]: SuiteClaimRepository,
 };
 
 const b2cMappings: BindingsMap = {

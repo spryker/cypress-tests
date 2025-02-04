@@ -21,3 +21,6 @@ export * from './customer/overview/customer-overview-page';
 export * from './customer/order/order-details-page';
 export * from './product-comparison/product-comparison-page';
 export * from './content/cms-content-page';
+export * from './claim/claim-list-page';
+export * from './claim/claim-create-page';
+export * from './claim/claim-detail-page';

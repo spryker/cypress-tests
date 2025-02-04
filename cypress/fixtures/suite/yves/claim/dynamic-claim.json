@@ -1,0 +1,46 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "operations": [
+          {
+              "type": "helper",
+              "name": "haveCompany",
+              "key": "company",
+              "arguments": [{ "isActive": true, "status": "approved" }]
+          },
+          {
+              "type": "helper",
+              "name": "haveCompanyBusinessUnit",
+              "key": "businessUnitFromCompany",
+              "arguments": [{ "fkCompany": "#company.id_company" }]
+          },
+          {
+              "type": "helper",
+              "name": "haveCustomer",
+              "key": "customer",
+              "arguments": [{ "password": "change123" }]
+          },
+          {
+              "type": "helper",
+              "name": "confirmCustomer",
+              "key": "confirmedCustomer",
+              "arguments": ["#customer"]
+          },
+          {
+              "type": "helper",
+              "name": "haveCompanyUser",
+              "key": "companyUserFromCompany",
+              "arguments": [
+                  {
+                      "customer": "#customer",
+                      "fkCustomer": "#customer.id_customer",
+                      "fkCompany": "#company.id_company",
+                      "fkCompanyBusinessUnit": "#businessUnitFromCompany.id_company_business_unit"
+                  }
+              ]
+          }
+      ]
+    }
+  }
+}
