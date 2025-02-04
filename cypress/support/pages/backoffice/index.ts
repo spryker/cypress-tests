@@ -39,3 +39,4 @@ export * from './payment-method/edit/payment-method-edit-page';
 export * from './file-manager-attachment/list/file-manager-attachment-list-page';
 export * from './file-manager-attachment/add/file-manager-attachment-add-page';
 export * from './file-manager-attachment/view/file-manager-attachment-view-page';
+export * from './file-manager-attachment/delete/file-manager-attachment-delete-page';

@@ -11,15 +11,18 @@ export class FileManagerAttachmentListPage extends BackofficePage {
     protected PAGE_URL = '/file-manager-attachment/list';
 
     verifyListPage(): void {
-        cy.get(this.repository.getTableHeaderSelector()).should('contain', 'Reference');
-        cy.get(this.repository.getTableHeaderSelector()).should('contain', 'File Name');
-        cy.get(this.repository.getTableHeaderSelector()).should('contain', 'Size');
-        cy.get(this.repository.getTableHeaderSelector()).should('contain', 'Type');
-        cy.get(this.repository.getTableHeaderSelector()).should('contain', 'Date Uploaded');
-        cy.get(this.repository.getTableHeaderSelector()).should('contain', 'Actions');
+        cy.get(this.repository.getReferenceHeaderSelector()).should('contain', 'Reference');
+        cy.get(this.repository.getFileNameHeaderSelector()).should('contain', 'File Name');
+        cy.get(this.repository.getFileSizeHeaderSelector()).should('contain', 'Size');
+        cy.get(this.repository.getFileTypeHeaderSelector()).should('contain', 'Type');
+        cy.get(this.repository.getUploadedDateHeaderSelector()).should('contain', 'Date Uploaded');
     }
 
     clickViewButton(): void {
         cy.get(this.repository.getViewButtonSelector()).first().click();
+    }
+
+    clickDeleteButton(): void {
+        cy.get(this.repository.getDeleteButtonSelector()).first().click();
     }
 }

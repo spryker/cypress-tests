@@ -23,16 +23,6 @@ export class FileManagerAttachmentAddPage extends BackofficePage {
         );
     }
 
-    uploadFile(file: { fileContent: any; fileName: string; mimeType: string; filePath: string; }): void {
-        cy.get(this.repository.getFileInputSelector()).selectFile({
-            contents: file.filePath,
-            fileName: file.fileName,
-            mimeType: file.mimeType,
-        }, {
-            force: true
-        });
-    }
-
     verifyFileUploadConstraints(): void {
         cy.get(this.repository.getFileInputSelector())
             .should('have.attr', 'multiple');

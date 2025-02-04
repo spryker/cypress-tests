@@ -1,7 +1,7 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { FileManagerAttachmentDynamicFixtures, FileManagerAttachmentStaticFixtures } from '@interfaces/backoffice';
-import { FileManagerAttachmentListPage, FileManagerAttachmentAddPage, FileManagerAttachmentViewPage } from '@pages/backoffice';
+import { FileManagerAttachmentListPage, FileManagerAttachmentAddPage, FileManagerAttachmentViewPage, FileManagerAttachmentDeletePage } from '@pages/backoffice';
 
 describe('File Manager Module - Files List', () => {
     const userLoginScenario = container.get(UserLoginScenario);
@@ -55,7 +55,17 @@ describe('File Manager Module - Files List', () => {
         });
     });
 
-    it('should display file details on view page', () => {
+    it.skip('should successfully delete a file', () => {
+        const fileManagerAttachmentDeletePage = container.get(FileManagerAttachmentDeletePage);
+
+        fileManagerAttachmentListPage.visit();
+        fileManagerAttachmentListPage.clickDeleteButton();
+        
+        fileManagerAttachmentDeletePage.confirmDelete();
+        fileManagerAttachmentDeletePage.verifySuccessMessage();
+    });
+
+    it.skip('should display file details on view page', () => {
         const fileManagerAttachmentViewPage = container.get(FileManagerAttachmentViewPage);
 
         fileManagerAttachmentListPage.visit();

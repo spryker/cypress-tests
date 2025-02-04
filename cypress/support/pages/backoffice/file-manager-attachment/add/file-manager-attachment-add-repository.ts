@@ -6,5 +6,5 @@ import { autoWired } from '@utils';
 export class FileManagerAttachmentAddRepository {
     getFileInputSelector = (): string => '[data-qa="file-upload-button"]';
     getSubmitButtonSelector = (): string => '[data-qa="file-upload-submit"]';
-    getSuccessMessageSelector = (): string => '.alert-success';
+    getSuccessMessageSelector = (): string => '[data-qa="success-message"]';
 }
