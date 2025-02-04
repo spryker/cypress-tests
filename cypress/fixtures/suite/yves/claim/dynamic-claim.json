@@ -4,6 +4,12 @@
     "attributes": {
       "operations": [
           {
+              "type": "transfer",
+              "name": "LocaleTransfer",
+              "key": "locale",
+              "arguments": { "id_locale": 66, "locale_name": "en_US" }
+          },
+          {
               "type": "helper",
               "name": "haveCompany",
               "key": "company",
@@ -19,7 +25,7 @@
               "type": "helper",
               "name": "haveCustomer",
               "key": "customer",
-              "arguments": [{ "password": "change123" }]
+              "arguments": [{ "locale": "#locale", "password": "change123" }]
           },
           {
               "type": "helper",
