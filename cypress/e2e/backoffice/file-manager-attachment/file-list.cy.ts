@@ -3,7 +3,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 import { FileManagerAttachmentDynamicFixtures, FileManagerAttachmentStaticFixtures } from '@interfaces/backoffice';
 import { FileManagerAttachmentListPage, FileManagerAttachmentAddPage, FileManagerAttachmentViewPage, FileManagerAttachmentDeletePage } from '@pages/backoffice';
 
-describe('File Manager Module - Files List', () => {
+describeWithoutMp('File Manager Module - Files List', { tags: ['@backoffice', '@fileManager', '@ssp'] }, () => {
     const userLoginScenario = container.get(UserLoginScenario);
     const fileManagerAttachmentListPage = container.get(FileManagerAttachmentListPage);
     
@@ -70,6 +70,10 @@ describe('File Manager Module - Files List', () => {
 
         fileManagerAttachmentListPage.visit();
         fileManagerAttachmentListPage.clickViewButton();
-        fileManagerAttachmentViewPage.verifyFileDetails();
+        fileManagerAttachmentViewPage.verifyFileDetailsAreVisible();
     });
 });
+
+function describeWithoutMp(title: string, options: { tags: string[] }, fn: () => void): void {
+    (['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, fn);
+}

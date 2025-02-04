@@ -8,7 +8,7 @@ import { FileManagerAttachmentViewRepository } from './file-manager-attachment-v
 export class FileManagerAttachmentViewPage extends BackofficePage {
     @inject(FileManagerAttachmentViewRepository) private repository: FileManagerAttachmentViewRepository;
 
-    verifyFileDetails(): void {
+    verifyFileDetailsAreVisible(): void {
         cy.get(this.repository.getFileNameSelector()).should('be.visible');
         cy.get(this.repository.getUploadedDateSelector()).should('be.visible');
         cy.get(this.repository.getFileSizeSelector()).should('be.visible');
