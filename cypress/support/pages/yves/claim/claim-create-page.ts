@@ -28,8 +28,8 @@ export class ClaimCreatePage extends YvesPage {
 
         cy.get('form[name="claimForm"] input[name="claimForm[subject]"]').type(params.subject);
         cy.get('form[name="claimForm"] textarea[name="claimForm[description]"]').type(params.description);
-        for (let fileName of params.files) {
-            cy.get('form[name="claimForm"] input[name="claimForm[files][]"]').attachFile(fileName);
+        for (let file of params.files) {
+            cy.get('form[name="claimForm"] input[name="claimForm[files][]"]').attachFile(file.name);
         }
 
         cy.get('form[name="claimForm"] button[type="submit"]').click();
@@ -44,10 +44,16 @@ export class ClaimCreatePage extends YvesPage {
 interface ClaimParams {
     subject: string;
     description: string;
-    files: string[];
+    files: File[];
     availableTypes: string[];
 }
 
 interface OrderClaimParams extends ClaimParams {
     orderReference: string;
+}
+
+export interface File {
+    name: string;
+    sise: string;
+    extension: string;
 }

@@ -23,7 +23,7 @@
                 {
                     "type": "helper",
                     "name": "haveCompanyBusinessUnit",
-                    "key": "businessUnitFromCompany",
+                    "key": "businessUnit",
                     "arguments": [
                         {
                             "fkCompany": "#company.id_company"
@@ -58,7 +58,7 @@
                             "customer": "#customer",
                             "fkCustomer": "#customer.id_customer",
                             "fkCompany": "#company.id_company",
-                            "fkCompanyBusinessUnit": "#businessUnitFromCompany.id_company_business_unit"
+                            "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
                         }
                     ]
                 },
