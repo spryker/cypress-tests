@@ -6,13 +6,13 @@ import { FileManagerAttachmentViewRepository } from './file-manager-attachment-v
 @injectable()
 @autoWired
 export class FileManagerAttachmentViewPage extends BackofficePage {
-    @inject(FileManagerAttachmentViewRepository) private repository: FileManagerAttachmentViewRepository;
+  @inject(FileManagerAttachmentViewRepository) private repository: FileManagerAttachmentViewRepository;
 
-    verifyFileDetailsAreVisible(): void {
-        cy.get(this.repository.getFileNameSelector()).should('be.visible');
-        cy.get(this.repository.getUploadedDateSelector()).should('be.visible');
-        cy.get(this.repository.getFileSizeSelector()).should('be.visible');
-        cy.get(this.repository.getFileTypeSelector()).should('be.visible');
-        cy.get(this.repository.getLinkedEntitiesSelector()).should('be.visible');
-    }
+  verifyFileDetailsAreVisible(): void {
+    cy.get(this.repository.getFileNameSelector()).should('be.visible');
+    cy.get(this.repository.getUploadedDateSelector()).should('be.visible');
+    cy.get(this.repository.getFileSizeSelector()).should('be.visible');
+    cy.get(this.repository.getFileTypeSelector()).should('be.visible');
+    cy.get(this.repository.getLinkedEntitiesSelector()).should('be.visible');
+  }
 }

@@ -6,33 +6,32 @@ import { FileManagerAttachmentAddRepository } from './file-manager-attachment-ad
 @injectable()
 @autoWired
 export class FileManagerAttachmentAddPage extends BackofficePage {
-    @inject(FileManagerAttachmentAddRepository) private repository: FileManagerAttachmentAddRepository;
+  @inject(FileManagerAttachmentAddRepository) private repository: FileManagerAttachmentAddRepository;
 
-    protected PAGE_URL = '/file-manager-attachment/add-files/index';
+  protected PAGE_URL = '/file-manager-attachment/add-files/index';
 
-    uploadFiles(files: Array<{ fileContent: any; fileName: string; mimeType: string; filePath: string; }>): void {
-        cy.get(this.repository.getFileInputSelector()).selectFile(
-            files.map(file => ({
-                contents: file.filePath,
-                fileName: file.fileName,
-                mimeType: file.mimeType,
-            })),
-            {
-                force: true
-            }
-        );
-    }
+  uploadFiles(files: Array<{ fileContent: any; fileName: string; mimeType: string; filePath: string }>): void {
+    cy.get(this.repository.getFileInputSelector()).selectFile(
+      files.map((file) => ({
+        contents: file.filePath,
+        fileName: file.fileName,
+        mimeType: file.mimeType,
+      })),
+      {
+        force: true,
+      }
+    );
+  }
 
-    verifyFileUploadConstraints(): void {
-        cy.get(this.repository.getFileInputSelector())
-            .should('have.attr', 'multiple');
-    }
+  verifyFileUploadConstraints(): void {
+    cy.get(this.repository.getFileInputSelector()).should('have.attr', 'multiple');
+  }
 
-    submitForm(): void {
-        cy.get(this.repository.getSubmitButtonSelector()).click();
-    }
+  submitForm(): void {
+    cy.get(this.repository.getSubmitButtonSelector()).click();
+  }
 
-    verifySuccessMessage(): void {
-        cy.get(this.repository.getSuccessMessageSelector()).should('be.visible');
-    }
+  verifySuccessMessage(): void {
+    cy.get(this.repository.getSuccessMessageSelector()).should('be.visible');
+  }
 }

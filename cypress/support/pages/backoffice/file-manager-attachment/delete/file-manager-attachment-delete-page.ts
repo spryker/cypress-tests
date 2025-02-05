@@ -6,15 +6,15 @@ import { FileManagerAttachmentDeleteRepository } from './file-manager-attachment
 @injectable()
 @autoWired
 export class FileManagerAttachmentDeletePage extends BackofficePage {
-    @inject(FileManagerAttachmentDeleteRepository) private repository: FileManagerAttachmentDeleteRepository;
+  @inject(FileManagerAttachmentDeleteRepository) private repository: FileManagerAttachmentDeleteRepository;
 
-    confirmDelete(): void {
-        cy.get(this.repository.getDeleteConfirmButtonSelector()).click();
-    }
+  confirmDelete(): void {
+    cy.get(this.repository.getDeleteConfirmButtonSelector()).click();
+  }
 
-    verifySuccessMessage(): void {
-        cy.get(this.repository.getSuccessMessageSelector())
-            .should('be.visible')
-            .and('contain', 'File was successfully removed.');
-    }
+  verifySuccessMessage(): void {
+    cy.get(this.repository.getSuccessMessageSelector())
+      .should('be.visible')
+      .and('contain', 'File was successfully removed.');
+  }
 }

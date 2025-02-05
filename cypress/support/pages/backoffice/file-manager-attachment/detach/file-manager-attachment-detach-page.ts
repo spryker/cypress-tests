@@ -6,15 +6,15 @@ import { FileManagerAttachmentDetachRepository } from './file-manager-attachment
 @injectable()
 @autoWired
 export class FileManagerAttachmentDetachPage extends BackofficePage {
-    @inject(FileManagerAttachmentDetachRepository) private repository: FileManagerAttachmentDetachRepository;
+  @inject(FileManagerAttachmentDetachRepository) private repository: FileManagerAttachmentDetachRepository;
 
-    detachFile(): void {
-        cy.get(this.repository.getDetachButtonSelector()).first().click();
-    }
+  detachFile(): void {
+    cy.get(this.repository.getDetachButtonSelector()).first().click();
+  }
 
-    verifySuccessMessage(): void {
-        cy.get(this.repository.getSuccessMessageSelector())
-            .should('be.visible')
-            .and('contain', 'File attachment successfully unlinked.');
-    }
+  verifySuccessMessage(): void {
+    cy.get(this.repository.getSuccessMessageSelector())
+      .should('be.visible')
+      .and('contain', 'File attachment successfully unlinked.');
+  }
 }
