@@ -9,10 +9,16 @@
             "suite/yves/claim/files/spryker_logo3.png",
             "suite/yves/claim/files/spryker_logo4.jpeg",
             "suite/yves/claim/files/spryker_logo5.jpeg"
-        ],
-        "availableTypes": [
+        ]
+    },
+    "claimTypes": {
+        "general": [
             "",
             "general"
+        ],
+        "order": [
+            "",
+            "order"
         ]
     }
 }

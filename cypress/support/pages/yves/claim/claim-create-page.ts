@@ -11,11 +11,16 @@ export class ClaimCreatePage extends YvesPage {
 
   public PAGE_URL = '/customer/claim/create';
 
+  createOrderClaim(params: OrderClaimParams): void
+  {
+      cy.get('form[name="claimForm"] input[name="claimForm[orderReference]"]').should('have.value', params.orderReference)
+
+      this.createClaim(params);
+  }
+
 
   createClaim(params: ClaimParams): void
   {
-      this.assertPageLocation();
-
       cy.get('select[name="claimForm[type_display]"] option').should('have.length', params.availableTypes.length);
       params.availableTypes.forEach((type, index) => {
           cy.get('select[name="claimForm[type_display]"] option').eq(index).should('have.value', type);
@@ -41,4 +46,8 @@ interface ClaimParams {
     description: string;
     files: string[];
     availableTypes: string[];
+}
+
+interface OrderClaimParams extends ClaimParams {
+    orderReference: string;
 }

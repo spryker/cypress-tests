@@ -24,3 +24,4 @@ export * from './content/cms-content-page';
 export * from './claim/claim-list-page';
 export * from './claim/claim-create-page';
 export * from './claim/claim-detail-page';
+export * from './claim/claim-order-page';
