@@ -11,4 +11,5 @@ export class FileManagerAttachmentListRepository {
     getUploadedDateHeaderSelector = (): string => '[data-qa="created_at"]';
     getFileSizeHeaderSelector = (): string => '[data-qa="size"]';
     getFileTypeHeaderSelector = (): string => '[data-qa="type"]';
+    getAttachButtonSelector = (): string => '[data-qa="attach-button"]';
 }

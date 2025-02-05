@@ -9,7 +9,7 @@ export class FileManagerAttachmentDetachPage extends BackofficePage {
     @inject(FileManagerAttachmentDetachRepository) private repository: FileManagerAttachmentDetachRepository;
 
     detachFile(): void {
-        cy.get(this.repository.getDetachButtonSelector()).click();
+        cy.get(this.repository.getDetachButtonSelector()).first().click();
     }
 
     verifySuccessMessage(): void {

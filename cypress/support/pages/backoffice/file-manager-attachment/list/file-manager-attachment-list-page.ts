@@ -25,4 +25,8 @@ export class FileManagerAttachmentListPage extends BackofficePage {
     clickDeleteButton(): void {
         cy.get(this.repository.getDeleteButtonSelector()).first().click();
     }
+
+    clickAttachButton(): void {
+        cy.get(this.repository.getAttachButtonSelector()).first().click();
+    }
 }

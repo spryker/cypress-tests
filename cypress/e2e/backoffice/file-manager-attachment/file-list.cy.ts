@@ -1,7 +1,7 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { FileManagerAttachmentDynamicFixtures, FileManagerAttachmentStaticFixtures } from '@interfaces/backoffice';
-import { FileManagerAttachmentListPage, FileManagerAttachmentAddPage, FileManagerAttachmentViewPage, FileManagerAttachmentDeletePage, FileManagerAttachmentDetachPage } from '@pages/backoffice';
+import { FileManagerAttachmentListPage, FileManagerAttachmentAddPage, FileManagerAttachmentViewPage, FileManagerAttachmentDeletePage, FileManagerAttachmentDetachPage, FileManagerAttachmentAttachPage } from '@pages/backoffice';
 
 describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fileManager', '@ssp'] }, () => {
     const userLoginScenario = container.get(UserLoginScenario);
@@ -21,12 +21,22 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
         });
     });
 
-    it.skip('should access the Files List page in Backoffice', () => {
+    it('should access the Files List page in Backoffice', () => {
         fileManagerAttachmentListPage.visit();
         fileManagerAttachmentListPage.verifyListPage();
     });
 
-    it.skip('should upload multiple files with size constraints', () => {
+    it('should successfully detach file from entity', () => {
+        const fileManagerAttachmentDetachPage = container.get(FileManagerAttachmentDetachPage);
+
+        fileManagerAttachmentListPage.visit();
+        fileManagerAttachmentListPage.clickViewButton();
+        
+        fileManagerAttachmentDetachPage.detachFile();
+        fileManagerAttachmentDetachPage.verifySuccessMessage();
+    });
+
+    it('should upload multiple files with size constraints', () => {
         const fileManagerAttachmentAddPage = container.get(FileManagerAttachmentAddPage);
         
         // Prepare test files that meet the constraints
@@ -55,7 +65,7 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
         });
     });
 
-    it.skip('should successfully delete a file', () => {
+    it('should successfully delete a file', () => {
         const fileManagerAttachmentDeletePage = container.get(FileManagerAttachmentDeletePage);
 
         fileManagerAttachmentListPage.visit();
@@ -65,7 +75,7 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
         fileManagerAttachmentDeletePage.verifySuccessMessage();
     });
 
-    it.skip('should display file details on view page', () => {
+    it('should display file details on view page', () => {
         const fileManagerAttachmentViewPage = container.get(FileManagerAttachmentViewPage);
 
         fileManagerAttachmentListPage.visit();
@@ -73,14 +83,16 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
         fileManagerAttachmentViewPage.verifyFileDetailsAreVisible();
     });
 
-    it('should successfully detach file from entity', () => {
-        const fileManagerAttachmentDetachPage = container.get(FileManagerAttachmentDetachPage);
+    it('should successfully attach file to multiple entities', () => {
+        const fileManagerAttachmentAttachPage = container.get(FileManagerAttachmentAttachPage);
 
         fileManagerAttachmentListPage.visit();
-        fileManagerAttachmentListPage.clickViewButton();
-        
-        fileManagerAttachmentDetachPage.detachFile();
-        fileManagerAttachmentDetachPage.verifySuccessMessage();
+        fileManagerAttachmentListPage.clickAttachButton();
+        fileManagerAttachmentAttachPage.selectCompany('comp');
+        fileManagerAttachmentAttachPage.selectCompanyUser('spen');
+        fileManagerAttachmentAttachPage.selectCompanyBusinessUnit('unit');
+        fileManagerAttachmentAttachPage.submitForm();
+        fileManagerAttachmentAttachPage.verifySuccessMessage();
     });
 });
 
