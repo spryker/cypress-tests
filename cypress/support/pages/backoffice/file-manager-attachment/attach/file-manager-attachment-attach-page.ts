@@ -9,7 +9,7 @@ export class FileManagerAttachmentAttachPage extends BackofficePage {
   @inject(FileManagerAttachmentAttachRepository) private repository: FileManagerAttachmentAttachRepository;
 
   selectCompany(companyName: string): void {
-    cy.intercept('GET', '/file-manager-attachment/autocomplete/company**').as('companySearch');
+    cy.intercept('GET', '/ssp-file-management/autocomplete/company**').as('companySearch');
 
     cy.get(this.repository.getCompanyFieldSelector())
       .siblings(this.repository.getSiblingSelector())
@@ -22,7 +22,7 @@ export class FileManagerAttachmentAttachPage extends BackofficePage {
   }
 
   selectCompanyUser(companyUserName: string): void {
-    cy.intercept('GET', '/file-manager-attachment/autocomplete/company-user**').as('companyUserSearch');
+    cy.intercept('GET', '/ssp-file-management/autocomplete/company-user**').as('companyUserSearch');
 
     cy.get(this.repository.getCompanyUserFieldSelector())
       .siblings(this.repository.getSiblingSelector())
@@ -35,7 +35,7 @@ export class FileManagerAttachmentAttachPage extends BackofficePage {
   }
 
   selectCompanyBusinessUnit(companyBusinessUnitName: string): void {
-    cy.intercept('GET', '/file-manager-attachment/autocomplete/company-business-unit**').as(
+    cy.intercept('GET', '/ssp-file-management/autocomplete/company-business-unit**').as(
       'companyBusinessUnitSearch'
     );
 

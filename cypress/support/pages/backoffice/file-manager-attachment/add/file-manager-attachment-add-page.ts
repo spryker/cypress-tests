@@ -8,7 +8,7 @@ import { FileManagerAttachmentAddRepository } from './file-manager-attachment-ad
 export class FileManagerAttachmentAddPage extends BackofficePage {
   @inject(FileManagerAttachmentAddRepository) private repository: FileManagerAttachmentAddRepository;
 
-  protected PAGE_URL = '/file-manager-attachment/add-files/index';
+  protected PAGE_URL = '/ssp-file-management/add-files/index';
 
   uploadFiles(files: Array<{ fileContent: any; fileName: string; mimeType: string; filePath: string }>): void {
     cy.get(this.repository.getFileInputSelector()).selectFile(

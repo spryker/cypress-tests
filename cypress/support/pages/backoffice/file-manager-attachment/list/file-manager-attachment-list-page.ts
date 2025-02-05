@@ -8,7 +8,7 @@ import { FileManagerAttachmentListRepository } from './file-manager-attachment-l
 export class FileManagerAttachmentListPage extends BackofficePage {
   @inject(FileManagerAttachmentListRepository) private repository: FileManagerAttachmentListRepository;
 
-  protected PAGE_URL = '/file-manager-attachment/list';
+  protected PAGE_URL = '/ssp-file-management/list';
 
   verifyListPage(): void {
     cy.get(this.repository.getReferenceHeaderSelector()).should('contain', 'Reference');
