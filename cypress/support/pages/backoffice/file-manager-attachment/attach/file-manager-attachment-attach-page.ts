@@ -35,9 +35,7 @@ export class FileManagerAttachmentAttachPage extends BackofficePage {
   }
 
   selectCompanyBusinessUnit(companyBusinessUnitName: string): void {
-    cy.intercept('GET', '/ssp-file-management/autocomplete/company-business-unit**').as(
-      'companyBusinessUnitSearch'
-    );
+    cy.intercept('GET', '/ssp-file-management/autocomplete/company-business-unit**').as('companyBusinessUnitSearch');
 
     cy.get(this.repository.getCompanyBusinessUnitFieldSelector())
       .siblings(this.repository.getSiblingSelector())
