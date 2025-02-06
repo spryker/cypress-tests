@@ -3,6 +3,7 @@ export * from './checkout';
 export * from './comments';
 export * from './merchant-b2b-contract-requests';
 export * from './customer-account-management';
+export * from './company-user-role';
 export * from './cms';
 export * from './product-comparison';
 export * from './product';
