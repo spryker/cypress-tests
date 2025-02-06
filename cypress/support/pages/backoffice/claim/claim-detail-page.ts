@@ -69,12 +69,13 @@ export class ClaimDetailPage extends BackofficePage {
     }
 
     convertToReadableSize(size: number): string {
+        let sizeForRound = size + 0.0001;
         if (size >= 1000 * 1000 * 1000) {
-            return parseFloat((size / (1000 * 1000 * 1000)).toFixed(2)) + ' GB';
+            return parseFloat((sizeForRound / (1000 * 1000 * 1000)).toFixed(2)) + ' GB';
         } else if (size >= 1000 * 1000) {
-            return parseFloat((size / (1000 * 1000)).toFixed(2)) + ' MB';
+            return parseFloat((sizeForRound / (1000 * 1000)).toFixed(2)) + ' MB';
         } else if (size >= 1000) {
-            return parseFloat((size / 1000).toFixed(2)) + ' kB';
+            return parseFloat((sizeForRound / 1000).toFixed(2)) + ' kB';
         } else {
             return size + ' B';
         }
