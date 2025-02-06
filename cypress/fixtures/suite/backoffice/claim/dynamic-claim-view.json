@@ -156,31 +156,58 @@
                     }
                 },
                 {
-                    "type": "transfer",
-                    "name": "FileTransfer",
-                    "key": "file",
-                    "arguments": {
-                        "fileName": "filename.png"
-                    }
-                },
-                {
-                    "type": "array-object",
-                    "key": "files",
-                    "arguments": [
-                        "#file"
-                    ]
-                },
-                {
                     "type": "helper",
                     "name": "haveClaim",
-                    "key": "claim",
+                    "key": "generalClaim",
                     "arguments": [
                         {
                             "companyUser": "#companyUser",
                             "store": "#store",
                             "type": "general",
                             "status": "pending",
-                            "files": "#files"
+                            "fileAmount": "5"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveOrder",
+                    "key": "salesOrder",
+                    "arguments": [
+                        {
+                            "item": {
+                                "sku": "#product.sku",
+                                "shipment": "#shipment",
+                                "shipmentType": "#shipmentType"
+                            },
+                            "customerReference": "#customer.customer_reference",
+                            "shipment": "#shipment"
+
+                        },
+                        "DummyPayment01"
+                    ]
+                },
+                {
+                    "type": "transfer",
+                    "name": "OrderTransfer",
+                    "key": "order",
+                    "arguments": {
+                        "orderReference": "#salesOrder.order_reference",
+                        "idSalesOrder": "#salesOrder.id_sales_order"
+                    }
+                },
+                {
+                    "type": "helper",
+                    "name": "haveClaim",
+                    "key": "orderClaim",
+                    "arguments": [
+                        {
+                            "companyUser": "#companyUser",
+                            "store": "#store",
+                            "type": "general",
+                            "status": "pending",
+                            "fileAmount": "5",
+                            "order": "#order"
                         }
                     ]
                 }

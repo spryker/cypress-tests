@@ -29,7 +29,7 @@ export class ClaimDetailPage extends YvesPage {
         cy.contains(this.repository.getClaimDetailsCompanyAndBusinessUnitName(params.customer.companyName, params.customer.businessUnitName)).should('exist')
 
         const getColumnIndexByName = (columnName: string): number => {
-            const columnNames = ['File name', 'Size', 'Type'];
+            const columnNames = ['File name', 'Size', 'Type', 'Actions'];
             return columnNames.indexOf(columnName);
         };
 
@@ -42,6 +42,7 @@ export class ClaimDetailPage extends YvesPage {
                 cy.get('td').eq(getColumnIndexByName('File name')).should('contain.text', extractFileName(file.name));
                 cy.get('td').eq(getColumnIndexByName('Size')).should('contain.text', file.size);
                 cy.get('td').eq(getColumnIndexByName('Type')).should('contain.text', file.extension);
+                cy.get('td').eq(getColumnIndexByName('Actions')).should('contain.text', 'Download');
             });
         }
     }
@@ -68,7 +69,7 @@ export interface Customer {
 
 export interface File {
     name: string;
-    sise: string;
+    size: string;
     extension: string;
 }
 

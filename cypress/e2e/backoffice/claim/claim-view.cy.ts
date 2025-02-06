@@ -8,7 +8,6 @@ import { UserLoginScenario } from '@scenarios/backoffice';
     'claim management',
     { tags: ['@yves', '@claim'] },
     (): void => {
-        // const categoryListPage = container.get(CategoryListPage);
         const claimDetailPage = container.get(ClaimDetailPage);
         const userLoginScenario = container.get(UserLoginScenario);
         //
@@ -30,21 +29,27 @@ import { UserLoginScenario } from '@scenarios/backoffice';
             claimDetailPage.visit(
                 {
                     qs: {
-                        "id-claim": dynamicFixtures.claim.id_claim
+                        "id-claim": dynamicFixtures.generalClaim.id_claim
                     }
             });
 
-            cy.log(JSON.stringify(dynamicFixtures.customer))
-
             claimDetailPage.assertClaimDetails({
-                reference: dynamicFixtures.claim.reference,
+                reference: dynamicFixtures.generalClaim.reference,
                 date: new Date().toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
                 }),
-                status: dynamicFixtures.claim.status,
-                type: dynamicFixtures.claim.type,
+                status: dynamicFixtures.generalClaim.status,
+                type: dynamicFixtures.generalClaim.type,
+                store: dynamicFixtures.generalClaim.store.name,
+                subject: dynamicFixtures.generalClaim.subject,
+                description: dynamicFixtures.generalClaim.description,
+                files: dynamicFixtures.generalClaim.files.map(file => ({
+                    file_name: file.file_name,
+                    size: file.file_info[0].size,
+                    extension: file.file_info[0].extension
+                })),
                 customer: {
                     firstName: dynamicFixtures.customer.first_name,
                     lastName: dynamicFixtures.customer.last_name,
@@ -54,6 +59,62 @@ import { UserLoginScenario } from '@scenarios/backoffice';
                     businessUnitName: dynamicFixtures.businessUnit.name
                 }
             })
+        });
 
+        it('can view order claim details', (): void => {
+            claimDetailPage.visit(
+                {
+                    qs: {
+                        "id-claim": dynamicFixtures.orderClaim.id_claim
+                    }
+                });
+
+            claimDetailPage.assertClaimDetails({
+                reference: dynamicFixtures.orderClaim.reference,
+                date: new Date().toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                }),
+                order: {
+                    reference: dynamicFixtures.orderClaim.order.order_reference
+                },
+                status: dynamicFixtures.orderClaim.status,
+                type: dynamicFixtures.orderClaim.type,
+                store: dynamicFixtures.orderClaim.store.name,
+                subject: dynamicFixtures.orderClaim.subject,
+                description: dynamicFixtures.orderClaim.description,
+                files: dynamicFixtures.orderClaim.files.map(file => ({
+                    file_name: file.file_name,
+                    size: file.file_info[0].size,
+                    extension: file.file_info[0].extension
+                })),
+                customer: {
+                    firstName: dynamicFixtures.customer.first_name,
+                    lastName: dynamicFixtures.customer.last_name,
+                    email: dynamicFixtures.customer.email,
+                    salutation: dynamicFixtures.customer.salutation,
+                    companyName: dynamicFixtures.company.name,
+                    businessUnitName: dynamicFixtures.businessUnit.name
+                }
+            })
+        });
+
+        it('user can fill and submit the comment form', (): void => {
+            claimDetailPage.visit({
+                qs: {
+                    "id-claim": dynamicFixtures.generalClaim.id_claim
+                }
+            });
+
+            // Fill in the form
+            cy.get('textarea[name="message"]').type('This is a test comment.');
+
+            // Submit the form
+            cy.get('form[action="/comment-gui/comment/add"]').submit();
+
+            // Verify the form submission
+            cy.url().should('include', '/claim/detail?id-claim=' + dynamicFixtures.generalClaim.id_claim);
+            cy.contains('This is a test comment.').should('exist');
         });
     })

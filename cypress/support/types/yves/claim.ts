@@ -43,6 +43,6 @@ export interface BusinessUnit {
 
 export interface File {
     name: string;
-    sise: string;
+    size: string;
     extension: string;
 }
