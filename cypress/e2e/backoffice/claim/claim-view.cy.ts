@@ -114,7 +114,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
             cy.get('form[action="/comment-gui/comment/add"]').submit();
 
             // Verify the form submission
-            cy.url().should('include', '/claim/detail?id-claim=' + dynamicFixtures.generalClaim.id_claim);
+            cy.url().should('include', '/ssp-claim-management/detail?id-claim=' + dynamicFixtures.generalClaim.id_claim);
             cy.contains('This is a test comment.').should('exist');
         });
     })

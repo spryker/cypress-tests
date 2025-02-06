@@ -54,9 +54,9 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
               files: staticFixtures.generalClaim.files,
               date: new Date().toLocaleDateString('en-US', {
                   year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-              }),
+                  month: 'short',
+                  day: '2-digit'
+              }).replace(/([a-zA-Z]+)\s/, '$1. '),
               customer: {
                   firstName: dynamicFixtures.customer.first_name,
                   lastName: dynamicFixtures.customer.last_name,
@@ -103,9 +103,9 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
                 files: staticFixtures.orderClaim.files,
                 date: new Date().toLocaleDateString('en-US', {
                     year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                }),
+                    month: 'short',
+                    day: '2-digit'
+                }).replace(/([a-zA-Z]+)\s/, '$1. '),
                 customer: {
                     firstName: dynamicFixtures.customer.first_name,
                     lastName: dynamicFixtures.customer.last_name,
