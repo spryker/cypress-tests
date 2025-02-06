@@ -22,6 +22,17 @@
                 },
                 {
                     "type": "helper",
+                    "name": "haveCompany",
+                    "key": "company2",
+                    "arguments": [
+                        {
+                            "isActive": true,
+                            "status": "approved"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
                     "name": "haveCompanyBusinessUnit",
                     "key": "businessUnitFromCompany",
                     "arguments": [
@@ -32,8 +43,83 @@
                 },
                 {
                     "type": "helper",
+                    "name": "haveCompanyBusinessUnit",
+                    "key": "businessUnitFromCompany2",
+                    "arguments": [
+                        {
+                            "fkCompany": "#company.id_company"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveCompanyBusinessUnit",
+                    "key": "businessUnitFromCompany3",
+                    "arguments": [
+                        {
+                            "fkCompany": "#company2.id_company"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
                     "name": "haveCustomer",
                     "key": "customer",
+                    "arguments": [
+                        {
+                            "locale": "#locale",
+                            "password": "change123"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveCustomer",
+                    "key": "customer2",
+                    "arguments": [
+                        {
+                            "locale": "#locale",
+                            "password": "change123"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveCustomer",
+                    "key": "customer3",
+                    "arguments": [
+                        {
+                            "locale": "#locale",
+                            "password": "change123"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveCustomer",
+                    "key": "customer4",
+                    "arguments": [
+                        {
+                            "locale": "#locale",
+                            "password": "change123"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveCustomer",
+                    "key": "customer5",
+                    "arguments": [
+                        {
+                            "locale": "#locale",
+                            "password": "change123"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveCustomer",
+                    "key": "customer6",
                     "arguments": [
                         {
                             "locale": "#locale",
@@ -51,6 +137,46 @@
                 },
                 {
                     "type": "helper",
+                    "name": "confirmCustomer",
+                    "key": "confirmedCustomer2",
+                    "arguments": [
+                        "#customer2"
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "confirmCustomer",
+                    "key": "confirmedCustomer3",
+                    "arguments": [
+                        "#customer3"
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "confirmCustomer",
+                    "key": "confirmedCustomer4",
+                    "arguments": [
+                        "#customer4"
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "confirmCustomer",
+                    "key": "confirmedCustomer5",
+                    "arguments": [
+                        "#customer5"
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "confirmCustomer",
+                    "key": "confirmedCustomer6",
+                    "arguments": [
+                        "#customer6"
+                    ]
+                },
+                {
+                    "type": "helper",
                     "name": "haveCompanyUser",
                     "key": "companyUserFromCompany",
                     "arguments": [
@@ -59,6 +185,71 @@
                             "fkCustomer": "#customer.id_customer",
                             "fkCompany": "#company.id_company",
                             "fkCompanyBusinessUnit": "#businessUnitFromCompany.id_company_business_unit"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveCompanyUser",
+                    "key": "companyUserFromCompany2",
+                    "arguments": [
+                        {
+                            "customer": "#customer2",
+                            "fkCustomer": "#customer2.id_customer",
+                            "fkCompany": "#company.id_company",
+                            "fkCompanyBusinessUnit": "#businessUnitFromCompany.id_company_business_unit"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveCompanyUser",
+                    "key": "companyUserFromCompany3",
+                    "arguments": [
+                        {
+                            "customer": "#customer6",
+                            "fkCustomer": "#customer6.id_customer",
+                            "fkCompany": "#company.id_company",
+                            "fkCompanyBusinessUnit": "#businessUnitFromCompany2.id_company_business_unit"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveCompanyUser",
+                    "key": "companyUserFromCompany4",
+                    "arguments": [
+                        {
+                            "customer": "#customer3",
+                            "fkCustomer": "#customer3.id_customer",
+                            "fkCompany": "#company2.id_company",
+                            "fkCompanyBusinessUnit": "#businessUnitFromCompany3.id_company_business_unit"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveCompanyUser",
+                    "key": "companyUserFromCompany5",
+                    "arguments": [
+                        {
+                            "customer": "#customer4",
+                            "fkCustomer": "#customer4.id_customer",
+                            "fkCompany": "#company2.id_company",
+                            "fkCompanyBusinessUnit": "#businessUnitFromCompany3.id_company_business_unit"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveCompanyUser",
+                    "key": "companyUserFromCompany6",
+                    "arguments": [
+                        {
+                            "customer": "#customer5",
+                            "fkCustomer": "#customer5.id_customer",
+                            "fkCompany": "#company2.id_company",
+                            "fkCompanyBusinessUnit": "#businessUnitFromCompany3.id_company_business_unit"
                         }
                     ]
                 },
@@ -138,16 +329,61 @@
                 },
                 {
                     "type": "helper",
+                    "name": "havePermissionByKey",
+                    "key": "permission2",
+                    "arguments": ["ViewCompanyClaimPermissionPlugin"]
+                },
+                {
+                    "type": "helper",
+                    "name": "havePermissionByKey",
+                    "key": "permission3",
+                    "arguments": ["ViewBusinessUnitClaimPermissionPlugin"]
+                },
+                {
+                    "type": "helper",
                     "name": "haveCompanyRoleWithPermissions",
-                    "key": "companyRole",
-                    "arguments": [{ "isDefault": true, "fkCompany": "#company.id_company" }, ["#permission"]]
+                    "key": "companyRoleWithAllPermissions",
+                    "arguments": [{ "isDefault": true, "fkCompany": "#company.id_company" }, ["#permission", "#permission2", "#permission3"]]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveCompanyRoleWithPermissions",
+                    "key": "companyRoleWithViewCompanyClaimPermission",
+                    "arguments": [{ "isDefault": true, "fkCompany": "#company.id_company" }, ["#permission", "#permission2"]]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveCompanyRoleWithPermissions",
+                    "key": "companyRoleWithViewBusinessUnitClaimPermission",
+                    "arguments": [{ "isDefault": true, "fkCompany": "#company.id_company" }, ["#permission3"]]
                 },
                 {
                     "type": "helper",
                     "name": "assignCompanyRoles",
-                    "arguments": ["#companyUserFromCompany", ["#companyRole"]]
+                    "arguments": ["#companyUserFromCompany", ["#companyRoleWithAllPermissions"]]
+                },
+                {
+                    "type": "helper",
+                    "name": "assignCompanyRoles",
+                    "arguments": ["#companyUserFromCompany2", ["#companyRoleWithAllPermissions"]]
+                },
+                {
+                    "type": "helper",
+                    "name": "assignCompanyRoles",
+                    "arguments": ["#companyUserFromCompany3", ["#companyRoleWithViewCompanyClaimPermission"]]
+                },
+                {
+                    "type": "helper",
+                    "name": "assignCompanyRoles",
+                    "arguments": ["#companyUserFromCompany4", ["#companyRoleWithViewCompanyClaimPermission"]]
+                },
+                {
+                    "type": "helper",
+                    "name": "assignCompanyRoles",
+                    "arguments": ["#companyUserFromCompany6", ["#companyRoleWithViewCompanyClaimPermission"]]
                 }
             ]
         }
     }
 }
+
