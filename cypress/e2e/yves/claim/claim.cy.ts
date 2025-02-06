@@ -23,15 +23,13 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 
-    beforeEach((): void => {
-
-        customerLoginScenario.execute({
-            email: dynamicFixtures.customer.email,
-            password: staticFixtures.defaultPassword,
-            withoutSession: true,
-        });    });
-
   it('customer should be able to create and view a general claim', (): void => {
+      customerLoginScenario.execute({
+          email: dynamicFixtures.customer.email,
+          password: staticFixtures.defaultPassword,
+          withoutSession: true,
+      });
+
       claimListPage.visit();
       claimListPage.clickCreateClaimButton();
 
@@ -64,13 +62,19 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
                   lastName: dynamicFixtures.customer.last_name,
                   email: dynamicFixtures.customer.email,
                   companyName: dynamicFixtures.company.name,
-                  businessUnitName: dynamicFixtures.businessUnit.name
+                  businessUnitName: dynamicFixtures.businessUnitFromCompany.name
               }
           });
       });
   });
 
     it('customer should be able to create and view an order claim', (): void => {
+        customerLoginScenario.execute({
+            email: dynamicFixtures.customer.email,
+            password: staticFixtures.defaultPassword,
+            withoutSession: true,
+        });
+
         orderDetailPage.visit({
             qs: {
                 id: dynamicFixtures.order.id_sales_order
@@ -107,7 +111,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
                     lastName: dynamicFixtures.customer.last_name,
                     email: dynamicFixtures.customer.email,
                     companyName: dynamicFixtures.company.name,
-                    businessUnitName: dynamicFixtures.businessUnit.name
+                    businessUnitName: dynamicFixtures.businessUnitFromCompany.name
                 },
                 orderReference: dynamicFixtures.order.order_reference
             });
@@ -125,7 +129,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
             claimListPage.clickCreateClaimButton();
 
-            claimCreatePage.createClaim(staticFixtures.claim);
+            claimCreatePage.createClaim(staticFixtures.generalClaim);
 
             claimDetailPage.assertPageLocation();
             claimDetailPage.clickCancelClaimButton();
@@ -144,7 +148,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
             claimListPage.clickCreateClaimButton();
 
-            claimCreatePage.createClaim(staticFixtures.claim);
+            claimCreatePage.createClaim(staticFixtures.generalClaim);
 
             claimDetailPage.assertPageLocation();
 
@@ -173,7 +177,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
             claimListPage.clickCreateClaimButton();
 
-            claimCreatePage.createClaim(staticFixtures.claim);
+            claimCreatePage.createClaim(staticFixtures.generalClaim);
 
             claimDetailPage.assertPageLocation();
 
@@ -204,7 +208,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
             claimListPage.clickCreateClaimButton();
 
-            claimCreatePage.createClaim(staticFixtures.claim);
+            claimCreatePage.createClaim(staticFixtures.generalClaim);
 
             claimDetailPage.assertPageLocation();
 
@@ -235,7 +239,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
             claimListPage.clickCreateClaimButton();
 
-            claimCreatePage.createClaim(staticFixtures.claim);
+            claimCreatePage.createClaim(staticFixtures.generalClaim);
 
             claimDetailPage.assertPageLocation();
 
@@ -263,7 +267,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
             claimListPage.clickCreateClaimButton();
 
-            claimCreatePage.createClaim(staticFixtures.claim);
+            claimCreatePage.createClaim(staticFixtures.generalClaim);
 
             claimDetailPage.assertPageLocation();
 
