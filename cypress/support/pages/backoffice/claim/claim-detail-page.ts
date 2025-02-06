@@ -6,7 +6,7 @@ import { BackofficePage } from '@pages/backoffice';
 @injectable()
 @autoWired
 export class ClaimDetailPage extends BackofficePage {
-    protected PAGE_URL = '/claim/detail';
+    protected PAGE_URL = '/ssp-claim-management/detail';
 
     assertOrderClaimDetails = (params: OrderClaimDetails): void => {
         cy.get('dl').contains('dt', 'Order reference').parent().within(() => {
