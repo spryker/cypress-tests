@@ -118,6 +118,15 @@ import { B2bYvesRepository } from '../../pages/yves/repositories/b2b-yves-reposi
 import { B2cMpYvesRepository } from '../../pages/yves/repositories/b2c-mp-yves-repository';
 import { B2bMpYvesRepository } from '../../pages/yves/repositories/b2b-mp-yves-repository';
 import { SuiteYvesRepository } from '../../pages/yves/repositories/suite-yves-repository';
+import {
+  SuiteCompanyRoleIndexRepository
+} from '../../pages/yves/company/company-role/index/repositories/suite-company-role-index-repository';
+import {
+  CompanyRoleCreateRepository
+} from '../../pages/yves/company/company-role/create/company-role-create-repository';
+import {
+  SuiteCompanyRoleCreateRepository
+} from '../../pages/yves/company/company-role/create/repositories/suite-company-role-create-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -145,6 +154,8 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.ContentRepository]: SuiteContentRepository,
   [REPOSITORIES.OrderDetailsRepository]: SuiteOrderDetailsRepository,
   [REPOSITORIES.ProductComparisonRepository]: SuiteProductComparisonRepository,
+  [REPOSITORIES.CompanyRoleIndexRepository]: SuiteCompanyRoleIndexRepository,
+  [REPOSITORIES.CompanyRoleCreateRepository]: SuiteCompanyRoleCreateRepository,
 };
 
 const b2cMappings: BindingsMap = {

@@ -1,3 +1,7 @@
+import {
+  CompanyRoleCreateRepository
+} from '../../pages/yves/company/company-role/create/company-role-create-repository';
+
 export const enum REPOSITORIES {
   YvesRepository = 'YvesRepository',
   HomeRepository = 'HomeRepository',
@@ -22,4 +26,6 @@ export const enum REPOSITORIES {
   ContentRepository = 'ContentRepository',
   ProductComparisonRepository = 'ProductComparisonRepository',
   OrderDetailsRepository = 'OrderDetailsRepository',
+  CompanyRoleIndexRepository = 'CompanyRoleIndexRepository',
+  CompanyRoleCreateRepository = 'CompanyRoleCreateRepository',
 }
