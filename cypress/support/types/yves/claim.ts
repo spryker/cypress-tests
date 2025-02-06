@@ -2,16 +2,47 @@ import {Customer, Store} from './shared';
 
 export interface ClaimDynamicFixtures {
     customer: Customer;
+    order: Order;
+    company: Company;
+    businessUnit: BusinessUnit;
 }
 
 export interface ClaimStaticFixtures {
     defaultPassword: string;
-    claim: Claim
+    generalClaim: Claim;
+    orderClaim: Claim;
+    claimTypes: ClaimTypes;
 }
 
-export interface Claim{
+export interface Claim {
     subject: string;
     description: string;
-    files: string[];
+    files: File[];
     availableTypes: string[];
+    type: string;
+    status: string;
+}
+
+export interface Order {
+    id_sales_order: number;
+    order_reference: string;
+}
+
+export interface ClaimTypes {
+    general: string[];
+    order: string[];
+}
+
+export interface Company {
+    name: string;
+}
+
+export interface BusinessUnit {
+    name: string;
+}
+
+export interface File {
+    name: string;
+    size: string;
+    extension: string;
 }
