@@ -11,15 +11,17 @@ export class CompanyRoleListPage extends BackofficePage {
   protected PAGE_URL = '/company-role-gui/list-company-role';
 
   update = (params: UpdateParams): void => {
-    this.find({ tableUrl: '/company-role-gui/list-company-role/table**', searchQuery: params.query }).then(($companyRoleRow) => {
-      if (params.action === ActionEnum.edit) {
-        this.clickEditAction($companyRoleRow);
-      }
+    this.find({ tableUrl: '/company-role-gui/list-company-role/table**', searchQuery: params.query }).then(
+      ($companyRoleRow) => {
+        if (params.action === ActionEnum.edit) {
+          this.clickEditAction($companyRoleRow);
+        }
 
-      if (params.action === ActionEnum.delete) {
-        this.clickDeleteAction($companyRoleRow);
+        if (params.action === ActionEnum.delete) {
+          this.clickDeleteAction($companyRoleRow);
+        }
       }
-    });
+    );
   };
 
   clickEditAction = ($row: JQuery<HTMLElement>): void => {
@@ -32,7 +34,7 @@ export class CompanyRoleListPage extends BackofficePage {
 
   clickAddCompanyUserRoleButton = (): void => {
     cy.get(this.repository.getAddCompanyUserRoleButtonSelector()).click();
-  }
+  };
 }
 
 interface UpdateParams {

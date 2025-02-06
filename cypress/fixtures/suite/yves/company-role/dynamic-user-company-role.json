@@ -42,20 +42,20 @@
             {
               "fk_company": "#company.id_company"
             },
-            [ "#seeCompanyPermission", "#createCompanyPermission" ]
+            ["#seeCompanyPermission", "#createCompanyPermission"]
           ]
         },
         {
           "type": "helper",
           "name": "haveCustomer",
           "key": "customer",
-          "arguments": [{ "registered":  "2025-01-01", "password":  "change123", "locale": "#locale"}]
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale": "#locale" }]
         },
         {
           "type": "builder",
           "name": "CompanyRoleCollectionBuilder",
           "key": "companyRoleCollection",
-          "arguments": { "roles": [ "#companyRole" ] }
+          "arguments": { "roles": ["#companyRole"] }
         },
         {
           "type": "helper",
@@ -65,7 +65,7 @@
             {
               "customer": "#customer",
               "fk_company": "#company.id_company",
-              "company_role_collection": [ "#companyRoleCollection" ],
+              "company_role_collection": ["#companyRoleCollection"],
               "fk_company_business_unit": "#companyBusinessUnit.id_company_business_unit"
             }
           ]
@@ -73,7 +73,7 @@
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": [ "#companyUser", [ "#companyRole" ] ]
+          "arguments": ["#companyUser", ["#companyRole"]]
         }
       ]
     }
