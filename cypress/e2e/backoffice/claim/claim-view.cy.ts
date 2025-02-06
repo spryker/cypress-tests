@@ -10,7 +10,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
     (): void => {
         const claimDetailPage = container.get(ClaimDetailPage);
         const userLoginScenario = container.get(UserLoginScenario);
-        //
+
         let staticFixtures: ClaimStaticFixtures;
         let dynamicFixtures: ClaimDynamicFixtures;
 
@@ -69,7 +69,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
                     }
                 });
 
-            claimDetailPage.assertClaimDetails({
+            claimDetailPage.assertOrderClaimDetails({
                 reference: dynamicFixtures.orderClaim.reference,
                 date: new Date().toLocaleDateString('en-US', {
                     year: 'numeric',
