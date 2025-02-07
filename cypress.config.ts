@@ -47,7 +47,6 @@ export default defineConfig({
   },
   viewportWidth: parseInt(process.env.VIEWPORT_WIDGTH ?? '1920', 10),
   viewportHeight: parseInt(process.env.VIEWPORT_HEIGHT ?? '1080', 10),
-  defaultCommandTimeout: 10000,
 });
 
 function getEnvVar(primary: string, fallback: string): string {
