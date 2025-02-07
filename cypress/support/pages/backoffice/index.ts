@@ -37,4 +37,4 @@ export * from './shipment/shipment-method/edit/shipment-method-edit-page';
 export * from './payment-method/list/payment-method-list-page';
 export * from './payment-method/edit/payment-method-edit-page';
 export * from './claim/claim-detail-page';
-
+export * from './claim/claim-list-page';
