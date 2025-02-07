@@ -1,6 +1,7 @@
 import { container } from '@utils';
 import { ClaimStaticFixtures, ClaimDynamicFixtures } from '@interfaces/backoffice';
 import { ClaimDetailPage } from '@pages/backoffice';
+import { ClaimListPage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
 
@@ -9,6 +10,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
     { tags: ['@yves', '@claim'] },
     (): void => {
         const claimDetailPage = container.get(ClaimDetailPage);
+        const claimListPage = container.get(ClaimListPage);
         const userLoginScenario = container.get(UserLoginScenario);
 
         let staticFixtures: ClaimStaticFixtures;
@@ -116,5 +118,66 @@ import { UserLoginScenario } from '@scenarios/backoffice';
             // Verify the form submission
             cy.url().should('include', '/ssp-claim-management/detail?id-claim=' + dynamicFixtures.generalClaim.id_claim);
             cy.contains('This is a test comment.').should('exist');
+        });
+
+        it('should visit the claim list page', () => {
+            claimListPage.visit();
+
+            // Check that the table contains claim entries
+            cy.get('table.gui-table-data tbody tr').should('have.length.greaterThan', 0);
+
+            // Check that the table has all the expected columns
+            const expectedColumns = ['ID', 'Reference', 'Type', 'Customer', 'Date', 'Status', 'Actions'];
+            cy.get('table.gui-table-data thead tr th').each((header, index) => {
+                if (expectedColumns[index]) {
+                    cy.wrap(header).should('contain.text', expectedColumns[index]);
+                }
+            });
+
+            cy.get('table.gui-table-data tbody tr').eq(0).find('a.btn-view').should('exist');
+        });
+
+        it('user can approve claim', (): void => {
+            claimDetailPage.visit({
+                qs: {
+                    "id-claim": dynamicFixtures.generalClaim.id_claim
+                }
+            });
+
+            claimDetailPage.approveClaim();
+            claimDetailPage.assertClaimStatusChangedToApproved();
+        });
+
+        it('user can reject claim', (): void => {
+            claimDetailPage.visit({
+                qs: {
+                    "id-claim": dynamicFixtures.generalClaim2.id_claim
+                }
+            });
+
+            claimDetailPage.rejectClaim();
+            claimDetailPage.assertClaimStatusChangedToRejected();
+        });
+
+        it('user can cancel claim', (): void => {
+            claimDetailPage.visit({
+                qs: {
+                    "id-claim": dynamicFixtures.generalClaim3.id_claim
+                }
+            });
+
+            claimDetailPage.cancelClaim();
+            claimDetailPage.assertClaimStatusChangedToCanceled();
+        });
+
+        it('i can see claim history', (): void => {
+            claimDetailPage.visit({
+                qs: {
+                    "id-claim": dynamicFixtures.generalClaim3.id_claim
+                }
+            });
+
+            claimDetailPage.openClaimHistory();
+            claimDetailPage.assertClaimHistoryIsNotEmpty();
         });
     })

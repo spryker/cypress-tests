@@ -80,6 +80,48 @@ export class ClaimDetailPage extends BackofficePage {
             return size + ' B';
         }
     }
+
+    openClaimHistory(): void
+    {
+        cy.get('a[data-qa=show-claim-status-history]').click();
+    }
+
+    assertClaimHistoryIsNotEmpty(): void
+    {
+        cy.get('table[data-qa=history-details-table] td').should('exist')
+    }
+
+    cancelClaim(): void
+    {
+        cy.get('#trigger_event_form_cancel').click();
+    }
+
+    assertClaimStatusChangedToCanceled(): void
+    {
+        cy.get('[data-qa=claim-status]').contains('Canceled');
+    }
+
+    approveClaim(): void
+    {
+        cy.get('#trigger_event_form_start_review').click();
+        cy.get('#trigger_event_form_approve').click();
+    }
+
+    assertClaimStatusChangedToApproved(): void
+    {
+        cy.get('[data-qa=claim-status]').contains('Approved');
+    }
+
+    rejectClaim(): void
+    {
+        cy.get('#trigger_event_form_start_review').click();
+        cy.get('#trigger_event_form_reject').click();
+    }
+
+    assertClaimStatusChangedToRejected(): void
+    {
+        cy.get('[data-qa=claim-status]').contains('Rejected');
+    }
 }
 
 

@@ -171,6 +171,34 @@
                 },
                 {
                     "type": "helper",
+                    "name": "haveClaim",
+                    "key": "generalClaim2",
+                    "arguments": [
+                        {
+                            "companyUser": "#companyUser",
+                            "store": "#store",
+                            "type": "general",
+                            "status": "pending",
+                            "fileAmount": "0"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveClaim",
+                    "key": "generalClaim3",
+                    "arguments": [
+                        {
+                            "companyUser": "#companyUser",
+                            "store": "#store",
+                            "type": "general",
+                            "status": "pending",
+                            "fileAmount": "0"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
                     "name": "haveOrder",
                     "key": "salesOrder",
                     "arguments": [
