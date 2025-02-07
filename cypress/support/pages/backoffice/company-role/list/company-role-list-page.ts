@@ -33,7 +33,7 @@ export class CompanyRoleListPage extends BackofficePage {
   };
 
   clickAddCompanyUserRoleButton = (): void => {
-    cy.get(this.repository.getAddCompanyUserRoleButtonSelector()).click();
+    this.repository.getAddCompanyUserRoleButton().click();
   };
 }
 

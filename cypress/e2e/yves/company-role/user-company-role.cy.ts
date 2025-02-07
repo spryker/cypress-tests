@@ -3,8 +3,8 @@ import { CompanyRoleDynamicFixtures, CompanyRoleStaticFixtures } from '@interfac
 import { CompanyRoleIndexPage, CompanyRoleCreatePage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
-(['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
-  'company company-role',
+(['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+  'company-role',
   { tags: ['@yves', '@company', '@company-role'] },
   (): void => {
     const loginCustomerScenario = container.get(CustomerLoginScenario);

@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { CompanyRoleCreateStaticFixtures } from '@interfaces/backoffice';
+import { CompanyRoleCreateStaticFixtures, CompanyRoleCreateDynamicFixtures } from '@interfaces/backoffice';
 import { CompanyRoleListPage, CompanyRoleCreatePage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
@@ -9,14 +9,15 @@ describe('company role create', { tags: ['@backoffice', '@company-role'] }, (): 
   const userLoginScenario = container.get(UserLoginScenario);
 
   let staticFixtures: CompanyRoleCreateStaticFixtures;
+  let dynamicFixtures: CompanyRoleCreateDynamicFixtures;
 
   before((): void => {
-    staticFixtures = Cypress.env('staticFixtures');
+    ({ dynamicFixtures, staticFixtures } = Cypress.env());
   });
 
   beforeEach((): void => {
     userLoginScenario.execute({
-      username: staticFixtures.rootUser.username,
+      username: dynamicFixtures.rootUser.username,
       password: staticFixtures.defaultPassword,
     });
   });
@@ -25,6 +26,6 @@ describe('company role create', { tags: ['@backoffice', '@company-role'] }, (): 
     companyRoleListPage.visit();
     companyRoleListPage.clickAddCompanyUserRoleButton();
     companyRoleCreatePage.assertPageLocation();
-    cy.get('body').contains('Create role');
+    companyRoleCreatePage.getCompanyRoleCreateForm().should('exist').and('be.visible');
   });
 });
