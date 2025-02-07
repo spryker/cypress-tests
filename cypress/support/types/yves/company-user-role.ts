@@ -1,8 +1,9 @@
-import { Customer, Store, User } from './shared';
+import { Customer, CompanyRole, User } from './shared';
 
 export interface CompanyRoleDynamicFixtures {
   customer: Customer;
   user: User;
+  companyRole: CompanyRole;
 }
 
 export interface CompanyRoleStaticFixtures {
