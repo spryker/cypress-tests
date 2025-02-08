@@ -21,10 +21,14 @@ export class ClaimListPage extends YvesPage {
   }
 
   openLatestClaimDetailsPage(): void {
-    this.repository.getClaimDetailLinks().last().click();
+    this.repository.getFirstRowViewButton().click();
   }
 
   assetPageHasNoClaims(): void {
     this.repository.getClaimDetailLinks().should('not.exist');
   }
+
+    getFirstRowReference(): Cypress.Chainable {
+      return this.repository.getFirstRowReference();
+    }
 }

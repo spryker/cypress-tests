@@ -4,7 +4,7 @@ import { ClaimStaticFixtures, ClaimDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 import { CustomerLogoutScenario } from '@scenarios/yves';
 
-(['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'claim management',
   { tags: ['@yves', '@claim'] },
   (): void => {
@@ -40,36 +40,33 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
       claimDetailPage.assertPageLocation();
       cy.contains(claimCreatePage.getClaimCreatedMessage()).should('exist');
 
-      var reference: string;
-      cy.url()
-        .then((url) => {
-          const urlParams = new URLSearchParams(url.split('?')[1]);
-          reference = urlParams.get('reference');
-        })
-        .then(() => {
-          claimDetailPage.assertClaimDetails({
-            reference: reference,
-            type: staticFixtures.generalClaim.type,
-            subject: staticFixtures.generalClaim.subject,
-            description: staticFixtures.generalClaim.description,
-            status: staticFixtures.generalClaim.status,
-            files: staticFixtures.generalClaim.files,
-            date: new Date()
-              .toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: '2-digit',
-              })
-              .replace(/([a-zA-Z]+)\s/, '$1. '),
-            customer: {
-              firstName: dynamicFixtures.customer.first_name,
-              lastName: dynamicFixtures.customer.last_name,
-              email: dynamicFixtures.customer.email,
-              companyName: dynamicFixtures.company.name,
-              businessUnitName: dynamicFixtures.businessUnitFromCompany.name,
-            },
-          });
+      claimListPage.visit();
+      claimListPage.getFirstRowReference().then((claimReference) => {
+        claimListPage.openLatestClaimDetailsPage();
+
+        claimDetailPage.assertClaimDetails({
+          reference: claimReference,
+          type: staticFixtures.generalClaim.type,
+          subject: staticFixtures.generalClaim.subject,
+          description: staticFixtures.generalClaim.description,
+          status: staticFixtures.generalClaim.status,
+          files: staticFixtures.generalClaim.files,
+          date: new Date()
+            .toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: '2-digit',
+            })
+            .replace(/([a-zA-Z]+)\s/, '$1. '),
+          customer: {
+            firstName: dynamicFixtures.customer.first_name,
+            lastName: dynamicFixtures.customer.last_name,
+            email: dynamicFixtures.customer.email,
+            companyName: dynamicFixtures.company.name,
+            businessUnitName: dynamicFixtures.businessUnit.name,
+          },
         });
+      });
     });
 
     it('customer should be able to create and view an order claim', (): void => {
@@ -96,37 +93,34 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
       claimDetailPage.assertPageLocation();
       cy.contains(claimCreatePage.getClaimCreatedMessage()).should('exist');
 
-      var reference: string;
-      cy.url()
-        .then((url) => {
-          const urlParams = new URLSearchParams(url.split('?')[1]);
-          reference = urlParams.get('reference');
-        })
-        .then(() => {
-          claimDetailPage.assertOrderClaimDetails({
-            reference: reference,
-            type: staticFixtures.orderClaim.type,
-            subject: staticFixtures.orderClaim.subject,
-            description: staticFixtures.orderClaim.description,
-            status: staticFixtures.orderClaim.status,
-            files: staticFixtures.orderClaim.files,
-            date: new Date()
-              .toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: '2-digit',
-              })
-              .replace(/([a-zA-Z]+)\s/, '$1. '),
-            customer: {
-              firstName: dynamicFixtures.customer.first_name,
-              lastName: dynamicFixtures.customer.last_name,
-              email: dynamicFixtures.customer.email,
-              companyName: dynamicFixtures.company.name,
-              businessUnitName: dynamicFixtures.businessUnitFromCompany.name,
-            },
-            orderReference: dynamicFixtures.order.order_reference,
-          });
+      claimListPage.visit();
+      claimListPage.getFirstRowReference().then((claimReference) => {
+        claimListPage.openLatestClaimDetailsPage();
+
+        claimDetailPage.assertOrderClaimDetails({
+          reference: claimReference,
+          type: staticFixtures.orderClaim.type,
+          subject: staticFixtures.orderClaim.subject,
+          description: staticFixtures.orderClaim.description,
+          status: staticFixtures.orderClaim.status,
+          files: staticFixtures.orderClaim.files,
+          date: new Date()
+            .toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: '2-digit',
+            })
+            .replace(/([a-zA-Z]+)\s/, '$1. '),
+          customer: {
+            firstName: dynamicFixtures.customer.first_name,
+            lastName: dynamicFixtures.customer.last_name,
+            email: dynamicFixtures.customer.email,
+            companyName: dynamicFixtures.company.name,
+            businessUnitName: dynamicFixtures.businessUnit.name,
+          },
+          orderReference: dynamicFixtures.order.order_reference,
         });
+      });
     });
 
     it('customer should be able to cancel a general claim', (): void => {

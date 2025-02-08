@@ -1,106 +1,42 @@
-import { autoWired } from '@utils';
-import { injectable } from 'inversify';
+import {autoWired} from '@utils';
+import { injectable, inject } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
+import { ClaimRepository } from './claim-repository';
 
 @injectable()
 @autoWired
 export class ClaimDetailPage extends BackofficePage {
   protected PAGE_URL = '/ssp-claim-management/detail';
+    @inject(ClaimRepository) private repository: ClaimRepository;
 
-  assertOrderClaimDetails = (params: OrderClaimDetails): void => {
-    cy.get('dl')
-      .contains('dt', 'Order reference')
-      .parent()
-      .within(() => {
-        cy.get('dd').should('contain.text', params.order.reference);
-      });
 
+    assertOrderClaimDetails = (params: OrderClaimDetails): void => {
+    this.repository.getOrderReferenceCell().should('contain.text', params.order.reference);
     this.assertClaimDetails(params);
   };
 
   assertClaimDetails = (params: ClaimDetails): void => {
-    cy.get('dl')
-      .contains('dt', 'Claim reference')
-      .parent()
-      .within(() => {
-        cy.get('dd').should('contain.text', params.reference);
-      });
-
-    cy.get('dl')
-      .contains('dt', 'Customer')
-      .parent()
-      .within(() => {
-        cy.get('dd').should(
-          'contain.text',
-          params.customer.salutation + ' ' + params.customer.firstName + ' ' + params.customer.lastName
-        );
-      });
-
-    cy.get('dl')
-      .contains('dt', 'Date')
-      .parent()
-      .within(() => {
-        cy.get('dd').should('contain.text', params.date);
-      });
-
-    cy.get('dl')
-      .contains('dt', 'Status')
-      .parent()
-      .within(() => {
-        cy.get('dd').should('contain.text', params.status);
-      });
-
-    cy.get('dl')
-      .contains('dt', 'Company / Business Unit')
-      .parent()
-      .within(() => {
-        cy.get('dd').should('contain.text', params.customer.companyName + ' / ' + params.customer.businessUnitName);
-      });
-
-    cy.get('dl')
-      .contains('dt', 'Store')
-      .parent()
-      .within(() => {
-        cy.get('dd').should('contain.text', params.store);
-      });
-
-    cy.get('dl')
-      .contains('dt', 'Type')
-      .parent()
-      .within(() => {
-        cy.get('dd').contains(new RegExp(params.type, 'i')).should('exist');
-      });
-
-    cy.get('dl')
-      .contains('dt', 'Subject')
-      .parent()
-      .within(() => {
-        cy.get('dd').should('contain.text', params.subject);
-      });
-
-    cy.get('dl')
-      .contains('dt', 'Description')
-      .parent()
-      .within(() => {
-        cy.get('dd').should('contain.text', params.description);
-      });
-
-    const getColumnIndexByName = (columnName: string): number => {
-      const columnNames = ['File name', 'Size', 'Type', 'Actions'];
-      return columnNames.indexOf(columnName);
-    };
+    this.repository.getClaimReferenceCell().should('contain.text', params.reference);
+    this.repository.getCustomerCell().should('contain.text',
+      `${params.customer.salutation} ${params.customer.firstName} ${params.customer.lastName}`);
+    this.repository.getDateCell().should('contain.text', params.date);
+    this.repository.getStatusCell().should('contain.text', params.status);
+    this.repository.getCompanyBusinessUnitCell().should('contain.text',
+      `${params.customer.companyName} / ${params.customer.businessUnitName}`);
+    this.repository.getStoreCell().should('contain.text', params.store);
+    this.repository.getTypeCell().contains(new RegExp(params.type, 'i')).should('exist');
+    this.repository.getSubjectCell().should('contain.text', params.subject);
+    this.repository.getDescriptionCell().should('contain.text', params.description);
 
     for (const file of params.files) {
-      cy.get('tr')
-        .contains('td', file.file_name)
-        .parent()
-        .within(() => {
-          cy.get('td').eq(getColumnIndexByName('File name')).should('contain.text', file.file_name);
-          cy.get('td').eq(getColumnIndexByName('Size')).should('contain.text', this.convertToReadableSize(file.size));
-          cy.get('td').eq(getColumnIndexByName('Type')).should('contain.text', file.extension);
-          cy.get('td').eq(getColumnIndexByName('Actions')).should('contain.text', 'Download');
-        });
+      const fileRow = this.repository.getFileTableCell(file.file_name);
+      fileRow.within(() => {
+        cy.get('td').eq(0).should('contain.text', file.file_name);
+        cy.get('td').eq(1).should('contain.text', this.convertToReadableSize(file.size));
+        cy.get('td').eq(2).should('contain.text', file.extension);
+        cy.get('td').eq(3).should('contain.text', 'Download');
+      });
     }
   };
 
@@ -118,37 +54,42 @@ export class ClaimDetailPage extends BackofficePage {
   }
 
   openClaimHistory(): void {
-    cy.get('a[data-qa=show-claim-status-history]').click();
+    this.repository.getClaimStatusHistory().click();
   }
 
   assertClaimHistoryIsNotEmpty(): void {
-    cy.get('table[data-qa=history-details-table] td').should('exist');
+    this.repository.getHistoryDetailsTable().should('exist');
   }
 
   cancelClaim(): void {
-    cy.get('#trigger_event_form_cancel').click();
+    this.repository.getCancelButton().click();
   }
 
   assertClaimStatusChangedToCanceled(): void {
-    cy.get('[data-qa=claim-status]').contains('Canceled');
+    this.repository.getClaimStatus().contains('Canceled');
+  }
+
+  submitComment(comment: string): void {
+    this.repository.getMessageTextarea().type(comment);
+    this.repository.getCommentForm().submit();
   }
 
   approveClaim(): void {
-    cy.get('#trigger_event_form_start_review').click();
-    cy.get('#trigger_event_form_approve').click();
+    this.repository.getStartReviewButton().click();
+    this.repository.getApproveButton().click();
   }
 
   assertClaimStatusChangedToApproved(): void {
-    cy.get('[data-qa=claim-status]').contains('Approved');
+    this.repository.getClaimStatus().contains('Approved');
   }
 
   rejectClaim(): void {
-    cy.get('#trigger_event_form_start_review').click();
-    cy.get('#trigger_event_form_reject').click();
+    this.repository.getStartReviewButton().click();
+    this.repository.getRejectButton().click();
   }
 
   assertClaimStatusChangedToRejected(): void {
-    cy.get('[data-qa=claim-status]').contains('Rejected');
+    this.repository.getClaimStatus().contains('Rejected');
   }
 }
 

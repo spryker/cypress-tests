@@ -12,27 +12,23 @@ export class ClaimCreatePage extends YvesPage {
   public PAGE_URL = '/customer/claim/create';
 
   createOrderClaim(params: OrderClaimParams): void {
-    cy.get('form[name="claimForm"] input[name="claimForm[orderReference]"]').should(
-      'have.value',
-      params.orderReference
-    );
-
+    this.repository.getOrderReferenceInput().should('have.value', params.orderReference);
     this.createClaim(params);
   }
 
   createClaim(params: ClaimParams): void {
-    cy.get('select[name="claimForm[type_display]"] option').should('have.length', params.availableTypes.length);
+    this.repository.getTypeOptions().should('have.length', params.availableTypes.length);
     params.availableTypes.forEach((type, index) => {
-      cy.get('select[name="claimForm[type_display]"] option').eq(index).should('have.value', type);
+      this.repository.getTypeOptions().eq(index).should('have.value', type);
     });
 
-    cy.get('form[name="claimForm"] input[name="claimForm[subject]"]').type(params.subject);
-    cy.get('form[name="claimForm"] textarea[name="claimForm[description]"]').type(params.description);
+    this.repository.getSubjectInput().type(params.subject);
+    this.repository.getDescriptionTextarea().type(params.description);
     for (let file of params.files) {
-      cy.get('form[name="claimForm"] input[name="claimForm[files][]"]').attachFile(file.name);
+      this.repository.getFileInput().attachFile(file.name);
     }
 
-    cy.get('form[name="claimForm"] button[type="submit"]').click();
+    this.repository.getSubmitButton().click();
   }
 
   getClaimCreatedMessage(): string {
