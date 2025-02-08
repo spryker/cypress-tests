@@ -12,28 +12,31 @@ describe('manage company user', { tags: ['@yves', '@customer-account-management'
   before((): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
-      loginPage.visit();
-      loginPage.login({
-          email: dynamicFixtures.customer.email,
-          password: staticFixtures.defaultPassword }
-      );
+    loginPage.visit();
+    loginPage.login({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+    });
 
-      companyRoleUserManagePage.visit({}, dynamicFixtures.companyRole.id_company_role);
+    companyRoleUserManagePage.visit({}, dynamicFixtures.companyRole.id_company_role);
   });
 
-    skipB2BIt('customer should be able to assign a user to a company role', (): void => {
-        companyRoleUserManagePage.unassignUser();
-        companyRoleUserManagePage.assignUser();
-        companyRoleUserManagePage.assertTopRowHasAssignButton();
-    });
+  skipB2BIt('customer should be able to assign a user to a company role', (): void => {
+    companyRoleUserManagePage.unassignUser();
+    companyRoleUserManagePage.assignUser();
+    companyRoleUserManagePage.assertTopRowHasAssignButton();
+  });
 
-    skipB2BIt('customer should be unable to unassign a company role without a CSRF token', (): void => {
-        cy.visit(
-            '/DE/en/company/company-role/user/unassign??id-company-user='
-            + dynamicFixtures.companyRole.id_company_role +'&id-company-role='
-            + dynamicFixtures.companyRole.id_company_role + '&_token=BAD_TOKEN');
-        cy.url().should('include', 'error-page/403')
-    });
+  skipB2BIt('customer should be unable to unassign a company role without a CSRF token', (): void => {
+    cy.visit(
+      '/DE/en/company/company-role/user/unassign??id-company-user=' +
+        dynamicFixtures.companyRole.id_company_role +
+        '&id-company-role=' +
+        dynamicFixtures.companyRole.id_company_role +
+        '&_token=BAD_TOKEN'
+    );
+    cy.url().should('include', 'error-page/403');
+  });
 
   function skipB2BIt(description: string, testFn: () => void): void {
     (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);

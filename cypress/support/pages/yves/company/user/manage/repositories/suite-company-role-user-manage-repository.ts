@@ -3,6 +3,8 @@ import { CompanyRoleUserManageRepository } from '../company-role-user-manage-rep
 
 @injectable()
 export class SuiteCompanyRoleUserManageRepository implements CompanyRoleUserManageRepository {
-    getFirstUserUnassignButton = (): Cypress.Chainable => cy.get('body').find('.role-user-table tr:first-child a:contains("Unassign")');
-    getFirstUserAssignButton = (): Cypress.Chainable => cy.get('body').find('.role-user-table tr:first-child a:contains("Assign")');
+  getFirstUserUnassignButton = (): Cypress.Chainable =>
+    cy.get('body').find('.role-user-table tr:first-child a:contains("Unassign")');
+  getFirstUserAssignButton = (): Cypress.Chainable =>
+    cy.get('body').find('.role-user-table tr:first-child a:contains("Assign")');
 }

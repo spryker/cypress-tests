@@ -1,3 +1,3 @@
 export interface CompanyRole {
-    id_company_role: number;
+  id_company_role: number;
 }

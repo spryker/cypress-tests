@@ -1,4 +1,4 @@
 export interface CompanyRoleUserManageRepository {
-    getFirstUserUnassignButton(): Cypress.Chainable;
-    getFirstUserAssignButton(): Cypress.Chainable;
+  getFirstUserUnassignButton(): Cypress.Chainable;
+  getFirstUserAssignButton(): Cypress.Chainable;
 }
