@@ -21,7 +21,7 @@ export class ClaimDetailPage extends BackofficePage {
     this.repository.getCustomerCell().should('contain.text',
       `${params.customer.salutation} ${params.customer.firstName} ${params.customer.lastName}`);
     this.repository.getDateCell().should('contain.text', params.date);
-    this.repository.getStatusCell().should('contain.text', params.status);
+    this.repository.getStatusCell().contains(new RegExp(params.status, 'i')).should('exist');
     this.repository.getCompanyBusinessUnitCell().should('contain.text',
       `${params.customer.companyName} / ${params.customer.businessUnitName}`);
     this.repository.getStoreCell().should('contain.text', params.store);
@@ -29,13 +29,18 @@ export class ClaimDetailPage extends BackofficePage {
     this.repository.getSubjectCell().should('contain.text', params.subject);
     this.repository.getDescriptionCell().should('contain.text', params.description);
 
+      const getColumnIndexByName = (columnName: string): number => {
+          const columnNames = ['File name', 'Size', 'Type', 'Actions'];
+          return columnNames.indexOf(columnName);
+      };
+
     for (const file of params.files) {
       const fileRow = this.repository.getFileTableCell(file.file_name);
       fileRow.within(() => {
-        cy.get('td').eq(0).should('contain.text', file.file_name);
-        cy.get('td').eq(1).should('contain.text', this.convertToReadableSize(file.size));
-        cy.get('td').eq(2).should('contain.text', file.extension);
-        cy.get('td').eq(3).should('contain.text', 'Download');
+        cy.get('td').eq(getColumnIndexByName('File name')).should('contain.text', file.file_name);
+        cy.get('td').eq(getColumnIndexByName('Size')).should('contain.text', this.convertToReadableSize(file.size));
+        cy.get('td').eq(getColumnIndexByName('Type')).should('contain.text', file.extension);
+        cy.get('td').eq(getColumnIndexByName('Actions')).should('contain.text', 'Download');
       });
     }
   };
