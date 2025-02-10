@@ -36,3 +36,5 @@ export * from './shipment/shipment-method/list/shipment-method-list-page';
 export * from './shipment/shipment-method/edit/shipment-method-edit-page';
 export * from './payment-method/list/payment-method-list-page';
 export * from './payment-method/edit/payment-method-edit-page';
+export * from './company-role/list/company-role-list-page';
+export * from './company-role/create/company-role-create-page';
