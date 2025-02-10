@@ -99,13 +99,13 @@ export class ClaimDetailPage extends BackofficePage {
 
   assertClaimTableIsNotEmpty(): void
   {
-    cy.get('table.gui-table-data tbody tr').should('have.length.greaterThan', 0)
+    this.repository.getClaimTableRows().should('have.length.greaterThan', 0)
   }
 
   assertClaimTableColumnsExist(): void
   {
     const expectedColumns = ['ID', 'Reference', 'Type', 'Customer', 'Date', 'Status', 'Actions'];
-    cy.get('table.gui-table-data thead tr th').each((header, index) => {
+    this.repository.getClaimTableHeaders().each((header, index) => {
       if (expectedColumns[index]) {
         cy.wrap(header).should('contain.text', expectedColumns[index]);
       }
@@ -114,7 +114,7 @@ export class ClaimDetailPage extends BackofficePage {
 
   assertViewClaimTableLinksExist(): void
   {
-    cy.get('table.gui-table-data tbody tr').eq(0).find('a.btn-view').should('exist');
+    this.repository.getClaimTableRows().eq(0).find('a.btn-view').should('exist');
   }
 }
 
