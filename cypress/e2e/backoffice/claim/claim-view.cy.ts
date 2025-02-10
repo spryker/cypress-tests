@@ -6,7 +6,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'claim management',
-  { tags: ['@ssp', '@yves', '@sspClaimManagement'] },
+  { tags: ['@ssp', '@backoffice', '@sspClaimManagement'] },
   (): void => {
     const claimDetailPage = container.get(ClaimDetailPage);
     const claimListPage = container.get(ClaimListPage);
@@ -21,7 +21,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 
     beforeEach((): void => {
       userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
+        username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
     });
