@@ -2,6 +2,7 @@ export interface ClaimRepository {
   getCreateGeneralClaimButton(): Cypress.Chainable;
   getCreateOrderClaimButton(): Cypress.Chainable;
   getCancelClaimButton(): Cypress.Chainable;
+    getPendingClaimStatusSelector(): string;
   getClaimDetailLinks(): Cypress.Chainable;
   getClaimCreatedMessage(): string;
   getClaimDetailsReference(reference: string): string;
@@ -15,4 +16,14 @@ export interface ClaimRepository {
   getClaimDetailsCustomerLastName(firstName: string): string;
   getClaimDetailsCustomerEmail(email: string): string;
   getClaimDetailsCompanyAndBusinessUnitName(companyName: string, businessUnitName: string): string;
+  getFirstRowViewButton(): Cypress.Chainable;
+  getFirstRowReference(): string;
+  getClaimForm(): Cypress.Chainable;
+  getOrderReferenceInput(): Cypress.Chainable;
+  getTypeSelect(): Cypress.Chainable;
+  getTypeOptions(): Cypress.Chainable;
+  getSubjectInput(): Cypress.Chainable;
+  getDescriptionTextarea(): Cypress.Chainable;
+  getFileInput(): Cypress.Chainable;
+  getSubmitButton(): Cypress.Chainable;
 }

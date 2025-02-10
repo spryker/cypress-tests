@@ -1,8 +1,20 @@
 import { injectable } from 'inversify';
 import { ClaimRepository } from '../claim-repository';
+import Chainable = Cypress.Chainable;
 
 @injectable()
 export class SuiteClaimRepository implements ClaimRepository {
+  private readonly selectors = {
+    claimForm: 'form[name="claimForm"]',
+    orderReferenceInput: 'input[name="claimForm[orderReference]"]',
+    typeSelect: 'select[name="claimForm[type_display]"]',
+    typeOptions: 'select[name="claimForm[type_display]"] option',
+    subjectInput: 'input[name="claimForm[subject]"]',
+    descriptionTextarea: 'textarea[name="claimForm[description]"]',
+    fileInput: 'input[name="claimForm[files][]"]',
+    submitButton: 'button[type="submit"]'
+  };
+
   getCreateGeneralClaimButton(): Cypress.Chainable {
     return cy.get('a[data-qa="create-general-claim"]');
   }
@@ -65,7 +77,62 @@ export class SuiteClaimRepository implements ClaimRepository {
     return '.claim-status-canceled';
   }
 
-  getClaimDetailLinks(): Cypress.Chainable {
-    return cy.get('a[data-qa="claim-details"]');
+  // New selectors for claim list table
+  private readonly claimTable = '[data-qa="component claim-table"] table';
+  private readonly tableRow = 'tbody tr';
+  private readonly viewButton = '[data-qa="claim-details"]';
+  private readonly reference = '[data-qa="claim-reference"]';
+
+  // New method to get first row view button
+  getFirstRowViewButton(): Chainable {
+    return cy.get(this.claimTable)
+      .find(this.tableRow)
+      .first()
+      .find(this.viewButton);
+  }
+
+    getFirstRowReference(): string {
+        return cy.get(this.claimTable)
+            .find(this.tableRow)
+            .first()
+            .find(this.reference)
+            .invoke('text');
+    }
+
+  // Add method to interface
+  getClaimDetailLinks(): Chainable {
+    return cy.get(this.viewButton);
+  }
+
+  getClaimForm(): Cypress.Chainable {
+    return cy.get(this.selectors.claimForm);
+  }
+
+  getOrderReferenceInput(): Cypress.Chainable {
+    return this.getClaimForm().find(this.selectors.orderReferenceInput);
+  }
+
+  getTypeSelect(): Cypress.Chainable {
+    return this.getClaimForm().find(this.selectors.typeSelect);
+  }
+
+  getTypeOptions(): Cypress.Chainable {
+    return cy.get(this.selectors.typeOptions);
+  }
+
+  getSubjectInput(): Cypress.Chainable {
+    return this.getClaimForm().find(this.selectors.subjectInput);
+  }
+
+  getDescriptionTextarea(): Cypress.Chainable {
+    return this.getClaimForm().find(this.selectors.descriptionTextarea);
+  }
+
+  getFileInput(): Cypress.Chainable {
+    return this.getClaimForm().find(this.selectors.fileInput);
+  }
+
+  getSubmitButton(): Cypress.Chainable {
+    return this.getClaimForm().find(this.selectors.submitButton);
   }
 }

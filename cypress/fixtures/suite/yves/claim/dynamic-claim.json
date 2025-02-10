@@ -34,7 +34,7 @@
         {
           "type": "helper",
           "name": "haveCompanyBusinessUnit",
-          "key": "businessUnitFromCompany",
+          "key": "businessUnit",
           "arguments": [
             {
               "fkCompany": "#company.id_company"
@@ -44,7 +44,7 @@
         {
           "type": "helper",
           "name": "haveCompanyBusinessUnit",
-          "key": "businessUnitFromCompany2",
+          "key": "businessUnit2",
           "arguments": [
             {
               "fkCompany": "#company.id_company"
@@ -54,7 +54,7 @@
         {
           "type": "helper",
           "name": "haveCompanyBusinessUnit",
-          "key": "businessUnitFromCompany3",
+          "key": "businessUnit3",
           "arguments": [
             {
               "fkCompany": "#company2.id_company"
@@ -172,7 +172,7 @@
               "customer": "#customer",
               "fkCustomer": "#customer.id_customer",
               "fkCompany": "#company.id_company",
-              "fkCompanyBusinessUnit": "#businessUnitFromCompany.id_company_business_unit"
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
             }
           ]
         },
@@ -185,7 +185,7 @@
               "customer": "#customer2",
               "fkCustomer": "#customer2.id_customer",
               "fkCompany": "#company.id_company",
-              "fkCompanyBusinessUnit": "#businessUnitFromCompany.id_company_business_unit"
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
             }
           ]
         },
@@ -198,7 +198,7 @@
               "customer": "#customer6",
               "fkCustomer": "#customer6.id_customer",
               "fkCompany": "#company.id_company",
-              "fkCompanyBusinessUnit": "#businessUnitFromCompany2.id_company_business_unit"
+              "fkCompanyBusinessUnit": "#businessUnit2.id_company_business_unit"
             }
           ]
         },
@@ -211,7 +211,7 @@
               "customer": "#customer3",
               "fkCustomer": "#customer3.id_customer",
               "fkCompany": "#company2.id_company",
-              "fkCompanyBusinessUnit": "#businessUnitFromCompany3.id_company_business_unit"
+              "fkCompanyBusinessUnit": "#businessUnit3.id_company_business_unit"
             }
           ]
         },
@@ -224,7 +224,7 @@
               "customer": "#customer4",
               "fkCustomer": "#customer4.id_customer",
               "fkCompany": "#company2.id_company",
-              "fkCompanyBusinessUnit": "#businessUnitFromCompany3.id_company_business_unit"
+              "fkCompanyBusinessUnit": "#businessUnit3.id_company_business_unit"
             }
           ]
         },
@@ -237,7 +237,7 @@
               "customer": "#customer5",
               "fkCustomer": "#customer5.id_customer",
               "fkCompany": "#company2.id_company",
-              "fkCompanyBusinessUnit": "#businessUnitFromCompany3.id_company_business_unit"
+              "fkCompanyBusinessUnit": "#businessUnit3.id_company_business_unit"
             }
           ]
         },

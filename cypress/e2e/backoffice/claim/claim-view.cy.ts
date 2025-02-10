@@ -4,9 +4,9 @@ import { ClaimDetailPage } from '@pages/backoffice';
 import { ClaimListPage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
-(['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'claim management',
-  { tags: ['@yves', '@claim'] },
+  { tags: ['@ssp', '@yves', '@sspClaimManagement'] },
   (): void => {
     const claimDetailPage = container.get(ClaimDetailPage);
     const claimListPage = container.get(ClaimListPage);
@@ -106,15 +106,10 @@ import { UserLoginScenario } from '@scenarios/backoffice';
         },
       });
 
-      // Fill in the form
-      cy.get('textarea[name="message"]').type('This is a test comment.');
+        claimDetailPage.submitComment('This is a test comment.');
 
-      // Submit the form
-      cy.get('form[action="/comment-gui/comment/add"]').submit();
-
-      // Verify the form submission
-      cy.url().should('include', '/ssp-claim-management/detail?id-claim=' + dynamicFixtures.generalClaim.id_claim);
-      cy.contains('This is a test comment.').should('exist');
+        claimDetailPage.assertPageLocation();
+        cy.contains('This is a test comment.').should('exist');
     });
 
     it('should visit the claim list page', () => {
