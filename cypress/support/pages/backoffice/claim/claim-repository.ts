@@ -106,4 +106,14 @@ export class ClaimRepository {
     getRejectButton(): Chainable {
         return cy.get(this.selectors.rejectButton);
     }
+
+    getClaimTableRows(): Chainable
+    {
+        return cy.get('table.gui-table-data tbody tr');
+    }
+
+    getClaimTableHeaders(): Chainable
+    {
+        return this.getClaimTableRows().get('th')
+    }
 }

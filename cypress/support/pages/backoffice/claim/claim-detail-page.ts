@@ -63,7 +63,7 @@ export class ClaimDetailPage extends BackofficePage {
   }
 
   assertClaimHistoryIsNotEmpty(): void {
-    this.repository.getHistoryDetailsTable().should('exist');
+    this.repository.getHistoryDetailsTable().should('exist').should('be.visible');
   }
 
   cancelClaim(): void {
@@ -95,6 +95,26 @@ export class ClaimDetailPage extends BackofficePage {
 
   assertClaimStatusChangedToRejected(): void {
     this.repository.getClaimStatus().contains('Rejected');
+  }
+
+  assertClaimTableIsNotEmpty(): void
+  {
+    this.repository.getClaimTableRows().should('have.length.greaterThan', 0)
+  }
+
+  assertClaimTableColumnsExist(): void
+  {
+    const expectedColumns = ['ID', 'Reference', 'Type', 'Customer', 'Date', 'Status', 'Actions'];
+    this.repository.getClaimTableHeaders().each((header, index) => {
+      if (expectedColumns[index]) {
+        cy.wrap(header).should('contain.text', expectedColumns[index]);
+      }
+    });
+  }
+
+  assertViewClaimTableLinksExist(): void
+  {
+    this.repository.getClaimTableRows().eq(0).find('a.btn-view').should('exist');
   }
 }
 
