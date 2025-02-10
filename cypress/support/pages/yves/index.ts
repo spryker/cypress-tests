@@ -25,3 +25,5 @@ export * from './claim/claim-list-page';
 export * from './claim/claim-create-page';
 export * from './claim/claim-detail-page';
 export * from './claim/claim-order-page';
+export * from './company/company-role/index/company-role-index-page';
+export * from './company/company-role/create/company-role-create-page';
