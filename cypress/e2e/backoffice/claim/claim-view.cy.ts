@@ -120,18 +120,9 @@ import { UserLoginScenario } from '@scenarios/backoffice';
     it('should visit the claim list page', () => {
       claimListPage.visit();
 
-      // Check that the table contains claim entries
-      cy.get('table.gui-table-data tbody tr').should('have.length.greaterThan', 0);
-
-      // Check that the table has all the expected columns
-      const expectedColumns = ['ID', 'Reference', 'Type', 'Customer', 'Date', 'Status', 'Actions'];
-      cy.get('table.gui-table-data thead tr th').each((header, index) => {
-        if (expectedColumns[index]) {
-          cy.wrap(header).should('contain.text', expectedColumns[index]);
-        }
-      });
-
-      cy.get('table.gui-table-data tbody tr').eq(0).find('a.btn-view').should('exist');
+      claimDetailPage.assertClaimTableIsNotEmpty();
+      claimDetailPage.assertClaimTableColumnsExist();
+      claimDetailPage.assertViewClaimTableLinksExist();
     });
 
     it('user can approve claim', (): void => {

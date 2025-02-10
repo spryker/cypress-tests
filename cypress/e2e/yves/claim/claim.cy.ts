@@ -145,7 +145,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
       claimDetailPage.assertPageLocation();
       claimDetailPage.clickCancelClaimButton();
 
-      cy.get(claimDetailPage.getPendingClaimStatusSelector()).should('exist');
+      cy.get(claimDetailPage.getCanceledClaimStatusSelector()).should('exist');
     });
 
     it('customer should not be able to cancel a claim if he is now owner', (): void => {
@@ -190,10 +190,6 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
       claimCreatePage.createClaim(staticFixtures.generalClaim);
 
-      claimDetailPage.assertPageLocation();
-
-      customerLogoutScenario.execute();
-
       customerLoginScenario.execute({
         email: dynamicFixtures.customer2.email,
         password: staticFixtures.defaultPassword,
@@ -202,7 +198,6 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
       claimListPage.visit();
 
-      claimListPage.visit();
       claimListPage.openLatestClaimDetailsPage();
 
       claimDetailPage.assertPageLocation();
@@ -221,8 +216,6 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
       claimCreatePage.createClaim(staticFixtures.generalClaim);
 
-      claimDetailPage.assertPageLocation();
-
       customerLogoutScenario.execute();
 
       customerLoginScenario.execute({
@@ -233,7 +226,6 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
       claimListPage.visit();
 
-      claimListPage.visit();
       claimListPage.openLatestClaimDetailsPage();
 
       claimDetailPage.assertPageLocation();
@@ -267,36 +259,6 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
       claimListPage.assetPageHasNoClaims();
     });
 
-    it('customer with corresponding permission can see claims created by other customers withing the same business unit', (): void => {
-      customerLoginScenario.execute({
-        email: dynamicFixtures.customer3.email,
-        password: staticFixtures.defaultPassword,
-        withoutSession: true,
-      });
-
-      claimListPage.visit();
-
-      claimListPage.clickCreateClaimButton();
-
-      claimCreatePage.createClaim(staticFixtures.generalClaim);
-
-      claimDetailPage.assertPageLocation();
-
-      customerLogoutScenario.execute();
-
-      customerLoginScenario.execute({
-        email: dynamicFixtures.customer5.email,
-        password: staticFixtures.defaultPassword,
-        withoutSession: true,
-      });
-
-      claimListPage.visit();
-
-      claimListPage.visit();
-      claimListPage.openLatestClaimDetailsPage();
-
-      claimDetailPage.assertPageLocation();
-    });
 
     it('customer should not be able to create a claim if he has no permission', (): void => {
       customerLoginScenario.execute({

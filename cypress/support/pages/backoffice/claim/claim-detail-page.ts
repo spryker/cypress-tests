@@ -122,7 +122,7 @@ export class ClaimDetailPage extends BackofficePage {
   }
 
   assertClaimHistoryIsNotEmpty(): void {
-    cy.get('table[data-qa=history-details-table] td').should('exist');
+    cy.get('table[data-qa=history-details-table] td').should('exist').should('be.visible');
   }
 
   cancelClaim(): void {
@@ -149,6 +149,26 @@ export class ClaimDetailPage extends BackofficePage {
 
   assertClaimStatusChangedToRejected(): void {
     cy.get('[data-qa=claim-status]').contains('Rejected');
+  }
+
+  assertClaimTableIsNotEmpty(): void
+  {
+    cy.get('table.gui-table-data tbody tr').should('have.length.greaterThan', 0)
+  }
+
+  assertClaimTableColumnsExist(): void
+  {
+    const expectedColumns = ['ID', 'Reference', 'Type', 'Customer', 'Date', 'Status', 'Actions'];
+    cy.get('table.gui-table-data thead tr th').each((header, index) => {
+      if (expectedColumns[index]) {
+        cy.wrap(header).should('contain.text', expectedColumns[index]);
+      }
+    });
+  }
+
+  assertViewClaimTableLinksExist(): void
+  {
+    cy.get('table.gui-table-data tbody tr').eq(0).find('a.btn-view').should('exist');
   }
 }
 

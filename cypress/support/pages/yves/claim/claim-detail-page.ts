@@ -55,15 +55,15 @@ export class ClaimDetailPage extends YvesPage {
   };
 
   clickCancelClaimButton(): void {
-    this.getCancelClaimButton().click();
+    this.repository.getCancelClaimButton().click();
   }
 
   getCancelClaimButton(): Cypress.Chainable {
     return this.repository.getCancelClaimButton();
   }
 
-  getPendingClaimStatusSelector(): string {
-    return this.repository.getPendingClaimStatusSelector();
+  getCanceledClaimStatusSelector(): string {
+    return this.repository.getCanceledClaimStatusSelector();
   }
 }
 

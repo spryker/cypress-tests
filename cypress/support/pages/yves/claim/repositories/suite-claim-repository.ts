@@ -61,7 +61,7 @@ export class SuiteClaimRepository implements ClaimRepository {
     return cy.get('button[data-qa="cancel-claim"]');
   }
 
-  getPendingClaimStatusSelector(): string {
+  getCanceledClaimStatusSelector(): string {
     return '.claim-status-canceled';
   }
 
