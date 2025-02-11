@@ -121,6 +121,12 @@ import { SuiteYvesRepository } from '../../pages/yves/repositories/suite-yves-re
 import { SuiteCompanyRoleUserManageRepository } from '../../pages/yves/company/user/manage/repositories/suite-company-role-user-manage-repository';
 import { B2bCompanyRoleUserManageRepository } from '../../pages/yves/company/user/manage/repositories/b2b-company-role-user-manage-repository';
 import { B2bMpCompanyRoleUserManageRepository } from '../../pages/yves/company/user/manage/repositories/b2b-mp-company-role-user-manage-repository';
+import { SuiteCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/suite-company-role-index-repository';
+import { SuiteCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/suite-company-role-create-repository';
+import { B2bMpCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2b-mp-company-role-create-repository';
+import { B2bMpCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/b2b-mp-company-role-index-repository';
+import { B2bCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/b2b-company-role-index-repository';
+import { B2bCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2b-company-role-create-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -149,6 +155,8 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.OrderDetailsRepository]: SuiteOrderDetailsRepository,
   [REPOSITORIES.ProductComparisonRepository]: SuiteProductComparisonRepository,
   [REPOSITORIES.CompanyRoleUserManageRepository]: SuiteCompanyRoleUserManageRepository,
+  [REPOSITORIES.CompanyRoleIndexRepository]: SuiteCompanyRoleIndexRepository,
+  [REPOSITORIES.CompanyRoleCreateRepository]: SuiteCompanyRoleCreateRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -202,6 +210,8 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.ContentRepository]: B2bContentRepository,
   [REPOSITORIES.ProductComparisonRepository]: B2bProductComparisonRepository,
   [REPOSITORIES.CompanyRoleUserManageRepository]: B2bCompanyRoleUserManageRepository,
+  [REPOSITORIES.CompanyRoleIndexRepository]: B2bCompanyRoleIndexRepository,
+  [REPOSITORIES.CompanyRoleCreateRepository]: B2bCompanyRoleCreateRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
@@ -255,6 +265,8 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.ContentRepository]: B2bMpContentRepository,
   [REPOSITORIES.ProductComparisonRepository]: B2bMpProductComparisonRepository,
   [REPOSITORIES.CompanyRoleUserManageRepository]: B2bMpCompanyRoleUserManageRepository,
+  [REPOSITORIES.CompanyRoleIndexRepository]: B2bMpCompanyRoleIndexRepository,
+  [REPOSITORIES.CompanyRoleCreateRepository]: B2bMpCompanyRoleCreateRepository,
 };
 
 const mappings = {

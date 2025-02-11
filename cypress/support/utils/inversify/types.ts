@@ -23,4 +23,6 @@ export const enum REPOSITORIES {
   ProductComparisonRepository = 'ProductComparisonRepository',
   OrderDetailsRepository = 'OrderDetailsRepository',
   CompanyRoleUserManageRepository = 'CompanyRoleUserManageRepository',
+  CompanyRoleIndexRepository = 'CompanyRoleIndexRepository',
+  CompanyRoleCreateRepository = 'CompanyRoleCreateRepository',
 }
