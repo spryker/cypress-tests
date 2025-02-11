@@ -12,6 +12,10 @@ export class FileManagerAttachmentDetachPage extends BackofficePage {
     cy.get(this.repository.getDetachButtonSelector()).first().click();
   }
 
+  assertDetachFile(): void {
+    this.repository.getAttachmentTableRows().should('have.length.greaterThan', 1);
+  }
+
   verifySuccessMessage(): void {
     cy.get(this.repository.getSuccessMessageSelector())
       .should('be.visible')

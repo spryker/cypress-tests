@@ -12,4 +12,5 @@ export class FileManagerAttachmentListRepository {
   getFileSizeHeaderSelector = (): string => '[data-qa="size"]';
   getFileTypeHeaderSelector = (): string => '[data-qa="type"]';
   getAttachButtonSelector = (): string => '[data-qa="attach-button"]';
+  getSearchInputSelector = (): string => '[type="search"]';
 }

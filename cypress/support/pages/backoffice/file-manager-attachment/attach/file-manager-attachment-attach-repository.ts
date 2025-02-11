@@ -13,4 +13,7 @@ export class FileManagerAttachmentAttachRepository {
   getDropdownOptionSelector = (): string => '.select2-results__option';
   getSubmitButtonSelector = (): string => '[data-qa="attach-submit-button"]';
   getSuccessMessageSelector = (): string => '[data-qa="success-message"]';
+  getCompanyPrompt = (): string => 'test';
+  getCompanyUserPrompt = (): string => 'test';
+  getCompanyBusinessUnitPrompt = (): string => 'test';
 }

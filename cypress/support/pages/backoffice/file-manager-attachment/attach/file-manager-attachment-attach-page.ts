@@ -8,39 +8,39 @@ import { FileManagerAttachmentAttachRepository } from './file-manager-attachment
 export class FileManagerAttachmentAttachPage extends BackofficePage {
   @inject(FileManagerAttachmentAttachRepository) private repository: FileManagerAttachmentAttachRepository;
 
-  selectCompany(companyName: string): void {
+  selectCompany(): void {
     cy.intercept('GET', '/ssp-file-management/autocomplete/company**').as('companySearch');
 
     cy.get(this.repository.getCompanyFieldSelector())
       .siblings(this.repository.getSiblingSelector())
       .find(this.repository.getSearchFieldSelector())
-      .type(companyName);
+      .type(this.repository.getCompanyPrompt());
 
     cy.wait('@companySearch');
 
     cy.get(this.repository.getDropdownOptionSelector()).filter(':visible').first().click();
   }
 
-  selectCompanyUser(companyUserName: string): void {
+  selectCompanyUser(): void {
     cy.intercept('GET', '/ssp-file-management/autocomplete/company-user**').as('companyUserSearch');
 
     cy.get(this.repository.getCompanyUserFieldSelector())
       .siblings(this.repository.getSiblingSelector())
       .find(this.repository.getSearchFieldSelector())
-      .type(companyUserName);
+      .type(this.repository.getCompanyUserPrompt());
 
     cy.wait('@companyUserSearch');
 
     cy.get(this.repository.getDropdownOptionSelector()).filter(':visible').first().click();
   }
 
-  selectCompanyBusinessUnit(companyBusinessUnitName: string): void {
+  selectCompanyBusinessUnit(): void {
     cy.intercept('GET', '/ssp-file-management/autocomplete/company-business-unit**').as('companyBusinessUnitSearch');
 
     cy.get(this.repository.getCompanyBusinessUnitFieldSelector())
       .siblings(this.repository.getSiblingSelector())
       .find(this.repository.getSearchFieldSelector())
-      .type(companyBusinessUnitName);
+      .type(this.repository.getCompanyBusinessUnitPrompt());
 
     cy.wait('@companyBusinessUnitSearch');
 

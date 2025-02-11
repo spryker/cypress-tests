@@ -13,6 +13,7 @@ import {
 describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fileManager', '@ssp'] }, () => {
   const userLoginScenario = container.get(UserLoginScenario);
   const fileManagerAttachmentListPage = container.get(FileManagerAttachmentListPage);
+  const fileManagerAttachmentAddPage = container.get(FileManagerAttachmentAddPage);
 
   let dynamicFixtures: FileManagerAttachmentDynamicFixtures;
   let staticFixtures: FileManagerAttachmentStaticFixtures;
@@ -41,63 +42,20 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     fileManagerAttachmentDetachPage.detachFile();
     fileManagerAttachmentDetachPage.verifySuccessMessage();
+    fileManagerAttachmentDetachPage.assertDetachFile();
   });
 
   it('should upload multiple files with size constraints', () => {
-    const fileManagerAttachmentAddPage = container.get(FileManagerAttachmentAddPage);
+    const testFiles: Array<{ fileContent: any; fileName: string; mimeType: string; filePath: string }> = [];
 
-    // Prepare test files that meet the constraints
-    const testFiles: { fileContent: any; fileName: string; mimeType: string; filePath: string }[] = [];
+    fileManagerAttachmentAddPage.visit();
+    fileManagerAttachmentAddPage.verifyFileUploadConstraints();
 
-    cy.fixture('suite/backoffice/file-manager-attachment/test-files/document1.pdf', 'binary')
-      .then((fileContent) => {
-        testFiles.push({
-          fileContent,
-          fileName: 'document1.pdf',
-          mimeType: 'application/pdf',
-          filePath: 'cypress/fixtures/suite/backoffice/file-manager-attachment/test-files/document1.pdf',
-        });
-      })
-      .then(() => {
-        cy.fixture('suite/backoffice/file-manager-attachment/test-files/image1.jpeg', 'binary');
-      })
-      .then((fileContent) => {
-        testFiles.push({
-          fileContent,
-          fileName: 'image1.jpeg',
-          mimeType: 'image/jpeg',
-          filePath: 'cypress/fixtures/suite/backoffice/file-manager-attachment/test-files/image1.jpeg',
-        });
-      })
-      .then(() => {
-        cy.fixture('suite/backoffice/file-manager-attachment/test-files/image2.png', 'binary');
-      })
-      .then((fileContent) => {
-        testFiles.push({
-          fileContent,
-          fileName: 'image2.png',
-          mimeType: 'image/png',
-          filePath: 'cypress/fixtures/suite/backoffice/file-manager-attachment/test-files/image2.png',
-        });
-      })
-      .then(() => {
-        cy.fixture('suite/backoffice/file-manager-attachment/test-files/document2.pdf', 'binary');
-      })
-      .then((fileContent) => {
-        testFiles.push({
-          fileContent,
-          fileName: 'document2.pdf',
-          mimeType: 'application/pdf',
-          filePath: 'cypress/fixtures/suite/backoffice/file-manager-attachment/test-files/document2.pdf',
-        });
-      })
-      .then(() => {
-        fileManagerAttachmentAddPage.visit();
-        fileManagerAttachmentAddPage.uploadFiles(testFiles);
-        fileManagerAttachmentAddPage.verifyFileUploadConstraints();
-        fileManagerAttachmentAddPage.submitForm();
-        fileManagerAttachmentAddPage.verifySuccessMessage();
-      });
+    fileManagerAttachmentAddPage.loadTestFiles().then((files) => {
+      fileManagerAttachmentAddPage.uploadFiles(files);
+      fileManagerAttachmentAddPage.submitForm();
+      fileManagerAttachmentAddPage.verifySuccessMessage();
+    });
   });
 
   it('should successfully delete a file', () => {
@@ -108,6 +66,7 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     fileManagerAttachmentDeletePage.confirmDelete();
     fileManagerAttachmentDeletePage.verifySuccessMessage();
+    fileManagerAttachmentDeletePage.assertDeleteFile();
   });
 
   it('should display file details on view page', () => {
@@ -123,9 +82,9 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
-    fileManagerAttachmentAttachPage.selectCompany('comp');
-    fileManagerAttachmentAttachPage.selectCompanyUser('spen');
-    fileManagerAttachmentAttachPage.selectCompanyBusinessUnit('unit');
+    fileManagerAttachmentAttachPage.selectCompany();
+    fileManagerAttachmentAttachPage.selectCompanyUser();
+    fileManagerAttachmentAttachPage.selectCompanyBusinessUnit();
     fileManagerAttachmentAttachPage.submitForm();
     fileManagerAttachmentAttachPage.verifySuccessMessage();
   });

@@ -17,4 +17,8 @@ export class FileManagerAttachmentDeletePage extends BackofficePage {
       .should('be.visible')
       .and('contain', 'File was successfully removed.');
   }
+
+  assertDeleteFile(): void {
+    this.repository.getFileTableRows().should('have.length.greaterThan', 5);
+  }
 }

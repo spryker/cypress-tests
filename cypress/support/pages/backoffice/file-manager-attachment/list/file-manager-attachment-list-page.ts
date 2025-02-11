@@ -18,15 +18,24 @@ export class FileManagerAttachmentListPage extends BackofficePage {
     cy.get(this.repository.getUploadedDateHeaderSelector()).should('contain', 'Date Uploaded');
   }
 
+  clickAttachButton(): void {
+    this.searchFile();
+    cy.get(this.repository.getAttachButtonSelector()).click();
+  }
+
+  searchFile(): void {
+    cy.intercept('GET', '/ssp-file-management/list/table**').as('fileSearch');
+    cy.get(this.repository.getSearchInputSelector()).type('image');
+    cy.wait('@fileSearch');
+  }
+
   clickViewButton(): void {
+    this.searchFile();
     cy.get(this.repository.getViewButtonSelector()).first().click();
   }
 
   clickDeleteButton(): void {
+    this.searchFile();
     cy.get(this.repository.getDeleteButtonSelector()).first().click();
-  }
-
-  clickAttachButton(): void {
-    cy.get(this.repository.getAttachButtonSelector()).first().click();
   }
 }
