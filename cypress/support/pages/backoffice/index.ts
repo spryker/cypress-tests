@@ -42,3 +42,5 @@ export * from './file-manager-attachment/view/file-manager-attachment-view-page'
 export * from './file-manager-attachment/delete/file-manager-attachment-delete-page';
 export * from './file-manager-attachment/detach/file-manager-attachment-detach-page';
 export * from './file-manager-attachment/attach/file-manager-attachment-attach-page';
+export * from './company-role/list/company-role-list-page';
+export * from './company-role/create/company-role-create-page';

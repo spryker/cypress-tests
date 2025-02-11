@@ -16,6 +16,10 @@ export class SuiteOrderDetailsRepository implements OrderDetailsRepository {
     return cy.get('input[type="checkbox"][name="sales-order-item-ids[]"]');
   }
   getEditOrderButton(): Cypress.Chainable {
-    return cy.get('[data-qa="component remote-form-submit"]').find('button');
+    return this.getEditOrderForm().find('button');
+  }
+
+  getEditOrderForm(): Cypress.Chainable {
+    return cy.get('[data-qa="component remote-form-submit"]');
   }
 }

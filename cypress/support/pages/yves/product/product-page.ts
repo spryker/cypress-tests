@@ -24,7 +24,21 @@ export class ProductPage extends YvesPage {
   };
 
   selectSoldByProductOffer = (params: SelectSoldByProductOfferParams): void => {
-    this.repository.getSoldByProductOfferRadios().check(params.productOfferReference, { force: true });
+    this.repository.getSoldByProductOfferRadios().then(($radios) => {
+      const targetRadio = $radios.filter(`[value="${params.productOfferReference}"]`);
+      if (targetRadio.length) {
+        cy.wrap(targetRadio).check(params.productOfferReference, { force: true });
+      } else {
+        cy.url().then((currentUrl) => {
+          cy.log('Fallback redirect to the product offer page');
+          cy.visit(
+            currentUrl +
+              '?attribute[selected_merchant_reference_type]=product_offer_reference&attribute[selected_merchant_reference]=' +
+              params.productOfferReference
+          );
+        });
+      }
+    });
   };
 
   createMerchantRelationRequest = (params: CreateMerchantRelationRequestParams): void => {

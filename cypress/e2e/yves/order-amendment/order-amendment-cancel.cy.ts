@@ -38,7 +38,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
         cartPage.assertCartName('Shopping cart');
 
         customerOverviewPage.viewLastPlacedOrder();
-        orderDetailsPage.containsOrderState('Payment pending');
+        orderDetailsPage.containsOrderState('New');
       });
     });
 
