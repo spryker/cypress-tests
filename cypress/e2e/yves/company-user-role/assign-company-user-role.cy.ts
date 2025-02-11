@@ -1,13 +1,13 @@
 import { container } from '@utils';
 import { LoginPage, CompanyRoleUserManagePage } from '@pages/yves';
-import { CompanyRoleDynamicFixtures, CompanyRoleStaticFixtures } from '@interfaces/yves';
+import { CompanyUserRoleDynamicFixtures, CompanyUserRoleStaticFixtures } from '@interfaces/yves';
 
 describe('manage company user', { tags: ['@yves', '@customer-account-management'] }, (): void => {
   const loginPage = container.get(LoginPage);
   const companyRoleUserManagePage = container.get(CompanyRoleUserManagePage);
 
-  let dynamicFixtures: CompanyRoleDynamicFixtures;
-  let staticFixtures: CompanyRoleStaticFixtures;
+  let dynamicFixtures: CompanyUserRoleDynamicFixtures;
+  let staticFixtures: CompanyUserRoleStaticFixtures;
 
   before((): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());

@@ -1,11 +1,11 @@
 import { Customer, CompanyRole, User } from './shared';
 
-export interface CompanyRoleDynamicFixtures {
+export interface CompanyUserRoleDynamicFixtures {
   customer: Customer;
   user: User;
   companyRole: CompanyRole;
 }
 
-export interface CompanyRoleStaticFixtures {
+export interface CompanyUserRoleStaticFixtures {
   defaultPassword: string;
 }
