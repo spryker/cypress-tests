@@ -10,7 +10,9 @@ export class FileManagerAttachmentAddPage extends BackofficePage {
 
   protected PAGE_URL = '/ssp-file-management/add-files/index';
 
-  loadTestFiles(): Cypress.Chainable<Array<{ fileContent: any; fileName: string; mimeType: string; filePath: string }>> {
+  loadTestFiles(): Cypress.Chainable<
+    Array<{ fileContent: any; fileName: string; mimeType: string; filePath: string }>
+  > {
     const testFiles: Array<{ fileContent: any; fileName: string; mimeType: string; filePath: string }> = [];
 
     return cy
@@ -73,14 +75,10 @@ export class FileManagerAttachmentAddPage extends BackofficePage {
   }
 
   verifyFileUploadConstraints(): void {
-    cy.get(this.repository.getFileInputSelector())
-      .should('have.attr', 'multiple');
-    cy.get(this.repository.getFileInputSelector())
-      .should('have.attr', 'accept', '.pdf,.jpeg,.jpg,.png,.heic,.heif');
-    cy.get(this.repository.getFileInputSelector())
-      .should('have.attr', 'size', '100M');
-    cy.get(this.repository.getFileInputSelector())
-      .should('have.attr', 'max', '4');
+    cy.get(this.repository.getFileInputSelector()).should('have.attr', 'multiple');
+    cy.get(this.repository.getFileInputSelector()).should('have.attr', 'accept', '.pdf,.jpeg,.jpg,.png,.heic,.heif');
+    cy.get(this.repository.getFileInputSelector()).should('have.attr', 'size', '100M');
+    cy.get(this.repository.getFileInputSelector()).should('have.attr', 'max', '4');
   }
 
   submitForm(): void {
