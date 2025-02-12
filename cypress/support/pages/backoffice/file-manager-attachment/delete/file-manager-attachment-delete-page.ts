@@ -19,6 +19,6 @@ export class FileManagerAttachmentDeletePage extends BackofficePage {
   }
 
   assertDeleteFile(): void {
-    this.repository.getFileTableRows().should('have.length.greaterThan', 5);
+    this.repository.getFileTableRows().should('have.length', 0);
   }
 }

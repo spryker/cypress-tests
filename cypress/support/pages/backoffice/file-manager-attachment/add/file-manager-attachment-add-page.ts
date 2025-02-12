@@ -74,10 +74,13 @@ export class FileManagerAttachmentAddPage extends BackofficePage {
 
   verifyFileUploadConstraints(): void {
     cy.get(this.repository.getFileInputSelector())
-      .should('have.attr', 'multiple')
-      .should('have.attr', 'accept')
-      .should('have.attr', 'max')
-      .should('have.attr', 'size');
+      .should('have.attr', 'multiple');
+    cy.get(this.repository.getFileInputSelector())
+      .should('have.attr', 'accept', '.pdf,.jpeg,.jpg,.png,.heic,.heif');
+    cy.get(this.repository.getFileInputSelector())
+      .should('have.attr', 'size', '100M');
+    cy.get(this.repository.getFileInputSelector())
+      .should('have.attr', 'max', '4');
   }
 
   submitForm(): void {

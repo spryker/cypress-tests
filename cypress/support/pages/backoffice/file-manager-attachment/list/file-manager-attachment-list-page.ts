@@ -19,23 +19,24 @@ export class FileManagerAttachmentListPage extends BackofficePage {
   }
 
   clickAttachButton(): void {
-    this.searchFile();
+    this.searchFile('image2.png');
     cy.get(this.repository.getAttachButtonSelector()).click();
   }
 
-  searchFile(): void {
+  searchFile(fileName: string): void {
     cy.intercept('GET', '/ssp-file-management/list/table**').as('fileSearch');
-    cy.get(this.repository.getSearchInputSelector()).type('image');
+    cy.get(this.repository.getSearchInputSelector()).clear();
+    cy.get(this.repository.getSearchInputSelector()).type(fileName);
     cy.wait('@fileSearch');
   }
 
   clickViewButton(): void {
-    this.searchFile();
+    this.searchFile('image2.png');
     cy.get(this.repository.getViewButtonSelector()).first().click();
   }
 
   clickDeleteButton(): void {
-    this.searchFile();
+    this.searchFile('image1.jpeg');
     cy.get(this.repository.getDeleteButtonSelector()).first().click();
   }
 }

@@ -73,9 +73,10 @@
           "key": "customer",
           "arguments": [
             {
-              "locale": "#locale",
+              "locale": "#localeEN",
               "password": "change123",
-              "name": "Test Customer"
+              "first_name": "Test",
+              "last_name": "Customer"
             }
           ]
         },

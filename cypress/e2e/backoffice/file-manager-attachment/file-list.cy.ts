@@ -34,17 +34,6 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     fileManagerAttachmentListPage.verifyListPage();
   });
 
-  it('should successfully detach file from entity', () => {
-    const fileManagerAttachmentDetachPage = container.get(FileManagerAttachmentDetachPage);
-
-    fileManagerAttachmentListPage.visit();
-    fileManagerAttachmentListPage.clickViewButton();
-
-    fileManagerAttachmentDetachPage.detachFile();
-    fileManagerAttachmentDetachPage.verifySuccessMessage();
-    fileManagerAttachmentDetachPage.assertDetachFile();
-  });
-
   it('should upload multiple files with size constraints', () => {
     const testFiles: Array<{ fileContent: any; fileName: string; mimeType: string; filePath: string }> = [];
 
@@ -87,6 +76,17 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     fileManagerAttachmentAttachPage.selectCompanyBusinessUnit();
     fileManagerAttachmentAttachPage.submitForm();
     fileManagerAttachmentAttachPage.verifySuccessMessage();
+  });
+
+  it('should successfully detach file from entity', () => {
+    const fileManagerAttachmentDetachPage = container.get(FileManagerAttachmentDetachPage);
+
+    fileManagerAttachmentListPage.visit();
+    fileManagerAttachmentListPage.clickViewButton();
+
+    fileManagerAttachmentDetachPage.detachFile();
+    fileManagerAttachmentDetachPage.verifySuccessMessage();
+    fileManagerAttachmentDetachPage.assertDetachFile();
   });
 });
 
