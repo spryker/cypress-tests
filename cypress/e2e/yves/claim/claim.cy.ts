@@ -184,6 +184,10 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
       claimCreatePage.createClaim(staticFixtures.generalClaim);
 
+      claimDetailPage.assertPageLocation();
+
+      customerLogoutScenario.execute();
+
       customerLoginScenario.execute({
         email: dynamicFixtures.customer2.email,
         password: staticFixtures.defaultPassword,
