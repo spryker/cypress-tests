@@ -12,7 +12,7 @@ export class SuiteClaimRepository implements ClaimRepository {
     subjectInput: 'input[name="claimForm[subject]"]',
     descriptionTextarea: 'textarea[name="claimForm[description]"]',
     fileInput: 'input[name="claimForm[files][]"]',
-    submitButton: 'button[type="submit"]'
+    submitButton: 'button[type="submit"]',
   };
 
   getCreateGeneralClaimButton(): Cypress.Chainable {
@@ -85,19 +85,12 @@ export class SuiteClaimRepository implements ClaimRepository {
 
   // New method to get first row view button
   getFirstRowViewButton(): Chainable {
-    return cy.get(this.claimTable)
-      .find(this.tableRow)
-      .first()
-      .find(this.viewButton);
+    return cy.get(this.claimTable).find(this.tableRow).first().find(this.viewButton);
   }
 
-    getFirstRowReference(): string {
-        return cy.get(this.claimTable)
-            .find(this.tableRow)
-            .first()
-            .find(this.reference)
-            .invoke('text');
-    }
+  getFirstRowReference(): string {
+    return cy.get(this.claimTable).find(this.tableRow).first().find(this.reference).invoke('text');
+  }
 
   // Add method to interface
   getClaimDetailLinks(): Chainable {

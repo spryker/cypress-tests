@@ -253,18 +253,19 @@
         },
         {
           "type": "helper",
-          "name": "haveShipmentType",
-          "key": "shipmentType"
+          "name": "getShipmentType",
+          "key": "shipmentType",
+          "arguments": {
+            "key": "delivery"
+          }
         },
         {
           "type": "helper",
-          "name": "haveShipmentMethod",
+          "name": "getShipmentMethod",
           "key": "shipmentMethod",
-          "arguments": [
-            {
-              "shipmentType": "#shipmentType"
-            }
-          ]
+          "arguments": {
+            "key": "spryker_dummy_shipment-standard"
+          }
         },
         {
           "type": "helper",
@@ -289,14 +290,12 @@
         },
         {
           "type": "helper",
-          "name": "haveOrder",
+          "name": "haveFullOrder",
           "key": "order",
           "arguments": [
             {
               "item": {
-                "sku": "#product.sku",
-                "shipment": "#shipment",
-                "shipmentType": "#shipmentType"
+                "sku": "#product.sku"
               },
               "customerReference": "#customer.customer_reference",
               "shipment": "#shipment"

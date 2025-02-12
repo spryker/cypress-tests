@@ -1,4 +1,4 @@
-import {autoWired} from '@utils';
+import { autoWired } from '@utils';
 import { injectable, inject } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
@@ -8,31 +8,32 @@ import { ClaimRepository } from './claim-repository';
 @autoWired
 export class ClaimDetailPage extends BackofficePage {
   protected PAGE_URL = '/ssp-claim-management/detail';
-    @inject(ClaimRepository) private repository: ClaimRepository;
+  @inject(ClaimRepository) private repository: ClaimRepository;
 
-
-    assertOrderClaimDetails = (params: OrderClaimDetails): void => {
+  assertOrderClaimDetails = (params: OrderClaimDetails): void => {
     this.repository.getOrderReferenceCell().should('contain.text', params.order.reference);
     this.assertClaimDetails(params);
   };
 
   assertClaimDetails = (params: ClaimDetails): void => {
     this.repository.getClaimReferenceCell().should('contain.text', params.reference);
-    this.repository.getCustomerCell().should('contain.text',
-      `${params.customer.salutation} ${params.customer.firstName} ${params.customer.lastName}`);
+    this.repository
+      .getCustomerCell()
+      .should('contain.text', `${params.customer.salutation} ${params.customer.firstName} ${params.customer.lastName}`);
     this.repository.getDateCell().should('contain.text', params.date);
     this.repository.getStatusCell().contains(new RegExp(params.status, 'i')).should('exist');
-    this.repository.getCompanyBusinessUnitCell().should('contain.text',
-      `${params.customer.companyName} / ${params.customer.businessUnitName}`);
+    this.repository
+      .getCompanyBusinessUnitCell()
+      .should('contain.text', `${params.customer.companyName} / ${params.customer.businessUnitName}`);
     this.repository.getStoreCell().should('contain.text', params.store);
     this.repository.getTypeCell().contains(new RegExp(params.type, 'i')).should('exist');
     this.repository.getSubjectCell().should('contain.text', params.subject);
     this.repository.getDescriptionCell().should('contain.text', params.description);
 
-      const getColumnIndexByName = (columnName: string): number => {
-          const columnNames = ['File name', 'Size', 'Type', 'Actions'];
-          return columnNames.indexOf(columnName);
-      };
+    const getColumnIndexByName = (columnName: string): number => {
+      const columnNames = ['File name', 'Size', 'Type', 'Actions'];
+      return columnNames.indexOf(columnName);
+    };
 
     for (const file of params.files) {
       const fileRow = this.repository.getFileTableCell(file.file_name);
@@ -97,13 +98,11 @@ export class ClaimDetailPage extends BackofficePage {
     this.repository.getClaimStatus().contains('Rejected');
   }
 
-  assertClaimTableIsNotEmpty(): void
-  {
-    this.repository.getClaimTableRows().should('have.length.greaterThan', 0)
+  assertClaimTableIsNotEmpty(): void {
+    this.repository.getClaimTableRows().should('have.length.greaterThan', 0);
   }
 
-  assertClaimTableColumnsExist(): void
-  {
+  assertClaimTableColumnsExist(): void {
     const expectedColumns = ['ID', 'Reference', 'Type', 'Customer', 'Date', 'Status', 'Actions'];
     this.repository.getClaimTableHeaders().each((header, index) => {
       if (expectedColumns[index]) {
@@ -112,8 +111,7 @@ export class ClaimDetailPage extends BackofficePage {
     });
   }
 
-  assertViewClaimTableLinksExist(): void
-  {
+  assertViewClaimTableLinksExist(): void {
     this.repository.getClaimTableRows().eq(0).find('a.btn-view').should('exist');
   }
 }

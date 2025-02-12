@@ -106,10 +106,10 @@ import { UserLoginScenario } from '@scenarios/backoffice';
         },
       });
 
-        claimDetailPage.submitComment('This is a test comment.');
+      claimDetailPage.submitComment('This is a test comment.');
 
-        claimDetailPage.assertPageLocation();
-        cy.contains('This is a test comment.').should('exist');
+      claimDetailPage.assertPageLocation();
+      cy.contains('This is a test comment.').should('exist');
     });
 
     it('should visit the claim list page', () => {

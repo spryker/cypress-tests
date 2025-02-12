@@ -257,7 +257,6 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
       claimListPage.assetPageHasNoClaims();
     });
 
-
     it('customer should not be able to create a claim if he has no permission', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer4.email,

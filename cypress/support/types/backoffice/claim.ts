@@ -14,14 +14,14 @@ export interface ClaimDynamicFixtures {
 }
 
 export interface Claim {
-    id_claim: number;
-    reference: string;
-    subject: string;
-    description: string;
-    status: string;
-    type: string;
-    store: Store;
-    files: File[];
+  id_claim: number;
+  reference: string;
+  subject: string;
+  description: string;
+  status: string;
+  type: string;
+  store: Store;
+  files: File[];
 }
 
 export interface Customer {
