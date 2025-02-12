@@ -11,3 +11,4 @@ export * from './order-amendment';
 export * from './locale';
 export * from './catalog';
 export * from './company-role';
+export * from './file-manager-attachment';
