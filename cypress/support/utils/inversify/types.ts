@@ -25,4 +25,5 @@ export const enum REPOSITORIES {
   ManageCompanyRoleUserRepository = 'ManageCompanyRoleUserRepository',
   CompanyRoleIndexRepository = 'CompanyRoleIndexRepository',
   CompanyRoleCreateRepository = 'CompanyRoleCreateRepository',
+  CompanyUserListRepository = 'CompanyUserListRepository',
 }

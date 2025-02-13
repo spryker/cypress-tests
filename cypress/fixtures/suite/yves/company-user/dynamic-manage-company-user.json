@@ -42,7 +42,12 @@
                 {
                     "type": "helper",
                     "name": "confirmCustomer",
-                    "arguments": ["#customer", "customer2"]
+                    "arguments": ["#customer"]
+                },
+                {
+                    "type": "helper",
+                    "name": "confirmCustomer",
+                    "arguments": ["#customer2"]
                 },
                 {
                     "type": "builder",

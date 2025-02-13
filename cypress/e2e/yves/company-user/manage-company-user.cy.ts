@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { LoginPage, CompanyUserSelectPage } from '@pages/yves';
+import { LoginPage, CompanyUserListPage } from '@pages/yves';
 import {
     ManageCompanyUserRoleStaticFixtures,
     ManageCompanyUserDynamicFixtures
@@ -7,7 +7,7 @@ import {
 
 describe('manage company user', { tags: ['@yves', '@customer-account-management'] }, (): void => {
     const loginPage = container.get(LoginPage);
-    const companyUserSelectPage = container.get(CompanyUserSelectPage);
+    const companyUserListPage = container.get(CompanyUserListPage);
 
     let dynamicFixtures: ManageCompanyUserDynamicFixtures;
     let staticFixtures: ManageCompanyUserRoleStaticFixtures;
@@ -18,35 +18,35 @@ describe('manage company user', { tags: ['@yves', '@customer-account-management'
 
     skipB2CIt('having permissions, should be able to disable a company user', (): void => {
         loginUserWithPermissions();
-        companyUserSelectPage.visit();
+        companyUserListPage.visit();
 
-        companyUserSelectPage.disableUser();
-        companyUserSelectPage.assertTopUserIsDisabled();
+        companyUserListPage.disableUser();
+        companyUserListPage.assertTopUserIsDisabled();
     });
-    //
-    // skipB2CIt('having permissions, should be able to enable a company user', (): void => {
-    //     loginUserWithPermissions();
-    //     companyUserSelectPage.visit();
-    //
-    //     companyUserSelectPage.enableUser();
-    //     companyUserSelectPage.assertTopUserIsEnabled();
-    // });
-    //
-    // skipB2CIt('without permissions, should not be able to disable a company user', (): void => {
-    //     loginUserWithoutPermissions();
-    //     companyUserSelectPage.visit();
-    //
-    //     companyUserSelectPage.disableUser();
-    //     companyUserSelectPage.assertTopUserIsDisabled();
-    // });
-    //
-    // skipB2CIt('without permissions, should not be able to enable a company user', (): void => {
-    //     loginUserWithoutPermissions();
-    //     companyUserSelectPage.visit();
-    //
-    //     companyUserSelectPage.enableUser();
-    //     companyUserSelectPage.assertTopUserIsEnabled();
-    // });
+
+    skipB2CIt('having permissions, should be able to enable a company user', (): void => {
+        loginUserWithPermissions();
+        companyUserListPage.visit();
+
+        companyUserListPage.enableUser();
+        companyUserListPage.assertTopUserIsEnabled();
+    });
+
+    skipB2CIt('without permissions, should not be able to disable a company user', (): void => {
+        loginUserWithoutPermissions();
+        companyUserListPage.visit();
+
+        companyUserListPage.disableUser();
+        companyUserListPage.assertTopUserIsEnabled();
+    });
+
+    skipB2CIt('without permissions, should not be able to enable a company user', (): void => {
+        loginUserWithoutPermissions();
+        companyUserListPage.visit();
+
+        companyUserListPage.enableUser();
+        companyUserListPage.assertTopUserIsEnabled();
+    });
 
     function loginUserWithPermissions(): void {
         loginPage.visit();

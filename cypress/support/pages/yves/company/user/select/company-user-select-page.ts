@@ -14,22 +14,6 @@ export class CompanyUserSelectPage extends YvesPage {
     this.repository.getBusinessUnitSelect().select(params.idCompanyUser.toString(), { force: true });
     this.repository.getSubmitButton().click();
   };
-
-  enableUser = (): void => {
-    this.repository.getTopUserEnableButton().click();
-  };
-
-  disableUser = (): void => {
-    this.repository.getTopUserDisableButton().click();
-  };
-
-  assertTopUserIsDisabled = (): void => {
-    this.repository.getTopUserEnableButton().should('exist');
-  };
-
-  assertTopUserIsEnabled = (): void => {
-    this.repository.getTopUserDisableButton().should('exist');
-  };
 }
 
 interface SelectBusinessUnitParams {

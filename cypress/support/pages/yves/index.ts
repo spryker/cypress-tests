@@ -12,6 +12,7 @@ export * from './login/login-page';
 export * from './multi-cart/multi-cart-page';
 export * from './catalog/catalog-page';
 export * from './company/user/select/company-user-select-page';
+export * from './company/user/list/company-user-list-page';
 export * from './company/merchant-relation-request/create/merchant-relation-request-create-page';
 export * from './company/merchant-relation-request/details/merchant-relation-request-details-page';
 export * from './company/merchant-relation-request/index/merchant-relation-request-index-page';
