@@ -1,13 +1,13 @@
 import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import { YvesPage } from '@pages/yves';
-import { CompanyRoleUserManageRepository } from './company-role-user-manage-repository';
+import { ManageCompanyRoleUserRepository } from './manage-company-role-user-repository';
 import VisitOptions = Cypress.VisitOptions;
 
 @injectable()
 @autoWired
-export class CompanyRoleUserManagePage extends YvesPage {
-  @inject(REPOSITORIES.CompanyRoleUserManageRepository) private repository: CompanyRoleUserManageRepository;
+export class ManageCompanyRoleUserPage extends YvesPage {
+  @inject(REPOSITORIES.ManageCompanyRoleUserRepository) private repository: ManageCompanyRoleUserRepository;
 
   protected PAGE_URL = '/company/company-role/user/manage';
 
