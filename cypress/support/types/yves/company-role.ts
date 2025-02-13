@@ -1,4 +1,4 @@
-import { Customer } from './shared';
+import {Customer, User} from './shared';
 
 export interface CompanyRoleDynamicFixtures {
   customer: Customer;
