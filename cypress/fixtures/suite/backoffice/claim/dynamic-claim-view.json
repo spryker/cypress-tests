@@ -86,19 +86,23 @@
         },
         {
           "type": "helper",
-          "name": "getShipmentType",
+          "name": "haveShipmentType",
           "key": "shipmentType",
-          "arguments": {
-            "key": "delivery"
-          }
+          "arguments": [
+            {
+              "key": "delivery"
+            }
+          ]
         },
         {
           "type": "helper",
-          "name": "getShipmentMethod",
+          "name": "haveShipmentMethod",
           "key": "shipmentMethod",
-          "arguments": {
-            "key": "spryker_dummy_shipment-standard"
-          }
+          "arguments": [
+            {
+              "key": "spryker_dummy_shipment-standard"
+            }
+          ]
         },
         {
           "type": "helper",
