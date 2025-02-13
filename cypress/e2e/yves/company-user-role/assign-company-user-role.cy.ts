@@ -9,7 +9,7 @@ describe('manage company user', { tags: ['@yves', '@customer-account-management'
   let dynamicFixtures: CompanyUserRoleDynamicFixtures;
   let staticFixtures: CompanyUserRoleStaticFixtures;
 
-  before((): void => {
+  beforeEach((): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
     loginPage.visit();
@@ -34,8 +34,9 @@ describe('manage company user', { tags: ['@yves', '@customer-account-management'
         '&id-company-role=' +
         dynamicFixtures.companyRole.id_company_role +
         '&_token=BAD_TOKEN'
-    );
-    cy.url().should('include', 'error-page/403');
+    ).then(() => {
+      cy.url().should('include', 'error-page/403');
+    });
   });
 
   function skipB2CIt(description: string, testFn: () => void): void {
