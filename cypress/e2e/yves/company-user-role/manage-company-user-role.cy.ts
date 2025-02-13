@@ -1,15 +1,15 @@
 import { container } from '@utils';
-import { LoginPage, CompanyRoleUserManagePage } from '@pages/yves';
+import { LoginPage, ManageCompanyRoleUserPage } from '@pages/yves';
 import { CompanyUserRoleDynamicFixtures, CompanyUserRoleStaticFixtures } from '@interfaces/yves';
 
 describe('manage company user', { tags: ['@yves', '@customer-account-management'] }, (): void => {
   const loginPage = container.get(LoginPage);
-  const companyRoleUserManagePage = container.get(CompanyRoleUserManagePage);
+  const manageCompanyRoleUserPage = container.get(ManageCompanyRoleUserPage);
 
   let dynamicFixtures: CompanyUserRoleDynamicFixtures;
   let staticFixtures: CompanyUserRoleStaticFixtures;
 
-  before((): void => {
+  beforeEach((): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
     loginPage.visit();
@@ -18,24 +18,25 @@ describe('manage company user', { tags: ['@yves', '@customer-account-management'
       password: staticFixtures.defaultPassword,
     });
 
-    companyRoleUserManagePage.visit({}, dynamicFixtures.companyRole.id_company_role);
+    manageCompanyRoleUserPage.visit({}, dynamicFixtures.companyRole.id_company_role);
   });
 
   skipB2CIt('customer should be able to assign a user to a company role', (): void => {
-    companyRoleUserManagePage.unassignUser();
-    companyRoleUserManagePage.assignUser();
-    companyRoleUserManagePage.assertTopRowHasAssignButton();
+    manageCompanyRoleUserPage.unassignUser();
+    manageCompanyRoleUserPage.assignUser();
+    manageCompanyRoleUserPage.assertTopRowHasAssignButton();
   });
 
   skipB2CIt('customer should be unable to unassign a company role without a CSRF token', (): void => {
     cy.visit(
-      '/DE/en/company/company-role/user/unassign??id-company-user=' +
+      '/company/company-role/user/unassign??id-company-user=' +
         dynamicFixtures.companyRole.id_company_role +
         '&id-company-role=' +
         dynamicFixtures.companyRole.id_company_role +
         '&_token=BAD_TOKEN'
-    );
-    cy.url().should('include', 'error-page/403');
+    ).then(() => {
+      cy.url().should('include', 'error-page/403');
+    });
   });
 
   function skipB2CIt(description: string, testFn: () => void): void {

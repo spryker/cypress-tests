@@ -21,6 +21,6 @@ export * from './customer/overview/customer-overview-page';
 export * from './customer/order/order-details-page';
 export * from './product-comparison/product-comparison-page';
 export * from './content/cms-content-page';
-export * from './company/user/manage/company-role-user-manage-page';
+export * from './company/user/manage/manage-company-role-user-page';
 export * from './company/company-role/index/company-role-index-page';
 export * from './company/company-role/create/company-role-create-page';

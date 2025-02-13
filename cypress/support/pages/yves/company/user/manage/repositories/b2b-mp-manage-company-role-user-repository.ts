@@ -1,8 +1,8 @@
 import { injectable } from 'inversify';
-import { CompanyRoleUserManageRepository } from '../company-role-user-manage-repository';
+import { ManageCompanyRoleUserRepository } from '../manage-company-role-user-repository';
 
 @injectable()
-export class SuiteCompanyRoleUserManageRepository implements CompanyRoleUserManageRepository {
+export class B2bMpManageCompanyRoleUserRepository implements ManageCompanyRoleUserRepository {
   getFirstUserUnassignButton = (): Cypress.Chainable =>
     cy.get('body').find('.role-user-table tr:first-child a:contains("Unassign")');
   getFirstUserAssignButton = (): Cypress.Chainable =>
