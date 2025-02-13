@@ -6,7 +6,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'claim management',
-  { tags: ['@yves', '@claim', `@ssp`, '@sspClaimManagement'] },
+  { tags: ['@yves', '@claim', '@ssp', '@sspClaimManagement'] },
   (): void => {
     const claimListPage = container.get(ClaimListPage);
     const claimCreatePage = container.get(ClaimCreatePage);
