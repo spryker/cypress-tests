@@ -29,7 +29,7 @@ describe('manage company user', { tags: ['@yves', '@customer-account-management'
 
   skipB2CIt('customer should be unable to unassign a company role without a CSRF token', (): void => {
     cy.visit(
-      '/DE/en/company/company-role/user/unassign??id-company-user=' +
+      '/company/company-role/user/unassign??id-company-user=' +
         dynamicFixtures.companyRole.id_company_role +
         '&id-company-role=' +
         dynamicFixtures.companyRole.id_company_role +

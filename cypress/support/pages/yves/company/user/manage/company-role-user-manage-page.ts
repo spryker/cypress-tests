@@ -9,7 +9,7 @@ import VisitOptions = Cypress.VisitOptions;
 export class CompanyRoleUserManagePage extends YvesPage {
   @inject(REPOSITORIES.CompanyRoleUserManageRepository) private repository: CompanyRoleUserManageRepository;
 
-  protected PAGE_URL = '/DE/en/company/company-role/user/manage';
+  protected PAGE_URL = '/company/company-role/user/manage';
 
   visit = (options?: Partial<VisitOptions>, idCompanyUser = 0): void => {
     cy.visit(this.PAGE_URL + '?id=' + idCompanyUser, options);
