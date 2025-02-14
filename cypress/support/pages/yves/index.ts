@@ -23,3 +23,4 @@ export * from './product-comparison/product-comparison-page';
 export * from './content/cms-content-page';
 export * from './company/company-role/index/company-role-index-page';
 export * from './company/company-role/create/company-role-create-page';
+export * from './file-manager-attachment/list/file-manager-attachment-list-page';
