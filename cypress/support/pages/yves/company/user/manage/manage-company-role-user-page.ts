@@ -26,4 +26,16 @@ export class ManageCompanyRoleUserPage extends YvesPage {
   assertTopRowHasAssignButton = (): void => {
     this.repository.getFirstUserUnassignButton().should('be.visible');
   };
+
+  requestUnassignUrl = (idCompanyUser: number, idCompanyRole: number) => {
+      return cy.visit(
+          '/company/company-role/user/unassign??id-company-user=' +
+          idCompanyUser +
+          '&id-company-role=' +
+          idCompanyRole +
+          '&_token=BAD_TOKEN'
+      )
+  };
+
+
 }
