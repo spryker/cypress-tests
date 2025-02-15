@@ -31,12 +31,11 @@ describe('manage company user', { tags: ['@yves', '@customer-account-management'
   });
 
   skipB2CIt((): void => {
-      manageCompanyRoleUserPage.requestUnassignUrl(
-          dynamicFixtures.companyRole.id_company_role,
-          dynamicFixtures.companyUser.id_company_user,
-      ).then(() => {
-      cy.url().should('include', 'error-page/403');
-    });
+    manageCompanyRoleUserPage
+      .requestUnassignUrl(dynamicFixtures.companyRole.id_company_role, dynamicFixtures.companyUser.id_company_user)
+      .then(() => {
+        cy.url().should('include', 'error-page/403');
+      });
   });
 
   function skipB2CIt(testFn: () => void): void {
