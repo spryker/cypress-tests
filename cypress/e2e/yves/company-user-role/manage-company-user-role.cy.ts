@@ -4,7 +4,7 @@ import { CompanyUserRoleDynamicFixtures, CompanyUserRoleStaticFixtures } from '@
 import { CustomerLoginScenario } from '@scenarios/yves';
 
 describe('manage company user', { tags: ['@yves', '@customer-account-management'] }, (): void => {
-  const loginPage = container.get(LoginPage);
+  const customerLoginScenario = container.get(CustomerLoginScenario);
   const manageCompanyRoleUserPage = container.get(ManageCompanyRoleUserPage);
 
   let dynamicFixtures: CompanyUserRoleDynamicFixtures;
@@ -31,7 +31,10 @@ describe('manage company user', { tags: ['@yves', '@customer-account-management'
   });
 
   skipB2CIt((): void => {
-    requestUnassignUrl.then(() => {
+      manageCompanyRoleUserPage.requestUnassignUrl(
+          dynamicFixtures.companyRole.id_company_role,
+          dynamicFixtures.companyUser.id_company_user,
+      ).then(() => {
       cy.url().should('include', 'error-page/403');
     });
   });
