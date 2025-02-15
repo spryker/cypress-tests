@@ -27,7 +27,7 @@ export class ManageCompanyRoleUserPage extends YvesPage {
     this.repository.getFirstUserUnassignButton().should('be.visible');
   };
 
-  requestUnassignUrl = (idCompanyUser: number, idCompanyRole: number) => {
+  requestUnassignUrl = (idCompanyUser: number, idCompanyRole: number): Cypress.Chainable => {
     return cy.visit(
       '/company/company-role/user/unassign??id-company-user=' +
         idCompanyUser +

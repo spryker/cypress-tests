@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { LoginPage, ManageCompanyRoleUserPage } from '@pages/yves';
+import { ManageCompanyRoleUserPage } from '@pages/yves';
 import { CompanyUserRoleDynamicFixtures, CompanyUserRoleStaticFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
