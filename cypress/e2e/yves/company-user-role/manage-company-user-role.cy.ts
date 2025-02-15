@@ -15,11 +15,11 @@ describe('manage company user', { tags: ['@yves', '@customer-account-management'
   });
 
   beforeEach((): void => {
-     customerLoginScenario.execute({
-          email: dynamicFixtures.customer.email,
-          password: staticFixtures.defaultPassword,
-          withoutSession: true,
-     });
+    customerLoginScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+      withoutSession: true,
+    });
 
     manageCompanyRoleUserPage.visit({}, dynamicFixtures.companyRole.id_company_role);
   });
@@ -31,8 +31,8 @@ describe('manage company user', { tags: ['@yves', '@customer-account-management'
   });
 
   skipB2CIt((): void => {
-      requestUnassignUrl.then(() => {
-        cy.url().should('include', 'error-page/403');
+    requestUnassignUrl.then(() => {
+      cy.url().should('include', 'error-page/403');
     });
   });
 

@@ -28,14 +28,12 @@ export class ManageCompanyRoleUserPage extends YvesPage {
   };
 
   requestUnassignUrl = (idCompanyUser: number, idCompanyRole: number) => {
-      return cy.visit(
-          '/company/company-role/user/unassign??id-company-user=' +
-          idCompanyUser +
-          '&id-company-role=' +
-          idCompanyRole +
-          '&_token=BAD_TOKEN'
-      )
+    return cy.visit(
+      '/company/company-role/user/unassign??id-company-user=' +
+        idCompanyUser +
+        '&id-company-role=' +
+        idCompanyRole +
+        '&_token=BAD_TOKEN'
+    );
   };
-
-
 }
