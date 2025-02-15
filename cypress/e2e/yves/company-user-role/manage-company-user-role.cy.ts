@@ -10,9 +10,9 @@ describe('manage company user', { tags: ['@yves', '@customer-account-management'
   let dynamicFixtures: CompanyUserRoleDynamicFixtures;
   let staticFixtures: CompanyUserRoleStaticFixtures;
 
-before((): void => {
+  before((): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
-});
+  });
 
   beforeEach((): void => {
      customerLoginScenario.execute({
