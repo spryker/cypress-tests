@@ -24,13 +24,13 @@ describe('manage company user', { tags: ['@yves', '@customer-account-management'
     manageCompanyRoleUserPage.visit({}, dynamicFixtures.companyRole.id_company_role);
   });
 
-  skipB2CIt((): void => {
+  skipB2CIt('customer should be able to assign a user to a company role', (): void => {
     manageCompanyRoleUserPage.unassignUser();
     manageCompanyRoleUserPage.assignUser();
     manageCompanyRoleUserPage.assertTopRowHasAssignButton();
   });
 
-  skipB2CIt((): void => {
+  skipB2CIt('customer should be unable to unassign a company role without a CSRF token', (): void => {
     manageCompanyRoleUserPage
       .requestUnassignUrl(dynamicFixtures.companyRole.id_company_role, dynamicFixtures.companyUser.id_company_user)
       .then(() => {
@@ -38,7 +38,7 @@ describe('manage company user', { tags: ['@yves', '@customer-account-management'
       });
   });
 
-  function skipB2CIt(testFn: () => void): void {
-    (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)('', testFn);
+  function skipB2CIt(description: string, testFn: () => void): void {
+    (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
   }
 });
