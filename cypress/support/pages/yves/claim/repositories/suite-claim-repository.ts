@@ -74,7 +74,7 @@ export class SuiteClaimRepository implements ClaimRepository {
   }
 
   getCanceledClaimStatusSelector(): string {
-    return '.claim-status--canceled';
+    return '.status--canceled';
   }
 
   // New selectors for claim list table
