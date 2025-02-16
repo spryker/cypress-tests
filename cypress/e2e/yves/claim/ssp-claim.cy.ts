@@ -41,31 +41,31 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
       cy.contains(claimCreatePage.getClaimCreatedMessage()).should('exist');
 
       claimListPage.visit();
-      claimListPage.getFirstRowReference().then((claimReference) => {
-        claimListPage.openLatestClaimDetailsPage();
 
-        claimDetailPage.assertClaimDetails({
-          reference: claimReference,
-          type: staticFixtures.generalClaim.type,
-          subject: staticFixtures.generalClaim.subject,
-          description: staticFixtures.generalClaim.description,
-          status: staticFixtures.generalClaim.status,
-          files: staticFixtures.generalClaim.files,
-          date: new Date()
-            .toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'short',
-              day: '2-digit',
-            })
-            .replace(/([a-zA-Z]+)\s/, '$1. '),
-          customer: {
-            firstName: dynamicFixtures.customer.first_name,
-            lastName: dynamicFixtures.customer.last_name,
-            email: dynamicFixtures.customer.email,
-            companyName: dynamicFixtures.company.name,
-            businessUnitName: dynamicFixtures.businessUnit.name,
-          },
-        });
+      let claimReference = claimListPage.getFirstRowReference();
+      claimListPage.openLatestClaimDetailsPage();
+
+      claimDetailPage.assertClaimDetails({
+        reference: claimReference,
+        type: staticFixtures.generalClaim.type,
+        subject: staticFixtures.generalClaim.subject,
+        description: staticFixtures.generalClaim.description,
+        status: staticFixtures.generalClaim.status,
+        files: staticFixtures.generalClaim.files,
+        date: new Date()
+          .toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+          })
+          .replace(/([a-zA-Z]+)\s/, '$1. '),
+        customer: {
+          firstName: dynamicFixtures.customer.first_name,
+          lastName: dynamicFixtures.customer.last_name,
+          email: dynamicFixtures.customer.email,
+          companyName: dynamicFixtures.company.name,
+          businessUnitName: dynamicFixtures.businessUnit.name,
+        },
       });
     });
 
@@ -94,32 +94,31 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
       cy.contains(claimCreatePage.getClaimCreatedMessage()).should('exist');
 
       claimListPage.visit();
-      claimListPage.getFirstRowReference().then((claimReference) => {
-        claimListPage.openLatestClaimDetailsPage();
+      let claimReference = claimListPage.getFirstRowReference();
+      claimListPage.openLatestClaimDetailsPage();
 
-        claimDetailPage.assertOrderClaimDetails({
-          reference: claimReference,
-          type: staticFixtures.orderClaim.type,
-          subject: staticFixtures.orderClaim.subject,
-          description: staticFixtures.orderClaim.description,
-          status: staticFixtures.orderClaim.status,
-          files: staticFixtures.orderClaim.files,
-          date: new Date()
-            .toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'short',
-              day: '2-digit',
-            })
-            .replace(/([a-zA-Z]+)\s/, '$1. '),
-          customer: {
-            firstName: dynamicFixtures.customer.first_name,
-            lastName: dynamicFixtures.customer.last_name,
-            email: dynamicFixtures.customer.email,
-            companyName: dynamicFixtures.company.name,
-            businessUnitName: dynamicFixtures.businessUnit.name,
-          },
-          orderReference: dynamicFixtures.order.order_reference,
-        });
+      claimDetailPage.assertOrderClaimDetails({
+        reference: claimReference,
+        type: staticFixtures.orderClaim.type,
+        subject: staticFixtures.orderClaim.subject,
+        description: staticFixtures.orderClaim.description,
+        status: staticFixtures.orderClaim.status,
+        files: staticFixtures.orderClaim.files,
+        date: new Date()
+          .toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+          })
+          .replace(/([a-zA-Z]+)\s/, '$1. '),
+        customer: {
+          firstName: dynamicFixtures.customer.first_name,
+          lastName: dynamicFixtures.customer.last_name,
+          email: dynamicFixtures.customer.email,
+          companyName: dynamicFixtures.company.name,
+          businessUnitName: dynamicFixtures.businessUnit.name,
+        },
+        orderReference: dynamicFixtures.order.order_reference,
       });
     });
 

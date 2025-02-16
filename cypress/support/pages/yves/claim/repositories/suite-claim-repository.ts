@@ -74,7 +74,7 @@ export class SuiteClaimRepository implements ClaimRepository {
   }
 
   getCanceledClaimStatusSelector(): string {
-    return '.claim-status-canceled';
+    return '.claim-status--canceled';
   }
 
   // New selectors for claim list table
@@ -89,7 +89,16 @@ export class SuiteClaimRepository implements ClaimRepository {
   }
 
   getFirstRowReference(): string {
-    return cy.get(this.claimTable).find(this.tableRow).first().find(this.reference).invoke('text');
+    let referenceText: string = '';
+    cy.get(this.claimTable)
+      .find(this.tableRow)
+      .first()
+      .find(this.reference)
+      .invoke('text')
+      .then((text) => {
+        referenceText = text;
+      });
+    return referenceText;
   }
 
   // Add method to interface

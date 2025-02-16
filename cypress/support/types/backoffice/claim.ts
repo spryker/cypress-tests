@@ -2,11 +2,13 @@ import { User } from './shared';
 
 export interface ClaimStaticFixtures {
   defaultPassword: string;
-  rootUser: User;
 }
 
 export interface ClaimDynamicFixtures {
+  rootUser: User;
   generalClaim: Claim;
+  generalClaim2: Claim;
+  generalClaim3: Claim;
   orderClaim: OrderClaim;
   customer: Customer;
   company: Company;

@@ -2,6 +2,11 @@ import { Customer, Store } from './shared';
 
 export interface ClaimDynamicFixtures {
   customer: Customer;
+  customer2: Customer;
+  customer3: Customer;
+  customer4: Customer;
+  customer5: Customer;
+  customer6: Customer;
   order: Order;
   company: Company;
   businessUnit: BusinessUnit;

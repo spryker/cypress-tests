@@ -2,7 +2,7 @@ export interface ClaimRepository {
   getCreateGeneralClaimButton(): Cypress.Chainable;
   getCreateOrderClaimButton(): Cypress.Chainable;
   getCancelClaimButton(): Cypress.Chainable;
-  getPendingClaimStatusSelector(): string;
+  getCanceledClaimStatusSelector(): string;
   getClaimDetailLinks(): Cypress.Chainable;
   getClaimCreatedMessage(): string;
   getClaimDetailsReference(reference: string): string;

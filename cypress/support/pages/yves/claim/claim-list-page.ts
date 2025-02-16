@@ -28,7 +28,7 @@ export class ClaimListPage extends YvesPage {
     this.repository.getClaimDetailLinks().should('not.exist');
   }
 
-  getFirstRowReference(): Cypress.Chainable {
+  getFirstRowReference(): string {
     return this.repository.getFirstRowReference();
   }
 }

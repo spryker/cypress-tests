@@ -39,7 +39,7 @@ export class ClaimCreatePage extends YvesPage {
 interface ClaimParams {
   subject: string;
   description: string;
-  files: File[];
+  files: UploadFile[];
   availableTypes: string[];
 }
 
@@ -47,8 +47,8 @@ interface OrderClaimParams extends ClaimParams {
   orderReference: string;
 }
 
-export interface File {
+export interface UploadFile {
   name: string;
-  sise: string;
+  size: string;
   extension: string;
 }
