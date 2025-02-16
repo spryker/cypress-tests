@@ -47,7 +47,7 @@ export class ClaimDetailPage extends BackofficePage {
   };
 
   convertToReadableSize(size: number): string {
-    let sizeForRound = size + 0.0001;
+    const sizeForRound = size + 0.0001;
     if (size >= 1000 * 1000 * 1000) {
       return parseFloat((sizeForRound / (1000 * 1000 * 1000)).toFixed(2)) + ' GB';
     } else if (size >= 1000 * 1000) {

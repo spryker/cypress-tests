@@ -1,4 +1,4 @@
-import { Customer, Store } from './shared';
+import { Customer } from './shared';
 
 export interface ClaimDynamicFixtures {
   customer: Customer;

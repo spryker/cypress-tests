@@ -89,7 +89,7 @@ export class SuiteClaimRepository implements ClaimRepository {
   }
 
   getFirstRowReference(): string {
-    let referenceText: string = '';
+    let referenceText = '';
     cy.get(this.claimTable)
       .find(this.tableRow)
       .first()

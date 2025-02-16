@@ -24,7 +24,7 @@ export class ClaimCreatePage extends YvesPage {
 
     this.repository.getSubjectInput().type(params.subject);
     this.repository.getDescriptionTextarea().type(params.description);
-    for (let file of params.files) {
+    for (const file of params.files) {
       this.repository.getFileInput().attachFile(file.name);
     }
 

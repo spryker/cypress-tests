@@ -42,7 +42,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
       claimListPage.visit();
 
-      let claimReference = claimListPage.getFirstRowReference();
+      const claimReference = claimListPage.getFirstRowReference();
       claimListPage.openLatestClaimDetailsPage();
 
       claimDetailPage.assertClaimDetails({
@@ -94,7 +94,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
       cy.contains(claimCreatePage.getClaimCreatedMessage()).should('exist');
 
       claimListPage.visit();
-      let claimReference = claimListPage.getFirstRowReference();
+      const claimReference = claimListPage.getFirstRowReference();
       claimListPage.openLatestClaimDetailsPage();
 
       claimDetailPage.assertOrderClaimDetails({
