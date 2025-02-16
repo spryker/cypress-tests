@@ -35,11 +35,13 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 
       claimDetailPage.assertClaimDetails({
         reference: dynamicFixtures.generalClaim.reference,
-        date: new Date().toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        }),
+        date: new Date()
+          .toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+          })
+          .replace(/([a-zA-Z]+)\s/, '$1. '),
         status: dynamicFixtures.generalClaim.status,
         type: dynamicFixtures.generalClaim.type,
         store: dynamicFixtures.generalClaim.store.name,
@@ -70,11 +72,13 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 
       claimDetailPage.assertOrderClaimDetails({
         reference: dynamicFixtures.orderClaim.reference,
-        date: new Date().toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        }),
+        date: new Date()
+          .toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+          })
+          .replace(/([a-zA-Z]+)\s/, '$1. '),
         order: {
           reference: dynamicFixtures.orderClaim.order.order_reference,
         },
