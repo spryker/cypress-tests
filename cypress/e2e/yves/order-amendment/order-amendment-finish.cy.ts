@@ -62,9 +62,9 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
     function assertOrderCancellationForPrevOrder(): void {
       customerOverviewPage.visit();
-      customerOverviewPage.viewOrder(2);
+      customerOverviewPage.viewOrder(1);
 
-      orderDetailsPage.containsOrderState('Canceled');
+      orderDetailsPage.containsOrderState('New');
     }
 
     function placeCustomerOrder(email: string, idCustomerAddress: number): void {
