@@ -56,11 +56,11 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
         customerOverviewPage.visit();
         customerOverviewPage.clickMyFilesLink();
 
-        sspFileManagementListPage.searchByName(staticFixtures.prompt_img);
+        sspFileManagementListPage.searchByName(dynamicFixtures.file1.file_name);
         sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
         sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file2.file_name);
 
-        sspFileManagementListPage.searchByName(staticFixtures.prompt_doc);
+        sspFileManagementListPage.searchByName(dynamicFixtures.file2.file_name);
         sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
         sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file1.file_name);
 
@@ -72,7 +72,7 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
         customerOverviewPage.visit();
         customerOverviewPage.clickMyFilesLink();
 
-        sspFileManagementListPage.applyFilters(staticFixtures.filter_type_file, staticFixtures.filter_value_pdf);
+        sspFileManagementListPage.applyFilters(dynamicFixtures.file3.file_name, staticFixtures.filter_value_pdf);
         sspFileManagementListPage.assertFileExists(dynamicFixtures.file3.file_name);
         sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file2.file_name);
         sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file1.file_name);
@@ -81,5 +81,5 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 );
 
 function describeForSsp(title: string, options: { tags: string[] }, fn: () => void): void {
-    (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, fn);
+    (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, options, fn);
 }

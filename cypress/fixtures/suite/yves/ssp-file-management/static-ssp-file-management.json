@@ -1,9 +1,6 @@
 {
     "defaultPassword": "change123",
-    "filter_type_file": "file",
     "filter_value_pdf": "pdf",
     "filter_value_jpeg": "jpeg",
-    "prompt_img": "img",
-    "prompt_doc": "doc",
     "prompt_nonexistent": "nonexistent"
 }

@@ -91,5 +91,5 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 });
 
 function describeForSsp(title: string, options: { tags: string[] }, fn: () => void): void {
-  (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, fn);
+  (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, options, fn);
 }
