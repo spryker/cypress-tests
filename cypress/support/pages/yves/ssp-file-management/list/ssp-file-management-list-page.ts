@@ -11,7 +11,7 @@ export class SspFileManagementListPage extends YvesPage {
     protected PAGE_URL = '/customer/files';
 
     verifyListPage(): void {
-        cy.get(this.repository.getFitersSelector()).should('be.visible');
+        cy.get(this.repository.getFiltersSelector()).should('be.visible');
     }
 
     assertFileExists(fileName: string): void {

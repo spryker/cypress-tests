@@ -4,7 +4,7 @@ import { autoWired } from '@utils';
 @injectable()
 @autoWired
 export class SspFileManagementListRepository {
-    getFitersSelector = (): string => '[data-qa="component filters"]';
+    getFiltersSelector = (): string => '[data-qa="component filters"]';
     getFileTableSelector = (): string => '[data-qa="component view-table"]';
     getFileNameHeaderSelector = (): string => '[data-qa="name"]';
     getUploadedDateHeaderSelector = (): string => '[data-qa="date"]';
