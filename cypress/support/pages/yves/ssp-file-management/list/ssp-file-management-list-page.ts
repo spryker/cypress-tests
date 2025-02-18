@@ -6,63 +6,57 @@ import { SspFileManagementListRepository } from './ssp-file-management-list-repo
 @injectable()
 @autoWired
 export class SspFileManagementListPage extends YvesPage {
-    @inject(SspFileManagementListRepository) private repository: SspFileManagementListRepository;
+  @inject(SspFileManagementListRepository) private repository: SspFileManagementListRepository;
 
-    protected PAGE_URL = '/customer/files';
+  protected PAGE_URL = '/customer/files';
 
-    verifyListPage(): void {
-        cy.get(this.repository.getFiltersSelector()).should('be.visible');
-    }
+  verifyListPage(): void {
+    cy.get(this.repository.getFiltersSelector()).should('be.visible');
+  }
 
-    assertFileExists(fileName: string): void {
-        cy.get(this.repository.getFileTableSelector())
-            .find('tr')
-            .contains(fileName)
-            .should('be.visible');
-    }
+  assertFileExists(fileName: string): void {
+    cy.get(this.repository.getFileTableSelector()).find('tr').contains(fileName).should('be.visible');
+  }
 
-    assertFileNotExists(fileName: string): void {
-        cy.get(this.repository.getFileTableSelector())
-            .find('tr')
-            .contains(fileName)
-            .should('not.exist');
-    }
+  assertFileNotExists(fileName: string): void {
+    cy.get(this.repository.getFileTableSelector()).find('tr').contains(fileName).should('not.exist');
+  }
 
-    assertNoResults(): void {
-        cy.get(this.repository.getFileTableSelector()).should('not.exist');
-    }
+  assertNoResults(): void {
+    cy.get(this.repository.getFileTableSelector()).should('not.exist');
+  }
 
-    downloadFile(fileName: string): void {
-        cy.get(this.repository.getFileTableSelector())
-            .find('tr')
-            .contains(fileName)
-            .parent()
-            .find(this.repository.getDownloadButtonSelector())
-            .click();
-    }
+  downloadFile(fileName: string): void {
+    cy.get(this.repository.getFileTableSelector())
+      .find('tr')
+      .contains(fileName)
+      .parent()
+      .find(this.repository.getDownloadButtonSelector())
+      .click();
+  }
 
-    verifyFileDownloaded(fileName: string): void {
-        cy.readFile(Cypress.config('downloadsFolder') + '/' + fileName).should('exist');
-    }
+  verifyFileDownloaded(fileName: string): void {
+    cy.readFile(Cypress.config('downloadsFolder') + '/' + fileName).should('exist');
+  }
 
-    filterByType(fileType: string): void {
-        cy.get(this.repository.getTypeFilterSelector()).select(fileType);
-        cy.get(this.repository.getApplyFiltersButtonSelector()).click();
-    }
+  filterByType(fileType: string): void {
+    cy.get(this.repository.getTypeFilterSelector()).select(fileType);
+    cy.get(this.repository.getApplyFiltersButtonSelector()).click();
+  }
 
-    searchByName(searchTerm: string): void {
-        cy.get(this.repository.getSearchFieldSelector()).clear().type(searchTerm);
-        cy.get(this.repository.getApplyFiltersButtonSelector()).click();
-    }
+  searchByName(searchTerm: string): void {
+    cy.get(this.repository.getSearchFieldSelector()).clear().type(searchTerm);
+    cy.get(this.repository.getApplyFiltersButtonSelector()).click();
+  }
 
-    applyFilters(searchTerm: string, fileType: string): void {
-        cy.get(this.repository.getSearchFieldSelector()).clear().type(searchTerm);
-        cy.get(this.repository.getTypeFilterSelector()).select(fileType);
-        cy.get(this.repository.getApplyFiltersButtonSelector()).click();
-    }
+  applyFilters(searchTerm: string, fileType: string): void {
+    cy.get(this.repository.getSearchFieldSelector()).clear().type(searchTerm);
+    cy.get(this.repository.getTypeFilterSelector()).select(fileType);
+    cy.get(this.repository.getApplyFiltersButtonSelector()).click();
+  }
 
-    verifyFilterValues(searchTerm: string, fileType: string): void {
-        cy.get(this.repository.getSearchFieldSelector()).should('have.value', searchTerm);
-        cy.get(this.repository.getTypeFilterSelector()).should('have.value', fileType.toLowerCase());
-    }
+  verifyFilterValues(searchTerm: string, fileType: string): void {
+    cy.get(this.repository.getSearchFieldSelector()).should('have.value', searchTerm);
+    cy.get(this.repository.getTypeFilterSelector()).should('have.value', fileType.toLowerCase());
+  }
 }

@@ -1,3 +1,3 @@
 export interface FileInfo {
-    storage_file_name: string;
+  storage_file_name: string;
 }
