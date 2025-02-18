@@ -4,7 +4,7 @@ import { ManageCompanyRoleUserRepository } from '../manage-company-role-user-rep
 @injectable()
 export class B2bMpManageCompanyRoleUserRepository implements ManageCompanyRoleUserRepository {
   getFirstUserUnassignButton = (): Cypress.Chainable =>
-    cy.get('body').find('.role-user-table tr:first-child a:contains("Unassign")');
+    cy.get('body').find('.role-user-table tr:first-child a[href*="user/unassign"]');
   getFirstUserAssignButton = (): Cypress.Chainable =>
-    cy.get('body').find('.role-user-table tr:first-child a:contains("Assign")');
+    cy.get('body').find('.role-user-table tr:first-child a[href*="user/assign"]');
 }
