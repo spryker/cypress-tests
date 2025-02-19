@@ -3,7 +3,9 @@ import { CompanyRoleCreateStaticFixtures, CompanyRoleCreateDynamicFixtures } fro
 import { CompanyRoleListPage, CompanyRoleCreatePage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
-describe('company role create', { tags: ['@backoffice', '@company-role'] }, (): void => {
+(['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+  'company role create',
+  { tags: ['@backoffice', '@company-role'] }, (): void => {
   const companyRoleListPage = container.get(CompanyRoleListPage);
   const companyRoleCreatePage = container.get(CompanyRoleCreatePage);
   const userLoginScenario = container.get(UserLoginScenario);
