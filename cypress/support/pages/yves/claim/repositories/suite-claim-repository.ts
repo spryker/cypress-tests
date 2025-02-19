@@ -80,8 +80,8 @@ export class SuiteClaimRepository implements ClaimRepository {
   // New selectors for claim list table
   private readonly claimTable = '[data-qa="component claim-table"] table';
   private readonly tableRow = 'tbody tr';
-  private readonly viewButton = '[data-qa="claim-details"]';
-  private readonly reference = '[data-qa="claim-reference"]';
+  private readonly viewButton = '[data-qa="cell-actions"] a';
+  private readonly reference = '[data-qa="cell-reference"]';
 
   // New method to get first row view button
   getFirstRowViewButton(): Chainable {
