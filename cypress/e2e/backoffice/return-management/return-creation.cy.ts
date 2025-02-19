@@ -53,7 +53,9 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       salesIndexPage.visit();
       salesIndexPage.view();
 
-      salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
+      if (['suite'].includes(Cypress.env('repositoryId'))) {
+        salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
+      }
       salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
       salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
       salesDetailPage.triggerOms({ state: 'skip picking' });
@@ -69,7 +71,9 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       salesIndexPage.visit();
       salesIndexPage.view();
 
-      salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
+      if (['suite'].includes(Cypress.env('repositoryId'))) {
+        salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
+      }
       salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
       salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
       salesDetailPage.triggerOms({ state: 'skip picking' });
