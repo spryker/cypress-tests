@@ -124,6 +124,10 @@ import { B2bMpCompanyRoleCreateRepository } from '../../pages/yves/company/compa
 import { B2bMpCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/b2b-mp-company-role-index-repository';
 import { B2bCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/b2b-company-role-index-repository';
 import { B2bCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2b-company-role-create-repository';
+import { B2cCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/b2c-company-role-index-repository';
+import { B2cCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2c-company-role-create-repository';
+import { B2cMpCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/b2c-mp-company-role-index-repository';
+import { B2cMpCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2c-mp-company-role-create-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -179,6 +183,8 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.OrderDetailsRepository]: B2cOrderDetailsRepository,
   [REPOSITORIES.ContentRepository]: B2cContentRepository,
   [REPOSITORIES.ProductComparisonRepository]: B2cProductComparisonRepository,
+  [REPOSITORIES.CompanyRoleIndexRepository]: B2cCompanyRoleIndexRepository,
+  [REPOSITORIES.CompanyRoleCreateRepository]: B2cCompanyRoleCreateRepository,
 };
 
 const b2bMappings: BindingsMap = {
@@ -233,6 +239,8 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.OrderDetailsRepository]: B2cMpOrderDetailsRepository,
   [REPOSITORIES.ContentRepository]: B2cMpContentRepository,
   [REPOSITORIES.ProductComparisonRepository]: B2cMpProductComparisonRepository,
+  [REPOSITORIES.CompanyRoleIndexRepository]: B2cMpCompanyRoleIndexRepository,
+  [REPOSITORIES.CompanyRoleCreateRepository]: B2cMpCompanyRoleCreateRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
