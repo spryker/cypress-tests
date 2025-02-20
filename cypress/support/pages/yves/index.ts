@@ -27,3 +27,4 @@ export * from './claim/claim-detail-page';
 export * from './claim/claim-order-page';
 export * from './company/company-role/index/company-role-index-page';
 export * from './company/company-role/create/company-role-create-page';
+export * from './ssp-file-management/list/ssp-file-management-list-page';

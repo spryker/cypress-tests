@@ -4,3 +4,4 @@ export * from './return-management';
 export * from './merchant-b2b-contract-requests';
 export * from './claim';
 export * from './company-role-create';
+export * from './ssp-file-management';
