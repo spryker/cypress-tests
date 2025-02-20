@@ -18,8 +18,8 @@ export class CheckoutShipmentPage extends YvesPage {
 
     this.repository
       .getShipmentDateInput()
-      .clear()
-      .type(new Date(+new Date().setHours(0, 0, 0, 0) + 86400000).toLocaleDateString('fr-CA'));
+      .clear({ force: true })
+      .type(new Date(+new Date().setHours(0, 0, 0, 0) + 86400000).toLocaleDateString('fr-CA'), { force: true });
     this.repository.getNextButton().click();
   };
 }

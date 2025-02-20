@@ -15,13 +15,12 @@
     "prettier:check": "prettier . --check",
     "prettier:write": "prettier . --write",
     "cy:open": "cypress open",
-    "cy:run": "cypress run --spec \"cypress/e2e/!(smoke)/**/*.ts\" --env grepTags=-@ssp",
-    "cy:run:ssp": "cypress run --spec \"cypress/e2e/!(smoke)/**/*.ts\" --env grepTags=@ssp",
-    "cy:ci": "cypress run --spec \"cypress/e2e/!(smoke)/**/*.ts\" --headless --browser chrome --env grepTags=-@ssp",
-    "cy:ci:ssp": "cypress run --spec \"cypress/e2e/!(smoke)/**/*.ts\" --headless --browser chrome --env grepTags=@ssp",
-    "cy:smoke": "cypress run --spec \"cypress/e2e/smoke/**/*.ts\" --headless --browser chrome --env grepTags=-@ssp",
-    "cy:dms": "cypress run --spec \"cypress/e2e/!(smoke)/**/*dms.cy.ts\" --headless --browser chrome --env grepTags=-@ssp",
-    "cy:smoke:demo": "cypress run --spec \"cypress/e2e/smoke/!(product)/*.ts\" --headless --browser chrome --env grepTags=-@ssp"
+    "cy:run": "cypress run --spec \"cypress/e2e/!(smoke)/**/*.ts\"",
+    "cy:ci": "cypress run --spec \"cypress/e2e/!(smoke)/**/!(ssp)*.ts\" --headless --browser chrome",
+    "cy:ci:ssp": "cypress run --spec \"cypress/e2e/!(smoke)/**/(ssp)*.ts\" --headless --browser chrome",
+    "cy:smoke": "cypress run --spec \"cypress/e2e/smoke/**/*.ts\" --headless --browser chrome",
+    "cy:dms": "cypress run --spec \"cypress/e2e/!(smoke)/**/*dms.cy.ts\" --headless --browser chrome",
+    "cy:smoke:demo": "cypress run --spec \"cypress/e2e/smoke/!(product)/*.ts\" --headless --browser chrome"
   },
   "engines": {
     "node": ">=18.0.0",
@@ -33,6 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "cypress": "^13.17.0",
+    "cypress-file-upload": "^5.0.8",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-plugin-cypress": "^2.15.2",
