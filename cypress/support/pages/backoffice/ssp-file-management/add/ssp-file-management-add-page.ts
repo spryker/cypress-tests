@@ -11,9 +11,9 @@ export class SspFileManagementAddPage extends BackofficePage {
   protected PAGE_URL = '/ssp-file-management/add-files/index';
 
   loadTestFiles(): Cypress.Chainable<
-    Array<{ fileContent: any; fileName: string; mimeType: string; filePath: string }>
+    Array<{ fileContent: string; fileName: string; mimeType: string; filePath: string }>
   > {
-    const testFiles: Array<{ fileContent: any; fileName: string; mimeType: string; filePath: string }> = [];
+    const testFiles: Array<{ fileContent: string; fileName: string; mimeType: string; filePath: string }> = [];
 
     return cy
       .fixture('suite/backoffice/ssp-file-management/test-files/document1.pdf', 'binary')
@@ -61,7 +61,7 @@ export class SspFileManagementAddPage extends BackofficePage {
       .then(() => testFiles);
   }
 
-  uploadFiles(files: Array<{ fileContent: any; fileName: string; mimeType: string; filePath: string }>): void {
+  uploadFiles(files: Array<{ fileContent: string; fileName: string; mimeType: string; filePath: string }>): void {
     cy.get(this.repository.getFileInputSelector()).selectFile(
       files.map((file) => ({
         contents: file.filePath,
