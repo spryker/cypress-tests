@@ -27,4 +27,8 @@ export class CustomerOverviewPage extends YvesPage {
       expect(occurrences).to.have.length(quantity);
     });
   };
+
+  clickMyFilesLink = (): void => {
+    this.repository.getMyFilesLink().click();
+  };
 }
