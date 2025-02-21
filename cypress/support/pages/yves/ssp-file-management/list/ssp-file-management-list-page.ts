@@ -23,7 +23,7 @@ export class SspFileManagementListPage extends YvesPage {
   }
 
   assertNoResults(): void {
-    cy.get(this.repository.getFileTableSelector()).should('not.exist');
+    cy.get(this.repository.getFileTableSelector()).find('tr').should('not.exist');
   }
 
   downloadFile(fileName: string): void {
