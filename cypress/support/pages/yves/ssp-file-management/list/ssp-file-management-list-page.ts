@@ -45,12 +45,14 @@ export class SspFileManagementListPage extends YvesPage {
   }
 
   searchByName(searchTerm: string): void {
-    cy.get(this.repository.getSearchFieldSelector()).clear().type(searchTerm);
+    cy.get(this.repository.getSearchFieldSelector()).clear();
+    cy.get(this.repository.getSearchFieldSelector()).type(searchTerm);
     cy.get(this.repository.getApplyFiltersButtonSelector()).click();
   }
 
   applyFilters(searchTerm: string, fileType: string): void {
-    cy.get(this.repository.getSearchFieldSelector()).clear().type(searchTerm);
+    cy.get(this.repository.getSearchFieldSelector()).clear();
+    cy.get(this.repository.getSearchFieldSelector()).type(searchTerm);
     cy.get(this.repository.getTypeFilterSelector()).select(fileType);
     cy.get(this.repository.getApplyFiltersButtonSelector()).click();
   }
