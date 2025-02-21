@@ -60,11 +60,31 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
       customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.localized_attributes[0].name, 3);
     });
 
+    it('customer should be able to update order item and shipping address', (): void => {
+      placeCustomerOrder(dynamicFixtures.customer3.email, dynamicFixtures.address3.id_customer_address);
+
+      customerOverviewPage.viewLastPlacedOrder();
+      orderDetailsPage.editOrder();
+
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product2.sku });
+      productPage.addToCart();
+
+      cartPage.visit();
+      cartPage.removeProduct({ sku: dynamicFixtures.product1.sku });
+
+      placeCustomerOrder(dynamicFixtures.customer3.email, dynamicFixtures.address4.id_customer_address);
+
+      customerOverviewPage.viewLastPlacedOrder();
+      customerOverviewPage.assertProductQuantity(dynamicFixtures.product2.localized_attributes[0].name, 1);
+      customerOverviewPage.assertFirstShippingAddress(dynamicFixtures.address4.address1);
+    });
+
     function assertOrderCancellationForPrevOrder(): void {
       customerOverviewPage.visit();
-      customerOverviewPage.viewOrder(2);
+      customerOverviewPage.viewOrder(1);
 
-      orderDetailsPage.containsOrderState('Canceled');
+      orderDetailsPage.containsOrderState('New');
     }
 
     function placeCustomerOrder(email: string, idCustomerAddress: number): void {
