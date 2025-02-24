@@ -12,4 +12,5 @@ export * from './locale';
 export * from './catalog';
 export * from './claim';
 export * from './company-role';
+export * from './ssp-asset';
 export * from './ssp-file-management';
