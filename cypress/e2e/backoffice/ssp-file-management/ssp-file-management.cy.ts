@@ -35,8 +35,6 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
   });
 
   it('should upload multiple files with size constraints', () => {
-    const testFiles: Array<{ fileContent: any; fileName: string; mimeType: string; filePath: string }> = [];
-
     fileManagerAttachmentAddPage.visit();
     fileManagerAttachmentAddPage.verifyFileUploadConstraints();
 
