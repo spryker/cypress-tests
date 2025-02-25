@@ -4,7 +4,8 @@ export interface SspAssetStaticFixtures {
 }
 
 export interface SspAssetDynamicFixtures {
-    customer: Customer
+    customer: Customer;
+    asset: SspAsset;
 }
 
 export interface SspAsset {
@@ -13,4 +14,9 @@ export interface SspAsset {
 
 export interface Customer {
     email: string;
+}
+
+export interface SspAsset {
+    reference: string;
+    name: string;
 }

@@ -6,27 +6,24 @@ import { SspAssetRepository } from './ssp-asset-repository';
 
 @injectable()
 @autoWired
-export class SspAssetCreatePage extends YvesPage {
+export class SspAssetEditPage extends YvesPage {
     @inject(REPOSITORIES.SspAssetRepository) private repository: SspAssetRepository;
 
-    protected PAGE_URL = '/customer/asset/create';
+    protected PAGE_URL = '/customer/asset/update';
 
-    public createAsset(params: AssetCreateParams): void {
+    public editAsset(params: AssetEditParams): void {
         this.repository.getAssetForm().within(() => {
             this.repository.getNameInput().type(params.name);
             this.repository.getSubmitButton().click();
         });
     }
 
-    public getAssetCreatedMessage(): string
+    public getAssetEditedMessage(): string
     {
-        return this.repository.getAssetCreatedMessage();
+        return this.repository.getAssetEditedMessage();
     }
 }
 
-export interface AssetCreateParams {
-    name: string,
-    serialNumber?: string,
-    note?: string,
-    image?: string,
+export interface AssetEditParams {
+    name: string;
 }

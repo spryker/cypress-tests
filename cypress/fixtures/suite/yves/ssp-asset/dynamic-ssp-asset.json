@@ -59,6 +59,16 @@
                             "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
                         }
                     ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveAsset",
+                    "key": "asset",
+                    "arguments": [
+                        {
+                            "companyBusinessUnit": "#businessUnit"
+                        }
+                    ]
                 }
             ]
         }

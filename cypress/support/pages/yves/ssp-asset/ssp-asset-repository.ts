@@ -4,4 +4,5 @@
     getNameInput(): Cypress.Chainable;
     getSubmitButton(): Cypress.Chainable;
     getAssetCreatedMessage(): string;
+    getAssetEditedMessage(): string;
 }

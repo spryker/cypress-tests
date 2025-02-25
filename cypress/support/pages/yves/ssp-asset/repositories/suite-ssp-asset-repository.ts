@@ -22,4 +22,8 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
     getAssetCreatedMessage(): string {
         return 'Asset has been successfully created';
     }
+
+    getAssetEditedMessage(): string {
+        return 'Asset has been successfully updated';
+    }
 }
