@@ -7,6 +7,7 @@ export class SuiteClaimRepository implements ClaimRepository {
   private readonly selectors = {
     claimForm: 'form[name="claimForm"]',
     orderReferenceInput: 'input[name="claimForm[orderReference]"]',
+    sspAssetReferenceInput: 'input[name="claimForm[sspAssetReference]"]',
     typeSelect: 'select[name="claimForm[type_display]"]',
     typeOptions: 'select[name="claimForm[type_display]"] option',
     subjectInput: 'input[name="claimForm[subject]"]',
@@ -14,6 +15,12 @@ export class SuiteClaimRepository implements ClaimRepository {
     fileInput: 'input[name="claimForm[files][]"]',
     submitButton: 'button[type="submit"]',
   };
+
+  // New selectors for claim list table
+  private readonly claimTable = '[data-qa="component claim-table"] table';
+  private readonly tableRow = 'tbody tr';
+  private readonly viewButton = '[data-qa="cell-actions"] a';
+  private readonly reference = '[data-qa="cell-reference"]';
 
   getCreateGeneralClaimButton(): Cypress.Chainable {
     return cy.get('a[data-qa="create-general-claim"]');
@@ -33,6 +40,10 @@ export class SuiteClaimRepository implements ClaimRepository {
 
   getClaimDetailsOrderReference(orderReference: string): string {
     return `Order Reference: ${orderReference}`;
+  }
+
+  getClaimDetailsSspAssetReference(orderReference: string): string {
+    return `Asset Reference: ${orderReference}`;
   }
 
   getClaimDetailsDate(date: string): string {
@@ -77,13 +88,6 @@ export class SuiteClaimRepository implements ClaimRepository {
     return '.status--canceled';
   }
 
-  // New selectors for claim list table
-  private readonly claimTable = '[data-qa="component claim-table"] table';
-  private readonly tableRow = 'tbody tr';
-  private readonly viewButton = '[data-qa="cell-actions"] a';
-  private readonly reference = '[data-qa="cell-reference"]';
-
-  // New method to get first row view button
   getFirstRowViewButton(): Chainable {
     return cy.get(this.claimTable).find(this.tableRow).first().find(this.viewButton);
   }
@@ -112,6 +116,10 @@ export class SuiteClaimRepository implements ClaimRepository {
 
   getOrderReferenceInput(): Cypress.Chainable {
     return this.getClaimForm().find(this.selectors.orderReferenceInput);
+  }
+
+  getSspAssetReferenceInput(): Cypress.Chainable {
+    return this.getClaimForm().find(this.selectors.sspAssetReferenceInput);
   }
 
   getTypeSelect(): Cypress.Chainable {

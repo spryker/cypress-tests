@@ -12,6 +12,12 @@ export class ClaimDetailPage extends YvesPage {
   public PAGE_URL = '/customer/claim/detail';
 
   assertOrderClaimDetails = (params: OrderClaimDetails): void => {
+    this.repository.getClaimDetailsOrderReference(params.orderReference);
+    this.assertClaimDetails(params);
+  };
+
+  assertSspAssetClaimDetails = (params: SspAssetClaimDetails): void => {
+    this.repository.getClaimDetailsSspAssetReference(params.reference);
     this.assertClaimDetails(params);
   };
 
@@ -19,7 +25,7 @@ export class ClaimDetailPage extends YvesPage {
     cy.contains(this.repository.getClaimDetailsReference(params.reference)).should('exist');
     cy.contains(this.repository.getClaimDetailsDate(params.date)).should('exist');
     cy.contains(new RegExp(this.repository.getClaimDetailsStatus(params.status), 'i')).should('exist');
-    cy.contains(new RegExp(this.repository.getClaimDetailsType(params.type), 'i')).should('exist');
+    cy.contains(this.repository.getClaimDetailsType(params.type.value)).should('exist');
     cy.contains(this.repository.getClaimDetailsSubject(params.subject)).should('exist');
     cy.contains(this.repository.getClaimDetailsDescription(params.description)).should('exist');
     cy.contains(this.repository.getClaimDetailsCustomerFirstName(params.customer.firstName)).should('exist');
@@ -69,7 +75,7 @@ export class ClaimDetailPage extends YvesPage {
 
 export interface ClaimDetails {
   reference: string;
-  type: string;
+  type: ClaimType;
   subject: string;
   description: string;
   date: string;
@@ -94,4 +100,13 @@ export interface File {
 
 export interface OrderClaimDetails extends ClaimDetails {
   orderReference: string;
+}
+
+export interface SspAssetClaimDetails extends ClaimDetails {
+  sspAssetReference: string;
+}
+
+interface ClaimType {
+  key: string;
+  value: string;
 }

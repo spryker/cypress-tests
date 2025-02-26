@@ -10,12 +10,14 @@ export interface ClaimDynamicFixtures {
   order: Order;
   company: Company;
   businessUnit: BusinessUnit;
+  sspAsset: SspAsset;
 }
 
 export interface ClaimStaticFixtures {
   defaultPassword: string;
   generalClaim: Claim;
   orderClaim: Claim;
+  sspAssetClaim: Claim;
   claimTypes: ClaimTypes;
 }
 
@@ -23,8 +25,8 @@ export interface Claim {
   subject: string;
   description: string;
   files: File[];
-  availableTypes: string[];
-  type: string;
+  availableTypes: ClaimType[];
+  type: ClaimType;
   status: string;
 }
 
@@ -34,8 +36,14 @@ export interface Order {
 }
 
 export interface ClaimTypes {
-  general: string[];
-  order: string[];
+  general: ClaimType[];
+  order: ClaimType[];
+  ssp_asset: ClaimType[];
+}
+
+export interface ClaimType {
+  key: string;
+  value: string;
 }
 
 export interface Company {
@@ -50,4 +58,8 @@ export interface File {
   name: string;
   size: string;
   extension: string;
+}
+
+export interface SspAsset {
+  reference: string;
 }

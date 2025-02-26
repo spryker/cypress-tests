@@ -3,27 +3,27 @@ import { SspAssetRepository } from '../ssp-asset-repository';
 
 @injectable()
 export class SuiteSspAssetRepository implements SspAssetRepository {
-    getCreateAssetButton(): Cypress.Chainable {
-        return cy.get('[data-qa="create-asset-button"]');
-    }
+  getCreateAssetButton(): Cypress.Chainable {
+    return cy.get('[data-qa="create-asset-button"]');
+  }
 
-    getAssetForm(): Cypress.Chainable {
-        return cy.get('[data-qa="customer-create-asset-form"]');
-    }
+  getAssetForm(): Cypress.Chainable {
+    return cy.get('[data-qa="customer-create-asset-form"]');
+  }
 
-    getNameInput(): Cypress.Chainable {
-        return cy.get('#assetForm_name');
-    }
+  getNameInput(): Cypress.Chainable {
+    return cy.get('#assetForm_name');
+  }
 
-    getSubmitButton(): Cypress.Chainable {
-        return cy.get('[data-qa="submit-button"]');
-    }
+  getSubmitButton(): Cypress.Chainable {
+    return cy.get('[data-qa="submit-button"]');
+  }
 
-    getAssetCreatedMessage(): string {
-        return 'Asset has been successfully created';
-    }
+  getAssetCreatedMessage(): string {
+    return 'Asset has been successfully created';
+  }
 
-    getAssetEditedMessage(): string {
-        return 'Asset has been successfully updated';
-    }
+  getAssetEditedMessage(): string {
+    return 'Asset has been successfully updated';
+  }
 }

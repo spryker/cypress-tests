@@ -15,11 +15,15 @@ export class ClaimCreatePage extends YvesPage {
     this.repository.getOrderReferenceInput().should('have.value', params.orderReference);
     this.createClaim(params);
   }
+  createSspAssetClaim(params: SspAssetClaimParams): void {
+    this.repository.getSspAssetReferenceInput().should('have.value', params.sspAssetReference);
+    this.createClaim(params);
+  }
 
   createClaim(params: ClaimParams): void {
     this.repository.getTypeOptions().should('have.length', params.availableTypes.length);
     params.availableTypes.forEach((type, index) => {
-      this.repository.getTypeOptions().eq(index).should('have.value', type);
+      this.repository.getTypeOptions().eq(index).should('have.value', type.key);
     });
 
     this.repository.getSubjectInput().type(params.subject);
@@ -40,15 +44,24 @@ interface ClaimParams {
   subject: string;
   description: string;
   files: UploadFile[];
-  availableTypes: string[];
+  availableTypes: ClaimType[];
 }
 
 interface OrderClaimParams extends ClaimParams {
   orderReference: string;
 }
 
+interface SspAssetClaimParams extends ClaimParams {
+  sspAssetReference: string;
+}
+
 export interface UploadFile {
   name: string;
   size: string;
   extension: string;
+}
+
+interface ClaimType {
+  key: string;
+  value: string;
 }

@@ -7,6 +7,7 @@ export interface ClaimRepository {
   getClaimCreatedMessage(): string;
   getClaimDetailsReference(reference: string): string;
   getClaimDetailsOrderReference(orderReference: string): string;
+  getClaimDetailsSspAssetReference(orderReference: string): string;
   getClaimDetailsDate(date: string): string;
   getClaimDetailsStatus(status: string): string;
   getClaimDetailsType(status: string): string;
@@ -20,6 +21,7 @@ export interface ClaimRepository {
   getFirstRowReference(): string;
   getClaimForm(): Cypress.Chainable;
   getOrderReferenceInput(): Cypress.Chainable;
+  getSspAssetReferenceInput(): Cypress.Chainable;
   getTypeSelect(): Cypress.Chainable;
   getTypeOptions(): Cypress.Chainable;
   getSubjectInput(): Cypress.Chainable;

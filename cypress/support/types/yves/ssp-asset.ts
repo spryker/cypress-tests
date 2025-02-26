@@ -1,22 +1,22 @@
 export interface SspAssetStaticFixtures {
-    asset: SspAsset;
-    defaultPassword: string;
+  asset: SspAsset;
+  defaultPassword: string;
 }
 
 export interface SspAssetDynamicFixtures {
-    customer: Customer;
-    asset: SspAsset;
+  customer: Customer;
+  asset: SspAsset;
 }
 
 export interface SspAsset {
-    name: string;
+  name: string;
 }
 
 export interface Customer {
-    email: string;
+  email: string;
 }
 
 export interface SspAsset {
-    reference: string;
-    name: string;
+  reference: string;
+  name: string;
 }

@@ -122,6 +122,58 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
       });
     });
 
+    it('customer should be able to create and view an ssp asset claim', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      claimCreatePage.visit({
+        qs: {
+          sspAssetReference: dynamicFixtures.sspAsset.reference,
+        },
+      });
+
+      claimCreatePage.assertPageLocation();
+      staticFixtures.sspAssetClaim.availableTypes = staticFixtures.claimTypes.ssp_asset;
+      claimCreatePage.createSspAssetClaim({
+        ...staticFixtures.sspAssetClaim,
+        sspAssetReference: dynamicFixtures.sspAsset.reference,
+      });
+
+      claimDetailPage.assertPageLocation();
+      cy.contains(claimCreatePage.getClaimCreatedMessage()).should('exist');
+
+      claimListPage.visit();
+      const claimReference = claimListPage.getFirstRowReference();
+      claimListPage.openLatestClaimDetailsPage();
+
+      claimDetailPage.assertSspAssetClaimDetails({
+        reference: claimReference,
+        type: staticFixtures.sspAssetClaim.type,
+        subject: staticFixtures.sspAssetClaim.subject,
+        description: staticFixtures.sspAssetClaim.description,
+        status: staticFixtures.sspAssetClaim.status,
+        files: staticFixtures.sspAssetClaim.files,
+        date: new Date()
+          .toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+          })
+          .replace(/([a-zA-Z]+)\s/, '$1. '),
+        customer: {
+          firstName: dynamicFixtures.customer.first_name,
+          lastName: dynamicFixtures.customer.last_name,
+          email: dynamicFixtures.customer.email,
+          companyName: dynamicFixtures.company.name,
+          businessUnitName: dynamicFixtures.businessUnit.name,
+        },
+        sspAssetReference: dynamicFixtures.sspAsset.reference,
+      });
+    });
+
     it('customer should be able to cancel a general claim', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
