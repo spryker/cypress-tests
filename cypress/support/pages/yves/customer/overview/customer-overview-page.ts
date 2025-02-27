@@ -27,4 +27,8 @@ export class CustomerOverviewPage extends YvesPage {
       expect(occurrences).to.have.length(quantity);
     });
   };
+
+  assertFirstShippingAddress = (address1: string): void => {
+    this.repository.getFirstShippingAddress().should('exist').should('contain.text', address1);
+  };
 }

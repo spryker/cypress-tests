@@ -10,4 +10,4 @@ export * from './reorder';
 export * from './order-amendment';
 export * from './locale';
 export * from './catalog';
-export * from './company-role';
+export * from './company-account';
