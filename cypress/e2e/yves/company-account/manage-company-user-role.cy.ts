@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { ManageCompanyRoleUserPage } from '@pages/yves';
-import { CompanyUserRoleDynamicFixtures, CompanyUserRoleStaticFixtures } from '@interfaces/yves';
+import { CompanyRoleDynamicFixtures, CompanyRoleStaticFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
 (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
@@ -10,8 +10,8 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const manageCompanyRoleUserPage = container.get(ManageCompanyRoleUserPage);
 
-    let dynamicFixtures: CompanyUserRoleDynamicFixtures;
-    let staticFixtures: CompanyUserRoleStaticFixtures;
+    let dynamicFixtures: CompanyRoleDynamicFixtures;
+    let staticFixtures: CompanyRoleStaticFixtures;
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());

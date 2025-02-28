@@ -29,6 +29,12 @@
         },
         {
           "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer3",
+          "arguments": [{ "locale": "#locale", "password": "change123" }]
+        },
+        {
+          "type": "helper",
           "name": "confirmCustomer",
           "arguments": ["#customer1"]
         },
@@ -36,6 +42,11 @@
           "type": "helper",
           "name": "confirmCustomer",
           "arguments": ["#customer2"]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "arguments": ["#customer3"]
         },
         {
           "type": "helper",
@@ -48,6 +59,18 @@
           "name": "haveCustomerAddress",
           "key": "address2",
           "arguments": [{ "fkCustomer": "#customer2.id_customer", "fkCountry": "#country.id_country" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address3",
+          "arguments": [{ "fkCustomer": "#customer3.id_customer", "fkCountry": "#country.id_country" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address4",
+          "arguments": [{ "fkCustomer": "#customer3.id_customer", "fkCountry": "#country.id_country" }]
         },
         {
           "type": "transfer",
@@ -154,6 +177,22 @@
           "arguments": [
             {
               "customer": "#customer2",
+              "items": [
+                {
+                  "sku": "#product1.sku",
+                  "abstractSku": "#product1.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer3",
               "items": [
                 {
                   "sku": "#product1.sku",
