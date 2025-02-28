@@ -28,6 +28,10 @@ export class CustomerOverviewPage extends YvesPage {
     });
   };
 
+  assertFirstShippingAddress = (address1: string): void => {
+    this.repository.getFirstShippingAddress().should('exist').should('contain.text', address1);
+  };
+
   clickMyFilesLink = (): void => {
     this.repository.getMyFilesLink().click();
   };
