@@ -45,11 +45,11 @@ Cypress.Commands.add(
             'Content-Type': 'application/vnd.api+json',
           },
           body: operationRequestPayload,
-          timeout: 80000,
+          timeout: 60000,
           failOnStatusCode: false,
         })
         .then((response) => {
-          if (response.status === 500 || response.status === 408) {
+          if (response.status !== 200) {
             if (retries > 0) {
               cy.log('Retrying due to error or timeout...');
               return cy.loadDynamicFixturesByPayload(dynamicFixturesFilePath, retries - 1);
