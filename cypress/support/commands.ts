@@ -49,7 +49,7 @@ Cypress.Commands.add(
           failOnStatusCode: false,
         })
         .then((response) => {
-          if (response.status !== 200) {
+          if (response.status !== 201) {
             if (retries > 0) {
               cy.log('Retrying due to error or timeout...');
               return cy.loadDynamicFixturesByPayload(dynamicFixturesFilePath, retries - 1);
