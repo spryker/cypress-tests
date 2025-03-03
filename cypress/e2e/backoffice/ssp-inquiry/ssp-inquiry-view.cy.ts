@@ -27,13 +27,13 @@ import { UserLoginScenario } from '@scenarios/backoffice';
     });
 
     it('can view general ssp inquiry details', (): void => {
-        sspInquiryDetailPage.visit({
+      sspInquiryDetailPage.visit({
         qs: {
           'id-ssp-inquiry': dynamicFixtures.generalSspInquiry.id_ssp_inquiry,
         },
       });
 
-        sspInquiryDetailPage.assertSspInquiryDetails({
+      sspInquiryDetailPage.assertSspInquiryDetails({
         reference: dynamicFixtures.generalSspInquiry.reference,
         date: new Date()
           .toLocaleDateString('en-US', {
@@ -64,13 +64,13 @@ import { UserLoginScenario } from '@scenarios/backoffice';
     });
 
     it('can view order ssp inquiry details', (): void => {
-        sspInquiryDetailPage.visit({
+      sspInquiryDetailPage.visit({
         qs: {
           'id-ssp-inquiry': dynamicFixtures.orderSspInquiry.id_ssp_inquiry,
         },
       });
 
-        sspInquiryDetailPage.assertOrderSspInquiryDetails({
+      sspInquiryDetailPage.assertOrderSspInquiryDetails({
         reference: dynamicFixtures.orderSspInquiry.reference,
         date: new Date()
           .toLocaleDateString('en-US', {
@@ -104,68 +104,68 @@ import { UserLoginScenario } from '@scenarios/backoffice';
     });
 
     it('user can fill and submit the comment form', (): void => {
-        sspInquiryDetailPage.visit({
+      sspInquiryDetailPage.visit({
         qs: {
           'id-ssp-inquiry': dynamicFixtures.generalSspInquiry.id_ssp_inquiry,
         },
       });
 
-        sspInquiryDetailPage.submitComment('This is a test comment.');
+      sspInquiryDetailPage.submitComment('This is a test comment.');
 
-        sspInquiryDetailPage.assertPageLocation();
+      sspInquiryDetailPage.assertPageLocation();
       cy.contains('This is a test comment.').should('exist');
     });
 
     it('should visit the ssp inquiry list page', () => {
-        sspInquiryListPage.visit();
+      sspInquiryListPage.visit();
 
-        sspInquiryDetailPage.assertSspInquiryTableIsNotEmpty();
-        sspInquiryDetailPage.assertSspInquiryTableColumnsExist();
-        sspInquiryDetailPage.assertViewSspInquiryTableLinksExist();
+      sspInquiryDetailPage.assertSspInquiryTableIsNotEmpty();
+      sspInquiryDetailPage.assertSspInquiryTableColumnsExist();
+      sspInquiryDetailPage.assertViewSspInquiryTableLinksExist();
     });
 
     it('user can approve ssp inquiry', (): void => {
-        sspInquiryDetailPage.visit({
+      sspInquiryDetailPage.visit({
         qs: {
           'id-ssp-inquiry': dynamicFixtures.generalSspInquiry.id_ssp_inquiry,
         },
       });
 
-        sspInquiryDetailPage.approveSspInquiry();
-        sspInquiryDetailPage.assertSspInquiryStatusChangedToApproved();
+      sspInquiryDetailPage.approveSspInquiry();
+      sspInquiryDetailPage.assertSspInquiryStatusChangedToApproved();
     });
 
     it('user can reject ssp inquiry', (): void => {
-        sspInquiryDetailPage.visit({
+      sspInquiryDetailPage.visit({
         qs: {
           'id-ssp-inquiry': dynamicFixtures.generalSspInquiry2.id_ssp_inquiry,
         },
       });
 
-        sspInquiryDetailPage.rejectSspInquiry();
-        sspInquiryDetailPage.assertSspInquiryStatusChangedToRejected();
+      sspInquiryDetailPage.rejectSspInquiry();
+      sspInquiryDetailPage.assertSspInquiryStatusChangedToRejected();
     });
 
     it('user can cancel ssp inquiry', (): void => {
-        sspInquiryDetailPage.visit({
+      sspInquiryDetailPage.visit({
         qs: {
           'id-ssp-inquiry': dynamicFixtures.generalSspInquiry3.id_ssp_inquiry,
         },
       });
 
-        sspInquiryDetailPage.cancelSspInquiry();
-        sspInquiryDetailPage.assertSspInquiryStatusChangedToCanceled();
+      sspInquiryDetailPage.cancelSspInquiry();
+      sspInquiryDetailPage.assertSspInquiryStatusChangedToCanceled();
     });
 
     it('i can see ssp inquiry history', (): void => {
-        sspInquiryDetailPage.visit({
+      sspInquiryDetailPage.visit({
         qs: {
           'id-ssp-inquiry': dynamicFixtures.generalSspInquiry3.id_ssp_inquiry,
         },
       });
 
-        sspInquiryDetailPage.openSspInquiryHistory();
-        sspInquiryDetailPage.assertSspInquiryHistoryIsNotEmpty();
+      sspInquiryDetailPage.openSspInquiryHistory();
+      sspInquiryDetailPage.assertSspInquiryHistoryIsNotEmpty();
     });
   }
 );

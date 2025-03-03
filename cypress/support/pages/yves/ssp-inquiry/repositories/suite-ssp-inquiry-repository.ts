@@ -5,7 +5,7 @@ import Chainable = Cypress.Chainable;
 @injectable()
 export class SuiteSspInquiryRepository implements SspInquiryRepository {
   private readonly selectors = {
-      sspInquiryForm: 'form[name="sspInquiryForm"]',
+    sspInquiryForm: 'form[name="sspInquiryForm"]',
     orderReferenceInput: 'input[name="sspInquiryForm[orderReference]"]',
     typeSelect: 'select[name="sspInquiryForm[type_display]"]',
     typeOptions: 'select[name="sspInquiryForm[type_display]"] option',

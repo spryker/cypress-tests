@@ -1,5 +1,11 @@
 import { container } from '@utils';
-import { SspInquiryListPage, SspInquiryCreatePage, SspInquiryDetailPage, OrderDetailsPage, SspInquiryOrderPage } from '@pages/yves';
+import {
+  SspInquiryListPage,
+  SspInquiryCreatePage,
+  SspInquiryDetailPage,
+  OrderDetailsPage,
+  SspInquiryOrderPage,
+} from '@pages/yves';
 import { SspInquiryStaticFixtures, SspInquiryDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 import { CustomerLogoutScenario } from '@scenarios/yves';
@@ -30,22 +36,22 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
-        sspInquiryListPage.visit();
-        sspInquiryListPage.clickCreateSspInquiryButton();
+      sspInquiryListPage.visit();
+      sspInquiryListPage.clickCreateSspInquiryButton();
 
       staticFixtures.generalSspInquiry.availableTypes = staticFixtures.sspInquiryTypes.general;
-        sspInquiryCreatePage.assertPageLocation();
-        sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
+      sspInquiryCreatePage.assertPageLocation();
+      sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
-        sspInquiryDetailPage.assertPageLocation();
+      sspInquiryDetailPage.assertPageLocation();
       cy.contains(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
 
-        sspInquiryListPage.visit();
+      sspInquiryListPage.visit();
 
       const sspInquiryReference = sspInquiryListPage.getFirstRowReference();
-        sspInquiryListPage.openLatestSspInquiryDetailsPage();
+      sspInquiryListPage.openLatestSspInquiryDetailsPage();
 
-        sspInquiryDetailPage.assertSspInquiryDetails({
+      sspInquiryDetailPage.assertSspInquiryDetails({
         reference: sspInquiryReference,
         type: staticFixtures.generalSspInquiry.type,
         subject: staticFixtures.generalSspInquiry.subject,
@@ -81,23 +87,23 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
           id: dynamicFixtures.order.id_sales_order,
         },
       });
-        sspInquiryOrderPage.clickCreateSspInquiryButton();
+      sspInquiryOrderPage.clickCreateSspInquiryButton();
 
-        sspInquiryCreatePage.assertPageLocation();
+      sspInquiryCreatePage.assertPageLocation();
       staticFixtures.orderSspInquiry.availableTypes = staticFixtures.sspInquiryTypes.order;
-        sspInquiryCreatePage.createOrderSspInquiry({
+      sspInquiryCreatePage.createOrderSspInquiry({
         ...staticFixtures.orderSspInquiry,
         orderReference: dynamicFixtures.order.order_reference,
       });
 
-        sspInquiryDetailPage.assertPageLocation();
+      sspInquiryDetailPage.assertPageLocation();
       cy.contains(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
 
-        sspInquiryListPage.visit();
+      sspInquiryListPage.visit();
       const sspInquiryReference = sspInquiryListPage.getFirstRowReference();
-        sspInquiryListPage.openLatestSspInquiryDetailsPage();
+      sspInquiryListPage.openLatestSspInquiryDetailsPage();
 
-        sspInquiryDetailPage.assertOrderSspInquiryDetails({
+      sspInquiryDetailPage.assertOrderSspInquiryDetails({
         reference: sspInquiryReference,
         type: staticFixtures.orderSspInquiry.type,
         subject: staticFixtures.orderSspInquiry.subject,
@@ -129,14 +135,14 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
-        sspInquiryListPage.visit();
+      sspInquiryListPage.visit();
 
-        sspInquiryListPage.clickCreateSspInquiryButton();
+      sspInquiryListPage.clickCreateSspInquiryButton();
 
-        sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
+      sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
-        sspInquiryDetailPage.assertPageLocation();
-        sspInquiryDetailPage.clickCancelSspInquiryButton();
+      sspInquiryDetailPage.assertPageLocation();
+      sspInquiryDetailPage.clickCancelSspInquiryButton();
 
       cy.get(sspInquiryDetailPage.getCanceledSspInquiryStatusSelector()).should('exist');
     });
@@ -148,13 +154,13 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
-        sspInquiryListPage.visit();
+      sspInquiryListPage.visit();
 
-        sspInquiryListPage.clickCreateSspInquiryButton();
+      sspInquiryListPage.clickCreateSspInquiryButton();
 
-        sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
+      sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
-        sspInquiryDetailPage.assertPageLocation();
+      sspInquiryDetailPage.assertPageLocation();
 
       customerLogoutScenario.execute();
 
@@ -164,10 +170,10 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
-        sspInquiryListPage.visit();
-        sspInquiryListPage.openLatestSspInquiryDetailsPage();
+      sspInquiryListPage.visit();
+      sspInquiryListPage.openLatestSspInquiryDetailsPage();
 
-        sspInquiryDetailPage.getCancelSspInquiryButton().should('not.exist');
+      sspInquiryDetailPage.getCancelSspInquiryButton().should('not.exist');
     });
 
     it('customer with corresponding permission can see ssp inquiries created by other customers withing the same business unit', (): void => {
@@ -177,13 +183,13 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
-        sspInquiryListPage.visit();
+      sspInquiryListPage.visit();
 
-        sspInquiryListPage.clickCreateSspInquiryButton();
+      sspInquiryListPage.clickCreateSspInquiryButton();
 
-        sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
+      sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
-        sspInquiryDetailPage.assertPageLocation();
+      sspInquiryDetailPage.assertPageLocation();
 
       customerLogoutScenario.execute();
 
@@ -193,11 +199,11 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
-        sspInquiryListPage.visit();
+      sspInquiryListPage.visit();
 
-        sspInquiryListPage.openLatestSspInquiryDetailsPage();
+      sspInquiryListPage.openLatestSspInquiryDetailsPage();
 
-        sspInquiryDetailPage.assertPageLocation();
+      sspInquiryDetailPage.assertPageLocation();
     });
 
     it('customer with corresponding permission can see ssp inquiries created by other customers withing the same company', (): void => {
@@ -207,11 +213,11 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
-        sspInquiryListPage.visit();
+      sspInquiryListPage.visit();
 
-        sspInquiryListPage.clickCreateSspInquiryButton();
+      sspInquiryListPage.clickCreateSspInquiryButton();
 
-        sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
+      sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
       customerLogoutScenario.execute();
 
@@ -221,11 +227,11 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
-        sspInquiryListPage.visit();
+      sspInquiryListPage.visit();
 
-        sspInquiryListPage.openLatestSspInquiryDetailsPage();
+      sspInquiryListPage.openLatestSspInquiryDetailsPage();
 
-        sspInquiryDetailPage.assertPageLocation();
+      sspInquiryDetailPage.assertPageLocation();
     });
 
     it("customer without corresponding permission shoudn't see ssp inquiries created by other customers withing the same business unit", (): void => {
@@ -235,13 +241,13 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
-        sspInquiryListPage.visit();
+      sspInquiryListPage.visit();
 
-        sspInquiryListPage.clickCreateSspInquiryButton();
+      sspInquiryListPage.clickCreateSspInquiryButton();
 
-        sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
+      sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
-        sspInquiryDetailPage.assertPageLocation();
+      sspInquiryDetailPage.assertPageLocation();
 
       customerLogoutScenario.execute();
 
@@ -251,9 +257,9 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
-        sspInquiryListPage.visit();
-        sspInquiryListPage.assertPageLocation();
-        sspInquiryListPage.assetPageHasNoSspInquiries();
+      sspInquiryListPage.visit();
+      sspInquiryListPage.assertPageLocation();
+      sspInquiryListPage.assetPageHasNoSspInquiries();
     });
 
     it('customer should not be able to create a ssp inquiry if he has no permission', (): void => {
@@ -263,9 +269,9 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
-        sspInquiryListPage.visit();
+      sspInquiryListPage.visit();
 
-        sspInquiryListPage.getCreateSspInquiryButton().should('not.exist');
+      sspInquiryListPage.getCreateSspInquiryButton().should('not.exist');
     });
   }
 );

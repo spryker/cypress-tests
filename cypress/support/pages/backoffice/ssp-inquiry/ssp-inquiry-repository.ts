@@ -6,7 +6,7 @@ import Chainable = Cypress.Chainable;
 @autoWired
 export class SspInquiryRepository {
   private readonly selectors = {
-      sspInquiryReferenceCell: 'dl dt:contains("Inquiry reference") + dd',
+    sspInquiryReferenceCell: 'dl dt:contains("Inquiry reference") + dd',
     orderReferenceCell: 'dl dt:contains("Order reference") + dd',
     customerCell: 'dl dt:contains("Customer") + dd',
     dateCell: 'dl dt:contains("Date") + dd',
@@ -18,10 +18,10 @@ export class SspInquiryRepository {
     descriptionCell: 'dl dt:contains("Description") + dd',
     messageTextarea: 'textarea[name="message"]',
     commentForm: 'form[action="/comment-gui/comment/add"]',
-      sspInquiryStatusHistory: 'a[data-qa=show-ssp-inquiry-status-history]',
+    sspInquiryStatusHistory: 'a[data-qa=show-ssp-inquiry-status-history]',
     historyDetailsTable: 'table[data-qa=history-details-table] td',
     cancelButton: '#trigger_event_form_cancel',
-      sspInquiryStatus: '[data-qa=ssp-inquiry-status]',
+    sspInquiryStatus: '[data-qa=ssp-inquiry-status]',
     startReviewButton: '#trigger_event_form_start_review',
     approveButton: '#trigger_event_form_approve',
     rejectButton: '#trigger_event_form_reject',
