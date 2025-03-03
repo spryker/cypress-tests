@@ -1,6 +1,6 @@
 import { Customer } from './shared';
 
-export interface ClaimDynamicFixtures {
+export interface SspInquiryDynamicFixtures {
   customer: Customer;
   customer2: Customer;
   customer3: Customer;
@@ -12,14 +12,14 @@ export interface ClaimDynamicFixtures {
   businessUnit: BusinessUnit;
 }
 
-export interface ClaimStaticFixtures {
+export interface SspInquiryStaticFixtures {
   defaultPassword: string;
-  generalClaim: Claim;
-  orderClaim: Claim;
-  claimTypes: ClaimTypes;
+  generalSspInquiry: SspInquiry;
+  orderSspInquiry: SspInquiry;
+  sspInquiryTypes: SspInquiryTypes;
 }
 
-export interface Claim {
+export interface SspInquiry {
   subject: string;
   description: string;
   files: File[];
@@ -33,7 +33,7 @@ export interface Order {
   order_reference: string;
 }
 
-export interface ClaimTypes {
+export interface SspInquiryTypes {
   general: string[];
   order: string[];
 }
