@@ -25,7 +25,8 @@ export class AssignStoreToShipmentMethodScenario {
           return;
         }
 
-        cy.wrap($row).find(this.shipmentMethodListPage.getEditButtonSelector()).click();
+        cy.wrap($row).find(this.shipmentMethodListPage.getEditButtonSelector()).as('editButton');
+        cy.get('@editButton').click();
 
         this.shipmentMethodEditPage.assignAllAvailableStore();
         this.shipmentMethodEditPage.addPrices();

@@ -228,6 +228,7 @@
           "name": "haveFullProduct",
           "key": "concreteProduct",
           "arguments": [
+            {},
             {
               "idTaxSet": 1,
               "localizedAttributes": [

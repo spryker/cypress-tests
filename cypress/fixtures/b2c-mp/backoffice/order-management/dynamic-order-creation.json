@@ -114,6 +114,7 @@
           "name": "haveFullProduct",
           "key": "product",
           "arguments": [
+            {},
             {
               "idTaxSet": 1,
               "localizedAttributes": [
