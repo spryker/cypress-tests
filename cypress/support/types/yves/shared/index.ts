@@ -16,3 +16,5 @@ export * from './product-localized-attributes';
 export * from './store';
 export * from './shipment-method';
 export * from './payment-method';
+export * from './file';
+export * from './file-info';

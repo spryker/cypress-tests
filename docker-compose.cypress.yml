@@ -18,5 +18,6 @@ services:
       - ./vendor/spryker/cypress-tests/cypress/support:/opt/cypress-tests/cypress/support:rw
       - ./.cypress/screenshots:/opt/cypress-tests/cypress/screenshots:rw
       - ./.cypress/videos:/opt/cypress-tests/cypress/videos:rw
+      - ./.cypress/downloads:/opt/cypress-tests/cypress/downloads:rw
       - ./.cypress/logs:/opt/cypress-tests/cypress/logs:rw
       - /tmp/.X11-unix:/tmp/.X11-unix
