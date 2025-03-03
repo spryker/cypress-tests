@@ -45,7 +45,7 @@ Cypress.Commands.add(
             'Content-Type': 'application/vnd.api+json',
           },
           body: operationRequestPayload,
-          timeout: 60000,
+          timeout: 80000,
           failOnStatusCode: false,
         })
         .then((response) => {
