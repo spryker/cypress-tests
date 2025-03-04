@@ -1,22 +1,22 @@
 import { User } from './shared';
 
-export interface ClaimStaticFixtures {
+export interface SspInquiryStaticFixtures {
   defaultPassword: string;
 }
 
-export interface ClaimDynamicFixtures {
+export interface SspInquiryDynamicFixtures {
   rootUser: User;
-  generalClaim: Claim;
-  generalClaim2: Claim;
-  generalClaim3: Claim;
-  orderClaim: OrderClaim;
+  generalSspInquiry: SspInquiry;
+  generalSspInquiry2: SspInquiry;
+  generalSspInquiry3: SspInquiry;
+  orderSspInquiry: OrderSspInquiry;
   customer: Customer;
   company: Company;
   businessUnit: BusinessUnit;
 }
 
-export interface Claim {
-  id_claim: number;
+export interface SspInquiry {
+  id_ssp_inquiry: number;
   reference: string;
   subject: string;
   description: string;
@@ -55,7 +55,7 @@ export interface FileInfo {
   size: number;
 }
 
-export interface OrderClaim extends Claim {
+export interface OrderSspInquiry extends SspInquiry {
   order: Order;
 }
 

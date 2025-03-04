@@ -37,7 +37,7 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
   });
 
-  it.skip('should allow downloading a file', (): void => {
+  it('should allow downloading a file', (): void => {
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
     sspFileManagementListPage.downloadFile(dynamicFixtures.file1.file_name);

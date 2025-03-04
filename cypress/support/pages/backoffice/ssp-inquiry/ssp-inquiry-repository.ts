@@ -4,9 +4,9 @@ import Chainable = Cypress.Chainable;
 
 @injectable()
 @autoWired
-export class ClaimRepository {
+export class SspInquiryRepository {
   private readonly selectors = {
-    claimReferenceCell: 'dl dt:contains("Claim reference") + dd',
+    sspInquiryReferenceCell: 'dl dt:contains("Inquiry reference") + dd',
     orderReferenceCell: 'dl dt:contains("Order reference") + dd',
     customerCell: 'dl dt:contains("Customer") + dd',
     dateCell: 'dl dt:contains("Date") + dd',
@@ -18,17 +18,17 @@ export class ClaimRepository {
     descriptionCell: 'dl dt:contains("Description") + dd',
     messageTextarea: 'textarea[name="message"]',
     commentForm: 'form[action="/comment-gui/comment/add"]',
-    claimStatusHistory: 'a[data-qa=show-claim-status-history]',
+    sspInquiryStatusHistory: 'a[data-qa=show-ssp-inquiry-status-history]',
     historyDetailsTable: 'table[data-qa=history-details-table] td',
     cancelButton: '#trigger_event_form_cancel',
-    claimStatus: '[data-qa=claim-status]',
+    sspInquiryStatus: '[data-qa=ssp-inquiry-status]',
     startReviewButton: '#trigger_event_form_start_review',
     approveButton: '#trigger_event_form_approve',
     rejectButton: '#trigger_event_form_reject',
   };
 
-  getClaimReferenceCell(): Chainable {
-    return cy.get(this.selectors.claimReferenceCell);
+  getSspInquiryReferenceCell(): Chainable {
+    return cy.get(this.selectors.sspInquiryReferenceCell);
   }
 
   getOrderReferenceCell(): Chainable {
@@ -79,8 +79,8 @@ export class ClaimRepository {
     return cy.get(this.selectors.commentForm);
   }
 
-  getClaimStatusHistory(): Chainable {
-    return cy.get(this.selectors.claimStatusHistory);
+  getSspInquiryStatusHistory(): Chainable {
+    return cy.get(this.selectors.sspInquiryStatusHistory);
   }
 
   getHistoryDetailsTable(): Chainable {
@@ -91,8 +91,8 @@ export class ClaimRepository {
     return cy.get(this.selectors.cancelButton);
   }
 
-  getClaimStatus(): Chainable {
-    return cy.get(this.selectors.claimStatus);
+  getSspInquiryStatus(): Chainable {
+    return cy.get(this.selectors.sspInquiryStatus);
   }
 
   getStartReviewButton(): Chainable {
@@ -107,11 +107,11 @@ export class ClaimRepository {
     return cy.get(this.selectors.rejectButton);
   }
 
-  getClaimTableRows(): Chainable {
+  getSspInquiryTableRows(): Chainable {
     return cy.get('table.gui-table-data tbody tr');
   }
 
-  getClaimTableHeaders(): Chainable {
-    return this.getClaimTableRows().get('th');
+  getSspInquiryTableHeaders(): Chainable {
+    return this.getSspInquiryTableRows().get('th');
   }
 }

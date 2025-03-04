@@ -2,21 +2,21 @@ import { autoWired } from '@utils';
 import { injectable, inject } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
-import { ClaimRepository } from './claim-repository';
+import { SspInquiryRepository } from './ssp-inquiry-repository';
 
 @injectable()
 @autoWired
-export class ClaimDetailPage extends BackofficePage {
-  protected PAGE_URL = '/ssp-claim-management/detail';
-  @inject(ClaimRepository) private repository: ClaimRepository;
+export class SspInquiryDetailPage extends BackofficePage {
+  protected PAGE_URL = '/ssp-inquiry-management/detail';
+  @inject(SspInquiryRepository) private repository: SspInquiryRepository;
 
-  assertOrderClaimDetails = (params: OrderClaimDetails): void => {
+  assertOrderSspInquiryDetails = (params: OrderSspInquiryDetails): void => {
     this.repository.getOrderReferenceCell().should('contain.text', params.order.reference);
-    this.assertClaimDetails(params);
+    this.assertSspInquiryDetails(params);
   };
 
-  assertClaimDetails = (params: ClaimDetails): void => {
-    this.repository.getClaimReferenceCell().should('contain.text', params.reference);
+  assertSspInquiryDetails = (params: SspInquiryDetails): void => {
+    this.repository.getSspInquiryReferenceCell().should('contain.text', params.reference);
     this.repository
       .getCustomerCell()
       .should('contain.text', `${params.customer.salutation} ${params.customer.firstName} ${params.customer.lastName}`);
@@ -59,20 +59,20 @@ export class ClaimDetailPage extends BackofficePage {
     }
   }
 
-  openClaimHistory(): void {
-    this.repository.getClaimStatusHistory().click();
+  openSspInquiryHistory(): void {
+    this.repository.getSspInquiryStatusHistory().click();
   }
 
-  assertClaimHistoryIsNotEmpty(): void {
+  assertSspInquiryHistoryIsNotEmpty(): void {
     this.repository.getHistoryDetailsTable().should('exist').should('be.visible');
   }
 
-  cancelClaim(): void {
+  cancelSspInquiry(): void {
     this.repository.getCancelButton().click();
   }
 
-  assertClaimStatusChangedToCanceled(): void {
-    this.repository.getClaimStatus().contains('Canceled');
+  assertSspInquiryStatusChangedToCanceled(): void {
+    this.repository.getSspInquiryStatus().contains('Canceled');
   }
 
   submitComment(comment: string): void {
@@ -80,43 +80,43 @@ export class ClaimDetailPage extends BackofficePage {
     this.repository.getCommentForm().submit();
   }
 
-  approveClaim(): void {
+  approveSspInquiry(): void {
     this.repository.getStartReviewButton().click();
     this.repository.getApproveButton().click();
   }
 
-  assertClaimStatusChangedToApproved(): void {
-    this.repository.getClaimStatus().contains('Approved');
+  assertSspInquiryStatusChangedToApproved(): void {
+    this.repository.getSspInquiryStatus().contains('Approved');
   }
 
-  rejectClaim(): void {
+  rejectSspInquiry(): void {
     this.repository.getStartReviewButton().click();
     this.repository.getRejectButton().click();
   }
 
-  assertClaimStatusChangedToRejected(): void {
-    this.repository.getClaimStatus().contains('Rejected');
+  assertSspInquiryStatusChangedToRejected(): void {
+    this.repository.getSspInquiryStatus().contains('Rejected');
   }
 
-  assertClaimTableIsNotEmpty(): void {
-    this.repository.getClaimTableRows().should('have.length.greaterThan', 0);
+  assertSspInquiryTableIsNotEmpty(): void {
+    this.repository.getSspInquiryTableRows().should('have.length.greaterThan', 0);
   }
 
-  assertClaimTableColumnsExist(): void {
+  assertSspInquiryTableColumnsExist(): void {
     const expectedColumns = ['ID', 'Reference', 'Type', 'Customer', 'Date', 'Status', 'Actions'];
-    this.repository.getClaimTableHeaders().each((header, index) => {
+    this.repository.getSspInquiryTableHeaders().each((header, index) => {
       if (expectedColumns[index]) {
         cy.wrap(header).should('contain.text', expectedColumns[index]);
       }
     });
   }
 
-  assertViewClaimTableLinksExist(): void {
-    this.repository.getClaimTableRows().eq(0).find('a.btn-view').should('exist');
+  assertViewSspInquiryTableLinksExist(): void {
+    this.repository.getSspInquiryTableRows().eq(0).find('a.btn-view').should('exist');
   }
 }
 
-export interface ClaimDetails {
+export interface SspInquiryDetails {
   reference: string;
   type: string;
   subject: string;
@@ -128,7 +128,7 @@ export interface ClaimDetails {
   files: File[];
 }
 
-export interface OrderClaimDetails extends ClaimDetails {
+export interface OrderSspInquiryDetails extends SspInquiryDetails {
   order: Order;
 }
 
