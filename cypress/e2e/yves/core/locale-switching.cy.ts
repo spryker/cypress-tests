@@ -1,17 +1,18 @@
 import { container } from '@utils';
 import { LocaleSwitchingScenario } from '@scenarios/yves';
 import { CatalogPage, HomePage } from '@pages/yves';
-import { LocaleStaticFixtures } from '@interfaces/yves';
+import { LocaleSwitchingDynamicFixtures, LocaleSwitchingStaticFixtures } from '@interfaces/yves';
 
 describe('locale switching', { tags: ['@core', '@yves'] }, (): void => {
   const homePage = container.get(HomePage);
   const catalogPage = container.get(CatalogPage);
   const localeSwitchingScenario = container.get(LocaleSwitchingScenario);
 
-  let staticFixtures: LocaleStaticFixtures;
+  let staticFixtures: LocaleSwitchingStaticFixtures;
+  let dynamicFixtures: LocaleSwitchingDynamicFixtures;
 
   before((): void => {
-    ({ staticFixtures } = Cypress.env());
+    ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 
   /**
@@ -47,7 +48,7 @@ describe('locale switching', { tags: ['@core', '@yves'] }, (): void => {
   it('should be able to switch locales at the product detailed page.', (): void => {
     testLocaleSwitching(() => {
       catalogPage.visit();
-      catalogPage.goToFirstItemInCatalogPage();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.abstract_sku });
     }, catalogPage);
   });
 

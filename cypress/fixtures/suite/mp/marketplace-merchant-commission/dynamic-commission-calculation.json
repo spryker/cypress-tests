@@ -217,6 +217,7 @@
           "name": "haveFullProduct",
           "key": "concreteProduct1",
           "arguments": [
+            {},
             {
               "idTaxSet": 1,
               "localizedAttributes": [
@@ -271,6 +272,7 @@
           "name": "haveFullProduct",
           "key": "concreteProduct2",
           "arguments": [
+            {},
             {
               "idTaxSet": 1,
               "localizedAttributes": [
@@ -325,6 +327,7 @@
           "name": "haveFullProduct",
           "key": "concreteProduct3",
           "arguments": [
+            {},
             {
               "idTaxSet": 1,
               "localizedAttributes": [
@@ -379,6 +382,7 @@
           "name": "haveFullProduct",
           "key": "concreteProduct4",
           "arguments": [
+            {},
             {
               "idTaxSet": 1,
               "localizedAttributes": [
@@ -433,6 +437,7 @@
           "name": "haveFullProduct",
           "key": "concreteProduct5",
           "arguments": [
+            {},
             {
               "idTaxSet": 1,
               "localizedAttributes": [
