@@ -128,6 +128,58 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
       });
     });
 
+      it('customer should be able to create and view an ssp asset ssp inquiry', (): void => {
+          customerLoginScenario.execute({
+              email: dynamicFixtures.customer.email,
+              password: staticFixtures.defaultPassword,
+              withoutSession: true,
+          });
+
+          sspInquiryCreatePage.visit({
+              qs: {
+                  sspAssetReference: dynamicFixtures.sspAsset.reference,
+              },
+          });
+
+          sspInquiryCreatePage.assertPageLocation();
+          staticFixtures.sspAssetSspInquiry.availableTypes = staticFixtures.sspInquiryTypes.ssp_asset;
+          sspInquiryCreatePage.createSspAssetSspInquiry({
+              ...staticFixtures.sspAssetSspInquiry,
+              sspAssetReference: dynamicFixtures.sspAsset.reference,
+          });
+
+          sspInquiryDetailPage.assertPageLocation();
+          cy.contains(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
+
+          sspInquiryListPage.visit();
+          const sspInquiryReference = sspInquiryListPage.getFirstRowReference();
+          sspInquiryListPage.openLatestSspInquiryDetailsPage();
+
+          sspInquiryDetailPage.assertSspAssetSspInquiryDetails({
+              reference: sspInquiryReference,
+              type: staticFixtures.sspAssetSspInquiry.type,
+              subject: staticFixtures.sspAssetSspInquiry.subject,
+              description: staticFixtures.sspAssetSspInquiry.description,
+              status: staticFixtures.sspAssetSspInquiry.status,
+              files: staticFixtures.sspAssetSspInquiry.files,
+              date: new Date()
+                  .toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: '2-digit',
+                  })
+                  .replace(/([a-zA-Z]+)\s/, '$1. '),
+              customer: {
+                  firstName: dynamicFixtures.customer.first_name,
+                  lastName: dynamicFixtures.customer.last_name,
+                  email: dynamicFixtures.customer.email,
+                  companyName: dynamicFixtures.company.name,
+                  businessUnitName: dynamicFixtures.businessUnit.name,
+              },
+              sspAssetReference: dynamicFixtures.sspAsset.reference,
+          });
+      });
+
     it('customer should be able to cancel a general ssp inquiry', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,

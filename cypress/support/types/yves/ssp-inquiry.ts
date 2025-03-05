@@ -25,8 +25,8 @@ export interface SspInquiry {
   subject: string;
   description: string;
   files: File[];
-  availableTypes: ClaimType[];
-  type: ClaimType;
+  availableTypes: SspInquiryType[];
+  type: SspInquiryType;
   status: string;
 }
 
@@ -36,12 +36,12 @@ export interface Order {
 }
 
 export interface SspInquiryTypes {
-  general: ClaimType[];
-  order: ClaimType[];
-  ssp_asset: ClaimType[];
+  general: SspInquiryType[];
+  order: SspInquiryType[];
+  ssp_asset: SspInquiryType[];
 }
 
-export interface ClaimType {
+export interface SspInquiryType {
   key: string;
   value: string;
 }

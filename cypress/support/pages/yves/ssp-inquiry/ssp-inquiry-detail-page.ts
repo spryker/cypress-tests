@@ -12,8 +12,14 @@ export class SspInquiryDetailPage extends YvesPage {
   public PAGE_URL = '/customer/ssp-inquiry/detail';
 
   assertOrderSspInquiryDetails = (params: OrderSspInquiryDetails): void => {
-    this.assertSspInquiryDetails(params);
+      this.repository.getSspInquiryDetailsOrderReference(params.orderReference);
+      this.assertSspInquiryDetails(params);
   };
+
+    assertSspAssetSspInquiryDetails = (params: SspAssetSspInquiryDetails): void => {
+        this.repository.getSspInquiryDetailsSspAssetReference(params.reference);
+        this.assertSspInquiryDetails(params);
+    };
 
   assertSspInquiryDetails = (params: SspInquiryDetails): void => {
     cy.contains(this.repository.getSspInquiryDetailsReference(params.reference)).should('exist');
@@ -69,7 +75,7 @@ export class SspInquiryDetailPage extends YvesPage {
 
 export interface SspInquiryDetails {
   reference: string;
-  type: string;
+  type: SspInquiryType;
   subject: string;
   description: string;
   date: string;
@@ -94,4 +100,13 @@ export interface File {
 
 export interface OrderSspInquiryDetails extends SspInquiryDetails {
   orderReference: string;
+}
+
+export interface SspAssetSspInquiryDetails extends SspInquiryDetails {
+  sspAssetReference: string;
+}
+
+interface SspInquiryType {
+  key: string;
+  value: string;
 }
