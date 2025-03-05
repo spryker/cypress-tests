@@ -4,6 +4,7 @@ export * from './product-concrete';
 export * from './quote';
 export * from './company';
 export * from './company-user';
+export * from './company-role';
 export * from './company-business-unit';
 export * from './product-offer';
 export * from './url';

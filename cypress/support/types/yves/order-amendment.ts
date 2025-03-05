@@ -13,6 +13,10 @@ export interface OrderAmendmentFinishDynamicFixtures {
   customer2: Customer;
   address2: Address;
 
+  customer3: Customer;
+  address3: Address;
+  address4: Address;
+
   product1: ProductConcrete;
   product2: ProductConcrete;
 }
