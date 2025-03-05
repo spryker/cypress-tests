@@ -2,21 +2,21 @@ import { autoWired, REPOSITORIES } from '@utils';
 import { inject, injectable } from 'inversify';
 import { YvesPage } from '@pages/yves';
 import 'cypress-file-upload';
-import { ClaimRepository } from './claim-repository';
+import { SspInquiryRepository } from './ssp-inquiry-repository';
 
 @injectable()
 @autoWired
-export class ClaimCreatePage extends YvesPage {
-  @inject(REPOSITORIES.ClaimRepository) private repository: ClaimRepository;
+export class SspInquiryCreatePage extends YvesPage {
+  @inject(REPOSITORIES.SspInquiryRepository) private repository: SspInquiryRepository;
 
-  public PAGE_URL = '/customer/claim/create';
+  public PAGE_URL = '/customer/ssp-inquiry/create';
 
-  createOrderClaim(params: OrderClaimParams): void {
+  createOrderSspInquiry(params: OrderSspInquiryParams): void {
     this.repository.getOrderReferenceInput().should('have.value', params.orderReference);
-    this.createClaim(params);
+    this.createSspInquiry(params);
   }
 
-  createClaim(params: ClaimParams): void {
+  createSspInquiry(params: SspInquiryParams): void {
     this.repository.getTypeOptions().should('have.length', params.availableTypes.length);
     params.availableTypes.forEach((type, index) => {
       this.repository.getTypeOptions().eq(index).should('have.value', type);
@@ -31,19 +31,19 @@ export class ClaimCreatePage extends YvesPage {
     this.repository.getSubmitButton().click();
   }
 
-  getClaimCreatedMessage(): string {
-    return this.repository.getClaimCreatedMessage();
+  getSspInquiryCreatedMessage(): string {
+    return this.repository.getSspInquiryCreatedMessage();
   }
 }
 
-interface ClaimParams {
+interface SspInquiryParams {
   subject: string;
   description: string;
   files: UploadFile[];
   availableTypes: string[];
 }
 
-interface OrderClaimParams extends ClaimParams {
+interface OrderSspInquiryParams extends SspInquiryParams {
   orderReference: string;
 }
 
