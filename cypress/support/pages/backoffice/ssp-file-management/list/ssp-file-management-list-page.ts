@@ -20,7 +20,7 @@ export class SspFileManagementListPage extends BackofficePage {
 
   clickAttachButton(): void {
     this.searchFile('image2.png');
-    cy.get(this.repository.getAttachButtonSelector()).click();
+    cy.get(this.repository.getAttachButtonSelector()).first().click();
   }
 
   searchFile(fileName: string): void {

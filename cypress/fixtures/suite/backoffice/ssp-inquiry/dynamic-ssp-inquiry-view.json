@@ -1,0 +1,243 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "locale",
+          "arguments": {
+            "id_locale": 66,
+            "locale_name": "en_US"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [
+            {
+              "fkCompany": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer",
+          "arguments": [
+            {
+              "locale": "#locale",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "key": "confirmedCustomer",
+          "arguments": ["#customer"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "fkCustomer": "#customer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "configureTestStateMachine",
+          "arguments": [["DummyPayment01"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product"
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentType",
+          "key": "shipmentType",
+          "arguments": [
+            {
+              "key": "delivery"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentMethod",
+          "key": "shipmentMethod",
+          "arguments": [
+            {
+              "key": "spryker_dummy_shipment-standard"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address",
+          "arguments": [
+            {
+              "fkCustomer": "#customer.id_customer"
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "name": "ShipmentTransfer",
+          "key": "shipment",
+          "arguments": {
+            "shipmentTypeUuid": "#shipmentType.uuid",
+            "idShipmentMethod": "#shipmentMethod.id_shipment_method",
+            "method": "#shipmentMethod",
+            "shippingAddress": "#address"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "permission",
+          "arguments": ["CreateSspInquiryPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "companyRole",
+          "arguments": [
+            {
+              "isDefault": true,
+              "fkCompany": "#company.id_company"
+            },
+            ["#permission"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser", ["#companyRole"]]
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": {
+            "name": "DE"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveSspInquiry",
+          "key": "generalSspInquiry",
+          "arguments": [
+            {
+              "companyUser": "#companyUser",
+              "store": "#store",
+              "type": "general",
+              "status": "pending",
+              "fileAmount": "5"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveSspInquiry",
+          "key": "generalSspInquiry2",
+          "arguments": [
+            {
+              "companyUser": "#companyUser",
+              "store": "#store",
+              "type": "general",
+              "status": "pending",
+              "fileAmount": "0"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveSspInquiry",
+          "key": "generalSspInquiry3",
+          "arguments": [
+            {
+              "companyUser": "#companyUser",
+              "store": "#store",
+              "type": "general",
+              "status": "pending",
+              "fileAmount": "0"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullOrder",
+          "key": "salesOrder",
+          "arguments": [
+            {
+              "item": {
+                "sku": "#product.sku"
+              },
+              "customerReference": "#customer.customer_reference",
+              "shipment": "#shipment"
+            },
+            "DummyPayment01"
+          ]
+        },
+        {
+          "type": "transfer",
+          "name": "OrderTransfer",
+          "key": "order",
+          "arguments": {
+            "orderReference": "#salesOrder.order_reference",
+            "idSalesOrder": "#salesOrder.id_sales_order"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveSspInquiry",
+          "key": "orderSspInquiry",
+          "arguments": [
+            {
+              "companyUser": "#companyUser",
+              "store": "#store",
+              "type": "general",
+              "status": "pending",
+              "fileAmount": "5",
+              "order": "#order"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

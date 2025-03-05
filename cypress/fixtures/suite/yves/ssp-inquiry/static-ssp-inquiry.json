@@ -1,0 +1,73 @@
+{
+  "defaultPassword": "change123",
+  "generalSspInquiry": {
+    "subject": "General Inquiry",
+    "description": "I have a question about your services. I would like to know more about the different packages you offer and the benefits of each. Additionally, I am interested in understanding the pricing structure and any available discounts for long-term commitments.",
+    "files": [
+      {
+        "name": "suite/yves/ssp-inquiry/files/spryker_logo1.png",
+        "size": "3.08 kB",
+        "extension": "png"
+      },
+      {
+        "name": "suite/yves/ssp-inquiry/files/spryker_logo2.png",
+        "size": "2.92 kB",
+        "extension": "png"
+      },
+      {
+        "name": "suite/yves/ssp-inquiry/files/spryker_logo3.png",
+        "size": "4.69 kB",
+        "extension": "png"
+      },
+      {
+        "name": "suite/yves/ssp-inquiry/files/spryker_logo4.jpeg",
+        "size": "6.38 kB",
+        "extension": "jpeg"
+      },
+      {
+        "name": "suite/yves/ssp-inquiry/files/spryker_logo5.jpeg",
+        "size": "7.05 kB",
+        "extension": "jpeg"
+      }
+    ],
+    "type": "general",
+    "status": "pending"
+  },
+  "orderSspInquiry": {
+    "subject": "Order Inquiry",
+    "description": "I have a question about your services. I would like to know more about the different packages you offer and the benefits of each. Additionally, I am interested in understanding the pricing structure and any available discounts for long-term commitments.",
+    "files": [
+      {
+        "name": "suite/yves/ssp-inquiry/files/spryker_logo1.png",
+        "size": "3.08 kB",
+        "extension": "png"
+      },
+      {
+        "name": "suite/yves/ssp-inquiry/files/spryker_logo2.png",
+        "size": "2.92 kB",
+        "extension": "png"
+      },
+      {
+        "name": "suite/yves/ssp-inquiry/files/spryker_logo3.png",
+        "size": "4.69 kB",
+        "extension": "png"
+      },
+      {
+        "name": "suite/yves/ssp-inquiry/files/spryker_logo4.jpeg",
+        "size": "6.38 kB",
+        "extension": "jpeg"
+      },
+      {
+        "name": "suite/yves/ssp-inquiry/files/spryker_logo5.jpeg",
+        "size": "7.05 kB",
+        "extension": "jpeg"
+      }
+    ],
+    "type": "order",
+    "status": "pending"
+  },
+  "sspInquiryTypes": {
+    "general": ["", "general"],
+    "order": ["", "order"]
+  }
+}
