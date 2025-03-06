@@ -25,7 +25,7 @@ export class SspInquiryDetailPage extends YvesPage {
     cy.contains(this.repository.getSspInquiryDetailsReference(params.reference)).should('exist');
     cy.contains(this.repository.getSspInquiryDetailsDate(params.date)).should('exist');
     cy.contains(new RegExp(this.repository.getSspInquiryDetailsStatus(params.status), 'i')).should('exist');
-    cy.contains(new RegExp(this.repository.getSspInquiryDetailsType(params.type), 'i')).should('exist');
+    cy.contains(this.repository.getSspInquiryDetailsType(params.type.value)).should('exist');
     cy.contains(this.repository.getSspInquiryDetailsSubject(params.subject)).should('exist');
     cy.contains(this.repository.getSspInquiryDetailsDescription(params.description)).should('exist');
     cy.contains(this.repository.getSspInquiryDetailsCustomerFirstName(params.customer.firstName)).should('exist');
