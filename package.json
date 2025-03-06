@@ -16,7 +16,8 @@
     "prettier:write": "prettier . --write",
     "cy:open": "cypress open",
     "cy:run": "cypress run --spec \"cypress/e2e/!(smoke)/**/*.ts\"",
-    "cy:ci": "cypress run --spec \"cypress/e2e/!(smoke)/**/*.ts\" --headless --browser chrome",
+    "cy:ci": "cypress run --spec \"cypress/e2e/!(smoke)/**/!(ssp)*.ts\" --headless --browser chrome",
+    "cy:ci:ssp": "cypress run --spec \"cypress/e2e/!(smoke)/**/(ssp)*.ts\" --headless --browser chrome",
     "cy:smoke": "cypress run --spec \"cypress/e2e/smoke/**/*.ts\" --headless --browser chrome",
     "cy:dms": "cypress run --spec \"cypress/e2e/!(smoke)/**/*dms.cy.ts\" --headless --browser chrome",
     "cy:smoke:demo": "cypress run --spec \"cypress/e2e/smoke/!(product)/*.ts\" --headless --browser chrome"
@@ -31,6 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "cypress": "^14.1.0",
+    "cypress-file-upload": "^5.0.8",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-plugin-cypress": "^2.15.2",

@@ -4,4 +4,5 @@ export interface CustomerOverviewRepository {
   getOrderedProductSpan(productName: string): string;
   getFirstShippingAddress(): Cypress.Chainable;
   getViewOrderButton(tableRowIndex: number): Cypress.Chainable;
+  getMyFilesLink(): Cypress.Chainable;
 }

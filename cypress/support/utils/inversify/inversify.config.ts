@@ -121,6 +121,7 @@ import { SuiteYvesRepository } from '../../pages/yves/repositories/suite-yves-re
 import { SuiteManageCompanyRoleUserRepository } from '../../pages/yves/company/user/manage/repositories/suite-manage-company-role-user-repository';
 import { B2bManageCompanyRoleUserRepository } from '../../pages/yves/company/user/manage/repositories/b2b-manage-company-role-user-repository';
 import { B2bMpManageCompanyRoleUserRepository } from '../../pages/yves/company/user/manage/repositories/b2b-mp-manage-company-role-user-repository';
+import { SuiteSspInquiryRepository } from '../../pages/yves/ssp-inquiry/repositories/suite-ssp-inquiry-repository';
 import { SuiteCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/suite-company-role-index-repository';
 import { SuiteCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/suite-company-role-create-repository';
 import { B2bMpCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2b-mp-company-role-create-repository';
@@ -159,6 +160,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.OrderDetailsRepository]: SuiteOrderDetailsRepository,
   [REPOSITORIES.ProductComparisonRepository]: SuiteProductComparisonRepository,
   [REPOSITORIES.ManageCompanyRoleUserRepository]: SuiteManageCompanyRoleUserRepository,
+  [REPOSITORIES.SspInquiryRepository]: SuiteSspInquiryRepository,
   [REPOSITORIES.CompanyRoleIndexRepository]: SuiteCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: SuiteCompanyRoleCreateRepository,
 };
