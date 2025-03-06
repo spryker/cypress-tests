@@ -1,6 +1,7 @@
 {
   "defaultPassword": "change123",
   "asset": {
-    "name": "Sample Asset Name"
+    "name": "Sample Asset Name",
+    "note": "Sample asset note for testing purposes"
   }
 }

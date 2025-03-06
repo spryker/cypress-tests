@@ -10,6 +10,7 @@ export interface SspAssetDynamicFixtures {
 
 export interface SspAsset {
   name: string;
+  note?: string;
 }
 
 export interface Customer {

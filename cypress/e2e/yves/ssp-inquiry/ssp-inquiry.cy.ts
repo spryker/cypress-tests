@@ -5,6 +5,7 @@ import {
   SspInquiryDetailPage,
   OrderDetailsPage,
   SspInquiryOrderPage,
+    SspAssetDetailPage
 } from '@pages/yves';
 import { SspInquiryStaticFixtures, SspInquiryDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
@@ -17,6 +18,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
     const sspInquiryListPage = container.get(SspInquiryListPage);
     const sspInquiryCreatePage = container.get(SspInquiryCreatePage);
     const sspInquiryDetailPage = container.get(SspInquiryDetailPage);
+    const sspAssetDetailPage = container.get(SspAssetDetailPage);
     const orderDetailPage = container.get(OrderDetailsPage);
     const sspInquiryOrderPage = container.get(SspInquiryOrderPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
@@ -135,11 +137,13 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
               withoutSession: true,
           });
 
-          sspInquiryCreatePage.visit({
+          sspAssetDetailPage.visit({
               qs: {
-                  sspAssetReference: dynamicFixtures.sspAsset.reference,
+                  reference: dynamicFixtures.sspAsset.reference,
               },
           });
+
+          sspAssetDetailPage.clickCreateClaimButton();
 
           sspInquiryCreatePage.assertPageLocation();
           staticFixtures.sspAssetSspInquiry.availableTypes = staticFixtures.sspInquiryTypes.ssp_asset;

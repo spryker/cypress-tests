@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { SspAssetCreatePage, SspAssetEditPage } from '@pages/yves';
+import { SspAssetCreatePage, SspAssetEditPage, SspAssetDetailPage } from '@pages/yves';
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
@@ -9,6 +9,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
   (): void => {
     const assetCreatePage = container.get(SspAssetCreatePage);
     const assetEditPage = container.get(SspAssetEditPage);
+    const assetDetailPage = container.get(SspAssetDetailPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
 
     let staticFixtures: SspAssetStaticFixtures;
@@ -46,6 +47,38 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       });
 
       cy.contains(assetEditPage.getAssetEditedMessage());
+    });
+
+    it('should view asset details correctly', () => {
+      assetDetailPage.visit({
+        qs: {
+          reference: dynamicFixtures.asset.reference,
+        },
+      });
+
+      assetDetailPage.assertPageLocation();
+
+      assetDetailPage.assertAssetDetails({
+        reference: dynamicFixtures.asset.reference,
+        name: 'new asset name',
+        note: staticFixtures.asset.note
+      });
+
+      cy.contains('Create claim').should('exist');
+      cy.contains('Search services').should('exist');
+    });
+
+    it('should navigate to edit page from details page', () => {
+      assetDetailPage.visit({
+        qs: {
+          reference: dynamicFixtures.asset.reference,
+        },
+      });
+
+      assetDetailPage.clickEditButton();
+
+      cy.location('pathname').should('include', '/customer/asset/update');
+      cy.location('search').should('include', `reference=${dynamicFixtures.asset.reference}`);
     });
   }
 );
