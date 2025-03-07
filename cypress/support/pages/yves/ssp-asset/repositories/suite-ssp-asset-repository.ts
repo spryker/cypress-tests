@@ -8,7 +8,7 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
   }
 
   getAssetForm(): Cypress.Chainable {
-    return cy.get('[data-qa="customer-create-asset-form"]');
+    return cy.get('[data-qa="customer-asset-form"]');
   }
 
   getNameInput(): Cypress.Chainable {

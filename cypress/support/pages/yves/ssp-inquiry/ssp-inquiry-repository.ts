@@ -7,8 +7,8 @@ export interface SspInquiryRepository {
   getSspInquiryCreatedMessage(): string;
   getSspInquiryDetailsReference(reference: string): string;
   getSspInquiryDetailsOrderReference(orderReference: string): string;
-    getSspInquiryDetailsSspAssetReference(orderReference: string): string;
-    getSspInquiryDetailsDate(date: string): string;
+  getSspInquiryDetailsSspAssetReference(orderReference: string): string;
+  getSspInquiryDetailsDate(date: string): string;
   getSspInquiryDetailsStatus(status: string): string;
   getSspInquiryDetailsType(status: string): string;
   getSspInquiryDetailsSubject(subject: string): string;

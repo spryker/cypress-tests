@@ -371,16 +371,16 @@
           "name": "assignCompanyRoles",
           "arguments": ["#companyUserFromCompany6", ["#companyRoleWithViewCompanySspInquiryPermission"]]
         },
-          {
-              "type": "helper",
-              "name": "haveAsset",
-              "key": "sspAsset",
-              "arguments": [
-                  {
-                      "companyBusinessUnit": "#businessUnit"
-                  }
-              ]
-          }
+        {
+          "type": "helper",
+          "name": "haveAsset",
+          "key": "sspAsset",
+          "arguments": [
+            {
+              "companyBusinessUnit": "#businessUnit"
+            }
+          ]
+        }
       ]
     }
   }

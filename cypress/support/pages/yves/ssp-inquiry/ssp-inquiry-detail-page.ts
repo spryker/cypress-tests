@@ -12,14 +12,14 @@ export class SspInquiryDetailPage extends YvesPage {
   public PAGE_URL = '/customer/ssp-inquiry/detail';
 
   assertOrderSspInquiryDetails = (params: OrderSspInquiryDetails): void => {
-      this.repository.getSspInquiryDetailsOrderReference(params.orderReference);
-      this.assertSspInquiryDetails(params);
+    this.repository.getSspInquiryDetailsOrderReference(params.orderReference);
+    this.assertSspInquiryDetails(params);
   };
 
-    assertSspAssetSspInquiryDetails = (params: SspAssetSspInquiryDetails): void => {
-        this.repository.getSspInquiryDetailsSspAssetReference(params.reference);
-        this.assertSspInquiryDetails(params);
-    };
+  assertSspAssetSspInquiryDetails = (params: SspAssetSspInquiryDetails): void => {
+    this.repository.getSspInquiryDetailsSspAssetReference(params.reference);
+    this.assertSspInquiryDetails(params);
+  };
 
   assertSspInquiryDetails = (params: SspInquiryDetails): void => {
     cy.contains(this.repository.getSspInquiryDetailsReference(params.reference)).should('exist');

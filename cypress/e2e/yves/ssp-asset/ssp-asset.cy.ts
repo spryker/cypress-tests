@@ -60,8 +60,8 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
       assetDetailPage.assertAssetDetails({
         reference: dynamicFixtures.asset.reference,
-        name: 'new asset name',
-        note: staticFixtures.asset.note
+        name: dynamicFixtures.asset.name,
+        note: dynamicFixtures.asset.note,
       });
 
       cy.contains('Create claim').should('exist');

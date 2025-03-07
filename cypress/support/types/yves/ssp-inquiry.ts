@@ -17,7 +17,7 @@ export interface SspInquiryStaticFixtures {
   defaultPassword: string;
   generalSspInquiry: SspInquiry;
   orderSspInquiry: SspInquiry;
-    sspAssetSspInquiry: SspInquiry;
+  sspAssetSspInquiry: SspInquiry;
   sspInquiryTypes: SspInquiryTypes;
 }
 

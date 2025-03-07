@@ -5,7 +5,7 @@ export interface SspAssetRepository {
   getSubmitButton(): Cypress.Chainable;
   getAssetCreatedMessage(): string;
   getAssetEditedMessage(): string;
-  
+
   // Asset detail page selectors
   getAssetDetailsTitle(): Cypress.Chainable;
   getAssetDetailsReference(reference: string): string;
