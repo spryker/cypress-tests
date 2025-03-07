@@ -26,32 +26,32 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
   getAssetEditedMessage(): string {
     return 'Asset has been successfully updated';
   }
-  
+
   // Asset detail page selectors
   getAssetDetailsTitle(): Cypress.Chainable {
     return cy.get('[data-qa="component asset-details-title"] .title--h3');
   }
-  
+
   getAssetDetailsReference(reference: string): string {
     return reference;
   }
-  
+
   getAssetDetailsName(name: string): string {
     return name;
   }
-  
+
   getAssetDetailsSerialNumber(serialNumber: string): string {
     return serialNumber;
   }
-  
+
   getAssetDetailsNote(note: string): string {
     return note;
   }
-  
+
   getEditAssetButton(): Cypress.Chainable {
     return cy.get('[title="Edit"]');
   }
-  
+
   getCreateClaimButton(): Cypress.Chainable {
     return cy.contains('Create claim');
   }
