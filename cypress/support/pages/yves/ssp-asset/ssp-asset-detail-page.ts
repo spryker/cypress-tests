@@ -35,6 +35,10 @@ export class SspAssetDetailPage extends YvesPage {
   clickCreateClaimButton(): void {
     this.repository.getCreateClaimButton().click();
   }
+
+    getAssetDetailsReference(reference: string): string {
+      return this.repository.getAssetDetailsReference(reference);
+    }
 }
 
 export interface SspAssetDetails {

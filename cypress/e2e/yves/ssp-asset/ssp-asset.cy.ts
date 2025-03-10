@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { SspAssetCreatePage, SspAssetEditPage, SspAssetDetailPage } from '@pages/yves';
+import { SspAssetCreatePage, SspAssetEditPage, SspAssetDetailPage, SspAssetListPage } from '@pages/yves';
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
@@ -10,6 +10,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     const assetCreatePage = container.get(SspAssetCreatePage);
     const assetEditPage = container.get(SspAssetEditPage);
     const assetDetailPage = container.get(SspAssetDetailPage);
+    const assetListPage = container.get(SspAssetListPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
 
     let staticFixtures: SspAssetStaticFixtures;
@@ -79,6 +80,35 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
       cy.location('pathname').should('include', '/customer/asset/update');
       cy.location('search').should('include', `reference=${dynamicFixtures.asset.reference}`);
+    });
+
+    it('should navigate to asset details from asset list', () => {
+      assetListPage.visit();
+
+      assetListPage.getFirstRowReference().then(assetReference => {
+        assetListPage.openLatestAssetDetailsPage();
+
+        assetDetailPage.assertPageLocation();
+
+        cy.contains(assetDetailPage.getAssetDetailsReference(assetReference)).should('exist');
+      });
+    });
+
+    it('should navigate to asset creation from asset list', () => {
+      assetListPage.visit();
+
+      assetListPage.clickCreateAssetButton();
+
+      assetCreatePage.assertPageLocation();
+    });
+
+    it('should display asset table with correct data', () => {
+      // Visit the asset list page
+      assetListPage.visit();
+
+      assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset name', 'Serial Number', 'Business Unit', 'Date added']);
+
+      assetListPage.assertTableHasData();
     });
   }
 );

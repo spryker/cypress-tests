@@ -1,4 +1,5 @@
 export interface SspAssetRepository {
+  // Asset form selectors
   getCreateAssetButton(): Cypress.Chainable;
   getAssetForm(): Cypress.Chainable;
   getNameInput(): Cypress.Chainable;
@@ -14,4 +15,13 @@ export interface SspAssetRepository {
   getAssetDetailsNote(note: string): string;
   getEditAssetButton(): Cypress.Chainable;
   getCreateClaimButton(): Cypress.Chainable;
+
+  // Asset list page selectors
+  getFirstRowViewButton(): Cypress.Chainable;
+  getFirstRowReference(): Cypress.Chainable<string>;
+  getAssetTableRows(): Cypress.Chainable;
+  getAssetTableHeaders(): Cypress.Chainable;
+  getAssetNameCells(): Cypress.Chainable;
+  getAssetReferenceCells(): Cypress.Chainable;
+  getAssetSerialNumberCells(): Cypress.Chainable;
 }

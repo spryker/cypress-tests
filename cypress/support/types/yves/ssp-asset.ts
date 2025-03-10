@@ -9,6 +9,7 @@ export interface SspAssetDynamicFixtures {
 }
 
 export interface SspAsset {
+  reference: string;
   name: string;
   note?: string;
 }
