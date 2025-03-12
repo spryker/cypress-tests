@@ -15,17 +15,13 @@ export class ProductAbstractTypePage extends BackofficePage {
       .find(this.repository.getSelect2Selector())
       .should('exist')
       .click();
-    
+
     // Then select the option from the dropdown by clicking on it
-    cy.get('li.select2-results__option')
-      .contains(typeValue)
-      .click();
+    cy.get('li.select2-results__option').contains(typeValue).click();
   }
 
   saveProductAbstract(): void {
-    cy.get(this.repository.getSaveButtonSelector())
-      .should('exist')
-      .click();
+    cy.get(this.repository.getSaveButtonSelector()).should('exist').click();
   }
 
   verifySuccessMessage(): void {
@@ -34,10 +30,9 @@ export class ProductAbstractTypePage extends BackofficePage {
       .should('be.visible')
       .should('contain', 'was saved successfully.');
   }
-  
+
   verifyProductAbstractTypeSelected(typeName: string): void {
-    cy.get(this.repository.getSelectedTypeVerificationSelector())
-      .should('contain', typeName);
+    cy.get(this.repository.getSelectedTypeVerificationSelector()).should('contain', typeName);
   }
 
   editProductFromList(sku: string): void {
