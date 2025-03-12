@@ -11,8 +11,8 @@ export class ManageCompanyRoleUserPage extends YvesPage {
 
   protected PAGE_URL = '/company/company-role/user/manage';
 
-  visit = (options?: Partial<VisitOptions>, idCompanyUser = 0): void => {
-    cy.visit(this.PAGE_URL + '?id=' + idCompanyUser, options);
+  visit = (options?: Partial<VisitOptions>, idCompanyRole = 0): void => {
+    cy.visit(this.PAGE_URL + '?id=' + idCompanyRole, options);
   };
 
   unassignUser = (): void => {
