@@ -56,7 +56,7 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
   }
 
   getFirstRowViewButton(): Cypress.Chainable {
-    return cy.get('.web-table-actions-cell .menu__item a').first();
+    return cy.get('[data-qa*="cell-actions"] .menu__item a').first();
   }
 
   getFirstRowReference(): Cypress.Chainable<string> {

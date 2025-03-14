@@ -5,6 +5,7 @@ export interface SspAssetStaticFixtures {
 
 export interface SspAssetDynamicFixtures {
   customer: Customer;
+    customerWithViewCompanyAssetPermission: Customer;
   asset: SspAsset;
 }
 

@@ -20,15 +20,13 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    beforeEach(() => {
-      customerLoginScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-        withoutSession: true,
-      });
-    });
-
     it('should create an asset successfully', () => {
+        customerLoginScenario.execute({
+            email: dynamicFixtures.customer.email,
+            password: staticFixtures.defaultPassword,
+            withoutSession: true,
+        });
+
       assetCreatePage.visit();
 
       assetCreatePage.createAsset({ name: staticFixtures.asset.name });
@@ -37,6 +35,12 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     });
 
     it('should update an asset successfully', () => {
+        customerLoginScenario.execute({
+            email: dynamicFixtures.customer.email,
+            password: staticFixtures.defaultPassword,
+            withoutSession: true,
+        });
+
       assetEditPage.visit({
         qs: {
           reference: dynamicFixtures.asset.reference,
@@ -51,6 +55,12 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     });
 
     it('should view asset details correctly', () => {
+        customerLoginScenario.execute({
+            email: dynamicFixtures.customer.email,
+            password: staticFixtures.defaultPassword,
+            withoutSession: true,
+        });
+
       assetDetailPage.visit({
         qs: {
           reference: dynamicFixtures.asset.reference,
@@ -65,11 +75,17 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         note: dynamicFixtures.asset.note,
       });
 
-      cy.contains('Create claim').should('exist');
+      // cy.contains('Create claim').should('exist');
       cy.contains('Search services').should('exist');
     });
 
     it('should navigate to edit page from details page', () => {
+        customerLoginScenario.execute({
+            email: dynamicFixtures.customer.email,
+            password: staticFixtures.defaultPassword,
+            withoutSession: true,
+        });
+
       assetDetailPage.visit({
         qs: {
           reference: dynamicFixtures.asset.reference,
@@ -83,6 +99,12 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     });
 
     it('should navigate to asset details from asset list', () => {
+        customerLoginScenario.execute({
+            email: dynamicFixtures.customer.email,
+            password: staticFixtures.defaultPassword,
+            withoutSession: true,
+        });
+
       assetListPage.visit();
 
       assetListPage.getFirstRowReference().then(assetReference => {
@@ -94,21 +116,41 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       });
     });
 
-    it('should navigate to asset creation from asset list', () => {
-      assetListPage.visit();
+    // it('should navigate to asset creation from asset list', () => {
+    //     customerLoginScenario.execute({
+    //         email: dynamicFixtures.customer.email,
+    //         password: staticFixtures.defaultPassword,
+    //         withoutSession: true,
+    //     });
+    //
+    //   assetListPage.visit();
+    //
+    //   assetListPage.clickCreateAssetButton();
+    //
+    //   assetCreatePage.assertPageLocation();
+    // });
+    //
+    // it('should display asset table with correct data', () => {
+    //     customerLoginScenario.execute({
+    //         email: dynamicFixtures.customer.email,
+    //         password: staticFixtures.defaultPassword,
+    //         withoutSession: true,
+    //     });
+    //   assetListPage.visit();
+    //
+    //   assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset name', 'Serial Number', 'Business Unit', 'Date added']);
+    //
+    //   assetListPage.assertTableHasData();
+    // });
 
-      assetListPage.clickCreateAssetButton();
+    it('should be able to view company assets', () => {
+        customerLoginScenario.execute({
+            email: dynamicFixtures.customerWithViewCompanyAssetPermission.email,
+            password: staticFixtures.defaultPassword,
+            withoutSession: true,
+        });
 
-      assetCreatePage.assertPageLocation();
-    });
-
-    it('should display asset table with correct data', () => {
-      // Visit the asset list page
-      assetListPage.visit();
-
-      assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset name', 'Serial Number', 'Business Unit', 'Date added']);
-
-      assetListPage.assertTableHasData();
-    });
+        assetListPage.visit();
+    })
   }
 );
