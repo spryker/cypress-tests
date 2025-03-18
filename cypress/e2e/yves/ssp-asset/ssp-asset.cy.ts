@@ -28,11 +28,11 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     });
 
     it('should create an asset successfully', () => {
-        customerLoginScenario.execute({
-            email: dynamicFixtures.customer.email,
-            password: staticFixtures.defaultPassword,
-            withoutSession: true,
-        });
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
 
       assetCreatePage.visit();
 
@@ -42,11 +42,11 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     });
 
     it('should update an asset successfully', () => {
-        customerLoginScenario.execute({
-            email: dynamicFixtures.customer.email,
-            password: staticFixtures.defaultPassword,
-            withoutSession: true,
-        });
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
 
       assetEditPage.visit({
         qs: {
@@ -62,11 +62,11 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     });
 
     it('should view asset details correctly', () => {
-        customerLoginScenario.execute({
-            email: dynamicFixtures.customer.email,
-            password: staticFixtures.defaultPassword,
-            withoutSession: true,
-        });
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
 
       assetDetailPage.visit({
         qs: {
@@ -87,11 +87,11 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     });
 
     it('should navigate to edit page from details page', () => {
-        customerLoginScenario.execute({
-            email: dynamicFixtures.customer.email,
-            password: staticFixtures.defaultPassword,
-            withoutSession: true,
-        });
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
 
       assetDetailPage.visit({
         qs: {
@@ -106,15 +106,15 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     });
 
     it('should navigate to asset details from asset list', () => {
-        customerLoginScenario.execute({
-            email: dynamicFixtures.customer.email,
-            password: staticFixtures.defaultPassword,
-            withoutSession: true,
-        });
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
 
       assetListPage.visit();
 
-      assetListPage.getFirstRowReference().then(assetReference => {
+      assetListPage.getFirstRowReference().then((assetReference) => {
         assetListPage.openLatestAssetDetailsPage();
 
         assetDetailPage.assertPageLocation();
@@ -124,11 +124,11 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     });
 
     it('should navigate to asset creation from asset list', () => {
-        customerLoginScenario.execute({
-            email: dynamicFixtures.customer.email,
-            password: staticFixtures.defaultPassword,
-            withoutSession: true,
-        });
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
 
       assetListPage.visit();
 
@@ -138,11 +138,11 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     });
 
     it('should display asset table with correct data', () => {
-        customerLoginScenario.execute({
-            email: dynamicFixtures.customer.email,
-            password: staticFixtures.defaultPassword,
-            withoutSession: true,
-        });
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
       assetListPage.visit();
 
       assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset Name', 'Serial Number', 'Business Unit']);
