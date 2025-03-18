@@ -60,6 +60,6 @@ export interface File {
   extension: string;
 }
 
-export interface SspAsset {
+interface SspAsset {
   reference: string;
 }
