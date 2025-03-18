@@ -37,6 +37,6 @@ export interface CompanyUser {
   customer: Customer;
 }
 
-export interface BusinessUnit {
+interface BusinessUnit {
   name: string;
 }
