@@ -1,5 +1,11 @@
 import { container } from '@utils';
-import { SspAssetCreatePage, SspAssetEditPage, SspAssetDetailPage, SspAssetListPage } from '@pages/yves';
+import {
+  SspAssetCreatePage,
+  SspAssetEditPage,
+  SspAssetDetailPage,
+  SspAssetListPage,
+  CompanyUserSelectPage,
+} from '@pages/yves';
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
@@ -12,6 +18,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     const assetDetailPage = container.get(SspAssetDetailPage);
     const assetListPage = container.get(SspAssetListPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
+    const companyUserSelectPage = container.get(CompanyUserSelectPage);
 
     let staticFixtures: SspAssetStaticFixtures;
     let dynamicFixtures: SspAssetDynamicFixtures;
@@ -92,7 +99,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         },
       });
 
-      assetDetailPage.clickEditButton();
+      assetDetailPage.getEditButton().click();
 
       cy.location('pathname').should('include', '/customer/asset/update');
       cy.location('search').should('include', `reference=${dynamicFixtures.asset.reference}`);
@@ -116,41 +123,157 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       });
     });
 
-    // it('should navigate to asset creation from asset list', () => {
-    //     customerLoginScenario.execute({
-    //         email: dynamicFixtures.customer.email,
-    //         password: staticFixtures.defaultPassword,
-    //         withoutSession: true,
-    //     });
-    //
-    //   assetListPage.visit();
-    //
-    //   assetListPage.clickCreateAssetButton();
-    //
-    //   assetCreatePage.assertPageLocation();
-    // });
-    //
-    // it('should display asset table with correct data', () => {
-    //     customerLoginScenario.execute({
-    //         email: dynamicFixtures.customer.email,
-    //         password: staticFixtures.defaultPassword,
-    //         withoutSession: true,
-    //     });
-    //   assetListPage.visit();
-    //
-    //   assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset name', 'Serial Number', 'Business Unit', 'Date added']);
-    //
-    //   assetListPage.assertTableHasData();
-    // });
-
-    it('should be able to view company assets', () => {
+    it('should navigate to asset creation from asset list', () => {
         customerLoginScenario.execute({
-            email: dynamicFixtures.customerWithViewCompanyAssetPermission.email,
+            email: dynamicFixtures.customer.email,
             password: staticFixtures.defaultPassword,
             withoutSession: true,
         });
 
-        assetListPage.visit();
-    })
+      assetListPage.visit();
+
+      assetListPage.getCreateAssetButton().click();
+
+      assetCreatePage.assertPageLocation();
+    });
+
+    it('should display asset table with correct data', () => {
+        customerLoginScenario.execute({
+            email: dynamicFixtures.customer.email,
+            password: staticFixtures.defaultPassword,
+            withoutSession: true,
+        });
+      assetListPage.visit();
+
+      assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset Name', 'Serial Number', 'Business Unit']);
+
+      assetListPage.assertTableHasData();
+    });
+
+    it('should be able to view company assets', () => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.companyUser1BU1C1.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      assetListPage.visit();
+
+      assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset Name', 'Serial Number', 'Business Unit']);
+
+      assetListPage.getRowCount().should('eq', 2);
+
+      assetDetailPage.visit({
+        qs: {
+          reference: dynamicFixtures.assetBU1C1BU2C1.reference,
+        },
+      });
+
+      assetDetailPage.getSspAssetAssignments().its('length').should('eq', 2);
+      assetDetailPage.getSspAssetAssignments().eq(0).should('contain', dynamicFixtures.businessUnit1Company1.name);
+      assetDetailPage.getSspAssetAssignments().eq(1).should('contain', dynamicFixtures.businessUnit2Company1.name);
+    });
+
+    it('should be able to view business unit assets', () => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.companyUser2BU1C1.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      companyUserSelectPage.selectBusinessUnit({
+        idCompanyUser: dynamicFixtures.companyUser2BU1C1.id_company_user,
+      });
+
+      assetListPage.visit();
+
+      assetListPage.getRowCount().should('eq', 2);
+
+      companyUserSelectPage.visit();
+      companyUserSelectPage.selectBusinessUnit({
+        idCompanyUser: dynamicFixtures.companyUser2BU2C1.id_company_user,
+      });
+
+      assetListPage.visit();
+
+      assetListPage.getRowCount().should('eq', 1);
+
+      assetDetailPage.visit({
+        qs: {
+          reference: dynamicFixtures.assetBU1C1BU2C1.reference,
+        },
+      });
+
+      assetDetailPage.getSspAssetAssignments().its('length').should('eq', 1);
+      assetDetailPage.getSspAssetAssignments().eq(0).should('contain', dynamicFixtures.businessUnit2Company1.name);
+    });
+
+    it('should be able to create asset', () => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.companyUser2BU2C1.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      companyUserSelectPage.selectBusinessUnit({
+        idCompanyUser: dynamicFixtures.companyUser2BU2C1.id_company_user,
+      });
+
+      assetListPage.visit();
+
+      assetListPage.getCreateAssetButton().should('exist');
+    });
+
+    it('should not be able to create asset', () => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.companyUser2BU1C1.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      companyUserSelectPage.selectBusinessUnit({
+        idCompanyUser: dynamicFixtures.companyUser2BU1C1.id_company_user,
+      });
+
+      assetListPage.visit();
+
+      assetListPage.getCreateAssetButton().should('not.exist');
+    });
+
+    it('should be able to udate asset', () => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.companyUser3BU1C2.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      assetDetailPage.visit({
+        qs: {
+          reference: dynamicFixtures.assetBU1C2.reference,
+        },
+      });
+
+      assetDetailPage.getEditButton().should('exist');
+    });
+
+    it('should not be able to udate asset', () => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.companyUser2BU2C1.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      companyUserSelectPage.selectBusinessUnit({
+        idCompanyUser: dynamicFixtures.companyUser2BU2C1.id_company_user,
+      });
+
+      assetDetailPage.visit({
+        qs: {
+          reference: dynamicFixtures.assetBU1C1BU2C1.reference,
+        },
+      });
+
+      assetDetailPage.getEditButton().should('not.exist');
+    });
   }
 );

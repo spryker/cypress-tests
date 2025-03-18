@@ -15,6 +15,7 @@ export interface SspAssetRepository {
   getAssetDetailsNote(note: string): string;
   getEditAssetButton(): Cypress.Chainable;
   getCreateClaimButton(): Cypress.Chainable;
+  getSspAssetAssignments(): Cypress.Chainable;
 
   // Asset list page selectors
   getFirstRowViewButton(): Cypress.Chainable;

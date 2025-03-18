@@ -48,7 +48,7 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
   }
 
   getEditAssetButton(): Cypress.Chainable {
-    return cy.get('[title="Edit"]');
+    return cy.get('[data-qa="edit-ssp-asset"]');
   }
 
   getCreateClaimButton(): Cypress.Chainable {
@@ -60,11 +60,14 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
   }
 
   getFirstRowReference(): Cypress.Chainable<string> {
-    return this.getAssetReferenceCells().first().invoke('text').then(text => text.trim());
+    return this.getAssetReferenceCells()
+      .first()
+      .invoke('text')
+      .then((text) => text.trim());
   }
 
   getAssetTableRows(): Cypress.Chainable {
-    return cy.get('tr');
+    return cy.get('[data-qa*="advanced-table-ssp-assets"] tbody tr');
   }
 
   getAssetTableHeaders(): Cypress.Chainable {
@@ -81,5 +84,9 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
 
   getAssetSerialNumberCells(): Cypress.Chainable {
     return cy.get('[data-qa="cell-serial_number"]');
+  }
+
+  getSspAssetAssignments(): Cypress.Chainable {
+    return cy.get('[data-qa="ssp-asset-assignments"]');
   }
 }

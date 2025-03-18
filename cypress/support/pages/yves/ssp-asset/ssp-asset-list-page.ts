@@ -10,8 +10,8 @@ export class SspAssetListPage extends YvesPage {
 
   protected PAGE_URL = '/customer/asset';
 
-  clickCreateAssetButton(): void {
-    this.repository.getCreateAssetButton().click();
+  getCreateAssetButton(): Cypress.Chainable {
+    return this.repository.getCreateAssetButton();
   }
 
   getFirstRowReference(): Cypress.Chainable<string> {
@@ -35,7 +35,7 @@ export class SspAssetListPage extends YvesPage {
   }
 
   assertAssetNameInTable(assetName: string): Cypress.Chainable<boolean> {
-    return this.repository.getAssetNameCells().then($cells => {
+    return this.repository.getAssetNameCells().then(($cells) => {
       for (let i = 0; i < $cells.length; i++) {
         if ($cells.eq(i).text().trim().includes(assetName)) {
           return true;

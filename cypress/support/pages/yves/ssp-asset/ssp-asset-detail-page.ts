@@ -28,17 +28,21 @@ export class SspAssetDetailPage extends YvesPage {
     }
   }
 
-  clickEditButton(): void {
-    this.repository.getEditAssetButton().click();
+  getEditButton(): Cypress.Chainable {
+    return this.repository.getEditAssetButton();
   }
 
   clickCreateClaimButton(): void {
     this.repository.getCreateClaimButton().click();
   }
 
-    getAssetDetailsReference(reference: string): string {
-      return this.repository.getAssetDetailsReference(reference);
-    }
+  getAssetDetailsReference(reference: string): string {
+    return this.repository.getAssetDetailsReference(reference);
+  }
+
+  getSspAssetAssignments(): Cypress.Chainable {
+    return this.repository.getSspAssetAssignments();
+  }
 }
 
 export interface SspAssetDetails {
