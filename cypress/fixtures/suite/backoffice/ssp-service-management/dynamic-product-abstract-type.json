@@ -47,7 +47,7 @@
           "type": "helper",
           "name": "haveProductAbstract",
           "key": "productAbstract",
-          "arguments":[
+          "arguments": [
             {
               "id_tax_set": "#taxSet.id_tax_set"
             },
@@ -58,9 +58,7 @@
           "type": "helper",
           "name": "havePriceProductAbstract",
           "key": "priceProductAbstract",
-          "arguments":[
-            "#productAbstract.id_product_abstract"
-          ]
+          "arguments": ["#productAbstract.id_product_abstract"]
         }
       ]
     }

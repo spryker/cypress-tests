@@ -1,5 +1,4 @@
 export interface ProductAbstract {
-    name: string;
-    sku: string;
+  name: string;
+  sku: string;
 }
-  
