@@ -14,3 +14,4 @@ export * from './catalog';
 export * from './ssp-inquiry';
 export * from './company-account';
 export * from './ssp-file-management';
+export * from './ssp-dashboard-management';
