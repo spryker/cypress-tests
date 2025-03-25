@@ -15,126 +15,151 @@
           "key": "customer",
           "arguments": [
             {
-              "customer_reference": "DE--customer-1"
+              "locale": "#locale",
+              "password": "change123"
             }
           ]
         },
         {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 1, "name": "DE", "defaultCurrencyIsoCode": "EUR" }
+        },
+        {
           "type": "helper",
-          "name": "haveSalesOrder",
-          "key": "order1",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address1",
+          "arguments": [{ "fkCustomer": "#customer.id_customer", "fkCountry": "#country.id_country" }]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "key": "confirmedCustomer",
+          "arguments": ["#customer"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductAbstractType",
+          "key": "productAbstractType",
           "arguments": [
             {
-              "orderReference": "DE--1",
-              "customerReference": "#customer.customer_reference",
-              "store": "DE",
-              "priceMode": "GROSS_MODE"
+              "name": "service"
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveSalesOrder",
-          "key": "order2",
+          "name": "haveFullProduct",
+          "key": "product1",
+          "arguments": [{ "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product2",
+          "arguments": [{ "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
           "arguments": [
             {
-              "orderReference": "DE--2",
-              "customerReference": "#customer.customer_reference",
-              "store": "DE",
-              "priceMode": "GROSS_MODE"
+              "skuProductAbstract": "#product1.abstract_sku",
+              "skuProduct": "#product1.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveSalesOrder",
-          "key": "order3",
+          "name": "havePriceProduct",
           "arguments": [
             {
-              "orderReference": "DE--3",
-              "customerReference": "#customer.customer_reference",
-              "store": "DE",
-              "priceMode": "GROSS_MODE"
+              "skuProductAbstract": "#product2.abstract_sku",
+              "skuProduct": "#product2.sku",
+              "moneyValue": { "netAmount": 20000, "grossAmount": 20000 }
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveSalesOrder",
-          "key": "order4",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#product1.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#product2.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "transfer",
+          "name": "ProductImageTransfer",
+          "key": "productImage",
+          "arguments": {
+            "externalUrlSmall": "https://images.icecat.biz/img/gallery_mediums/30691822_1486.jpg",
+            "externalUrlLarge": "https://images.icecat.biz/img/gallery/30691822_1486.jpg"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
           "arguments": [
             {
-              "orderReference": "DE--4",
-              "customerReference": "#customer.customer_reference",
-              "store": "DE",
-              "priceMode": "GROSS_MODE"
+              "name": "default",
+              "idProduct": "#product1.id_product_concrete",
+              "idProductAbstract": "#product1.fk_product_abstract",
+              "productImages": ["#productImage"]
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveSspService",
-          "key": "service1",
+          "name": "haveProductImageSet",
           "arguments": [
             {
-              "fkCustomer": "#customer.id_customer",
-              "orderReference": "DE--1",
-              "productName": "Standard Support Package",
-              "timeAndDate": "2023-10-10T14:30:00+01:00",
-              "createdAt": "2023-10-05T09:15:00+01:00",
-              "state": "approved"
+              "name": "default",
+              "idProduct": "#product2.id_product_concrete",
+              "idProductAbstract": "#product2.fk_product_abstract",
+              "productImages": ["#productImage"]
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveSspService",
-          "key": "service2",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#product1.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#product2.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
           "arguments": [
             {
-              "fkCustomer": "#customer.id_customer",
-              "orderReference": "DE--2",
-              "productName": "Premium Maintenance Support",
-              "timeAndDate": "2023-10-15T16:00:00+01:00",
-              "createdAt": "2023-10-07T11:30:00+01:00",
-              "state": "pending"
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#product1.sku",
+                  "abstractSku": "#product1.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#product2.sku",
+                  "abstractSku": "#product2.abstract_sku",
+                  "quantity": 1
+                }
+              ]
             }
           ]
-        },
-        {
-          "type": "helper",
-          "name": "haveSspService",
-          "key": "service3",
-          "arguments": [
-            {
-              "fkCustomer": "#customer.id_customer",
-              "orderReference": "DE--3",
-              "productName": "Advanced Technical Support",
-              "timeAndDate": "2023-10-18T10:00:00+01:00",
-              "createdAt": "2023-10-12T14:45:00+01:00",
-              "state": "in progress"
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveSspService",
-          "key": "service4",
-          "arguments": [
-            {
-              "fkCustomer": "#customer.id_customer",
-              "orderReference": "DE--4",
-              "productName": "Emergency Support",
-              "timeAndDate": "2023-10-20T09:30:00+01:00",
-              "createdAt": "2023-10-19T18:20:00+01:00",
-              "state": "completed"
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "assignCompanyRoles",
-          "arguments": ["#companyUser", ["#companyRoleWithAllPermissions"]]
         }
       ]
     }

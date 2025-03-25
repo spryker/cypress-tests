@@ -7,7 +7,7 @@ type JQueryElement = JQuery<HTMLElement>;
 @injectable()
 export class SspServiceRepository {
   getSspServiceTable(): Chainable<JQueryElement> {
-    return cy.get('table.table--expand');
+    return cy.get('[data-qa=services-table]');
   }
 
   getSspServiceTableRows(): Chainable<JQueryElement> {
@@ -23,19 +23,15 @@ export class SspServiceRepository {
   }
 
   getSortOrderByInput(): Chainable<JQueryElement> {
-    return cy.get('input[name="orderBy"]');
+    return cy.get('.js-service-orderBy-target');
   }
 
   getSortDirectionInput(): Chainable<JQueryElement> {
-    return cy.get('input[name="orderDirection"]');
+    return cy.get('.js-service-orderDirection-target');
   }
 
   getResetButton(): Chainable<JQueryElement> {
-    return cy.contains('button', 'Reset');
-  }
-
-  getPagination(): Chainable<JQueryElement> {
-    return cy.get('.pagination');
+    return cy.get('[data-qa=reset-button]');
   }
 
   getSortColumnByName(columnName: string): Chainable<JQueryElement> {

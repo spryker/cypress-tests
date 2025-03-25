@@ -21,19 +21,15 @@ export class SuiteSspServiceRepository implements SspServiceRepository {
   }
 
   getSortOrderByInput(): Chainable<JQuery<HTMLElement>> {
-    return cy.get('input[name="orderBy"]');
+    return cy.get('.js-service-orderBy-target');
   }
 
   getSortDirectionInput(): Chainable<JQuery<HTMLElement>> {
-    return cy.get('input[name="orderDirection"]');
+    return cy.get('.js-service-orderDirection-target');
   }
 
   getResetButton(): Chainable<JQuery<HTMLElement>> {
-    return cy.contains('button', 'Reset');
-  }
-
-  getPagination(): Chainable<JQuery<HTMLElement>> {
-    return cy.get('.pagination');
+    return cy.get('[data-qa=reset-button]');
   }
 
   getSortColumnByName(columnName: string): Chainable<JQuery<HTMLElement>> {
