@@ -1,7 +1,9 @@
 import { Customer } from './shared';
+import {Company} from "./ssp-inquiry";
 
 export interface SspDashboardManagementDynamicFixtures {
   customer: Customer;
+  company: Company;
 }
 
 export interface SspDashboardManagementStaticFixtures {

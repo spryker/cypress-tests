@@ -4,7 +4,6 @@ import {
 } from '@pages/yves';
 import { SspDashboardManagementStaticFixtures, SspDashboardManagementDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
-import { CustomerLogoutScenario } from '@scenarios/yves';
 
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp dashboard management',
@@ -12,7 +11,6 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
   (): void => {
     const sspDashboardPage = container.get(SspDashboardPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
-    const customerLogoutScenario = container.get(CustomerLogoutScenario);
 
     let staticFixtures: SspDashboardManagementStaticFixtures;
     let dynamicFixtures: SspDashboardManagementDynamicFixtures;
@@ -30,5 +28,9 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
       sspDashboardPage.visit();
       sspDashboardPage.assertPageLocation();
-  });
+      sspDashboardPage.assertSspDashboardUserInfoPresent();
+      sspDashboardPage.assertSspDashboardUserInfoHasWelcomeText(dynamicFixtures.customer.first_name + ' ' + dynamicFixtures.customer.last_name);
+      sspDashboardPage.assertSspDashboardUserInfoHasCompanyName(dynamicFixtures.company.name);
+      sspDashboardPage.assertSspDashboardHasOverviewBlock();
+    });
 });
