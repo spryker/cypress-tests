@@ -2,6 +2,7 @@ import { container } from '@utils';
 import { OrderAmendmentFinishDynamicFixtures, OrderAmendmentStaticFixtures } from '@interfaces/yves';
 import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
+import { UpdatePriceProductScenario, UserLoginScenario } from '@scenarios/backoffice';
 
 /**
  * Order Amendment checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4545871873/Initialisation+Order+Amendment+Process}
@@ -18,6 +19,8 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const checkoutScenario = container.get(CheckoutScenario);
+    const userLoginScenario = container.get(UserLoginScenario);
+    const updatePriceProductScenario = container.get(UpdatePriceProductScenario);
 
     let staticFixtures: OrderAmendmentStaticFixtures;
     let dynamicFixtures: OrderAmendmentFinishDynamicFixtures;
@@ -73,12 +76,52 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
       cartPage.visit();
       cartPage.removeProduct({ sku: dynamicFixtures.product1.sku });
 
-      placeCustomerOrder(dynamicFixtures.customer3.email, dynamicFixtures.address4.id_customer_address);
+      placeCustomerOrder(dynamicFixtures.customer3.email, dynamicFixtures.address3new.id_customer_address);
 
       customerOverviewPage.viewLastPlacedOrder();
       customerOverviewPage.assertProductQuantity(dynamicFixtures.product2.localized_attributes[0].name, 1);
-      customerOverviewPage.assertFirstShippingAddress(dynamicFixtures.address4.address1);
+      customerOverviewPage.assertFirstShippingAddress(dynamicFixtures.address3new.address1);
     });
+
+    it('customer should be able to reorder product with old price', (): void => {
+      placeCustomerOrder(dynamicFixtures.customer4.email, dynamicFixtures.address4.id_customer_address);
+      updateProductPriceInBackoffice();
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer4.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product3.sku });
+      productPage.getProductConfigurator().should('contain', staticFixtures.newProductPrice);
+
+      customerOverviewPage.viewLastPlacedOrder();
+      orderDetailsPage.editOrder();
+      cartPage.getCartItemSummary(0).should('contain', staticFixtures.oldProductPrice);
+      checkoutScenario.execute({
+        idCustomerAddress: dynamicFixtures.address4.id_customer_address,
+        shouldTriggerOmsInCli: true,
+      });
+
+      customerOverviewPage.viewLastPlacedOrder();
+      customerOverviewPage.getOrderDetailTable().should('contain', `€${staticFixtures.oldProductPrice}`);
+    });
+
+    function updateProductPriceInBackoffice(): void {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      updatePriceProductScenario.execute({
+        abstractSku: dynamicFixtures.product3.abstract_sku,
+        newPrice: staticFixtures.newProductPrice,
+        shouldTriggerPublishAndSync: true,
+      });
+
+      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+    }
 
     function assertOrderCancellationForPrevOrder(): void {
       customerOverviewPage.visit();
