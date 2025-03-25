@@ -11,6 +11,30 @@
         },
         {
           "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "viewCompanySspAssetPermission",
+          "arguments": ["ViewCompanySspAssetPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "viewBUSspAssetPermission",
+          "arguments": ["ViewBusinessUnitSspAssetPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "createSspAssetPermission",
+          "arguments": ["CreateSspAssetPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "udateSspAssetPermission",
+          "arguments": ["UpdateSspAssetPermissionPlugin"]
+        },
+        {
+          "type": "helper",
           "name": "haveCompany",
           "key": "company",
           "arguments": [
@@ -18,6 +42,15 @@
               "isActive": true,
               "status": "approved"
             }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "companyRole",
+          "arguments": [
+            { "isDefault": true, "fkCompany": "#company.id_company" },
+            ["#viewCompanySspAssetPermission", "#createSspAssetPermission", "#udateSspAssetPermission"]
           ]
         },
         {
@@ -62,11 +95,286 @@
         },
         {
           "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser", ["#companyRole"]]
+        },
+        {
+          "type": "helper",
           "name": "haveAsset",
           "key": "asset",
           "arguments": [
             {
-              "companyBusinessUnit": "#businessUnit"
+              "companyBusinessUnit": "#businessUnit",
+              "assignments": [
+                {
+                  "companyBusinessUnit": {
+                    "idCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company1",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company2",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit1Company1",
+          "arguments": [
+            {
+              "fkCompany": "#company1.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit2Company1",
+          "arguments": [
+            {
+              "fkCompany": "#company1.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit1Company2",
+          "arguments": [
+            {
+              "fkCompany": "#company2.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer1",
+          "arguments": [
+            {
+              "locale": "#locale",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer2",
+          "arguments": [
+            {
+              "locale": "#locale",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer3",
+          "arguments": [
+            {
+              "locale": "#locale",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "arguments": ["#customer1"]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "arguments": ["#customer2"]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "arguments": ["#customer3"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser1BU1C1",
+          "arguments": [
+            {
+              "customer": "#customer1",
+              "fkCustomer": "#customer1.id_customer",
+              "fkCompany": "#company1.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit1Company1.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser2BU1C1",
+          "arguments": [
+            {
+              "customer": "#customer2",
+              "fkCustomer": "#customer2.id_customer",
+              "fkCompany": "#company1.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit1Company1.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser2BU2C1",
+          "arguments": [
+            {
+              "customer": "#customer2",
+              "fkCustomer": "#customer2.id_customer",
+              "fkCompany": "#company1.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit2Company1.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser3BU1C2",
+          "arguments": [
+            {
+              "customer": "#customer3",
+              "fkCustomer": "#customer3.id_customer",
+              "fkCompany": "#company2.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit1Company2.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "company1RoleViewCompanySspAssetPermission",
+          "arguments": [{ "isDefault": true, "fkCompany": "#company1.id_company" }, ["#viewCompanySspAssetPermission"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "company1RoleViewBUSspAssetPermission",
+          "arguments": [{ "isDefault": true, "fkCompany": "#company1.id_company" }, ["#viewBUSspAssetPermission"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "company1RoleViewBUAndCreateSspAssetPermission",
+          "arguments": [
+            { "isDefault": true, "fkCompany": "#company1.id_company" },
+            ["#viewBUSspAssetPermission", "#createSspAssetPermission"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "company2RoleViewCompanySspAssetAndCreateAndEditPermission",
+          "arguments": [
+            { "isDefault": true, "fkCompany": "#company2.id_company" },
+            ["#viewCompanySspAssetPermission", "#createSspAssetPermission", "#udateSspAssetPermission"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser1BU1C1", ["#company1RoleViewCompanySspAssetPermission"]]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser2BU1C1", ["#company1RoleViewBUSspAssetPermission"]]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser2BU2C1", ["#company1RoleViewBUAndCreateSspAssetPermission"]]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser3BU1C2", ["#company2RoleViewCompanySspAssetAndCreateAndEditPermission"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveAsset",
+          "key": "assetBU1C1BU2C1",
+          "arguments": [
+            {
+              "companyBusinessUnit": "#businessUnit1Company1",
+              "assignments": [
+                {
+                  "companyBusinessUnit": {
+                    "idCompanyBusinessUnit": "#businessUnit1Company1.id_company_business_unit"
+                  }
+                },
+                {
+                  "companyBusinessUnit": {
+                    "idCompanyBusinessUnit": "#businessUnit1Company2.id_company_business_unit"
+                  }
+                },
+                {
+                  "companyBusinessUnit": {
+                    "idCompanyBusinessUnit": "#businessUnit2Company1.id_company_business_unit"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveAsset",
+          "key": "assetBU1C1",
+          "arguments": [
+            {
+              "companyBusinessUnit": "#businessUnit1Company1",
+              "assignments": [
+                {
+                  "companyBusinessUnit": {
+                    "idCompanyBusinessUnit": "#businessUnit1Company1.id_company_business_unit"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveAsset",
+          "key": "assetBU1C2",
+          "arguments": [
+            {
+              "companyBusinessUnit": "#businessUnit1Company2",
+              "assignments": [
+                {
+                  "companyBusinessUnit": {
+                    "idCompanyBusinessUnit": "#businessUnit1Company2.id_company_business_unit"
+                  }
+                }
+              ]
             }
           ]
         }
