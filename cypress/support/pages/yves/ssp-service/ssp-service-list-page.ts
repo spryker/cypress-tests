@@ -62,6 +62,29 @@ export class SspServiceListPage extends YvesPage {
       this.getTableHeaders().contains(header).should('exist');
     });
   }
+  
+  // Search methods
+  setSearchType(type: string): void {
+    this.repository.getSearchTypeSelect().select(type);
+  }
+  
+  setSearchText(text: string): void {
+    this.repository.getSearchTextInput().clear().type(text);
+  }
+  
+  getBusinessUnitSelect(): Chainable<JQuery<HTMLElement>> {
+    return this.repository.getBusinessUnitSelect();
+  }
+  
+  clickSearchButton(): void {
+    this.repository.getSearchButton().click();
+  }
+  
+  searchFor(searchType: string, searchText: string): void {
+    this.setSearchType(searchType);
+    this.setSearchText(searchText);
+    this.clickSearchButton();
+  }
 
   sortByColumn(columnName: string): void {
     this.clickSortColumn(columnName);

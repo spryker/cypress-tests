@@ -33,9 +33,30 @@ export class SspServiceRepository {
   getResetButton(): Chainable<JQueryElement> {
     return cy.get('[data-qa=reset-button]');
   }
+  
+  getPagination(): Chainable<JQueryElement> {
+    return cy.get('.pagination');
+  }
 
-  getSortColumnByName(columnName: string): Chainable<JQueryElement> {
+  getSortColumnByName(columnName: string): Chainable<any> {
     return cy.contains('th a', columnName);
+  }
+  
+  // Search form methods
+  getSearchTypeSelect(): Chainable<JQueryElement> {
+    return cy.get('select[name*="searchType"]');
+  }
+  
+  getSearchTextInput(): Chainable<JQueryElement> {
+    return cy.get('input[name*="searchText"]');
+  }
+
+  getBusinessUnitSelect(): Chainable<JQueryElement> {
+    return cy.get('select[name*="companyBusinessUnit"]');
+  }
+  
+  getSearchButton(): Chainable<any> {
+    return cy.contains('button', 'Search');
   }
 
   getFirstRowReference(): string {
@@ -53,7 +74,7 @@ export class SspServiceRepository {
     return reference;
   }
 
-  getFirstRowViewDetailsButton(): Chainable<JQueryElement> {
+  getFirstRowViewDetailsButton(): Chainable<any> {
     return this.getSspServiceTableRows().first().find('a').contains('View');
   }
 }
