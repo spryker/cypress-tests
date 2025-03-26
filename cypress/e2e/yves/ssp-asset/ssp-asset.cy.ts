@@ -171,7 +171,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
       assetListPage.visit();
 
-      assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset Name', 'Serial Number', 'Business Unit']);
+      assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset Name', 'Serial Number', 'Business Unit Owner']);
 
       assetListPage.assertTableData(
           [dynamicFixtures.assetBU1C1BU2C1BU1C2, dynamicFixtures.assetBU2C1, dynamicFixtures.assetBU1C1]

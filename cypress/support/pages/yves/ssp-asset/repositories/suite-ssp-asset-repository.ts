@@ -81,7 +81,7 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
   }
 
   getCreateClaimButton(): Cypress.Chainable {
-    return cy.contains('Create claim');
+    return cy.contains('Create inquiry');
   }
 
   getFirstRowViewButton(): Cypress.Chainable {
