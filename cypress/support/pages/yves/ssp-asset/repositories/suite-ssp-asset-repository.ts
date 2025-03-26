@@ -3,6 +3,11 @@ import { injectable } from 'inversify';
 
 @injectable()
 export class SuiteSspAssetRepository implements SspAssetRepository {
+    getSspAssetCustomerMenuItem(): Cypress.Chainable
+    {
+        return cy.get('[data-qa="ssp-asset-customer-menu-item"]');
+    }
+
   getCreateAssetButton(): Cypress.Chainable {
     return cy.get('[data-qa="create-ssp-asset"]');
   }
@@ -14,6 +19,22 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
   getNameInput(): Cypress.Chainable {
     return cy.get('#assetForm_name');
   }
+
+    getSerialNumberInput(): Cypress.Chainable {
+    return cy.get('#assetForm_serialNumber');
+  }
+
+    getNoteInput(): Cypress.Chainable {
+    return cy.get('#assetForm_note');
+  }
+
+    getImageUploadInput():Cypress.Chainable {
+    return cy.get('#assetForm_asset_image_file');
+}
+
+    getSspAssetImageDeleteCheckbox(): Cypress.Chainable {
+    return cy.get('#assetForm_asset_image_delete');
+    }
 
   getSubmitButton(): Cypress.Chainable {
     return cy.get('[data-qa="submit-button"]');
@@ -31,8 +52,8 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
     return cy.get('[data-qa="component asset-details-title"] .title--h3');
   }
 
-  getAssetDetailsReference(reference: string): string {
-    return reference;
+    getUnassignmentErrorMessage(): string {
+    return 'You cannot unassign your own business unit from the asset';
   }
 
   getAssetDetailsName(name: string): string {
@@ -49,6 +70,14 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
 
   getEditAssetButton(): Cypress.Chainable {
     return cy.get('[data-qa="edit-ssp-asset"]');
+  }
+
+    getUnassignButton(): Cypress.Chainable {
+    return cy.get('[data-qa="unassign-ssp-asset"]');
+  }
+
+    getUnassignLink(): Cypress.Chainable {
+    return cy.get('[data-qa="unassign-ssp-asset-link"]');
   }
 
   getCreateClaimButton(): Cypress.Chainable {
@@ -86,7 +115,31 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
     return cy.get('[data-qa="cell-serial_number"]');
   }
 
+    getAccessTableFilterSelect(): Cypress.Chainable {
+    return cy.get('[data-qa="ssp-asset-filter-scope"]');
+  }
+
   getSspAssetAssignments(): Cypress.Chainable {
     return cy.get('[data-qa="ssp-asset-assignments"]');
   }
+
+  getSspAssetServicesButton(): Cypress.Chainable {
+    return cy.get('[data-qa="ssp-asset-services"]');
+  }
+
+    getSspAssetInquiriresTable(): Cypress.Chainable {
+    return cy.get('[data-qa*="ssp-asset-table-ssp-inquiries"]');
+  }
+    getSspAssetImageSrc(): Cypress.Chainable {
+    return cy.get('[data-qa*="ssp-asset-image"]').invoke('attr', 'image-src');
+    }
+
+    getAccessTableFilterByBusinessUnitValue(): string
+    {
+        return 'filterByBusinessUnit';
+    }
+
+    getSspAssetFiltersSubmitButton(): Cypress.Chainable {
+        return cy.get('[data-qa="ssp-asset-submit-filters"]');
+    }
 }

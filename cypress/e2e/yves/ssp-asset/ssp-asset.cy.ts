@@ -36,9 +36,40 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
       assetCreatePage.visit();
 
-      assetCreatePage.createAsset({ name: staticFixtures.asset.name });
+        assetListPage.getSspAssetCustomerMenuItem().should('exist');
+
+      assetCreatePage.createAsset({
+          name: staticFixtures.asset.name,
+          note: staticFixtures.asset.note,
+          serialNumber: staticFixtures.asset.serial_number,
+          image: staticFixtures.asset.image
+      });
 
       cy.contains(assetCreatePage.getAssetCreatedMessage());
+
+        assetDetailPage.assertPageLocation();
+
+        assetDetailPage.assertAssetDetails({
+            name: staticFixtures.asset.name,
+            note: staticFixtures.asset.note,
+            serialNumber: staticFixtures.asset.serial_number,
+            image: staticFixtures.asset.image,
+            businessUnitOwner: {name: dynamicFixtures.businessUnit.name},
+            businessUnitAssignment: [{name: dynamicFixtures.businessUnit.name}],
+        });
+
+        assetDetailPage.getSspAssetServicesButton().should('exist');
+        assetDetailPage.getUnassignButton().should('exist');
+        assetDetailPage.getEditButton().should('exist');
+        assetDetailPage.getSspAssetServicesButton().should('exist');
+        assetDetailPage.assertSspAssetAsignments([{name: dynamicFixtures.businessUnit.name}]);
+
+        assetListPage.visit();
+
+        assetListPage.assertTableData([
+            {name: staticFixtures.asset.name},
+            {name: dynamicFixtures.asset.name},
+        ]);
     });
 
     it('should update an asset successfully', () => {
@@ -55,13 +86,27 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       });
 
       assetEditPage.editAsset({
-        name: 'new asset name',
+        name: staticFixtures.assetUpdateData.name,
+        serialNumber: staticFixtures.assetUpdateData.serial_number,
+        note: staticFixtures.assetUpdateData.note,
+        image: staticFixtures.assetUpdateData.image,
       });
 
       cy.contains(assetEditPage.getAssetEditedMessage());
+
+        assetDetailPage.visit({
+            qs: {
+                reference: dynamicFixtures.asset.reference,
+            },
+        });
+
+        assetDetailPage.assertAssetDetails({
+            name: dynamicFixtures.asset.name,
+            serialNumber: dynamicFixtures.asset.serial_number,
+        });
     });
 
-    it('should view asset details correctly', () => {
+    it('should view asset relations correctly', () => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
@@ -76,17 +121,13 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
       assetDetailPage.assertPageLocation();
 
-      assetDetailPage.assertAssetDetails({
-        reference: dynamicFixtures.asset.reference,
-        name: dynamicFixtures.asset.name,
-        note: dynamicFixtures.asset.note,
-      });
-
-      // cy.contains('Create claim').should('exist');
-      cy.contains('Search services').should('exist');
+      assetDetailPage.assertSspInquiries([
+          {reference: dynamicFixtures.sspInquiry1.reference},
+          {reference: dynamicFixtures.sspInquiry3.reference},
+      ]);
     });
 
-    it('should navigate to edit page from details page', () => {
+    it('should navigate to ssp asset pages from different sources', () => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
@@ -103,51 +144,22 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
       cy.location('pathname').should('include', '/customer/asset/update');
       cy.location('search').should('include', `reference=${dynamicFixtures.asset.reference}`);
-    });
 
-    it('should navigate to asset details from asset list', () => {
-      customerLoginScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-        withoutSession: true,
-      });
+        assetListPage.visit();
 
-      assetListPage.visit();
+        assetListPage.getFirstRowReference().then((assetReference) => {
+            assetListPage.openLatestAssetDetailsPage();
 
-      assetListPage.getFirstRowReference().then((assetReference) => {
-        assetListPage.openLatestAssetDetailsPage();
+            assetDetailPage.assertPageLocation();
 
-        assetDetailPage.assertPageLocation();
+            cy.contains(assetReference).should('exist');
+        });
 
-        cy.contains(assetDetailPage.getAssetDetailsReference(assetReference)).should('exist');
-      });
-    });
+        assetListPage.visit();
 
-    it('should navigate to asset creation from asset list', () => {
-      customerLoginScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-        withoutSession: true,
-      });
+        assetListPage.getCreateAssetButton().click();
 
-      assetListPage.visit();
-
-      assetListPage.getCreateAssetButton().click();
-
-      assetCreatePage.assertPageLocation();
-    });
-
-    it('should display asset table with correct data', () => {
-      customerLoginScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-        withoutSession: true,
-      });
-      assetListPage.visit();
-
-      assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset Name', 'Serial Number', 'Business Unit']);
-
-      assetListPage.assertTableHasData();
+        assetCreatePage.assertPageLocation();
     });
 
     it('should be able to view company assets', () => {
@@ -161,17 +173,36 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
       assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset Name', 'Serial Number', 'Business Unit']);
 
-      assetListPage.getRowCount().should('eq', 2);
+      assetListPage.assertTableData(
+          [dynamicFixtures.assetBU1C1BU2C1BU1C2, dynamicFixtures.assetBU2C1, dynamicFixtures.assetBU1C1]
+      );
 
       assetDetailPage.visit({
         qs: {
-          reference: dynamicFixtures.assetBU1C1BU2C1.reference,
+          reference: dynamicFixtures.assetBU1C1BU2C1BU1C2.reference,
         },
       });
 
-      assetDetailPage.getSspAssetAssignments().its('length').should('eq', 2);
-      assetDetailPage.getSspAssetAssignments().eq(0).should('contain', dynamicFixtures.businessUnit1Company1.name);
-      assetDetailPage.getSspAssetAssignments().eq(1).should('contain', dynamicFixtures.businessUnit2Company1.name);
+      assetDetailPage.assertSspAssetAsignments([
+          {name: dynamicFixtures.businessUnit1Company1.name},
+          {name: dynamicFixtures.businessUnit2Company1.name},
+      ]);
+
+        assetListPage.visit();
+
+      assetListPage.getAccessTableFilterSelect().select(assetListPage.getAccessTableFilterByBusinessUnitValue(), { force: true });
+      assetListPage.getSspAssetFiltersSubmitButton().click();
+
+        assetListPage.assertTableData(
+            [dynamicFixtures.assetBU1C1BU2C1BU1C2, dynamicFixtures.assetBU1C1]
+        );
+
+        assetListPage.getAccessTableFilterSelect().select(assetListPage.getAccessTableFilterByCompanyValue(), { force: true });
+        assetListPage.getSspAssetFiltersSubmitButton().click();
+
+        assetListPage.assertTableData(
+            [dynamicFixtures.assetBU1C1BU2C1BU1C2, dynamicFixtures.assetBU2C1, dynamicFixtures.assetBU1C1]
+        );
     });
 
     it('should be able to view business unit assets', () => {
@@ -187,41 +218,29 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
       assetListPage.visit();
 
-      assetListPage.getRowCount().should('eq', 2);
+        assetListPage.assertTableData(
+            [dynamicFixtures.assetBU1C1BU2C1BU1C2, dynamicFixtures.assetBU1C1]
+        );
 
-      companyUserSelectPage.visit();
+        companyUserSelectPage.visit();
       companyUserSelectPage.selectBusinessUnit({
         idCompanyUser: dynamicFixtures.companyUser2BU2C1.id_company_user,
       });
 
       assetListPage.visit();
 
-      assetListPage.getRowCount().should('eq', 1);
+        assetListPage.assertTableData(
+            [dynamicFixtures.assetBU2C1, dynamicFixtures.assetBU1C1BU2C1BU1C2]
+        );
 
-      assetDetailPage.visit({
+
+        assetDetailPage.visit({
         qs: {
-          reference: dynamicFixtures.assetBU1C1BU2C1.reference,
+          reference: dynamicFixtures.assetBU1C1BU2C1BU1C2.reference,
         },
       });
 
-      assetDetailPage.getSspAssetAssignments().its('length').should('eq', 1);
-      assetDetailPage.getSspAssetAssignments().eq(0).should('contain', dynamicFixtures.businessUnit2Company1.name);
-    });
-
-    it('should be able to create asset', () => {
-      customerLoginScenario.execute({
-        email: dynamicFixtures.companyUser2BU2C1.customer.email,
-        password: staticFixtures.defaultPassword,
-        withoutSession: true,
-      });
-
-      companyUserSelectPage.selectBusinessUnit({
-        idCompanyUser: dynamicFixtures.companyUser2BU2C1.id_company_user,
-      });
-
-      assetListPage.visit();
-
-      assetListPage.getCreateAssetButton().should('exist');
+      assetDetailPage.assertSspAssetAsignments([{name: dynamicFixtures.businessUnit2Company1.name}]);
     });
 
     it('should not be able to create asset', () => {
@@ -240,23 +259,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       assetListPage.getCreateAssetButton().should('not.exist');
     });
 
-    it('should be able to udate asset', () => {
-      customerLoginScenario.execute({
-        email: dynamicFixtures.companyUser3BU1C2.customer.email,
-        password: staticFixtures.defaultPassword,
-        withoutSession: true,
-      });
-
-      assetDetailPage.visit({
-        qs: {
-          reference: dynamicFixtures.assetBU1C2.reference,
-        },
-      });
-
-      assetDetailPage.getEditButton().should('exist');
-    });
-
-    it('should not be able to udate asset', () => {
+    it('should not be able to update asset', () => {
       customerLoginScenario.execute({
         email: dynamicFixtures.companyUser2BU2C1.customer.email,
         password: staticFixtures.defaultPassword,
@@ -269,11 +272,48 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
       assetDetailPage.visit({
         qs: {
-          reference: dynamicFixtures.assetBU1C1BU2C1.reference,
+          reference: dynamicFixtures.assetBU1C1BU2C1BU1C2.reference,
         },
       });
 
       assetDetailPage.getEditButton().should('not.exist');
     });
+
+      it('should be able to unassign asset', () => {
+          customerLoginScenario.execute({
+              email: dynamicFixtures.companyUser2BU2C1.customer.email,
+              password: staticFixtures.defaultPassword,
+              withoutSession: true,
+          });
+
+          companyUserSelectPage.selectBusinessUnit({
+              idCompanyUser: dynamicFixtures.companyUser2BU1C1.id_company_user,
+          });
+
+          assetListPage.visit();
+
+          assetListPage.assertTableData([dynamicFixtures.assetBU1C1, dynamicFixtures.assetBU1C1BU2C1BU1C2]);
+
+          assetDetailPage.visit({
+              qs: {
+                  reference: dynamicFixtures.assetBU1C1.reference,
+              },
+          });
+
+          assetDetailPage.getUnassignLink().click();
+          assetDetailPage.getUnassignButton().click();
+          cy.contains(assetDetailPage.getUnassignmentErrorMessage()).should('exist');
+
+          assetDetailPage.visit({
+              qs: {
+                  reference: dynamicFixtures.assetBU1C1BU2C1BU1C2.reference,
+              },
+          });
+
+          assetDetailPage.getUnassignLink().click();
+          assetDetailPage.getUnassignButton().click();
+
+          assetListPage.assertTableData([dynamicFixtures.assetBU1C1]);
+      });
   }
 );

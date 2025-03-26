@@ -30,36 +30,50 @@ export class SspAssetListPage extends YvesPage {
     });
   }
 
-  assertTableHasData(): void {
-    this.repository.getAssetTableRows().should('have.length.at.least', 1);
+  getRows(): Cypress.Chainable {
+    return this.repository.getAssetTableRows();
   }
 
-  assertAssetNameInTable(assetName: string): Cypress.Chainable<boolean> {
-    return this.repository.getAssetNameCells().then(($cells) => {
-      for (let i = 0; i < $cells.length; i++) {
-        if ($cells.eq(i).text().trim().includes(assetName)) {
-          return true;
-        }
-      }
-      return false;
-    });
+  assertTableData(sspAssets: SspAsset[]): void {
+      this.getRows().its('length').should('eq', sspAssets.length);
+
+      sspAssets.forEach((sspAsset) => {
+          if (sspAsset.reference) {
+              this.getRows().contains(sspAsset.reference).should('exist');
+          }
+          if (sspAsset.name) {
+              this.getRows().contains(sspAsset.name).should('exist');
+          }
+      });
   }
 
-  assertTableRowContains(rowIndex: number, expectedTexts: Record<string, string>): void {
-    if (expectedTexts.reference) {
-      this.repository.getAssetReferenceCells().eq(rowIndex).should('contain.text', expectedTexts.reference);
+    getSspAssetCustomerMenuItem(): Cypress.Chainable
+    {
+        return this.repository.getSspAssetCustomerMenuItem();
     }
 
-    if (expectedTexts.name) {
-      this.repository.getAssetNameCells().eq(rowIndex).should('contain.text', expectedTexts.name);
+    getAccessTableFilterSelect(): Cypress.Chainable
+    {
+        return this.repository.getAccessTableFilterSelect();
     }
 
-    if (expectedTexts.serialNumber) {
-      this.repository.getAssetSerialNumberCells().eq(rowIndex).should('contain.text', expectedTexts.serialNumber);
+    getSspAssetFiltersSubmitButton(): Cypress.Chainable
+    {
+        return this.repository.getSspAssetFiltersSubmitButton();
     }
-  }
 
-  getRowCount(): Cypress.Chainable<number> {
-    return this.repository.getAssetTableRows().its('length');
-  }
+    getAccessTableFilterByBusinessUnitValue(): string
+    {
+        return 'filterByBusinessUnit';
+    }
+
+    getAccessTableFilterByCompanyValue(): string
+    {
+        return 'filterByCompany';
+    }
+}
+
+interface SspAsset {
+    reference?: string;
+    name?: string;
 }

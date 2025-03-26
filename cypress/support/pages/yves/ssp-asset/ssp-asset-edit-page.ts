@@ -14,6 +14,18 @@ export class SspAssetEditPage extends YvesPage {
   public editAsset(params: AssetEditParams): void {
     this.repository.getAssetForm().within(() => {
       this.repository.getNameInput().type(params.name);
+      if (params.note) {
+          this.repository.getNoteInput().type(params.note);
+      }
+
+      if (params.serialNumber) {
+          this.repository.getNoteInput().type(params.serialNumber);
+      }
+
+      if (!params.image) {
+        this.repository.getSspAssetImageDeleteCheckbox().check({ force: true });
+      }
+
       this.repository.getSubmitButton().click();
     });
   }
@@ -25,4 +37,7 @@ export class SspAssetEditPage extends YvesPage {
 
 export interface AssetEditParams {
   name: string;
+  note?: string;
+  serialNumber?: string;
+  image?: string;
 }

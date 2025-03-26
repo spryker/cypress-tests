@@ -12,7 +12,7 @@ export class SspAssetDetailPage extends YvesPage {
 
   assertAssetDetails(details: SspAssetDetails): void {
     if (details.reference) {
-      cy.contains(this.repository.getAssetDetailsReference(details.reference)).should('exist');
+      cy.contains(details.reference).should('exist');
     }
 
     if (details.name) {
@@ -26,28 +26,78 @@ export class SspAssetDetailPage extends YvesPage {
     if (details.note) {
       cy.contains(this.repository.getAssetDetailsNote(details.note)).should('exist');
     }
+
+    if (details.image) {
+        this.repository.getSspAssetImageSrc().should('include', ('customer/asset/view-image?ssp-asset-reference='));
+    } else {
+        this.repository.getSspAssetImageSrc().should('not.include', ('customer/asset/view-image?ssp-asset-reference='));
+    }
   }
+
+  assertSspInquiries(sspInquiries: SspInquiry[]): void {
+      this.getSspAssetInquiriresTable().should('exist');
+      this.getSspAssetInquiriresTable().get('tbody tr').its('length').should('eq', sspInquiries.length);
+
+      sspInquiries.forEach((sspInquiry) => {
+          this.getSspAssetInquiriresTable().should('contain', sspInquiry.reference);
+      });
+  }
+
+    assertSspAssetAsignments(assignedBusinessUnits: BusinessUnit[]): void {
+        this.getSspAssetAssignments().its('length').should('eq', assignedBusinessUnits.length);
+
+        assignedBusinessUnits.forEach((assignedBusinessUnit) => {
+            this.getSspAssetAssignments().should('contain', assignedBusinessUnit.name);
+        });
+    }
 
   getEditButton(): Cypress.Chainable {
     return this.repository.getEditAssetButton();
+  }
+
+  getUnassignButton(): Cypress.Chainable {
+    return this.repository.getUnassignButton();
+  }
+
+    getUnassignLink(): Cypress.Chainable {
+    return this.repository.getUnassignLink();
   }
 
   clickCreateClaimButton(): void {
     this.repository.getCreateClaimButton().click();
   }
 
-  getAssetDetailsReference(reference: string): string {
-    return this.repository.getAssetDetailsReference(reference);
+    getUnassignmentErrorMessage(): string {
+    return this.repository.getUnassignmentErrorMessage();
   }
 
   getSspAssetAssignments(): Cypress.Chainable {
     return this.repository.getSspAssetAssignments();
   }
+
+  getSspAssetServicesButton(): Cypress.Chainable {
+    return this.repository.getSspAssetServicesButton();
+  }
+
+  getSspAssetInquiriresTable(): Cypress.Chainable {
+      return this.repository.getSspAssetInquiriresTable();
+  }
 }
 
-export interface SspAssetDetails {
+interface SspAssetDetails {
   reference?: string;
   name: string;
   serialNumber?: string;
   note?: string;
+  image?: string;
+  businessUnitOwner?: BusinessUnit;
+  businessUnitAssignment?: BusinessUnit[];
+}
+
+interface SspInquiry {
+    reference: string;
+}
+
+interface BusinessUnit {
+    name: string;
 }

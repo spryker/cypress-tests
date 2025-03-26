@@ -14,6 +14,16 @@ export class SspAssetCreatePage extends YvesPage {
   public createAsset(params: AssetCreateParams): void {
     this.repository.getAssetForm().within(() => {
       this.repository.getNameInput().type(params.name);
+      if (params.serialNumber) {
+          this.repository.getSerialNumberInput().type(params.serialNumber);
+      }
+        if (params.note) {
+            this.repository.getNoteInput().type(params.note);
+
+        }
+        if (params.image) {
+            this.repository.getImageUploadInput().attachFile(params.image);
+        }
       this.repository.getSubmitButton().click();
     });
   }
