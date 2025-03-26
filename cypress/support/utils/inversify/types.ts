@@ -5,6 +5,7 @@ export const enum REPOSITORIES {
   CartRepository = 'CartRepository',
   CommentCartRepository = 'CommentCartRepository',
   MultiCartRepository = 'MultiCartRepository',
+  MultiFactorAuthRepository = 'MultiFactorAuthRepository',
   CheckoutAddressRepository = 'CheckoutAddressRepository',
   CheckoutCustomerRepository = 'CheckoutCustomerRepository',
   CheckoutShipmentRepository = 'CheckoutShipmentRepository',

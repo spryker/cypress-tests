@@ -170,3 +170,29 @@ Cypress.Commands.add('confirmCustomerByEmail', (email) => {
     },
   });
 });
+
+Cypress.Commands.add('getMfaCodeByEmail', (email) => {
+  const operation = {
+    type: 'helper',
+    name: 'getMfaCodeByEmail',
+    arguments: { email }
+  };
+
+  return cy.request({
+    method: 'POST',
+    url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
+    headers: {
+      'Content-Type': 'application/vnd.api+json'
+    },
+    body: {
+      data: {
+        type: 'dynamic-fixtures',
+        attributes: {
+          operations: [operation]
+        }
+      }
+    }
+  }).then((response) => {
+    return response.body.data.attributes.data.code;
+  });
+});

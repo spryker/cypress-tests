@@ -29,3 +29,4 @@ export * from './ssp-inquiry/ssp-inquiry-order-page';
 export * from './company/company-role/index/company-role-index-page';
 export * from './company/company-role/create/company-role-create-page';
 export * from './ssp-file-management/list/ssp-file-management-list-page';
+export * from './multi-factor-auth/multi-factor-auth-page';

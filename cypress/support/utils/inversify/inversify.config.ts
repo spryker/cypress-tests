@@ -85,6 +85,11 @@ import { B2cMerchantRelationRequestCreateRepository } from '../../pages/yves/com
 import { B2cMerchantRelationRequestDetailsRepository } from '../../pages/yves/company/merchant-relation-request/details/repositories/b2c-merchant-relation-request-details-repository';
 import { B2cMerchantRelationRequestIndexRepository } from '../../pages/yves/company/merchant-relation-request/index/repositories/b2c-merchant-relation-request-index-repository';
 import { B2cMerchantRepository } from '../../pages/yves/merchant/repositories/b2c-merchant-repository';
+import { SuiteMultiFactorAuthRepository } from '../../pages/yves/multi-factor-auth/repositories/suite-multi-factor-auth-repository';
+import { B2bMultiFactorAuthRepository } from '../../pages/yves/multi-factor-auth/repositories/b2b-multi-factor-auth-repository';
+import { B2cMultiFactorAuthRepository } from '../../pages/yves/multi-factor-auth/repositories/b2c-multi-factor-auth-repository';
+import { B2bMpMultiFactorAuthRepository } from '../../pages/yves/multi-factor-auth/repositories/b2b-mp-multi-factor-auth-repository';
+import { B2cMpMultiFactorAuthRepository } from '../../pages/yves/multi-factor-auth/repositories/b2c-mp-multi-factor-auth-repository';
 import { B2bCheckoutCustomerRepository } from '../../pages/yves/checkout/customer/repositories/b2b-checkout-customer-repository';
 import { B2bCheckoutAddressRepository } from '../../pages/yves/checkout/address/repositories/b2b-checkout-address-repository';
 import { B2bCheckoutShipmentRepository } from '../../pages/yves/checkout/shipment/repositories/b2b-checkout-shipment-repository';
@@ -140,6 +145,7 @@ type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 const suiteMappings: BindingsMap = {
   [REPOSITORIES.YvesRepository]: SuiteYvesRepository,
   [REPOSITORIES.HomeRepository]: SuiteHomeRepository,
+  [REPOSITORIES.MultiFactorAuthRepository]: SuiteMultiFactorAuthRepository,
   [REPOSITORIES.LoginRepository]: SuiteLoginRepository,
   [REPOSITORIES.CartRepository]: SuiteCartRepository,
   [REPOSITORIES.MultiCartRepository]: SuiteMultiCartRepository,
@@ -170,6 +176,7 @@ const suiteMappings: BindingsMap = {
 const b2cMappings: BindingsMap = {
   [REPOSITORIES.YvesRepository]: B2cYvesRepository,
   [REPOSITORIES.HomeRepository]: B2cHomeRepository,
+  [REPOSITORIES.MultiFactorAuthRepository]: B2cMultiFactorAuthRepository,
   [REPOSITORIES.LoginRepository]: B2cLoginRepository,
   [REPOSITORIES.CartRepository]: B2cCartRepository,
   [REPOSITORIES.MultiCartRepository]: B2cMultiCartRepository,
@@ -199,6 +206,7 @@ const b2cMappings: BindingsMap = {
 const b2bMappings: BindingsMap = {
   [REPOSITORIES.YvesRepository]: B2bYvesRepository,
   [REPOSITORIES.HomeRepository]: B2bHomeRepository,
+  [REPOSITORIES.MultiFactorAuthRepository]: B2bMultiFactorAuthRepository,
   [REPOSITORIES.LoginRepository]: B2bLoginRepository,
   [REPOSITORIES.CartRepository]: B2bCartRepository,
   [REPOSITORIES.MultiCartRepository]: B2bMultiCartRepository,
@@ -228,6 +236,7 @@ const b2bMappings: BindingsMap = {
 const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.YvesRepository]: B2cMpYvesRepository,
   [REPOSITORIES.HomeRepository]: B2cMpHomeRepository,
+  [REPOSITORIES.MultiFactorAuthRepository]: B2cMpMultiFactorAuthRepository,
   [REPOSITORIES.LoginRepository]: B2cMpLoginRepository,
   [REPOSITORIES.CartRepository]: B2cMpCartRepository,
   [REPOSITORIES.MultiCartRepository]: B2cMpMultiCartRepository,
@@ -257,6 +266,7 @@ const b2cMpMappings: BindingsMap = {
 const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.YvesRepository]: B2bMpYvesRepository,
   [REPOSITORIES.HomeRepository]: B2bMpHomeRepository,
+  [REPOSITORIES.MultiFactorAuthRepository]: B2bMpMultiFactorAuthRepository,
   [REPOSITORIES.LoginRepository]: B2bMpLoginRepository,
   [REPOSITORIES.CartRepository]: B2bMpCartRepository,
   [REPOSITORIES.MultiCartRepository]: B2bMpMultiCartRepository,

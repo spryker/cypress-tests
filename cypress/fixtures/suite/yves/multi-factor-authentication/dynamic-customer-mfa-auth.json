@@ -20,19 +20,6 @@
           "name": "confirmCustomer",
           "key": "confirmedCustomer",
           "arguments": ["#customer"]
-        },
-        {
-          "type": "helper",
-          "name": "enableMfaForCustomer",
-          "key": "mfaCustomer",
-          "arguments": [
-            "#confirmedCustomer",
-            {
-              "verificationCode": "123456",
-              "type": "email",
-              "contact": "#customer.email"
-            }
-          ]
         }
       ]
     }
