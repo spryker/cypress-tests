@@ -15,11 +15,11 @@ export class SspAssetEditPage extends YvesPage {
     this.repository.getAssetForm().within(() => {
       this.repository.getNameInput().type(params.name);
       if (params.note) {
-          this.repository.getNoteInput().type(params.note);
+        this.repository.getNoteInput().type(params.note);
       }
 
       if (params.serialNumber) {
-          this.repository.getNoteInput().type(params.serialNumber);
+        this.repository.getNoteInput().type(params.serialNumber);
       }
 
       if (!params.image) {

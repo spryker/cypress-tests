@@ -63,11 +63,11 @@
           "arguments": [
             { "isDefault": true, "fkCompany": "#company.id_company" },
             [
-                "#viewCompanySspAssetPermission",
-                "#createSspAssetPermission",
-                "#udateSspAssetPermission",
-                "#unassignSspAssetPermission",
-                "#viewCompanySspInquiryPermission"
+              "#viewCompanySspAssetPermission",
+              "#createSspAssetPermission",
+              "#udateSspAssetPermission",
+              "#unassignSspAssetPermission",
+              "#viewCompanySspInquiryPermission"
             ]
           ]
         },
@@ -116,37 +116,31 @@
           "name": "assignCompanyRoles",
           "arguments": ["#companyUser", ["#companyRole"]]
         },
-          {
-              "type": "helper",
-              "name": "haveStore",
-              "key": "store",
-              "arguments": [{ "name": "DE" }]
-          },
-          {
-              "type": "helper",
-              "name": "haveSspInquiry",
-              "key": "sspInquiry1",
-              "arguments": [
-                  {"store": "#store", "type": "ssp_asset", "companyUser": "#companyUser", "status": "pending" }
-              ]
-          },
-          {
-              "type": "helper",
-              "name": "haveSspInquiry",
-              "key": "sspInquiry2",
-              "arguments": [
-                  {"store": "#store", "type": "ssp_asset", "companyUser": "#companyUser", "status": "pending" }
-              ]
-          },
+        {
+          "type": "helper",
+          "name": "haveStore",
+          "key": "store",
+          "arguments": [{ "name": "DE" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveSspInquiry",
+          "key": "sspInquiry1",
+          "arguments": [{ "store": "#store", "type": "ssp_asset", "companyUser": "#companyUser", "status": "pending" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveSspInquiry",
+          "key": "sspInquiry2",
+          "arguments": [{ "store": "#store", "type": "ssp_asset", "companyUser": "#companyUser", "status": "pending" }]
+        },
 
-          {
-              "type": "helper",
-              "name": "haveSspInquiry",
-              "key": "sspInquiry3",
-              "arguments": [
-                  {"store": "#store", "type": "ssp_asset", "companyUser": "#companyUser", "status": "pending" }
-              ]
-          },
+        {
+          "type": "helper",
+          "name": "haveSspInquiry",
+          "key": "sspInquiry3",
+          "arguments": [{ "store": "#store", "type": "ssp_asset", "companyUser": "#companyUser", "status": "pending" }]
+        },
         {
           "type": "helper",
           "name": "haveAsset",
@@ -154,8 +148,8 @@
           "arguments": [
             {
               "companyBusinessUnit": "#businessUnit",
-                "generateImage": true,
-                "sspInquiries": ["#sspInquiry1", "#sspInquiry3"],
+              "generateImage": true,
+              "sspInquiries": ["#sspInquiry1", "#sspInquiry3"],
               "assignments": [
                 {
                   "companyBusinessUnit": {
@@ -328,7 +322,10 @@
           "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "key": "company1RoleViewBUAndUnassignSspAssetPermission",
-          "arguments": [{ "isDefault": true, "fkCompany": "#company1.id_company" }, ["#viewBUSspAssetPermission", "#unassignSspAssetPermission"]]
+          "arguments": [
+            { "isDefault": true, "fkCompany": "#company1.id_company" },
+            ["#viewBUSspAssetPermission", "#unassignSspAssetPermission"]
+          ]
         },
         {
           "type": "helper",
@@ -395,23 +392,23 @@
             }
           ]
         },
-          {
-              "type": "helper",
-              "name": "haveAsset",
-              "key": "assetBU2C1",
-              "arguments": [
-                  {
-                      "companyBusinessUnit": "#businessUnit1Company2",
-                      "assignments": [
-                          {
-                              "companyBusinessUnit": {
-                                  "idCompanyBusinessUnit": "#businessUnit2Company1.id_company_business_unit"
-                              }
-                          }
-                      ]
+        {
+          "type": "helper",
+          "name": "haveAsset",
+          "key": "assetBU2C1",
+          "arguments": [
+            {
+              "companyBusinessUnit": "#businessUnit1Company2",
+              "assignments": [
+                {
+                  "companyBusinessUnit": {
+                    "idCompanyBusinessUnit": "#businessUnit2Company1.id_company_business_unit"
                   }
+                }
               ]
-          },
+            }
+          ]
+        },
         {
           "type": "helper",
           "name": "haveAsset",

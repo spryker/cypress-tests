@@ -28,28 +28,28 @@ export class SspAssetDetailPage extends YvesPage {
     }
 
     if (details.image) {
-        this.repository.getSspAssetImageSrc().should('include', ('customer/asset/view-image?ssp-asset-reference='));
+      this.repository.getSspAssetImageSrc().should('include', 'customer/asset/view-image?ssp-asset-reference=');
     } else {
-        this.repository.getSspAssetImageSrc().should('not.include', ('customer/asset/view-image?ssp-asset-reference='));
+      this.repository.getSspAssetImageSrc().should('not.include', 'customer/asset/view-image?ssp-asset-reference=');
     }
   }
 
   assertSspInquiries(sspInquiries: SspInquiry[]): void {
-      this.getSspAssetInquiriresTable().should('exist');
-      this.getSspAssetInquiriresTable().get('tbody tr').its('length').should('eq', sspInquiries.length);
+    this.getSspAssetInquiriresTable().should('exist');
+    this.getSspAssetInquiriresTable().get('tbody tr').its('length').should('eq', sspInquiries.length);
 
-      sspInquiries.forEach((sspInquiry) => {
-          this.getSspAssetInquiriresTable().should('contain', sspInquiry.reference);
-      });
+    sspInquiries.forEach((sspInquiry) => {
+      this.getSspAssetInquiriresTable().should('contain', sspInquiry.reference);
+    });
   }
 
-    assertSspAssetAsignments(assignedBusinessUnits: BusinessUnit[]): void {
-        this.getSspAssetAssignments().its('length').should('eq', assignedBusinessUnits.length);
+  assertSspAssetAsignments(assignedBusinessUnits: BusinessUnit[]): void {
+    this.getSspAssetAssignments().its('length').should('eq', assignedBusinessUnits.length);
 
-        assignedBusinessUnits.forEach((assignedBusinessUnit) => {
-            this.getSspAssetAssignments().should('contain', assignedBusinessUnit.name);
-        });
-    }
+    assignedBusinessUnits.forEach((assignedBusinessUnit) => {
+      this.getSspAssetAssignments().should('contain', assignedBusinessUnit.name);
+    });
+  }
 
   getEditButton(): Cypress.Chainable {
     return this.repository.getEditAssetButton();
@@ -59,7 +59,7 @@ export class SspAssetDetailPage extends YvesPage {
     return this.repository.getUnassignButton();
   }
 
-    getUnassignLink(): Cypress.Chainable {
+  getUnassignLink(): Cypress.Chainable {
     return this.repository.getUnassignLink();
   }
 
@@ -67,7 +67,7 @@ export class SspAssetDetailPage extends YvesPage {
     this.repository.getCreateClaimButton().click();
   }
 
-    getUnassignmentErrorMessage(): string {
+  getUnassignmentErrorMessage(): string {
     return this.repository.getUnassignmentErrorMessage();
   }
 
@@ -80,7 +80,7 @@ export class SspAssetDetailPage extends YvesPage {
   }
 
   getSspAssetInquiriresTable(): Cypress.Chainable {
-      return this.repository.getSspAssetInquiriresTable();
+    return this.repository.getSspAssetInquiriresTable();
   }
 }
 
@@ -95,9 +95,9 @@ interface SspAssetDetails {
 }
 
 interface SspInquiry {
-    reference: string;
+  reference: string;
 }
 
 interface BusinessUnit {
-    name: string;
+  name: string;
 }

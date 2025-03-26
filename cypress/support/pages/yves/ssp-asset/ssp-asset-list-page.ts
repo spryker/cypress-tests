@@ -35,45 +35,40 @@ export class SspAssetListPage extends YvesPage {
   }
 
   assertTableData(sspAssets: SspAsset[]): void {
-      this.getRows().its('length').should('eq', sspAssets.length);
+    this.getRows().its('length').should('eq', sspAssets.length);
 
-      sspAssets.forEach((sspAsset) => {
-          if (sspAsset.reference) {
-              this.getRows().contains(sspAsset.reference).should('exist');
-          }
-          if (sspAsset.name) {
-              this.getRows().contains(sspAsset.name).should('exist');
-          }
-      });
+    sspAssets.forEach((sspAsset) => {
+      if (sspAsset.reference) {
+        this.getRows().contains(sspAsset.reference).should('exist');
+      }
+      if (sspAsset.name) {
+        this.getRows().contains(sspAsset.name).should('exist');
+      }
+    });
   }
 
-    getSspAssetCustomerMenuItem(): Cypress.Chainable
-    {
-        return this.repository.getSspAssetCustomerMenuItem();
-    }
+  getSspAssetCustomerMenuItem(): Cypress.Chainable {
+    return this.repository.getSspAssetCustomerMenuItem();
+  }
 
-    getAccessTableFilterSelect(): Cypress.Chainable
-    {
-        return this.repository.getAccessTableFilterSelect();
-    }
+  getAccessTableFilterSelect(): Cypress.Chainable {
+    return this.repository.getAccessTableFilterSelect();
+  }
 
-    getSspAssetFiltersSubmitButton(): Cypress.Chainable
-    {
-        return this.repository.getSspAssetFiltersSubmitButton();
-    }
+  getSspAssetFiltersSubmitButton(): Cypress.Chainable {
+    return this.repository.getSspAssetFiltersSubmitButton();
+  }
 
-    getAccessTableFilterByBusinessUnitValue(): string
-    {
-        return 'filterByBusinessUnit';
-    }
+  getAccessTableFilterByBusinessUnitValue(): string {
+    return 'filterByBusinessUnit';
+  }
 
-    getAccessTableFilterByCompanyValue(): string
-    {
-        return 'filterByCompany';
-    }
+  getAccessTableFilterByCompanyValue(): string {
+    return 'filterByCompany';
+  }
 }
 
 interface SspAsset {
-    reference?: string;
-    name?: string;
+  reference?: string;
+  name?: string;
 }

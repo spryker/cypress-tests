@@ -41,7 +41,7 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
     sspFileManagementListPage.downloadFile(dynamicFixtures.file1.file_name);
-      sspFileManagementListPage.verifyFileDownloaded(dynamicFixtures.file1.file_name);
+    sspFileManagementListPage.verifyFileDownloaded(dynamicFixtures.file1.file_name);
   });
 
   it('should filter files by JPEG type', (): void => {
