@@ -158,7 +158,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       assetListPage.getCreateAssetButton().click();
 
       assetCreatePage.assertPageLocation();
-        assetCreatePage.getAssetForm().should('exist');
+      assetCreatePage.getAssetForm().should('exist');
     });
 
     it('should be able to view company assets', () => {

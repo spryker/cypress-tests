@@ -31,10 +31,9 @@ export class SspAssetCreatePage extends YvesPage {
     return this.repository.getAssetCreatedMessage();
   }
 
-    getAssetForm(): Cypress.Chainable
-    {
-        return this.repository.getAssetForm();
-    }
+  getAssetForm(): Cypress.Chainable {
+    return this.repository.getAssetForm();
+  }
 }
 
 export interface AssetCreateParams {

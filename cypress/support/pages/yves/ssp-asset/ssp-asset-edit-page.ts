@@ -34,10 +34,9 @@ export class SspAssetEditPage extends YvesPage {
     return this.repository.getAssetEditedMessage();
   }
 
-    getAssetForm(): Cypress.Chainable
-    {
-        return this.repository.getAssetForm();
-    }
+  getAssetForm(): Cypress.Chainable {
+    return this.repository.getAssetForm();
+  }
 }
 
 export interface AssetEditParams {
