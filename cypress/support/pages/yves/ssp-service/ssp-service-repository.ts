@@ -7,7 +7,7 @@ type JQueryElement = JQuery<HTMLElement>;
 @injectable()
 export class SspServiceRepository {
   getSspServiceTable(): Chainable<JQueryElement> {
-    return cy.get('[data-qa=services-table]');
+    return cy.get('.ssp-service-table');
   }
 
   getSspServiceTableRows(): Chainable<JQueryElement> {
@@ -23,11 +23,11 @@ export class SspServiceRepository {
   }
 
   getSortOrderByInput(): Chainable<JQueryElement> {
-    return cy.get('.js-service-orderBy-target');
+    return cy.get('.js-advanced-table-order-by-target');
   }
 
   getSortDirectionInput(): Chainable<JQueryElement> {
-    return cy.get('.js-service-orderDirection-target');
+    return cy.get('.js-advanced-table-order-direction-target');
   }
 
   getResetButton(): Chainable<JQueryElement> {
@@ -39,7 +39,7 @@ export class SspServiceRepository {
   }
 
   getSortColumnByName(columnName: string): Chainable<any> {
-    return cy.contains('th a', columnName);
+    return cy.contains('th div', columnName);
   }
   
   // Search form methods

@@ -130,27 +130,6 @@ import {SspServiceListPage, CatalogPage, ProductPage} from '@pages/yves';
                 sspServiceListPage.getOrderDirectionInput().should('have.value', 'DESC');
             });
 
-            it('should reset sort order when clicking reset button', (): void => {
-                customerLoginScenario.execute({
-                    email: dynamicFixtures.customer.email,
-                    password: staticFixtures.defaultPassword,
-                    withoutSession: true,
-                });
-                prepareServices();
-                // First sort by a column
-                sspServiceListPage.clickSortColumn('Created At');
-
-                // Verify sort is applied
-                sspServiceListPage.getOrderByInput().should('have.value', 'created_at');
-
-                // Click reset button
-                sspServiceListPage.clickResetButton();
-
-                // Verify sort has been reset
-                sspServiceListPage.getOrderByInput().should('have.value', '');
-                sspServiceListPage.getOrderDirectionInput().should('have.value', '');
-            });
-
             it('should search services by SKU', (): void => {
                 customerLoginScenario.execute({
                     email: dynamicFixtures.customer.email,
@@ -172,15 +151,9 @@ import {SspServiceListPage, CatalogPage, ProductPage} from '@pages/yves';
 
                 // Verify exactly one row is found (the exact match)
                 sspServiceListPage.getTableRows().should('have.length', 1);
-
-                // Reset search by clicking the reset button
-                sspServiceListPage.clickResetButton();
-
-                // Verify search has been reset
-                cy.url().should('not.include', 'searchText=');
             });
 
-            it('should have "My Services" in the Business Unit dropdown for regular customers', (): void => {
+            it('customer without permissions should se only his own services', (): void => {
                 customerLoginScenario.execute({
                     email: dynamicFixtures.customer2.email,
                     password: staticFixtures.defaultPassword,

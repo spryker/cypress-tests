@@ -5,7 +5,7 @@ import Chainable = Cypress.Chainable;
 @injectable()
 export class SuiteSspServiceRepository implements SspServiceRepository {
   getSspServiceTable(): Chainable<JQuery<HTMLElement>> {
-    return cy.get('table.table--expand');
+    return cy.get('.ssp-service-table');
   }
 
   getSspServiceTableRows(): Chainable<JQuery<HTMLElement>> {
@@ -21,11 +21,11 @@ export class SuiteSspServiceRepository implements SspServiceRepository {
   }
 
   getSortOrderByInput(): Chainable<JQuery<HTMLElement>> {
-    return cy.get('.js-service-orderBy-target');
+    return cy.get('.js-advanced-table-order-by-target');
   }
 
   getSortDirectionInput(): Chainable<JQuery<HTMLElement>> {
-    return cy.get('.js-service-orderDirection-target');
+    return cy.get('.js-advanced-table-order-direction-target');
   }
 
   getResetButton(): Chainable<JQuery<HTMLElement>> {
@@ -33,7 +33,7 @@ export class SuiteSspServiceRepository implements SspServiceRepository {
   }
 
   getSortColumnByName(columnName: string): Chainable<any> {
-    return cy.contains('th a', columnName);
+    return cy.contains('th div', columnName);
   }
   
   // Search form methods
