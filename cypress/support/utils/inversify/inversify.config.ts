@@ -134,6 +134,7 @@ import { B2cMpCompanyRoleIndexRepository } from '../../pages/yves/company/compan
 import { B2cMpCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2c-mp-company-role-create-repository';
 import { B2cMpManageCompanyRoleUserRepository } from '../../pages/yves/company/user/manage/repositories/b2c-mp-manage-company-role-user-repository';
 import { B2cManageCompanyRoleUserRepository } from '../../pages/yves/company/user/manage/repositories/b2c-manage-company-role-user-repository';
+import { SuiteSspAssetRepository } from '../../pages/yves/ssp-asset/repositories/suite-ssp-asset-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -165,6 +166,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.SspInquiryRepository]: SuiteSspInquiryRepository,
   [REPOSITORIES.CompanyRoleIndexRepository]: SuiteCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: SuiteCompanyRoleCreateRepository,
+  [REPOSITORIES.SspAssetRepository]: SuiteSspAssetRepository,
 };
 
 const b2cMappings: BindingsMap = {

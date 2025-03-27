@@ -12,6 +12,12 @@ export class SspInquiryDetailPage extends YvesPage {
   public PAGE_URL = '/customer/ssp-inquiry/detail';
 
   assertOrderSspInquiryDetails = (params: OrderSspInquiryDetails): void => {
+    this.repository.getSspInquiryDetailsOrderReference(params.orderReference);
+    this.assertSspInquiryDetails(params);
+  };
+
+  assertSspAssetSspInquiryDetails = (params: SspAssetSspInquiryDetails): void => {
+    this.repository.getSspInquiryDetailsSspAssetReference(params.reference);
     this.assertSspInquiryDetails(params);
   };
 
@@ -19,7 +25,7 @@ export class SspInquiryDetailPage extends YvesPage {
     cy.contains(this.repository.getSspInquiryDetailsReference(params.reference)).should('exist');
     cy.contains(this.repository.getSspInquiryDetailsDate(params.date)).should('exist');
     cy.contains(new RegExp(this.repository.getSspInquiryDetailsStatus(params.status), 'i')).should('exist');
-    cy.contains(new RegExp(this.repository.getSspInquiryDetailsType(params.type), 'i')).should('exist');
+    cy.contains(this.repository.getSspInquiryDetailsType(params.type.value)).should('exist');
     cy.contains(this.repository.getSspInquiryDetailsSubject(params.subject)).should('exist');
     cy.contains(this.repository.getSspInquiryDetailsDescription(params.description)).should('exist');
     cy.contains(this.repository.getSspInquiryDetailsCustomerFirstName(params.customer.firstName)).should('exist');
@@ -69,7 +75,7 @@ export class SspInquiryDetailPage extends YvesPage {
 
 export interface SspInquiryDetails {
   reference: string;
-  type: string;
+  type: SspInquiryType;
   subject: string;
   description: string;
   date: string;
@@ -94,4 +100,13 @@ export interface File {
 
 export interface OrderSspInquiryDetails extends SspInquiryDetails {
   orderReference: string;
+}
+
+export interface SspAssetSspInquiryDetails extends SspInquiryDetails {
+  sspAssetReference: string;
+}
+
+interface SspInquiryType {
+  key: string;
+  value: string;
 }

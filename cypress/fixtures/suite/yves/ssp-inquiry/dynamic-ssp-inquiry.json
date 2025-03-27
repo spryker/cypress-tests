@@ -327,11 +327,17 @@
         },
         {
           "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "viewCompanySspAssetPermission",
+          "arguments": ["ViewCompanySspAssetPermissionPlugin"]
+        },
+        {
+          "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "key": "companyRoleWithAllPermissions",
           "arguments": [
             { "isDefault": true, "fkCompany": "#company.id_company" },
-            ["#permission", "#permission2", "#permission3"]
+            ["#permission", "#permission2", "#permission3", "#viewCompanySspAssetPermission"]
           ]
         },
         {
@@ -370,6 +376,23 @@
           "type": "helper",
           "name": "assignCompanyRoles",
           "arguments": ["#companyUserFromCompany6", ["#companyRoleWithViewCompanySspInquiryPermission"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveAsset",
+          "key": "sspAsset",
+          "arguments": [
+            {
+              "companyBusinessUnit": "#businessUnit",
+              "assignments": [
+                {
+                  "companyBusinessUnit": {
+                    "idCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     }
