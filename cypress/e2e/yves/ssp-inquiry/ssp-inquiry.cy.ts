@@ -130,7 +130,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
       });
     });
 
-    it('customer should be able to create and view an ssp asset ssp inquiry', (): void => {
+    it('customer should be able to create and view ssp asset inquiry', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,

@@ -33,6 +33,11 @@ export class SspAssetEditPage extends YvesPage {
   public getAssetEditedMessage(): string {
     return this.repository.getAssetEditedMessage();
   }
+
+    getAssetForm(): Cypress.Chainable
+    {
+        return this.repository.getAssetForm();
+    }
 }
 
 export interface AssetEditParams {

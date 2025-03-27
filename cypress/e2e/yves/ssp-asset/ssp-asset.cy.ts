@@ -62,7 +62,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       assetDetailPage.getUnassignButton().should('exist');
       assetDetailPage.getEditButton().should('exist');
       assetDetailPage.getSspAssetServicesButton().should('exist');
-      assetDetailPage.assertSspAssetAsignments([{ name: dynamicFixtures.businessUnit.name }]);
+      assetDetailPage.assertSspAssetAssignments([{ name: dynamicFixtures.businessUnit.name }]);
 
       assetListPage.visit();
 
@@ -141,6 +141,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
       cy.location('pathname').should('include', '/customer/asset/update');
       cy.location('search').should('include', `reference=${dynamicFixtures.asset.reference}`);
+      assetEditPage.getAssetForm().should('exist');
 
       assetListPage.visit();
 
@@ -157,6 +158,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       assetListPage.getCreateAssetButton().click();
 
       assetCreatePage.assertPageLocation();
+        assetCreatePage.getAssetForm().should('exist');
     });
 
     it('should be able to view company assets', () => {
@@ -182,7 +184,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         },
       });
 
-      assetDetailPage.assertSspAssetAsignments([
+      assetDetailPage.assertSspAssetAssignments([
         { name: dynamicFixtures.businessUnit1Company1.name },
         { name: dynamicFixtures.businessUnit2Company1.name },
       ]);
@@ -238,10 +240,10 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         },
       });
 
-      assetDetailPage.assertSspAssetAsignments([{ name: dynamicFixtures.businessUnit2Company1.name }]);
+      assetDetailPage.assertSspAssetAssignments([{ name: dynamicFixtures.businessUnit2Company1.name }]);
     });
 
-    it('should not be able to create asset', () => {
+    it('should not be able to create asset without permission', () => {
       customerLoginScenario.execute({
         email: dynamicFixtures.companyUser2BU1C1.customer.email,
         password: staticFixtures.defaultPassword,
@@ -257,7 +259,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       assetListPage.getCreateAssetButton().should('not.exist');
     });
 
-    it('should not be able to update asset', () => {
+    it('should not be able to update asset without permission', () => {
       customerLoginScenario.execute({
         email: dynamicFixtures.companyUser2BU2C1.customer.email,
         password: staticFixtures.defaultPassword,

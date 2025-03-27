@@ -43,7 +43,7 @@ export class SspAssetDetailPage extends YvesPage {
     });
   }
 
-  assertSspAssetAsignments(assignedBusinessUnits: BusinessUnit[]): void {
+  assertSspAssetAssignments(assignedBusinessUnits: BusinessUnit[]): void {
     this.getSspAssetAssignments().its('length').should('eq', assignedBusinessUnits.length);
 
     assignedBusinessUnits.forEach((assignedBusinessUnit) => {
