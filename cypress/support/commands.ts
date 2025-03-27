@@ -171,11 +171,11 @@ Cypress.Commands.add('confirmCustomerByEmail', (email) => {
   });
 });
 
-Cypress.Commands.add('getMfaCodeByEmail', (email) => {
+Cypress.Commands.add('getMfaCode', (email, type) => {
   const operation = {
     type: 'helper',
-    name: 'getMfaCodeByEmail',
-    arguments: { email }
+    name: 'getMfaCode',
+    arguments: { email, type }
   };
 
   return cy.request({
@@ -193,6 +193,7 @@ Cypress.Commands.add('getMfaCodeByEmail', (email) => {
       }
     }
   }).then((response) => {
+    // console.log(response);
     return response.body.data.attributes.data.code;
   });
 });

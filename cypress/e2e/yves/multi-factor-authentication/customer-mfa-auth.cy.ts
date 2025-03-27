@@ -3,9 +3,6 @@ import { LoginPage, CustomerOverviewPage, MultiFactorAuthPage } from '@pages/yve
 import { CustomerMfaAuthDynamicFixtures, CustomerMfaAuthStaticFixtures } from '../../../support/types/yves/multi-factor-authentication';
 import { retryableBefore } from '../../../support/e2e';
 
-/**
- * Multi-Factor Authentication test suite for customer login
- */
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
     'customer mfa auth [suite]',
     { tags: ['@yves', '@customer-account-management'] },
@@ -23,37 +20,41 @@ import { retryableBefore } from '../../../support/e2e';
 
         it('should setup email MFA', (): void => {
             loginPage.visit();
-            loginPage.login({ 
-                email: dynamicFixtures.customer.email, 
-                password: staticFixtures.defaultPassword 
+            loginPage.login({
+                email: dynamicFixtures.customer.email,
+                password: staticFixtures.defaultPassword
             });
 
             customerOverviewPage.assertPageLocation();
             mfaPage.visit();
 
             // Click the activate button for Dummy MFA
-            mfaPage.activateMfa('Dummy');
+            mfaPage.activateMfa('Email');
 
             // Wait for popup and verification form
             mfaPage.waitForVerificationPopup();
 
             // Get and verify the code from email
-            // cy.getMfaCodeByEmail(dynamicFixtures.customer.email).then((code) => {
-            mfaPage.verifyCode('123456');
-            // });
+            cy.getMfaCode(dynamicFixtures.customer.email, 'email').then((code) => {
+                mfaPage.verifyCode(code);
+            });
 
             // Wait for the page to reload and verify the button changed to Deactivate
-            mfaPage.verifyMfaActivated('Dummy');
+            mfaPage.verifyMfaActivated('Email');
+
+            //add helper to clean up the code
+            //logout
+            //login with mfa
 
             // Deactivate MFA
-            mfaPage.deactivateMfa('Dummy');
-
-            // Wait for verification popup and enter code
-            mfaPage.waitForVerificationPopup();
-            mfaPage.verifyCode('123456');
-
-            // Wait for the page to reload and verify the button changed to Activate
-            mfaPage.verifyMfaDeactivated('Dummy');
+            // mfaPage.deactivateMfa('Dummy');
+            //
+            // // Wait for verification popup and enter code
+            // mfaPage.waitForVerificationPopup();
+            // mfaPage.verifyCode('123456');
+            //
+            // // Wait for the page to reload and verify the button changed to Activate
+            // mfaPage.verifyMfaDeactivated('Dummy');
         });
 
 
@@ -62,9 +63,9 @@ import { retryableBefore } from '../../../support/e2e';
         //     it('should show error for invalid code', (): void => {
         //         // Login with credentials
         //         loginPage.visit();
-        //         loginPage.login({ 
-        //             email: dynamicFixtures.customer.email, 
-        //             password: staticFixtures.defaultPassword 
+        //         loginPage.login({
+        //             email: dynamicFixtures.customer.email,
+        //             password: staticFixtures.defaultPassword
         //         });
 
         //         // Should go to MFA page

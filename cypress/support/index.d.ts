@@ -64,8 +64,8 @@ declare namespace Cypress {
     confirmCustomerByEmail(email: string): void;
 
     /**
-     * @example cy.getMfaCodeByEmail('test@spryker.com')
+     * @example cy.getMfaCode('test@spryker.com', 'email')
      */
-    getMfaCodeByEmail(email: string): Chainable<string>;
+    getMfaCode(email: string, type: string): Chainable<string>;
   }
 }
