@@ -115,10 +115,6 @@ export class SspServiceListPage extends YvesPage {
     return this.repository.getRescheduleFormSubmitButton();
   }
 
-  getRescheduleSuccessMessage(): Chainable<JQuery<HTMLElement>> {
-    return this.repository.getRescheduleSuccessMessage();
-  }
-
   rescheduleService(newDate: string, newTime: string): void {
     this.getDetailsPageRescheduleButton().click();
     this.getRescheduleFormDateInput().clear().type(newDate);
