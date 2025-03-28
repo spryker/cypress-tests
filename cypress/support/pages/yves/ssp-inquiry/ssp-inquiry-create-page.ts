@@ -15,11 +15,15 @@ export class SspInquiryCreatePage extends YvesPage {
     this.repository.getOrderReferenceInput().should('have.value', params.orderReference);
     this.createSspInquiry(params);
   }
+  createSspAssetSspInquiry(params: SspAssetSspInquiryParams): void {
+    this.repository.getSspAssetReferenceInput().should('have.value', params.sspAssetReference);
+    this.createSspInquiry(params);
+  }
 
   createSspInquiry(params: SspInquiryParams): void {
     this.repository.getTypeOptions().should('have.length', params.availableTypes.length);
     params.availableTypes.forEach((type, index) => {
-      this.repository.getTypeOptions().eq(index).should('have.value', type);
+      this.repository.getTypeOptions().eq(index).should('have.value', type.key);
     });
 
     this.repository.getSubjectInput().type(params.subject);
@@ -40,15 +44,24 @@ interface SspInquiryParams {
   subject: string;
   description: string;
   files: UploadFile[];
-  availableTypes: string[];
+  availableTypes: SspInquiryType[];
 }
 
 interface OrderSspInquiryParams extends SspInquiryParams {
   orderReference: string;
 }
 
+interface SspAssetSspInquiryParams extends SspInquiryParams {
+  sspAssetReference: string;
+}
+
 export interface UploadFile {
   name: string;
   size: string;
   extension: string;
+}
+
+interface SspInquiryType {
+  key: string;
+  value: string;
 }
