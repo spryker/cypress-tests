@@ -1,10 +1,7 @@
-import { injectable } from 'inversify';
-
 // Import Cypress types
 type Chainable<Subject = any> = Cypress.Chainable<Subject>;
 type JQueryElement = JQuery<HTMLElement>;
 
-@injectable()
 export interface SspServiceRepository {
   getSspServiceTable(): Chainable<JQueryElement>;
 
