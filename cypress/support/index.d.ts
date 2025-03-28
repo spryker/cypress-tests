@@ -78,6 +78,6 @@ declare namespace Cypress {
      * @example
      * cy.cleanUpCode('123456')
      */
-    cleanUpCode(code: string): Chainable<Response<any>>;
+    cleanUpCode(code: string): void;
   }
 }

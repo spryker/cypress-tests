@@ -13,11 +13,6 @@ export class B2bMultiFactorAuthRepository implements MultiFactorAuthRepository {
     SUBMIT_BUTTON: 'button[type="submit"]',
   };
 
-  private readonly TEXT = {
-    DEACTIVATE: 'Deactivate',
-    ACTIVATE: 'Activate',
-  };
-
   getVerificationCodeInput(): Cypress.Chainable {
     return cy.get(this.SELECTORS.VERIFICATION_CODE_INPUT);
   }
@@ -46,17 +41,11 @@ export class B2bMultiFactorAuthRepository implements MultiFactorAuthRepository {
     return cy.get(this.SELECTORS.SUBMIT_BUTTON);
   }
 
-  assertMfaTypeActivated(type: string): void {
-    this.getMfaTypeSection(type)
-      .find(`${this.SELECTORS.DEACTIVATE_FORM} ${this.SELECTORS.SUBMIT_BUTTON}`)
-      .should('be.visible')
-      .and('contain', this.TEXT.DEACTIVATE);
+  assertActivationSuccess(): void {
+    cy.contains('The multi-factor authentication has been activated').should('be.visible');
   }
 
-  assertMfaTypeDeactivated(type: string): void {
-    this.getMfaTypeSection(type)
-      .find(`${this.SELECTORS.ACTIVATE_FORM} ${this.SELECTORS.SUBMIT_BUTTON}`)
-      .should('be.visible')
-      .and('contain', this.TEXT.ACTIVATE);
+  assertDeactivationSuccess(): void {
+    cy.contains('The multi-factor authentication has been deactivated').should('be.visible');
   }
 }

@@ -24,12 +24,16 @@ export class MultiFactorAuthPage extends YvesPage {
     });
   }
 
-  verifyMfaActivated(type: string): void {
-    this.repository.assertMfaTypeActivated(type);
-  }
-
   waitForVerificationPopup(): void {
     this.repository.getVerificationPopup().should('be.visible');
+  }
+
+  waitForActivationSuccess(): void {
+    this.repository.assertActivationSuccess();
+  }
+
+  waitForDeactivationSuccess(): void {
+    this.repository.assertDeactivationSuccess();
   }
 
   deactivateMfa(type: string): void {
@@ -38,9 +42,5 @@ export class MultiFactorAuthPage extends YvesPage {
         this.repository.getSubmitButton().click();
       });
     });
-  }
-
-  verifyMfaDeactivated(type: string): void {
-    this.repository.assertMfaTypeDeactivated(type);
   }
 }

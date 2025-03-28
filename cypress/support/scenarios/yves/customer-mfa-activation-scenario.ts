@@ -18,15 +18,10 @@ export class CustomerMfaActivationScenario {
       .then((code) => {
         mfaCode = code;
         this.mfaPage.verifyCode(code);
-      })
-      .then(() => {
-        cy.wait(1000);
+        this.mfaPage.waitForActivationSuccess();
       })
       .then(() => {
         cy.cleanUpCode(mfaCode);
-      })
-      .then(() => {
-        this.mfaPage.verifyMfaActivated('Email');
       });
   }
 
@@ -41,16 +36,10 @@ export class CustomerMfaActivationScenario {
       .then((code) => {
         mfaCode = code;
         this.mfaPage.verifyCode(code);
-      })
-      .then(() => {
-        cy.wait(1000);
-        cy.reload();
+        this.mfaPage.waitForDeactivationSuccess();
       })
       .then(() => {
         cy.cleanUpCode(mfaCode);
-      })
-      .then(() => {
-        this.mfaPage.verifyMfaDeactivated('Email');
       });
   }
 }

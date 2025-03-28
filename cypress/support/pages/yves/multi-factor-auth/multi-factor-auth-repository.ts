@@ -6,6 +6,6 @@ export interface MultiFactorAuthRepository {
   getDeactivateForm(): Cypress.Chainable;
   getSubmitButton(): Cypress.Chainable;
   getVerificationPopup(): Cypress.Chainable;
-  assertMfaTypeActivated(type: string): void;
-  assertMfaTypeDeactivated(type: string): void;
+  assertActivationSuccess(): void;
+  assertDeactivationSuccess(): void;
 }

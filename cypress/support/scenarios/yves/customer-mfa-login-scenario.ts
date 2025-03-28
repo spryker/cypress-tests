@@ -14,20 +14,17 @@ export class CustomerMfaLoginScenario {
   @inject(MultiFactorAuthPage) private mfaPage: MultiFactorAuthPage;
 
   execute(credentials: LoginCredentials): void {
-    let mfaCode: string;
-
     this.loginPage.visit();
     this.loginPage.login(credentials);
 
     this.mfaPage.waitForVerificationPopup();
 
     cy.getMultiFactorAuthCode(credentials.email, 'email').then((code) => {
-      mfaCode = code;
       this.mfaPage.verifyCode(code);
     });
   }
 
-  executeWithInvalidCode(credentials: LoginCredentials, invalidCode: string = '123456'): void {
+  executeWithInvalidCode(credentials: LoginCredentials, invalidCode = '123456'): void {
     this.loginPage.visit();
     this.loginPage.login(credentials);
 
