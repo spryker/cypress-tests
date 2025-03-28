@@ -182,79 +182,43 @@ interface DynamicFixtures {
     //   });
 
       it('should allow rescheduling a service', (): void => {
+        // Setup: Purchase a service as a regular customer
         isSetupDone = false;
-
-        // Purchase a service as a regular customer
         purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
 
-        // Verify the service is in the list
-        cy.get('h1').should('contain', 'Services');
-        sspServiceListPage.getTable().should('exist');
+        // Verify service is listed
         sspServiceListPage.getTableRows().should('have.length.at.least', 1);
 
-        // Store the original time and date
-        let originalTimeAndDate = '';
-        sspServiceListPage
-          .getTableRows()
-          .first()
-          .find('td')
-          .eq(2) // Time and Date column (3rd column, 0-indexed)
-          .invoke('text')
-          .then((text) => {
-            originalTimeAndDate = text.trim();
-          });
-
-        // First navigate to the service details page
+        // Navigate to service details page
         sspServiceListPage.viewFirstServiceDetails();
-        
-        // Verify we're on the details page
         cy.url().should('include', '/order/details');
 
-        // Now click on the reschedule button from the details page
+        // Access reschedule functionality
         sspServiceListPage.getDetailsPageRescheduleButton().should('be.visible').first().click();
-
-        // Verify we're on the reschedule form page
         cy.url().should('include', '/update-service-time');
 
-        // Generate a new date and time (tomorrow at 2:00 PM)
+        // Set up new date/time (tomorrow at 2:00 PM)
         const tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
-        tomorrow.setHours(14, 0, 0); // Set to 2:00 PM
+        tomorrow.setHours(14, 0, 0);
+        const dateTimeISO = tomorrow.toISOString().split('.')[0].substring(0, 16);
 
-        // Format as ISO datetime string YYYY-MM-DDThh:mm
-        const dateTimeISO = tomorrow.toISOString().split('.')[0].substring(0, 16); // Format: YYYY-MM-DDThh:mm
-        
-        // For time input, still use HH:mm format
-        const timeFormat = '14:00'; // 2:00 PM
-        
-        // Fill in the reschedule form - use proper ISO format for datetime input
+        // Complete the reschedule form
         sspServiceListPage.getRescheduleFormDateInput().clear().type(dateTimeISO);
-
-        // Submit the form
         sspServiceListPage.getRescheduleFormSubmitButton().click();
 
-        // Verify we're back on the service list page
+        // Verify redirection to services list
         cy.url().should('include', '/customer/ssp-service');
-        cy.get('h1').should('contain', 'Services');
 
-        // Verify the date and time has been updated
-        sspServiceListPage
-          .getTableRows()
-          .first()
-          .find('td')
-          .eq(2) // Time and Date column
-          .invoke('text')
-          .then((text) => {
-            const updatedTimeAndDate = text.trim();
-            
-            // Format the date to match browser's display format - 'Month DD, YYYY'
-            const day = tomorrow.getDate();
-            const year = tomorrow.getFullYear();
-            const expectedDateFormat = `${day}, ${year}`;
-            
-            // Verify the updated date contains our expected date format
-            expect(updatedTimeAndDate).to.include(expectedDateFormat);
-          });
+        // Verify service was rescheduled
+        sspServiceListPage.getTableRows().first().find('td').eq(2).invoke('text').then((text) => {
+          const updatedDate = text.trim();
+          const day = tomorrow.getDate();
+          const year = tomorrow.getFullYear();
+          
+          // Verify date in formatted display matches expected date
+          expect(updatedDate).to.include(`${day}, ${year}`);
+        });
       });
     });
 
