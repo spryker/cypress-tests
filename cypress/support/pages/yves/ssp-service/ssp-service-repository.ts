@@ -33,4 +33,24 @@ export interface SspServiceRepository {
   getFirstRowReference(): string;
 
   getFirstRowViewDetailsButton(): Chainable<JQueryElement>;
+
+  /**
+   * Get the reschedule button on the service details page
+   */
+  getDetailsPageRescheduleButton(): Chainable<JQueryElement>;
+
+  /**
+   * Get the reschedule form date input field
+   */
+  getRescheduleFormDateInput(): Chainable<JQueryElement>;
+
+  /**
+   * Get the reschedule form time input field
+   */
+  getRescheduleFormTimeInput(): Chainable<JQueryElement>;
+
+  /**
+   * Get the reschedule form submit button
+   */
+  getRescheduleFormSubmitButton(): Chainable<JQueryElement>;
 }
