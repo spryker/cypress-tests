@@ -6,11 +6,11 @@ import { CustomerDeleteRepository } from './customer-delete-repository';
 @injectable()
 @autoWired
 export class CustomerDeletePage extends YvesPage {
-    @inject(REPOSITORIES.CustomerDeleteRepository) private repository: CustomerDeleteRepository;
+  @inject(REPOSITORIES.CustomerDeleteRepository) private repository: CustomerDeleteRepository;
 
-    protected PAGE_URL = '/customer/delete';
+  protected PAGE_URL = '/customer/delete';
 
-    clickDeleteAccount(): void {
-        this.repository.getDeleteButton().click();
-    }
+  clickDeleteAccount(): void {
+    this.repository.getDeleteButton().click();
+  }
 }

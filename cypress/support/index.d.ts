@@ -69,7 +69,7 @@ declare namespace Cypress {
      * @param type - MFA type (e.g., 'email', 'authenticator')
      * @example
      * cy.getMultiFactorAuthCode('customer@example.com', 'email')
-    */
+     */
     getMultiFactorAuthCode(email: string, type: string): Chainable<string>;
 
     /**
