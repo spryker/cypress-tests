@@ -36,7 +36,7 @@ import { SspServiceListPage, CatalogPage, ProductPage } from '@pages/yves';
         sspServiceListPage.getTableHeaders().contains('State').should('exist');
       });
 
-      it('should sort by Order Reference column in both directions', (): void => {
+      it('should sort table in both directions', (): void => {
         purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
 
         // Sort by Order Reference
@@ -100,7 +100,7 @@ import { SspServiceListPage, CatalogPage, ProductPage } from '@pages/yves';
         sspServiceListPage.getTableRows().should('have.length', 1);
       });
 
-      it('customer without permissions should ses only his own services', (): void => {
+      it('customer without permissions should see only his own services', (): void => {
         purchaseServiceAsCustomer(dynamicFixtures.customer2.email, dynamicFixtures.address1.id_customer_address);
 
         // Check if Business Unit dropdown exists
