@@ -46,140 +46,140 @@ interface DynamicFixtures {
     });
 
     describe('Service List Page', () => {
-    //   it('should verify all required table headers exist', (): void => {
-    //     purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
-    //
-    //     // Assert page is loaded correctly
-    //     cy.get('h1').should('contain', 'Services');
-    //     sspServiceListPage.getTable().should('exist');
-    //
-    //     // Check if all column headers are present
-    //     sspServiceListPage.getTableHeaders().should('have.length.at.least', 5);
-    //     sspServiceListPage.getTableHeaders().contains('Order Reference').should('exist');
-    //     sspServiceListPage.getTableHeaders().contains('Service Name').should('exist');
-    //     sspServiceListPage.getTableHeaders().contains('Time and Date').should('exist');
-    //     sspServiceListPage.getTableHeaders().contains('Created At').should('exist');
-    //     sspServiceListPage.getTableHeaders().contains('State').should('exist');
-    //   });
-    //
-    //   it('should sort table in both directions', (): void => {
-    //     purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
-    //
-    //     // Sort by Order Reference
-    //     sspServiceListPage.clickSortColumn('Order Reference');
-    //     // Verify that sorting was triggered
-    //     sspServiceListPage.getOrderByInput().should('have.value', 'order_reference');
-    //     sspServiceListPage.getOrderDirectionInput().should('have.value', 'ASC');
-    //
-    //     // Click again to toggle sort direction
-    //     sspServiceListPage.clickSortColumn('Order Reference');
-    //
-    //     // Verify sort direction was toggled
-    //     sspServiceListPage.getOrderByInput().should('have.value', 'order_reference');
-    //     sspServiceListPage.getOrderDirectionInput().should('have.value', 'DESC');
-    //
-    //     // Sort by Service Name
-    //     sspServiceListPage.clickSortColumn('Service Name');
-    //
-    //     // Verify that sorting was triggered
-    //     sspServiceListPage.getOrderByInput().should('have.value', 'product_name');
-    //     sspServiceListPage.getOrderDirectionInput().should('have.value', 'ASC');
-    //
-    //     // Click again to toggle sort direction
-    //     sspServiceListPage.clickSortColumn('Service Name');
-    //
-    //     // Verify sort direction was toggled
-    //     sspServiceListPage.getOrderByInput().should('have.value', 'product_name');
-    //     sspServiceListPage.getOrderDirectionInput().should('have.value', 'DESC');
-    //
-    //     // Sort by Created At
-    //     sspServiceListPage.clickSortColumn('Created At');
-    //
-    //     // Verify that sorting was triggered
-    //     sspServiceListPage.getOrderByInput().should('have.value', 'created_at');
-    //     sspServiceListPage.getOrderDirectionInput().should('have.value', 'ASC');
-    //
-    //     // Click again to toggle sort direction
-    //     sspServiceListPage.clickSortColumn('Created At');
-    //
-    //     // Verify sort direction was toggled
-    //     sspServiceListPage.getOrderByInput().should('have.value', 'created_at');
-    //     sspServiceListPage.getOrderDirectionInput().should('have.value', 'DESC');
-    //   });
-    //
-    //   it('should search services by SKU', (): void => {
-    //     purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
-    //
-    //     // Get product SKU from fixtures to search for
-    //     const productSku = dynamicFixtures.product1.sku;
-    //
-    //     // Select SKU search type and enter the product SKU
-    //     sspServiceListPage.searchFor('SKU', productSku);
-    //
-    //     // Wait for the search results to be available
-    //     sspServiceListPage.getTableRows().should('be.visible');
-    //
-    //     // Verify search filter is applied in URL
-    //     cy.url().should('include', productSku);
-    //
-    //     // Verify exactly one row is found (the exact match)
-    //     sspServiceListPage.getTableRows().should('have.length', 1);
-    //   });
-    //
-    //   it('customer without permissions should see only his own services', (): void => {
-    //     purchaseServiceAsCustomer(dynamicFixtures.customer2.email, dynamicFixtures.address1.id_customer_address);
-    //
-    //     // Check if Business Unit dropdown exists
-    //     sspServiceListPage.getBusinessUnitSelect().should('exist');
-    //
-    //     // Check that 'My Services' option is available in the dropdown
-    //     sspServiceListPage.getBusinessUnitSelect().find('option').should('contain', 'My Services');
-    //
-    //     // A regular customer should not see business unit and company claims
-    //     sspServiceListPage.getBusinessUnitSelect().find('option[value*="businessUnit"]').should('not.exist');
-    //     sspServiceListPage.getBusinessUnitSelect().find('option[value*="company"]').should('not.exist');
-    //
-    //     sspServiceListPage.getTableRows().should('not.exist');
-    //   });
-    //
-    //   it("company users from different companies cannot see each other's services", (): void => {
-    //     isSetupDone = false;
-    //
-    //     // First company user purchases a service
-    //     purchaseServiceAsCustomer(
-    //       dynamicFixtures.company1Customer.email,
-    //       dynamicFixtures.company1CustomerAddress.id_customer_address
-    //     );
-    //
-    //     // Verify the service is in the list for the first company user
-    //     cy.get('h1').should('contain', 'Services');
-    //     sspServiceListPage.getTable().should('exist');
-    //     sspServiceListPage.getTableRows().should('have.length.at.least', 1);
-    //
-    //     // Verify business unit dropdown has company options
-    //     sspServiceListPage.getBusinessUnitSelect().should('exist');
-    //     sspServiceListPage.getBusinessUnitSelect().find('option[value*="company"]').should('exist');
-    //
-    //     // Logout first company user
-    //     customerLogoutScenario.execute();
-    //
-    //     // Login as second company user
-    //     customerLoginScenario.execute({
-    //       email: dynamicFixtures.company2Customer.email,
-    //       password: staticFixtures.defaultPassword as string,
-    //     });
-    //
-    //     // Visit service list page
-    //     sspServiceListPage.visit();
-    //
-    //     // Verify the second company user sees the business unit dropdown but no services
-    //     cy.get('h1').should('contain', 'Services');
-    //     sspServiceListPage.getBusinessUnitSelect().should('exist');
-    //     sspServiceListPage.getBusinessUnitSelect().find('option[value*="company"]').should('exist');
-    //
-    //     // The second company user should see no services from the first company
-    //     sspServiceListPage.getTableRows().should('not.exist');
-    //   });
+      it('should verify all required table headers exist', (): void => {
+        purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
+
+        // Assert page is loaded correctly
+        cy.get('h1').should('contain', 'Services');
+        sspServiceListPage.getTable().should('exist');
+
+        // Check if all column headers are present
+        sspServiceListPage.getTableHeaders().should('have.length.at.least', 5);
+        sspServiceListPage.getTableHeaders().contains('Order Reference').should('exist');
+        sspServiceListPage.getTableHeaders().contains('Service Name').should('exist');
+        sspServiceListPage.getTableHeaders().contains('Time and Date').should('exist');
+        sspServiceListPage.getTableHeaders().contains('Created At').should('exist');
+        sspServiceListPage.getTableHeaders().contains('State').should('exist');
+      });
+
+      it('should sort table in both directions', (): void => {
+        purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
+
+        // Sort by Order Reference
+        sspServiceListPage.clickSortColumn('Order Reference');
+        // Verify that sorting was triggered
+        sspServiceListPage.getOrderByInput().should('have.value', 'order_reference');
+        sspServiceListPage.getOrderDirectionInput().should('have.value', 'ASC');
+
+        // Click again to toggle sort direction
+        sspServiceListPage.clickSortColumn('Order Reference');
+
+        // Verify sort direction was toggled
+        sspServiceListPage.getOrderByInput().should('have.value', 'order_reference');
+        sspServiceListPage.getOrderDirectionInput().should('have.value', 'DESC');
+
+        // Sort by Service Name
+        sspServiceListPage.clickSortColumn('Service Name');
+
+        // Verify that sorting was triggered
+        sspServiceListPage.getOrderByInput().should('have.value', 'product_name');
+        sspServiceListPage.getOrderDirectionInput().should('have.value', 'ASC');
+
+        // Click again to toggle sort direction
+        sspServiceListPage.clickSortColumn('Service Name');
+
+        // Verify sort direction was toggled
+        sspServiceListPage.getOrderByInput().should('have.value', 'product_name');
+        sspServiceListPage.getOrderDirectionInput().should('have.value', 'DESC');
+
+        // Sort by Created At
+        sspServiceListPage.clickSortColumn('Created At');
+
+        // Verify that sorting was triggered
+        sspServiceListPage.getOrderByInput().should('have.value', 'created_at');
+        sspServiceListPage.getOrderDirectionInput().should('have.value', 'ASC');
+
+        // Click again to toggle sort direction
+        sspServiceListPage.clickSortColumn('Created At');
+
+        // Verify sort direction was toggled
+        sspServiceListPage.getOrderByInput().should('have.value', 'created_at');
+        sspServiceListPage.getOrderDirectionInput().should('have.value', 'DESC');
+      });
+
+      it('should search services by SKU', (): void => {
+        purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
+
+        // Get product SKU from fixtures to search for
+        const productSku = dynamicFixtures.product1.sku;
+
+        // Select SKU search type and enter the product SKU
+        sspServiceListPage.searchFor('SKU', productSku);
+
+        // Wait for the search results to be available
+        sspServiceListPage.getTableRows().should('be.visible');
+
+        // Verify search filter is applied in URL
+        cy.url().should('include', productSku);
+
+        // Verify exactly one row is found (the exact match)
+        sspServiceListPage.getTableRows().should('have.length', 1);
+      });
+
+      it('customer without permissions should see only his own services', (): void => {
+        purchaseServiceAsCustomer(dynamicFixtures.customer2.email, dynamicFixtures.address1.id_customer_address);
+
+        // Check if Business Unit dropdown exists
+        sspServiceListPage.getBusinessUnitSelect().should('exist');
+
+        // Check that 'My Services' option is available in the dropdown
+        sspServiceListPage.getBusinessUnitSelect().find('option').should('contain', 'My Services');
+
+        // A regular customer should not see business unit and company claims
+        sspServiceListPage.getBusinessUnitSelect().find('option[value*="businessUnit"]').should('not.exist');
+        sspServiceListPage.getBusinessUnitSelect().find('option[value*="company"]').should('not.exist');
+
+        sspServiceListPage.getTableRows().should('not.exist');
+      });
+
+      it("company users from different companies cannot see each other's services", (): void => {
+        isSetupDone = false;
+
+        // First company user purchases a service
+        purchaseServiceAsCustomer(
+          dynamicFixtures.company1Customer.email,
+          dynamicFixtures.company1CustomerAddress.id_customer_address
+        );
+
+        // Verify the service is in the list for the first company user
+        cy.get('h1').should('contain', 'Services');
+        sspServiceListPage.getTable().should('exist');
+        sspServiceListPage.getTableRows().should('have.length.at.least', 1);
+
+        // Verify business unit dropdown has company options
+        sspServiceListPage.getBusinessUnitSelect().should('exist');
+        sspServiceListPage.getBusinessUnitSelect().find('option[value*="company"]').should('exist');
+
+        // Logout first company user
+        customerLogoutScenario.execute();
+
+        // Login as second company user
+        customerLoginScenario.execute({
+          email: dynamicFixtures.company2Customer.email,
+          password: staticFixtures.defaultPassword as string,
+        });
+
+        // Visit service list page
+        sspServiceListPage.visit();
+
+        // Verify the second company user sees the business unit dropdown but no services
+        cy.get('h1').should('contain', 'Services');
+        sspServiceListPage.getBusinessUnitSelect().should('exist');
+        sspServiceListPage.getBusinessUnitSelect().find('option[value*="company"]').should('exist');
+
+        // The second company user should see no services from the first company
+        sspServiceListPage.getTableRows().should('not.exist');
+      });
 
       it('should allow rescheduling a service', (): void => {
         // Setup: Purchase a service as a regular customer
@@ -211,14 +211,20 @@ interface DynamicFixtures {
         cy.url().should('include', '/customer/ssp-service');
 
         // Verify service was rescheduled
-        sspServiceListPage.getTableRows().first().find('td').eq(2).invoke('text').then((text) => {
-          const updatedDate = text.trim();
-          const day = tomorrow.getDate();
-          const year = tomorrow.getFullYear();
-          
-          // Verify date in formatted display matches expected date
-          expect(updatedDate).to.include(`${day}, ${year}`);
-        });
+        sspServiceListPage
+          .getTableRows()
+          .first()
+          .find('td')
+          .eq(2)
+          .invoke('text')
+          .then((text) => {
+            const updatedDate = text.trim();
+            const day = tomorrow.getDate();
+            const year = tomorrow.getFullYear();
+
+            // Verify date in formatted display matches expected date
+            expect(updatedDate).to.include(`${day}, ${year}`);
+          });
       });
     });
 
