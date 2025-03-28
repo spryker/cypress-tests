@@ -1,7 +1,9 @@
 import { Customer } from './shared';
 
 export interface CustomerMfaAuthDynamicFixtures {
-    customer: Customer;
+    customerOne: Customer;
+    customerTwo: Customer;
+    customerThree: Customer;
 }
 
 export interface CustomerMfaAuthStaticFixtures {

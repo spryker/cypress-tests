@@ -171,11 +171,12 @@ Cypress.Commands.add('confirmCustomerByEmail', (email) => {
   });
 });
 
-Cypress.Commands.add('getMfaCode', (email, type) => {
+Cypress.Commands.add('getMultiFactorAuthCode', (email, type) => {
   const operation = {
     type: 'helper',
-    name: 'getMfaCode',
-    arguments: { email, type }
+    name: 'getMultiFactorAuthCode',
+    key: 'code',
+    arguments: [email, type]
   };
 
   return cy.request({
@@ -193,7 +194,36 @@ Cypress.Commands.add('getMfaCode', (email, type) => {
       }
     }
   }).then((response) => {
-    // console.log(response);
-    return response.body.data.attributes.data.code;
+    console.log('Response:', response.body);
+    if (response.body.data && response.body.data.attributes && response.body.data.attributes.data) {
+      const mfaResponse = response.body.data.attributes.data;
+      console.log('MFA Response:', mfaResponse);
+      return mfaResponse.code;
+    }
+    return null;
+  });
+});
+
+Cypress.Commands.add('cleanUpCode', (code: string) => {
+  const operation = {
+    type: 'helper',
+    name: 'cleanUpCode',
+    arguments: [code],
+  };
+
+  return cy.request({
+    method: 'POST',
+    url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
+    headers: {
+      'Content-Type': 'application/vnd.api+json',
+    },
+    body: {
+      data: {
+        type: 'dynamic-fixtures',
+        attributes: {
+          operations: [operation],
+        },
+      },
+    },
   });
 });

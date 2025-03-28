@@ -1,6 +1,11 @@
 import { container } from '@utils';
 import { LoginPage, CustomerOverviewPage, MultiFactorAuthPage } from '@pages/yves';
 import { CustomerMfaAuthDynamicFixtures, CustomerMfaAuthStaticFixtures } from '../../../support/types/yves/multi-factor-authentication';
+import { CustomerLogoutScenario } from '../../../support/scenarios/yves/customer-logout-scenario';
+import { CustomerDeletePage } from '../../../support/pages/yves/customer/customer-delete/customer-delete-page';
+import { CustomerMfaActivationScenario } from '../../../support/scenarios/yves/customer-mfa-activation-scenario';
+import { CustomerMfaLoginScenario } from '../../../support/scenarios/yves/customer-mfa-login-scenario';
+import { CustomerLoginScenario } from '../../../support/scenarios/yves/customer-login-scenario';
 import { retryableBefore } from '../../../support/e2e';
 
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
@@ -10,6 +15,11 @@ import { retryableBefore } from '../../../support/e2e';
         const loginPage = container.get(LoginPage);
         const customerOverviewPage = container.get(CustomerOverviewPage);
         const mfaPage = container.get(MultiFactorAuthPage);
+        const logoutScenario = container.get(CustomerLogoutScenario);
+        const customerDeletePage = container.get(CustomerDeletePage);
+        const mfaActivationScenario = container.get(CustomerMfaActivationScenario);
+        const customerLoginScenario = container.get(CustomerLoginScenario);
+        const mfaLoginScenario = container.get(CustomerMfaLoginScenario);
 
         let dynamicFixtures: CustomerMfaAuthDynamicFixtures;
         let staticFixtures: CustomerMfaAuthStaticFixtures;
@@ -18,66 +28,56 @@ import { retryableBefore } from '../../../support/e2e';
             ({ staticFixtures, dynamicFixtures } = Cypress.env());
         });
 
-        it('should setup email MFA', (): void => {
-            loginPage.visit();
-            loginPage.login({
-                email: dynamicFixtures.customer.email,
-                password: staticFixtures.defaultPassword
+        it('should setup email MFA and login with MFA', (): void => {
+            customerLoginScenario.execute({
+                email: dynamicFixtures.customerOne.email,
+                password: staticFixtures.defaultPassword,
+                withoutSession: true,
+              });
+            
+            customerOverviewPage.assertPageLocation();
+            mfaActivationScenario.execute(dynamicFixtures.customerOne.email);
+
+            logoutScenario.execute();
+            mfaLoginScenario.execute({
+                email: dynamicFixtures.customerOne.email,
+                password: staticFixtures.defaultPassword,
             });
 
             customerOverviewPage.assertPageLocation();
-            mfaPage.visit();
-
-            // Click the activate button for Dummy MFA
-            mfaPage.activateMfa('Email');
-
-            // Wait for popup and verification form
-            mfaPage.waitForVerificationPopup();
-
-            // Get and verify the code from email
-            cy.getMfaCode(dynamicFixtures.customer.email, 'email').then((code) => {
-                mfaPage.verifyCode(code);
-            });
-
-            // Wait for the page to reload and verify the button changed to Deactivate
-            mfaPage.verifyMfaActivated('Email');
-
-            //add helper to clean up the code
-            //logout
-            //login with mfa
-
-            // Deactivate MFA
-            // mfaPage.deactivateMfa('Dummy');
-            //
-            // // Wait for verification popup and enter code
-            // mfaPage.waitForVerificationPopup();
-            // mfaPage.verifyCode('123456');
-            //
-            // // Wait for the page to reload and verify the button changed to Activate
-            // mfaPage.verifyMfaDeactivated('Dummy');
         });
 
+        it('should setup email MFA, verify MFA is triggered on delete account form and deactivate MFA', (): void => {
+            loginPage.visit();
+            loginPage.login({
+                email: dynamicFixtures.customerTwo.email,
+                password: staticFixtures.defaultPassword,
+            });
+            
+            customerOverviewPage.assertPageLocation();
+            mfaActivationScenario.execute(dynamicFixtures.customerTwo.email);
 
+            customerDeletePage.visit();
+            customerDeletePage.clickDeleteAccount();
+            mfaPage.waitForVerificationPopup();
 
-        // describe('Invalid MFA code', () => {
-        //     it('should show error for invalid code', (): void => {
-        //         // Login with credentials
-        //         loginPage.visit();
-        //         loginPage.login({
-        //             email: dynamicFixtures.customer.email,
-        //             password: staticFixtures.defaultPassword
-        //         });
+            mfaActivationScenario.deactivate(dynamicFixtures.customerTwo.email);
+        });
 
-        //         // Should go to MFA page
-        //         cy.url().should('include', '/multi-factor-auth');
-        //         mfaPage.assertMfaHandlerWidgetVisible();
+        it('should setup email MFA and enter the invalid code during login', (): void => {
+            loginPage.visit();
+            loginPage.login({
+                email: dynamicFixtures.customerThree.email,
+                password: staticFixtures.defaultPassword,
+            });
+            
+            customerOverviewPage.assertPageLocation();
+            mfaActivationScenario.execute(dynamicFixtures.customerThree.email);
 
-        //         // Enter invalid code
-        //         mfaPage.selectAuthType('email');
-        //         mfaPage.verifyCode('000000');
-
-        //         // Should show error
-        //         mfaPage.assertValidationError();
-        //     });
-        // });    }
+            logoutScenario.execute();
+            mfaLoginScenario.executeWithInvalidCode({
+                email: dynamicFixtures.customerThree.email,
+                password: staticFixtures.defaultPassword,
+            });
+        });
 });

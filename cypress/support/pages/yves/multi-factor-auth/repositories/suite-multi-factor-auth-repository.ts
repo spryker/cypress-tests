@@ -27,7 +27,7 @@ export class SuiteMultiFactorAuthRepository implements MultiFactorAuthRepository
     }
 
     getVerificationPopup(): Cypress.Chainable {
-        return cy.get(this.SELECTORS.VERIFICATION_POPUP, { timeout: 15000 });
+        return cy.get(this.SELECTORS.VERIFICATION_POPUP, { timeout: 8000 });
     }
 
     getMfaTypeSection(type: string): Cypress.Chainable {
