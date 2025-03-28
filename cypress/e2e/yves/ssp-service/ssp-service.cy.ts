@@ -7,6 +7,7 @@ import {SspServiceListPage, CatalogPage, ProductPage} from '@pages/yves';
     {tags: ['@yves', '@ssp-service', '@ssp', '@SspServiceManagement']},
     (): void => {
         const customerLoginScenario = container.get(CustomerLoginScenario);
+        const customerLogoutScenario = container.get(CustomerLogoutScenario);
         const sspServiceListPage = container.get(SspServiceListPage);
         const checkoutScenario = container.get(CheckoutScenario);
 
@@ -112,6 +113,42 @@ import {SspServiceListPage, CatalogPage, ProductPage} from '@pages/yves';
                 sspServiceListPage.getBusinessUnitSelect().find('option[value*="businessUnit"]').should('not.exist');
                 sspServiceListPage.getBusinessUnitSelect().find('option[value*="company"]').should('not.exist');
 
+                sspServiceListPage.getTableRows().should('not.exist');
+            });
+            
+            it('company users from different companies cannot see each other\'s services', (): void => {
+                isSetupDone = false;
+
+                // First company user purchases a service
+                purchaseServiceAsCustomer(dynamicFixtures.companyUser1.email, dynamicFixtures.companyUser1Address.id_customer_address);
+                
+                // Verify the service is in the list for the first company user
+                cy.get('h1').should('contain', 'Services');
+                sspServiceListPage.getTable().should('exist');
+                sspServiceListPage.getTableRows().should('have.length.at.least', 1);
+                
+                // Verify business unit dropdown has company options
+                sspServiceListPage.getBusinessUnitSelect().should('exist');
+                sspServiceListPage.getBusinessUnitSelect().find('option[value*="company"]').should('exist');
+                
+                // Logout first company user
+                customerLogoutScenario.execute();
+                
+                // Login as second company user
+                customerLoginScenario.execute({
+                    email: dynamicFixtures.companyUser2.email,
+                    password: staticFixtures.defaultPassword,
+                });
+                
+                // Visit service list page
+                sspServiceListPage.visit();
+                
+                // Verify the second company user sees the business unit dropdown but no services
+                cy.get('h1').should('contain', 'Services');
+                sspServiceListPage.getBusinessUnitSelect().should('exist');
+                sspServiceListPage.getBusinessUnitSelect().find('option[value*="company"]').should('exist');
+                
+                // The second company user should see no services from the first company
                 sspServiceListPage.getTableRows().should('not.exist');
             });
         });
