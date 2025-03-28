@@ -16,18 +16,18 @@ export interface SspServiceRepository {
   getSortDirectionInput(): Chainable<JQueryElement>;
 
   getResetButton(): Chainable<JQueryElement>;
-  
+
   getPagination(): Chainable<JQueryElement>;
 
   getSortColumnByName(columnName: string): Chainable<any>;
-  
+
   // Search form methods
   getSearchTypeSelect(): Chainable<JQueryElement>;
-  
+
   getSearchTextInput(): Chainable<JQueryElement>;
 
   getBusinessUnitSelect(): Chainable<JQueryElement>;
-  
+
   getSearchButton(): Chainable<any>;
 
   getFirstRowReference(): string;
