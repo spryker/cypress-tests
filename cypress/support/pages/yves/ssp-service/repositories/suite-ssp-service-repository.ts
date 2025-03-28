@@ -73,6 +73,8 @@ export class SuiteSspServiceRepository implements SspServiceRepository {
   }
 
   getFirstRowViewDetailsButton(): Chainable<JQuery<HTMLElement>> {
-    return this.getSspServiceTableRows().first().find('a').contains('View') as unknown as Chainable<JQuery<HTMLElement>>;
+    return this.getSspServiceTableRows().first().find('a').contains('View') as unknown as Chainable<
+      JQuery<HTMLElement>
+    >;
   }
 }
