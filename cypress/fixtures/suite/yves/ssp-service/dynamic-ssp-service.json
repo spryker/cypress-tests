@@ -36,10 +36,10 @@
           "name": "haveCustomer",
           "key": "company1Customer",
           "arguments": [
-            { 
-              "registered": "2025-01-01", 
-              "password": "change123", 
-              "locale": "#locale" 
+            {
+              "registered": "2025-01-01",
+              "password": "change123",
+              "locale": "#locale"
             }
           ]
         },
@@ -48,10 +48,10 @@
           "name": "haveCustomer",
           "key": "company2Customer",
           "arguments": [
-            { 
-              "registered": "2025-01-01", 
-              "password": "change123", 
-              "locale": "#locale" 
+            {
+              "registered": "2025-01-01",
+              "password": "change123",
+              "locale": "#locale"
             }
           ]
         },
@@ -79,7 +79,7 @@
           "key": "confirmedCompany2Customer",
           "arguments": ["#company2Customer"]
         },
-        
+
         {
           "type": "helper",
           "name": "haveCompany",
@@ -235,19 +235,13 @@
           "type": "helper",
           "name": "haveProductAbstractToProductAbstractType",
           "key": "productAbstractToProductAbstractType1",
-          "arguments": [
-            "#product1.fk_product_abstract",
-            "#productAbstractType.id_product_abstract_type"
-          ]
+          "arguments": ["#product1.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
         },
         {
           "type": "helper",
           "name": "haveProductAbstractToProductAbstractType",
           "key": "productAbstractToProductAbstractType1",
-          "arguments": [
-            "#product2.fk_product_abstract",
-            "#productAbstractType.id_product_abstract_type"
-          ]
+          "arguments": ["#product2.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
         },
         {
           "type": "helper",

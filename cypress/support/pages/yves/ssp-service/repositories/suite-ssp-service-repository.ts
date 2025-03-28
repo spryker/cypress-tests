@@ -35,31 +35,31 @@ export class SuiteSspServiceRepository implements SspServiceRepository {
   getSortColumnByName(columnName: string): Chainable<any> {
     return cy.contains('.advanced-table th', columnName);
   }
-  
+
   // Search form methods
   getSearchTypeSelect(): Chainable<JQuery<HTMLElement>> {
     return cy.get('select[name*="searchType"]');
   }
-  
+
   getSearchTextInput(): Chainable<JQuery<HTMLElement>> {
     return cy.get('input[name*="searchText"]');
   }
-  
+
   getBusinessUnitSelect(): Chainable<JQuery<HTMLElement>> {
     return cy.get('select[name*="companyBusinessUnit"]');
   }
-  
+
   getSearchButton(): Chainable<any> {
     return cy.contains('button', 'Search');
   }
-  
+
   getPagination(): Chainable<any> {
     return cy.get('.pagination');
   }
 
   getFirstRowReference(): string {
     let reference = '';
-    
+
     this.getSspServiceTableRows()
       .first()
       .find('td')
@@ -68,7 +68,7 @@ export class SuiteSspServiceRepository implements SspServiceRepository {
       .then((text: string) => {
         reference = text.trim();
       });
-      
+
     return reference;
   }
 

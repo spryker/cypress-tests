@@ -58,28 +58,28 @@ export class SspServiceListPage extends YvesPage {
   }
 
   assertTableHeadersExist(headers: string[]): void {
-    headers.forEach(header => {
+    headers.forEach((header) => {
       this.getTableHeaders().contains(header).should('exist');
     });
   }
-  
+
   // Search methods
   setSearchType(type: string): void {
     this.repository.getSearchTypeSelect().select(type);
   }
-  
+
   setSearchText(text: string): void {
     this.repository.getSearchTextInput().clear().type(text);
   }
-  
+
   getBusinessUnitSelect(): Chainable<JQuery<HTMLElement>> {
     return this.repository.getBusinessUnitSelect();
   }
-  
+
   clickSearchButton(): void {
     this.repository.getSearchButton().click();
   }
-  
+
   searchFor(searchType: string, searchText: string): void {
     this.setSearchType(searchType);
     this.setSearchText(searchText);
@@ -108,19 +108,26 @@ export class SspServiceListPage extends YvesPage {
   }
 
   goToNextPageIfExists(): void {
-    this.repository.getPagination().find('a').contains('Next').then($next => {
-      if ($next.length > 0) {
-        cy.wrap($next).click();
-      }
-    });
+    this.repository
+      .getPagination()
+      .find('a')
+      .contains('Next')
+      .then(($next) => {
+        if ($next.length > 0) {
+          cy.wrap($next).click();
+        }
+      });
   }
 
   assertCurrentPageNumberIfMultiplePages(pageNumber: number): void {
-    this.repository.getPagination().find('li.active').then($active => {
-      if ($active.length > 0) {
-        cy.wrap($active).should('contain', pageNumber.toString());
-      }
-    });
+    this.repository
+      .getPagination()
+      .find('li.active')
+      .then(($active) => {
+        if ($active.length > 0) {
+          cy.wrap($active).should('contain', pageNumber.toString());
+        }
+      });
   }
 
   assertServiceListExists(): void {
