@@ -77,4 +77,22 @@ export class SuiteSspServiceRepository implements SspServiceRepository {
       JQuery<HTMLElement>
     >;
   }
+
+  getDetailsPageRescheduleButton(): Chainable<JQuery<HTMLElement>> {
+    return cy.get('a[data-qa="reschedule-button"]') as unknown as Chainable<
+      JQuery<HTMLElement>
+    >;
+  }
+
+  getRescheduleFormDateInput(): Chainable<JQuery<HTMLElement>> {
+    return cy.get('input[data-qa="reschedule-date"]');
+  }
+
+  getRescheduleFormTimeInput(): Chainable<JQuery<HTMLElement>> {
+    return cy.get('input[data-qa="reschedule-time"]');
+  }
+
+  getRescheduleFormSubmitButton(): Chainable<JQuery<HTMLElement>> {
+    return cy.get('button[data-qa="submit-button"]') as unknown as Chainable<JQuery<HTMLElement>>;
+  }
 }

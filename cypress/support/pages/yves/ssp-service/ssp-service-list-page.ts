@@ -98,6 +98,34 @@ export class SspServiceListPage extends YvesPage {
     this.clickResetButton();
   }
 
+  // Reschedule methods
+  getDetailsPageRescheduleButton(): Chainable<JQuery<HTMLElement>> {
+    return this.repository.getDetailsPageRescheduleButton();
+  }
+
+  getRescheduleFormDateInput(): Chainable<JQuery<HTMLElement>> {
+    return this.repository.getRescheduleFormDateInput();
+  }
+
+  getRescheduleFormTimeInput(): Chainable<JQuery<HTMLElement>> {
+    return this.repository.getRescheduleFormTimeInput();
+  }
+
+  getRescheduleFormSubmitButton(): Chainable<JQuery<HTMLElement>> {
+    return this.repository.getRescheduleFormSubmitButton();
+  }
+
+  getRescheduleSuccessMessage(): Chainable<JQuery<HTMLElement>> {
+    return this.repository.getRescheduleSuccessMessage();
+  }
+
+  rescheduleService(newDate: string, newTime: string): void {
+    this.getDetailsPageRescheduleButton().click();
+    this.getRescheduleFormDateInput().clear().type(newDate);
+    this.getRescheduleFormTimeInput().clear().type(newTime);
+    this.getRescheduleFormSubmitButton().click();
+  }
+
   assertNoSortIsApplied(): void {
     this.getOrderByInput().should('have.value', '');
     this.getOrderDirectionInput().should('have.value', '');
