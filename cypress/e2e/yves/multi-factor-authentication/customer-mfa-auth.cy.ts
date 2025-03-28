@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { LoginPage, CustomerOverviewPage, MultiFactorAuthPage } from '@pages/yves';
+import { CustomerOverviewPage, MultiFactorAuthPage } from '@pages/yves';
 import { CustomerMfaAuthDynamicFixtures, CustomerMfaAuthStaticFixtures } from '../../../support/types/yves/multi-factor-authentication';
 import { CustomerLogoutScenario } from '../../../support/scenarios/yves/customer-logout-scenario';
 import { CustomerDeletePage } from '../../../support/pages/yves/customer/customer-delete/customer-delete-page';
@@ -12,7 +12,6 @@ import { retryableBefore } from '../../../support/e2e';
     'customer mfa auth [suite]',
     { tags: ['@yves', '@customer-account-management'] },
     (): void => {
-        const loginPage = container.get(LoginPage);
         const customerOverviewPage = container.get(CustomerOverviewPage);
         const mfaPage = container.get(MultiFactorAuthPage);
         const logoutScenario = container.get(CustomerLogoutScenario);
@@ -28,7 +27,7 @@ import { retryableBefore } from '../../../support/e2e';
             ({ staticFixtures, dynamicFixtures } = Cypress.env());
         });
 
-        it('should setup email MFA and login with MFA', (): void => {
+        it('should verify successful MFA activation and subsequent authenticated login', (): void => {
             customerLoginScenario.execute({
                 email: dynamicFixtures.customerOne.email,
                 password: staticFixtures.defaultPassword,
@@ -47,12 +46,12 @@ import { retryableBefore } from '../../../support/e2e';
             customerOverviewPage.assertPageLocation();
         });
 
-        it('should setup email MFA, verify MFA is triggered on delete account form and deactivate MFA', (): void => {
-            loginPage.visit();
-            loginPage.login({
+        it('should validate MFA verification requirement during account deletion and successful deactivation', (): void => {
+            customerLoginScenario.execute({
                 email: dynamicFixtures.customerTwo.email,
                 password: staticFixtures.defaultPassword,
-            });
+                withoutSession: true,
+              });
             
             customerOverviewPage.assertPageLocation();
             mfaActivationScenario.execute(dynamicFixtures.customerTwo.email);
@@ -64,12 +63,12 @@ import { retryableBefore } from '../../../support/e2e';
             mfaActivationScenario.deactivate(dynamicFixtures.customerTwo.email);
         });
 
-        it('should setup email MFA and enter the invalid code during login', (): void => {
-            loginPage.visit();
-            loginPage.login({
+        it('should ensure proper error handling when invalid MFA verification code is provided', (): void => {
+            customerLoginScenario.execute({
                 email: dynamicFixtures.customerThree.email,
                 password: staticFixtures.defaultPassword,
-            });
+                withoutSession: true,
+              });
             
             customerOverviewPage.assertPageLocation();
             mfaActivationScenario.execute(dynamicFixtures.customerThree.email);

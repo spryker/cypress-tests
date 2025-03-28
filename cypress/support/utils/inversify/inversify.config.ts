@@ -144,6 +144,7 @@ import { B2cCustomerDeleteRepository } from '../../pages/yves/customer/customer-
 import { B2bCustomerDeleteRepository } from '../../pages/yves/customer/customer-delete/repositories/b2b-customer-delete-repository';
 import { B2cMpCustomerDeleteRepository } from '../../pages/yves/customer/customer-delete/repositories/b2c-mp-customer-delete-repository';
 import { B2bMpCustomerDeleteRepository } from '../../pages/yves/customer/customer-delete/repositories/b2b-mp-customer-delete-repository';
+import { SuiteSspAssetRepository } from '../../pages/yves/ssp-asset/repositories/suite-ssp-asset-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -177,6 +178,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.CompanyRoleIndexRepository]: SuiteCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: SuiteCompanyRoleCreateRepository,
   [REPOSITORIES.CustomerDeleteRepository]: SuiteCustomerDeleteRepository,
+  [REPOSITORIES.SspAssetRepository]: SuiteSspAssetRepository,
 };
 
 const b2cMappings: BindingsMap = {
