@@ -7,7 +7,6 @@ import {SspServiceListPage, CatalogPage, ProductPage} from '@pages/yves';
     {tags: ['@yves', '@ssp-service', '@ssp', '@SspServiceManagement']},
     (): void => {
         const customerLoginScenario = container.get(CustomerLoginScenario);
-        const customerLogoutScenario = container.get(CustomerLogoutScenario);
         const sspServiceListPage = container.get(SspServiceListPage);
         const checkoutScenario = container.get(CheckoutScenario);
 
@@ -19,42 +18,13 @@ import {SspServiceListPage, CatalogPage, ProductPage} from '@pages/yves';
             ({staticFixtures, dynamicFixtures} = Cypress.env());
         });
 
-        // Setup method to be called in each test
-        const prepareServices = () => {
-            if (!isSetupDone) {
-                checkoutScenario.execute({idCustomerAddress: dynamicFixtures.address1.id_customer_address});
-
-                isSetupDone = true;
-            }
-
-            sspServiceListPage.visit();
-        };
-
-        afterEach(() => {
-            customerLogoutScenario.execute();
-        });
-
         describe('Service List Page', () => {
-            it('should display the service list page with table', (): void => {
-                customerLoginScenario.execute({
-                    email: dynamicFixtures.customer.email,
-                    password: staticFixtures.defaultPassword,
-                    withoutSession: true,
-                });
-                prepareServices();
+            it('should verify all required table headers exist', (): void => {
+                purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
 
                 // Assert page is loaded correctly
                 cy.get('h1').should('contain', 'Services');
                 sspServiceListPage.getTable().should('exist');
-            });
-
-            it('should verify all required table headers exist', (): void => {
-                customerLoginScenario.execute({
-                    email: dynamicFixtures.customer.email,
-                    password: staticFixtures.defaultPassword,
-                    withoutSession: true,
-                });
-                prepareServices();
 
                 // Check if all column headers are present
                 sspServiceListPage.getTableHeaders().should('have.length.at.least', 5);
@@ -66,12 +36,8 @@ import {SspServiceListPage, CatalogPage, ProductPage} from '@pages/yves';
             });
 
             it('should sort by Order Reference column in both directions', (): void => {
-                customerLoginScenario.execute({
-                    email: dynamicFixtures.customer.email,
-                    password: staticFixtures.defaultPassword,
-                    withoutSession: true,
-                });
-                prepareServices();
+                purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
+
                 // Sort by Order Reference
                 sspServiceListPage.clickSortColumn('Order Reference');
                 // Verify that sorting was triggered
@@ -84,15 +50,7 @@ import {SspServiceListPage, CatalogPage, ProductPage} from '@pages/yves';
                 // Verify sort direction was toggled
                 sspServiceListPage.getOrderByInput().should('have.value', 'order_reference');
                 sspServiceListPage.getOrderDirectionInput().should('have.value', 'DESC');
-            });
 
-            it('should sort by Service Name column in both directions', (): void => {
-                customerLoginScenario.execute({
-                    email: dynamicFixtures.customer.email,
-                    password: staticFixtures.defaultPassword,
-                    withoutSession: true,
-                });
-                prepareServices();
                 // Sort by Service Name
                 sspServiceListPage.clickSortColumn('Service Name');
 
@@ -106,15 +64,7 @@ import {SspServiceListPage, CatalogPage, ProductPage} from '@pages/yves';
                 // Verify sort direction was toggled
                 sspServiceListPage.getOrderByInput().should('have.value', 'product_name');
                 sspServiceListPage.getOrderDirectionInput().should('have.value', 'DESC');
-            });
 
-            it('should sort by Created At column in both directions', (): void => {
-                customerLoginScenario.execute({
-                    email: dynamicFixtures.customer.email,
-                    password: staticFixtures.defaultPassword,
-                    withoutSession: true,
-                });
-                prepareServices();
                 // Sort by Created At
                 sspServiceListPage.clickSortColumn('Created At');
 
@@ -131,12 +81,8 @@ import {SspServiceListPage, CatalogPage, ProductPage} from '@pages/yves';
             });
 
             it('should search services by SKU', (): void => {
-                customerLoginScenario.execute({
-                    email: dynamicFixtures.customer.email,
-                    password: staticFixtures.defaultPassword,
-                    withoutSession: true,
-                });
-                prepareServices();
+                purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
+
                 // Get product SKU from fixtures to search for
                 const productSku = dynamicFixtures.product1.sku;
 
@@ -153,13 +99,8 @@ import {SspServiceListPage, CatalogPage, ProductPage} from '@pages/yves';
                 sspServiceListPage.getTableRows().should('have.length', 1);
             });
 
-            it('customer without permissions should se only his own services', (): void => {
-                customerLoginScenario.execute({
-                    email: dynamicFixtures.customer2.email,
-                    password: staticFixtures.defaultPassword,
-                    withoutSession: true,
-                })
-                prepareServices();
+            it('customer without permissions should ses only his own services', (): void => {
+                purchaseServiceAsCustomer(dynamicFixtures.customer2.email, dynamicFixtures.address1.id_customer_address);
 
                 // Check if Business Unit dropdown exists
                 sspServiceListPage.getBusinessUnitSelect().should('exist');
@@ -174,5 +115,21 @@ import {SspServiceListPage, CatalogPage, ProductPage} from '@pages/yves';
                 sspServiceListPage.getTableRows().should('not.exist');
             });
         });
+
+        // Setup method to be called in each test
+        function purchaseServiceAsCustomer(email: string, idCustomerAddress: number): void {
+            customerLoginScenario.execute({
+                email: email,
+                password: staticFixtures.defaultPassword,
+            });
+
+            if (!isSetupDone) {
+                checkoutScenario.execute({idCustomerAddress: idCustomerAddress});
+
+                isSetupDone = true;
+            }
+
+            sspServiceListPage.visit();
+        }
     },
 );

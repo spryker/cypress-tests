@@ -5,76 +5,35 @@ type Chainable<Subject = any> = Cypress.Chainable<Subject>;
 type JQueryElement = JQuery<HTMLElement>;
 
 @injectable()
-export class SspServiceRepository {
-  getSspServiceTable(): Chainable<JQueryElement> {
-    return cy.get('.ssp-service-table');
-  }
+export interface SspServiceRepository {
+  getSspServiceTable(): Chainable<JQueryElement>;
 
-  getSspServiceTableRows(): Chainable<JQueryElement> {
-    return this.getSspServiceTable().find('tbody tr');
-  }
+  getSspServiceTableRows(): Chainable<JQueryElement>;
 
-  getSspServiceTableHeaders(): Chainable<JQueryElement> {
-    return this.getSspServiceTable().find('thead th');
-  }
+  getSspServiceTableHeaders(): Chainable<JQueryElement>;
 
-  getSortingTriggers(): Chainable<JQueryElement> {
-    return cy.get('.js-service-sort-trigger');
-  }
+  getSortingTriggers(): Chainable<JQueryElement>;
 
-  getSortOrderByInput(): Chainable<JQueryElement> {
-    return cy.get('.js-advanced-table-order-by-target');
-  }
+  getSortOrderByInput(): Chainable<JQueryElement>;
 
-  getSortDirectionInput(): Chainable<JQueryElement> {
-    return cy.get('.js-advanced-table-order-direction-target');
-  }
+  getSortDirectionInput(): Chainable<JQueryElement>;
 
-  getResetButton(): Chainable<JQueryElement> {
-    return cy.get('[data-qa=reset-button]');
-  }
+  getResetButton(): Chainable<JQueryElement>;
   
-  getPagination(): Chainable<JQueryElement> {
-    return cy.get('.pagination');
-  }
+  getPagination(): Chainable<JQueryElement>;
 
-  getSortColumnByName(columnName: string): Chainable<any> {
-    return cy.contains('th div', columnName);
-  }
+  getSortColumnByName(columnName: string): Chainable<any>;
   
   // Search form methods
-  getSearchTypeSelect(): Chainable<JQueryElement> {
-    return cy.get('select[name*="searchType"]');
-  }
+  getSearchTypeSelect(): Chainable<JQueryElement>;
   
-  getSearchTextInput(): Chainable<JQueryElement> {
-    return cy.get('input[name*="searchText"]');
-  }
+  getSearchTextInput(): Chainable<JQueryElement>;
 
-  getBusinessUnitSelect(): Chainable<JQueryElement> {
-    return cy.get('select[name*="companyBusinessUnit"]');
-  }
+  getBusinessUnitSelect(): Chainable<JQueryElement>;
   
-  getSearchButton(): Chainable<any> {
-    return cy.contains('button', 'Search');
-  }
+  getSearchButton(): Chainable<any>;
 
-  getFirstRowReference(): string {
-    let reference = '';
-    
-    this.getSspServiceTableRows()
-      .first()
-      .find('td')
-      .first()
-      .invoke('text')
-      .then((text: string) => {
-        reference = text.trim();
-      });
-      
-    return reference;
-  }
+  getFirstRowReference(): string;
 
-  getFirstRowViewDetailsButton(): Chainable<any> {
-    return this.getSspServiceTableRows().first().find('a').contains('View');
-  }
+  getFirstRowViewDetailsButton(): Chainable<any>;
 }

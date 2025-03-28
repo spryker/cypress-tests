@@ -33,7 +33,7 @@ export class SuiteSspServiceRepository implements SspServiceRepository {
   }
 
   getSortColumnByName(columnName: string): Chainable<any> {
-    return cy.contains('th div', columnName);
+    return cy.contains('.advanced-table th', columnName);
   }
   
   // Search form methods
