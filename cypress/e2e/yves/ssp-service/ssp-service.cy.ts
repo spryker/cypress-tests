@@ -120,7 +120,7 @@ import {SspServiceListPage, CatalogPage, ProductPage} from '@pages/yves';
                 isSetupDone = false;
 
                 // First company user purchases a service
-                purchaseServiceAsCustomer(dynamicFixtures.companyUser1.email, dynamicFixtures.companyUser1Address.id_customer_address);
+                purchaseServiceAsCustomer(dynamicFixtures.company1Customer.email, dynamicFixtures.company1CustomerAddress.id_customer_address);
                 
                 // Verify the service is in the list for the first company user
                 cy.get('h1').should('contain', 'Services');
@@ -136,7 +136,7 @@ import {SspServiceListPage, CatalogPage, ProductPage} from '@pages/yves';
                 
                 // Login as second company user
                 customerLoginScenario.execute({
-                    email: dynamicFixtures.companyUser2.email,
+                    email: dynamicFixtures.company2Customer.email,
                     password: staticFixtures.defaultPassword,
                 });
                 

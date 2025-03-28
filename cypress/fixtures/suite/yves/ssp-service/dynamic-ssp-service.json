@@ -34,7 +34,7 @@
         {
           "type": "helper",
           "name": "haveCustomer",
-          "key": "companyUser1",
+          "key": "company1Customer",
           "arguments": [
             { 
               "registered": "2025-01-01", 
@@ -46,7 +46,7 @@
         {
           "type": "helper",
           "name": "haveCustomer",
-          "key": "companyUser2",
+          "key": "company2Customer",
           "arguments": [
             { 
               "registered": "2025-01-01", 
@@ -70,14 +70,14 @@
         {
           "type": "helper",
           "name": "confirmCustomer",
-          "key": "confirmedCompanyUser1",
-          "arguments": ["#companyUser1"]
+          "key": "confirmedCompany1Customer",
+          "arguments": ["#company1Customer"]
         },
         {
           "type": "helper",
           "name": "confirmCustomer",
-          "key": "confirmedCompanyUser2",
-          "arguments": ["#companyUser2"]
+          "key": "confirmedCompany2Customer",
+          "arguments": ["#company2Customer"]
         },
         
         {
@@ -150,7 +150,7 @@
           "key": "companyUser1Entity",
           "arguments": [
             {
-              "customer": "#companyUser1",
+              "customer": "#company1Customer",
               "fk_company": "#company1.id_company",
               "company_role_collection": ["#companyRoleCollection1"],
               "fk_company_business_unit": "#companyBusinessUnit1.id_company_business_unit"
@@ -163,7 +163,7 @@
           "key": "companyUser2Entity",
           "arguments": [
             {
-              "customer": "#companyUser2",
+              "customer": "#company2Customer",
               "fk_company": "#company2.id_company",
               "company_role_collection": ["#companyRoleCollection2"],
               "fk_company_business_unit": "#companyBusinessUnit2.id_company_business_unit"
@@ -200,14 +200,14 @@
         {
           "type": "helper",
           "name": "haveCustomerAddress",
-          "key": "companyUser1Address",
-          "arguments": [{ "fkCustomer": "#companyUser1.id_customer", "fkCountry": "#country.id_country" }]
+          "key": "company1CustomerAddress",
+          "arguments": [{ "fkCustomer": "#company1Customer.id_customer", "fkCountry": "#country.id_country" }]
         },
         {
           "type": "helper",
           "name": "haveCustomerAddress",
-          "key": "companyUser2Address",
-          "arguments": [{ "fkCustomer": "#companyUser2.id_customer", "fkCountry": "#country.id_country" }]
+          "key": "company2CustomerAddress",
+          "arguments": [{ "fkCustomer": "#company2Customer.id_customer", "fkCountry": "#country.id_country" }]
         },
         {
           "type": "helper",
@@ -350,7 +350,7 @@
           "name": "havePersistentQuote",
           "arguments": [
             {
-              "customer": "#companyUser1",
+              "customer": "#company1Customer",
               "items": [
                 {
                   "sku": "#product1.sku",
