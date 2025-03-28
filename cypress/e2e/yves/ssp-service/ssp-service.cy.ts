@@ -1,6 +1,32 @@
 import { container } from '@utils';
 import { CustomerLoginScenario, CustomerLogoutScenario, CheckoutScenario } from '@scenarios/yves';
-import { SspServiceListPage, CatalogPage, ProductPage } from '@pages/yves';
+import { SspServiceListPage } from '@pages/yves';
+
+// Define fixture interfaces
+interface CustomerFixture {
+  email: string;
+  password?: string;
+}
+
+interface AddressFixture {
+  id_customer_address: number;
+}
+
+interface ProductFixture {
+  sku: string;
+  name?: string;
+}
+
+interface DynamicFixtures {
+  customer: CustomerFixture;
+  customer2: CustomerFixture;
+  company1Customer: CustomerFixture;
+  company2Customer: CustomerFixture;
+  address1: AddressFixture;
+  company1CustomerAddress: AddressFixture;
+  product1: ProductFixture;
+  [key: string]: unknown;
+}
 
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'SSP Service Management',
@@ -11,8 +37,8 @@ import { SspServiceListPage, CatalogPage, ProductPage } from '@pages/yves';
     const sspServiceListPage = container.get(SspServiceListPage);
     const checkoutScenario = container.get(CheckoutScenario);
 
-    let staticFixtures: Record<string, any>;
-    let dynamicFixtures: Record<string, any>;
+    let staticFixtures: Record<string, unknown>;
+    let dynamicFixtures: DynamicFixtures;
     let isSetupDone = false;
 
     before((): void => {
@@ -90,8 +116,8 @@ import { SspServiceListPage, CatalogPage, ProductPage } from '@pages/yves';
         // Select SKU search type and enter the product SKU
         sspServiceListPage.searchFor('SKU', productSku);
 
-        // Wait for the search results to load
-        cy.wait(500);
+        // Wait for the search results to be available
+        sspServiceListPage.getTableRows().should('be.visible');
 
         // Verify search filter is applied in URL
         cy.url().should('include', productSku);
@@ -140,7 +166,7 @@ import { SspServiceListPage, CatalogPage, ProductPage } from '@pages/yves';
         // Login as second company user
         customerLoginScenario.execute({
           email: dynamicFixtures.company2Customer.email,
-          password: staticFixtures.defaultPassword,
+          password: staticFixtures.defaultPassword as string,
         });
 
         // Visit service list page
@@ -160,7 +186,7 @@ import { SspServiceListPage, CatalogPage, ProductPage } from '@pages/yves';
     function purchaseServiceAsCustomer(email: string, idCustomerAddress: number): void {
       customerLoginScenario.execute({
         email: email,
-        password: staticFixtures.defaultPassword,
+        password: staticFixtures.defaultPassword as string,
       });
 
       if (!isSetupDone) {

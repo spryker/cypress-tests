@@ -1,5 +1,5 @@
 // Import Cypress types
-type Chainable<Subject = any> = Cypress.Chainable<Subject>;
+type Chainable<Subject = JQuery<HTMLElement>> = Cypress.Chainable<Subject>;
 type JQueryElement = JQuery<HTMLElement>;
 
 export interface SspServiceRepository {
@@ -19,7 +19,7 @@ export interface SspServiceRepository {
 
   getPagination(): Chainable<JQueryElement>;
 
-  getSortColumnByName(columnName: string): Chainable<any>;
+  getSortColumnByName(columnName: string): Chainable<JQueryElement>;
 
   // Search form methods
   getSearchTypeSelect(): Chainable<JQueryElement>;
@@ -28,9 +28,9 @@ export interface SspServiceRepository {
 
   getBusinessUnitSelect(): Chainable<JQueryElement>;
 
-  getSearchButton(): Chainable<any>;
+  getSearchButton(): Chainable<JQueryElement>;
 
   getFirstRowReference(): string;
 
-  getFirstRowViewDetailsButton(): Chainable<any>;
+  getFirstRowViewDetailsButton(): Chainable<JQueryElement>;
 }

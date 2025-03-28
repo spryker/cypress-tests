@@ -32,7 +32,7 @@ export class SuiteSspServiceRepository implements SspServiceRepository {
     return cy.get('[data-qa=reset-button]');
   }
 
-  getSortColumnByName(columnName: string): Chainable<any> {
+  getSortColumnByName(columnName: string): Chainable<JQuery<HTMLElement>> {
     return cy.contains('.advanced-table th', columnName);
   }
 
@@ -49,11 +49,11 @@ export class SuiteSspServiceRepository implements SspServiceRepository {
     return cy.get('select[name*="companyBusinessUnit"]');
   }
 
-  getSearchButton(): Chainable<any> {
-    return cy.contains('button', 'Search');
+  getSearchButton(): Chainable<JQuery<HTMLElement>> {
+    return cy.contains('button', 'Search') as unknown as Chainable<JQuery<HTMLElement>>;
   }
 
-  getPagination(): Chainable<any> {
+  getPagination(): Chainable<JQuery<HTMLElement>> {
     return cy.get('.pagination');
   }
 
@@ -72,7 +72,7 @@ export class SuiteSspServiceRepository implements SspServiceRepository {
     return reference;
   }
 
-  getFirstRowViewDetailsButton(): Chainable<any> {
-    return this.getSspServiceTableRows().first().find('a').contains('View');
+  getFirstRowViewDetailsButton(): Chainable<JQuery<HTMLElement>> {
+    return this.getSspServiceTableRows().first().find('a').contains('View') as unknown as Chainable<JQuery<HTMLElement>>;
   }
 }
