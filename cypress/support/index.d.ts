@@ -76,8 +76,8 @@ declare namespace Cypress {
      * Clean up an MFA code from the database
      * @param code - The code to clean up
      * @example
-     * cy.cleanUpCode('123456')
+     * cy.cleanUpMultiFactorAuthCode('123456')
      */
-    cleanUpCode(code: string): void;
+    cleanUpMultiFactorAuthCode(code: string): void;
   }
 }

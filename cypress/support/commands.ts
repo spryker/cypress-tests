@@ -196,20 +196,18 @@ Cypress.Commands.add('getMultiFactorAuthCode', (email, type) => {
       },
     })
     .then((response) => {
-      console.log('Response:', response.body);
       if (response.body.data && response.body.data.attributes && response.body.data.attributes.data) {
         const mfaResponse = response.body.data.attributes.data;
-        console.log('MFA Response:', mfaResponse);
         return mfaResponse.code;
       }
       return null;
     });
 });
 
-Cypress.Commands.add('cleanUpCode', (code: string) => {
+Cypress.Commands.add('cleanUpMultiFactorAuthCode', (code: string) => {
   const operation = {
     type: 'helper',
-    name: 'cleanUpCode',
+    name: 'cleanUpMultiFactorAuthCode',
     arguments: [code],
   };
 

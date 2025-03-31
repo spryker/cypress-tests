@@ -3,49 +3,31 @@ import { MultiFactorAuthRepository } from '../multi-factor-auth-repository';
 
 @injectable()
 export class B2bMultiFactorAuthRepository implements MultiFactorAuthRepository {
-  private readonly SELECTORS = {
-    VERIFICATION_CODE_INPUT: 'input[name="codeValidationForm[authentication_code]"]',
-    VERIFY_BUTTON: 'form[name="codeValidationForm"] button[type="submit"]',
-    VERIFICATION_POPUP: '.js-multi-factor-authentication-handler__popup-content',
-    FORM_BOX: '.form.box',
-    ACTIVATE_FORM: 'form[name^="activateForm"]',
-    DEACTIVATE_FORM: 'form[name^="deactivateForm"]',
-    SUBMIT_BUTTON: 'button[type="submit"]',
-  };
-
   getVerificationCodeInput(): Cypress.Chainable {
-    return cy.get(this.SELECTORS.VERIFICATION_CODE_INPUT);
+    return cy.get('input[name="codeValidationForm[authentication_code]"]');
   }
 
   getVerifyButton(): Cypress.Chainable {
-    return cy.get(this.SELECTORS.VERIFY_BUTTON);
+    return cy.get('form[name="codeValidationForm"] button[type="submit"]');
   }
 
   getVerificationPopup(): Cypress.Chainable {
-    return cy.get(this.SELECTORS.VERIFICATION_POPUP, { timeout: 15000 });
+    return cy.get('.js-multi-factor-authentication-handler__popup-content');
   }
 
   getMfaTypeSection(type: string): Cypress.Chainable {
-    return cy.contains(this.SELECTORS.FORM_BOX, type);
+    return cy.get(`div[data-qa="mfa-type-section"]:contains("${type}")`);
   }
 
   getActivateForm(): Cypress.Chainable {
-    return cy.get(this.SELECTORS.ACTIVATE_FORM).first();
+    return cy.get('form[name^="activateForm"]').first();
   }
 
   getDeactivateForm(): Cypress.Chainable {
-    return cy.get(this.SELECTORS.DEACTIVATE_FORM).first();
+    return cy.get('form[name^="deactivateForm"]').first();
   }
 
   getSubmitButton(): Cypress.Chainable {
-    return cy.get(this.SELECTORS.SUBMIT_BUTTON);
-  }
-
-  assertActivationSuccess(): void {
-    cy.contains('The multi-factor authentication has been activated').should('be.visible');
-  }
-
-  assertDeactivationSuccess(): void {
-    cy.contains('The multi-factor authentication has been deactivated').should('be.visible');
+    return cy.get('button[type="submit"]');
   }
 }

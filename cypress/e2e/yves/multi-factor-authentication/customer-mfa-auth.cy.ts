@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { CustomerOverviewPage, MultiFactorAuthPage } from '@pages/yves';
+import { CustomerOverviewPage, HomePage, MultiFactorAuthPage } from '@pages/yves';
 import {
   CustomerMfaAuthDynamicFixtures,
   CustomerMfaAuthStaticFixtures,
@@ -10,18 +10,23 @@ import { CustomerMfaActivationScenario } from '../../../support/scenarios/yves/c
 import { CustomerMfaLoginScenario } from '../../../support/scenarios/yves/customer-mfa-login-scenario';
 import { CustomerLoginScenario } from '../../../support/scenarios/yves/customer-login-scenario';
 import { retryableBefore } from '../../../support/e2e';
+import { CustomerProfilePage } from '../../../support/pages/yves/customer/profile/customer-profile-page';
+import { CustomerProfileScenario } from '../../../support/scenarios/yves/customer-profile-scenario';
 
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'customer mfa auth [suite]',
   { tags: ['@yves', '@customer-account-management'] },
   (): void => {
     const customerOverviewPage = container.get(CustomerOverviewPage);
-    const mfaPage = container.get(MultiFactorAuthPage);
-    const logoutScenario = container.get(CustomerLogoutScenario);
     const customerDeletePage = container.get(CustomerDeletePage);
+    const customerProfilePage = container.get(CustomerProfilePage);
+    const mfaPage = container.get(MultiFactorAuthPage);
+    const homePage = container.get(HomePage);
+    const logoutScenario = container.get(CustomerLogoutScenario);
     const mfaActivationScenario = container.get(CustomerMfaActivationScenario);
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const mfaLoginScenario = container.get(CustomerMfaLoginScenario);
+    const customerProfileScenario = container.get(CustomerProfileScenario);
 
     let dynamicFixtures: CustomerMfaAuthDynamicFixtures;
     let staticFixtures: CustomerMfaAuthStaticFixtures;
@@ -38,7 +43,7 @@ import { retryableBefore } from '../../../support/e2e';
       });
 
       customerOverviewPage.assertPageLocation();
-      mfaActivationScenario.execute(dynamicFixtures.customerOne.email);
+      mfaActivationScenario.execute(dynamicFixtures.customerOne.email, staticFixtures.activationSuccessMessage);
 
       logoutScenario.execute();
       mfaLoginScenario.execute({
@@ -57,13 +62,17 @@ import { retryableBefore } from '../../../support/e2e';
       });
 
       customerOverviewPage.assertPageLocation();
-      mfaActivationScenario.execute(dynamicFixtures.customerTwo.email);
+      mfaActivationScenario.execute(dynamicFixtures.customerTwo.email, staticFixtures.activationSuccessMessage);
 
       customerDeletePage.visit();
       customerDeletePage.clickDeleteAccount();
       mfaPage.waitForVerificationPopup();
 
-      mfaActivationScenario.deactivate(dynamicFixtures.customerTwo.email);
+      mfaActivationScenario.deactivate(dynamicFixtures.customerTwo.email, staticFixtures.deactivationSuccessMessage);
+
+      customerDeletePage.visit();
+      customerDeletePage.clickDeleteAccount();
+      homePage.assertPageLocation();
     });
 
     it('should ensure proper error handling when invalid MFA verification code is provided', (): void => {
@@ -74,13 +83,41 @@ import { retryableBefore } from '../../../support/e2e';
       });
 
       customerOverviewPage.assertPageLocation();
-      mfaActivationScenario.execute(dynamicFixtures.customerThree.email);
+      mfaActivationScenario.execute(dynamicFixtures.customerThree.email, staticFixtures.activationSuccessMessage);
 
       logoutScenario.execute();
-      mfaLoginScenario.executeWithInvalidCode({
-        email: dynamicFixtures.customerThree.email,
+      mfaLoginScenario.executeWithInvalidCode(
+        {
+          email: dynamicFixtures.customerThree.email,
+          password: staticFixtures.defaultPassword,
+        },
+        staticFixtures
+      );
+    });
+
+    it("should change password and login using a new one without MFA if it's not enabled", (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customerFour.email,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
+
+      customerProfilePage.visit();
+      customerProfileScenario.executePasswordChange({
+        password: staticFixtures.defaultPassword,
+        newPassword: staticFixtures.newPassword,
+        passwordChangeSuccessMessage: staticFixtures.passwordChangeSuccessMessage,
+      });
+
+      logoutScenario.execute();
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customerFour.email,
+        password: staticFixtures.newPassword,
+        withoutSession: true,
+      });
+
+      customerOverviewPage.assertPageLocation();
     });
   }
 );

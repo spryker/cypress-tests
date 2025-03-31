@@ -1,3 +1,9 @@
 {
-  "defaultPassword": "change123"
+  "defaultPassword": "change123",
+  "newPassword": "s2L}J(_t7C4X",
+  "activationSuccessMessage": "The multi-factor authentication has been activated",
+  "deactivationSuccessMessage": "The multi-factor authentication has been deactivated",
+  "passwordChangeSuccessMessage": "Password change successful",
+  "invalidCodeMessage": "Invalid multi-factor authentication code",
+  "invalidCode": "123456"
 }

@@ -144,6 +144,11 @@ import { B2cCustomerDeleteRepository } from '../../pages/yves/customer/customer-
 import { B2bCustomerDeleteRepository } from '../../pages/yves/customer/customer-delete/repositories/b2b-customer-delete-repository';
 import { B2cMpCustomerDeleteRepository } from '../../pages/yves/customer/customer-delete/repositories/b2c-mp-customer-delete-repository';
 import { B2bMpCustomerDeleteRepository } from '../../pages/yves/customer/customer-delete/repositories/b2b-mp-customer-delete-repository';
+import { SuiteCustomerProfileRepository } from '../../pages/yves/customer/profile/repositories/suite-customer-profile-repository';
+import { B2cCustomerProfileRepository } from '../../pages/yves/customer/profile/repositories/b2c-customer-profile-repository';
+import { B2bCustomerProfileRepository } from '../../pages/yves/customer/profile/repositories/b2b-customer-profile-repository';
+import { B2cMpCustomerProfileRepository } from '../../pages/yves/customer/profile/repositories/b2c-mp-customer-profile-repository';
+import { B2bMpCustomerProfileRepository } from '../../pages/yves/customer/profile/repositories/b2b-mp-customer-profile-repository';
 import { SuiteSspAssetRepository } from '../../pages/yves/ssp-asset/repositories/suite-ssp-asset-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
@@ -178,6 +183,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.CompanyRoleIndexRepository]: SuiteCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: SuiteCompanyRoleCreateRepository,
   [REPOSITORIES.CustomerDeleteRepository]: SuiteCustomerDeleteRepository,
+  [REPOSITORIES.CustomerProfileRepository]: SuiteCustomerProfileRepository,
   [REPOSITORIES.SspAssetRepository]: SuiteSspAssetRepository,
 };
 
@@ -210,6 +216,7 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.CompanyRoleCreateRepository]: B2cCompanyRoleCreateRepository,
   [REPOSITORIES.ManageCompanyRoleUserRepository]: B2cManageCompanyRoleUserRepository,
   [REPOSITORIES.CustomerDeleteRepository]: B2cCustomerDeleteRepository,
+  [REPOSITORIES.CustomerProfileRepository]: B2cCustomerProfileRepository,
 };
 
 const b2bMappings: BindingsMap = {
@@ -241,6 +248,7 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.CompanyRoleIndexRepository]: B2bCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: B2bCompanyRoleCreateRepository,
   [REPOSITORIES.CustomerDeleteRepository]: B2bCustomerDeleteRepository,
+  [REPOSITORIES.CustomerProfileRepository]: B2bCustomerProfileRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
@@ -272,6 +280,7 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.CompanyRoleCreateRepository]: B2cMpCompanyRoleCreateRepository,
   [REPOSITORIES.ManageCompanyRoleUserRepository]: B2cMpManageCompanyRoleUserRepository,
   [REPOSITORIES.CustomerDeleteRepository]: B2cMpCustomerDeleteRepository,
+  [REPOSITORIES.CustomerProfileRepository]: B2cMpCustomerProfileRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
@@ -303,6 +312,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.CompanyRoleIndexRepository]: B2bMpCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: B2bMpCompanyRoleCreateRepository,
   [REPOSITORIES.CustomerDeleteRepository]: B2bMpCustomerDeleteRepository,
+  [REPOSITORIES.CustomerProfileRepository]: B2bMpCustomerProfileRepository,
 };
 
 const mappings = {

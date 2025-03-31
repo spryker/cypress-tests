@@ -2,11 +2,6 @@ import { injectable, inject } from 'inversify';
 import { autoWired } from '@utils';
 import { LoginPage, MultiFactorAuthPage } from '../../pages/yves';
 
-interface LoginCredentials {
-  email: string;
-  password: string;
-}
-
 @injectable()
 @autoWired
 export class CustomerMfaLoginScenario {
@@ -24,15 +19,25 @@ export class CustomerMfaLoginScenario {
     });
   }
 
-  executeWithInvalidCode(credentials: LoginCredentials, invalidCode = '123456'): void {
+  executeWithInvalidCode(credentials: LoginCredentials, staticFixtures: CustomerMfaAuthStaticFixtures): void {
     this.loginPage.visit();
     this.loginPage.login(credentials);
 
     this.mfaPage.waitForVerificationPopup();
-    this.mfaPage.verifyCode(invalidCode);
+    this.mfaPage.verifyCode(staticFixtures.invalidCode);
+    this.mfaPage.waitForMessage(staticFixtures.invalidCodeMessage);
 
-    cy.contains('Invalid multi-factor authentication code');
     cy.reload();
     this.loginPage.assertPageLocation();
   }
+}
+
+interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+interface CustomerMfaAuthStaticFixtures {
+  invalidCodeMessage: string;
+  invalidCode: string;
 }
