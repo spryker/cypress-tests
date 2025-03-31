@@ -174,4 +174,42 @@ export class SspServiceListPage extends YvesPage {
   assertPaginationActive(pageNumber: number): void {
     this.repository.getPagination().find('li.active').should('contain', pageNumber);
   }
+
+  /**
+   * Sets up a date for tomorrow at 2:00 PM and enters it in the reschedule form
+   * @returns The Date object for tomorrow at 2:00 PM
+   */
+  updateServiceDateToTomorrow(): Date {
+    // Set up new date/time (tomorrow at 2:00 PM)
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(14, 0, 0);
+    const dateTimeISO = tomorrow.toISOString().split('.')[0].substring(0, 16);
+
+    // Complete the reschedule form
+    this.getRescheduleFormDateInput().clear().type(dateTimeISO);
+    this.getRescheduleFormSubmitButton().click();
+
+    return tomorrow;
+  }
+
+  /**
+   * Verifies that a service was rescheduled to the expected date
+   * @param tomorrow The Date object representing the expected date
+   */
+  verifyServiceRescheduled(tomorrow: Date): void {
+    this.getTableRows()
+      .first()
+      .find('td')
+      .eq(2)
+      .invoke('text')
+      .then((text) => {
+        const updatedDate = text.trim();
+        const day = tomorrow.getDate();
+        const year = tomorrow.getFullYear();
+
+        // Verify date in formatted display matches expected date
+        expect(updatedDate).to.include(`${day}, ${year}`);
+      });
+  }
 }

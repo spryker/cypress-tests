@@ -183,7 +183,6 @@ interface DynamicFixtures {
 
       it('should allow rescheduling a service', (): void => {
         // Setup: Purchase a service as a regular customer
-        isSetupDone = false;
         purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
 
         // Verify service is listed
@@ -197,34 +196,14 @@ interface DynamicFixtures {
         sspServiceListPage.getDetailsPageRescheduleButton().should('be.visible').first().click();
         cy.url().should('include', '/update-service-time');
 
-        // Set up new date/time (tomorrow at 2:00 PM)
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        tomorrow.setHours(14, 0, 0);
-        const dateTimeISO = tomorrow.toISOString().split('.')[0].substring(0, 16);
-
-        // Complete the reschedule form
-        sspServiceListPage.getRescheduleFormDateInput().clear().type(dateTimeISO);
-        sspServiceListPage.getRescheduleFormSubmitButton().click();
+        // Set up new date/time (tomorrow at 2:00 PM) and submit the form
+        const tomorrow = sspServiceListPage.updateServiceDateToTomorrow();
 
         // Verify redirection to services list
         cy.url().should('include', '/customer/ssp-service');
 
         // Verify service was rescheduled
-        sspServiceListPage
-          .getTableRows()
-          .first()
-          .find('td')
-          .eq(2)
-          .invoke('text')
-          .then((text) => {
-            const updatedDate = text.trim();
-            const day = tomorrow.getDate();
-            const year = tomorrow.getFullYear();
-
-            // Verify date in formatted display matches expected date
-            expect(updatedDate).to.include(`${day}, ${year}`);
-          });
+        sspServiceListPage.verifyServiceRescheduled(tomorrow);
       });
     });
 
