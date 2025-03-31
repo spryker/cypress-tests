@@ -180,6 +180,31 @@ interface DynamicFixtures {
         // The second company user should see no services from the first company
         sspServiceListPage.getTableRows().should('not.exist');
       });
+
+      it('should allow rescheduling a service', (): void => {
+        // Setup: Purchase a service as a regular customer
+        purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
+
+        // Verify service is listed
+        sspServiceListPage.getTableRows().should('have.length.at.least', 1);
+
+        // Navigate to service details page
+        sspServiceListPage.viewFirstServiceDetails();
+        cy.url().should('include', '/order/details');
+
+        // Access reschedule functionality
+        sspServiceListPage.getDetailsPageRescheduleButton().should('be.visible').first().click();
+        cy.url().should('include', '/update-service-time');
+
+        // Set up new date/time (tomorrow at 2:00 PM) and submit the form
+        const tomorrow = sspServiceListPage.updateServiceDateToTomorrow();
+
+        // Verify redirection to services list
+        cy.url().should('include', '/customer/ssp-service');
+
+        // Verify service was rescheduled
+        sspServiceListPage.verifyServiceRescheduled(tomorrow);
+      });
     });
 
     // Setup method to be called in each test
