@@ -55,7 +55,7 @@ export class SspInquiryDetailPage extends YvesPage {
           cy.get('td').eq(getColumnIndexByName('File name')).should('contain.text', extractFileName(file.name));
           cy.get('td').eq(getColumnIndexByName('Size')).should('contain.text', file.size);
           cy.get('td').eq(getColumnIndexByName('Type')).should('contain.text', file.extension);
-          cy.get('td').eq(getColumnIndexByName('Actions')).should('contain.text', 'Download');
+          cy.get('td').eq(getColumnIndexByName('Actions')).find(this.repository.getFileDownloadActionSelector()).should('exist');
         });
     }
   };

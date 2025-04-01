@@ -146,4 +146,8 @@ export class SuiteSspInquiryRepository implements SspInquiryRepository {
   getSubmitButton(): Cypress.Chainable {
     return this.getSspInquiryForm().find(this.selectors.submitButton);
   }
+
+    getFileDownloadActionSelector(): string {
+      return '[data-qa*="download-button"]';
+    }
 }

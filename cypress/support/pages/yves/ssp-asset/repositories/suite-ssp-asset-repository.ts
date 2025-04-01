@@ -4,7 +4,7 @@ import { injectable } from 'inversify';
 @injectable()
 export class SuiteSspAssetRepository implements SspAssetRepository {
   getSspAssetCustomerMenuItem(): Cypress.Chainable {
-    return cy.get('[data-qa="ssp-asset-customer-menu-item"]');
+    return cy.get('[data-qa*="ssp-asset-customer-menu-item"]');
   }
 
   getCreateAssetButton(): Cypress.Chainable {
