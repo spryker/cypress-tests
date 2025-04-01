@@ -1,0 +1,14 @@
+{
+  "defaultPassword": "change123",
+  "asset": {
+    "name": "Sample Asset Name",
+    "note": "Sample asset note for testing purposes",
+    "serial_number": "1234567890",
+    "image": "suite/yves/ssp-asset/files/asset_image.png"
+  },
+  "assetUpdateData": {
+    "name": "New Sample Asset Name",
+    "note": "New Sample asset note for testing purposes",
+    "serial_number": "767676767"
+  }
+}

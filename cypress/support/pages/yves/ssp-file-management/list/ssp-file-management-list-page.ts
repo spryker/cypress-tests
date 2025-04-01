@@ -40,7 +40,7 @@ export class SspFileManagementListPage extends YvesPage {
   }
 
   filterByType(fileType: string): void {
-    cy.get(this.repository.getTypeFilterSelector()).select(fileType);
+    cy.get(this.repository.getTypeFilterSelector()).select(fileType, { force: true });
     cy.get(this.repository.getApplyFiltersButtonSelector()).click();
   }
 
@@ -53,7 +53,7 @@ export class SspFileManagementListPage extends YvesPage {
   applyFilters(searchTerm: string, fileType: string): void {
     cy.get(this.repository.getSearchFieldSelector()).clear();
     cy.get(this.repository.getSearchFieldSelector()).type(searchTerm);
-    cy.get(this.repository.getTypeFilterSelector()).select(fileType);
+    cy.get(this.repository.getTypeFilterSelector()).select(fileType, { force: true });
     cy.get(this.repository.getApplyFiltersButtonSelector()).click();
   }
 
