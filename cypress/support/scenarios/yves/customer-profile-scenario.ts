@@ -9,12 +9,11 @@ export class CustomerProfileScenario {
 
   executePasswordChange(credentials: PasswordChangeParams): void {
     this.profilePage.changePassword(credentials.password, credentials.newPassword);
-    this.profilePage.waitForSuccessMessage(credentials.passwordChangeSuccessMessage);
+    this.profilePage.waitForPasswordChangedMessage();
   }
 }
 
 interface PasswordChangeParams {
   password: string;
   newPassword: string;
-  passwordChangeSuccessMessage: string;
 }

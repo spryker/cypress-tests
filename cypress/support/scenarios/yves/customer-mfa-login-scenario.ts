@@ -25,7 +25,7 @@ export class CustomerMfaLoginScenario {
 
     this.mfaPage.waitForVerificationPopup();
     this.mfaPage.verifyCode(staticFixtures.invalidCode);
-    this.mfaPage.waitForMessage(staticFixtures.invalidCodeMessage);
+    this.mfaPage.waitForInvalidCodeMessage();
 
     cy.reload();
     this.loginPage.assertPageLocation();
@@ -38,6 +38,5 @@ interface LoginCredentials {
 }
 
 interface CustomerMfaAuthStaticFixtures {
-  invalidCodeMessage: string;
   invalidCode: string;
 }

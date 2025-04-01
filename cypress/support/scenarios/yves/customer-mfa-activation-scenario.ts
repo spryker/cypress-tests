@@ -7,7 +7,7 @@ import { MultiFactorAuthPage } from '../../pages/yves';
 export class CustomerMfaActivationScenario {
   @inject(MultiFactorAuthPage) private mfaPage: MultiFactorAuthPage;
 
-  execute(email: string, activationSuccessMessage: string): void {
+  execute(email: string): void {
     let mfaCode: string;
 
     this.mfaPage.visit();
@@ -18,14 +18,14 @@ export class CustomerMfaActivationScenario {
       .then((code) => {
         mfaCode = code;
         this.mfaPage.verifyCode(code);
-        this.mfaPage.waitForMessage(activationSuccessMessage);
+        this.mfaPage.waitForActivationSuccessMessage();
       })
       .then(() => {
         cy.cleanUpMultiFactorAuthCode(mfaCode);
       });
   }
 
-  deactivate(email: string, deactivationSuccessMessage: string): void {
+  deactivate(email: string): void {
     let mfaCode: string;
 
     this.mfaPage.visit();
@@ -36,7 +36,7 @@ export class CustomerMfaActivationScenario {
       .then((code) => {
         mfaCode = code;
         this.mfaPage.verifyCode(code);
-        this.mfaPage.waitForMessage(deactivationSuccessMessage);
+        this.mfaPage.waitForDeactivationSuccessMessage();
       })
       .then(() => {
         cy.cleanUpMultiFactorAuthCode(mfaCode);

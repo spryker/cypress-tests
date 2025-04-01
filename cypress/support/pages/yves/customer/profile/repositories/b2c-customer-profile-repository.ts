@@ -17,5 +17,9 @@ export class B2cCustomerProfileRepository implements CustomerProfileRepository {
 
   getSubmitButton(): Cypress.Chainable {
     return cy.get('form[name="passwordForm"] button[type="submit"]');
+  } 
+
+  getPasswordChangedMessage(): string {
+    return 'Password change successful';
   }
 }

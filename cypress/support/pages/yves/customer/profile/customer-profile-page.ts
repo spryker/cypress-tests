@@ -17,7 +17,7 @@ export class CustomerProfilePage extends YvesPage {
     this.repository.getSubmitButton().click();
   }
 
-  waitForSuccessMessage(message: string): void {
-    cy.contains(message).should('be.visible');
+  waitForPasswordChangedMessage(): void {
+    cy.contains(this.repository.getPasswordChangedMessage()).should('be.visible');
   }
 }

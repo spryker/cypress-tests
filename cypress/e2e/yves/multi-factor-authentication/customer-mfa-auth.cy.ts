@@ -43,7 +43,7 @@ import { CustomerProfileScenario } from '../../../support/scenarios/yves/custome
       });
 
       customerOverviewPage.assertPageLocation();
-      mfaActivationScenario.execute(dynamicFixtures.customerOne.email, staticFixtures.activationSuccessMessage);
+      mfaActivationScenario.execute(dynamicFixtures.customerOne.email);
 
       logoutScenario.execute();
       mfaLoginScenario.execute({
@@ -62,13 +62,13 @@ import { CustomerProfileScenario } from '../../../support/scenarios/yves/custome
       });
 
       customerOverviewPage.assertPageLocation();
-      mfaActivationScenario.execute(dynamicFixtures.customerTwo.email, staticFixtures.activationSuccessMessage);
+      mfaActivationScenario.execute(dynamicFixtures.customerTwo.email);
 
       customerDeletePage.visit();
       customerDeletePage.clickDeleteAccount();
       mfaPage.waitForVerificationPopup();
 
-      mfaActivationScenario.deactivate(dynamicFixtures.customerTwo.email, staticFixtures.deactivationSuccessMessage);
+      mfaActivationScenario.deactivate(dynamicFixtures.customerTwo.email);
 
       customerDeletePage.visit();
       customerDeletePage.clickDeleteAccount();
@@ -83,7 +83,7 @@ import { CustomerProfileScenario } from '../../../support/scenarios/yves/custome
       });
 
       customerOverviewPage.assertPageLocation();
-      mfaActivationScenario.execute(dynamicFixtures.customerThree.email, staticFixtures.activationSuccessMessage);
+      mfaActivationScenario.execute(dynamicFixtures.customerThree.email);
 
       logoutScenario.execute();
       mfaLoginScenario.executeWithInvalidCode(
@@ -106,7 +106,6 @@ import { CustomerProfileScenario } from '../../../support/scenarios/yves/custome
       customerProfileScenario.executePasswordChange({
         password: staticFixtures.defaultPassword,
         newPassword: staticFixtures.newPassword,
-        passwordChangeSuccessMessage: staticFixtures.passwordChangeSuccessMessage,
       });
 
       logoutScenario.execute();

@@ -3,4 +3,5 @@ export interface CustomerProfileRepository {
   getNewPasswordInput(): Cypress.Chainable;
   getConfirmPasswordInput(): Cypress.Chainable;
   getSubmitButton(): Cypress.Chainable;
+  getPasswordChangedMessage(): string;
 }

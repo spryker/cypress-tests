@@ -12,7 +12,7 @@ export class B2cMpMultiFactorAuthRepository implements MultiFactorAuthRepository
   }
 
   getVerificationPopup(): Cypress.Chainable {
-    return cy.get('.js-multi-factor-authentication-handler__popup-content');
+    return cy.get('div[data-qa*="multi-factor-authentication-content"]');
   }
 
   getMfaTypeSection(type: string): Cypress.Chainable {
@@ -29,5 +29,17 @@ export class B2cMpMultiFactorAuthRepository implements MultiFactorAuthRepository
 
   getSubmitButton(): Cypress.Chainable {
     return cy.get('button[type="submit"]');
+  }
+
+  getActivationSuccessMessage(): string {
+    return 'The multi-factor authentication has been activated';
+  }
+
+  getDeactivationSuccessMessage(): string {
+    return 'The multi-factor authentication has been deactivated';
+  }
+
+  getInvalidCodeMessage(): string {
+    return 'Invalid multi-factor authentication code';
   }
 }

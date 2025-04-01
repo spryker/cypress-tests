@@ -28,8 +28,16 @@ export class MultiFactorAuthPage extends YvesPage {
     this.repository.getVerificationPopup().should('be.visible');
   }
 
-  waitForMessage(message: string): void {
-    cy.contains(message).should('be.visible');
+  waitForActivationSuccessMessage(): void {
+    cy.contains(this.repository.getActivationSuccessMessage()).should('be.visible');
+  }
+
+  waitForDeactivationSuccessMessage(): void {
+    cy.contains(this.repository.getDeactivationSuccessMessage()).should('be.visible');
+  }
+
+  waitForInvalidCodeMessage(): void {
+    cy.contains(this.repository.getInvalidCodeMessage()).should('be.visible');
   }
 
   deactivateMfa(type: string): void {
