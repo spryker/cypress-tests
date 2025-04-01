@@ -147,7 +147,7 @@ export class SuiteSspInquiryRepository implements SspInquiryRepository {
     return this.getSspInquiryForm().find(this.selectors.submitButton);
   }
 
-    getFileDownloadActionSelector(): string {
-      return '[data-qa*="download-button"]';
-    }
+  getFileDownloadActionSelector(): string {
+    return '[data-qa*="download-button"]';
+  }
 }

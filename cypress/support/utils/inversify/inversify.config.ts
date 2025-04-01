@@ -285,8 +285,8 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.ManageCompanyRoleUserRepository]: B2bMpManageCompanyRoleUserRepository,
   [REPOSITORIES.CompanyRoleIndexRepository]: B2bMpCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: B2bMpCompanyRoleCreateRepository,
-    [REPOSITORIES.SspAssetRepository]: B2bMpSspAssetRepository,
-    [REPOSITORIES.SspInquiryRepository]: B2bMpSspInquiryRepository,
+  [REPOSITORIES.SspAssetRepository]: B2bMpSspAssetRepository,
+  [REPOSITORIES.SspInquiryRepository]: B2bMpSspInquiryRepository,
 };
 
 const mappings = {

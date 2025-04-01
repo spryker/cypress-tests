@@ -195,7 +195,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
       sspInquiryListPage.clickCreateSspInquiryButton();
 
-        staticFixtures.generalSspInquiry.availableTypes = staticFixtures.sspInquiryTypes.general;
+      staticFixtures.generalSspInquiry.availableTypes = staticFixtures.sspInquiryTypes.general;
       sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
       sspInquiryDetailPage.assertPageLocation();

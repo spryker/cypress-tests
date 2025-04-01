@@ -18,6 +18,6 @@ export class B2bMpCustomerOverviewRepository implements CustomerOverviewReposito
     return cy.get('[data-qa="component order-table"]').find('tr').eq(tableRowIndex).contains('a', 'View Order');
   }
   getMyFilesLink(): Cypress.Chainable {
-    return cy.get('[data-qa*="component my-files"]');
+    return cy.get('[data-qa*="my-files"]:visible');
   }
 }
