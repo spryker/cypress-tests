@@ -53,4 +53,14 @@ export interface SspServiceRepository {
    * Get the reschedule form submit button
    */
   getRescheduleFormSubmitButton(): Chainable<JQueryElement>;
+
+  /**
+   * Get the cancel button on the service details page
+   */
+  getServiceCancelButton(): Chainable<JQueryElement>;
+
+  /**
+   * Get the state cell of the first service in the table
+   */
+  getStateCell(): Chainable<JQueryElement>;
 }

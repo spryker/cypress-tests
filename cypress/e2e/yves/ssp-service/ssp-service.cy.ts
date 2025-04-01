@@ -205,6 +205,38 @@ interface DynamicFixtures {
         // Verify service was rescheduled
         sspServiceListPage.verifyServiceRescheduled(tomorrow);
       });
+
+      it('should allow cancelling a service', (): void => {
+        // Setup: Purchase a service as a regular customer
+        purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
+
+        // Verify service is listed
+        sspServiceListPage.getTableRows().should('have.length.at.least', 1);
+
+        // Cancel the service
+        sspServiceListPage.cancelService();
+
+        // Verify service was cancelled and state is updated
+        sspServiceListPage.verifyServiceCancelled();
+      });
+
+      it('should not display cancel button for non-cancellable services', (): void => {
+        // Setup: Purchase a service as a regular customer
+        purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
+
+        // Cancel the service to put it in a non-cancellable state
+        sspServiceListPage.cancelService();
+
+        // Verify service was cancelled
+        sspServiceListPage.verifyServiceCancelled();
+
+        // Navigate back to the service details page
+        sspServiceListPage.viewFirstServiceDetails();
+        cy.url().should('include', '/order/details');
+
+        // Verify cancel button is not visible for the cancelled service
+        sspServiceListPage.getServiceCancelButton().should('not.exist');
+      });
     });
 
     // Setup method to be called in each test

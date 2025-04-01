@@ -93,4 +93,12 @@ export class SuiteSspServiceRepository implements SspServiceRepository {
   getRescheduleFormSubmitButton(): Chainable<JQuery<HTMLElement>> {
     return cy.get('button[data-qa="submit-button"]') as unknown as Chainable<JQuery<HTMLElement>>;
   }
+
+  getServiceCancelButton(): Chainable<JQuery<HTMLElement>> {
+    return cy.get('button[data-qa="cancel-service-button"]') as unknown as Chainable<JQuery<HTMLElement>>;
+  }
+
+  getStateCell(): Chainable<JQuery<HTMLElement>> {
+    return this.getSspServiceTableRows().first().find('td:nth-last-child(2)');
+  }
 }
