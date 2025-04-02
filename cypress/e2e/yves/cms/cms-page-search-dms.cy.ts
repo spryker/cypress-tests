@@ -1,7 +1,7 @@
 import { container } from '@utils';
 import { CmsContentPage, CustomerOverviewPage } from '@pages/yves';
 import { CmsPageSearchDmsDynamicFixtures, CmsPageSearchDmsStaticFixtures } from '@interfaces/yves';
-import { CustomerLoginScenario, SelectStoreScenario,  } from '@scenarios/yves';
+import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 import { CreateStoreScenario, CreateCmsPageScenario, UserLoginScenario } from '@scenarios/backoffice';
 
 describeIfDynamicStoreEnabled('cms page search dms', { tags: ['@yves', '@cms', '@dms'] }, (): void => {
