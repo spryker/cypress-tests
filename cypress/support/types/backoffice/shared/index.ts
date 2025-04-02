@@ -13,3 +13,5 @@ export * from './merchant-relation-request';
 export * from './store';
 export * from './url';
 export * from './payment-method';
+export * from './product-abstract-type';
+export * from './product-abstract';
