@@ -10,12 +10,14 @@ export interface SspInquiryDynamicFixtures {
   order: Order;
   company: Company;
   businessUnit: BusinessUnit;
+  sspAsset: SspAsset;
 }
 
 export interface SspInquiryStaticFixtures {
   defaultPassword: string;
   generalSspInquiry: SspInquiry;
   orderSspInquiry: SspInquiry;
+  sspAssetSspInquiry: SspInquiry;
   sspInquiryTypes: SspInquiryTypes;
 }
 
@@ -23,8 +25,8 @@ export interface SspInquiry {
   subject: string;
   description: string;
   files: File[];
-  availableTypes: string[];
-  type: string;
+  availableTypes: SspInquiryType[];
+  type: SspInquiryType;
   status: string;
 }
 
@@ -34,8 +36,14 @@ export interface Order {
 }
 
 export interface SspInquiryTypes {
-  general: string[];
-  order: string[];
+  general: SspInquiryType[];
+  order: SspInquiryType[];
+  ssp_asset: SspInquiryType[];
+}
+
+export interface SspInquiryType {
+  key: string;
+  value: string;
 }
 
 export interface Company {
@@ -50,4 +58,8 @@ export interface File {
   name: string;
   size: string;
   extension: string;
+}
+
+interface SspAsset {
+  reference: string;
 }

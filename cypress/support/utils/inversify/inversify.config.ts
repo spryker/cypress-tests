@@ -122,6 +122,7 @@ import { SuiteManageCompanyRoleUserRepository } from '../../pages/yves/company/u
 import { B2bManageCompanyRoleUserRepository } from '../../pages/yves/company/user/manage/repositories/b2b-manage-company-role-user-repository';
 import { B2bMpManageCompanyRoleUserRepository } from '../../pages/yves/company/user/manage/repositories/b2b-mp-manage-company-role-user-repository';
 import { SuiteSspInquiryRepository } from '../../pages/yves/ssp-inquiry/repositories/suite-ssp-inquiry-repository';
+import { SuiteSspServiceRepository } from '../../pages/yves/ssp-service/repositories/suite-ssp-service-repository';
 import { SuiteCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/suite-company-role-index-repository';
 import { SuiteCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/suite-company-role-create-repository';
 import { B2bMpCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2b-mp-company-role-create-repository';
@@ -134,6 +135,7 @@ import { B2cMpCompanyRoleIndexRepository } from '../../pages/yves/company/compan
 import { B2cMpCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2c-mp-company-role-create-repository';
 import { B2cMpManageCompanyRoleUserRepository } from '../../pages/yves/company/user/manage/repositories/b2c-mp-manage-company-role-user-repository';
 import { B2cManageCompanyRoleUserRepository } from '../../pages/yves/company/user/manage/repositories/b2c-manage-company-role-user-repository';
+import { SuiteSspAssetRepository } from '../../pages/yves/ssp-asset/repositories/suite-ssp-asset-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -163,8 +165,10 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.ProductComparisonRepository]: SuiteProductComparisonRepository,
   [REPOSITORIES.ManageCompanyRoleUserRepository]: SuiteManageCompanyRoleUserRepository,
   [REPOSITORIES.SspInquiryRepository]: SuiteSspInquiryRepository,
+  [REPOSITORIES.SspServiceRepository]: SuiteSspServiceRepository,
   [REPOSITORIES.CompanyRoleIndexRepository]: SuiteCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: SuiteCompanyRoleCreateRepository,
+  [REPOSITORIES.SspAssetRepository]: SuiteSspAssetRepository,
 };
 
 const b2cMappings: BindingsMap = {
