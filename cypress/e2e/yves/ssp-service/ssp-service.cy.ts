@@ -147,8 +147,8 @@ interface DynamicFixtures {
 
         // First company user purchases a service
         purchaseServiceAsCustomer(
-            dynamicFixtures.company1Customer.email,
-            dynamicFixtures.company1CustomerAddress.id_customer_address
+          dynamicFixtures.company1Customer.email,
+          dynamicFixtures.company1CustomerAddress.id_customer_address
         );
 
         // Verify the service is in the list for the first company user
@@ -209,7 +209,7 @@ interface DynamicFixtures {
       it('should allow cancelling a service', (): void => {
         // Setup: Purchase a service as a regular customer
         purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
-        
+
         // Verify two services are listed
         sspServiceListPage.getTableRows().should('have.length', 2);
 

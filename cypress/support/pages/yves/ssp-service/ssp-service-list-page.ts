@@ -240,6 +240,6 @@ export class SspServiceListPage extends YvesPage {
     this.viewFirstServiceDetails();
 
     // Verify that first service is cancelled and only second left
-    this.getServiceCancelButton().first().should('have.length', 1)
+    this.getServiceCancelButton().first().should('have.length', 1);
   }
 }
