@@ -12,7 +12,7 @@ export class B2bMpMultiFactorAuthRepository implements MultiFactorAuthRepository
   }
 
   getVerificationPopup(): Cypress.Chainable {
-    return cy.get('div[data-qa*="multi-factor-authentication-content"]');
+    return cy.get('div[data-qa*="multi-factor-authentication-content"]', { timeout: 10000 });
   }
 
   getMfaTypeSection(type: string): Cypress.Chainable {
