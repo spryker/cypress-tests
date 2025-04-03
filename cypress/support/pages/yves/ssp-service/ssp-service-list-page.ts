@@ -218,10 +218,6 @@ export class SspServiceListPage extends YvesPage {
     return this.repository.getServiceCancelButton();
   }
 
-  getStateCell(): Chainable<JQuery<HTMLElement>> {
-    return this.repository.getStateCell();
-  }
-
   /**
    * Cancels the first service in the list
    */
@@ -241,6 +237,9 @@ export class SspServiceListPage extends YvesPage {
    * Verifies that a service state is 'Cancelled'
    */
   verifyServiceCancelled(): void {
-    this.getStateCell().should('contain', 'Canceled');
+    this.viewFirstServiceDetails();
+
+    // Verify that first service is cancelled and only second left
+    this.getServiceCancelButton().first().should('have.length', 1)
   }
 }

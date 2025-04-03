@@ -58,9 +58,4 @@ export interface SspServiceRepository {
    * Get the cancel button on the service details page
    */
   getServiceCancelButton(): Chainable<JQueryElement>;
-
-  /**
-   * Get the state cell of the first service in the table
-   */
-  getStateCell(): Chainable<JQueryElement>;
 }

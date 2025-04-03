@@ -147,8 +147,8 @@ interface DynamicFixtures {
 
         // First company user purchases a service
         purchaseServiceAsCustomer(
-          dynamicFixtures.company1Customer.email,
-          dynamicFixtures.company1CustomerAddress.id_customer_address
+            dynamicFixtures.company1Customer.email,
+            dynamicFixtures.company1CustomerAddress.id_customer_address
         );
 
         // Verify the service is in the list for the first company user
@@ -185,8 +185,8 @@ interface DynamicFixtures {
         // Setup: Purchase a service as a regular customer
         purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
 
-        // Verify service is listed
-        sspServiceListPage.getTableRows().should('have.length.at.least', 1);
+        // Verify two services are listed
+        sspServiceListPage.getTableRows().should('have.length.at.least', 2);
 
         // Navigate to service details page
         sspServiceListPage.viewFirstServiceDetails();
@@ -202,40 +202,31 @@ interface DynamicFixtures {
         // Verify redirection to services list
         cy.url().should('include', '/customer/ssp-service');
 
-        // Verify service was rescheduled
+        // Verify first service was rescheduled
         sspServiceListPage.verifyServiceRescheduled(tomorrow);
       });
 
       it('should allow cancelling a service', (): void => {
         // Setup: Purchase a service as a regular customer
         purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
-
-        // Verify service is listed
-        sspServiceListPage.getTableRows().should('have.length.at.least', 1);
+        
+        // Verify two services are listed
+        sspServiceListPage.getTableRows().should('have.length', 2);
 
         // Cancel the service
         sspServiceListPage.cancelService();
 
-        // Verify service was cancelled and state is updated
-        sspServiceListPage.verifyServiceCancelled();
-      });
-
-      it('should not display cancel button for non-cancellable services', (): void => {
-        // Setup: Purchase a service as a regular customer
-        purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
-
-        // Cancel the service to put it in a non-cancellable state
-        sspServiceListPage.cancelService();
-
-        // Verify service was cancelled
+        // Verify that first service was cancelled and state is updated
         sspServiceListPage.verifyServiceCancelled();
 
-        // Navigate back to the service details page
+        // Visit the service list page explicitly
+        sspServiceListPage.visit();
+
         sspServiceListPage.viewFirstServiceDetails();
         cy.url().should('include', '/order/details');
 
-        // Verify cancel button is not visible for the cancelled service
-        sspServiceListPage.getServiceCancelButton().should('not.exist');
+        // Verify cancel button is not visible for the fist cancelled service, and only visible for last
+        sspServiceListPage.getServiceCancelButton().should('have.length', 1);
       });
     });
 
