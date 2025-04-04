@@ -1,0 +1,63 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "operations": [
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "locale",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customerOne",
+          "arguments": [{ "locale": "#locale", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "key": "confirmedCustomerOne",
+          "arguments": ["#customerOne"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customerTwo",
+          "arguments": [{ "locale": "#locale", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "key": "confirmedCustomerTwo",
+          "arguments": ["#customerTwo"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customerThree",
+          "arguments": [{ "locale": "#locale", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "key": "confirmedCustomerThree",
+          "arguments": ["#customerThree"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customerFour",
+          "arguments": [{ "locale": "#locale", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "key": "confirmedCustomerFour",
+          "arguments": ["#customerFour"]
+        }
+      ]
+    }
+  }
+}

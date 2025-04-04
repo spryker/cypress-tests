@@ -85,6 +85,11 @@ import { B2cMerchantRelationRequestCreateRepository } from '../../pages/yves/com
 import { B2cMerchantRelationRequestDetailsRepository } from '../../pages/yves/company/merchant-relation-request/details/repositories/b2c-merchant-relation-request-details-repository';
 import { B2cMerchantRelationRequestIndexRepository } from '../../pages/yves/company/merchant-relation-request/index/repositories/b2c-merchant-relation-request-index-repository';
 import { B2cMerchantRepository } from '../../pages/yves/merchant/repositories/b2c-merchant-repository';
+import { SuiteMultiFactorAuthRepository } from '../../pages/yves/multi-factor-auth/repositories/suite-multi-factor-auth-repository';
+import { B2bMultiFactorAuthRepository } from '../../pages/yves/multi-factor-auth/repositories/b2b-multi-factor-auth-repository';
+import { B2cMultiFactorAuthRepository } from '../../pages/yves/multi-factor-auth/repositories/b2c-multi-factor-auth-repository';
+import { B2bMpMultiFactorAuthRepository } from '../../pages/yves/multi-factor-auth/repositories/b2b-mp-multi-factor-auth-repository';
+import { B2cMpMultiFactorAuthRepository } from '../../pages/yves/multi-factor-auth/repositories/b2c-mp-multi-factor-auth-repository';
 import { B2bCheckoutCustomerRepository } from '../../pages/yves/checkout/customer/repositories/b2b-checkout-customer-repository';
 import { B2bCheckoutAddressRepository } from '../../pages/yves/checkout/address/repositories/b2b-checkout-address-repository';
 import { B2bCheckoutShipmentRepository } from '../../pages/yves/checkout/shipment/repositories/b2b-checkout-shipment-repository';
@@ -135,6 +140,16 @@ import { B2cMpCompanyRoleIndexRepository } from '../../pages/yves/company/compan
 import { B2cMpCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2c-mp-company-role-create-repository';
 import { B2cMpManageCompanyRoleUserRepository } from '../../pages/yves/company/user/manage/repositories/b2c-mp-manage-company-role-user-repository';
 import { B2cManageCompanyRoleUserRepository } from '../../pages/yves/company/user/manage/repositories/b2c-manage-company-role-user-repository';
+import { SuiteCustomerDeleteRepository } from '../../pages/yves/customer/customer-delete/repositories/suite-customer-delete-repository';
+import { B2cCustomerDeleteRepository } from '../../pages/yves/customer/customer-delete/repositories/b2c-customer-delete-repository';
+import { B2bCustomerDeleteRepository } from '../../pages/yves/customer/customer-delete/repositories/b2b-customer-delete-repository';
+import { B2cMpCustomerDeleteRepository } from '../../pages/yves/customer/customer-delete/repositories/b2c-mp-customer-delete-repository';
+import { B2bMpCustomerDeleteRepository } from '../../pages/yves/customer/customer-delete/repositories/b2b-mp-customer-delete-repository';
+import { SuiteCustomerProfileRepository } from '../../pages/yves/customer/profile/repositories/suite-customer-profile-repository';
+import { B2cCustomerProfileRepository } from '../../pages/yves/customer/profile/repositories/b2c-customer-profile-repository';
+import { B2bCustomerProfileRepository } from '../../pages/yves/customer/profile/repositories/b2b-customer-profile-repository';
+import { B2cMpCustomerProfileRepository } from '../../pages/yves/customer/profile/repositories/b2c-mp-customer-profile-repository';
+import { B2bMpCustomerProfileRepository } from '../../pages/yves/customer/profile/repositories/b2b-mp-customer-profile-repository';
 import { SuiteSspAssetRepository } from '../../pages/yves/ssp-asset/repositories/suite-ssp-asset-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
@@ -142,6 +157,7 @@ type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 const suiteMappings: BindingsMap = {
   [REPOSITORIES.YvesRepository]: SuiteYvesRepository,
   [REPOSITORIES.HomeRepository]: SuiteHomeRepository,
+  [REPOSITORIES.MultiFactorAuthRepository]: SuiteMultiFactorAuthRepository,
   [REPOSITORIES.LoginRepository]: SuiteLoginRepository,
   [REPOSITORIES.CartRepository]: SuiteCartRepository,
   [REPOSITORIES.MultiCartRepository]: SuiteMultiCartRepository,
@@ -168,12 +184,15 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.SspServiceRepository]: SuiteSspServiceRepository,
   [REPOSITORIES.CompanyRoleIndexRepository]: SuiteCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: SuiteCompanyRoleCreateRepository,
+  [REPOSITORIES.CustomerDeleteRepository]: SuiteCustomerDeleteRepository,
+  [REPOSITORIES.CustomerProfileRepository]: SuiteCustomerProfileRepository,
   [REPOSITORIES.SspAssetRepository]: SuiteSspAssetRepository,
 };
 
 const b2cMappings: BindingsMap = {
   [REPOSITORIES.YvesRepository]: B2cYvesRepository,
   [REPOSITORIES.HomeRepository]: B2cHomeRepository,
+  [REPOSITORIES.MultiFactorAuthRepository]: B2cMultiFactorAuthRepository,
   [REPOSITORIES.LoginRepository]: B2cLoginRepository,
   [REPOSITORIES.CartRepository]: B2cCartRepository,
   [REPOSITORIES.MultiCartRepository]: B2cMultiCartRepository,
@@ -198,11 +217,14 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.CompanyRoleIndexRepository]: B2cCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: B2cCompanyRoleCreateRepository,
   [REPOSITORIES.ManageCompanyRoleUserRepository]: B2cManageCompanyRoleUserRepository,
+  [REPOSITORIES.CustomerDeleteRepository]: B2cCustomerDeleteRepository,
+  [REPOSITORIES.CustomerProfileRepository]: B2cCustomerProfileRepository,
 };
 
 const b2bMappings: BindingsMap = {
   [REPOSITORIES.YvesRepository]: B2bYvesRepository,
   [REPOSITORIES.HomeRepository]: B2bHomeRepository,
+  [REPOSITORIES.MultiFactorAuthRepository]: B2bMultiFactorAuthRepository,
   [REPOSITORIES.LoginRepository]: B2bLoginRepository,
   [REPOSITORIES.CartRepository]: B2bCartRepository,
   [REPOSITORIES.MultiCartRepository]: B2bMultiCartRepository,
@@ -227,11 +249,14 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.ManageCompanyRoleUserRepository]: B2bManageCompanyRoleUserRepository,
   [REPOSITORIES.CompanyRoleIndexRepository]: B2bCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: B2bCompanyRoleCreateRepository,
+  [REPOSITORIES.CustomerDeleteRepository]: B2bCustomerDeleteRepository,
+  [REPOSITORIES.CustomerProfileRepository]: B2bCustomerProfileRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.YvesRepository]: B2cMpYvesRepository,
   [REPOSITORIES.HomeRepository]: B2cMpHomeRepository,
+  [REPOSITORIES.MultiFactorAuthRepository]: B2cMpMultiFactorAuthRepository,
   [REPOSITORIES.LoginRepository]: B2cMpLoginRepository,
   [REPOSITORIES.CartRepository]: B2cMpCartRepository,
   [REPOSITORIES.MultiCartRepository]: B2cMpMultiCartRepository,
@@ -256,11 +281,14 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.CompanyRoleIndexRepository]: B2cMpCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: B2cMpCompanyRoleCreateRepository,
   [REPOSITORIES.ManageCompanyRoleUserRepository]: B2cMpManageCompanyRoleUserRepository,
+  [REPOSITORIES.CustomerDeleteRepository]: B2cMpCustomerDeleteRepository,
+  [REPOSITORIES.CustomerProfileRepository]: B2cMpCustomerProfileRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.YvesRepository]: B2bMpYvesRepository,
   [REPOSITORIES.HomeRepository]: B2bMpHomeRepository,
+  [REPOSITORIES.MultiFactorAuthRepository]: B2bMpMultiFactorAuthRepository,
   [REPOSITORIES.LoginRepository]: B2bMpLoginRepository,
   [REPOSITORIES.CartRepository]: B2bMpCartRepository,
   [REPOSITORIES.MultiCartRepository]: B2bMpMultiCartRepository,
@@ -285,6 +313,8 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.ManageCompanyRoleUserRepository]: B2bMpManageCompanyRoleUserRepository,
   [REPOSITORIES.CompanyRoleIndexRepository]: B2bMpCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: B2bMpCompanyRoleCreateRepository,
+  [REPOSITORIES.CustomerDeleteRepository]: B2bMpCustomerDeleteRepository,
+  [REPOSITORIES.CustomerProfileRepository]: B2bMpCustomerProfileRepository,
 };
 
 const mappings = {
