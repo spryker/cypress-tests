@@ -109,6 +109,11 @@ export class BackofficePage extends AbstractPage {
 
     return searchAndIntercept();
   };
+
+  public assertAssetsHaveHash(): void {
+    cy.get('head link[rel="stylesheet"][href$="/v="]').should('have.length', 1);
+    cy.get('head script[href$="/v="]').should('have.length', 1);
+  }
 }
 
 export enum ActionEnum {
