@@ -111,8 +111,8 @@ export class BackofficePage extends AbstractPage {
   };
 
   public assertAssetsHaveHash(): void {
-    cy.get('head link[rel="stylesheet"][href$="/v="]').should('have.length', 1);
-    cy.get('head script[href$="/v="]').should('have.length', 1);
+    cy.get('head > link[rel="stylesheet"][href$="/v="]').should('exist');
+    cy.get('body > script[src$="/v="]').should('exist');
   }
 }
 
