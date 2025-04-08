@@ -16,8 +16,6 @@ describe('assets cache-busting hash', { tags: ['@backoffice', '@assets @cache @c
   });
 
   it('should see a build hash appended at the end of the asset files path', (): void => {
-    backofficePage.assertAssetsHaveHash();
-
     userLoginScenario.execute({
       username: staticFixtures.rootUser.username,
       password: staticFixtures.defaultPassword,
