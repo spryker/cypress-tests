@@ -83,7 +83,7 @@ export class SuiteSspInquiryRepository implements SspInquiryRepository {
   }
 
   // New selectors for ssp inquiry list table
-  private readonly sspInquiryTable = '[data-qa="component ssp-inquiry-table"] table';
+  private readonly sspInquiryTable = '[data-qa="component advanced-table"] table';
   private readonly tableRow = 'tbody tr';
   private readonly viewButton = '[data-qa="cell-actions"] a';
   private readonly reference = '[data-qa="cell-reference"]';
