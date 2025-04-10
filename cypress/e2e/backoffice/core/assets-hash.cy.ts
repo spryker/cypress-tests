@@ -1,12 +1,10 @@
 import { container } from '@utils';
 import { AssetsHashStaticFixtures } from '@interfaces/backoffice';
-import { BackofficePage } from '@pages/backoffice';
-import { CatalogPage } from '@pages/yves';
+import { IndexPage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
-describe('assets cache-busting hash', { tags: ['@backoffice', '@assets @cache @cache-busting'] }, (): void => {
-  const catalogPage = container.get(CatalogPage);
-  const backofficePage = container.get(BackofficePage);
+describe('assets cache-busting hash', { tags: ['@backoffice', '@assets', '@cache', '@cache-busting'] }, (): void => {
+  const indexPage = container.get(IndexPage);
   const userLoginScenario = container.get(UserLoginScenario);
 
   let staticFixtures: AssetsHashStaticFixtures;
@@ -21,8 +19,8 @@ describe('assets cache-busting hash', { tags: ['@backoffice', '@assets @cache @c
       password: staticFixtures.defaultPassword,
     });
 
-    catalogPage.visit();
+    indexPage.visit();
 
-    backofficePage.assertAssetsHaveHash();
+    indexPage.assertAssetsHaveHash();
   });
 });
