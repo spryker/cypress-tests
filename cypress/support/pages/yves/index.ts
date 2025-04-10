@@ -33,4 +33,5 @@ export * from './ssp-asset/ssp-asset-detail-page';
 export * from './ssp-asset/ssp-asset-edit-page';
 export * from './ssp-asset/ssp-asset-list-page';
 export * from './ssp-file-management/list/ssp-file-management-list-page';
+export * from './multi-factor-auth/multi-factor-auth-page';
 export * from './ssp-service/ssp-service-list-page';
