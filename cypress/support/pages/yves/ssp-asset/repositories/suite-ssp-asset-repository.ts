@@ -127,7 +127,7 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
   }
 
   getSspAssetInquiriresTable(): Cypress.Chainable {
-    return cy.get('[data-qa*="ssp-inquiry-table"]');
+    return cy.get('[data-qa*="advanced-table"]');
   }
   getSspAssetImageSrc(): Cypress.Chainable {
     return cy.get('[data-qa*="ssp-asset-image"]').invoke('attr', 'image-src');
@@ -138,6 +138,6 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
   }
 
   getSspAssetFiltersSubmitButton(): Cypress.Chainable {
-    return cy.get('[data-qa="ssp-asset-submit-filters"]');
+    return cy.get('[data-qa="submit-filters"]');
   }
 }
