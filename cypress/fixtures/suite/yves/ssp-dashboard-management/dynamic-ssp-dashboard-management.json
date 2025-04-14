@@ -269,8 +269,11 @@
                 {
                     "type": "helper",
                     "name": "haveCompanyRoleWithPermissions",
-                    "key": "companyRoleWithViewCompanySspInquiryPermission",
-                    "arguments": [{ "isDefault": true, "fkCompany": "#company.id_company" }, ["#permission"]]
+                    "key": "companyRoleWithViewDashboardPermission",
+                    "arguments": [
+                        { "isDefault": true, "fkCompany": "#company.id_company" },
+                        ["#permission"]
+                    ]
                 },
                 {
                     "type": "helper",
@@ -281,12 +284,7 @@
                 {
                     "type": "helper",
                     "name": "assignCompanyRoles",
-                    "arguments": ["#companyUserFromCompany", ["#companyRoleWithAllPermissions"]]
-                },
-                {
-                    "type": "helper",
-                    "name": "assignCompanyRoles",
-                    "arguments": ["#companyUserFromCompany2", ["#companyRoleWithAllPermissions"]]
+                    "arguments": ["#companyUser", ["#companyRole"]]
                 }
             ]
         }

@@ -7,6 +7,7 @@ export class SuiteSspInquiryRepository implements SspInquiryRepository {
   private readonly selectors = {
     sspInquiryForm: 'form[name="sspInquiryForm"]',
     orderReferenceInput: 'input[name="sspInquiryForm[orderReference]"]',
+    sspAssetReferenceInput: 'input[name="sspInquiryForm[sspAssetReference]"]',
     typeSelect: 'select[name="sspInquiryForm[type_display]"]',
     typeOptions: 'select[name="sspInquiryForm[type_display]"] option',
     subjectInput: 'input[name="sspInquiryForm[subject]"]',
@@ -37,6 +38,10 @@ export class SuiteSspInquiryRepository implements SspInquiryRepository {
 
   getSspInquiryDetailsDate(date: string): string {
     return `Date: ${date}`;
+  }
+
+  getSspInquiryDetailsSspAssetReference(orderReference: string): string {
+    return `Asset Reference: ${orderReference}`;
   }
 
   getSspInquiryDetailsStatus(status: string): string {
@@ -78,7 +83,7 @@ export class SuiteSspInquiryRepository implements SspInquiryRepository {
   }
 
   // New selectors for ssp inquiry list table
-  private readonly sspInquiryTable = '[data-qa="component ssp-inquiry-table"] table';
+  private readonly sspInquiryTable = '[data-qa="component advanced-table"] table';
   private readonly tableRow = 'tbody tr';
   private readonly viewButton = '[data-qa="cell-actions"] a';
   private readonly reference = '[data-qa="cell-reference"]';
@@ -112,6 +117,10 @@ export class SuiteSspInquiryRepository implements SspInquiryRepository {
 
   getOrderReferenceInput(): Cypress.Chainable {
     return this.getSspInquiryForm().find(this.selectors.orderReferenceInput);
+  }
+
+  getSspAssetReferenceInput(): Cypress.Chainable {
+    return this.getSspInquiryForm().find(this.selectors.sspAssetReferenceInput);
   }
 
   getTypeSelect(): Cypress.Chainable {

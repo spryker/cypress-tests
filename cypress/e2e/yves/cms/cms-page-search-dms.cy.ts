@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { CmsContentPage } from '@pages/yves';
+import { CmsContentPage, CustomerOverviewPage } from '@pages/yves';
 import { CmsPageSearchDmsDynamicFixtures, CmsPageSearchDmsStaticFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 import { CreateStoreScenario, CreateCmsPageScenario, UserLoginScenario } from '@scenarios/backoffice';
@@ -11,6 +11,7 @@ describeIfDynamicStoreEnabled('cms page search dms', { tags: ['@yves', '@cms', '
   const selectStoreScenario = container.get(SelectStoreScenario);
   const createCmsPageScenario = container.get(CreateCmsPageScenario);
   const customerLoginScenario = container.get(CustomerLoginScenario);
+  const customerOverviewPage = container.get(CustomerOverviewPage);
 
   let staticFixtures: CmsPageSearchDmsStaticFixtures;
   let dynamicFixtures: CmsPageSearchDmsDynamicFixtures;
@@ -36,7 +37,7 @@ describeIfDynamicStoreEnabled('cms page search dms', { tags: ['@yves', '@cms', '
       password: staticFixtures.defaultPassword,
       withoutSession: true,
     });
-
+    customerOverviewPage.assertPageLocation();
     contentPage.findCmsPageFromSuggestions({ query: staticFixtures.cmsPageName });
 
     assertCmsPage();

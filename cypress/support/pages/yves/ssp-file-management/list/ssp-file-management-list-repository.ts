@@ -5,13 +5,13 @@ import { autoWired } from '@utils';
 @autoWired
 export class SspFileManagementListRepository {
   getFiltersSelector = (): string => '[data-qa="component filters"]';
-  getFileTableSelector = (): string => '[data-qa="component advanced-table web-table-files"]';
+  getFileTableSelector = (): string => '[data-qa="component advanced-table"]';
   getFileNameHeaderSelector = (): string => '[data-qa="name"]';
   getUploadedDateHeaderSelector = (): string => '[data-qa="date"]';
   getFileSizeHeaderSelector = (): string => '[data-qa="size"]';
   getFileTypeHeaderSelector = (): string => '[data-qa="type"]';
   getDownloadButtonSelector = (): string => '[data-qa="download-button"]';
   getTypeFilterSelector = (): string => '[data-qa="filter-type"]';
-  getApplyFiltersButtonSelector = (): string => '[data-qa="filters-apply"]';
+  getApplyFiltersButtonSelector = (): string => '[data-qa="submit-filters"]';
   getSearchFieldSelector = (): string => '[data-qa="search"]';
 }
