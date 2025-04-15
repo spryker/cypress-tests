@@ -31,6 +31,12 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       sspDashboardPage.assertSspDashboardUserInfoPresent();
       sspDashboardPage.assertSspDashboardUserInfoHasWelcomeText(dynamicFixtures.customer.first_name + ' ' + dynamicFixtures.customer.last_name);
       sspDashboardPage.assertSspDashboardUserInfoHasCompanyName(dynamicFixtures.company.name);
+      sspDashboardPage.assertSspDashboardUserInfoHasCompanyBusinessUnitName(dynamicFixtures.businessUnit.name);
       sspDashboardPage.assertSspDashboardHasOverviewBlock();
+      sspDashboardPage.assertSspDashboardHasStatsOverviewBlock();
+      sspDashboardPage.assertSspDashboardHasSalesRepresentativeBlock(
+          dynamicFixtures.cmsBlockGlossary.glossary_placeholders,
+          dynamicFixtures.locale.id_locale
+      );
     });
 });

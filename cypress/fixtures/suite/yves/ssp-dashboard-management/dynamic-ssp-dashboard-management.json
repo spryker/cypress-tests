@@ -2,12 +2,19 @@
     "data": {
         "type": "dynamic-fixtures",
         "attributes": {
+            "synchronize": true,
             "operations": [
                 {
                     "type": "transfer",
                     "name": "LocaleTransfer",
                     "key": "locale",
                     "arguments": { "id_locale": 66, "locale_name": "en_US" }
+                },
+                {
+                    "type": "helper",
+                    "name": "haveStore",
+                    "key": "store",
+                    "arguments": [{ "name": "DE" }]
                 },
                 {
                     "type": "helper",
@@ -277,14 +284,31 @@
                 },
                 {
                     "type": "helper",
-                    "name": "haveCompanyRoleWithPermissions",
-                    "key": "companyRoleWithViewBusinessUnitSspInquiryPermission",
-                    "arguments": [{ "isDefault": true, "fkCompany": "#company.id_company" }, ["#permission"]]
+                    "name": "assignCompanyRoles",
+                    "arguments": ["#companyUserFromCompany", ["#companyRoleWithViewDashboardPermission"]]
                 },
                 {
                     "type": "helper",
-                    "name": "assignCompanyRoles",
-                    "arguments": ["#companyUser", ["#companyRole"]]
+                    "name": "haveSalesRepresentativeCmsBlockForBusinessUnit",
+                    "key": "cmsBlockGlossary",
+                    "arguments": [
+                        {
+                            "name": "sales-rep:company_unit:",
+                            "isActive": true,
+
+                            "validTo": "2035-12-12 23:59:59",
+                            "locale": {
+                                "idLocale": "#locale.id_locale",
+                                "localeName": "#locale.locale_name"
+                            },
+                            "storeRelation": {
+                                "idStores": [
+                                    "#store.id_store"
+                                ]
+                            }
+                        },
+                        "#businessUnit.id_company_business_unit"
+                    ]
                 }
             ]
         }

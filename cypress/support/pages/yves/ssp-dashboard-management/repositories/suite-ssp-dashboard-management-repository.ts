@@ -10,11 +10,26 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
   getUserInfoBlockWelcome(): Chainable {
     return cy.get('div[data-qa="user-info"] strong');
   }
-  getOverview(): Chainable {
-    return cy.get('div[data-qa="block-title] h5');
+  getWelcomeBlock(): Chainable {
+    return cy.get('div[data-qa="welcome-block"]');
+  }
+  getOverviewBlock(): Chainable {
+    return cy.get('div[data-qa="component stats-overview"]');
   }
   getOverviewTitle(): string {
-    return 'My Overview';
+      return 'My Overview';
+  }
+  getStatsColumnBlocks(): Chainable {
+    return cy.get('div[data-qa="stats-column"]');
+  }
+  getSalesRepresentativeBlocks(): Chainable {
+    return cy.get('div[data-qa="sales-representative"]');
+  }
+  getExpectedStatsColumnBlocks(): string[] {
+    return [
+        'Assets',
+        'Pending Inquiries',
+    ];
   }
   private readonly selectors = {};
 }
