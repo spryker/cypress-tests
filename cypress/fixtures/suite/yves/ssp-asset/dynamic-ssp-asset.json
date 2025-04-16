@@ -247,6 +247,17 @@
         },
         {
           "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer4",
+          "arguments": [
+            {
+              "locale": "#locale",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "confirmCustomer",
           "arguments": ["#customer1"]
         },
@@ -259,6 +270,11 @@
           "type": "helper",
           "name": "confirmCustomer",
           "arguments": ["#customer3"]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "arguments": ["#customer4"]
         },
         {
           "type": "helper",
@@ -314,6 +330,19 @@
         },
         {
           "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser4BU1C2",
+          "arguments": [
+            {
+              "customer": "#customer4",
+              "fkCustomer": "#customer4.id_customer",
+              "fkCompany": "#company2.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit1Company2.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "key": "company1RoleViewCompanySspAssetPermission",
           "arguments": [{ "isDefault": true, "fkCompany": "#company1.id_company" }, ["#viewCompanySspAssetPermission"]]
@@ -347,6 +376,12 @@
         },
         {
           "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "company2RolePermission",
+          "arguments": [{ "isDefault": true, "fkCompany": "#company2.id_company" }, []]
+        },
+        {
+          "type": "helper",
           "name": "assignCompanyRoles",
           "arguments": ["#companyUser1BU1C1", ["#company1RoleViewCompanySspAssetPermission"]]
         },
@@ -364,6 +399,11 @@
           "type": "helper",
           "name": "assignCompanyRoles",
           "arguments": ["#companyUser3BU1C2", ["#company2RoleViewCompanySspAssetAndCreateAndEditPermission"]]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser4BU1C2", ["#company2RolePermission"]]
         },
         {
           "type": "helper",

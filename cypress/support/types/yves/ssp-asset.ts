@@ -11,6 +11,7 @@ export interface SspAssetDynamicFixtures {
   companyUser2BU1C1: CompanyUser;
   companyUser2BU2C1: CompanyUser;
   companyUser3BU1C2: CompanyUser;
+  companyUser4BU1C2: CompanyUser;
   asset: SspAsset;
   assetBU1C1BU2C1BU1C2: SspAsset;
   assetBU1C2: SspAsset;

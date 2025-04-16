@@ -123,7 +123,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         { reference: dynamicFixtures.sspInquiry3.reference },
       ]);
 
-        assetDetailPage.getViewAllInquiriesLink().should('exist');
+      assetDetailPage.getViewAllInquiriesLink().should('exist');
     });
 
     it('should navigate to ssp asset pages from different sources', () => {
@@ -316,6 +316,24 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       assetDetailPage.getUnassignButton().click();
 
       assetListPage.assertTableData([dynamicFixtures.assetBU1C1]);
+    });
+
+    it('should not be able to view assets without permission', () => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.companyUser4BU1C2.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      assetListPage.visit();
+      cy.contains('Access denied');
+
+      assetDetailPage.visit({
+        qs: {
+          reference: dynamicFixtures.assetBU1C1BU2C1BU1C2.reference,
+        },
+      });
+      cy.contains('Access denied');
     });
   }
 );

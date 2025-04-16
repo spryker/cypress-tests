@@ -10,7 +10,6 @@ export class SspAssetDetailPage extends BackofficePage {
 
   protected PAGE_URL = '/ssp-asset-management/detail';
 
-
   verifyAssetDetails(assetData: SspAsset): void {
     if (assetData.reference) {
       cy.get(this.repository.getReferenceValueSelector()).should('contain', assetData.reference);
@@ -26,7 +25,7 @@ export class SspAssetDetailPage extends BackofficePage {
 
     if (assetData.status) {
       const expectedStatus = assetData.status.toLowerCase();
-      cy.get(this.repository.getStatusValueSelector()).then($statusElement => {
+      cy.get(this.repository.getStatusValueSelector()).then(($statusElement) => {
         const actualStatus = $statusElement.text().trim().toLowerCase();
         expect(actualStatus).to.include(expectedStatus);
       });
@@ -50,23 +49,20 @@ export class SspAssetDetailPage extends BackofficePage {
     this.repository.getSspAssetRelationTabs().find(this.repository.getInquiriesTabSelector()).should('exist');
 
     if (assetData.assignedbusinessUnits && assetData.assignedbusinessUnits.length > 0) {
-        this.repository.getSspAssetRelationTabs()
-            .find(this.repository.getCompanyTableSelector())
+      this.repository
+        .getSspAssetRelationTabs()
+        .find(this.repository.getCompanyTableSelector())
         .should('be.visible')
         .find('tbody tr')
         .should('have.length.at.least', assetData.assignedbusinessUnits.length);
 
       for (const businessUnit of assetData.assignedbusinessUnits) {
-        cy.get(this.repository.getBusinessUnitNameColumnSelector())
-          .contains(businessUnit.name)
-          .should('be.visible');
+        cy.get(this.repository.getBusinessUnitNameColumnSelector()).contains(businessUnit.name).should('be.visible');
       }
 
       if (assetData.companies) {
         for (const company of assetData.companies) {
-          cy.get(this.repository.getCompanyNameColumnSelector())
-              .contains(company.name)
-              .should('be.visible');
+          cy.get(this.repository.getCompanyNameColumnSelector()).contains(company.name).should('be.visible');
         }
       }
     }
@@ -102,9 +98,10 @@ export class SspAssetDetailPage extends BackofficePage {
   }
 
   getReference(): Cypress.Chainable<string> {
-    return cy.get(this.repository.getReferenceValueSelector())
+    return cy
+      .get(this.repository.getReferenceValueSelector())
       .invoke('text')
-      .then(text => text.trim());
+      .then((text) => text.trim());
   }
 }
 

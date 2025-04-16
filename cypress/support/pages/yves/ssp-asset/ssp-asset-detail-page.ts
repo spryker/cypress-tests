@@ -43,9 +43,8 @@ export class SspAssetDetailPage extends YvesPage {
     });
   }
 
-  getViewAllInquiriesLink(): Cypress.Chainable
-  {
-      return this.repository.getViewAllInquiriesLink();
+  getViewAllInquiriesLink(): Cypress.Chainable {
+    return this.repository.getViewAllInquiriesLink();
   }
 
   assertSspAssetAssignments(assignedBusinessUnits: BusinessUnit[]): void {

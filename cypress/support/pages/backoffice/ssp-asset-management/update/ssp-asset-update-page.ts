@@ -28,7 +28,7 @@ export class SspAssetUpdatePage extends BackofficePage {
     }
 
     if (!assetData.image) {
-      cy.get(this.repository.getImageDeleteSelector()).check({force: true});
+      cy.get(this.repository.getImageDeleteSelector()).check({ force: true });
     }
 
     if (assetData.businessUnitOwner) {
@@ -41,7 +41,7 @@ export class SspAssetUpdatePage extends BackofficePage {
 
     if (assetData.assignedbusinessUnits && assetData.assignedbusinessUnits.length > 0) {
       this.updateAssignedBusinessUnits(assetData.assignedbusinessUnits);
-      }
+    }
   }
 
   uploadImage(imagePath: string): void {
@@ -57,98 +57,80 @@ export class SspAssetUpdatePage extends BackofficePage {
   }
 
   updateBusinessUnitOwner(businessUnitOwner: BusinessUnit): void {
-    cy.get(this.repository.getBusinessUnitOwnerSelect())
-        .select('', {force: true});
+    cy.get(this.repository.getBusinessUnitOwnerSelect()).select('', { force: true });
 
     cy.intercept('GET', '**/company-business-unit-gui/suggest*').as('businessUnitOwnerSuggest');
 
-    cy.get(this.repository.getBusinessUnitOwnerSelect())
-        .next(this.repository.getSelectContainer())
-        .click();
+    cy.get(this.repository.getBusinessUnitOwnerSelect()).next(this.repository.getSelectContainer()).click();
 
     cy.get(this.repository.getSelectContainerSelector())
-        .find(this.repository.getSearchFieldSelector())
-        .type(businessUnitOwner.name, {force: true});
+      .find(this.repository.getSearchFieldSelector())
+      .type(businessUnitOwner.name, { force: true });
 
     cy.wait('@businessUnitOwnerSuggest');
 
-    cy.get(this.repository.getDropdownOptionSelector())
-        .filter(':visible')
-        .first()
-        .click();
+    cy.get(this.repository.getDropdownOptionSelector()).filter(':visible').first().click();
   }
 
   updateAssignedCompanies(companies: Company[]): void {
-    this.repository.getAssignedCompaniesSelect()
-        .next(this.repository.getSelectContainer())
-        .find(this.repository.getSelectionChoiceRemoveSelector())
-        .each(($el) => {
-          cy.wrap($el).click();
-        });
+    this.repository
+      .getAssignedCompaniesSelect()
+      .next(this.repository.getSelectContainer())
+      .find(this.repository.getSelectionChoiceRemoveSelector())
+      .each(($el) => {
+        cy.wrap($el).click();
+      });
 
-    this.repository.getAssignedCompaniesSelect()
-        .next(this.repository.getSelectContainer())
-        .click();
+    this.repository.getAssignedCompaniesSelect().next(this.repository.getSelectContainer()).click();
 
     for (const company of companies) {
       cy.intercept('GET', '**/company-gui/suggest*').as('companySuggest');
 
-      this.repository.getAssignedCompaniesSelect()
-          .next(this.repository.getSelectContainer())
-          .click();
+      this.repository.getAssignedCompaniesSelect().next(this.repository.getSelectContainer()).click();
 
       cy.get(this.repository.getSelectContainerSelector())
-          .find(this.repository.getSearchFieldSelector())
-          .type(company.name, {force: true});
+        .find(this.repository.getSearchFieldSelector())
+        .type(company.name, { force: true });
 
       cy.wait('@companySuggest');
 
-      cy.get(this.repository.getDropdownOptionSelector())
-          .filter(':visible')
-          .first()
-          .click();
+      cy.get(this.repository.getDropdownOptionSelector()).filter(':visible').first().click();
     }
   }
 
   updateAssignedBusinessUnits(businessUnits: BusinessUnit[]): void {
-  cy.get(this.repository.getAssignedBusinessUnitsSelector())
+    cy.get(this.repository.getAssignedBusinessUnitsSelector())
       .next(this.repository.getSelectContainer())
       .find(this.repository.getSelectionChoiceSelector())
-      .then($choices => {
+      .then(($choices) => {
         const count = $choices.length;
         if (count > 0) {
           for (let i = 0; i < count; i++) {
             cy.get(this.repository.getAssignedBusinessUnitsSelector())
-                .next(this.repository.getSelectContainer())
-                .find(this.repository.getSelectionChoiceRemoveSelector())
-                .first()
-                .click({force: true});
+              .next(this.repository.getSelectContainer())
+              .find(this.repository.getSelectionChoiceRemoveSelector())
+              .first()
+              .click({ force: true });
           }
         }
       });
 
-  cy.get(this.repository.getAssignedBusinessUnitsSelector())
-      .next(this.repository.getSelectContainer())
-      .click();
+    cy.get(this.repository.getAssignedBusinessUnitsSelector()).next(this.repository.getSelectContainer()).click();
 
-  for (const businessUnit of businessUnits) {
-  cy.intercept('GET', '**/company-business-unit-gui/suggest*').as('businessUnitSuggest');
+    for (const businessUnit of businessUnits) {
+      cy.intercept('GET', '**/company-business-unit-gui/suggest*').as('businessUnitSuggest');
 
-  cy.get(this.repository.getAssignedBusinessUnitsSelector())
-      .next(this.repository.getSelectContainer())
-      .click();
+      cy.get(this.repository.getAssignedBusinessUnitsSelector()).next(this.repository.getSelectContainer()).click();
 
-  cy.get(this.repository.getSelectContainerSelector())
-      .find(this.repository.getSearchFieldSelector())
-      .type(businessUnit.name, {force: true});
+      cy.get(this.repository.getSelectContainerSelector())
+        .find(this.repository.getSearchFieldSelector())
+        .type(businessUnit.name, { force: true });
 
-  cy.wait('@businessUnitSuggest');
+      cy.wait('@businessUnitSuggest');
 
-  cy.get(this.repository.getDropdownOptionSelector())
-      .filter(':visible')
-      .first()
-      .click();
-  }}
+      cy.get(this.repository.getDropdownOptionSelector()).filter(':visible').first().click();
+    }
+  }
 }
 
 interface SspAsset {

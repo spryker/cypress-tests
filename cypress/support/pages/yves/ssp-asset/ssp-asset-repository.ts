@@ -27,8 +27,7 @@ export interface SspAssetRepository {
   getSspAssetServicesButton(): Cypress.Chainable;
   getSspAssetInquiriresTable(): Cypress.Chainable;
   getSspAssetImageSrc(): Cypress.Chainable;
-    getViewAllInquiriesLink(): Cypress.Chainable;
-
+  getViewAllInquiriesLink(): Cypress.Chainable;
 
   // Asset list page selectors
   getFirstRowViewButton(): Cypress.Chainable;
