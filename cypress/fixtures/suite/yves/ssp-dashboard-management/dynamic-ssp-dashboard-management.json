@@ -261,8 +261,14 @@
                 {
                     "type": "helper",
                     "name": "havePermissionByKey",
-                    "key": "permission",
+                    "key": "permissionDashboard",
                     "arguments": ["ViewDashboardPermissionPlugin"]
+                },
+                {
+                    "type": "helper",
+                    "name": "havePermissionByKey",
+                    "key": "permissionAsset",
+                    "arguments": ["ViewBusinessUnitSspAssetPermissionPlugin"]
                 },
                 {
                     "type": "helper",
@@ -270,7 +276,7 @@
                     "key": "companyRoleWithAllPermissions",
                     "arguments": [
                         { "isDefault": true, "fkCompany": "#company.id_company" },
-                        ["#permission"]
+                        ["#permissionDashboard", "#permissionAsset"]
                     ]
                 },
                 {
@@ -279,13 +285,18 @@
                     "key": "companyRoleWithViewDashboardPermission",
                     "arguments": [
                         { "isDefault": true, "fkCompany": "#company.id_company" },
-                        ["#permission"]
+                        ["#permissionDashboard"]
                     ]
                 },
                 {
                     "type": "helper",
                     "name": "assignCompanyRoles",
                     "arguments": ["#companyUserFromCompany", ["#companyRoleWithViewDashboardPermission"]]
+                },
+                {
+                    "type": "helper",
+                    "name": "assignCompanyRoles",
+                    "arguments": ["#companyUserFromCompany2", ["#companyRoleWithAllPermissions"]]
                 },
                 {
                     "type": "helper",
@@ -308,6 +319,43 @@
                             }
                         },
                         "#businessUnit.id_company_business_unit"
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveAsset",
+                    "key": "sspAsset",
+                    "arguments": [
+                        {
+                            "companyBusinessUnit": "#businessUnit",
+                            "generateImage": true,
+                            "createdDate": "2025-05-05 14:58:00",
+                            "assignments": [
+                                {
+                                    "companyBusinessUnit": {
+                                        "idCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveAsset",
+                    "key": "sspAsset1",
+                    "arguments": [
+                        {
+                            "companyBusinessUnit": "#businessUnit",
+                            "createdDate": "2025-05-05 12:10:00",
+                            "assignments": [
+                                {
+                                    "companyBusinessUnit": {
+                                        "idCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+                                    }
+                                }
+                            ]
+                        }
                     ]
                 }
             ]

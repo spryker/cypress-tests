@@ -22,14 +22,35 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
   getStatsColumnBlocks(): Chainable {
     return cy.get('div[data-qa="stats-column"]');
   }
+  getStatsColumnTitleName(): string {
+    return 'div[data-qa="stats-column-title"]';
+  }
+  getStatsColumnCounterName(): string {
+    return 'div[data-qa="stats-column-counter"]';
+  }
   getSalesRepresentativeBlocks(): Chainable {
     return cy.get('div[data-qa="sales-representative"]');
+  }
+  getAssetsBlock(): Chainable {
+    return cy.get('div[data-qa="component assets-preview"]');
+  }
+  getAssetPreviewBlock(): Chainable {
+    return cy.get('div[data-qa="component assets-preview"]').find('div[data-qa="asset-item-preview"]')
+  }
+  getAssetPreviewItemBlock(index: number): Chainable {
+    return cy.get('div[data-qa="component assets-preview"]').find('div[data-qa="asset-item-preview"]:nth-child(' + (index + 1) + ')')
+  }
+  getAssetPreviewItemLinkBlock(index: number): Chainable {
+    return cy.get('div[data-qa="component assets-preview"]').find('div[data-qa="asset-item-preview"]:nth-child(' + (index + 1) + ')').find('a.assets-preview__link')
   }
   getExpectedStatsColumnBlocks(): string[] {
     return [
         'Assets',
         'Pending Inquiries',
     ];
+  }
+  getPlaceholderImage(): string {
+    return 'image-placeholder.png';
   }
   private readonly selectors = {};
 }

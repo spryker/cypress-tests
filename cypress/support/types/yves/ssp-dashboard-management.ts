@@ -1,4 +1,5 @@
 import { Customer, Company } from './shared';
+import { SspAsset } from './ssp-asset';
 
 export interface SspDashboardManagementDynamicFixtures {
   customer: Customer;
@@ -7,6 +8,8 @@ export interface SspDashboardManagementDynamicFixtures {
   businessUnit: BusinessUnit;
   cmsBlockGlossary: CmsBlockGlossary;
   locale: Locale;
+  sspAsset: SspAsset;
+  sspAsset1: SspAsset;
 }
 
 export interface BusinessUnit {

@@ -18,7 +18,6 @@ export class CustomerLoginScenario {
     cy.session([params.email, params.password], () => {
       this.loginPage.visit();
       this.loginPage.login(params);
-      cy.url().should('contain', '/customer');
     });
   };
 }

@@ -3,7 +3,7 @@ import { inject, injectable } from 'inversify';
 
 import {YvesPage} from '@pages/yves';
 import { SspDashboardManagementRepository } from './ssp-dashboard-management-repository';
-import {GlossaryPlaceholders, GlossaryPlaceholderTranslations} from "../../../types/yves";
+import {GlossaryPlaceholders, GlossaryPlaceholderTranslations, SspAsset} from "../../../types/yves";
 
 @injectable()
 @autoWired
@@ -37,9 +37,9 @@ export class SspDashboardPage extends YvesPage {
         .should('have.length', 2)
         .each(($statsBlock, $index) => {
           cy.wrap($statsBlock)
-            .find('div[data-qa="stats-column-title"]').contains(this.repository.getExpectedStatsColumnBlocks()[$index]);
+            .find(this.repository.getStatsColumnTitleName()).contains(this.repository.getExpectedStatsColumnBlocks()[$index]);
           cy.wrap($statsBlock)
-            .find('strong[data-qa="stats-column-counter"]').contains('n/a');
+            .find(this.repository.getStatsColumnCounterName()).contains('n/a');
         });
   };
 
@@ -54,4 +54,28 @@ export class SspDashboardPage extends YvesPage {
       })
     })
   };
+
+  assertSspDashboardAssetsWidgetPresent = (): void => {
+    this.repository.getAssetsBlock().should('exist');
+  }
+
+  assertWidgetData(sspAssets: SspAsset[]): void {
+    this.repository.getAssetPreviewBlock().its('length').should('eq', sspAssets.length);
+
+    sspAssets.forEach((sspAsset: SspAsset, index) => {
+        if (sspAsset.reference) {
+            this.repository.getAssetPreviewItemLinkBlock(index)
+                .should("have.attr", "href")
+                .should('have.string', sspAsset.reference)
+        }
+        if (sspAsset.name) {
+            this.repository.getAssetPreviewItemBlock(index).contains(sspAsset.name).should('exist');
+        }
+        if (!sspAsset.image) {
+            this.repository.getAssetPreviewItemBlock(index).find('lazy-image div')
+                .should('have.css', 'background-image')
+                .and('have.string', this.repository.getPlaceholderImage());
+        }
+    });
+  }
 }
