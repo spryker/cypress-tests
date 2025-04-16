@@ -20,4 +20,7 @@ export class B2cMpCustomerOverviewRepository implements CustomerOverviewReposito
   getMyFilesLink(): Cypress.Chainable {
     return cy.get('[data-qa="my-files"]');
   }
+  getOrderDetailTableRow(): Cypress.Chainable {
+    return cy.get('[data-qa="component order-detail-table"]');
+  }
 }
