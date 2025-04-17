@@ -52,5 +52,34 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
   getPlaceholderImage(): string {
     return 'image-placeholder.png';
   }
+  getFilesBlock(): Chainable {
+    return cy.get('div[data-qa="component dashboard-table dashboard-table-table-files"]');
+  }
+  getNoFilesText(): string {
+    return 'There is no data yet';
+  }
+  getFilesHeaders(): string[] {
+    return [
+      'File Name',
+      'Size',
+      'File Type',
+      '',
+    ];
+  }
+  getInquiriesBlock(): Chainable {
+    return cy.get('div[data-qa="component dashboard-table ssp-inquiry-table"]');
+  }
+  getNoInquiriesText(): string {
+    return 'You do not have inquiries yet.';
+  }
+  getInquiriesHeaders(): string[] {
+    return [
+      'Reference',
+      'Type',
+      'Date',
+      'Status',
+      '',
+    ];
+  }
   private readonly selectors = {};
 }

@@ -14,4 +14,10 @@ export interface SspDashboardManagementRepository {
     getAssetPreviewItemLinkBlock(index: number): Cypress.Chainable;
     getExpectedStatsColumnBlocks(): string[];
     getPlaceholderImage(): string;
+    getFilesBlock(): Cypress.Chainable;
+    getNoFilesText(): string;
+    getFilesHeaders(): string[];
+    getInquiriesBlock(): Cypress.Chainable;
+    getNoInquiriesText(): string;
+    getInquiriesHeaders(): string[];
 }
