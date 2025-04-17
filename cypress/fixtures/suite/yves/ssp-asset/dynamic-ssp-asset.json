@@ -367,6 +367,32 @@
         },
         {
           "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product1",
+          "arguments": [{ "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#product1.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "key": "product1WithPrice",
+          "arguments": [
+            {
+              "skuProductAbstract": "#product1.abstract_sku",
+              "skuProduct": "#product1.sku",
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveAsset",
           "key": "assetBU1C1BU2C1BU1C2",
           "arguments": [
