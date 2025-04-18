@@ -21,8 +21,6 @@ export interface SspAssetDynamicFixtures {
   // generalSspInquiry3: SspInquiry;
   // orderSspInquiry: OrderSspInquiry;
   customer: Customer;
-  // company: Company;
-  // businessUnit: BusinessUnit;
 }
 
 export interface SspAsset {
@@ -34,18 +32,7 @@ export interface SspAsset {
   image?: string;
   status?: string;
 }
-//
-// export interface SspInquiry {
-//   id_ssp_inquiry: number;
-//   reference: string;
-//   subject: string;
-//   description: string;
-//   status: string;
-//   type: string;
-//   store: Store;
-//   files: File[];
-// }
-//
+
 export interface Customer {
   first_name: string;
   last_name: string;
@@ -65,25 +52,3 @@ export interface Status {
   key: string;
   value: string;
 }
-//
-// export interface Store {
-//   name: string;
-// }
-//
-// export interface File {
-//   file_name: string;
-//   file_info: FileInfo[];
-// }
-//
-// export interface FileInfo {
-//   extension: string;
-//   size: number;
-// }
-//
-// export interface OrderSspInquiry extends SspInquiry {
-//   order: Order;
-// }
-//
-// export interface Order {
-//   order_reference: string;
-// }
