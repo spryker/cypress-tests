@@ -24,7 +24,9 @@ export class ProductPage extends YvesPage {
   };
 
   selectSoldByProductOffer = (params: SelectSoldByProductOfferParams): void => {
-    this.repository.getSoldByProductOfferRadios().then(($radios) => {
+    this.repository.getSoldByProductOfferRadios()
+      .should("have.length.gte", 0)
+      .then(($radios) => {
       const targetRadio = $radios.filter(`[value="${params.productOfferReference}"]`);
       if (targetRadio.length) {
         cy.wrap(targetRadio).check(params.productOfferReference, { force: true });
