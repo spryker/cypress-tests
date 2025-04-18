@@ -61,16 +61,13 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     });
 
     it('customer without permission should not see files on dashboard', (): void => {
-      cy.intercept('/DE/en/customer/overview').as('loginRequest');
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
         withoutSession: true,
       });
-      cy.wait('@loginRequest', { timeout: 30000 }).then((): void => {
-        sspDashboardPage.visit();
-        sspDashboardPage.assertSspDashboardFilesBlockNotPresent();
-      });
+      sspDashboardPage.visit();
+      sspDashboardPage.assertSspDashboardFilesBlockNotPresent();
     });
 
     it('customer should see empty files block on dashboard', (): void => {

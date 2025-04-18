@@ -3,8 +3,6 @@ import { inject, injectable } from 'inversify';
 
 import { YvesPage } from '@pages/yves';
 import { SspDashboardManagementRepository } from './ssp-dashboard-management-repository';
-import { GlossaryPlaceholders, GlossaryPlaceholderTranslations, SspAsset, SspFile } from '../../../types/yves';
-import { SspInquiry } from '../../../types/yves/ssp-dashboard-management';
 
 @injectable()
 @autoWired
@@ -54,7 +52,7 @@ export class SspDashboardPage extends YvesPage {
     translations.forEach((translation) => {
       translation.translations.forEach((glossaryPlaceholder: GlossaryPlaceholderTranslations) => {
         if (glossaryPlaceholder.fk_locale === idLocale) {
-          this.repository.getSalesRepresentativeBlocks().contains(glossaryPlaceholder.translation);
+          this.repository.getSalesRepresentativeBlocks().contains(glossaryPlaceholder.translation).should('exist');
         }
       });
     });
@@ -191,4 +189,47 @@ export class SspDashboardPage extends YvesPage {
           });
       });
   }
+}
+
+interface SspInquiry {
+  subject: string;
+  description: string;
+  reference: string;
+  type: string;
+  availableTypes: SspInquiryType[];
+  status: string;
+}
+
+interface SspInquiryType {
+  key: string;
+  value: string;
+}
+
+export interface SspFile {
+  file_name: string;
+  file_info: SspFileInfo[];
+}
+
+export interface SspFileInfo {
+  extension: string;
+}
+
+interface SspAsset {
+  reference: string;
+  name: string;
+  serial_number: string;
+  image: string;
+}
+
+export interface CmsBlockGlossary {
+  glossary_placeholders: GlossaryPlaceholders[];
+}
+
+export interface GlossaryPlaceholders {
+  translations: GlossaryPlaceholderTranslations[];
+}
+
+export interface GlossaryPlaceholderTranslations {
+  fk_locale: number;
+  translation: string;
 }

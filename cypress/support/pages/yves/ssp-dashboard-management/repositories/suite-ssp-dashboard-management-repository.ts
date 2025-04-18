@@ -26,7 +26,7 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
     return 'div[data-qa="stats-column-title"]';
   }
   getStatsColumnCounterName(): string {
-    return 'div[data-qa="stats-column-counter"]';
+    return 'strong[data-qa="stats-column-counter"]';
   }
   getSalesRepresentativeBlocks(): Chainable {
     return cy.get('div[data-qa="sales-representative"]');

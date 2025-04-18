@@ -1,6 +1,4 @@
 import { Customer, Company } from './shared';
-import { SspAsset } from './ssp-asset';
-import { SspInquiryType } from './ssp-inquiry';
 
 export interface SspDashboardManagementDynamicFixtures {
   customer: Customer;
@@ -27,7 +25,7 @@ export interface SspDashboardManagementStaticFixtures {
   defaultPassword: string;
 }
 
-export interface BusinessUnit {
+interface BusinessUnit {
   name: string;
 }
 
@@ -53,15 +51,27 @@ export interface GlossaryPlaceholderTranslations {
   translation: string;
 }
 
-export interface Locale {
+interface Locale {
   id_locale: number;
 }
 
-export interface SspInquiry {
+interface SspInquiry {
   subject: string;
   description: string;
   reference: string;
   type: string;
   availableTypes: SspInquiryType[];
   status: string;
+}
+
+interface SspInquiryType {
+  key: string;
+  value: string;
+}
+
+interface SspAsset {
+  reference: string;
+  name: string;
+  serial_number: string;
+  image: string;
 }
