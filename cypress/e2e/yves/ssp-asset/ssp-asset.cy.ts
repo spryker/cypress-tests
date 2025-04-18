@@ -123,7 +123,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         { reference: dynamicFixtures.sspInquiry3.reference },
       ]);
 
-        assetDetailPage.getViewAllInquiriesLink().should('exist');
+      assetDetailPage.getViewAllInquiriesLink().should('exist');
     });
 
     it('should navigate to ssp asset pages from different sources', () => {

@@ -14,7 +14,7 @@ export class SspAssetAddRepository {
   getSelectContainerContainer = (): Cypress.Chainable => cy.get('.select2-container--open');
 
   // Form field IDs instead of names to work better with Select2
-    getSiblingSelector = (): string => 'span';
+  getSiblingSelector = (): string => 'span';
 
   // Original selectors (kept for backward compatibility)
   getAssignedCompaniesSelect = (): Cypress.Chainable => cy.get('select[name="assetForm[assignedCompanies][]"]');

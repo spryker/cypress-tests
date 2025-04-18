@@ -132,7 +132,7 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
   getSspAssetImageSrc(): Cypress.Chainable {
     return cy.get('[data-qa*="ssp-asset-image"]').invoke('attr', 'image-src');
   }
-    getViewAllInquiriesLink(): Cypress.Chainable {
+  getViewAllInquiriesLink(): Cypress.Chainable {
     return cy.get('[data-qa*="ssp-inquiry-table"]').find('a[href*="/customer/ssp-inquiry?ssp_asset_reference="');
   }
 

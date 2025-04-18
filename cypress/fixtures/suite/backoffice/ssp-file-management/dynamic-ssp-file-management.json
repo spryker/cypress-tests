@@ -104,8 +104,8 @@
           "name": "haveAsset",
           "key": "asset1",
           "arguments": [
-            { 
-              "name": "Test Asset" 
+            {
+              "name": "Test Asset"
             }
           ]
         },

@@ -46,7 +46,7 @@ export class SspFileManagementAttachPage extends BackofficePage {
 
     cy.get(this.repository.getDropdownOptionSelector()).filter(':visible').first().click();
   }
-  
+
   clickAssetAttachmentTab(): void {
     cy.get(this.repository.getAssetAttachmentTabSelector()).click();
   }

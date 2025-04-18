@@ -21,11 +21,11 @@ export class SspAssetListPage extends BackofficePage {
   }
 
   verifyReferenceColumnSortedDesc(): void {
-    cy.get(this.repository.getReferenceHeaderSelector()).then($referenceHeader => {
-      cy.get('table.dataTable thead th').then($headers => {
+    cy.get(this.repository.getReferenceHeaderSelector()).then(($referenceHeader) => {
+      cy.get('table.dataTable thead th').then(($headers) => {
         const referenceIndex = $headers.index($referenceHeader);
 
-        cy.get(`table.dataTable tbody tr td:nth-child(${referenceIndex + 1})`).then($cells => {
+        cy.get(`table.dataTable tbody tr td:nth-child(${referenceIndex + 1})`).then(($cells) => {
           const references = $cells.map((i, el) => Cypress.$(el).text().trim()).get();
           const sortedReferences = [...references].sort((a, b) => b.localeCompare(a));
           expect(references).to.deep.equal(sortedReferences, 'Reference column should be sorted in descending order');

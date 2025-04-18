@@ -3,8 +3,8 @@ import { User } from './shared';
 export interface SspAssetStaticFixtures {
   defaultPassword: string;
   sspAsset: SspAsset;
-    sspAssetOverride: SspAsset;
-    statuses: Status[];
+  sspAssetOverride: SspAsset;
+  statuses: Status[];
 }
 
 export interface SspAssetDynamicFixtures {
@@ -14,7 +14,7 @@ export interface SspAssetDynamicFixtures {
   businessUnit3: BusinessUnit;
   company1: Company;
   company2: Company;
-    // sspAsset: SspAsset;
+  // sspAsset: SspAsset;
 
   // generalSspInquiry: SspInquiry;
   // generalSspInquiry2: SspInquiry;
@@ -26,13 +26,13 @@ export interface SspAssetDynamicFixtures {
 }
 
 export interface SspAsset {
-    id_ssp_asset?: number;
-    reference: string;
-    serial_number: string;
-    name: string;
-    note?: string;
-    image?: string;
-    status?: string;
+  id_ssp_asset?: number;
+  reference: string;
+  serial_number: string;
+  name: string;
+  note?: string;
+  image?: string;
+  status?: string;
 }
 //
 // export interface SspInquiry {
@@ -62,8 +62,8 @@ export interface BusinessUnit {
 }
 
 export interface Status {
-    key: string;
-    value: string;
+  key: string;
+  value: string;
 }
 //
 // export interface Store {
