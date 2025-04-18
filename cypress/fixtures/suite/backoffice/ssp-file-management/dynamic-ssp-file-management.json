@@ -101,6 +101,16 @@
         },
         {
           "type": "helper",
+          "name": "haveAsset",
+          "key": "asset1",
+          "arguments": [
+            { 
+              "name": "Test Asset" 
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveFile",
           "key": "file1",
           "arguments": [

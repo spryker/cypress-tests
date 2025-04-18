@@ -46,14 +46,41 @@ export class SspFileManagementAttachPage extends BackofficePage {
 
     cy.get(this.repository.getDropdownOptionSelector()).filter(':visible').first().click();
   }
+  
+  clickAssetAttachmentTab(): void {
+    cy.get(this.repository.getAssetAttachmentTabSelector()).click();
+  }
+
+  selectAsset(): void {
+    cy.intercept('GET', '/ssp-asset-management/autocomplete/asset**').as('assetSearch');
+
+    cy.get(this.repository.getAssetFieldSelector())
+      .siblings(this.repository.getSiblingSelector())
+      .find(this.repository.getSearchFieldSelector())
+      .type(this.repository.getAssetPrompt(), { force: true });
+
+    cy.wait('@assetSearch');
+
+    cy.get(this.repository.getDropdownOptionSelector()).filter(':visible').first().click();
+  }
 
   submitForm(): void {
     cy.get(this.repository.getSubmitButtonSelector()).click();
+  }
+
+  submitAssetForm(): void {
+    cy.get(this.repository.getAssetSubmitButtonSelector()).click();
   }
 
   verifySuccessMessage(): void {
     cy.get(this.repository.getSuccessMessageSelector())
       .should('be.visible')
       .and('contain', 'File attachments have been created successfully.');
+  }
+
+  verifyAssetSuccessMessage(): void {
+    cy.get(this.repository.getSuccessMessageSelector())
+      .should('be.visible')
+      .and('contain', 'Asset attachment saved successfully.');
   }
 }

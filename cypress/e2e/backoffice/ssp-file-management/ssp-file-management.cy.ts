@@ -76,6 +76,28 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     fileManagerAttachmentAttachPage.verifySuccessMessage();
   });
 
+  it('should successfully attach file to an asset', () => {
+    const fileManagerAttachmentAttachPage = container.get(SspFileManagementAttachPage);
+
+    fileManagerAttachmentListPage.visit();
+    fileManagerAttachmentListPage.clickAttachButton();
+    fileManagerAttachmentAttachPage.clickAssetAttachmentTab();
+    fileManagerAttachmentAttachPage.selectAsset();
+    fileManagerAttachmentAttachPage.submitAssetForm();
+    fileManagerAttachmentAttachPage.verifyAssetSuccessMessage();
+  });
+
+  it('should successfully detach file from an asset', () => {
+    const fileManagerAttachmentDetachPage = container.get(SspFileManagementDetachPage);
+
+    fileManagerAttachmentListPage.visit();
+    fileManagerAttachmentListPage.clickViewButton();
+
+    fileManagerAttachmentDetachPage.detachFile();
+    fileManagerAttachmentDetachPage.verifySuccessMessage();
+    fileManagerAttachmentDetachPage.assertDetachFile();
+  });
+
   it('should successfully detach file from entity', () => {
     const fileManagerAttachmentDetachPage = container.get(SspFileManagementDetachPage);
 
