@@ -6,7 +6,7 @@ export interface SspDashboardManagementDynamicFixtures {
   customer: Customer;
   customer2: Customer;
   customer3: Customer;
-  customer6: Customer;
+  customer4: Customer;
   company: Company;
   businessUnit: BusinessUnit;
   cmsBlockGlossary: CmsBlockGlossary;

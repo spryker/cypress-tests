@@ -81,5 +81,8 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
       '',
     ];
   }
+  getStatusLabelPath(): string {
+    return 'span[data-qa="component status"]';
+  }
   private readonly selectors = {};
 }

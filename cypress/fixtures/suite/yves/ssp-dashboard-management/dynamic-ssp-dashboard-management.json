@@ -224,42 +224,6 @@
                 },
                 {
                     "type": "helper",
-                    "name": "haveCompanyUser",
-                    "key": "companyUserFromCompany5",
-                    "arguments": [
-                        {
-                            "customer": "#customer4",
-                            "fkCustomer": "#customer4.id_customer",
-                            "fkCompany": "#company2.id_company",
-                            "fkCompanyBusinessUnit": "#businessUnit3.id_company_business_unit"
-                        }
-                    ]
-                },
-                {
-                    "type": "helper",
-                    "name": "haveCompanyUser",
-                    "key": "companyUserFromCompany6",
-                    "arguments": [
-                        {
-                            "customer": "#customer5",
-                            "fkCustomer": "#customer5.id_customer",
-                            "fkCompany": "#company2.id_company",
-                            "fkCompanyBusinessUnit": "#businessUnit3.id_company_business_unit"
-                        }
-                    ]
-                },
-                {
-                    "type": "helper",
-                    "name": "haveCustomerAddress",
-                    "key": "address",
-                    "arguments": [
-                        {
-                            "fkCustomer": "#customer.id_customer"
-                        }
-                    ]
-                },
-                {
-                    "type": "helper",
                     "name": "havePermissionByKey",
                     "key": "permissionDashboard",
                     "arguments": ["ViewDashboardPermissionPlugin"]
@@ -502,6 +466,18 @@
                             "entity_id": "#companyUserFromCompany2.id_company_user",
                             "entity_name": "company_user",
                             "attachedAt": "2025-05-05 14:53:00"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "haveFileAttachment",
+                    "arguments": [
+                        {
+                            "file": "#file1",
+                            "entity_id": "#companyUserFromCompany4.id_company_user",
+                            "entity_name": "company_user",
+                            "attachedAt": "2025-05-05 14:58:00"
                         }
                     ]
                 },

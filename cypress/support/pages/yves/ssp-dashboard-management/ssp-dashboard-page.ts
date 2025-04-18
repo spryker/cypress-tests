@@ -104,7 +104,7 @@ export class SspDashboardPage extends YvesPage {
   }
 
   assertSspDashboardFilesTableHasNoDownloadLink(): void {
-    this.repository.getFilesBlock().find('table thead tr td:last-child').should('not.contain.text', 'Download');
+    this.repository.getFilesBlock().find('table tbody tr td:last-child').should('not.contain.text', 'Download');
   }
 
   assertSspDashboardFilesTable(files: SspFile[]): void {
@@ -165,6 +165,7 @@ export class SspDashboardPage extends YvesPage {
         }
         if (indexTd === 3) {
           cy.wrap($td).contains(inquiries[index].status, { matchCase: false }).should('exist');
+          cy.wrap($td).find(this.repository.getStatusLabelPath()).should('have.class', 'status--' + inquiries[index].status.toLowerCase());
         }
         if (indexTd === 4) {
           cy.wrap($td).should('contain.text', 'View');
