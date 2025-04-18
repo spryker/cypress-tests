@@ -14,12 +14,6 @@ export interface SspAssetDynamicFixtures {
   businessUnit3: BusinessUnit;
   company1: Company;
   company2: Company;
-  // sspAsset: SspAsset;
-
-  // generalSspInquiry: SspInquiry;
-  // generalSspInquiry2: SspInquiry;
-  // generalSspInquiry3: SspInquiry;
-  // orderSspInquiry: OrderSspInquiry;
   customer: Customer;
 }
 
