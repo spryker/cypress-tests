@@ -17,7 +17,7 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
     return cy.get('div[data-qa="component stats-overview"]');
   }
   getOverviewTitle(): string {
-      return 'My Overview';
+    return 'My Overview';
   }
   getStatsColumnBlocks(): Chainable {
     return cy.get('div[data-qa="stats-column"]');
@@ -35,19 +35,21 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
     return cy.get('div[data-qa="component assets-preview"]');
   }
   getAssetPreviewBlock(): Chainable {
-    return cy.get('div[data-qa="component assets-preview"]').find('div[data-qa="asset-item-preview"]')
+    return cy.get('div[data-qa="component assets-preview"]').find('div[data-qa="asset-item-preview"]');
   }
   getAssetPreviewItemBlock(index: number): Chainable {
-    return cy.get('div[data-qa="component assets-preview"]').find('div[data-qa="asset-item-preview"]:nth-child(' + (index + 1) + ')')
+    return cy
+      .get('div[data-qa="component assets-preview"]')
+      .find('div[data-qa="asset-item-preview"]:nth-child(' + (index + 1) + ')');
   }
   getAssetPreviewItemLinkBlock(index: number): Chainable {
-    return cy.get('div[data-qa="component assets-preview"]').find('div[data-qa="asset-item-preview"]:nth-child(' + (index + 1) + ')').find('a.assets-preview__link')
+    return cy
+      .get('div[data-qa="component assets-preview"]')
+      .find('div[data-qa="asset-item-preview"]:nth-child(' + (index + 1) + ')')
+      .find('a.assets-preview__link');
   }
   getExpectedStatsColumnBlocks(): string[] {
-    return [
-        'Assets',
-        'Pending Inquiries',
-    ];
+    return ['Assets', 'Pending Inquiries'];
   }
   getPlaceholderImage(): string {
     return 'image-placeholder.png';
@@ -59,12 +61,7 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
     return 'There is no data yet';
   }
   getFilesHeaders(): string[] {
-    return [
-      'File Name',
-      'Size',
-      'File Type',
-      '',
-    ];
+    return ['File Name', 'Size', 'File Type', ''];
   }
   getInquiriesBlock(): Chainable {
     return cy.get('div[data-qa="component dashboard-table ssp-inquiry-table"]');
@@ -73,13 +70,7 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
     return 'You do not have inquiries yet.';
   }
   getInquiriesHeaders(): string[] {
-    return [
-      'Reference',
-      'Type',
-      'Date',
-      'Status',
-      '',
-    ];
+    return ['Reference', 'Type', 'Date', 'Status', ''];
   }
   getStatusLabelPath(): string {
     return 'span[data-qa="component status"]';

@@ -28,7 +28,7 @@ export interface SspDashboardManagementStaticFixtures {
 }
 
 export interface BusinessUnit {
-    name: string;
+  name: string;
 }
 
 export interface SspFile {
@@ -41,11 +41,11 @@ export interface SspFileInfo {
 }
 
 export interface CmsBlockGlossary {
-  glossary_placeholders: GlossaryPlaceholders[]
+  glossary_placeholders: GlossaryPlaceholders[];
 }
 
 export interface GlossaryPlaceholders {
-  translations: GlossaryPlaceholderTranslations[]
+  translations: GlossaryPlaceholderTranslations[];
 }
 
 export interface GlossaryPlaceholderTranslations {
@@ -54,7 +54,7 @@ export interface GlossaryPlaceholderTranslations {
 }
 
 export interface Locale {
-    id_locale: number
+  id_locale: number;
 }
 
 export interface SspInquiry {
