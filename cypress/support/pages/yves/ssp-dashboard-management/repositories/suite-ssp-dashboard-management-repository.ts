@@ -58,7 +58,8 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
     return cy.get('[data-qa="component dashboard-table dashboard-table-table-files"]');
   }
   getFilesBlockTitle(): Chainable {
-    return cy.get('[data-qa="component dashboard-table dashboard-table-table-files"]')
+    return cy
+      .get('[data-qa="component dashboard-table dashboard-table-table-files"]')
       .find('[data-qa="dashboard-table-table-files-counter-title"]');
   }
   getNoFilesText(): string {
@@ -71,7 +72,8 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
     return cy.get('[data-qa="component dashboard-table ssp-inquiry-table"]');
   }
   getInquiriesBlockTitle(): Chainable {
-    return cy.get('[data-qa="component dashboard-table ssp-inquiry-table"]')
+    return cy
+      .get('[data-qa="component dashboard-table ssp-inquiry-table"]')
       .find('[data-qa="ssp-inquiry-table-counter-title"]');
   }
   getNoInquiriesText(): string {

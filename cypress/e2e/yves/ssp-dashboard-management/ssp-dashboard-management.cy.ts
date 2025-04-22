@@ -92,11 +92,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       sspDashboardPage.visit();
       sspDashboardPage.assertSspDashboardFilesBlockPresent();
       sspDashboardPage.assertSspDashboardFilesTable(
-        [
-          dynamicFixtures.file1,
-          dynamicFixtures.file2,
-          dynamicFixtures.file3,
-        ],
+        [dynamicFixtures.file1, dynamicFixtures.file2, dynamicFixtures.file3],
         4
       );
     });
@@ -145,11 +141,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       sspDashboardPage.visit();
       sspDashboardPage.assertSspDashboardInquiriesBlockPresent();
       sspDashboardPage.assertSspDashboardInquiriesTable(
-        [
-          dynamicFixtures.sspInquiry,
-          dynamicFixtures.sspInquiry1,
-          dynamicFixtures.sspInquiry2,
-        ],
+        [dynamicFixtures.sspInquiry, dynamicFixtures.sspInquiry1, dynamicFixtures.sspInquiry2],
         4
       );
     });
