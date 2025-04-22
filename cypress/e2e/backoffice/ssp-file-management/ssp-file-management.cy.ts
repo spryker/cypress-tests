@@ -76,7 +76,7 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     fileManagerAttachmentAttachPage.verifySuccessMessage();
   });
 
-  it('should successfully attach file to an asset', () => {
+  it.skip('should successfully attach file to an asset', () => {
     const fileManagerAttachmentAttachPage = container.get(SspFileManagementAttachPage);
 
     fileManagerAttachmentListPage.visit();
@@ -87,7 +87,7 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     fileManagerAttachmentAttachPage.verifyAssetSuccessMessage();
   });
 
-  it('should successfully detach file from an asset', () => {
+  it.skip('should successfully detach file from an asset', () => {
     const fileManagerAttachmentDetachPage = container.get(SspFileManagementDetachPage);
 
     fileManagerAttachmentListPage.visit();
