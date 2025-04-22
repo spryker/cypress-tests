@@ -91,12 +91,6 @@
         {
           "type": "helper",
           "name": "havePermissionByKey",
-          "key": "permission",
-          "arguments": ["ViewFilesPermissionPlugin"]
-        },
-        {
-          "type": "helper",
-          "name": "havePermissionByKey",
           "key": "permission2",
           "arguments": ["DownloadFilesPermissionPlugin"]
         },
