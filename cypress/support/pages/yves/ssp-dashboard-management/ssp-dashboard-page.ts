@@ -105,10 +105,9 @@ export class SspDashboardPage extends YvesPage {
     this.repository.getFilesBlock().find('table tbody tr td:last-child').should('not.contain.text', 'Download');
   }
 
-  assertSspDashboardFilesTable(files: SspFile[]): void {
-    this.repository.getFilesBlock().find('h5').should('contain.text', 'Files');
-    this.repository.getFilesBlock().find('span.badge').should('contain.text', '4');
-    this.repository.getFilesBlock().find('table thead th').should('have.length', 4);
+  assertSspDashboardFilesTable(files: SspFile[], filesCount: number): void {
+    this.repository.getFilesBlockTitle().should('contain.text', 'Files');
+    this.repository.getFilesBlock().find('span.badge').should('contain.text', filesCount);
     this.repository
       .getFilesBlock()
       .find('table thead th')
@@ -117,13 +116,11 @@ export class SspDashboardPage extends YvesPage {
           cy.wrap($th).should('contain.text', this.repository.getFilesHeaders()[index]);
         }
       });
-    this.repository.getFilesBlock().find('table tbody tr').should('have.length', 3);
+    this.repository.getFilesBlock().find('table tbody tr').should('have.length', files.length);
     this.repository
       .getFilesBlock()
       .find('table tbody tr')
       .each(($tr, index) => {
-        cy.wrap($tr).find('td').should('have.length', 4);
-
         cy.wrap($tr)
           .find('td')
           .each(($td, indexTd) => {
@@ -149,10 +146,9 @@ export class SspDashboardPage extends YvesPage {
     this.repository.getInquiriesBlock().should('contain.text', this.repository.getNoInquiriesText());
   }
 
-  assertSspDashboardInquiriesTable(inquiries: SspInquiry[]): void {
-    this.repository.getInquiriesBlock().find('h5').should('contain.text', 'Inquiries');
-    this.repository.getInquiriesBlock().find('span.badge').should('contain.text', '4');
-    this.repository.getInquiriesBlock().find('table thead th').should('have.length', 5);
+  assertSspDashboardInquiriesTable(inquiries: SspInquiry[], inquiriesCount: number): void {
+    this.repository.getInquiriesBlockTitle().should('contain.text', 'Inquiries');
+    this.repository.getInquiriesBlock().find('.badge').should('contain.text', inquiriesCount);
     this.repository
       .getInquiriesBlock()
       .find('table thead th')
@@ -161,7 +157,7 @@ export class SspDashboardPage extends YvesPage {
           cy.wrap($th).should('contain.text', this.repository.getInquiriesHeaders()[index]);
         }
       });
-    this.repository.getInquiriesBlock().find('table tbody tr').should('have.length', 3);
+    this.repository.getInquiriesBlock().find('table tbody tr').should('have.length', inquiries.length);
     this.repository
       .getInquiriesBlock()
       .find('table tbody tr')

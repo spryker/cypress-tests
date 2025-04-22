@@ -91,11 +91,14 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
       sspDashboardPage.visit();
       sspDashboardPage.assertSspDashboardFilesBlockPresent();
-      sspDashboardPage.assertSspDashboardFilesTable([
-        dynamicFixtures.file1,
-        dynamicFixtures.file2,
-        dynamicFixtures.file3,
-      ]);
+      sspDashboardPage.assertSspDashboardFilesTable(
+        [
+          dynamicFixtures.file1,
+          dynamicFixtures.file2,
+          dynamicFixtures.file3,
+        ],
+        4
+      );
     });
 
     it('customer without download permission should see files on dashboard without download link', (): void => {
@@ -141,11 +144,14 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
       sspDashboardPage.visit();
       sspDashboardPage.assertSspDashboardInquiriesBlockPresent();
-      sspDashboardPage.assertSspDashboardInquiriesTable([
-        dynamicFixtures.sspInquiry,
-        dynamicFixtures.sspInquiry1,
-        dynamicFixtures.sspInquiry2,
-      ]);
+      sspDashboardPage.assertSspDashboardInquiriesTable(
+        [
+          dynamicFixtures.sspInquiry,
+          dynamicFixtures.sspInquiry1,
+          dynamicFixtures.sspInquiry2,
+        ],
+        4
+      );
     });
   }
 );

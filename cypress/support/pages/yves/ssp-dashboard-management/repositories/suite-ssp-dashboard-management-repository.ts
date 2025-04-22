@@ -5,47 +5,47 @@ import Chainable = Cypress.Chainable;
 @injectable()
 export class SuiteSspDashboardManagementRepository implements SspDashboardManagementRepository {
   getUserInfoBlock(): Chainable {
-    return cy.get('div[data-qa="user-info"]');
+    return cy.get('[data-qa="user-info"]');
   }
   getUserInfoBlockWelcome(): Chainable {
-    return cy.get('div[data-qa="user-info"] strong');
+    return cy.get('[data-qa="user-info"] strong');
   }
   getWelcomeBlock(): Chainable {
-    return cy.get('div[data-qa="welcome-block"]');
+    return cy.get('[data-qa="welcome-block"]');
   }
   getOverviewBlock(): Chainable {
-    return cy.get('div[data-qa="component stats-overview"]');
+    return cy.get('[data-qa="component stats-overview"]');
   }
   getOverviewTitle(): string {
     return 'My Overview';
   }
   getStatsColumnBlocks(): Chainable {
-    return cy.get('div[data-qa="stats-column"]');
+    return cy.get('[data-qa="stats-column"]');
   }
   getStatsColumnTitleName(): string {
-    return 'div[data-qa="stats-column-title"]';
+    return '[data-qa="stats-column-title"]';
   }
   getStatsColumnCounterName(): string {
-    return 'strong[data-qa="stats-column-counter"]';
+    return '[data-qa="stats-column-counter"]';
   }
   getSalesRepresentativeBlocks(): Chainable {
-    return cy.get('div[data-qa="sales-representative"]');
+    return cy.get('[data-qa="sales-representative"]');
   }
   getAssetsBlock(): Chainable {
-    return cy.get('div[data-qa="component assets-preview"]');
+    return cy.get('[data-qa="component assets-preview"]');
   }
   getAssetPreviewBlock(): Chainable {
-    return cy.get('div[data-qa="component assets-preview"]').find('div[data-qa="asset-item-preview"]');
+    return cy.get('[data-qa="component assets-preview"]').find('[data-qa="asset-item-preview"]');
   }
   getAssetPreviewItemBlock(index: number): Chainable {
     return cy
-      .get('div[data-qa="component assets-preview"]')
-      .find('div[data-qa="asset-item-preview"]:nth-child(' + (index + 1) + ')');
+      .get('[data-qa="component assets-preview"]')
+      .find('[data-qa="asset-item-preview"]:nth-child(' + (index + 1) + ')');
   }
   getAssetPreviewItemLinkBlock(index: number): Chainable {
     return cy
-      .get('div[data-qa="component assets-preview"]')
-      .find('div[data-qa="asset-item-preview"]:nth-child(' + (index + 1) + ')')
+      .get('[data-qa="component assets-preview"]')
+      .find('[data-qa="asset-item-preview"]:nth-child(' + (index + 1) + ')')
       .find('a.assets-preview__link');
   }
   getExpectedStatsColumnBlocks(): string[] {
@@ -55,7 +55,11 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
     return 'image-placeholder.png';
   }
   getFilesBlock(): Chainable {
-    return cy.get('div[data-qa="component dashboard-table dashboard-table-table-files"]');
+    return cy.get('[data-qa="component dashboard-table dashboard-table-table-files"]');
+  }
+  getFilesBlockTitle(): Chainable {
+    return cy.get('[data-qa="component dashboard-table dashboard-table-table-files"]')
+      .find('[data-qa="dashboard-table-table-files-counter-title"]');
   }
   getNoFilesText(): string {
     return 'There is no data yet';
@@ -64,7 +68,11 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
     return ['File Name', 'Size', 'File Type', ''];
   }
   getInquiriesBlock(): Chainable {
-    return cy.get('div[data-qa="component dashboard-table ssp-inquiry-table"]');
+    return cy.get('[data-qa="component dashboard-table ssp-inquiry-table"]');
+  }
+  getInquiriesBlockTitle(): Chainable {
+    return cy.get('[data-qa="component dashboard-table ssp-inquiry-table"]')
+      .find('[data-qa="ssp-inquiry-table-counter-title"]');
   }
   getNoInquiriesText(): string {
     return 'You do not have inquiries yet.';
@@ -73,7 +81,7 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
     return ['Reference', 'Type', 'Date', 'Status', ''];
   }
   getStatusLabelPath(): string {
-    return 'span[data-qa="component status"]';
+    return '[data-qa="component status"]';
   }
   private readonly selectors = {};
 }

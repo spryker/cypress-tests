@@ -15,9 +15,11 @@ export interface SspDashboardManagementRepository {
   getExpectedStatsColumnBlocks(): string[];
   getPlaceholderImage(): string;
   getFilesBlock(): Cypress.Chainable;
+  getFilesBlockTitle(): Cypress.Chainable;
   getNoFilesText(): string;
   getFilesHeaders(): string[];
   getInquiriesBlock(): Cypress.Chainable;
+  getInquiriesBlockTitle(): Cypress.Chainable;
   getNoInquiriesText(): string;
   getInquiriesHeaders(): string[];
   getStatusLabelPath(): string;
