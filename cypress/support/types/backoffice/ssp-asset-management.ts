@@ -17,7 +17,7 @@ export interface SspAssetDynamicFixtures {
   customer: Customer;
 }
 
-export interface SspAsset {
+interface SspAsset {
   id_ssp_asset?: number;
   reference: string;
   serial_number: string;
@@ -27,22 +27,22 @@ export interface SspAsset {
   status?: string;
 }
 
-export interface Customer {
+interface Customer {
   first_name: string;
   last_name: string;
   email: string;
   salutation: string;
 }
 
-export interface Company {
+interface Company {
   name: string;
 }
 
-export interface BusinessUnit {
+interface BusinessUnit {
   name: string;
 }
 
-export interface Status {
+interface Status {
   key: string;
   value: string;
 }

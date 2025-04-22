@@ -134,7 +134,6 @@ export class SspAssetUpdatePage extends BackofficePage {
 }
 
 interface SspAsset {
-  reference: string;
   name: string;
   serialNumber?: string;
   status?: string;
