@@ -54,55 +54,54 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       assetManagementAddPage.submitForm();
       assetManagementAddPage.verifySuccessMessage();
 
-        assetManagementDetailPage.assertPageLocation();
-        assetManagementDetailPage.verifyAssetDetails({
-            reference: staticFixtures.sspAsset.reference,
-            name: staticFixtures.sspAsset.name,
-            status: staticFixtures.sspAsset.status,
-            note: staticFixtures.sspAsset.note,
-            serialNumber: staticFixtures.sspAsset.serial_number,
-            image: staticFixtures.sspAsset.image,
-            businessUnitOwner: { name: dynamicFixtures.businessUnit1.name },
-            assignedbusinessUnits: [
-                { name: dynamicFixtures.businessUnit1.name },
-                { name: dynamicFixtures.businessUnit2.name },
-            ],
-            companies: [{ name: dynamicFixtures.company1.name }],
-        });
+      assetManagementDetailPage.assertPageLocation();
+      assetManagementDetailPage.verifyAssetDetails({
+        reference: staticFixtures.sspAsset.reference,
+        name: staticFixtures.sspAsset.name,
+        status: staticFixtures.sspAsset.status,
+        note: staticFixtures.sspAsset.note,
+        serialNumber: staticFixtures.sspAsset.serial_number,
+        image: staticFixtures.sspAsset.image,
+        businessUnitOwner: { name: dynamicFixtures.businessUnit1.name },
+        assignedbusinessUnits: [
+          { name: dynamicFixtures.businessUnit1.name },
+          { name: dynamicFixtures.businessUnit2.name },
+        ],
+        companies: [{ name: dynamicFixtures.company1.name }],
+      });
 
       assetManagementDetailPage.getReference().then((reference) => {
-        let assetReference = reference;
+        const assetReference = reference;
 
         assetManagementListPage.visit();
 
         assetManagementListPage.searchAsset(reference);
 
-          assetManagementListPage.assetTableContainsAsset({
-              reference: assetReference,
-              name: staticFixtures.sspAsset.name,
-              status: staticFixtures.sspAsset.status,
-              serialNumber: staticFixtures.sspAsset.serial_number,
-              statuses: staticFixtures.statuses
-          });
+        assetManagementListPage.assetTableContainsAsset({
+          reference: assetReference,
+          name: staticFixtures.sspAsset.name,
+          status: staticFixtures.sspAsset.status,
+          serialNumber: staticFixtures.sspAsset.serial_number,
+          statuses: staticFixtures.statuses,
+        });
 
+        customerLoginScenario.execute({
+          email: dynamicFixtures.customer.email,
+          password: staticFixtures.defaultPassword,
+          withoutSession: true,
+        });
 
-          customerLoginScenario.execute({
-              email: dynamicFixtures.customer.email,
-              password: staticFixtures.defaultPassword,
-              withoutSession: true,
-          });
+        yvesSspAssetDetailPage.visit({
+          qs: { reference: assetReference },
+        });
 
-          yvesSspAssetDetailPage.visit({
-              qs: { reference: assetReference },
-          });
-
-          yvesSspAssetDetailPage.assertAssetDetails({
-              reference: assetReference,
-              name: staticFixtures.sspAsset.name,
-              image: staticFixtures.sspAsset.image,
-              serialNumber: staticFixtures.sspAsset.serial_number,
-              note: staticFixtures.sspAsset.note,
-          });
+        yvesSspAssetDetailPage.assertAssetDetails({
+          reference: assetReference,
+          name: staticFixtures.sspAsset.name,
+          image: staticFixtures.sspAsset.image,
+          serialNumber: staticFixtures.sspAsset.serial_number,
+          note: staticFixtures.sspAsset.note,
+        });
       });
     });
 

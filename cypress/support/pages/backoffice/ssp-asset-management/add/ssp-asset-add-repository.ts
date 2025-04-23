@@ -10,13 +10,12 @@ export class SspAssetAddRepository {
   getNoteTextarea = (): Cypress.Chainable => cy.get('textarea[name="assetForm[note]"]');
 
   getSearchFieldSelector = (): string => 'input.select2-search__field';
-  getDropdownOptionContainer = (): Cypress.Chainable => cy.get('.select2-results__option');
-  getSelectContainerContainer = (): Cypress.Chainable => cy.get('.select2-container--open');
+  getBusinessUnitOwnerSearchField = (): Cypress.Chainable =>
+    cy.get('[aria-controls="select2-assetForm_companyBusinessUnit-results"]');
+  getDropdownOption = (): Cypress.Chainable => cy.get('.select2-results__option');
 
-  // Form field IDs instead of names to work better with Select2
-  getSiblingSelector = (): string => 'span';
+  getSelectContainerSelector = (): string => '.select2';
 
-  // Original selectors (kept for backward compatibility)
   getAssignedCompaniesSelect = (): Cypress.Chainable => cy.get('select[name="assetForm[assignedCompanies][]"]');
   getAssignedBusinessUnitsSelect = (): Cypress.Chainable => cy.get('select[name="assetForm[assignedBusinessUnits][]"]');
   getBusinessUnitOwnerSelect = (): Cypress.Chainable => cy.get('select[name="assetForm[companyBusinessUnit]"]');

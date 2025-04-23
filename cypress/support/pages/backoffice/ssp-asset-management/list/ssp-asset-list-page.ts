@@ -44,40 +44,35 @@ export class SspAssetListPage extends BackofficePage {
   }
 
   assetTableContainsAsset(params: {
-      reference: string,
-      name: string,
-      status: string,
-      serialNumber: string,
-      statuses: Status[],
+    reference: string;
+    name: string;
+    status: string;
+    serialNumber: string;
+    statuses: Status[];
   }): void {
-      cy.intercept('GET', '**/ssp-asset-management/index/table*').as('assetTableData');
+    cy.intercept('GET', '**/ssp-asset-management/index/table*').as('assetTableData');
 
-      cy.wait('@assetTableData').then(() => {
-
+    cy.wait('@assetTableData').then(() => {
       let displayStatus = params.status;
 
       if (Array.isArray(params.statuses)) {
-          const matchingStatus = params.statuses.find(
-              (statusObj) => statusObj.key === params.status
-          );
+        const matchingStatus = params.statuses.find((statusObj) => statusObj.key === params.status);
 
-          if (matchingStatus && matchingStatus.value) {
-              displayStatus = matchingStatus.value;
-          }
+        if (matchingStatus && matchingStatus.value) {
+          displayStatus = matchingStatus.value;
+        }
       }
 
       cy.get('table.dataTable tbody tr')
-          .should('contain', params.reference)
-          .and('contain', params.name)
-          .and('contain', displayStatus)
-          .and('contain', params.serialNumber);
-
-      });
+        .should('contain', params.reference)
+        .and('contain', params.name)
+        .and('contain', displayStatus)
+        .and('contain', params.serialNumber);
+    });
   }
 }
 
-
-interface Status{
-    key: string;
-    value: string;
+interface Status {
+  key: string;
+  value: string;
 }
