@@ -38,21 +38,46 @@ export class SspAssetListPage extends BackofficePage {
     cy.get(this.repository.getCreateButtonSelector()).click();
   }
 
-  clickViewButton(): void {
-    cy.get(this.repository.getViewButtonSelector()).first().click();
-  }
-
-  clickEditButton(): void {
-    cy.get(this.repository.getEditButtonSelector()).first().click();
-  }
-
-  filterByStatus(status: string): void {
-    cy.get(this.repository.getStatusFilterSelector()).select(status);
-    cy.get(this.repository.getApplyFilterButtonSelector()).click();
-  }
-
   searchAsset(searchTerm: string): void {
     cy.get(this.repository.getSearchInputSelector()).clear();
     cy.get(this.repository.getSearchInputSelector()).type(searchTerm);
   }
+
+  assetTableContainsAsset(params: {
+      reference: string,
+      name: string,
+      status: string,
+      serialNumber: string,
+      statuses: Status[],
+  }): void {
+      cy.intercept('GET', '**/ssp-asset-management/index/table*').as('assetTableData');
+
+      cy.wait('@assetTableData').then(() => {
+
+      let displayStatus = params.status;
+
+      if (Array.isArray(params.statuses)) {
+          const matchingStatus = params.statuses.find(
+              (statusObj) => statusObj.key === params.status
+          );
+
+          if (matchingStatus && matchingStatus.value) {
+              displayStatus = matchingStatus.value;
+          }
+      }
+
+      cy.get('table.dataTable tbody tr')
+          .should('contain', params.reference)
+          .and('contain', params.name)
+          .and('contain', displayStatus)
+          .and('contain', params.serialNumber);
+
+      });
+  }
+}
+
+
+interface Status{
+    key: string;
+    value: string;
 }

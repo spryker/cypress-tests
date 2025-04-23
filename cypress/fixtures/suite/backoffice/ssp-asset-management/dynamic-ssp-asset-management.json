@@ -118,7 +118,25 @@
           "type": "helper",
           "name": "addUserToGroup",
           "arguments": ["#rootUser.id_user", 1]
-        }
+        },
+          {
+              "type": "helper",
+              "name": "haveAsset",
+              "key": "sspAsset",
+              "arguments": [
+                  {
+                      "companyBusinessUnit": "#businessUnit1",
+                      "assignments": [
+                          {
+                              "companyBusinessUnit": {
+                                  "idCompanyBusinessUnit": "#businessUnit1.id_company_business_unit",
+                                  "idCompanyBusinessUnit": "#businessUnit2.id_company_business_unit"
+                              }
+                          }
+                      ]
+                  }
+              ]
+          }
       ]
     }
   }

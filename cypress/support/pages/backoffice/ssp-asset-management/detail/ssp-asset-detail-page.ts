@@ -41,14 +41,17 @@ export class SspAssetDetailPage extends BackofficePage {
       cy.get(this.repository.getImageSelector()).should('not.exist');
     }
 
-    if (assetData.businessUnitOwner) {
-      cy.get(this.repository.getBusinessUnitOwnerValueSelector()).should('contain', assetData.businessUnitOwner.name);
-    }
-
     this.repository.getSspAssetRelationTabs().find(this.repository.getCompaniesTabSelector()).should('exist');
     this.repository.getSspAssetRelationTabs().find(this.repository.getInquiriesTabSelector()).should('exist');
 
+      if (assetData.companies) {
+          for (const company of assetData.companies) {
+              cy.get(this.repository.getCompanyNameColumnSelector()).contains(company.name).should('be.visible');
+          }
+      }
+
     if (assetData.assignedbusinessUnits && assetData.assignedbusinessUnits.length > 0) {
+
       this.repository
         .getSspAssetRelationTabs()
         .find(this.repository.getCompanyTableSelector())
@@ -59,13 +62,11 @@ export class SspAssetDetailPage extends BackofficePage {
       for (const businessUnit of assetData.assignedbusinessUnits) {
         cy.get(this.repository.getBusinessUnitNameColumnSelector()).contains(businessUnit.name).should('be.visible');
       }
-
-      if (assetData.companies) {
-        for (const company of assetData.companies) {
-          cy.get(this.repository.getCompanyNameColumnSelector()).contains(company.name).should('be.visible');
-        }
-      }
     }
+
+      if (assetData.businessUnitOwner) {
+          cy.get(this.repository.getBusinessUnitOwnerValueSelector()).should('contain', assetData.businessUnitOwner.name);
+      }
   }
 
   verifyImageIsVisible(): void {

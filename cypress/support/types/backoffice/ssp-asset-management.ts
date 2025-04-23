@@ -12,6 +12,7 @@ export interface SspAssetDynamicFixtures {
   businessUnit1: BusinessUnit;
   businessUnit2: BusinessUnit;
   businessUnit3: BusinessUnit;
+    sspAsset: SspAsset;
   company1: Company;
   company2: Company;
   customer: Customer;
@@ -24,7 +25,7 @@ interface SspAsset {
   name: string;
   note?: string;
   image?: string;
-  status?: string;
+  status: string;
 }
 
 interface Customer {

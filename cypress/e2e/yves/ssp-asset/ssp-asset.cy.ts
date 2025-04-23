@@ -327,7 +327,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
       cy.intercept('GET', '**/customer/asset**').as('assetRequest');
       assetListPage.visit();
-      cy.wait('@assetRequest').its('response.statusCode').should('eq', 403);
+      cy.url().should('include', 'errorMessage=ssp_asset.access.denied');
 
       cy.intercept('GET', '**/customer/asset/details**').as('assetDetailRequest');
       assetDetailPage.visit({
@@ -335,7 +335,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
           reference: dynamicFixtures.assetBU1C1BU2C1BU1C2.reference,
         },
       });
-      cy.wait('@assetDetailRequest').its('response.statusCode').should('eq', 403);
+      cy.url().should('include', 'errorMessage=ssp_asset.access.denied');
     });
   }
 );
