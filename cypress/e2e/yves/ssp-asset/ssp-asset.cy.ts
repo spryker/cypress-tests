@@ -326,14 +326,14 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       });
 
       assetListPage.visit();
-      cy.contains('Access denied');
+      cy.wait('@assetRequest').its('response.statusCode').should('eq', 403);
 
       assetDetailPage.visit({
         qs: {
           reference: dynamicFixtures.assetBU1C1BU2C1BU1C2.reference,
         },
       });
-      cy.contains('Access denied');
+      cy.wait('@assetDetailRequest').its('response.statusCode').should('eq', 403);
     });
   }
 );
