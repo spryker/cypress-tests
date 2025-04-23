@@ -68,7 +68,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
         cy.intercept('GET', '**/ssp-asset-management/index/table*').as('assetTableData');
 
-        cy.wait('@assetTableData').then((interception) => {
+        cy.wait('@assetTableData').then(() => {
           let displayStatus = staticFixtures.sspAsset.status;
 
           if (Array.isArray(staticFixtures.statuses)) {

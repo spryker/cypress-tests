@@ -12,11 +12,13 @@ export class SspAssetUpdatePage extends BackofficePage {
 
   updateAssetForm(assetData: SspAsset): void {
     if (assetData.name) {
-      cy.get(this.repository.getNameInputSelector()).clear().type(assetData.name);
+      cy.get(this.repository.getNameInputSelector()).clear();
+      cy.get(this.repository.getNameInputSelector()).type(assetData.name);
     }
 
     if (assetData.serialNumber) {
-      cy.get(this.repository.getSerialNumberInputSelector()).clear().type(assetData.serialNumber);
+      cy.get(this.repository.getSerialNumberInputSelector()).clear();
+      cy.get(this.repository.getSerialNumberInputSelector()).type(assetData.serialNumber);
     }
 
     if (assetData.status) {
@@ -24,7 +26,8 @@ export class SspAssetUpdatePage extends BackofficePage {
     }
 
     if (assetData.note) {
-      cy.get(this.repository.getNoteTextareaSelector()).clear().type(assetData.note);
+      cy.get(this.repository.getNoteTextareaSelector()).clear();
+      cy.get(this.repository.getNoteTextareaSelector()).type(assetData.note);
     }
 
     if (!assetData.image) {

@@ -38,11 +38,11 @@ export class SspAssetListPage extends BackofficePage {
     cy.get(this.repository.getCreateButtonSelector()).click();
   }
 
-  clickViewButton(assetReference: string): void {
+  clickViewButton(): void {
     cy.get(this.repository.getViewButtonSelector()).first().click();
   }
 
-  clickEditButton(assetReference: string): void {
+  clickEditButton(): void {
     cy.get(this.repository.getEditButtonSelector()).first().click();
   }
 
@@ -52,6 +52,7 @@ export class SspAssetListPage extends BackofficePage {
   }
 
   searchAsset(searchTerm: string): void {
-    cy.get(this.repository.getSearchInputSelector()).clear().type(searchTerm);
+    cy.get(this.repository.getSearchInputSelector()).clear()
+    cy.get(this.repository.getSearchInputSelector()).type(searchTerm);
   }
 }
