@@ -325,9 +325,11 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
+      cy.intercept('GET', '**/customer/asset**').as('assetRequest');
       assetListPage.visit();
       cy.wait('@assetRequest').its('response.statusCode').should('eq', 403);
 
+      cy.intercept('GET', '**/customer/asset/details**').as('assetDetailRequest');
       assetDetailPage.visit({
         qs: {
           reference: dynamicFixtures.assetBU1C1BU2C1BU1C2.reference,
