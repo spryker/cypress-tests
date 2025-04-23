@@ -52,7 +52,7 @@ export class SspAssetListPage extends BackofficePage {
   }
 
   searchAsset(searchTerm: string): void {
-    cy.get(this.repository.getSearchInputSelector()).clear()
+    cy.get(this.repository.getSearchInputSelector()).clear();
     cy.get(this.repository.getSearchInputSelector()).type(searchTerm);
   }
 }
