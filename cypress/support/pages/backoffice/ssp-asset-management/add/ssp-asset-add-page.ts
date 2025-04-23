@@ -30,6 +30,21 @@ export class SspAssetAddPage extends BackofficePage {
       this.repository.getImageUploadInput().attachFile(assetData.image);
     }
 
+      if (assetData.company) {
+          cy.intercept('GET', '**/company-gui/suggest*').as('companySuggest');
+
+          this.repository.getAssignedCompaniesSelect().next('.select2').find('.select2-selection').click();
+
+          this.repository
+              .getSelectContainerContainer()
+              .find(this.repository.getSearchFieldSelector())
+              .type(assetData.company.name, { force: true });
+
+          cy.wait('@companySuggest');
+
+          this.repository.getDropdownOptionContainer().filter(':visible').first().click();
+      }
+
     if (assetData.businessUnitOwner) {
       cy.intercept('GET', '**/company-business-unit-gui/suggest*').as('businessUnitOwnerSuggest');
 
@@ -41,21 +56,6 @@ export class SspAssetAddPage extends BackofficePage {
         .type(assetData.businessUnitOwner.name, { force: true });
 
       cy.wait('@businessUnitOwnerSuggest');
-
-      this.repository.getDropdownOptionContainer().filter(':visible').first().click();
-    }
-
-    if (assetData.company) {
-      cy.intercept('GET', '**/company-gui/suggest*').as('companySuggest');
-
-      this.repository.getAssignedCompaniesSelect().next('.select2').find('.select2-selection').click();
-
-      this.repository
-        .getSelectContainerContainer()
-        .find(this.repository.getSearchFieldSelector())
-        .type(assetData.company.name, { force: true });
-
-      cy.wait('@companySuggest');
 
       this.repository.getDropdownOptionContainer().filter(':visible').first().click();
     }
