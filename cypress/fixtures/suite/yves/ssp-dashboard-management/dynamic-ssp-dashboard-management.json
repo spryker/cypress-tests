@@ -29,17 +29,6 @@
         },
         {
           "type": "helper",
-          "name": "haveCompany",
-          "key": "company2",
-          "arguments": [
-            {
-              "isActive": true,
-              "status": "approved"
-            }
-          ]
-        },
-        {
-          "type": "helper",
           "name": "haveCompanyBusinessUnit",
           "key": "businessUnit",
           "arguments": [
@@ -55,16 +44,6 @@
           "arguments": [
             {
               "fkCompany": "#company.id_company"
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveCompanyBusinessUnit",
-          "key": "businessUnit3",
-          "arguments": [
-            {
-              "fkCompany": "#company2.id_company"
             }
           ]
         },
@@ -114,28 +93,6 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
-          "key": "customer5",
-          "arguments": [
-            {
-              "locale": "#locale",
-              "password": "change123"
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveCustomer",
-          "key": "customer6",
-          "arguments": [
-            {
-              "locale": "#locale",
-              "password": "change123"
-            }
-          ]
-        },
-        {
-          "type": "helper",
           "name": "confirmCustomer",
           "key": "confirmedCustomer",
           "arguments": ["#customer"]
@@ -160,20 +117,8 @@
         },
         {
           "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomer5",
-          "arguments": ["#customer5"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomer6",
-          "arguments": ["#customer6"]
-        },
-        {
-          "type": "helper",
           "name": "haveCompanyUser",
-          "key": "companyUserFromCompany",
+          "key": "companyUser",
           "arguments": [
             {
               "customer": "#customer",
@@ -186,7 +131,7 @@
         {
           "type": "helper",
           "name": "haveCompanyUser",
-          "key": "companyUserFromCompany2",
+          "key": "companyUser2",
           "arguments": [
             {
               "customer": "#customer2",
@@ -199,11 +144,11 @@
         {
           "type": "helper",
           "name": "haveCompanyUser",
-          "key": "companyUserFromCompany3",
+          "key": "companyUser3",
           "arguments": [
             {
-              "customer": "#customer6",
-              "fkCustomer": "#customer6.id_customer",
+              "customer": "#customer3",
+              "fkCustomer": "#customer3.id_customer",
               "fkCompany": "#company.id_company",
               "fkCompanyBusinessUnit": "#businessUnit2.id_company_business_unit"
             }
@@ -212,11 +157,11 @@
         {
           "type": "helper",
           "name": "haveCompanyUser",
-          "key": "companyUserFromCompany4",
+          "key": "companyUser4",
           "arguments": [
             {
-              "customer": "#customer3",
-              "fkCustomer": "#customer3.id_customer",
+              "customer": "#customer4",
+              "fkCustomer": "#customer4.id_customer",
               "fkCompany": "#company.id_company",
               "fkCompanyBusinessUnit": "#businessUnit2.id_company_business_unit"
             }
@@ -263,7 +208,7 @@
           "name": "haveCompanyRoleWithPermissions",
           "key": "companyRoleWithAllPermissions",
           "arguments": [
-            { "isDefault": true, "fkCompany": "#company.id_company" },
+            { "isDefault": false, "fkCompany": "#company.id_company" },
             [
               "#permissionDashboard",
               "#permissionAsset",
@@ -279,7 +224,7 @@
           "name": "haveCompanyRoleWithPermissions",
           "key": "companyRoleWithNoDownloadPermissions",
           "arguments": [
-            { "isDefault": true, "fkCompany": "#company.id_company" },
+            { "isDefault": false, "fkCompany": "#company.id_company" },
             [
               "#permissionDashboard",
               "#permissionAsset",
@@ -298,22 +243,22 @@
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": ["#companyUserFromCompany", ["#companyRoleWithViewDashboardPermission"]]
+          "arguments": ["#companyUser", ["#companyRoleWithViewDashboardPermission"]]
         },
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": ["#companyUserFromCompany2", ["#companyRoleWithAllPermissions"]]
+          "arguments": ["#companyUser2", ["#companyRoleWithAllPermissions"]]
         },
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": ["#companyUserFromCompany3", ["#companyRoleWithAllPermissions"]]
+          "arguments": ["#companyUser3", ["#companyRoleWithAllPermissions"]]
         },
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": ["#companyUserFromCompany4", ["#companyRoleWithNoDownloadPermissions"]]
+          "arguments": ["#companyUser4", ["#companyRoleWithNoDownloadPermissions"]]
         },
         {
           "type": "helper",
@@ -435,7 +380,7 @@
           "arguments": [
             {
               "file": "#file1",
-              "entity_id": "#companyUserFromCompany2.id_company_user",
+              "entity_id": "#companyUser2.id_company_user",
               "entity_name": "company_user",
               "attachedAt": "2025-05-05 14:58:00"
             }
@@ -447,7 +392,7 @@
           "arguments": [
             {
               "file": "#file2",
-              "entity_id": "#companyUserFromCompany2.id_company_user",
+              "entity_id": "#companyUser2.id_company_user",
               "entity_name": "company_user",
               "attachedAt": "2025-05-05 14:57:00"
             }
@@ -459,7 +404,7 @@
           "arguments": [
             {
               "file": "#file3",
-              "entity_id": "#companyUserFromCompany2.id_company_user",
+              "entity_id": "#companyUser2.id_company_user",
               "entity_name": "company_user",
               "attachedAt": "2025-05-05 14:56:00"
             }
@@ -471,7 +416,7 @@
           "arguments": [
             {
               "file": "#file4",
-              "entity_id": "#companyUserFromCompany2.id_company_user",
+              "entity_id": "#companyUser2.id_company_user",
               "entity_name": "company_user",
               "attachedAt": "2025-05-05 14:53:00"
             }
@@ -483,7 +428,7 @@
           "arguments": [
             {
               "file": "#file1",
-              "entity_id": "#companyUserFromCompany4.id_company_user",
+              "entity_id": "#companyUser4.id_company_user",
               "entity_name": "company_user",
               "attachedAt": "2025-05-05 14:58:00"
             }
@@ -495,7 +440,7 @@
           "key": "sspInquiry",
           "arguments": [
             {
-              "companyUser": "#companyUserFromCompany2",
+              "companyUser": "#companyUser2",
               "store": "#store",
               "type": "general",
               "status": "pending",
@@ -510,7 +455,7 @@
           "key": "sspInquiry1",
           "arguments": [
             {
-              "companyUser": "#companyUserFromCompany2",
+              "companyUser": "#companyUser2",
               "store": "#store",
               "type": "general",
               "status": "pending",
@@ -525,7 +470,7 @@
           "key": "sspInquiry2",
           "arguments": [
             {
-              "companyUser": "#companyUserFromCompany2",
+              "companyUser": "#companyUser2",
               "store": "#store",
               "type": "general",
               "status": "pending",
@@ -540,7 +485,7 @@
           "key": "sspInquiry3",
           "arguments": [
             {
-              "companyUser": "#companyUserFromCompany2",
+              "companyUser": "#companyUser2",
               "store": "#store",
               "type": "general",
               "status": "pending",

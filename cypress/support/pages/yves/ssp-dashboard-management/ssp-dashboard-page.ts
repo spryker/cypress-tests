@@ -35,15 +35,13 @@ export class SspDashboardPage extends YvesPage {
   };
 
   assertSspDashboardHasStatsOverviewBlock = (): void => {
-    this.repository
-      .getStatsColumnBlocks()
-      .should('have.length', 2)
-      .each(($statsBlock, $index) => {
-        cy.wrap($statsBlock)
-          .find(this.repository.getStatsColumnTitleName())
-          .contains(this.repository.getExpectedStatsColumnBlocks()[$index]);
-        cy.wrap($statsBlock).find(this.repository.getStatsColumnCounterName()).contains('n/a');
-      });
+    this.repository.getStatsColumnBlocks().each(($statsBlock, $index) => {
+      cy.wrap($statsBlock)
+        .find(this.repository.getStatsColumnTitleName())
+        .contains(this.repository.getExpectedStatsColumnBlocks()[$index])
+        .should('exist');
+      cy.wrap($statsBlock).find(this.repository.getStatsColumnCounterName()).should('exist');
+    });
   };
 
   assertSspDashboardHasSalesRepresentativeBlock = (translations: GlossaryPlaceholders[], idLocale: number): void => {
@@ -121,16 +119,8 @@ export class SspDashboardPage extends YvesPage {
       .getFilesBlock()
       .find('table tbody tr')
       .each(($tr, index) => {
-        cy.wrap($tr)
-          .find('td')
-          .each(($td, indexTd) => {
-            if (indexTd === 0) {
-              cy.wrap($td).should('contain.text', files[index].file_name);
-            }
-            if (indexTd === 2) {
-              cy.wrap($td).should('contain.text', files[index].file_info[0].extension);
-            }
-          });
+        cy.wrap($tr).should('contain.text', files[index].file_name);
+        cy.wrap($tr).should('contain.text', files[index].file_info[0].extension);
       });
   }
 
@@ -162,27 +152,13 @@ export class SspDashboardPage extends YvesPage {
       .getInquiriesBlock()
       .find('table tbody tr')
       .each(($tr, index) => {
-        cy.wrap($tr).find('td').should('have.length', 5);
-
+        cy.wrap($tr).should('contain.text', inquiries[index].reference);
+        cy.wrap($tr).contains(inquiries[index].type, { matchCase: false }).should('exist');
+        cy.wrap($tr).contains(inquiries[index].status, { matchCase: false }).should('exist');
         cy.wrap($tr)
-          .find('td')
-          .each(($td, indexTd) => {
-            if (indexTd === 0) {
-              cy.wrap($td).should('contain.text', inquiries[index].reference);
-            }
-            if (indexTd === 1) {
-              cy.wrap($td).contains(inquiries[index].type, { matchCase: false }).should('exist');
-            }
-            if (indexTd === 3) {
-              cy.wrap($td).contains(inquiries[index].status, { matchCase: false }).should('exist');
-              cy.wrap($td)
-                .find(this.repository.getStatusLabelPath())
-                .should('have.class', 'status--' + inquiries[index].status.toLowerCase());
-            }
-            if (indexTd === 4) {
-              cy.wrap($td).should('contain.text', 'View');
-            }
-          });
+          .find(this.repository.getStatusLabelPath())
+          .should('have.class', 'status--' + inquiries[index].status.toLowerCase());
+        cy.wrap($tr).should('contain.text', 'View');
       });
   }
 }

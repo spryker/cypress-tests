@@ -23,6 +23,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         password: staticFixtures.defaultPassword,
         withoutSession: true,
       });
+
       sspDashboardPage.visit();
       sspDashboardPage.assertPageLocation();
       sspDashboardPage.assertSspDashboardUserInfoPresent();
@@ -45,6 +46,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         password: staticFixtures.defaultPassword,
         withoutSession: true,
       });
+
       sspDashboardPage.visit();
       sspDashboardPage.assertSspDashboardAssetsWidgetNotPresent();
     });
@@ -55,6 +57,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         password: staticFixtures.defaultPassword,
         withoutSession: true,
       });
+
       sspDashboardPage.visit();
       sspDashboardPage.assertSspDashboardAssetsWidgetPresent();
       sspDashboardPage.assertWidgetData([dynamicFixtures.sspAsset, dynamicFixtures.sspAsset1]);
@@ -66,13 +69,14 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         password: staticFixtures.defaultPassword,
         withoutSession: true,
       });
+
       sspDashboardPage.visit();
       sspDashboardPage.assertSspDashboardFilesBlockNotPresent();
     });
 
     it('customer should see empty files block on dashboard', (): void => {
       customerLoginScenario.execute({
-        email: dynamicFixtures.customer4.email,
+        email: dynamicFixtures.customer3.email,
         password: staticFixtures.defaultPassword,
         withoutSession: true,
       });
@@ -99,7 +103,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
     it('customer without download permission should see files on dashboard without download link', (): void => {
       customerLoginScenario.execute({
-        email: dynamicFixtures.customer3.email,
+        email: dynamicFixtures.customer4.email,
         password: staticFixtures.defaultPassword,
         withoutSession: true,
       });
@@ -126,6 +130,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         password: staticFixtures.defaultPassword,
         withoutSession: true,
       });
+
       sspDashboardPage.visit();
       sspDashboardPage.assertSspDashboardInquiriesBlockPresent();
       sspDashboardPage.assertSspDashboardInquiriesTableEmpty();
