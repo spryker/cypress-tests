@@ -1,12 +1,12 @@
 import { injectable, inject } from 'inversify';
 import { autoWired } from '@utils';
-import { LoginPage, MultiFactorAuthPage } from '../../pages/yves';
+import { AgentLoginPage, AgentMultiFactorAuthPage } from '../../pages/yves';
 
 @injectable()
 @autoWired
-export class CustomerMfaLoginScenario {
-  @inject(LoginPage) private loginPage: LoginPage;
-  @inject(MultiFactorAuthPage) private mfaPage: MultiFactorAuthPage;
+export class AgentMfaLoginScenario {
+  @inject(AgentLoginPage) private loginPage: AgentLoginPage;
+  @inject(AgentMultiFactorAuthPage) private mfaPage: AgentMultiFactorAuthPage;
 
   execute(credentials: LoginCredentials): void {
     this.loginPage.visit();
@@ -14,14 +14,12 @@ export class CustomerMfaLoginScenario {
 
     this.mfaPage.waitForVerificationPopup();
 
-    console.log('customer');
-
-    cy.getMultiFactorAuthCode(credentials.email, 'email').then((code) => {
+    cy.getUserMultiFactorAuthCode(credentials.username, 'email').then((code) => {
       this.mfaPage.verifyCode(code);
     });
   }
 
-  executeWithInvalidCode(credentials: LoginCredentials, staticFixtures: CustomerMfaAuthStaticFixtures): void {
+  executeWithInvalidCode(credentials: LoginCredentials, staticFixtures: AgentMfaAuthStaticFixtures): void {
     this.loginPage.visit();
     this.loginPage.login(credentials);
 
@@ -35,10 +33,10 @@ export class CustomerMfaLoginScenario {
 }
 
 interface LoginCredentials {
-  email: string;
+  username: string;
   password: string;
 }
 
-interface CustomerMfaAuthStaticFixtures {
+interface AgentMfaAuthStaticFixtures {
   invalidCode: string;
 }

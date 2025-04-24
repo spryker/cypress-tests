@@ -1,0 +1,31 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "agentOne",
+          "arguments": [{ "password": "change123", "isAgent": true }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#agentOne.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "agentTwo",
+          "arguments": [{ "password": "change123", "isAgent": true }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#agentTwo.id_user", 1]
+        }
+      ]
+    }
+  }
+}

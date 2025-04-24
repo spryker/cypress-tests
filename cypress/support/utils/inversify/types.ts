@@ -31,4 +31,5 @@ export const enum REPOSITORIES {
   CustomerProfileRepository = 'CustomerProfileRepository',
   SspServiceRepository = 'SspServiceRepository',
   SspAssetRepository = 'SspAssetRepository',
+  AgentMultiFactorAuthRepository = 'AgentMultiFactorAuthRepository',
 }

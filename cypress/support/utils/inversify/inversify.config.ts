@@ -151,6 +151,11 @@ import { B2bCustomerProfileRepository } from '../../pages/yves/customer/profile/
 import { B2cMpCustomerProfileRepository } from '../../pages/yves/customer/profile/repositories/b2c-mp-customer-profile-repository';
 import { B2bMpCustomerProfileRepository } from '../../pages/yves/customer/profile/repositories/b2b-mp-customer-profile-repository';
 import { SuiteSspAssetRepository } from '../../pages/yves/ssp-asset/repositories/suite-ssp-asset-repository';
+import { SuiteAgentMultiFactorAuthRepository } from '../../pages/yves/multi-factor-auth/agent/repositories/suite-agent-multi-factor-auth-repository';
+import { B2cAgentMultiFactorAuthRepository } from '../../pages/yves/multi-factor-auth/agent/repositories/b2c-agent-multi-factor-auth-repository';
+import { B2bAgentMultiFactorAuthRepository } from '../../pages/yves/multi-factor-auth/agent/repositories/b2b-agent-multi-factor-auth-repository';
+import { B2cMpAgentMultiFactorAuthRepository } from '../../pages/yves/multi-factor-auth/agent/repositories/b2c-mp-agent-multi-factor-auth-repository';
+import { B2bMpAgentMultiFactorAuthRepository } from '../../pages/yves/multi-factor-auth/agent/repositories/b2b-mp-agent-multi-factor-auth-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -187,6 +192,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.CustomerDeleteRepository]: SuiteCustomerDeleteRepository,
   [REPOSITORIES.CustomerProfileRepository]: SuiteCustomerProfileRepository,
   [REPOSITORIES.SspAssetRepository]: SuiteSspAssetRepository,
+  [REPOSITORIES.AgentMultiFactorAuthRepository]: SuiteAgentMultiFactorAuthRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -219,6 +225,7 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.ManageCompanyRoleUserRepository]: B2cManageCompanyRoleUserRepository,
   [REPOSITORIES.CustomerDeleteRepository]: B2cCustomerDeleteRepository,
   [REPOSITORIES.CustomerProfileRepository]: B2cCustomerProfileRepository,
+  [REPOSITORIES.AgentMultiFactorAuthRepository]: B2cAgentMultiFactorAuthRepository,
 };
 
 const b2bMappings: BindingsMap = {
@@ -251,6 +258,7 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.CompanyRoleCreateRepository]: B2bCompanyRoleCreateRepository,
   [REPOSITORIES.CustomerDeleteRepository]: B2bCustomerDeleteRepository,
   [REPOSITORIES.CustomerProfileRepository]: B2bCustomerProfileRepository,
+  [REPOSITORIES.AgentMultiFactorAuthRepository]: B2bAgentMultiFactorAuthRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
@@ -283,6 +291,7 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.ManageCompanyRoleUserRepository]: B2cMpManageCompanyRoleUserRepository,
   [REPOSITORIES.CustomerDeleteRepository]: B2cMpCustomerDeleteRepository,
   [REPOSITORIES.CustomerProfileRepository]: B2cMpCustomerProfileRepository,
+  [REPOSITORIES.AgentMultiFactorAuthRepository]: B2cMpAgentMultiFactorAuthRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
@@ -315,6 +324,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.CompanyRoleCreateRepository]: B2bMpCompanyRoleCreateRepository,
   [REPOSITORIES.CustomerDeleteRepository]: B2bMpCustomerDeleteRepository,
   [REPOSITORIES.CustomerProfileRepository]: B2bMpCustomerProfileRepository,
+  [REPOSITORIES.AgentMultiFactorAuthRepository]: B2bMpAgentMultiFactorAuthRepository,
 };
 
 const mappings = {

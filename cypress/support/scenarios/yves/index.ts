@@ -5,3 +5,6 @@ export * from './customer-login-scenario';
 export * from './customer-logout-scenario';
 export * from './locale-switching-scenario';
 export * from './select-store-scenario';
+export * from './agent-mfa-activation-scenario';
+export * from './agent-logout-scenario';
+export * from './agent-mfa-login-scenario';
