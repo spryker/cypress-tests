@@ -37,7 +37,6 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       assetManagementListPage.verifyListPage();
       assetManagementListPage.clickCreateButton();
 
-      assetManagementAddPage.visit();
       assetManagementAddPage.fillAssetForm({
         name: staticFixtures.sspAsset.name,
         serialNumber: staticFixtures.sspAsset.serial_number,
@@ -55,45 +54,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       assetManagementAddPage.submitForm();
       assetManagementAddPage.verifySuccessMessage();
 
-      assetManagementDetailPage.getAssetId().then((id) => {
-        staticFixtures.sspAsset.id_ssp_asset = id;
-      });
-
-      assetManagementDetailPage.getReference().then((reference) => {
-        staticFixtures.sspAsset.reference = reference;
-
-        assetManagementListPage.visit();
-
-        assetManagementListPage.searchAsset(reference);
-
-        cy.intercept('GET', '**/ssp-asset-management/index/table*').as('assetTableData');
-
-        cy.wait('@assetTableData').then((interception) => {
-          let displayStatus = staticFixtures.sspAsset.status;
-
-          if (Array.isArray(staticFixtures.statuses)) {
-            const matchingStatus = staticFixtures.statuses.find(
-              (statusObj) => statusObj.key === staticFixtures.sspAsset.status
-            );
-
-            if (matchingStatus && matchingStatus.value) {
-              displayStatus = matchingStatus.value;
-            }
-          }
-
-          cy.get('table.dataTable tbody tr')
-            .should('contain', staticFixtures.sspAsset.reference)
-            .and('contain', staticFixtures.sspAsset.name)
-            .and('contain', displayStatus)
-            .and('contain', staticFixtures.sspAsset.serial_number);
-        });
-      });
-    });
-
-    it('should display asset details on view page', () => {
-      assetManagementDetailPage.visit({
-        qs: { 'id-ssp-asset': staticFixtures.sspAsset.id_ssp_asset },
-      });
+      assetManagementDetailPage.assertPageLocation();
       assetManagementDetailPage.verifyAssetDetails({
         reference: staticFixtures.sspAsset.reference,
         name: staticFixtures.sspAsset.name,
@@ -109,28 +70,44 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         companies: [{ name: dynamicFixtures.company1.name }],
       });
 
-      customerLoginScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-        withoutSession: true,
-      });
+      assetManagementDetailPage.getReference().then((reference) => {
+        const assetReference = reference;
 
-      yvesSspAssetDetailPage.visit({
-        qs: { reference: staticFixtures.sspAsset.reference },
-      });
+        assetManagementListPage.visit();
 
-      yvesSspAssetDetailPage.assertAssetDetails({
-        reference: staticFixtures.sspAsset.reference,
-        name: staticFixtures.sspAsset.name,
-        image: staticFixtures.sspAsset.image,
-        serialNumber: staticFixtures.sspAsset.serial_number,
-        note: staticFixtures.sspAsset.note,
+        assetManagementListPage.searchAsset(reference);
+
+        assetManagementListPage.assetTableContainsAsset({
+          reference: assetReference,
+          name: staticFixtures.sspAsset.name,
+          status: staticFixtures.sspAsset.status,
+          serialNumber: staticFixtures.sspAsset.serial_number,
+          statuses: staticFixtures.statuses,
+        });
+
+        customerLoginScenario.execute({
+          email: dynamicFixtures.customer.email,
+          password: staticFixtures.defaultPassword,
+          withoutSession: true,
+        });
+
+        yvesSspAssetDetailPage.visit({
+          qs: { reference: assetReference },
+        });
+
+        yvesSspAssetDetailPage.assertAssetDetails({
+          reference: assetReference,
+          name: staticFixtures.sspAsset.name,
+          image: staticFixtures.sspAsset.image,
+          serialNumber: staticFixtures.sspAsset.serial_number,
+          note: staticFixtures.sspAsset.note,
+        });
       });
     });
 
     it('should update an existing asset', () => {
       assetManagementUpdatePage.visit({
-        qs: { 'id-ssp-asset': staticFixtures.sspAsset.id_ssp_asset },
+        qs: { 'id-ssp-asset': dynamicFixtures.sspAsset.id_ssp_asset },
       });
 
       assetManagementUpdatePage.updateAssetForm({

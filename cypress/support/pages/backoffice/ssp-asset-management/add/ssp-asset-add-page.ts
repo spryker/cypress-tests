@@ -30,34 +30,32 @@ export class SspAssetAddPage extends BackofficePage {
       this.repository.getImageUploadInput().attachFile(assetData.image);
     }
 
+    if (!assetData.company) {
+      return;
+    }
+
+    cy.intercept('GET', '**/company-gui/suggest*').as('companySuggest');
+
+    this.repository
+      .getAssignedCompaniesSelect()
+      .parent()
+      .find(this.repository.getSearchFieldSelector())
+      .type(assetData.company.name, { force: true });
+
+    cy.wait('@companySuggest');
+
+    this.repository.getDropdownOption().filter(':visible').first().click();
+
     if (assetData.businessUnitOwner) {
       cy.intercept('GET', '**/company-business-unit-gui/suggest*').as('businessUnitOwnerSuggest');
 
-      this.repository.getBusinessUnitOwnerSelect().next('.select2').find('.select2-selection').click();
+      this.repository.getBusinessUnitOwnerSelect().parent().find(this.repository.getSelectContainerSelector()).click();
 
-      this.repository
-        .getSelectContainerContainer()
-        .find(this.repository.getSearchFieldSelector())
-        .type(assetData.businessUnitOwner.name, { force: true });
+      this.repository.getBusinessUnitOwnerSearchField().type(assetData.businessUnitOwner.name, { force: true });
 
       cy.wait('@businessUnitOwnerSuggest');
 
-      this.repository.getDropdownOptionContainer().filter(':visible').first().click();
-    }
-
-    if (assetData.company) {
-      cy.intercept('GET', '**/company-gui/suggest*').as('companySuggest');
-
-      this.repository.getAssignedCompaniesSelect().next('.select2').find('.select2-selection').click();
-
-      this.repository
-        .getSelectContainerContainer()
-        .find(this.repository.getSearchFieldSelector())
-        .type(assetData.company.name, { force: true });
-
-      cy.wait('@companySuggest');
-
-      this.repository.getDropdownOptionContainer().filter(':visible').first().click();
+      this.repository.getDropdownOption().filter(':visible').first().click();
     }
 
     for (const businessUnit of assetData.assignedbusinessUnits || []) {
@@ -66,13 +64,14 @@ export class SspAssetAddPage extends BackofficePage {
       this.repository.getAssignedBusinessUnitsSelect().siblings('span').click();
 
       this.repository
-        .getSelectContainerContainer()
+        .getAssignedBusinessUnitsSelect()
+        .parent()
         .find(this.repository.getSearchFieldSelector())
         .type(businessUnit.name, { force: true });
 
       cy.wait('@businessUnitSuggest');
 
-      this.repository.getDropdownOptionContainer().filter(':visible').first().click();
+      this.repository.getDropdownOption().filter(':visible').first().click();
     }
   }
 

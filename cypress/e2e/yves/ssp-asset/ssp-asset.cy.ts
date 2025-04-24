@@ -325,15 +325,17 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
+      cy.intercept('GET', '**/customer/asset**').as('assetRequest');
       assetListPage.visit();
-      cy.contains('Access denied');
+      cy.url().should('include', 'errorMessage=ssp_asset.access.denied');
 
+      cy.intercept('GET', '**/customer/asset/details**').as('assetDetailRequest');
       assetDetailPage.visit({
         qs: {
           reference: dynamicFixtures.assetBU1C1BU2C1BU1C2.reference,
         },
       });
-      cy.contains('Access denied');
+      cy.url().should('include', 'errorMessage=ssp_asset.access.denied');
     });
   }
 );

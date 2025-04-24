@@ -11,10 +11,7 @@ export class SspAssetListRepository {
   getStatusHeaderSelector = (): string => 'th[data-qa="spy_ssp_asset.status"]';
   getCreatedDateHeaderSelector = (): string => 'th[data-qa="spy_ssp_asset.created_at"]';
   getCreateButtonSelector = (): string => 'a.btn-create';
-  getViewButtonSelector = (): string => 'a.btn-view';
-  getEditButtonSelector = (): string => 'a.btn-edit';
   getSearchInputSelector = (): string => 'div.dataTables_filter input[type="search"]';
   getStatusFilterSelector = (): string => 'select[name="filter[status]"]';
-  getApplyFilterButtonSelector = (): string => 'button.filter-btn';
   getTableCellSelector = (): string => 'table.dataTable td';
 }
