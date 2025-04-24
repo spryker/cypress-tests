@@ -75,7 +75,7 @@
             {
               "locale": "#localeEN",
               "password": "change123",
-              "first_name": "Test",
+              "first_name": "Test for file attachment",
               "last_name": "Customer"
             }
           ]
@@ -102,10 +102,10 @@
         {
           "type": "helper",
           "name": "haveAsset",
-          "key": "asset1",
+          "key": "sspAsset",
           "arguments": [
             {
-              "name": "Test Asset"
+              "name": "Test Asset for file attachment"
             }
           ]
         },

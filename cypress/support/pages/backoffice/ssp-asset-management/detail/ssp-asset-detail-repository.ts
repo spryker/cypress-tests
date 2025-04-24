@@ -4,22 +4,20 @@ import { autoWired } from '@utils';
 @injectable()
 @autoWired
 export class SspAssetDetailRepository {
-  getReferenceValueSelector = (): string => 'dd[data-qa="ssp-asset-reference"]';
-  getNameValueSelector = (): string => 'dd[data-qa="ssp-asset-name"]';
-  getSerialNumberValueSelector = (): string => 'dd[data-qa="ssp-asset-serial-number"]';
-  getStatusValueSelector = (): string => 'dd[data-qa="ssp-asset-status"]';
-  getNoteValueSelector = (): string => 'dd[data-qa="ssp-asset-note"]';
-  getBusinessUnitOwnerValueSelector = (): string => 'dd[data-qa="ssp-asset-business-unit-owner"]';
-  getImageSelector = (): string => 'img[data-qa="ssp-asset-image"]';
-  getEditButtonSelector = (): string => 'a.btn-edit';
-  getBackButtonSelector = (): string => 'a.btn-back';
+  getReferenceValueSelector = (): string => '[data-qa="ssp-asset-reference"]';
+  getNameValueSelector = (): string => '[data-qa="ssp-asset-name"]';
+  getSerialNumberValueSelector = (): string => '[data-qa="ssp-asset-serial-number"]';
+  getStatusValueSelector = (): string => '[data-qa="ssp-asset-status"]';
+  getNoteValueSelector = (): string => '[data-qa="ssp-asset-note"]';
+  getBusinessUnitOwnerValueSelector = (): string => '[data-qa="ssp-asset-business-unit-owner"]';
+  getImageSelector = (): string => '[data-qa="ssp-asset-image"]';
+  getEditButtonSelector = (): string => 'a[href*="/ssp-asset-management/update?id-ssp-asset="]';
+  getBackButtonSelector = (): string => 'a[href*="/ssp-asset-management"]';
 
   getCompanyTableSelector = (): string => 'table[data-qa="data-table"]';
-  getCompanyNameColumnSelector = (): string => 'div#tab-content-companies td.column-spy_company\\.name';
-  getBusinessUnitNameColumnSelector = (): string =>
-    'div#tab-content-companies td.column-spy_company_business_unit\\.name';
+  getCompaniesTabContent = (): Cypress.Chainable => cy.get('[data-qa=tab-content-companies]');
 
-  getSspAssetRelationTabs = (): Cypress.Chainable => cy.get('div[data-qa="ssp-asset-relations"]');
-  getCompaniesTabSelector = (): string => 'a[href="#tab-content-companies"]';
-  getInquiriesTabSelector = (): string => 'a[href="#tab-content-ssp-inquiries"]';
+  getSspAssetRelationTabs = (): Cypress.Chainable => cy.get('[data-qa="ssp-asset-relations"]');
+  getCompaniesTabSelector = (): string => '[data-qa="tab-content-companies"]';
+  getInquiriesTabSelector = (): string => '[data-qa="tab-content-ssp-inquiries"]';
 }

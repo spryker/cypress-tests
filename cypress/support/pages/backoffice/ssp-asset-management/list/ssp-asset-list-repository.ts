@@ -4,14 +4,13 @@ import { autoWired } from '@utils';
 @injectable()
 @autoWired
 export class SspAssetListRepository {
-  getReferenceHeaderSelector = (): string => 'th[data-qa="spy_ssp_asset.reference"]';
-  getImageHeaderSelector = (): string => 'th[data-qa="image"]';
-  getNameHeaderSelector = (): string => 'th[data-qa="spy_ssp_asset.name"]';
-  getSerialNumberHeaderSelector = (): string => 'th[data-qa="spy_ssp_asset.serial_number"]';
-  getStatusHeaderSelector = (): string => 'th[data-qa="spy_ssp_asset.status"]';
-  getCreatedDateHeaderSelector = (): string => 'th[data-qa="spy_ssp_asset.created_at"]';
-  getCreateButtonSelector = (): string => 'a.btn-create';
-  getSearchInputSelector = (): string => 'div.dataTables_filter input[type="search"]';
-  getStatusFilterSelector = (): string => 'select[name="filter[status]"]';
-  getTableCellSelector = (): string => 'table.dataTable td';
+  getReferenceHeaderSelector = (): string => '[data-qa="spy_ssp_asset.reference"]';
+  getImageHeaderSelector = (): string => '[data-qa="image"]';
+  getNameHeaderSelector = (): string => '[data-qa="spy_ssp_asset.name"]';
+  getSerialNumberHeaderSelector = (): string => '[data-qa="spy_ssp_asset.serial_number"]';
+  getStatusHeaderSelector = (): string => '[data-qa="spy_ssp_asset.status"]';
+  getCreatedDateHeaderSelector = (): string => '[data-qa="spy_ssp_asset.created_at"]';
+  getCreateButtonSelector = (): string => '[href*="/ssp-asset-management/add"]';
+  getSearchInputSelector = (): string => 'input[type="search"]';
+  getStatusFilterSelector = (): string => 'form[name="ssp_asset_filter_form"] [name="filter[status]"]';
 }

@@ -46,7 +46,7 @@ export class SspAssetDetailPage extends BackofficePage {
 
     if (assetData.companies) {
       for (const company of assetData.companies) {
-        cy.get(this.repository.getCompanyNameColumnSelector()).contains(company.name).should('be.visible');
+        this.repository.getCompaniesTabContent().contains(company.name).should('be.visible');
       }
     }
 
@@ -59,7 +59,7 @@ export class SspAssetDetailPage extends BackofficePage {
         .should('have.length.at.least', assetData.assignedbusinessUnits.length);
 
       for (const businessUnit of assetData.assignedbusinessUnits) {
-        cy.get(this.repository.getBusinessUnitNameColumnSelector()).contains(businessUnit.name).should('be.visible');
+        this.repository.getCompaniesTabContent().contains(businessUnit.name).should('be.visible');
       }
     }
 

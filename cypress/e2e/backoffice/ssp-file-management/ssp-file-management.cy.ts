@@ -69,9 +69,9 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
-    fileManagerAttachmentAttachPage.selectCompany(staticFixtures.companyPrompt);
-    fileManagerAttachmentAttachPage.selectCompanyUser(staticFixtures.companyUserPrompt);
-    fileManagerAttachmentAttachPage.selectCompanyBusinessUnit(staticFixtures.companyBusinessUnitPrompt);
+    fileManagerAttachmentAttachPage.selectCompany(dynamicFixtures.company1.name);
+    fileManagerAttachmentAttachPage.selectCompanyUser(dynamicFixtures.companyUser.customer.first_name);
+    fileManagerAttachmentAttachPage.selectCompanyBusinessUnit(dynamicFixtures.businessUnit.name);
     fileManagerAttachmentAttachPage.submitForm();
     fileManagerAttachmentAttachPage.verifySuccessMessage();
   });
@@ -82,7 +82,7 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
     fileManagerAttachmentAttachPage.clickAssetAttachmentTab();
-    fileManagerAttachmentAttachPage.selectAsset(staticFixtures.assetPrompt);
+    fileManagerAttachmentAttachPage.selectAsset(dynamicFixtures.sspAsset.name);
     fileManagerAttachmentAttachPage.submitAssetForm();
     fileManagerAttachmentAttachPage.verifyAssetSuccessMessage();
   });
