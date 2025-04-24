@@ -16,8 +16,6 @@ export class SspFileManagementAttachRepository {
   getSubmitButtonSelector = (): string => '[data-qa="attach-submit-button"]';
   getAssetSubmitButtonSelector = (): string => '[data-qa="attach-asset-submit-button"]';
   getSuccessMessageSelector = (): string => '[data-qa="success-message"]';
-  getCompanyPrompt = (): string => 'test';
-  getCompanyUserPrompt = (): string => 'test';
-  getCompanyBusinessUnitPrompt = (): string => 'test';
-  getAssetPrompt = (): string => 'test';
+  getAssetAttachmentSuccessText = (): string => 'Asset attachment saved successfully.';
+  getFileAttachmentSuccessText = (): string => 'File attachments have been created successfully.';
 }
