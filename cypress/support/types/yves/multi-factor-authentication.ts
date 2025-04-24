@@ -22,4 +22,3 @@ export interface AgentMfaAuthStaticFixtures {
   defaultPassword: string;
   invalidCode: string;
 }
-

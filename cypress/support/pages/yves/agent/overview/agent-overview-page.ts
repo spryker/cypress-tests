@@ -1,5 +1,5 @@
-import { autoWired, REPOSITORIES } from '@utils';
-import { inject, injectable } from 'inversify';
+import { autoWired } from '@utils';
+import { injectable } from 'inversify';
 import { YvesPage } from '@pages/yves';
 
 @injectable()
