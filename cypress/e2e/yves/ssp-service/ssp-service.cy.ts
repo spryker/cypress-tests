@@ -185,8 +185,8 @@ interface DynamicFixtures {
         // Setup: Purchase a service as a regular customer
         purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
 
-        // Verify service is listed
-        sspServiceListPage.getTableRows().should('have.length.at.least', 1);
+        // Verify two services are listed
+        sspServiceListPage.getTableRows().should('have.length.at.least', 2);
 
         // Navigate to service details page
         sspServiceListPage.viewFirstServiceDetails();
@@ -196,15 +196,37 @@ interface DynamicFixtures {
         sspServiceListPage.getDetailsPageRescheduleButton().should('be.visible').first().click();
         cy.url().should('include', '/update-service-time');
 
-        // TODO: [flickery] uncomment after Services v2 releae.
-        // // Set up new date/time (tomorrow at 2:00 PM) and submit the form
-        // const tomorrow = sspServiceListPage.updateServiceDateToTomorrow();
-        //
-        // // Verify redirection to services list
-        // cy.url().should('include', '/customer/ssp-service');
-        //
-        // // Verify service was rescheduled
-        // sspServiceListPage.verifyServiceRescheduled(tomorrow);
+        // Set up new date/time (tomorrow at 2:00 PM) and submit the form
+        const tomorrow = sspServiceListPage.updateServiceDateToTomorrow();
+
+        // Verify redirection to services list
+        cy.url().should('include', '/customer/ssp-service');
+
+        // Verify first service was rescheduled
+        sspServiceListPage.verifyServiceRescheduled(tomorrow);
+      });
+
+      it('should allow cancelling a service', (): void => {
+        // Setup: Purchase a service as a regular customer
+        purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
+
+        // Verify two services are listed
+        sspServiceListPage.getTableRows().should('have.length', 2);
+
+        // Cancel the service
+        sspServiceListPage.cancelService();
+
+        // Verify that first service was cancelled and state is updated
+        sspServiceListPage.verifyServiceCancelled();
+
+        // Visit the service list page explicitly
+        sspServiceListPage.visit();
+
+        sspServiceListPage.viewFirstServiceDetails();
+        cy.url().should('include', '/order/details');
+
+        // Verify cancel button is not visible for the fist cancelled service, and only visible for last
+        sspServiceListPage.getServiceCancelButton().should('have.length', 1);
       });
     });
 
