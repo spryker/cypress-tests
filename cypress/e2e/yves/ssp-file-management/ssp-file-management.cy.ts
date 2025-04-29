@@ -21,13 +21,6 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     ({ dynamicFixtures, staticFixtures } = Cypress.env());
   });
 
-  beforeEach((): void => {
-    customerLoginScenario.execute({
-      email: dynamicFixtures.customer.email,
-      password: staticFixtures.defaultPassword,
-    });
-  });
-
   it('should access the My Files page from customer overview', (): void => {
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
@@ -35,6 +28,11 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
   });
 
   it('should display uploaded files in the list', (): void => {
+    customerLoginScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+    });
+
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
@@ -49,6 +47,11 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
   });
 
   it('should allow downloading a file according to permissions', (): void => {
+    customerLoginScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+    });
+
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
     sspFileManagementListPage.downloadFile(dynamicFixtures.file1.file_name);
@@ -87,15 +90,15 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     sspFileManagementDownloadPage.downloadFileForbidden({ fileUuid: dynamicFixtures.fileSspAsset.uuid });
 
     customerLogoutScenario.execute();
+  });
 
+  it('should filter files by JPEG type', (): void => {
     customerLoginScenario.execute({
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
       withoutSession: true,
     });
-  });
 
-  it('should filter files by JPEG type', (): void => {
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
     sspFileManagementListPage.filterByType(staticFixtures.filter_value_jpeg);
@@ -104,6 +107,11 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
   });
 
   it('should search for files by name', (): void => {
+    customerLoginScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+      withoutSession: true,
+    });
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
 
@@ -120,6 +128,11 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
   });
 
   it('should save filter and search settings during session', (): void => {
+    customerLoginScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+      withoutSession: true,
+    });
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
 

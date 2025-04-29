@@ -409,10 +409,10 @@
           "type": "helper",
           "name": "haveAsset",
           "key": "assetBU1C1BU2C1BU1C2",
-          "businessUnitAssignments": [
+          "arguments": [
             {
               "companyBusinessUnit": "#businessUnit2Company1",
-              "assignments": [
+              "businessUnitAssignments": [
                 {
                   "companyBusinessUnit": {
                     "idCompanyBusinessUnit": "#businessUnit1Company1.id_company_business_unit"

@@ -133,7 +133,7 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
     return cy.get('[data-qa*="ssp-asset-image"]').invoke('attr', 'image-src');
   }
   getViewAllInquiriesLink(): Cypress.Chainable {
-    return cy.get('[data-qa*="ssp-inquiry-table"]').find('a[href*="/customer/ssp-inquiry?ssp_asset_reference="');
+    return cy.get('[data-qa*="ssp-inquiry-table"]').find('a[href*="/customer/ssp-inquiry?ssp-asset-reference="');
   }
 
   getAccessTableFilterByBusinessUnitValue(): string {
