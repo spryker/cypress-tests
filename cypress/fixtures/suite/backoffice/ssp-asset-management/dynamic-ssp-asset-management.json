@@ -126,7 +126,7 @@
           "arguments": [
             {
               "companyBusinessUnit": "#businessUnit1",
-              "assignments": [
+              "businessUnitAssignments": [
                 {
                   "companyBusinessUnit": {
                     "idCompanyBusinessUnit": "#businessUnit1.id_company_business_unit",
