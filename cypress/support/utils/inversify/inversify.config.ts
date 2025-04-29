@@ -151,6 +151,7 @@ import { B2bCustomerProfileRepository } from '../../pages/yves/customer/profile/
 import { B2cMpCustomerProfileRepository } from '../../pages/yves/customer/profile/repositories/b2c-mp-customer-profile-repository';
 import { B2bMpCustomerProfileRepository } from '../../pages/yves/customer/profile/repositories/b2b-mp-customer-profile-repository';
 import { SuiteSspAssetRepository } from '../../pages/yves/ssp-asset/repositories/suite-ssp-asset-repository';
+import { SuiteSspDashboardManagementRepository } from '../../pages/yves/ssp-dashboard-management/repositories/suite-ssp-dashboard-management-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -187,6 +188,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.CustomerDeleteRepository]: SuiteCustomerDeleteRepository,
   [REPOSITORIES.CustomerProfileRepository]: SuiteCustomerProfileRepository,
   [REPOSITORIES.SspAssetRepository]: SuiteSspAssetRepository,
+  [REPOSITORIES.SspDashboardManagementRepository]: SuiteSspDashboardManagementRepository,
 };
 
 const b2cMappings: BindingsMap = {
