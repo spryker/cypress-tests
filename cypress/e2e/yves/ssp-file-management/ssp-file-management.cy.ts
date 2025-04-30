@@ -26,7 +26,7 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
     });
-    
+
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
     sspFileManagementListPage.verifyListPage();
