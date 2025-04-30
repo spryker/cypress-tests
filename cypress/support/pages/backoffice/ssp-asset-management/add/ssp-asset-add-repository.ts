@@ -20,7 +20,7 @@ export class SspAssetAddRepository {
   getAssignedBusinessUnitsSelect = (): Cypress.Chainable => cy.get('select[name="assetForm[assignedBusinessUnits][]"]');
   getBusinessUnitOwnerSelect = (): Cypress.Chainable => cy.get('select[name="assetForm[companyBusinessUnit]"]');
   getImageUploadInput = (): Cypress.Chainable => cy.get('input[name="assetForm[asset_image][file]"]');
-  getSubmitButton = (): Cypress.Chainable => cy.get('form[name="assetForm"] button[data-qa="submit"]');
+  getSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="submit"]');
   getSuccessMessageContainer = (): Cypress.Chainable => cy.get('[data-qa="success-message"]');
   getSuccessMessage = (): string => 'Asset has been successfully created';
 }
