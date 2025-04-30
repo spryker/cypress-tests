@@ -18,8 +18,10 @@ export class SspAssetDetailRepository {
   getCompanyNameColumnSelector = (): string => 'div#tab-content-companies td.column-spy_company\\.name';
   getBusinessUnitNameColumnSelector = (): string =>
     'div#tab-content-companies td.column-spy_company_business_unit\\.name';
+  getOrderReferenceColumnSelector = (): string => 'div#tab-content-ssp-services td.column-spy_sales_order\\.order_reference';
 
   getSspAssetRelationTabs = (): Cypress.Chainable => cy.get('div[data-qa="ssp-asset-relations"]');
   getCompaniesTabSelector = (): string => 'a[href="#tab-content-companies"]';
   getInquiriesTabSelector = (): string => 'a[href="#tab-content-ssp-inquiries"]';
+  getServicesTabSelector = (): string => 'a[href="#tab-content-ssp-services"]';
 }
