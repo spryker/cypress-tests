@@ -24,6 +24,10 @@ export class MultiCartPage extends YvesPage {
   selectCart = (params: SelectCartParams): void => {
     this.repository.getQuoteTable().contains(params.name).click();
   };
+
+  getMiniCartRadios = (): Cypress.Chainable => {
+    return this.repository.getMiniCartRadios();
+  };
 }
 
 interface CreateCartParams {
