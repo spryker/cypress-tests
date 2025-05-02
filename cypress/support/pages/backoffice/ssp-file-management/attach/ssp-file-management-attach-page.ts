@@ -81,6 +81,6 @@ export class SspFileManagementAttachPage extends BackofficePage {
   verifyAssetSuccessMessage(): void {
     cy.get(this.repository.getSuccessMessageSelector())
       .should('be.visible')
-      .and('contain', this.repository.getAssetAttachmentSuccessText());
+      .and('contain', this.repository.getFileAttachmentSuccessText());
   }
 }

@@ -150,7 +150,7 @@
               "companyBusinessUnit": "#businessUnit",
               "generateImage": true,
               "sspInquiries": ["#sspInquiry1", "#sspInquiry3"],
-              "assignments": [
+              "businessUnitAssignments": [
                 {
                   "companyBusinessUnit": {
                     "idCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
@@ -412,7 +412,7 @@
           "arguments": [
             {
               "companyBusinessUnit": "#businessUnit2Company1",
-              "assignments": [
+              "businessUnitAssignments": [
                 {
                   "companyBusinessUnit": {
                     "idCompanyBusinessUnit": "#businessUnit1Company1.id_company_business_unit"
@@ -439,7 +439,7 @@
           "arguments": [
             {
               "companyBusinessUnit": "#businessUnit1Company2",
-              "assignments": [
+              "businessUnitAssignments": [
                 {
                   "companyBusinessUnit": {
                     "idCompanyBusinessUnit": "#businessUnit2Company1.id_company_business_unit"
@@ -456,7 +456,7 @@
           "arguments": [
             {
               "companyBusinessUnit": "#businessUnit1Company1",
-              "assignments": [
+              "businessUnitAssignments": [
                 {
                   "companyBusinessUnit": {
                     "idCompanyBusinessUnit": "#businessUnit1Company1.id_company_business_unit"
@@ -473,7 +473,7 @@
           "arguments": [
             {
               "companyBusinessUnit": "#businessUnit1Company2",
-              "assignments": [
+              "businessUnitAssignments": [
                 {
                   "companyBusinessUnit": {
                     "idCompanyBusinessUnit": "#businessUnit1Company2.id_company_business_unit"
