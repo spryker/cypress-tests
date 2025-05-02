@@ -290,7 +290,7 @@
               "companyBusinessUnit": "#businessUnit",
               "generateImage": true,
               "createdDate": "2025-05-05 14:58:00",
-              "assignments": [
+              "businessUnitAssignments": [
                 {
                   "companyBusinessUnit": {
                     "idCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
@@ -308,7 +308,7 @@
             {
               "companyBusinessUnit": "#businessUnit",
               "createdDate": "2025-05-05 12:10:00",
-              "assignments": [
+              "businessUnitAssignments": [
                 {
                   "companyBusinessUnit": {
                     "idCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
