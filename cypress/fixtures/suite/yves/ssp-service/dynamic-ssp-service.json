@@ -328,11 +328,13 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
+                  "id": "#product1.id_product_concrete",
                   "quantity": 1
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
+                  "id": "#product2.id_product_concrete",
                   "quantity": 1
                 }
               ]
@@ -349,11 +351,13 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
+                  "id": "#product1.id_product_concrete",
                   "quantity": 1
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
+                  "id": "#product2.id_product_concrete",
                   "quantity": 1
                 }
               ]
