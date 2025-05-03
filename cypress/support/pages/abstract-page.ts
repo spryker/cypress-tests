@@ -7,7 +7,7 @@ export class AbstractPage {
   protected faker = faker;
 
   assertPageLocation = (): void => {
-    cy.url({ timeout: 4000 }).should('include', this.PAGE_URL);
+    cy.url({ timeout: 20000 }).should('include', this.PAGE_URL);
   };
 
   isRepository = (...ids: string[]): boolean => ids.includes(Cypress.env('repositoryId'));

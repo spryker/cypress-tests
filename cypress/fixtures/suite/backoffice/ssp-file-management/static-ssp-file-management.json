@@ -1,3 +1,7 @@
 {
-  "defaultPassword": "change123"
+  "defaultPassword": "change123",
+  "assetPrompt": "test",
+  "companyBusinessUnitPrompt": "test",
+  "companyUserPrompt": "test",
+  "companyPrompt": "test"
 }

@@ -1,0 +1,21 @@
+{
+  "defaultPassword": "change123",
+  "sspAsset": {
+    "name": "Sample Asset Name",
+    "note": "Sample asset note for testing purposes",
+    "serial_number": "1234567890",
+    "status": "approved",
+    "image": "suite/backoffice/ssp-asset-management/files/asset_image.png"
+  },
+  "sspAssetOverride": {
+    "name": "New Asset Name",
+    "note": "New asset note for testing purposes",
+    "serial_number": "8567-4610-5618"
+  },
+  "statuses": [
+    {
+      "key": "approved",
+      "value": "Approved"
+    }
+  ]
+}

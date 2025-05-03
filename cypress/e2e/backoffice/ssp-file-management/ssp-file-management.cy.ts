@@ -69,11 +69,33 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
-    fileManagerAttachmentAttachPage.selectCompany();
-    fileManagerAttachmentAttachPage.selectCompanyUser();
-    fileManagerAttachmentAttachPage.selectCompanyBusinessUnit();
+    fileManagerAttachmentAttachPage.selectCompany(staticFixtures.companyPrompt);
+    fileManagerAttachmentAttachPage.selectCompanyUser(staticFixtures.companyUserPrompt);
+    fileManagerAttachmentAttachPage.selectCompanyBusinessUnit(staticFixtures.companyBusinessUnitPrompt);
     fileManagerAttachmentAttachPage.submitForm();
     fileManagerAttachmentAttachPage.verifySuccessMessage();
+  });
+
+  it.skip('should successfully attach file to an asset', () => {
+    const fileManagerAttachmentAttachPage = container.get(SspFileManagementAttachPage);
+
+    fileManagerAttachmentListPage.visit();
+    fileManagerAttachmentListPage.clickAttachButton();
+    fileManagerAttachmentAttachPage.clickAssetAttachmentTab();
+    fileManagerAttachmentAttachPage.selectAsset(staticFixtures.assetPrompt);
+    fileManagerAttachmentAttachPage.submitAssetForm();
+    fileManagerAttachmentAttachPage.verifyAssetSuccessMessage();
+  });
+
+  it.skip('should successfully detach file from an asset', () => {
+    const fileManagerAttachmentDetachPage = container.get(SspFileManagementDetachPage);
+
+    fileManagerAttachmentListPage.visit();
+    fileManagerAttachmentListPage.clickViewButton();
+
+    fileManagerAttachmentDetachPage.detachFile();
+    fileManagerAttachmentDetachPage.verifySuccessMessage();
+    fileManagerAttachmentDetachPage.assertDetachFile();
   });
 
   it('should successfully detach file from entity', () => {
