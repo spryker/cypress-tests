@@ -16,3 +16,6 @@ export * from './enable-cms-block-for-all-stores-scenario';
 export * from './assign-store-to-merchant-scenario';
 export * from './setup-default-store-relations-scenario';
 export * from './update-price-product-scenario';
+export * from './user-mfa-activation-scenario';
+export * from './user-mfa-login-scenario';
+export * from './user-logout-scenario';

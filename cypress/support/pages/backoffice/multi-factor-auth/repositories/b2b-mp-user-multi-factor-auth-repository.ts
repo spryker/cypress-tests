@@ -2,33 +2,26 @@ import { injectable } from 'inversify';
 import { MultiFactorAuthRepository } from '../multi-factor-auth-repository';
 
 @injectable()
-export class SuiteMultiFactorAuthRepository implements MultiFactorAuthRepository {
+export class B2bMpUserMultiFactorAuthRepository implements MultiFactorAuthRepository {
   getVerificationCodeInput(): Cypress.Chainable {
     return cy.get('input[name="codeValidationForm[authentication_code]"]');
   }
 
   getVerifyButton(): Cypress.Chainable {
-    return cy.get('form[name="codeValidationForm"] button[type="submit"]');
+    return cy.get('form[name="codeValidationForm"] input[type="submit"]');
   }
 
   getVerificationPopup(): Cypress.Chainable {
-    return cy.get('div[data-qa*="multi-factor-authentication-content"]', { timeout: 20000 });
+    return cy.get(`div[data-qa="multi-factor-authentication-modal"]`, { timeout: 20000 });
   }
 
   getMfaTypeSection(type: string): Cypress.Chainable {
-    return cy.get(`div[data-qa="mfa-type-section"]:contains("${type}")`);
-  }
-
-  getActivateForm(): Cypress.Chainable {
-    return cy.get('form[name^="activateForm"]').first();
-  }
-
-  getDeactivateForm(): Cypress.Chainable {
-    return cy.get('form[name^="deactivateForm"]').first();
-  }
-
-  getSubmitButton(): Cypress.Chainable {
-    return cy.get('button[type="submit"]');
+    return cy
+      .get('tr[data-qa="mfa-type-section"]')
+      .filter((_, el) => {
+        return Cypress.$(el).find('td').first().text().trim() === type;
+      })
+      .find('button');
   }
 
   getActivationSuccessMessage(): string {

@@ -1,0 +1,54 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUserOne",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUserOne.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUserTwo",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUserTwo.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUserThree",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUserThree.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUserFour",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUserFour.id_user", 1]
+        }
+      ]
+    }
+  }
+}

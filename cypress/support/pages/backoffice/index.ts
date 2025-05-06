@@ -47,6 +47,8 @@ export * from './ssp-file-management/attach/ssp-file-management-attach-page';
 export * from './company-role/list/company-role-list-page';
 export * from './company-role/create/company-role-create-page';
 export * from './ssp-service-management/product-abstract-type/product-abstract-type-page';
+export * from './multi-factor-auth/multi-factor-auth-page';
+export * from './user/reset-password/reset-password-page';
 export * from './ssp-asset-management/list/ssp-asset-list-page';
 export * from './ssp-asset-management/add/ssp-asset-add-page';
 export * from './ssp-asset-management/detail/ssp-asset-detail-page';
