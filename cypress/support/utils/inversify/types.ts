@@ -5,7 +5,6 @@ export const enum REPOSITORIES {
   CartRepository = 'CartRepository',
   CommentCartRepository = 'CommentCartRepository',
   MultiCartRepository = 'MultiCartRepository',
-  MultiFactorAuthRepository = 'MultiFactorAuthRepository',
   CheckoutAddressRepository = 'CheckoutAddressRepository',
   CheckoutCustomerRepository = 'CheckoutCustomerRepository',
   CheckoutShipmentRepository = 'CheckoutShipmentRepository',
@@ -27,9 +26,5 @@ export const enum REPOSITORIES {
   SspInquiryRepository = 'SspInquiryRepository',
   CompanyRoleIndexRepository = 'CompanyRoleIndexRepository',
   CompanyRoleCreateRepository = 'CompanyRoleCreateRepository',
-  CustomerDeleteRepository = 'CustomerDeleteRepository',
-  CustomerProfileRepository = 'CustomerProfileRepository',
-  SspServiceRepository = 'SspServiceRepository',
   SspAssetRepository = 'SspAssetRepository',
-  SspDashboardManagementRepository = 'SspDashboardManagementRepository',
 }

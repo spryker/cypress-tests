@@ -5,5 +5,4 @@ export interface CustomerOverviewRepository {
   getFirstShippingAddress(): Cypress.Chainable;
   getViewOrderButton(tableRowIndex: number): Cypress.Chainable;
   getMyFilesLink(): Cypress.Chainable;
-  getOrderDetailTableRow(): Cypress.Chainable;
 }

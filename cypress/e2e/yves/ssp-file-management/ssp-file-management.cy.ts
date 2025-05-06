@@ -26,7 +26,9 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
     });
+  });
 
+  it('should access the My Files page from customer overview', (): void => {
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
     sspFileManagementListPage.verifyListPage();
@@ -149,5 +151,5 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 });
 
 function describeForSsp(title: string, options: { tags: string[] }, fn: () => void): void {
-  (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, options, fn);
+  (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, options, fn);
 }

@@ -50,6 +50,4 @@ export class B2cCartRepository implements CartRepository {
   submitCartItemChangeQuantity = (sku: string): void => {
     this.getCartItemChangeQuantityField(sku).type('{enter}', { force: true });
   };
-  getCartItemSummaryBlock = (itemIndex: number): Cypress.Chainable =>
-    cy.get('[data-qa="component cart-item-summary"]').eq(itemIndex);
 }

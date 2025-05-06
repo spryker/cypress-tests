@@ -384,7 +384,7 @@
           "arguments": [
             {
               "companyBusinessUnit": "#businessUnit",
-              "businessUnitAssignments": [
+              "assignments": [
                 {
                   "companyBusinessUnit": {
                     "idCompanyBusinessUnit": "#businessUnit.id_company_business_unit"

@@ -14,6 +14,4 @@ export class ProductManagementEditVariantRepository {
   getIsNeverOutOfStockCheckbox = (): Cypress.Chainable =>
     cy.get('#product_concrete_form_edit_price_and_stock_0_is_never_out_of_stock');
   getSaveButton = (): Cypress.Chainable => cy.get('[type="submit"]');
-  getPriceTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-price"]');
-  getAllPriceInputs = (): Cypress.Chainable => cy.get('#price-table-collection [data-decimal-rounding="2"]');
 }

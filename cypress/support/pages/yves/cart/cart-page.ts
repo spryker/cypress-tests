@@ -93,10 +93,6 @@ export class CartPage extends YvesPage {
   assertCartName = (name: string): void => {
     cy.get('body').contains(name).should('exist');
   };
-
-  getCartItemSummary = (itemIndex: number): Cypress.Chainable => {
-    return this.repository.getCartItemSummaryBlock(itemIndex);
-  };
 }
 
 interface QuickAddToCartParams {

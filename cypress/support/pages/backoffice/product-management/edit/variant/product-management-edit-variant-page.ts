@@ -27,14 +27,4 @@ export class ProductManagementEditVariantPage extends BackofficePage {
   deactivate = (): void => {
     this.repository.getDeactivateButton().click();
   };
-
-  updatePrice = (newPrice: string): void => {
-    this.repository.getPriceTab().click();
-
-    this.repository.getAllPriceInputs().each(($el) => {
-      cy.wrap($el).type(newPrice, { force: true });
-    });
-
-    this.repository.getSaveButton().click();
-  };
 }

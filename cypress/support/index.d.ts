@@ -62,22 +62,5 @@ declare namespace Cypress {
      * @example cy.confirmCustomerByEmail('test@spryker.com')
      */
     confirmCustomerByEmail(email: string): void;
-
-    /**
-     * Get MFA code for a customer by email and type
-     * @param email - Customer's email
-     * @param type - MFA type (e.g., 'email', 'authenticator')
-     * @example
-     * cy.getMultiFactorAuthCode('customer@example.com', 'email')
-     */
-    getMultiFactorAuthCode(email: string, type: string): Chainable<string>;
-
-    /**
-     * Clean up an MFA code from the database
-     * @param code - The code to clean up
-     * @example
-     * cy.cleanUpMultiFactorAuthCode('123456')
-     */
-    cleanUpMultiFactorAuthCode(code: string): void;
   }
 }
