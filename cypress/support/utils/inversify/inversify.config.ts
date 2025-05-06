@@ -161,6 +161,7 @@ import { B2cUserMultiFactorAuthRepository } from '../../pages/backoffice/multi-f
 import { B2bUserMultiFactorAuthRepository } from '../../pages/backoffice/multi-factor-auth/repositories/b2b-user-multi-factor-auth-repository';
 import { B2cMpUserMultiFactorAuthRepository } from '../../pages/backoffice/multi-factor-auth/repositories/b2c-mp-user-multi-factor-auth-repository';
 import { B2bMpUserMultiFactorAuthRepository } from '../../pages/backoffice/multi-factor-auth/repositories/b2b-mp-user-multi-factor-auth-repository';
+import { SuiteSspDashboardManagementRepository } from '../../pages/yves/ssp-dashboard-management/repositories/suite-ssp-dashboard-management-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -199,6 +200,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.SspAssetRepository]: SuiteSspAssetRepository,
   [REPOSITORIES.AgentMultiFactorAuthRepository]: SuiteAgentMultiFactorAuthRepository,
   [REPOSITORIES.UserMultiFactorAuthRepository]: SuiteUserMultiFactorAuthRepository,
+  [REPOSITORIES.SspDashboardManagementRepository]: SuiteSspDashboardManagementRepository,
 };
 
 const b2cMappings: BindingsMap = {

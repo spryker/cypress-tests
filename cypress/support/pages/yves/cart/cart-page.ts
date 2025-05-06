@@ -97,6 +97,14 @@ export class CartPage extends YvesPage {
   getCartItemSummary = (itemIndex: number): Cypress.Chainable => {
     return this.repository.getCartItemSummaryBlock(itemIndex);
   };
+
+  cancelOrderAmendment = (): void => {
+    const cancelOrderAmendmentButton = this.repository.getCancelOrderAmendmentButton();
+
+    if (cancelOrderAmendmentButton) {
+      cancelOrderAmendmentButton.click();
+    }
+  };
 }
 
 interface QuickAddToCartParams {

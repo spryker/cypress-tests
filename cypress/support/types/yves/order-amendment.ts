@@ -48,6 +48,9 @@ export interface OrderAmendmentStartDynamicFixtures {
   customer6: Customer;
   address6: Address;
 
+  customer7: Customer;
+  address7: Address;
+
   product: ProductConcrete;
   productInActive: ProductConcrete;
   productOutOfStock: ProductConcrete;
