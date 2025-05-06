@@ -32,7 +32,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
         orderDetailsPage.editOrder();
         cartPage.assertCartName(`Editing Order ${orderReference}`);
 
-        cartPage.clearCart();
+        cartPage.cancelOrderAmendment();
 
         cartPage.visit();
         cartPage.assertCartName('Shopping cart');

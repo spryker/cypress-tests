@@ -29,7 +29,7 @@ export class OrderDetailsPage extends YvesPage {
   };
 
   containsOrderState = (orderState: string): void => {
-    cy.get('body').contains(orderState).should('exist');
+    this.repository.getOrderDetailTableBlock().contains(orderState).should('exist');
   };
 
   doesNotContainEditOrderButton = (): void => {

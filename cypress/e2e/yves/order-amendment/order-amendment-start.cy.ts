@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { OrderAmendmentStartDynamicFixtures, OrderAmendmentStaticFixtures } from '@interfaces/yves';
-import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
+import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage, MultiCartPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { RemoveProductStockScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
@@ -20,6 +20,7 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
     const productPage = container.get(ProductPage);
     const salesIndexPage = container.get(SalesIndexPage);
     const salesDetailPage = container.get(SalesDetailPage);
+    const multiCartPage = container.get(MultiCartPage);
 
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const checkoutScenario = container.get(CheckoutScenario);
@@ -152,6 +153,17 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
       cy.get('body').contains(dynamicFixtures.productOutOfStock.localized_attributes[0].name).should('not.exist');
     });
 
+    skipB2cIt('customer should be able to create a new cart with amended order items', (): void => {
+      placeCustomerOrder(dynamicFixtures.customer7.email, dynamicFixtures.address7.id_customer_address);
+      addProductsToCart(dynamicFixtures.product.sku, 2);
+
+      customerOverviewPage.viewLastPlacedOrder();
+      orderDetailsPage.editOrder();
+
+      multiCartPage.getMiniCartRadios().should('have.length', 2);
+      cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).should('have.value', '1');
+    });
+
     function addProductsToCart(sku: string, quantity?: number): void {
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: sku });
@@ -201,6 +213,10 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
       salesIndexPage.view();
 
       salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
+    }
+
+    function skipB2cIt(description: string, testFn: () => void): void {
+      (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
     }
   }
 );
