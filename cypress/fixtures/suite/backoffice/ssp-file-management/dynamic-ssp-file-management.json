@@ -75,7 +75,7 @@
             {
               "locale": "#localeEN",
               "password": "change123",
-              "first_name": "Test",
+              "first_name": "Test for file attachment",
               "last_name": "Customer"
             }
           ]
@@ -96,6 +96,16 @@
               "fkCustomer": "#customer.id_customer",
               "fkCompany": "#company1.id_company",
               "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveAsset",
+          "key": "sspAsset",
+          "arguments": [
+            {
+              "name": "Test Asset for file attachment"
             }
           ]
         },

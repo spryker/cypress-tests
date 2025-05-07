@@ -50,4 +50,7 @@ export class SuiteCartRepository implements CartRepository {
   submitCartItemChangeQuantity = (sku: string): void => {
     this.getCartItemChangeQuantitySubmit(sku).click();
   };
+  getCartItemSummaryBlock = (itemIndex: number): Cypress.Chainable =>
+    cy.get('[data-qa="component cart-item-summary"]').eq(itemIndex);
+  getCancelOrderAmendmentButton = (): Cypress.Chainable => cy.get('[data-qa="cancel-order-amendment-button"]');
 }

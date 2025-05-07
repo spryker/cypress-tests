@@ -79,8 +79,8 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
     return cy.get('[data-qa="unassign-ssp-asset-link"]');
   }
 
-  getCreateClaimButton(): Cypress.Chainable {
-    return cy.contains('Create inquiry');
+  getCreateInquiryButton(): Cypress.Chainable {
+    return cy.get('[data-qa="ssp-aset-create-inquiry"]');
   }
 
   getFirstRowViewButton(): Cypress.Chainable {
@@ -127,10 +127,13 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
   }
 
   getSspAssetInquiriresTable(): Cypress.Chainable {
-    return cy.get('[data-qa*="ssp-inquiry-table"]');
+    return cy.get('[data-qa*="advanced-table"]');
   }
   getSspAssetImageSrc(): Cypress.Chainable {
     return cy.get('[data-qa*="ssp-asset-image"]').invoke('attr', 'image-src');
+  }
+  getViewAllInquiriesLink(): Cypress.Chainable {
+    return cy.get('[data-qa*="ssp-inquiry-table"]').find('a[href*="/customer/ssp-inquiry?ssp-asset-reference="');
   }
 
   getAccessTableFilterByBusinessUnitValue(): string {
@@ -138,6 +141,6 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
   }
 
   getSspAssetFiltersSubmitButton(): Cypress.Chainable {
-    return cy.get('[data-qa="ssp-asset-submit-filters"]');
+    return cy.get('[data-qa="submit-filters"]');
   }
 }

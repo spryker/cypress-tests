@@ -5,4 +5,5 @@ export interface OrderDetailsRepository {
   getCartReorderItemCheckboxes(): Cypress.Chainable;
   getEditOrderButton(): Cypress.Chainable;
   getEditOrderForm(): Cypress.Chainable;
+  getOrderDetailTableBlock(): Cypress.Chainable;
 }
