@@ -19,7 +19,7 @@
           "type": "helper",
           "name": "confirmCustomer",
           "key": "confirmedCustomerOne",
-          "arguments": [{ "customer": "#customerOne" }]
+          "arguments": ["#customerOne"]
         },
         {
           "type": "helper",
