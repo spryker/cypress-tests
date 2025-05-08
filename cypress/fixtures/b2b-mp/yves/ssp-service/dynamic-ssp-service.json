@@ -1,0 +1,522 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "operations": [
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "locale",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer",
+          "arguments": [
+            {
+              "locale": "#locale",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer2",
+          "arguments": [
+            {
+              "locale": "#locale",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "company1Customer",
+          "arguments": [
+            {
+              "registered": "2025-01-01",
+              "password": "change123",
+              "locale": "#locale"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "company2Customer",
+          "arguments": [
+            {
+              "registered": "2025-01-01",
+              "password": "change123",
+              "locale": "#locale"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "key": "confirmedCustomer",
+          "arguments": ["#customer"]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "key": "confirmedCustomer2",
+          "arguments": ["#customer2"]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "key": "confirmedCompany1Customer",
+          "arguments": ["#company1Customer"]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "key": "confirmedCompany2Customer",
+          "arguments": ["#company2Customer"]
+        },
+          {
+              "type": "helper",
+              "name": "haveCompany",
+              "key": "company",
+              "arguments": [{ "status": "approved", "is_active": true }]
+          },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company1",
+          "arguments": [{ "status": "approved", "is_active": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company2",
+          "arguments": [{ "status": "approved", "is_active": true }]
+        },
+          {
+              "type": "helper",
+              "name": "haveCompanyBusinessUnit",
+              "key": "companyBusinessUnit",
+              "arguments": [{ "fk_company": "#company.id_company" }]
+          },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "companyBusinessUnit1",
+          "arguments": [{ "fk_company": "#company1.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "companyBusinessUnit2",
+          "arguments": [{ "fk_company": "#company2.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "seeCompanyOrdersPermission",
+          "arguments": ["SeeCompanyOrdersPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderWithAmountUpToPermission",
+          "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderPermission",
+          "arguments": ["PlaceOrderPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "companyRole1",
+          "arguments": [
+            {
+              "fk_company": "#company1.id_company"
+            },
+            ["#seeCompanyOrdersPermission", "#placeOrderPermission", "#placeOrderWithAmountUpToPermission"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "companyRole2",
+          "arguments": [
+            {
+              "fk_company": "#company2.id_company"
+            },
+            ["#seeCompanyOrdersPermission"]
+          ]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "companyRoleCollection1",
+          "arguments": { "roles": ["#companyRole1"] }
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "companyRoleCollection2",
+          "arguments": { "roles": ["#companyRole2"] }
+        },
+          {
+              "type": "helper",
+              "name": "haveCompanyUser",
+              "key": "companyUserEntity",
+              "arguments": [
+                  {
+                      "customer": "#customer",
+                      "fk_company": "#company.id_company",
+                      "company_role_collection": ["#companyRoleCollection1"],
+                      "fk_company_business_unit": "#companyBusinessUnit.id_company_business_unit"
+                  }
+              ]
+          },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser1Entity",
+          "arguments": [
+            {
+              "customer": "#company1Customer",
+              "fk_company": "#company1.id_company",
+              "company_role_collection": ["#companyRoleCollection1"],
+              "fk_company_business_unit": "#companyBusinessUnit1.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser2Entity",
+          "arguments": [
+            {
+              "customer": "#company2Customer",
+              "fk_company": "#company2.id_company",
+              "company_role_collection": ["#companyRoleCollection2"],
+              "fk_company_business_unit": "#companyBusinessUnit2.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUserEntity", ["#companyRole1"]]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser1Entity", ["#companyRole1"]]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser2Entity", ["#companyRole2"]]
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 1, "name": "DE", "defaultCurrencyIsoCode": "EUR" }
+        },
+        {
+          "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address1",
+          "arguments": [{ "fkCustomer": "#customer.id_customer", "fkCountry": "#country.id_country" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "company1CustomerAddress",
+          "arguments": [{ "fkCustomer": "#company1Customer.id_customer", "fkCountry": "#country.id_country" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "company2CustomerAddress",
+          "arguments": [{ "fkCustomer": "#company2Customer.id_customer", "fkCountry": "#country.id_country" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductAbstractType",
+          "key": "productAbstractType",
+          "arguments": [
+            {
+              "name": "service"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product1",
+          "arguments": [{ "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product2",
+          "arguments": [{ "idTaxSet": 1 }]
+        },
+          {
+              "type": "array-object",
+              "key": "stores",
+              "arguments": ["#store"]
+          },
+          {
+              "type": "builder",
+              "name": "MerchantProfileBuilder",
+              "key": "merchantProfile"
+          },
+          {
+              "type": "helper",
+              "name": "haveMerchant",
+              "key": "merchant",
+              "arguments": [
+                  {
+                      "merchantProfile": "#merchantProfile",
+                      "isActive": true,
+                      "status": "approved",
+                      "storeRelation": {
+                          "idStores": ["#store.id_store"]
+                      }
+                  }
+              ]
+          },
+          {
+              "type": "helper",
+              "name": "haveProductOffer",
+              "key": "productOffer1",
+              "arguments": [
+                  {
+                      "isActive": true,
+                      "status": "approved",
+                      "idProductConcrete": "#product2.id_product_concrete",
+                      "concreteSku": "#product1.sku",
+                      "merchantReference": "#merchant.merchant_reference",
+                      "stores": "#stores"
+                  }
+              ]
+          },
+          {
+              "type": "helper",
+              "name": "haveProductOffer",
+              "key": "productOffer2",
+              "arguments": [
+                  {
+                      "isActive": true,
+                      "status": "approved",
+                      "idProductConcrete": "#product2.id_product_concrete",
+                      "concreteSku": "#product2.sku",
+                      "merchantReference": "#merchant.merchant_reference",
+                      "stores": "#stores"
+                  }
+              ]
+          },
+        {
+          "type": "helper",
+          "name": "haveProductAbstractToProductAbstractType",
+          "key": "productAbstractToProductAbstractType1",
+          "arguments": ["#product1.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductAbstractToProductAbstractType",
+          "key": "productAbstractToProductAbstractType1",
+          "arguments": ["#product2.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#product1.abstract_sku",
+              "skuProduct": "#product1.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#product2.abstract_sku",
+              "skuProduct": "#product2.sku",
+              "moneyValue": { "netAmount": 20000, "grossAmount": 20000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#product1.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#product2.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "transfer",
+          "name": "ProductImageTransfer",
+          "key": "productImage",
+          "arguments": {
+            "externalUrlSmall": "https://images.icecat.biz/img/gallery_mediums/30691822_1486.jpg",
+            "externalUrlLarge": "https://images.icecat.biz/img/gallery/30691822_1486.jpg"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#product1.id_product_concrete",
+              "idProductAbstract": "#product1.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#product2.id_product_concrete",
+              "idProductAbstract": "#product2.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#product1.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#product2.sku", "isNeverOutOfStock": "1" }]
+        },
+          {
+              "type": "helper",
+              "name": "haveProductOfferStock",
+              "arguments": [
+                  {
+                      "idProductOffer": "#productOffer1.id_product_offer",
+                      "productOfferReference": "#productOffer1.product_offer_reference",
+                      "isNeverOutOfStock": true
+                  },
+                  "#merchant.stocks"
+              ]
+          },
+          {
+              "type": "helper",
+              "name": "haveProductOfferStock",
+              "arguments": [
+                  {
+                      "idProductOffer": "#productOffer2.id_product_offer",
+                      "productOfferReference": "#productOffer2.product_offer_reference",
+                      "isNeverOutOfStock": true
+                  },
+                  "#merchant.stocks"
+              ]
+          },
+          {
+              "type": "transfer",
+              "name": "TaxTotalTransfer",
+              "key": "taxTotal",
+              "arguments": {
+                  "amount": 0
+              }
+          },
+          {
+              "type": "transfer",
+              "name": "TotalsTransfer",
+              "key": "totals",
+              "arguments": {
+                  "subtotal": 5000,
+                  "priceToPay": 5000,
+                  "discountTotal": 0,
+                  "taxTotal": "#taxTotal",
+                  "grandTotal": 5000
+              }
+          },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer",
+                "totals": "#totals",
+              "items": [
+                {
+                  "sku": "#product1.sku",
+                  "abstractSku": "#product1.abstract_sku",
+                    "idProductAbstract": "#product1.fk_product_abstract",
+                  "quantity": 1,
+                    "merchantReference": "#merchant.merchant_reference",
+                    "unitPrice": 30000,
+                    "productOfferReference": "#productOffer1.product_offer_reference"
+                },
+                {
+                  "sku": "#product2.sku",
+                  "abstractSku": "#product2.abstract_sku",
+                    "idProductAbstract": "#product2.fk_product_abstract",
+                  "quantity": 1,
+                    "merchantReference": "#merchant.merchant_reference",
+                    "unitPrice": 20000,
+                    "productOfferReference": "#productOffer2.product_offer_reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#company1Customer",
+                "totals": "#totals",
+              "items": [
+                {
+                  "sku": "#product1.sku",
+                  "abstractSku": "#product1.abstract_sku",
+                  "quantity": 1,
+                    "merchantReference": "#merchant.merchant_reference",
+                    "unitPrice": 30000,
+                    "productOfferReference": "#productOffer1.product_offer_reference"
+                },
+                {
+                  "sku": "#product2.sku",
+                  "abstractSku": "#product2.abstract_sku",
+                  "quantity": 1,
+                    "merchantReference": "#merchant.merchant_reference",
+                    "unitPrice": 20000,
+                    "productOfferReference": "#productOffer2.product_offer_reference"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

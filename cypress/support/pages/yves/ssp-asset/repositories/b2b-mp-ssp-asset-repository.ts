@@ -78,7 +78,7 @@ export class B2bMpSspAssetRepository implements SspAssetRepository {
   getUnassignLink(): Cypress.Chainable {
     return cy.get('[data-qa="unassign-ssp-asset-link"]');
   }
-  
+
     getCreateInquiryButton(): Cypress.Chainable {
         return cy.get('[data-qa="ssp-aset-create-inquiry"]');
     }
@@ -136,12 +136,15 @@ export class B2bMpSspAssetRepository implements SspAssetRepository {
   getSspAssetImageSrc(): Cypress.Chainable {
     return cy.get('[data-qa*="ssp-asset-image"]').invoke('attr', 'image-src');
   }
+    getViewAllInquiriesLink(): Cypress.Chainable {
+        return cy.get('[data-qa*="ssp-inquiry-table"]').find('a[href*="/customer/ssp-inquiry?ssp-asset-reference="');
+    }
 
   getAccessTableFilterByBusinessUnitValue(): string {
     return 'filterByBusinessUnit';
   }
 
-  getSspAssetFiltersSubmitButton(): Cypress.Chainable {
-    return cy.get('[data-qa="ssp-asset-submit-filters"]');
-  }
+    getSspAssetFiltersSubmitButton(): Cypress.Chainable {
+        return cy.get('[data-qa="submit-filters"]');
+    }
 }

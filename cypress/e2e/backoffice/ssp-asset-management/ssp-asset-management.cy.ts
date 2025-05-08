@@ -6,7 +6,7 @@ import { SspAssetListPage, SspAssetAddPage, SspAssetDetailPage, SspAssetUpdatePa
 import { SspAssetDetailPage as YvesSspAssetDetailPage } from '@pages/yves/';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
-(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+(['suite', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp asset management',
   { tags: ['@backoffice', '@assetManagement', '@ssp'] },
   () => {
