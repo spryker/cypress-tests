@@ -78,6 +78,10 @@ export class B2bMpSspAssetRepository implements SspAssetRepository {
   getUnassignLink(): Cypress.Chainable {
     return cy.get('[data-qa="unassign-ssp-asset-link"]');
   }
+  
+    getCreateInquiryButton(): Cypress.Chainable {
+        return cy.get('[data-qa="ssp-aset-create-inquiry"]');
+    }
 
   getCreateClaimButton(): Cypress.Chainable {
     return cy.contains('Create inquiry');
