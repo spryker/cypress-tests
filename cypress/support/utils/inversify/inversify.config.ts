@@ -323,8 +323,8 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.SspInquiryRepository]: B2bMpSspInquiryRepository,
   [REPOSITORIES.CustomerDeleteRepository]: B2bMpCustomerDeleteRepository,
   [REPOSITORIES.CustomerProfileRepository]: B2bMpCustomerProfileRepository,
-    [REPOSITORIES.SspDashboardManagementRepository]: B2bMpSspDashboardManagementRepository,
-    [REPOSITORIES.SspServiceRepository]: B2bMpSspServiceRepository,
+  [REPOSITORIES.SspDashboardManagementRepository]: B2bMpSspDashboardManagementRepository,
+  [REPOSITORIES.SspServiceRepository]: B2bMpSspServiceRepository,
 };
 
 const mappings = {

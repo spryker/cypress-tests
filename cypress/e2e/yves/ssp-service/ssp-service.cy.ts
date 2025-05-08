@@ -216,7 +216,10 @@ interface DynamicFixtures {
       });
 
       if (!isSetupDone) {
-        checkoutScenario.execute({ idCustomerAddress: idCustomerAddress, paymentMethod: 'dummyMarketplacePaymentInvoice' });
+        checkoutScenario.execute({
+          idCustomerAddress: idCustomerAddress,
+          paymentMethod: 'dummyMarketplacePaymentInvoice',
+        });
 
         isSetupDone = true;
       }

@@ -218,12 +218,7 @@
           "key": "companyRoleWithNoDownloadPermissions",
           "arguments": [
             { "isDefault": false, "fkCompany": "#company.id_company" },
-            [
-              "#permissionDashboard",
-              "#permissionAsset",
-              "#permissionCUFiles",
-              "#permissionBUInquiries"
-            ]
+            ["#permissionDashboard", "#permissionAsset", "#permissionCUFiles", "#permissionBUInquiries"]
           ]
         },
         {
