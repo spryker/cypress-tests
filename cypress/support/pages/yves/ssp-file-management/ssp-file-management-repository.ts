@@ -10,7 +10,7 @@ export class SspFileManagementRepository {
   getUploadedDateHeaderSelector = (): string => '[data-qa="date"]';
   getFileSizeHeaderSelector = (): string => '[data-qa="size"]';
   getFileTypeHeaderSelector = (): string => '[data-qa="type"]';
-  getDownloadButtonSelector = (): string => '[data-qa="download-button"]';
+  getDownloadButtonSelector = (): string => '[data-qa*="download-button"]';
   getTypeFilterSelector = (): string => '[data-qa="filter-type"]';
   getApplyFiltersButtonSelector = (): string => '[data-qa="submit-filters"]';
   getSearchFieldSelector = (): string => '[data-qa="search"]';
