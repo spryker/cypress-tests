@@ -83,10 +83,6 @@ export class B2bMpSspAssetRepository implements SspAssetRepository {
     return cy.get('[data-qa="ssp-aset-create-inquiry"]');
   }
 
-  getCreateClaimButton(): Cypress.Chainable {
-    return cy.contains('Create inquiry');
-  }
-
   getFirstRowViewButton(): Cypress.Chainable {
     return cy.get('[data-qa*="cell-actions"] a[href*="/customer/asset/details?reference="]').first();
   }
