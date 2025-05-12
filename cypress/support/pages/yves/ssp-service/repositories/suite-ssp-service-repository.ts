@@ -5,7 +5,7 @@ import Chainable = Cypress.Chainable;
 @injectable()
 export class SuiteSspServiceRepository implements SspServiceRepository {
   getSspServiceTable(): Chainable<JQuery<HTMLElement>> {
-    return cy.get('.ssp-service-table');
+    return cy.get('[data-qa*="advanced-table"]');
   }
 
   getSspServiceTableRows(): Chainable<JQuery<HTMLElement>> {
@@ -50,7 +50,7 @@ export class SuiteSspServiceRepository implements SspServiceRepository {
   }
 
   getSearchButton(): Chainable<JQuery<HTMLElement>> {
-    return cy.contains('button', 'Search') as unknown as Chainable<JQuery<HTMLElement>>;
+    return cy.get('[data-qa="submit-filters"]');
   }
 
   getPagination(): Chainable<JQuery<HTMLElement>> {

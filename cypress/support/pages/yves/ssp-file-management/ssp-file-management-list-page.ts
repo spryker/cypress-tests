@@ -1,14 +1,14 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import { YvesPage } from '@pages/yves';
-import { SspFileManagementListRepository } from './ssp-file-management-list-repository';
+import { SspFileManagementRepository } from './ssp-file-management-repository';
 
 @injectable()
 @autoWired
 export class SspFileManagementListPage extends YvesPage {
-  @inject(SspFileManagementListRepository) private repository: SspFileManagementListRepository;
+  @inject(SspFileManagementRepository) private repository: SspFileManagementRepository;
 
-  protected PAGE_URL = '/customer/files';
+  protected PAGE_URL = '/ssp-file-management';
 
   verifyListPage(): void {
     cy.get(this.repository.getFiltersSelector()).should('be.visible');

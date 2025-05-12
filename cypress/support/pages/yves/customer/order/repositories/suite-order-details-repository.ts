@@ -18,8 +18,10 @@ export class SuiteOrderDetailsRepository implements OrderDetailsRepository {
   getEditOrderButton(): Cypress.Chainable {
     return this.getEditOrderForm().find('button');
   }
-
   getEditOrderForm(): Cypress.Chainable {
     return cy.get('[data-qa="component remote-form-submit"]');
+  }
+  getOrderDetailTableBlock(): Cypress.Chainable {
+    return cy.get('[data-qa="component order-detail-table"]');
   }
 }

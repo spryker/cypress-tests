@@ -7,6 +7,8 @@ export interface OrderAmendmentCancelDynamicFixtures {
 }
 
 export interface OrderAmendmentFinishDynamicFixtures {
+  rootUser: User;
+
   customer1: Customer;
   address1: Address;
 
@@ -15,10 +17,14 @@ export interface OrderAmendmentFinishDynamicFixtures {
 
   customer3: Customer;
   address3: Address;
+  address3new: Address;
+
+  customer4: Customer;
   address4: Address;
 
   product1: ProductConcrete;
   product2: ProductConcrete;
+  product3: ProductConcrete;
 }
 
 export interface OrderAmendmentStartDynamicFixtures {
@@ -42,6 +48,9 @@ export interface OrderAmendmentStartDynamicFixtures {
   customer6: Customer;
   address6: Address;
 
+  customer7: Customer;
+  address7: Address;
+
   product: ProductConcrete;
   productInActive: ProductConcrete;
   productOutOfStock: ProductConcrete;
@@ -49,4 +58,6 @@ export interface OrderAmendmentStartDynamicFixtures {
 
 export interface OrderAmendmentStaticFixtures {
   defaultPassword: string;
+  oldProductPrice: string;
+  newProductPrice: string;
 }

@@ -22,11 +22,12 @@ export interface SspAssetRepository {
   getEditAssetButton(): Cypress.Chainable;
   getUnassignButton(): Cypress.Chainable;
   getUnassignLink(): Cypress.Chainable;
-  getCreateClaimButton(): Cypress.Chainable;
+  getCreateInquiryButton(): Cypress.Chainable;
   getSspAssetAssignments(): Cypress.Chainable;
   getSspAssetServicesButton(): Cypress.Chainable;
   getSspAssetInquiriresTable(): Cypress.Chainable;
   getSspAssetImageSrc(): Cypress.Chainable;
+  getViewAllInquiriesLink(): Cypress.Chainable;
 
   // Asset list page selectors
   getFirstRowViewButton(): Cypress.Chainable;
@@ -37,6 +38,5 @@ export interface SspAssetRepository {
   getAssetReferenceCells(): Cypress.Chainable;
   getAssetSerialNumberCells(): Cypress.Chainable;
   getAccessTableFilterSelect(): Cypress.Chainable;
-  getAccessTableFilterByBusinessUnitValue(): string;
   getSspAssetFiltersSubmitButton(): Cypress.Chainable;
 }

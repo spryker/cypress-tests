@@ -35,4 +35,8 @@ export class CustomerOverviewPage extends YvesPage {
   clickMyFilesLink = (): void => {
     this.repository.getMyFilesLink().click();
   };
+
+  getOrderDetailTable = (): Cypress.Chainable => {
+    return this.repository.getOrderDetailTableRow();
+  };
 }
