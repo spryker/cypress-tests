@@ -232,6 +232,31 @@
           "arguments": [{ "idTaxSet": 1, "isServiceDateTimeEnabled": true }]
         },
         {
+          "type": "array-object",
+          "key": "stores",
+          "arguments": ["#store"]
+        },
+        {
+          "type": "builder",
+          "name": "MerchantProfileBuilder",
+          "key": "merchantProfile"
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchant",
+          "key": "merchant",
+          "arguments": [
+            {
+              "merchantProfile": "#merchantProfile",
+              "isActive": true,
+              "status": "approved",
+              "storeRelation": {
+                "idStores": ["#store.id_store"]
+              }
+            }
+          ]
+        },
+        {
           "type": "helper",
           "name": "haveShipmentType",
           "key": "shipmentType",
@@ -243,15 +268,45 @@
         },
         {
           "type": "helper",
-          "name": "haveProductConcreteShipmentType",
-          "key": "shipmentType1",
-          "arguments": ["#product1", "#shipmentType"]
+          "name": "haveProductOffer",
+          "key": "productOffer1",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "idProductConcrete": "#product2.id_product_concrete",
+              "concreteSku": "#product1.sku",
+              "merchantReference": "#merchant.merchant_reference",
+              "stores": "#stores"
+            }
+          ]
         },
         {
           "type": "helper",
-          "name": "haveProductConcreteShipmentType",
-          "key": "shipmentType2",
-          "arguments": ["#product2", "#shipmentType"]
+          "name": "haveProductOffer",
+          "key": "productOffer2",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "idProductConcrete": "#product2.id_product_concrete",
+              "concreteSku": "#product2.sku",
+              "merchantReference": "#merchant.merchant_reference",
+              "stores": "#stores"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferShipmentType",
+          "key": "productOfferShipmentType1",
+          "arguments": ["#productOffer1", "#shipmentType"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferShipmentType",
+          "key": "productOfferShipmentType2",
+          "arguments": ["#productOffer2", "#shipmentType"]
         },
         {
           "type": "helper",
@@ -342,6 +397,50 @@
         },
         {
           "type": "helper",
+          "name": "haveProductOfferStock",
+          "arguments": [
+            {
+              "idProductOffer": "#productOffer1.id_product_offer",
+              "productOfferReference": "#productOffer1.product_offer_reference",
+              "isNeverOutOfStock": true
+            },
+            "#merchant.stocks"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferStock",
+          "arguments": [
+            {
+              "idProductOffer": "#productOffer2.id_product_offer",
+              "productOfferReference": "#productOffer2.product_offer_reference",
+              "isNeverOutOfStock": true
+            },
+            "#merchant.stocks"
+          ]
+        },
+        {
+          "type": "transfer",
+          "name": "TaxTotalTransfer",
+          "key": "taxTotal",
+          "arguments": {
+            "amount": 0
+          }
+        },
+        {
+          "type": "transfer",
+          "name": "TotalsTransfer",
+          "key": "totals",
+          "arguments": {
+            "subtotal": 5000,
+            "priceToPay": 5000,
+            "discountTotal": 0,
+            "taxTotal": "#taxTotal",
+            "grandTotal": 5000
+          }
+        },
+        {
+          "type": "helper",
           "name": "havePersistentQuote",
           "arguments": [
             {
@@ -350,14 +449,18 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "id": "#product1.id_product_concrete",
-                  "quantity": 1
+                  "idProductAbstract": "#product1.fk_product_abstract",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference",
+                  "productOfferReference": "#productOffer1.product_offer_reference"
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
-                  "id": "#product2.id_product_concrete",
-                  "quantity": 1
+                  "idProductAbstract": "#product2.fk_product_abstract",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference",
+                  "productOfferReference": "#productOffer2.product_offer_reference"
                 }
               ]
             }
@@ -373,14 +476,16 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "id": "#product1.id_product_concrete",
-                  "quantity": 1
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference",
+                  "productOfferReference": "#productOffer1.product_offer_reference"
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
-                  "id": "#product2.id_product_concrete",
-                  "quantity": 1
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference",
+                  "productOfferReference": "#productOffer2.product_offer_reference"
                 }
               ]
             }
