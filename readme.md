@@ -34,3 +34,4 @@ npm run cy:open
 ```
 
 This command opens the Cypress Test Runner, a powerful interface that allows you to see tests running in real time.
+
