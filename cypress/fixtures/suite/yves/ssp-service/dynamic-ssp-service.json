@@ -215,7 +215,7 @@
           "key": "productAbstractType",
           "arguments": [
             {
-              "name": "service"
+              "name": "Service"
             }
           ]
         },
@@ -223,13 +223,35 @@
           "type": "helper",
           "name": "haveFullProduct",
           "key": "product1",
-          "arguments": [{ "idTaxSet": 1 }]
+          "arguments": [{ "idTaxSet": 1, "isServiceDateTimeEnabled": true }]
         },
         {
           "type": "helper",
           "name": "haveFullProduct",
           "key": "product2",
-          "arguments": [{ "idTaxSet": 1 }]
+          "arguments": [{ "idTaxSet": 1, "isServiceDateTimeEnabled": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentType",
+          "key": "shipmentType",
+          "arguments": [
+            {
+              "key": "delivery"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "key": "shipmentType1",
+          "arguments": ["#product1", "#shipmentType"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "key": "shipmentType2",
+          "arguments": ["#product2", "#shipmentType"]
         },
         {
           "type": "helper",
@@ -328,11 +350,13 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
+                  "id": "#product1.id_product_concrete",
                   "quantity": 1
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
+                  "id": "#product2.id_product_concrete",
                   "quantity": 1
                 }
               ]
@@ -349,11 +373,13 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
+                  "id": "#product1.id_product_concrete",
                   "quantity": 1
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
+                  "id": "#product2.id_product_concrete",
                   "quantity": 1
                 }
               ]

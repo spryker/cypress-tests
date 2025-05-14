@@ -212,4 +212,34 @@ export class SspServiceListPage extends YvesPage {
         expect(updatedDate).to.include(`${day}, ${year}`);
       });
   }
+
+  // Cancel service methods
+  getServiceCancelButton(): Chainable<JQuery<HTMLElement>> {
+    return this.repository.getServiceCancelButton();
+  }
+
+  /**
+   * Cancels the first service in the list
+   */
+  cancelService(): void {
+    // Go to service details page
+    this.viewFirstServiceDetails();
+    cy.url().should('include', '/order/details');
+
+    // Click cancel button
+    this.getServiceCancelButton().should('be.visible').first().click();
+
+    // Verify redirection to services list
+    cy.url().should('include', '/customer/ssp-service');
+  }
+
+  /**
+   * Verifies that a service state is 'Cancelled'
+   */
+  verifyServiceCancelled(): void {
+    this.viewFirstServiceDetails();
+
+    // Verify that first service is cancelled and only second left
+    this.getServiceCancelButton().first().should('have.length', 1);
+  }
 }
