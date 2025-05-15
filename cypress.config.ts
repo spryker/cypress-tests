@@ -1,6 +1,7 @@
 import { defineConfig } from 'cypress';
 import dotenv from 'dotenv';
 import { existsSync } from 'fs';
+import cypressSplit from 'cypress-split';
 
 dotenv.config();
 
@@ -32,12 +33,14 @@ export default defineConfig({
   },
   e2e: {
     baseUrl: `${protocol}://${baseHost}`,
-    setupNodeEvents(on) {
+    setupNodeEvents(on, config) {
       on('task', {
         isFileExists(filename: string): boolean {
           return existsSync(filename);
         },
       });
+      cypressSplit(on, config);
+        return config;
     },
     retries: {
       runMode: 2,
