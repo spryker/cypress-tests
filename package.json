@@ -16,7 +16,7 @@
     "prettier:write": "prettier . --write",
     "cy:open": "cypress open",
     "cy:run": "cypress run --spec \"cypress/e2e/!(smoke)/**/*.ts\"",
-    "cy:ci": "cypress run --spec \"cypress/e2e/!(smoke)/**/!(ssp)*.ts\" --headless --browser chrome",
+    "cy:ci": "cypress run --spec \"cypress/e2e/yves/**/!(ssp)*.ts\" --headless --browser chrome",
     "cy:ci:ssp": "cypress run --spec \"cypress/e2e/!(smoke)/**/(ssp)*.ts\" --headless --browser chrome",
     "cy:smoke": "cypress run --spec \"cypress/e2e/smoke/**/*.ts\" --headless --browser chrome",
     "cy:dms": "cypress run --spec \"cypress/e2e/!(smoke)/**/*dms.cy.ts\" --headless --browser chrome",
