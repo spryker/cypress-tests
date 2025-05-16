@@ -24,7 +24,7 @@ export class SspAssetUpdateRepository {
 
   getImageUploadSelector = (): string => 'input[name="assetForm[asset_image][file]"]';
   getImageDeleteSelector = (): string => 'input[name="assetForm[asset_image][delete]"]';
-  getSubmitButtonSelector = (): string => 'form[name="assetForm"] button[data-qa="submit"]';
+  getSubmitButtonSelector = (): string => '[data-qa="submit"]';
   getSuccessMessageSelector = (): string => '[data-qa="success-message"]';
 
   getSuccessMessage = (): string => 'Asset has been successfully updated';

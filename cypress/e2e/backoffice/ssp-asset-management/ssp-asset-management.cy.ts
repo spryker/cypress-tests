@@ -138,6 +138,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
           { name: dynamicFixtures.businessUnit3.name },
         ],
         companies: [{ name: dynamicFixtures.company1.name }, { name: dynamicFixtures.company2.name }],
+        orderReference: dynamicFixtures.salesOrder.order_reference
       });
     });
   }
