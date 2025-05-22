@@ -14,6 +14,7 @@ describe('cart item note management', { tags: ['@yves', '@cart'] }, (): void => 
   let dynamicFixtures: CartItemNoteManagementDynamicFixtures;
 
   before((): void => {
+    cy.clearCookies();
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 

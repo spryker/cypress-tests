@@ -16,6 +16,7 @@ describe('remove cart item', { tags: ['@yves', '@cart'] }, (): void => {
   let dynamicFixtures: RemoveCartItemDynamicFixtures;
 
   before((): void => {
+    cy.clearCookies();
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 

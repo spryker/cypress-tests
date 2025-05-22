@@ -16,6 +16,7 @@ describe('change cart item quantity', { tags: ['@yves', '@cart'] }, (): void => 
   let dynamicFixtures: ChangeCartItemQuantityDynamicFixtures;
 
   before((): void => {
+    cy.clearCookies();
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
   });
 
