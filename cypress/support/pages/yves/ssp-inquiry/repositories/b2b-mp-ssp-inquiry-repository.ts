@@ -3,7 +3,7 @@ import { SspInquiryRepository } from '../ssp-inquiry-repository';
 import Chainable = Cypress.Chainable;
 
 @injectable()
-export class SuiteSspInquiryRepository implements SspInquiryRepository {
+export class B2bMpSspInquiryRepository implements SspInquiryRepository {
   private readonly selectors = {
     sspInquiryForm: 'form[name="sspInquiryForm"]',
     orderReferenceInput: 'input[name="sspInquiryForm[orderReference]"]',

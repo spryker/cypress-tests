@@ -28,4 +28,5 @@ export interface SspInquiryRepository {
   getDescriptionTextarea(): Cypress.Chainable;
   getFileInput(): Cypress.Chainable;
   getSubmitButton(): Cypress.Chainable;
+  getFileDownloadActionSelector(): string;
 }

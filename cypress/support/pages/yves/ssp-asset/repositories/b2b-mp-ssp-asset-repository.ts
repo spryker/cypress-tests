@@ -2,7 +2,7 @@ import { SspAssetRepository } from '../ssp-asset-repository';
 import { injectable } from 'inversify';
 
 @injectable()
-export class SuiteSspAssetRepository implements SspAssetRepository {
+export class B2bMpSspAssetRepository implements SspAssetRepository {
   getSspAssetCustomerMenuItem(): Cypress.Chainable {
     return cy.get('[data-qa*="ssp-asset-customer-menu-item"]');
   }
@@ -84,7 +84,7 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
   }
 
   getFirstRowViewButton(): Cypress.Chainable {
-    return cy.get('[data-qa*="cell-actions"] .menu__item a').first();
+    return cy.get('[data-qa*="cell-actions"] a[href*="/customer/asset/details?reference="]').first();
   }
 
   getFirstRowReference(): Cypress.Chainable<string> {
@@ -127,7 +127,7 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
   }
 
   getSspAssetInquiriresTable(): Cypress.Chainable {
-    return cy.get('[data-qa*="advanced-table"]');
+    return cy.get('[data-qa*="ssp-inquiry-table"]');
   }
   getSspAssetImageSrc(): Cypress.Chainable {
     return cy.get('[data-qa*="ssp-asset-image"]').invoke('attr', 'image-src');

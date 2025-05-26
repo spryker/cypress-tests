@@ -9,7 +9,7 @@ import {
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
-(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+(['suite', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp asset management',
   { tags: ['@yves', '@ssp-asset', '@ssp', '@sspAssetManagement'] },
   (): void => {
