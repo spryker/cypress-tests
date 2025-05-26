@@ -33,7 +33,7 @@ export class BackofficePage extends AbstractPage {
   public find = (params: UpdateParams): Cypress.Chainable => {
     // eslint-disable-next-line cypress/unsafe-to-chain-command
     return cy
-      .get('.dataTables_filter input[type="search"]')
+      .get('input[type="search"][data-qa]')
       .clear()
       .invoke('val', params.searchQuery)
       .trigger('input')
@@ -68,7 +68,7 @@ export class BackofficePage extends AbstractPage {
     const searchAndIntercept = (): Cypress.Chainable => {
       attempts++;
       // eslint-disable-next-line cypress/unsafe-to-chain-command
-      cy.get('.dataTables_filter input[type="search"]')
+      cy.get('input[type="search"][data-qa]')
         .clear()
         .then(() => {
           cy.visitBackoffice(params.pageUrl);
@@ -76,7 +76,7 @@ export class BackofficePage extends AbstractPage {
 
       return this.interceptTable({ url: params.tableUrl }).then(() => {
         // eslint-disable-next-line cypress/unsafe-to-chain-command
-        cy.get('.dataTables_filter input[type="search"]')
+        cy.get('input[type="search"][data-qa]')
           .invoke('val', params.searchQuery)
           .trigger('input')
           .then(() => {
