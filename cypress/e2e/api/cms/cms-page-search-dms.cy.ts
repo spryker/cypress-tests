@@ -37,6 +37,9 @@ describeIfDynamicStoreEnabled('cms page search dms', { tags: ['@api', '@cms', '@
       password: staticFixtures.defaultPassword,
     });
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(2000);
+
     createStoreScenario.execute({ store: staticFixtures.store, shouldTriggerPublishAndSync: true });
 
     staticFixtures.cmsPageName = `${staticFixtures.cmsPageName}-${Date.now()}`;
