@@ -19,3 +19,5 @@ export * from './update-price-product-scenario';
 export * from './user-mfa-activation-scenario';
 export * from './user-mfa-login-scenario';
 export * from './user-logout-scenario';
+export * from './user-mfa-create-scenario';
+export * from './customer-mfa-remove-scenario';

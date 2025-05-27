@@ -8,3 +8,4 @@ export * from './select-store-scenario';
 export * from './agent-mfa-activation-scenario';
 export * from './agent-logout-scenario';
 export * from './agent-mfa-login-scenario';
+export * from './customer-mfa-activation-scenario';

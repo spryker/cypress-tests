@@ -120,6 +120,7 @@ export enum ActionEnum {
   denyAccess,
   delete,
   deny,
+  removeMultiFactorAuthentication,
 }
 
 interface InterceptGuiTableParams {
