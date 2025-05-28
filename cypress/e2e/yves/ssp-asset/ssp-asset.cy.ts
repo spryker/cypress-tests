@@ -7,7 +7,7 @@ import {
   CompanyUserSelectPage,
 } from '@pages/yves';
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/yves';
-import { CustomerLoginScenario } from '@scenarios/yves';
+import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
 
 (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp asset management',
@@ -18,6 +18,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     const assetDetailPage = container.get(SspAssetDetailPage);
     const assetListPage = container.get(SspAssetListPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
+    const checkoutScenario = container.get(CheckoutScenario);
     const companyUserSelectPage = container.get(CompanyUserSelectPage);
 
     let staticFixtures: SspAssetStaticFixtures;
@@ -110,6 +111,10 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
+      checkoutScenario.execute({
+        paymentMethod: 'dummyMarketplacePaymentInvoice',
+      });
+
       assetDetailPage.visit({
         qs: {
           reference: dynamicFixtures.asset.reference,
@@ -124,6 +129,19 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       ]);
 
       assetDetailPage.getViewAllInquiriesLink().should('exist');
+
+      assetDetailPage.assertSspServices([
+        {
+          name: dynamicFixtures.product1.localized_attributes[0].name,
+          customerFirstName: dynamicFixtures.customer.firstName,
+          customerLastName: dynamicFixtures.customer.lastName,
+        },
+        {
+          name: dynamicFixtures.product2.localized_attributes[0].name,
+          customerFirstName: dynamicFixtures.customer.firstName,
+          customerLastName: dynamicFixtures.customer.lastName,
+        },
+      ]);
     });
 
     it('should navigate to ssp asset pages from different sources', () => {
