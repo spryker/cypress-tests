@@ -127,7 +127,11 @@ export class B2bMpSspAssetRepository implements SspAssetRepository {
   }
 
   getSspAssetInquiriresTable(): Cypress.Chainable {
-    return cy.get('[data-qa*="ssp-inquiry-table"]');
+    return cy.get('[data-qa="ssp-asset-inquiries-table"] [data-qa*="ssp-inquiry-table"]');
+  }
+
+  getSspAssetServicesTable(): Cypress.Chainable {
+    return cy.get('[data-qa="ssp-asset-services-table"] [data-qa*="ssp-inquiry-table"]');
   }
   getSspAssetImageSrc(): Cypress.Chainable {
     return cy.get('[data-qa*="ssp-asset-image"]').invoke('attr', 'image-src');

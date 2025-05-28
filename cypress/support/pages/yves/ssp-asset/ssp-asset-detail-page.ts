@@ -43,6 +43,15 @@ export class SspAssetDetailPage extends YvesPage {
     });
   }
 
+  assertSspServices(sspServices: SspService[]): void {
+    this.repository.getSspAssetServicesTable().should('exist');
+    this.repository.getSspAssetServicesTable().find('tbody tr').its('length').should('eq', sspServices.length);
+
+    sspServices.forEach((sspServices) => {
+      this.repository.getSspAssetServicesTable().should('contain', sspServices.name);
+    });
+  }
+
   getViewAllInquiriesLink(): Cypress.Chainable {
     return this.repository.getViewAllInquiriesLink();
   }
@@ -104,4 +113,10 @@ interface SspInquiry {
 
 interface BusinessUnit {
   name: string;
+}
+
+interface SspService {
+  name: string;
+  customerFirstName: string;
+  customerLastName: string;
 }
