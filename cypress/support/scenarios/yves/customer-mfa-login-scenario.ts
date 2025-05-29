@@ -14,6 +14,8 @@ export class CustomerMfaLoginScenario {
 
     this.mfaPage.waitForVerificationPopup();
 
+    console.log('customer');
+
     cy.getMultiFactorAuthCode(credentials.email, 'email').then((code) => {
       this.mfaPage.verifyCode(code);
     });

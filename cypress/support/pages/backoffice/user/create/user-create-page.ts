@@ -37,6 +37,10 @@ export class UserCreatePage extends BackofficePage {
 
     return user;
   };
+
+  waitForUserCreatedSuccessMessage(): void {
+    cy.contains(this.repository.getSuccessMessage()).should('be.visible');
+  }
 }
 
 interface CreateParams {
@@ -44,6 +48,7 @@ interface CreateParams {
   password?: string;
   isRootUser?: boolean;
   isAgentMerchant?: boolean;
+  adminUsername?: string;
 }
 
 interface User {

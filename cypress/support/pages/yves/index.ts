@@ -36,4 +36,6 @@ export * from './ssp-file-management/ssp-file-management-list-page';
 export * from './ssp-file-management/ssp-file-management-download-page';
 export * from './multi-factor-auth/multi-factor-auth-page';
 export * from './ssp-service/ssp-service-list-page';
+export * from './agent/overview/agent-overview-page';
+export * from './multi-factor-auth/agent/agent-multi-factor-auth-page';
 export * from './ssp-dashboard-management/ssp-dashboard-page';
