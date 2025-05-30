@@ -201,10 +201,7 @@
         {
           "type": "helper",
           "name": "haveProductAbstractToProductAbstractType",
-          "arguments": [
-            "#product.fk_product_abstract",
-            "#productAbstractType.id_product_abstract_type"
-          ]
+          "arguments": ["#product.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
         },
         {
           "type": "helper",
@@ -225,10 +222,7 @@
           "type": "helper",
           "name": "haveSalesSspAsset",
           "key": "salesSspAsset",
-          "arguments": [
-            "#salesOrder.id_sales_order",
-            "#sspAsset.id_ssp_asset"
-          ]
+          "arguments": ["#salesOrder.id_sales_order", "#sspAsset.id_ssp_asset"]
         }
       ]
     }
