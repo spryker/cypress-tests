@@ -136,6 +136,93 @@
               ]
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "configureTestStateMachine",
+          "arguments": [["DummyPayment01"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product"
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentType",
+          "key": "shipmentType",
+          "arguments": [
+            {
+              "key": "delivery"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentMethod",
+          "key": "shipmentMethod",
+          "arguments": [
+            {
+              "key": "spryker_dummy_shipment-standard"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address",
+          "arguments": [
+            {
+              "fkCustomer": "#customer.id_customer"
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "name": "ShipmentTransfer",
+          "key": "shipment",
+          "arguments": {
+            "shipmentTypeUuid": "#shipmentType.uuid",
+            "idShipmentMethod": "#shipmentMethod.id_shipment_method",
+            "method": "#shipmentMethod",
+            "shippingAddress": "#address"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveProductAbstractType",
+          "key": "productAbstractType",
+          "arguments": [
+            {
+              "key": "service"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductAbstractToProductAbstractType",
+          "arguments": ["#product.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullOrder",
+          "key": "salesOrder",
+          "arguments": [
+            {
+              "item": {
+                "sku": "#product.sku"
+              },
+              "customerReference": "#customer.customer_reference",
+              "shipment": "#shipment"
+            },
+            "DummyPayment01"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveSalesSspAsset",
+          "key": "salesSspAsset",
+          "arguments": ["#salesOrder.id_sales_order", "#sspAsset.id_ssp_asset"]
         }
       ]
     }

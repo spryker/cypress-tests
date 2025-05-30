@@ -16,6 +16,7 @@ export interface SspAssetDynamicFixtures {
   company1: Company;
   company2: Company;
   customer: Customer;
+  salesOrder: Order;
 }
 
 interface SspAsset {
@@ -26,6 +27,10 @@ interface SspAsset {
   note?: string;
   image?: string;
   status: string;
+}
+
+interface Order {
+  order_reference: string;
 }
 
 interface Customer {
