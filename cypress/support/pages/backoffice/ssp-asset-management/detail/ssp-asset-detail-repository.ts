@@ -23,4 +23,5 @@ export class SspAssetDetailRepository {
   getCompaniesTabSelector = (): string => '[data-qa="tab-content-companies"]';
   getInquiriesTabSelector = (): string => '[data-qa="tab-content-ssp-inquiries"]';
   getServicesTabSelector = (): string => 'a[href="#tab-content-ssp-services"]';
+  getCompaniesTabClickSelector = (): string => 'a[href="#tab-content-companies"]';
 }
