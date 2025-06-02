@@ -11,7 +11,10 @@ export class SspAssetDetailPage extends BackofficePage {
   protected PAGE_URL = '/ssp-asset-management/detail';
 
   verifyAssetDetails(assetData: SspAsset): void {
-    this.repository.getSspAssetRelationTabs().find(this.repository.getCompaniesTabClickSelector()).click({ force: true });
+    this.repository
+      .getSspAssetRelationTabs()
+      .find(this.repository.getCompaniesTabClickSelector())
+      .click({ force: true });
     if (assetData.reference) {
       cy.get(this.repository.getReferenceValueSelector()).should('contain', assetData.reference);
     }
