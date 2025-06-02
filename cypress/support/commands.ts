@@ -204,10 +204,67 @@ Cypress.Commands.add('getMultiFactorAuthCode', (email, type) => {
     });
 });
 
+Cypress.Commands.add('getUserMultiFactorAuthCode', (username, type) => {
+  const operation = {
+    type: 'helper',
+    name: 'getUserMultiFactorAuthCode',
+    key: 'code',
+    arguments: [username, type],
+  };
+
+  return cy
+    .request({
+      method: 'POST',
+      url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
+      headers: {
+        'Content-Type': 'application/vnd.api+json',
+      },
+      body: {
+        data: {
+          type: 'dynamic-fixtures',
+          attributes: {
+            operations: [operation],
+          },
+        },
+      },
+    })
+    .then((response) => {
+      if (response.body.data && response.body.data.attributes && response.body.data.attributes.data) {
+        const mfaResponse = response.body.data.attributes.data;
+        return mfaResponse.code;
+      }
+      return null;
+    });
+});
+
 Cypress.Commands.add('cleanUpMultiFactorAuthCode', (code: string) => {
   const operation = {
     type: 'helper',
     name: 'cleanUpMultiFactorAuthCode',
+    arguments: [code],
+  };
+
+  return cy.request({
+    method: 'POST',
+    url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
+    headers: {
+      'Content-Type': 'application/vnd.api+json',
+    },
+    body: {
+      data: {
+        type: 'dynamic-fixtures',
+        attributes: {
+          operations: [operation],
+        },
+      },
+    },
+  });
+});
+
+Cypress.Commands.add('cleanUpUserMultiFactorAuthCode', (code: string) => {
+  const operation = {
+    type: 'helper',
+    name: 'cleanUpUserMultiFactorAuthCode',
     arguments: [code],
   };
 
