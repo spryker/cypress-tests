@@ -11,6 +11,10 @@ export class SspAssetDetailPage extends BackofficePage {
   protected PAGE_URL = '/ssp-asset-management/detail';
 
   verifyAssetDetails(assetData: SspAsset): void {
+    this.repository
+      .getSspAssetRelationTabs()
+      .find(this.repository.getCompaniesTabClickSelector())
+      .click({ force: true });
     if (assetData.reference) {
       cy.get(this.repository.getReferenceValueSelector()).should('contain', assetData.reference);
     }
@@ -66,6 +70,13 @@ export class SspAssetDetailPage extends BackofficePage {
     if (assetData.businessUnitOwner) {
       cy.get(this.repository.getBusinessUnitOwnerValueSelector()).should('contain', assetData.businessUnitOwner.name);
     }
+
+    this.repository.getSspAssetRelationTabs().find(this.repository.getServicesTabSelector()).should('exist');
+
+    if (assetData.orderReference) {
+      this.repository.getSspAssetRelationTabs().find(this.repository.getServicesTabSelector()).click();
+      cy.get(this.repository.getOrderReferenceColumnSelector()).contains(assetData.orderReference).should('be.visible');
+    }
   }
 
   verifyImageIsVisible(): void {
@@ -115,6 +126,7 @@ interface SspAsset {
   businessUnitOwner?: BusinessOwner;
   assignedbusinessUnits?: BusinessOwner[];
   companies: Company[];
+  orderReference?: string;
 }
 
 interface Company {
