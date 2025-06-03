@@ -10,5 +10,5 @@ export class IndexPage extends BackofficePage {
 
   assertLoginFormDoesNotExist = (): void => {
     cy.get('form[name="auth"]').should('not.exist');
-  }
+  };
 }
