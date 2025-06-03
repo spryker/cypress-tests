@@ -7,4 +7,8 @@ import { BackofficePage } from '@pages/backoffice';
 @autoWired
 export class IndexPage extends BackofficePage {
   protected PAGE_URL = '/';
+
+  assertLoginFormDoesNotExist = (): void => {
+    cy.get('form[name="auth"]').should('not.exist');
+  }
 }

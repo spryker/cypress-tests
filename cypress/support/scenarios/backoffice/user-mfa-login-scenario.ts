@@ -1,12 +1,13 @@
 import { injectable, inject } from 'inversify';
 import { autoWired } from '@utils';
-import { LoginPage, MultiFactorAuthPage } from '../../pages/backoffice';
+import { LoginPage, MultiFactorAuthPage, IndexPage } from '../../pages/backoffice';
 
 @injectable()
 @autoWired
 export class UserMfaLoginScenario {
   @inject(LoginPage) private loginPage: LoginPage;
   @inject(MultiFactorAuthPage) private mfaPage: MultiFactorAuthPage;
+  @inject(IndexPage) private indexPage: IndexPage;
 
   execute(params: ExecuteParams): void {
     this.loginPage.visit();
@@ -17,6 +18,8 @@ export class UserMfaLoginScenario {
     cy.getUserMultiFactorAuthCode(params.username, 'email').then((code) => {
       this.mfaPage.verifyCode(code);
     });
+
+    this.indexPage.assertLoginFormDoesNotExist();
   }
 
   executeWithInvalidCode(params: ExecuteParams, staticFixtures: UserMfaAuthStaticFixtures): void {
