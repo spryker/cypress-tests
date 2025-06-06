@@ -36,7 +36,7 @@ export class SspAssetDetailPage extends YvesPage {
 
   assertSspInquiries(sspInquiries: SspInquiry[]): void {
     this.getSspAssetInquiriresTable().should('exist');
-    this.getSspAssetInquiriresTable().get('tbody tr').its('length').should('eq', sspInquiries.length);
+    this.getSspAssetInquiriresTable().find('tbody tr').its('length').should('eq', sspInquiries.length);
 
     sspInquiries.forEach((sspInquiry) => {
       this.getSspAssetInquiriresTable().should('contain', sspInquiry.reference);

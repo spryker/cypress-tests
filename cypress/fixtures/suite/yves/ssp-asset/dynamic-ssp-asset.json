@@ -542,6 +542,12 @@
         },
         {
           "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product3",
+          "arguments": [{ "idTaxSet": 1, "isServiceDateTimeEnabled": true }]
+        },
+        {
+          "type": "helper",
           "name": "haveProductAbstractToProductAbstractType",
           "key": "productAbstractToProductAbstractType1",
           "arguments": ["#product1.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
@@ -551,6 +557,12 @@
           "name": "haveProductAbstractToProductAbstractType",
           "key": "productAbstractToProductAbstractType1",
           "arguments": ["#product2.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductAbstractToProductAbstractType",
+          "key": "productAbstractToProductAbstractType1",
+          "arguments": ["#product3.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
         },
         {
           "type": "helper",
@@ -584,6 +596,21 @@
         },
         {
           "type": "helper",
+          "name": "haveProductOffer",
+          "key": "productOffer3",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "idProductConcrete": "#product3.id_product_concrete",
+              "concreteSku": "#product3.sku",
+              "merchantReference": "#merchant.merchant_reference",
+              "stores": "#stores"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveProductOfferShipmentType",
           "key": "productOfferShipmentType1",
           "arguments": ["#productOffer1", "#shipmentType"]
@@ -605,6 +632,12 @@
           "name": "haveProductAbstractToProductAbstractType",
           "key": "productAbstractToProductAbstractType1",
           "arguments": ["#product2.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductAbstractToProductAbstractType",
+          "key": "productAbstractToProductAbstractType1",
+          "arguments": ["#product3.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
         },
         {
           "type": "helper",
@@ -630,6 +663,17 @@
         },
         {
           "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#product3.abstract_sku",
+              "skuProduct": "#product3.sku",
+              "moneyValue": { "netAmount": 20000, "grossAmount": 20000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveProductInStockForStore",
           "arguments": ["#store", { "sku": "#product1.sku", "isNeverOutOfStock": "1" }]
         },
@@ -637,6 +681,11 @@
           "type": "helper",
           "name": "haveProductInStockForStore",
           "arguments": ["#store", { "sku": "#product2.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#product3.sku", "isNeverOutOfStock": "1" }]
         },
         {
           "type": "transfer",
@@ -673,6 +722,18 @@
         },
         {
           "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#product3.id_product_concrete",
+              "idProductAbstract": "#product3.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveProductInStockForStore",
           "arguments": ["#store", { "sku": "#product1.sku", "isNeverOutOfStock": "1" }]
         },
@@ -680,6 +741,11 @@
           "type": "helper",
           "name": "haveProductInStockForStore",
           "arguments": ["#store", { "sku": "#product2.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#product3.sku", "isNeverOutOfStock": "1" }]
         },
         {
           "type": "helper",
@@ -700,6 +766,18 @@
             {
               "idProductOffer": "#productOffer2.id_product_offer",
               "productOfferReference": "#productOffer2.product_offer_reference",
+              "isNeverOutOfStock": true
+            },
+            "#merchant.stocks"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferStock",
+          "arguments": [
+            {
+              "idProductOffer": "#productOffer3.id_product_offer",
+              "productOfferReference": "#productOffer3.product_offer_reference",
               "isNeverOutOfStock": true
             },
             "#merchant.stocks"
@@ -731,6 +809,7 @@
           "arguments": [
             {
               "customer": "#customer",
+              "totals": "#totals",
               "items": [
                 {
                   "sku": "#product1.sku",
@@ -756,6 +835,19 @@
                     "idSspAsset": "#asset.id_ssp_asset",
                     "reference": "#asset.reference",
                     "name": "#asset.name"
+                  }
+                },
+                {
+                  "sku": "#product3.sku",
+                  "abstractSku": "#product3.abstract_sku",
+                  "idProductAbstract": "#product3.fk_product_abstract",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference",
+                  "productOfferReference": "#productOffer3.product_offer_reference",
+                  "sspAsset": {
+                    "idSspAsset": "#assetBU1C2.id_ssp_asset",
+                    "reference": "#assetBU1C2.reference",
+                    "name": "#assetBU1C2.name"
                   }
                 }
               ]
