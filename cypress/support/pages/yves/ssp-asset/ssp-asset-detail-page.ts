@@ -36,10 +36,19 @@ export class SspAssetDetailPage extends YvesPage {
 
   assertSspInquiries(sspInquiries: SspInquiry[]): void {
     this.getSspAssetInquiriresTable().should('exist');
-    this.getSspAssetInquiriresTable().get('tbody tr').its('length').should('eq', sspInquiries.length);
+    this.getSspAssetInquiriresTable().find('tbody tr').its('length').should('eq', sspInquiries.length);
 
     sspInquiries.forEach((sspInquiry) => {
       this.getSspAssetInquiriresTable().should('contain', sspInquiry.reference);
+    });
+  }
+
+  assertSspServices(sspServices: SspService[]): void {
+    this.repository.getSspAssetServicesTable().should('exist');
+    this.repository.getSspAssetServicesTable().find('tbody tr').its('length').should('eq', sspServices.length);
+
+    sspServices.forEach((sspServices) => {
+      this.repository.getSspAssetServicesTable().should('contain', sspServices.name);
     });
   }
 
@@ -104,4 +113,10 @@ interface SspInquiry {
 
 interface BusinessUnit {
   name: string;
+}
+
+interface SspService {
+  name: string;
+  customerFirstName: string;
+  customerLastName: string;
 }
