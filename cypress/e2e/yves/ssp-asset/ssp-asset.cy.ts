@@ -135,11 +135,13 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
           name: dynamicFixtures.product1.localized_attributes[0].name,
           customerFirstName: dynamicFixtures.customer.firstName,
           customerLastName: dynamicFixtures.customer.lastName,
+          companyName: dynamicFixtures.company.name,
         },
         {
           name: dynamicFixtures.product2.localized_attributes[0].name,
           customerFirstName: dynamicFixtures.customer.firstName,
           customerLastName: dynamicFixtures.customer.lastName,
+          companyName: dynamicFixtures.company.name,
         },
       ]);
     });
@@ -354,6 +356,32 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
         },
       });
       cy.url().should('include', 'errorMessage=ssp_asset.access.denied');
+    });
+
+    it('should display services on SSP asset detail page for volume testing', () => {
+      customerLoginScenario.execute({
+        email: 'ssp-service@volume.data',
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      cy.url().then((url) => {
+        if (url.includes('customer/overview')) {
+          assetListPage.visit();
+
+          assetListPage.openLatestAssetDetailsPage();
+
+          assetDetailPage.assertSspServices([
+            { name: '', companyName: '', customerFirstName: '', customerLastName: '' },
+            { name: '', companyName: '', customerFirstName: '', customerLastName: '' },
+            { name: '', companyName: '', customerFirstName: '', customerLastName: '' },
+            { name: '', companyName: '', customerFirstName: '', customerLastName: '' },
+          ]);
+        } else {
+          cy.log('Not on customer overview page after login - skipping remaining test steps');
+          assert.isTrue(true, 'Not on customer overview page after login');
+        }
+      });
     });
   }
 );

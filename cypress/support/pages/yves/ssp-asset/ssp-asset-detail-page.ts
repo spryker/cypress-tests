@@ -49,6 +49,9 @@ export class SspAssetDetailPage extends YvesPage {
 
     sspServices.forEach((sspServices) => {
       this.repository.getSspAssetServicesTable().should('contain', sspServices.name);
+      this.repository.getSspAssetServicesTable().should('contain', sspServices.customerFirstName);
+      this.repository.getSspAssetServicesTable().should('contain', sspServices.customerLastName);
+      this.repository.getSspAssetServicesTable().should('contain', sspServices.companyName);
     });
   }
 
@@ -119,4 +122,5 @@ interface SspService {
   name: string;
   customerFirstName: string;
   customerLastName: string;
+  companyName: string;
 }

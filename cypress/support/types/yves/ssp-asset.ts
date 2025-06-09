@@ -7,6 +7,7 @@ export interface SspAssetStaticFixtures {
 export interface SspAssetDynamicFixtures {
   customer: Customer;
   businessUnit: BusinessUnit;
+  company: Company;
   companyUser1BU1C1: CompanyUser;
   companyUser2BU1C1: CompanyUser;
   companyUser2BU2C1: CompanyUser;
@@ -64,4 +65,8 @@ interface Product {
       name: string;
     },
   ];
+}
+
+interface Company {
+  name: string;
 }
