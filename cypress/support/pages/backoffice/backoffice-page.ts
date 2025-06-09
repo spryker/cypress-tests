@@ -33,7 +33,7 @@ export class BackofficePage extends AbstractPage {
   public find = (params: UpdateParams): Cypress.Chainable => {
     // eslint-disable-next-line cypress/unsafe-to-chain-command
     return cy
-      .get('[type="search"]')
+      .get('input[type="search"][data-qa="table-search"]')
       .clear()
       .invoke('val', params.searchQuery)
       .trigger('input')
@@ -68,7 +68,7 @@ export class BackofficePage extends AbstractPage {
     const searchAndIntercept = (): Cypress.Chainable => {
       attempts++;
       // eslint-disable-next-line cypress/unsafe-to-chain-command
-      cy.get('[type="search"]')
+      cy.get('input[type="search"][data-qa="table-search"]')
         .clear()
         .then(() => {
           cy.visitBackoffice(params.pageUrl);
@@ -76,7 +76,7 @@ export class BackofficePage extends AbstractPage {
 
       return this.interceptTable({ url: params.tableUrl }).then(() => {
         // eslint-disable-next-line cypress/unsafe-to-chain-command
-        cy.get('[type="search"]')
+        cy.get('input[type="search"][data-qa="table-search"]')
           .invoke('val', params.searchQuery)
           .trigger('input')
           .then(() => {
@@ -120,6 +120,7 @@ export enum ActionEnum {
   denyAccess,
   delete,
   deny,
+  removeMultiFactorAuthentication,
 }
 
 interface InterceptGuiTableParams {
