@@ -35,8 +35,8 @@ export interface SspAsset {
 
 export interface Customer {
   email: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
 }
 
 export interface SspAsset {

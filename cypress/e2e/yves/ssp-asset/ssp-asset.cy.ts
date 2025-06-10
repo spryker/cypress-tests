@@ -133,14 +133,14 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
       assetDetailPage.assertSspServices([
         {
           name: dynamicFixtures.product1.localized_attributes[0].name,
-          customerFirstName: dynamicFixtures.customer.firstName,
-          customerLastName: dynamicFixtures.customer.lastName,
+          customerFirstName: dynamicFixtures.customer.first_name,
+          customerLastName: dynamicFixtures.customer.last_name,
           companyName: dynamicFixtures.company.name,
         },
         {
           name: dynamicFixtures.product2.localized_attributes[0].name,
-          customerFirstName: dynamicFixtures.customer.firstName,
-          customerLastName: dynamicFixtures.customer.lastName,
+          customerFirstName: dynamicFixtures.customer.first_name,
+          customerLastName: dynamicFixtures.customer.last_name,
           companyName: dynamicFixtures.company.name,
         },
       ]);
