@@ -8,7 +8,7 @@ import { SspAssetListRepository } from './ssp-asset-list-repository';
 export class SspAssetListPage extends BackofficePage {
   @inject(SspAssetListRepository) private repository: SspAssetListRepository;
 
-  protected PAGE_URL = '/ssp-asset-management';
+  protected PAGE_URL = '/self-service-portal/list-asset';
 
   verifyListPage(): void {
     cy.get(this.repository.getReferenceHeaderSelector()).should('exist');
