@@ -365,6 +365,12 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
+      // Customer is created by execution of `docker/sdk testing console volume-data:generate -e ServiceSspAssetOrder`.
+      // This command creates:
+      // - customer `ssp-service@volume.data`.
+      // - orders with service product.
+      // - service products have relation with ssp assets.
+      // Below checks are not executed if customer is not generated.
       cy.url().then((url) => {
         if (url.includes('customer/overview')) {
           assetListPage.visit();
