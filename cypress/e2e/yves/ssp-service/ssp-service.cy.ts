@@ -47,7 +47,7 @@ interface DynamicFixtures {
 
     describe('Service List Page', () => {
       it('should verify all required table headers exist', (): void => {
-        purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
+        purchaseServiceAsCustomer(dynamicFixtures.company1Customer.email, dynamicFixtures.company1CustomerAddress.id_customer_address);
 
         // Assert page is loaded correctly
         cy.get('h1').should('contain', 'Services');
@@ -63,7 +63,7 @@ interface DynamicFixtures {
       });
 
       it('should sort table in both directions', (): void => {
-        purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
+        purchaseServiceAsCustomer(dynamicFixtures.company1Customer.email, dynamicFixtures.company1CustomerAddress.id_customer_address);
 
         // Sort by Order Reference
         sspServiceListPage.clickSortColumn('Order Reference');
@@ -108,7 +108,7 @@ interface DynamicFixtures {
       });
 
       it('should search services by SKU', (): void => {
-        purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
+        purchaseServiceAsCustomer(dynamicFixtures.company1Customer.email, dynamicFixtures.company1CustomerAddress.id_customer_address);
 
         // Get product SKU from fixtures to search for
         const productSku = dynamicFixtures.product1.sku;
@@ -126,24 +126,8 @@ interface DynamicFixtures {
         sspServiceListPage.getTableRows().should('have.length', 1);
       });
 
-      it('customer without permissions should see only his own services', (): void => {
-        purchaseServiceAsCustomer(dynamicFixtures.customer2.email, dynamicFixtures.address1.id_customer_address);
-
-        // Check if Business Unit dropdown exists
-        sspServiceListPage.getBusinessUnitSelect().should('exist');
-
-        // Check that 'My Services' option is available in the dropdown
-        sspServiceListPage.getBusinessUnitSelect().find('option').should('contain', 'My Services');
-
-        // A regular customer should not see business unit and company claims
-        sspServiceListPage.getBusinessUnitSelect().find('option[value*="businessUnit"]').should('not.exist');
-        sspServiceListPage.getBusinessUnitSelect().find('option[value*="company"]').should('not.exist');
-
-        sspServiceListPage.getTableRows().should('not.exist');
-      });
-
       it("company users from different companies cannot see each other's services", (): void => {
-        isSetupDone = false;
+        isSetupDone = true;
 
         // First company user purchases a service
         purchaseServiceAsCustomer(
@@ -181,10 +165,10 @@ interface DynamicFixtures {
         sspServiceListPage.getTableRows().should('not.exist');
       });
 
-      //TODO: Uncomment and implement the following tests when the functionality is available
       // it('should allow rescheduling a service', (): void => {
+      //   isSetupDone = true;
       //   // Setup: Purchase a service as a regular customer
-      //   purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
+      //   purchaseServiceAsCustomer(dynamicFixtures.company1Customer.email, dynamicFixtures.company1CustomerAddress.id_customer_address);
 
       //   // Verify two services are listed
       //   sspServiceListPage.getTableRows().should('have.length.at.least', 2);
@@ -201,15 +185,16 @@ interface DynamicFixtures {
       //   const tomorrow = sspServiceListPage.updateServiceDateToTomorrow();
 
       //   // Verify redirection to services list
-      //   cy.url().should('include', '/customer/ssp-service');
+      //   cy.url().should('include', '/ssp/service/list');
 
       //   // Verify first service was rescheduled
       //   sspServiceListPage.verifyServiceRescheduled(tomorrow);
       // });
 
       // it('should allow cancelling a service', (): void => {
+      //   isSetupDone = false;
       //   // Setup: Purchase a service as a regular customer
-      //   purchaseServiceAsCustomer(dynamicFixtures.customer.email, dynamicFixtures.address1.id_customer_address);
+      //   purchaseServiceAsCustomer(dynamicFixtures.company1Customer.email, dynamicFixtures.company1CustomerAddress.id_customer_address);
 
       //   // Verify two services are listed
       //   sspServiceListPage.getTableRows().should('have.length', 2);

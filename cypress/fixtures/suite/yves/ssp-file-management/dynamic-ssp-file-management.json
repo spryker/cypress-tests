@@ -192,7 +192,7 @@
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "downloadFilesPermission",
-          "arguments": ["DownloadFilesPermissionPlugin"]
+          "arguments": ["DownloadCompanyFilesPermissionPlugin"]
         },
         {
           "type": "helper",
