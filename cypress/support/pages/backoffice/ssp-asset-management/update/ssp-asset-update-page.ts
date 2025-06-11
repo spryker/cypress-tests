@@ -8,7 +8,7 @@ import { SspAssetUpdateRepository } from './ssp-asset-update-repository';
 export class SspAssetUpdatePage extends BackofficePage {
   @inject(SspAssetUpdateRepository) private repository: SspAssetUpdateRepository;
 
-  protected PAGE_URL = '/ssp-asset-management/update';
+  protected PAGE_URL = '/self-service-portal/update-asset';
 
   updateAssetForm(assetData: SspAsset): void {
     if (assetData.name) {

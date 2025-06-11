@@ -7,7 +7,10 @@
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "locale",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+          "arguments": {
+            "id_locale": 66,
+            "locale_name": "en_US"
+          }
         },
         {
           "type": "helper",
@@ -65,13 +68,23 @@
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "viewCompanySspAssetPermission",
-          "arguments": ["ViewCompanySspAssetPermissionPlugin"]
+          "arguments": [
+            "ViewCompanySspAssetPermissionPlugin"
+          ]
         },
         {
           "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "key": "companyRole",
-          "arguments": [{ "isDefault": true, "fkCompany": "#company1.id_company" }, ["#viewCompanySspAssetPermission"]]
+          "arguments": [
+            {
+              "isDefault": true,
+              "fkCompany": "#company1.id_company"
+            },
+            [
+              "#viewCompanySspAssetPermission"
+            ]
+          ]
         },
         {
           "type": "helper",
@@ -88,7 +101,9 @@
           "type": "helper",
           "name": "confirmCustomer",
           "key": "confirmedCustomer",
-          "arguments": ["#customer"]
+          "arguments": [
+            "#customer"
+          ]
         },
         {
           "type": "helper",
@@ -106,18 +121,30 @@
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": ["#companyUser", ["#companyRole"]]
+          "arguments": [
+            "#companyUser",
+            [
+              "#companyRole"
+            ]
+          ]
         },
         {
           "type": "helper",
           "name": "haveUser",
           "key": "rootUser",
-          "arguments": [{ "password": "change123" }]
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "addUserToGroup",
-          "arguments": ["#rootUser.id_user", 1]
+          "arguments": [
+            "#rootUser.id_user",
+            1
+          ]
         },
         {
           "type": "helper",
@@ -129,8 +156,7 @@
               "businessUnitAssignments": [
                 {
                   "companyBusinessUnit": {
-                    "idCompanyBusinessUnit": "#businessUnit1.id_company_business_unit",
-                    "idCompanyBusinessUnit": "#businessUnit2.id_company_business_unit"
+                    "idCompanyBusinessUnit": "#businessUnit1.id_company_business_unit"
                   }
                 }
               ]
@@ -140,7 +166,11 @@
         {
           "type": "helper",
           "name": "configureTestStateMachine",
-          "arguments": [["DummyPayment01"]]
+          "arguments": [
+            [
+              "DummyPayment01"
+            ]
+          ]
         },
         {
           "type": "helper",
@@ -201,7 +231,10 @@
         {
           "type": "helper",
           "name": "haveProductAbstractToProductAbstractType",
-          "arguments": ["#product.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
+          "arguments": [
+            "#product.fk_product_abstract",
+            "#productAbstractType.id_product_abstract_type"
+          ]
         },
         {
           "type": "helper",
@@ -222,7 +255,10 @@
           "type": "helper",
           "name": "haveSalesSspAsset",
           "key": "salesSspAsset",
-          "arguments": ["#salesOrder.id_sales_order", "#sspAsset.id_ssp_asset"]
+          "arguments": [
+            "#salesOrder.id_sales_order",
+            "#sspAsset.id_ssp_asset"
+          ]
         }
       ]
     }

@@ -50,7 +50,7 @@ export class SspAssetListPage extends BackofficePage {
     serialNumber: string;
     statuses: Status[];
   }): void {
-    cy.intercept('GET', '**/ssp-asset-management/index/table*').as('assetTableData');
+    cy.intercept('GET', '**/self-service-portal/list-asset/table*').as('assetTableData');
 
     cy.wait('@assetTableData').then(() => {
       let displayStatus = params.status;
