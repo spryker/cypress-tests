@@ -141,7 +141,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
       assetDetailPage.getEditButton().click();
 
-      cy.location('pathname').should('include', '/customer/asset/update');
+      cy.location('pathname').should('include', '/ssp/asset/update');
       cy.location('search').should('include', `reference=${dynamicFixtures.asset.reference}`);
       assetEditPage.getAssetForm().should('exist');
 
@@ -325,17 +325,17 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
-      cy.intercept('GET', '**/customer/asset**').as('assetRequest');
+      cy.intercept('GET', '**/ssp/asset**').as('assetRequest');
       assetListPage.visit();
-      cy.url().should('include', 'errorMessage=ssp_asset.access.denied');
+      cy.url().should('include', 'errorMessage=self_service_portal.asset.access.denied');
 
-      cy.intercept('GET', '**/customer/asset/details**').as('assetDetailRequest');
+      cy.intercept('GET', '**/ssp/asset/details**').as('assetDetailRequest');
       assetDetailPage.visit({
         qs: {
           reference: dynamicFixtures.assetBU1C1BU2C1BU1C2.reference,
         },
       });
-      cy.url().should('include', 'errorMessage=ssp_asset.access.denied');
+      cy.url().should('include', 'errorMessage=self_service_portal.asset.access.denied');
     });
   }
 );
