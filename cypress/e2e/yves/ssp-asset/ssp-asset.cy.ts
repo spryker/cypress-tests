@@ -7,7 +7,7 @@ import {
   CompanyUserSelectPage,
 } from '@pages/yves';
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/yves';
-import { CustomerLoginScenario } from '@scenarios/yves';
+import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
 
 (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp asset management',
@@ -18,6 +18,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     const assetDetailPage = container.get(SspAssetDetailPage);
     const assetListPage = container.get(SspAssetListPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
+    const checkoutScenario = container.get(CheckoutScenario);
     const companyUserSelectPage = container.get(CompanyUserSelectPage);
 
     let staticFixtures: SspAssetStaticFixtures;
@@ -110,6 +111,10 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
+      checkoutScenario.execute({
+        paymentMethod: 'dummyMarketplacePaymentInvoice',
+      });
+
       assetDetailPage.visit({
         qs: {
           reference: dynamicFixtures.asset.reference,
@@ -124,6 +129,21 @@ import { CustomerLoginScenario } from '@scenarios/yves';
       ]);
 
       assetDetailPage.getViewAllInquiriesLink().should('exist');
+
+      assetDetailPage.assertSspServices([
+        {
+          name: dynamicFixtures.product1.localized_attributes[0].name,
+          customerFirstName: dynamicFixtures.customer.first_name,
+          customerLastName: dynamicFixtures.customer.last_name,
+          companyName: dynamicFixtures.company.name,
+        },
+        {
+          name: dynamicFixtures.product2.localized_attributes[0].name,
+          customerFirstName: dynamicFixtures.customer.first_name,
+          customerLastName: dynamicFixtures.customer.last_name,
+          companyName: dynamicFixtures.company.name,
+        },
+      ]);
     });
 
     it('should navigate to ssp asset pages from different sources', () => {
@@ -336,6 +356,38 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         },
       });
       cy.url().should('include', 'errorMessage=ssp_asset.access.denied');
+    });
+
+    it('should display services on SSP asset detail page for volume testing', () => {
+      customerLoginScenario.execute({
+        email: 'ssp-service@volume.data',
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      // Customer is created by execution of `docker/sdk testing console volume-data:generate -e ServiceSspAssetOrder`.
+      // This command creates:
+      // - customer `ssp-service@volume.data`.
+      // - orders with service product.
+      // - service products have relation with ssp assets.
+      // Below checks are not executed if customer is not generated.
+      cy.url().then((url) => {
+        if (url.includes('customer/overview')) {
+          assetListPage.visit();
+
+          assetListPage.openLatestAssetDetailsPage();
+
+          assetDetailPage.assertSspServices([
+            { name: '', companyName: '', customerFirstName: '', customerLastName: '' },
+            { name: '', companyName: '', customerFirstName: '', customerLastName: '' },
+            { name: '', companyName: '', customerFirstName: '', customerLastName: '' },
+            { name: '', companyName: '', customerFirstName: '', customerLastName: '' },
+          ]);
+        } else {
+          cy.log('Not on customer overview page after login - skipping remaining test steps');
+          assert.isTrue(true, 'Not on customer overview page after login');
+        }
+      });
     });
   }
 );
