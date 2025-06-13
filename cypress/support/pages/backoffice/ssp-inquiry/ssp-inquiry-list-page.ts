@@ -6,5 +6,5 @@ import { BackofficePage } from '@pages/backoffice';
 @injectable()
 @autoWired
 export class SspInquiryListPage extends BackofficePage {
-  protected PAGE_URL = '/ssp-inquiry-management';
+  protected PAGE_URL = '/self-service-portal/list-inquiry';
 }

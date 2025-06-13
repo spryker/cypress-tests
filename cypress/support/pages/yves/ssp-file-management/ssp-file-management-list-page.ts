@@ -8,7 +8,7 @@ import { SspFileManagementRepository } from './ssp-file-management-repository';
 export class SspFileManagementListPage extends YvesPage {
   @inject(SspFileManagementRepository) private repository: SspFileManagementRepository;
 
-  protected PAGE_URL = '/ssp-file-management';
+  protected PAGE_URL = '/ssp/company-file/list-file';
 
   verifyListPage(): void {
     cy.get(this.repository.getFiltersSelector()).should('be.visible');

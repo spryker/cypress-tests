@@ -8,7 +8,7 @@ import { SspFileManagementListRepository } from './ssp-file-management-list-repo
 export class SspFileManagementListPage extends BackofficePage {
   @inject(SspFileManagementListRepository) private repository: SspFileManagementListRepository;
 
-  protected PAGE_URL = '/ssp-file-management/list';
+  protected PAGE_URL = '/self-service-portal/list-file';
 
   verifyListPage(): void {
     cy.get(this.repository.getReferenceHeaderSelector()).should('contain', 'Reference');
@@ -24,7 +24,7 @@ export class SspFileManagementListPage extends BackofficePage {
   }
 
   searchFile(fileName: string): void {
-    cy.intercept('GET', '/ssp-file-management/list/table**').as('fileSearch');
+    cy.intercept('GET', '/self-service-portal/list-file/table**').as('fileSearch');
     cy.get(this.repository.getSearchInputSelector()).clear();
     cy.get(this.repository.getSearchInputSelector()).type(fileName);
     cy.wait('@fileSearch');

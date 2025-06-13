@@ -8,7 +8,7 @@ import { SspAssetListRepository } from './ssp-asset-list-repository';
 export class SspAssetListPage extends BackofficePage {
   @inject(SspAssetListRepository) private repository: SspAssetListRepository;
 
-  protected PAGE_URL = '/ssp-asset-management';
+  protected PAGE_URL = '/self-service-portal/list-asset';
 
   verifyListPage(): void {
     cy.get(this.repository.getReferenceHeaderSelector()).should('exist');
@@ -50,7 +50,7 @@ export class SspAssetListPage extends BackofficePage {
     serialNumber: string;
     statuses: Status[];
   }): void {
-    cy.intercept('GET', '**/ssp-asset-management/index/table*').as('assetTableData');
+    cy.intercept('GET', '**/self-service-portal/list-asset/table*').as('assetTableData');
 
     cy.wait('@assetTableData').then(() => {
       let displayStatus = params.status;

@@ -8,7 +8,7 @@ import { SspAssetDetailRepository } from './ssp-asset-detail-repository';
 export class SspAssetDetailPage extends BackofficePage {
   @inject(SspAssetDetailRepository) private repository: SspAssetDetailRepository;
 
-  protected PAGE_URL = '/ssp-asset-management/detail';
+  protected PAGE_URL = '/self-service-portal/view-asset';
 
   verifyAssetDetails(assetData: SspAsset): void {
     this.repository

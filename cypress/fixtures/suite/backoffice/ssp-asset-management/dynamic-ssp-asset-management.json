@@ -7,7 +7,10 @@
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "locale",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+          "arguments": {
+            "id_locale": 66,
+            "locale_name": "en_US"
+          }
         },
         {
           "type": "helper",
@@ -71,7 +74,13 @@
           "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "key": "companyRole",
-          "arguments": [{ "isDefault": true, "fkCompany": "#company1.id_company" }, ["#viewCompanySspAssetPermission"]]
+          "arguments": [
+            {
+              "isDefault": true,
+              "fkCompany": "#company1.id_company"
+            },
+            ["#viewCompanySspAssetPermission"]
+          ]
         },
         {
           "type": "helper",
@@ -112,7 +121,11 @@
           "type": "helper",
           "name": "haveUser",
           "key": "rootUser",
-          "arguments": [{ "password": "change123" }]
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
         },
         {
           "type": "helper",
@@ -129,8 +142,7 @@
               "businessUnitAssignments": [
                 {
                   "companyBusinessUnit": {
-                    "idCompanyBusinessUnit": "#businessUnit1.id_company_business_unit",
-                    "idCompanyBusinessUnit": "#businessUnit2.id_company_business_unit"
+                    "idCompanyBusinessUnit": "#businessUnit1.id_company_business_unit"
                   }
                 }
               ]

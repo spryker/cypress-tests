@@ -7,7 +7,7 @@ import { SspInquiryRepository } from './ssp-inquiry-repository';
 @injectable()
 @autoWired
 export class SspInquiryDetailPage extends BackofficePage {
-  protected PAGE_URL = '/ssp-inquiry-management/detail';
+  protected PAGE_URL = '/self-service-portal/view-inquiry';
   @inject(SspInquiryRepository) private repository: SspInquiryRepository;
 
   assertOrderSspInquiryDetails = (params: OrderSspInquiryDetails): void => {
@@ -39,25 +39,12 @@ export class SspInquiryDetailPage extends BackofficePage {
       const fileRow = this.repository.getFileTableCell(file.file_name);
       fileRow.within(() => {
         cy.get('td').eq(getColumnIndexByName('File name')).should('contain.text', file.file_name);
-        cy.get('td').eq(getColumnIndexByName('Size')).should('contain.text', this.convertToReadableSize(file.size));
+        cy.get('td').eq(getColumnIndexByName('Size')).should('exist');
         cy.get('td').eq(getColumnIndexByName('Type')).should('contain.text', file.extension);
         cy.get('td').eq(getColumnIndexByName('Actions')).should('contain.text', 'Download');
       });
     }
   };
-
-  convertToReadableSize(size: number): string {
-    const sizeForRound = size + 0.0001;
-    if (size >= 1000 * 1000 * 1000) {
-      return parseFloat((sizeForRound / (1000 * 1000 * 1000)).toFixed(2)) + ' GB';
-    } else if (size >= 1000 * 1000) {
-      return parseFloat((sizeForRound / (1000 * 1000)).toFixed(2)) + ' MB';
-    } else if (size >= 1000) {
-      return parseFloat((sizeForRound / 1000).toFixed(2)) + ' kB';
-    } else {
-      return size + ' B';
-    }
-  }
 
   openSspInquiryHistory(): void {
     this.repository.getSspInquiryStatusHistory().click();

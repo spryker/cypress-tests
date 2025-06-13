@@ -8,7 +8,7 @@ import { SspFileManagementAddRepository } from './ssp-file-management-add-reposi
 export class SspFileManagementAddPage extends BackofficePage {
   @inject(SspFileManagementAddRepository) private repository: SspFileManagementAddRepository;
 
-  protected PAGE_URL = '/ssp-file-management/add-files/index';
+  protected PAGE_URL = '/self-service-portal/add-file/index';
 
   loadTestFiles(): Cypress.Chainable<
     Array<{ fileContent: string; fileName: string; mimeType: string; filePath: string }>

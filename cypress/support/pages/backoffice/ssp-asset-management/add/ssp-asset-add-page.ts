@@ -9,7 +9,7 @@ import 'cypress-file-upload';
 export class SspAssetAddPage extends BackofficePage {
   @inject(SspAssetAddRepository) private repository: SspAssetAddRepository;
 
-  protected PAGE_URL = '/ssp-asset-management/add';
+  protected PAGE_URL = '/self-service-portal/add-asset';
 
   fillAssetForm(assetData: SspAsset): void {
     this.repository.getNameInput().type(assetData.name);
