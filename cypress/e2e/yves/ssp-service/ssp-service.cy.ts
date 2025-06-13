@@ -47,7 +47,10 @@ interface DynamicFixtures {
 
     describe('Service List Page', () => {
       it('should verify all required table headers exist', (): void => {
-        purchaseServiceAsCustomer(dynamicFixtures.company1Customer.email, dynamicFixtures.company1CustomerAddress.id_customer_address);
+        purchaseServiceAsCustomer(
+          dynamicFixtures.company1Customer.email,
+          dynamicFixtures.company1CustomerAddress.id_customer_address
+        );
 
         // Assert page is loaded correctly
         cy.get('h1').should('contain', 'Services');
@@ -63,7 +66,10 @@ interface DynamicFixtures {
       });
 
       it('should sort table in both directions', (): void => {
-        purchaseServiceAsCustomer(dynamicFixtures.company1Customer.email, dynamicFixtures.company1CustomerAddress.id_customer_address);
+        purchaseServiceAsCustomer(
+          dynamicFixtures.company1Customer.email,
+          dynamicFixtures.company1CustomerAddress.id_customer_address
+        );
 
         // Sort by Order Reference
         sspServiceListPage.clickSortColumn('Order Reference');
@@ -108,7 +114,10 @@ interface DynamicFixtures {
       });
 
       it('should search services by SKU', (): void => {
-        purchaseServiceAsCustomer(dynamicFixtures.company1Customer.email, dynamicFixtures.company1CustomerAddress.id_customer_address);
+        purchaseServiceAsCustomer(
+          dynamicFixtures.company1Customer.email,
+          dynamicFixtures.company1CustomerAddress.id_customer_address
+        );
 
         // Get product SKU from fixtures to search for
         const productSku = dynamicFixtures.product1.sku;
