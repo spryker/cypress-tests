@@ -56,7 +56,7 @@ export class SspFileManagementAttachPage extends BackofficePage {
   }
 
   selectAsset(prompt: string): void {
-    cy.intercept('GET', '/ssp-asset-management/autocomplete/asset**').as('assetSearch');
+    cy.intercept('GET', '/self-service-portal/autocomplete-asset/asset**').as('assetSearch');
 
     cy.get(this.repository.getAssetFieldSelector())
       .siblings(this.repository.getSiblingSelector())
