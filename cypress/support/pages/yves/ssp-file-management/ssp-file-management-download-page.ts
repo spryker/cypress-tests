@@ -8,7 +8,7 @@ import { SspFileManagementRepository } from './ssp-file-management-repository';
 export class SspFileManagementDownloadPage extends YvesPage {
   @inject(SspFileManagementRepository) private repository: SspFileManagementRepository;
 
-  protected PAGE_URL = '/ssp-file-management/download';
+  protected PAGE_URL = '/ssp/company-file/download';
 
   downloadFile(params: { fileUuid: string }): void {
     cy.request({
