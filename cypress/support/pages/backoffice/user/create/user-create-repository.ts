@@ -13,4 +13,5 @@ export class UserCreateRepository {
   getRootGroupCheckbox = (): Cypress.Chainable => cy.get('#user_group_0');
   getCreateUserButton = (): Cypress.Chainable => cy.get('form[name=user]').find('[type="submit"]');
   getAgentMerchantCheckbox = (): Cypress.Chainable => cy.get('#user_is_merchant_agent');
+  getSuccessMessage = (): string => 'User was created successfully.';
 }

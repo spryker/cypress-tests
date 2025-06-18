@@ -9,7 +9,7 @@ import { SspAssetRepository } from './ssp-asset-repository';
 export class SspAssetEditPage extends YvesPage {
   @inject(REPOSITORIES.SspAssetRepository) private repository: SspAssetRepository;
 
-  protected PAGE_URL = '/customer/asset/update';
+  protected PAGE_URL = '/ssp/asset/update';
 
   public editAsset(params: AssetEditParams): void {
     this.repository.getAssetForm().within(() => {

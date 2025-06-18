@@ -73,11 +73,28 @@ declare namespace Cypress {
     getMultiFactorAuthCode(email: string, type: string): Chainable<string>;
 
     /**
+     * Get MFA code for an user by username and type
+     * @param username - User's username
+     * @param type - MFA type (e.g., 'email', 'authenticator')
+     * @example
+     * cy.getUserMultiFactorAuthCode('agent123', 'email')
+     */
+    getUserMultiFactorAuthCode(username: string, type: string): Chainable<string>;
+
+    /**
      * Clean up an MFA code from the database
      * @param code - The code to clean up
      * @example
      * cy.cleanUpMultiFactorAuthCode('123456')
      */
     cleanUpMultiFactorAuthCode(code: string): void;
+
+    /**
+     * Clean up an MFA code from the database
+     * @param code - The code to clean up
+     * @example
+     * cy.cleanUpUserMultiFactorAuthCode('123456')
+     */
+    cleanUpUserMultiFactorAuthCode(code: string): void;
   }
 }
