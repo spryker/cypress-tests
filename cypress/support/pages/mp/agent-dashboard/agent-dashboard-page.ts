@@ -48,6 +48,10 @@ export class AgentDashboardPage extends MpPage {
   getLogoutAgentSelector = (): string => {
     return this.repository.getLogoutAgentSelector();
   };
+
+  logoutAgent = (): void => {
+    cy.contains('a', 'Logout').click({ force: true });
+  };
 }
 
 interface AssistParams {
