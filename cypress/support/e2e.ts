@@ -23,6 +23,9 @@ import registerCypressGrep from '@cypress/grep';
 registerCypressGrep();
 
 before(() => {
+  // Sanitizing queues before running tests
+  cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+
   loadFixture();
 });
 
