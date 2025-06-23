@@ -23,8 +23,9 @@ import registerCypressGrep from '@cypress/grep';
 registerCypressGrep();
 
 before(() => {
-  // Sanitizing queues before running tests
-  cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+  if (Cypress.env('E2E_BASE_HOST') === 'yves.eu.spryker.local') {
+    cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+  }
 
   loadFixture();
 });
