@@ -51,9 +51,13 @@ export interface OrderAmendmentStartDynamicFixtures {
   customer7: Customer;
   address7: Address;
 
+  customer8: Customer;
+  address8: Address;
+
   product: ProductConcrete;
   productInActive: ProductConcrete;
   productOutOfStock: ProductConcrete;
+  productOutOfStock2: ProductConcrete;
 }
 
 export interface OrderAmendmentStaticFixtures {

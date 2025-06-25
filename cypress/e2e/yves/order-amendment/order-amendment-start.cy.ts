@@ -91,7 +91,7 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
       });
     });
 
-    it('customer should not be able to amend order when item was deactivated', (): void => {
+    it('customer should be able to amend order when item was deactivated', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer5.email,
         password: staticFixtures.defaultPassword,
@@ -113,17 +113,19 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
       });
 
       customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.editOrder();
+      orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
+        orderDetailsPage.editOrder();
 
-      cartPage.assertPageLocation();
-      cy.contains(`Inactive item ${dynamicFixtures.productInActive.sku} was removed from your shopping cart.`).should(
-        'exist'
-      );
-      cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
-      cy.get('body').contains(dynamicFixtures.productInActive.localized_attributes[0].name).should('not.exist');
+        cartPage.assertPageLocation();
+        cartPage.assertCartName(`Editing Order ${orderReference}`);
+        cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
+
+        customerOverviewPage.viewLastPlacedOrder();
+        orderDetailsPage.containsOrderState('Editing in Progress');
+      });
     });
 
-    it('customer should not be able to amend order when item was out-of-stock', (): void => {
+    it('customer should be able to amend order when item was out-of-stock', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer6.email,
         password: staticFixtures.defaultPassword,
@@ -137,7 +139,7 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
         shouldTriggerOmsInCli: true,
       });
 
-      removeProductStock();
+      removeProductStock(dynamicFixtures.productOutOfStock.abstract_sku);
 
       customerLoginScenario.execute({
         email: dynamicFixtures.customer6.email,
@@ -145,12 +147,16 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
       });
 
       customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.editOrder();
+      orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
+        orderDetailsPage.editOrder();
 
-      cartPage.assertPageLocation();
-      cy.contains(`Product ${dynamicFixtures.productOutOfStock.sku} is not available at the moment.`).should('exist');
-      cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
-      cy.get('body').contains(dynamicFixtures.productOutOfStock.localized_attributes[0].name).should('not.exist');
+        cartPage.assertPageLocation();
+        cartPage.assertCartName(`Editing Order ${orderReference}`);
+        cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
+
+        customerOverviewPage.viewLastPlacedOrder();
+        orderDetailsPage.containsOrderState('Editing in Progress');
+      });
     });
 
     skipB2cIt('customer should be able to create a new cart with amended order items', (): void => {
@@ -162,6 +168,37 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
 
       multiCartPage.getMiniCartRadios().should('have.length', 2);
       cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).should('have.value', '1');
+    });
+
+    it('customer should not be able to increase the out-of-stock item quantity for more than stock plus original item quantity', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer8.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      addProductsToCart(dynamicFixtures.productOutOfStock2.sku);
+
+      checkoutScenario.execute({
+        idCustomerAddress: dynamicFixtures.address8.id_customer_address,
+        shouldTriggerOmsInCli: true,
+      });
+
+      removeProductStock(dynamicFixtures.productOutOfStock2.abstract_sku);
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer8.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      customerOverviewPage.viewLastPlacedOrder();
+      orderDetailsPage.getOrderReferenceBlock().then(() => {
+        orderDetailsPage.editOrder();
+
+        cartPage.changeQuantity({ sku: dynamicFixtures.productOutOfStock2.sku, quantity: 2 });
+
+        cy.contains(`Item ${dynamicFixtures.productOutOfStock2.sku} only has availability of 1.`).should('exist');
+        cartPage.getCartItemChangeQuantityField(dynamicFixtures.productOutOfStock2.sku).should('have.value', '1');
+      });
     });
 
     function addProductsToCart(sku: string, quantity?: number): void {
@@ -191,14 +228,14 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
       });
     }
 
-    function removeProductStock(): void {
+    function removeProductStock(sku: string): void {
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
 
       removeProductStockScenario.execute({
-        abstractSku: dynamicFixtures.productOutOfStock.abstract_sku,
+        abstractSku: sku,
         shouldTriggerPublishAndSync: true,
       });
     }
