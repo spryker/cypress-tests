@@ -35,8 +35,8 @@
         },
         {
           "type": "helper",
-          "name": "haveProductAbstractType",
-          "key": "productAbstractType"
+          "name": "haveProductClass",
+          "key": "productClass"
         },
         {
           "type": "helper",

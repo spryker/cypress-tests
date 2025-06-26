@@ -252,11 +252,11 @@
         },
         {
           "type": "helper",
-          "name": "haveProductAbstractType",
-          "key": "productAbstractType",
+          "name": "haveProductClass",
+          "key": "productClass",
           "arguments": [
             {
-              "name": "service"
+              "name": "Service"
             }
           ]
         },
