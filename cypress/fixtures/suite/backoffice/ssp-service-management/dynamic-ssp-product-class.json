@@ -44,21 +44,35 @@
           "key": "taxSet"
         },
         {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "localizedAttribute"
+        },
+        {
           "type": "helper",
-          "name": "haveProductAbstract",
-          "key": "productAbstract",
+          "name": "haveFullProduct",
+          "key": "product",
           "arguments": [
+            {},
             {
-              "id_tax_set": "#taxSet.id_tax_set"
-            },
-            true
+              "id_tax_set": "#taxSet.id_tax_set",
+              "localizedAttributes": [
+                { "locale": "#localeEN", "name": "#localizedAttribute.name" },
+                { "locale": "#localeDE", "name": "#localizedAttribute.name" }
+              ]
+            }
           ]
         },
         {
           "type": "helper",
-          "name": "havePriceProductAbstract",
-          "key": "priceProductAbstract",
-          "arguments": ["#productAbstract.id_product_abstract"]
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#product.abstract_sku",
+              "skuProduct": "#product.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
         }
       ]
     }

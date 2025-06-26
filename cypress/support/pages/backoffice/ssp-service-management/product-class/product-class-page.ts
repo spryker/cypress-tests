@@ -1,16 +1,16 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import { BackofficePage, ProductManagementListPage } from '@pages/backoffice';
-import { ProductAbstractTypeRepository } from './product-abstract-type-repository';
+import { ProductClassRepository } from './product-class-repository';
 
 @injectable()
 @autoWired
-export class ProductAbstractTypePage extends BackofficePage {
-  @inject(ProductAbstractTypeRepository) private repository: ProductAbstractTypeRepository;
+export class ProductClassPage extends BackofficePage {
+  @inject(ProductClassRepository) private repository: ProductClassRepository;
   @inject(ProductManagementListPage) private productListPage: ProductManagementListPage;
 
-  selectProductAbstractType(typeValue: string): void {
-    cy.get(this.repository.getProductAbstractTypeSelectSelector())
+  selectProductClass(typeValue: string): void {
+    cy.get(this.repository.getProductClassSelectSelector())
       .siblings(this.repository.getSiblingSelector())
       .find(this.repository.getSelect2Selector())
       .should('exist')
@@ -20,7 +20,7 @@ export class ProductAbstractTypePage extends BackofficePage {
     cy.get('li.select2-results__option').contains(typeValue).click();
   }
 
-  saveProductAbstract(): void {
+  saveProduct(): void {
     cy.get(this.repository.getSaveButtonSelector()).should('exist').click();
   }
 
@@ -31,13 +31,24 @@ export class ProductAbstractTypePage extends BackofficePage {
       .should('contain', 'was saved successfully.');
   }
 
-  verifyProductAbstractTypeSelected(typeName: string): void {
+  verifyProductClassSelected(typeName: string): void {
     cy.get(this.repository.getSelectedTypeVerificationSelector()).should('contain', typeName);
   }
 
   editProductFromList(sku: string): void {
     cy.contains('tr', sku).then(($row) => {
       this.productListPage.clickEditAction($row);
+    });
+  }
+
+  goToVariansTab(): void {
+    this.repository.getVariantsTab().click();
+  }
+
+  editFirstVariant(): void {
+    this.repository.getVariantFirstTableRow().then(($productVariantRow) => {
+      cy.wrap($productVariantRow).find(this.repository.getVariantEditButtonSelector()).as('editVariantButton');
+      cy.get('@editVariantButton').should('be.visible').click({ force: true });
     });
   }
 }
