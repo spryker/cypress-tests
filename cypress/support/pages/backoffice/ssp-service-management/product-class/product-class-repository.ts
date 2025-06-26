@@ -5,8 +5,7 @@ import { injectable } from 'inversify';
 @autoWired
 export class ProductClassRepository {
   getProductClassSelectSelector = (): string => '[data-qa="product-classes"]';
-  getProductClassOptionSelector = (value: string): string =>
-    `[data-qa="product-classes"] option[value="${value}"]`;
+  getProductClassOptionSelector = (value: string): string => `[data-qa="product-classes"] option[value="${value}"]`;
   getSaveButtonSelector = (): string => '[name="product_concrete_form_edit"] [value="Save"]';
   getSuccessMessageSelector = (): string => '.flash-messages .alert-success';
   getVariantsTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-variants"]');
