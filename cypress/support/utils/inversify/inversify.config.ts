@@ -128,8 +128,10 @@ import { B2bManageCompanyRoleUserRepository } from '../../pages/yves/company/use
 import { B2bMpManageCompanyRoleUserRepository } from '../../pages/yves/company/user/manage/repositories/b2b-mp-manage-company-role-user-repository';
 import { SuiteSspInquiryRepository } from '../../pages/yves/ssp-inquiry/repositories/suite-ssp-inquiry-repository';
 import { B2bMpSspInquiryRepository } from '../../pages/yves/ssp-inquiry/repositories/b2b-mp-ssp-inquiry-repository';
+import { B2bSspInquiryRepository } from '../../pages/yves/ssp-inquiry/repositories/b2b-ssp-inquiry-repository';
 import { SuiteSspServiceRepository } from '../../pages/yves/ssp-service/repositories/suite-ssp-service-repository';
 import { B2bMpSspServiceRepository } from '../../pages/yves/ssp-service/repositories/b2b-mp-ssp-service-repository';
+import { B2bSspServiceRepository } from '../../pages/yves/ssp-service/repositories/b2b-ssp-service-repository';
 import { SuiteCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/suite-company-role-index-repository';
 import { SuiteCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/suite-company-role-create-repository';
 import { B2bMpCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2b-mp-company-role-create-repository';
@@ -164,8 +166,11 @@ import { B2bUserMultiFactorAuthRepository } from '../../pages/backoffice/multi-f
 import { B2cMpUserMultiFactorAuthRepository } from '../../pages/backoffice/multi-factor-auth/repositories/b2c-mp-user-multi-factor-auth-repository';
 import { B2bMpUserMultiFactorAuthRepository } from '../../pages/backoffice/multi-factor-auth/repositories/b2b-mp-user-multi-factor-auth-repository';
 import { B2bMpSspAssetRepository } from '../../pages/yves/ssp-asset/repositories/b2b-mp-ssp-asset-repository';
+import { B2bSspAssetRepository } from '../../pages/yves/ssp-asset/repositories/b2b-ssp-asset-repository';
 import { SuiteSspDashboardManagementRepository } from '../../pages/yves/ssp-dashboard-management/repositories/suite-ssp-dashboard-management-repository';
 import { B2bMpSspDashboardManagementRepository } from '../../pages/yves/ssp-dashboard-management/repositories/b2b-mp-ssp-dashboard-management-repository';
+import { B2bSspDashboardManagementRepository } from '../../pages/yves/ssp-dashboard-management/repositories/b2b-ssp-dashboard-management-repository';
+
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -273,6 +278,10 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.CustomerProfileRepository]: B2bCustomerProfileRepository,
   [REPOSITORIES.AgentMultiFactorAuthRepository]: B2bAgentMultiFactorAuthRepository,
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2bUserMultiFactorAuthRepository,
+  [REPOSITORIES.SspAssetRepository]: B2bSspAssetRepository,
+  [REPOSITORIES.SspInquiryRepository]: B2bSspInquiryRepository,
+  [REPOSITORIES.SspDashboardManagementRepository]: B2bSspDashboardManagementRepository,
+  [REPOSITORIES.SspServiceRepository]: B2bSspServiceRepository,
 };
 
 const b2cMpMappings: BindingsMap = {

@@ -1,0 +1,374 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeEN",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeDE",
+          "arguments": { "id_locale": 46, "locale_name": "de_DE" }
+        },
+        {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "localizedAttribute"
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 1, "name": "DE" }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company1",
+          "arguments": [{ "isActive": true, "status": "approved", "name": "Test Company 1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company2",
+          "arguments": [{ "isActive": true, "status": "approved", "name": "Test Company 2" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company3",
+          "arguments": [{ "isActive": true, "status": "approved", "name": "Test Company 3" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [
+            {
+              "fkCompany": "#company1.id_company",
+              "name": "Test Business Unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit1C2",
+          "arguments": [
+            {
+              "fkCompany": "#company2.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit2C2",
+          "arguments": [
+            {
+              "fkCompany": "#company2.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit1C3",
+          "arguments": [
+            {
+              "fkCompany": "#company3.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer",
+          "arguments": [
+            {
+              "locale": "#localeEN",
+              "password": "change123",
+              "first_name": "Test",
+              "last_name": "Customer"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer2",
+          "arguments": [
+            {
+              "locale": "#localeEN",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer3",
+          "arguments": [
+            {
+              "locale": "#localeEN",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "arguments": ["#customer"]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "arguments": ["#customer2"]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "arguments": ["#customer3"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "fkCustomer": "#customer.id_customer",
+              "fkCompany": "#company1.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUserBU1C2",
+          "arguments": [
+            {
+              "customer": "#customer2",
+              "fkCustomer": "#customer2.id_customer",
+              "fkCompany": "#company2.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit1C2.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUserBU2C2",
+          "arguments": [
+            {
+              "customer": "#customer2",
+              "fkCustomer": "#customer2.id_customer",
+              "fkCompany": "#company2.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit2C2.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUserBU1C3",
+          "arguments": [
+            {
+              "customer": "#customer3",
+              "fkCustomer": "#customer3.id_customer",
+              "fkCompany": "#company3.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit1C3.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "downloadFilesPermission",
+          "arguments": ["DownloadFilesPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "permission3",
+          "arguments": ["ViewCompanyUserFilesPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "viewCompanySspAssetPermissionPlugin",
+          "arguments": ["ViewCompanySspAssetPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "viewBusinessUnitSspAssetPermission",
+          "arguments": ["ViewBusinessUnitSspAssetPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "companyRoleWithAllPermissions",
+          "arguments": [
+            { "isDefault": true, "fkCompany": "#company1.id_company" },
+            [
+              "#downloadFilesPermission",
+              "#permission3",
+              "#viewBusinessUnitSspAssetPermission",
+              "#viewCompanySspAssetPermissionPlugin"
+            ]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "companyRoleWithViewBUSspAssetPermission",
+          "arguments": [
+            { "isDefault": true, "fkCompany": "#company1.id_company" },
+            ["#viewBusinessUnitSspAssetPermission", "#downloadFilesPermission"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser", ["#companyRoleWithAllPermissions"]]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUserBU1C2", ["#companyRoleWithViewBUSspAssetPermission"]]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUserBU2C2", ["#companyRoleWithViewBUSspAssetPermission"]]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUserBU1C3", ["#companyRoleWithAllPermissions"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveFile",
+          "key": "file1",
+          "arguments": [
+            {
+              "file_name": "img.jpeg"
+            },
+            {
+              "extension": "jpeg"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFile",
+          "key": "file2",
+          "arguments": [
+            {
+              "file_name": "doc.pdf"
+            },
+            {
+              "extension": "pdf"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFile",
+          "key": "file3",
+          "arguments": [
+            {
+              "file_name": "file.pdf"
+            },
+            {
+              "extension": "pdf"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFile",
+          "key": "fileSspAsset",
+          "arguments": [
+            {
+              "file_name": "ssp_asset_file.pdf"
+            },
+            {
+              "extension": "pdf"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFileAttachment",
+          "arguments": [
+            {
+              "file": "#file1",
+              "entity_id": "#companyUser.id_company_user",
+              "entity_name": "company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFileAttachment",
+          "arguments": [
+            {
+              "file": "#file2",
+              "entity_id": "#companyUser.id_company_user",
+              "entity_name": "company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFileAttachment",
+          "arguments": [
+            {
+              "file": "#file3",
+              "entity_id": "#companyUser.id_company_user",
+              "entity_name": "company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveAsset",
+          "key": "sspAsset",
+          "arguments": [
+            {
+              "companyBusinessUnit": "#businessUnit1C2",
+              "businessUnitAssignments": [
+                {
+                  "companyBusinessUnit": {
+                    "idCompanyBusinessUnit": "#businessUnit1C2.id_company_business_unit"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFileAttachment",
+          "arguments": [
+            {
+              "file": "#fileSspAsset",
+              "entity_id": "#sspAsset.id_ssp_asset",
+              "entity_name": "ssp_asset"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

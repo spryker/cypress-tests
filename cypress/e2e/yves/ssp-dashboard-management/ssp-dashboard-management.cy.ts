@@ -3,7 +3,7 @@ import { SspDashboardPage } from '@pages/yves';
 import { SspDashboardManagementStaticFixtures, SspDashboardManagementDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
-(['suite', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+(['suite', 'b2b-mp', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp dashboard management',
   { tags: ['@yves', '@ssp-dashboard', '@ssp', '@SspDashboardManagement'] },
   (): void => {
