@@ -252,11 +252,11 @@
         },
         {
           "type": "helper",
-          "name": "haveProductAbstractType",
-          "key": "productAbstractType",
+          "name": "haveProductClass",
+          "key": "productClass",
           "arguments": [
             {
-              "name": "service"
+              "name": "Service"
             }
           ]
         },
@@ -329,15 +329,15 @@
         },
         {
           "type": "helper",
-          "name": "haveProductAbstractToProductAbstractType",
-          "key": "productAbstractToProductAbstractType1",
-          "arguments": ["#product1.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
+          "name": "haveProductToProductClass",
+          "key": "productToProductClass1",
+          "arguments": ["#product1.id_product_concrete", "#productClass.id_product_class"]
         },
         {
           "type": "helper",
-          "name": "haveProductAbstractToProductAbstractType",
-          "key": "productAbstractToProductAbstractType1",
-          "arguments": ["#product2.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
+          "name": "haveProductToProductClass",
+          "key": "productToProductClass2",
+          "arguments": ["#product2.id_product_concrete", "#productClass.id_product_class"]
         },
         {
           "type": "helper",
