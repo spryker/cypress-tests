@@ -1,0 +1,117 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantAgentUserOne",
+          "arguments": [{ "password": "change123", "isMerchantAgent": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantAgentUserTwo",
+          "arguments": [{ "password": "change123", "isMerchantAgent": true }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#merchantAgentUserOne.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#merchantAgentUserTwo.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantUserOne",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantUserTwo",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "builder",
+          "name": "MerchantProfileBuilder",
+          "key": "merchantProfileOne"
+        },
+        {
+          "type": "builder",
+          "name": "MerchantProfileBuilder",
+          "key": "merchantProfileTwo"
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 1, "name": "DE" }
+        },
+        {
+          "type": "array-object",
+          "key": "stores",
+          "arguments": ["#store"]
+        },
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeEN",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeDE",
+          "arguments": { "id_locale": 46, "locale_name": "de_DE" }
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchant",
+          "key": "merchantOne",
+          "arguments": [
+            {
+              "merchantProfile": "#merchantProfileOne",
+              "isActive": true,
+              "status": "approved",
+              "storeRelation": {
+                "idStores": ["#store.id_store"]
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchant",
+          "key": "merchantTwo",
+          "arguments": [
+            {
+              "merchantProfile": "#merchantProfileTwo",
+              "isActive": true,
+              "status": "approved",
+              "storeRelation": {
+                "idStores": ["#store.id_store"]
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#merchantOne", "#merchantUserOne"]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#merchantTwo", "#merchantUserTwo"]
+        }
+      ]
+    }
+  }
+}
