@@ -1,6 +1,6 @@
 import { User } from './shared';
 
-export interface ProductMeasurementUnitListStaticFixtures {
+export interface ProductMeasurementUnitManagementStaticFixtures {
   defaultPassword: string;
   rootUser: User;
 }

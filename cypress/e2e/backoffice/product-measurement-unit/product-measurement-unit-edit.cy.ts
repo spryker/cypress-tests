@@ -4,11 +4,11 @@ import {
   ProductMeasurementUnitListStaticFixtures,
 } from '../../../support/types/backoffice/product-measurement-unit-list';
 import {
-  ProductMeasurementUnitPage,
-} from '../../../support/pages/backoffice/product-measurement-unit/list/product-measurement-unit-page';
+  ProductMeasurementUnitListPage,
+} from '../../../support/pages/backoffice/product-measurement-unit/list/product-measurement-unit-list-page';
 
 describe('Measurement Units - Edit', { tags: ['@backoffice', '@product-measurement-unit'] }, () => {
-  const productMeasurementUnitPage = container.get(ProductMeasurementUnitPage);
+  const productMeasurementUnitPage = container.get(ProductMeasurementUnitListPage);
   const userLoginScenario = container.get(UserLoginScenario);
 
   let staticFixtures: ProductMeasurementUnitListStaticFixtures;
