@@ -363,12 +363,11 @@
         },
         {
           "type": "helper",
-          "name": "haveFileAttachment",
+          "name": "haveCompanyUserFileAttachment",
           "arguments": [
             {
-              "file": "#file1",
-              "entity_id": "#companyUser2.id_company_user",
-              "entity_name": "company_user",
+              "idFile": "#file1.id_file",
+              "idCompanyUser": "#companyUser2.id_company_user",
               "attachedAt": "2025-05-05 14:58:00"
             }
           ]
