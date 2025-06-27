@@ -623,6 +623,12 @@
         },
         {
           "type": "helper",
+          "name": "haveProductOfferShipmentType",
+          "key": "productOfferShipmentType3",
+          "arguments": ["#productOffer3", "#shipmentType"]
+        },
+        {
+          "type": "helper",
           "name": "haveProductToProductClass",
           "key": "productToProductClass1",
           "arguments": ["#product1.id_product_concrete", "#productClass.id_product_class"]
