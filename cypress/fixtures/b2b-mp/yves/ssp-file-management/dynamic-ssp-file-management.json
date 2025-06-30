@@ -318,11 +318,11 @@
         },
         {
           "type": "helper",
-          "name": "haveFileAttachment",
+          "name": "haveCompanyUserFileAttachment",
           "arguments": [
             {
-              "file": "#file2.id_file",
-              "entity_id": "#companyUser.id_company_user"
+              "idFile": "#file2.id_file",
+              "idCompanyUser": "#companyUser.id_company_user"
             }
 ]
         },
@@ -355,12 +355,11 @@
         },
         {
           "type": "helper",
-          "name": "haveFileAttachment",
+          "name": "haveSspAssetFileAttachment",
           "arguments": [
             {
-              "file": "#fileSspAsset",
-              "entity_id": "#sspAsset.id_ssp_asset",
-              "entity_name": "ssp_asset"
+              "idFile": "#fileSspAsset.id_file",
+              "idSspAsset": "#sspAsset.id_ssp_asset"
             }
           ]
         }
