@@ -2,10 +2,14 @@ import { autoWired } from '@utils';
 import { injectable } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
+import { inject } from 'inversify/lib/esm';
+import { ProductMeasurementUnitCreateRepository } from './product-measurement-unit-create-repository';
 
 @injectable()
 @autoWired
 export class ProductMeasurementUnitCreatePage extends BackofficePage {
+  @inject(ProductMeasurementUnitCreateRepository) private repository: ProductMeasurementUnitCreateRepository;
+
   protected PAGE_URL = '/product-measurement-unit-gui/index/create';
 
   assertCreateUrl = (): void => {

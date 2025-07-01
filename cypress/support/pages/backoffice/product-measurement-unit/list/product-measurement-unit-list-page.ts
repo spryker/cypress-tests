@@ -14,41 +14,40 @@ export class ProductMeasurementUnitListPage extends BackofficePage {
   protected PAGE_URL = '/product-measurement-unit-gui';
   protected POST_URL = '/product-measurement-unit-gui/index/table';
 
-  clearSearchField = (): void => {
-    cy.get('input[placeholder*="Search"]').clear();
-  }
-
-  typeSearchField = (searchQuery: string): void => {
-    cy.get('input[placeholder*="Search"]').type(searchQuery);
-  }
-
-  getPageTitle = ():  Cypress.Chainable => {
-    return cy.get('h2').contains('Measurement Unit');
+  getSearchField = (): Cypress.Chainable => {
+    return cy.get(this.repository.getSearchSelector());
   }
 
   getCreateButton = (): Cypress.Chainable => {
-    return cy.get('a').contains(/Create/i);
+    return cy.get(this.repository.getCreateButtonSelector());
   }
 
   getTableRows = (): Cypress.Chainable => {
-    return cy.get('table.dataTable tbody tr');
+    return cy.get(this.repository.getTableRowsSelector());
   }
 
   getTableEditButton = (row: number): Cypress.Chainable => {
-    return this.getTableRows().eq(row).get('a').contains(/edit/i);
+    return this.getTableRows().eq(row).get(this.repository.getEditButtonSelector());
   }
 
   getTableDeleteButton = (row: number): Cypress.Chainable => {
-    return this.getTableRows().eq(row).get('button').contains(/delete/i);
+    return this.getTableRows().eq(row).get(this.repository.getDeleteButtonSelector());
   }
 
   getPaginationBar = (): Cypress.Chainable => {
-    return cy.get('.dataTables_paginate');
+    return cy.get(this.repository.getPaginationBarSelector());
   }
 
-  // TBD
   getTableCodeColumn = (): Cypress.Chainable => {
-    return cy.get('table.dataTable thead');
+    return cy.get(this.repository.getTableCodeColumnSelector());
+  }
+
+  clearSearchField = (): void => {
+    this.getSearchField().clear();
+  }
+
+  typeSearchField = (searchQuery: string): void => {
+    this.getSearchField().type(searchQuery);
   }
 
   interceptFetchTable = (alias: string): void => {

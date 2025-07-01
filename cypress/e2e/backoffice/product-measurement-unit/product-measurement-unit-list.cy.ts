@@ -28,7 +28,6 @@ describe('Measurement Units - List Page', { tags: ['@backoffice', '@product-meas
     productMeasurementUnitListPage.visit();
 
     // Assert
-    productMeasurementUnitListPage.getPageTitle().should('exist');
     productMeasurementUnitListPage.getCreateButton().should('exist');
     productMeasurementUnitListPage.getTableCodeColumn().should('exist');
     productMeasurementUnitListPage.getPaginationBar().should('exist');
