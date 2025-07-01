@@ -22,10 +22,7 @@ describe('Measurement Units - List Page', { tags: ['@backoffice', '@product-meas
     });
   });
 
-  it('renders the Measurement unit list page with measurement units', () => {
-    // Assign
-    const firstRow = 0;
-
+  it('renders the Measurement unit list page with searchable measurement units', () => {
     // Navigate
     productMeasurementUnitListPage.interceptFetchTable('fetchTable');
     productMeasurementUnitListPage.visit();
@@ -36,17 +33,16 @@ describe('Measurement Units - List Page', { tags: ['@backoffice', '@product-meas
     productMeasurementUnitListPage.getTableCodeColumn().should('exist');
     productMeasurementUnitListPage.getPaginationBar().should('exist');
 
-    // Navigate
-    cy.wait('@fetchTable');
-
+    // Act
     productMeasurementUnitListPage.clearSearchField();
     productMeasurementUnitListPage.typeSearchField(dynamicFixtures.productMeasurementUnit.code);
+    cy.wait('@fetchTable');
 
     // Assert
-    productMeasurementUnitListPage.getTableRows().should('exist').and('contain', 'ITEM');
-    productMeasurementUnitListPage.getTableRows().should('have.length.gte', 1);
-    productMeasurementUnitListPage.getTableEditButton(firstRow).should('exist'); // Edit button
-    productMeasurementUnitListPage.getTableDeleteButton(firstRow).should('exist'); // Delete button
+    const firstRow = 0;
+    productMeasurementUnitListPage.getTableRows().should('exist').and('contain', dynamicFixtures.productMeasurementUnit.code);
+    productMeasurementUnitListPage.getTableEditButton(firstRow).should('exist');
+    productMeasurementUnitListPage.getTableDeleteButton(firstRow).should('exist');
   });
 
 });
