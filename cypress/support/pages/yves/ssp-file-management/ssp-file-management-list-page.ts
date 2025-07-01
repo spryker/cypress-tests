@@ -11,7 +11,7 @@ export class SspFileManagementListPage extends YvesPage {
   protected PAGE_URL = '/ssp/company-file/list-file';
 
   verifyListPage(): void {
-    cy.get(this.repository.getFiltersSelector()).should('be.visible');
+    cy.get(this.repository.getFiltersTriggerSelector()).should('be.visible');
   }
 
   assertFileExists(fileName: string): void {
@@ -40,17 +40,20 @@ export class SspFileManagementListPage extends YvesPage {
   }
 
   filterByType(fileType: string): void {
+    cy.get(this.repository.getFiltersTriggerSelector()).click();
     cy.get(this.repository.getTypeFilterSelector()).select(fileType, { force: true });
     cy.get(this.repository.getApplyFiltersButtonSelector()).click();
   }
 
   searchByName(searchTerm: string): void {
+    cy.get(this.repository.getFiltersTriggerSelector()).click();
     cy.get(this.repository.getSearchFieldSelector()).clear();
     cy.get(this.repository.getSearchFieldSelector()).type(searchTerm);
     cy.get(this.repository.getApplyFiltersButtonSelector()).click();
   }
 
   applyFilters(searchTerm: string, fileType: string): void {
+    cy.get(this.repository.getFiltersTriggerSelector()).click();
     cy.get(this.repository.getSearchFieldSelector()).clear();
     cy.get(this.repository.getSearchFieldSelector()).type(searchTerm);
     cy.get(this.repository.getTypeFilterSelector()).select(fileType, { force: true });
@@ -58,6 +61,7 @@ export class SspFileManagementListPage extends YvesPage {
   }
 
   verifyFilterValues(searchTerm: string, fileType: string): void {
+    cy.get(this.repository.getFiltersTriggerSelector()).click();
     cy.get(this.repository.getSearchFieldSelector()).should('have.value', searchTerm);
     cy.get(this.repository.getTypeFilterSelector()).should('have.value', fileType.toLowerCase());
   }

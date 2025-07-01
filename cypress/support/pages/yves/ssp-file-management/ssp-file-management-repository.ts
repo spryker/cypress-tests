@@ -5,6 +5,7 @@ import { autoWired } from '@utils';
 @autoWired
 export class SspFileManagementRepository {
   getFiltersSelector = (): string => '[data-qa="component filters"]';
+  getFiltersTriggerSelector = (): string => '[data-qa="component filters-button"]';
   getFileTableSelector = (): string => '[data-qa="component advanced-table"]';
   getFileNameHeaderSelector = (): string => '[data-qa="name"]';
   getUploadedDateHeaderSelector = (): string => '[data-qa="date"]';

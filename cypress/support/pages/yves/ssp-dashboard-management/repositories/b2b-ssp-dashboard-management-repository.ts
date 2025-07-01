@@ -80,7 +80,7 @@ export class B2bSspDashboardManagementRepository implements SspDashboardManageme
     return 'You do not have inquiries yet.';
   }
   getInquiriesHeaders(): string[] {
-    return ['Reference', 'Type', 'Date', 'Status', ''];
+    return ['Reference', 'Type', 'Subject', 'Date', 'Status', ''];
   }
   getStatusLabelPath(): string {
     return '[data-qa="component status"]';
