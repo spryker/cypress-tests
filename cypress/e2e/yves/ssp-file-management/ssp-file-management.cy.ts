@@ -29,6 +29,13 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
+
+    console.log(Cypress.env('repositoryId'));
+
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
+
     sspFileManagementListPage.verifyListPage();
   });
 
@@ -106,6 +113,9 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
     sspFileManagementListPage.filterByType(staticFixtures.filter_value_jpeg);
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
     sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file2.file_name);
@@ -120,13 +130,25 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
 
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
+
     sspFileManagementListPage.searchByName(dynamicFixtures.file1.file_name);
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
     sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file2.file_name);
 
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
+
     sspFileManagementListPage.searchByName(dynamicFixtures.file2.file_name);
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
     sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file1.file_name);
+
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
 
     sspFileManagementListPage.searchByName(staticFixtures.prompt_nonexistent);
     sspFileManagementListPage.assertNoResults();
@@ -140,6 +162,10 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     });
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
+
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
 
     sspFileManagementListPage.applyFilters(dynamicFixtures.file3.file_name, staticFixtures.filter_value_pdf);
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file3.file_name);

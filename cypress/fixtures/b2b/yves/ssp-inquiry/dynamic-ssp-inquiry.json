@@ -244,7 +244,7 @@
         {
           "type": "helper",
           "name": "configureTestStateMachine",
-          "arguments": [["Nopayment01"]]
+          "arguments": [["DummyPayment01"]]
         },
         {
           "type": "helper",
@@ -304,7 +304,7 @@
               "customerReference": "#customer.customer_reference",
               "shipment": "#shipment"
             },
-            "Nopayment01"
+            "DummyPayment01"
           ]
         },
         {

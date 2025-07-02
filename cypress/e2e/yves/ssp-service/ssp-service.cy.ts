@@ -28,7 +28,7 @@ interface DynamicFixtures {
   [key: string]: unknown;
 }
 
-(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+(['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'SSP Service Management',
   { tags: ['@yves', '@ssp-service', '@ssp', '@SspServiceManagement'] },
   (): void => {
