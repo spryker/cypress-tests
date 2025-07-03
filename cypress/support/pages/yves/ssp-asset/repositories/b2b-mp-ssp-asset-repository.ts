@@ -147,4 +147,8 @@ export class B2bMpSspAssetRepository implements SspAssetRepository {
   getSspAssetFiltersSubmitButton(): Cypress.Chainable {
     return cy.get('[data-qa="submit-filters"]');
   }
+
+  getFiltersTriggerSelector(): string {
+    return '[data-qa="component filters-button"]';
+  }
 }

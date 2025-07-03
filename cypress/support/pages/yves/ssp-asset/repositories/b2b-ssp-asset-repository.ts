@@ -84,7 +84,7 @@ export class B2bSspAssetRepository implements SspAssetRepository {
   }
 
   getFirstRowViewButton(): Cypress.Chainable {
-    return cy.get('[data-qa*="cell-actions"] a[href*="/customer/asset/details?reference="]').first();
+    return cy.get('[data-qa*="cell-actions"] a[href*="/ssp/asset/details?reference="]').first();
   }
 
   getFirstRowReference(): Cypress.Chainable<string> {
@@ -137,6 +137,7 @@ export class B2bSspAssetRepository implements SspAssetRepository {
     return cy.get('[data-qa*="ssp-asset-image"]').invoke('attr', 'image-src');
   }
   getViewAllInquiriesLink(): Cypress.Chainable {
+    console.log(cy.get('[data-qa*="ssp-inquiry-table"]'));
     return cy.get('[data-qa*="ssp-inquiry-table"]').find('a[href*="/customer/ssp-inquiry?ssp-asset-reference="');
   }
 
@@ -146,5 +147,9 @@ export class B2bSspAssetRepository implements SspAssetRepository {
 
   getSspAssetFiltersSubmitButton(): Cypress.Chainable {
     return cy.get('[data-qa="submit-filters"]');
+  }
+
+  getFiltersTriggerSelector(): string {
+    return '[data-qa="component filters-button"]';
   }
 }

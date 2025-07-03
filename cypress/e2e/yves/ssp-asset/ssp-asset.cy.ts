@@ -112,7 +112,7 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
       });
 
       checkoutScenario.execute({
-        paymentMethod: 'dummyMarketplacePaymentInvoice',
+        paymentMethod: 'dummyPaymentInvoice',
       });
 
       assetDetailPage.visit({
@@ -213,12 +213,20 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
 
       assetListPage.visit();
 
+      if (['b2b'].includes(Cypress.env('repositoryId'))) {
+        assetListPage.openFilters();
+      }
+
       assetListPage
         .getAccessTableFilterSelect()
         .select(assetListPage.getAccessTableFilterByBusinessUnitValue(), { force: true });
       assetListPage.getSspAssetFiltersSubmitButton().click();
 
       assetListPage.assertTableData([dynamicFixtures.assetBU1C1BU2C1BU1C2, dynamicFixtures.assetBU1C1]);
+
+      if (['b2b'].includes(Cypress.env('repositoryId'))) {
+        assetListPage.openFilters();
+      }
 
       assetListPage
         .getAccessTableFilterSelect()

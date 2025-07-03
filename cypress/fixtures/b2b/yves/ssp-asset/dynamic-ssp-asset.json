@@ -12,6 +12,18 @@
         {
           "type": "helper",
           "name": "havePermissionByKey",
+          "key": "placeOrderWithAmountUpToPermissionPlugin",
+          "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderPermissionPlugin",
+          "arguments": ["PlaceOrderPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
           "key": "viewCompanySspInquiryPermission",
           "arguments": ["ViewCompanySspInquiryPermissionPlugin"]
         },
@@ -67,7 +79,9 @@
               "#createSspAssetPermission",
               "#udateSspAssetPermission",
               "#unassignSspAssetPermission",
-              "#viewCompanySspInquiryPermission"
+              "#viewCompanySspInquiryPermission",
+              "#placeOrderPermissionPlugin",
+              "#placeOrderWithAmountUpToPermissionPlugin"
             ]
           ]
         },
@@ -520,8 +534,8 @@
         },
         {
           "type": "helper",
-          "name": "haveProductAbstractType",
-          "key": "productAbstractType",
+          "name": "haveProductClass",
+          "key": "productClass",
           "arguments": [
             {
               "name": "Service"
@@ -548,21 +562,21 @@
         },
         {
           "type": "helper",
-          "name": "haveProductAbstractToProductAbstractType",
-          "key": "productAbstractToProductAbstractType1",
-          "arguments": ["#product1.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
+          "name": "haveProductToProductClass",
+          "key": "productToProductClass",
+          "arguments": ["#product1.id_product_concrete", "#productClass.id_product_class"]
         },
         {
           "type": "helper",
-          "name": "haveProductAbstractToProductAbstractType",
-          "key": "productAbstractToProductAbstractType1",
-          "arguments": ["#product2.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
+          "name": "haveProductToProductClass",
+          "key": "productToProductClass",
+          "arguments": ["#product2.id_product_concrete", "#productClass.id_product_class"]
         },
         {
           "type": "helper",
-          "name": "haveProductAbstractToProductAbstractType",
-          "key": "productAbstractToProductAbstractType1",
-          "arguments": ["#product3.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
+          "name": "haveProductToProductClass",
+          "key": "productToProductClass",
+          "arguments": ["#product3.id_product_concrete", "#productClass.id_product_class"]
         },
         {
           "type": "helper",
@@ -623,21 +637,27 @@
         },
         {
           "type": "helper",
-          "name": "haveProductAbstractToProductAbstractType",
-          "key": "productAbstractToProductAbstractType1",
-          "arguments": ["#product1.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
+          "name": "haveProductOfferShipmentType",
+          "key": "productOfferShipmentType3",
+          "arguments": ["#productOffer3", "#shipmentType"]
         },
         {
           "type": "helper",
-          "name": "haveProductAbstractToProductAbstractType",
-          "key": "productAbstractToProductAbstractType1",
-          "arguments": ["#product2.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
+          "name": "haveProductToProductClass",
+          "key": "productToProductClass1",
+          "arguments": ["#product1.id_product_concrete", "#productClass.id_product_class"]
         },
         {
           "type": "helper",
-          "name": "haveProductAbstractToProductAbstractType",
-          "key": "productAbstractToProductAbstractType1",
-          "arguments": ["#product3.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
+          "name": "haveProductToProductClass",
+          "key": "productToProductClass2",
+          "arguments": ["#product2.id_product_concrete", "#productClass.id_product_class"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductToProductClass",
+          "key": "productToProductClass3",
+          "arguments": ["#product3.id_product_concrete", "#productClass.id_product_class"]
         },
         {
           "type": "helper",
@@ -646,7 +666,7 @@
             {
               "skuProductAbstract": "#product1.abstract_sku",
               "skuProduct": "#product1.sku",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+              "moneyValue": { "netAmount": 3000, "grossAmount": 3000 }
             }
           ]
         },
@@ -657,7 +677,7 @@
             {
               "skuProductAbstract": "#product2.abstract_sku",
               "skuProduct": "#product2.sku",
-              "moneyValue": { "netAmount": 20000, "grossAmount": 20000 }
+              "moneyValue": { "netAmount": 2000, "grossAmount": 2000 }
             }
           ]
         },
@@ -668,7 +688,7 @@
             {
               "skuProductAbstract": "#product3.abstract_sku",
               "skuProduct": "#product3.sku",
-              "moneyValue": { "netAmount": 20000, "grossAmount": 20000 }
+              "moneyValue": { "netAmount": 2000, "grossAmount": 2000 }
             }
           ]
         },
@@ -808,6 +828,11 @@
           "name": "havePersistentQuote",
           "arguments": [
             {
+              "quoteApprovals": [
+                {
+                  "status": "approved"
+                }
+              ],
               "customer": "#customer",
               "totals": "#totals",
               "items": [
