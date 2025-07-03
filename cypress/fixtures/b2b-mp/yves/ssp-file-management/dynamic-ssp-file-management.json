@@ -314,7 +314,8 @@
             {
               "idFile": "#file1.id_file",
               "idCompanyUser": "#companyUser.id_company_user"
-            }]
+            }
+          ]
         },
         {
           "type": "helper",
@@ -324,7 +325,7 @@
               "idFile": "#file2.id_file",
               "idCompanyUser": "#companyUser.id_company_user"
             }
-]
+          ]
         },
         {
           "type": "helper",
@@ -334,7 +335,7 @@
               "idFile": "#file3.id_file",
               "idCompanyUser": "#companyUser.id_company_user"
             }
-]
+          ]
         },
         {
           "type": "helper",

@@ -44,11 +44,11 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
 
     sspAssetDetailPage.visit({
-      qs: { reference: dynamicFixtures.sspAsset.reference },
+      qs: { reference: dynamicFixtures.sspAssetBU1C2.reference },
     });
 
     sspFileManagementListPage.visit();
-    sspFileManagementListPage.assertFileNotExists(dynamicFixtures.fileSspAsset.file_name);
+    sspFileManagementListPage.assertFileExists(dynamicFixtures.fileSspAsset1.file_name);
   });
 
   it('should allow downloading a file according to permissions', (): void => {
@@ -62,7 +62,7 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     sspFileManagementListPage.downloadFile(dynamicFixtures.file1.file_name);
     sspFileManagementListPage.verifyFileDownloaded(dynamicFixtures.file1.file_name);
 
-    sspFileManagementDownloadPage.downloadFile({ fileUuid: dynamicFixtures.fileSspAsset.uuid });
+    sspFileManagementDownloadPage.downloadFile({ fileUuid: dynamicFixtures.fileSspAsset1.uuid });
 
     customerLogoutScenario.execute();
 
@@ -76,13 +76,13 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
       idCompanyUser: dynamicFixtures.companyUserBU1C2.id_company_user,
     });
 
-    sspFileManagementDownloadPage.downloadFile({ fileUuid: dynamicFixtures.fileSspAsset.uuid });
+    sspFileManagementDownloadPage.downloadFile({ fileUuid: dynamicFixtures.fileSspAsset1.uuid });
 
     companyUserSelectPage.selectBusinessUnit({
       idCompanyUser: dynamicFixtures.companyUserBU2C2.id_company_user,
     });
 
-    sspFileManagementDownloadPage.downloadFileForbidden({ fileUuid: dynamicFixtures.fileSspAsset.uuid });
+    sspFileManagementDownloadPage.downloadFileForbidden({ fileUuid: dynamicFixtures.fileSspAsset1.uuid });
 
     customerLogoutScenario.execute();
 
@@ -92,7 +92,7 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
       withoutSession: true,
     });
 
-    sspFileManagementDownloadPage.downloadFileForbidden({ fileUuid: dynamicFixtures.fileSspAsset.uuid });
+    sspFileManagementDownloadPage.downloadFileForbidden({ fileUuid: dynamicFixtures.fileSspAsset1.uuid });
 
     customerLogoutScenario.execute();
   });
@@ -141,10 +141,75 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
 
-    sspFileManagementListPage.applyFilters(dynamicFixtures.file3.file_name, staticFixtures.filter_value_pdf);
+    sspFileManagementListPage.applyFilterByTypeAndSearchTerm(
+      dynamicFixtures.file3.file_name,
+      staticFixtures.filter_value_pdf
+    );
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file3.file_name);
     sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file2.file_name);
     sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file1.file_name);
+  });
+
+  it('should filter files by business entity', (): void => {
+    customerLoginScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+      withoutSession: true,
+    });
+
+    customerOverviewPage.visit();
+    customerOverviewPage.clickMyFilesLink();
+    sspFileManagementListPage.verifyListPage();
+
+    sspFileManagementListPage.filterByBusinessEntity('all');
+    sspFileManagementListPage.filterBySspAssetEntity('all');
+    sspFileManagementListPage.applyFilters();
+    sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
+    sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
+    sspFileManagementListPage.assertFileExists(dynamicFixtures.file3.file_name);
+    sspFileManagementListPage.assertFileExists(dynamicFixtures.fileSspAsset1.file_name);
+
+    sspFileManagementListPage.filterByBusinessEntity('company_user');
+    sspFileManagementListPage.filterBySspAssetEntity('all');
+    sspFileManagementListPage.applyFilters();
+
+    sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
+    sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
+    sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file3.file_name);
+    sspFileManagementListPage.assertFileExists(dynamicFixtures.fileSspAsset1.file_name);
+
+    sspFileManagementListPage.filterByBusinessEntity('company');
+    sspFileManagementListPage.filterBySspAssetEntity('none');
+    sspFileManagementListPage.applyFilters();
+    sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
+    sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
+    sspFileManagementListPage.assertFileExists(dynamicFixtures.file3.file_name);
+    sspFileManagementListPage.assertFileNotExists(dynamicFixtures.fileSspAsset1.file_name);
+
+    sspFileManagementListPage.filterByBusinessEntity('none');
+    sspFileManagementListPage.filterBySspAssetEntity('all');
+    sspFileManagementListPage.applyFilters();
+    sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file1.file_name);
+    sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file2.file_name);
+    sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file3.file_name);
+    sspFileManagementListPage.assertFileExists(dynamicFixtures.fileSspAsset1.file_name);
+
+    sspFileManagementListPage.filterByBusinessEntity(dynamicFixtures.businessUnit2C1.uuid.toString());
+    sspFileManagementListPage.filterBySspAssetEntity('none');
+    sspFileManagementListPage.applyFilters();
+    sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file1.file_name);
+    sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
+    sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file3.file_name);
+    sspFileManagementListPage.assertFileNotExists(dynamicFixtures.fileSspAsset1.file_name);
+
+    sspFileManagementListPage.filterByBusinessEntity('none');
+    sspFileManagementListPage.filterBySspAssetEntity('all');
+    sspFileManagementListPage.applyFilters();
+    sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file1.file_name);
+    sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file2.file_name);
+    sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file3.file_name);
+    sspFileManagementListPage.assertFileExists(dynamicFixtures.fileSspAsset1.file_name);
+    sspFileManagementListPage.assertFileNotExists(dynamicFixtures.fileSspAsset2.file_name);
   });
 });
 

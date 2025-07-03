@@ -135,8 +135,9 @@
           "arguments": [
             {
               "idFile": "#file1.id_file",
-              "idCompany": "#company1.id_company",
-            }]
+              "idCompany": "#company1.id_company"
+            }
+          ]
         },
         {
           "type": "helper",
@@ -146,7 +147,7 @@
               "idFile": "#file2.id_file",
               "idCompany": "#company1.id_company"
             }
-]
+          ]
         }
       ]
     }
