@@ -1,0 +1,22 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": false,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveProductMeasurementUnit",
+          "key": "productMeasurementUnit",
+          "arguments": [
+            {
+              "code": "TEST_GRAM_3",
+              "name": "Test Gram_3",
+              "conversionRate": 3
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
