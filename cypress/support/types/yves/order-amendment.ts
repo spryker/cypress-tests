@@ -64,4 +64,5 @@ export interface OrderAmendmentStaticFixtures {
   defaultPassword: string;
   oldProductPrice: string;
   newProductPrice: string;
+  paymentMethodCreditCard: string;
 }

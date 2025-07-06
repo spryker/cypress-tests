@@ -1,5 +1,6 @@
 {
   "defaultPassword": "change123",
   "oldProductPrice": "300.00",
-  "newProductPrice": "500.00"
+  "newProductPrice": "500.00",
+  "paymentMethodCreditCard": "dummyPaymentCreditCard"
 }

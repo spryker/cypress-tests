@@ -136,7 +136,11 @@ import { UpdatePriceProductScenario, UserLoginScenario } from '@scenarios/backof
         password: staticFixtures.defaultPassword,
       });
 
-      checkoutScenario.execute({ idCustomerAddress: idCustomerAddress, shouldTriggerOmsInCli: true });
+      checkoutScenario.execute({
+        idCustomerAddress: idCustomerAddress,
+        shouldTriggerOmsInCli: true,
+        paymentMethod: staticFixtures.paymentMethodCreditCard,
+      });
     }
   }
 );
