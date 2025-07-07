@@ -10,41 +10,43 @@ import { ProductMeasurementUnitListPage } from '../../../support/pages/backoffic
   'Measurement Units - List Page',
   { tags: ['@backoffice', '@product-measurement-unit'] },
   (): void => {
+    const productMeasurementUnitListPage = container.get(ProductMeasurementUnitListPage);
+    const userLoginScenario = container.get(UserLoginScenario);
 
-  const productMeasurementUnitListPage = container.get(ProductMeasurementUnitListPage);
-  const userLoginScenario = container.get(UserLoginScenario);
+    let staticFixtures: ProductMeasurementUnitManagementStaticFixtures;
+    let dynamicFixtures: ProductMeasurementUnitManagementDynamicFixtures;
 
-  let staticFixtures: ProductMeasurementUnitManagementStaticFixtures;
-  let dynamicFixtures: ProductMeasurementUnitManagementDynamicFixtures;
-
-  before((): void => {
-    ({ dynamicFixtures, staticFixtures } = Cypress.env());
-  });
-
-  beforeEach((): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
+    before((): void => {
+      ({ dynamicFixtures, staticFixtures } = Cypress.env());
     });
-  });
 
-  it('renders the Measurement unit list page with searchable measurement units', () => {
-    // Act
-    productMeasurementUnitListPage.visit();
+    beforeEach((): void => {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+    });
 
-    // Assert
-    productMeasurementUnitListPage.getCreateButton().should('exist');
-    productMeasurementUnitListPage.getTableCodeColumn().should('exist');
-    productMeasurementUnitListPage.getPaginationBar().should('exist');
+    it('renders the Measurement unit list page with searchable measurement units', () => {
+      // Act
+      productMeasurementUnitListPage.visit();
 
-    // Act
-    productMeasurementUnitListPage.findByText(dynamicFixtures.productMeasurementUnit.code);
+      // Assert
+      productMeasurementUnitListPage.getCreateButton().should('exist');
+      productMeasurementUnitListPage.getTableCodeColumn().should('exist');
+      productMeasurementUnitListPage.getPaginationBar().should('exist');
 
-    // Assert
-    const firstRow = 0;
-    productMeasurementUnitListPage.getTableRows().should('exist').and('contain', dynamicFixtures.productMeasurementUnit.code);
-    productMeasurementUnitListPage.getTableEditButton(firstRow).should('exist');
-    productMeasurementUnitListPage.getTableDeleteButton(firstRow).should('exist');
-  });
+      // Act
+      productMeasurementUnitListPage.findByText(dynamicFixtures.productMeasurementUnit.code);
 
-});
+      // Assert
+      const firstRow = 0;
+      productMeasurementUnitListPage
+        .getTableRows()
+        .should('exist')
+        .and('contain', dynamicFixtures.productMeasurementUnit.code);
+      productMeasurementUnitListPage.getTableEditButton(firstRow).should('exist');
+      productMeasurementUnitListPage.getTableDeleteButton(firstRow).should('exist');
+    });
+  }
+);

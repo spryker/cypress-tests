@@ -7,8 +7,8 @@ export interface ProductMeasurementUnitManagementStaticFixtures {
 export interface ProductMeasurementUnitManagementDynamicFixtures {
   rootUser: User;
   productMeasurementUnit: {
-    code: string,
-    name: string,
-    conversionRate: number
+    code: string;
+    name: string;
+    conversionRate: number;
   };
 }
