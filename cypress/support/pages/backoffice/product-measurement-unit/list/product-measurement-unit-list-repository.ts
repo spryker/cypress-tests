@@ -4,11 +4,10 @@ import { injectable } from 'inversify';
 @injectable()
 @autoWired
 export class ProductMeasurementUnitListRepository {
-  getSearchSelector = (): string => '[type="search"]';
 
-  getCreateButtonSelector = (): string => '.btn-create';
+  getCreateButtonSelector = (): string => 'a[href*="/product-measurement-unit-gui/index/create"]';
 
-  getEditButtonSelector = (): string => '.btn-edit';
+  getEditButtonSelector = (): string => 'a[href*="/product-measurement-unit-gui/index/edit"]';
 
   getDeleteButtonSelector = (): string => '[data-qa="delete-button"]';
 

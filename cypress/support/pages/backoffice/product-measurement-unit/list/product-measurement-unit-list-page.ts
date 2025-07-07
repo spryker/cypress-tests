@@ -14,8 +14,8 @@ export class ProductMeasurementUnitListPage extends BackofficePage {
   protected PAGE_URL = '/product-measurement-unit-gui';
   protected POST_URL = '/product-measurement-unit-gui/index/table';
 
-  getSearchField = (): Cypress.Chainable => {
-    return cy.get(this.repository.getSearchSelector());
+  findByText = (text : string): Cypress.Chainable => {
+    return this.find({ tableUrl: this.POST_URL + '**', searchQuery: text });
   }
 
   getCreateButton = (): Cypress.Chainable => {
@@ -40,17 +40,5 @@ export class ProductMeasurementUnitListPage extends BackofficePage {
 
   getTableCodeColumn = (): Cypress.Chainable => {
     return cy.get(this.repository.getTableCodeColumnSelector());
-  }
-
-  clearSearchField = (): void => {
-    this.getSearchField().clear();
-  }
-
-  typeSearchField = (searchQuery: string): void => {
-    this.getSearchField().type(searchQuery);
-  }
-
-  interceptFetchTable = (alias: string): void => {
-    cy.intercept('GET', this.POST_URL + '*').as(alias);
   }
 }

@@ -7,27 +7,35 @@ import {
   ProductMeasurementUnitListPage
 } from '../../../support/pages/backoffice/product-measurement-unit/list/product-measurement-unit-list-page';
 import {
-  ProductMeasurementUnitManagementStaticFixtures
+  ProductMeasurementUnitManagementDynamicFixtures,
+  ProductMeasurementUnitManagementStaticFixtures,
 } from '../../../support/types/backoffice/product-measurement-unit-management';
 
-describe('Measurement Units - Create', { tags: ['@backoffice', '@product-measurement-unit'] }, () => {
+(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+  'Measurement Units - Create Page',
+  { tags: ['@backoffice', '@product-measurement-unit'] },
+  (): void => {
+
   const productMeasurementUnitCreatePage = container.get(ProductMeasurementUnitCreatePage);
   const productMeasurementUnitListPage = container.get(ProductMeasurementUnitListPage);
   const userLoginScenario = container.get(UserLoginScenario);
 
   let staticFixtures: ProductMeasurementUnitManagementStaticFixtures;
+  let dynamicFixtures: ProductMeasurementUnitManagementDynamicFixtures;
 
-  beforeEach(() => {
-    ({ staticFixtures } = Cypress.env());
+  before((): void => {
+    ({ dynamicFixtures, staticFixtures } = Cypress.env());
+  });
 
+  beforeEach((): void => {
     userLoginScenario.execute({
-      username: staticFixtures.rootUser.username,
+      username: dynamicFixtures.rootUser.username,
       password: staticFixtures.defaultPassword,
     });
   });
 
   it('allows back office user to create a new Measurement Unit', () => {
-    // Navigate
+    // Act
     productMeasurementUnitCreatePage.visit();
 
     // Assign
@@ -35,19 +43,11 @@ describe('Measurement Units - Create', { tags: ['@backoffice', '@product-measure
     const uniqueCode = `E2E_MU_${Date.now()}_${randomValue}`;
     const glossaryKey = `e2e.unit.${randomValue}`;
     const defaultPrecision = '4';
-
     productMeasurementUnitCreatePage.fillCreateForm(uniqueCode, glossaryKey, defaultPrecision);
-    productMeasurementUnitCreatePage.interceptCreateFormSubmit('createFormSubmit')
 
     // Act
     productMeasurementUnitCreatePage.submitCreateForm();
-    cy.wait('@createFormSubmit');
-
-    // Assign
-    productMeasurementUnitListPage.interceptFetchTable('fetchTable');
-    productMeasurementUnitListPage.clearSearchField();
-    productMeasurementUnitListPage.typeSearchField(uniqueCode);
-    cy.wait('@fetchTable');
+    productMeasurementUnitListPage.findByText(uniqueCode);
 
     // Assert
     productMeasurementUnitListPage.getTableRows().should('exist').and('contain', uniqueCode);

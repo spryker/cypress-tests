@@ -6,25 +6,30 @@ import {
 } from '../../../support/types/backoffice/product-measurement-unit-management';
 import { ProductMeasurementUnitListPage } from '../../../support/pages/backoffice/product-measurement-unit/list/product-measurement-unit-list-page';
 
-describe('Measurement Units - List Page', { tags: ['@backoffice', '@product-measurement-unit'] }, () => {
+(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+  'Measurement Units - List Page',
+  { tags: ['@backoffice', '@product-measurement-unit'] },
+  (): void => {
+
   const productMeasurementUnitListPage = container.get(ProductMeasurementUnitListPage);
   const userLoginScenario = container.get(UserLoginScenario);
 
   let staticFixtures: ProductMeasurementUnitManagementStaticFixtures;
   let dynamicFixtures: ProductMeasurementUnitManagementDynamicFixtures;
 
-  beforeEach(() => {
-    ({ staticFixtures, dynamicFixtures } = Cypress.env());
+  before((): void => {
+    ({ dynamicFixtures, staticFixtures } = Cypress.env());
+  });
 
+  beforeEach((): void => {
     userLoginScenario.execute({
-      username: staticFixtures.rootUser.username,
+      username: dynamicFixtures.rootUser.username,
       password: staticFixtures.defaultPassword,
     });
   });
 
   it('renders the Measurement unit list page with searchable measurement units', () => {
-    // Navigate
-    productMeasurementUnitListPage.interceptFetchTable('fetchTable');
+    // Act
     productMeasurementUnitListPage.visit();
 
     // Assert
@@ -33,9 +38,7 @@ describe('Measurement Units - List Page', { tags: ['@backoffice', '@product-meas
     productMeasurementUnitListPage.getPaginationBar().should('exist');
 
     // Act
-    productMeasurementUnitListPage.clearSearchField();
-    productMeasurementUnitListPage.typeSearchField(dynamicFixtures.productMeasurementUnit.code);
-    cy.wait('@fetchTable');
+    productMeasurementUnitListPage.findByText(dynamicFixtures.productMeasurementUnit.code);
 
     // Assert
     const firstRow = 0;

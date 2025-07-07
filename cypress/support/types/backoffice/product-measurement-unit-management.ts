@@ -2,10 +2,10 @@ import { User } from './shared';
 
 export interface ProductMeasurementUnitManagementStaticFixtures {
   defaultPassword: string;
-  rootUser: User;
 }
 
 export interface ProductMeasurementUnitManagementDynamicFixtures {
+  rootUser: User;
   productMeasurementUnit: {
     code: string,
     name: string,

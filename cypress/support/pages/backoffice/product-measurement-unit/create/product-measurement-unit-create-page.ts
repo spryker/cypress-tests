@@ -11,10 +11,6 @@ export class ProductMeasurementUnitCreatePage extends BackofficePage {
 
   protected PAGE_URL = '/product-measurement-unit-gui/index/create';
 
-  interceptCreateFormSubmit = (alias: string): void => {
-    cy.intercept('POST', this.PAGE_URL + '*').as(alias);
-  }
-
   fillCreateForm = (code:string, name:string, defaultPrecision: string): void => {
     cy.get(this.repository.getFormCodeFieldSelector()).clear();
     cy.get(this.repository.getFormCodeFieldSelector()).type(code);
