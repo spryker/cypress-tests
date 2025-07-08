@@ -12,3 +12,4 @@ export * from './merchant-relations/merchant-relations-page';
 export * from './variants/variants-page';
 export * from './multi-factor-auth/merchant-user-multi-factor-auth-page';
 export * from './multi-factor-auth/merchant-agent-multi-factor-auth-page';
+export * from './account/account-page';

@@ -19,21 +19,6 @@ export class ProfilePage extends MpPage {
 
     this.repository.getProfileForm().submit();
   };
-
-  openChangePasswordForm = (): void => {
-    this.repository.getChangePasswordButton().click();
-  };
-
-  changePassword(defaultPassword: string, newPassword: string): void {
-    this.repository.getDefaultPasswordInput().type(defaultPassword);
-    this.repository.getNewPasswordInput().type(newPassword);
-    this.repository.getConfirmPasswordInput().type(newPassword);
-    this.repository.getSubmitButton().click();
-  }
-
-  waitForPasswordChangedMessage(): void {
-    cy.contains(this.repository.getPasswordChangedMessage()).should('be.visible');
-  }
 }
 
 interface UpdatePhoneParams {

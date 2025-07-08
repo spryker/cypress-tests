@@ -6,8 +6,7 @@ import {
 } from '../../../support/types/mp/multi-factor-authentication';
 import {
   MerchantUserLoginScenario,
-  MerchantUserLogoutScenario,
-  MerchantUserProfileScenario,
+  MerchantUserAccountScenario,
   MerchantUserSetUpMfaScenario,
   MerchantUserMfaLoginScenario,
 } from '@scenarios/mp';
@@ -22,8 +21,7 @@ import { retryableBefore } from '../../../support/e2e';
     const mfaSetUpScenario = new MerchantUserSetUpMfaScenario(mfaPage);
     const mfaLoginScenario = container.get(MerchantUserMfaLoginScenario);
     const loginScenario = container.get(MerchantUserLoginScenario);
-    const logoutScenario = container.get(MerchantUserLogoutScenario);
-    const profileScenario = container.get(MerchantUserProfileScenario);
+    const accountScenario = container.get(MerchantUserAccountScenario);
 
     let dynamicFixtures: MerchantUserMfaAuthDynamicFixtures;
     let staticFixtures: MerchantUserMfaAuthStaticFixtures;
@@ -40,7 +38,7 @@ import { retryableBefore } from '../../../support/e2e';
 
       mfaSetUpScenario.executeActivation(dynamicFixtures.merchantUserOne.username);
 
-      logoutScenario.execute();
+      dashboardPage.logout();
 
       mfaLoginScenario.execute({
         username: dynamicFixtures.merchantUserOne.username,
@@ -49,9 +47,9 @@ import { retryableBefore } from '../../../support/e2e';
 
       mfaSetUpScenario.executeDeactivation(dynamicFixtures.merchantUserOne.username);
 
-      profileScenario.executeChangePassword(staticFixtures.defaultPassword, staticFixtures.newPassword);
+      accountScenario.executeChangePassword(staticFixtures.defaultPassword, staticFixtures.newPassword);
 
-      logoutScenario.execute();
+      dashboardPage.logout();
 
       loginScenario.execute({
         username: dynamicFixtures.merchantUserOne.username,
@@ -70,7 +68,7 @@ import { retryableBefore } from '../../../support/e2e';
 
       mfaSetUpScenario.executeActivation(dynamicFixtures.merchantUserTwo.username);
 
-      logoutScenario.execute();
+      dashboardPage.logout();
 
       mfaLoginScenario.executeWithInvalidCode(
         {

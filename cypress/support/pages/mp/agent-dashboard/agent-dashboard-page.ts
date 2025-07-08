@@ -50,6 +50,7 @@ export class AgentDashboardPage extends MpPage {
   };
 
   logoutAgent = (): void => {
+    this.repository.getUserMenu().click();
     cy.contains('a', 'Logout').click({ force: true });
   };
 }

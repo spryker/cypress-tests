@@ -17,6 +17,9 @@ export class MerchantAgentMfaLoginScenario {
     cy.getUserMultiFactorAuthCode(params.username, 'email').then((code) => {
       this.mfaPage.verifyCode(code);
     });
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(4000);
   }
 
   executeWithInvalidCode(params: ExecuteParams, staticFixtures: MerchantUserMfaAuthStaticFixtures): void {
