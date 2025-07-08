@@ -11,6 +11,8 @@ export class MerchantUserLoginScenario {
     cy.session([params.username, params.password], () => {
       this.loginPage.visit();
       this.loginPage.login(params);
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(2000);
     });
   };
 }
