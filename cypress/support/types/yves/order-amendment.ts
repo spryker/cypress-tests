@@ -22,9 +22,13 @@ export interface OrderAmendmentFinishDynamicFixtures {
   customer4: Customer;
   address4: Address;
 
+  customer5: Customer;
+  address5: Address;
+
   product1: ProductConcrete;
   product2: ProductConcrete;
   product3: ProductConcrete;
+  product4: ProductConcrete;
 }
 
 export interface OrderAmendmentStartDynamicFixtures {
@@ -65,4 +69,5 @@ export interface OrderAmendmentStaticFixtures {
   oldProductPrice: string;
   newProductPrice: string;
   paymentMethodCreditCard: string;
+  paymentMethodInvoice: string;
 }

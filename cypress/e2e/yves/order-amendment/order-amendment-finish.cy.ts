@@ -108,6 +108,39 @@ import { UpdatePriceProductScenario, UserLoginScenario } from '@scenarios/backof
       customerOverviewPage.getOrderDetailTable().should('contain', `€${staticFixtures.oldProductPrice}`);
     });
 
+    it('customer should be able to update order in async mode', (): void => {
+      placeCustomerOrder(dynamicFixtures.customer5.email, dynamicFixtures.address5.id_customer_address);
+
+      customerOverviewPage.viewLastPlacedOrder();
+      orderDetailsPage.editOrder();
+
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product4.sku });
+      productPage.addToCart();
+
+      cartPage.visit();
+      cartPage.changeQuantity({ sku: dynamicFixtures.product1.sku, quantity: 3 });
+      cartPage.removeProduct({ sku: dynamicFixtures.product2.sku });
+
+      placeCustomerOrder(
+        dynamicFixtures.customer5.email,
+        dynamicFixtures.address5.id_customer_address,
+        staticFixtures.paymentMethodInvoice,
+        false
+      );
+
+      customerOverviewPage.viewLastPlacedOrder();
+      orderDetailsPage.containsOrderState('Editing in Progress');
+      customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.localized_attributes[0].name, 1);
+      customerOverviewPage.assertProductQuantity(dynamicFixtures.product2.localized_attributes[0].name, 1);
+
+      cy.runCliCommands(['console oms:check-condition']);
+
+      customerOverviewPage.viewLastPlacedOrder();
+      customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.localized_attributes[0].name, 3);
+      customerOverviewPage.assertProductQuantity(dynamicFixtures.product4.localized_attributes[0].name, 1);
+    });
+
     function updateProductPriceInBackoffice(): void {
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
@@ -130,7 +163,12 @@ import { UpdatePriceProductScenario, UserLoginScenario } from '@scenarios/backof
       orderDetailsPage.containsOrderState('New');
     }
 
-    function placeCustomerOrder(email: string, idCustomerAddress: number): void {
+    function placeCustomerOrder(
+      email: string,
+      idCustomerAddress: number,
+      paymentMethod?: string,
+      shouldTriggerOmsInCli?: boolean
+    ): void {
       customerLoginScenario.execute({
         email: email,
         password: staticFixtures.defaultPassword,
@@ -138,8 +176,8 @@ import { UpdatePriceProductScenario, UserLoginScenario } from '@scenarios/backof
 
       checkoutScenario.execute({
         idCustomerAddress: idCustomerAddress,
-        shouldTriggerOmsInCli: true,
-        paymentMethod: staticFixtures.paymentMethodCreditCard,
+        shouldTriggerOmsInCli: shouldTriggerOmsInCli ?? true,
+        paymentMethod: paymentMethod ?? staticFixtures.paymentMethodCreditCard,
       });
     }
   }
