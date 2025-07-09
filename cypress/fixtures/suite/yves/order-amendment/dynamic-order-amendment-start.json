@@ -70,6 +70,12 @@
         },
         {
           "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer8",
+          "arguments": [{ "locale": "#locale", "password": "change123" }]
+        },
+        {
+          "type": "helper",
           "name": "confirmCustomer",
           "arguments": ["#customer1"]
         },
@@ -102,6 +108,11 @@
           "type": "helper",
           "name": "confirmCustomer",
           "arguments": ["#customer7"]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "arguments": ["#customer8"]
         },
         {
           "type": "helper",
@@ -144,6 +155,12 @@
           "name": "haveCustomerAddress",
           "key": "address7",
           "arguments": [{ "fkCustomer": "#customer7.id_customer", "fkCountry": "#country.id_country" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address8",
+          "arguments": [{ "fkCustomer": "#customer8.id_customer", "fkCountry": "#country.id_country" }]
         },
         {
           "type": "transfer",
@@ -258,6 +275,40 @@
               "name": "default",
               "idProduct": "#productOutOfStock.id_product_concrete",
               "idProductAbstract": "#productOutOfStock.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productOutOfStock2",
+          "arguments": [{ "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productOutOfStock2.abstract_sku",
+              "skuProduct": "#productOutOfStock2.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#productOutOfStock2.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#productOutOfStock2.id_product_concrete",
+              "idProductAbstract": "#productOutOfStock2.fk_product_abstract",
               "productImages": ["#productImage"]
             }
           ]
