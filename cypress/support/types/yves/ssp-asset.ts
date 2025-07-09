@@ -7,6 +7,7 @@ export interface SspAssetStaticFixtures {
 export interface SspAssetDynamicFixtures {
   customer: Customer;
   businessUnit: BusinessUnit;
+  company: Company;
   companyUser1BU1C1: CompanyUser;
   companyUser2BU1C1: CompanyUser;
   companyUser2BU2C1: CompanyUser;
@@ -22,6 +23,8 @@ export interface SspAssetDynamicFixtures {
   businessUnit1Company2: BusinessUnit;
   sspInquiry1: SspInquiry;
   sspInquiry3: SspInquiry;
+  product1: Product;
+  product2: Product;
 }
 
 export interface SspAsset {
@@ -32,6 +35,8 @@ export interface SspAsset {
 
 export interface Customer {
   email: string;
+  first_name: string;
+  last_name: string;
 }
 
 export interface SspAsset {
@@ -52,4 +57,16 @@ interface BusinessUnit {
 
 interface SspInquiry {
   reference: string;
+}
+
+interface Product {
+  localized_attributes: [
+    {
+      name: string;
+    },
+  ];
+}
+
+interface Company {
+  name: string;
 }

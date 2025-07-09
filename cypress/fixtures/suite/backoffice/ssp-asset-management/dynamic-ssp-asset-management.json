@@ -7,7 +7,10 @@
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "locale",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+          "arguments": {
+            "id_locale": 66,
+            "locale_name": "en_US"
+          }
         },
         {
           "type": "helper",
@@ -71,7 +74,13 @@
           "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "key": "companyRole",
-          "arguments": [{ "isDefault": true, "fkCompany": "#company1.id_company" }, ["#viewCompanySspAssetPermission"]]
+          "arguments": [
+            {
+              "isDefault": true,
+              "fkCompany": "#company1.id_company"
+            },
+            ["#viewCompanySspAssetPermission"]
+          ]
         },
         {
           "type": "helper",
@@ -112,7 +121,11 @@
           "type": "helper",
           "name": "haveUser",
           "key": "rootUser",
-          "arguments": [{ "password": "change123" }]
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
         },
         {
           "type": "helper",
@@ -129,8 +142,7 @@
               "businessUnitAssignments": [
                 {
                   "companyBusinessUnit": {
-                    "idCompanyBusinessUnit": "#businessUnit1.id_company_business_unit",
-                    "idCompanyBusinessUnit": "#businessUnit2.id_company_business_unit"
+                    "idCompanyBusinessUnit": "#businessUnit1.id_company_business_unit"
                   }
                 }
               ]
@@ -190,18 +202,18 @@
         },
         {
           "type": "helper",
-          "name": "haveProductAbstractType",
-          "key": "productAbstractType",
+          "name": "haveProductClass",
+          "key": "productClass",
           "arguments": [
             {
-              "key": "service"
+              "key": "Service"
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveProductAbstractToProductAbstractType",
-          "arguments": ["#product.fk_product_abstract", "#productAbstractType.id_product_abstract_type"]
+          "name": "haveProductToProductClass",
+          "arguments": ["#product.id_product_concrete", "#productClass.id_product_class"]
         },
         {
           "type": "helper",

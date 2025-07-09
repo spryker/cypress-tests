@@ -8,7 +8,7 @@ import { SspAssetRepository } from './ssp-asset-repository';
 export class SspAssetDetailPage extends YvesPage {
   @inject(REPOSITORIES.SspAssetRepository) private repository: SspAssetRepository;
 
-  public PAGE_URL = '/customer/asset/details';
+  public PAGE_URL = '/ssp/asset/details';
 
   assertAssetDetails(details: SspAssetDetails): void {
     if (details.reference) {
@@ -28,18 +28,30 @@ export class SspAssetDetailPage extends YvesPage {
     }
 
     if (details.image) {
-      this.repository.getSspAssetImageSrc().should('include', 'customer/asset/view-image?ssp-asset-reference=');
+      this.repository.getSspAssetImageSrc().should('include', 'ssp/asset/view-image?ssp-asset-reference=');
     } else {
-      this.repository.getSspAssetImageSrc().should('not.include', 'customer/asset/view-image?ssp-asset-reference=');
+      this.repository.getSspAssetImageSrc().should('not.include', 'ssp/asset/view-image?ssp-asset-reference=');
     }
   }
 
   assertSspInquiries(sspInquiries: SspInquiry[]): void {
     this.getSspAssetInquiriresTable().should('exist');
-    this.getSspAssetInquiriresTable().get('tbody tr').its('length').should('eq', sspInquiries.length);
+    this.getSspAssetInquiriresTable().find('tbody tr').its('length').should('eq', sspInquiries.length);
 
     sspInquiries.forEach((sspInquiry) => {
       this.getSspAssetInquiriresTable().should('contain', sspInquiry.reference);
+    });
+  }
+
+  assertSspServices(sspServices: SspService[]): void {
+    this.repository.getSspAssetServicesTable().should('exist');
+    this.repository.getSspAssetServicesTable().find('tbody tr').its('length').should('eq', sspServices.length);
+
+    sspServices.forEach((sspServices) => {
+      this.repository.getSspAssetServicesTable().should('contain', sspServices.name);
+      this.repository.getSspAssetServicesTable().should('contain', sspServices.customerFirstName);
+      this.repository.getSspAssetServicesTable().should('contain', sspServices.customerLastName);
+      this.repository.getSspAssetServicesTable().should('contain', sspServices.companyName);
     });
   }
 
@@ -104,4 +116,11 @@ interface SspInquiry {
 
 interface BusinessUnit {
   name: string;
+}
+
+interface SspService {
+  name: string;
+  customerFirstName: string;
+  customerLastName: string;
+  companyName: string;
 }

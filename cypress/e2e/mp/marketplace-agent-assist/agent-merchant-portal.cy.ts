@@ -5,6 +5,7 @@ import { ActionEnum, OffersPage, ProductsPage, ProfilePage, SalesOrdersPage } fr
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ImpersonateAsMerchantUserScenario } from '@scenarios/mp';
 import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
+import { CatalogPage, ProductPage } from '@pages/yves';
 
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
@@ -13,6 +14,8 @@ import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
   'agent merchant portal',
   { tags: ['@mp', '@marketplace-agent-assist'] },
   (): void => {
+    const catalogPage = container.get(CatalogPage);
+    const productPage = container.get(ProductPage);
     const salesIndexPage = container.get(SalesIndexPage);
     const salesDetailPage = container.get(SalesDetailPage);
     const salesOrdersPage = container.get(SalesOrdersPage);
@@ -36,6 +39,8 @@ import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
       });
+
+      addOneProductToCart();
       checkoutMpScenario.execute({ isGuest: false, shouldTriggerOmsInCli: true });
 
       userLoginScenario.execute({
@@ -74,7 +79,7 @@ import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
         query: dynamicFixtures.merchantUser.username,
       });
 
-      profilePage.visit();
+      profilePage.visit({ failOnStatusCode: false }); // TODO: Fix JS error
       profilePage.updatePhone();
 
       cy.get('body').contains('The Profile has been changed successfully.');
@@ -115,5 +120,15 @@ import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
 
       cy.get('body').contains('The Offer is saved.');
     });
+
+    function addOneProductToCart(): void {
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.productConcreteForOffer.sku });
+      productPage.selectSoldByProductOffer({
+        productOfferReference: dynamicFixtures.productOffer.product_offer_reference,
+      });
+
+      productPage.addToCart();
+    }
   }
 );

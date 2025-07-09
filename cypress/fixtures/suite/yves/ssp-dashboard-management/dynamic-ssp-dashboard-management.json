@@ -189,7 +189,7 @@
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "permissionDownloadFiles",
-          "arguments": ["DownloadFilesPermissionPlugin"]
+          "arguments": ["DownloadCompanyFilesPermissionPlugin"]
         },
         {
           "type": "helper",
@@ -363,60 +363,55 @@
         },
         {
           "type": "helper",
-          "name": "haveFileAttachment",
+          "name": "haveCompanyUserFileAttachment",
           "arguments": [
             {
-              "file": "#file1",
-              "entity_id": "#companyUser2.id_company_user",
-              "entity_name": "company_user",
+              "idFile": "#file1.id_file",
+              "idCompanyUser": "#companyUser2.id_company_user",
               "attachedAt": "2025-05-05 14:58:00"
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveFileAttachment",
+          "name": "haveCompanyUserFileAttachment",
           "arguments": [
             {
-              "file": "#file2",
-              "entity_id": "#companyUser2.id_company_user",
-              "entity_name": "company_user",
+              "idFile": "#file2.id_file",
+              "idCompanyUser": "#companyUser2.id_company_user",
               "attachedAt": "2025-05-05 14:57:00"
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveFileAttachment",
+          "name": "haveCompanyUserFileAttachment",
           "arguments": [
             {
-              "file": "#file3",
-              "entity_id": "#companyUser2.id_company_user",
-              "entity_name": "company_user",
+              "idFile": "#file3.id_file",
+              "idCompanyUser": "#companyUser2.id_company_user",
               "attachedAt": "2025-05-05 14:56:00"
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveFileAttachment",
+          "name": "haveCompanyUserFileAttachment",
           "arguments": [
             {
-              "file": "#file4",
-              "entity_id": "#companyUser2.id_company_user",
-              "entity_name": "company_user",
+              "idFile": "#file4.id_file",
+              "idCompanyUser": "#companyUser2.id_company_user",
               "attachedAt": "2025-05-05 14:53:00"
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveFileAttachment",
+          "name": "haveCompanyUserFileAttachment",
           "arguments": [
             {
-              "file": "#file1",
-              "entity_id": "#companyUser4.id_company_user",
-              "entity_name": "company_user",
+              "idFile": "#file1.id_file",
+              "idCompanyUser": "#companyUser4.id_company_user",
               "attachedAt": "2025-05-05 14:58:00"
             }
           ]

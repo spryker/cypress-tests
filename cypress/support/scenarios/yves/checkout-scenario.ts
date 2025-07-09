@@ -26,7 +26,10 @@ export class CheckoutScenario {
       this.checkoutCustomerPage.checkoutAsGuest();
     }
     this.fillShippingAddress(params);
-    this.checkoutShipmentPage.setStandardShippingMethod();
+
+    if (!params?.shouldSkipShipmentStep) {
+      this.checkoutShipmentPage.setStandardShippingMethod();
+    }
     this.fillPaymentCheckoutStep(params);
 
     this.checkoutSummaryPage.placeOrder();
@@ -68,4 +71,5 @@ interface ExecuteParams {
   idCustomerAddress?: number;
   shouldTriggerOmsInCli?: boolean;
   paymentMethod?: string;
+  shouldSkipShipmentStep?: boolean;
 }

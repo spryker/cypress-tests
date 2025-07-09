@@ -8,7 +8,7 @@ import { SspFileManagementRepository } from './ssp-file-management-repository';
 export class SspFileManagementListPage extends YvesPage {
   @inject(SspFileManagementRepository) private repository: SspFileManagementRepository;
 
-  protected PAGE_URL = '/ssp-file-management';
+  protected PAGE_URL = '/ssp/company-file/list-file';
 
   verifyListPage(): void {
     cy.get(this.repository.getFiltersSelector()).should('be.visible');
@@ -44,13 +44,21 @@ export class SspFileManagementListPage extends YvesPage {
     cy.get(this.repository.getApplyFiltersButtonSelector()).click();
   }
 
+  filterByBusinessEntity(accessLevel: string): void {
+    cy.get(this.repository.getBusinessEntityFilterSelector()).select(accessLevel, { force: true });
+  }
+
+  filterBySspAssetEntity(accessLevel: string): void {
+    cy.get(this.repository.getSspAssetEntityFilterSelector()).select(accessLevel, { force: true });
+  }
+
   searchByName(searchTerm: string): void {
     cy.get(this.repository.getSearchFieldSelector()).clear();
     cy.get(this.repository.getSearchFieldSelector()).type(searchTerm);
     cy.get(this.repository.getApplyFiltersButtonSelector()).click();
   }
 
-  applyFilters(searchTerm: string, fileType: string): void {
+  applyFilterByTypeAndSearchTerm(searchTerm: string, fileType: string): void {
     cy.get(this.repository.getSearchFieldSelector()).clear();
     cy.get(this.repository.getSearchFieldSelector()).type(searchTerm);
     cy.get(this.repository.getTypeFilterSelector()).select(fileType, { force: true });
@@ -60,5 +68,9 @@ export class SspFileManagementListPage extends YvesPage {
   verifyFilterValues(searchTerm: string, fileType: string): void {
     cy.get(this.repository.getSearchFieldSelector()).should('have.value', searchTerm);
     cy.get(this.repository.getTypeFilterSelector()).should('have.value', fileType.toLowerCase());
+  }
+
+  applyFilters(): void {
+    cy.get(this.repository.getApplyFiltersButtonSelector()).click();
   }
 }
