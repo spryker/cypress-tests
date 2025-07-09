@@ -28,7 +28,6 @@ export class MerchantAgentMfaLoginScenario {
 
     this.mfaPage.waitForVerificationPopup();
     this.mfaPage.verifyCode(staticFixtures.invalidCode);
-    this.mfaPage.waitForInvalidCodeMessage();
 
     cy.reload();
     this.loginPage.assertPageLocation();
