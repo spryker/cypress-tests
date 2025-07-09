@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
-import { SspModelAddPage } from '@pages/backoffice';
+import { SspModelAddPage } from '@pages/backoffice/';
 import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } from '@interfaces/backoffice';
 
 (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
@@ -30,6 +30,7 @@ import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } f
       modelAddPage.fillModelForm({
         name: staticFixtures.sspModel.name,
         code: staticFixtures.sspModel.code,
+        image: staticFixtures.sspModel.image,
       });
 
       modelAddPage.submitForm();
