@@ -33,8 +33,4 @@ export class MerchantUserMultiFactorAuthRepository {
   getDeactivationSuccessMessage(): string {
     return 'The multi-factor authentication has been deactivated';
   }
-
-  getInvalidCodeMessage(): string {
-    return 'Invalid multi-factor authentication code';
-  }
 }

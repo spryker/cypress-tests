@@ -36,8 +36,4 @@ export class MerchantUserMultiFactorAuthPage extends MpPage implements MultiFact
   waitForDeactivationSuccessMessage(): void {
     cy.contains(this.repository.getDeactivationSuccessMessage()).should('be.visible');
   }
-
-  waitForInvalidCodeMessage(): void {
-    cy.contains(this.repository.getInvalidCodeMessage()).should('be.visible');
-  }
 }

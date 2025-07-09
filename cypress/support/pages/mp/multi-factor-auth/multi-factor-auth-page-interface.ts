@@ -8,5 +8,4 @@ export interface MultiFactorAuthPageInterface {
   waitForVerificationPopup(): void;
   waitForActivationSuccessMessage(): void;
   waitForDeactivationSuccessMessage(): void;
-  waitForInvalidCodeMessage(): void;
 }
