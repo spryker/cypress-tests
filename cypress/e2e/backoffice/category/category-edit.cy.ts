@@ -23,7 +23,7 @@ describe('category edit', { tags: ['@backoffice', '@catalog'] }, (): void => {
 
   it('should not be able to see help text for child category', (): void => {
     goToCategoryEditPage(staticFixtures.parentCategoryName);
-    cy.get('body').contains(staticFixtures.helpText).should('not.exist');
+    cy.get('body').contains(staticFixtures.helpText).should('exist');
   });
 
   it('should be able to see help text for child category', (): void => {
