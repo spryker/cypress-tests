@@ -55,3 +55,5 @@ export * from './ssp-asset-management/detail/ssp-asset-detail-page';
 export * from './ssp-asset-management/update/ssp-asset-update-page';
 export * from './customer/index/customer-index-page';
 export * from './multi-factor-auth/customer-remove-mfa/customer-remove-mfa-page';
+export * from './ssp-model-management/list/ssp-model-list-page';
+export * from './ssp-model-management/add/ssp-model-add-page';
