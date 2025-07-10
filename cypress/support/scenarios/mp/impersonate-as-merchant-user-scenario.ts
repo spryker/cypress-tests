@@ -11,6 +11,8 @@ export class ImpersonateAsMerchantUserScenario {
   execute = (params: ExecuteParams): void => {
     this.agentLoginPage.visit();
     this.agentLoginPage.login({ username: params.username, password: params.password });
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(5000);
 
     this.mpAgentDashboardPage.visit();
     this.mpAgentDashboardPage.assist({ query: params.query });
