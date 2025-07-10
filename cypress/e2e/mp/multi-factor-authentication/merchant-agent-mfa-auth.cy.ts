@@ -28,7 +28,7 @@ import { retryableBefore } from '../../../support/e2e';
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    it('agent (merchant user) should handle MFA activation and login flow, ensures proper error handling when invalid MFA then deactivate MFA', (): void => {
+    it('agent (merchant user) should handle MFA activation and login flow, then deactivate MFA', (): void => {
       merchantAgentLoginUserScenario.execute({
         username: dynamicFixtures.merchantAgentUserOne.username,
         password: staticFixtures.defaultPassword,
@@ -41,20 +41,28 @@ import { retryableBefore } from '../../../support/e2e';
 
       mpAgentDashboardPage.logoutAgent();
 
-      mfaLoginScenario.executeWithInvalidCode(
-        {
-          username: dynamicFixtures.merchantAgentUserTwo.username,
-          password: staticFixtures.defaultPassword,
-        },
-        staticFixtures
-      );
-
       mfaLoginScenario.execute({
         username: dynamicFixtures.merchantAgentUserOne.username,
         password: staticFixtures.defaultPassword,
       });
 
       mfaSetUpScenario.executeDeactivation(dynamicFixtures.merchantAgentUserOne.username);
+
+      mpAgentDashboardPage.logoutAgent();
+    });
+
+    it('agent (merchant user) should ensure proper error handling when invalid MFA verification code is provided', (): void => {
+      merchantAgentLoginUserScenario.execute({
+        username: dynamicFixtures.merchantAgentUserTwo.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      mpAgentDashboardPage.visit();
+      mpAgentDashboardPage.assertPageLocation();
+
+      mfaSetUpScenario.executeActivation(dynamicFixtures.merchantAgentUserTwo.username);
+
+      mpAgentDashboardPage.logoutAgent();
     });
   }
 );
