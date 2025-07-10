@@ -12,6 +12,9 @@ export class SspFileManagementRepository {
   getFileTypeHeaderSelector = (): string => '[data-qa="type"]';
   getDownloadButtonSelector = (): string => '[data-qa*="download-button"]';
   getTypeFilterSelector = (): string => '[data-qa="filter-type"]';
+  getBusinessEntityFilterSelector = (): string => '[data-qa="filter-business-entity"]';
+
+  getSspAssetEntityFilterSelector = (): string => '[data-qa="filter-ssp-asset-entity"]';
   getApplyFiltersButtonSelector = (): string => '[data-qa="submit-filters"]';
   getSearchFieldSelector = (): string => '[data-qa="search"]';
 }
