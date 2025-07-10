@@ -14,11 +14,11 @@ export class MerchantUserMfaLoginScenario {
 
     this.mfaPage.waitForVerificationPopup();
 
+    cy.intercept('POST', '**/send-code').as('sendCode');
     cy.getUserMultiFactorAuthCode(params.username, 'email').then((code) => {
       this.mfaPage.verifyCode(code);
     });
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(4000);
+    cy.wait('@sendCode');
   }
 
   executeWithInvalidCode(params: ExecuteParams, staticFixtures: MerchantUserMfaAuthStaticFixtures): void {
@@ -26,7 +26,9 @@ export class MerchantUserMfaLoginScenario {
     this.loginPage.login(params);
 
     this.mfaPage.waitForVerificationPopup();
+    cy.intercept('POST', '**/send-code').as('sendCode');
     this.mfaPage.verifyCode(staticFixtures.invalidCode);
+    cy.wait('@sendCode');
 
     cy.reload();
     this.loginPage.assertPageLocation();

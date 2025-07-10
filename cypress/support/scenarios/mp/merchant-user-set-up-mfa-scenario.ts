@@ -17,10 +17,15 @@ export class MerchantUserSetUpMfaScenario {
     cy.getUserMultiFactorAuthCode(email, 'email')
       .then((code) => {
         mfaCode = code;
+
+        cy.intercept('POST', '**/send-code').as('sendCode');
         this.mfaPage.verifyCode(code);
+        cy.wait('@sendCode');
+
         this.mfaPage.waitForActivationSuccessMessage();
       })
       .then(() => {
+        this.mfaPage.waitForActivationSuccessMessage();
         cy.cleanUpUserMultiFactorAuthCode(mfaCode);
       });
   }
@@ -35,7 +40,9 @@ export class MerchantUserSetUpMfaScenario {
     cy.getUserMultiFactorAuthCode(email, 'email')
       .then((code) => {
         mfaCode = code;
+        cy.intercept('POST', '**/send-code').as('sendCode');
         this.mfaPage.verifyCode(code);
+        cy.wait('@sendCode');
         this.mfaPage.waitForDeactivationSuccessMessage();
       })
       .then(() => {
