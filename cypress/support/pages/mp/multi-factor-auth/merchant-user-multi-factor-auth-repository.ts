@@ -9,7 +9,7 @@ export class MerchantUserMultiFactorAuthRepository {
   }
 
   getVerifyButton(): Cypress.Chainable {
-    return cy.get('[data-qa="multi-factor-authentication-modal"] button[type="submit"]');
+    return cy.get('[data-qa="multi-factor-authentication-modal"] button');
   }
 
   getVerificationPopup(): Cypress.Chainable {
