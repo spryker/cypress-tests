@@ -78,7 +78,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         assetManagementListPage.searchAsset(reference);
 
         assetManagementListPage.assetTableContainsAsset({
-          reference: 'assetReference',
+          reference: assetReference,
           name: staticFixtures.sspAsset.name,
           status: staticFixtures.sspAsset.status,
           serialNumber: staticFixtures.sspAsset.serial_number,
