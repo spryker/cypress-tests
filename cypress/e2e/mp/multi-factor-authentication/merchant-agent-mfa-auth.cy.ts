@@ -32,6 +32,7 @@ import { retryableBefore } from '../../../support/e2e';
       merchantAgentLoginUserScenario.execute({
         username: dynamicFixtures.merchantAgentUserOne.username,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
 
       mpAgentDashboardPage.visit();
@@ -49,12 +50,23 @@ import { retryableBefore } from '../../../support/e2e';
       mfaSetUpScenario.executeDeactivation(dynamicFixtures.merchantAgentUserOne.username);
 
       mpAgentDashboardPage.logoutAgent();
+
+      merchantAgentLoginUserScenario.execute({
+        username: dynamicFixtures.merchantAgentUserOne.username,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      mpAgentDashboardPage.visit();
+      mpAgentDashboardPage.assertPageLocation();
+      mpAgentDashboardPage.logoutAgent();
     });
 
     it('agent (merchant user) should ensure proper error handling when invalid MFA verification code is provided', (): void => {
       merchantAgentLoginUserScenario.execute({
         username: dynamicFixtures.merchantAgentUserTwo.username,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
 
       mpAgentDashboardPage.visit();
@@ -63,6 +75,14 @@ import { retryableBefore } from '../../../support/e2e';
       mfaSetUpScenario.executeActivation(dynamicFixtures.merchantAgentUserTwo.username);
 
       mpAgentDashboardPage.logoutAgent();
+
+      mfaLoginScenario.executeWithInvalidCode(
+        {
+          username: dynamicFixtures.merchantAgentUserTwo.username,
+          password: staticFixtures.defaultPassword,
+        },
+        staticFixtures
+      );
     });
   }
 );

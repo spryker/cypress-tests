@@ -8,11 +8,20 @@ export class MerchantUserLoginScenario {
   @inject(LoginPage) private loginPage: LoginPage;
 
   execute = (params: ExecuteParams): void => {
+    if (params.withoutSession) {
+      this.loginPage.visit();
+      cy.intercept('POST', '**/login_check').as('merchantUserLogin');
+      this.loginPage.login(params);
+      cy.wait('@merchantUserLogin');
+
+      return;
+    }
+
     cy.session([params.username, params.password], () => {
       this.loginPage.visit();
+      cy.intercept('POST', '**/login_check').as('merchantUserLogin');
       this.loginPage.login(params);
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(4000);
+      cy.wait('@merchantUserLogin');
     });
   };
 }
@@ -20,4 +29,5 @@ export class MerchantUserLoginScenario {
 interface ExecuteParams {
   username: string;
   password: string;
+  withoutSession?: boolean;
 }

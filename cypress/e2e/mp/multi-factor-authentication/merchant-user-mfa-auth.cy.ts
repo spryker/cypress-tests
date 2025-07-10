@@ -34,6 +34,7 @@ import { retryableBefore } from '../../../support/e2e';
       loginScenario.execute({
         username: dynamicFixtures.merchantUserOne.username,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
 
       mfaSetUpScenario.executeActivation(dynamicFixtures.merchantUserOne.username);
@@ -54,16 +55,19 @@ import { retryableBefore } from '../../../support/e2e';
       loginScenario.execute({
         username: dynamicFixtures.merchantUserOne.username,
         password: staticFixtures.newPassword,
+        withoutSession: true,
       });
 
       dashboardPage.visit();
       dashboardPage.assertPageLocation();
+      dashboardPage.logout();
     });
 
     it('merchant user should ensure proper error handling when invalid MFA verification code is provided', (): void => {
       loginScenario.execute({
         username: dynamicFixtures.merchantUserTwo.username,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
 
       mfaSetUpScenario.executeActivation(dynamicFixtures.merchantUserTwo.username);

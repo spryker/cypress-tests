@@ -13,7 +13,7 @@ export class MerchantUserMultiFactorAuthRepository {
   }
 
   getVerificationPopup(): Cypress.Chainable {
-    return cy.get('[data-qa="multi-factor-authentication-modal"]', { timeout: 20000 });
+    return cy.get('[data-qa="multi-factor-authentication-modal"]');
   }
 
   getMfaTypeSection(type: string): Cypress.Chainable {

@@ -11,17 +11,18 @@ export class MerchantUserSetUpMfaScenario {
     let mfaCode: string;
 
     this.mfaPage.visit();
+
+    cy.intercept('POST', '**/get-enabled-types*').as('getEnabledTypes');
     this.mfaPage.activateMfa('Email');
+    cy.wait('@getEnabledTypes');
+
     this.mfaPage.waitForVerificationPopup();
 
     cy.getUserMultiFactorAuthCode(email, 'email')
       .then((code) => {
         mfaCode = code;
 
-        cy.intercept('POST', '**/send-code').as('sendCode');
         this.mfaPage.verifyCode(code);
-        cy.wait('@sendCode');
-
         this.mfaPage.waitForActivationSuccessMessage();
       })
       .then(() => {
@@ -34,15 +35,17 @@ export class MerchantUserSetUpMfaScenario {
     let mfaCode: string;
 
     this.mfaPage.visit();
+
+    cy.intercept('POST', '**/get-enabled-types*').as('getEnabledTypes');
     this.mfaPage.deactivateMfa('Email');
+    cy.wait('@getEnabledTypes');
+
     this.mfaPage.waitForVerificationPopup();
 
     cy.getUserMultiFactorAuthCode(email, 'email')
       .then((code) => {
         mfaCode = code;
-        cy.intercept('POST', '**/send-code').as('sendCode');
         this.mfaPage.verifyCode(code);
-        cy.wait('@sendCode');
         this.mfaPage.waitForDeactivationSuccessMessage();
       })
       .then(() => {

@@ -10,25 +10,27 @@ export class MerchantUserMfaLoginScenario {
 
   execute(params: ExecuteParams): void {
     this.loginPage.visit();
+
+    cy.intercept('POST', '**/get-enabled-types*').as('getEnabledTypes');
     this.loginPage.login(params);
+    cy.wait('@getEnabledTypes');
 
     this.mfaPage.waitForVerificationPopup();
 
-    cy.intercept('POST', '**/send-code').as('sendCode');
     cy.getUserMultiFactorAuthCode(params.username, 'email').then((code) => {
       this.mfaPage.verifyCode(code);
     });
-    cy.wait('@sendCode');
   }
 
   executeWithInvalidCode(params: ExecuteParams, staticFixtures: MerchantUserMfaAuthStaticFixtures): void {
     this.loginPage.visit();
+
+    cy.intercept('POST', '**/get-enabled-types*').as('getEnabledTypes');
     this.loginPage.login(params);
+    cy.wait('@getEnabledTypes');
 
     this.mfaPage.waitForVerificationPopup();
-    cy.intercept('POST', '**/send-code').as('sendCode');
     this.mfaPage.verifyCode(staticFixtures.invalidCode);
-    cy.wait('@sendCode');
 
     cy.reload();
     this.loginPage.assertPageLocation();
