@@ -23,9 +23,9 @@ export class MerchantUserSetUpMfaScenario {
         mfaCode = code;
 
         this.mfaPage.verifyCode(code);
-        this.mfaPage.waitForActivationSuccessMessage();
       })
       .then(() => {
+        this.mfaPage.waitForActivationSuccessMessage();
         cy.cleanUpUserMultiFactorAuthCode(mfaCode);
       });
   }
@@ -46,9 +46,9 @@ export class MerchantUserSetUpMfaScenario {
         mfaCode = code;
 
         this.mfaPage.verifyCode(code);
-        this.mfaPage.waitForDeactivationSuccessMessage();
       })
       .then(() => {
+        this.mfaPage.waitForDeactivationSuccessMessage();
         cy.cleanUpUserMultiFactorAuthCode(mfaCode);
       });
   }
