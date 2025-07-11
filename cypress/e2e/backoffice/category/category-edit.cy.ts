@@ -31,7 +31,7 @@ describe('category edit', { tags: ['@backoffice', '@catalog'] }, (): void => {
     categoryEditPage.unassignStore({ storeName: staticFixtures.storeNameToUnassign });
 
     goToCategoryEditPage(staticFixtures.childCategoryName);
-    cy.get('body').contains(staticFixtures.helpText);
+    cy.get('body').contains('staticFixtures.helpText');
   });
 
   function goToCategoryEditPage(categoryName: string): void {
