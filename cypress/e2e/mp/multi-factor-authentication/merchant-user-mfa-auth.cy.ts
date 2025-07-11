@@ -34,7 +34,6 @@ import { retryableBefore } from '../../../support/e2e';
       loginScenario.execute({
         username: dynamicFixtures.merchantUserOne.username,
         password: staticFixtures.defaultPassword,
-        withoutSession: true,
       });
 
       dashboardPage.visit();
@@ -75,7 +74,7 @@ import { retryableBefore } from '../../../support/e2e';
 
       dashboardPage.visit();
       dashboardPage.assertPageLocation();
-      
+
       mfaSetUpScenario.executeActivation(dynamicFixtures.merchantUserTwo.username);
 
       dashboardPage.logout();
