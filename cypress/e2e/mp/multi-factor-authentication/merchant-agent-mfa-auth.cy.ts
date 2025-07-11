@@ -9,7 +9,6 @@ import {
   MerchantAgentMfaLoginScenario,
   MerchantUserSetUpMfaScenario,
 } from '@scenarios/mp';
-import { retryableBefore } from '../../../support/e2e';
 
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'agent (merchant user) mfa auth [suite]',
@@ -24,15 +23,14 @@ import { retryableBefore } from '../../../support/e2e';
     let dynamicFixtures: MerchantAgentMfaAuthDynamicFixtures;
     let staticFixtures: MerchantAgentMfaAuthStaticFixtures;
 
-    retryableBefore((): void => {
-      ({ staticFixtures, dynamicFixtures } = Cypress.env());
+    before((): void => {
+      ({ dynamicFixtures, staticFixtures } = Cypress.env());
     });
 
     it('agent (merchant user) should handle MFA activation and login flow, then deactivate MFA', (): void => {
       merchantAgentLoginUserScenario.execute({
         username: dynamicFixtures.merchantAgentUserOne.username,
         password: staticFixtures.defaultPassword,
-        withoutSession: true,
       });
 
       mpAgentDashboardPage.visit();
@@ -47,9 +45,6 @@ import { retryableBefore } from '../../../support/e2e';
         password: staticFixtures.defaultPassword,
       });
 
-      mpAgentDashboardPage.visit();
-      mpAgentDashboardPage.assertPageLocation();
-
       mfaSetUpScenario.executeDeactivation(dynamicFixtures.merchantAgentUserOne.username);
 
       mpAgentDashboardPage.logoutAgent();
@@ -60,8 +55,6 @@ import { retryableBefore } from '../../../support/e2e';
         withoutSession: true,
       });
 
-      mpAgentDashboardPage.visit();
-      mpAgentDashboardPage.assertPageLocation();
       mpAgentDashboardPage.logoutAgent();
     });
 

@@ -10,7 +10,6 @@ import {
   MerchantUserSetUpMfaScenario,
   MerchantUserMfaLoginScenario,
 } from '@scenarios/mp';
-import { retryableBefore } from '../../../support/e2e';
 
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'merchant user mfa auth [suite]',
@@ -26,7 +25,7 @@ import { retryableBefore } from '../../../support/e2e';
     let dynamicFixtures: MerchantUserMfaAuthDynamicFixtures;
     let staticFixtures: MerchantUserMfaAuthStaticFixtures;
 
-    retryableBefore((): void => {
+    before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
