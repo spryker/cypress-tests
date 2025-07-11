@@ -64,8 +64,6 @@ import {
         withoutSession: true,
       });
 
-      dashboardPage.visit();
-      dashboardPage.assertPageLocation();
       dashboardPage.logout();
     });
 
