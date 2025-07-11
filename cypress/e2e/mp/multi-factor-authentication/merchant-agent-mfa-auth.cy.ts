@@ -34,7 +34,8 @@ import {
         withoutSession: true,
       });
 
-      cy.url().should('not.include', '/login');
+      mpAgentDashboardPage.visit();
+      mpAgentDashboardPage.assertPageLocation();
 
       mfaSetUpScenario.executeActivation(dynamicFixtures.merchantAgentUserOne.username);
 
