@@ -47,6 +47,9 @@ import { retryableBefore } from '../../../support/e2e';
         password: staticFixtures.defaultPassword,
       });
 
+      mpAgentDashboardPage.visit();
+      mpAgentDashboardPage.assertPageLocation();
+
       mfaSetUpScenario.executeDeactivation(dynamicFixtures.merchantAgentUserOne.username);
 
       mpAgentDashboardPage.logoutAgent();
