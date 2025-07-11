@@ -46,72 +46,72 @@ interface DynamicFixtures {
     });
 
     describe('Service List Page', () => {
-      // it('should verify all required table headers exist', (): void => {
-      //   purchaseServiceAsCustomer(
-      //     dynamicFixtures.company1Customer.email,
-      //     dynamicFixtures.company1CustomerAddress.id_customer_address
-      //   );
-      //
-      //   // Assert page is loaded correctly
-      //   sspServiceListPage.getPageTitle().should('contain', 'Services');
-      //   sspServiceListPage.getTable().should('exist');
-      //
-      //   // Check if all column headers are present
-      //   sspServiceListPage.getTableHeaders().should('have.length.at.least', 5);
-      //   sspServiceListPage.getTableHeaders().contains('Order Reference').should('exist');
-      //   sspServiceListPage.getTableHeaders().contains('Service Name').should('exist');
-      //   sspServiceListPage.getTableHeaders().contains('Time and Date').should('exist');
-      //   sspServiceListPage.getTableHeaders().contains('Created At').should('exist');
-      //   sspServiceListPage.getTableHeaders().contains('State').should('exist');
-      // });
-      //
-      // it('should sort table in both directions', (): void => {
-      //   purchaseServiceAsCustomer(
-      //     dynamicFixtures.company1Customer.email,
-      //     dynamicFixtures.company1CustomerAddress.id_customer_address
-      //   );
-      //
-      //   // Sort by Order Reference
-      //   sspServiceListPage.clickSortColumn('Order Reference');
-      //   // Verify that sorting was triggered
-      //   sspServiceListPage.getOrderByInput().should('have.value', 'order_reference');
-      //   sspServiceListPage.getOrderDirectionInput().should('have.value', 'ASC');
-      //
-      //   // Click again to toggle sort direction
-      //   sspServiceListPage.clickSortColumn('Order Reference');
-      //
-      //   // Verify sort direction was toggled
-      //   sspServiceListPage.getOrderByInput().should('have.value', 'order_reference');
-      //   sspServiceListPage.getOrderDirectionInput().should('have.value', 'DESC');
-      //
-      //   // Sort by Service Name
-      //   sspServiceListPage.clickSortColumn('Service Name');
-      //
-      //   // Verify that sorting was triggered
-      //   sspServiceListPage.getOrderByInput().should('have.value', 'product_name');
-      //   sspServiceListPage.getOrderDirectionInput().should('have.value', 'ASC');
-      //
-      //   // Click again to toggle sort direction
-      //   sspServiceListPage.clickSortColumn('Service Name');
-      //
-      //   // Verify sort direction was toggled
-      //   sspServiceListPage.getOrderByInput().should('have.value', 'product_name');
-      //   sspServiceListPage.getOrderDirectionInput().should('have.value', 'DESC');
-      //
-      //   // Sort by Created At
-      //   sspServiceListPage.clickSortColumn('Created At');
-      //
-      //   // Verify that sorting was triggered
-      //   sspServiceListPage.getOrderByInput().should('have.value', 'created_at');
-      //   sspServiceListPage.getOrderDirectionInput().should('have.value', 'ASC');
-      //
-      //   // Click again to toggle sort direction
-      //   sspServiceListPage.clickSortColumn('Created At');
-      //
-      //   // Verify sort direction was toggled
-      //   sspServiceListPage.getOrderByInput().should('have.value', 'created_at');
-      //   sspServiceListPage.getOrderDirectionInput().should('have.value', 'DESC');
-      // });
+      it('should verify all required table headers exist', (): void => {
+        purchaseServiceAsCustomer(
+          dynamicFixtures.company1Customer.email,
+          dynamicFixtures.company1CustomerAddress.id_customer_address
+        );
+
+        // Assert page is loaded correctly
+        sspServiceListPage.getPageTitle().should('contain', 'Services');
+        sspServiceListPage.getTable().should('exist');
+
+        // Check if all column headers are present
+        sspServiceListPage.getTableHeaders().should('have.length.at.least', 5);
+        sspServiceListPage.getTableHeaders().contains('Order Reference').should('exist');
+        sspServiceListPage.getTableHeaders().contains('Service Name').should('exist');
+        sspServiceListPage.getTableHeaders().contains('Time and Date').should('exist');
+        sspServiceListPage.getTableHeaders().contains('Created At').should('exist');
+        sspServiceListPage.getTableHeaders().contains('State').should('exist');
+      });
+
+      it('should sort table in both directions', (): void => {
+        purchaseServiceAsCustomer(
+          dynamicFixtures.company1Customer.email,
+          dynamicFixtures.company1CustomerAddress.id_customer_address
+        );
+
+        // Sort by Order Reference
+        sspServiceListPage.clickSortColumn('Order Reference');
+        // Verify that sorting was triggered
+        sspServiceListPage.getOrderByInput().should('have.value', 'order_reference');
+        sspServiceListPage.getOrderDirectionInput().should('have.value', 'ASC');
+
+        // Click again to toggle sort direction
+        sspServiceListPage.clickSortColumn('Order Reference');
+
+        // Verify sort direction was toggled
+        sspServiceListPage.getOrderByInput().should('have.value', 'order_reference');
+        sspServiceListPage.getOrderDirectionInput().should('have.value', 'DESC');
+
+        // Sort by Service Name
+        sspServiceListPage.clickSortColumn('Service Name');
+
+        // Verify that sorting was triggered
+        sspServiceListPage.getOrderByInput().should('have.value', 'product_name');
+        sspServiceListPage.getOrderDirectionInput().should('have.value', 'ASC');
+
+        // Click again to toggle sort direction
+        sspServiceListPage.clickSortColumn('Service Name');
+
+        // Verify sort direction was toggled
+        sspServiceListPage.getOrderByInput().should('have.value', 'product_name');
+        sspServiceListPage.getOrderDirectionInput().should('have.value', 'DESC');
+
+        // Sort by Created At
+        sspServiceListPage.clickSortColumn('Created At');
+
+        // Verify that sorting was triggered
+        sspServiceListPage.getOrderByInput().should('have.value', 'created_at');
+        sspServiceListPage.getOrderDirectionInput().should('have.value', 'ASC');
+
+        // Click again to toggle sort direction
+        sspServiceListPage.clickSortColumn('Created At');
+
+        // Verify sort direction was toggled
+        sspServiceListPage.getOrderByInput().should('have.value', 'created_at');
+        sspServiceListPage.getOrderDirectionInput().should('have.value', 'DESC');
+      });
 
       it('should search services by SKU', (): void => {
         purchaseServiceAsCustomer(
