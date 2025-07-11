@@ -1,0 +1,33 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": false,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveProductMeasurementUnit",
+          "key": "productMeasurementUnit",
+          "arguments": [
+            {
+              "code": "TEST_GRAM_3",
+              "name": "Test Gram_3",
+              "conversionRate": 3
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        }
+      ]
+    }
+  }
+}
