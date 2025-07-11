@@ -37,6 +37,9 @@ import { retryableBefore } from '../../../support/e2e';
         withoutSession: true,
       });
 
+      dashboardPage.visit();
+      dashboardPage.assertPageLocation();
+
       mfaSetUpScenario.executeActivation(dynamicFixtures.merchantUserOne.username);
 
       dashboardPage.logout();
@@ -70,6 +73,9 @@ import { retryableBefore } from '../../../support/e2e';
         withoutSession: true,
       });
 
+      dashboardPage.visit();
+      dashboardPage.assertPageLocation();
+      
       mfaSetUpScenario.executeActivation(dynamicFixtures.merchantUserTwo.username);
 
       dashboardPage.logout();
