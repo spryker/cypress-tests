@@ -30,10 +30,15 @@ import { retryableBefore } from '../../../support/e2e';
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
+    beforeEach((): void => {
+      cy.clearAllSessionStorage();
+    });
+
     it('merchant user should handle MFA activation and login flow, deactivation, password change and login with new password when MFA is disabled', (): void => {
       loginScenario.execute({
         username: dynamicFixtures.merchantUserOne.username,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
 
       dashboardPage.visit();
