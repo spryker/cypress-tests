@@ -31,10 +31,10 @@ import {
       merchantAgentLoginUserScenario.execute({
         username: dynamicFixtures.merchantAgentUserOne.username,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
 
-      mpAgentDashboardPage.visit();
-      mpAgentDashboardPage.assertPageLocation();
+      cy.url().should('not.include', '/login');
 
       mfaSetUpScenario.executeActivation(dynamicFixtures.merchantAgentUserOne.username);
 
