@@ -27,7 +27,7 @@ import { retryableBefore } from '../../../support/e2e';
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    before((): void => {
+    beforeEach((): void => {
       cy.cleanUpUserMultiFactorAuth();
     });
 

@@ -35,7 +35,7 @@ import { CustomerProfileScenario } from '../../../support/scenarios/yves/custome
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    before((): void => {
+    beforeEach((): void => {
       cy.cleanUpCustomerMultiFactorAuth();
     });
 
