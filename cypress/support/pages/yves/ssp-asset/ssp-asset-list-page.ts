@@ -8,7 +8,7 @@ import { inject, injectable } from 'inversify';
 export class SspAssetListPage extends YvesPage {
   @inject(REPOSITORIES.SspAssetRepository) private repository: SspAssetRepository;
 
-  protected PAGE_URL = '/ssp/asset';
+  protected PAGE_URL = '/customer/ssp-asset';
 
   getCreateAssetButton(): Cypress.Chainable {
     return this.repository.getCreateAssetButton();

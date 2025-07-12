@@ -9,7 +9,7 @@ import { SspDashboardManagementRepository } from './ssp-dashboard-management-rep
 export class SspDashboardPage extends YvesPage {
   @inject(REPOSITORIES.SspDashboardManagementRepository) private repository: SspDashboardManagementRepository;
 
-  protected PAGE_URL = '/customer/dashboard';
+  protected PAGE_URL = '/customer/ssp-dashboard';
 
   assertSspDashboardUserInfoPresent = (): void => {
     this.repository.getUserInfoBlock().should('exist');

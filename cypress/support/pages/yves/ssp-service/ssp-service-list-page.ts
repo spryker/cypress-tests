@@ -10,7 +10,7 @@ import Chainable = Cypress.Chainable;
 export class SspServiceListPage extends YvesPage {
   @inject(REPOSITORIES.SspServiceRepository) private repository: SspServiceRepository;
 
-  protected PAGE_URL = '/ssp/service/list';
+  protected PAGE_URL = '/customer/ssp-service/list';
 
   getTable(): Chainable<JQuery<HTMLElement>> {
     return this.repository.getSspServiceTable();
@@ -230,7 +230,7 @@ export class SspServiceListPage extends YvesPage {
     this.getServiceCancelButton().should('be.visible').first().click();
 
     // Verify redirection to services list
-    cy.url().should('include', '/ssp/service/list');
+    cy.url().should('include', '/customer/ssp-service/list');
   }
 
   /**
