@@ -35,6 +35,10 @@ import { CustomerProfileScenario } from '../../../support/scenarios/yves/custome
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
+    before((): void => {
+      cy.cleanUpCustomerMultiFactorAuth();
+    });
+
     it('should verify successful MFA activation and subsequent authenticated login', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customerOne.email,

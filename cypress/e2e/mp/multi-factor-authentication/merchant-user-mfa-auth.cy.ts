@@ -27,6 +27,7 @@ import {
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
+      cy.cleanUpUserMultiFactorAuth();
     });
 
     beforeEach((): void => {

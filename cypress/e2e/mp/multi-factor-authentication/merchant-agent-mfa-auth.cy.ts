@@ -25,6 +25,7 @@ import {
 
     before((): void => {
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
+      cy.cleanUpUserMultiFactorAuth();
     });
 
     it('agent (merchant user) should handle MFA activation and login flow, then deactivate MFA', (): void => {
