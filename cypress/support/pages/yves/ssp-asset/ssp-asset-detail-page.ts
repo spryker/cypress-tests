@@ -8,7 +8,7 @@ import { SspAssetRepository } from './ssp-asset-repository';
 export class SspAssetDetailPage extends YvesPage {
   @inject(REPOSITORIES.SspAssetRepository) private repository: SspAssetRepository;
 
-  public PAGE_URL = '/ssp/asset/details';
+  public PAGE_URL = '/customer/ssp-asset/details';
 
   assertAssetDetails(details: SspAssetDetails): void {
     if (details.reference) {
@@ -28,9 +28,9 @@ export class SspAssetDetailPage extends YvesPage {
     }
 
     if (details.image) {
-      this.repository.getSspAssetImageSrc().should('include', 'ssp/asset/view-image?ssp-asset-reference=');
+      this.repository.getSspAssetImageSrc().should('include', 'customer/ssp-asset/view-image?ssp-asset-reference=');
     } else {
-      this.repository.getSspAssetImageSrc().should('not.include', 'ssp/asset/view-image?ssp-asset-reference=');
+      this.repository.getSspAssetImageSrc().should('not.include', 'customer/ssp-asset/view-image?ssp-asset-reference=');
     }
   }
 
