@@ -96,5 +96,19 @@ declare namespace Cypress {
      * cy.cleanUpUserMultiFactorAuthCode('123456')
      */
     cleanUpUserMultiFactorAuthCode(code: string): void;
+
+    /**
+     * Clean up the customer MFA from the database
+     * @example
+     * cy.cleanUpCustomerMultiFactorAuth()
+     */
+    cleanUpCustomerMultiFactorAuth(): void;
+
+    /**
+     * Clean up the user MFA from the database
+     * @example
+     * cy.cleanUpUserMultiFactorAuth()
+     */
+    cleanUpUserMultiFactorAuth(): void;
   }
 }

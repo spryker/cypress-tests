@@ -30,6 +30,7 @@ import {
     });
 
     beforeEach((): void => {
+      cy.cleanUpUserMultiFactorAuth();
       cy.clearAllSessionStorage();
     });
 

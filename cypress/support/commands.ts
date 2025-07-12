@@ -284,3 +284,49 @@ Cypress.Commands.add('cleanUpUserMultiFactorAuthCode', (code: string) => {
     },
   });
 });
+
+Cypress.Commands.add('cleanUpUserMultiFactorAuth', () => {
+  const operation = {
+    type: 'helper',
+    name: 'cleanUpUserMultiFactorAuth',
+  };
+
+  return cy.request({
+    method: 'POST',
+    url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
+    headers: {
+      'Content-Type': 'application/vnd.api+json',
+    },
+    body: {
+      data: {
+        type: 'dynamic-fixtures',
+        attributes: {
+          operations: [operation],
+        },
+      },
+    },
+  });
+});
+
+Cypress.Commands.add('cleanUpCustomerMultiFactorAuth', () => {
+  const operation = {
+    type: 'helper',
+    name: 'cleanUpCustomerMultiFactorAuth',
+  };
+
+  return cy.request({
+    method: 'POST',
+    url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
+    headers: {
+      'Content-Type': 'application/vnd.api+json',
+    },
+    body: {
+      data: {
+        type: 'dynamic-fixtures',
+        attributes: {
+          operations: [operation],
+        },
+      },
+    },
+  });
+});
