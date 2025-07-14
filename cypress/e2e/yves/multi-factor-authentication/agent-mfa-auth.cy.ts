@@ -27,6 +27,10 @@ import { retryableBefore } from '../../../support/e2e';
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
+    beforeEach((): void => {
+      cy.cleanUpUserMultiFactorAuth();
+    });
+
     it('should verify successful MFA activation and subsequent authenticated login', (): void => {
       loginScenario.execute({
         username: dynamicFixtures.agentOne.username,
