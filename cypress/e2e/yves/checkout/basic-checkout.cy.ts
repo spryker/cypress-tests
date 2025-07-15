@@ -140,7 +140,7 @@ describe('basic checkout', { tags: ['@yves', '@checkout'] }, (): void => {
     (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
   }
 
-// @TODO drop this after SSP address step unifiation with core https://spryker.atlassian.net/browse/CC-36068
+  // @TODO drop this after SSP address step unifiation with core https://spryker.atlassian.net/browse/CC-36068
   function skipSSPIt(description: string, testFn: () => void): void {
     (Cypress.env('ENV_IS_SSP_ENABLED') ? it.skip : it)(description, testFn);
   }
