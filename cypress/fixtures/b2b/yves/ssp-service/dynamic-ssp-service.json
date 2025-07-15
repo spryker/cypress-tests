@@ -130,11 +130,7 @@
             {
               "fk_company": "#company1.id_company"
             },
-            [
-              "#seeCompanyOrdersPermission",
-              "#placeOrderPermissionPlugin",
-              "#placeOrderWithAmountUpToPermissionPlugin"
-            ]
+            ["#seeCompanyOrdersPermission", "#placeOrderPermissionPlugin", "#placeOrderWithAmountUpToPermissionPlugin"]
           ]
         },
         {
