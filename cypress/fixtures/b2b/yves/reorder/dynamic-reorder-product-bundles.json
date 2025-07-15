@@ -32,6 +32,75 @@
           "key": "address",
           "arguments": [{ "fkCustomer": "#customer.id_customer", "fkCountry": "#country.id_country" }]
         },
+          {
+              "type": "helper",
+              "name": "haveCompany",
+              "key": "company",
+              "arguments": [{ "isActive": true, "status": "approved" }]
+          },
+          {
+              "type": "helper",
+              "name": "haveCompanyBusinessUnit",
+              "key": "businessUnit",
+              "arguments": [{ "fkCompany": "#company.id_company" }]
+          },
+          {
+              "type": "helper",
+              "name": "havePermissionByKey",
+              "key": "permission1",
+              "arguments": ["AddCartItemPermissionPlugin"]
+          },
+          {
+              "type": "helper",
+              "name": "havePermissionByKey",
+              "key": "permission2",
+              "arguments": ["ChangeCartItemPermissionPlugin"]
+          },
+          {
+              "type": "helper",
+              "name": "havePermissionByKey",
+              "key": "permission3",
+              "arguments": ["RemoveCartItemPermissionPlugin"]
+          },
+          {
+              "type": "helper",
+              "name": "havePermissionByKey",
+              "key": "permission4",
+              "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
+          },
+          {
+              "type": "helper",
+              "name": "havePermissionByKey",
+              "key": "permission5",
+              "arguments": ["PlaceOrderPermissionPlugin"]
+          },
+          {
+              "type": "helper",
+              "name": "havePermissionByKey",
+              "key": "permission6",
+              "arguments": ["SeeBusinessUnitOrdersPermissionPlugin"]
+          },
+          {
+              "type": "helper",
+              "name": "haveCompanyRoleWithPermissions",
+              "arguments": [
+                  { "isDefault": true, "fkCompany": "#company.id_company" },
+                  ["#permission1", "#permission2", "#permission3", "#permission4", "#permission5", "#permission6"]
+              ]
+          },
+          {
+              "type": "helper",
+              "name": "haveCompanyUser",
+              "key": "companyUser",
+              "arguments": [
+                  {
+                      "customer": "#customer",
+                      "fkCustomer": "#customer.id_customer",
+                      "fkCompany": "#company.id_company",
+                      "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+                  }
+              ]
+          },
         {
           "type": "transfer",
           "name": "StoreTransfer",
