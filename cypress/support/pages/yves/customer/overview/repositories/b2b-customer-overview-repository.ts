@@ -8,8 +8,8 @@ export class B2bCustomerOverviewRepository implements CustomerOverviewRepository
   getLastViewOrderButton(): Cypress.Chainable {
     return cy.get('[data-qa="component order-table"]').find('tr').eq(1).contains('a', 'View Order');
   }
-  getOrderedProductSpan(productName: string): string {
-    return `span:contains("${productName}")`;
+  getOrderedProductSelector(productName: string): string {
+    return `h1:contains("${productName}")`;
   }
   getFirstShippingAddress(): Cypress.Chainable {
     return cy.get('[data-qa="component display-address"]').first();
