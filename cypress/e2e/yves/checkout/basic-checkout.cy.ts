@@ -79,7 +79,7 @@ describe('basic checkout', { tags: ['@yves', '@checkout'] }, (): void => {
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
-   it('customer should checkout to multi shipment address (with customer shipping address)', (): void => {
+  it('customer should checkout to multi shipment address (with customer shipping address)', (): void => {
     loginCustomerScenario.execute({
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
