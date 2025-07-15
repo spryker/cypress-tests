@@ -7,7 +7,7 @@ export class B2bOrderDetailsRepository implements OrderDetailsRepository {
     return cy.get('form[name="cartReorderForm"]').eq(1).find('button');
   }
   getOrderReferenceBlock(): Cypress.Chainable {
-    return cy.get('li:contains("Order Id:")').find('strong').invoke('text');
+    return cy.get('[data-qa="order-reference"]').invoke('text');
   }
   getReorderSelectedItemsButton(): Cypress.Chainable {
     return cy.get('.js-cart-reorder-form__trigger');
