@@ -12,4 +12,5 @@ export class AgentDashboardRepository {
   getLogoutAgentSelector = (): string => 'a:contains("Log out Agent")';
   getModalConfirmButton = (): Cypress.Chainable =>
     cy.get('[ng-reflect-ng-class="ant-modal--confirmation"]').find('button:contains("Confirm")');
+  getUserMenu = (): Cypress.Chainable => cy.get('.spy-user-menu');
 }

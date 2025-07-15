@@ -63,6 +63,12 @@
         },
         {
           "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer5",
+          "arguments": [{ "locale": "#localeEN", "password": "change123" }]
+        },
+        {
+          "type": "helper",
           "name": "confirmCustomer",
           "arguments": ["#customer1"]
         },
@@ -80,6 +86,11 @@
           "type": "helper",
           "name": "confirmCustomer",
           "arguments": ["#customer4"]
+        },
+        {
+          "type": "helper",
+          "name": "confirmCustomer",
+          "arguments": ["#customer5"]
         },
         {
           "type": "helper",
@@ -110,6 +121,12 @@
           "name": "haveCustomerAddress",
           "key": "address4",
           "arguments": [{ "fkCustomer": "#customer4.id_customer", "fkCountry": "#country.id_country" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address5",
+          "arguments": [{ "fkCustomer": "#customer5.id_customer", "fkCountry": "#country.id_country" }]
         },
         {
           "type": "transfer",
@@ -238,6 +255,40 @@
         },
         {
           "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product4",
+          "arguments": [{ "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#product4.abstract_sku",
+              "skuProduct": "#product4.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#product4.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#product4.id_product_concrete",
+              "idProductAbstract": "#product4.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "havePersistentQuote",
           "arguments": [
             {
@@ -294,6 +345,27 @@
                 {
                   "sku": "#product3.sku",
                   "abstractSku": "#product3.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer5",
+              "items": [
+                {
+                  "sku": "#product1.sku",
+                  "abstractSku": "#product1.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#product2.sku",
+                  "abstractSku": "#product2.abstract_sku",
                   "quantity": 1
                 }
               ]

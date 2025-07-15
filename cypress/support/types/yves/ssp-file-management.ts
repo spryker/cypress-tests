@@ -7,12 +7,15 @@ export interface SspFileManagementDynamicFixtures {
   file1: File;
   file2: File;
   file3: File;
-  fileSspAsset: FileAttach;
-  sspAsset: SspAsset;
+  fileSspAsset1: FileAttach;
+  fileSspAsset2: FileAttach;
+  sspAssetBU1C2: SspAsset;
   companyUser: CompanyUser;
   companyUserBU1C2: CompanyUser;
   companyUserBU2C2: CompanyUser;
   companyUserBU1C3: CompanyUser;
+  businessUnit: BusinessUnit;
+  businessUnit2C1: BusinessUnit;
 }
 
 export interface SspFileManagementStaticFixtures {
@@ -35,4 +38,10 @@ interface FileAttach extends File {
 
 interface CompanyUser {
   id_company_user: number;
+}
+
+interface BusinessUnit {
+  id_company_business_unit: number;
+  name: string;
+  uuid: string;
 }

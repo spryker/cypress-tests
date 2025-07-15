@@ -10,7 +10,10 @@ export class ImpersonateAsMerchantUserScenario {
 
   execute = (params: ExecuteParams): void => {
     this.agentLoginPage.visit();
+
+    cy.intercept('POST', '**/login_check').as('impersonateLogin');
     this.agentLoginPage.login({ username: params.username, password: params.password });
+    cy.wait('@impersonateLogin');
 
     this.mpAgentDashboardPage.visit();
     this.mpAgentDashboardPage.assist({ query: params.query });
