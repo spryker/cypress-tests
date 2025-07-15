@@ -343,7 +343,9 @@
                 { "locale": "#localeEN", "name": "#localizedAttribute.name" },
                 { "locale": "#localeDE", "name": "#localizedAttribute.name" }
               ]
-            }
+            }, {
+                  "idTaxSet": 1
+              }
           ]
         },
         {
