@@ -5,67 +5,34 @@
       "synchronize": true,
       "operations": [
         {
-          "type": "helper",
-          "name": "haveUser",
-          "key": "rootUser",
-          "arguments": [{ "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "addUserToGroup",
-          "arguments": ["#rootUser.id_user", 1]
-        },
-        {
-          "type": "builder",
-          "name": "LocalizedAttributesBuilder",
-          "key": "localizedAttribute"
-        },
-        {
           "type": "transfer",
           "name": "LocaleTransfer",
-          "key": "localeEN",
+          "key": "locale",
           "arguments": { "id_locale": 66, "locale_name": "en_US" }
-        },
-        {
-          "type": "transfer",
-          "name": "LocaleTransfer",
-          "key": "localeDE",
-          "arguments": { "id_locale": 46, "locale_name": "de_DE" }
-        },
-        {
-          "type": "helper",
-          "name": "haveCountry",
-          "key": "country"
         },
         {
           "type": "helper",
           "name": "haveCustomer",
           "key": "customer1",
-          "arguments": [{ "locale": "#localeEN", "password": "change123" }]
+          "arguments": [{ "locale": "#locale", "password": "change123" }]
         },
         {
           "type": "helper",
           "name": "haveCustomer",
           "key": "customer2",
-          "arguments": [{ "locale": "#localeEN", "password": "change123" }]
+          "arguments": [{ "locale": "#locale", "password": "change123" }]
         },
         {
           "type": "helper",
           "name": "haveCustomer",
           "key": "customer3",
-          "arguments": [{ "locale": "#localeEN", "password": "change123" }]
+          "arguments": [{ "locale": "#locale", "password": "change123" }]
         },
         {
           "type": "helper",
           "name": "haveCustomer",
           "key": "customer4",
-          "arguments": [{ "locale": "#localeEN", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveCustomer",
-          "key": "customer5",
-          "arguments": [{ "locale": "#localeEN", "password": "change123" }]
+          "arguments": [{ "locale": "#locale", "password": "change123" }]
         },
         {
           "type": "helper",
@@ -88,9 +55,15 @@
           "arguments": ["#customer4"]
         },
         {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 1, "name": "DE", "defaultCurrencyIsoCode": "EUR" }
+        },
+        {
           "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer5"]
+          "name": "haveCountry",
+          "key": "country"
         },
         {
           "type": "helper",
@@ -113,26 +86,8 @@
         {
           "type": "helper",
           "name": "haveCustomerAddress",
-          "key": "address3new",
-          "arguments": [{ "fkCustomer": "#customer3.id_customer", "fkCountry": "#country.id_country" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveCustomerAddress",
           "key": "address4",
           "arguments": [{ "fkCustomer": "#customer4.id_customer", "fkCountry": "#country.id_country" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveCustomerAddress",
-          "key": "address5",
-          "arguments": [{ "fkCustomer": "#customer5.id_customer", "fkCountry": "#country.id_country" }]
-        },
-        {
-          "type": "transfer",
-          "name": "StoreTransfer",
-          "key": "store",
-          "arguments": { "id_store": 1, "name": "DE" }
         },
         {
           "type": "transfer",
@@ -213,79 +168,9 @@
         },
         {
           "type": "helper",
-          "name": "haveFullProduct",
-          "key": "product3",
-          "arguments": [
-            {
-              "idTaxSet": 1,
-              "localizedAttributes": [
-                { "locale": "#localeEN", "name": "#localizedAttribute.name" },
-                { "locale": "#localeDE", "name": "#localizedAttribute.name" }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "havePriceProduct",
-          "arguments": [
-            {
-              "skuProductAbstract": "#product3.abstract_sku",
-              "skuProduct": "#product3.sku",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveProductInStockForStore",
-          "arguments": ["#store", { "sku": "#product3.sku", "isNeverOutOfStock": "1" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveProductImageSet",
-          "arguments": [
-            {
-              "name": "default",
-              "idProduct": "#product3.id_product_concrete",
-              "idProductAbstract": "#product3.fk_product_abstract",
-              "productImages": ["#productImage"]
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveFullProduct",
-          "key": "product4",
-          "arguments": [{ "idTaxSet": 1 }]
-        },
-        {
-          "type": "helper",
-          "name": "havePriceProduct",
-          "arguments": [
-            {
-              "skuProductAbstract": "#product4.abstract_sku",
-              "skuProduct": "#product4.sku",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveProductInStockForStore",
-          "arguments": ["#store", { "sku": "#product4.sku", "isNeverOutOfStock": "1" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveProductImageSet",
-          "arguments": [
-            {
-              "name": "default",
-              "idProduct": "#product4.id_product_concrete",
-              "idProductAbstract": "#product4.fk_product_abstract",
-              "productImages": ["#productImage"]
-            }
-          ]
+          "name": "haveProductOptionValueForAbstractProduct",
+          "key": "productOptionValue",
+          "arguments": ["#product2.abstract_sku", "#store"]
         },
         {
           "type": "helper",
@@ -297,6 +182,11 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#product2.sku",
+                  "abstractSku": "#product2.abstract_sku",
                   "quantity": 1
                 }
               ]
@@ -314,6 +204,11 @@
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
                   "quantity": 1
+                },
+                {
+                  "sku": "#product2.sku",
+                  "abstractSku": "#product2.abstract_sku",
+                  "quantity": 1
                 }
               ]
             }
@@ -329,7 +224,12 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "quantity": 1
+                  "quantity": 3
+                },
+                {
+                  "sku": "#product2.sku",
+                  "abstractSku": "#product2.abstract_sku",
+                  "quantity": 2
                 }
               ]
             }
@@ -343,30 +243,10 @@
               "customer": "#customer4",
               "items": [
                 {
-                  "sku": "#product3.sku",
-                  "abstractSku": "#product3.abstract_sku",
-                  "quantity": 1
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "havePersistentQuote",
-          "arguments": [
-            {
-              "customer": "#customer5",
-              "items": [
-                {
-                  "sku": "#product1.sku",
-                  "abstractSku": "#product1.abstract_sku",
-                  "quantity": 1
-                },
-                {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                  "productOptions": [{ "idProductOptionValue": "#productOptionValue.id_product_option_value" }]
                 }
               ]
             }
