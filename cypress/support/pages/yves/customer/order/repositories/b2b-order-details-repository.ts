@@ -20,7 +20,7 @@ export class B2bOrderDetailsRepository implements OrderDetailsRepository {
   }
 
   getEditOrderForm(): Cypress.Chainable {
-    return cy.get('[data-qa="component remote-form-submit"]');
+      return cy.get('[data-qa="component order-amendment"]').find('[data-qa="component remote-form-submit"]');
   }
   getOrderDetailTableBlock(): Cypress.Chainable {
     return cy.get('[data-qa="component order-detail-table"]');
