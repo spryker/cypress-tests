@@ -85,6 +85,7 @@ describe(
       cartPage.visit();
       cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: 2 });
       addProductsToCart(dynamicFixtures.product.sku, 2);
+        cartPage.visit();
 
       cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).each(($input) => {
         cy.wrap($input).should('have.value', '2');

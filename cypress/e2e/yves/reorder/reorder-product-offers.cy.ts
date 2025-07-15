@@ -3,7 +3,7 @@ import { ReorderProductOffersDynamicFixtures, ReorderStaticFixtures } from '@int
 import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
-(['b2c', 'b2c-mp', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+(['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'reorder product offers',
   { tags: ['@yves', '@order-amendment'] },
   (): void => {

@@ -375,7 +375,9 @@
           "type": "helper",
           "name": "haveFullProduct",
           "key": "productInActive",
-          "arguments": [{ "idTaxSet": 1 }]
+          "arguments": [{ "idTaxSet": 1 }, {
+              "idTaxSet": 1
+          }]
         },
         {
           "type": "helper",
