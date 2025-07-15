@@ -4,7 +4,7 @@ import { OrderDetailsRepository } from '../order-details-repository';
 @injectable()
 export class B2cMpOrderDetailsRepository implements OrderDetailsRepository {
   getReorderAllButton(): Cypress.Chainable {
-    return cy.get('form[name="cartReorderForm"]').eq(1).find('button');
+      return cy.get('[data-qa="reorder-all-button"]');
   }
   getOrderReferenceBlock(): Cypress.Chainable {
     return cy.get('li:contains("Order Id:")').find('strong').invoke('text');
