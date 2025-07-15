@@ -187,7 +187,7 @@
           {
               "type": "helper",
               "name": "haveCompanyUser",
-              "key": "companyUser",
+              "key": "companyUser1",
               "arguments": [
                   {
                       "customer": "#customer1",
@@ -200,7 +200,7 @@
           {
               "type": "helper",
               "name": "haveCompanyUser",
-              "key": "companyUser",
+              "key": "companyUser2",
               "arguments": [
                   {
                       "customer": "#customer2",
@@ -213,7 +213,7 @@
           {
               "type": "helper",
               "name": "haveCompanyUser",
-              "key": "companyUser",
+              "key": "companyUser3",
               "arguments": [
                   {
                       "customer": "#customer3",
@@ -226,7 +226,7 @@
           {
               "type": "helper",
               "name": "haveCompanyUser",
-              "key": "companyUser",
+              "key": "companyUser4",
               "arguments": [
                   {
                       "customer": "#customer4",
@@ -239,7 +239,7 @@
           {
               "type": "helper",
               "name": "haveCompanyUser",
-              "key": "companyUser",
+              "key": "companyUser5",
               "arguments": [
                   {
                       "customer": "#customer5",
