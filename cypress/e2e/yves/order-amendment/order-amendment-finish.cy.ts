@@ -7,7 +7,7 @@ import { UpdatePriceProductScenario, UserLoginScenario } from '@scenarios/backof
 /**
  * Order Amendment checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4545871873/Initialisation+Order+Amendment+Process}
  */
-(['b2c', 'b2c-mp', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+describe(
   'order amendment finish',
   { tags: ['@yves', '@order-amendment'] },
   (): void => {
@@ -108,7 +108,7 @@ import { UpdatePriceProductScenario, UserLoginScenario } from '@scenarios/backof
       customerOverviewPage.getOrderDetailTable().should('contain', `€${staticFixtures.oldProductPrice}`);
     });
 
-    it('customer should be able to update order in async mode', (): void => {
+    skipB2bIt('customer should be able to update order in async mode', (): void => {
       placeCustomerOrder(dynamicFixtures.customer5.email, dynamicFixtures.address5.id_customer_address);
 
       customerOverviewPage.viewLastPlacedOrder();
@@ -180,5 +180,9 @@ import { UpdatePriceProductScenario, UserLoginScenario } from '@scenarios/backof
         paymentMethod: paymentMethod ?? staticFixtures.paymentMethodCreditCard,
       });
     }
+
+      function skipB2bIt(description: string, testFn: () => void): void {
+          (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+      }
   }
 );
