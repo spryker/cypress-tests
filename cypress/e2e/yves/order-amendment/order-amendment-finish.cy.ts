@@ -125,7 +125,7 @@ describe(
       placeCustomerOrder(
         dynamicFixtures.customer5.email,
         dynamicFixtures.address5.id_customer_address,
-        staticFixtures.paymentMethodInvoice,
+        staticFixtures.paymentMethodAsyncFlow,
         false
       );
 
@@ -177,7 +177,7 @@ describe(
       checkoutScenario.execute({
         idCustomerAddress: idCustomerAddress,
         shouldTriggerOmsInCli: shouldTriggerOmsInCli ?? true,
-        paymentMethod: paymentMethod ?? staticFixtures.paymentMethodCreditCard,
+        paymentMethod: paymentMethod ?? staticFixtures.paymentMethodSyncFlow,
       });
     }
 
