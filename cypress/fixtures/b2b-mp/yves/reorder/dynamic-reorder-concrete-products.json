@@ -152,7 +152,7 @@
               "arguments": [
                   {
                       "customer": "#customer1",
-                      "fkCustomer": "#customer.id_customer",
+                      "fkCustomer": "#customer1.id_customer",
                       "fkCompany": "#company.id_company",
                       "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
                   }
@@ -165,7 +165,7 @@
               "arguments": [
                   {
                       "customer": "#customer2",
-                      "fkCustomer": "#customer.id_customer",
+                      "fkCustomer": "#customer2.id_customer",
                       "fkCompany": "#company.id_company",
                       "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
                   }
@@ -178,7 +178,7 @@
               "arguments": [
                   {
                       "customer": "#customer3",
-                      "fkCustomer": "#customer.id_customer",
+                      "fkCustomer": "#customer3.id_customer",
                       "fkCompany": "#company.id_company",
                       "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
                   }
@@ -191,7 +191,7 @@
               "arguments": [
                   {
                       "customer": "#customer4",
-                      "fkCustomer": "#customer.id_customer",
+                      "fkCustomer": "#customer4.id_customer",
                       "fkCompany": "#company.id_company",
                       "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
                   }
