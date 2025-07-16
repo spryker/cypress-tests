@@ -10,6 +10,12 @@
           "key": "locale",
           "arguments": { "id_locale": 66, "locale_name": "en_US" }
         },
+          {
+              "type": "transfer",
+              "name": "StoreTransfer",
+              "key": "store",
+              "arguments": { "id_store": 1, "name": "DE" }
+          },
         {
           "type": "helper",
           "name": "haveCountry",
@@ -26,17 +32,31 @@
           "name": "confirmCustomer",
           "arguments": ["#customer"]
         },
+          {
+              "type": "builder",
+              "name": "MerchantProfileBuilder",
+              "key": "merchantProfile"
+          },
+          {
+              "type": "helper",
+              "name": "haveMerchant",
+              "key": "merchant",
+              "arguments": [
+                  {
+                      "merchantProfile": "#merchantProfile",
+                      "isActive": true,
+                      "status": "approved",
+                      "storeRelation": {
+                          "idStores": ["#store.id_store"]
+                      }
+                  }
+              ]
+          },
         {
           "type": "helper",
           "name": "haveCustomerAddress",
           "key": "address",
           "arguments": [{ "fkCustomer": "#customer.id_customer", "fkCountry": "#country.id_country" }]
-        },
-        {
-          "type": "transfer",
-          "name": "StoreTransfer",
-          "key": "store",
-          "arguments": { "id_store": 1, "name": "DE" }
         },
         {
           "type": "transfer",
@@ -172,7 +192,27 @@
             1,
             "#productMeasurementBaseUnitForPackagingUnit.id_product_measurement_base_unit"
           ]
-        }
+        },
+          {
+              "type": "helper",
+              "name": "haveMerchantProduct",
+              "arguments": [
+                  {
+                      "idProductAbstract": "#productMUnit.fk_product_abstract",
+                      "idMerchant": "#merchant.id_merchant"
+                  }
+              ]
+          },
+          {
+              "type": "helper",
+              "name": "haveMerchantProduct",
+              "arguments": [
+                  {
+                      "idProductAbstract": "#productPUnit.fk_product_abstract",
+                      "idMerchant": "#merchant.id_merchant"
+                  }
+              ]
+          }
       ]
     }
   }
