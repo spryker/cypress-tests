@@ -51,7 +51,14 @@ describe(
       checkoutScenario.execute({
         idCustomerAddress: dynamicFixtures.address.id_customer_address,
         shouldTriggerOmsInCli: true,
+          paymentMethod: getPaymentMethodBasedOnEnv(),
       });
     }
+
+      function getPaymentMethodBasedOnEnv(): string {
+          return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
+              ? 'dummyMarketplacePaymentInvoice'
+              : 'dummyPaymentInvoice';
+      }
   }
 );
