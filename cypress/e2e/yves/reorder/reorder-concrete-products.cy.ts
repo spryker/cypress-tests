@@ -25,7 +25,7 @@ describe('reorder concrete products', { tags: ['@yves', '@reorder'] }, (): void 
       orderDetailsPage.reorderAll();
 
       cartPage.assertPageLocation();
-      cartPage.assertCartName(`isB2c() ? 'In Your Cart' : Reorder from Order ${orderReference}`);
+      cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Reorder from Order ${orderReference}`);
 
       cy.get('body').contains(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
       cy.get('body').contains(dynamicFixtures.product2.localized_attributes[0].name).should('exist');
