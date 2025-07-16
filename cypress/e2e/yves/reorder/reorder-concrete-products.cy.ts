@@ -25,7 +25,7 @@ describe('reorder concrete products', { tags: ['@yves', '@reorder'] }, (): void 
       orderDetailsPage.reorderAll();
 
       cartPage.assertPageLocation();
-      cartPage.assertCartName(`Reorder from Order ${orderReference}`);
+      cartPage.assertCartName(`isB2c() ? 'In Your Cart' : Reorder from Order ${orderReference}`);
 
       cy.get('body').contains(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
       cy.get('body').contains(dynamicFixtures.product2.localized_attributes[0].name).should('exist');
@@ -40,7 +40,7 @@ describe('reorder concrete products', { tags: ['@yves', '@reorder'] }, (): void 
       orderDetailsPage.reorderFirstSalesOrderItem();
 
       cartPage.assertPageLocation();
-      cartPage.assertCartName(`Reorder from Order ${orderReference}`);
+      cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Reorder from Order ${orderReference}`);
 
       cy.get('body').contains(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
       cy.get('body').contains(dynamicFixtures.product2.localized_attributes[0].name).should('not.exist');
@@ -80,4 +80,8 @@ describe('reorder concrete products', { tags: ['@yves', '@reorder'] }, (): void 
       ? 'dummyMarketplacePaymentInvoice'
       : 'dummyPaymentInvoice';
   }
+
+    function isB2c(): boolean {
+        return ['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'));
+    }
 });
