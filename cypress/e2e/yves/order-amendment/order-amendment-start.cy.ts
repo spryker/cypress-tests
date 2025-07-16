@@ -214,7 +214,11 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      checkoutScenario.execute({ idCustomerAddress: idCustomerAddress, shouldTriggerOmsInCli: true });
+      checkoutScenario.execute({
+          idCustomerAddress: idCustomerAddress,
+          shouldTriggerOmsInCli: true,
+          paymentMethod: getPaymentMethodBasedOnEnv(),
+      });
     }
 
     function deactivateProductInBackoffice(): void {
@@ -252,8 +256,7 @@ describe(
 
       salesDetailPage.triggerOms({
           state: 'skip grace period',
-          shouldTriggerOmsInCli: true,
-          paymentMethod: getPaymentMethodBasedOnEnv(),
+          shouldTriggerOmsInCli: true
       });
     }
 
