@@ -8,53 +8,54 @@ import { CartPage, CustomerOverviewPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
-(['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ||  (Cypress.env('ENV_IS_SSP_ENABLED') ? describe.skip : describe)(
-  'custom order reference management',
-  { tags: ['@backoffice', '@order-management'] },
-  (): void => {
-    const cartPage = container.get(CartPage);
-    const salesIndexPage = container.get(SalesIndexPage);
-    const customerOverviewPage = container.get(CustomerOverviewPage);
-    const loginCustomerScenario = container.get(CustomerLoginScenario);
-    const checkoutScenario = container.get(CheckoutScenario);
-    const userLoginScenario = container.get(UserLoginScenario);
+['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ||
+  (Cypress.env('ENV_IS_SSP_ENABLED') ? describe.skip : describe)(
+    'custom order reference management',
+    { tags: ['@backoffice', '@order-management'] },
+    (): void => {
+      const cartPage = container.get(CartPage);
+      const salesIndexPage = container.get(SalesIndexPage);
+      const customerOverviewPage = container.get(CustomerOverviewPage);
+      const loginCustomerScenario = container.get(CustomerLoginScenario);
+      const checkoutScenario = container.get(CheckoutScenario);
+      const userLoginScenario = container.get(UserLoginScenario);
 
-    let staticFixtures: CustomOrderReferenceManagementStaticFixtures;
-    let dynamicFixtures: CustomOrderReferenceManagementDynamicFixtures;
+      let staticFixtures: CustomOrderReferenceManagementStaticFixtures;
+      let dynamicFixtures: CustomOrderReferenceManagementDynamicFixtures;
 
-    before((): void => {
-      ({ staticFixtures, dynamicFixtures } = Cypress.env());
-    });
-
-    it('should be able to create an order with custom order reference', (): void => {
-      loginCustomerScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-      });
-      cartPage.visit();
-      cartPage.addCustomOrderReferenceInput(staticFixtures.orderReference);
-
-      checkoutScenario.execute({
-        paymentMethod: getPaymentMethodBasedOnEnv(),
+      before((): void => {
+        ({ staticFixtures, dynamicFixtures } = Cypress.env());
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      it('should be able to create an order with custom order reference', (): void => {
+        loginCustomerScenario.execute({
+          email: dynamicFixtures.customer.email,
+          password: staticFixtures.defaultPassword,
+        });
+        cartPage.visit();
+        cartPage.addCustomOrderReferenceInput(staticFixtures.orderReference);
 
-      userLoginScenario.execute({
-        username: dynamicFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
+        checkoutScenario.execute({
+          paymentMethod: getPaymentMethodBasedOnEnv(),
+        });
+
+        cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+
+        userLoginScenario.execute({
+          username: dynamicFixtures.rootUser.username,
+          password: staticFixtures.defaultPassword,
+        });
+
+        salesIndexPage.visit();
+        salesIndexPage.view();
+
+        cy.get('body').contains(staticFixtures.orderReference);
       });
 
-      salesIndexPage.visit();
-      salesIndexPage.view();
-
-      cy.get('body').contains(staticFixtures.orderReference);
-    });
-
-    function getPaymentMethodBasedOnEnv(): string {
-      return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice';
+      function getPaymentMethodBasedOnEnv(): string {
+        return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
+          ? 'dummyMarketplacePaymentInvoice'
+          : 'dummyPaymentInvoice';
+      }
     }
-  }
-);
+  );
