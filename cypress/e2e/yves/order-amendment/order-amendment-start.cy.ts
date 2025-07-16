@@ -85,7 +85,7 @@ describe('order amendment start', { tags: ['@yves', '@order-amendment'] }, (): v
     cartPage.visit();
 
     cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).each(($input) => {
-      cy.wrap($input).should('have.value', '2');
+      cy.wrap($input).should('have.value', isB2c() ? '4': '2');
     });
   });
 

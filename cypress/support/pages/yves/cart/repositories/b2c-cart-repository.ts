@@ -31,7 +31,7 @@ export class B2cCartRepository implements CartRepository {
     });
   };
   getCartItemChangeQuantityField = (sku: string): Cypress.Chainable =>
-    this.findCartItemChangeQuantityForm(sku).find('[data-qa="quantity-counter"]');
+    this.findCartItemChangeQuantityForm(sku).find('[data-qa="component quantity-counter"] input:visible');
   findClearCartForm = (): Cypress.Chainable => cy.get('[data-qa="multi-cart-clear-form"]');
   getCheckoutButton = (): Cypress.Chainable => cy.get('[data-qa="cart-go-to-checkout"]:visible');
   findCartItemRemovalSubmit = (sku: string): Cypress.Chainable => this.findCartItemRemovalForm(sku).find('button');
