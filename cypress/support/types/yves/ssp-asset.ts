@@ -63,7 +63,7 @@ interface Product {
   localized_attributes: [
     {
       name: string;
-    },
+    }
   ];
 }
 

@@ -6,9 +6,9 @@ export class B2bMpOrderDetailsRepository implements OrderDetailsRepository {
   getReorderAllButton(): Cypress.Chainable {
     return cy.get('[data-qa="reorder-all-button"]');
   }
-    getOrderReferenceBlock(): Cypress.Chainable {
-        return cy.get('[data-qa="order-reference"]').invoke('text');
-    }
+  getOrderReferenceBlock(): Cypress.Chainable {
+    return cy.get('[data-qa="order-reference"]').invoke('text');
+  }
   getReorderSelectedItemsButton(): Cypress.Chainable {
     return cy.get('.js-cart-reorder-form__trigger');
   }
@@ -20,7 +20,7 @@ export class B2bMpOrderDetailsRepository implements OrderDetailsRepository {
   }
 
   getEditOrderForm(): Cypress.Chainable {
-      return cy.get('[data-qa="component order-amendment"] [data-qa="component remote-form-submit"]');
+    return cy.get('[data-qa="component order-amendment"] [data-qa="component remote-form-submit"]');
   }
   getOrderDetailTableBlock(): Cypress.Chainable {
     return cy.get('[data-qa="component order-detail-table"]');

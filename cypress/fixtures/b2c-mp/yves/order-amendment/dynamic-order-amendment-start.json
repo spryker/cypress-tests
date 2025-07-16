@@ -21,12 +21,12 @@
           "key": "locale",
           "arguments": { "id_locale": 66, "locale_name": "en_US" }
         },
-          {
-              "type": "transfer",
-              "name": "StoreTransfer",
-              "key": "store",
-              "arguments": { "id_store": 1, "name": "DE" }
-          },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 1, "name": "DE" }
+        },
         {
           "type": "helper",
           "name": "haveCountry",
@@ -120,26 +120,26 @@
           "name": "confirmCustomer",
           "arguments": ["#customer8"]
         },
-          {
-              "type": "builder",
-              "name": "MerchantProfileBuilder",
-              "key": "merchantProfile"
-          },
-          {
-              "type": "helper",
-              "name": "haveMerchant",
-              "key": "merchant",
-              "arguments": [
-                  {
-                      "merchantProfile": "#merchantProfile",
-                      "isActive": true,
-                      "status": "approved",
-                      "storeRelation": {
-                          "idStores": ["#store.id_store"]
-                      }
-                  }
-              ]
-          },
+        {
+          "type": "builder",
+          "name": "MerchantProfileBuilder",
+          "key": "merchantProfile"
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchant",
+          "key": "merchant",
+          "arguments": [
+            {
+              "merchantProfile": "#merchantProfile",
+              "isActive": true,
+              "status": "approved",
+              "storeRelation": {
+                "idStores": ["#store.id_store"]
+              }
+            }
+          ]
+        },
         {
           "type": "helper",
           "name": "haveCustomerAddress",
@@ -333,46 +333,46 @@
             }
           ]
         },
-          {
-              "type": "helper",
-              "name": "haveMerchantProduct",
-              "arguments": [
-                  {
-                      "idProductAbstract": "#product.fk_product_abstract",
-                      "idMerchant": "#merchant.id_merchant"
-                  }
-              ]
-          },
-          {
-              "type": "helper",
-              "name": "haveMerchantProduct",
-              "arguments": [
-                  {
-                      "idProductAbstract": "#productInActive.fk_product_abstract",
-                      "idMerchant": "#merchant.id_merchant"
-                  }
-              ]
-          },
-          {
-              "type": "helper",
-              "name": "haveMerchantProduct",
-              "arguments": [
-                  {
-                      "idProductAbstract": "#productOutOfStock.fk_product_abstract",
-                      "idMerchant": "#merchant.id_merchant"
-                  }
-              ]
-          },
-          {
-              "type": "helper",
-              "name": "haveMerchantProduct",
-              "arguments": [
-                  {
-                      "idProductAbstract": "#productOutOfStock2.fk_product_abstract",
-                      "idMerchant": "#merchant.id_merchant"
-                  }
-              ]
-          },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#product.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#productInActive.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#productOutOfStock.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#productOutOfStock2.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
+            }
+          ]
+        },
         {
           "type": "helper",
           "name": "havePersistentQuote",
@@ -384,7 +384,7 @@
                   "sku": "#product.sku",
                   "abstractSku": "#product.abstract_sku",
                   "quantity": 1,
-                    "merchantReference": "#merchant.merchant_reference"
+                  "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             }
@@ -401,7 +401,7 @@
                   "sku": "#product.sku",
                   "abstractSku": "#product.abstract_sku",
                   "quantity": 1,
-                    "merchantReference": "#merchant.merchant_reference"
+                  "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             }
@@ -418,7 +418,7 @@
                   "sku": "#product.sku",
                   "abstractSku": "#product.abstract_sku",
                   "quantity": 1,
-                    "merchantReference": "#merchant.merchant_reference"
+                  "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             }
@@ -435,7 +435,7 @@
                   "sku": "#product.sku",
                   "abstractSku": "#product.abstract_sku",
                   "quantity": 1,
-                    "merchantReference": "#merchant.merchant_reference"
+                  "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             }
@@ -452,7 +452,7 @@
                   "sku": "#product.sku",
                   "abstractSku": "#product.abstract_sku",
                   "quantity": 1,
-                    "merchantReference": "#merchant.merchant_reference"
+                  "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             }

@@ -46,6 +46,6 @@ export interface ReorderStaticFixtures {
 }
 
 export interface ReorderProductOfferStaticFixtures {
-    defaultPassword: string;
-    soldByText: string;
+  defaultPassword: string;
+  soldByText: string;
 }

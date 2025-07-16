@@ -97,7 +97,7 @@ describeDmsSuiteAndMp('order creation dms', { tags: ['@mp', '@marketplace-order-
     salesIndexPage.view();
 
     salesIndexPage.getOrderReference().then((orderReference) => {
-        salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
+      salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
       salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
       salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
 

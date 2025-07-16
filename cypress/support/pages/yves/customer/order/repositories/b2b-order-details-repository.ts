@@ -4,7 +4,7 @@ import { OrderDetailsRepository } from '../order-details-repository';
 @injectable()
 export class B2bOrderDetailsRepository implements OrderDetailsRepository {
   getReorderAllButton(): Cypress.Chainable {
-      return cy.get('[data-qa="reorder-all-button"]');
+    return cy.get('[data-qa="reorder-all-button"]');
   }
   getOrderReferenceBlock(): Cypress.Chainable {
     return cy.get('[data-qa="order-reference"]').invoke('text');
@@ -20,7 +20,7 @@ export class B2bOrderDetailsRepository implements OrderDetailsRepository {
   }
 
   getEditOrderForm(): Cypress.Chainable {
-      return cy.get('[data-qa="component order-amendment"] [data-qa="component remote-form-submit"]');
+    return cy.get('[data-qa="component order-amendment"] [data-qa="component remote-form-submit"]');
   }
   getOrderDetailTableBlock(): Cypress.Chainable {
     return cy.get('[data-qa="component order-detail-table"]');
