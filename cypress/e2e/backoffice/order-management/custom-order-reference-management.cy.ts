@@ -8,7 +8,7 @@ import { CartPage, CustomerOverviewPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
-(['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+(['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ||  (Cypress.env('ENV_IS_SSP_ENABLED') ? describe.skip : describe)(
   'custom order reference management',
   { tags: ['@backoffice', '@order-management'] },
   (): void => {
