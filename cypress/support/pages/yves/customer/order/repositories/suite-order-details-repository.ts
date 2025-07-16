@@ -18,6 +18,9 @@ export class SuiteOrderDetailsRepository implements OrderDetailsRepository {
   getEditOrderButton(): Cypress.Chainable {
     return this.getEditOrderForm().find('button');
   }
+    getEditOrderConfirmButton(): Cypress.Chainable {
+        return cy.get('button:contains("Clear Cart & Continue")');
+    }
   getEditOrderForm(): Cypress.Chainable {
     return cy.get('[data-qa="component remote-form-submit"]');
   }
