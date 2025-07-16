@@ -42,7 +42,7 @@ describe('order amendment start', { tags: ['@yves', '@order-amendment'] }, (): v
       orderDetailsPage.editOrder();
 
       cartPage.assertPageLocation();
-      cartPage.assertCartName(`Editing Order ${orderReference}`);
+      cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
       cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
 
       customerOverviewPage.viewLastPlacedOrder();
@@ -116,7 +116,7 @@ describe('order amendment start', { tags: ['@yves', '@order-amendment'] }, (): v
       orderDetailsPage.editOrder();
 
       cartPage.assertPageLocation();
-      cartPage.assertCartName(`Editing Order ${orderReference}`);
+      cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
       cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
 
       customerOverviewPage.viewLastPlacedOrder();
@@ -151,7 +151,7 @@ describe('order amendment start', { tags: ['@yves', '@order-amendment'] }, (): v
       orderDetailsPage.editOrder();
 
       cartPage.assertPageLocation();
-      cartPage.assertCartName(`Editing Order ${orderReference}`);
+      cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
       cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
 
       customerOverviewPage.viewLastPlacedOrder();
@@ -269,4 +269,8 @@ describe('order amendment start', { tags: ['@yves', '@order-amendment'] }, (): v
       ? 'dummyMarketplacePaymentInvoice'
       : 'dummyPaymentInvoice';
   }
+
+    function isB2c(): boolean {
+        return ['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'));
+    }
 });
