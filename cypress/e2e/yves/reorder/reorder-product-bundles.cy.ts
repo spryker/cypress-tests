@@ -41,7 +41,13 @@ describe(
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.productBundle.sku });
       productPage.addToCart();
 
-      checkoutScenario.execute({ idCustomerAddress: dynamicFixtures.address.id_customer_address });
+      checkoutScenario.execute({ idCustomerAddress: dynamicFixtures.address.id_customer_address, paymentMethod: getPaymentMethodBasedOnEnv() });
     }
+
+      function getPaymentMethodBasedOnEnv(): string {
+          return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
+              ? 'dummyMarketplacePaymentInvoice'
+              : 'dummyPaymentInvoice';
+      }
   }
 );
