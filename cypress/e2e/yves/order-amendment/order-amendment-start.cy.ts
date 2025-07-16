@@ -104,6 +104,7 @@ describe(
       checkoutScenario.execute({
         idCustomerAddress: dynamicFixtures.address5.id_customer_address,
         shouldTriggerOmsInCli: true,
+          paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
       deactivateProductInBackoffice();
@@ -138,6 +139,7 @@ describe(
       checkoutScenario.execute({
         idCustomerAddress: dynamicFixtures.address6.id_customer_address,
         shouldTriggerOmsInCli: true,
+          paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
       removeProductStock(dynamicFixtures.productOutOfStock.abstract_sku);
@@ -182,6 +184,7 @@ describe(
       checkoutScenario.execute({
         idCustomerAddress: dynamicFixtures.address8.id_customer_address,
         shouldTriggerOmsInCli: true,
+          paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
       removeProductStock(dynamicFixtures.productOutOfStock2.abstract_sku);

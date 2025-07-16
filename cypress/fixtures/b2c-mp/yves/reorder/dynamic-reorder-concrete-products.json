@@ -10,6 +10,12 @@
           "key": "locale",
           "arguments": { "id_locale": 66, "locale_name": "en_US" }
         },
+          {
+              "type": "transfer",
+              "name": "StoreTransfer",
+              "key": "store",
+              "arguments": { "id_store": 1, "name": "DE", "defaultCurrencyIsoCode": "EUR" }
+          },
         {
           "type": "helper",
           "name": "haveCustomer",
@@ -54,12 +60,26 @@
           "name": "confirmCustomer",
           "arguments": ["#customer4"]
         },
-        {
-          "type": "transfer",
-          "name": "StoreTransfer",
-          "key": "store",
-          "arguments": { "id_store": 1, "name": "DE", "defaultCurrencyIsoCode": "EUR" }
-        },
+          {
+              "type": "builder",
+              "name": "MerchantProfileBuilder",
+              "key": "merchantProfile"
+          },
+          {
+              "type": "helper",
+              "name": "haveMerchant",
+              "key": "merchant",
+              "arguments": [
+                  {
+                      "merchantProfile": "#merchantProfile",
+                      "isActive": true,
+                      "status": "approved",
+                      "storeRelation": {
+                          "idStores": ["#store.id_store"]
+                      }
+                  }
+              ]
+          },
         {
           "type": "helper",
           "name": "haveCountry",
@@ -172,6 +192,26 @@
           "key": "productOptionValue",
           "arguments": ["#product2.abstract_sku", "#store"]
         },
+          {
+              "type": "helper",
+              "name": "haveMerchantProduct",
+              "arguments": [
+                  {
+                      "idProductAbstract": "#product1.fk_product_abstract",
+                      "idMerchant": "#merchant.id_merchant"
+                  }
+              ]
+          },
+          {
+              "type": "helper",
+              "name": "haveMerchantProduct",
+              "arguments": [
+                  {
+                      "idProductAbstract": "#product2.fk_product_abstract",
+                      "idMerchant": "#merchant.id_merchant"
+                  }
+              ]
+          },
         {
           "type": "helper",
           "name": "havePersistentQuote",
@@ -182,12 +222,14 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                    "merchantReference": "#merchant.merchant_reference"
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                    "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             }
@@ -203,12 +245,14 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                    "merchantReference": "#merchant.merchant_reference"
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                    "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             }
@@ -224,12 +268,14 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "quantity": 3
+                  "quantity": 3,
+                    "merchantReference": "#merchant.merchant_reference"
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
-                  "quantity": 2
+                  "quantity": 2,
+                    "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             }
@@ -246,7 +292,8 @@
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
                   "quantity": 1,
-                  "productOptions": [{ "idProductOptionValue": "#productOptionValue.id_product_option_value" }]
+                  "productOptions": [{ "idProductOptionValue": "#productOptionValue.id_product_option_value" }],
+                    "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             }

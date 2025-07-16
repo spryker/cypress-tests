@@ -75,7 +75,13 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      checkoutScenario.execute({ idCustomerAddress: idCustomerAddress });
+      checkoutScenario.execute({ idCustomerAddress: idCustomerAddress, paymentMethod: getPaymentMethodBasedOnEnv() });
     }
+
+      function getPaymentMethodBasedOnEnv(): string {
+          return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
+              ? 'dummyMarketplacePaymentInvoice'
+              : 'dummyPaymentInvoice';
+      }
   }
 );
