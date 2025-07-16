@@ -23,6 +23,7 @@ export default defineConfig({
   env: {
     repositoryId: process.env.ENV_REPOSITORY_ID,
     isDynamicStoreEnabled: getEnvVar('ENV_IS_DYNAMIC_STORE_ENABLED', 'SPRYKER_DYNAMIC_STORE_MODE') === 'true',
+    ENV_IS_SSP_ENABLED: getEnvVar('ENV_IS_SSP_ENABLED', 'ENV_IS_SSP_ENABLED') === 'true',
     backofficeUrl: `${protocol}://${backofficeHost}`,
     merchantPortalUrl: `${protocol}://${merchantPortalHost}`,
     glueUrl: `${protocol}://${glueHost}`,

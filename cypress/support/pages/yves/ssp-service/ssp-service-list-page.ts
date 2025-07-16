@@ -69,11 +69,11 @@ export class SspServiceListPage extends YvesPage {
 
   // Search methods
   setSearchType(type: string): void {
-    this.repository.getSearchTypeSelect().select(type, {force: true});
+    this.repository.getSearchTypeSelect().select(type, { force: true });
   }
 
   setSearchText(text: string): void {
-    this.repository.getSearchTextInput().clear().type(text, {force: true});
+    this.repository.getSearchTextInput().clear().type(text, { force: true });
   }
 
   getBusinessUnitSelect(): Chainable<JQuery<HTMLElement>> {

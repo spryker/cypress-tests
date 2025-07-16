@@ -59,7 +59,6 @@ export interface SspServiceRepository {
    */
   getServiceCancelButton(): Chainable<JQueryElement>;
 
-
   getSspServicePageTitle(): Cypress.Chainable;
 
   getFiltersTriggerSelector(): Cypress.Chainable;

@@ -171,7 +171,6 @@ import { SuiteSspDashboardManagementRepository } from '../../pages/yves/ssp-dash
 import { B2bMpSspDashboardManagementRepository } from '../../pages/yves/ssp-dashboard-management/repositories/b2b-mp-ssp-dashboard-management-repository';
 import { B2bSspDashboardManagementRepository } from '../../pages/yves/ssp-dashboard-management/repositories/b2b-ssp-dashboard-management-repository';
 
-
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
 const suiteMappings: BindingsMap = {

@@ -131,23 +131,21 @@
         },
         {
           "type": "helper",
-          "name": "haveFileAttachment",
+          "name": "haveCompanyFileAttachment",
           "arguments": [
             {
-              "file": "#file1",
-              "entity_id": "#company1.id_company",
-              "entity_name": "company"
+              "idFile": "#file1.id_file",
+              "idCompany": "#company1.id_company"
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveFileAttachment",
+          "name": "haveCompanyFileAttachment",
           "arguments": [
             {
-              "file": "#file2",
-              "entity_id": "#company1.id_company",
-              "entity_name": "company"
+              "idFile": "#file2.id_file",
+              "idCompany": "#company1.id_company"
             }
           ]
         }

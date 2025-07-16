@@ -44,13 +44,21 @@ export class SspFileManagementListPage extends YvesPage {
     cy.get(this.repository.getApplyFiltersButtonSelector()).click();
   }
 
+  filterByBusinessEntity(accessLevel: string): void {
+    cy.get(this.repository.getBusinessEntityFilterSelector()).select(accessLevel, { force: true });
+  }
+
+  filterBySspAssetEntity(accessLevel: string): void {
+    cy.get(this.repository.getSspAssetEntityFilterSelector()).select(accessLevel, { force: true });
+  }
+
   searchByName(searchTerm: string): void {
     cy.get(this.repository.getSearchFieldSelector()).clear();
     cy.get(this.repository.getSearchFieldSelector()).type(searchTerm);
     cy.get(this.repository.getApplyFiltersButtonSelector()).click();
   }
 
-  applyFilters(searchTerm: string, fileType: string): void {
+  applyFilterByTypeAndSearchTerm(searchTerm: string, fileType: string): void {
     cy.get(this.repository.getSearchFieldSelector()).clear();
     cy.get(this.repository.getSearchFieldSelector()).type(searchTerm);
     cy.get(this.repository.getTypeFilterSelector()).select(fileType, { force: true });
@@ -62,7 +70,7 @@ export class SspFileManagementListPage extends YvesPage {
     cy.get(this.repository.getTypeFilterSelector()).should('have.value', fileType.toLowerCase());
   }
 
-  openFilters(): void {
-    cy.get(this.repository.getFiltersTriggerSelector()).click();
+  applyFilters(): void {
+    cy.get(this.repository.getApplyFiltersButtonSelector()).click();
   }
 }
