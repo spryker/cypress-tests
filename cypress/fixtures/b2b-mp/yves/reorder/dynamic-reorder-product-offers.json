@@ -274,7 +274,33 @@
             },
             "#merchant2.stocks"
           ]
-        }
+        },
+          {
+              "type": "helper",
+              "name": "haveUrl",
+              "key": "merchantUrl1",
+              "arguments": [
+                  {
+                      "fkLocale": "#locale.id_locale",
+                      "fkResourceMerchant": "#merchant1.id_merchant",
+                      "urlPrefix": "/en/merchant/dummy-en-prefix-",
+                      "url": "#merchant1.name"
+                  }
+              ]
+          },
+          {
+              "type": "helper",
+              "name": "haveUrl",
+              "key": "merchantUrl2",
+              "arguments": [
+                  {
+                      "fkLocale": "#locale.id_locale",
+                      "fkResourceMerchant": "#merchant2.id_merchant",
+                      "urlPrefix": "/en/merchant/dummy-en-prefix-",
+                      "url": "#merchant2.name"
+                  }
+              ]
+          }
       ]
     }
   }

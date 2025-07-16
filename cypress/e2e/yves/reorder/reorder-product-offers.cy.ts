@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { ReorderProductOffersDynamicFixtures, ReorderStaticFixtures } from '@interfaces/yves';
+import { ReorderProductOffersDynamicFixtures, ReorderProductOfferStaticFixtures } from '@interfaces/yves';
 import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
@@ -16,7 +16,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const checkoutScenario = container.get(CheckoutScenario);
 
-    let staticFixtures: ReorderStaticFixtures;
+    let staticFixtures: ReorderProductOfferStaticFixtures;
     let dynamicFixtures: ReorderProductOffersDynamicFixtures;
 
     before((): void => {
@@ -33,10 +33,10 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
         cartPage.assertPageLocation();
         cartPage.assertCartName(`Reorder from Order ${orderReference}`);
 
-        cy.get('body').contains(`Sold by ${dynamicFixtures.merchant1.name}`).should('exist');
+        cy.get('body').contains(`${staticFixtures.soldByText} ${dynamicFixtures.merchant1.name}`).should('exist');
         cy.get('body').contains(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
 
-        cy.get('body').contains(`Sold by ${dynamicFixtures.merchant2.name}`).should('exist');
+        cy.get('body').contains(`${staticFixtures.soldByText} ${dynamicFixtures.merchant2.name}`).should('exist');
         cy.get('body').contains(dynamicFixtures.product2.localized_attributes[0].name).should('exist');
       });
     });
