@@ -32,6 +32,12 @@
           "key": "localeDE",
           "arguments": { "id_locale": 46, "locale_name": "de_DE" }
         },
+          {
+              "type": "transfer",
+              "name": "StoreTransfer",
+              "key": "store",
+              "arguments": { "id_store": 1, "name": "DE" }
+          },
         {
           "type": "helper",
           "name": "haveCountry",
@@ -92,6 +98,26 @@
           "name": "confirmCustomer",
           "arguments": ["#customer5"]
         },
+          {
+              "type": "builder",
+              "name": "MerchantProfileBuilder",
+              "key": "merchantProfile"
+          },
+          {
+              "type": "helper",
+              "name": "haveMerchant",
+              "key": "merchant",
+              "arguments": [
+                  {
+                      "merchantProfile": "#merchantProfile",
+                      "isActive": true,
+                      "status": "approved",
+                      "storeRelation": {
+                          "idStores": ["#store.id_store"]
+                      }
+                  }
+              ]
+          },
         {
           "type": "helper",
           "name": "haveCustomerAddress",
@@ -251,12 +277,6 @@
           },
         {
           "type": "transfer",
-          "name": "StoreTransfer",
-          "key": "store",
-          "arguments": { "id_store": 1, "name": "DE" }
-        },
-        {
-          "type": "transfer",
           "name": "ProductImageTransfer",
           "key": "productImage",
           "arguments": {
@@ -408,6 +428,46 @@
             }
           ]
         },
+          {
+              "type": "helper",
+              "name": "haveMerchantProduct",
+              "arguments": [
+                  {
+                      "idProductAbstract": "#product1.fk_product_abstract",
+                      "idMerchant": "#merchant.id_merchant"
+                  }
+              ]
+          },
+          {
+              "type": "helper",
+              "name": "haveMerchantProduct",
+              "arguments": [
+                  {
+                      "idProductAbstract": "#product2.fk_product_abstract",
+                      "idMerchant": "#merchant.id_merchant"
+                  }
+              ]
+          },
+          {
+              "type": "helper",
+              "name": "haveMerchantProduct",
+              "arguments": [
+                  {
+                      "idProductAbstract": "#product3.fk_product_abstract",
+                      "idMerchant": "#merchant.id_merchant"
+                  }
+              ]
+          },
+          {
+              "type": "helper",
+              "name": "haveMerchantProduct",
+              "arguments": [
+                  {
+                      "idProductAbstract": "#product4.fk_product_abstract",
+                      "idMerchant": "#merchant.id_merchant"
+                  }
+              ]
+          },
         {
           "type": "helper",
           "name": "havePersistentQuote",
@@ -418,7 +478,8 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                    "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             }
@@ -434,7 +495,8 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                    "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             }
@@ -450,7 +512,8 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                    "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             }
@@ -466,7 +529,8 @@
                 {
                   "sku": "#product3.sku",
                   "abstractSku": "#product3.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                    "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             }
@@ -482,12 +546,14 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                    "merchantReference": "#merchant.merchant_reference"
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                    "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             }

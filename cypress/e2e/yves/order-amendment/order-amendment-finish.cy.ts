@@ -102,6 +102,7 @@ describe(
       checkoutScenario.execute({
         idCustomerAddress: dynamicFixtures.address4.id_customer_address,
         shouldTriggerOmsInCli: true,
+          paymentMethod: staticFixtures.paymentMethodSyncFlow
       });
 
       customerOverviewPage.viewLastPlacedOrder();
