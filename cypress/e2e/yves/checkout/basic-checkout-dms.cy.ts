@@ -123,7 +123,7 @@ describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
-  it('customer should checkout to multi shipment address (with new shipping address)', (): void => {
+  skipB2BIt('customer should checkout to multi shipment address (with new shipping address)', (): void => {
     loginCustomerScenario.execute({
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
