@@ -9,7 +9,7 @@ export class B2cCustomerOverviewRepository implements CustomerOverviewRepository
     return cy.get('[data-qa="component order-table"]').find('tr').eq(1).contains('a', 'View Order');
   }
   getOrderedProductSelector(productName: string): string {
-    return `h1:contains("${productName}")`;
+      return `div[data-qa="product-item-info"]:contains("${productName}")`;
   }
   getFirstShippingAddress(): Cypress.Chainable {
     return cy.get('[data-qa="component display-address"]').first();
