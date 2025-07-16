@@ -528,7 +528,7 @@
               "name": "haveMerchantProduct",
               "arguments": [
                   {
-                      "idProductAbstract": "#productOutOfStoc2.fk_product_abstract",
+                      "idProductAbstract": "#productOutOfStock2.fk_product_abstract",
                       "idMerchant": "#merchant.id_merchant"
                   }
               ]

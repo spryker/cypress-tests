@@ -250,11 +250,21 @@ describe(
       salesIndexPage.visit();
       salesIndexPage.view();
 
-      salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
+      salesDetailPage.triggerOms({
+          state: 'skip grace period',
+          shouldTriggerOmsInCli: true,
+          paymentMethod: getPaymentMethodBasedOnEnv(),
+      });
     }
 
     function skipB2cIt(description: string, testFn: () => void): void {
       (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
     }
+
+      function getPaymentMethodBasedOnEnv(): string {
+          return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
+              ? 'dummyMarketplacePaymentInvoice'
+              : 'dummyPaymentInvoice';
+      }
   }
 );
