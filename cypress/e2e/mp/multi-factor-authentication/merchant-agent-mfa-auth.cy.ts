@@ -27,10 +27,15 @@ import {
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
     });
 
+    beforeEach((): void => {
+      cy.cleanUpUserMultiFactorAuth();
+    });
+
     it('agent (merchant user) should handle MFA activation and login flow, then deactivate MFA', (): void => {
       merchantAgentLoginUserScenario.execute({
         username: dynamicFixtures.merchantAgentUserOne.username,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
 
       mpAgentDashboardPage.visit();

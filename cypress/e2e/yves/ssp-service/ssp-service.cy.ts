@@ -202,7 +202,7 @@ interface DynamicFixtures {
       //   const tomorrow = sspServiceListPage.updateServiceDateToTomorrow();
 
       //   // Verify redirection to services list
-      //   cy.url().should('include', '/ssp/service/list');
+      //   cy.url().should('include', '/customer/ssp-service/list');
 
       //   // Verify first service was rescheduled
       //   sspServiceListPage.verifyServiceRescheduled(tomorrow);
