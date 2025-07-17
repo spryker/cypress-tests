@@ -23,6 +23,31 @@
         },
         {
           "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [{ "isActive": true, "status": "approved" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [{ "fkCompany": "#company.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUserOne",
+          "arguments": [
+            {
+              "customer": "#customerOne",
+              "fkCustomer": "#customerOne.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveCustomer",
           "key": "customerTwo",
           "arguments": [{ "locale": "#locale", "password": "change123" }]
@@ -32,6 +57,19 @@
           "name": "confirmCustomer",
           "key": "confirmedCustomerTwo",
           "arguments": ["#customerTwo"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUserTwo",
+          "arguments": [
+            {
+              "customer": "#customerTwo",
+              "fkCustomer": "#customerTwo.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
         },
         {
           "type": "helper",
@@ -47,6 +85,19 @@
         },
         {
           "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUserThree",
+          "arguments": [
+            {
+              "customer": "#customerThree",
+              "fkCustomer": "#customerThree.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveCustomer",
           "key": "customerFour",
           "arguments": [{ "locale": "#locale", "password": "change123" }]
@@ -56,6 +107,19 @@
           "name": "confirmCustomer",
           "key": "confirmedCustomerFour",
           "arguments": ["#customerFour"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUserFour",
+          "arguments": [
+            {
+              "customer": "#customerFour",
+              "fkCustomer": "#customerFour.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
         }
       ]
     }

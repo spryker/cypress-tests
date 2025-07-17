@@ -38,6 +38,7 @@ describe('user mfa auth', { tags: ['@backoffice', '@user-account-management'] },
 
   beforeEach((): void => {
     cy.cleanUpUserMultiFactorAuth();
+    cy.cleanUpCustomerMultiFactorAuth();
   });
 
   it('should verify successful MFA activation and subsequent authenticated login', (): void => {
