@@ -12,7 +12,7 @@ export class B2bProductRepository implements ProductRepository {
   getProductConfigurator = (): Cypress.Chainable => cy.get('[data-qa="component product-configurator"]');
   getAddToCartButton = (): Cypress.Chainable => cy.get('[data-qa="add-to-cart-button"]');
   getAddToCartSuccessMessage = (): string => 'Items added successfully';
-  getQuantityInput = (): Cypress.Chainable => cy.get('[data-qa="quantity-counter"]');
+  getQuantityInput = (): Cypress.Chainable => cy.get('[data-qa="quantity-input"]');
   getToggleComparisonListButton = (): Cypress.Chainable => cy.get('[data-qa="add-to-compare-list-button"]');
   getAddToComparisonListSuccessMessage = (): string => 'Added to comparison';
   getRemoveFromComparisonListSuccessMessage = (): string => 'Product was removed from the comparison list.';
