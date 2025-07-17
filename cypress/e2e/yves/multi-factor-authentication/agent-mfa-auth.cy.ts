@@ -10,10 +10,7 @@ import { AgentMfaLoginScenario } from '../../../support/scenarios/yves/agent-mfa
 import { AgentLoginScenario } from '../../../support/scenarios/yves/agent-login-scenario';
 import { retryableBefore } from '../../../support/e2e';
 
-(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
-  'agent mfa auth [suite]',
-  { tags: ['@yves', '@customer-account-management'] },
-  (): void => {
+describe('agent mfa auth', { tags: ['@yves', '@customer-account-management'] }, (): void => {
     const agentOverviewPage = container.get(AgentOverviewPage);
     const logoutScenario = container.get(AgentLogoutScenario);
     const loginScenario = container.get(AgentLoginScenario);

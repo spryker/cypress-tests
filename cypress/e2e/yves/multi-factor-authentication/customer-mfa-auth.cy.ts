@@ -13,10 +13,7 @@ import { retryableBefore } from '../../../support/e2e';
 import { CustomerProfilePage } from '../../../support/pages/yves/customer/profile/customer-profile-page';
 import { CustomerProfileScenario } from '../../../support/scenarios/yves/customer-profile-scenario';
 
-(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
-  'customer mfa auth [suite]',
-  { tags: ['@yves', '@customer-account-management'] },
-  (): void => {
+describe('customer mfa auth', { tags: ['@yves', '@customer-account-management'] }, (): void => {
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const customerDeletePage = container.get(CustomerDeletePage);
     const customerProfilePage = container.get(CustomerProfilePage);
