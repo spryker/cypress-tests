@@ -32,6 +32,7 @@ describe('agent mfa auth', { tags: ['@yves', '@customer-account-management'] }, 
     loginScenario.execute({
       username: dynamicFixtures.agentOne.username,
       password: staticFixtures.defaultPassword,
+      withoutSession: true,
     });
 
     agentOverviewPage.visit();
@@ -52,6 +53,7 @@ describe('agent mfa auth', { tags: ['@yves', '@customer-account-management'] }, 
     loginScenario.execute({
       username: dynamicFixtures.agentTwo.username,
       password: staticFixtures.defaultPassword,
+      withoutSession: true,
     });
 
     agentOverviewPage.visit();
