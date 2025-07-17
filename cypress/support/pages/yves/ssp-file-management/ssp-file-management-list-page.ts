@@ -73,4 +73,8 @@ export class SspFileManagementListPage extends YvesPage {
   applyFilters(): void {
     cy.get(this.repository.getApplyFiltersButtonSelector()).click();
   }
+
+  openFilters(): void {
+    cy.get(this.repository.getFiltersTriggerSelector()).click();
+  }
 }

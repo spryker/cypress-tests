@@ -66,6 +66,10 @@ export class SspAssetListPage extends YvesPage {
   getAccessTableFilterByCompanyValue(): string {
     return 'filterByCompany';
   }
+
+  openFilters(): void {
+    cy.get(this.repository.getFiltersTriggerSelector()).click();
+  }
 }
 
 interface SspAsset {

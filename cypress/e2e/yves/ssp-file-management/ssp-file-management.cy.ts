@@ -29,6 +29,11 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
+
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
+
     sspFileManagementListPage.verifyListPage();
   });
 
@@ -106,6 +111,9 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
     sspFileManagementListPage.filterByType(staticFixtures.filter_value_jpeg);
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
     sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file2.file_name);
@@ -120,13 +128,25 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
 
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
+
     sspFileManagementListPage.searchByName(dynamicFixtures.file1.file_name);
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
     sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file2.file_name);
 
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
+
     sspFileManagementListPage.searchByName(dynamicFixtures.file2.file_name);
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
     sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file1.file_name);
+
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
 
     sspFileManagementListPage.searchByName(staticFixtures.prompt_nonexistent);
     sspFileManagementListPage.assertNoResults();
@@ -140,6 +160,10 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     });
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
+
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
 
     sspFileManagementListPage.applyFilterByTypeAndSearchTerm(
       dynamicFixtures.file3.file_name,
@@ -159,6 +183,11 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     customerOverviewPage.visit();
     customerOverviewPage.clickMyFilesLink();
+
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
+
     sspFileManagementListPage.verifyListPage();
 
     sspFileManagementListPage.filterByBusinessEntity('all');
@@ -169,6 +198,10 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file3.file_name);
     sspFileManagementListPage.assertFileExists(dynamicFixtures.fileSspAsset1.file_name);
 
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
+
     sspFileManagementListPage.filterByBusinessEntity('company_user');
     sspFileManagementListPage.filterBySspAssetEntity('all');
     sspFileManagementListPage.applyFilters();
@@ -178,6 +211,10 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file3.file_name);
     sspFileManagementListPage.assertFileExists(dynamicFixtures.fileSspAsset1.file_name);
 
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
+
     sspFileManagementListPage.filterByBusinessEntity('company');
     sspFileManagementListPage.filterBySspAssetEntity('none');
     sspFileManagementListPage.applyFilters();
@@ -185,6 +222,10 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file3.file_name);
     sspFileManagementListPage.assertFileNotExists(dynamicFixtures.fileSspAsset1.file_name);
+
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
 
     sspFileManagementListPage.filterByBusinessEntity('none');
     sspFileManagementListPage.filterBySspAssetEntity('all');
@@ -194,6 +235,10 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file3.file_name);
     sspFileManagementListPage.assertFileExists(dynamicFixtures.fileSspAsset1.file_name);
 
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
+
     sspFileManagementListPage.filterByBusinessEntity(dynamicFixtures.businessUnit2C1.uuid.toString());
     sspFileManagementListPage.filterBySspAssetEntity('none');
     sspFileManagementListPage.applyFilters();
@@ -201,6 +246,10 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
     sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file3.file_name);
     sspFileManagementListPage.assertFileNotExists(dynamicFixtures.fileSspAsset1.file_name);
+
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      sspFileManagementListPage.openFilters();
+    }
 
     sspFileManagementListPage.filterByBusinessEntity('none');
     sspFileManagementListPage.filterBySspAssetEntity('all');
@@ -214,5 +263,5 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 });
 
 function describeForSsp(title: string, options: { tags: string[] }, fn: () => void): void {
-  (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, options, fn);
+  (['suite', 'b2b-mp', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, options, fn);
 }

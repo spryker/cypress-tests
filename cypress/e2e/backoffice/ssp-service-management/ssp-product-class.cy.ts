@@ -35,5 +35,5 @@ describeForSsp('Product Class Functionality', { tags: ['@backoffice', '@productM
 });
 
 function describeForSsp(title: string, options: { tags: string[] }, fn: () => void): void {
-  (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, options, fn);
+  (['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, options, fn);
 }

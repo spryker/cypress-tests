@@ -147,4 +147,8 @@ export class SuiteSspAssetRepository implements SspAssetRepository {
   getSspAssetFiltersSubmitButton(): Cypress.Chainable {
     return cy.get('[data-qa="submit-filters"]');
   }
+
+  getFiltersTriggerSelector(): string {
+    return '[data-qa="component filters-button"]';
+  }
 }
