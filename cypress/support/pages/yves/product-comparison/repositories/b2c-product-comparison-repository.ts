@@ -6,8 +6,8 @@ import * as Cypress from 'cypress';
 export class B2cProductComparisonRepository implements ProductComparisonRepository {
   getDeleteFromComparisonButton = (sku: string): Cypress.Chainable =>
     cy.get(`comparison-product-toggler[sku="${sku}"] > button`);
-  getClearComparisonListButton = (): Cypress.Chainable => cy.get('[data-qa="clear-comparison-list-button"]');
-  getComparisonPageNavigationLinkSelector = (): string => 'div.header__navigation-top comparison-link > a';
+  getClearComparisonListButton = (): Cypress.Chainable => cy.get('[data-qa="clear-compare-list-button"]');
+  getComparisonPageNavigationLinkSelector = (): string => '[data-qa="comparison-link-list-link"]:last';
   getProductItemSelector = (): string => '[data-qa="component product-item"]';
   getProductComparisonListIsEmptyMessage = (): string => 'Comparison list is empty.';
   getComparisonTableRowSelector = (): string => '[data-qa="component comparison-table"] .comparison-table__list-row';
