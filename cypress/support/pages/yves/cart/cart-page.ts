@@ -94,9 +94,9 @@ export class CartPage extends YvesPage {
     cy.get('body').contains(name).should('exist');
   };
 
-    assertCancelOrderAmendmentButton = (): void => {
-        this.repository.getCancelOrderAmendmentButton().should('be.visible');
-    };
+  assertCancelOrderAmendmentButton = (): void => {
+    this.repository.getCancelOrderAmendmentButton().should('be.visible');
+  };
 
   getCartItemSummary = (itemIndex: number): Cypress.Chainable => {
     return this.repository.getCartItemSummaryBlock(itemIndex);

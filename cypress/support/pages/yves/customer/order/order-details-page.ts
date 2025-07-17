@@ -27,9 +27,9 @@ export class OrderDetailsPage extends YvesPage {
   editOrder = (): void => {
     this.repository.getEditOrderButton().click();
 
-      if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
-        this.repository.getEditOrderConfirmButton().click();
-      }
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      this.repository.getEditOrderConfirmButton().click();
+    }
   };
 
   containsOrderState = (orderState: string): void => {

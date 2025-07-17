@@ -223,9 +223,9 @@
                 { "locale": "#localeDE", "name": "#localizedAttribute.name" }
               ]
             },
-              {
-                  "idTaxSet": 1
-              }
+            {
+              "idTaxSet": 1
+            }
           ]
         },
         {

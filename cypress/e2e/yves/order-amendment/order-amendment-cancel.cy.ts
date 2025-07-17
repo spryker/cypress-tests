@@ -27,13 +27,13 @@ describe('order amendment cancel', { tags: ['@yves', '@order-amendment'] }, (): 
 
     orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
       orderDetailsPage.editOrder();
-        cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
+      cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
 
-        cartPage.assertCancelOrderAmendmentButton();
+      cartPage.assertCancelOrderAmendmentButton();
       cartPage.cancelOrderAmendment();
 
       cartPage.visit();
-        cartPage.assertCartName(isB2c() ? 'Cart' : 'Shopping cart');
+      cartPage.assertCartName(isB2c() ? 'Cart' : 'Shopping cart');
 
       customerOverviewPage.viewLastPlacedOrder();
       orderDetailsPage.containsOrderState('New');
@@ -59,7 +59,7 @@ describe('order amendment cancel', { tags: ['@yves', '@order-amendment'] }, (): 
       : 'dummyPaymentInvoice';
   }
 
-    function isB2c(): boolean {
-        return ['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'));
-    }
+  function isB2c(): boolean {
+    return ['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'));
+  }
 });

@@ -67,8 +67,8 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
         : 'dummyPaymentInvoice';
     }
 
-      function isB2c(): boolean {
-          return ['b2c-mp'].includes(Cypress.env('repositoryId'));
-      }
+    function isB2c(): boolean {
+      return ['b2c-mp'].includes(Cypress.env('repositoryId'));
+    }
   }
 );

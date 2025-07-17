@@ -81,7 +81,7 @@ describe('reorder concrete products', { tags: ['@yves', '@reorder'] }, (): void 
       : 'dummyPaymentInvoice';
   }
 
-    function isB2c(): boolean {
-        return ['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'));
-    }
+  function isB2c(): boolean {
+    return ['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'));
+  }
 });
