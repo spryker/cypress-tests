@@ -84,7 +84,7 @@ export class B2bSspAssetRepository implements SspAssetRepository {
   }
 
   getFirstRowViewButton(): Cypress.Chainable {
-    return cy.get('[data-qa*="cell-actions"] a[href*="/ssp/asset/details?reference="]').first();
+    return cy.get('[data-qa*="cell-actions"] a[href*="/customer/ssp-asset/details?reference="]').first();
   }
 
   getFirstRowReference(): Cypress.Chainable<string> {
