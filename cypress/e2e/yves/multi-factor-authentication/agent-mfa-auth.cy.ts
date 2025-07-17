@@ -11,61 +11,60 @@ import { AgentLoginScenario } from '../../../support/scenarios/yves/agent-login-
 import { retryableBefore } from '../../../support/e2e';
 
 describe('agent mfa auth', { tags: ['@yves', '@customer-account-management'] }, (): void => {
-    const agentOverviewPage = container.get(AgentOverviewPage);
-    const logoutScenario = container.get(AgentLogoutScenario);
-    const loginScenario = container.get(AgentLoginScenario);
-    const mfaActivationScenario = container.get(AgentMfaActivationScenario);
-    const mfaLoginScenario = container.get(AgentMfaLoginScenario);
+  const agentOverviewPage = container.get(AgentOverviewPage);
+  const logoutScenario = container.get(AgentLogoutScenario);
+  const loginScenario = container.get(AgentLoginScenario);
+  const mfaActivationScenario = container.get(AgentMfaActivationScenario);
+  const mfaLoginScenario = container.get(AgentMfaLoginScenario);
 
-    let dynamicFixtures: AgentMfaAuthDynamicFixtures;
-    let staticFixtures: AgentMfaAuthStaticFixtures;
+  let dynamicFixtures: AgentMfaAuthDynamicFixtures;
+  let staticFixtures: AgentMfaAuthStaticFixtures;
 
-    retryableBefore((): void => {
-      ({ staticFixtures, dynamicFixtures } = Cypress.env());
+  retryableBefore((): void => {
+    ({ staticFixtures, dynamicFixtures } = Cypress.env());
+  });
+
+  beforeEach((): void => {
+    cy.cleanUpUserMultiFactorAuth();
+  });
+
+  it('should verify successful MFA activation and subsequent authenticated login', (): void => {
+    loginScenario.execute({
+      username: dynamicFixtures.agentOne.username,
+      password: staticFixtures.defaultPassword,
     });
 
-    beforeEach((): void => {
-      cy.cleanUpUserMultiFactorAuth();
+    agentOverviewPage.visit();
+    agentOverviewPage.assertPageLocation();
+    mfaActivationScenario.execute(dynamicFixtures.agentOne.username);
+
+    logoutScenario.execute();
+    mfaLoginScenario.execute({
+      username: dynamicFixtures.agentOne.username,
+      password: staticFixtures.defaultPassword,
     });
 
-    it('should verify successful MFA activation and subsequent authenticated login', (): void => {
-      loginScenario.execute({
-        username: dynamicFixtures.agentOne.username,
-        password: staticFixtures.defaultPassword,
-      });
+    agentOverviewPage.visit();
+    agentOverviewPage.assertPageLocation();
+  });
 
-      agentOverviewPage.visit();
-      agentOverviewPage.assertPageLocation();
-      mfaActivationScenario.execute(dynamicFixtures.agentOne.username);
-
-      logoutScenario.execute();
-      mfaLoginScenario.execute({
-        username: dynamicFixtures.agentOne.username,
-        password: staticFixtures.defaultPassword,
-      });
-
-      agentOverviewPage.visit();
-      agentOverviewPage.assertPageLocation();
+  it('should ensure proper error handling when invalid MFA verification code is provided', (): void => {
+    loginScenario.execute({
+      username: dynamicFixtures.agentTwo.username,
+      password: staticFixtures.defaultPassword,
     });
 
-    it('should ensure proper error handling when invalid MFA verification code is provided', (): void => {
-      loginScenario.execute({
+    agentOverviewPage.visit();
+    agentOverviewPage.assertPageLocation();
+    mfaActivationScenario.execute(dynamicFixtures.agentTwo.username);
+
+    logoutScenario.execute();
+    mfaLoginScenario.executeWithInvalidCode(
+      {
         username: dynamicFixtures.agentTwo.username,
         password: staticFixtures.defaultPassword,
-      });
-
-      agentOverviewPage.visit();
-      agentOverviewPage.assertPageLocation();
-      mfaActivationScenario.execute(dynamicFixtures.agentTwo.username);
-
-      logoutScenario.execute();
-      mfaLoginScenario.executeWithInvalidCode(
-        {
-          username: dynamicFixtures.agentTwo.username,
-          password: staticFixtures.defaultPassword,
-        },
-        staticFixtures
-      );
-    });
-  }
-);
+      },
+      staticFixtures
+    );
+  });
+});
