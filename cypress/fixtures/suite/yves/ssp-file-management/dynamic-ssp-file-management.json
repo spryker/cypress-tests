@@ -349,7 +349,6 @@
             }
           ]
         },
-
         {
           "type": "helper",
           "name": "haveAsset",
