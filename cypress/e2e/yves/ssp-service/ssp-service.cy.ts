@@ -28,7 +28,7 @@ interface DynamicFixtures {
   [key: string]: unknown;
 }
 
-(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+(['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'SSP Service Management',
   { tags: ['@yves', '@ssp-service', '@ssp', '@SspServiceManagement'] },
   (): void => {
@@ -53,7 +53,7 @@ interface DynamicFixtures {
         );
 
         // Assert page is loaded correctly
-        cy.get('h1').should('contain', 'Services');
+        sspServiceListPage.getPageTitle().should('contain', 'Services');
         sspServiceListPage.getTable().should('exist');
 
         // Check if all column headers are present
@@ -122,6 +122,10 @@ interface DynamicFixtures {
         // Get product SKU from fixtures to search for
         const productSku = dynamicFixtures.product1.sku;
 
+        if (['b2b'].includes(Cypress.env('repositoryId'))) {
+          sspServiceListPage.openFilter();
+        }
+
         // Select SKU search type and enter the product SKU
         sspServiceListPage.searchFor('SKU', productSku);
 
@@ -145,9 +149,13 @@ interface DynamicFixtures {
         );
 
         // Verify the service is in the list for the first company user
-        cy.get('h1').should('contain', 'Services');
+        sspServiceListPage.getPageTitle().should('contain', 'Services');
         sspServiceListPage.getTable().should('exist');
         sspServiceListPage.getTableRows().should('have.length.at.least', 1);
+
+        if (['b2b'].includes(Cypress.env('repositoryId'))) {
+          sspServiceListPage.openFilter();
+        }
 
         // Verify business unit dropdown has company options
         sspServiceListPage.getBusinessUnitSelect().should('exist');
@@ -166,7 +174,7 @@ interface DynamicFixtures {
         sspServiceListPage.visit();
 
         // Verify the second company user sees the business unit dropdown but no services
-        cy.get('h1').should('contain', 'Services');
+        sspServiceListPage.getPageTitle().should('contain', 'Services');
         sspServiceListPage.getBusinessUnitSelect().should('exist');
         sspServiceListPage.getBusinessUnitSelect().find('option[value*="company"]').should('exist');
 
@@ -235,7 +243,7 @@ interface DynamicFixtures {
       if (!isSetupDone) {
         checkoutScenario.execute({
           idCustomerAddress: idCustomerAddress,
-          paymentMethod: 'dummyMarketplacePaymentInvoice',
+          paymentMethod: 'dummyPaymentInvoice',
         });
 
         isSetupDone = true;

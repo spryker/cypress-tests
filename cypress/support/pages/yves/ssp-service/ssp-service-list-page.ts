@@ -24,6 +24,10 @@ export class SspServiceListPage extends YvesPage {
     return this.repository.getSspServiceTableHeaders();
   }
 
+  getPageTitle(): Chainable<JQuery<HTMLElement>> {
+    return this.repository.getSspServicePageTitle();
+  }
+
   clickSortColumn(columnName: string): void {
     this.repository.getSortColumnByName(columnName).click();
   }
@@ -65,11 +69,11 @@ export class SspServiceListPage extends YvesPage {
 
   // Search methods
   setSearchType(type: string): void {
-    this.repository.getSearchTypeSelect().select(type);
+    this.repository.getSearchTypeSelect().select(type, { force: true });
   }
 
   setSearchText(text: string): void {
-    this.repository.getSearchTextInput().clear().type(text);
+    this.repository.getSearchTextInput().clear().type(text, { force: true });
   }
 
   getBusinessUnitSelect(): Chainable<JQuery<HTMLElement>> {
@@ -241,5 +245,9 @@ export class SspServiceListPage extends YvesPage {
 
     // Verify that first service is cancelled and only second left
     this.getServiceCancelButton().first().should('have.length', 1);
+  }
+
+  openFilter(): void {
+    this.repository.getFiltersTriggerSelector().click();
   }
 }
