@@ -42,6 +42,12 @@ export class CheckoutScenario {
   private fillShippingAddress = (params?: ExecuteParams): void => {
     const fillShippingAddressParams = { idCustomerAddress: params?.idCustomerAddress };
 
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      this.checkoutAddressPage.fillSingleCheckoutAddress();
+
+      return;
+    }
+
     if (params?.isMultiShipment) {
       this.checkoutAddressPage.fillMultiShippingAddress(fillShippingAddressParams);
 

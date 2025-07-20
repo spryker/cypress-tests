@@ -69,4 +69,8 @@ export class B2cCheckoutAddressRepository implements CheckoutAddressRepository {
     index: number
   ): Cypress.Chainable =>
     cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shippingAddress_phone`);
+
+  getSingleCheckoutFirstItemAddressSelector(): Cypress.Chainable | null {
+    return null;
+  }
 }

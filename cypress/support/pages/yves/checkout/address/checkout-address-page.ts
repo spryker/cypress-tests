@@ -106,6 +106,59 @@ export class CheckoutAddressPage extends YvesPage {
     this.fillBillingAddress();
   };
 
+  fillSingleCheckoutAddress = (): void => {
+    const checkoutAddress = this.createDummyCheckoutAddress();
+
+    cy.get('[name="addressesForm[multiShippingAddresses][0][shippingAddress][id_customer_address]"]').select('0', {
+      force: true,
+    });
+
+    this.repository
+      .getMultiShipmentAddressItemElement()
+      .children()
+      .first()
+      .then(($addressItem) => {
+        this.repository
+          .getMultiShipmentAddressItemAddressFirstNameField($addressItem, 0)
+          .clear()
+          .type(checkoutAddress.firstName, { delay: 0 });
+        this.repository
+          .getMultiShipmentAddressItemAddressLastNameField($addressItem, 0)
+          .clear()
+          .type(checkoutAddress.lastName, { delay: 0 });
+        this.repository
+          .getMultiShipmentAddressItemAddressAddress1Field($addressItem, 0)
+          .clear()
+          .type(checkoutAddress.address1, { delay: 0 });
+        this.repository
+          .getMultiShipmentAddressItemAddressAddress2Field($addressItem, 0)
+          .clear()
+          .type(checkoutAddress.address2, { delay: 0 });
+        this.repository
+          .getMultiShipmentAddressItemAddressZipCodeField($addressItem, 0)
+          .clear()
+          .type(checkoutAddress.zipCode, { delay: 0 });
+        this.repository
+          .getMultiShipmentAddressItemAddressCityField($addressItem, 0)
+          .clear()
+          .type(checkoutAddress.city, { delay: 0 });
+
+        // Setting optional fields
+        this.repository
+          .getMultiShipmentAddressItemAddressCompanyField($addressItem, 0)
+          .clear()
+          .type(checkoutAddress.company, { delay: 0 });
+        this.repository
+          .getMultiShipmentAddressItemAddressPhoneField($addressItem, 0)
+          .clear()
+          .type(checkoutAddress.phone, { delay: 0 });
+      });
+
+    this.fillBillingAddress();
+
+    this.repository.getNextButton().click();
+  };
+
   fillBillingAddress = (): void => {
     const checkoutAddress = this.createDummyCheckoutAddress();
     this.repository.getSelectBillingAddressField().select('0', { force: true });
