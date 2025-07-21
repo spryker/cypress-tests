@@ -2,6 +2,6 @@
   "defaultPassword": "change123",
   "oldProductPrice": "300.00",
   "newProductPrice": "500.00",
-  "paymentMethodCreditCard": "dummyPaymentCreditCard",
-  "paymentMethodInvoice": "dummyPaymentInvoice"
+  "paymentMethodSyncFlow": "dummyPaymentCreditCard",
+  "paymentMethodAsyncFlow": "dummyPaymentInvoice"
 }

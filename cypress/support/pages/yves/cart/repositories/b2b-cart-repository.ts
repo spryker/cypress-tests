@@ -76,6 +76,6 @@ export class B2bCartRepository implements CartRepository {
     input.parent().trigger('change');
   };
   getCartItemSummaryBlock = (itemIndex: number): Cypress.Chainable =>
-    cy.get('[data-qa="component cart-item-summary"]').eq(itemIndex);
+    cy.get('[data-qa="cart-item-summary"]').eq(itemIndex);
   getCancelOrderAmendmentButton = (): Cypress.Chainable => cy.get('[data-qa="cancel-order-amendment-button"]');
 }
