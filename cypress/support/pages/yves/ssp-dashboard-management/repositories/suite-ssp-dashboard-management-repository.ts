@@ -66,7 +66,7 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
     return 'There is no data yet';
   }
   getFilesHeaders(): string[] {
-    return ['File Name', 'Size', 'File Type', ''];
+    return ['File Name', 'Size', 'File Format', ''];
   }
   getInquiriesBlock(): Chainable {
     return cy.get('[data-qa="component dashboard-table ssp-inquiry-table"]');
@@ -80,7 +80,7 @@ export class SuiteSspDashboardManagementRepository implements SspDashboardManage
     return 'You do not have inquiries yet.';
   }
   getInquiriesHeaders(): string[] {
-    return ['Reference', 'Type', 'Date', 'Status', ''];
+    return ['Reference', 'Type', 'Subject', 'Date', 'Status', ''];
   }
   getStatusLabelPath(): string {
     return '[data-qa="component status"]';
