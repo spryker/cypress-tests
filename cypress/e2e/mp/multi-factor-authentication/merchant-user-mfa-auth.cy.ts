@@ -11,7 +11,7 @@ import {
   MerchantUserMfaLoginScenario,
 } from '@scenarios/mp';
 
-([['b2c', 'b2b']].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+([['b2c', 'b2b']].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'merchant user mfa auth',
   { tags: ['@mp'] },
   (): void => {
