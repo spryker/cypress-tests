@@ -199,9 +199,7 @@ import { CatalogPage, MultiCartPage, ProductPage } from '@pages/yves';
     function triggerLatestOrderToPayState(): void {
       salesIndexPage.visit();
       salesIndexPage.view();
-      if (['suite'].includes(Cypress.env('repositoryId'))) {
-        salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
-      }
+      salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
       salesDetailPage.triggerOms({ state: 'Pay' });
       salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
 

@@ -68,6 +68,31 @@
         },
         {
           "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [{ "isActive": true, "status": "approved" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [{ "fkCompany": "#company.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUserOne",
+          "arguments": [
+            {
+              "customer": "#customerOne",
+              "fkCustomer": "#customerOne.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveUser",
           "key": "rootUserFive",
           "arguments": [{ "password": "change123" }]

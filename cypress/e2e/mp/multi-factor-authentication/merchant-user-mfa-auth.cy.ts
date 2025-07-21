@@ -11,8 +11,8 @@ import {
   MerchantUserMfaLoginScenario,
 } from '@scenarios/mp';
 
-(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
-  'merchant user mfa auth [suite]',
+([['b2c', 'b2b']].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+  'merchant user mfa auth',
   { tags: ['@mp'] },
   (): void => {
     const dashboardPage = container.get(DashboardPage);

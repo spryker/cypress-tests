@@ -5,6 +5,6 @@ import { injectable } from 'inversify';
 @autoWired
 export class AgentLogoutScenario {
   execute = (): void => {
-    cy.contains('li a', 'Logout').click({ force: true });
+    cy.visit('/agent/logout');
   };
 }

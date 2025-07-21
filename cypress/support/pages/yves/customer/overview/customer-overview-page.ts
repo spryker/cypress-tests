@@ -23,7 +23,7 @@ export class CustomerOverviewPage extends YvesPage {
 
   assertProductQuantity = (productName: string, quantity: number): void => {
     cy.get('body').then(($body) => {
-      const occurrences = $body.find(this.repository.getOrderedProductSpan(productName));
+      const occurrences = $body.find(this.repository.getOrderedProductSelector(productName));
       expect(occurrences).to.have.length(quantity);
     });
   };

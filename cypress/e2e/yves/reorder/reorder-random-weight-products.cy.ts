@@ -3,7 +3,7 @@ import { ReorderRandomWeightProductsDynamicFixtures, ReorderStaticFixtures } fro
 import { CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
-(['b2c', 'b2c-mp', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+(['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'reorder random weight products',
   { tags: ['@yves', '@order-amendment'] },
   (): void => {
@@ -47,7 +47,10 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.productPUnit.sku });
       productPage.addToCart();
 
-      checkoutScenario.execute({ idCustomerAddress: dynamicFixtures.address.id_customer_address });
+      checkoutScenario.execute({
+        idCustomerAddress: dynamicFixtures.address.id_customer_address,
+        paymentMethod: getPaymentMethodBasedOnEnv(),
+      });
     }
 
     function triggerPublishEvents(): void {
@@ -56,6 +59,12 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
         `console publish:trigger-events -r product_packaging_unit -i ${dynamicFixtures.productPUnit.id_product_concrete}`,
         'console queue:worker:start --stop-when-empty',
       ]);
+    }
+
+    function getPaymentMethodBasedOnEnv(): string {
+      return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
+        ? 'dummyMarketplacePaymentInvoice'
+        : 'dummyPaymentInvoice';
     }
   }
 );
