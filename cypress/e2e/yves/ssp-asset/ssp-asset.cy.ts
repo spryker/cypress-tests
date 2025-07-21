@@ -193,7 +193,7 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
 
       assetListPage.visit();
 
-      assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset Name', 'Serial number', 'Business Unit Owner']);
+      assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset Name', 'Serial Number', 'Business Unit Owner']);
 
       assetListPage.assertTableData([
         dynamicFixtures.assetBU1C1BU2C1BU1C2,

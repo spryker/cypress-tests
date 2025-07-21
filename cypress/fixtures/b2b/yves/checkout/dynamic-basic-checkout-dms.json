@@ -135,6 +135,26 @@
         },
         {
           "type": "helper",
+          "name": "haveShipmentType",
+          "key": "shipmentType",
+          "arguments": [
+            {
+              "key": "delivery"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "arguments": ["#product1", "#shipmentType"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "arguments": ["#product2", "#shipmentType"]
+        },
+        {
+          "type": "helper",
           "name": "haveProductImageSet",
           "arguments": [
             {
