@@ -87,7 +87,7 @@ describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
-  skipSSPIt('customer should checkout to single shipment (with new shipping address)', (): void => {
+  it('customer should checkout to single shipment (with new shipping address)', (): void => {
     loginCustomerScenario.execute({
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,
@@ -99,6 +99,8 @@ describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout
     checkoutScenario.execute({
       shouldTriggerOmsInCli: true,
       paymentMethod: getPaymentMethodBasedOnEnv(),
+      isSingleCheckout: true,
+      isMultiShipment: true,
     });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
@@ -178,11 +180,6 @@ describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout
 
   function skipB2BIt(description: string, testFn: () => void): void {
     (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
-  }
-
-  // @TODO drop this after SSP address step unifiation with core https://spryker.atlassian.net/browse/CC-36068
-  function skipSSPIt(description: string, testFn: () => void): void {
-    (Cypress.env('ENV_IS_SSP_ENABLED') ? it.skip : it)(description, testFn);
   }
 });
 

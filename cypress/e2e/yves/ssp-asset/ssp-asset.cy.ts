@@ -9,7 +9,7 @@ import {
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
 
-(['suite', 'b2b-mp', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+(['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp asset management',
   { tags: ['@yves', '@ssp-asset', '@ssp', '@sspAssetManagement'] },
   (): void => {
@@ -113,6 +113,7 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
 
       checkoutScenario.execute({
         paymentMethod: 'dummyPaymentInvoice',
+        isSingleCheckout: true,
       });
 
       assetDetailPage.visit({
@@ -192,7 +193,7 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
 
       assetListPage.visit();
 
-      assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset Name', 'Serial number', 'Business Unit Owner']);
+      assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset Name', 'Serial Number', 'Business Unit Owner']);
 
       assetListPage.assertTableData([
         dynamicFixtures.assetBU1C1BU2C1BU1C2,

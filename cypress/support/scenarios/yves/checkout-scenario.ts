@@ -42,6 +42,12 @@ export class CheckoutScenario {
   private fillShippingAddress = (params?: ExecuteParams): void => {
     const fillShippingAddressParams = { idCustomerAddress: params?.idCustomerAddress };
 
+    if (params?.isSingleCheckout) {
+      this.checkoutAddressPage.fillSingleCheckoutAddress();
+
+      return;
+    }
+
     if (params?.isMultiShipment) {
       this.checkoutAddressPage.fillMultiShippingAddress(fillShippingAddressParams);
 
@@ -72,4 +78,5 @@ interface ExecuteParams {
   shouldTriggerOmsInCli?: boolean;
   paymentMethod?: string;
   shouldSkipShipmentStep?: boolean;
+  isSingleCheckout?: boolean;
 }
