@@ -109,49 +109,44 @@ export class CheckoutAddressPage extends YvesPage {
   fillSingleCheckoutAddress = (): void => {
     const checkoutAddress = this.createDummyCheckoutAddress();
 
-    const index = 0;
-
-    cy.get('[name="addressesForm[multiShippingAddresses][0][shippingAddress][id_customer_address]"]').select('0', {
-      force: true,
-    });
-
     this.repository
       .getMultiShipmentAddressItemElement()
       .children()
       .first()
       .then(($addressItem) => {
-        this.repository
-          .getMultiShipmentAddressItemAddressFirstNameField($addressItem, index)
+          this.repository.getMultiShipmentAddressItemAddressField($addressItem, 0).select('0', { force: true });
+          this.repository
+          .getMultiShipmentAddressItemAddressFirstNameField($addressItem, 0)
           .clear()
           .type(checkoutAddress.firstName, { delay: 0 });
         this.repository
-          .getMultiShipmentAddressItemAddressLastNameField($addressItem, index)
+          .getMultiShipmentAddressItemAddressLastNameField($addressItem, 0)
           .clear()
           .type(checkoutAddress.lastName, { delay: 0 });
         this.repository
-          .getMultiShipmentAddressItemAddressAddress1Field($addressItem, index)
+          .getMultiShipmentAddressItemAddressAddress1Field($addressItem, 0)
           .clear()
           .type(checkoutAddress.address1, { delay: 0 });
         this.repository
-          .getMultiShipmentAddressItemAddressAddress2Field($addressItem, index)
+          .getMultiShipmentAddressItemAddressAddress2Field($addressItem, 0)
           .clear()
           .type(checkoutAddress.address2, { delay: 0 });
         this.repository
-          .getMultiShipmentAddressItemAddressZipCodeField($addressItem, index)
+          .getMultiShipmentAddressItemAddressZipCodeField($addressItem, 0)
           .clear()
           .type(checkoutAddress.zipCode, { delay: 0 });
         this.repository
-          .getMultiShipmentAddressItemAddressCityField($addressItem, index)
+          .getMultiShipmentAddressItemAddressCityField($addressItem, 0)
           .clear()
           .type(checkoutAddress.city, { delay: 0 });
 
         // Setting optional fields
         this.repository
-          .getMultiShipmentAddressItemAddressCompanyField($addressItem, index)
+          .getMultiShipmentAddressItemAddressCompanyField($addressItem, 0)
           .clear()
           .type(checkoutAddress.company, { delay: 0 });
         this.repository
-          .getMultiShipmentAddressItemAddressPhoneField($addressItem, index)
+          .getMultiShipmentAddressItemAddressPhoneField($addressItem, 0)
           .clear()
           .type(checkoutAddress.phone, { delay: 0 });
       });

@@ -100,6 +100,7 @@ describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout
       shouldTriggerOmsInCli: true,
       paymentMethod: getPaymentMethodBasedOnEnv(),
       isSingleCheckout: true,
+      isMultiShipment: true
     });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
