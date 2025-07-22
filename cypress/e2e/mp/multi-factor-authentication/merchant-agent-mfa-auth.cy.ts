@@ -10,7 +10,7 @@ import {
   MerchantUserSetUpMfaScenario,
 } from '@scenarios/mp';
 
-([['b2c', 'b2b']].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+(['suite', 'b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'agent (merchant user) mfa auth [suite]',
   { tags: ['@mp'] },
   (): void => {
