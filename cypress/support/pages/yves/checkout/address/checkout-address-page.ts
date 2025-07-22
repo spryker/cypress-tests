@@ -114,8 +114,8 @@ export class CheckoutAddressPage extends YvesPage {
       .children()
       .first()
       .then(($addressItem) => {
-          this.repository.getMultiShipmentAddressItemAddressField($addressItem, 0).select('0', { force: true });
-          this.repository
+        this.repository.getMultiShipmentAddressItemAddressField($addressItem, 0).select('0', { force: true });
+        this.repository
           .getMultiShipmentAddressItemAddressFirstNameField($addressItem, 0)
           .clear()
           .type(checkoutAddress.firstName, { delay: 0 });
