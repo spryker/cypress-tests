@@ -99,8 +99,7 @@ describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout
     checkoutScenario.execute({
       shouldTriggerOmsInCli: true,
       paymentMethod: getPaymentMethodBasedOnEnv(),
-      isSingleCheckout: true,
-      isMultiShipment: true,
+      isMultiShipment: ['b2b'].includes(Cypress.env('repositoryId')),
     });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
@@ -125,7 +124,7 @@ describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
-  skipB2BIt('customer should checkout to multi shipment address (with new shipping address)', (): void => {
+  it('customer should checkout to multi shipment address (with new shipping address)', (): void => {
     loginCustomerScenario.execute({
       email: dynamicFixtures.customer.email,
       password: staticFixtures.defaultPassword,

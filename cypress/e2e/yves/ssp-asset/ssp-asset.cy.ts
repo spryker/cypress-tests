@@ -113,7 +113,6 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
 
       checkoutScenario.execute({
         paymentMethod: 'dummyPaymentInvoice',
-        isSingleCheckout: true,
       });
 
       assetDetailPage.visit({

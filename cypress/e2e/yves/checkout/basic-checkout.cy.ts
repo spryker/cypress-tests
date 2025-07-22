@@ -74,7 +74,6 @@ describe('basic checkout', { tags: ['@yves', '@checkout'] }, (): void => {
     checkoutScenario.execute({
       shouldTriggerOmsInCli: true,
       paymentMethod: getPaymentMethodBasedOnEnv(),
-      isSingleCheckout: true,
     });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());

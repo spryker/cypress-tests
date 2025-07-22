@@ -42,7 +42,7 @@ export class CheckoutScenario {
   private fillShippingAddress = (params?: ExecuteParams): void => {
     const fillShippingAddressParams = { idCustomerAddress: params?.idCustomerAddress };
 
-    if (params?.isSingleCheckout) {
+    if (['b2b'].includes(Cypress.env('repositoryId'))) {
       this.checkoutAddressPage.fillSingleCheckoutAddress();
 
       return;
@@ -78,5 +78,4 @@ interface ExecuteParams {
   shouldTriggerOmsInCli?: boolean;
   paymentMethod?: string;
   shouldSkipShipmentStep?: boolean;
-  isSingleCheckout?: boolean;
 }
