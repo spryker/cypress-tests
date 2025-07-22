@@ -189,6 +189,10 @@ export class CheckoutAddressPage extends YvesPage {
       phone: this.faker.phone.number(),
     };
   };
+
+  getItemsCount = (): Cypress.Chainable<number> => {
+    return this.repository.getItemElement().then(($els) => $els.length);
+  };
 }
 
 interface FillShippingAddressParams {

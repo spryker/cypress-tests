@@ -69,4 +69,7 @@ export class SuiteCheckoutAddressRepository implements CheckoutAddressRepository
     index: number
   ): Cypress.Chainable =>
     cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shippingAddress_phone`);
+  getItemElement(): Cypress.Chainable {
+    return cy.get('[data-qa*="product-card-item"]');
+  }
 }
