@@ -4,7 +4,7 @@ import { SspInquiryDetailPage } from '@pages/backoffice';
 import { SspInquiryListPage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
-(['suite', 'b2b-mp', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+(['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp inquiry management',
   { tags: ['@ssp', '@backoffice', '@sspInquiryManagement'] },
   (): void => {
