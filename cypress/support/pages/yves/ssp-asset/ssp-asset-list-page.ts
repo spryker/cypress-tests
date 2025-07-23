@@ -25,7 +25,7 @@ export class SspAssetListPage extends YvesPage {
   assertTableHeaders(expectedHeaders: string[]): void {
     this.repository.getAssetTableHeaders().each(($header, index) => {
       if (index < expectedHeaders.length && expectedHeaders[index]) {
-        cy.wrap($header).should('match', new RegExp(expectedHeaders[index], 'i'));
+          cy.wrap($header).contains(new RegExp(expectedHeaders[index], 'i')).should('exist');
       }
     });
   }
