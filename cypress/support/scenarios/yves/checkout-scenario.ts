@@ -43,7 +43,7 @@ export class CheckoutScenario {
     const fillShippingAddressParams = { idCustomerAddress: params?.idCustomerAddress };
 
     if (['b2b'].includes(Cypress.env('repositoryId'))) {
-      this.checkoutAddressPage.fillSingleCheckoutAddress();
+      this.checkoutAddressPage.fillSingleCheckoutAddress(fillShippingAddressParams);
       return;
     }
 

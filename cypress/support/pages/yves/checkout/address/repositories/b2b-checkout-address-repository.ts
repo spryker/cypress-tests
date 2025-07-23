@@ -42,8 +42,15 @@ export class B2bCheckoutAddressRepository implements CheckoutAddressRepository {
   getBillingAddressCompanyField = (): Cypress.Chainable => cy.get('#addressesForm_billingAddress_company');
   getBillingAddressPhoneField = (): Cypress.Chainable => cy.get('#addressesForm_billingAddress_phone');
   getMultiShipmentTriggerButton = (): Cypress.Chainable => cy.get('[data-qa="multiple-shipment-trigger-button"]');
-  getMultiShipmentAddressItemElement = (): Cypress.Chainable =>
-    cy.get('[data-qa="component address-item-form-field-list"]');
+  getMultiShipmentAddressItemElement = (): Cypress.Chainable => {
+    return cy.get('body').then((body) => {
+      if (body.find('[data-qa="component address-item-form-field-list"]').length === 1) {
+        return cy.get('[data-qa="component address-item-form-field-list"]');
+      }
+
+      return null;
+    });
+  };
   getAddressItemFormFieldListElement = (): Cypress.Chainable =>
     cy.get('[data-qa="component address-item-form-field-list"]');
   getMultiShipmentAddressItemDeliveryRadio = ($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable =>
