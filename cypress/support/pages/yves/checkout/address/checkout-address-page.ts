@@ -118,12 +118,10 @@ export class CheckoutAddressPage extends YvesPage {
         .children()
         .first()
         .then(($addressItem: JQuery<HTMLElement>) => {
-          if (params?.idCustomerAddress) {
+          if (params?.idCustomerAddress !== undefined) {
             this.repository
               .getMultiShipmentAddressItemAddressField($addressItem, 0)
               .select(params.idCustomerAddress.toString(), { force: true });
-
-            return;
           }
 
           if (params?.idCustomerAddress !== 0) {
