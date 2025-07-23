@@ -52,6 +52,25 @@ describe('locale switching', { tags: ['@core', '@yves'] }, (): void => {
     }, catalogPage);
   });
 
+  it('should maintain locale when navigating to New page after switching locale.', (): void => {
+    homePage.visit();
+    homePage.getAvailableLocales();
+
+    const initialLocale = staticFixtures.localeEN;
+    const oppositeLocale = staticFixtures.localeDE;
+
+    localeSwitchingScenario.execute({
+      currentLocale: initialLocale,
+      selectedLocale: oppositeLocale,
+    });
+
+    cy.get('.navigation-multilevel-node .navigation-multilevel-node__link--lvl-1')
+      .contains(oppositeLocale === staticFixtures.localeDE ? 'Neu' : 'New')
+      .click({force: true});
+
+    cy.get('[data-qa="component language-switcher"]').should('contain', oppositeLocale === staticFixtures.localeDE ? 'DE' : 'EN');
+  });
+
   function skipDisabledDynamicStoreIt(description: string, testFn: () => void): void {
     (Cypress.env('isDynamicStoreEnabled') ? it : it.skip)(description, testFn);
   }
