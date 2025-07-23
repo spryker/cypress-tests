@@ -42,7 +42,7 @@ export class CheckoutScenario {
   private fillShippingAddress = (params?: ExecuteParams): void => {
     const fillShippingAddressParams = { idCustomerAddress: params?.idCustomerAddress };
 
-    if (Cypress.env('ENV_IS_SSP_ENABLED') || true) {
+    if (Cypress.env('ENV_IS_SSP_ENABLED')) {
       this.checkoutAddressPage.fillSingleCheckoutAddress(params);
       return;
     }
