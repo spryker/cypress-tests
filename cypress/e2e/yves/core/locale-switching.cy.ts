@@ -66,9 +66,12 @@ describe('locale switching', { tags: ['@core', '@yves'] }, (): void => {
 
     cy.get('.navigation-multilevel-node .navigation-multilevel-node__link--lvl-1')
       .contains(oppositeLocale === staticFixtures.localeDE ? 'Neu' : 'New')
-      .click({force: true});
+      .click({ force: true });
 
-    cy.get('[data-qa="component language-switcher"]').should('contain', oppositeLocale === staticFixtures.localeDE ? 'DE' : 'EN');
+    cy.get('[data-qa="component language-switcher"]').should(
+      'contain',
+      oppositeLocale === staticFixtures.localeDE ? 'DE' : 'EN'
+    );
   });
 
   function skipDisabledDynamicStoreIt(description: string, testFn: () => void): void {
