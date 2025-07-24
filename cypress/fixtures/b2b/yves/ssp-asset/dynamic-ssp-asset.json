@@ -546,19 +546,19 @@
           "type": "helper",
           "name": "haveFullProduct",
           "key": "product1",
-          "arguments": [{ "idTaxSet": 1, "isServiceDateTimeEnabled": true }]
+          "arguments": [{}, { "idTaxSet": 1, "isServiceDateTimeEnabled": true }]
         },
         {
           "type": "helper",
           "name": "haveFullProduct",
           "key": "product2",
-          "arguments": [{ "idTaxSet": 1, "isServiceDateTimeEnabled": true }]
+          "arguments": [{}, { "idTaxSet": 1, "isServiceDateTimeEnabled": true }]
         },
         {
           "type": "helper",
           "name": "haveFullProduct",
           "key": "product3",
-          "arguments": [{ "idTaxSet": 1, "isServiceDateTimeEnabled": true }]
+          "arguments": [{}, { "idTaxSet": 1, "isServiceDateTimeEnabled": true }]
         },
         {
           "type": "helper",
@@ -571,6 +571,21 @@
           "name": "haveProductToProductClass",
           "key": "productToProductClass",
           "arguments": ["#product2.id_product_concrete", "#productClass.id_product_class"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "arguments": ["#product1", "#shipmentType"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "arguments": ["#product3", "#shipmentType"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "arguments": ["#product3", "#shipmentType"]
         },
         {
           "type": "helper",

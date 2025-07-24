@@ -106,6 +106,67 @@ export class CheckoutAddressPage extends YvesPage {
     this.fillBillingAddress();
   };
 
+  fillSingleCheckoutAddress = (params?: FillShippingAddressParams): void => {
+    const checkoutAddress = this.createDummyCheckoutAddress();
+
+    this.repository.getMultiShipmentAddressItemElement().then(($element: JQuery<HTMLElement>) => {
+      if (!$element) {
+        return;
+      }
+
+      cy.wrap($element)
+        .children()
+        .first()
+        .then(($addressItem: JQuery<HTMLElement>) => {
+          if (params?.idCustomerAddress !== undefined) {
+            this.repository
+              .getMultiShipmentAddressItemAddressField($addressItem, 0)
+              .select(params.idCustomerAddress.toString(), { force: true });
+          }
+
+          if (params?.idCustomerAddress !== 0) {
+            return;
+          }
+
+          this.repository
+            .getMultiShipmentAddressItemAddressFirstNameField($addressItem, 0)
+            .clear()
+            .type(checkoutAddress.firstName, { delay: 0 });
+          this.repository
+            .getMultiShipmentAddressItemAddressLastNameField($addressItem, 0)
+            .clear()
+            .type(checkoutAddress.lastName, { delay: 0 });
+          this.repository
+            .getMultiShipmentAddressItemAddressAddress1Field($addressItem, 0)
+            .clear()
+            .type(checkoutAddress.address1, { delay: 0 });
+          this.repository
+            .getMultiShipmentAddressItemAddressAddress2Field($addressItem, 0)
+            .clear()
+            .type(checkoutAddress.address2, { delay: 0 });
+          this.repository
+            .getMultiShipmentAddressItemAddressZipCodeField($addressItem, 0)
+            .clear()
+            .type(checkoutAddress.zipCode, { delay: 0 });
+          this.repository
+            .getMultiShipmentAddressItemAddressCityField($addressItem, 0)
+            .clear()
+            .type(checkoutAddress.city, { delay: 0 });
+
+          this.repository
+            .getMultiShipmentAddressItemAddressCompanyField($addressItem, 0)
+            .clear()
+            .type(checkoutAddress.company, { delay: 0 });
+          this.repository
+            .getMultiShipmentAddressItemAddressPhoneField($addressItem, 0)
+            .clear()
+            .type(checkoutAddress.phone, { delay: 0 });
+        });
+    });
+    this.fillBillingAddress();
+    this.repository.getNextButton().click();
+  };
+
   fillBillingAddress = (): void => {
     const checkoutAddress = this.createDummyCheckoutAddress();
     this.repository.getSelectBillingAddressField().select('0', { force: true });
