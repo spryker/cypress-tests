@@ -54,31 +54,31 @@ describe('locale switching', { tags: ['@core', '@yves'] }, (): void => {
 
   // Will be done after product release
   if (['none'].includes(Cypress.env('repositoryId'))) {
-  it('should maintain locale when navigating to New page after switching locale.', (): void => {
-    homePage.visit();
-    homePage.getAvailableLocales();
+    it('should maintain locale when navigating to New page after switching locale.', (): void => {
+      homePage.visit();
+      homePage.getAvailableLocales();
 
-    const initialLocale = staticFixtures.localeEN;
-    const oppositeLocale = staticFixtures.localeDE;
+      const initialLocale = staticFixtures.localeEN;
+      const oppositeLocale = staticFixtures.localeDE;
 
-    localeSwitchingScenario.execute({
-      currentLocale: initialLocale,
-      selectedLocale: oppositeLocale,
+      localeSwitchingScenario.execute({
+        currentLocale: initialLocale,
+        selectedLocale: oppositeLocale,
+      });
+
+      const newPageLinkText =
+        oppositeLocale === staticFixtures.localeDE ? staticFixtures.newPageLinkDE : staticFixtures.newPageLinkEN;
+      homePage.navigateToNewPage(newPageLinkText);
+
+      const expectedStore =
+        oppositeLocale === staticFixtures.localeDE ? staticFixtures.storeCodeDE : staticFixtures.storeCodeAT;
+      const expectedLanguage =
+        oppositeLocale === staticFixtures.localeDE ? staticFixtures.languageCodeDE : staticFixtures.languageCodeEN;
+      const expectedUrlFormat = `/${expectedStore}/${expectedLanguage}/`;
+      cy.url().should('include', expectedUrlFormat);
+
+      homePage.getLanguageSwitcher().should('contain', expectedStore);
     });
-
-    const newPageLinkText =
-      oppositeLocale === staticFixtures.localeDE ? staticFixtures.newPageLinkDE : staticFixtures.newPageLinkEN;
-    homePage.navigateToNewPage(newPageLinkText);
-
-    const expectedStore =
-      oppositeLocale === staticFixtures.localeDE ? staticFixtures.storeCodeDE : staticFixtures.storeCodeAT;
-    const expectedLanguage =
-      oppositeLocale === staticFixtures.localeDE ? staticFixtures.languageCodeDE : staticFixtures.languageCodeEN;
-    const expectedUrlFormat = `/${expectedStore}/${expectedLanguage}/`;
-    cy.url().should('include', expectedUrlFormat);
-
-    homePage.getLanguageSwitcher().should('contain', expectedStore);
-  });
   }
 
   function skipDisabledDynamicStoreIt(description: string, testFn: () => void): void {
