@@ -97,4 +97,12 @@ export class SuiteSspServiceRepository implements SspServiceRepository {
   getServiceCancelButton(): Chainable<JQuery<HTMLElement>> {
     return cy.get('button[data-qa="cancel-service-button"]') as unknown as Chainable<JQuery<HTMLElement>>;
   }
+
+  getSspServicePageTitle(): Cypress.Chainable {
+    return cy.get('h1');
+  }
+
+  getFiltersTriggerSelector(): Cypress.Chainable {
+    return cy.get('[data-qa="component filters-button"]');
+  }
 }
