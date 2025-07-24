@@ -10,4 +10,13 @@ export class B2bHomeRepository implements HomeRepository {
       .select(storeName, { force: true });
   getStoreSelectorOption = (storeName: string): string => `select[name="_store"] option[value*="${storeName}"]`;
   getStoreSelectorHeader = (): string => `header [data-qa="component custom-select _store"]`;
+  getNavigationNewLink = (newPageLinkText: string): Cypress.Chainable => {
+    return cy
+      .get('[data-qa="component navigation-multilevel-node"] a')
+      .filter(`:contains("${newPageLinkText}")`)
+      .first();
+  };
+  getLanguageSwitcher = (): Cypress.Chainable => {
+    return cy.get('[data-qa="component language-switcher"]');
+  };
 }
