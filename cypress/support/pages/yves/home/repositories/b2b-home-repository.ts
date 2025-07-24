@@ -6,13 +6,21 @@ import { HomeRepository } from '../home-repository';
 export class B2bHomeRepository implements HomeRepository {
   selectStore = (storeName: string): Cypress.Chainable =>
     cy
-      .get('[data-qa="component header"] [data-qa="component custom-select _store"] [name="_store"]')
+      .get(this.getStoreSelectorHeader())
+      .scrollIntoView()
+      .click()
+      .get(this.getStoreSelectorOption(storeName))
+      .scrollIntoView()
       .select(storeName, { force: true });
   getStoreSelectorOption = (storeName: string): string => `select[name="_store"] option[value*="${storeName}"]`;
   getStoreSelectorHeader = (): string => `header [data-qa="component custom-select _store"]`;
   getNavigationNewLink = (newPageLinkText: string): Cypress.Chainable => {
-    return cy.get('.navigation-multilevel-node .navigation-multilevel-node__link--lvl-1')
+    return cy
+      .get('[data-qa="component navigation-multilevel-node"] a')
       .filter(`:contains("${newPageLinkText}")`)
       .first();
+  };
+  getLanguageSwitcher = (): Cypress.Chainable => {
+    return cy.get('[data-qa="component language-switcher"]');
   };
 }

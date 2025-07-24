@@ -26,7 +26,11 @@ export class HomePage extends YvesPage {
     cy.url().should('include', `${store}`);
   };
 
-  navigateToNewPage = (newPageLinkText: string): void => {
-    this.repository.getNavigationNewLink(newPageLinkText).click({force: true});
-  };
+  navigateToNewPage(newPageLinkText: string): void {
+    this.repository.getNavigationNewLink(newPageLinkText).click({ force: true });
+  }
+
+  getLanguageSwitcher(): Cypress.Chainable {
+    return this.repository.getLanguageSwitcher();
+  }
 }

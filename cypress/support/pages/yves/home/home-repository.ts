@@ -3,4 +3,5 @@ export interface HomeRepository {
   getStoreSelectorOption(storeName: string): string;
   getStoreSelectorHeader(): string;
   getNavigationNewLink(newPageLinkText: string): Cypress.Chainable;
+  getLanguageSwitcher(): Cypress.Chainable;
 }

@@ -3,5 +3,9 @@
   "localeDE": "de_DE",
   "localeEN": "en_US",
   "newPageLinkDE": "Neu",
-  "newPageLinkEN": "New"
+  "newPageLinkEN": "New",
+  "countryCodeDE": "DE",
+  "countryCodeEN": "EN",
+  "languageCodeDE": "de",
+  "languageCodeEN": "en"
 }

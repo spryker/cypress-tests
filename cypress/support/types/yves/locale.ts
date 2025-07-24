@@ -10,4 +10,8 @@ export interface LocaleSwitchingStaticFixtures {
   availableLocales: string[];
   newPageLinkEN: string;
   newPageLinkDE: string;
+  countryCodeDE: string;
+  countryCodeEN: string;
+  languageCodeDE: string;
+  languageCodeEN: string;
 }
