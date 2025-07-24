@@ -66,7 +66,7 @@ export class B2bSspDashboardManagementRepository implements SspDashboardManageme
     return 'No Files';
   }
   getFilesHeaders(): string[] {
-    return ['File Name', 'Size', 'File Type', ''];
+    return ['File Name', 'Size', 'File Format', ''];
   }
   getInquiriesBlock(): Chainable {
     return cy.get('[data-qa="component dashboard-table ssp-inquiry-table"]');
