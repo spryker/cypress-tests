@@ -4,14 +4,14 @@ import { HomeRepository } from '../home-repository';
 
 @injectable()
 export class B2cHomeRepository implements HomeRepository {
-  selectStore = (storeName: string): Cypress.Chainable =>
-    cy
-      .get(this.getStoreSelectorHeader())
+  selectStore = (storeName: string): Cypress.Chainable => {
+    cy.get(this.getStoreSelectorHeader())
       .scrollIntoView()
-      .click()
-      .get(this.getStoreSelectorOption(storeName))
+      .click();
+    return cy.get(this.getStoreSelectorOption(storeName))
       .scrollIntoView()
       .select(storeName, { force: true });
+  };
   getStoreSelectorOption = (storeName: string): string => `select[name="_store"] option[value*="${storeName}"]`;
   getStoreSelectorHeader = (): string => `header [data-qa="component custom-select _store"]`;
   getNavigationNewLink = (newPageLinkText: string): Cypress.Chainable => {

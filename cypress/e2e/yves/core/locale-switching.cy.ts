@@ -68,14 +68,14 @@ describe('locale switching', { tags: ['@core', '@yves'] }, (): void => {
       oppositeLocale === staticFixtures.localeDE ? staticFixtures.newPageLinkDE : staticFixtures.newPageLinkEN;
     homePage.navigateToNewPage(newPageLinkText);
 
-    const expectedCountry =
-      oppositeLocale === staticFixtures.localeDE ? staticFixtures.countryCodeDE : staticFixtures.countryCodeEN;
+    const expectedStore =
+      oppositeLocale === staticFixtures.localeDE ? staticFixtures.storeCodeDE : staticFixtures.storeCodeAT;
     const expectedLanguage =
       oppositeLocale === staticFixtures.localeDE ? staticFixtures.languageCodeDE : staticFixtures.languageCodeEN;
-    const expectedUrlFormat = `/${expectedCountry}/${expectedLanguage}/`;
+    const expectedUrlFormat = `/${expectedStore}/${expectedLanguage}/`;
     cy.url().should('include', expectedUrlFormat);
 
-    homePage.getLanguageSwitcher().should('contain', expectedCountry);
+    homePage.getLanguageSwitcher().should('contain', expectedStore);
   });
 
   function skipDisabledDynamicStoreIt(description: string, testFn: () => void): void {
