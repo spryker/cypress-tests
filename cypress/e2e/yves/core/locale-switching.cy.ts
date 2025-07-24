@@ -64,14 +64,15 @@ describe('locale switching', { tags: ['@core', '@yves'] }, (): void => {
       selectedLocale: oppositeLocale,
     });
 
-    cy.get('.navigation-multilevel-node .navigation-multilevel-node__link--lvl-1')
-      .contains(oppositeLocale === staticFixtures.localeDE ? 'Neu' : 'New')
-      .click({ force: true });
-
-    cy.get('[data-qa="component language-switcher"]').should(
-      'contain',
-      oppositeLocale === staticFixtures.localeDE ? 'DE' : 'EN'
-    );
+    const newPageLinkText = oppositeLocale === staticFixtures.localeDE ? staticFixtures.newPageLinkDE : staticFixtures.newPageLinkEN;
+    homePage.navigateToNewPage(newPageLinkText);
+    
+    const expectedCountry = oppositeLocale === staticFixtures.localeDE ? 'DE' : 'EN';
+    const expectedLanguage = oppositeLocale === staticFixtures.localeDE ? 'de' : 'en';
+    const expectedUrlFormat = `/${expectedCountry}/${expectedLanguage}/`;
+    cy.url().should('include', expectedUrlFormat);
+    
+    cy.get('[data-qa="component language-switcher"]').should('contain', oppositeLocale === staticFixtures.localeDE ? 'DE' : 'EN');
   });
 
   function skipDisabledDynamicStoreIt(description: string, testFn: () => void): void {

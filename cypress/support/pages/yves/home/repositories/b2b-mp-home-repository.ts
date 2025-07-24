@@ -10,4 +10,9 @@ export class B2bMpHomeRepository implements HomeRepository {
       .select(storeName, { force: true });
   getStoreSelectorOption = (storeName: string): string => `select[name="_store"] option[value*="${storeName}"]`;
   getStoreSelectorHeader = (): string => `header [data-qa="component custom-select _store"]`;
+  getNavigationNewLink = (newPageLinkText: string): Cypress.Chainable => {
+    return cy.get('.navigation-multilevel-node .navigation-multilevel-node__link--lvl-1')
+      .filter(`:contains("${newPageLinkText}")`)
+      .first();
+  };
 }

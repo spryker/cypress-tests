@@ -1,5 +1,7 @@
 {
   "availableLocales": ["de", "en"],
   "localeDE": "de_DE",
-  "localeEN": "en_US"
+  "localeEN": "en_US",
+  "newPageLinkDE": "Neu",
+  "newPageLinkEN": "New"
 }

@@ -8,4 +8,6 @@ export interface LocaleSwitchingStaticFixtures {
   localeDE: string;
   localeEN: string;
   availableLocales: string[];
+  newPageLinkEN: string;
+  newPageLinkDE: string;
 }
