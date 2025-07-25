@@ -52,7 +52,7 @@ describe('locale switching', { tags: ['@core', '@yves'] }, (): void => {
     }, catalogPage);
   });
 
-  // Will be done after product release
+  // Will be done after product release https://spryker.atlassian.net/browse/FRW-10788
   if (['none'].includes(Cypress.env('repositoryId'))) {
     it('should maintain locale when navigating to New page after switching locale.', (): void => {
       homePage.visit();
