@@ -49,7 +49,7 @@ export class B2bMpSspDashboardManagementRepository implements SspDashboardManage
       .find('a.assets-preview__link');
   }
   getExpectedStatsColumnBlocks(): string[] {
-    return ['Assets', 'Pending Inquiries'];
+    return ['Assets', 'Pending Inquiries', 'Booked Services'];
   }
   getPlaceholderImage(): string {
     return 'image-placeholder.png';
