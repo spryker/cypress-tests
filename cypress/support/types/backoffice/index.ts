@@ -7,3 +7,4 @@ export * from './company-role-create';
 export * from './ssp-file-management';
 export * from './product-class';
 export * from './ssp-asset-management';
+export * from './product-offer';

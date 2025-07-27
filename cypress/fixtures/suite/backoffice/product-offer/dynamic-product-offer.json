@@ -1,0 +1,44 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductClass",
+          "key": "productClass",
+          "arguments": [{ "key": "service", "name": "Service" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveStore",
+          "key": "store",
+          "arguments": [{ "name": "DE" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveServicePoint",
+          "key": "servicePoint"
+        },
+        {
+          "type": "helper",
+          "name": "haveService",
+          "key": "service",
+          "arguments": [{ "servicePoint": { "id_service_point": "#servicePoint.id_service_point" } }]
+        }
+      ]
+    }
+  }
+}
