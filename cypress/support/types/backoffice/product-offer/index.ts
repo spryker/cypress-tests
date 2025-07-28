@@ -3,6 +3,10 @@ export interface ProductOfferStaticFixtures {
   productConcrete: {
     productClass: string;
   };
+  defaultApprovalStatus: string;
+  defaultStatus: string;
+  defaultMerchantName: string;
+  defaultStockName: string;
 }
 
 export interface ProductOfferDynamicFixtures {
@@ -17,10 +21,18 @@ export interface ProductOfferDynamicFixtures {
     name: string;
     id_store: number;
   };
-  servicePoint: {
-    id_service_point: number;
-  };
   service: {
     uuid: string;
+  service_point: {
+    id_service_point: number;
+    key: string;
+    name: string;
+    serviceType: {
+      name: string;
+    };
   };
+  service_type: {
+    name: string;
+  };
+}
 }

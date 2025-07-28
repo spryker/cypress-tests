@@ -6,8 +6,8 @@ import {
   ProductClassPage,
   ProductManagementEditPage,
   ProductOfferCreatePage,
+  ProductOfferViewPage
 } from '@pages/backoffice';
-import { ProductOfferViewPage } from '../../../support/pages/backoffice/product-offer/view/product-offer-view-page';
 
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'Product Offer - List Page',
@@ -42,19 +42,44 @@ import { ProductOfferViewPage } from '../../../support/pages/backoffice/product-
 
       productManagementEditPage.getGeneralTab().click();
       productClassPage.selectProductClass(dynamicFixtures.productClass.name);
-      // productClassPage.saveProduct();
+      productClassPage.saveProduct();
 
       productOfferListPage.visit();
       productOfferListPage.getCreateButton().click();
-      productOfferCreatePage.create({
+
+      const productOffer = productOfferCreatePage.create({
         sku: product.sku,
         store: dynamicFixtures.store.name,
-        servicePointId: dynamicFixtures.servicePoint.id_service_point,
+        servicePointId: dynamicFixtures.service.service_point.id_service_point,
         validFrom: getCurrentDate(),
         validTo: getFuturetDate(),
         serviceUuid: dynamicFixtures.service.uuid,
       });
       productOfferCreatePage.getSuccessMessageSelector().should('exist');
+
+      productOfferListPage.find({
+        searchQuery: product.sku,
+        tableUrl: '**/product-offer-gui/list/table**' + product.sku + '**'
+      }).then(($row) => cy.wrap($row).find('a[href*="/product-offer-gui/view?id-product-offer="]').click());
+
+      productOfferViewPage.verifyProductOfferData({
+        approvalStatus: staticFixtures.defaultApprovalStatus,
+        status: staticFixtures.defaultStatus,
+        stores: productOffer.stores,
+        productSku: product.sku,
+        merchantName: staticFixtures.defaultMerchantName,
+        validFrom: productOffer.validFrom,
+        validTo: productOffer.validTo,
+        stocks: [
+          {
+            name: staticFixtures.defaultStockName,
+            neverOutOfStock: productOffer.isNeverOfStock,
+            quantity: productOffer.quantity,
+            storeName: dynamicFixtures.store.name
+          }
+        ],
+        servicePoint: dynamicFixtures.service.service_point.key + ' - ' + dynamicFixtures.service.service_point.name + ' - ' + dynamicFixtures.service.service_type.name
+      })
     });
   }
 );

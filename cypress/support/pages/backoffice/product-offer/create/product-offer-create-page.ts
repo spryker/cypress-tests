@@ -12,13 +12,25 @@ export class ProductOfferCreatePage extends BackofficePage {
 
   protected PAGE_URL = '/product-offer-gui/create';
 
-  create = (params: CreateProductOfferParams): void => {
+  create = (params: CreateProductOfferParams): ProductOffer => {
+    let productOffer: ProductOffer = {
+      status: '',
+      stores: [],
+      productSku: '',
+      validFrom: '',
+      validTo: '',
+      quantity: 0,
+      isNeverOfStock: false
+    };
+
     this.repository
       .getproductSearchField()
       .clear()
       .invoke('val', params.sku)
       .trigger('input')
       .then(() => {
+        
+
         cy.intercept('GET', '**/self-service-portal/create-offer/table**' + params.sku + '**').as('createOfferTable');
         cy.wait('@createOfferTable');
 
@@ -29,8 +41,10 @@ export class ProductOfferCreatePage extends BackofficePage {
           });
 
         this.repository.getStoreField().select(params.store, { force: true });
+        productOffer.stores = [params.store];
 
         this.repository.getStockQuantityField().type('1');
+        productOffer.quantity = 1;
         this.repository.getServiceField().should('be.disabled');
         if (params.servicePointId) {
           this.repository.getServicePointField().select(params.servicePointId.toString(), { force: true });
@@ -42,19 +56,24 @@ export class ProductOfferCreatePage extends BackofficePage {
 
           if (params.validFrom) {
             this.repository.getValidFromField().type(params.validFrom);
+            productOffer.validFrom = params.validFrom;
           }
         }
 
         if (params.validTo) {
           this.repository.getValidToField().type(params.validTo);
+          productOffer.validTo = params.validTo;
         }
 
         if (params.isNeverOfStock) {
           this.repository.getIsNeverOfStockCheckbox().check();
+          productOffer.isNeverOfStock = true;
         }
 
         this.repository.getSaveButton().click();
       });
+
+      return productOffer;
   };
 
   getSuccessMessageSelector = (): Cypress.Chainable => {
@@ -70,4 +89,14 @@ interface CreateProductOfferParams {
   servicePointId?: number;
   serviceUuid?: string;
   isNeverOfStock?: boolean;
+}
+
+interface ProductOffer {
+  status: string;
+  stores: string[];
+  productSku: string;
+  validFrom: string;
+  validTo: string;
+  quantity: number;
+  isNeverOfStock: boolean;
 }

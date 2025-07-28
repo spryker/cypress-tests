@@ -38,16 +38,6 @@ export class ProductOfferListPage extends BackofficePage {
   };
 
   /**
-   * Find a product offer by search query and wait for table to update
-   * @param params - Search parameters
-   */
-  find = (params: FindParams): Cypress.Chainable => {
-    cy.intercept('GET', params.tableUrl).as('tableUpdate');
-    this.search(params.searchQuery);
-    return cy.wait('@tableUpdate');
-  };
-
-  /**
    * Click the view button for a specific row
    * @param rowIndex - The row index (default: 0 for first row)
    */
