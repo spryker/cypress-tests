@@ -73,7 +73,17 @@
               "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
             }
           ]
-        }
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentType",
+          "key": "shipmentType",
+          "arguments": [
+              {
+                  "key": "delivery"
+              }
+          ]
+      }
       ]
     }
   }

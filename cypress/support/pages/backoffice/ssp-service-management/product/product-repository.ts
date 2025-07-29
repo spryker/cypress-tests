@@ -5,7 +5,7 @@ import { injectable } from 'inversify';
 @autoWired
 export class ProductRepository {
   getProductClassSelectSelector = (): string => '[data-qa="product-classes"]';
-  getShipmentTypeSelectSelector = (): string => '[data-qa="shipment-types"]';
+  getShipmentTypeSelectSelect = (): Cypress.Chainable => cy.get('[name="product_concrete_form_edit[shipmentTypes][]"]');
   getProductClassOptionSelector = (value: string): string => `[data-qa="product-classes"] option[value="${value}"]`;
   getSaveButtonSelector = (): string => '[name="product_concrete_form_edit"] [value="Save"]';
   getSuccessMessageSelector = (): string => '.flash-messages .alert-success';
@@ -18,4 +18,6 @@ export class ProductRepository {
   getSelect2ChoiceItemSelector = (): string => 'li.select2-selection__choice';
   getSelectedTypeVerificationSelector = (): string =>
     `${this.getProductClassSelectSelector()} ~ ${this.getSiblingSelector()} ${this.getSelect2Selector()} ${this.getSelect2ChoiceItemSelector()}`;
+
+  getShipmentTypeVerificationSelector = (): string => 'select[name="product_concrete_form_edit[shipmentTypes][]"] option:selected';
 }

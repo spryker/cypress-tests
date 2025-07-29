@@ -6,7 +6,7 @@ import { ProductClassStaticFixtures, ProductClassDynamicFixtures } from '@interf
 describeForSsp('Product Class Functionality', { tags: ['@backoffice', '@productManagement', '@ssp'] }, () => {
   const userLoginScenario = container.get(UserLoginScenario);
   const productManagementListPage = container.get(ProductManagementListPage);
-  const productClassPage = container.get(ProductPage);
+  const productPage = container.get(ProductPage);
 
   let dynamicFixtures: ProductClassDynamicFixtures;
   let staticFixtures: ProductClassStaticFixtures;
@@ -24,22 +24,25 @@ describeForSsp('Product Class Functionality', { tags: ['@backoffice', '@productM
 
   it('should assign product class to a product', () => {
     productManagementListPage.visit();
-    productClassPage.editProductFromList(dynamicFixtures.product.abstract_sku);
-    productClassPage.goToVariansTab();
-    productClassPage.editFirstVariant();
-    productClassPage.selectProductClass(dynamicFixtures.productClass.name);
-    productClassPage.saveProduct();
-    productClassPage.verifySuccessMessage();
-    productClassPage.verifyProductClassSelected(dynamicFixtures.productClass.name);
+      productPage.editProductFromList(dynamicFixtures.product.abstract_sku);
+      productPage.goToVariansTab();
+      productPage.editFirstVariant();
+      productPage.selectProductClass(dynamicFixtures.productClass.name);
+      productPage.saveProduct();
+      productPage.verifySuccessMessage();
+      productPage.verifyProductClassSelected(dynamicFixtures.productClass.name);
   });
 
- 
+
   it('should assign shipment type to a product', () => {
     productManagementListPage.visit();
-    productClassPage.editProductFromList(dynamicFixtures.product.abstract_sku);
-    productClassPage.goToVariansTab();
-    productClassPage.editFirstVariant();
-    productClassPage.selectProductClass(dynamicFixtures.productClass.name);
+      productPage.editProductFromList(dynamicFixtures.product.abstract_sku);
+      productPage.goToVariansTab();
+      productPage.editFirstVariant();
+      productPage.selectShipmentType(dynamicFixtures.shipmentType.name);
+      productPage.saveProduct();
+      productPage.verifySuccessMessage();
+        productPage.verifyShipmentTypeSelected(dynamicFixtures.shipmentType.name);
   });
 
 });

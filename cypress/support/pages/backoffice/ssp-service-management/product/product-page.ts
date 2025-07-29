@@ -20,12 +20,14 @@ export class ProductPage extends BackofficePage {
     cy.get('li.select2-results__option').contains(typeValue).click();
   }
 
-  selectShipmentType(typeValue: string): void {
-    cy.get(this.repository.getShipmentTypeSelectSelector())
-      .siblings(this.repository.getSiblingSelector())
-      .find(this.repository.getSelect2Selector())
-      .should('exist')
-      .click();
+  selectShipmentType(shipmentName: string): void {
+    this.repository.getShipmentTypeSelectSelect()
+        .siblings(this.repository.getSiblingSelector())
+        .find(this.repository.getSelect2Selector())
+        .should('exist')
+        .click();
+
+      cy.get('li.select2-results__option').contains(shipmentName).click();
   }
 
   saveProduct(): void {
@@ -41,6 +43,10 @@ export class ProductPage extends BackofficePage {
 
   verifyProductClassSelected(typeName: string): void {
     cy.get(this.repository.getSelectedTypeVerificationSelector()).should('contain', typeName);
+  }
+
+  verifyShipmentTypeSelected(shipmentTypeName: string): void {
+    cy.get(this.repository.getShipmentTypeVerificationSelector()).should('contain', shipmentTypeName);
   }
 
   editProductFromList(sku: string): void {
