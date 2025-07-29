@@ -3,7 +3,6 @@ import { inject, injectable } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
 import { ProductOfferViewRepository } from './product-offer-view-repository';
-import { forEach } from 'cypress/types/lodash';
 
 @injectable()
 @autoWired

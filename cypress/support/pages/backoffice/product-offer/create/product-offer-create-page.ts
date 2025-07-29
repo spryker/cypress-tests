@@ -3,7 +3,6 @@ import { inject, injectable } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
 import { ProductOfferCreateRepository } from './product-offer-create-repository';
-import { th } from '@faker-js/faker';
 
 @injectable()
 @autoWired
@@ -13,7 +12,7 @@ export class ProductOfferCreatePage extends BackofficePage {
   protected PAGE_URL = '/product-offer-gui/create';
 
   create = (params: CreateProductOfferParams): ProductOffer => {
-    let productOffer: ProductOffer = {
+    const productOffer: ProductOffer = {
       status: '',
       stores: [],
       productSku: '',

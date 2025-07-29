@@ -30,7 +30,7 @@ describeForSsp('Service List Page', { tags: ['@backoffice', '@ssp', '@service-ma
         tableUrl:
           '**/self-service-portal/list-service/table**' + dynamicFixtures.salesOrder?.order_items[0].name + '**',
       })
-      .then(($row) => {
+      .then(() => {
         serviceListPage.verifyServiceListPage({
           orderReference: dynamicFixtures.salesOrder?.order_reference,
           customerFullName: `${dynamicFixtures.customer.first_name} ${dynamicFixtures.customer.last_name}`,
