@@ -24,27 +24,25 @@ describeForSsp('Product Class Functionality', { tags: ['@backoffice', '@productM
 
   it('should assign product class to a product', () => {
     productManagementListPage.visit();
-      productPage.editProductFromList(dynamicFixtures.product.abstract_sku);
-      productPage.goToVariansTab();
-      productPage.editFirstVariant();
-      productPage.selectProductClass(dynamicFixtures.productClass.name);
-      productPage.saveProduct();
-      productPage.verifySuccessMessage();
-      productPage.verifyProductClassSelected(dynamicFixtures.productClass.name);
+    productPage.editProductFromList(dynamicFixtures.product.abstract_sku);
+    productPage.goToVariansTab();
+    productPage.editFirstVariant();
+    productPage.selectProductClass(dynamicFixtures.productClass.name);
+    productPage.saveProduct();
+    productPage.verifySuccessMessage();
+    productPage.verifyProductClassSelected(dynamicFixtures.productClass.name);
   });
-
 
   it('should assign shipment type to a product', () => {
     productManagementListPage.visit();
-      productPage.editProductFromList(dynamicFixtures.product.abstract_sku);
-      productPage.goToVariansTab();
-      productPage.editFirstVariant();
-      productPage.selectShipmentType(dynamicFixtures.shipmentType.name);
-      productPage.saveProduct();
-      productPage.verifySuccessMessage();
-        productPage.verifyShipmentTypeSelected(dynamicFixtures.shipmentType.name);
+    productPage.editProductFromList(dynamicFixtures.product.abstract_sku);
+    productPage.goToVariansTab();
+    productPage.editFirstVariant();
+    productPage.selectShipmentType(dynamicFixtures.shipmentType.name);
+    productPage.saveProduct();
+    productPage.verifySuccessMessage();
+    productPage.verifyShipmentTypeSelected(dynamicFixtures.shipmentType.name);
   });
-
 });
 
 function describeForSsp(title: string, options: { tags: string[] }, fn: () => void): void {

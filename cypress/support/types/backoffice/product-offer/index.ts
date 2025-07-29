@@ -23,19 +23,19 @@ export interface ProductOfferDynamicFixtures {
   };
   shipmentType: {
     id_shipment_type: number;
-  }
+  };
   service: {
     uuid: string;
-  service_point: {
-    id_service_point: number;
-    key: string;
-    name: string;
-    serviceType: {
+    service_point: {
+      id_service_point: number;
+      key: string;
+      name: string;
+      serviceType: {
+        name: string;
+      };
+    };
+    service_type: {
       name: string;
     };
   };
-  service_type: {
-    name: string;
-  };
-}
 }

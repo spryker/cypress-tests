@@ -20,7 +20,7 @@ export class ProductOfferCreatePage extends BackofficePage {
       validFrom: '',
       validTo: '',
       quantity: 0,
-      isNeverOfStock: false
+      isNeverOfStock: false,
     };
 
     this.repository
@@ -29,8 +29,6 @@ export class ProductOfferCreatePage extends BackofficePage {
       .invoke('val', params.sku)
       .trigger('input')
       .then(() => {
-
-
         cy.intercept('GET', '**/self-service-portal/create-offer/table**' + params.sku + '**').as('createOfferTable');
         cy.wait('@createOfferTable');
 
@@ -71,13 +69,13 @@ export class ProductOfferCreatePage extends BackofficePage {
         }
 
         if (params.shipmentTypeId) {
-          this.repository.getShipmentTypesField().select(params.shipmentTypeId, {force: true})
+          this.repository.getShipmentTypesField().select(params.shipmentTypeId, { force: true });
         }
 
         this.repository.getSaveButton().click();
       });
 
-      return productOffer;
+    return productOffer;
   };
 
   getSuccessMessageSelector = (): Cypress.Chainable => {

@@ -6,7 +6,7 @@ import {
   ProductPage,
   ProductManagementEditPage,
   ProductOfferCreatePage,
-  ProductOfferViewPage
+  ProductOfferViewPage,
 } from '@pages/backoffice';
 
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
@@ -54,14 +54,16 @@ import {
         validFrom: getCurrentDate(),
         validTo: getFuturetDate(),
         serviceUuid: dynamicFixtures.service.uuid,
-        shipmentTypeId: dynamicFixtures.shipmentType.id_shipment_type
+        shipmentTypeId: dynamicFixtures.shipmentType.id_shipment_type,
       });
       productOfferCreatePage.getSuccessMessageSelector().should('exist');
 
-      productOfferListPage.find({
-        searchQuery: product.sku,
-        tableUrl: '**/product-offer-gui/list/table**' + product.sku + '**'
-      }).then(($row) => cy.wrap($row).find('a[href*="/product-offer-gui/view?id-product-offer="]').click());
+      productOfferListPage
+        .find({
+          searchQuery: product.sku,
+          tableUrl: '**/product-offer-gui/list/table**' + product.sku + '**',
+        })
+        .then(($row) => cy.wrap($row).find('a[href*="/product-offer-gui/view?id-product-offer="]').click());
 
       productOfferViewPage.verifyProductOfferData({
         approvalStatus: staticFixtures.defaultApprovalStatus,
@@ -76,11 +78,16 @@ import {
             name: staticFixtures.defaultStockName,
             neverOutOfStock: productOffer.isNeverOfStock,
             quantity: productOffer.quantity,
-            storeName: dynamicFixtures.store.name
-          }
+            storeName: dynamicFixtures.store.name,
+          },
         ],
-        servicePoint: dynamicFixtures.service.service_point.key + ' - ' + dynamicFixtures.service.service_point.name + ' - ' + dynamicFixtures.service.service_type.name
-      })
+        servicePoint:
+          dynamicFixtures.service.service_point.key +
+          ' - ' +
+          dynamicFixtures.service.service_point.name +
+          ' - ' +
+          dynamicFixtures.service.service_type.name,
+      });
     });
   }
 );

@@ -19,5 +19,6 @@ export class ProductRepository {
   getSelectedTypeVerificationSelector = (): string =>
     `${this.getProductClassSelectSelector()} ~ ${this.getSiblingSelector()} ${this.getSelect2Selector()} ${this.getSelect2ChoiceItemSelector()}`;
 
-  getShipmentTypeVerificationSelector = (): string => 'select[name="product_concrete_form_edit[shipmentTypes][]"] option:selected';
+  getShipmentTypeVerificationSelector = (): string =>
+    'select[name="product_concrete_form_edit[shipmentTypes][]"] option:selected';
 }

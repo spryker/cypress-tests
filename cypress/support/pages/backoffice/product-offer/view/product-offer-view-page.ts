@@ -16,10 +16,13 @@ export class ProductOfferViewPage extends BackofficePage {
     this.repository.getApprovalStatusContainer().should('contain.text', param.approvalStatus);
     this.repository.getStatusContainer().should('contain.text', param.status);
 
-    this.repository.getStoreContainer().should('have.length', param.stores.length)
+    this.repository.getStoreContainer().should('have.length', param.stores.length);
 
     param.stores.forEach((store) => {
-      this.repository.getStoreContainer().filter(':contains("' + store + '")').should('exist');
+      this.repository
+        .getStoreContainer()
+        .filter(':contains("' + store + '")')
+        .should('exist');
     });
 
     this.repository.getProductSkuContainer().should('contain.text', param.productSku);

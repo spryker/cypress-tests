@@ -13,7 +13,6 @@ interface ServiceListTableDataParams {
   itemName: string;
 }
 
-
 @injectable()
 @autoWired
 export class ServiceListPage extends BackofficePage {
@@ -22,11 +21,11 @@ export class ServiceListPage extends BackofficePage {
   protected PAGE_URL = '/self-service-portal/list-service';
 
   verifyServiceListPage(param: {
-      orderReference: string,
-      customerFullName: string,
-      companyName?: string,
-      itemId: number;
-      itemName: string;
+    orderReference: string;
+    customerFullName: string;
+    companyName?: string;
+    itemId: number;
+    itemName: string;
   }): void {
     this.verifyServiceListTableColumns();
 
@@ -40,8 +39,9 @@ export class ServiceListPage extends BackofficePage {
   }
 
   verifyServiceListTableColumns(): void {
-    this.repository.getServiceListTable()
-        .first()
+    this.repository
+      .getServiceListTable()
+      .first()
       .within(() => {
         this.repository.getOrderReferenceHeader().should('exist').and('contain', 'Order Reference');
         this.repository.getCustomerHeader().should('exist').and('contain', 'Customer');
@@ -54,47 +54,42 @@ export class ServiceListPage extends BackofficePage {
   }
 
   checkTableData(params: ServiceListTableDataParams): void {
+    this.repository.getFirstTableRow().within(() => {
+      if (params.orderReference) {
+        this.repository.getOrderReferenceCell().should('contain', params.orderReference);
+      }
 
-        this.repository.getFirstTableRow().within(() => {
-          if (params.orderReference) {
-            this.repository.getOrderReferenceCell()
-              .should('contain', params.orderReference);
-          }
+      if (params.customerName) {
+        this.repository.getCustomerNameCell().should('contain', params.customerName);
+      }
 
-          if (params.customerName) {
-            this.repository.getCustomerNameCell()
-              .should('contain', params.customerName);
-          }
+      if (params.company) {
+        this.repository.getCompanyCell().should('contain', params.company);
+      }
 
-          if (params.company) {
-            this.repository.getCompanyCell()
-              .should('contain', params.company);
-          }
+      this.repository.getServiceCell().should('contain', params.itemName);
 
-            this.repository.getServiceCell()
-              .should('contain', params.itemName);
+      if (params.scheduledDate) {
+        this.repository.getScheduledDateCell().should('contain', params.scheduledDate);
+      }
 
-          if (params.scheduledDate) {
-            this.repository.getScheduledDateCell()
-              .should('contain', params.scheduledDate);
-          }
+      if (params.createdDate) {
+        this.repository.getCreatedDateCell().should('contain', params.createdDate);
+      }
 
-          if (params.createdDate) {
-            this.repository.getCreatedDateCell()
-              .should('contain', params.createdDate);
-          }
+      this.repository
+        .getActionsCell()
+        .should('contain', 'View')
+        .find(this.repository.getViewButtonSelector())
+        .should('exist')
+        .and('have.attr', 'href')
+        .and('include', '/self-service-portal/view-service?id-sales-order-item=');
 
-            this.repository.getActionsCell()
-              .should('contain', 'View')
-              .find(this.repository.getViewButtonSelector())
-              .should('exist')
-              .and('have.attr', 'href')
-              .and('include', '/self-service-portal/view-service?id-sales-order-item=');
-
-              this.repository.getActionsCell()
-                .find(this.repository.getViewButtonSelector())
-                .should('have.attr', 'href')
-                .and('include', `/self-service-portal/view-service?id-sales-order-item=${params.itemId}`);
-        });
+      this.repository
+        .getActionsCell()
+        .find(this.repository.getViewButtonSelector())
+        .should('have.attr', 'href')
+        .and('include', `/self-service-portal/view-service?id-sales-order-item=${params.itemId}`);
+    });
   }
 }

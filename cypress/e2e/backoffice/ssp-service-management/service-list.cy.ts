@@ -24,17 +24,20 @@ describeForSsp('Service List Page', { tags: ['@backoffice', '@ssp', '@service-ma
   it('should display service list table with order containing service product', () => {
     serviceListPage.visit();
 
-      serviceListPage.find({
-          searchQuery: dynamicFixtures.salesOrder?.order_items[0].name,
-          tableUrl: '**/self-service-portal/list-service/table**' + dynamicFixtures.salesOrder?.order_items[0].name + '**'
-      }).then(($row) => {
-          serviceListPage.verifyServiceListPage({
-              orderReference: dynamicFixtures.salesOrder?.order_reference,
-              customerFullName: `${dynamicFixtures.customer.first_name} ${dynamicFixtures.customer.last_name}`,
-              companyName: dynamicFixtures.company?.name,
-              itemId: dynamicFixtures.salesOrder?.order_items[0].id_sales_order_item,
-              itemName: dynamicFixtures.salesOrder?.order_items[0].name,
-          });
+    serviceListPage
+      .find({
+        searchQuery: dynamicFixtures.salesOrder?.order_items[0].name,
+        tableUrl:
+          '**/self-service-portal/list-service/table**' + dynamicFixtures.salesOrder?.order_items[0].name + '**',
+      })
+      .then(($row) => {
+        serviceListPage.verifyServiceListPage({
+          orderReference: dynamicFixtures.salesOrder?.order_reference,
+          customerFullName: `${dynamicFixtures.customer.first_name} ${dynamicFixtures.customer.last_name}`,
+          companyName: dynamicFixtures.company?.name,
+          itemId: dynamicFixtures.salesOrder?.order_items[0].id_sales_order_item,
+          itemName: dynamicFixtures.salesOrder?.order_items[0].name,
+        });
       });
   });
 });

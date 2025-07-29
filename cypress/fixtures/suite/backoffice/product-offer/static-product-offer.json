@@ -3,8 +3,8 @@
   "productConcrete": {
     "productClass": "service"
   },
-    "defaultApprovalStatus": "Approved",
-    "defaultStatus": "Active",
-    "defaultMerchantName": "Spryker",
-    "defaultStockName": "Spryker MER000001 Warehouse 1"
+  "defaultApprovalStatus": "Approved",
+  "defaultStatus": "Active",
+  "defaultMerchantName": "Spryker",
+  "defaultStockName": "Spryker MER000001 Warehouse 1"
 }

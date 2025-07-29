@@ -12,11 +12,11 @@ export class ProductOfferViewRepository {
   getValidFromContainer = (): Cypress.Chainable => cy.get('[data-qa="product-offer-valid-from"]');
   getValidToContainer = (): Cypress.Chainable => cy.get('[data-qa="product-offer-valid-to"]');
   getProductOfferServicePointContainer = (): Cypress.Chainable => cy.get('[data-qa="product-offer-service-point"]');
-  
-   // Stock table selectors
-   getStockTable = (): Cypress.Chainable => cy.get('.table.table--expand');
-   getStockTableRows = (): Cypress.Chainable => this.getStockTable().find('tbody > tr');
-   getStockNameCell = (row: number): Cypress.Chainable => this.getStockTableRows().eq(row).find('td').eq(0);
-   getStockQuantityCell = (row: number): Cypress.Chainable => this.getStockTableRows().eq(row).find('td').eq(1);
-   getStockNeverOutOfStockCell = (row: number): Cypress.Chainable => this.getStockTableRows().eq(row).find('td').last();
+
+  // Stock table selectors
+  getStockTable = (): Cypress.Chainable => cy.get('.table.table--expand');
+  getStockTableRows = (): Cypress.Chainable => this.getStockTable().find('tbody > tr');
+  getStockNameCell = (row: number): Cypress.Chainable => this.getStockTableRows().eq(row).find('td').eq(0);
+  getStockQuantityCell = (row: number): Cypress.Chainable => this.getStockTableRows().eq(row).find('td').eq(1);
+  getStockNeverOutOfStockCell = (row: number): Cypress.Chainable => this.getStockTableRows().eq(row).find('td').last();
 }

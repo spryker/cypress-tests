@@ -21,13 +21,14 @@ export class ProductPage extends BackofficePage {
   }
 
   selectShipmentType(shipmentName: string): void {
-    this.repository.getShipmentTypeSelectSelect()
-        .siblings(this.repository.getSiblingSelector())
-        .find(this.repository.getSelect2Selector())
-        .should('exist')
-        .click();
+    this.repository
+      .getShipmentTypeSelectSelect()
+      .siblings(this.repository.getSiblingSelector())
+      .find(this.repository.getSelect2Selector())
+      .should('exist')
+      .click();
 
-      cy.get('li.select2-results__option').contains(shipmentName).click();
+    cy.get('li.select2-results__option').contains(shipmentName).click();
   }
 
   saveProduct(): void {

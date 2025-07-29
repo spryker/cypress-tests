@@ -22,10 +22,6 @@ export class ServiceListRepository {
 
   getActionsHeader = () => cy.get('th[data-qa="Actions"]');
 
-  getTableHeader = () => cy.get('thead');
-
-  getTableBody = () => cy.get('tbody');
-
   getTableRows = () => cy.get('tbody tr');
 
   getFirstTableRow = () => cy.get('tbody tr').first();
