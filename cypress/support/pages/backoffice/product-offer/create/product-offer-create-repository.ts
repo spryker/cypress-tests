@@ -14,6 +14,7 @@ export class ProductOfferCreateRepository {
   getValidFromField = (): Cypress.Chainable => cy.get('[name="create_offer_form[validFrom]"]');
   getValidToField = (): Cypress.Chainable => cy.get('[name="create_offer_form[validTo]"]');
   getIsNeverOfStockCheckbox = (): Cypress.Chainable => cy.get('[name="create_offer_form[isNeverOutOfStock]"]');
+  getShipmentTypesField = (): Cypress.Chainable => cy.get('[name="create_offer_form[shipmentTypes][]"]');
 
   getSaveButton = (): Cypress.Chainable => cy.get('[name="create_offer_form"]').find('button');
 

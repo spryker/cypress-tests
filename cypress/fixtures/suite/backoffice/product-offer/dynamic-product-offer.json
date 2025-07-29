@@ -4,6 +4,7 @@
     "attributes": {
       "synchronize": true,
       "operations": [
+
         {
           "type": "helper",
           "name": "haveUser",
@@ -25,8 +26,18 @@
           "type": "helper",
           "name": "haveStore",
           "key": "store",
-          "arguments": [{ "name": "DE" }]
+          "arguments": [{"id_store": 1, "name": "DE"  }]
         },
+          {
+              "type": "helper",
+              "name": "haveShipmentType",
+              "key": "shipmentType",
+              "arguments": [
+                  {
+                      "key": "delivery"
+                  }
+              ]
+          },
         {
           "type": "helper",
           "name": "haveServicePoint",

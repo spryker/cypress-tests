@@ -21,6 +21,9 @@ export interface ProductOfferDynamicFixtures {
     name: string;
     id_store: number;
   };
+  shipmentType: {
+    id_shipment_type: number;
+  }
   service: {
     uuid: string;
   service_point: {

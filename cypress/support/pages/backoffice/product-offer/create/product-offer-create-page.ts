@@ -29,7 +29,7 @@ export class ProductOfferCreatePage extends BackofficePage {
       .invoke('val', params.sku)
       .trigger('input')
       .then(() => {
-        
+
 
         cy.intercept('GET', '**/self-service-portal/create-offer/table**' + params.sku + '**').as('createOfferTable');
         cy.wait('@createOfferTable');
@@ -70,6 +70,10 @@ export class ProductOfferCreatePage extends BackofficePage {
           productOffer.isNeverOfStock = true;
         }
 
+        if (params.shipmentTypeId) {
+          this.repository.getShipmentTypesField().select(params.shipmentTypeId, {force: true})
+        }
+
         this.repository.getSaveButton().click();
       });
 
@@ -89,6 +93,7 @@ interface CreateProductOfferParams {
   servicePointId?: number;
   serviceUuid?: string;
   isNeverOfStock?: boolean;
+  shipmentTypeId?: number;
 }
 
 interface ProductOffer {
@@ -99,4 +104,5 @@ interface ProductOffer {
   validTo: string;
   quantity: number;
   isNeverOfStock: boolean;
+  shipmentType?: string;
 }

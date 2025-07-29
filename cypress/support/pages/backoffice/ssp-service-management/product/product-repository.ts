@@ -3,8 +3,9 @@ import { injectable } from 'inversify';
 
 @injectable()
 @autoWired
-export class ProductClassRepository {
+export class ProductRepository {
   getProductClassSelectSelector = (): string => '[data-qa="product-classes"]';
+  getShipmentTypeSelectSelector = (): string => '[data-qa="shipment-types"]';
   getProductClassOptionSelector = (value: string): string => `[data-qa="product-classes"] option[value="${value}"]`;
   getSaveButtonSelector = (): string => '[name="product_concrete_form_edit"] [value="Save"]';
   getSuccessMessageSelector = (): string => '.flash-messages .alert-success';

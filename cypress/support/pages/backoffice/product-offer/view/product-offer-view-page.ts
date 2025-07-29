@@ -34,7 +34,7 @@ export class ProductOfferViewPage extends BackofficePage {
     } else {
       this.repository.getValidToContainer().should('contain.text', '--');
     }
-    
+
     if (param.stocks && param.stocks.length > 0) {
       this.verifyProductOfferStocks(param.stocks);
     }
@@ -43,18 +43,18 @@ export class ProductOfferViewPage extends BackofficePage {
       this.repository.getProductOfferServicePointContainer().should('contain.text', param.servicePoint);
     }
   }
-  
+
   verifyProductOfferStocks(stocks: ProductOfferStock[]): void {
     this.repository.getStockTableRows().should('have.length', stocks.length);
-    
+
     stocks.forEach((stock, index) => {
       this.repository.getStockNameCell(index).should('contain.text', stock.name);
       if (stock.storeName) {
         this.repository.getStockNameCell(index).should('contain.text', stock.storeName);
       }
-      
+
       this.repository.getStockQuantityCell(index).should('contain.text', stock.quantity);
-      
+
       const expectedText = stock.neverOutOfStock ? 'Yes' : 'No';
       this.repository.getStockNeverOutOfStockCell(index).should('contain.text', expectedText);
     });

@@ -3,7 +3,7 @@ import { UserLoginScenario, CreateProductScenario } from '@scenarios/backoffice'
 import { ProductOfferStaticFixtures, ProductOfferDynamicFixtures } from '@interfaces/backoffice';
 import {
   ProductOfferListPage,
-  ProductClassPage,
+  ProductPage,
   ProductManagementEditPage,
   ProductOfferCreatePage,
   ProductOfferViewPage
@@ -14,7 +14,7 @@ import {
   { tags: ['@backoffice', '@product-offer'] },
   (): void => {
     const productOfferListPage = container.get(ProductOfferListPage);
-    const productClassPage = container.get(ProductClassPage);
+    const productPage = container.get(ProductPage);
     const productManagementEditPage = container.get(ProductManagementEditPage);
     const createProductScenario = container.get(CreateProductScenario);
     const productOfferCreatePage = container.get(ProductOfferCreatePage);
@@ -41,8 +41,8 @@ import {
       });
 
       productManagementEditPage.getGeneralTab().click();
-      productClassPage.selectProductClass(dynamicFixtures.productClass.name);
-      productClassPage.saveProduct();
+      productPage.selectProductClass(dynamicFixtures.productClass.name);
+      productPage.saveProduct();
 
       productOfferListPage.visit();
       productOfferListPage.getCreateButton().click();
@@ -54,6 +54,7 @@ import {
         validFrom: getCurrentDate(),
         validTo: getFuturetDate(),
         serviceUuid: dynamicFixtures.service.uuid,
+        shipmentTypeId: dynamicFixtures.shipmentType.id_shipment_type
       });
       productOfferCreatePage.getSuccessMessageSelector().should('exist');
 

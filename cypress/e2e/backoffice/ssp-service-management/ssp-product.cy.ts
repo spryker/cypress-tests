@@ -1,12 +1,12 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
-import { ProductClassPage, ProductManagementListPage } from '@pages/backoffice';
+import { ProductPage, ProductManagementListPage } from '@pages/backoffice';
 import { ProductClassStaticFixtures, ProductClassDynamicFixtures } from '@interfaces/backoffice';
 
 describeForSsp('Product Class Functionality', { tags: ['@backoffice', '@productManagement', '@ssp'] }, () => {
   const userLoginScenario = container.get(UserLoginScenario);
   const productManagementListPage = container.get(ProductManagementListPage);
-  const productClassPage = container.get(ProductClassPage);
+  const productClassPage = container.get(ProductPage);
 
   let dynamicFixtures: ProductClassDynamicFixtures;
   let staticFixtures: ProductClassStaticFixtures;
@@ -32,6 +32,16 @@ describeForSsp('Product Class Functionality', { tags: ['@backoffice', '@productM
     productClassPage.verifySuccessMessage();
     productClassPage.verifyProductClassSelected(dynamicFixtures.productClass.name);
   });
+
+ 
+  it('should assign shipment type to a product', () => {
+    productManagementListPage.visit();
+    productClassPage.editProductFromList(dynamicFixtures.product.abstract_sku);
+    productClassPage.goToVariansTab();
+    productClassPage.editFirstVariant();
+    productClassPage.selectProductClass(dynamicFixtures.productClass.name);
+  });
+
 });
 
 function describeForSsp(title: string, options: { tags: string[] }, fn: () => void): void {
