@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { CustomerLoginScenario, CustomerLogoutScenario, CheckoutScenario } from '@scenarios/yves';
-import { SspServiceListPage } from '@pages/yves';
+import { SspServiceListPage, CartPage } from '@pages/yves';
 
 // Define fixture interfaces
 interface CustomerFixture {
@@ -36,6 +36,7 @@ interface DynamicFixtures {
     const customerLogoutScenario = container.get(CustomerLogoutScenario);
     const sspServiceListPage = container.get(SspServiceListPage);
     const checkoutScenario = container.get(CheckoutScenario);
+    const cartPage = container.get(CartPage);
 
     let staticFixtures: Record<string, unknown>;
     let dynamicFixtures: DynamicFixtures;
@@ -52,14 +53,10 @@ interface DynamicFixtures {
           password: staticFixtures.defaultPassword as string,
         });
 
-        cy.visit('/cart');
+        cartPage.visit();
 
-        cy.get('[data-qa="component product-cart-item"]').contains('Service point');
-
-        cy.get('[data-qa="component product-cart-items-list"] .title--h4').should('have.length.at.least', 2);
-        cy.get('[data-qa="component product-cart-items-list"] .title--h4').contains('Delivery');
-        cy.get('[data-qa="component product-cart-items-list"] .title--h4').contains('In-Center Service');
-
+        cartPage.assertServicePointsDisplayed();
+        cartPage.assertShipmentTypeGrouping();
       });
 
       // it('should allow rescheduling a service', (): void => {
