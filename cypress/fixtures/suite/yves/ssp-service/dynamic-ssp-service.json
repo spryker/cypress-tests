@@ -259,12 +259,40 @@
         {
           "type": "helper",
           "name": "haveShipmentType",
-          "key": "shipmentType",
+          "key": "shipmentType1",
           "arguments": [
             {
               "key": "delivery"
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentType",
+          "key": "shipmentType2",
+          "arguments": [
+              {
+                  "key": "in-center-service"
+              }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveServicePoint",
+          "key": "servicePoint",
+          "arguments": [{ "storeRelation": { "stores": [{"idStore":  "#store.id_store"}] } }]
+        },
+        {
+          "type": "helper",
+          "name": "haveServicePointAddress",
+          "key": "servicePointAddress",
+          "arguments": [{ "servicePoint": "#servicePoint", "country": "#country" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveService",
+          "key": "service1",
+          "arguments": [{ "servicePoint": { "id_service_point": "#servicePoint.id_service_point" } }]
         },
         {
           "type": "helper",
@@ -298,15 +326,37 @@
         },
         {
           "type": "helper",
+          "name": "haveProductOfferService",
+          "key": "productOfferService1",
+          "arguments": [
+            {
+              "idProductOffer": "#productOffer1.id_product_offer",
+              "idService": "#service1.id_service"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferService",
+          "key": "productOfferService2",
+          "arguments": [
+              {
+                  "idProductOffer": "#productOffer2.id_product_offer",
+                  "idService": "#service1.id_service"
+              }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveProductOfferShipmentType",
           "key": "productOfferShipmentType1",
-          "arguments": ["#productOffer1", "#shipmentType"]
+          "arguments": ["#productOffer1", "#shipmentType1"]
         },
         {
           "type": "helper",
           "name": "haveProductOfferShipmentType",
           "key": "productOfferShipmentType2",
-          "arguments": ["#productOffer2", "#shipmentType"]
+          "arguments": ["#productOffer2", "#shipmentType2"]
         },
         {
           "type": "helper",
@@ -452,7 +502,8 @@
                   "idProductAbstract": "#product1.fk_product_abstract",
                   "quantity": 1,
                   "merchantReference": "#merchant.merchant_reference",
-                  "productOfferReference": "#productOffer1.product_offer_reference"
+                  "productOfferReference": "#productOffer1.product_offer_reference",
+                  "shipmentType": "#shipmentType1"
                 },
                 {
                   "sku": "#product2.sku",
@@ -460,7 +511,9 @@
                   "idProductAbstract": "#product2.fk_product_abstract",
                   "quantity": 1,
                   "merchantReference": "#merchant.merchant_reference",
-                  "productOfferReference": "#productOffer2.product_offer_reference"
+                  "productOfferReference": "#productOffer2.product_offer_reference",
+                  "servicePoint": "#servicePoint",
+                  "shipmentType": "#shipmentType2"
                 }
               ]
             }
@@ -478,14 +531,16 @@
                   "abstractSku": "#product1.abstract_sku",
                   "quantity": 1,
                   "merchantReference": "#merchant.merchant_reference",
-                  "productOfferReference": "#productOffer1.product_offer_reference"
+                  "productOfferReference": "#productOffer1.product_offer_reference",
+                  "servicePoint": "#servicePoint"
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
                   "quantity": 1,
                   "merchantReference": "#merchant.merchant_reference",
-                  "productOfferReference": "#productOffer2.product_offer_reference"
+                  "productOfferReference": "#productOffer2.product_offer_reference",
+                  "servicePoint": "#servicePoint"
                 }
               ]
             }
