@@ -532,7 +532,8 @@
                   "quantity": 1,
                   "merchantReference": "#merchant.merchant_reference",
                   "productOfferReference": "#productOffer1.product_offer_reference",
-                  "servicePoint": "#servicePoint"
+                  "servicePoint": "#servicePoint",
+                  "shipmentType": "#shipmentType1"
                 },
                 {
                   "sku": "#product2.sku",
@@ -540,7 +541,8 @@
                   "quantity": 1,
                   "merchantReference": "#merchant.merchant_reference",
                   "productOfferReference": "#productOffer2.product_offer_reference",
-                  "servicePoint": "#servicePoint"
+                  "servicePoint": "#servicePoint",
+                  "shipmentType": "#shipmentType2"
                 }
               ]
             }

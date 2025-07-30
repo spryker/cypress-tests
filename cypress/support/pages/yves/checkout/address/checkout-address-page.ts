@@ -15,6 +15,10 @@ export class CheckoutAddressPage extends YvesPage {
       this.repository.getSelectShippingAddressField().select(params.idCustomerAddress.toString(), { force: true });
       this.repository.getShippingAddressBillingSameAsShippingCheckbox().check({ force: true });
 
+      if (params?.shipmentType) {
+          this.repository.getShipmentTypeRadio(params.shipmentType).click({ force: true });
+      }
+
       this.repository.getNextButton().click();
 
       return;
@@ -143,6 +147,7 @@ export class CheckoutAddressPage extends YvesPage {
 
 interface FillShippingAddressParams {
   idCustomerAddress?: number;
+  shipmentType?: string;
 }
 
 interface Address {

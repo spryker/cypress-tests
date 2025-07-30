@@ -69,4 +69,6 @@ export class SuiteCheckoutAddressRepository implements CheckoutAddressRepository
     index: number
   ): Cypress.Chainable =>
     cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shippingAddress_phone`);
+  getShipmentTypeRadio = (shipmentType: string): Cypress.Chainable =>
+    cy.get(`input[name="addressesForm[shipmentType][key]"][value="${shipmentType}"]`);
 }
