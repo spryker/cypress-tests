@@ -54,7 +54,6 @@
             }
           ]
         },
-
         {
           "type": "helper",
           "name": "haveServicePoint",
@@ -186,7 +185,6 @@
             "shippingAddress": "#address"
           }
         },
-
         {
           "type": "helper",
           "name": "haveFullOrder",
@@ -196,7 +194,7 @@
               "item": {
                 "sku": "#serviceProduct.sku",
                 "productClasses": ["service"],
-                "scheduledAt": "2027-10-01"
+                "scheduledAt": "2097-10-01"
               },
               "customerReference": "#customer.customer_reference",
               "shipment": "#shipment"

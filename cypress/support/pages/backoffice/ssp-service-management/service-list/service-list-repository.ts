@@ -8,8 +8,6 @@ export class ServiceListRepository {
 
   getCustomerHeader = (): Cypress.Chainable => cy.get('th[data-qa="first_name"]');
 
-  getViewButton = (): Cypress.Chainable => cy.get(this.getViewButtonSelector());
-
   getOrderReferenceHeader = (): Cypress.Chainable => cy.get('th[data-qa="order_reference"]');
 
   getCompanyHeader = (): Cypress.Chainable => cy.get('th[data-qa="company"]');
@@ -21,8 +19,6 @@ export class ServiceListRepository {
   getCreatedAtHeader = (): Cypress.Chainable => cy.get('th[data-qa="created_at"]');
 
   getActionsHeader = (): Cypress.Chainable => cy.get('th[data-qa="Actions"]');
-
-  getTableRows = (): Cypress.Chainable => cy.get('tbody tr');
 
   getFirstTableRow = (): Cypress.Chainable => cy.get('tbody tr').first();
 
