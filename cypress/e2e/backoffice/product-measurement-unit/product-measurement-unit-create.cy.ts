@@ -7,7 +7,7 @@ import {
   ProductMeasurementUnitManagementStaticFixtures,
 } from '../../../support/types/backoffice/product-measurement-unit-management';
 
-(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+(['suite', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'Measurement Units - Create Page',
   { tags: ['@backoffice', '@product-measurement-unit'] },
   (): void => {

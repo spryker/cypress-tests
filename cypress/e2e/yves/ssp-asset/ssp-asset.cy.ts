@@ -9,7 +9,7 @@ import {
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
 
-(['suite', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+(['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp asset management',
   { tags: ['@yves', '@ssp-asset', '@ssp', '@sspAssetManagement'] },
   (): void => {
@@ -112,7 +112,8 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
       });
 
       checkoutScenario.execute({
-        paymentMethod: 'dummyMarketplacePaymentInvoice',
+        paymentMethod: 'dummyPaymentInvoice',
+        idCustomerAddress: 0,
       });
 
       assetDetailPage.visit({
@@ -161,7 +162,7 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
 
       assetDetailPage.getEditButton().click();
 
-      cy.location('pathname').should('include', '/ssp/asset/update');
+      cy.location('pathname').should('include', '/customer/ssp-asset/update');
       cy.location('search').should('include', `reference=${dynamicFixtures.asset.reference}`);
       assetEditPage.getAssetForm().should('exist');
 
@@ -213,12 +214,20 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
 
       assetListPage.visit();
 
+      if (['b2b'].includes(Cypress.env('repositoryId'))) {
+        assetListPage.openFilters();
+      }
+
       assetListPage
         .getAccessTableFilterSelect()
         .select(assetListPage.getAccessTableFilterByBusinessUnitValue(), { force: true });
       assetListPage.getSspAssetFiltersSubmitButton().click();
 
       assetListPage.assertTableData([dynamicFixtures.assetBU1C1BU2C1BU1C2, dynamicFixtures.assetBU1C1]);
+
+      if (['b2b'].includes(Cypress.env('repositoryId'))) {
+        assetListPage.openFilters();
+      }
 
       assetListPage
         .getAccessTableFilterSelect()
@@ -345,11 +354,11 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
         withoutSession: true,
       });
 
-      cy.intercept('GET', '**/ssp/asset**').as('assetRequest');
+      cy.intercept('GET', '**/customer/ssp-asset**').as('assetRequest');
       assetListPage.visit();
       cy.url().should('include', 'errorMessage=self_service_portal.asset.access.denied');
 
-      cy.intercept('GET', '**/ssp/asset/details**').as('assetDetailRequest');
+      cy.intercept('GET', '**/customer/ssp-asset/details**').as('assetDetailRequest');
       assetDetailPage.visit({
         qs: {
           reference: dynamicFixtures.assetBU1C1BU2C1BU1C2.reference,

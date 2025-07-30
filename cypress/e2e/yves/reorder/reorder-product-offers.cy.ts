@@ -1,9 +1,9 @@
 import { container } from '@utils';
-import { ReorderProductOffersDynamicFixtures, ReorderStaticFixtures } from '@interfaces/yves';
+import { ReorderProductOffersDynamicFixtures, ReorderProductOfferStaticFixtures } from '@interfaces/yves';
 import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
-(['b2c', 'b2c-mp', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+(['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'reorder product offers',
   { tags: ['@yves', '@order-amendment'] },
   (): void => {
@@ -16,7 +16,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const checkoutScenario = container.get(CheckoutScenario);
 
-    let staticFixtures: ReorderStaticFixtures;
+    let staticFixtures: ReorderProductOfferStaticFixtures;
     let dynamicFixtures: ReorderProductOffersDynamicFixtures;
 
     before((): void => {
@@ -31,12 +31,12 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
         orderDetailsPage.reorderAll();
 
         cartPage.assertPageLocation();
-        cartPage.assertCartName(`Reorder from Order ${orderReference}`);
+        cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Reorder from Order ${orderReference}`);
 
-        cy.get('body').contains(`Sold by ${dynamicFixtures.merchant1.name}`).should('exist');
+        cy.get('body').contains(`${staticFixtures.soldByText} ${dynamicFixtures.merchant1.name}`).should('exist');
         cy.get('body').contains(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
 
-        cy.get('body').contains(`Sold by ${dynamicFixtures.merchant2.name}`).should('exist');
+        cy.get('body').contains(`${staticFixtures.soldByText} ${dynamicFixtures.merchant2.name}`).should('exist');
         cy.get('body').contains(dynamicFixtures.product2.localized_attributes[0].name).should('exist');
       });
     });
@@ -55,7 +55,20 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product2.sku });
       productPage.addToCart();
 
-      checkoutScenario.execute({ idCustomerAddress: dynamicFixtures.address.id_customer_address });
+      checkoutScenario.execute({
+        idCustomerAddress: dynamicFixtures.address.id_customer_address,
+        paymentMethod: getPaymentMethodBasedOnEnv(),
+      });
+    }
+
+    function getPaymentMethodBasedOnEnv(): string {
+      return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
+        ? 'dummyMarketplacePaymentInvoice'
+        : 'dummyPaymentInvoice';
+    }
+
+    function isB2c(): boolean {
+      return ['b2c-mp'].includes(Cypress.env('repositoryId'));
     }
   }
 );

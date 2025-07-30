@@ -6,7 +6,7 @@ import {
 } from '../../../support/types/backoffice/product-measurement-unit-management';
 import { ProductMeasurementUnitListPage } from '../../../support/pages/backoffice/product-measurement-unit/list/product-measurement-unit-list-page';
 
-(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+(['suite', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'Measurement Units - List Page',
   { tags: ['@backoffice', '@product-measurement-unit'] },
   (): void => {

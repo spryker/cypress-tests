@@ -42,6 +42,11 @@ export class CheckoutScenario {
   private fillShippingAddress = (params?: ExecuteParams): void => {
     const fillShippingAddressParams = { idCustomerAddress: params?.idCustomerAddress };
 
+    if (Cypress.env('ENV_IS_SSP_ENABLED')) {
+      this.checkoutAddressPage.fillSingleCheckoutAddress(params);
+      return;
+    }
+
     if (params?.isMultiShipment) {
       this.checkoutAddressPage.fillMultiShippingAddress(fillShippingAddressParams);
 

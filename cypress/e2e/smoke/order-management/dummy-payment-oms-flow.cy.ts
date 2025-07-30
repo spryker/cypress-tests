@@ -73,6 +73,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
     }
 
     function closeOrderFromBackoffice(): void {
+      salesDetailPage.triggerOms({ state: 'skip grace period' });
       salesDetailPage.triggerOms({ state: 'Pay' });
       salesDetailPage.triggerOms({ state: 'Skip timeout' });
       salesDetailPage.triggerOms({ state: 'skip picking' });

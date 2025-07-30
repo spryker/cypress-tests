@@ -8,7 +8,7 @@ import { SspFileManagementRepository } from './ssp-file-management-repository';
 export class SspFileManagementListPage extends YvesPage {
   @inject(SspFileManagementRepository) private repository: SspFileManagementRepository;
 
-  protected PAGE_URL = '/ssp/company-file/list-file';
+  protected PAGE_URL = '/customer/ssp-file/list-file';
 
   verifyListPage(): void {
     cy.get(this.repository.getFiltersSelector()).should('be.visible');
@@ -72,5 +72,9 @@ export class SspFileManagementListPage extends YvesPage {
 
   applyFilters(): void {
     cy.get(this.repository.getApplyFiltersButtonSelector()).click();
+  }
+
+  openFilters(): void {
+    cy.get(this.repository.getFiltersTriggerSelector()).click();
   }
 }

@@ -28,6 +28,8 @@ export class B2cCheckoutAddressRepository implements CheckoutAddressRepository {
   getMultiShipmentTriggerButton = (): Cypress.Chainable => cy.get('[data-qa="multiple-shipment-trigger-button"]');
   getMultiShipmentAddressItemElement = (): Cypress.Chainable =>
     cy.get('[data-qa="component address-item-form-field-list"]');
+  getAddressItemFormFieldListElement = (): Cypress.Chainable =>
+    cy.get('[data-qa="component address-item-form-field-list"]');
   getMultiShipmentAddressItemDeliveryRadio = ($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable =>
     cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shipmentType_key [value="delivery"]`);
   getMultiShipmentAddressItemAddressField = ($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable =>

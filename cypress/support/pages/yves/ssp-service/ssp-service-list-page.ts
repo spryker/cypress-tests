@@ -10,7 +10,7 @@ import Chainable = Cypress.Chainable;
 export class SspServiceListPage extends YvesPage {
   @inject(REPOSITORIES.SspServiceRepository) private repository: SspServiceRepository;
 
-  protected PAGE_URL = '/ssp/service/list';
+  protected PAGE_URL = '/customer/ssp-service/list';
 
   getTable(): Chainable<JQuery<HTMLElement>> {
     return this.repository.getSspServiceTable();
@@ -22,6 +22,10 @@ export class SspServiceListPage extends YvesPage {
 
   getTableHeaders(): Chainable<JQuery<HTMLElement>> {
     return this.repository.getSspServiceTableHeaders();
+  }
+
+  getPageTitle(): Chainable<JQuery<HTMLElement>> {
+    return this.repository.getSspServicePageTitle();
   }
 
   clickSortColumn(columnName: string): void {
@@ -65,11 +69,11 @@ export class SspServiceListPage extends YvesPage {
 
   // Search methods
   setSearchType(type: string): void {
-    this.repository.getSearchTypeSelect().select(type);
+    this.repository.getSearchTypeSelect().select(type, { force: true });
   }
 
   setSearchText(text: string): void {
-    this.repository.getSearchTextInput().clear().type(text);
+    this.repository.getSearchTextInput().clear().type(text, { force: true });
   }
 
   getBusinessUnitSelect(): Chainable<JQuery<HTMLElement>> {
@@ -230,7 +234,7 @@ export class SspServiceListPage extends YvesPage {
     this.getServiceCancelButton().should('be.visible').first().click();
 
     // Verify redirection to services list
-    cy.url().should('include', '/ssp/service/list');
+    cy.url().should('include', '/customer/ssp-service/list');
   }
 
   /**
@@ -241,5 +245,9 @@ export class SspServiceListPage extends YvesPage {
 
     // Verify that first service is cancelled and only second left
     this.getServiceCancelButton().first().should('have.length', 1);
+  }
+
+  openFilter(): void {
+    this.repository.getFiltersTriggerSelector().click();
   }
 }

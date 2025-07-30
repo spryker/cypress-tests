@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { AgentDashboardDynamicFixtures, MarketplaceAgentAssistStaticFixtures } from '@interfaces/mp';
-import { AgentDashboardPage, DashboardPage, AgentLoginPage as MpAgentLoginPage } from '@pages/mp';
+import { AgentDashboardPage, DashboardPage } from '@pages/mp';
 import { MerchantAgentLoginUserScenario } from '@scenarios/mp';
 
 /**
@@ -10,7 +10,6 @@ import { MerchantAgentLoginUserScenario } from '@scenarios/mp';
   'agent dashboard',
   { tags: ['@mp', '@marketplace-agent-assist'] },
   (): void => {
-    const mpAgentLoginPage = container.get(MpAgentLoginPage);
     const mpDashboardPage = container.get(DashboardPage);
     const mpAgentDashboardPage = container.get(AgentDashboardPage);
     const merchantAgentLoginUserScenario = container.get(MerchantAgentLoginUserScenario);
@@ -62,10 +61,10 @@ import { MerchantAgentLoginUserScenario } from '@scenarios/mp';
     });
 
     it('agent should be able to see and assist inactive merchant user in a table', (): void => {
-      mpAgentLoginPage.visit();
-      mpAgentLoginPage.login({
+      merchantAgentLoginUserScenario.execute({
         username: dynamicFixtures.merchantAgentUser.username,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
 
       mpAgentDashboardPage.visit();
@@ -80,10 +79,10 @@ import { MerchantAgentLoginUserScenario } from '@scenarios/mp';
     });
 
     it('agent should be able to see and assist deleted merchant user in a table', (): void => {
-      mpAgentLoginPage.visit();
-      mpAgentLoginPage.login({
+      merchantAgentLoginUserScenario.execute({
         username: dynamicFixtures.merchantAgentUser.username,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
 
       mpAgentDashboardPage.visit();
@@ -98,10 +97,10 @@ import { MerchantAgentLoginUserScenario } from '@scenarios/mp';
     });
 
     it('agent should be able to see and assist merchant users from active (without approved access) merchant', (): void => {
-      mpAgentLoginPage.visit();
-      mpAgentLoginPage.login({
+      merchantAgentLoginUserScenario.execute({
         username: dynamicFixtures.merchantAgentUser.username,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
 
       mpAgentDashboardPage.visit();
@@ -118,10 +117,10 @@ import { MerchantAgentLoginUserScenario } from '@scenarios/mp';
     });
 
     it('agent should be able to see and assist merchant users from inactive (with approved access) merchant', (): void => {
-      mpAgentLoginPage.visit();
-      mpAgentLoginPage.login({
+      merchantAgentLoginUserScenario.execute({
         username: dynamicFixtures.merchantAgentUser.username,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
 
       mpAgentDashboardPage.visit();
@@ -138,10 +137,10 @@ import { MerchantAgentLoginUserScenario } from '@scenarios/mp';
     });
 
     it('agent should be able to see and assist merchant users from inactive (without approved access) merchant', (): void => {
-      mpAgentLoginPage.visit();
-      mpAgentLoginPage.login({
+      merchantAgentLoginUserScenario.execute({
         username: dynamicFixtures.merchantAgentUser.username,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
 
       mpAgentDashboardPage.visit();
@@ -158,10 +157,10 @@ import { MerchantAgentLoginUserScenario } from '@scenarios/mp';
     });
 
     it('agent should be able to see and assist merchant users from active (with approved access) merchant', (): void => {
-      mpAgentLoginPage.visit();
-      mpAgentLoginPage.login({
+      merchantAgentLoginUserScenario.execute({
         username: dynamicFixtures.merchantAgentUser.username,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
 
       mpAgentDashboardPage.visit();

@@ -40,4 +40,6 @@ export interface SspAssetRepository {
   getAssetSerialNumberCells(): Cypress.Chainable;
   getAccessTableFilterSelect(): Cypress.Chainable;
   getSspAssetFiltersSubmitButton(): Cypress.Chainable;
+
+  getFiltersTriggerSelector(): string;
 }

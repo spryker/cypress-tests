@@ -8,7 +8,7 @@ import { inject, injectable } from 'inversify';
 export class SspAssetListPage extends YvesPage {
   @inject(REPOSITORIES.SspAssetRepository) private repository: SspAssetRepository;
 
-  protected PAGE_URL = '/ssp/asset';
+  protected PAGE_URL = '/customer/ssp-asset';
 
   getCreateAssetButton(): Cypress.Chainable {
     return this.repository.getCreateAssetButton();
@@ -25,7 +25,7 @@ export class SspAssetListPage extends YvesPage {
   assertTableHeaders(expectedHeaders: string[]): void {
     this.repository.getAssetTableHeaders().each(($header, index) => {
       if (index < expectedHeaders.length && expectedHeaders[index]) {
-        cy.wrap($header).should('contain.text', expectedHeaders[index]);
+        cy.wrap($header).contains(new RegExp(expectedHeaders[index], 'i')).should('exist');
       }
     });
   }
@@ -65,6 +65,10 @@ export class SspAssetListPage extends YvesPage {
 
   getAccessTableFilterByCompanyValue(): string {
     return 'filterByCompany';
+  }
+
+  openFilters(): void {
+    cy.get(this.repository.getFiltersTriggerSelector()).click();
   }
 }
 

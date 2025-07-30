@@ -49,7 +49,7 @@ export class B2bMpSspDashboardManagementRepository implements SspDashboardManage
       .find('a.assets-preview__link');
   }
   getExpectedStatsColumnBlocks(): string[] {
-    return ['Assets', 'Pending Inquiries'];
+    return ['Assets', 'Pending Inquiries', 'Booked Services'];
   }
   getPlaceholderImage(): string {
     return 'image-placeholder.png';
@@ -66,7 +66,7 @@ export class B2bMpSspDashboardManagementRepository implements SspDashboardManage
     return 'No Files';
   }
   getFilesHeaders(): string[] {
-    return ['File Name', 'Size', 'File Type', ''];
+    return ['File Name', 'Size', 'File Format', ''];
   }
   getInquiriesBlock(): Chainable {
     return cy.get('[data-qa="component dashboard-table ssp-inquiry-table"]');
@@ -80,7 +80,7 @@ export class B2bMpSspDashboardManagementRepository implements SspDashboardManage
     return 'You do not have inquiries yet.';
   }
   getInquiriesHeaders(): string[] {
-    return ['Reference', 'Type', 'Date', 'Status', ''];
+    return ['Reference', 'Type', 'Subject', 'Date', 'Status', ''];
   }
   getStatusLabelPath(): string {
     return '[data-qa="component status"]';

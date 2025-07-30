@@ -44,3 +44,8 @@ export interface ReorderRandomWeightProductsDynamicFixtures {
 export interface ReorderStaticFixtures {
   defaultPassword: string;
 }
+
+export interface ReorderProductOfferStaticFixtures {
+  defaultPassword: string;
+  soldByText: string;
+}
