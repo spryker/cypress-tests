@@ -1,0 +1,208 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeEN",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductClass",
+          "key": "productClass",
+          "arguments": [{ "key": "service", "name": "Service" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveStore",
+          "key": "store",
+          "arguments": [{ "id_store": 1, "name": "DE" }]
+        },
+        {
+          "type": "builder",
+          "name": "MerchantProfileBuilder",
+          "key": "merchantProfile"
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchant",
+          "key": "merchant",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "isOpenForRelationRequest": true,
+              "merchantProfile": "#merchantProfile",
+              "storeRelation": {
+                "idStores": ["#store.id_store"]
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveServicePoint",
+          "key": "servicePoint"
+        },
+        {
+          "type": "helper",
+          "name": "haveService",
+          "key": "service",
+          "arguments": [{ "servicePoint": { "id_service_point": "#servicePoint.id_service_point" } }]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "serviceProduct",
+          "arguments": [{ "productClass": "service" }]
+        },
+        {
+          "type": "array-object",
+          "key": "stores",
+          "arguments": ["#store"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOffer",
+          "key": "serviceProductOffer",
+          "arguments": [
+            {
+              "isActive": true,
+              "approvalStatus": "approved",
+              "idProductConcrete": "#serviceProduct.id_product_concrete",
+              "concreteSku": "#serviceProduct.sku",
+              "merchantReference": "#merchant.merchant_reference",
+              "stores": "#stores"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferStock",
+          "key": "serviceProductOfferStock",
+          "arguments": [
+            {
+              "idProductOffer": "#serviceProductOffer.id_product_offer",
+              "productOfferReference": "#serviceProductOffer.product_offer_reference",
+              "isNeverOutOfStock": true
+            },
+            "#merchant.stocks"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer",
+          "arguments": [{ "locale": "#localeEN", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address",
+          "arguments": [
+            {
+              "fkCustomer": "#customer.id_customer"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [
+            {
+              "fkCompany": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUserFromCompany",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "fkCustomer": "#customer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentType",
+          "key": "shipmentType",
+          "arguments": [
+            {
+              "key": "delivery"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentMethod",
+          "key": "shipmentMethod",
+          "arguments": [
+            {
+              "key": "spryker_dummy_shipment-standard"
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "name": "ShipmentTransfer",
+          "key": "shipment",
+          "arguments": {
+            "shipmentTypeUuid": "#shipmentType.uuid",
+            "idShipmentMethod": "#shipmentMethod.id_shipment_method",
+            "method": "#shipmentMethod",
+            "shippingAddress": "#address"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveFullOrder",
+          "key": "salesOrder",
+          "arguments": [
+            {
+              "item": {
+                "sku": "#serviceProduct.sku",
+                "productClasses": ["service"],
+                "scheduledAt": "2097-10-01"
+              },
+              "customerReference": "#customer.customer_reference",
+              "shipment": "#shipment"
+            },
+            "DummyPayment01"
+          ]
+        }
+      ]
+    }
+  }
+}
