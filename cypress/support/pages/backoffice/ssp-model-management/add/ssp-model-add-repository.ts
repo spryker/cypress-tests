@@ -1,11 +1,9 @@
-import {inject, injectable} from 'inversify';
+import { injectable } from 'inversify';
 import { autoWired } from '@utils';
-import {ShipmentMethodEditRepository} from "../../shipment/shipment-method/edit/shipment-method-edit-repository";
 
 @injectable()
 @autoWired
 export class SspModelAddRepository {
-
   getNameInput = (): Cypress.Chainable => cy.get('input[name="modelForm[name]"]');
   getCodeInput = (): Cypress.Chainable => cy.get('input[name="modelForm[code]"]');
   getImageUploadInput = (): Cypress.Chainable => cy.get('input[name="modelForm[model_image][file]"]');

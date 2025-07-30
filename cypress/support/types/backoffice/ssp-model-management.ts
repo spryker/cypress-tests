@@ -4,7 +4,7 @@ export interface SspModelManagementStaticFixtures {
   sspModel: {
     name: string;
     code: string;
-      image?: string;
+    image?: string;
   };
 }
 export interface SspModelManagementDynamicFixtures {
