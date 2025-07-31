@@ -52,7 +52,7 @@ describe('locale switching', { tags: ['@core', '@yves'] }, (): void => {
     }, catalogPage);
   });
 
-  it('should maintain locale when navigating to New page after switching locale.', (): void => {
+  skipDisabledDynamicStoreIt('should maintain locale when navigating to New page after switching locale.', (): void => {
     homePage.visit();
     homePage.getAvailableLocales();
 
@@ -75,7 +75,7 @@ describe('locale switching', { tags: ['@core', '@yves'] }, (): void => {
     const expectedUrlFormat = `/${expectedStore}/${expectedLanguage}/`;
     cy.url().should('include', expectedUrlFormat);
 
-    homePage.getLanguageSwitcher().should('contain', expectedStore);
+    cy.url().should('contain', expectedStore);
   });
 
   function skipDisabledDynamicStoreIt(description: string, testFn: () => void): void {

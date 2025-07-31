@@ -13,7 +13,7 @@ export class SuiteHomeRepository implements HomeRepository {
   getNavigationNewLink = (newPageLinkText: string): Cypress.Chainable => {
     return cy
       .get('[data-qa="component navigation-multilevel-node"] a')
-      .filter(`:contains("${newPageLinkText}")`)
+      .filter((_, el) => el.textContent?.trim() === newPageLinkText)
       .first();
   };
   getLanguageSwitcher = (): Cypress.Chainable => {

@@ -13,7 +13,7 @@ export class B2bMpHomeRepository implements HomeRepository {
   getNavigationNewLink = (newPageLinkText: string): Cypress.Chainable => {
     return cy
       .get('[data-qa="component navigation-multilevel-node"] a')
-      .filter(`:contains("${newPageLinkText}")`)
+      .filter((_, el) => el.textContent?.trim() === newPageLinkText)
       .first();
   };
   getLanguageSwitcher = (): Cypress.Chainable => {
