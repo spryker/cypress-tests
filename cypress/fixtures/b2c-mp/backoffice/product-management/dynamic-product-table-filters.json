@@ -1,0 +1,82 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "storeDE",
+          "arguments": { "id_store": 1, "name": "DE"}
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "storeAT",
+          "arguments": { "id_store": 2, "name": "AT" }
+        },
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "locale",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "localizedAttribute"
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                { "locale": "#locale", "name": "#localizedAttribute.name" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product2",
+          "arguments": [
+            {
+              "isActive":  false
+            },
+            {
+              "idTaxSet": 1,
+              "storeRelation": {
+                "idStores": ["#storeAT.id_store"]
+              },
+              "localizedAttributes": [
+                { "locale": "#locale", "name": "#localizedAttribute.name" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

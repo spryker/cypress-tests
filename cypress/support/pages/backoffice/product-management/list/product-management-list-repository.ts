@@ -9,4 +9,10 @@ export class ProductManagementListRepository {
   getEditButtonSelector = (): string => 'a:contains("Edit")';
   getStoreCellSelector = (): string => 'td[class*="column-store_relation"]';
   getDenyButtonSelector = (): string => 'a:contains("Deny")';
+  getFilterStatusSelect = (): Cypress.Chainable => cy.get('#select2-table_filter_form_status-container');
+  getFilterStoresSelect = (): Cypress.Chainable => cy.get('#table_filter_form_stores').next();
+  getFilterButton = (): Cypress.Chainable => cy.get('#product-management-filter-form button');
+  getTableRows = (): Cypress.Chainable => cy.get('.dataTables_scrollBody tbody tr', { timeout: 10000 });
+  getFilterSearchInput = (): Cypress.Chainable => cy.get('.dataTables_filter [type=search]');
+  getResetButton = (): Cypress.Chainable => cy.get('#product-management-filter-form a[href="/product-management"]');
 }

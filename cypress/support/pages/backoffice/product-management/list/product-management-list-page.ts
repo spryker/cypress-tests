@@ -23,6 +23,30 @@ export class ProductManagementListPage extends BackofficePage {
     return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
   };
 
+  getTableRows = (): Cypress.Chainable => this.repository.getTableRows();
+
+  getResetButton = (): Cypress.Chainable => this.repository.getResetButton();
+
+  applyFilters = (params: ApplyFiltersParams): void => {
+    if (params.query) {
+      this.repository.getFilterSearchInput().type(params.query);
+    }
+
+    if (params.status) {
+      this.repository.getFilterStatusSelect().click();
+      cy.get('.select2-results__option').contains('Active').click();
+    }
+
+    if (params.stores) {
+      params.stores.forEach(store => {
+        this.repository.getFilterStoresSelect().click();
+        cy.get('.select2-results__option').contains(store).click();
+      });
+    }
+
+    this.repository.getFilterButton().click();
+  };
+
   update = (params: UpdateParams): void => {
     this.find({ searchQuery: params.query, tableUrl: '/product-management/index/table**' }).then(($productRow) => {
       if (params.action === ActionEnum.edit) {
@@ -42,6 +66,16 @@ interface UpdateParams {
   query: string;
 }
 
+interface ApplyFiltersParams {
+  status?: string;
+  query?: string;
+  stores?: (string)[];
+}
+
+export enum StatusEnum {
+  active = 'active',
+  deactivated = 'deactivated',
+}
 interface IsAssignedParams {
   row: JQuery<HTMLElement>;
   storeName?: string;
