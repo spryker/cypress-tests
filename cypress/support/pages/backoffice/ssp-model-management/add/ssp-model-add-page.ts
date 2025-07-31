@@ -11,15 +11,15 @@ export class SspModelAddPage extends BackofficePage {
 
   protected readonly PAGE_URL = '/self-service-portal/add-model';
 
-  public fillModelForm(model: { name: string; code?: string; image?: string }): void {
-    this.repository.getNameInput().type(model.name);
+  public fillSspModelForm(sspModel: { name: string; code?: string; image?: string }): void {
+    this.repository.getNameInput().type(sspModel.name);
 
-    if (model.code) {
-      this.repository.getCodeInput().type(model.code);
+    if (sspModel.code) {
+      this.repository.getCodeInput().type(sspModel.code);
     }
 
-    if (model.image) {
-      this.repository.getImageUploadInput().attachFile(model.image);
+    if (sspModel.image) {
+      this.repository.getImageUploadInput().attachFile(sspModel.image);
     }
   }
 

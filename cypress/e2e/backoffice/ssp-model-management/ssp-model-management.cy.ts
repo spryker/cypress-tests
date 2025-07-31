@@ -3,12 +3,12 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 import { SspModelAddPage } from '@pages/backoffice/';
 import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } from '@interfaces/backoffice';
 
-(['suite', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp model creation',
-  { tags: ['@backoffice', '@modelManagement', '@ssp'] },
+  { tags: ['@backoffice', '@sspModelManagement', '@ssp'] },
   () => {
     const userLoginScenario = container.get(UserLoginScenario);
-    const modelAddPage = container.get(SspModelAddPage);
+    const sspModelAddPage = container.get(SspModelAddPage);
 
     let staticFixtures: SspModelManagementStaticFixtures;
     let dynamicFixtures: SspModelManagementDynamicFixtures;
@@ -24,18 +24,18 @@ import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } f
       });
     });
 
-    it('should be able to create a new model', () => {
-      modelAddPage.visit();
+    it('should be able to create a new ssp model', () => {
+      sspModelAddPage.visit();
 
-      modelAddPage.fillModelForm({
+      sspModelAddPage.fillSspModelForm({
         name: staticFixtures.sspModel.name,
         code: staticFixtures.sspModel.code,
         image: staticFixtures.sspModel.image,
       });
 
-      modelAddPage.submitForm();
+      sspModelAddPage.submitForm();
 
-      modelAddPage.verifySuccessMessage();
+      sspModelAddPage.verifySuccessMessage();
     });
   }
 );
