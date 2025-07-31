@@ -1,0 +1,8 @@
+{
+  "defaultPassword": "change123",
+  "sspModel": {
+    "name": "Sample Model Name",
+    "code": "sample-model-code",
+    "image": "suite/backoffice/ssp-model-management/files/model_image.png"
+  }
+}
