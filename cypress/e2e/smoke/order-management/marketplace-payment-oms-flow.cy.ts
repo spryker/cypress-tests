@@ -74,6 +74,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       salesIndexPage.view();
 
       salesIndexPage.getOrderReference().then((orderReference) => {
+        salesDetailPage.triggerOms({ state: 'skip grace period' });
         salesDetailPage.triggerOms({ state: 'Pay' });
         salesDetailPage.triggerOms({ state: 'skip picking' });
 
