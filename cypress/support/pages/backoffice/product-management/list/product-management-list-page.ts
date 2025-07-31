@@ -38,7 +38,7 @@ export class ProductManagementListPage extends BackofficePage {
     }
 
     if (params.stores) {
-      params.stores.forEach(store => {
+      params.stores.forEach((store) => {
         this.repository.getFilterStoresSelect().click();
         cy.get('.select2-results__option').contains(store).click();
       });
@@ -69,7 +69,7 @@ interface UpdateParams {
 interface ApplyFiltersParams {
   status?: string;
   query?: string;
-  stores?: (string)[];
+  stores?: string[];
 }
 
 export enum StatusEnum {

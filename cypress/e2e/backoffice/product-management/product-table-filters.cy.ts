@@ -11,31 +11,43 @@ describe('product management filter', { tags: ['@backoffice', '@product-manageme
   let staticFixtures: ProductManagementStaticFixtures;
 
   before((): void => {
-      ({ dynamicFixtures, staticFixtures } = Cypress.env());
+    ({ dynamicFixtures, staticFixtures } = Cypress.env());
   });
 
   beforeEach(() => {
-      userLoginScenario.execute({
-          username: dynamicFixtures.rootUser.username,
-          password: staticFixtures.defaultPassword,
-      });
+    userLoginScenario.execute({
+      username: dynamicFixtures.rootUser.username,
+      password: staticFixtures.defaultPassword,
+    });
   });
 
   it('search with filters shows only matching active products', (): void => {
-      productManagementListPage.visit();
-      productManagementListPage.applyFilters({ status: StatusEnum.active, query: dynamicFixtures.product.localized_attributes[0].name, stores: [dynamicFixtures.storeDE.name, dynamicFixtures.storeAT.name] });
-      productManagementListPage.getTableRows().should('have.length', 1);
+    productManagementListPage.visit();
+    productManagementListPage.applyFilters({
+      status: StatusEnum.active,
+      query: dynamicFixtures.product.localized_attributes[0].name,
+      stores: [dynamicFixtures.storeDE.name, dynamicFixtures.storeAT.name],
+    });
+    productManagementListPage.getTableRows().should('have.length', 1);
   });
 
   it('search with filters returns no results when criteria don’t match', (): void => {
     productManagementListPage.visit();
-    productManagementListPage.applyFilters({ status: StatusEnum.active, query: dynamicFixtures.product.localized_attributes[0].name, stores: [dynamicFixtures.storeAT.name] });
+    productManagementListPage.applyFilters({
+      status: StatusEnum.active,
+      query: dynamicFixtures.product.localized_attributes[0].name,
+      stores: [dynamicFixtures.storeAT.name],
+    });
     productManagementListPage.getTableRows().should('have.length', 0);
   });
 
   it('resetting filters restores all search results', (): void => {
     productManagementListPage.visit();
-    productManagementListPage.applyFilters({ status: StatusEnum.active, query: dynamicFixtures.product.localized_attributes[0].name, stores: [dynamicFixtures.storeAT.name] });
+    productManagementListPage.applyFilters({
+      status: StatusEnum.active,
+      query: dynamicFixtures.product.localized_attributes[0].name,
+      stores: [dynamicFixtures.storeAT.name],
+    });
     productManagementListPage.getTableRows().should('have.length', 0);
     productManagementListPage.getResetButton().click();
     productManagementListPage.getTableRows().should('have.length', 2);

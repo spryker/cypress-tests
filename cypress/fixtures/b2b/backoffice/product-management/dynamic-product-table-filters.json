@@ -19,7 +19,7 @@
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "storeDE",
-          "arguments": { "id_store": 1, "name": "DE"}
+          "arguments": { "id_store": 1, "name": "DE" }
         },
         {
           "type": "transfer",
@@ -51,9 +51,7 @@
             {},
             {
               "idTaxSet": 1,
-              "localizedAttributes": [
-                { "locale": "#locale", "name": "#localizedAttribute.name" }
-              ]
+              "localizedAttributes": [{ "locale": "#locale", "name": "#localizedAttribute.name" }]
             }
           ]
         },
@@ -63,16 +61,14 @@
           "key": "product2",
           "arguments": [
             {
-              "isActive":  false
+              "isActive": false
             },
             {
               "idTaxSet": 1,
               "storeRelation": {
                 "idStores": ["#storeAT.id_store"]
               },
-              "localizedAttributes": [
-                { "locale": "#locale", "name": "#localizedAttribute.name" }
-              ]
+              "localizedAttributes": [{ "locale": "#locale", "name": "#localizedAttribute.name" }]
             }
           ]
         }
