@@ -1,4 +1,4 @@
-import { User, ProductClass, Store } from './shared';
+import { User, ProductClass, Product, Store } from './shared';
 
 export interface ProductManagementStaticFixtures {
   defaultPassword: string;
@@ -10,15 +10,4 @@ export interface ProductManagementDynamicFixtures {
   product: Product;
   storeAT: Store;
   storeDE: Store;
-}
-
-export interface Product {
-  sku: string;
-  name: string;
-  abstract_sku: string;
-  localized_attributes: [
-    {
-      name: string;
-    },
-  ];
 }

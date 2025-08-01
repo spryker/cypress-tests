@@ -34,13 +34,13 @@ export class ProductManagementListPage extends BackofficePage {
 
     if (params.status) {
       this.repository.getFilterStatusSelect().click();
-      cy.get('.select2-results__option').contains('Active').click();
+        this.repository.getSelectOption().contains('Active').click();
     }
 
     if (params.stores) {
       params.stores.forEach((store) => {
         this.repository.getFilterStoresSelect().click();
-        cy.get('.select2-results__option').contains(store).click();
+        this.repository.getSelectOption().contains(store).click();
       });
     }
 
