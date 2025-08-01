@@ -34,7 +34,7 @@ export class ProductManagementListPage extends BackofficePage {
 
     if (params.status) {
       this.repository.getFilterStatusSelect().click();
-        this.repository.getSelectOption().contains('Active').click();
+      this.repository.getSelectOption().contains('Active').click();
     }
 
     if (params.stores) {
