@@ -415,13 +415,13 @@
           "type": "helper",
           "name": "haveProductOfferShipmentType",
           "key": "productOfferShipmentType3",
-          "arguments": ["#productOffer3", "#shipmentType1"]
+          "arguments": ["#productOffer3", "#shipmentType2"]
         },
         {
           "type": "helper",
           "name": "haveProductOfferShipmentType",
           "key": "productOfferShipmentType4",
-          "arguments": ["#productOffer4", "#shipmentType2"]
+          "arguments": ["#productOffer4", "#shipmentType1"]
         },
         {
           "type": "helper",
@@ -645,7 +645,8 @@
                           "quantity": 1,
                           "merchantReference": "#merchant.merchant_reference",
                           "productOfferReference": "#productOffer3.product_offer_reference",
-                          "shipmentType": "#shipmentType1"
+                          "servicePoint": "#servicePoint",
+                          "shipmentType": "#shipmentType2"
                       },
                       {
                           "sku": "#product2.sku",
@@ -654,8 +655,7 @@
                           "quantity": 1,
                           "merchantReference": "#merchant.merchant_reference",
                           "productOfferReference": "#productOffer4.product_offer_reference",
-                          "servicePoint": "#servicePoint",
-                          "shipmentType": "#shipmentType2"
+                          "shipmentType": "#shipmentType1"
                       }
                   ]
               }

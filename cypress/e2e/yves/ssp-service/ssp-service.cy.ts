@@ -248,6 +248,7 @@ interface DynamicFixtures {
           idCustomerAddress: idCustomerAddress,
           paymentMethod: 'dummyPaymentInvoice',
           shipmentType: shipmentType,
+          isMultiShipment: true
         });
 
         isSetupDone = true;
