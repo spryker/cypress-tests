@@ -40,9 +40,9 @@ export class CheckoutScenario {
   };
 
   private fillShippingAddress = (params?: ExecuteParams): void => {
-    const fillShippingAddressParams = { 
+    const fillShippingAddressParams = {
       idCustomerAddress: params?.idCustomerAddress,
-      shipmentType: params?.shipmentType
+      shipmentType: params?.shipmentType,
     };
 
     if (Cypress.env('ENV_IS_SSP_ENABLED')) {

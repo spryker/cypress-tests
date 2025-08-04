@@ -248,7 +248,7 @@ interface DynamicFixtures {
           idCustomerAddress: idCustomerAddress,
           paymentMethod: 'dummyPaymentInvoice',
           shipmentType: shipmentType,
-          isMultiShipment: true
+          isMultiShipment: true,
         });
 
         isSetupDone = true;
@@ -259,21 +259,21 @@ interface DynamicFixtures {
 
     describe('Service Point Cart and Checkout Flow', () => {
       it('should display service points per item in cart and group items by shipment type', (): void => {
-          customerLoginScenario.execute({
-              email: dynamicFixtures.customer3.email,
-              password: staticFixtures.defaultPassword as string,
-          });
+        customerLoginScenario.execute({
+          email: dynamicFixtures.customer3.email,
+          password: staticFixtures.defaultPassword as string,
+        });
 
-          cartPage.visit();
+        cartPage.visit();
 
-          cartPage.assertServicePointsDisplayed();
-          cartPage.assertShipmentTypeGrouping();
+        cartPage.assertServicePointsDisplayed();
+        cartPage.assertShipmentTypeGrouping();
 
-          purchaseServiceAsCustomer(
-              dynamicFixtures.customer3.email,
-              dynamicFixtures.company3CustomerAddress.id_customer_address,
-              "in-center-service"
-          );
+        purchaseServiceAsCustomer(
+          dynamicFixtures.customer3.email,
+          dynamicFixtures.company3CustomerAddress.id_customer_address,
+          'in-center-service'
+        );
       });
     });
   }
