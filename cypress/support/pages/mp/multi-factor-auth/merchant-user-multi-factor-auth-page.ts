@@ -10,7 +10,7 @@ import { MpPage } from '@pages/mp';
 export class MerchantUserMultiFactorAuthPage extends MpPage implements MultiFactorAuthPageInterface {
   @inject(MerchantUserMultiFactorAuthRepository) private repository: MerchantUserMultiFactorAuthRepository;
 
-  protected PAGE_URL = '/multi-factor-auth/user-management-merchant-portal/set-up';
+  protected PAGE_URL = '/multi-factor-auth-merchant-portal/user-management/set-up';
 
   verifyCode(code: string): void {
     cy.intercept('POST', '**/send-code').as('sendCode');
