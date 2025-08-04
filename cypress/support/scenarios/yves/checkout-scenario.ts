@@ -45,6 +45,11 @@ export class CheckoutScenario {
       shipmentType: params?.shipmentType
     };
 
+    if (Cypress.env('ENV_IS_SSP_ENABLED')) {
+      this.checkoutAddressPage.fillSingleCheckoutAddress(params);
+      return;
+    }
+
     if (params?.isMultiShipment) {
       this.checkoutAddressPage.fillMultiShippingAddress(fillShippingAddressParams);
 

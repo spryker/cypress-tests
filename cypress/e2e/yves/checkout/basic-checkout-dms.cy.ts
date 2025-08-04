@@ -99,6 +99,7 @@ describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout
     checkoutScenario.execute({
       shouldTriggerOmsInCli: true,
       paymentMethod: getPaymentMethodBasedOnEnv(),
+      isMultiShipment: ['b2b'].includes(Cypress.env('repositoryId')),
     });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
