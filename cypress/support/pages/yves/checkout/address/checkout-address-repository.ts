@@ -32,4 +32,5 @@ export interface CheckoutAddressRepository {
   getMultiShipmentAddressItemAddressZipCodeField($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable;
   getMultiShipmentAddressItemAddressCompanyField($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable;
   getMultiShipmentAddressItemAddressPhoneField($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable;
+  getShipmentTypeRadio(shipmentType: string): Cypress.Chainable;
 }

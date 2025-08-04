@@ -40,7 +40,10 @@ export class CheckoutScenario {
   };
 
   private fillShippingAddress = (params?: ExecuteParams): void => {
-    const fillShippingAddressParams = { idCustomerAddress: params?.idCustomerAddress };
+    const fillShippingAddressParams = {
+      idCustomerAddress: params?.idCustomerAddress,
+      shipmentType: params?.shipmentType,
+    };
 
     if (Cypress.env('ENV_IS_SSP_ENABLED')) {
       this.checkoutAddressPage.fillSingleCheckoutAddress(params);
@@ -77,4 +80,5 @@ interface ExecuteParams {
   shouldTriggerOmsInCli?: boolean;
   paymentMethod?: string;
   shouldSkipShipmentStep?: boolean;
+  shipmentType?: string;
 }

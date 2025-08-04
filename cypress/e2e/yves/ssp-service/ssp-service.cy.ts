@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { CustomerLoginScenario, CustomerLogoutScenario, CheckoutScenario } from '@scenarios/yves';
-import { SspServiceListPage } from '@pages/yves';
+import { SspServiceListPage, CartPage } from '@pages/yves';
 
 // Define fixture interfaces
 interface CustomerFixture {
@@ -20,10 +20,12 @@ interface ProductFixture {
 interface DynamicFixtures {
   customer: CustomerFixture;
   customer2: CustomerFixture;
+  customer3: CustomerFixture;
   company1Customer: CustomerFixture;
   company2Customer: CustomerFixture;
   address1: AddressFixture;
   company1CustomerAddress: AddressFixture;
+  company3CustomerAddress: AddressFixture;
   product1: ProductFixture;
   [key: string]: unknown;
 }
@@ -36,6 +38,7 @@ interface DynamicFixtures {
     const customerLogoutScenario = container.get(CustomerLogoutScenario);
     const sspServiceListPage = container.get(SspServiceListPage);
     const checkoutScenario = container.get(CheckoutScenario);
+    const cartPage = container.get(CartPage);
 
     let staticFixtures: Record<string, unknown>;
     let dynamicFixtures: DynamicFixtures;
@@ -234,7 +237,7 @@ interface DynamicFixtures {
     });
 
     // Setup method to be called in each test
-    function purchaseServiceAsCustomer(email: string, idCustomerAddress: number): void {
+    function purchaseServiceAsCustomer(email: string, idCustomerAddress: number, shipmentType?: string): void {
       customerLoginScenario.execute({
         email: email,
         password: staticFixtures.defaultPassword as string,
@@ -244,6 +247,8 @@ interface DynamicFixtures {
         checkoutScenario.execute({
           idCustomerAddress: idCustomerAddress,
           paymentMethod: 'dummyPaymentInvoice',
+          shipmentType: shipmentType,
+          isMultiShipment: true,
         });
 
         isSetupDone = true;
@@ -251,5 +256,25 @@ interface DynamicFixtures {
 
       sspServiceListPage.visit();
     }
+
+    describe('Service Point Cart and Checkout Flow', () => {
+      it('should display service points per item in cart and group items by shipment type', (): void => {
+        customerLoginScenario.execute({
+          email: dynamicFixtures.customer3.email,
+          password: staticFixtures.defaultPassword as string,
+        });
+
+        cartPage.visit();
+
+        cartPage.assertServicePointsDisplayed();
+        cartPage.assertShipmentTypeGrouping();
+
+        purchaseServiceAsCustomer(
+          dynamicFixtures.customer3.email,
+          dynamicFixtures.company3CustomerAddress.id_customer_address,
+          'in-center-service'
+        );
+      });
+    });
   }
 );

@@ -6,6 +6,8 @@ export * from './ssp-inquiry';
 export * from './company-role-create';
 export * from './ssp-file-management';
 export * from './product-class';
+export * from './product-management';
 export * from './ssp-asset-management';
+export * from './ssp-model-management';
 export * from './ssp-service-management';
 export * from './product-offer';
