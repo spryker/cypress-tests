@@ -71,4 +71,6 @@ export class B2cMpCheckoutAddressRepository implements CheckoutAddressRepository
     index: number
   ): Cypress.Chainable =>
     cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shippingAddress_phone`);
+  getShipmentTypeRadio = (shipmentType: string): Cypress.Chainable => 
+    cy.get(`[data-qa="shipment-type-radio"][value="${shipmentType}"]`);
 }
