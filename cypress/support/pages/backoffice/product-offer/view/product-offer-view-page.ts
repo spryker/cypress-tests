@@ -12,37 +12,16 @@ export class ProductOfferViewPage extends BackofficePage {
   protected PAGE_URL = '/product-offer-gui/view';
 
   verifyProductOfferData(param: ProductOffer): void {
-    this.repository.getApprovalStatusContainer().should('contain.text', param.approvalStatus);
-    this.repository.getStatusContainer().should('contain.text', param.status);
-
-    this.repository.getStoreContainer().should('have.length', param.stores.length);
-
-    param.stores.forEach((store) => {
-      this.repository
-        .getStoreContainer()
-        .filter(':contains("' + store + '")')
-        .should('exist');
-    });
-
-    this.repository.getProductSkuContainer().should('contain.text', param.productSku);
-    this.repository.getMerchantNameContainer().should('contain.text', param.merchantName);
-    if (param.validFrom) {
-      this.repository.getValidFromContainer().should('contain.text', param.validFrom);
-    } else {
-      this.repository.getValidFromContainer().should('contain.text', '--');
-    }
-    if (param.validTo) {
-      this.repository.getValidToContainer().should('contain.text', param.validTo);
-    } else {
-      this.repository.getValidToContainer().should('contain.text', '--');
-    }
+    this.verifyDetails(param);
+    this.verifyStores(param.stores);
+    this.verifyValidity(param);
 
     if (param.stocks && param.stocks.length > 0) {
       this.verifyProductOfferStocks(param.stocks);
     }
 
-    if (param.servicePoint) {
-      this.repository.getProductOfferServicePointContainer().should('contain.text', param.servicePoint);
+    if (param.serviceTypeName) {
+      this.verifyService(param.serviceTypeName);
     }
   }
 
@@ -61,6 +40,33 @@ export class ProductOfferViewPage extends BackofficePage {
       this.repository.getStockNeverOutOfStockCell(index).should('contain.text', expectedText);
     });
   }
+
+  private verifyDetails(param: ProductOffer): void {
+    this.repository.getApprovalStatusContainer().should('contain.text', param.approvalStatus);
+    this.repository.getStatusContainer().should('contain.text', param.status);
+    this.repository.getProductSkuContainer().should('contain.text', param.productSku);
+    this.repository.getMerchantNameContainer().should('contain.text', param.merchantName);
+  }
+
+  private verifyStores(stores: string[]): void {
+    this.repository.getStoreContainer().should('have.length', stores.length);
+
+    stores.forEach((store) => {
+      this.repository.getStoreContainer().filter(`:contains("${store}")`).should('exist');
+    });
+  }
+
+  private verifyValidity(param: ProductOffer): void {
+    const validFromText = param.validFrom ? param.validFrom : '--';
+    this.repository.getValidFromContainer().should('contain.text', validFromText);
+
+    const validToText = param.validTo ? param.validTo : '--';
+    this.repository.getValidToContainer().should('contain.text', validToText);
+  }
+
+  private verifyService(serviceTypeName: string): void {
+    this.repository.getProductOfferServicePointContainer().should('contain.text', serviceTypeName);
+  }
 }
 
 interface ProductOffer {
@@ -72,7 +78,7 @@ interface ProductOffer {
   validFrom?: string;
   validTo?: string;
   stocks?: ProductOfferStock[];
-  servicePoint?: string;
+  serviceTypeName?: string;
 }
 
 interface ProductOfferStock {

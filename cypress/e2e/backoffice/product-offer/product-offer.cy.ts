@@ -47,61 +47,39 @@ import {
       productOfferListPage.visit();
       productOfferListPage.getCreateButton().click();
 
-      const productOffer = productOfferCreatePage.create({
-        sku: product.sku,
-        store: dynamicFixtures.store.name,
-        servicePointId: dynamicFixtures.service.service_point.id_service_point,
-        validFrom: getCurrentDate(),
-        validTo: getFuturetDate(),
-        serviceUuid: dynamicFixtures.service.uuid,
-        shipmentTypeId: dynamicFixtures.shipmentType.id_shipment_type,
-      });
-      productOfferCreatePage.getSuccessMessageSelector().should('exist');
-
-      productOfferListPage
-        .find({
-          searchQuery: product.sku,
-          tableUrl: '**/product-offer-gui/list/table**' + product.sku + '**',
+      productOfferCreatePage
+        .create({
+          sku: product.sku,
+          store: dynamicFixtures.store.name,
+          servicePointId: dynamicFixtures.service.service_point.id_service_point,
+          validFrom: productOfferCreatePage.getCurrentDate(),
+          validTo: productOfferCreatePage.getFutureDate(),
+          serviceUuid: dynamicFixtures.service.uuid,
+          shipmentTypeId: dynamicFixtures.shipmentType.id_shipment_type,
         })
-        .then(($row) => cy.wrap($row).find('a[href*="/product-offer-gui/view?id-product-offer="]').click());
+        .then((productOffer) => {
+          productOfferCreatePage.verifySuccessMessage();
+          productOfferListPage.clickViewButton();
 
-      productOfferViewPage.verifyProductOfferData({
-        approvalStatus: staticFixtures.defaultApprovalStatus,
-        status: staticFixtures.defaultStatus,
-        stores: productOffer.stores,
-        productSku: product.sku,
-        merchantName: staticFixtures.defaultMerchantName,
-        validFrom: productOffer.validFrom,
-        validTo: productOffer.validTo,
-        stocks: [
-          {
-            name: staticFixtures.defaultStockName,
-            neverOutOfStock: productOffer.isNeverOfStock,
-            quantity: productOffer.quantity,
-            storeName: dynamicFixtures.store.name,
-          },
-        ],
-        servicePoint:
-          dynamicFixtures.service.service_point.key +
-          ' - ' +
-          dynamicFixtures.service.service_point.name +
-          ' - ' +
-          dynamicFixtures.service.service_type.name,
-      });
+          productOfferViewPage.verifyProductOfferData({
+            approvalStatus: staticFixtures.defaultApprovalStatus,
+            status: staticFixtures.defaultStatus,
+            stores: productOffer.stores,
+            productSku: product.sku,
+            merchantName: staticFixtures.defaultMerchantName,
+            validFrom: productOffer.validFrom,
+            validTo: productOffer.validTo,
+            stocks: [
+              {
+                name: staticFixtures.defaultStockName,
+                neverOutOfStock: productOffer.isNeverOfStock,
+                quantity: productOffer.quantity,
+                storeName: dynamicFixtures.store.name,
+              },
+            ],
+            serviceTypeName: dynamicFixtures.service.service_type.name,
+          });
+        });
     });
   }
 );
-
-function getCurrentDate(): string {
-  const date = new Date();
-  const year = date.getFullYear() + 1;
-
-  return `${year}-05-07`;
-}
-
-function getFuturetDate(): string {
-  const date = new Date();
-  const year = date.getFullYear() + 1;
-
-  return `${year}-10-20`;
-}

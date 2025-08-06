@@ -69,7 +69,7 @@
           "type": "helper",
           "name": "haveFullProduct",
           "key": "serviceProduct",
-          "arguments": [{ "productClass": "service" }]
+          "arguments": [{ "productClasses": ["service"] }]
         },
         {
           "type": "array-object",
@@ -194,7 +194,7 @@
               "item": {
                 "sku": "#serviceProduct.sku",
                 "productClasses": ["service"],
-                "scheduledAt": "2097-10-01"
+                "scheduledAt": "2025-08-05 15:44:47"
               },
               "customerReference": "#customer.customer_reference",
               "shipment": "#shipment"

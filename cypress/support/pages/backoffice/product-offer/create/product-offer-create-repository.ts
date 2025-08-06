@@ -4,7 +4,7 @@ import { injectable } from 'inversify';
 @injectable()
 @autoWired
 export class ProductOfferCreateRepository {
-  getproductSearchField = (): Cypress.Chainable => cy.get('[data-qa="table-search"]');
+  getProductSearchField = (): Cypress.Chainable => cy.get('[data-qa="table-search"]');
   getMerchantSkuField = (): string => '#product_offer_form_merchant_sku';
   getStoreField = (): Cypress.Chainable => cy.get('[name="create_offer_form[stores][]"]');
 

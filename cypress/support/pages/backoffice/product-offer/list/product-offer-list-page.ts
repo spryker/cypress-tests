@@ -36,12 +36,4 @@ export class ProductOfferListPage extends BackofficePage {
   getReference = (rowIndex = 0): Cypress.Chainable<string> => {
     return this.getTableRows().eq(rowIndex).find(this.repository.getReferenceColumnSelector()).invoke('text');
   };
-
-  findAndView = (searchQuery: string): Cypress.Chainable => {
-    this.find({
-      searchQuery,
-      tableUrl: '**/product-offer-gui/list/table**',
-    });
-    return this.clickViewButton();
-  };
 }
