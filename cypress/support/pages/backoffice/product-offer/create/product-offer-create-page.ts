@@ -115,7 +115,9 @@ export class ProductOfferCreatePage extends BackofficePage {
 
   private fillServiceDetails = (params: CreateProductOfferParams): void => {
     this.repository.getServiceField().should('be.disabled');
-    this.repository.getServicePointField().select(params?.servicePointId.toString(), { force: true });
+    if (params.servicePointId !== undefined) {
+      this.repository.getServicePointField().select(params.servicePointId.toString(), { force: true });
+    }
     this.repository.getServiceField().should('not.be.disabled');
 
     if (params.serviceUuid) {
