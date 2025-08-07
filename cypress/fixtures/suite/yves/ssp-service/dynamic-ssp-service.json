@@ -7,7 +7,10 @@
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "locale",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+          "arguments": {
+            "id_locale": 66,
+            "locale_name": "en_US"
+          }
         },
         {
           "type": "helper",
@@ -96,30 +99,47 @@
           "key": "confirmedCompany2Customer",
           "arguments": ["#company2Customer"]
         },
-
         {
           "type": "helper",
           "name": "haveCompany",
           "key": "company1",
-          "arguments": [{ "status": "approved", "is_active": true }]
+          "arguments": [
+            {
+              "status": "approved",
+              "is_active": true
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveCompany",
           "key": "company2",
-          "arguments": [{ "status": "approved", "is_active": true }]
+          "arguments": [
+            {
+              "status": "approved",
+              "is_active": true
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveCompanyBusinessUnit",
           "key": "companyBusinessUnit1",
-          "arguments": [{ "fk_company": "#company1.id_company" }]
+          "arguments": [
+            {
+              "fk_company": "#company1.id_company"
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveCompanyBusinessUnit",
           "key": "companyBusinessUnit2",
-          "arguments": [{ "fk_company": "#company2.id_company" }]
+          "arguments": [
+            {
+              "fk_company": "#company2.id_company"
+            }
+          ]
         },
         {
           "type": "helper",
@@ -153,13 +173,17 @@
           "type": "builder",
           "name": "CompanyRoleCollectionBuilder",
           "key": "companyRoleCollection1",
-          "arguments": { "roles": ["#companyRole1"] }
+          "arguments": {
+            "roles": ["#companyRole1"]
+          }
         },
         {
           "type": "builder",
           "name": "CompanyRoleCollectionBuilder",
           "key": "companyRoleCollection2",
-          "arguments": { "roles": ["#companyRole2"] }
+          "arguments": {
+            "roles": ["#companyRole2"]
+          }
         },
         {
           "type": "helper",
@@ -201,7 +225,11 @@
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
-          "arguments": { "id_store": 1, "name": "DE", "defaultCurrencyIsoCode": "EUR" }
+          "arguments": {
+            "id_store": 1,
+            "name": "DE",
+            "defaultCurrencyIsoCode": "EUR"
+          }
         },
         {
           "type": "helper",
@@ -212,25 +240,45 @@
           "type": "helper",
           "name": "haveCustomerAddress",
           "key": "address1",
-          "arguments": [{ "fkCustomer": "#customer.id_customer", "fkCountry": "#country.id_country" }]
+          "arguments": [
+            {
+              "fkCustomer": "#customer.id_customer",
+              "fkCountry": "#country.id_country"
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveCustomerAddress",
           "key": "company1CustomerAddress",
-          "arguments": [{ "fkCustomer": "#company1Customer.id_customer", "fkCountry": "#country.id_country" }]
+          "arguments": [
+            {
+              "fkCustomer": "#company1Customer.id_customer",
+              "fkCountry": "#country.id_country"
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveCustomerAddress",
           "key": "company2CustomerAddress",
-          "arguments": [{ "fkCustomer": "#company2Customer.id_customer", "fkCountry": "#country.id_country" }]
+          "arguments": [
+            {
+              "fkCustomer": "#company2Customer.id_customer",
+              "fkCountry": "#country.id_country"
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveCustomerAddress",
           "key": "company3CustomerAddress",
-          "arguments": [{ "fkCustomer": "#customer3.id_customer", "fkCountry": "#country.id_country" }]
+          "arguments": [
+            {
+              "fkCustomer": "#customer3.id_customer",
+              "fkCountry": "#country.id_country"
+            }
+          ]
         },
         {
           "type": "helper",
@@ -244,15 +292,33 @@
         },
         {
           "type": "helper",
+          "name": "haveProductClass",
+          "key": "scheduledProductClass",
+          "arguments": [
+            {
+              "name": "Scheduled"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveFullProduct",
           "key": "product1",
-          "arguments": [{ "idTaxSet": 1, "isServiceDateTimeEnabled": true }]
+          "arguments": [
+            {
+              "idTaxSet": 1
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveFullProduct",
           "key": "product2",
-          "arguments": [{ "idTaxSet": 1, "isServiceDateTimeEnabled": true }]
+          "arguments": [
+            {
+              "idTaxSet": 1
+            }
+          ]
         },
         {
           "type": "array-object",
@@ -303,19 +369,40 @@
           "type": "helper",
           "name": "haveServicePoint",
           "key": "servicePoint",
-          "arguments": [{ "storeRelation": { "stores": [{ "idStore": "#store.id_store" }] } }]
+          "arguments": [
+            {
+              "storeRelation": {
+                "stores": [
+                  {
+                    "idStore": "#store.id_store"
+                  }
+                ]
+              }
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveServicePointAddress",
           "key": "servicePointAddress",
-          "arguments": [{ "servicePoint": "#servicePoint", "country": "#country" }]
+          "arguments": [
+            {
+              "servicePoint": "#servicePoint",
+              "country": "#country"
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveService",
           "key": "service1",
-          "arguments": [{ "servicePoint": { "id_service_point": "#servicePoint.id_service_point" } }]
+          "arguments": [
+            {
+              "servicePoint": {
+                "id_service_point": "#servicePoint.id_service_point"
+              }
+            }
+          ]
         },
         {
           "type": "helper",
@@ -437,12 +524,27 @@
         },
         {
           "type": "helper",
+          "name": "haveProductToProductClass",
+          "key": "productToProductClass1",
+          "arguments": ["#product1.id_product_concrete", "#scheduledProductClass.id_product_class"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductToProductClass",
+          "key": "productToProductClass2",
+          "arguments": ["#product2.id_product_concrete", "#scheduledProductClass.id_product_class"]
+        },
+        {
+          "type": "helper",
           "name": "havePriceProduct",
           "arguments": [
             {
               "skuProductAbstract": "#product1.abstract_sku",
               "skuProduct": "#product1.sku",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
             }
           ]
         },
@@ -453,19 +555,34 @@
             {
               "skuProductAbstract": "#product2.abstract_sku",
               "skuProduct": "#product2.sku",
-              "moneyValue": { "netAmount": 20000, "grossAmount": 20000 }
+              "moneyValue": {
+                "netAmount": 20000,
+                "grossAmount": 20000
+              }
             }
           ]
         },
         {
           "type": "helper",
           "name": "haveProductInStockForStore",
-          "arguments": ["#store", { "sku": "#product1.sku", "isNeverOutOfStock": "1" }]
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product1.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveProductInStockForStore",
-          "arguments": ["#store", { "sku": "#product2.sku", "isNeverOutOfStock": "1" }]
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product2.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
         },
         {
           "type": "transfer",
@@ -503,12 +620,24 @@
         {
           "type": "helper",
           "name": "haveProductInStockForStore",
-          "arguments": ["#store", { "sku": "#product1.sku", "isNeverOutOfStock": "1" }]
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product1.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveProductInStockForStore",
-          "arguments": ["#store", { "sku": "#product2.sku", "isNeverOutOfStock": "1" }]
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product2.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
         },
         {
           "type": "helper",
