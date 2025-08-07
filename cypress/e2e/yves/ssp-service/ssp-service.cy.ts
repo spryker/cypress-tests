@@ -134,7 +134,7 @@ interface DynamicFixtures {
 
         sspServiceListPage.visit();
         sspServiceListPage.assertBusinessUnitSelectIsVisible();
-        sspServiceListPage.getTableRows().should('not.exist');
+        sspServiceListPage.assertServiceTableIsEmpty();
       });
     });
 

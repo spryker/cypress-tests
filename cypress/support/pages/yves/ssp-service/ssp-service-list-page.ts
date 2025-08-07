@@ -213,6 +213,10 @@ export class SspServiceListPage extends YvesPage {
     this.getTableRows().should('have.length.at.least', count);
   }
 
+  assertServiceTableIsEmpty(): void {
+    this.getTableRows().should('not.exist');
+  }
+
   assertSorting(columnName: string, orderByValue: string): void {
     this.clickSortColumn(columnName);
     this.getOrderByInput().should('have.value', orderByValue);
