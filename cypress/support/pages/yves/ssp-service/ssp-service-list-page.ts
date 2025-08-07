@@ -56,7 +56,6 @@ export class SspServiceListPage extends YvesPage {
     this.repository.getFirstRowViewDetailsButton().click();
   }
 
-  // Methods required for tests
   assertPageTitleIsVisible(): void {
     cy.contains('h1', 'Services').should('be.visible');
   }
@@ -67,7 +66,6 @@ export class SspServiceListPage extends YvesPage {
     });
   }
 
-  // Search methods
   setSearchType(type: string): void {
     this.repository.getSearchTypeSelect().select(type, { force: true });
   }
@@ -102,7 +100,6 @@ export class SspServiceListPage extends YvesPage {
     this.clickResetButton();
   }
 
-  // Reschedule methods
   getDetailsPageRescheduleButton(): Chainable<JQuery<HTMLElement>> {
     return this.repository.getDetailsPageRescheduleButton();
   }
@@ -226,14 +223,11 @@ export class SspServiceListPage extends YvesPage {
    * Cancels the first service in the list
    */
   cancelService(): void {
-    // Go to service details page
     this.viewFirstServiceDetails();
     cy.url().should('include', '/order/details');
 
-    // Click cancel button
     this.getServiceCancelButton().should('be.visible').first().click();
 
-    // Verify redirection to services list
     cy.url().should('include', '/customer/ssp-service/list');
   }
 
@@ -243,7 +237,6 @@ export class SspServiceListPage extends YvesPage {
   verifyServiceCancelled(): void {
     this.viewFirstServiceDetails();
 
-    // Verify that first service is cancelled and only second left
     this.getServiceCancelButton().first().should('have.length', 1);
   }
 

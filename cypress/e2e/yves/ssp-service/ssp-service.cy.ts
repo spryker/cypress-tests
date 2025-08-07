@@ -2,7 +2,6 @@ import { container } from '@utils';
 import { CustomerLoginScenario, CustomerLogoutScenario, CheckoutScenario } from '@scenarios/yves';
 import { SspServiceListPage, CartPage } from '@pages/yves';
 
-// Define fixture interfaces
 interface CustomerFixture {
   email: string;
   password?: string;
@@ -55,11 +54,9 @@ interface DynamicFixtures {
           dynamicFixtures.company1CustomerAddress.id_customer_address
         );
 
-        // Assert page is loaded correctly
         sspServiceListPage.getPageTitle().should('contain', 'Services');
         sspServiceListPage.getTable().should('exist');
 
-        // Check if all column headers are present
         sspServiceListPage.getTableHeaders().should('have.length.at.least', 5);
         sspServiceListPage.getTableHeaders().contains('Order Reference').should('exist');
         sspServiceListPage.getTableHeaders().contains('Service Name').should('exist');
@@ -74,7 +71,6 @@ interface DynamicFixtures {
           dynamicFixtures.company1CustomerAddress.id_customer_address
         );
 
-        // Sort by Order Reference
         sspServiceListPage.clickSortColumn('Order Reference');
         // Verify that sorting was triggered
         sspServiceListPage.getOrderByInput().should('have.value', 'order_reference');
@@ -269,9 +265,10 @@ interface DynamicFixtures {
         cartPage.assertServicePointsDisplayed();
         cartPage.assertShipmentTypeGrouping();
 
+        isSetupDone = false; 
         purchaseServiceAsCustomer(
-          dynamicFixtures.customer3.email,
-          dynamicFixtures.company3CustomerAddress.id_customer_address,
+          dynamicFixtures.company1Customer.email,
+          dynamicFixtures.company1CustomerAddress.id_customer_address,
           'in-center-service'
         );
       });
