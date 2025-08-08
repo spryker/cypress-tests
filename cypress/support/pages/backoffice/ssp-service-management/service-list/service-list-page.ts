@@ -27,16 +27,16 @@ export class ServiceListPage extends BackofficePage {
     });
   }
 
-  verifyServiceListPage(param: {
+  assertServiceListPage(param: {
     orderReference: string;
     customerFullName: string;
     companyName?: string;
     itemId: number;
     itemName: string;
   }): void {
-    this.verifyServiceListTableColumns();
+    this.assertServiceListTableColumns();
 
-    this.checkTableData({
+    this.assertTableData({
       orderReference: param.orderReference,
       customerName: param.customerFullName,
       company: param.companyName,
@@ -45,7 +45,7 @@ export class ServiceListPage extends BackofficePage {
     });
   }
 
-  verifyServiceListTableColumns(): void {
+  assertServiceListTableColumns(): void {
     this.repository
       .getServiceListTable()
       .first()
@@ -60,7 +60,7 @@ export class ServiceListPage extends BackofficePage {
       });
   }
 
-  checkTableData(params: ServiceListTableDataParams): void {
+  assertTableData(params: ServiceListTableDataParams): void {
     this.repository.getFirstTableRow().within(() => {
       if (params.orderReference) {
         this.repository.getOrderReferenceCell().should('contain', params.orderReference);

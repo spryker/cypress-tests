@@ -11,21 +11,21 @@ export class ProductOfferViewPage extends BackofficePage {
 
   protected PAGE_URL = '/product-offer-gui/view';
 
-  verifyProductOfferData(param: ProductOffer): void {
-    this.verifyDetails(param);
-    this.verifyStores(param.stores);
-    this.verifyValidity(param);
+  assertProductOfferData(param: ProductOffer): void {
+    this.assertDetails(param);
+    this.assertStores(param.stores);
+    this.assertValidity(param);
 
     if (param.stocks && param.stocks.length > 0) {
-      this.verifyProductOfferStocks(param.stocks);
+      this.assertProductOfferStocks(param.stocks);
     }
 
     if (param.serviceTypeName) {
-      this.verifyService(param.serviceTypeName);
+      this.assertService(param.serviceTypeName);
     }
   }
 
-  verifyProductOfferStocks(stocks: ProductOfferStock[]): void {
+  assertProductOfferStocks(stocks: ProductOfferStock[]): void {
     this.repository.getStockTableRows().should('have.length', stocks.length);
 
     stocks.forEach((stock, index) => {
@@ -41,14 +41,14 @@ export class ProductOfferViewPage extends BackofficePage {
     });
   }
 
-  private verifyDetails(param: ProductOffer): void {
+  private assertDetails(param: ProductOffer): void {
     this.repository.getApprovalStatusContainer().should('contain.text', param.approvalStatus);
     this.repository.getStatusContainer().should('contain.text', param.status);
     this.repository.getProductSkuContainer().should('contain.text', param.productSku);
     this.repository.getMerchantNameContainer().should('contain.text', param.merchantName);
   }
 
-  private verifyStores(stores: string[]): void {
+  private assertStores(stores: string[]): void {
     this.repository.getStoreContainer().should('have.length', stores.length);
 
     stores.forEach((store) => {
@@ -56,7 +56,7 @@ export class ProductOfferViewPage extends BackofficePage {
     });
   }
 
-  private verifyValidity(param: ProductOffer): void {
+  private assertValidity(param: ProductOffer): void {
     const validFromText = param.validFrom ? param.validFrom : '--';
     this.repository.getValidFromContainer().should('contain.text', validFromText);
 
@@ -64,7 +64,7 @@ export class ProductOfferViewPage extends BackofficePage {
     this.repository.getValidToContainer().should('contain.text', validToText);
   }
 
-  private verifyService(serviceTypeName: string): void {
+  private assertService(serviceTypeName: string): void {
     this.repository.getProductOfferServicePointContainer().should('contain.text', serviceTypeName);
   }
 }

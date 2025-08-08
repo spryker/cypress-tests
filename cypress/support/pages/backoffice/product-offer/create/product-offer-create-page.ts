@@ -65,7 +65,7 @@ export class ProductOfferCreatePage extends BackofficePage {
     return `${year}-10-20`;
   }
 
-  verifySuccessMessage = (): Cypress.Chainable => {
+  assertSuccessMessage = (): Cypress.Chainable => {
     return this.repository.getSuccessMessageBox().should('exist');
   };
 

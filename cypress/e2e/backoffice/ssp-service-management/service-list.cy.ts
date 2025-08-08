@@ -25,7 +25,7 @@ describeForSsp('Service List Page', { tags: ['@backoffice', '@ssp', '@service-ma
     serviceListPage.visit();
 
     serviceListPage.findServiceTableByName(dynamicFixtures.salesOrder?.order_items[0].name).then(() => {
-      serviceListPage.verifyServiceListPage({
+      serviceListPage.assertServiceListPage({
         orderReference: dynamicFixtures.salesOrder?.order_reference,
         customerFullName: `${dynamicFixtures.customer.first_name} ${dynamicFixtures.customer.last_name}`,
         companyName: dynamicFixtures.company?.name,

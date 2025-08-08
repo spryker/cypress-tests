@@ -58,10 +58,10 @@ import {
           shipmentTypeId: dynamicFixtures.shipmentType.id_shipment_type,
         })
         .then((productOffer) => {
-          productOfferCreatePage.verifySuccessMessage();
+          productOfferCreatePage.assertSuccessMessage();
           productOfferListPage.clickViewButton();
 
-          productOfferViewPage.verifyProductOfferData({
+          productOfferViewPage.assertProductOfferData({
             approvalStatus: staticFixtures.defaultApprovalStatus,
             status: staticFixtures.defaultStatus,
             stores: productOffer.stores,
