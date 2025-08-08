@@ -73,4 +73,11 @@ export class SuiteCheckoutAddressRepository implements CheckoutAddressRepository
     cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shippingAddress_phone`);
   getShipmentTypeRadio = (shipmentType: string): Cypress.Chainable =>
     cy.get(`input[name="addressesForm[shipmentType][key]"][value="${shipmentType}"]`);
+  getMultiShipmentAddressItemServicePointUuidValue = (
+    $addressItem: JQuery<HTMLElement>,
+    index: number
+  ): string | undefined =>
+    ($addressItem.find(`#addressesForm_multiShippingAddresses_${index}_servicePoint_uuid`).val() as
+      | string
+      | undefined) || undefined;
 }

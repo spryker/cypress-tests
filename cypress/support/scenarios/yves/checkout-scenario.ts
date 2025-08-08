@@ -43,6 +43,7 @@ export class CheckoutScenario {
     const fillShippingAddressParams = {
       idCustomerAddress: params?.idCustomerAddress,
       shipmentType: params?.shipmentType,
+      skipServicePointAddressOverride: params?.skipServicePointAddressOverride,
     };
 
     if (Cypress.env('ENV_IS_SSP_ENABLED')) {
@@ -52,7 +53,6 @@ export class CheckoutScenario {
 
     if (params?.isMultiShipment) {
       this.checkoutAddressPage.fillMultiShippingAddress(fillShippingAddressParams);
-
       return;
     }
 
@@ -81,4 +81,5 @@ interface ExecuteParams {
   paymentMethod?: string;
   shouldSkipShipmentStep?: boolean;
   shipmentType?: string;
+  skipServicePointAddressOverride?: boolean;
 }

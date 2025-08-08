@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { CustomerLoginScenario, CustomerLogoutScenario, CheckoutScenario } from '@scenarios/yves';
-import { SspServiceListPage, CartPage } from '@pages/yves';
+import { SspServiceListPage, CartPage, CatalogPage, ProductPage, CustomerOverviewPage } from '@pages/yves';
 
 interface CustomerFixture {
   email: string;
@@ -16,6 +16,20 @@ interface ProductFixture {
   name?: string;
 }
 
+interface ServicePointFixture {
+  key: string;
+  name: string;
+}
+
+interface ShipmentTypeFixture {
+  key: string;
+  name: string;
+}
+
+interface ServicePointAddressFixture {
+  address1: string;
+}
+
 interface DynamicFixtures {
   customer: CustomerFixture;
   customer2: CustomerFixture;
@@ -26,6 +40,9 @@ interface DynamicFixtures {
   company1CustomerAddress: AddressFixture;
   company3CustomerAddress: AddressFixture;
   product1: ProductFixture;
+  servicePoint: ServicePointFixture;
+  shipmentType2: ShipmentTypeFixture;
+  servicePointAddress: ServicePointAddressFixture;
   [key: string]: unknown;
 }
 
@@ -38,6 +55,9 @@ interface DynamicFixtures {
     const sspServiceListPage = container.get(SspServiceListPage);
     const checkoutScenario = container.get(CheckoutScenario);
     const cartPage = container.get(CartPage);
+    const catalogPage = container.get(CatalogPage);
+    const productPage = container.get(ProductPage);
+    const customerOverviewPage = container.get(CustomerOverviewPage);
 
     let staticFixtures: Record<string, unknown>;
     let dynamicFixtures: DynamicFixtures;
@@ -155,6 +175,37 @@ interface DynamicFixtures {
           dynamicFixtures.company1CustomerAddress.id_customer_address,
           'in-center-service'
         );
+      });
+
+      it('should allow purchasing a product with a service point', (): void => {
+        customerLoginScenario.execute({
+          email: dynamicFixtures.customer.email,
+          password: staticFixtures.defaultPassword as string,
+        });
+
+        catalogPage.visit();
+        catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product1.sku });
+
+        productPage.selectShipmentType(dynamicFixtures.shipmentType2.name);
+        productPage.selectServicePoint(dynamicFixtures.servicePoint.name);
+        productPage.assertServicePointIsSelected(dynamicFixtures.servicePointAddress.address1);
+        productPage.addToCart();
+
+        cartPage.visit();
+
+        cartPage.assertServicePointsDisplayed();
+        cartPage.assertShipmentTypeGrouping();
+
+        checkoutScenario.execute({
+          idCustomerAddress: dynamicFixtures.address1.id_customer_address,
+          paymentMethod: 'dummyPaymentInvoice',
+          shipmentType: 'in-center-service',
+          isMultiShipment: true,
+          skipServicePointAddressOverride: true,
+        });
+
+        customerOverviewPage.visit();
+        customerOverviewPage.viewLastPlacedOrder();
       });
     });
 
