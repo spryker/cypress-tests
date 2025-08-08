@@ -53,4 +53,6 @@ export class SuiteCartRepository implements CartRepository {
   getCartItemSummaryBlock = (itemIndex: number): Cypress.Chainable =>
     cy.get('[data-qa="component cart-item-summary"]').eq(itemIndex);
   getCancelOrderAmendmentButton = (): Cypress.Chainable => cy.get('[data-qa="cancel-order-amendment-button"]');
+  getProductCartItems = (): Cypress.Chainable => cy.get('[data-qa="component product-cart-item"]');
+  getCartItemsListTitles = (): Cypress.Chainable => cy.get('[data-qa="component product-cart-items-list"] .title--h4');
 }

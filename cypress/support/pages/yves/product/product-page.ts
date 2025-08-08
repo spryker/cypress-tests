@@ -83,6 +83,20 @@ export class ProductPage extends YvesPage {
   getAddToComparisonListLimitExceededErrorMessage = (): string => {
     return this.repository.getAddToComparisonListLimitExceededErrorMessage();
   };
+
+  selectShipmentType(shipmentTypeName: string): void {
+    this.repository.getShipmentTypeRadioButton(shipmentTypeName).click({ force: true });
+  }
+
+  selectServicePoint(servicePointName: string): void {
+    this.repository.getSelectServicePointButton().first().click();
+    this.repository.getServicePointSearchInput().clear().type(servicePointName);
+    this.repository.getServicePointListItem(servicePointName).click({ force: true });
+  }
+
+  assertServicePointIsSelected(servicePointName: string): void {
+    this.repository.getSelectedServicePointName().should('contain', servicePointName);
+  }
 }
 
 interface SelectSoldByProductOfferParams {

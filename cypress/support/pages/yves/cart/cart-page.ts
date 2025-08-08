@@ -109,6 +109,24 @@ export class CartPage extends YvesPage {
       cancelOrderAmendmentButton.click();
     }
   };
+
+  getProductCartItems = (): Cypress.Chainable => {
+    return this.repository.getProductCartItems();
+  };
+
+  getCartItemsListTitles = (): Cypress.Chainable => {
+    return this.repository.getCartItemsListTitles();
+  };
+
+  assertServicePointsDisplayed = (): void => {
+    this.getProductCartItems().contains('Service point');
+  };
+
+  assertShipmentTypeGrouping = (): void => {
+    this.getCartItemsListTitles().should('have.length.at.least', 2);
+    this.getCartItemsListTitles().contains('Delivery');
+    this.getCartItemsListTitles().contains('In-Center Service');
+  };
 }
 
 interface QuickAddToCartParams {

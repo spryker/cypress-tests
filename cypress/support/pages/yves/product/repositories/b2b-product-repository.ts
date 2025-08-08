@@ -17,4 +17,13 @@ export class B2bProductRepository implements ProductRepository {
   getAddToComparisonListSuccessMessage = (): string => 'Added to comparison';
   getRemoveFromComparisonListSuccessMessage = (): string => 'Product was removed from the comparison list.';
   getAddToComparisonListLimitExceededErrorMessage = (): string => 'The limit has already been reached';
+  getShipmentTypeRadioButton = (shipmentTypeName: string): Cypress.Chainable =>
+    cy.contains('[data-qa="component radio shipment_type_uuid"]', shipmentTypeName).find('input');
+  getSelectServicePointButton = (): Cypress.Chainable =>
+    cy.get('[data-qa="component ssp-service-point-selector"] button');
+  getServicePointSearchInput = (): Cypress.Chainable => cy.get('[data-qa="component ssp-service-point-finder"] input');
+  getServicePointListItem = (servicePointName: string): Cypress.Chainable =>
+    cy.contains('[data-qa="component service-point"]', servicePointName).find('button');
+  getSelectedServicePointName = (): Cypress.Chainable => cy.get('[data-qa="component ssp-service-point-selector"]');
+  getCloseServicePointPopupButton = (): Cypress.Chainable => cy.get('.js-main-popup__close');
 }

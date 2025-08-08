@@ -19,4 +19,6 @@ export interface CartRepository {
   submitCartItemChangeQuantity(sku: string): void;
   getCartItemSummaryBlock(itemIndex: number): Cypress.Chainable;
   getCancelOrderAmendmentButton(): Cypress.Chainable;
+  getProductCartItems(): Cypress.Chainable;
+  getCartItemsListTitles(): Cypress.Chainable;
 }
