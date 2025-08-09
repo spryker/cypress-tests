@@ -48,16 +48,18 @@ export class ProductManagementListPage extends BackofficePage {
   };
 
   update = (params: UpdateParams): void => {
-    this.find({ searchQuery: params.query, tableUrl: '/product-management/index/table**' }).then(($productRow) => {
-      if (params.action === ActionEnum.edit) {
-        cy.wrap($productRow).find(this.repository.getEditButtonSelector()).as('editButton');
-        cy.get('@editButton').click();
+    this.find({ searchQuery: params.query, tableUrl: '/product-management/index/table**', expectedCount: 1 }).then(
+      ($productRow) => {
+        if (params.action === ActionEnum.edit) {
+          cy.wrap($productRow).find(this.repository.getEditButtonSelector()).as('editButton');
+          cy.get('@editButton').click();
+        }
+        if (params.action === ActionEnum.deny) {
+          cy.wrap($productRow).find(this.repository.getDenyButtonSelector()).as('denyButton');
+          cy.get('@denyButton').click();
+        }
       }
-      if (params.action === ActionEnum.deny) {
-        cy.wrap($productRow).find(this.repository.getDenyButtonSelector()).as('denyButton');
-        cy.get('@denyButton').click();
-      }
-    });
+    );
   };
 }
 

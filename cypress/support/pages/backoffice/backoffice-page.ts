@@ -31,6 +31,14 @@ export class BackofficePage extends AbstractPage {
   };
 
   public find = (params: UpdateParams): Cypress.Chainable => {
+    const getRows = (): Cypress.Chainable<JQuery<HTMLElement>> => {
+      if (params.expectedCount !== undefined) {
+        return cy.get('tbody > tr:visible').should('have.length', params.expectedCount);
+      }
+
+      return cy.get('tbody > tr:visible');
+    };
+
     // eslint-disable-next-line cypress/unsafe-to-chain-command
     return cy
       .get('input[type="search"][data-qa="table-search"]')
@@ -39,7 +47,7 @@ export class BackofficePage extends AbstractPage {
       .trigger('input')
       .then(() => {
         return this.interceptTable({ url: params.tableUrl, expectedCount: params.expectedCount }, () => {
-          cy.get('tbody > tr:visible').then(($rows) => {
+          return getRows().then(($rows) => {
             let rows = Cypress.$($rows);
 
             if (params.rowFilter && params.rowFilter.length > 0) {

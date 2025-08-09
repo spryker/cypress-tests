@@ -11,16 +11,15 @@ export class AvailabilityIndexPage extends BackofficePage {
   protected PAGE_URL = '/availability-gui';
 
   update = (params: UpdateParams): void => {
-    this.find({ tableUrl: '/availability-gui/index/availability-abstract-table**', searchQuery: params.query }).then(
-      ($availabilityRow) => {
-        if (params.action === ActionEnum.view) {
-          cy.wrap($availabilityRow)
-            .find(this.repository.getViewButtonSelector())
-            .should('exist')
-            .click({ force: true });
-        }
+    this.find({
+      tableUrl: '/availability-gui/index/availability-abstract-table**',
+      searchQuery: params.query,
+      expectedCount: 1,
+    }).then(($availabilityRow) => {
+      if (params.action === ActionEnum.view) {
+        cy.wrap($availabilityRow).find(this.repository.getViewButtonSelector()).should('exist').click({ force: true });
       }
-    );
+    });
   };
 }
 
