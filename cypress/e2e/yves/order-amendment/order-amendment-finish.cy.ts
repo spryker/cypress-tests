@@ -90,8 +90,7 @@ describe('order amendment finish', { tags: ['@yves', '@order-amendment'] }, (): 
     });
 
     catalogPage.visit();
-    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product3.sku });
-    productPage.getProductConfigurator().should('contain', staticFixtures.newProductPrice);
+    searchAndAssertProductPriceWithRetry(dynamicFixtures.product3.sku, staticFixtures.newProductPrice);
 
     customerOverviewPage.viewLastPlacedOrder();
     orderDetailsPage.editOrder();
@@ -138,6 +137,31 @@ describe('order amendment finish', { tags: ['@yves', '@order-amendment'] }, (): 
     customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.localized_attributes[0].name, 3);
     customerOverviewPage.assertProductQuantity(dynamicFixtures.product4.localized_attributes[0].name, 1);
   });
+
+  function searchAndAssertProductPriceWithRetry(sku: string, price: string, attempt = 1): void {
+    const maxAttempts = 3;
+
+    catalogPage.searchProductFromSuggestions({ query: sku });
+
+    productPage.getProductConfigurator().then(($productConfigurator) => {
+      if ($productConfigurator.text().includes(price)) {
+        cy.wrap($productConfigurator).should('contain', price);
+
+        return;
+      }
+
+      cy.log(`Price is not synchronized yet, retrying... (Attempt ${attempt})`);
+
+      if (attempt < maxAttempts) {
+        catalogPage.visit();
+        searchAndAssertProductPriceWithRetry(sku, price, attempt + 1);
+
+        return;
+      }
+
+      cy.wrap($productConfigurator).should('contain', price);
+    });
+  }
 
   function updateProductPriceInBackoffice(): void {
     userLoginScenario.execute({
