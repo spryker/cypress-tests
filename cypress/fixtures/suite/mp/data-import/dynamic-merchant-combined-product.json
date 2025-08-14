@@ -7,6 +7,12 @@
         {
           "type": "helper",
           "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
           "key": "merchantUser",
           "arguments": [{ "password": "change123" }]
         },
