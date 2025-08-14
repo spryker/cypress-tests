@@ -73,7 +73,6 @@
           "name": "haveFullProduct",
           "key": "concreteProduct1",
           "arguments": [
-            {},
             {
               "idTaxSet": 1,
               "localizedAttributes": [
@@ -96,7 +95,6 @@
           "name": "haveFullProduct",
           "key": "concreteProduct2",
           "arguments": [
-            {},
             {
               "idTaxSet": 1,
               "localizedAttributes": [
