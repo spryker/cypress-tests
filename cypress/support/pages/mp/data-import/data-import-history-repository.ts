@@ -8,6 +8,10 @@ export class DataImportHistoryRepository {
     return cy.contains('Start Import');
   }
 
+  getTableSearchInput(): Cypress.Chainable {
+    return cy.get('mp-file-imports-table').find('spy-input input');
+  }
+
   getEntityTypeSelect(): Cypress.Chainable {
     return cy.get('select[name="merchant_file_import_form[entity_type]"]');
   }

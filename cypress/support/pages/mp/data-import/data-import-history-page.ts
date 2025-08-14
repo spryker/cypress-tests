@@ -10,6 +10,10 @@ export class DataImportHistoryPage extends MpPage {
 
   PAGE_URL = '/file-import-merchant-portal-gui/history';
 
+  searchInTable(query: string): void {
+    this.repository.getTableSearchInput().clear({ force: true }).type(query);
+  }
+
   openFormDrawer(): void {
     this.repository.getStartImportButton().click();
   }

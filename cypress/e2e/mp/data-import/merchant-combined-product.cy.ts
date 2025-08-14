@@ -30,11 +30,12 @@ import { DataImportHistoryPage } from '@pages/mp';
         (contents) => {
           const timestamp: number = Date.now();
           const abstractSku: string = 'PRODUCT-' + timestamp;
+          const fileName = 'merchant_combined_product.csv';
 
           contents = contents.replaceAll('{UNIQUE}', timestamp);
 
           const file: Cypress.FileReference = {
-            fileName: 'merchant_combined_product.csv',
+            fileName,
             contents: Cypress.Buffer.from(contents),
             mimeType: 'text/csv',
             lastModified: timestamp,
@@ -55,6 +56,9 @@ import { DataImportHistoryPage } from '@pages/mp';
           cy.get('body').should('contain', 'File import has been started');
 
           cy.runCliCommands(['console merchant-portal:file-import']);
+
+          dataImportHistoryPage.searchInTable(fileName);
+          cy.get('table').contains('Successful');
 
           // Approve product in the backoffice
           userLoginScenario.execute({
