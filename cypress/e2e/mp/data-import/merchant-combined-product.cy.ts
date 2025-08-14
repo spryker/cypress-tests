@@ -24,7 +24,7 @@ import { CatalogPage } from '@pages/yves';
     it('merchant can start import', (): void => {
       const repositoryId = Cypress.env('repositoryId');
 
-      cy.readFile('cypress/fixtures/' + repositoryId + '/mp/data-import/merchant_combined_product-1.csv').then(
+      cy.readFile('cypress/fixtures/' + repositoryId + '/mp/data-import/one_merchant_combined_product.csv').then(
         (contents) => {
           const timestamp: number = Date.now();
           const abstractSku: string = 'PRODUCT-' + timestamp;
