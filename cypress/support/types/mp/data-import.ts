@@ -5,5 +5,6 @@ export interface MerchantCombinedProductDynamicFixtures {
 }
 
 export interface MerchantCombinedProductStaticFixtures {
+  rootUser: User;
   defaultPassword: string;
 }
