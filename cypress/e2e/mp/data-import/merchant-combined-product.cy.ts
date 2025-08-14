@@ -4,11 +4,13 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 import { ActionEnum, ProductManagementListPage } from '@pages/backoffice';
 import { MerchantCombinedProductDynamicFixtures, MerchantCombinedProductStaticFixtures } from '@interfaces/mp';
 import { CatalogPage } from '@pages/yves';
+import { DataImportHistoryPage } from '@pages/mp';
 
 (['suite', 'b2b-mp', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
-  'merchant combined product data import',
+  'merchant combined product',
   { tags: ['@mp', '@data-import'] },
   (): void => {
+    const dataImportHistoryPage = container.get(DataImportHistoryPage);
     const catalogPage = container.get(CatalogPage);
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
     const userLoginScenario = container.get(UserLoginScenario);
@@ -21,7 +23,7 @@ import { CatalogPage } from '@pages/yves';
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
     });
 
-    it('merchant can start import', (): void => {
+    it('merchant can import a combined product', (): void => {
       const repositoryId = Cypress.env('repositoryId');
 
       cy.readFile('cypress/fixtures/' + repositoryId + '/mp/data-import/one_merchant_combined_product.csv').then(
@@ -43,11 +45,13 @@ import { CatalogPage } from '@pages/yves';
             username: dynamicFixtures.merchantUser.username,
             password: staticFixtures.defaultPassword,
           });
-          cy.visit('http://mp.eu.spryker.local/file-import-merchant-portal-gui/history');
-          cy.contains('Start Import').click();
-          cy.get('select[name="merchant_file_import_form[entity_type]"]').select('Product', { force: true });
-          cy.get('input[name="merchant_file_import_form[merchantFile][file]"]').selectFile(file);
-          cy.get('web-spy-button').contains('Import').click();
+          dataImportHistoryPage.visit();
+          dataImportHistoryPage.openFormDrawer();
+          dataImportHistoryPage.fillForm({
+            entityType: 'Product',
+            file: file,
+          });
+          dataImportHistoryPage.submitForm();
           cy.get('body').should('contain', 'File import has been started');
 
           cy.runCliCommands(['console merchant-portal:file-import']);
@@ -59,6 +63,7 @@ import { CatalogPage } from '@pages/yves';
           });
           productManagementListPage.visit();
           productManagementListPage.update({ query: abstractSku, action: ActionEnum.approve });
+          cy.contains('The approval status was updated');
           cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
 
           // Check that product is accessible in Storefront
