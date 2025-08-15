@@ -123,6 +123,7 @@ export enum ActionEnum {
   view,
   edit,
   activate,
+  approve,
   deactivate,
   approveAccess,
   denyAccess,
