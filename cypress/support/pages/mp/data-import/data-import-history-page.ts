@@ -11,7 +11,7 @@ export class DataImportHistoryPage extends MpPage {
   PAGE_URL = '/file-import-merchant-portal-gui/history';
 
   searchInTable(query: string): void {
-    this.repository.getTableSearchInput().clear({ force: true }).type(query);
+    this.repository.getTableSearchInput().type(query);
   }
 
   openFormDrawer(): void {
@@ -25,6 +25,34 @@ export class DataImportHistoryPage extends MpPage {
 
   submitForm(): void {
     this.repository.getFormSubmitButton().click();
+  }
+
+  assertImportStartedNotification(): void {
+    cy.get('body').should('contain', 'File import has been started');
+  }
+
+  assertFileStatus(fileName: string, status: DataImportStatusEnum): void {
+    this.searchInTable(fileName);
+    cy.get('table').contains(getDataImportStatusLabel(status));
+  }
+}
+
+export enum DataImportStatusEnum {
+  pending,
+  successful,
+  failed,
+}
+
+function getDataImportStatusLabel(status: DataImportStatusEnum): string {
+  switch (status) {
+    case DataImportStatusEnum.pending:
+      return 'Pending';
+    case DataImportStatusEnum.successful:
+      return 'Successful';
+    case DataImportStatusEnum.failed:
+      return 'Failed';
+    default:
+      throw new Error(`Unknown status: ${status}`);
   }
 }
 

@@ -4,7 +4,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 import { ActionEnum, ProductManagementListPage } from '@pages/backoffice';
 import { MerchantCombinedProductDynamicFixtures, MerchantCombinedProductStaticFixtures } from '@interfaces/mp';
 import { CatalogPage } from '@pages/yves';
-import { DataImportHistoryPage } from '@pages/mp';
+import { DataImportHistoryPage, DataImportStatusEnum } from '@pages/mp';
 
 (['suite', 'b2b-mp', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'merchant combined product',
@@ -53,12 +53,13 @@ import { DataImportHistoryPage } from '@pages/mp';
             file: file,
           });
           dataImportHistoryPage.submitForm();
-          cy.get('body').should('contain', 'File import has been started');
+          dataImportHistoryPage.assertImportStartedNotification();
+          dataImportHistoryPage.assertFileStatus(fileName, DataImportStatusEnum.pending);
 
           cy.runCliCommands(['console merchant-portal:file-import']);
 
-          dataImportHistoryPage.searchInTable(fileName);
-          cy.get('table').contains('Successful');
+          cy.reload();
+          dataImportHistoryPage.assertFileStatus(fileName, DataImportStatusEnum.successful);
 
           // Approve product in the backoffice
           userLoginScenario.execute({
