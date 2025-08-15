@@ -30,6 +30,10 @@ export class ProductManagementEditPage extends BackofficePage {
     this.repository.getAllStockInputs().check();
   };
 
+  getGeneralTab(): Cypress.Chainable {
+    return this.repository.getGeneralTab();
+  }
+
   bulkPriceUpdate = (productPrice: string): void => {
     this.repository.getPriceTaxTab().click();
     this.repository.getAllPriceInputs().each(($el) => {
