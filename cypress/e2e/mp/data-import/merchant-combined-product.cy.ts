@@ -29,10 +29,14 @@ import { DataImportEntityTypeEnum, DataImportHistoryPage, DataImportStatusEnum }
 
       cy.readFile('cypress/fixtures/' + repositoryId + '/mp/data-import/one_merchant_combined_product.csv').then(
         (content) => {
-          const timestamp: number = Date.now();
-          const abstractSku: string = 'PRODUCT-' + timestamp;
+          const unique = String(Date.now());
+          const abstractSku: string = 'PRODUCT-' + unique;
           const fileName = 'merchant_combined_product.csv';
-          const file = merchantStartDataImportScenario.prepareFileByContent(fileName, content);
+          const file = merchantStartDataImportScenario.prepareFileByContent({
+            fileName,
+            content,
+            unique,
+          });
 
           // Start import in Merchant Portal
           merchantUserLoginScenario.execute({
@@ -73,7 +77,10 @@ import { DataImportEntityTypeEnum, DataImportHistoryPage, DataImportStatusEnum }
       cy.readFile('cypress/fixtures/' + repositoryId + '/mp/data-import/failed_merchant_combined_product.csv').then(
         (content) => {
           const fileName = 'failed_merchant_combined_product.csv';
-          const file = merchantStartDataImportScenario.prepareFileByContent(fileName, content);
+          const file = merchantStartDataImportScenario.prepareFileByContent({
+            fileName,
+            content,
+          });
 
           // Start import in Merchant Portal
           merchantUserLoginScenario.execute({

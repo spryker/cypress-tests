@@ -24,17 +24,25 @@ export class MerchantStartDataImportScenario {
     this.dataImportHistoryPage.assertFileStatus(<string>executeParams.file.fileName, DataImportStatusEnum.pending);
   };
 
-  prepareFileByContent = (fileName: string, content: string): Cypress.FileReferenceObject => {
-    const timestamp: number = Date.now();
+  prepareFileByContent = (fileParams: FileParams): Cypress.FileReferenceObject => {
+    const unique: string = fileParams.unique !== undefined ? fileParams.unique : String(Date.now());
 
-    content = content.replaceAll('{UNIQUE}', String(timestamp));
+    let content: string = fileParams.content;
+
+    content = content.replaceAll('{UNIQUE}', unique);
 
     return {
-      fileName,
+      fileName: fileParams.fileName,
       contents: Cypress.Buffer.from(content),
       mimeType: 'text/csv',
     };
   };
+}
+
+interface FileParams {
+  fileName: string;
+  content: string;
+  unique?: string;
 }
 
 interface ExecuteParams {
