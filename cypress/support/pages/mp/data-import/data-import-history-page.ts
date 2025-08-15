@@ -37,10 +37,23 @@ export class DataImportHistoryPage extends MpPage {
   }
 }
 
+export enum DataImportEntityTypeEnum {
+  merchantCombinedProduct,
+}
+
 export enum DataImportStatusEnum {
   pending,
   successful,
   failed,
+}
+
+export function getDataImportEntityTypeOptionLabel(entityType: DataImportEntityTypeEnum): string {
+  switch (entityType) {
+    case DataImportEntityTypeEnum.merchantCombinedProduct:
+      return 'Product';
+    default:
+      throw new Error(`Unknown entity type: ${entityType}`);
+  }
 }
 
 function getDataImportStatusLabel(status: DataImportStatusEnum): string {
@@ -58,5 +71,5 @@ function getDataImportStatusLabel(status: DataImportStatusEnum): string {
 
 interface FormData {
   entityType: string;
-  file: Cypress.FileReference;
+  file: Cypress.FileReferenceObject;
 }
