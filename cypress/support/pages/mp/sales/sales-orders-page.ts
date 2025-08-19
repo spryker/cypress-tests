@@ -13,9 +13,9 @@ export class SalesOrdersPage extends MpPage {
 
   find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector, { timeout: params.timeout ?? 5000 }).clear();
+    cy.get(searchSelector, { timeout: params.timeout ?? Cypress.config('defaultCommandTimeout') }).clear();
     cy.get(searchSelector).type(params.query, { delay: 0 });
-    cy.get(this.repository.FIRST_TABLE_ROW_SELECTOR, { timeout: 20000 });
+    this.repository.getFirstTableRow({ timeout: 20000 });
 
     this.interceptTable(
       {
