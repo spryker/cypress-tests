@@ -3,7 +3,7 @@ import { LocaleSwitchingScenario } from '@scenarios/yves';
 import { CatalogPage, HomePage } from '@pages/yves';
 import { LocaleSwitchingDynamicFixtures, LocaleSwitchingStaticFixtures } from '@interfaces/yves';
 
-describe('locale switching', { tags: ['@core', '@yves'] }, (): void => {
+describeIfDynamicStoreEnabled('locale switching', { tags: ['@core', '@yves'] }, (): void => {
   const homePage = container.get(HomePage);
   const catalogPage = container.get(CatalogPage);
   const localeSwitchingScenario = container.get(LocaleSwitchingScenario);
@@ -37,7 +37,7 @@ describe('locale switching', { tags: ['@core', '@yves'] }, (): void => {
     });
   };
 
-  skipDisabledDynamicStoreIt('should be able to switch locales at the home page.', (): void => {
+  it('should be able to switch locales at the home page.', (): void => {
     testLocaleSwitching(() => homePage.visit(), homePage);
   });
 
@@ -52,7 +52,7 @@ describe('locale switching', { tags: ['@core', '@yves'] }, (): void => {
     }, catalogPage);
   });
 
-  skipDisabledDynamicStoreIt('should maintain locale when navigating to New page after switching locale.', (): void => {
+  it('should maintain locale when navigating to New page after switching locale.', (): void => {
     homePage.visit();
     homePage.getAvailableLocales();
 
@@ -77,8 +77,8 @@ describe('locale switching', { tags: ['@core', '@yves'] }, (): void => {
 
     cy.url().should('contain', expectedStore);
   });
-
-  function skipDisabledDynamicStoreIt(description: string, testFn: () => void): void {
-    (Cypress.env('isDynamicStoreEnabled') ? it : it.skip)(description, testFn);
-  }
 });
+
+function describeIfDynamicStoreEnabled(title: string, options: { tags: string[] }, fn: () => void): void {
+  (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(title, fn);
+}
