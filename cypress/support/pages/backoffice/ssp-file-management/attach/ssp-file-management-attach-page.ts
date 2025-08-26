@@ -14,7 +14,11 @@ export class SspFileManagementAttachPage extends BackofficePage {
   selectAttachmentScope(scope: 'asset' | 'business-unit' | 'company-user' | 'company'): void {
     cy.get('.nav-tabs', { timeout: 10000 }).should('be.visible');
     
-    cy.get('.nav-tabs a');
+    cy.get('.nav-tabs a').then($tabs => {
+      const tabTexts = Array.from($tabs).map(tab => tab.textContent?.trim());
+      
+      const tabHrefs = Array.from($tabs).map(tab => tab.getAttribute('href'));
+    });
     
     const scopeText = scope === 'business-unit' ? 'Business Unit' : 
                      scope === 'company-user' ? 'Company User' :
@@ -228,10 +232,10 @@ export class SspFileManagementAttachPage extends BackofficePage {
    * Submit the form
    */
   submitForm(): void {
-
     cy.get(this.repository.getSaveButtonSelector()).first().click({ force: true });
     
-
+    cy.wait(500);
+    
     cy.get(this.repository.getModalSubmitButtonSelector(), { timeout: 10000 })
       .should('be.visible')
       .click({ force: true });
