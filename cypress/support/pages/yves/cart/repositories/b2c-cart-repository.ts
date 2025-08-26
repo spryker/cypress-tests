@@ -54,8 +54,7 @@ export class B2cCartRepository implements CartRepository {
     cy.get('[data-qa="component product-card-item"]').eq(itemIndex);
   getCancelOrderAmendmentButton = (): Cypress.Chainable => cy.get('[data-qa="cancel-order-amendment-button"]');
   getProductCartItems = (): Cypress.Chainable => cy.get('[data-qa="component product-cart-item"]');
-  getCartItemsListTitles = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-cart-items-list"] .title--h4');
+  getCartItemsListTitles = (): Cypress.Chainable => cy.get('[data-qa="component product-cart-items-list"] .title--h4');
   getProductCartItemComponent = (): Cypress.Chainable => cy.get('[data-qa="component product-cart-item"]');
   getProductCartItemCompatibilityStatus = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-cart-item"] .status');
