@@ -26,4 +26,7 @@ export class B2bMpProductRepository implements ProductRepository {
     cy.contains('[data-qa="component service-point"]', servicePointName).find('button');
   getSelectedServicePointName = (): Cypress.Chainable => cy.get('[data-qa="component ssp-service-point-selector"]');
   getCloseServicePointPopupButton = (): Cypress.Chainable => cy.get('.js-main-popup__close');
+  getAssetFinderSearchButton = (): Cypress.Chainable => cy.get('[data-qa="component asset-finder"] input');
+  getAssetListComponent = (): Cypress.Chainable => cy.get('[data-qa="component asset-list"]');
+  getAssetCompatibilityStatus = (): Cypress.Chainable => cy.get('[data-qa="component asset-list"] .status');
 }

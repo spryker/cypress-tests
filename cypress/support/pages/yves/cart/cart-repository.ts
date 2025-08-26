@@ -21,4 +21,6 @@ export interface CartRepository {
   getCancelOrderAmendmentButton(): Cypress.Chainable;
   getProductCartItems(): Cypress.Chainable;
   getCartItemsListTitles(): Cypress.Chainable;
+  getProductCartItemComponent(): Cypress.Chainable;
+  getProductCartItemCompatibilityStatus(): Cypress.Chainable;
 }

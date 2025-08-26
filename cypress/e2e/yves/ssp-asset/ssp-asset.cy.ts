@@ -5,6 +5,9 @@ import {
   SspAssetDetailPage,
   SspAssetListPage,
   CompanyUserSelectPage,
+  CatalogPage,
+  ProductPage,
+  CartPage,
 } from '@pages/yves';
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
@@ -20,6 +23,9 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const checkoutScenario = container.get(CheckoutScenario);
     const companyUserSelectPage = container.get(CompanyUserSelectPage);
+    const catalogPage = container.get(CatalogPage);
+    const productPage = container.get(ProductPage);
+    const cartPage = container.get(CartPage);
 
     let staticFixtures: SspAssetStaticFixtures;
     let dynamicFixtures: SspAssetDynamicFixtures;
@@ -397,6 +403,23 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
           assert.isTrue(true, 'Not on customer overview page after login');
         }
       });
+    });
+
+    it('should be able to select the asset on product detail page and see compatibility status', () => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product1.sku });
+
+      productPage.clickAssetFinderSearch();
+      productPage.clickAssetListComponent();
+      productPage.assertAssetCompatibilityStatus('Not Compatible');
+      productPage.addToCart();
+      cartPage.assertProductCartItemCompatibilityStatus('Not Compatible');
     });
   }
 );

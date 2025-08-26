@@ -97,6 +97,18 @@ export class ProductPage extends YvesPage {
   assertServicePointIsSelected(servicePointName: string): void {
     this.repository.getSelectedServicePointName().should('contain', servicePointName);
   }
+
+  clickAssetFinderSearch(): void {
+    this.repository.getAssetFinderSearchButton().first().click();
+  }
+
+  clickAssetListComponent(): void {
+    this.repository.getAssetListComponent().first().click();
+  }
+
+  assertAssetCompatibilityStatus(expectedStatus: string): void {
+    this.repository.getAssetCompatibilityStatus().should('contain.text', expectedStatus);
+  }
 }
 
 interface SelectSoldByProductOfferParams {
