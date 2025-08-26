@@ -1,12 +1,13 @@
 import { container } from '@utils';
 import {
-    SspAssetCreatePage,
-    SspAssetEditPage,
-    SspAssetDetailPage,
-    SspAssetListPage,
-    CompanyUserSelectPage,
-    CatalogPage,
-    ProductPage, CartPage,
+  SspAssetCreatePage,
+  SspAssetEditPage,
+  SspAssetDetailPage,
+  SspAssetListPage,
+  CompanyUserSelectPage,
+  CatalogPage,
+  ProductPage,
+  CartPage,
 } from '@pages/yves';
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
@@ -412,7 +413,7 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
       });
 
       catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product1.abstract_sku });
+      catalogPage.searchProductFromSuggestions({ query: 'service' });
 
       productPage.clickAssetFinderSearch();
       productPage.clickAssetListComponent();
