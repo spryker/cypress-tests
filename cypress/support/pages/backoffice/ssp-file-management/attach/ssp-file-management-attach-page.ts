@@ -14,13 +14,7 @@ export class SspFileManagementAttachPage extends BackofficePage {
   selectAttachmentScope(scope: 'asset' | 'business-unit' | 'company-user' | 'company'): void {
     cy.get('.nav-tabs', { timeout: 10000 }).should('be.visible');
     
-    cy.get('.nav-tabs a').then($tabs => {
-      const tabTexts = Array.from($tabs).map(tab => tab.textContent?.trim());
-      cy.log('Available tabs:', tabTexts.join(', '));
-      
-      const tabHrefs = Array.from($tabs).map(tab => tab.getAttribute('href'));
-      cy.log('Tab hrefs:', tabHrefs.join(', '));
-    });
+    cy.get('.nav-tabs a');
     
     const scopeText = scope === 'business-unit' ? 'Business Unit' : 
                      scope === 'company-user' ? 'Company User' :
@@ -29,18 +23,15 @@ export class SspFileManagementAttachPage extends BackofficePage {
     cy.get('.nav-tabs a').contains(scopeText, { matchCase: false }).then($tab => {
       if ($tab.length > 0) {
         cy.wrap($tab).first().click({ force: true });
-        cy.log(`Clicked tab by text: ${scopeText}`);
       } else {
 
         cy.get(`.nav-tabs a[href="#tab-content-${scope}"]`).then($hrefTab => {
           if ($hrefTab.length > 0) {
             cy.wrap($hrefTab).first().click({ force: true });
-            cy.log(`Clicked tab by href: #tab-content-${scope}`);
           } else {
 
             const tabIndex = ['asset', 'business-unit', 'company-user', 'company'].indexOf(scope);
             cy.get('.nav-tabs a').eq(tabIndex).click({ force: true });
-            cy.log(`Clicked tab by index: ${tabIndex}`);
           }
         });
       }
