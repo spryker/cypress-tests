@@ -60,6 +60,7 @@ interface SspInquiry {
 }
 
 interface Product {
+  sku: string;
   localized_attributes: [
     {
       name: string;

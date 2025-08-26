@@ -413,7 +413,7 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
       });
 
       catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: 'service' });
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product1.sku });
 
       productPage.clickAssetFinderSearch();
       productPage.clickAssetListComponent();
