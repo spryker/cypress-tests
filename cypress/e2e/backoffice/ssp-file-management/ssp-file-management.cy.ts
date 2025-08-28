@@ -69,7 +69,6 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
-    
 
     fileManagerAttachmentAttachPage.selectAttachmentScope('company');
     fileManagerAttachmentAttachPage.selectAvailableItems('company', [dynamicFixtures.company1.name]);
@@ -82,7 +81,6 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
-    
 
     fileManagerAttachmentAttachPage.selectAttachmentScope('business-unit');
     fileManagerAttachmentAttachPage.selectAvailableItems('business-unit', [dynamicFixtures.businessUnit.name]);
@@ -95,10 +93,11 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
-    
 
     fileManagerAttachmentAttachPage.selectAttachmentScope('company-user');
-    fileManagerAttachmentAttachPage.selectAvailableItems('company-user', [dynamicFixtures.companyUser.customer.first_name]);
+    fileManagerAttachmentAttachPage.selectAvailableItems('company-user', [
+      dynamicFixtures.companyUser.customer.first_name,
+    ]);
     fileManagerAttachmentAttachPage.submitForm();
     fileManagerAttachmentAttachPage.verifySuccessMessage();
   });
@@ -108,7 +107,6 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
-    
 
     fileManagerAttachmentAttachPage.selectAvailableItems('asset', [dynamicFixtures.sspAsset.name]);
     fileManagerAttachmentAttachPage.submitForm();
@@ -120,10 +118,8 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
-    
 
     fileManagerAttachmentAttachPage.selectAttachmentScope('asset');
-    
 
     fileManagerAttachmentAttachPage.uploadCsvFile('asset', 'csv/assets-example.csv');
     fileManagerAttachmentAttachPage.submitForm();
@@ -135,10 +131,8 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
-    
 
     fileManagerAttachmentAttachPage.selectAttachmentScope('business-unit');
-    
 
     fileManagerAttachmentAttachPage.uploadCsvFile('business-unit', 'csv/business-units-example.csv');
     fileManagerAttachmentAttachPage.submitForm();
@@ -150,10 +144,8 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
-    
 
     fileManagerAttachmentAttachPage.selectAttachmentScope('company-user');
-    
 
     fileManagerAttachmentAttachPage.uploadCsvFile('company-user', 'csv/company-users-example.csv');
     fileManagerAttachmentAttachPage.submitForm();
@@ -165,10 +157,8 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
-    
 
     fileManagerAttachmentAttachPage.selectAttachmentScope('company');
-    
 
     fileManagerAttachmentAttachPage.uploadCsvFile('company', 'csv/companies-example.csv');
     fileManagerAttachmentAttachPage.submitForm();
@@ -202,10 +192,8 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
-    
 
     fileManagerAttachmentAttachPage.selectAttachmentScope('asset');
-    
 
     fileManagerAttachmentAttachPage.selectAssignedItems('asset', [dynamicFixtures.sspAsset.name]);
     fileManagerAttachmentAttachPage.submitForm();
