@@ -15,4 +15,5 @@ export * from './ssp-inquiry';
 export * from './company-account';
 export * from './ssp-file-management';
 export * from './ssp-asset';
+export * from './ssp-asset-specific-catalog';
 export * from './ssp-dashboard-management';

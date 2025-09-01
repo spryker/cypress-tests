@@ -95,6 +95,10 @@ export class SspAssetDetailPage extends YvesPage {
     return this.repository.getSspAssetServicesButton();
   }
 
+  getSspAssetSparePartsButton(): Cypress.Chainable {
+    return this.repository.getSspAssetSparePartsButton();
+  }
+
   getSspAssetInquiriresTable(): Cypress.Chainable {
     return this.repository.getSspAssetInquiriresTable();
   }

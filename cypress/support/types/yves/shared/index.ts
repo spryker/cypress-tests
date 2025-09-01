@@ -19,3 +19,4 @@ export * from './shipment-method';
 export * from './payment-method';
 export * from './file';
 export * from './file-info';
+export * from './ssp-asset';

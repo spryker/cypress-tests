@@ -11,4 +11,9 @@ export class SuiteCatalogRepository implements CatalogRepository {
   getFirstProductItemBlockSelector = (): string => '[data-qa="component product-item"]:first';
   getViewButtonSelector = (): string => 'a:contains("View")';
   getItemBlockSearchQuery = (query: string): string => `span:contains("${query}")`;
+  getSspAssetSelectorBlock = (): Cypress.Chainable => cy.get('[data-qa="component asset-selector"]');
+  getSspAssetNameBlock = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-name"]');
+  getSspAssetSelectorTriggerButton = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-trigger"]');
+  getSspAssetOption = (name: string): Cypress.Chainable => cy.get('[data-qa="component asset-option"]').filter(`:contains("${name}")`);
+  getSspAssetOptionTriggerButtonSelector = (): string => '[data-qa="asset-option-trigger"]';
 }

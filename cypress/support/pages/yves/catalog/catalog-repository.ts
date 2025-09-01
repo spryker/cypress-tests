@@ -6,4 +6,9 @@ export interface CatalogRepository {
   getFirstProductItemBlockSelector(): string;
   getViewButtonSelector(): string;
   getItemBlockSearchQuery(query: string): string;
+  getSspAssetSelectorBlock(): Cypress.Chainable;
+  getSspAssetNameBlock(): Cypress.Chainable;
+  getSspAssetSelectorTriggerButton(): Cypress.Chainable;
+  getSspAssetOption(reference: string): Cypress.Chainable;
+  getSspAssetOptionTriggerButtonSelector(): string;
 }
