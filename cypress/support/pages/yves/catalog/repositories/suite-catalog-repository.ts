@@ -14,6 +14,7 @@ export class SuiteCatalogRepository implements CatalogRepository {
   getSspAssetSelectorBlock = (): Cypress.Chainable => cy.get('[data-qa="component asset-selector"]');
   getSspAssetNameBlock = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-name"]');
   getSspAssetSelectorTriggerButton = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-trigger"]');
-  getSspAssetOption = (name: string): Cypress.Chainable => cy.get('[data-qa="component asset-option"]').filter(`:contains("${name}")`);
+  getSspAssetOption = (name: string): Cypress.Chainable =>
+    cy.get('[data-qa="component asset-option"]').filter(`:contains("${name}")`);
   getSspAssetOptionTriggerButtonSelector = (): string => '[data-qa="asset-option-trigger"]';
 }

@@ -46,18 +46,16 @@ export class CatalogPage extends YvesPage {
   getProductItemBlocks = (): Cypress.Chainable => this.repository.getProductItemBlocks();
 
   getSspAssetSelectorBlock = (): Cypress.Chainable => this.repository.getSspAssetSelectorBlock();
-  
+
   getSspAssetNameBlock = (): Cypress.Chainable => this.repository.getSspAssetNameBlock();
 
   selectSspAsset = (params: SelectSspAssetParams): void => {
     this.repository.getSspAssetSelectorTriggerButton().click();
 
-    cy.intercept('GET', '**/customer/ssp-asset/widget-content**').as('sspAssetWidgetContent');
-
-    cy.wait('@sspAssetWidgetContent');
-
-    this.repository.getSspAssetOption(params.name).find(this.repository.getSspAssetOptionTriggerButtonSelector()).click();
-
+    this.repository
+      .getSspAssetOption(params.name)
+      .find(this.repository.getSspAssetOptionTriggerButtonSelector())
+      .click();
   };
 }
 
