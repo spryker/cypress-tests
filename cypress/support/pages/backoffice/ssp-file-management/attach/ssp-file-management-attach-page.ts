@@ -77,7 +77,8 @@ export class SspFileManagementAttachPage extends BackofficePage {
     const searchSelector = searchSelectors[scope];
 
     searchTerms.forEach((searchTerm) => {
-      cy.get(searchSelector).clear({ force: true }).type(searchTerm, { force: true });
+      cy.get(searchSelector).clear({ force: true });
+      cy.get(searchSelector).type(searchTerm, { force: true });
       cy.get(`${tableSelector} tbody tr`)
         .first()
         .find(this.repository.getTableRowCheckboxSelector())
@@ -107,7 +108,8 @@ export class SspFileManagementAttachPage extends BackofficePage {
     const searchSelector = searchSelectors[scope];
 
     searchTerms.forEach((searchTerm) => {
-      cy.get(searchSelector).clear({ force: true }).type(searchTerm, { force: true });
+      cy.get(searchSelector).clear({ force: true });
+      cy.get(searchSelector).type(searchTerm, { force: true });
       cy.get(`${tableSelector} tbody tr`)
         .first()
         .find(this.repository.getTableRowCheckboxSelector())
