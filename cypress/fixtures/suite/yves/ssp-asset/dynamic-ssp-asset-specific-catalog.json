@@ -2,6 +2,7 @@
   "data": {
     "type": "dynamic-fixtures",
     "attributes": {
+      "synchronize": true,
       "operations": [
         {
           "type": "transfer",
