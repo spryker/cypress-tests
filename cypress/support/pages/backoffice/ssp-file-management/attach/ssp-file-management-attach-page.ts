@@ -39,8 +39,6 @@ export class SspFileManagementAttachPage extends BackofficePage {
           });
         }
       });
-
-    cy.wait(1000);
   }
 
   /**
@@ -80,9 +78,6 @@ export class SspFileManagementAttachPage extends BackofficePage {
 
     searchTerms.forEach((searchTerm) => {
       cy.get(searchSelector).clear({ force: true }).type(searchTerm, { force: true });
-
-      cy.wait(1000);
-
       cy.get(`${tableSelector} tbody tr`)
         .first()
         .find(this.repository.getTableRowCheckboxSelector())
@@ -113,9 +108,6 @@ export class SspFileManagementAttachPage extends BackofficePage {
 
     searchTerms.forEach((searchTerm) => {
       cy.get(searchSelector).clear({ force: true }).type(searchTerm, { force: true });
-
-      cy.wait(1000);
-
       cy.get(`${tableSelector} tbody tr`)
         .first()
         .find(this.repository.getTableRowCheckboxSelector())
@@ -251,7 +243,6 @@ export class SspFileManagementAttachPage extends BackofficePage {
     };
 
     cy.get(tableSelectors[scope]).should('be.visible');
-
     cy.get(`${tableSelectors[scope]}_processing`, { timeout: 10000 }).should('not.exist');
   }
 }
