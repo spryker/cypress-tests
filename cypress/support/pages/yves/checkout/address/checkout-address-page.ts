@@ -50,6 +50,13 @@ export class CheckoutAddressPage extends YvesPage {
       .getMultiShipmentAddressItemElement()
       .children()
       .each(($addressItem, index) => {
+        if (
+          params?.skipServicePointAddressOverride &&
+          this.repository.getMultiShipmentAddressItemServicePointUuidValue?.($addressItem, index)
+        ) {
+          return;
+        }
+
         const checkoutAddress = this.createDummyCheckoutAddress();
 
         if (!this.isRepository('b2c', 'b2b', 'b2b-mp')) {
@@ -204,6 +211,7 @@ export class CheckoutAddressPage extends YvesPage {
 
 interface FillShippingAddressParams {
   idCustomerAddress?: number;
+  skipServicePointAddressOverride?: boolean;
 }
 
 interface Address {

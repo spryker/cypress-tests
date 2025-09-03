@@ -4,7 +4,8 @@ import { injectable } from 'inversify';
 @injectable()
 @autoWired
 export class SalesOrdersRepository {
-  getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1):visible');
+  getFirstTableRow = (params?: Partial<Cypress.Timeoutable>): Cypress.Chainable =>
+    cy.get('tbody > :nth-child(1):visible', params);
   getSearchSelector = (): string => '.spy-table-search-feature input[type="text"]';
   getCancelButtonSelector = (): string => 'button:contains("Cancel")';
   getShipButtonSelector = (): string => 'button:contains("Ship")';

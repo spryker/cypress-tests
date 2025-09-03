@@ -13,8 +13,9 @@ export class SalesOrdersPage extends MpPage {
 
   find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector).clear();
+    cy.get(searchSelector, { timeout: params.timeout ?? Cypress.config('defaultCommandTimeout') }).clear();
     cy.get(searchSelector).type(params.query, { delay: 0 });
+    this.repository.getFirstTableRow({ timeout: 20000 });
 
     this.interceptTable(
       {
@@ -26,7 +27,7 @@ export class SalesOrdersPage extends MpPage {
       }
     );
 
-    return this.repository.getFirstTableRow();
+    return this.repository.getFirstTableRow().should('contain', params.query);
   };
 
   update = (params: UpdateParams): void => {
@@ -80,6 +81,7 @@ interface FindParams {
   query: string;
   expectedCount?: number;
   waitUntilOrderIsVisible?: boolean;
+  timeout?: number;
 }
 
 interface UpdateParams {

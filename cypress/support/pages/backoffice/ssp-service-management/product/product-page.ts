@@ -1,12 +1,12 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import { BackofficePage, ProductManagementListPage } from '@pages/backoffice';
-import { ProductClassRepository } from './product-class-repository';
+import { ProductRepository } from './product-repository';
 
 @injectable()
 @autoWired
-export class ProductClassPage extends BackofficePage {
-  @inject(ProductClassRepository) private repository: ProductClassRepository;
+export class ProductPage extends BackofficePage {
+  @inject(ProductRepository) private repository: ProductRepository;
   @inject(ProductManagementListPage) private productListPage: ProductManagementListPage;
 
   selectProductClass(typeValue: string): void {
@@ -18,6 +18,17 @@ export class ProductClassPage extends BackofficePage {
 
     // Then select the option from the dropdown by clicking on it
     cy.get('li.select2-results__option').contains(typeValue).click();
+  }
+
+  selectShipmentType(shipmentName: string): void {
+    this.repository
+      .getShipmentTypeSelectSelect()
+      .siblings(this.repository.getSiblingSelector())
+      .find(this.repository.getSelect2Selector())
+      .should('exist')
+      .click();
+
+    cy.get('li.select2-results__option').contains(shipmentName).click();
   }
 
   saveProduct(): void {
@@ -33,6 +44,10 @@ export class ProductClassPage extends BackofficePage {
 
   verifyProductClassSelected(typeName: string): void {
     cy.get(this.repository.getSelectedTypeVerificationSelector()).should('contain', typeName);
+  }
+
+  verifyShipmentTypeSelected(shipmentTypeName: string): void {
+    cy.get(this.repository.getShipmentTypeVerificationSelector()).should('contain', shipmentTypeName);
   }
 
   editProductFromList(sku: string): void {
