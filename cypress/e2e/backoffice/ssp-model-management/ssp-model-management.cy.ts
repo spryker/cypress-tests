@@ -43,7 +43,7 @@ import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } f
     it('should be able to edit a model and persist changes', () => {
       sspModelUpdatePage.visit({
         qs: {
-          "id-ssp-model": dynamicFixtures.sspModel.id_ssp_model,
+          'id-ssp-model': dynamicFixtures.sspModel.id_ssp_model,
         },
       });
 
@@ -57,14 +57,14 @@ import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } f
 
       sspModelViewPage.visit({
         qs: {
-          "id-ssp-model": dynamicFixtures.sspModel.id_ssp_model,
+          'id-ssp-model': dynamicFixtures.sspModel.id_ssp_model,
         },
       });
 
       sspModelViewPage.assertPageLocation();
 
       sspModelViewPage.verifySspModel({
-        code: staticFixtures.sspModelEdit.code
+        code: staticFixtures.sspModelEdit.code,
       });
     });
   }
