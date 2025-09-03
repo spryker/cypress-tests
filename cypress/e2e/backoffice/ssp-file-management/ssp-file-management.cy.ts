@@ -64,14 +64,40 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     fileManagerAttachmentViewPage.verifyFileDetailsAreVisible();
   });
 
-  it('should successfully attach file to multiple entities', () => {
+  it('should successfully attach file to a company manually', () => {
     const fileManagerAttachmentAttachPage = container.get(SspFileManagementAttachPage);
 
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
-    fileManagerAttachmentAttachPage.selectCompany(dynamicFixtures.company1.name);
-    fileManagerAttachmentAttachPage.selectCompanyUser(dynamicFixtures.companyUser.customer.first_name);
-    fileManagerAttachmentAttachPage.selectCompanyBusinessUnit(dynamicFixtures.businessUnit.name);
+
+    fileManagerAttachmentAttachPage.selectAttachmentScope('company');
+    fileManagerAttachmentAttachPage.selectAvailableItems('company', [dynamicFixtures.company1.name]);
+    fileManagerAttachmentAttachPage.submitForm();
+    fileManagerAttachmentAttachPage.verifySuccessMessage();
+  });
+
+  it('should successfully attach file to a business unit manually', () => {
+    const fileManagerAttachmentAttachPage = container.get(SspFileManagementAttachPage);
+
+    fileManagerAttachmentListPage.visit();
+    fileManagerAttachmentListPage.clickAttachButton();
+
+    fileManagerAttachmentAttachPage.selectAttachmentScope('business-unit');
+    fileManagerAttachmentAttachPage.selectAvailableItems('business-unit', [dynamicFixtures.businessUnit.name]);
+    fileManagerAttachmentAttachPage.submitForm();
+    fileManagerAttachmentAttachPage.verifySuccessMessage();
+  });
+
+  it('should successfully attach file to a company user manually', () => {
+    const fileManagerAttachmentAttachPage = container.get(SspFileManagementAttachPage);
+
+    fileManagerAttachmentListPage.visit();
+    fileManagerAttachmentListPage.clickAttachButton();
+
+    fileManagerAttachmentAttachPage.selectAttachmentScope('company-user');
+    fileManagerAttachmentAttachPage.selectAvailableItems('company-user', [
+      dynamicFixtures.companyUser.customer.first_name,
+    ]);
     fileManagerAttachmentAttachPage.submitForm();
     fileManagerAttachmentAttachPage.verifySuccessMessage();
   });
@@ -81,10 +107,62 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
-    fileManagerAttachmentAttachPage.clickAssetAttachmentTab();
-    fileManagerAttachmentAttachPage.selectAsset(dynamicFixtures.sspAsset.name);
-    fileManagerAttachmentAttachPage.submitAssetForm();
-    fileManagerAttachmentAttachPage.verifyAssetSuccessMessage();
+
+    fileManagerAttachmentAttachPage.selectAvailableItems('asset', [dynamicFixtures.sspAsset.name]);
+    fileManagerAttachmentAttachPage.submitForm();
+    fileManagerAttachmentAttachPage.verifySuccessMessage();
+  });
+
+  it('should successfully attach assets via CSV import', () => {
+    const fileManagerAttachmentAttachPage = container.get(SspFileManagementAttachPage);
+
+    fileManagerAttachmentListPage.visit();
+    fileManagerAttachmentListPage.clickAttachButton();
+
+    fileManagerAttachmentAttachPage.selectAttachmentScope('asset');
+
+    fileManagerAttachmentAttachPage.uploadCsvFile('asset', 'csv/assets-example.csv');
+    fileManagerAttachmentAttachPage.submitForm();
+    fileManagerAttachmentAttachPage.verifySuccessMessage();
+  });
+
+  it('should successfully attach business units via CSV import', () => {
+    const fileManagerAttachmentAttachPage = container.get(SspFileManagementAttachPage);
+
+    fileManagerAttachmentListPage.visit();
+    fileManagerAttachmentListPage.clickAttachButton();
+
+    fileManagerAttachmentAttachPage.selectAttachmentScope('business-unit');
+
+    fileManagerAttachmentAttachPage.uploadCsvFile('business-unit', 'csv/business-units-example.csv');
+    fileManagerAttachmentAttachPage.submitForm();
+    fileManagerAttachmentAttachPage.verifySuccessMessage();
+  });
+
+  it('should successfully attach company users via CSV import', () => {
+    const fileManagerAttachmentAttachPage = container.get(SspFileManagementAttachPage);
+
+    fileManagerAttachmentListPage.visit();
+    fileManagerAttachmentListPage.clickAttachButton();
+
+    fileManagerAttachmentAttachPage.selectAttachmentScope('company-user');
+
+    fileManagerAttachmentAttachPage.uploadCsvFile('company-user', 'csv/company-users-example.csv');
+    fileManagerAttachmentAttachPage.submitForm();
+    fileManagerAttachmentAttachPage.verifySuccessMessage();
+  });
+
+  it('should successfully attach companies via CSV import', () => {
+    const fileManagerAttachmentAttachPage = container.get(SspFileManagementAttachPage);
+
+    fileManagerAttachmentListPage.visit();
+    fileManagerAttachmentListPage.clickAttachButton();
+
+    fileManagerAttachmentAttachPage.selectAttachmentScope('company');
+
+    fileManagerAttachmentAttachPage.uploadCsvFile('company', 'csv/companies-example.csv');
+    fileManagerAttachmentAttachPage.submitForm();
+    fileManagerAttachmentAttachPage.verifySuccessMessage();
   });
 
   it('should successfully detach file from an asset', () => {
