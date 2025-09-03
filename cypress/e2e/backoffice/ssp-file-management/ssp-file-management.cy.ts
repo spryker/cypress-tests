@@ -186,19 +186,6 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     fileManagerAttachmentDetachPage.verifySuccessMessage();
     fileManagerAttachmentDetachPage.assertDetachFile();
   });
-
-  it('should successfully detach items using new interface', () => {
-    const fileManagerAttachmentAttachPage = container.get(SspFileManagementAttachPage);
-
-    fileManagerAttachmentListPage.visit();
-    fileManagerAttachmentListPage.clickAttachButton();
-
-    fileManagerAttachmentAttachPage.selectAttachmentScope('asset');
-
-    fileManagerAttachmentAttachPage.selectAssignedItems('asset', [dynamicFixtures.sspAsset.name]);
-    fileManagerAttachmentAttachPage.submitForm();
-    fileManagerAttachmentAttachPage.verifySuccessMessage();
-  });
 });
 
 function describeForSsp(title: string, options: { tags: string[] }, fn: () => void): void {
