@@ -91,7 +91,9 @@ export class B2bSspServiceRepository implements SspServiceRepository {
   }
 
   getRescheduleFormSubmitButton(): Chainable<JQuery<HTMLElement>> {
-    return cy.get('button[data-qa="submit-button"]') as unknown as Chainable<JQuery<HTMLElement>>;
+    return cy.get('form[name="service_item_scheduler_form"] button[data-qa="submit-button"]') as unknown as Chainable<
+      JQuery<HTMLElement>
+    >;
   }
 
   getServiceCancelButton(): Chainable<JQuery<HTMLElement>> {
