@@ -2,7 +2,7 @@ version: '3.7'
 services:
   cypress-tests:
     build:
-      context: ./vendor/spryker/cypress-tests
+      context: ./tests/cypress-tests
       dockerfile: Dockerfile
     networks:
       - private
@@ -13,9 +13,9 @@ services:
       'spryker.app.type': cypress-tests
       'spryker.project': ${SPRYKER_DOCKER_PREFIX}:${SPRYKER_DOCKER_TAG}
     volumes:
-      - ./vendor/spryker/cypress-tests/cypress/e2e:/opt/cypress-tests/cypress/e2e:rw
-      - ./vendor/spryker/cypress-tests/cypress/fixtures:/opt/cypress-tests/cypress/fixtures:rw
-      - ./vendor/spryker/cypress-tests/cypress/support:/opt/cypress-tests/cypress/support:rw
+      - ./tests/cypress-tests/cypress/e2e:/opt/cypress-tests/cypress/e2e:rw
+      - ./tests/cypress-tests/cypress/fixtures:/opt/cypress-tests/cypress/fixtures:rw
+      - ./tests/cypress-tests/cypress/support:/opt/cypress-tests/cypress/support:rw
       - ./.cypress/screenshots:/opt/cypress-tests/cypress/screenshots:rw
       - ./.cypress/videos:/opt/cypress-tests/cypress/videos:rw
       - ./.cypress/downloads:/opt/cypress-tests/cypress/downloads:rw
