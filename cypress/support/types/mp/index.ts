@@ -5,3 +5,4 @@ export * from './marketplace-product-concretes';
 export * from './marketplace-products';
 export * from './marketplace-order-management';
 export * from './multi-factor-authentication';
+export * from './data-import';
