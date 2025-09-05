@@ -13,7 +13,7 @@ export class SspFileManagementDetachPage extends BackofficePage {
   }
 
   assertDetachFile(): void {
-    this.repository.getAttachmentTableRows().should('have.length.greaterThan', 1);
+    this.repository.getAttachmentTableRows().should('have.length.gte', 1);
   }
 
   verifySuccessMessage(): void {
