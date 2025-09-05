@@ -36,9 +36,12 @@ interface DynamicFixtures {
   customer3: CustomerFixture;
   company1Customer: CustomerFixture;
   company2Customer: CustomerFixture;
+  company3Customer: CustomerFixture;
+  company4Customer: CustomerFixture;
   address1: AddressFixture;
   company1CustomerAddress: AddressFixture;
   company3CustomerAddress: AddressFixture;
+  company4CustomerAddress: AddressFixture;
   product1: ProductFixture;
   servicePoint: ServicePointFixture;
   shipmentType2: ShipmentTypeFixture;
@@ -161,7 +164,7 @@ interface DynamicFixtures {
     describe('Service Point Cart and Checkout Flow', () => {
       it('should display service points per item in cart and group items by shipment type', (): void => {
         customerLoginScenario.execute({
-          email: dynamicFixtures.customer3.email,
+          email: dynamicFixtures.company3Customer.email,
           password: staticFixtures.defaultPassword as string,
         });
 
@@ -171,15 +174,15 @@ interface DynamicFixtures {
         cartPage.assertShipmentTypeGrouping();
 
         purchaseServiceAsCustomer(
-          dynamicFixtures.company1Customer.email,
-          dynamicFixtures.company1CustomerAddress.id_customer_address,
+          dynamicFixtures.company3Customer.email,
+          dynamicFixtures.company3CustomerAddress.id_customer_address,
           'in-center-service'
         );
       });
 
       it('should allow purchasing a product with a service point', (): void => {
         customerLoginScenario.execute({
-          email: dynamicFixtures.customer.email,
+          email: dynamicFixtures.company4Customer.email,
           password: staticFixtures.defaultPassword as string,
         });
 
@@ -197,7 +200,9 @@ interface DynamicFixtures {
         cartPage.assertShipmentTypeGrouping();
 
         checkoutScenario.execute({
-          idCustomerAddress: dynamicFixtures.address1.id_customer_address,
+          idCustomerAddress: Cypress.env('ENV_IS_SSP_ENABLED')
+            ? undefined
+            : dynamicFixtures.company4CustomerAddress.id_customer_address,
           paymentMethod: 'dummyPaymentInvoice',
           shipmentType: 'in-center-service',
           isMultiShipment: true,

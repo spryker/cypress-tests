@@ -77,7 +77,7 @@ export class SspServiceListPage extends YvesPage {
   }
 
   viewFirstServiceDetails(): void {
-    this.repository.getFirstRowViewDetailsButton().click();
+    this.repository.getFirstRowViewDetailsButton().click({ force: true });
   }
 
   setSearchType(type: string): void {

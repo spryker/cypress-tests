@@ -43,21 +43,26 @@ export class CatalogPage extends YvesPage {
     });
   };
 
-  goToFirstItemInCatalogPage = (): void => {
-    this.repository.getProductItemBlocks().first().find(this.repository.getViewButtonSelector()).click();
-  };
+  getProductItemBlocks = (): Cypress.Chainable => this.repository.getProductItemBlocks();
 
-  hasProductsInCatalog = (): Cypress.Chainable<boolean> => {
-    return cy.get('body').then((body) => {
-      if (body.find(this.repository.getFirstProductItemBlockSelector()).length > 0) {
-        return cy.wrap(true);
-      } else {
-        return cy.wrap(false);
-      }
-    });
+  getSspAssetSelectorBlock = (): Cypress.Chainable => this.repository.getSspAssetSelectorBlock();
+
+  getSspAssetNameBlock = (): Cypress.Chainable => this.repository.getSspAssetNameBlock();
+
+  selectSspAsset = (params: SelectSspAssetParams): void => {
+    this.repository.getSspAssetSelectorTriggerButton().click();
+
+    this.repository
+      .getSspAssetOption(params.name)
+      .find(this.repository.getSspAssetOptionTriggerButtonSelector())
+      .click();
   };
 }
 
 interface SearchParams {
   query: string;
+}
+
+interface SelectSspAssetParams {
+  name: string;
 }

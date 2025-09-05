@@ -25,6 +25,7 @@ export interface SspAssetRepository {
   getCreateInquiryButton(): Cypress.Chainable;
   getSspAssetAssignments(): Cypress.Chainable;
   getSspAssetServicesButton(): Cypress.Chainable;
+  getSspAssetSparePartsButton(): Cypress.Chainable;
   getSspAssetInquiriresTable(): Cypress.Chainable;
   getSspAssetServicesTable(): Cypress.Chainable;
   getSspAssetImageSrc(): Cypress.Chainable;

@@ -8,42 +8,42 @@ import { SspFileManagementAttachRepository } from './ssp-file-management-attach-
 export class SspFileManagementAttachPage extends BackofficePage {
   @inject(SspFileManagementAttachRepository) private repository: SspFileManagementAttachRepository;
 
-  /**
-   * Select attachment scope by clicking on the tab
-   */
   selectAttachmentScope(scope: 'asset' | 'business-unit' | 'company-user' | 'company'): void {
     cy.get('.nav-tabs', { timeout: 10000 }).should('be.visible');
 
-    const scopeText =
-      scope === 'business-unit'
-        ? 'Business Unit'
-        : scope === 'company-user'
-          ? 'Company User'
-          : scope === 'company'
-            ? 'Company'
-            : 'Asset';
+    const scopeTextMap = {
+      asset: 'Asset',
+      'business-unit': 'Business Unit',
+      'company-user': 'Company User',
+      company: 'Company',
+    };
 
-    cy.get('.nav-tabs a')
-      .contains(scopeText, { matchCase: false })
-      .then(($tab) => {
-        if ($tab.length > 0) {
-          cy.wrap($tab).first().click({ force: true });
-        } else {
-          cy.get(`.nav-tabs a[href="#tab-content-${scope}"]`).then(($hrefTab) => {
-            if ($hrefTab.length > 0) {
-              cy.wrap($hrefTab).first().click({ force: true });
-            } else {
-              const tabIndex = ['asset', 'business-unit', 'company-user', 'company'].indexOf(scope);
-              cy.get('.nav-tabs a').eq(tabIndex).click({ force: true });
-            }
-          });
-        }
+    const scopeText = scopeTextMap[scope];
+    const scopeOrder = ['asset', 'business-unit', 'company-user', 'company'];
+
+    cy.get('.nav-tabs a').then(($tabs) => {
+      const matchingTab = $tabs.filter((index, element) => {
+        const text = Cypress.$(element).text().trim();
+        return text.toLowerCase() === scopeText.toLowerCase();
       });
+
+      if (matchingTab.length > 0) {
+        cy.wrap(matchingTab).first().click({ force: true });
+        return;
+      }
+
+      cy.get(`.nav-tabs a[href="#tab-content-${scope}"]`).then(($hrefTab) => {
+        if ($hrefTab.length > 0) {
+          cy.wrap($hrefTab).first().click({ force: true });
+          return;
+        }
+
+        const tabIndex = scopeOrder.indexOf(scope);
+        cy.get('.nav-tabs a').eq(tabIndex).click({ force: true });
+      });
+    });
   }
 
-  /**
-   * Click on specific scope tab
-   */
   clickScopeTab(scope: 'asset' | 'business-unit' | 'company-user' | 'company'): void {
     const tabSelectors = {
       asset: this.repository.getAssetTabSelector(),
@@ -55,9 +55,6 @@ export class SspFileManagementAttachPage extends BackofficePage {
     cy.get(tabSelectors[scope]).click({ force: true });
   }
 
-  /**
-   * Select items in available table by searching and checking checkboxes
-   */
   selectAvailableItems(scope: 'asset' | 'business-unit' | 'company-user' | 'company', searchTerms: string[]): void {
     const tableSelectors = {
       asset: this.repository.getAvailableAssetTableSelector(),
@@ -77,8 +74,8 @@ export class SspFileManagementAttachPage extends BackofficePage {
     const searchSelector = searchSelectors[scope];
 
     searchTerms.forEach((searchTerm) => {
-      cy.get(searchSelector).clear({ force: true });
-      cy.get(searchSelector).type(searchTerm, { force: true });
+      cy.get(searchSelector).clear();
+      cy.get(searchSelector).type(searchTerm);
       cy.get(`${tableSelector} tbody tr`)
         .first()
         .find(this.repository.getTableRowCheckboxSelector())
@@ -86,9 +83,6 @@ export class SspFileManagementAttachPage extends BackofficePage {
     });
   }
 
-  /**
-   * Select items in assigned table (for detachment)
-   */
   selectAssignedItems(scope: 'asset' | 'business-unit' | 'company-user' | 'company', searchTerms: string[]): void {
     const tableSelectors = {
       asset: this.repository.getAssignedAssetTableSelector(),
@@ -117,9 +111,6 @@ export class SspFileManagementAttachPage extends BackofficePage {
     });
   }
 
-  /**
-   * Upload CSV file for import
-   */
   uploadCsvFile(scope: 'asset' | 'business-unit' | 'company-user' | 'company', fileName: string): void {
     const csvSelectors = {
       asset: this.repository.getAssetCsvImportSelector(),
@@ -131,63 +122,42 @@ export class SspFileManagementAttachPage extends BackofficePage {
     cy.get(csvSelectors[scope]).attachFile(fileName);
   }
 
-  /**
-   * Attach assets manually by selection
-   */
   attachAssets(assetNames: string[]): void {
     this.selectAttachmentScope('asset');
     this.selectAvailableItems('asset', assetNames);
     this.submitForm();
   }
 
-  /**
-   * Attach business units manually by selection
-   */
   attachBusinessUnits(businessUnitNames: string[]): void {
     this.selectAttachmentScope('business-unit');
     this.selectAvailableItems('business-unit', businessUnitNames);
     this.submitForm();
   }
 
-  /**
-   * Attach company users manually by selection
-   */
   attachCompanyUsers(companyUserNames: string[]): void {
     this.selectAttachmentScope('company-user');
     this.selectAvailableItems('company-user', companyUserNames);
     this.submitForm();
   }
 
-  /**
-   * Attach companies manually by selection
-   */
   attachCompanies(companyNames: string[]): void {
     this.selectAttachmentScope('company');
     this.selectAvailableItems('company', companyNames);
     this.submitForm();
   }
 
-  /**
-   * Attach assets via CSV import
-   */
   attachAssetsViaCsv(csvFileName: string): void {
     this.selectAttachmentScope('asset');
     this.uploadCsvFile('asset', csvFileName);
     this.submitForm();
   }
 
-  /**
-   * Detach assets by selecting them in assigned table
-   */
   detachAssets(assetNames: string[]): void {
     this.selectAttachmentScope('asset');
     this.selectAssignedItems('asset', assetNames);
     this.submitForm();
   }
 
-  /**
-   * Legacy methods for backward compatibility (updated to use new approach)
-   */
   selectCompany(companyName: string): void {
     this.attachCompanies([companyName]);
   }
@@ -208,15 +178,10 @@ export class SspFileManagementAttachPage extends BackofficePage {
     this.selectAttachmentScope('asset');
   }
 
-  /**
-   * Submit the form
-   */
   submitForm(): void {
     cy.get(this.repository.getSaveButtonSelector()).first().click({ force: true });
 
-    cy.get(this.repository.getModalSubmitButtonSelector(), { timeout: 10000 })
-      .should('be.visible')
-      .click({ force: true });
+    cy.get(this.repository.getModalSubmitButtonSelector(), { timeout: 10000 }).click({ force: true });
   }
 
   submitAssetForm(): void {
@@ -233,9 +198,6 @@ export class SspFileManagementAttachPage extends BackofficePage {
     this.verifySuccessMessage();
   }
 
-  /**
-   * Wait for table to load
-   */
   waitForTableToLoad(scope: 'asset' | 'business-unit' | 'company-user' | 'company'): void {
     const tableSelectors = {
       asset: this.repository.getAvailableAssetTableSelector(),

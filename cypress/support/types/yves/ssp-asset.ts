@@ -1,3 +1,5 @@
+import { Customer, SspAsset } from './shared';
+
 export interface SspAssetStaticFixtures {
   asset: SspAsset;
   defaultPassword: string;
@@ -26,26 +28,6 @@ export interface SspAssetDynamicFixtures {
   product1: Product;
   product2: Product;
 }
-
-export interface SspAsset {
-  reference: string;
-  name: string;
-  note?: string;
-}
-
-export interface Customer {
-  email: string;
-  first_name: string;
-  last_name: string;
-}
-
-export interface SspAsset {
-  reference: string;
-  name: string;
-  serial_number: string;
-  image: string;
-}
-
 export interface CompanyUser {
   id_company_user: number;
   customer: Customer;

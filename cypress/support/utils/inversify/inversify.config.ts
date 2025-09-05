@@ -165,7 +165,6 @@ import { B2cUserMultiFactorAuthRepository } from '../../pages/backoffice/multi-f
 import { B2bUserMultiFactorAuthRepository } from '../../pages/backoffice/multi-factor-auth/repositories/b2b-user-multi-factor-auth-repository';
 import { B2cMpUserMultiFactorAuthRepository } from '../../pages/backoffice/multi-factor-auth/repositories/b2c-mp-user-multi-factor-auth-repository';
 import { B2bMpUserMultiFactorAuthRepository } from '../../pages/backoffice/multi-factor-auth/repositories/b2b-mp-user-multi-factor-auth-repository';
-import { B2bMpSspAssetRepository } from '../../pages/yves/ssp-asset/repositories/b2b-mp-ssp-asset-repository';
 import { B2bSspAssetRepository } from '../../pages/yves/ssp-asset/repositories/b2b-ssp-asset-repository';
 import { SuiteSspDashboardManagementRepository } from '../../pages/yves/ssp-dashboard-management/repositories/suite-ssp-dashboard-management-repository';
 import { B2bMpSspDashboardManagementRepository } from '../../pages/yves/ssp-dashboard-management/repositories/b2b-mp-ssp-dashboard-management-repository';
@@ -345,7 +344,6 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.ManageCompanyRoleUserRepository]: B2bMpManageCompanyRoleUserRepository,
   [REPOSITORIES.CompanyRoleIndexRepository]: B2bMpCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: B2bMpCompanyRoleCreateRepository,
-  [REPOSITORIES.SspAssetRepository]: B2bMpSspAssetRepository,
   [REPOSITORIES.SspInquiryRepository]: B2bMpSspInquiryRepository,
   [REPOSITORIES.CustomerDeleteRepository]: B2bMpCustomerDeleteRepository,
   [REPOSITORIES.CustomerProfileRepository]: B2bMpCustomerProfileRepository,
