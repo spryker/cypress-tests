@@ -126,6 +126,10 @@ export class B2bSspAssetRepository implements SspAssetRepository {
     return cy.get('[data-qa="ssp-asset-services"]');
   }
 
+  getSspAssetSparePartsButton(): Cypress.Chainable {
+    return cy.get('[data-qa="ssp-asset-spare-parts"]');
+  }
+
   getSspAssetInquiriresTable(): Cypress.Chainable {
     return cy.get('[data-qa="ssp-asset-inquiries-table"] [data-qa*="ssp-inquiry-table"]');
   }
