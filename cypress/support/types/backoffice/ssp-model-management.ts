@@ -6,7 +6,13 @@ export interface SspModelManagementStaticFixtures {
     code: string;
     image?: string;
   };
+  sspModelEdit: {
+    code: string;
+  };
 }
 export interface SspModelManagementDynamicFixtures {
   rootUser: User;
+  sspModel: {
+    id_ssp_model: number;
+  };
 }
