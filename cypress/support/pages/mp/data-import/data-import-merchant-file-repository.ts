@@ -9,7 +9,7 @@ export class DataImportMerchantFileRepository {
   }
 
   getTableSearchInput(): Cypress.Chainable {
-    return cy.get('mp-data-imports-table').find('spy-input input');
+    return cy.get('.spy-table-search-feature input[type="text"]');
   }
 
   getEntityTypeSelect(): Cypress.Chainable {

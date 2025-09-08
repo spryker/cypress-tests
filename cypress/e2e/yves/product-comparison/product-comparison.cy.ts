@@ -77,7 +77,7 @@ import { CatalogPage, ProductPage, ProductComparisonPage } from '@pages/yves';
       productPage.toggleProductComparisonList();
       cy.contains(productPage.getRemoveFromComparisonListSuccessMessage());
 
-      cy.get(productComparisonPage.getComparisonPageNavigationLinkSelector()).click({ force: true });
+      cy.get(productComparisonPage.getComparisonPageNavigationLinkSelector()).click({ force: true, multiple: true });
       cy.contains(productComparisonPage.getProductComparisonListIsEmptyMessage());
     });
 
