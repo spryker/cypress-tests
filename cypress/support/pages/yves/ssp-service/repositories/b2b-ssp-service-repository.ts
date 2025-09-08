@@ -97,7 +97,9 @@ export class B2bSspServiceRepository implements SspServiceRepository {
   }
 
   getServiceCancelButton(): Chainable<JQuery<HTMLElement>> {
-    return cy.get('button[data-qa="cancel-service-button"]') as unknown as Chainable<JQuery<HTMLElement>>;
+    cy.get('button[data-qa="cancel-service-popup"]').first().click();
+
+    return cy.get('.main-popup--open button[data-qa="cancel-service-button"]') as unknown as Chainable<JQuery<HTMLElement>>;
   }
 
   getSspServicePageTitle(): Cypress.Chainable {
