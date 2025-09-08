@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
-import { SspModelAddPage } from '@pages/backoffice/';
+import { SspModelAddPage, SspModelUpdatePage, SspModelViewPage } from '@pages/backoffice/';
 import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } from '@interfaces/backoffice';
 
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
@@ -9,6 +9,8 @@ import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } f
   () => {
     const userLoginScenario = container.get(UserLoginScenario);
     const sspModelAddPage = container.get(SspModelAddPage);
+    const sspModelUpdatePage = container.get(SspModelUpdatePage);
+    const sspModelViewPage = container.get(SspModelViewPage);
 
     let staticFixtures: SspModelManagementStaticFixtures;
     let dynamicFixtures: SspModelManagementDynamicFixtures;
@@ -36,6 +38,34 @@ import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } f
       sspModelAddPage.submitForm();
 
       sspModelAddPage.verifySuccessMessage();
+    });
+
+    it('should be able to edit a model and persist changes', () => {
+      sspModelUpdatePage.visit({
+        qs: {
+          'id-ssp-model': dynamicFixtures.sspModel.id_ssp_model,
+        },
+      });
+
+      sspModelUpdatePage.fillSspModelForm({
+        code: staticFixtures.sspModelEdit.code,
+      });
+
+      sspModelUpdatePage.submitForm();
+
+      sspModelUpdatePage.verifySuccessMessage();
+
+      sspModelViewPage.visit({
+        qs: {
+          'id-ssp-model': dynamicFixtures.sspModel.id_ssp_model,
+        },
+      });
+
+      sspModelViewPage.assertPageLocation();
+
+      sspModelViewPage.verifySspModel({
+        code: staticFixtures.sspModelEdit.code,
+      });
     });
   }
 );

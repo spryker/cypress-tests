@@ -17,6 +17,12 @@
           "type": "helper",
           "name": "addUserToGroup",
           "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveSspModel",
+          "key": "sspModel",
+          "arguments": []
         }
       ]
     }

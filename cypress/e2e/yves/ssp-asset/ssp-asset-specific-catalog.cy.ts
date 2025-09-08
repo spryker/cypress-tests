@@ -3,7 +3,7 @@ import { SspAssetDetailPage, CatalogPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 import { SspAssetSpecificCatalogStaticFixtures, SspAssetSpecificCatalogDynamicFixtures } from '@interfaces/yves';
 
-(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+(['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp asset specific catalog',
   { tags: ['@yves', '@ssp-asset', '@ssp', '@sspAssetManagement'] },
   (): void => {

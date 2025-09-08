@@ -4,5 +4,8 @@
     "name": "Sample Model Name",
     "code": "sample-model-code",
     "image": "suite/backoffice/ssp-model-management/files/model_image.png"
+  },
+  "sspModelEdit": {
+    "code": "sample-model-code-edit"
   }
 }
