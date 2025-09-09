@@ -54,6 +54,10 @@ export class ProductManagementListPage extends BackofficePage {
           cy.wrap($productRow).find(this.repository.getEditButtonSelector()).as('editButton');
           cy.get('@editButton').click();
         }
+        if (params.action === ActionEnum.approve) {
+          cy.wrap($productRow).find(this.repository.getApproveButtonSelector()).as('approveButton');
+          cy.get('@approveButton').click();
+        }
         if (params.action === ActionEnum.deny) {
           cy.wrap($productRow).find(this.repository.getDenyButtonSelector()).as('denyButton');
           cy.get('@denyButton').click();

@@ -8,6 +8,7 @@ export class ProductManagementListRepository {
   getSearchSelector = (): string => '[type="search"]';
   getEditButtonSelector = (): string => 'a:contains("Edit")';
   getStoreCellSelector = (): string => 'td[class*="column-store_relation"]';
+  getApproveButtonSelector = (): string => 'a:contains("Approve")';
   getDenyButtonSelector = (): string => 'a:contains("Deny")';
   getFilterStatusSelect = (): Cypress.Chainable => cy.get('#select2-table_filter_form_status-container');
   getFilterStoresSelect = (): Cypress.Chainable => cy.get('#table_filter_form_stores').next();
