@@ -17,6 +17,8 @@ describeIfDynamicStoreEnabled('cms page search dms', { tags: ['@api', '@cms', '@
   });
 
   it('should be able to see the cms page for new store', (): void => {
+    throw new Error("test must fail here");
+
     cy.request({
       method: 'GET',
       url: Cypress.env().glueUrl + '/cms-pages',
