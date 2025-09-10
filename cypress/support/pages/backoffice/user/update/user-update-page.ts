@@ -16,6 +16,11 @@ export class UserUpdatePage extends BackofficePage {
     this.repository.getUpdateUserButton().click();
   };
 
+  uncheckMerchantAgentCheckbox = (): void => {
+    this.getAgentMerchantCheckbox().uncheck();
+    this.repository.getUpdateUserButton().click();
+  };
+
   getAgentMerchantCheckbox = (): Cypress.Chainable => {
     return this.repository.getAgentMerchantCheckbox();
   };
