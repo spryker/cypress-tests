@@ -97,10 +97,12 @@ We dynamically generated a new test to display this failure.
 When you encounter a "URI malformed" error in Cypress, it NOT always indicates that there is an issue with the URL used in your tests.
 
 To resolve this error, you can try the following steps:
+
 - Ensure "Node.js" version is **22.16.0** or higher.
 - Ensue "npm" version is **11.6.0** or higher.
 - If you changed version of Node or npm, delete the `node_modules` folder and reinstall dependencies. (`rm -rf node_modules/ && npm install`)
 - Clear Cypress App Data following [this guide](https://docs.cypress.io/app/references/troubleshooting#Clear-App-Data).
 
 ### Other issues
+
 If you encounter other issues not described here, refer to the [Troubleshooting](https://docs.cypress.io/app/references/troubleshooting) for common problems and solutions.
