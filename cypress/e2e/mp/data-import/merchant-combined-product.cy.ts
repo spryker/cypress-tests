@@ -32,7 +32,10 @@ import { DataImportMerchantFilePage } from '@pages/mp';
 
     it('merchant can import a combined product and access its PDP', (): void => {
       const fileName = 'one_merchant_combined_product.csv';
-      const abstractSku = uploadProductDataImportMerchantFileScenario.execute({ importerType: 'Product', fileName: fileName });
+      const abstractSku = uploadProductDataImportMerchantFileScenario.execute({
+        importerType: 'Product',
+        fileName: fileName,
+      });
 
       dataImportMerchantFilePage.visit();
       dataImportMerchantFilePage.assertFileStatus(fileName, 'Successful');
