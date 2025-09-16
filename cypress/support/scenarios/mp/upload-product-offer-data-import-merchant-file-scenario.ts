@@ -1,6 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import { DataImportMerchantFilePage } from '@pages/mp';
+import { Merchant, Stock } from '../../types/mp/shared';
 
 @injectable()
 @autoWired
@@ -11,11 +12,14 @@ export class UploadProductOfferDataImportMerchantFileScenario {
     const repositoryId = Cypress.env('repositoryId');
     const uniqueIdentifier = String(Date.now());
     const productOfferReference = 'OFFER-' + uniqueIdentifier;
+    const warehouseName: string | null = getDefaultWarehouseName(params);
 
     cy.readFile('cypress/fixtures/' + repositoryId + `/mp/data-import/${params.fileName}`).then((content) => {
-      content = content
-        .replaceAll('{UNIQUE}', uniqueIdentifier)
-        .replaceAll('{WAREHOUSE_NAME}', params.warehouseName || '');
+      content = content.replaceAll('{UNIQUE}', uniqueIdentifier);
+
+      if (warehouseName) {
+        content = content.replaceAll('{WAREHOUSE_NAME}', warehouseName);
+      }
 
       const file = {
         fileName: params.fileName,
@@ -25,7 +29,7 @@ export class UploadProductOfferDataImportMerchantFileScenario {
 
       this.dataImportMerchantFilePage.visit();
       this.dataImportMerchantFilePage.openFormDrawer();
-      this.dataImportMerchantFilePage.importFile(params.importerType, file);
+      this.dataImportMerchantFilePage.importFile('Product offer', file);
 
       this.dataImportMerchantFilePage.assertImportStartedNotification();
       this.dataImportMerchantFilePage.assertFileStatus(<string>params.fileName, 'Pending');
@@ -37,8 +41,21 @@ export class UploadProductOfferDataImportMerchantFileScenario {
   };
 }
 
+function getDefaultWarehouseName(params: ExecuteParams): string | null {
+  if (params.merchant === undefined) {
+    return null;
+  }
+
+  const merchantFirstStock: Stock | undefined = params.merchant.stocks.shift();
+
+  if (merchantFirstStock === undefined) {
+    return null;
+  }
+
+  return merchantFirstStock.name;
+}
+
 interface ExecuteParams {
   fileName: string;
-  importerType: string;
-  warehouseName?: string;
+  merchant?: Merchant;
 }

@@ -1,6 +1,7 @@
 export interface Stock {
-  idStock: number;
+  id_stock: number;
   name: string;
-  isActive: boolean;
+  is_active: boolean;
   uuid: string;
+  is_default: boolean;
 }
