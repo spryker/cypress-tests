@@ -17,4 +17,5 @@ export interface ProductRepository {
   getServicePointListItem(servicePointName: string): Cypress.Chainable;
   getSelectedServicePointName(): Cypress.Chainable;
   getCloseServicePointPopupButton(): Cypress.Chainable;
+  getSspAssetNameBlock(): Cypress.Chainable;
 }
