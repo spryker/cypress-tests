@@ -37,7 +37,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
     });
 
     it('merchant can import a product offer and access its PDP', (): void => {
-      const fileName = 'one_merchant_product_offer.csv';
+      const fileName = 'one_merchant_combined_product_offer.csv';
       const productOfferReference = uploadProductOfferDataImportMerchantFileScenario.execute({
         fileName,
         merchant: dynamicFixtures.merchant,
@@ -60,7 +60,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
     });
 
     it('merchant will see failed data import status when uploaded with with invalid data', () => {
-      const fileName = 'failed_merchant_product_offer.csv';
+      const fileName = 'failed_merchant_combined_product_offer.csv';
       uploadProductOfferDataImportMerchantFileScenario.execute({
         fileName: fileName,
       });
