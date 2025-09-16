@@ -38,26 +38,6 @@
         },
         {
           "type": "helper",
-          "name": "haveStock",
-          "key": "stock",
-          "arguments": [
-            {
-              "isActive": true
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveMerchantStock",
-          "arguments": [
-            {
-              "idStock": "#stock.id_stock",
-              "idMerchant": "#merchant.id_merchant"
-            }
-          ]
-        },
-        {
-          "type": "helper",
           "name": "haveMerchantUserWithAclEntities",
           "arguments": ["#merchant", "#merchantUser"]
         },
