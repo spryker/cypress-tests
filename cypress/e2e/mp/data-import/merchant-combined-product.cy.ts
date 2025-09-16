@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { MerchantUserLoginScenario, UploadDataImportMerchantFileScenario } from '@scenarios/mp';
+import { MerchantUserLoginScenario, UploadProductDataImportMerchantFileScenario } from '@scenarios/mp';
 import { ActivateProductScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { MerchantCombinedProductDynamicFixtures, MerchantCombinedProductStaticFixtures } from '@interfaces/mp';
 import { CatalogPage } from '@pages/yves';
@@ -11,7 +11,7 @@ import { DataImportMerchantFilePage } from '@pages/mp';
   (): void => {
     const dataImportMerchantFilePage = container.get(DataImportMerchantFilePage);
     const catalogPage = container.get(CatalogPage);
-    const uploadDataImportMerchantFileScenario = container.get(UploadDataImportMerchantFileScenario);
+    const uploadProductDataImportMerchantFileScenario = container.get(UploadProductDataImportMerchantFileScenario);
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
     const userLoginScenario = container.get(UserLoginScenario);
     const activateProductScenario = container.get(ActivateProductScenario);
@@ -32,7 +32,7 @@ import { DataImportMerchantFilePage } from '@pages/mp';
 
     it('merchant can import a combined product and access its PDP', (): void => {
       const fileName = 'one_merchant_combined_product.csv';
-      const abstractSku = uploadDataImportMerchantFileScenario.execute({ importerType: 'Product', fileName: fileName });
+      const abstractSku = uploadProductDataImportMerchantFileScenario.execute({ importerType: 'Product', fileName: fileName });
 
       dataImportMerchantFilePage.visit();
       dataImportMerchantFilePage.assertFileStatus(fileName, 'Successful');
@@ -51,7 +51,7 @@ import { DataImportMerchantFilePage } from '@pages/mp';
 
     it('merchant will see failed data import status when uploaded with with invalid data', () => {
       const fileName = 'failed_merchant_combined_product.csv';
-      uploadDataImportMerchantFileScenario.execute({ importerType: 'Product', fileName: fileName });
+      uploadProductDataImportMerchantFileScenario.execute({ importerType: 'Product', fileName: fileName });
 
       dataImportMerchantFilePage.visit();
       dataImportMerchantFilePage.assertFileStatus(fileName, 'Failed');
