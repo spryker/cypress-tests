@@ -4,12 +4,6 @@
     "attributes": {
       "operations": [
         {
-          "type": "transfer",
-          "name": "LocaleTransfer",
-          "key": "locale",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
-        },
-        {
           "type": "helper",
           "name": "haveCompany",
           "key": "company",
@@ -63,105 +57,69 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer",
           "arguments": [
             {
-              "locale": "#locale",
+              "locale_name": "en_US",
               "password": "change123"
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer2",
           "arguments": [
             {
-              "locale": "#locale",
+              "locale_name": "en_US",
               "password": "change123"
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer3",
           "arguments": [
             {
-              "locale": "#locale",
+              "locale_name": "en_US",
               "password": "change123"
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer4",
           "arguments": [
             {
-              "locale": "#locale",
+              "locale_name": "en_US",
               "password": "change123"
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer5",
           "arguments": [
             {
-              "locale": "#locale",
+              "locale_name": "en_US",
               "password": "change123"
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer6",
           "arguments": [
             {
-              "locale": "#locale",
+              "locale_name": "en_US",
               "password": "change123"
             }
           ]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomer",
-          "arguments": ["#customer"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomer2",
-          "arguments": ["#customer2"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomer3",
-          "arguments": ["#customer3"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomer4",
-          "arguments": ["#customer4"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomer5",
-          "arguments": ["#customer5"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomer6",
-          "arguments": ["#customer6"]
         },
         {
           "type": "helper",

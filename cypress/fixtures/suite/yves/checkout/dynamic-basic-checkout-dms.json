@@ -28,7 +28,7 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer",
           "arguments": [{ "locale": "#locale", "password": "change123" }]
         },
@@ -37,12 +37,6 @@
           "name": "haveCustomerAddress",
           "key": "address",
           "arguments": [{ "fkCustomer": "#customer.id_customer", "fkCountry": "#country.id_country" }]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomer",
-          "arguments": ["#customer"]
         },
         {
           "type": "helper",
