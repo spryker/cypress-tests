@@ -1,0 +1,78 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "builder",
+          "name": "MerchantProfileBuilder",
+          "key": "merchantProfileTransfer"
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 1, "name": "DE" }
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchant",
+          "key": "merchant",
+          "arguments": [
+            {
+              "merchantProfile": "#merchantProfileTransfer",
+              "isActive": true,
+              "status": "approved",
+              "storeRelation": {
+                "idStores": ["#store.id_store"]
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveStock",
+          "key": "stock",
+          "arguments": [
+            {
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantStock",
+          "arguments": [
+            {
+              "idStock": "#stock.id_stock",
+              "idMerchant": "#merchant.id_merchant"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#merchant", "#merchantUser"]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        }
+      ]
+    }
+  }
+}
