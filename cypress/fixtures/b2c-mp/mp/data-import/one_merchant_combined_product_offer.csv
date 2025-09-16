@@ -1,0 +1,2 @@
+offer_reference,concrete_sku,is_active,store_relations,stock.{WAREHOUSE_NAME}.quantity
+OFFER-{UNIQUE},035_17360369,1,DE,10
