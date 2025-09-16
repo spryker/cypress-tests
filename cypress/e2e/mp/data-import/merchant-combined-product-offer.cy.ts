@@ -58,5 +58,15 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       catalogPage.searchProductFromSuggestions({ query: staticFixtures.productSku });
       productPage.getSoldByProductOffers().find(`input[value="${productOfferReference}"]`).should('exist');
     });
+
+    it('merchant will see failed data import status when uploaded with with invalid data', () => {
+      const fileName = 'failed_merchant_product_offer.csv';
+      uploadProductOfferDataImportMerchantFileScenario.execute({
+        fileName: fileName,
+      });
+
+      dataImportMerchantFilePage.visit();
+      dataImportMerchantFilePage.assertFileStatus(fileName, 'Failed');
+    });
   }
 );
