@@ -47,11 +47,11 @@ export class UploadProductOfferDataImportMerchantFileScenario {
 }
 
 function getDefaultWarehouseName(params: ExecuteParams): string | null {
-  if (params.merchant === undefined) {
+  if (!params?.merchant) {
     return null;
   }
 
-  const merchantFirstStock: Stock | undefined = params.merchant.stocks.shift();
+  const merchantFirstStock: Stock | undefined = params?.merchant?.stocks.shift();
 
   if (merchantFirstStock === undefined) {
     return null;
