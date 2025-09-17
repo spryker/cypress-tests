@@ -1,7 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import { DataImportMerchantFilePage } from '@pages/mp';
-import { Merchant, Stock } from '../../types/mp/shared';
+import { Merchant, ProductConcrete, Stock } from '../../types/mp/shared';
 
 @injectable()
 @autoWired
@@ -13,9 +13,14 @@ export class UploadProductOfferDataImportMerchantFileScenario {
     const uniqueIdentifier = String(Date.now());
     const productOfferReference = 'OFFER-' + uniqueIdentifier;
     const warehouseName: string | null = getDefaultWarehouseName(params);
+    const productSku: string | null = getProductSku(params);
 
     cy.readFile('cypress/fixtures/' + repositoryId + `/mp/data-import/${params.fileName}`).then((content) => {
       content = content.replaceAll('{UNIQUE}', uniqueIdentifier);
+
+      if (productSku) {
+        content = content.replaceAll('{PRODUCT_SKU}', productSku);
+      }
 
       if (warehouseName) {
         content = content.replaceAll('{WAREHOUSE_NAME}', warehouseName);
@@ -55,7 +60,16 @@ function getDefaultWarehouseName(params: ExecuteParams): string | null {
   return merchantFirstStock.name;
 }
 
+function getProductSku(params: ExecuteParams): string | null {
+  if (params.product === undefined) {
+    return null;
+  }
+
+  return params?.product.sku;
+}
+
 interface ExecuteParams {
   fileName: string;
   merchant?: Merchant;
+  product?: ProductConcrete;
 }

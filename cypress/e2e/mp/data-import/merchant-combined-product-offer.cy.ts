@@ -41,6 +41,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
       const productOfferReference = uploadProductOfferDataImportMerchantFileScenario.execute({
         fileName,
         merchant: dynamicFixtures.merchant,
+        product: dynamicFixtures.product,
       });
 
       dataImportMerchantFilePage.visit();
@@ -55,14 +56,15 @@ import { CatalogPage, ProductPage } from '@pages/yves';
         shouldTriggerPublishAndSync: true,
       });
       catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: staticFixtures.productSku });
-      productPage.getSoldByProductOffers().find(`input[value="${productOfferReference}"]`).should('exist');
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
+      productPage.getProductOfferRadio({ productOfferReference }).should('exist');
     });
 
     it('merchant will see failed data import status when uploaded with with invalid data', () => {
       const fileName = 'failed_merchant_combined_product_offer.csv';
       uploadProductOfferDataImportMerchantFileScenario.execute({
         fileName: fileName,
+        product: dynamicFixtures.product,
       });
 
       dataImportMerchantFilePage.visit();

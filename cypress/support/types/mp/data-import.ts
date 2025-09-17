@@ -1,4 +1,4 @@
-import { User, Merchant } from './shared';
+import { User, Merchant, ProductConcrete } from './shared';
 
 export interface MerchantCombinedProductDynamicFixtures {
   rootUser: User;
@@ -9,6 +9,7 @@ export interface MerchantCombinedProductOfferDynamicFixtures {
   rootUser: User;
   merchantUser: User;
   merchant: Merchant;
+  product: ProductConcrete;
 }
 
 export interface MerchantCombinedProductStaticFixtures {
@@ -17,5 +18,4 @@ export interface MerchantCombinedProductStaticFixtures {
 
 export interface MerchantCombinedProductOfferStaticFixtures {
   defaultPassword: string;
-  productSku: string;
 }
