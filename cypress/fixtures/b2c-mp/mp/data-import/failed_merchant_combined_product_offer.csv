@@ -1,2 +1,2 @@
 offer_reference,concrete_sku,is_active,store_relations
-OFFER-{UNIQUE},035_17360369,0,NON_EXISTING_STORE
+OFFER-{UNIQUE},{PRODUCT_SKU},0,NON_EXISTING_STORE
