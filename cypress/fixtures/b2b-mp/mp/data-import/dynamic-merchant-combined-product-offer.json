@@ -5,6 +5,37 @@
       "synchronize": true,
       "operations": [
         {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeEN",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeDE",
+          "arguments": { "id_locale": 46, "locale_name": "de_DE" }
+        },
+        {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "localizedAttributes"
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product",
+          "arguments": [
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                { "locale": "#localeEN", "name": "#localizedAttributes.name" },
+                { "locale": "#localeDE", "name": "#localizedAttributes.name" }
+              ]
+            }
+          ]
+        },
+        {
           "type": "helper",
           "name": "haveUser",
           "key": "merchantUser",
