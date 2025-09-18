@@ -97,6 +97,8 @@ export class ProductPage extends YvesPage {
   assertServicePointIsSelected(servicePointName: string): void {
     this.repository.getSelectedServicePointName().should('contain', servicePointName);
   }
+
+  getSspAssetNameBlock = (): Cypress.Chainable => this.repository.getSspAssetNameBlock();
 }
 
 interface SelectSoldByProductOfferParams {
