@@ -97,6 +97,13 @@ import { UserLoginScenario } from '@scenarios/backoffice';
     it('backoffice user should be able to modify existing user by setting merchant agent permission', (): void => {
       backofficeUserIndexPage.visit();
       backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.rootUser.username });
+
+      backofficeUserUpdatePage.getAgentMerchantCheckbox().then(($checkbox) => {
+        if ($checkbox.is(':checked')) {
+          backofficeUserUpdatePage.uncheckMerchantAgentCheckbox();
+        }
+      });
+
       backofficeUserUpdatePage.getAgentMerchantCheckbox().should('not.be.checked');
 
       backofficeUserUpdatePage.checkMerchantAgentCheckbox();
