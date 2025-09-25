@@ -111,3 +111,6 @@ temp
 # Cypress files
 cypress/screenshots/*
 cypress/downloads/*
+
+# Multiple stores executor results
+tools/scripts/multi-store-runner/results/*
