@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
-import { SspModelAddPage, SspModelUpdatePage, SspModelViewPage } from '@pages/backoffice/';
+import { SspModelAddPage, SspModelUpdatePage, SspModelViewPage, SspModelListPage } from '@pages/backoffice/';
 import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } from '@interfaces/backoffice';
 
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
@@ -11,6 +11,7 @@ import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } f
     const sspModelAddPage = container.get(SspModelAddPage);
     const sspModelUpdatePage = container.get(SspModelUpdatePage);
     const sspModelViewPage = container.get(SspModelViewPage);
+    const sspModelListPage = container.get(SspModelListPage);
 
     let staticFixtures: SspModelManagementStaticFixtures;
     let dynamicFixtures: SspModelManagementDynamicFixtures;
@@ -27,7 +28,11 @@ import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } f
     });
 
     it('should be able to create a new ssp model', () => {
-      sspModelAddPage.visit();
+      sspModelListPage.visit();
+
+      sspModelListPage.clickCreateButton();
+
+      sspModelAddPage.assertPageLocation();
 
       sspModelAddPage.fillSspModelForm({
         name: staticFixtures.sspModel.name,
@@ -38,6 +43,13 @@ import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } f
       sspModelAddPage.submitForm();
 
       sspModelAddPage.verifySuccessMessage();
+
+      sspModelListPage.visit();
+
+      sspModelListPage.verifyModelInTable({
+        name: staticFixtures.sspModel.name,
+        code: staticFixtures.sspModel.code,
+      });
     });
 
     it('should be able to edit a model and persist changes', () => {
