@@ -11,15 +11,18 @@ chmod +x cypress-multistore-runner.sh
 ```
 
 ### Environments
- - A working Spryker demoshop setup:
-   - All demoshops are cloned in the same parent directory.
-   - Environments successfully built.
-   - Queue messages are successfully consumed with empty queues.
- - All environments are initially **STOPPED** (docker/sdk stop) to mitigate unexpected issues.
+
+- A working Spryker demoshop setup:
+  - All demoshops are cloned in the same parent directory.
+  - Environments successfully built.
+  - Queue messages are successfully consumed with empty queues.
+- All environments are initially **STOPPED** (docker/sdk stop) to mitigate unexpected issues.
 
 ### Directory structure
+
 Out of the box the script expects demoshop directories to be named after repositories.
 Entire directory structure is expected to look like this:
+
 ```
 {parent_directory}/
 ├── suite-nonsplit/
@@ -30,11 +33,9 @@ Entire directory structure is expected to look like this:
 └── b2c-demo-shop/
 ```
 
-
 ## Usage
 
 The script writes test results to `./results/`.
-
 
 ### Basic
 
@@ -43,6 +44,7 @@ Run Cypress tests for all shops:
 ```bash
 ./cypress-multistore-runner.sh
 ```
+
 ### With Namespace
 
 Run Cypress tests for all shops using a specific namespace (e.g., yves):
@@ -68,6 +70,7 @@ Run tests for specific demo shops by ENV_REPOSITORY_ID (`suite`, `b2b-mp`, `b2b`
 ```
 
 ### Combine Namespace, Tag, and Shops
+
 ```bash
 ./cypress-multistore-runner.sh --namespace=yves --tag=@company-user --shops=b2c-mp,b2c
 ```
@@ -85,12 +88,15 @@ For each selected shop:
 The script prints logs to the console, including whether each shop’s tests passed or failed.
 
 ## Parameters
+
 All parameters are optional and can be combined:
+
 - `--namespace`- one of: backoffice, api, mp, yves, ssp. Appends to Cypress run command.
 - `--tag` - any tag used in Cypress tests. Filters tests using --env grep=@tag.
- - `--shops` - comma-separated list of ENV_REPOSITORY_ID values. Only runs tests for these shops.
+- `--shops` - comma-separated list of ENV_REPOSITORY_ID values. Only runs tests for these shops.
 
 ## Notes
+
 - Script must be run from the `multi-store-runner/` directory.
 - `.env` updates only modify the first line with ENV_REPOSITORY_ID, so it **MUST** be defined on the first line. After execution is finished, it's not set back to original value.
 - `SSP` namespace tests for B2B require additional flag `ENV_IS_SSP_ENABLED` in `.env` which is not handled by the script and must be done manually.
