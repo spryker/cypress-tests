@@ -21,6 +21,9 @@ export class B2cMpProductRepository implements ProductRepository {
     cy.contains('[data-qa="component radio shipment_type_uuid"]', shipmentTypeName).find('input');
   getSelectServicePointButton = (): Cypress.Chainable =>
     cy.get('[data-qa="component ssp-service-point-selector"] button');
+  getSelectAssetButton = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-trigger"]');
+  getSelectAssetPopup = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-results"]', { timeout: 10000 });
+  getAssetOptions = (): Cypress.Chainable => cy.get('[data-qa="asset-option-trigger"');
   getServicePointSearchInput = (): Cypress.Chainable => cy.get('[data-qa="component ssp-service-point-finder"] input');
   getServicePointListItem = (servicePointName: string): Cypress.Chainable =>
     cy.contains('[data-qa="component service-point"]', servicePointName).find('button');

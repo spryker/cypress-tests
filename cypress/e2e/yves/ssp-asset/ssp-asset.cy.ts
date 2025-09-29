@@ -5,6 +5,11 @@ import {
   SspAssetDetailPage,
   SspAssetListPage,
   CompanyUserSelectPage,
+  CatalogPage,
+  ProductPage,
+  CustomerOverviewPage,
+  CartPage,
+  OrderDetailsPage,
 } from '@pages/yves';
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
@@ -17,9 +22,14 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
     const assetEditPage = container.get(SspAssetEditPage);
     const assetDetailPage = container.get(SspAssetDetailPage);
     const assetListPage = container.get(SspAssetListPage);
+    const cartPage = container.get(CartPage);
+    const catalogPage = container.get(CatalogPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
+    const customerOverviewPage = container.get(CustomerOverviewPage);
     const checkoutScenario = container.get(CheckoutScenario);
     const companyUserSelectPage = container.get(CompanyUserSelectPage);
+    const orderDetailsPage = container.get(OrderDetailsPage);
+    const productPage = container.get(ProductPage);
 
     let staticFixtures: SspAssetStaticFixtures;
     let dynamicFixtures: SspAssetDynamicFixtures;
@@ -345,6 +355,36 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
       assetDetailPage.getUnassignButton().click();
 
       assetListPage.assertTableData([dynamicFixtures.assetBU1C1]);
+    });
+
+    it('customer should be able to select asset on product detail page and asset details are available on checkout summary and order history', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer3.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product1.sku });
+      productPage.selectAsset();
+      productPage.addToCart();
+
+      cartPage.getCartItemSummary(0).next().contains(dynamicFixtures.assetBU1C1BU2C1BU1C2.name);
+      cartPage.getCartItemSummary(0).next().contains('Compatible');
+
+      cartPage.visit();
+      cartPage.startCheckout();
+
+      checkoutScenario.execute({
+        paymentMethod: 'dummyPaymentInvoice',
+        idCustomerAddress: 0,
+      });
+
+      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+
+      customerOverviewPage.viewLastPlacedOrder();
+
+      orderDetailsPage.containsOrderState(dynamicFixtures.assetBU1C1BU2C1BU1C2.name);
     });
 
     it('should not be able to view assets without permission', () => {
