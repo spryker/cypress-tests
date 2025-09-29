@@ -242,7 +242,7 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     sspFileManagementListPage.filterByBusinessEntity(dynamicFixtures.businessUnit2C1.uuid.toString());
     sspFileManagementListPage.filterBySspAssetEntity('none');
     sspFileManagementListPage.applyFilters();
-    sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file1.file_name);
+    sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
     sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
     sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file3.file_name);
     sspFileManagementListPage.assertFileNotExists(dynamicFixtures.fileSspAsset1.file_name);

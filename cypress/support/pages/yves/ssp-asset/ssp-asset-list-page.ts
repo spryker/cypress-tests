@@ -59,10 +59,6 @@ export class SspAssetListPage extends YvesPage {
     return this.repository.getSspAssetFiltersSubmitButton();
   }
 
-  getAccessTableFilterByBusinessUnitValue(): string {
-    return 'filterByBusinessUnit';
-  }
-
   getAccessTableFilterByCompanyValue(): string {
     return 'filterByCompany';
   }

@@ -316,6 +316,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
       sspInquiryListPage.visit();
       sspInquiryListPage.assertPageLocation();
+      sspInquiryListPage.submitSspInquirySearchForm();
       sspInquiryListPage.assetPageHasNoSspInquiries();
     });
 
