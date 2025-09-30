@@ -31,4 +31,8 @@ export class SspInquiryListPage extends YvesPage {
   getFirstRowReference(): string {
     return this.repository.getFirstRowReference();
   }
+
+  submitSspInquirySearchForm(): void {
+    this.repository.getSspInquirySearchFormSubmitButton().click();
+  }
 }

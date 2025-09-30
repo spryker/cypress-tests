@@ -228,9 +228,6 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
         assetListPage.openFilters();
       }
 
-      assetListPage
-        .getAccessTableFilterSelect()
-        .select(assetListPage.getAccessTableFilterByBusinessUnitValue(), { force: true });
       assetListPage.getSspAssetFiltersSubmitButton().click();
 
       assetListPage.assertTableData([dynamicFixtures.assetBU1C1BU2C1BU1C2, dynamicFixtures.assetBU1C1]);

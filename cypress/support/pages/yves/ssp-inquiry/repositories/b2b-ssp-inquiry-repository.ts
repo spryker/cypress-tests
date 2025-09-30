@@ -14,6 +14,8 @@ export class B2bSspInquiryRepository implements SspInquiryRepository {
     descriptionTextarea: 'textarea[name="sspInquiryForm[description]"]',
     fileInput: 'input[name="sspInquiryForm[files][]"]',
     submitButton: 'button[type="submit"]',
+    sspInquirySearchForm: 'form[name="sspInquirySearchForm"]',
+    sspInquirySearchFormSubmitButton: '[data-qa="submit-filters"]',
   };
 
   getCreateGeneralSspInquiryButton(): Cypress.Chainable {
@@ -149,5 +151,13 @@ export class B2bSspInquiryRepository implements SspInquiryRepository {
 
   getFileDownloadActionSelector(): string {
     return '[data-qa*="download-button"]';
+  }
+
+  getSspInquirySearchForm(): Cypress.Chainable {
+    return cy.get(this.selectors.sspInquirySearchForm);
+  }
+
+  getSspInquirySearchFormSubmitButton(): Cypress.Chainable {
+    return cy.get(this.selectors.sspInquirySearchFormSubmitButton);
   }
 }

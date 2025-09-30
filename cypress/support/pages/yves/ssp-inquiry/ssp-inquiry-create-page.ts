@@ -21,10 +21,12 @@ export class SspInquiryCreatePage extends YvesPage {
   }
 
   createSspInquiry(params: SspInquiryParams): void {
-    this.repository.getTypeOptions().should('have.length', params.availableTypes.length);
-    params.availableTypes.forEach((type, index) => {
-      this.repository.getTypeOptions().eq(index).should('have.value', type.key);
-    });
+    if (params.availableTypes) {
+      this.repository.getTypeOptions().should('have.length', params.availableTypes.length);
+      params.availableTypes.forEach((type, index) => {
+        this.repository.getTypeOptions().eq(index).should('have.value', type.key);
+      });
+    }
 
     this.repository.getSubjectInput().type(params.subject);
     this.repository.getDescriptionTextarea().type(params.description);
