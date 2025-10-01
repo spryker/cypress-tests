@@ -33,6 +33,6 @@ export class SspInquiryListPage extends YvesPage {
   }
 
   submitSspInquirySearchForm(): void {
-    this.repository.getSspInquirySearchFormSubmitButton().click();
+    this.repository.getSspInquirySearchFormSubmitButton().click({ force: true });
   }
 }
