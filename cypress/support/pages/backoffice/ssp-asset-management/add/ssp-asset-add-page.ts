@@ -75,6 +75,10 @@ export class SspAssetAddPage extends BackofficePage {
     }
   }
 
+  checkCreateSspModelCheckbox(): void {
+    this.repository.getCreateSspModelCheckbox().check();
+  }
+
   submitForm(): void {
     this.repository.getSubmitButton().click();
   }
