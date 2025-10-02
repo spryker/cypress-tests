@@ -33,6 +33,10 @@ export class ProductOfferListPage extends BackofficePage {
     return this.getTableRows().eq(rowIndex).find(this.repository.getViewButtonSelector()).click();
   };
 
+  clickApproveButton = (rowIndex = 0): Cypress.Chainable => {
+    return this.getTableRows().eq(rowIndex).find(this.repository.getApproveButtonSelector()).click();
+  };
+
   getReference = (rowIndex = 0): Cypress.Chainable<string> => {
     return this.getTableRows().eq(rowIndex).find(this.repository.getReferenceColumnSelector()).invoke('text');
   };

@@ -56,6 +56,10 @@ export class ProductPage extends YvesPage {
     return this.repository.getSoldByProductOffers();
   };
 
+  getProductOfferRadio(params: GetProductOfferRadioParams): Cypress.Chainable {
+    return this.repository.getSoldByProductOfferRadios().filter(`[value="${params.productOfferReference}"]`);
+  }
+
   getMerchantRelationRequestLinkAttribute = (): string => {
     return this.repository.getMerchantRelationRequestLinkAttribute();
   };
@@ -117,4 +121,8 @@ interface CreateMerchantRelationRequestParams {
 
 interface AddToCartParams {
   quantity?: number;
+}
+
+interface GetProductOfferRadioParams {
+  productOfferReference: string;
 }

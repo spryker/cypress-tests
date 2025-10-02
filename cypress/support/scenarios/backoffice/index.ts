@@ -23,3 +23,4 @@ export * from './user-mfa-create-scenario';
 export * from './customer-mfa-remove-scenario';
 export * from './deactivate-product-scenario';
 export * from './activate-product-scenario';
+export * from './approve-product-offer-scenario';
