@@ -119,8 +119,6 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
 
-    fileManagerAttachmentAttachPage.selectAttachmentScope('asset');
-
     fileManagerAttachmentAttachPage.uploadCsvFile('asset', 'csv/assets-example.csv');
     fileManagerAttachmentAttachPage.submitForm();
     fileManagerAttachmentAttachPage.verifySuccessMessage();

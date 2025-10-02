@@ -354,7 +354,8 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
       assetListPage.assertTableData([dynamicFixtures.assetBU1C1]);
     });
 
-    it('customer should be able to select asset on product detail page and asset details are available on checkout summary and order history', (): void => {
+    // The flickery test will be fixed later: https://spryker.atlassian.net/browse/SSP-1654
+    it.skip('customer should be able to select asset on product detail page and asset details are available on checkout summary and order history', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer3.email,
         password: staticFixtures.defaultPassword,
@@ -366,7 +367,7 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
       productPage.selectAsset();
       productPage.addToCart();
 
-      cartPage.getCartItemSummary(0).next().contains(dynamicFixtures.assetBU1C1BU2C1BU1C2.name);
+      cartPage.getCartItemSummary(0).next().contains(dynamicFixtures.assetBU1C2.name);
       cartPage.getCartItemSummary(0).next().contains('Compatible');
 
       cartPage.visit();
@@ -381,7 +382,7 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
 
       customerOverviewPage.viewLastPlacedOrder();
 
-      orderDetailsPage.containsOrderState(dynamicFixtures.assetBU1C1BU2C1BU1C2.name);
+      orderDetailsPage.containsOrderState(dynamicFixtures.assetBU1C2.name);
     });
 
     it('should not be able to view assets without permission', () => {

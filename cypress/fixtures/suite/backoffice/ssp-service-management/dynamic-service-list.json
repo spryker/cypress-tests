@@ -182,7 +182,7 @@
             {
               "item": {
                 "sku": "#serviceProduct.sku",
-                "productClasses": ["service"],
+                "productClasses": ["Service"],
                 "scheduledAt": "2025-08-05 15:44:47"
               },
               "customerReference": "#customer.customer_reference",
