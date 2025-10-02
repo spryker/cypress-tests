@@ -17,12 +17,6 @@
         },
         {
           "type": "transfer",
-          "name": "LocaleTransfer",
-          "key": "locale",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
-        },
-        {
-          "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
           "arguments": { "id_store": 1, "name": "DE" }
@@ -34,111 +28,56 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer1",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer2",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer3",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer4",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer5",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer6",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer7",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer8",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer1"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer2"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer3"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer4"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer5"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer6"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer7"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer8"]
-        },
-        {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfile"
-        },
-        {
-          "type": "helper",
-          "name": "haveMerchant",
-          "key": "merchant",
-          "arguments": [
-            {
-              "merchantProfile": "#merchantProfile",
-              "isActive": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
-            }
-          ]
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
         },
         {
           "type": "helper",

@@ -17,41 +17,15 @@
           "arguments": { "id_locale": 46, "locale_name": "de_DE" }
         },
         {
-          "type": "transfer",
-          "name": "StoreTransfer",
-          "key": "store",
-          "arguments": { "id_store": 1, "name": "DE" }
-        },
-        {
-          "type": "array-object",
-          "key": "stores",
-          "arguments": ["#store"]
-        },
-        {
           "type": "helper",
           "name": "haveUser",
           "key": "merchantUser",
           "arguments": [{ "password": "change123" }]
         },
         {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfile"
-        },
-        {
           "type": "helper",
-          "name": "haveMerchant",
-          "key": "merchant",
-          "arguments": [
-            {
-              "merchantProfile": "#merchantProfile",
-              "isActive": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
-            }
-          ]
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
         },
         {
           "type": "helper",

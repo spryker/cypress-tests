@@ -16,18 +16,6 @@
           "arguments": ["#rootUser.id_user", 1]
         },
         {
-          "type": "transfer",
-          "name": "LocaleTransfer",
-          "key": "localeEN",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
-        },
-        {
-          "type": "transfer",
-          "name": "LocaleTransfer",
-          "key": "localeDE",
-          "arguments": { "id_locale": 46, "locale_name": "de_DE" }
-        },
-        {
           "type": "builder",
           "name": "LocalizedAttributesBuilder",
           "key": "localizedAttribute"
@@ -69,22 +57,16 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer",
           "arguments": [
             {
-              "locale": "#localeEN",
+              "locale_name": "en_US",
               "password": "change123",
               "first_name": "Test for file attachment",
               "last_name": "Customer"
             }
           ]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomer",
-          "arguments": ["#customer"]
         },
         {
           "type": "helper",

@@ -16,12 +16,6 @@
           "arguments": ["#rootUser.id_user", 1]
         },
         {
-          "type": "transfer",
-          "name": "LocaleTransfer",
-          "key": "localeEN",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
-        },
-        {
           "type": "helper",
           "name": "haveUser",
           "key": "merchantUser1FromMerchant1",
@@ -65,15 +59,9 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer",
-          "arguments": [{ "locale": "#localeEN", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomer",
-          "arguments": ["#customer"]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",

@@ -4,7 +4,7 @@ import { DataImportMerchantFilePage } from '@pages/mp';
 
 @injectable()
 @autoWired
-export class UploadDataImportMerchantFileScenario {
+export class UploadProductDataImportMerchantFileScenario {
   @inject(DataImportMerchantFilePage) private readonly dataImportMerchantFilePage: DataImportMerchantFilePage;
 
   execute = (params: ExecuteParams): string => {

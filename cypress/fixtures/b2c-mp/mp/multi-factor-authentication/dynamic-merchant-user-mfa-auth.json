@@ -34,24 +34,9 @@
           "arguments": [{ "password": "change123" }]
         },
         {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfileOne"
-        },
-        {
           "type": "helper",
-          "name": "haveMerchant",
-          "key": "merchantOne",
-          "arguments": [
-            {
-              "merchantProfile": "#merchantProfileOne",
-              "isActive": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
-            }
-          ]
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchantOne"
         },
         {
           "type": "helper",
@@ -65,24 +50,9 @@
           "arguments": [{ "password": "change123" }]
         },
         {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfileTwo"
-        },
-        {
           "type": "helper",
-          "name": "haveMerchant",
-          "key": "merchantTwo",
-          "arguments": [
-            {
-              "merchantProfile": "#merchantProfileTwo",
-              "isActive": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
-            }
-          ]
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchantTwo"
         },
         {
           "type": "helper",

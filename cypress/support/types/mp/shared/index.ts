@@ -12,3 +12,4 @@ export * from './url';
 export * from './address';
 export * from './payment-method';
 export * from './store';
+export * from './stock';

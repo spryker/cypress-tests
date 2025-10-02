@@ -5,89 +5,34 @@
       "synchronize": true,
       "operations": [
         {
-          "type": "transfer",
-          "name": "LocaleTransfer",
-          "key": "locale",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
-        },
-        {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomerWithAddress",
           "key": "customer1",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomerWithAddress",
           "key": "customer2",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomerWithAddress",
           "key": "customer3",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomerWithAddress",
           "key": "customer4",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer1"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer2"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer3"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer4"]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
           "arguments": { "id_store": 1, "name": "DE", "defaultCurrencyIsoCode": "EUR" }
-        },
-        {
-          "type": "helper",
-          "name": "haveCountry",
-          "key": "country"
-        },
-        {
-          "type": "helper",
-          "name": "haveCustomerAddress",
-          "key": "address1",
-          "arguments": [{ "fkCustomer": "#customer1.id_customer", "fkCountry": "#country.id_country" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveCustomerAddress",
-          "key": "address2",
-          "arguments": [{ "fkCustomer": "#customer2.id_customer", "fkCountry": "#country.id_country" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveCustomerAddress",
-          "key": "address3",
-          "arguments": [{ "fkCustomer": "#customer3.id_customer", "fkCountry": "#country.id_country" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveCustomerAddress",
-          "key": "address4",
-          "arguments": [{ "fkCustomer": "#customer4.id_customer", "fkCountry": "#country.id_country" }]
         },
         {
           "type": "transfer",

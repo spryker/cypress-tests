@@ -35,6 +35,8 @@ npm run cy:open
 
 This command opens the Cypress Test Runner, a powerful interface that allows you to see tests running in real time.
 
+Note: to run tests against different demoshops automatically, use [Multi-Store-Runner script](tools/scripts/multi-store-runner/readme.md).
+
 ## Development workflow in the shop (suite-nonsplit or demoshop)
 
 To update the cypress-tests to use a different branch or commit, you need to modify these three locations:
@@ -77,3 +79,32 @@ In the same repository definition, update the `reference` field:
 ```json
 "reference": "YOUR_COMMIT_HASH_OR_BRANCH"
 ```
+
+## Troubleshooting
+
+### URI malformed
+
+```
+The following error originated from your test code, not from Cypress.
+
+> URI malformed
+
+When Cypress detects uncaught errors originating from your test code it will automatically fail the current test.
+
+Cypress could not associate this error to any specific test.
+
+We dynamically generated a new test to display this failure.
+```
+
+When you encounter a "URI malformed" error in Cypress, it NOT always indicates that there is an issue with the URL used in your tests.
+
+To resolve this error, you can try the following steps:
+
+- Ensure "Node.js" version is **22.16.0** or higher.
+- Ensue "npm" version is **11.6.0** or higher.
+- If you changed version of Node or npm, delete the `node_modules` folder and reinstall dependencies. (`rm -rf node_modules/ && npm install`)
+- Clear Cypress App Data following [this guide](https://docs.cypress.io/app/references/troubleshooting#Clear-App-Data).
+
+### Other issues
+
+If you encounter other issues not described here, refer to the [Troubleshooting](https://docs.cypress.io/app/references/troubleshooting) for common problems and solutions.

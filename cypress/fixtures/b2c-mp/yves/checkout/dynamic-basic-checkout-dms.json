@@ -5,11 +5,6 @@
       "synchronize": true,
       "operations": [
         {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfile"
-        },
-        {
           "type": "helper",
           "name": "haveStore",
           "key": "store",
@@ -17,13 +12,10 @@
         },
         {
           "type": "helper",
-          "name": "haveMerchant",
+          "name": "haveActiveMerchantWithStore",
           "key": "merchant",
           "arguments": [
             {
-              "merchantProfile": "#merchantProfile",
-              "isActive": true,
-              "status": "approved",
               "storeRelation": {
                 "idStores": ["#store.id_store"]
               }
@@ -60,7 +52,7 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer",
           "arguments": [{ "locale": "#locale", "password": "change123" }]
         },
@@ -69,12 +61,6 @@
           "name": "haveCustomerAddress",
           "key": "address",
           "arguments": [{ "fkCustomer": "#customer.id_customer", "fkCountry": "#country.id_country" }]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomer",
-          "arguments": ["#customer"]
         },
         {
           "type": "helper",

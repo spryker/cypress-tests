@@ -17,14 +17,9 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer",
           "arguments": [{ "locale": "#locale", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer"]
         },
         {
           "type": "helper",
@@ -151,23 +146,12 @@
           ]
         },
         {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfile1"
-        },
-        {
           "type": "helper",
-          "name": "haveMerchant",
+          "name": "haveActiveMerchantWithStore",
           "key": "merchant1",
           "arguments": [
             {
-              "merchantProfile": "#merchantProfile1",
-              "isActive": true,
-              "isOpenForRelationRequest": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
+              "isOpenForRelationRequest": true
             }
           ]
         },
@@ -228,23 +212,12 @@
           ]
         },
         {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfile2"
-        },
-        {
           "type": "helper",
-          "name": "haveMerchant",
+          "name": "haveActiveMerchantWithStore",
           "key": "merchant2",
           "arguments": [
             {
-              "merchantProfile": "#merchantProfile2",
-              "isActive": true,
-              "isOpenForRelationRequest": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
+              "isOpenForRelationRequest": true
             }
           ]
         },
