@@ -5,26 +5,15 @@
       "synchronize": true,
       "operations": [
         {
-          "type": "transfer",
-          "name": "LocaleTransfer",
-          "key": "locale",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
-        },
-        {
           "type": "helper",
           "name": "haveCountry",
           "key": "country"
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer"]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
@@ -82,23 +71,12 @@
           ]
         },
         {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfile1"
-        },
-        {
           "type": "helper",
-          "name": "haveMerchant",
+          "name": "haveActiveMerchantWithStore",
           "key": "merchant1",
           "arguments": [
             {
-              "merchantProfile": "#merchantProfile1",
-              "isActive": true,
-              "isOpenForRelationRequest": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
+              "isOpenForRelationRequest": true
             }
           ]
         },
@@ -159,23 +137,12 @@
           ]
         },
         {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfile2"
-        },
-        {
           "type": "helper",
-          "name": "haveMerchant",
+          "name": "haveActiveMerchantWithStore",
           "key": "merchant2",
           "arguments": [
             {
-              "merchantProfile": "#merchantProfile2",
-              "isActive": true,
-              "isOpenForRelationRequest": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
+              "isOpenForRelationRequest": true
             }
           ]
         },

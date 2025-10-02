@@ -35,6 +35,8 @@ npm run cy:open
 
 This command opens the Cypress Test Runner, a powerful interface that allows you to see tests running in real time.
 
+Note: to run tests against different demoshops automatically, use [Multi-Store-Runner script](tools/scripts/multi-store-runner/readme.md).
+
 ## Development workflow in the shop (suite-nonsplit or demoshop)
 
 To update the cypress-tests to use a different branch or commit, you need to modify these three locations:

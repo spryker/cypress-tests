@@ -11,15 +11,9 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customerOne",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomerOne",
-          "arguments": ["#customerOne"]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
@@ -48,15 +42,9 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customerTwo",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomerTwo",
-          "arguments": ["#customerTwo"]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
@@ -73,15 +61,9 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customerThree",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomerThree",
-          "arguments": ["#customerThree"]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
@@ -98,15 +80,9 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customerFour",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomerFour",
-          "arguments": ["#customerFour"]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",

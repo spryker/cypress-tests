@@ -18,7 +18,10 @@ describe('reorder concrete products', { tags: ['@yves', '@reorder'] }, (): void 
   });
 
   it('customer should be able to reorder all items from previous order', (): void => {
-    placeCustomerOrder(dynamicFixtures.customer1.email, dynamicFixtures.address1.id_customer_address);
+    placeCustomerOrder(
+      dynamicFixtures.customer1.email,
+      dynamicFixtures.customer1.addresses.addresses[0].id_customer_address
+    );
 
     customerOverviewPage.viewLastPlacedOrder();
     orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
@@ -33,7 +36,10 @@ describe('reorder concrete products', { tags: ['@yves', '@reorder'] }, (): void 
   });
 
   it('customer should be able to reorder selected items from previous order', (): void => {
-    placeCustomerOrder(dynamicFixtures.customer2.email, dynamicFixtures.address2.id_customer_address);
+    placeCustomerOrder(
+      dynamicFixtures.customer2.email,
+      dynamicFixtures.customer2.addresses.addresses[0].id_customer_address
+    );
 
     customerOverviewPage.viewLastPlacedOrder();
     orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
@@ -48,7 +54,10 @@ describe('reorder concrete products', { tags: ['@yves', '@reorder'] }, (): void 
   });
 
   it('customer should be able to reorder all items with quantity splitting', (): void => {
-    placeCustomerOrder(dynamicFixtures.customer3.email, dynamicFixtures.address3.id_customer_address);
+    placeCustomerOrder(
+      dynamicFixtures.customer3.email,
+      dynamicFixtures.customer3.addresses.addresses[0].id_customer_address
+    );
 
     customerOverviewPage.viewLastPlacedOrder();
     orderDetailsPage.reorderAll();
@@ -58,7 +67,10 @@ describe('reorder concrete products', { tags: ['@yves', '@reorder'] }, (): void 
   });
 
   it('customer should be able to reorder item with product option', (): void => {
-    placeCustomerOrder(dynamicFixtures.customer4.email, dynamicFixtures.address4.id_customer_address);
+    placeCustomerOrder(
+      dynamicFixtures.customer4.email,
+      dynamicFixtures.customer4.addresses.addresses[0].id_customer_address
+    );
 
     customerOverviewPage.viewLastPlacedOrder();
     orderDetailsPage.reorderAll();

@@ -5,12 +5,6 @@
       "synchronize": false,
       "operations": [
         {
-          "type": "transfer",
-          "name": "LocaleTransfer",
-          "key": "locale",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
-        },
-        {
           "type": "helper",
           "name": "haveCompany",
           "key": "company",
@@ -53,9 +47,9 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer",
-          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale": "#locale" }]
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
         },
         {
           "type": "builder",

@@ -17,41 +17,15 @@
           "arguments": { "id_locale": 46, "locale_name": "de_DE" }
         },
         {
-          "type": "transfer",
-          "name": "StoreTransfer",
-          "key": "store",
-          "arguments": { "id_store": 1, "name": "DE" }
-        },
-        {
-          "type": "array-object",
-          "key": "stores",
-          "arguments": ["#store"]
-        },
-        {
           "type": "helper",
           "name": "haveUser",
           "key": "merchantUserOne",
           "arguments": [{ "password": "change123" }]
         },
         {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfileOne"
-        },
-        {
           "type": "helper",
-          "name": "haveMerchant",
-          "key": "merchantOne",
-          "arguments": [
-            {
-              "merchantProfile": "#merchantProfileOne",
-              "isActive": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
-            }
-          ]
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchantOne"
         },
         {
           "type": "helper",
@@ -65,24 +39,9 @@
           "arguments": [{ "password": "change123" }]
         },
         {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfileTwo"
-        },
-        {
           "type": "helper",
-          "name": "haveMerchant",
-          "key": "merchantTwo",
-          "arguments": [
-            {
-              "merchantProfile": "#merchantProfileTwo",
-              "isActive": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
-            }
-          ]
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchantTwo"
         },
         {
           "type": "helper",

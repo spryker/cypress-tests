@@ -45,11 +45,6 @@
           "arguments": [{ "password": "change123", "status": "deleted" }]
         },
         {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfile"
-        },
-        {
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
@@ -74,18 +69,8 @@
         },
         {
           "type": "helper",
-          "name": "haveMerchant",
-          "key": "merchant",
-          "arguments": [
-            {
-              "merchantProfile": "#merchantProfile",
-              "isActive": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
-            }
-          ]
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
         },
         {
           "type": "helper",
