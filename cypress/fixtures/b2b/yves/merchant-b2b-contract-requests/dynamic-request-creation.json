@@ -6,12 +6,6 @@
       "operations": [
         {
           "type": "transfer",
-          "name": "LocaleTransfer",
-          "key": "localeEN",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
-        },
-        {
-          "type": "transfer",
           "name": "MerchantTransfer",
           "key": "merchant1",
           "arguments": { "id_merchant": 6, "name": "Sugar Monster", "merchant_reference": "MER000006" }
@@ -30,15 +24,9 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer",
-          "arguments": [{ "locale": "#localeEN", "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomer",
-          "arguments": ["#customer"]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",

@@ -39,17 +39,6 @@
         },
         {
           "type": "transfer",
-          "name": "StoreTransfer",
-          "key": "store",
-          "arguments": { "id_store": 1, "name": "DE" }
-        },
-        {
-          "type": "array-object",
-          "key": "stores",
-          "arguments": ["#store"]
-        },
-        {
-          "type": "transfer",
           "name": "LocaleTransfer",
           "key": "localeEN",
           "arguments": { "id_locale": 66, "locale_name": "en_US" }
@@ -62,16 +51,8 @@
         },
         {
           "type": "helper",
-          "name": "haveMerchant",
-          "key": "merchant",
-          "arguments": [
-            {
-              "merchantProfile": "#merchantProfile",
-              "isActive": true,
-              "status": "approved",
-              "storeRelation": { "idStores": ["#store.id_store"] }
-            }
-          ]
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
         },
         {
           "type": "helper",

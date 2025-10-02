@@ -5,16 +5,10 @@
       "synchronize": true,
       "operations": [
         {
-          "type": "transfer",
-          "name": "LocaleTransfer",
-          "key": "locale",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
-        },
-        {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer",
-          "arguments": [{ "locale": "#locale", "password": "change123" }]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",
@@ -51,12 +45,6 @@
               "fkCompanyBusinessUnit": "#businessUnitFromCompany.id_company_business_unit"
             }
           ]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "key": "confirmedCustomer",
-          "arguments": ["#customer"]
         },
         {
           "type": "transfer",

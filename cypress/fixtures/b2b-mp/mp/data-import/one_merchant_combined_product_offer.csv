@@ -1,0 +1,2 @@
+offer_reference,concrete_sku,is_active,store_relations,stock.{WAREHOUSE_NAME}.quantity
+OFFER-{UNIQUE},{PRODUCT_SKU},1,DE,10

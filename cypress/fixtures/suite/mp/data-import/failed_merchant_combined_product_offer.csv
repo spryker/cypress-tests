@@ -1,0 +1,2 @@
+offer_reference,concrete_sku,is_active,store_relations
+OFFER-{UNIQUE},{PRODUCT_SKU},0,NON_EXISTING_STORE

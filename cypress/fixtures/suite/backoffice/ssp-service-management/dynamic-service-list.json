@@ -34,23 +34,12 @@
           "arguments": [{ "id_store": 1, "name": "DE" }]
         },
         {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfile"
-        },
-        {
           "type": "helper",
-          "name": "haveMerchant",
+          "name": "haveActiveMerchantWithStore",
           "key": "merchant",
           "arguments": [
             {
-              "isActive": true,
-              "status": "approved",
-              "isOpenForRelationRequest": true,
-              "merchantProfile": "#merchantProfile",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
+              "isOpenForRelationRequest": true
             }
           ]
         },
@@ -106,9 +95,9 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer",
-          "arguments": [{ "locale": "#localeEN", "password": "change123" }]
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         },
         {
           "type": "helper",

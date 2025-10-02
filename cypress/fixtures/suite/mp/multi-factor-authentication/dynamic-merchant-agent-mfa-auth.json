@@ -39,27 +39,6 @@
           "arguments": [{ "password": "change123" }]
         },
         {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfileOne"
-        },
-        {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfileTwo"
-        },
-        {
-          "type": "transfer",
-          "name": "StoreTransfer",
-          "key": "store",
-          "arguments": { "id_store": 1, "name": "DE" }
-        },
-        {
-          "type": "array-object",
-          "key": "stores",
-          "arguments": ["#store"]
-        },
-        {
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "localeEN",
@@ -73,33 +52,13 @@
         },
         {
           "type": "helper",
-          "name": "haveMerchant",
-          "key": "merchantOne",
-          "arguments": [
-            {
-              "merchantProfile": "#merchantProfileOne",
-              "isActive": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
-            }
-          ]
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchantOne"
         },
         {
           "type": "helper",
-          "name": "haveMerchant",
-          "key": "merchantTwo",
-          "arguments": [
-            {
-              "merchantProfile": "#merchantProfileTwo",
-              "isActive": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
-            }
-          ]
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchantTwo"
         },
         {
           "type": "helper",

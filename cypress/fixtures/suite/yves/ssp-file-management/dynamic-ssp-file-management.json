@@ -99,7 +99,7 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer",
           "arguments": [
             {
@@ -112,7 +112,7 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer2",
           "arguments": [
             {
@@ -123,7 +123,7 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer3",
           "arguments": [
             {
@@ -131,21 +131,6 @@
               "password": "change123"
             }
           ]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer2"]
-        },
-        {
-          "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer3"]
         },
         {
           "type": "helper",

@@ -5,11 +5,6 @@
       "synchronize": true,
       "operations": [
         {
-          "type": "builder",
-          "name": "MerchantProfileBuilder",
-          "key": "merchantProfile"
-        },
-        {
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
@@ -39,7 +34,7 @@
         },
         {
           "type": "helper",
-          "name": "haveCustomer",
+          "name": "haveConfirmedCustomer",
           "key": "customer",
           "arguments": [{ "locale": "#localeEN", "password": "change123" }]
         },
@@ -51,23 +46,8 @@
         },
         {
           "type": "helper",
-          "name": "confirmCustomer",
-          "arguments": ["#customer"]
-        },
-        {
-          "type": "helper",
-          "name": "haveMerchant",
-          "key": "merchant",
-          "arguments": [
-            {
-              "merchantProfile": "#merchantProfile",
-              "isActive": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
-            }
-          ]
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
         },
         {
           "type": "helper",
