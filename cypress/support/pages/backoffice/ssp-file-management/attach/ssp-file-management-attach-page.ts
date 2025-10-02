@@ -92,7 +92,7 @@ export class SspFileManagementAttachPage extends BackofficePage {
       cy.get(searchSelector).type(searchTerm);
       cy.get(`${tableSelector} tbody tr`)
         .first()
-        .find(this.repository.getTableRowCheckboxSelector())
+        .find(this.repository.getTableRowCheckboxSelector(), { timeout: 10000 })
         .check({ force: true });
     });
   }
