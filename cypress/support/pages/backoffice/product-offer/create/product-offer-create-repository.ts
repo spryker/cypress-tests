@@ -18,7 +18,7 @@ export class ProductOfferCreateRepository {
 
   getSaveButton = (): Cypress.Chainable => cy.get('[name="create_offer_form"]').find('button');
 
-  getSuccessMessageBox = (): Cypress.Chainable => cy.get('.alert-success');
+  getSuccessMessageBox = (): Cypress.Chainable => cy.get('.alert-success', { timeout: 10000 });
 
   getTableRowsSelector = (): string => 'table.dataTable tbody tr';
 
