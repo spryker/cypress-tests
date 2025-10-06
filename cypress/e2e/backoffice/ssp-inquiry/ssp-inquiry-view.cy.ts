@@ -44,7 +44,6 @@ import { UserLoginScenario } from '@scenarios/backoffice';
           .replace(/([a-zA-Z]+)\s/, '$1. '),
         status: dynamicFixtures.generalSspInquiry.status,
         type: dynamicFixtures.generalSspInquiry.type,
-        store: dynamicFixtures.generalSspInquiry.store.name,
         subject: dynamicFixtures.generalSspInquiry.subject,
         description: dynamicFixtures.generalSspInquiry.description,
         files: dynamicFixtures.generalSspInquiry.files.map((file) => ({
@@ -84,7 +83,6 @@ import { UserLoginScenario } from '@scenarios/backoffice';
         },
         status: dynamicFixtures.orderSspInquiry.status,
         type: dynamicFixtures.orderSspInquiry.type,
-        store: dynamicFixtures.orderSspInquiry.store.name,
         subject: dynamicFixtures.orderSspInquiry.subject,
         description: dynamicFixtures.orderSspInquiry.description,
         files: dynamicFixtures.orderSspInquiry.files.map((file) => ({
