@@ -1,7 +1,7 @@
 import { container } from '@utils';
 import { OrderAmendmentFinishDynamicFixtures, OrderAmendmentStaticFixtures } from '@interfaces/yves';
-import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
-import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
+import { CartPage, CatalogPage, CustomerOverviewPage, OrderPage, OrderDetailsPage, ProductPage } from '@pages/yves';
+import { CheckoutScenario, CustomerLoginScenario, CustomerLogoutScenario } from '@scenarios/yves';
 import { UpdatePriceProductScenario, UserLoginScenario } from '@scenarios/backoffice';
 
 /**
@@ -9,12 +9,14 @@ import { UpdatePriceProductScenario, UserLoginScenario } from '@scenarios/backof
  */
 describe('order amendment finish', { tags: ['@yves', '@order-amendment'] }, (): void => {
   const customerOverviewPage = container.get(CustomerOverviewPage);
+  const orderPage = container.get(OrderPage);
   const orderDetailsPage = container.get(OrderDetailsPage);
   const cartPage = container.get(CartPage);
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);
 
   const customerLoginScenario = container.get(CustomerLoginScenario);
+  const customerLogoutScenario = container.get(CustomerLogoutScenario);
   const checkoutScenario = container.get(CheckoutScenario);
   const userLoginScenario = container.get(UserLoginScenario);
   const updatePriceProductScenario = container.get(UpdatePriceProductScenario);
@@ -138,6 +140,38 @@ describe('order amendment finish', { tags: ['@yves', '@order-amendment'] }, (): 
     customerOverviewPage.assertProductQuantity(dynamicFixtures.product4.localized_attributes[0].name, 1);
   });
 
+  skipB2cIt('customer should be able to update company order', (): void => {
+    placeCustomerOrder(dynamicFixtures.customer7.email, dynamicFixtures.address7.id_customer_address);
+    customerLogoutScenario.execute();
+
+    customerLoginScenario.execute({
+      email: dynamicFixtures.customer6.email,
+      password: staticFixtures.defaultPassword,
+    });
+
+    orderPage.visit();
+    orderPage.applyCompanyOrdersFilter();
+    orderPage.editOrder();
+
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product4.sku });
+    productPage.addToCart();
+
+    cartPage.visit();
+    cartPage.changeQuantity({ sku: dynamicFixtures.product1.sku, quantity: 3 });
+    cartPage.removeProduct({ sku: dynamicFixtures.product2.sku });
+
+    checkoutScenario.execute({
+      idCustomerAddress: dynamicFixtures.address6.id_customer_address,
+      shouldTriggerOmsInCli: true,
+      paymentMethod: staticFixtures.paymentMethodSyncFlow,
+    });
+
+    customerOverviewPage.viewLastPlacedOrder();
+    customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.localized_attributes[0].name, 3);
+    customerOverviewPage.assertProductQuantity(dynamicFixtures.product4.localized_attributes[0].name, 1);
+  });
+
   function searchAndAssertProductPriceWithRetry(sku: string, price: string, attempt = 1): void {
     const maxAttempts = 3;
 
@@ -205,5 +239,9 @@ describe('order amendment finish', { tags: ['@yves', '@order-amendment'] }, (): 
 
   function skipB2bIt(description: string, testFn: () => void): void {
     (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+  }
+
+  function skipB2cIt(description: string, testFn: () => void): void {
+    (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
   }
 });
