@@ -3,6 +3,7 @@ import { User, Merchant, ProductConcrete } from './shared';
 export interface MerchantCombinedProductDynamicFixtures {
   rootUser: User;
   merchantUser: User;
+  merchant: Merchant;
 }
 
 export interface MerchantCombinedProductOfferDynamicFixtures {
