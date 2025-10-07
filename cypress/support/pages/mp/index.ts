@@ -14,3 +14,4 @@ export * from './multi-factor-auth/merchant-user-multi-factor-auth-page';
 export * from './multi-factor-auth/merchant-agent-multi-factor-auth-page';
 export * from './account/account-page';
 export * from './data-import/data-import-merchant-file-page';
+export * from './data-export/data-export-merchant-file-page';
