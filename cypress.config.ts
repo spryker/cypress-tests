@@ -30,15 +30,20 @@ export default defineConfig({
     glueBackendUrl: `${protocol}://${glueBackendHost}`,
     glueStorefrontUrl: `${protocol}://${glueStorefrontHost}`,
     mailCatcherUrl: `${protocol}://${mailCatcherHost}`,
+    grepFilterSpecs: true,  
+    grepOmitFiltered: true,  
+    grepUntagged: true
   },
   e2e: {
     baseUrl: `${protocol}://${baseHost}`,
-    setupNodeEvents(on) {
+    setupNodeEvents(on,config) {
       on('task', {
         isFileExists(filename: string): boolean {
           return existsSync(filename);
         },
       });
+    require('@cypress/grep/src/plugin')(config);
+    return config;
     },
     retries: {
       runMode: 2,
