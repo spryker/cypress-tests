@@ -146,9 +146,21 @@
         },
         {
           "type": "helper",
+          "name": "haveCompany",
+          "key": "company2",
+          "arguments": [{ "isActive": true, "status": "approved" }]
+        },
+        {
+          "type": "helper",
           "name": "haveCompanyBusinessUnit",
           "key": "businessUnit",
           "arguments": [{ "fkCompany": "#company.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit2",
+          "arguments": [{ "fkCompany": "#company2.id_company" }]
         },
         {
           "type": "helper",
@@ -209,9 +221,17 @@
         {
           "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
+          "arguments": [
+            { "isDefault": true, "fkCompany": "#company2.id_company" },
+            ["#permission1", "#permission2", "#permission3", "#permission4", "#permission5", "#permission6"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
           "key": "companyRole1",
           "arguments": [
-            { "isDefault": false, "fkCompany": "#company.id_company" },
+            { "isDefault": false, "fkCompany": "#company2.id_company" },
             [
               "#seeCompanyOrdersPermissionPlugin",
               "#editCompanyOrdersPermissionPlugin",
@@ -297,8 +317,8 @@
             {
               "customer": "#customer6",
               "fkCustomer": "#customer6.id_customer",
-              "fkCompany": "#company.id_company",
-              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+              "fkCompany": "#company2.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit2.id_company_business_unit"
             }
           ]
         },
@@ -310,8 +330,8 @@
             {
               "customer": "#customer7",
               "fkCustomer": "#customer7.id_customer",
-              "fkCompany": "#company.id_company",
-              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+              "fkCompany": "#company2.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit2.id_company_business_unit"
             }
           ]
         },
