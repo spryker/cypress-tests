@@ -211,15 +211,18 @@
           "name": "haveCompanyRoleWithPermissions",
           "key": "companyRole1",
           "arguments": [
-            { "isDefault": true, "fkCompany": "#company.id_company" },
-            ["#seeCompanyOrdersPermissionPlugin", "#editCompanyOrdersPermissionPlugin"]
+            { "isDefault": false, "fkCompany": "#company.id_company" },
+            [
+              "#seeCompanyOrdersPermissionPlugin",
+              "#editCompanyOrdersPermissionPlugin",
+              "#permission1",
+              "#permission2",
+              "#permission3",
+              "#permission4",
+              "#permission5",
+              "#permission6"
+            ]
           ]
-        },
-        {
-          "type": "helper",
-          "name": "haveCompanyRoleWithPermissions",
-          "key": "companyRole2",
-          "arguments": [{ "isDefault": true, "fkCompany": "#company.id_company" }, []]
         },
         {
           "type": "helper",
@@ -316,11 +319,6 @@
           "type": "helper",
           "name": "assignCompanyRoles",
           "arguments": ["#companyUser6", ["#companyRole1"]]
-        },
-        {
-          "type": "helper",
-          "name": "assignCompanyRoles",
-          "arguments": ["#companyUser7", ["#companyRole2"]]
         },
         {
           "type": "transfer",

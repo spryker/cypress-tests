@@ -11,7 +11,7 @@ export class OrderPage extends YvesPage {
   protected PAGE_URL = '/customer/order';
 
   applyCompanyOrdersFilter = (): void => {
-    this.repository.getOrderBusinessUnitFilter().select('company');
+    this.repository.getOrderBusinessUnitFilter().select('company', { force: true });
     this.repository.getOrderFilterApplyButton().click();
   };
 
