@@ -10,14 +10,14 @@ const protocolMap: { [key: string]: 'http' | 'https' } = {
   http: 'http',
   https: 'https',
 };
-const protocol = "https";
-const backofficeHost = "backoffice.b2b-marketplace-eu.demo-spryker.com";
-const merchantPortalHost = "mp.b2b-marketplace-eu.demo-spryker.com";
-const glueHost = "glue.b2b-marketplace-eu.demo-spryker.com";
-const glueBackendHost = "glue.b2b-marketplace-eu.demo-spryker.com";
-const glueStorefrontHost = "glue.b2b-marketplace-eu.demo-spryker.com";
-const mailCatcherHost = "www.b2b-marketplace-eu.demo-spryker.com";
-const baseHost = "www.b2b-marketplace-eu.demo-spryker.com";
+const protocol = protocolMap[getEnvVar('ENV_PROTOCOL', 'SPRYKER_SSL_ENABLED')];
+const backofficeHost = getEnvVar('ENV_BACKOFFICE_HOST', 'SPRYKER_BE_HOST');
+const merchantPortalHost = getEnvVar('ENV_MERCHANT_PORTAL_HOST', 'SPRYKER_MP_HOST');
+const glueHost = getEnvVar('ENV_GLUE_HOST', 'SPRYKER_API_HOST');
+const glueBackendHost = getEnvVar('ENV_GLUE_BACKEND_HOST', 'SPRYKER_GLUE_BACKEND_HOST');
+const glueStorefrontHost = getEnvVar('ENV_GLUE_STOREFRONT_HOST', 'SPRYKER_GLUE_STOREFRONT_HOST');
+const mailCatcherHost = getEnvVar('ENV_MAIL_CATCHER_HOST', 'SPRYKER_SMTP_HOST');
+const baseHost = getEnvVar('E2E_BASE_HOST', 'SPRYKER_FE_HOST');
 
 export default defineConfig({
   env: {
