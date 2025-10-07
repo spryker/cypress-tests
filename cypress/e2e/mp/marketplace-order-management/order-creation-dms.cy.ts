@@ -14,7 +14,7 @@ import { ActionEnum, SalesOrdersPage } from '@pages/mp';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
 import { retryableBefore } from '../../../support/e2e';
 
-describeDmsSuiteAndMp('order creation dms', { tags: ['@mp', '@marketplace-order-management', '@dms'] }, (): void => {
+describeDmsSuiteAndMp('order creation dms', { tags: ['@mp', '@marketplace-order-management', '@dms','marketplace-order-management', 'checkout', 'cart'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);
   const salesIndexPage = container.get(SalesIndexPage);

@@ -3,7 +3,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 import { ServiceListPage } from '@pages/backoffice';
 import { ServiceListStaticFixtures, ServiceListDynamicFixtures } from '@interfaces/backoffice';
 
-describeForSsp('Service List Page', { tags: ['@backoffice', '@ssp', '@service-management'] }, () => {
+describeForSsp('Service List Page', { tags: ['@backoffice', '@ssp', '@service-management', 'service-points', ] }, () => {
   const userLoginScenario = container.get(UserLoginScenario);
   const serviceListPage = container.get(ServiceListPage);
 

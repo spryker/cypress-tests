@@ -10,7 +10,7 @@ import {
   SspFileManagementAttachPage,
 } from '@pages/backoffice';
 
-describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fileManager', '@ssp'] }, () => {
+describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fileManager', '@ssp', 'ssp-file-management'] }, () => {
   const userLoginScenario = container.get(UserLoginScenario);
   const fileManagerAttachmentListPage = container.get(SspFileManagementListPage);
   const fileManagerAttachmentAddPage = container.get(SspFileManagementAddPage);

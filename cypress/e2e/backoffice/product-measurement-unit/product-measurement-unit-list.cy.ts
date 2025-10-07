@@ -8,7 +8,7 @@ import { ProductMeasurementUnitListPage } from '../../../support/pages/backoffic
 
 (['suite', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'Measurement Units - List Page',
-  { tags: ['@backoffice', '@product-measurement-unit'] },
+  { tags: ['@backoffice', '@product-measurement-unit','measurement-units'] },
   (): void => {
     const productMeasurementUnitListPage = container.get(ProductMeasurementUnitListPage);
     const userLoginScenario = container.get(UserLoginScenario);

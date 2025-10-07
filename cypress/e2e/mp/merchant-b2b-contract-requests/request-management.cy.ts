@@ -8,7 +8,7 @@ import { MerchantUserLoginScenario } from '@scenarios/mp';
  */
 (['b2c', 'b2b', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'request management',
-  { tags: ['@mp', '@merchant-b2b-contract-requests'] },
+  { tags: ['@mp', '@merchant-b2b-contract-requests', 'marketplace-merchant-contract-requests', 'merchant-contract-requests', 'merchant-contracts', 'company-account'] },
   (): void => {
     const merchantRelationRequestsPage = container.get(MerchantRelationRequestsPage);
     const merchantRelationsPage = container.get(MerchantRelationsPage);

@@ -11,7 +11,7 @@ import {
 
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'Product Offer - List Page',
-  { tags: ['@backoffice', '@product-offer'] },
+  { tags: ['@backoffice', '@product-offer','marketplace-product-offer', 'product'] },
   (): void => {
     const productOfferListPage = container.get(ProductOfferListPage);
     const productPage = container.get(ProductPage);

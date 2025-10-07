@@ -8,7 +8,7 @@ import { MerchantAgentLoginUserScenario } from '@scenarios/mp';
  */
 (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'agent dashboard',
-  { tags: ['@mp', '@marketplace-agent-assist'] },
+  { tags: ['@mp', '@marketplace-agent-assist', 'marketplace-agent-assist', 'marketplace-merchant', 'merchant'] },
   (): void => {
     const mpDashboardPage = container.get(DashboardPage);
     const mpAgentDashboardPage = container.get(AgentDashboardPage);

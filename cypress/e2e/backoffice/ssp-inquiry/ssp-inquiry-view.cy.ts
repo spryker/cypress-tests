@@ -6,7 +6,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 
 (['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp inquiry management',
-  { tags: ['@ssp', '@backoffice', '@sspInquiryManagement'] },
+  { tags: ['@ssp', '@backoffice', '@sspInquiryManagement', 'ssp-inquiry-management'] },
   (): void => {
     const sspInquiryDetailPage = container.get(SspInquiryDetailPage);
     const sspInquiryListPage = container.get(SspInquiryListPage);

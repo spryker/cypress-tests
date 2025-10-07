@@ -7,7 +7,7 @@ import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { ActionEnum, SalesOrdersPage } from '@pages/mp';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
 
-describeSuiteAndMp('order creation', { tags: ['@mp', '@marketplace-order-management'] }, (): void => {
+describeSuiteAndMp('order creation', { tags: ['@mp', '@marketplace-order-management', 'marketplace-order-management', 'checkout', 'cart'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);
   const salesIndexPage = container.get(SalesIndexPage);
