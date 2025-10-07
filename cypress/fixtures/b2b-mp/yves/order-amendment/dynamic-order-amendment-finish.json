@@ -142,22 +142,13 @@
           "type": "helper",
           "name": "haveCompany",
           "key": "company",
-          "arguments": [
-            {
-              "isActive": true,
-              "status": "approved"
-            }
-          ]
+          "arguments": [{ "isActive": true, "status": "approved" }]
         },
         {
           "type": "helper",
           "name": "haveCompanyBusinessUnit",
           "key": "businessUnit",
-          "arguments": [
-            {
-              "fkCompany": "#company.id_company"
-            }
-          ]
+          "arguments": [{ "fkCompany": "#company.id_company" }]
         },
         {
           "type": "helper",
@@ -625,12 +616,14 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference"
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             }
