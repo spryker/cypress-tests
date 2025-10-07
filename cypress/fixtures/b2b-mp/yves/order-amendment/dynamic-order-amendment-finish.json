@@ -87,90 +87,6 @@
         },
         {
           "type": "helper",
-          "name": "haveCompany",
-          "key": "company",
-          "arguments": [
-            {
-              "isActive": true,
-              "status": "approved"
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveCompanyBusinessUnit",
-          "key": "businessUnit",
-          "arguments": [
-            {
-              "fkCompany": "#company.id_company"
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveCompanyUser",
-          "key": "companyUser1",
-          "arguments": [
-            {
-              "customer": "#customer6",
-              "fkCustomer": "#customer6.id_customer",
-              "fkCompany": "#company.id_company",
-              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveCompanyUser",
-          "key": "companyUser2",
-          "arguments": [
-            {
-              "customer": "#customer7",
-              "fkCustomer": "#customer7.id_customer",
-              "fkCompany": "#company.id_company",
-              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "havePermissionByKey",
-          "key": "seeCompanyOrdersPermissionPlugin",
-          "arguments": ["SeeCompanyOrdersPermissionPlugin"]
-        },
-        {
-          "type": "helper",
-          "name": "havePermissionByKey",
-          "key": "editCompanyOrdersPermissionPlugin",
-          "arguments": ["EditCompanyOrdersPermissionPlugin"]
-        },
-        {
-          "type": "helper",
-          "name": "haveCompanyRoleWithPermissions",
-          "key": "companyRole1",
-          "arguments": [
-            { "isDefault": true, "fkCompany": "#company.id_company" },
-            ["#seeCompanyOrdersPermissionPlugin", "#editCompanyOrdersPermissionPlugin"]
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveCompanyRoleWithPermissions",
-          "key": "companyRole2",
-          "arguments": [{ "isDefault": true, "fkCompany": "#company.id_company" }, []]
-        },
-        {
-          "type": "helper",
-          "name": "assignCompanyRoles",
-          "arguments": ["#companyUser1", ["#companyRole1"]]
-        },
-        {
-          "type": "helper",
-          "name": "assignCompanyRoles",
-          "arguments": ["#companyUser2", ["#companyRole2"]]
-        },
-        {
-          "type": "helper",
           "name": "haveActiveMerchantWithStore",
           "key": "merchant"
         },
@@ -224,9 +140,24 @@
         },
         {
           "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveCompanyBusinessUnit",
           "key": "businessUnit",
-          "arguments": [{ "fkCompany": "#company.id_company" }]
+          "arguments": [
+            {
+              "fkCompany": "#company.id_company"
+            }
+          ]
         },
         {
           "type": "helper",
@@ -266,11 +197,38 @@
         },
         {
           "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "seeCompanyOrdersPermissionPlugin",
+          "arguments": ["SeeCompanyOrdersPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "editCompanyOrdersPermissionPlugin",
+          "arguments": ["EditCompanyOrdersPermissionPlugin"]
+        },
+        {
+          "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "arguments": [
             { "isDefault": true, "fkCompany": "#company.id_company" },
             ["#permission1", "#permission2", "#permission3", "#permission4", "#permission5", "#permission6"]
           ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "companyRole1",
+          "arguments": [
+            { "isDefault": true, "fkCompany": "#company.id_company" },
+            ["#seeCompanyOrdersPermissionPlugin", "#editCompanyOrdersPermissionPlugin"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "companyRole2",
+          "arguments": [{ "isDefault": true, "fkCompany": "#company.id_company" }, []]
         },
         {
           "type": "helper",
@@ -336,6 +294,42 @@
               "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser6",
+          "arguments": [
+            {
+              "customer": "#customer6",
+              "fkCustomer": "#customer6.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser7",
+          "arguments": [
+            {
+              "customer": "#customer7",
+              "fkCustomer": "#customer7.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser6", ["#companyRole1"]]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser7", ["#companyRole2"]]
         },
         {
           "type": "transfer",
