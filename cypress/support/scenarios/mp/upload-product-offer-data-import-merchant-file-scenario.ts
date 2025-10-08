@@ -1,7 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import { DataImportMerchantFilePage } from '@pages/mp';
-import { Merchant, ProductConcrete, Stock } from '../../types/mp/shared';
+import { Merchant, ProductConcrete } from '../../types/mp/shared';
 
 @injectable()
 @autoWired
@@ -47,25 +47,19 @@ export class UploadProductOfferDataImportMerchantFileScenario {
 }
 
 function getDefaultWarehouseName(params: ExecuteParams): string | null {
-  if (!params?.merchant) {
+  if (!params?.merchant?.stocks?.length) {
     return null;
   }
 
-  const merchantFirstStock: Stock | undefined = params?.merchant?.stocks.shift();
-
-  if (merchantFirstStock === undefined) {
-    return null;
-  }
-
-  return merchantFirstStock.name;
+  return params.merchant.stocks[0].name;
 }
 
 function getProductSku(params: ExecuteParams): string | null {
-  if (params.product === undefined) {
+  if (!params?.product?.sku) {
     return null;
   }
 
-  return params?.product.sku;
+  return params.product.sku;
 }
 
 interface ExecuteParams {
