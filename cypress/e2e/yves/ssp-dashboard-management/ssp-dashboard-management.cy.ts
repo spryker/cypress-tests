@@ -5,7 +5,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
 (['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp dashboard management',
-  { tags: ['@yves', '@ssp-dashboard', '@ssp', '@SspDashboardManagement'] },
+  { tags: ['@yves', '@ssp-dashboard', '@ssp', '@SspDashboardManagement', 'ssp-asset-management', 'self-service-portal', 'spryker-core'] },
   (): void => {
     const isB2B = ['b2b'].includes(Cypress.env('repositoryId'));
     const sspDashboardPage = container.get(SspDashboardPage);

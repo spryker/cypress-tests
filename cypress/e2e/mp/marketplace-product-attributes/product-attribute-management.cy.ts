@@ -5,7 +5,7 @@ import { MerchantUserLoginScenario } from '@scenarios/mp';
 
 (['b2b', 'b2c'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'product attribute management',
-  { tags: ['@merchant-product-attributes', 'product',] },
+  { tags: ['@merchant-product-attributes', 'product','marketplace-merchantportal-core', 'spryker-core'] },
   (): void => {
     const productPage = container.get(ProductsPage);
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);

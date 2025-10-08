@@ -5,7 +5,7 @@ import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
-describe('order creation', { tags: ['@backoffice', '@order-management', 'order-management', 'marketplace-order-management'] }, (): void => {
+describe('order creation', { tags: ['@backoffice', '@order-management', 'order-management', 'marketplace-order-management', 'spryker-core-back-office', 'spryker-core'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);
   const customerOverviewPage = container.get(CustomerOverviewPage);

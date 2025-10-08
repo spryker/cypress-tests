@@ -3,7 +3,7 @@ import { ReorderConcreteProductsDynamicFixtures, ReorderStaticFixtures } from '@
 import { CartPage, CustomerOverviewPage, OrderDetailsPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
-describe('reorder concrete products', { tags: ['@yves', '@reorder'] }, (): void => {
+describe('reorder concrete products', { tags: ['@yves', '@reorder', 'product', 'spryker-core', 'reorder', 'cart', 'non-splittable-products', 'product-options', 'marketplace-product-options'] }, (): void => {
   const customerOverviewPage = container.get(CustomerOverviewPage);
   const orderDetailsPage = container.get(OrderDetailsPage);
   const cartPage = container.get(CartPage);

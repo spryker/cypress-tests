@@ -3,7 +3,7 @@ import { ProductManagementListPage, StatusEnum } from '@pages/backoffice';
 import { ProductManagementStaticFixtures, ProductManagementDynamicFixtures } from '@interfaces/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
-describe('product management filter', { tags: ['@backoffice', '@product-management', 'product'] }, (): void => {
+describe('product management filter', { tags: ['@backoffice', '@product-management', 'product','spryker-core-back-office', 'spryker-core' ] }, (): void => {
   const productManagementListPage = container.get(ProductManagementListPage);
   const userLoginScenario = container.get(UserLoginScenario);
 

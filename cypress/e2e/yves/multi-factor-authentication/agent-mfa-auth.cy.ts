@@ -10,7 +10,7 @@ import { AgentMfaLoginScenario } from '../../../support/scenarios/yves/agent-mfa
 import { AgentLoginScenario } from '../../../support/scenarios/yves/agent-login-scenario';
 import { retryableBefore } from '../../../support/e2e';
 
-describe('agent mfa auth', { tags: ['@yves', '@customer-account-management'] }, (): void => {
+describe('agent mfa auth', { tags: ['@yves', '@customer-account-management', 'agent-assist', 'spryker-core',] }, (): void => {
   const agentOverviewPage = container.get(AgentOverviewPage);
   const logoutScenario = container.get(AgentLogoutScenario);
   const loginScenario = container.get(AgentLoginScenario);

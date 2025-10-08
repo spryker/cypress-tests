@@ -8,7 +8,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
  */
 (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'agent permission',
-  { tags: ['@mp', '@marketplace-agent-assist', 'marketplace-agent-assist', 'spryker-core-back-office' ] },
+  { tags: ['@mp', '@marketplace-agent-assist', 'marketplace-agent-assist', 'spryker-core-back-office', 'marketplace-merchantportal-core', 'spryker-core' ] },
   (): void => {
     const backofficeUserIndexPage = container.get(UserIndexPage);
     const backofficeUserUpdatePage = container.get(UserUpdatePage);

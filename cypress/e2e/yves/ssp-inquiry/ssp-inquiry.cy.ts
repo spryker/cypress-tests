@@ -13,7 +13,7 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
 
 (['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp inquiry management',
-  { tags: ['@yves', '@ssp-inquiry', '@ssp', '@SspInquiryManagement'] },
+  { tags: ['@yves', '@ssp-inquiry', '@ssp', '@SspInquiryManagement', 'ssp-inquiry-management', 'self-service-portal', 'spryker-core'] },
   (): void => {
     const sspInquiryListPage = container.get(SspInquiryListPage);
     const sspInquiryCreatePage = container.get(SspInquiryCreatePage);

@@ -14,7 +14,7 @@ import { retryableBefore } from '../../../support/e2e';
 
 describeIfDynamicStoreEnabled(
   'order creation dms',
-  { tags: ['@backoffice', '@order-management', 'order-management', 'marketplace-order-management', '@dms'] },
+  { tags: ['@backoffice', '@order-management', 'order-management', 'marketplace-order-management', '@dms', 'spryker-core-back-office', 'spryker-core'] },
   (): void => {
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);

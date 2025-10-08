@@ -16,7 +16,7 @@ import {
 import { CustomerMfaActivationScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { retryableBefore } from '../../../support/e2e';
 
-describe('user mfa auth', { tags: ['@backoffice', '@user-account-management', 'spryker-core-back-office'] }, (): void => {
+describe('user mfa auth', { tags: ['@backoffice', '@user-account-management', 'spryker-core-back-office', 'spryker-core-back-office', 'spryker-core'] }, (): void => {
   const backofficeIndexPage = container.get(IndexPage);
   const userResetPasswordPage = container.get(ResetPasswordPage);
   const mfaActivationScenario = container.get(UserMfaActivationScenario);

@@ -6,7 +6,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 /**
  * Yves Cart Update Without Reload checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4147904521/Yves+Cart+Update+Without+Reload+Checklist}
  */
-describe('remove cart item', { tags: ['@yves', '@cart'] }, (): void => {
+describe('remove cart item', { tags: ['@yves', '@cart', 'cart', 'marketplace-cart', 'product', 'non-splittable-products', 'spryker-core'] }, (): void => {
   const cartPage = container.get(CartPage);
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);

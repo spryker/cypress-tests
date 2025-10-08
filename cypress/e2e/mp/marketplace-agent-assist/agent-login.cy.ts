@@ -13,7 +13,7 @@ import { MerchantAgentLoginUserScenario } from '@scenarios/mp';
  */
 (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'agent login',
-  { tags: ['@mp', '@marketplace-agent-assist', 'marketplace-agent-assist', 'marketplace-merchantportal-core'] },
+  { tags: ['@mp', '@marketplace-agent-assist', 'marketplace-agent-assist', 'marketplace-merchantportal-core', 'spryker-core'] },
   (): void => {
     const mpLoginPage = container.get(MpLoginPage);
     const mpAgentLoginPage = container.get(MpAgentLoginPage);

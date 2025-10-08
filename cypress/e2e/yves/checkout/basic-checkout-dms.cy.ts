@@ -10,7 +10,7 @@ import {
 } from '@scenarios/backoffice';
 import { retryableBefore } from '../../../support/e2e';
 
-describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout', '@dms'] }, (): void => {
+describeIfDynamicStoreEnabled('basic checkout dms', { tags: ['@yves', '@checkout', '@dms', 'checkout', 'shipment', 'cart', 'marketplace-shipment', 'spryker-core'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);
   const customerOverviewPage = container.get(CustomerOverviewPage);

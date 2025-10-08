@@ -5,7 +5,7 @@ import { SspFileManagementDynamicFixtures } from '@interfaces/yves';
 import { SspFileManagementListPage, SspAssetDetailPage, SspFileManagementDownloadPage } from '@pages/yves';
 import { SspFileManagementStaticFixtures } from '@interfaces/yves';
 
-describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fileManager', '@ssp'] }, () => {
+describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fileManager', '@ssp', 'ssp-file-management','self-service-portal', 'spryker-core'] }, () => {
   const customerLoginScenario = container.get(CustomerLoginScenario);
   const customerLogoutScenario = container.get(CustomerLogoutScenario);
   const customerOverviewPage = container.get(CustomerOverviewPage);

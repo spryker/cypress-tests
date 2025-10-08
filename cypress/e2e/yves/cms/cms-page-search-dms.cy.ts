@@ -4,7 +4,7 @@ import { CmsPageSearchDmsDynamicFixtures, CmsPageSearchDmsStaticFixtures } from 
 import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 import { CreateStoreScenario, CreateCmsPageScenario, UserLoginScenario } from '@scenarios/backoffice';
 
-describeIfDynamicStoreEnabled('cms page search dms', { tags: ['@yves', '@cms', '@dms'] }, (): void => {
+describeIfDynamicStoreEnabled('cms page search dms', { tags: ['@yves', '@cms', '@dms', 'cms', 'search', 'spryker-core'] }, (): void => {
   const contentPage = container.get(CmsContentPage);
   const userLoginScenario = container.get(UserLoginScenario);
   const createStoreScenario = container.get(CreateStoreScenario);

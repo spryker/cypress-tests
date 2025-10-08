@@ -4,7 +4,7 @@ import { CatalogPage, ProductPage, ProductComparisonPage } from '@pages/yves';
 
 (['b2c-mp', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'product comparison',
-  { tags: ['@yves', '@product-comparison'] },
+  { tags: ['@yves', '@product-comparison', 'product', 'spryker-core', 'product-comparison '] },
   (): void => {
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);

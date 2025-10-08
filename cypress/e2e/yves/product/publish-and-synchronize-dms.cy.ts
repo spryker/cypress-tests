@@ -4,7 +4,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 import { PublishAndSynchronizeDmsDynamicFixtures, PublishAndSynchronizeDmsStaticFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 
-describeIfDynamicStoreEnabled('publish and synchronize dms', { tags: ['@yves', '@product', '@dms'] }, (): void => {
+describeIfDynamicStoreEnabled('publish and synchronize dms', { tags: ['@yves', '@product', '@dms', 'product', 'spryker-core-back-office', 'spryker-core', 'search', 'cart'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);
   const userLoginScenario = container.get(UserLoginScenario);

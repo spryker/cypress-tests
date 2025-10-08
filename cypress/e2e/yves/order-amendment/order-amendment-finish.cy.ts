@@ -7,7 +7,7 @@ import { UpdatePriceProductScenario, UserLoginScenario } from '@scenarios/backof
 /**
  * Order Amendment checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4545871873/Initialisation+Order+Amendment+Process}
  */
-describe('order amendment finish', { tags: ['@yves', '@order-amendment'] }, (): void => {
+describe('order amendment finish', { tags: ['@yves', '@order-amendment','product', 'order-management', 'order-amendment', 'cart', 'checkout', 'non-splittable-products', 'spryker-core'] }, (): void => {
   const customerOverviewPage = container.get(CustomerOverviewPage);
   const orderDetailsPage = container.get(OrderDetailsPage);
   const cartPage = container.get(CartPage);

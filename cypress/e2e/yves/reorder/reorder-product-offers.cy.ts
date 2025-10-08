@@ -5,7 +5,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
 (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'reorder product offers',
-  { tags: ['@yves', '@order-amendment'] },
+  { tags: ['@yves', '@order-amendment', 'product', 'spryker-core', 'reorder', 'cart', 'marketplace-product-offer'] },
   (): void => {
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const orderDetailsPage = container.get(OrderDetailsPage);

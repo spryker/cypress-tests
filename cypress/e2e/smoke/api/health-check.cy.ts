@@ -1,7 +1,7 @@
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
-describe('health check', { tags: ['@smoke', '@api','search'] }, () => {
+describe('health check', { tags: ['@smoke', '@api','search', 'spryker-core'] }, () => {
   it('GLUE endpoint should return 200', () => {
     cy.request(Cypress.env().glueUrl + '/catalog-search')
       .its('status')

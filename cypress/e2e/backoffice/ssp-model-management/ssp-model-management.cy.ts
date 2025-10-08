@@ -5,7 +5,7 @@ import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } f
 
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp model creation',
-  { tags: ['@backoffice', '@sspModelManagement', '@ssp', 'ssp-service-management'] },
+  { tags: ['@backoffice', '@sspModelManagement', '@ssp', 'ssp-service-management',' self-service-portal', 'spryker-core-back-office', 'spryker-core'] },
   () => {
     const userLoginScenario = container.get(UserLoginScenario);
     const sspModelAddPage = container.get(SspModelAddPage);

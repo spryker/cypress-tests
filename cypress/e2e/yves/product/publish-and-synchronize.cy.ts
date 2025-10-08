@@ -4,7 +4,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 import { PublishAndSynchronizeStaticFixtures, PublishAndSynchronizeDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
-describe('publish and synchronize', { tags: ['@yves', '@product'] }, (): void => {
+describe('publish and synchronize', { tags: ['@yves', '@product', 'product', 'spryker-core-back-office', 'spryker-core', 'search', 'cart'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);
   const userLoginScenario = container.get(UserLoginScenario);

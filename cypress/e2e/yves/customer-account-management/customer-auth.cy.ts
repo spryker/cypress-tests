@@ -2,7 +2,7 @@ import { container } from '@utils';
 import { LoginPage, CustomerOverviewPage } from '@pages/yves';
 import { CustomerAuthDynamicFixtures, CustomerAuthStaticFixtures } from '@interfaces/yves';
 
-describe('customer auth', { tags: ['@yves', '@customer-account-management'] }, (): void => {
+describe('customer auth', { tags: ['@yves', '@customer-account-management', 'spryker-core', 'customer-account-management', 'spryker-core'] }, (): void => {
   const loginPage = container.get(LoginPage);
   const customerOverviewPage = container.get(CustomerOverviewPage);
 

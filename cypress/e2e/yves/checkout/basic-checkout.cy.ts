@@ -3,7 +3,7 @@ import { CheckoutStaticFixtures, BasicCheckoutDynamicFixtures } from '@interface
 import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
-describe('basic checkout', { tags: ['@yves', '@checkout'] }, (): void => {
+describe('basic checkout', { tags: ['@yves', '@checkout', 'checkout', 'shipment', 'cart', 'marketplace-shipment', 'spryker-core'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);
   const customerOverviewPage = container.get(CustomerOverviewPage);

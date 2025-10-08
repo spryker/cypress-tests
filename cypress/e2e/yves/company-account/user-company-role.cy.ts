@@ -5,7 +5,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
 (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'company-role',
-  { tags: ['@yves', '@company', '@company-role'] },
+  { tags: ['@yves', '@company', '@company-role', 'company-account', 'customer-account-management', 'customer-access', 'spryker-core'] },
   (): void => {
     const loginCustomerScenario = container.get(CustomerLoginScenario);
     const companyRoleIndexPage = container.get(CompanyRoleIndexPage);

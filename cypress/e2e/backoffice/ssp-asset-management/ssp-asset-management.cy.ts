@@ -8,7 +8,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
 (['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp asset management',
-  { tags: ['@backoffice', '@assetManagement', '@ssp', 'ssp-asset-management'] },
+  { tags: ['@backoffice', '@assetManagement', '@ssp', 'ssp-asset-management', 'self-service-portal', 'spryker-core-back-office', 'spryker-core'] },
   () => {
     const userLoginScenario = container.get(UserLoginScenario);
     const assetManagementListPage = container.get(SspAssetListPage);

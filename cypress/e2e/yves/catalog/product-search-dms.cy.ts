@@ -5,7 +5,7 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 import { AssignStoreToProductScenario, CreateStoreScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { retryableBefore } from '../../../support/e2e';
 
-describeIfDynamicStoreEnabled('product search dms', { tags: ['@yves', '@catalog', '@dms'] }, (): void => {
+describeIfDynamicStoreEnabled('product search dms', { tags: ['@yves', '@catalog', '@dms', 'search', 'customer-access', 'spryker-core'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);
   const customerLoginScenario = container.get(CustomerLoginScenario);

@@ -10,7 +10,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
  */
 (['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'dummy payment OMS flow',
-  { tags: ['@smoke', '@order-management', 'order-management'] },
+  { tags: ['@smoke', '@order-management', 'order-management', 'cart', 'checkout', 'search', 'spryker-core'] },
   (): void => {
     const catalogPage = container.get(CatalogPage);
     const productsPage = container.get(ProductPage);

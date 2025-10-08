@@ -3,7 +3,7 @@ import { LocaleSwitchingScenario } from '@scenarios/yves';
 import { CatalogPage, HomePage } from '@pages/yves';
 import { LocaleSwitchingDynamicFixtures, LocaleSwitchingStaticFixtures } from '@interfaces/yves';
 
-describeIfDynamicStoreEnabled('locale switching', { tags: ['@core', '@yves'] }, (): void => {
+describeIfDynamicStoreEnabled('locale switching', { tags: ['@core', '@yves', 'spryker-core', 'search', 'product'] }, (): void => {
   const homePage = container.get(HomePage);
   const catalogPage = container.get(CatalogPage);
   const localeSwitchingScenario = container.get(LocaleSwitchingScenario);
