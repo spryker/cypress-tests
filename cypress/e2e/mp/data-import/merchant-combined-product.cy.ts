@@ -35,6 +35,7 @@ import { DataImportMerchantFilePage } from '@pages/mp';
       const abstractSku = uploadProductDataImportMerchantFileScenario.execute({
         importerType: 'Product',
         fileName: fileName,
+        merchant: dynamicFixtures.merchant,
       });
 
       dataImportMerchantFilePage.visit();
@@ -54,7 +55,11 @@ import { DataImportMerchantFilePage } from '@pages/mp';
 
     it('merchant will see failed data import status when uploaded with with invalid data', () => {
       const fileName = 'failed_merchant_combined_product.csv';
-      uploadProductDataImportMerchantFileScenario.execute({ importerType: 'Product', fileName: fileName });
+      uploadProductDataImportMerchantFileScenario.execute({
+        importerType: 'Product',
+        fileName: fileName,
+        merchant: dynamicFixtures.merchant,
+      });
 
       dataImportMerchantFilePage.visit();
       dataImportMerchantFilePage.assertFileStatus(fileName, 'Failed');

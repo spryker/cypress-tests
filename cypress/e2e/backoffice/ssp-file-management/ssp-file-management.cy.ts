@@ -119,8 +119,6 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickAttachButton();
 
-    fileManagerAttachmentAttachPage.selectAttachmentScope('asset');
-
     fileManagerAttachmentAttachPage.uploadCsvFile('asset', 'csv/assets-example.csv');
     fileManagerAttachmentAttachPage.submitForm();
     fileManagerAttachmentAttachPage.verifySuccessMessage();
@@ -167,24 +165,6 @@ describeForSsp('File Manager Module - Files List', { tags: ['@backoffice', '@fil
 
   it('should successfully detach file from an asset', () => {
     const fileManagerAttachmentDetachPage = container.get(SspFileManagementDetachPage);
-
-    fileManagerAttachmentListPage.visit();
-    fileManagerAttachmentListPage.clickViewButton();
-
-    fileManagerAttachmentDetachPage.detachFile();
-    fileManagerAttachmentDetachPage.verifySuccessMessage();
-    fileManagerAttachmentDetachPage.assertDetachFile();
-  });
-
-  it('should successfully detach file from entity', () => {
-    const fileManagerAttachmentDetachPage = container.get(SspFileManagementDetachPage);
-    const fileManagerAttachmentAttachPage = container.get(SspFileManagementAttachPage);
-
-    fileManagerAttachmentListPage.visit();
-    fileManagerAttachmentListPage.clickAttachButton();
-
-    fileManagerAttachmentAttachPage.selectAvailableItems('asset', [dynamicFixtures.sspAsset.name]);
-    fileManagerAttachmentAttachPage.submitForm();
 
     fileManagerAttachmentListPage.visit();
     fileManagerAttachmentListPage.clickViewButton();

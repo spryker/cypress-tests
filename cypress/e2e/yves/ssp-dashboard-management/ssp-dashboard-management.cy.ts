@@ -61,7 +61,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
       sspDashboardPage.visit();
       sspDashboardPage.assertSspDashboardAssetsWidgetPresent();
-      sspDashboardPage.assertWidgetData([dynamicFixtures.sspAsset, dynamicFixtures.sspAsset1]);
+      sspDashboardPage.assertWidgetData([dynamicFixtures.sspAsset1, dynamicFixtures.sspAsset]);
     });
 
     it('customer without permission should not see files on dashboard', (): void => {

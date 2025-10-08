@@ -8,40 +8,54 @@ import { SspFileManagementAttachRepository } from './ssp-file-management-attach-
 export class SspFileManagementAttachPage extends BackofficePage {
   @inject(SspFileManagementAttachRepository) private repository: SspFileManagementAttachRepository;
 
-  selectAttachmentScope(scope: 'asset' | 'business-unit' | 'company-user' | 'company'): void {
-    cy.get('.nav-tabs', { timeout: 10000 }).should('be.visible');
-
+  selectAttachmentScope(
+    scope: 'asset' | 'business-unit' | 'company-user' | 'company' | 'model',
+    options?: Partial<Cypress.ClickOptions>
+  ): void {
     const scopeTextMap = {
       asset: 'Asset',
       'business-unit': 'Business Unit',
       'company-user': 'Company User',
       company: 'Company',
+      model: 'Model',
     };
 
     const scopeText = scopeTextMap[scope];
-    const scopeOrder = ['asset', 'business-unit', 'company-user', 'company'];
+    const scopeOrder = ['asset', 'model', 'business-unit', 'company-user', 'company'];
 
-    cy.get('.nav-tabs a').then(($tabs) => {
-      const matchingTab = $tabs.filter((index, element) => {
-        const text = Cypress.$(element).text().trim();
-        return text.toLowerCase() === scopeText.toLowerCase();
+    cy.get('.nav-tabs', { timeout: 10000 })
+      .first()
+      .should('be.visible')
+      .within(() => {
+        cy.get('a').then(($tabs) => {
+          const matchingTab = $tabs.filter((index, element) => {
+            const text = Cypress.$(element).text().trim();
+            return text.toLowerCase() === scopeText.toLowerCase();
+          });
+
+          if (matchingTab.length > 0) {
+            cy.wrap(matchingTab).first().click(options);
+            return;
+          }
+
+          const matchingHrefTab = $tabs.filter((index, element) => {
+            const href = Cypress.$(element).attr('href');
+            return href === `#tab-content-${scope}`;
+          });
+
+          if (matchingHrefTab.length > 0) {
+            cy.wrap(matchingHrefTab)
+              .first()
+              .click(options || { force: true });
+            return;
+          }
+
+          const tabIndex = scopeOrder.indexOf(scope);
+          cy.wrap($tabs)
+            .eq(tabIndex)
+            .click(options || { force: true });
+        });
       });
-
-      if (matchingTab.length > 0) {
-        cy.wrap(matchingTab).first().click({ force: true });
-        return;
-      }
-
-      cy.get(`.nav-tabs a[href="#tab-content-${scope}"]`).then(($hrefTab) => {
-        if ($hrefTab.length > 0) {
-          cy.wrap($hrefTab).first().click({ force: true });
-          return;
-        }
-
-        const tabIndex = scopeOrder.indexOf(scope);
-        cy.get('.nav-tabs a').eq(tabIndex).click({ force: true });
-      });
-    });
   }
 
   clickScopeTab(scope: 'asset' | 'business-unit' | 'company-user' | 'company'): void {
@@ -78,7 +92,7 @@ export class SspFileManagementAttachPage extends BackofficePage {
       cy.get(searchSelector).type(searchTerm);
       cy.get(`${tableSelector} tbody tr`)
         .first()
-        .find(this.repository.getTableRowCheckboxSelector())
+        .find(this.repository.getTableRowCheckboxSelector(), { timeout: 10000 })
         .check({ force: true });
     });
   }

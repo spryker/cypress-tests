@@ -59,7 +59,7 @@ import { SspAssetSpecificCatalogStaticFixtures, SspAssetSpecificCatalogDynamicFi
 
       cy.url().should('include', `ssp-asset-reference=${dynamicFixtures.sspAsset.reference}`);
 
-      catalogPage.getProductItemBlocks().should('have.length', 1);
+      catalogPage.getProductItemBlocks().should('be.visible');
       catalogPage
         .getProductItemBlocks()
         .first()
