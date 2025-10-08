@@ -11,24 +11,25 @@ export class SspAssetListPage extends BackofficePage {
   protected PAGE_URL = '/self-service-portal/list-asset';
 
   verifyListPage(): void {
+    cy.get(this.repository.getIdHeaderSelector()).should('exist');
     cy.get(this.repository.getReferenceHeaderSelector()).should('exist');
     cy.get(this.repository.getImageHeaderSelector()).should('exist');
     cy.get(this.repository.getNameHeaderSelector()).should('exist');
     cy.get(this.repository.getSerialNumberHeaderSelector()).should('exist');
     cy.get(this.repository.getStatusHeaderSelector()).should('exist');
 
-    this.verifyReferenceColumnSortedDesc();
+    this.verifyIdColumnSortedDesc();
   }
 
-  verifyReferenceColumnSortedDesc(): void {
-    cy.get(this.repository.getReferenceHeaderSelector()).then(($referenceHeader) => {
+  verifyIdColumnSortedDesc(): void {
+    cy.get(this.repository.getIdHeaderSelector()).then(($idHeader) => {
       cy.get('table.dataTable thead th').then(($headers) => {
-        const referenceIndex = $headers.index($referenceHeader);
+        const idIndex = $headers.index($idHeader);
 
-        cy.get(`table.dataTable tbody tr td:nth-child(${referenceIndex + 1})`).then(($cells) => {
-          const references = $cells.map((i, el) => Cypress.$(el).text().trim()).get();
-          const sortedReferences = [...references].sort((a, b) => b.localeCompare(a));
-          expect(references).to.deep.equal(sortedReferences, 'Reference column should be sorted in descending order');
+        cy.get(`table.dataTable tbody tr td:nth-child(${idIndex + 1})`).then(($cells) => {
+          const ids = $cells.map((i, el) => parseInt(Cypress.$(el).text().trim(), 10)).get();
+          const sortedIds = [...ids].sort((a, b) => b - a);
+          expect(ids).to.deep.equal(sortedIds, 'ID column should be sorted in descending order');
         });
       });
     });
