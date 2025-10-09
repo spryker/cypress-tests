@@ -12,7 +12,21 @@ import { CustomerLoginScenario } from '@scenarios/yves';
  */
 (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'request management',
-  { tags: ['@yves', '@merchant-b2b-contract-requests', 'marketplace-merchant-contracts', 'merchant-contracts', 'merchant-contract-requests', 'marketplace-merchant', 'product', 'marketplace-product', 'marketplace-merchant-portal-product-management', 'marketplace-merchantportal-core', 'spryker-core'] },
+  {
+    tags: [
+      '@yves',
+      '@merchant-b2b-contract-requests',
+      'marketplace-merchant-contracts',
+      'merchant-contracts',
+      'merchant-contract-requests',
+      'marketplace-merchant',
+      'product',
+      'marketplace-product',
+      'marketplace-merchant-portal-product-management',
+      'marketplace-merchantportal-core',
+      'spryker-core',
+    ],
+  },
   (): void => {
     const companyUserSelectPage = container.get(CompanyUserSelectPage);
     const merchantRelationRequestIndexPage = container.get(MerchantRelationRequestIndexPage);

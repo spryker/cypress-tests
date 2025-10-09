@@ -3,81 +3,85 @@ import { LocaleSwitchingScenario } from '@scenarios/yves';
 import { CatalogPage, HomePage } from '@pages/yves';
 import { LocaleSwitchingDynamicFixtures, LocaleSwitchingStaticFixtures } from '@interfaces/yves';
 
-describeIfDynamicStoreEnabled('locale switching', { tags: ['@core', '@yves', 'spryker-core', 'search', 'catalog', 'navigation', 'product'] }, (): void => {
-  const homePage = container.get(HomePage);
-  const catalogPage = container.get(CatalogPage);
-  const localeSwitchingScenario = container.get(LocaleSwitchingScenario);
+describeIfDynamicStoreEnabled(
+  'locale switching',
+  { tags: ['@core', '@yves', 'spryker-core', 'search', 'catalog', 'navigation', 'product'] },
+  (): void => {
+    const homePage = container.get(HomePage);
+    const catalogPage = container.get(CatalogPage);
+    const localeSwitchingScenario = container.get(LocaleSwitchingScenario);
 
-  let staticFixtures: LocaleSwitchingStaticFixtures;
-  let dynamicFixtures: LocaleSwitchingDynamicFixtures;
+    let staticFixtures: LocaleSwitchingStaticFixtures;
+    let dynamicFixtures: LocaleSwitchingDynamicFixtures;
 
-  before((): void => {
-    ({ staticFixtures, dynamicFixtures } = Cypress.env());
-  });
-
-  /**
-   * Helper method for testing locale switching on any page.
-   * @param visitPage - Function to visit the page (e.g., `catalogPage.visit`).
-   * @param page - The page object containing methods like `getAvailableLocales`.
-   */
-  const testLocaleSwitching = (visitPage: () => void, page: { getAvailableLocales: () => void }): void => {
-    visitPage();
-
-    page.getAvailableLocales();
-
-    localeSwitchingScenario.execute({
-      currentLocale: staticFixtures.localeEN,
-      selectedLocale: staticFixtures.localeDE,
+    before((): void => {
+      ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    cy.reload();
-    localeSwitchingScenario.execute({
-      currentLocale: staticFixtures.localeDE,
-      selectedLocale: staticFixtures.localeEN,
-    });
-  };
+    /**
+     * Helper method for testing locale switching on any page.
+     * @param visitPage - Function to visit the page (e.g., `catalogPage.visit`).
+     * @param page - The page object containing methods like `getAvailableLocales`.
+     */
+    const testLocaleSwitching = (visitPage: () => void, page: { getAvailableLocales: () => void }): void => {
+      visitPage();
 
-  it('should be able to switch locales at the home page.', (): void => {
-    testLocaleSwitching(() => homePage.visit(), homePage);
-  });
+      page.getAvailableLocales();
 
-  it('should be able to switch locales at the catalog page.', (): void => {
-    testLocaleSwitching(() => catalogPage.visit(), catalogPage);
-  });
+      localeSwitchingScenario.execute({
+        currentLocale: staticFixtures.localeEN,
+        selectedLocale: staticFixtures.localeDE,
+      });
 
-  it('should be able to switch locales at the product detailed page.', (): void => {
-    testLocaleSwitching(() => {
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.abstract_sku });
-    }, catalogPage);
-  });
+      cy.reload();
+      localeSwitchingScenario.execute({
+        currentLocale: staticFixtures.localeDE,
+        selectedLocale: staticFixtures.localeEN,
+      });
+    };
 
-  it('should maintain locale when navigating to New page after switching locale.', (): void => {
-    homePage.visit();
-    homePage.getAvailableLocales();
-
-    const initialLocale = staticFixtures.localeEN;
-    const oppositeLocale = staticFixtures.localeDE;
-
-    localeSwitchingScenario.execute({
-      currentLocale: initialLocale,
-      selectedLocale: oppositeLocale,
+    it('should be able to switch locales at the home page.', (): void => {
+      testLocaleSwitching(() => homePage.visit(), homePage);
     });
 
-    const newPageLinkText =
-      oppositeLocale === staticFixtures.localeDE ? staticFixtures.newPageLinkDE : staticFixtures.newPageLinkEN;
-    homePage.navigateToNewPage(newPageLinkText);
+    it('should be able to switch locales at the catalog page.', (): void => {
+      testLocaleSwitching(() => catalogPage.visit(), catalogPage);
+    });
 
-    const expectedStore =
-      oppositeLocale === staticFixtures.localeDE ? staticFixtures.storeCodeDE : staticFixtures.storeCodeAT;
-    const expectedLanguage =
-      oppositeLocale === staticFixtures.localeDE ? staticFixtures.languageCodeDE : staticFixtures.languageCodeEN;
-    const expectedUrlFormat = `/${expectedStore}/${expectedLanguage}/`;
-    cy.url().should('include', expectedUrlFormat);
+    it('should be able to switch locales at the product detailed page.', (): void => {
+      testLocaleSwitching(() => {
+        catalogPage.visit();
+        catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.abstract_sku });
+      }, catalogPage);
+    });
 
-    cy.url().should('contain', expectedStore);
-  });
-});
+    it('should maintain locale when navigating to New page after switching locale.', (): void => {
+      homePage.visit();
+      homePage.getAvailableLocales();
+
+      const initialLocale = staticFixtures.localeEN;
+      const oppositeLocale = staticFixtures.localeDE;
+
+      localeSwitchingScenario.execute({
+        currentLocale: initialLocale,
+        selectedLocale: oppositeLocale,
+      });
+
+      const newPageLinkText =
+        oppositeLocale === staticFixtures.localeDE ? staticFixtures.newPageLinkDE : staticFixtures.newPageLinkEN;
+      homePage.navigateToNewPage(newPageLinkText);
+
+      const expectedStore =
+        oppositeLocale === staticFixtures.localeDE ? staticFixtures.storeCodeDE : staticFixtures.storeCodeAT;
+      const expectedLanguage =
+        oppositeLocale === staticFixtures.localeDE ? staticFixtures.languageCodeDE : staticFixtures.languageCodeEN;
+      const expectedUrlFormat = `/${expectedStore}/${expectedLanguage}/`;
+      cy.url().should('include', expectedUrlFormat);
+
+      cy.url().should('contain', expectedStore);
+    });
+  }
+);
 
 function describeIfDynamicStoreEnabled(title: string, options: { tags: string[] }, fn: () => void): void {
   (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(title, fn);

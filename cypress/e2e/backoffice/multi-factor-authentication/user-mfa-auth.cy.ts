@@ -16,144 +16,157 @@ import {
 import { CustomerMfaActivationScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { retryableBefore } from '../../../support/e2e';
 
-describe('user mfa auth', { tags: ['@backoffice', '@user-account-management', 'spryker-core-back-office', 'spryker-core-back-office', 'spryker-core', 'acl'] }, (): void => {
-  const backofficeIndexPage = container.get(IndexPage);
-  const userResetPasswordPage = container.get(ResetPasswordPage);
-  const mfaActivationScenario = container.get(UserMfaActivationScenario);
-  const mfaLoginScenario = container.get(UserMfaLoginScenario);
-  const userLoginScenario = container.get(UserLoginScenario);
-  const userLogoutScenario = container.get(UserLogoutScenario);
-  const userMfaCreateScenario = container.get(UserMfaCreateScenario);
-  const customerOverviewPage = container.get(CustomerOverviewPage);
-  const customerMfaActivationScenario = container.get(CustomerMfaActivationScenario);
-  const customerLoginScenario = container.get(CustomerLoginScenario);
-  const customerMfaRemoveScenario = container.get(CustomerMfaRemoveScenario);
+describe(
+  'user mfa auth',
+  {
+    tags: [
+      '@backoffice',
+      '@user-account-management',
+      'spryker-core-back-office',
+      'spryker-core-back-office',
+      'spryker-core',
+      'acl',
+    ],
+  },
+  (): void => {
+    const backofficeIndexPage = container.get(IndexPage);
+    const userResetPasswordPage = container.get(ResetPasswordPage);
+    const mfaActivationScenario = container.get(UserMfaActivationScenario);
+    const mfaLoginScenario = container.get(UserMfaLoginScenario);
+    const userLoginScenario = container.get(UserLoginScenario);
+    const userLogoutScenario = container.get(UserLogoutScenario);
+    const userMfaCreateScenario = container.get(UserMfaCreateScenario);
+    const customerOverviewPage = container.get(CustomerOverviewPage);
+    const customerMfaActivationScenario = container.get(CustomerMfaActivationScenario);
+    const customerLoginScenario = container.get(CustomerLoginScenario);
+    const customerMfaRemoveScenario = container.get(CustomerMfaRemoveScenario);
 
-  let dynamicFixtures: UserMfaAuthDynamicFixtures;
-  let staticFixtures: UserMfaAuthStaticFixtures;
+    let dynamicFixtures: UserMfaAuthDynamicFixtures;
+    let staticFixtures: UserMfaAuthStaticFixtures;
 
-  retryableBefore((): void => {
-    ({ staticFixtures, dynamicFixtures } = Cypress.env());
-  });
-
-  beforeEach((): void => {
-    cy.cleanUpUserMultiFactorAuth();
-    cy.cleanUpCustomerMultiFactorAuth();
-  });
-
-  it('should verify successful MFA activation and subsequent authenticated login', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUserOne.username,
-      password: staticFixtures.defaultPassword,
+    retryableBefore((): void => {
+      ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    mfaActivationScenario.execute(dynamicFixtures.rootUserOne.username);
-
-    userLogoutScenario.execute();
-    mfaLoginScenario.execute({
-      username: dynamicFixtures.rootUserOne.username,
-      password: staticFixtures.defaultPassword,
+    beforeEach((): void => {
+      cy.cleanUpUserMultiFactorAuth();
+      cy.cleanUpCustomerMultiFactorAuth();
     });
 
-    backofficeIndexPage.assertPageLocation();
-  });
+    it('should verify successful MFA activation and subsequent authenticated login', (): void => {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUserOne.username,
+        password: staticFixtures.defaultPassword,
+      });
 
-  it('should ensure proper error handling when invalid MFA verification code is provided', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUserTwo.username,
-      password: staticFixtures.defaultPassword,
+      mfaActivationScenario.execute(dynamicFixtures.rootUserOne.username);
+
+      userLogoutScenario.execute();
+      mfaLoginScenario.execute({
+        username: dynamicFixtures.rootUserOne.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      backofficeIndexPage.assertPageLocation();
     });
 
-    mfaActivationScenario.execute(dynamicFixtures.rootUserTwo.username);
-
-    userLogoutScenario.execute();
-    mfaLoginScenario.executeWithInvalidCode(
-      {
+    it('should ensure proper error handling when invalid MFA verification code is provided', (): void => {
+      userLoginScenario.execute({
         username: dynamicFixtures.rootUserTwo.username,
         password: staticFixtures.defaultPassword,
-      },
-      staticFixtures
-    );
-  });
+      });
 
-  it("should change password and login using a new one without MFA if it's not enabled", (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUserThree.username,
-      password: staticFixtures.defaultPassword,
+      mfaActivationScenario.execute(dynamicFixtures.rootUserTwo.username);
+
+      userLogoutScenario.execute();
+      mfaLoginScenario.executeWithInvalidCode(
+        {
+          username: dynamicFixtures.rootUserTwo.username,
+          password: staticFixtures.defaultPassword,
+        },
+        staticFixtures
+      );
     });
 
-    userResetPasswordPage.visit();
-    userResetPasswordPage.changePassword(staticFixtures.defaultPassword, staticFixtures.newPassword);
+    it("should change password and login using a new one without MFA if it's not enabled", (): void => {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUserThree.username,
+        password: staticFixtures.defaultPassword,
+      });
 
-    userLogoutScenario.execute();
+      userResetPasswordPage.visit();
+      userResetPasswordPage.changePassword(staticFixtures.defaultPassword, staticFixtures.newPassword);
 
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUserThree.username,
-      password: staticFixtures.newPassword,
+      userLogoutScenario.execute();
+
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUserThree.username,
+        password: staticFixtures.newPassword,
+      });
+
+      backofficeIndexPage.visit();
+      backofficeIndexPage.assertPageLocation();
     });
 
-    backofficeIndexPage.visit();
-    backofficeIndexPage.assertPageLocation();
-  });
+    it('should verify successful MFA deactivation and subsequent login without MFA', (): void => {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUserFour.username,
+        password: staticFixtures.defaultPassword,
+      });
 
-  it('should verify successful MFA deactivation and subsequent login without MFA', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUserFour.username,
-      password: staticFixtures.defaultPassword,
+      mfaActivationScenario.execute(dynamicFixtures.rootUserFour.username);
+
+      userLogoutScenario.execute();
+      mfaLoginScenario.execute({
+        username: dynamicFixtures.rootUserFour.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      mfaActivationScenario.deactivate(dynamicFixtures.rootUserFour.username);
+
+      userLogoutScenario.execute();
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUserFour.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      backofficeIndexPage.visit();
+      backofficeIndexPage.assertPageLocation();
     });
 
-    mfaActivationScenario.execute(dynamicFixtures.rootUserFour.username);
+    it('should verify requesting MFA during user creation', (): void => {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUserFive.username,
+        password: staticFixtures.defaultPassword,
+      });
 
-    userLogoutScenario.execute();
-    mfaLoginScenario.execute({
-      username: dynamicFixtures.rootUserFour.username,
-      password: staticFixtures.defaultPassword,
+      mfaActivationScenario.execute(dynamicFixtures.rootUserFive.username);
+
+      userMfaCreateScenario.execute({
+        password: staticFixtures.newPassword,
+        adminUsername: dynamicFixtures.rootUserFive.username,
+        isRootUser: true,
+      });
     });
 
-    mfaActivationScenario.deactivate(dynamicFixtures.rootUserFour.username);
+    it('should remove customer MFA from Backoffice', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customerOne.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
 
-    userLogoutScenario.execute();
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUserFour.username,
-      password: staticFixtures.defaultPassword,
+      customerOverviewPage.assertPageLocation();
+      customerMfaActivationScenario.execute(dynamicFixtures.customerOne.email);
+
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUserSix.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      customerMfaRemoveScenario.execute({
+        email: dynamicFixtures.customerOne.email,
+      });
     });
-
-    backofficeIndexPage.visit();
-    backofficeIndexPage.assertPageLocation();
-  });
-
-  it('should verify requesting MFA during user creation', (): void => {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUserFive.username,
-      password: staticFixtures.defaultPassword,
-    });
-
-    mfaActivationScenario.execute(dynamicFixtures.rootUserFive.username);
-
-    userMfaCreateScenario.execute({
-      password: staticFixtures.newPassword,
-      adminUsername: dynamicFixtures.rootUserFive.username,
-      isRootUser: true,
-    });
-  });
-
-  it('should remove customer MFA from Backoffice', (): void => {
-    customerLoginScenario.execute({
-      email: dynamicFixtures.customerOne.email,
-      password: staticFixtures.defaultPassword,
-      withoutSession: true,
-    });
-
-    customerOverviewPage.assertPageLocation();
-    customerMfaActivationScenario.execute(dynamicFixtures.customerOne.email);
-
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUserSix.username,
-      password: staticFixtures.defaultPassword,
-    });
-
-    customerMfaRemoveScenario.execute({
-      email: dynamicFixtures.customerOne.email,
-    });
-  });
-});
+  }
+);

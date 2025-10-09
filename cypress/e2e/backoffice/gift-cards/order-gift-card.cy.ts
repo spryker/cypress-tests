@@ -7,7 +7,18 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
 (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'order gift card',
-  { tags: ['@backoffice','@gift-cards', 'gift-cards', 'shipment','spryker-core-back-office', 'order-management', 'state-machine', 'spryker-core'] },
+  {
+    tags: [
+      '@backoffice',
+      '@gift-cards',
+      'gift-cards',
+      'shipment',
+      'spryker-core-back-office',
+      'order-management',
+      'state-machine',
+      'spryker-core',
+    ],
+  },
   (): void => {
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const salesIndexPage = container.get(SalesIndexPage);

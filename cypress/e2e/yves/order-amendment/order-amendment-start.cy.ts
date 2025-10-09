@@ -9,268 +9,289 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
 /**
  * Order Amendment checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4545871873/Initialisation+Order+Amendment+Process}
  */
-describe('order amendment start', { tags: ['@yves', '@order-amendment', 'product', 'marketplace-product', 'marketplace-merchant-portal-product-management', 'order-management', 'marketplace-order-management', 'inventory-management', 'state-machine', 'order-amendment', 'non-splittable-products', 'cart', 'checkout', 'spryker-core'] }, (): void => {
-  const customerOverviewPage = container.get(CustomerOverviewPage);
-  const orderDetailsPage = container.get(OrderDetailsPage);
-  const cartPage = container.get(CartPage);
-  const catalogPage = container.get(CatalogPage);
-  const productPage = container.get(ProductPage);
-  const salesIndexPage = container.get(SalesIndexPage);
-  const salesDetailPage = container.get(SalesDetailPage);
-  const multiCartPage = container.get(MultiCartPage);
+describe(
+  'order amendment start',
+  {
+    tags: [
+      '@yves',
+      '@order-amendment',
+      'product',
+      'marketplace-product',
+      'marketplace-merchant-portal-product-management',
+      'order-management',
+      'marketplace-order-management',
+      'inventory-management',
+      'state-machine',
+      'order-amendment',
+      'non-splittable-products',
+      'cart',
+      'checkout',
+      'spryker-core',
+    ],
+  },
+  (): void => {
+    const customerOverviewPage = container.get(CustomerOverviewPage);
+    const orderDetailsPage = container.get(OrderDetailsPage);
+    const cartPage = container.get(CartPage);
+    const catalogPage = container.get(CatalogPage);
+    const productPage = container.get(ProductPage);
+    const salesIndexPage = container.get(SalesIndexPage);
+    const salesDetailPage = container.get(SalesDetailPage);
+    const multiCartPage = container.get(MultiCartPage);
 
-  const customerLoginScenario = container.get(CustomerLoginScenario);
-  const checkoutScenario = container.get(CheckoutScenario);
-  const deactivateProductScenario = container.get(DeactivateProductScenario);
-  const userLoginScenario = container.get(UserLoginScenario);
-  const removeProductStockScenario = container.get(RemoveProductStockScenario);
+    const customerLoginScenario = container.get(CustomerLoginScenario);
+    const checkoutScenario = container.get(CheckoutScenario);
+    const deactivateProductScenario = container.get(DeactivateProductScenario);
+    const userLoginScenario = container.get(UserLoginScenario);
+    const removeProductStockScenario = container.get(RemoveProductStockScenario);
 
-  let staticFixtures: OrderAmendmentStaticFixtures;
-  let dynamicFixtures: OrderAmendmentStartDynamicFixtures;
+    let staticFixtures: OrderAmendmentStaticFixtures;
+    let dynamicFixtures: OrderAmendmentStartDynamicFixtures;
 
-  before((): void => {
-    ({ staticFixtures, dynamicFixtures } = Cypress.env());
-  });
+    before((): void => {
+      ({ staticFixtures, dynamicFixtures } = Cypress.env());
+    });
 
-  it('customer should be able to create order amendment and lock previous order', (): void => {
-    placeCustomerOrder(dynamicFixtures.customer1.email, dynamicFixtures.address1.id_customer_address);
-
-    customerOverviewPage.viewLastPlacedOrder();
-    orderDetailsPage.containsOrderState('New');
-
-    orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
-      orderDetailsPage.editOrder();
-
-      cartPage.assertPageLocation();
-      cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
-      cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
+    it('customer should be able to create order amendment and lock previous order', (): void => {
+      placeCustomerOrder(dynamicFixtures.customer1.email, dynamicFixtures.address1.id_customer_address);
 
       customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.containsOrderState('Editing in Progress');
-    });
-  });
+      orderDetailsPage.containsOrderState('New');
 
-  it('customer should not be able to create order amendment when order not in "grace period started" state', (): void => {
-    placeCustomerOrder(dynamicFixtures.customer2.email, dynamicFixtures.address2.id_customer_address);
-    triggerOmsOrderToGracePeriodFinishedState();
+      orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
+        orderDetailsPage.editOrder();
 
-    customerLoginScenario.execute({
-      email: dynamicFixtures.customer2.email,
-      password: staticFixtures.defaultPassword,
-    });
+        cartPage.assertPageLocation();
+        cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
+        cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
 
-    customerOverviewPage.viewLastPlacedOrder();
-    orderDetailsPage.doesNotContainEditOrderButton();
-  });
-
-  it('customer should be able to replace current cart (quote) with previous order items', (): void => {
-    placeCustomerOrder(dynamicFixtures.customer3.email, dynamicFixtures.address3.id_customer_address);
-    addProductsToCart(dynamicFixtures.product.sku, 2);
-
-    customerOverviewPage.viewLastPlacedOrder();
-    orderDetailsPage.editOrder();
-
-    cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).should('have.value', '1');
-  });
-
-  it('customer should be able to modify new cart (change quantity, add new items)', (): void => {
-    placeCustomerOrder(dynamicFixtures.customer4.email, dynamicFixtures.address4.id_customer_address);
-
-    customerOverviewPage.viewLastPlacedOrder();
-    orderDetailsPage.editOrder();
-
-    cartPage.visit();
-    cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: 2 });
-    addProductsToCart(dynamicFixtures.product.sku, 2);
-    cartPage.visit();
-
-    cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).each(($input) => {
-      cy.wrap($input).should('have.value', isB2c() ? '4' : '2');
-    });
-  });
-
-  it('customer should be able to amend order when item was deactivated', (): void => {
-    customerLoginScenario.execute({
-      email: dynamicFixtures.customer5.email,
-      password: staticFixtures.defaultPassword,
+        customerOverviewPage.viewLastPlacedOrder();
+        orderDetailsPage.containsOrderState('Editing in Progress');
+      });
     });
 
-    addProductsToCart(dynamicFixtures.product.sku);
-    addProductsToCart(dynamicFixtures.productInActive.sku);
+    it('customer should not be able to create order amendment when order not in "grace period started" state', (): void => {
+      placeCustomerOrder(dynamicFixtures.customer2.email, dynamicFixtures.address2.id_customer_address);
+      triggerOmsOrderToGracePeriodFinishedState();
 
-    checkoutScenario.execute({
-      idCustomerAddress: dynamicFixtures.address5.id_customer_address,
-      shouldTriggerOmsInCli: true,
-      paymentMethod: getPaymentMethodBasedOnEnv(),
-    });
-
-    deactivateProductInBackoffice();
-
-    customerLoginScenario.execute({
-      email: dynamicFixtures.customer5.email,
-      password: staticFixtures.defaultPassword,
-    });
-
-    customerOverviewPage.viewLastPlacedOrder();
-    orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
-      orderDetailsPage.editOrder();
-
-      cartPage.assertPageLocation();
-      cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
-      cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer2.email,
+        password: staticFixtures.defaultPassword,
+      });
 
       customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.containsOrderState('Editing in Progress');
-    });
-  });
-
-  it('customer should be able to amend order when item was out-of-stock', (): void => {
-    customerLoginScenario.execute({
-      email: dynamicFixtures.customer6.email,
-      password: staticFixtures.defaultPassword,
+      orderDetailsPage.doesNotContainEditOrderButton();
     });
 
-    addProductsToCart(dynamicFixtures.product.sku);
-    addProductsToCart(dynamicFixtures.productOutOfStock.sku);
-
-    checkoutScenario.execute({
-      idCustomerAddress: dynamicFixtures.address6.id_customer_address,
-      shouldTriggerOmsInCli: true,
-      paymentMethod: getPaymentMethodBasedOnEnv(),
-    });
-
-    removeProductStock(dynamicFixtures.productOutOfStock.abstract_sku);
-
-    customerLoginScenario.execute({
-      email: dynamicFixtures.customer6.email,
-      password: staticFixtures.defaultPassword,
-    });
-
-    customerOverviewPage.viewLastPlacedOrder();
-    orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
-      orderDetailsPage.editOrder();
-
-      cartPage.assertPageLocation();
-      cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
-      cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
+    it('customer should be able to replace current cart (quote) with previous order items', (): void => {
+      placeCustomerOrder(dynamicFixtures.customer3.email, dynamicFixtures.address3.id_customer_address);
+      addProductsToCart(dynamicFixtures.product.sku, 2);
 
       customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.containsOrderState('Editing in Progress');
-    });
-  });
-
-  skipB2cIt('customer should be able to create a new cart with amended order items', (): void => {
-    placeCustomerOrder(dynamicFixtures.customer7.email, dynamicFixtures.address7.id_customer_address);
-    addProductsToCart(dynamicFixtures.product.sku, 2);
-
-    customerOverviewPage.viewLastPlacedOrder();
-    orderDetailsPage.editOrder();
-
-    multiCartPage.getMiniCartRadios().should('have.length', 2);
-    cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).should('have.value', '1');
-  });
-
-  it('customer should not be able to increase the out-of-stock item quantity for more than stock plus original item quantity', (): void => {
-    customerLoginScenario.execute({
-      email: dynamicFixtures.customer8.email,
-      password: staticFixtures.defaultPassword,
-    });
-
-    addProductsToCart(dynamicFixtures.productOutOfStock2.sku);
-
-    checkoutScenario.execute({
-      idCustomerAddress: dynamicFixtures.address8.id_customer_address,
-      shouldTriggerOmsInCli: true,
-      paymentMethod: getPaymentMethodBasedOnEnv(),
-    });
-
-    removeProductStock(dynamicFixtures.productOutOfStock2.abstract_sku);
-
-    customerLoginScenario.execute({
-      email: dynamicFixtures.customer8.email,
-      password: staticFixtures.defaultPassword,
-    });
-
-    customerOverviewPage.viewLastPlacedOrder();
-    orderDetailsPage.getOrderReferenceBlock().then(() => {
       orderDetailsPage.editOrder();
 
-      cartPage.changeQuantity({ sku: dynamicFixtures.productOutOfStock2.sku, quantity: 2 });
-
-      cy.contains(`Item ${dynamicFixtures.productOutOfStock2.sku} only has availability of 1.`).should('exist');
-      cartPage.getCartItemChangeQuantityField(dynamicFixtures.productOutOfStock2.sku).should('have.value', '1');
+      cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).should('have.value', '1');
     });
-  });
 
-  function addProductsToCart(sku: string, quantity?: number): void {
-    catalogPage.visit();
-    catalogPage.searchProductFromSuggestions({ query: sku });
-    productPage.addToCart({ quantity: quantity ?? 1 });
+    it('customer should be able to modify new cart (change quantity, add new items)', (): void => {
+      placeCustomerOrder(dynamicFixtures.customer4.email, dynamicFixtures.address4.id_customer_address);
+
+      customerOverviewPage.viewLastPlacedOrder();
+      orderDetailsPage.editOrder();
+
+      cartPage.visit();
+      cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: 2 });
+      addProductsToCart(dynamicFixtures.product.sku, 2);
+      cartPage.visit();
+
+      cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).each(($input) => {
+        cy.wrap($input).should('have.value', isB2c() ? '4' : '2');
+      });
+    });
+
+    it('customer should be able to amend order when item was deactivated', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer5.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      addProductsToCart(dynamicFixtures.product.sku);
+      addProductsToCart(dynamicFixtures.productInActive.sku);
+
+      checkoutScenario.execute({
+        idCustomerAddress: dynamicFixtures.address5.id_customer_address,
+        shouldTriggerOmsInCli: true,
+        paymentMethod: getPaymentMethodBasedOnEnv(),
+      });
+
+      deactivateProductInBackoffice();
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer5.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      customerOverviewPage.viewLastPlacedOrder();
+      orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
+        orderDetailsPage.editOrder();
+
+        cartPage.assertPageLocation();
+        cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
+        cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
+
+        customerOverviewPage.viewLastPlacedOrder();
+        orderDetailsPage.containsOrderState('Editing in Progress');
+      });
+    });
+
+    it('customer should be able to amend order when item was out-of-stock', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer6.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      addProductsToCart(dynamicFixtures.product.sku);
+      addProductsToCart(dynamicFixtures.productOutOfStock.sku);
+
+      checkoutScenario.execute({
+        idCustomerAddress: dynamicFixtures.address6.id_customer_address,
+        shouldTriggerOmsInCli: true,
+        paymentMethod: getPaymentMethodBasedOnEnv(),
+      });
+
+      removeProductStock(dynamicFixtures.productOutOfStock.abstract_sku);
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer6.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      customerOverviewPage.viewLastPlacedOrder();
+      orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
+        orderDetailsPage.editOrder();
+
+        cartPage.assertPageLocation();
+        cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
+        cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
+
+        customerOverviewPage.viewLastPlacedOrder();
+        orderDetailsPage.containsOrderState('Editing in Progress');
+      });
+    });
+
+    skipB2cIt('customer should be able to create a new cart with amended order items', (): void => {
+      placeCustomerOrder(dynamicFixtures.customer7.email, dynamicFixtures.address7.id_customer_address);
+      addProductsToCart(dynamicFixtures.product.sku, 2);
+
+      customerOverviewPage.viewLastPlacedOrder();
+      orderDetailsPage.editOrder();
+
+      multiCartPage.getMiniCartRadios().should('have.length', 2);
+      cartPage.getCartItemChangeQuantityField(dynamicFixtures.product.sku).should('have.value', '1');
+    });
+
+    it('customer should not be able to increase the out-of-stock item quantity for more than stock plus original item quantity', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer8.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      addProductsToCart(dynamicFixtures.productOutOfStock2.sku);
+
+      checkoutScenario.execute({
+        idCustomerAddress: dynamicFixtures.address8.id_customer_address,
+        shouldTriggerOmsInCli: true,
+        paymentMethod: getPaymentMethodBasedOnEnv(),
+      });
+
+      removeProductStock(dynamicFixtures.productOutOfStock2.abstract_sku);
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer8.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      customerOverviewPage.viewLastPlacedOrder();
+      orderDetailsPage.getOrderReferenceBlock().then(() => {
+        orderDetailsPage.editOrder();
+
+        cartPage.changeQuantity({ sku: dynamicFixtures.productOutOfStock2.sku, quantity: 2 });
+
+        cy.contains(`Item ${dynamicFixtures.productOutOfStock2.sku} only has availability of 1.`).should('exist');
+        cartPage.getCartItemChangeQuantityField(dynamicFixtures.productOutOfStock2.sku).should('have.value', '1');
+      });
+    });
+
+    function addProductsToCart(sku: string, quantity?: number): void {
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: sku });
+      productPage.addToCart({ quantity: quantity ?? 1 });
+    }
+
+    function placeCustomerOrder(email: string, idCustomerAddress: number): void {
+      customerLoginScenario.execute({
+        email: email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      checkoutScenario.execute({
+        idCustomerAddress: idCustomerAddress,
+        shouldTriggerOmsInCli: true,
+        paymentMethod: getPaymentMethodBasedOnEnv(),
+      });
+    }
+
+    function deactivateProductInBackoffice(): void {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      deactivateProductScenario.execute({
+        abstractSku: dynamicFixtures.productInActive.abstract_sku,
+        shouldTriggerPublishAndSync: true,
+      });
+    }
+
+    function removeProductStock(sku: string): void {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      removeProductStockScenario.execute({
+        abstractSku: sku,
+        shouldTriggerPublishAndSync: true,
+      });
+    }
+
+    function triggerOmsOrderToGracePeriodFinishedState(): void {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      salesIndexPage.visit();
+      salesIndexPage.view();
+
+      salesDetailPage.triggerOms({
+        state: 'skip grace period',
+        shouldTriggerOmsInCli: true,
+      });
+    }
+
+    function skipB2cIt(description: string, testFn: () => void): void {
+      (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+    }
+
+    function getPaymentMethodBasedOnEnv(): string {
+      return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
+        ? 'dummyMarketplacePaymentInvoice'
+        : 'dummyPaymentInvoice';
+    }
+
+    function isB2c(): boolean {
+      return ['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'));
+    }
   }
-
-  function placeCustomerOrder(email: string, idCustomerAddress: number): void {
-    customerLoginScenario.execute({
-      email: email,
-      password: staticFixtures.defaultPassword,
-    });
-
-    checkoutScenario.execute({
-      idCustomerAddress: idCustomerAddress,
-      shouldTriggerOmsInCli: true,
-      paymentMethod: getPaymentMethodBasedOnEnv(),
-    });
-  }
-
-  function deactivateProductInBackoffice(): void {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
-    });
-
-    deactivateProductScenario.execute({
-      abstractSku: dynamicFixtures.productInActive.abstract_sku,
-      shouldTriggerPublishAndSync: true,
-    });
-  }
-
-  function removeProductStock(sku: string): void {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
-    });
-
-    removeProductStockScenario.execute({
-      abstractSku: sku,
-      shouldTriggerPublishAndSync: true,
-    });
-  }
-
-  function triggerOmsOrderToGracePeriodFinishedState(): void {
-    userLoginScenario.execute({
-      username: dynamicFixtures.rootUser.username,
-      password: staticFixtures.defaultPassword,
-    });
-
-    salesIndexPage.visit();
-    salesIndexPage.view();
-
-    salesDetailPage.triggerOms({
-      state: 'skip grace period',
-      shouldTriggerOmsInCli: true,
-    });
-  }
-
-  function skipB2cIt(description: string, testFn: () => void): void {
-    (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
-  }
-
-  function getPaymentMethodBasedOnEnv(): string {
-    return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-      ? 'dummyMarketplacePaymentInvoice'
-      : 'dummyPaymentInvoice';
-  }
-
-  function isB2c(): boolean {
-    return ['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'));
-  }
-});
+);

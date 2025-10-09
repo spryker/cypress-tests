@@ -9,7 +9,17 @@ import {
 
 (['suite', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'Measurement Units - Create Page',
-  { tags: ['@backoffice', '@product-measurement-unit', 'measurement-units', 'packaging-units', 'marketplace-packaging-units', 'spryker-core-back-office', 'spryker-core'] },
+  {
+    tags: [
+      '@backoffice',
+      '@product-measurement-unit',
+      'measurement-units',
+      'packaging-units',
+      'marketplace-packaging-units',
+      'spryker-core-back-office',
+      'spryker-core',
+    ],
+  },
   (): void => {
     const productMeasurementUnitCreatePage = container.get(ProductMeasurementUnitCreatePage);
     const productMeasurementUnitListPage = container.get(ProductMeasurementUnitListPage);

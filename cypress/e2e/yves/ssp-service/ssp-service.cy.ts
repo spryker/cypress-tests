@@ -51,7 +51,19 @@ interface DynamicFixtures {
 
 (['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'SSP Service Management',
-  { tags: ['@yves', '@ssp-service', '@ssp', '@SspServiceManagement', 'product','shipment-service-points', 'product-offer-service-points', 'self-service-portal', 'spryker-core'] },
+  {
+    tags: [
+      '@yves',
+      '@ssp-service',
+      '@ssp',
+      '@SspServiceManagement',
+      'product',
+      'shipment-service-points',
+      'product-offer-service-points',
+      'self-service-portal',
+      'spryker-core',
+    ],
+  },
   (): void => {
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const customerLogoutScenario = container.get(CustomerLogoutScenario);

@@ -5,7 +5,22 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
 (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'reorder product offers',
-  { tags: ['@yves', '@order-amendment', 'product', 'marketplace-product', 'spryker-core', 'reorder', 'cart', 'marketplace-product-offer', 'product-offer-shipment', 'marketplace-merchant-portal-product-offer-management', 'marketplace-order-management', 'state-machine'] },
+  {
+    tags: [
+      '@yves',
+      '@order-amendment',
+      'product',
+      'marketplace-product',
+      'spryker-core',
+      'reorder',
+      'cart',
+      'marketplace-product-offer',
+      'product-offer-shipment',
+      'marketplace-merchant-portal-product-offer-management',
+      'marketplace-order-management',
+      'state-machine',
+    ],
+  },
   (): void => {
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const orderDetailsPage = container.get(OrderDetailsPage);
