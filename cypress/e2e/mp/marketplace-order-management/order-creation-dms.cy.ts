@@ -14,7 +14,7 @@ import { ActionEnum, SalesOrdersPage } from '@pages/mp';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
 import { retryableBefore } from '../../../support/e2e';
 
-describeDmsSuiteAndMp('order creation dms', { tags: ['@mp', '@marketplace-order-management', '@dms','marketplace-order-management', 'checkout', 'cart', 'marketplace-merchantportal-core', 'spryker-core'] }, (): void => {
+describeDmsSuiteAndMp('order creation dms', { tags: ['@mp', '@marketplace-order-management', '@dms', 'marketplace-order-management', 'order-management', 'state-machine',  'checkout', 'cart', 'marketplace-merchantportal-core', 'spryker-core'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);
   const salesIndexPage = container.get(SalesIndexPage);

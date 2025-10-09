@@ -12,7 +12,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
  */
 (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'marketplace payment OMS flow',
-  { tags: ['@smoke', '@order-management', 'order-management', 'marketplace-order-management', 'cart', 'checkout', 'search', 'spryker-core'] },
+  { tags: ['@smoke', '@order-management', 'order-management', 'marketplace-order-management', 'state-machine', 'cart', 'checkout', 'search',  'catalog', 'spryker-core'] },
   (): void => {
     const catalogPage = container.get(CatalogPage);
     const productsPage = container.get(ProductPage);

@@ -7,7 +7,7 @@ import { UpdatePriceProductScenario, UserLoginScenario } from '@scenarios/backof
 /**
  * Order Amendment checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4545871873/Initialisation+Order+Amendment+Process}
  */
-describe('order amendment finish', { tags: ['@yves', '@order-amendment','product', 'order-management', 'order-amendment', 'cart', 'checkout', 'non-splittable-products', 'spryker-core'] }, (): void => {
+describe('order amendment finish', { tags: ['@yves', '@order-amendment','product', 'marketplace-product', 'marketplace-merchant-portal-product-management', 'order-management', 'marketplace-order-management', 'state-machine', 'order-amendment', 'cart', 'checkout', 'non-splittable-products','prices', 'spryker-core'] }, (): void => {
   const customerOverviewPage = container.get(CustomerOverviewPage);
   const orderPage = container.get(OrderPage);
   const orderDetailsPage = container.get(OrderDetailsPage);

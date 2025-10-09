@@ -11,7 +11,7 @@ import {
 
 (['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'Product Offer - List Page',
-  { tags: ['@backoffice', '@product-offer','marketplace-product-offer', 'product', 'spryker-core-back-office', 'spryker-core'] },
+  { tags: ['@backoffice', '@product-offer','marketplace-product-offer', 'product', 'marketplace-product', 'marketplace-merchant-portal-product-offer-management', 'spryker-core-back-office', 'spryker-core'] },
   (): void => {
     const productOfferListPage = container.get(ProductOfferListPage);
     const productPage = container.get(ProductPage);

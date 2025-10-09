@@ -7,7 +7,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
-describe('publish and synchronize', { tags: ['@smoke', '@product', 'cart', 'search', 'spryker-core'] }, (): void => {
+describe('publish and synchronize', { tags: ['@smoke', '@product', 'cart', 'search', 'catalog', 'spryker-core', 'prices'] }, (): void => {
   const catalogPage = container.get(CatalogPage);
   const productPage = container.get(ProductPage);
   const userLoginScenario = container.get(UserLoginScenario);

@@ -10,7 +10,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 
 (['suite', 'b2b-mp', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'merchant combined product offer',
-  { tags: ['@mp', '@data-import', 'marketplace-product-offer', 'merchant-portal-data-import', 'search', 'self-service-portal', 'marketplace-merchantportal-core', 'spryker-core'] },
+  { tags: ['@mp', '@data-import', 'marketplace-product-offer', 'marketplace-merchant-portal-product-offer-management', 'merchant-portal-data-import', 'search', 'catalog', 'self-service-portal', 'marketplace-merchantportal-core', 'spryker-core'] },
   (): void => {
     const dataImportMerchantFilePage = container.get(DataImportMerchantFilePage);
     const catalogPage = container.get(CatalogPage);

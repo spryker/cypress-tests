@@ -3,7 +3,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 import { ProductPage, ProductManagementListPage } from '@pages/backoffice';
 import { ProductClassStaticFixtures, ProductClassDynamicFixtures } from '@interfaces/backoffice';
 
-describeForSsp('Product Class Functionality', { tags: ['@backoffice', '@productManagement', '@ssp', 'product','shipment-service-points', 'self-service-portal', 'spryker-core-back-office', 'spryker-core'] }, () => {
+describeForSsp('Product Class Functionality', { tags: ['@backoffice', '@productManagement', '@ssp', 'product','shipment-service-points', 'product-offer-service-points', 'self-service-portal', 'spryker-core-back-office', 'spryker-core'] }, () => {
   const userLoginScenario = container.get(UserLoginScenario);
   const productManagementListPage = container.get(ProductManagementListPage);
   const productPage = container.get(ProductPage);

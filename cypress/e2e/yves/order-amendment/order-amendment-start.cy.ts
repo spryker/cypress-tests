@@ -9,7 +9,7 @@ import { DeactivateProductScenario } from '../../../support/scenarios/backoffice
 /**
  * Order Amendment checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4545871873/Initialisation+Order+Amendment+Process}
  */
-describe('order amendment start', { tags: ['@yves', '@order-amendment', 'product', 'order-management', 'order-amendment', 'non-splittable-products', 'cart', 'checkout', 'spryker-core'] }, (): void => {
+describe('order amendment start', { tags: ['@yves', '@order-amendment', 'product', 'marketplace-product', 'marketplace-merchant-portal-product-management', 'order-management', 'marketplace-order-management', 'inventory-management', 'state-machine', 'order-amendment', 'non-splittable-products', 'cart', 'checkout', 'spryker-core'] }, (): void => {
   const customerOverviewPage = container.get(CustomerOverviewPage);
   const orderDetailsPage = container.get(OrderDetailsPage);
   const cartPage = container.get(CartPage);

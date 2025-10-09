@@ -16,7 +16,7 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
 
 (['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp asset management',
-  { tags: ['@yves', '@ssp-asset', '@ssp', '@sspAssetManagement', 'ssp-asset-management', 'self-service-portal', 'spryker-core'] },
+  { tags: ['@yves', '@ssp-asset', '@ssp', '@sspAssetManagement', 'ssp-asset-management', 'self-service-portal', 'spryker-core', 'navigation'] },
   (): void => {
     const assetCreatePage = container.get(SspAssetCreatePage);
     const assetEditPage = container.get(SspAssetEditPage);
