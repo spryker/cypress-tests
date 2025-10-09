@@ -10,7 +10,16 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
 (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'custom order reference management',
-  { tags: ['@backoffice', '@order-management'] },
+  {
+    tags: [
+      '@backoffice',
+      '@order-management',
+      'order-management',
+      'spryker-core-back-office',
+      'spryker-core',
+      'custom-order-reference',
+    ],
+  },
   (): void => {
     const cartPage = container.get(CartPage);
     const salesIndexPage = container.get(SalesIndexPage);

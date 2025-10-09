@@ -5,7 +5,19 @@ import { SspAssetSpecificCatalogStaticFixtures, SspAssetSpecificCatalogDynamicFi
 
 (['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'ssp asset specific catalog',
-  { tags: ['@yves', '@ssp-asset', '@ssp', '@sspAssetManagement'] },
+  {
+    tags: [
+      '@yves',
+      '@ssp-asset',
+      '@ssp',
+      '@sspAssetManagement',
+      'ssp-asset-management',
+      'self-service-portal',
+      'spryker-core',
+      'search',
+      'catalog',
+    ],
+  },
   (): void => {
     let staticFixtures: SspAssetSpecificCatalogStaticFixtures;
     let dynamicFixtures: SspAssetSpecificCatalogDynamicFixtures;

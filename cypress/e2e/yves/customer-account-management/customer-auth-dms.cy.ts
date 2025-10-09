@@ -7,7 +7,17 @@ import { retryableBefore } from '../../../support/e2e';
 
 describeIfDynamicStoreEnabled(
   'customer auth dms',
-  { tags: ['@yves', '@customer-account-management', '@dms'] },
+  {
+    tags: [
+      '@yves',
+      '@customer-account-management',
+      '@dms',
+      'spryker-core',
+      'customer-account-management',
+      'spryker-core',
+      'acl',
+    ],
+  },
   (): void => {
     const loginPage = container.get(LoginPage);
     const customerOverviewPage = container.get(CustomerOverviewPage);

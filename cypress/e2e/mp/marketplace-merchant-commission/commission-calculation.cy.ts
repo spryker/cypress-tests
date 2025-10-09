@@ -12,7 +12,20 @@ import { CatalogPage, MultiCartPage, ProductPage } from '@pages/yves';
  */
 (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'commission calculation',
-  { tags: ['@mp', '@marketplace-merchant-commission'] },
+  {
+    tags: [
+      '@mp',
+      '@marketplace-merchant-commission',
+      'marketplace-merchant-commission',
+      'marketplace-order-management',
+      'order-management',
+      'state-machine',
+      'marketplace-merchant',
+      'refunds',
+      'marketplace-merchantportal-core',
+      'spryker-core',
+    ],
+  },
   (): void => {
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);

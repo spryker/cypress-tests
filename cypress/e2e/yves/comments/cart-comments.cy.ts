@@ -5,7 +5,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
 (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'cart comments',
-  { tags: ['@yves', '@comments'] },
+  { tags: ['@yves', '@comments', 'cart', 'marketplace-cart', 'spryker-core'] },
   (): void => {
     const multiCartPage = container.get(MultiCartPage);
     const commentCartPage = container.get(CommentCartPage);

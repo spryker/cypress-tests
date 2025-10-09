@@ -12,7 +12,23 @@ import { CatalogPage, ProductPage } from '@pages/yves';
  */
 (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'agent merchant portal',
-  { tags: ['@mp', '@marketplace-agent-assist'] },
+  {
+    tags: [
+      '@mp',
+      '@marketplace-agent-assist',
+      'marketplace-agent-assist',
+      'marketplace-order-management',
+      'order-management',
+      'state-machine',
+      'product',
+      'marketplace-product',
+      'marketplace-merchant-portal-product-management',
+      'marketplace-product-offer',
+      'product-offer-shipment',
+      'marketplace-merchantportal-core',
+      'spryker-core',
+    ],
+  },
   (): void => {
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);

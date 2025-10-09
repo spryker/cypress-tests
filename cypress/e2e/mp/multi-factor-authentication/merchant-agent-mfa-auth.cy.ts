@@ -12,7 +12,7 @@ import {
 
 (['suite', 'b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'agent (merchant user) mfa auth [suite]',
-  { tags: ['@mp'] },
+  { tags: ['@mp', 'marketplace-agent-assist', 'marketplace-merchantportal-core', 'spryker-core', 'acl'] },
   (): void => {
     const mpAgentDashboardPage = container.get(AgentDashboardPage);
     const mfaLoginScenario = container.get(MerchantAgentMfaLoginScenario);
