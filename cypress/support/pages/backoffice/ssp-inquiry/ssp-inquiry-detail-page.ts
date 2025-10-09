@@ -25,7 +25,6 @@ export class SspInquiryDetailPage extends BackofficePage {
     this.repository
       .getCompanyBusinessUnitCell()
       .should('contain.text', `${params.customer.companyName} / ${params.customer.businessUnitName}`);
-    this.repository.getStoreCell().should('contain.text', params.store);
     this.repository.getTypeCell().contains(new RegExp(params.type, 'i')).should('exist');
     this.repository.getSubjectCell().should('contain.text', params.subject);
     this.repository.getDescriptionCell().should('contain.text', params.description);
@@ -110,7 +109,6 @@ export interface SspInquiryDetails {
   description: string;
   date: string;
   status: string;
-  store: string;
   customer: Customer;
   files: File[];
 }
