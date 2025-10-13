@@ -22,7 +22,6 @@ export interface SspInquiry {
   description: string;
   status: string;
   type: string;
-  store: Store;
   files: File[];
 }
 
