@@ -128,5 +128,5 @@ describeSuiteAndMp(
 );
 
 function describeSuiteAndMp(title: string, options: { tags: string[] }, fn: () => void): void {
-  (['suite', 'b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, fn);
+  (['suite', 'b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, options, fn);
 }
