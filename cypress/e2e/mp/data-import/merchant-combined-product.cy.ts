@@ -7,7 +7,22 @@ import { DataImportMerchantFilePage } from '@pages/mp';
 
 (['suite', 'b2b-mp', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'merchant combined product',
-  { tags: ['@mp', '@data-import'] },
+  {
+    tags: [
+      '@mp',
+      '@data-import',
+      'marketplace-product-offer',
+      'marketplace-merchant-portal-product-offer-management',
+      'merchant-portal-data-import',
+      'product',
+      'marketplace-product',
+      'marketplace-merchant-portal-product-management',
+      'search',
+      'catalog',
+      'marketplace-merchantportal-core',
+      'spryker-core',
+    ],
+  },
   (): void => {
     const dataImportMerchantFilePage = container.get(DataImportMerchantFilePage);
     const catalogPage = container.get(CatalogPage);
@@ -35,6 +50,7 @@ import { DataImportMerchantFilePage } from '@pages/mp';
       const abstractSku = uploadProductDataImportMerchantFileScenario.execute({
         importerType: 'Product',
         fileName: fileName,
+        merchant: dynamicFixtures.merchant,
       });
 
       dataImportMerchantFilePage.visit();
@@ -54,7 +70,11 @@ import { DataImportMerchantFilePage } from '@pages/mp';
 
     it('merchant will see failed data import status when uploaded with with invalid data', () => {
       const fileName = 'failed_merchant_combined_product.csv';
-      uploadProductDataImportMerchantFileScenario.execute({ importerType: 'Product', fileName: fileName });
+      uploadProductDataImportMerchantFileScenario.execute({
+        importerType: 'Product',
+        fileName: fileName,
+        merchant: dynamicFixtures.merchant,
+      });
 
       dataImportMerchantFilePage.visit();
       dataImportMerchantFilePage.assertFileStatus(fileName, 'Failed');

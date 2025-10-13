@@ -7,7 +7,7 @@ import { LoginStaticFixtures } from '@interfaces/smoke';
  */
 (['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'login',
-  { tags: ['@smoke', '@merchant-portal'] },
+  { tags: ['@smoke', '@merchant-portal', 'marketplace-merchantportal-core', 'spryker-core'] },
   (): void => {
     const loginPage = container.get(LoginPage);
     const dashboardPage = container.get(DashboardPage);

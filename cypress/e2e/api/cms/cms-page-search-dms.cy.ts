@@ -3,7 +3,7 @@ import { CmsPageSearchDmsDynamicFixtures, CmsPageSearchDmsStaticFixtures } from 
 import { CreateCmsPageScenario, CreateStoreScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { retryableBefore } from '../../../support/e2e';
 
-describeIfDynamicStoreEnabled('cms page search dms', { tags: ['@api', '@cms', '@dms'] }, () => {
+describeIfDynamicStoreEnabled('cms page search dms', { tags: ['@api', '@cms', '@dms', 'cms', 'content-item'] }, () => {
   const userLoginScenario = container.get(UserLoginScenario);
   const createStoreScenario = container.get(CreateStoreScenario);
   const createCmsPageScenario = container.get(CreateCmsPageScenario);

@@ -13,7 +13,17 @@ import {
  */
 (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'request management',
-  { tags: ['@backoffice', '@merchant-b2b-contract-requests'] },
+  {
+    tags: [
+      '@backoffice',
+      '@merchant-b2b-contract-requests',
+      'merchant-contract-requests',
+      'marketplace-merchant-contract-requests',
+      'merchant-contracts',
+      'spryker-core-back-office',
+      'spryker-core',
+    ],
+  },
   (): void => {
     const merchantRelationRequestListPage = container.get(MerchantRelationRequestListPage);
     const merchantRelationRequestEditPage = container.get(MerchantRelationRequestEditPage);

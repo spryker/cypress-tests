@@ -5,7 +5,17 @@ import { MerchantUserLoginScenario } from '@scenarios/mp';
 
 (['b2b', 'b2c'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'product concretes management',
-  { tags: ['@mp', '@merchant-product-concretes'] },
+  {
+    tags: [
+      '@mp',
+      '@merchant-product-concretes',
+      'product',
+      'marketplace-merchantportal-core',
+      'marketplace-product',
+      'marketplace-merchant-portal-product-management',
+      'spryker-core',
+    ],
+  },
   (): void => {
     const variantsPage = container.get(VariantsPage);
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);

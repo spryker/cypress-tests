@@ -13,7 +13,7 @@ import {
 
 (['suite', 'b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
   'merchant user mfa auth',
-  { tags: ['@mp'] },
+  { tags: ['@mp', 'marketplace-merchantportal-core', 'spryker-core', 'acl'] },
   (): void => {
     const dashboardPage = container.get(DashboardPage);
     const mfaPage = container.get(MerchantUserMultiFactorAuthPage);

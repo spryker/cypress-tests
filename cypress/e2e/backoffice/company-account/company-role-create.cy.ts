@@ -5,7 +5,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 
 (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
   'company role create',
-  { tags: ['@backoffice', '@company-role'] },
+  { tags: ['@backoffice', '@company-role', 'company-role', 'spryker-core-back-office', 'spryker-core'] },
   (): void => {
     const companyRoleListPage = container.get(CompanyRoleListPage);
     const companyRoleCreatePage = container.get(CompanyRoleCreatePage);
