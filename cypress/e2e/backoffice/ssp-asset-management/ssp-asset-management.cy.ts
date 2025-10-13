@@ -1,7 +1,13 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/backoffice';
-import { SspAssetListPage, SspAssetAddPage, SspAssetDetailPage, SspAssetUpdatePage } from '@pages/backoffice/';
+import {
+  SspAssetListPage,
+  SspAssetAddPage,
+  SspAssetDetailPage,
+  SspAssetUpdatePage,
+  SspModelListPage,
+} from '@pages/backoffice/';
 
 import { SspAssetDetailPage as YvesSspAssetDetailPage } from '@pages/yves/';
 import { CustomerLoginScenario } from '@scenarios/yves';
@@ -25,6 +31,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     const assetManagementAddPage = container.get(SspAssetAddPage);
     const assetManagementDetailPage = container.get(SspAssetDetailPage);
     const assetManagementUpdatePage = container.get(SspAssetUpdatePage);
+    const sspModelListPage = container.get(SspModelListPage);
     const yvesSspAssetDetailPage = container.get(YvesSspAssetDetailPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
 
@@ -60,6 +67,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
         ],
         company: { name: dynamicFixtures.company1.name },
       });
+      assetManagementAddPage.checkCreateSspModelCheckbox();
 
       assetManagementAddPage.submitForm();
       assetManagementAddPage.verifySuccessMessage();
@@ -113,6 +121,9 @@ import { CustomerLoginScenario } from '@scenarios/yves';
           note: staticFixtures.sspAsset.note,
         });
       });
+
+      sspModelListPage.visit();
+      sspModelListPage.verifyModelInTable({ name: staticFixtures.sspAsset.name });
     });
 
     it('should update an existing asset', () => {

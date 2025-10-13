@@ -4,6 +4,7 @@ import { autoWired } from '@utils';
 @injectable()
 @autoWired
 export class SspAssetListRepository {
+  getIdHeaderSelector = (): string => '[data-qa="spy_ssp_asset.id_ssp_asset"]';
   getReferenceHeaderSelector = (): string => '[data-qa="spy_ssp_asset.reference"]';
   getImageHeaderSelector = (): string => '[data-qa="image"]';
   getNameHeaderSelector = (): string => '[data-qa="spy_ssp_asset.name"]';
