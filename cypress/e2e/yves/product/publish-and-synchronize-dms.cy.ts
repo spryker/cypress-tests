@@ -97,7 +97,7 @@ describeIfDynamicStoreEnabled(
 );
 
 function describeIfDynamicStoreEnabled(title: string, options: { tags: string[] }, fn: () => void): void {
-  (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(title, fn);
+  (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(title, options, fn);
 }
 
 interface ProductAbstract {

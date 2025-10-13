@@ -31,8 +31,6 @@ export default defineConfig({
     glueStorefrontUrl: `${protocol}://${glueStorefrontHost}`,
     mailCatcherUrl: `${protocol}://${mailCatcherHost}`,
     grepFilterSpecs: true,
-    grepOmitFiltered: true,
-    grepUntagged: true,
   },
   e2e: {
     baseUrl: `${protocol}://${baseHost}`,
@@ -42,8 +40,13 @@ export default defineConfig({
           return existsSync(filename);
         },
       });
+      if (!config.env.grepTags) {
+        config.env.grepFilterSpecs = false;
+      }
+
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       require('@cypress/grep/src/plugin')(config);
+
       return config;
     },
     retries: {
