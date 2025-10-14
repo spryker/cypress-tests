@@ -135,6 +135,7 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
       checkoutScenario.execute({
         paymentMethod: 'dummyPaymentInvoice',
         idCustomerAddress: 0,
+        isMultiShipment: true,
       });
 
       assetDetailPage.visit({

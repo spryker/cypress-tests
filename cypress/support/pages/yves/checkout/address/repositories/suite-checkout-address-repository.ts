@@ -15,7 +15,15 @@ export class SuiteCheckoutAddressRepository implements CheckoutAddressRepository
   getShippingAddressPhoneField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_phone');
   getShippingAddressBillingSameAsShippingCheckbox = (): Cypress.Chainable =>
     cy.get('#addressesForm_billingSameAsShipping');
-  getNextButton = (): Cypress.Chainable => cy.get('[data-qa="submit-address-form-button"]');
+  getNextButton = (): Cypress.Chainable => {
+    return cy.get('body').then(($body) => {
+      if ($body.find('[data-qa="submit-address-form-button"]').length > 0) {
+        return cy.get('[data-qa="submit-address-form-button"]');
+      } else {
+        return cy.get('button[data-qa="submit-button"]');
+      }
+    });
+  };
   getSelectBillingAddressField = (): Cypress.Chainable => cy.get('#addressesForm_billingAddress_id_customer_address');
   getBillingAddressFirstNameField = (): Cypress.Chainable => cy.get('#addressesForm_billingAddress_first_name');
   getBillingAddressLastNameField = (): Cypress.Chainable => cy.get('#addressesForm_billingAddress_last_name');
