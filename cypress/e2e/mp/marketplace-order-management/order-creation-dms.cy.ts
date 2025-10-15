@@ -187,5 +187,5 @@ describeDmsSuiteAndMp(
 function describeDmsSuiteAndMp(title: string, options: { tags: string[] }, fn: () => void): void {
   (Cypress.env('isDynamicStoreEnabled') && ['suite', 'b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
     ? describe
-    : describe.skip)(title, fn);
+    : describe.skip)(title, options, fn);
 }
