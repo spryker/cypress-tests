@@ -11,7 +11,7 @@ import { SspInquiryStaticFixtures, SspInquiryDynamicFixtures } from '@interfaces
 import { CustomerLoginScenario } from '@scenarios/yves';
 import { CustomerLogoutScenario } from '@scenarios/yves';
 
-(['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+describe(
   'ssp inquiry management',
   {
     tags: [
@@ -25,6 +25,10 @@ import { CustomerLogoutScenario } from '@scenarios/yves';
     ],
   },
   (): void => {
+    if (!['suite', 'b2b'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped because tests run only for suite and b2b ', () => {});
+    return;
+    }
     const sspInquiryListPage = container.get(SspInquiryListPage);
     const sspInquiryCreatePage = container.get(SspInquiryCreatePage);
     const sspInquiryDetailPage = container.get(SspInquiryDetailPage);

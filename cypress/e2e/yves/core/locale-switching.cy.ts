@@ -3,10 +3,14 @@ import { LocaleSwitchingScenario } from '@scenarios/yves';
 import { CatalogPage, HomePage } from '@pages/yves';
 import { LocaleSwitchingDynamicFixtures, LocaleSwitchingStaticFixtures } from '@interfaces/yves';
 
-describeIfDynamicStoreEnabled(
+describe(
   'locale switching',
   { tags: ['@core', '@yves', 'spryker-core', 'search', 'catalog', 'navigation', 'product'] },
   (): void => {
+    if (!Cypress.env('isDynamicStoreEnabled')) {
+    it.skip('skipped due to disabled dynamic store feature', () => {});
+    return;
+    }
     const homePage = container.get(HomePage);
     const catalogPage = container.get(CatalogPage);
     const localeSwitchingScenario = container.get(LocaleSwitchingScenario);
@@ -83,6 +87,3 @@ describeIfDynamicStoreEnabled(
   }
 );
 
-function describeIfDynamicStoreEnabled(title: string, options: { tags: string[] }, fn: () => void): void {
-  (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(title, options, fn);
-}

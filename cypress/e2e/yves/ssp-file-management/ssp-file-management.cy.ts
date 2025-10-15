@@ -5,10 +5,14 @@ import { SspFileManagementDynamicFixtures } from '@interfaces/yves';
 import { SspFileManagementListPage, SspAssetDetailPage, SspFileManagementDownloadPage } from '@pages/yves';
 import { SspFileManagementStaticFixtures } from '@interfaces/yves';
 
-describeForSsp(
+describe(
   'File Manager Module - Files List',
   { tags: ['@backoffice', '@fileManager', '@ssp', 'ssp-file-management', 'self-service-portal', 'spryker-core'] },
   () => {
+    if (!['suite', 'b2b'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped because tests run only for suite and b2b ', () => {});
+    return;
+    }
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const customerLogoutScenario = container.get(CustomerLogoutScenario);
     const customerOverviewPage = container.get(CustomerOverviewPage);
@@ -266,6 +270,3 @@ describeForSsp(
   }
 );
 
-function describeForSsp(title: string, options: { tags: string[] }, fn: () => void): void {
-  (['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, options, fn);
-}

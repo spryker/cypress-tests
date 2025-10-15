@@ -3,10 +3,14 @@ import { CartCommentsDynamicFixtures, CartCommentsStaticFixtures } from '@interf
 import { CommentCartPage, MultiCartPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
-(['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+describe(
   'cart comments',
   { tags: ['@yves', '@comments', 'cart', 'marketplace-cart', 'spryker-core'] },
   (): void => {
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped because tests run only for suite and b2b and b2b-mp', () => {});
+    return;
+    }
     const multiCartPage = container.get(MultiCartPage);
     const commentCartPage = container.get(CommentCartPage);
     const loginCustomerScenario = container.get(CustomerLoginScenario);

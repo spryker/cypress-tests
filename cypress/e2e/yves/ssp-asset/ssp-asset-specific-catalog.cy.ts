@@ -3,7 +3,7 @@ import { SspAssetDetailPage, CatalogPage, ProductPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 import { SspAssetSpecificCatalogStaticFixtures, SspAssetSpecificCatalogDynamicFixtures } from '@interfaces/yves';
 
-(['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+describe(
   'ssp asset specific catalog',
   {
     tags: [
@@ -19,6 +19,10 @@ import { SspAssetSpecificCatalogStaticFixtures, SspAssetSpecificCatalogDynamicFi
     ],
   },
   (): void => {
+    if (!['suite', 'b2b'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped because tests run only for suite and b2b ', () => {});
+    return;
+    }
     let staticFixtures: SspAssetSpecificCatalogStaticFixtures;
     let dynamicFixtures: SspAssetSpecificCatalogDynamicFixtures;
     const customerLoginScenario = container.get(CustomerLoginScenario);

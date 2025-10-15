@@ -5,7 +5,7 @@ import { CreateStoreScenario, EnableCmsBlockForAllStoresScenario, UserLoginScena
 import { SelectStoreScenario } from '@scenarios/yves';
 import { retryableBefore } from '../../../support/e2e';
 
-describeIfDynamicStoreEnabled(
+describe(
   'customer auth dms',
   {
     tags: [
@@ -19,6 +19,10 @@ describeIfDynamicStoreEnabled(
     ],
   },
   (): void => {
+    if (!Cypress.env('isDynamicStoreEnabled')) {
+    it.skip('skipped due to disabled dynamic store feature', () => {});
+    return;
+    }
     const loginPage = container.get(LoginPage);
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const userLoginScenario = container.get(UserLoginScenario);
@@ -77,6 +81,3 @@ describeIfDynamicStoreEnabled(
   }
 );
 
-function describeIfDynamicStoreEnabled(title: string, options: { tags: string[] }, fn: () => void): void {
-  (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(title, options, fn);
-}

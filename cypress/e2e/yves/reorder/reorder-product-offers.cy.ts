@@ -3,7 +3,7 @@ import { ReorderProductOffersDynamicFixtures, ReorderProductOfferStaticFixtures 
 import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
-(['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+describe(
   'reorder product offers',
   {
     tags: [
@@ -22,6 +22,10 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
     ],
   },
   (): void => {
+    if (['b2c', 'b2b'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped because tests run only for suite b2b-mp and b2c-mp ', () => {});
+    return;
+    }
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const orderDetailsPage = container.get(OrderDetailsPage);
     const cartPage = container.get(CartPage);

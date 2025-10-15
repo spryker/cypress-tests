@@ -4,10 +4,14 @@ import { CmsPageSearchDmsDynamicFixtures, CmsPageSearchDmsStaticFixtures } from 
 import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 import { CreateStoreScenario, CreateCmsPageScenario, UserLoginScenario } from '@scenarios/backoffice';
 
-describeIfDynamicStoreEnabled(
+describe(
   'cms page search dms',
   { tags: ['@yves', '@cms', '@dms', 'cms', 'content-item', 'search', 'catalog', 'spryker-core'] },
   (): void => {
+    if (!Cypress.env('isDynamicStoreEnabled')) {
+    it.skip('skipped due to disabled dynamic store feature', () => {});
+    return;
+   }
     const contentPage = container.get(CmsContentPage);
     const userLoginScenario = container.get(UserLoginScenario);
     const createStoreScenario = container.get(CreateStoreScenario);
@@ -74,6 +78,3 @@ describeIfDynamicStoreEnabled(
   }
 );
 
-function describeIfDynamicStoreEnabled(title: string, options: { tags: string[] }, fn: () => void): void {
-  (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(title, options, fn);
-}

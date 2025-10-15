@@ -2,10 +2,14 @@ import { container } from '@utils';
 import { ProductComparisonDynamicFixtures } from '@interfaces/yves';
 import { CatalogPage, ProductPage, ProductComparisonPage } from '@pages/yves';
 
-(['b2c-mp', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+describe(
   'product comparison',
   { tags: ['@yves', '@product-comparison', 'product', 'marketplace-product', 'spryker-core', 'product-comparison '] },
   (): void => {
+    if (['b2c-mp', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped because tests run only for suite and b2c ', () => {});
+    return;
+    }
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const productComparisonPage = container.get(ProductComparisonPage);

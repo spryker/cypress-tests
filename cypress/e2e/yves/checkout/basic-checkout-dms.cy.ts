@@ -10,10 +10,14 @@ import {
 } from '@scenarios/backoffice';
 import { retryableBefore } from '../../../support/e2e';
 
-describeIfDynamicStoreEnabled(
+describe(
   'basic checkout dms',
   { tags: ['@yves', '@checkout', '@dms', 'checkout', 'shipment', 'cart', 'marketplace-shipment', 'spryker-core'] },
   (): void => {
+    if (!Cypress.env('isDynamicStoreEnabled')) {
+    it.skip('skipped due to disabled dynamic store feature', () => {});
+    return;
+    }
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const customerOverviewPage = container.get(CustomerOverviewPage);
@@ -186,6 +190,4 @@ describeIfDynamicStoreEnabled(
   }
 );
 
-function describeIfDynamicStoreEnabled(title: string, options: { tags: string[] }, fn: () => void): void {
-  (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(title, options, fn);
-}
+
