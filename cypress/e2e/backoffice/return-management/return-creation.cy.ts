@@ -5,7 +5,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { CatalogPage, ProductPage } from '@pages/yves';
 
-(['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+describe(
   'return creation',
   {
     tags: [
@@ -20,6 +20,10 @@ import { CatalogPage, ProductPage } from '@pages/yves';
     ],
   },
   (): void => {
+    if (['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped due to it being B2C or B2C MP repo ', () => {});
+    return;
+    }
     const catalogPage = container.get(CatalogPage);
     const productsPage = container.get(ProductPage);
     const salesIndexPage = container.get(SalesIndexPage);

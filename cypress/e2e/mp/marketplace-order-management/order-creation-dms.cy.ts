@@ -14,7 +14,7 @@ import { ActionEnum, SalesOrdersPage } from '@pages/mp';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
 import { retryableBefore } from '../../../support/e2e';
 
-describeDmsSuiteAndMp(
+describe(
   'order creation dms',
   {
     tags: [
@@ -31,6 +31,10 @@ describeDmsSuiteAndMp(
     ],
   },
   (): void => {
+    if (!Cypress.env('isDynamicStoreEnabled') || !['suite', 'b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped because tests run only for DMS on suite, b2b-mp and b2c-mp', () => {});
+    return;
+    }
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const salesIndexPage = container.get(SalesIndexPage);
@@ -183,9 +187,3 @@ describeDmsSuiteAndMp(
     }
   }
 );
-
-function describeDmsSuiteAndMp(title: string, options: { tags: string[] }, fn: () => void): void {
-  (Cypress.env('isDynamicStoreEnabled') && ['suite', 'b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-    ? describe
-    : describe.skip)(title, options, fn);
-}

@@ -4,7 +4,7 @@ import { SspInquiryDetailPage } from '@pages/backoffice';
 import { SspInquiryListPage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
-(['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+describe(
   'ssp inquiry management',
   {
     tags: [
@@ -18,6 +18,10 @@ import { UserLoginScenario } from '@scenarios/backoffice';
     ],
   },
   (): void => {
+    if (!['suite', 'b2b'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped because tests run only for suite and b2b', () => {});
+    return;
+    }
     const sspInquiryDetailPage = container.get(SspInquiryDetailPage);
     const sspInquiryListPage = container.get(SspInquiryListPage);
     const userLoginScenario = container.get(UserLoginScenario);

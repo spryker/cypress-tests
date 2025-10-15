@@ -9,7 +9,7 @@ import {
   ProductOfferViewPage,
 } from '@pages/backoffice';
 
-(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+describe(
   'Product Offer - List Page',
   {
     tags: [
@@ -24,6 +24,10 @@ import {
     ],
   },
   (): void => {
+    if (!['suite'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped due to it being non-suite repo ', () => {});
+    return;
+    }
     const productOfferListPage = container.get(ProductOfferListPage);
     const productPage = container.get(ProductPage);
     const productManagementEditPage = container.get(ProductManagementEditPage);

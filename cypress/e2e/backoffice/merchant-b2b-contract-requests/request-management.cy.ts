@@ -11,7 +11,7 @@ import {
 /**
  * Merchant Relation Requests & Enhanced Merchant Relations checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4105896492/Business+Journey+B2B+Marketplace+-+to+automate}
  */
-(['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+describe(
   'request management',
   {
     tags: [
@@ -25,6 +25,10 @@ import {
     ],
   },
   (): void => {
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped due to repo being b2c or b2c-mp', () => {});
+    return;
+    }
     const merchantRelationRequestListPage = container.get(MerchantRelationRequestListPage);
     const merchantRelationRequestEditPage = container.get(MerchantRelationRequestEditPage);
     const merchantRelationshipListPage = container.get(MerchantRelationshipListPage);

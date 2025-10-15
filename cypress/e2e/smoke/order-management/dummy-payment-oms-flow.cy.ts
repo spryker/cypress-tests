@@ -8,7 +8,7 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
-(['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+describe(
   'dummy payment OMS flow',
   {
     tags: [
@@ -25,6 +25,10 @@ import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
     ],
   },
   (): void => {
+    if (['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped because tests run only for suite, b2b and b2c', () => {});
+    return;
+    }
     const catalogPage = container.get(CatalogPage);
     const productsPage = container.get(ProductPage);
     const customerOverviewPage = container.get(CustomerOverviewPage);

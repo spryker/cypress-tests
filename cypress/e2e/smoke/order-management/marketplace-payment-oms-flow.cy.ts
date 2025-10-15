@@ -27,6 +27,10 @@ import { CatalogPage, ProductPage } from '@pages/yves';
     ],
   },
   (): void => {
+    if (['b2c', 'b2b'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped because tests run only for suite, b2b-mp, b2c-mp, suite', () => {});
+    return;
+    }
     const catalogPage = container.get(CatalogPage);
     const productsPage = container.get(ProductPage);
     const salesIndexPage = container.get(SalesIndexPage);

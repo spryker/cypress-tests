@@ -12,7 +12,7 @@ import {
 import { SspAssetDetailPage as YvesSspAssetDetailPage } from '@pages/yves/';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
-(['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+describe(
   'ssp asset management',
   {
     tags: [
@@ -26,6 +26,10 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     ],
   },
   () => {
+    if (!['suite', 'b2b'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped because tests run only for suite and b2b', () => {});
+    return;
+    }
     const userLoginScenario = container.get(UserLoginScenario);
     const assetManagementListPage = container.get(SspAssetListPage);
     const assetManagementAddPage = container.get(SspAssetAddPage);

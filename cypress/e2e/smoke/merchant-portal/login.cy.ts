@@ -5,10 +5,14 @@ import { LoginStaticFixtures } from '@interfaces/smoke';
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  */
-(['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+describe(
   'login',
   { tags: ['@smoke', '@merchant-portal', 'marketplace-merchantportal-core', 'spryker-core'] },
   (): void => {
+    if (['b2c', 'b2b'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped because tests run only for suite, b2b-mp and b2b-mp', () => {});
+    return;
+    }
     const loginPage = container.get(LoginPage);
     const dashboardPage = container.get(DashboardPage);
 

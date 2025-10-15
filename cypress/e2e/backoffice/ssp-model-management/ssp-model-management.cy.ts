@@ -3,7 +3,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 import { SspModelAddPage, SspModelUpdatePage, SspModelViewPage } from '@pages/backoffice/';
 import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } from '@interfaces/backoffice';
 
-(['suite'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+describe(
   'ssp model creation',
   {
     tags: [
@@ -17,6 +17,10 @@ import { SspModelManagementStaticFixtures, SspModelManagementDynamicFixtures } f
     ],
   },
   () => {
+    if (!['suite'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped because tests run only for suite', () => {});
+    return;
+    }
     const userLoginScenario = container.get(UserLoginScenario);
     const sspModelAddPage = container.get(SspModelAddPage);
     const sspModelUpdatePage = container.get(SspModelUpdatePage);

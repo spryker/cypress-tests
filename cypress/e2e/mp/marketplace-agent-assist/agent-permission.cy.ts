@@ -6,7 +6,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
-(['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+describe(
   'agent permission',
   {
     tags: [
@@ -19,6 +19,10 @@ import { UserLoginScenario } from '@scenarios/backoffice';
     ],
   },
   (): void => {
+    if (['b2c', 'b2b'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped because tests run only for suite, b2b-mp and b2c-mp', () => {});
+    return;
+    }
     const backofficeUserIndexPage = container.get(UserIndexPage);
     const backofficeUserUpdatePage = container.get(UserUpdatePage);
     const userLoginScenario = container.get(UserLoginScenario);

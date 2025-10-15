@@ -10,10 +10,14 @@ import {
   MerchantUserSetUpMfaScenario,
 } from '@scenarios/mp';
 
-(['suite', 'b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+describe.skip(
   'agent (merchant user) mfa auth [suite]',
   { tags: ['@mp', 'marketplace-agent-assist', 'marketplace-merchantportal-core', 'spryker-core', 'acl'] },
   (): void => {
+    if (!['suite', 'b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+    it.skip('skipped because tests run only for suite, b2b-mp', () => {});
+    return;
+    }
     const mpAgentDashboardPage = container.get(AgentDashboardPage);
     const mfaLoginScenario = container.get(MerchantAgentMfaLoginScenario);
     const merchantAgentLoginUserScenario = container.get(MerchantAgentLoginUserScenario);
