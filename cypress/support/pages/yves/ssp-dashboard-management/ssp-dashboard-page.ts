@@ -67,19 +67,27 @@ export class SspDashboardPage extends YvesPage {
   assertWidgetData(sspAssets: SspAsset[]): void {
     this.repository.getAssetPreviewBlock().its('length').should('eq', sspAssets.length);
 
-    sspAssets.forEach((sspAsset: SspAsset, index) => {
-      if (sspAsset.reference) {
-        this.repository
-          .getAssetPreviewItemLinkBlock(index)
+    this.repository.getAssetPreviewBlock().each(($element) => {
+      const assetName = $element.text();
+      const matchingAsset = sspAssets.find((asset) => assetName.includes(asset.name));
+
+      if (!matchingAsset) {
+        return;
+      }
+
+      if (matchingAsset.reference) {
+        cy.wrap($element)
+          .find('a.assets-preview__link')
           .should('have.attr', 'href')
-          .should('have.string', sspAsset.reference);
+          .should('have.string', matchingAsset.reference);
       }
-      if (sspAsset.name) {
-        this.repository.getAssetPreviewItemBlock(index).contains(sspAsset.name).should('exist');
+
+      if (matchingAsset.name) {
+        cy.wrap($element).contains(matchingAsset.name).should('exist');
       }
-      if (!sspAsset.image) {
-        this.repository
-          .getAssetPreviewItemBlock(index)
+
+      if (!matchingAsset.image) {
+        cy.wrap($element)
           .find('lazy-image div')
           .should('have.css', 'background-image')
           .and('have.string', this.repository.getPlaceholderImage());

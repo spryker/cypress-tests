@@ -37,17 +37,6 @@ export class B2bMpSspDashboardManagementRepository implements SspDashboardManage
   getAssetPreviewBlock(): Chainable {
     return cy.get('[data-qa="component assets-preview"]').find('[data-qa="asset-item-preview"]');
   }
-  getAssetPreviewItemBlock(index: number): Chainable {
-    return cy
-      .get('[data-qa="component assets-preview"]')
-      .find('[data-qa="asset-item-preview"]:nth-child(' + (index + 1) + ')');
-  }
-  getAssetPreviewItemLinkBlock(index: number): Chainable {
-    return cy
-      .get('[data-qa="component assets-preview"]')
-      .find('[data-qa="asset-item-preview"]:nth-child(' + (index + 1) + ')')
-      .find('a.assets-preview__link');
-  }
   getExpectedStatsColumnBlocks(): string[] {
     return ['Assets', 'Pending Inquiries', 'Booked Services'];
   }
