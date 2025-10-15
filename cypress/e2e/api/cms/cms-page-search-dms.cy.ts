@@ -48,4 +48,3 @@ describe('cms page search dms', { tags: ['@api', '@cms', '@dms', 'cms', 'content
     createCmsPageScenario.execute({ cmsPageName: staticFixtures.cmsPageName, shouldTriggerPublishAndSync: true });
   }
 });
-

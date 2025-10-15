@@ -8,8 +8,8 @@ describe(
   { tags: ['@core', '@yves', 'spryker-core', 'search', 'catalog', 'navigation', 'product'] },
   (): void => {
     if (!Cypress.env('isDynamicStoreEnabled')) {
-    it.skip('skipped due to disabled dynamic store feature', () => {});
-    return;
+      it.skip('skipped due to disabled dynamic store feature', () => {});
+      return;
     }
     const homePage = container.get(HomePage);
     const catalogPage = container.get(CatalogPage);
@@ -86,4 +86,3 @@ describe(
     });
   }
 );
-

@@ -23,8 +23,8 @@ describe(
   },
   (): void => {
     if (!['suite', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
-    it.skip('skipped due to it being B2C or B2C MP repo ', () => {});
-    return;
+      it.skip('skipped due to it being B2C or B2C MP repo ', () => {});
+      return;
     }
     const productMeasurementUnitListPage = container.get(ProductMeasurementUnitListPage);
     const userLoginScenario = container.get(UserLoginScenario);

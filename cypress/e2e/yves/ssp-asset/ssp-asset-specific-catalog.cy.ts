@@ -20,8 +20,8 @@ describe(
   },
   (): void => {
     if (!['suite', 'b2b'].includes(Cypress.env('repositoryId'))) {
-    it.skip('skipped because tests run only for suite and b2b ', () => {});
-    return;
+      it.skip('skipped because tests run only for suite and b2b ', () => {});
+      return;
     }
     let staticFixtures: SspAssetSpecificCatalogStaticFixtures;
     let dynamicFixtures: SspAssetSpecificCatalogDynamicFixtures;

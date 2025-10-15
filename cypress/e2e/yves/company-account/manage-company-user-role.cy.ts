@@ -19,8 +19,8 @@ describe(
   },
   (): void => {
     if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
-    it.skip('skipped because tests run only for suite and b2b and b2b-mp', () => {});
-    return;
+      it.skip('skipped because tests run only for suite and b2b and b2b-mp', () => {});
+      return;
     }
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const manageCompanyRoleUserPage = container.get(ManageCompanyRoleUserPage);

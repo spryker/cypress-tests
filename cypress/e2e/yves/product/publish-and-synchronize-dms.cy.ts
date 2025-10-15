@@ -24,8 +24,8 @@ describe(
   },
   (): void => {
     if (!Cypress.env('isDynamicStoreEnabled')) {
-    it.skip('skipped due to disabled dynamic store feature', () => {});
-    return;
+      it.skip('skipped due to disabled dynamic store feature', () => {});
+      return;
     }
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
@@ -99,7 +99,6 @@ describe(
     });
   }
 );
-
 
 interface ProductAbstract {
   name: string;

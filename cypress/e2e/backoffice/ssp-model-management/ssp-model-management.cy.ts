@@ -18,8 +18,8 @@ describe(
   },
   () => {
     if (!['suite'].includes(Cypress.env('repositoryId'))) {
-    it.skip('skipped because tests run only for suite', () => {});
-    return;
+      it.skip('skipped because tests run only for suite', () => {});
+      return;
     }
     const userLoginScenario = container.get(UserLoginScenario);
     const sspModelAddPage = container.get(SspModelAddPage);

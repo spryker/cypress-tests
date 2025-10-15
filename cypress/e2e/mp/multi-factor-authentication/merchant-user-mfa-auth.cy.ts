@@ -16,8 +16,8 @@ describe.skip(
   { tags: ['@mp', 'marketplace-merchantportal-core', 'spryker-core', 'acl'] },
   (): void => {
     if (!['suite', 'b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
-    it.skip('skipped because tests run only for suite, b2b-mp', () => {});
-    return;
+      it.skip('skipped because tests run only for suite, b2b-mp', () => {});
+      return;
     }
     const dashboardPage = container.get(DashboardPage);
     const mfaPage = container.get(MerchantUserMultiFactorAuthPage);

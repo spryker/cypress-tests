@@ -15,8 +15,8 @@ describe(
   { tags: ['@yves', '@checkout', '@dms', 'checkout', 'shipment', 'cart', 'marketplace-shipment', 'spryker-core'] },
   (): void => {
     if (!Cypress.env('isDynamicStoreEnabled')) {
-    it.skip('skipped due to disabled dynamic store feature', () => {});
-    return;
+      it.skip('skipped due to disabled dynamic store feature', () => {});
+      return;
     }
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
@@ -189,5 +189,3 @@ describe(
     }
   }
 );
-
-

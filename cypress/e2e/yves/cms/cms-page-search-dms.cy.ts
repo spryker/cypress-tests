@@ -9,9 +9,9 @@ describe(
   { tags: ['@yves', '@cms', '@dms', 'cms', 'content-item', 'search', 'catalog', 'spryker-core'] },
   (): void => {
     if (!Cypress.env('isDynamicStoreEnabled')) {
-    it.skip('skipped due to disabled dynamic store feature', () => {});
-    return;
-   }
+      it.skip('skipped due to disabled dynamic store feature', () => {});
+      return;
+    }
     const contentPage = container.get(CmsContentPage);
     const userLoginScenario = container.get(UserLoginScenario);
     const createStoreScenario = container.get(CreateStoreScenario);
@@ -77,4 +77,3 @@ describe(
     }
   }
 );
-

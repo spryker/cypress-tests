@@ -9,10 +9,10 @@ describe(
   'product search dms',
   { tags: ['@yves', '@catalog', '@dms', 'search', 'catalog', 'customer-access', 'spryker-core', 'prices'] },
   (): void => {
-  if (!Cypress.env('isDynamicStoreEnabled')) {
-    it.skip('skipped due to disabled dynamic store feature', () => {});
-    return;
-  }
+    if (!Cypress.env('isDynamicStoreEnabled')) {
+      it.skip('skipped due to disabled dynamic store feature', () => {});
+      return;
+    }
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
@@ -97,4 +97,3 @@ describe(
     }
   }
 );
-

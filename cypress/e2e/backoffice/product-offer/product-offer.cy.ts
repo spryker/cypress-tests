@@ -25,8 +25,8 @@ describe(
   },
   (): void => {
     if (!['suite'].includes(Cypress.env('repositoryId'))) {
-    it.skip('skipped due to it being non-suite repo ', () => {});
-    return;
+      it.skip('skipped due to it being non-suite repo ', () => {});
+      return;
     }
     const productOfferListPage = container.get(ProductOfferListPage);
     const productPage = container.get(ProductPage);
