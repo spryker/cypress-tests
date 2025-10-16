@@ -11,7 +11,7 @@ import {
   MerchantUserMfaLoginScenario,
 } from '@scenarios/mp';
 
-describe.skip(
+describe(
   'merchant user mfa auth',
   { tags: ['@mp', 'marketplace-merchantportal-core', 'spryker-core', 'acl'] },
   (): void => {

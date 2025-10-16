@@ -10,7 +10,7 @@ import {
   MerchantUserSetUpMfaScenario,
 } from '@scenarios/mp';
 
-describe.skip(
+describe(
   'agent (merchant user) mfa auth [suite]',
   { tags: ['@mp', 'marketplace-agent-assist', 'marketplace-merchantportal-core', 'spryker-core', 'acl'] },
   (): void => {
