@@ -10,7 +10,7 @@ import {
   SspFileManagementAttachPage,
 } from '@pages/backoffice';
 
-describeForSsp(
+describe(
   'File Manager Module - Files List',
   {
     tags: [
@@ -24,6 +24,10 @@ describeForSsp(
     ],
   },
   () => {
+    if (!['suite', 'b2b'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite and b2b', () => {});
+      return;
+    }
     const userLoginScenario = container.get(UserLoginScenario);
     const fileManagerAttachmentListPage = container.get(SspFileManagementListPage);
     const fileManagerAttachmentAddPage = container.get(SspFileManagementAddPage);
@@ -188,7 +192,3 @@ describeForSsp(
     });
   }
 );
-
-function describeForSsp(title: string, options: { tags: string[] }, fn: () => void): void {
-  (['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, options, fn);
-}

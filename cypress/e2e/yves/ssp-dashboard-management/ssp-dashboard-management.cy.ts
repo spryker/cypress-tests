@@ -3,7 +3,7 @@ import { SspDashboardPage } from '@pages/yves';
 import { SspDashboardManagementStaticFixtures, SspDashboardManagementDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
-(['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+describe(
   'ssp dashboard management',
   {
     tags: [
@@ -17,6 +17,10 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     ],
   },
   (): void => {
+    if (!['suite', 'b2b'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite and b2b ', () => {});
+      return;
+    }
     const isB2B = ['b2b'].includes(Cypress.env('repositoryId'));
     const sspDashboardPage = container.get(SspDashboardPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);

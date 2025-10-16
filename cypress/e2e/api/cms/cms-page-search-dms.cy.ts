@@ -3,7 +3,11 @@ import { CmsPageSearchDmsDynamicFixtures, CmsPageSearchDmsStaticFixtures } from 
 import { CreateCmsPageScenario, CreateStoreScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { retryableBefore } from '../../../support/e2e';
 
-describeIfDynamicStoreEnabled('cms page search dms', { tags: ['@api', '@cms', '@dms', 'cms', 'content-item'] }, () => {
+describe('cms page search dms', { tags: ['@api', '@cms', '@dms', 'cms', 'content-item'] }, () => {
+  if (!Cypress.env('isDynamicStoreEnabled')) {
+    it.skip('skipped due to disabled dynamic store feature', () => {});
+    return;
+  }
   const userLoginScenario = container.get(UserLoginScenario);
   const createStoreScenario = container.get(CreateStoreScenario);
   const createCmsPageScenario = container.get(CreateCmsPageScenario);
@@ -44,7 +48,3 @@ describeIfDynamicStoreEnabled('cms page search dms', { tags: ['@api', '@cms', '@
     createCmsPageScenario.execute({ cmsPageName: staticFixtures.cmsPageName, shouldTriggerPublishAndSync: true });
   }
 });
-
-function describeIfDynamicStoreEnabled(title: string, options: { tags: string[] }, fn: () => void): void {
-  (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(title, options, fn);
-}

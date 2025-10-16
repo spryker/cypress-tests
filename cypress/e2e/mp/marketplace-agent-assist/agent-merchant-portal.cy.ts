@@ -10,7 +10,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
-(['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+describe(
   'agent merchant portal',
   {
     tags: [
@@ -30,6 +30,10 @@ import { CatalogPage, ProductPage } from '@pages/yves';
     ],
   },
   (): void => {
+    if (['b2c', 'b2b'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite, b2b-mp and b2c-mp', () => {});
+      return;
+    }
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const salesIndexPage = container.get(SalesIndexPage);

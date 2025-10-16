@@ -7,7 +7,7 @@ import {
   ProductMeasurementUnitManagementStaticFixtures,
 } from '../../../support/types/backoffice/product-measurement-unit-management';
 
-(['suite', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+describe(
   'Measurement Units - Create Page',
   {
     tags: [
@@ -21,6 +21,10 @@ import {
     ],
   },
   (): void => {
+    if (!['suite', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped due to it being B2C or B2C MP repo ', () => {});
+      return;
+    }
     const productMeasurementUnitCreatePage = container.get(ProductMeasurementUnitCreatePage);
     const productMeasurementUnitListPage = container.get(ProductMeasurementUnitListPage);
     const userLoginScenario = container.get(UserLoginScenario);

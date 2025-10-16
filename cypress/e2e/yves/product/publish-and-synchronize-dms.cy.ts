@@ -4,7 +4,7 @@ import { CatalogPage, ProductPage } from '@pages/yves';
 import { PublishAndSynchronizeDmsDynamicFixtures, PublishAndSynchronizeDmsStaticFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 
-describeIfDynamicStoreEnabled(
+describe(
   'publish and synchronize dms',
   {
     tags: [
@@ -23,6 +23,10 @@ describeIfDynamicStoreEnabled(
     ],
   },
   (): void => {
+    if (!Cypress.env('isDynamicStoreEnabled')) {
+      it.skip('skipped due to disabled dynamic store feature', () => {});
+      return;
+    }
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const userLoginScenario = container.get(UserLoginScenario);
@@ -95,10 +99,6 @@ describeIfDynamicStoreEnabled(
     });
   }
 );
-
-function describeIfDynamicStoreEnabled(title: string, options: { tags: string[] }, fn: () => void): void {
-  (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(title, options, fn);
-}
 
 interface ProductAbstract {
   name: string;

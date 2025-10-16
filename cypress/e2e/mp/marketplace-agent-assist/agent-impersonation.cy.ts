@@ -12,7 +12,7 @@ import { ImpersonateAsMerchantUserScenario } from '@scenarios/mp';
 /**
  * Agent Assist in Merchant Portal checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/3975741526/Agent+Assist+in+Merchant+Portal+Checklists}
  */
-(['b2c', 'b2b'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+describe(
   'agent impersonation',
   {
     tags: [
@@ -26,6 +26,10 @@ import { ImpersonateAsMerchantUserScenario } from '@scenarios/mp';
     ],
   },
   (): void => {
+    if (['b2c', 'b2b'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite, b2b-mp and b2c-mp', () => {});
+      return;
+    }
     const yvesLoginPage = container.get(LoginPage);
     const mpLoginPage = container.get(MpLoginPage);
     const mpAgentLoginPage = container.get(MpAgentLoginPage);

@@ -7,7 +7,7 @@ import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { ActionEnum, SalesOrdersPage } from '@pages/mp';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
 
-describeSuiteAndMp(
+describe(
   'order creation',
   {
     tags: [
@@ -23,6 +23,10 @@ describeSuiteAndMp(
     ],
   },
   (): void => {
+    if (!['suite', 'b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite, b2b-mp and b2c-mp', () => {});
+      return;
+    }
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const salesIndexPage = container.get(SalesIndexPage);
@@ -126,7 +130,3 @@ describeSuiteAndMp(
     }
   }
 );
-
-function describeSuiteAndMp(title: string, options: { tags: string[] }, fn: () => void): void {
-  (['suite', 'b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(title, options, fn);
-}

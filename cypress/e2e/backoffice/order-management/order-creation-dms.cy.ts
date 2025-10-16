@@ -12,7 +12,7 @@ import {
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import { retryableBefore } from '../../../support/e2e';
 
-describeIfDynamicStoreEnabled(
+describe(
   'order creation dms',
   {
     tags: [
@@ -27,6 +27,10 @@ describeIfDynamicStoreEnabled(
     ],
   },
   (): void => {
+    if (!Cypress.env('isDynamicStoreEnabled') || !['suite', 'b2c', 'b2b'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped due to disabled dynamic store feature and it being MP repo ', () => {});
+      return;
+    }
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const salesIndexPage = container.get(SalesIndexPage);
@@ -160,9 +164,3 @@ describeIfDynamicStoreEnabled(
     }
   }
 );
-
-function describeIfDynamicStoreEnabled(title: string, options: { tags: string[] }, fn: () => void): void {
-  (Cypress.env('isDynamicStoreEnabled') && ['suite', 'b2c', 'b2b'].includes(Cypress.env('repositoryId'))
-    ? describe
-    : describe.skip)(title, fn);
-}

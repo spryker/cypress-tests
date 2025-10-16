@@ -5,7 +5,7 @@ import { MerchantCombinedProductDynamicFixtures, MerchantCombinedProductStaticFi
 import { CatalogPage } from '@pages/yves';
 import { DataImportMerchantFilePage } from '@pages/mp';
 
-(['suite', 'b2b-mp', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+describe(
   'merchant combined product',
   {
     tags: [
@@ -24,6 +24,10 @@ import { DataImportMerchantFilePage } from '@pages/mp';
     ],
   },
   (): void => {
+    if (!['suite', 'b2b-mp', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite, b2b-mp and b2c-mp', () => {});
+      return;
+    }
     const dataImportMerchantFilePage = container.get(DataImportMerchantFilePage);
     const catalogPage = container.get(CatalogPage);
     const uploadProductDataImportMerchantFileScenario = container.get(UploadProductDataImportMerchantFileScenario);

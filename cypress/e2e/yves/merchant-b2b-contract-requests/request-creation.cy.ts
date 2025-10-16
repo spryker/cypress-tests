@@ -14,7 +14,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 /**
  * Merchant Relation Requests & Enhanced Merchant Relations checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4105896492/Business+Journey+B2B+Marketplace+-+to+automate}
  */
-(['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+describe(
   'request creation',
   {
     tags: [
@@ -32,6 +32,10 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     ],
   },
   (): void => {
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite and b2b and b2b-mp', () => {});
+      return;
+    }
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const companyUserSelectPage = container.get(CompanyUserSelectPage);

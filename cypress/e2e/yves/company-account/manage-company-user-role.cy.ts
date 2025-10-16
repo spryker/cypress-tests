@@ -3,7 +3,7 @@ import { ManageCompanyRoleUserPage } from '@pages/yves';
 import { CompanyRoleDynamicFixtures, CompanyRoleStaticFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
-(['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+describe(
   'manage company user',
   {
     tags: [
@@ -18,6 +18,10 @@ import { CustomerLoginScenario } from '@scenarios/yves';
     ],
   },
   (): void => {
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite and b2b and b2b-mp', () => {});
+      return;
+    }
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const manageCompanyRoleUserPage = container.get(ManageCompanyRoleUserPage);
 

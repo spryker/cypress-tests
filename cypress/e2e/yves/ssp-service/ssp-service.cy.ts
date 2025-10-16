@@ -49,7 +49,7 @@ interface DynamicFixtures {
   [key: string]: unknown;
 }
 
-(['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+describe(
   'SSP Service Management',
   {
     tags: [
@@ -65,6 +65,10 @@ interface DynamicFixtures {
     ],
   },
   (): void => {
+    if (!['suite', 'b2b'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite and b2b ', () => {});
+      return;
+    }
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const customerLogoutScenario = container.get(CustomerLogoutScenario);
     const sspServiceListPage = container.get(SspServiceListPage);

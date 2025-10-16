@@ -8,7 +8,7 @@ import {
 import { DataImportMerchantFilePage } from '@pages/mp';
 import { CatalogPage, ProductPage } from '@pages/yves';
 
-(['suite', 'b2b-mp', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+describe(
   'merchant combined product offer',
   {
     tags: [
@@ -25,6 +25,10 @@ import { CatalogPage, ProductPage } from '@pages/yves';
     ],
   },
   (): void => {
+    if (!['suite', 'b2b-mp', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite, b2b-mp and b2c-mp', () => {});
+      return;
+    }
     const dataImportMerchantFilePage = container.get(DataImportMerchantFilePage);
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);

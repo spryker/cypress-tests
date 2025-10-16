@@ -5,10 +5,14 @@ import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
 import { AssignStoreToProductScenario, CreateStoreScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { retryableBefore } from '../../../support/e2e';
 
-describeIfDynamicStoreEnabled(
+describe(
   'product search dms',
   { tags: ['@yves', '@catalog', '@dms', 'search', 'catalog', 'customer-access', 'spryker-core', 'prices'] },
   (): void => {
+    if (!Cypress.env('isDynamicStoreEnabled')) {
+      it.skip('skipped due to disabled dynamic store feature', () => {});
+      return;
+    }
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
@@ -93,7 +97,3 @@ describeIfDynamicStoreEnabled(
     }
   }
 );
-
-function describeIfDynamicStoreEnabled(title: string, options: { tags: string[] }, fn: () => void): void {
-  (Cypress.env('isDynamicStoreEnabled') ? describe : describe.skip)(title, options, fn);
-}

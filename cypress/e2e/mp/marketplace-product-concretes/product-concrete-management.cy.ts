@@ -3,7 +3,7 @@ import { ProductConcreteManagementDynamicFixtures, ProductConcreteManagementStat
 import { VariantsPage } from '@pages/mp';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
 
-(['b2b', 'b2c'].includes(Cypress.env('repositoryId')) ? describe.skip : describe)(
+describe(
   'product concretes management',
   {
     tags: [
@@ -17,6 +17,10 @@ import { MerchantUserLoginScenario } from '@scenarios/mp';
     ],
   },
   (): void => {
+    if (['b2b', 'b2c'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite, b2b-mp and b2c-mp', () => {});
+      return;
+    }
     const variantsPage = container.get(VariantsPage);
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
 

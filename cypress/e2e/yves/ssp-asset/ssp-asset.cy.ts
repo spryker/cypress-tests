@@ -14,7 +14,7 @@ import {
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
 
-(['suite', 'b2b'].includes(Cypress.env('repositoryId')) ? describe : describe.skip)(
+describe(
   'ssp asset management',
   {
     tags: [
@@ -29,6 +29,10 @@ import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
     ],
   },
   (): void => {
+    if (!['suite', 'b2b'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite and b2b ', () => {});
+      return;
+    }
     const assetCreatePage = container.get(SspAssetCreatePage);
     const assetEditPage = container.get(SspAssetEditPage);
     const assetDetailPage = container.get(SspAssetDetailPage);
