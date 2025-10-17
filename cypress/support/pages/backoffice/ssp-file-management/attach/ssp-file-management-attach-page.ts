@@ -71,10 +71,10 @@ export class SspFileManagementAttachPage extends BackofficePage {
 
   selectAvailableItems(scope: 'asset' | 'business-unit' | 'company-user' | 'company', searchTerms: string[]): void {
     const tableSelectors = {
-      asset: this.repository.getAvailableAssetTableSelector(),
-      'business-unit': this.repository.getAvailableBusinessUnitTableSelector(),
-      'company-user': this.repository.getAvailableCompanyUserTableSelector(),
-      company: this.repository.getAvailableCompanyTableSelector(),
+      asset: this.repository.getUnattachedSspAssetTableSelector(),
+      'business-unit': this.repository.getUnattachedBusinessUnitTableSelector(),
+      'company-user': this.repository.getUnattachedCompanyUserTableSelector(),
+      company: this.repository.getUnattachedCompanyTableSelector(),
     };
 
     const searchSelectors = {
@@ -97,19 +97,19 @@ export class SspFileManagementAttachPage extends BackofficePage {
     });
   }
 
-  selectAssignedItems(scope: 'asset' | 'business-unit' | 'company-user' | 'company', searchTerms: string[]): void {
+  selectAttachedItems(scope: 'asset' | 'business-unit' | 'company-user' | 'company', searchTerms: string[]): void {
     const tableSelectors = {
-      asset: this.repository.getAssignedAssetTableSelector(),
-      'business-unit': this.repository.getAssignedBusinessUnitTableSelector(),
-      'company-user': this.repository.getAssignedCompanyUserTableSelector(),
-      company: this.repository.getAssignedCompanyTableSelector(),
+      asset: this.repository.getAttachedSspAssetTableSelector(),
+      'business-unit': this.repository.getAttachedBusinessUnitTableSelector(),
+      'company-user': this.repository.getAttachedCompanyUserTableSelector(),
+      company: this.repository.getAttachedCompanyTableSelector(),
     };
 
     const searchSelectors = {
-      asset: this.repository.getAssignedAssetTableSearchSelector(),
-      'business-unit': this.repository.getAssignedBusinessUnitTableSearchSelector(),
-      'company-user': this.repository.getAssignedCompanyUserTableSearchSelector(),
-      company: this.repository.getAssignedCompanyTableSearchSelector(),
+      asset: this.repository.getAttachedSspAssetTableSearchSelector(),
+      'business-unit': this.repository.getAttachedBusinessUnitTableSearchSelector(),
+      'company-user': this.repository.getAttachedCompanyUserTableSearchSelector(),
+      company: this.repository.getAttachedCompanyTableSearchSelector(),
     };
 
     const tableSelector = tableSelectors[scope];
@@ -168,7 +168,7 @@ export class SspFileManagementAttachPage extends BackofficePage {
 
   detachAssets(assetNames: string[]): void {
     this.selectAttachmentScope('asset');
-    this.selectAssignedItems('asset', assetNames);
+    this.selectAttachedItems('asset', assetNames);
     this.submitForm();
   }
 
@@ -214,10 +214,10 @@ export class SspFileManagementAttachPage extends BackofficePage {
 
   waitForTableToLoad(scope: 'asset' | 'business-unit' | 'company-user' | 'company'): void {
     const tableSelectors = {
-      asset: this.repository.getAvailableAssetTableSelector(),
-      'business-unit': this.repository.getAvailableBusinessUnitTableSelector(),
-      'company-user': this.repository.getAvailableCompanyUserTableSelector(),
-      company: this.repository.getAvailableCompanyTableSelector(),
+      asset: this.repository.getUnattachedSspAssetTableSelector(),
+      'business-unit': this.repository.getUnattachedBusinessUnitTableSelector(),
+      'company-user': this.repository.getUnattachedCompanyUserTableSelector(),
+      company: this.repository.getUnattachedCompanyTableSelector(),
     };
 
     cy.get(tableSelectors[scope]).should('be.visible');

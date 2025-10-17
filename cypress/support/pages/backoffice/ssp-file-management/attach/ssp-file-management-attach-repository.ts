@@ -22,15 +22,15 @@ export class SspFileManagementAttachRepository {
   getCompanyUserTabSelector = (): string => 'a[href="#company-user-attachment"]';
   getCompanyTabSelector = (): string => 'a[href="#company-attachment"]';
 
-  getAvailableAssetTableSelector = (): string => '#available-ssp-asset-table';
-  getAvailableBusinessUnitTableSelector = (): string => '#available-business-unit-table';
-  getAvailableCompanyUserTableSelector = (): string => '#available-company-user-table';
-  getAvailableCompanyTableSelector = (): string => '#available-company-table';
+  getUnattachedSspAssetTableSelector = (): string => '#unattached-ssp-asset-table';
+  getUnattachedBusinessUnitTableSelector = (): string => '#unattached-business-unit-table';
+  getUnattachedCompanyUserTableSelector = (): string => '#unattached-company-user-table';
+  getUnattachedCompanyTableSelector = (): string => '#unattached-company-table';
 
-  getAssignedAssetTableSelector = (): string => '#assigned-ssp-asset-table';
-  getAssignedBusinessUnitTableSelector = (): string => '#assigned-business-unit-table';
-  getAssignedCompanyUserTableSelector = (): string => '#assigned-company-user-table';
-  getAssignedCompanyTableSelector = (): string => '#assigned-company-table';
+  getAttachedSspAssetTableSelector = (): string => '#attached-ssp-asset-table';
+  getAttachedBusinessUnitTableSelector = (): string => '#attached-business-unit-table';
+  getAttachedCompanyUserTableSelector = (): string => '#attached-company-user-table';
+  getAttachedCompanyTableSelector = (): string => '#attached-company-table';
 
   getTableRowCheckboxSelector = (): string => 'input[type="checkbox"]';
   getSelectAllCheckboxSelector = (): string => 'thead input[type="checkbox"]';
@@ -47,15 +47,15 @@ export class SspFileManagementAttachRepository {
   getSuccessMessageSelector = (): string => '.alert-success, [data-qa="success-message"]';
   getFileAttachmentSuccessText = (): string => 'File attachments have been created successfully.';
 
-  getAssetTableSearchSelector = (): string => '#available-ssp-asset-table_filter label input';
-  getBusinessUnitTableSearchSelector = (): string => '#available-business-unit-table_filter label input';
-  getCompanyUserTableSearchSelector = (): string => '#available-company-user-table_filter label input';
-  getCompanyTableSearchSelector = (): string => '#available-company-table_filter label input';
+  getAssetTableSearchSelector = (): string => '#unattached-ssp-asset-table_filter label input';
+  getBusinessUnitTableSearchSelector = (): string => '#unattached-business-unit-table_filter label input';
+  getCompanyUserTableSearchSelector = (): string => '#unattached-company-user-table_filter label input';
+  getCompanyTableSearchSelector = (): string => '#unattached-company-table_filter label input';
 
-  getAssignedAssetTableSearchSelector = (): string => '#assigned-ssp-asset-table_filter label input';
-  getAssignedBusinessUnitTableSearchSelector = (): string => '#assigned-business-unit-table_filter label input';
-  getAssignedCompanyUserTableSearchSelector = (): string => '#assigned-company-user-table_filter label input';
-  getAssignedCompanyTableSearchSelector = (): string => '#assigned-company-table_filter label input';
+  getAttachedSspAssetTableSearchSelector = (): string => '#attached-ssp-asset-table_filter label input';
+  getAttachedBusinessUnitTableSearchSelector = (): string => '#attached-business-unit-table_filter label input';
+  getAttachedCompanyUserTableSearchSelector = (): string => '#attached-company-user-table_filter label input';
+  getAttachedCompanyTableSearchSelector = (): string => '#attached-company-table_filter label input';
 
   getTableSearchSelector = (): string => '.dataTables_filter input[type="search"]';
 
