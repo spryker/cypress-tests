@@ -24,7 +24,10 @@
     "cy:ci:ssp": "cypress run --spec \"cypress/e2e/!(smoke)/**/(ssp)*.ts\" --headless --browser chrome",
     "cy:smoke": "cypress run --spec \"cypress/e2e/smoke/**/*.ts\" --headless --browser chrome",
     "cy:dms": "cypress run --spec \"cypress/e2e/!(smoke)/**/*dms.cy.ts\" --headless --browser chrome",
-    "cy:smoke:demo": "cypress run --spec \"cypress/e2e/smoke/!(product)/*.ts\" --headless --browser chrome"
+    "cy:smoke:demo": "cypress run --spec \"cypress/e2e/smoke/!(product)/*.ts\" --headless --browser chrome",
+    
+    "cy:ci:backoffice_parallel": "cypress run --spec \"cypress/e2e/backoffice/category/category-edit.cy.ts\" --headless --browser firefox --config trashAssetsBeforeRuns=false",
+    "cy:ci:api_parallel": "cypress run --spec \"cypress/e2e/api/**/!(ssp)*.ts\" --headless --browser firefox --config trashAssetsBeforeRuns=false"
   },
   "engines": {
     "node": ">=18.0.0",
@@ -35,6 +38,7 @@
     "@faker-js/faker": "^8.4.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
+    "concurrently": "^9.2.1",
     "cypress": "^14.5.3",
     "cypress-file-upload": "^5.0.8",
     "dotenv": "^16.4.5",
