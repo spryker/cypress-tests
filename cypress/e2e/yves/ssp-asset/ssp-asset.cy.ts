@@ -139,6 +139,7 @@ describe(
       checkoutScenario.execute({
         paymentMethod: 'dummyPaymentInvoice',
         idCustomerAddress: 0,
+        isMultiShipment: true,
       });
 
       assetDetailPage.visit({

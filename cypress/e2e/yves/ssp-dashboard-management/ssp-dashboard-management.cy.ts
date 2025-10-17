@@ -75,7 +75,7 @@ describe(
 
       sspDashboardPage.visit();
       sspDashboardPage.assertSspDashboardAssetsWidgetPresent();
-      sspDashboardPage.assertWidgetData([dynamicFixtures.sspAsset1, dynamicFixtures.sspAsset]);
+      sspDashboardPage.assertWidgetData([dynamicFixtures.sspAsset, dynamicFixtures.sspAsset1]);
     });
 
     it('customer without permission should not see files on dashboard', (): void => {

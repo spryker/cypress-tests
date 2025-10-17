@@ -105,4 +105,8 @@ export class B2bCheckoutAddressRepository implements CheckoutAddressRepository {
     cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shippingAddress_phone`);
   getShipmentTypeRadio = (shipmentType: string): Cypress.Chainable =>
     cy.get(`[data-qa="shipment-type-radio"][value="${shipmentType}"]`);
+  getMultiShipmentAddressItemServicePointUuidValue = ($addressItem: JQuery<HTMLElement>): string | undefined => {
+    const servicePointUuid = $addressItem.find(`input[name*="[servicePoint][uuid]"]`).val() as string | undefined;
+    return servicePointUuid || undefined;
+  };
 }

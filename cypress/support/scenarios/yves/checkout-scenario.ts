@@ -46,11 +46,6 @@ export class CheckoutScenario {
       skipServicePointAddressOverride: params?.skipServicePointAddressOverride,
     };
 
-    if (Cypress.env('ENV_IS_SSP_ENABLED')) {
-      this.checkoutAddressPage.fillSingleCheckoutAddress(params);
-      return;
-    }
-
     if (params?.isMultiShipment) {
       this.checkoutAddressPage.fillMultiShippingAddress(fillShippingAddressParams);
       return;

@@ -216,9 +216,7 @@ describe(
         cartPage.assertShipmentTypeGrouping();
 
         checkoutScenario.execute({
-          idCustomerAddress: Cypress.env('ENV_IS_SSP_ENABLED')
-            ? undefined
-            : dynamicFixtures.company4CustomerAddress.id_customer_address,
+          idCustomerAddress: dynamicFixtures.company4CustomerAddress.id_customer_address,
           paymentMethod: 'dummyPaymentInvoice',
           shipmentType: 'in-center-service',
           isMultiShipment: true,
