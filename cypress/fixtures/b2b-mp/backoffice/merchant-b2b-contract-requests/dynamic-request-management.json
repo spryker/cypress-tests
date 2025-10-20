@@ -147,13 +147,7 @@
           "key": "merchant3",
           "arguments": [
             {
-              "merchantProfile": "#merchantProfile3",
-              "isActive": true,
-              "isOpenForRelationRequest": true,
-              "status": "approved",
-              "storeRelation": {
-                "idStores": ["#store.id_store"]
-              }
+              "isOpenForRelationRequest": true
             }
           ]
         },
