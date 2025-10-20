@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  cypress-tests:
+  cypress-tests-api:
     build:
       context: ./tests/cypress-tests
       dockerfile: Dockerfile
@@ -22,7 +22,70 @@ services:
       - ./.cypress/videos:/opt/cypress-tests/cypress/videos:rw
       - ./.cypress/downloads:/opt/cypress-tests/cypress/downloads:rw
       - ./.cypress/logs:/opt/cypress-tests/cypress/logs:rw
-  cypress-tests_bo:
+  cypress-tests-bo:
+    build:
+      context: ./tests/cypress-tests
+      dockerfile: Dockerfile
+    networks:
+      - private
+    env_file:
+      - ${DEPLOYMENT_PATH}/env/cli/testing.env # depends on application setup
+    labels:
+      'spryker.app.name': cypress-tests
+      'spryker.app.type': cypress-tests
+      'spryker.project': ${SPRYKER_DOCKER_PREFIX}:${SPRYKER_DOCKER_TAG}
+    volumes:
+      - ./tests/cypress-tests/cypress/e2e:/opt/cypress-tests/cypress/e2e:rw
+      - ./tests/cypress-tests/cypress/fixtures:/opt/cypress-tests/cypress/fixtures:rw
+      - ./tests/cypress-tests/cypress/support:/opt/cypress-tests/cypress/support:rw
+      - ./tests/cypress-tests/package.json:/opt/cypress-tests/package.json:rw
+      - ./.cypress/screenshots:/opt/cypress-tests/cypress/screenshots:rw
+      - ./.cypress/videos:/opt/cypress-tests/cypress/videos:rw
+      - ./.cypress/downloads:/opt/cypress-tests/cypress/downloads:rw
+      - ./.cypress/logs:/opt/cypress-tests/cypress/logs:rw
+  cypress-tests-mp:
+    build:
+      context: ./tests/cypress-tests
+      dockerfile: Dockerfile
+    networks:
+      - private
+    env_file:
+      - ${DEPLOYMENT_PATH}/env/cli/testing.env # depends on application setup
+    labels:
+      'spryker.app.name': cypress-tests
+      'spryker.app.type': cypress-tests
+      'spryker.project': ${SPRYKER_DOCKER_PREFIX}:${SPRYKER_DOCKER_TAG}
+    volumes:
+      - ./tests/cypress-tests/cypress/e2e:/opt/cypress-tests/cypress/e2e:rw
+      - ./tests/cypress-tests/cypress/fixtures:/opt/cypress-tests/cypress/fixtures:rw
+      - ./tests/cypress-tests/cypress/support:/opt/cypress-tests/cypress/support:rw
+      - ./tests/cypress-tests/package.json:/opt/cypress-tests/package.json:rw
+      - ./.cypress/screenshots:/opt/cypress-tests/cypress/screenshots:rw
+      - ./.cypress/videos:/opt/cypress-tests/cypress/videos:rw
+      - ./.cypress/downloads:/opt/cypress-tests/cypress/downloads:rw
+      - ./.cypress/logs:/opt/cypress-tests/cypress/logs:rw
+  cypress-tests-yves:
+    build:
+      context: ./tests/cypress-tests
+      dockerfile: Dockerfile
+    networks:
+      - private
+    env_file:
+      - ${DEPLOYMENT_PATH}/env/cli/testing.env # depends on application setup
+    labels:
+      'spryker.app.name': cypress-tests
+      'spryker.app.type': cypress-tests
+      'spryker.project': ${SPRYKER_DOCKER_PREFIX}:${SPRYKER_DOCKER_TAG}
+    volumes:
+      - ./tests/cypress-tests/cypress/e2e:/opt/cypress-tests/cypress/e2e:rw
+      - ./tests/cypress-tests/cypress/fixtures:/opt/cypress-tests/cypress/fixtures:rw
+      - ./tests/cypress-tests/cypress/support:/opt/cypress-tests/cypress/support:rw
+      - ./tests/cypress-tests/package.json:/opt/cypress-tests/package.json:rw
+      - ./.cypress/screenshots:/opt/cypress-tests/cypress/screenshots:rw
+      - ./.cypress/videos:/opt/cypress-tests/cypress/videos:rw
+      - ./.cypress/downloads:/opt/cypress-tests/cypress/downloads:rw
+      - ./.cypress/logs:/opt/cypress-tests/cypress/logs:rw
+  cypress-tests-ssp:
     build:
       context: ./tests/cypress-tests
       dockerfile: Dockerfile
