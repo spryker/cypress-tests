@@ -26,8 +26,11 @@
     "cy:dms": "cypress run --spec \"cypress/e2e/!(smoke)/**/*dms.cy.ts\" --headless --browser chrome",
     "cy:smoke:demo": "cypress run --spec \"cypress/e2e/smoke/!(product)/*.ts\" --headless --browser chrome",
     
-    "cy:ci:backoffice_parallel": "cypress run --spec \"cypress/e2e/backoffice/category/category-edit.cy.ts\" --headless --browser firefox --config trashAssetsBeforeRuns=false",
-    "cy:ci:api_parallel": "cypress run --spec \"cypress/e2e/api/**/!(ssp)*.ts\" --headless --browser firefox --config trashAssetsBeforeRuns=false"
+    "cy:ci:backoffice_parallel": "cypress run --spec \"cypress/e2e/backoffice/**/!(ssp)*.ts\" --headless --browser chrome --config trashAssetsBeforeRuns=false",
+    "cy:ci:api_parallel": "cypress run --spec \"cypress/e2e/api/**/!(ssp)*.ts\" --headless --browser chrome --config trashAssetsBeforeRuns=false",
+    "cy:ci:mp_parallel": "cypress run --spec \"cypress/e2e/mp/**/!(ssp)*.ts\" --headless --browser chrome --config trashAssetsBeforeRuns=false",
+    "cy:ci:yves_parallel": "cypress run --spec \"cypress/e2e/yves/**/!(ssp)*.ts\" --headless --browser chrome --config trashAssetsBeforeRuns=false",
+    "cy:ci:ssp_parallel": "cypress run --spec \"cypress/e2e/!(smoke)/**/(ssp)*.ts\" --headless --browser chrome --config trashAssetsBeforeRuns=false"
   },
   "engines": {
     "node": ">=18.0.0",
