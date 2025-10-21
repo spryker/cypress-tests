@@ -22,7 +22,6 @@ describe(
       it.skip('skipped because tests run only for suite and b2b', () => {});
       return;
     }
-
     const userLoginScenario = container.get(UserLoginScenario);
     const serviceListPage = container.get(ServiceListPage);
 
