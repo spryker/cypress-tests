@@ -20,8 +20,8 @@ describe(
     ],
   },
   (): void => {
-    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped due to repo being b2c or b2c-mp', () => {});
+    if (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped due to repo being b2b or b2b-mp', () => {});
       return;
     }
     const customerOverviewPage = container.get(CustomerOverviewPage);
