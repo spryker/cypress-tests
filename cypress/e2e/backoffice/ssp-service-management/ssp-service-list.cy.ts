@@ -23,11 +23,6 @@ describe(
       return;
     }
 
-    if (Cypress.env('repositoryId') === 'b2b' && Cypress.env('ENV_IS_SSP_ENABLED') !== true) {
-      it.skip('skipped because SSP is not enabled for b2b', () => {});
-      return;
-    }
-
     const userLoginScenario = container.get(UserLoginScenario);
     const serviceListPage = container.get(ServiceListPage);
 
