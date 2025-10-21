@@ -110,4 +110,5 @@ To resolve this error, you can try the following steps:
 If you encounter other issues not described here, refer to the [Troubleshooting](https://docs.cypress.io/app/references/troubleshooting) for common problems and solutions.
 
 ## Test Tagging
+
 When adding a new test or extending the coverage of an existing test - add the tag for the covered feature. The tag should be named the same as the corresponding feature in the Release App. E.g. if you create a new test that touches Marketplace Agent Assist feature, you should add tags `marketplace-agent-assist` and `marketplace-merchantportal-core`. Please see the existing tests for the tag syntax.
