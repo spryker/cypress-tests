@@ -1,0 +1,11 @@
+{
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "searchTermShort": "Of",
+  "searchTermValid": "Dashboard",
+  "searchTermWithParentAndChild": "Cat",
+  "expectedParentLabel": "Catalog",
+  "expectedChildLabel": "Category"
+}
