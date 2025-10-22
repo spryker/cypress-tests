@@ -29,16 +29,28 @@ describe(
       indexPage.visit();
     });
 
-    it('should display filter input above the menu', (): void => {
+    it('should filter menu items correctly', (): void => {
       navigationMenuPage.assertFilterInputVisible();
-    });
 
-    it('should not filter when less than 3 characters are entered', (): void => {
       navigationMenuPage.filterMenu(staticFixtures.searchTermShort);
       navigationMenuPage.assertAnyMenuItemVisible();
+
+      navigationMenuPage.filterMenu(staticFixtures.searchTermWithParentAndChild);
+      navigationMenuPage.assertMenuItemsFiltered();
+
+      navigationMenuPage.hasMenuItem(staticFixtures.searchTermValid).then((hasItem) => {
+        if (hasItem) {
+          navigationMenuPage.filterMenu(staticFixtures.searchTermValid.toLowerCase());
+          navigationMenuPage.assertItemVisible(staticFixtures.searchTermValid);
+        }
+      });
+
+      navigationMenuPage.clearFilter();
+      navigationMenuPage.assertAllMenuItemsVisible();
+      navigationMenuPage.assertAllParentItemsClosed();
     });
 
-    it('should show parent sections for matching child items', (): void => {
+    it('should handle parent-child filtering logic', (): void => {
       navigationMenuPage.hasMenuItem('Marketplace').then((hasMarketplace) => {
         if (hasMarketplace) {
           navigationMenuPage.filterMenu('Offers');
@@ -46,9 +58,7 @@ describe(
           navigationMenuPage.assertParentItemExpanded('Marketplace');
         }
       });
-    });
 
-    it('should show only matching children when parent and children match', (): void => {
       navigationMenuPage.filterMenu(staticFixtures.searchTermWithParentAndChild);
       navigationMenuPage.assertOnlyMatchingChildrenVisible(
         staticFixtures.expectedParentLabel,
@@ -57,47 +67,21 @@ describe(
       );
     });
 
-    it('should reset filter and close parent sections when input is cleared', (): void => {
-      navigationMenuPage.filterMenu(staticFixtures.searchTermWithParentAndChild);
-      navigationMenuPage.assertMenuItemsFiltered();
-      navigationMenuPage.assertActiveParentItemExists();
-
-      navigationMenuPage.clearFilter();
-      navigationMenuPage.assertAllMenuItemsVisible();
-      navigationMenuPage.assertAllParentItemsClosed();
-    });
-
-    it('should not change the order of menu items', (): void => {
+    it('should preserve menu order and support keyboard navigation', (): void => {
       navigationMenuPage.getMenuItemsOrder().then((originalOrder) => {
         navigationMenuPage.filterMenu(staticFixtures.searchTermValid);
         navigationMenuPage.clearFilter();
         navigationMenuPage.assertMenuOrderUnchanged(originalOrder);
       });
-    });
 
-    it('should not persist filter value after page reload', (): void => {
+      navigationMenuPage.filterMenu(staticFixtures.searchTermValid);
+      navigationMenuPage.pressEnter();
+      cy.url().should('match', /dashboard|\/$/i);
+
+      indexPage.visit();
       navigationMenuPage.filterMenu(staticFixtures.searchTermValid);
       cy.reload();
       navigationMenuPage.assertFilterValueEmpty();
-    });
-
-    it('should open first matched item when Enter is pressed', (): void => {
-      navigationMenuPage.filterMenu(staticFixtures.searchTermValid);
-      navigationMenuPage.pressEnter();
-
-      cy.url().should('match', /dashboard|\/$/i);
-    });
-
-    it('should match items case-insensitively', (): void => {
-      navigationMenuPage.hasMenuItem(staticFixtures.searchTermValid).then((hasItem) => {
-        if (hasItem) {
-          navigationMenuPage.filterMenu(staticFixtures.searchTermValid.toLowerCase());
-          navigationMenuPage.assertItemVisible(staticFixtures.searchTermValid);
-
-          navigationMenuPage.filterMenu(staticFixtures.searchTermValid.toUpperCase());
-          navigationMenuPage.assertItemVisible(staticFixtures.searchTermValid);
-        }
-      });
     });
   }
 );

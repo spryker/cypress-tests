@@ -11,7 +11,9 @@ export class NavigationMenuRepository {
   getMenuItemLabelSelector = (): string => '[data-qa="menu-item-label"]';
   getMenuSubmenuSelector = (): string => '[data-qa="menu-submenu"]';
   getActiveMenuItemSelector = (): string => '[data-qa="menu-parent-item"].active';
+  getMatchedMenuItemSelector = (): string => '[data-qa="menu-parent-item"].matched';
   getHiddenMenuItemsSelector = (): string =>
-    '[data-qa="navigation-menu"] [data-qa="menu-item"][style*="display: none"], [data-qa="navigation-menu"] [data-qa="menu-parent-item"][style*="display: none"]';
+    '[data-qa="navigation-menu"] [data-qa="menu-item"]:not(:visible), [data-qa="navigation-menu"] [data-qa="menu-parent-item"]:not(:visible)';
   getVisibleMenuItemsSelector = (): string => '[data-qa="menu-item"]:visible, [data-qa="menu-parent-item"]:visible';
+  getFilteredMenuSelector = (): string => '[data-qa="navigation-menu"].filtered';
 }

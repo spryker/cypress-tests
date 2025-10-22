@@ -44,7 +44,9 @@ export class NavigationMenuPage extends BackofficePage {
         cy.contains(this.repository.getMenuItemLabelSelector(), parentLabel)
           .parents(this.repository.getMenuParentItemSelector())
           .first()
-          .should('have.class', 'active');
+          .should('have.class', 'matched')
+          .find(this.repository.getMenuSubmenuSelector())
+          .should('be.visible');
       }
     });
   };
