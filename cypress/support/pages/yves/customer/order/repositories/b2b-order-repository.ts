@@ -16,9 +16,9 @@ export class B2bOrderRepository implements OrderRepository {
     return cy.get('button:contains("Clear Cart & Continue")');
   }
   getEditOrderForm(): Cypress.Chainable {
-    return cy.get(
-      '[data-qa="component order-amendment"] [data-qa="component remote-form-submit"]:contains("Edit Order")'
-    );
+    return cy
+      .get('[data-qa="component order-amendment"] [data-qa="component remote-form-submit"]:contains("Edit Order")')
+      .first();
   }
   getOrderFilters(): Cypress.Chainable {
     return cy.get('form[name="orderSearchForm"]');
