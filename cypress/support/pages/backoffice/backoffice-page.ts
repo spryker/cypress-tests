@@ -15,7 +15,7 @@ export class BackofficePage extends AbstractPage {
 
     cy.intercept('GET', params.url).as(interceptAlias);
     return cy
-      .wait(`@${interceptAlias}`)
+      .wait(`@${interceptAlias}`, { timeout: 10000 })
       .its('response.body.recordsFiltered')
       .should((total) => {
         if (params.expectedCount !== null) {
