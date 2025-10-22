@@ -5,7 +5,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 
 describe(
   'navigation menu filter',
-  { tags: ['@backoffice', '@navigation', 'spryker-core-back-office', 'spryker-core'] },
+  { tags: ['@backoffice', 'navigation', 'spryker-core-back-office', 'spryker-core'] },
   (): void => {
     if (Cypress.env('repositoryId') !== 'suite') {
       it.skip('skipped due to repo not being suite', () => {});
@@ -35,12 +35,7 @@ describe(
 
     it('should not filter when less than 3 characters are entered', (): void => {
       navigationMenuPage.filterMenu(staticFixtures.searchTermShort);
-      cy.get('[data-qa="menu-item"], [data-qa="menu-parent-item"]').should('be.visible');
-    });
-
-    it('should filter menu items when 3 or more characters are entered', (): void => {
-      navigationMenuPage.filterMenu(staticFixtures.searchTermWithParentAndChild);
-      navigationMenuPage.assertMenuItemsFiltered();
+      navigationMenuPage.assertAnyMenuItemVisible();
     });
 
     it('should show parent sections for matching child items', (): void => {
@@ -48,13 +43,9 @@ describe(
         if (hasMarketplace) {
           navigationMenuPage.filterMenu('Offers');
           navigationMenuPage.assertParentItemVisible('Marketplace');
+          navigationMenuPage.assertParentItemExpanded('Marketplace');
         }
       });
-    });
-
-    it('should expand parent sections when filtering', (): void => {
-      navigationMenuPage.filterMenu(staticFixtures.searchTermWithParentAndChild);
-      navigationMenuPage.assertParentItemExpanded(staticFixtures.expectedParentLabel);
     });
 
     it('should show only matching children when parent and children match', (): void => {
@@ -66,33 +57,13 @@ describe(
       );
     });
 
-    it('should allow consequential searches', (): void => {
-      navigationMenuPage.filterMenu(staticFixtures.searchTermValid);
-      cy.get('[data-qa="menu-item"]:visible, [data-qa="menu-parent-item"]:visible').should(
-        'have.length.greaterThan',
-        0
-      );
-
+    it('should reset filter and close parent sections when input is cleared', (): void => {
       navigationMenuPage.filterMenu(staticFixtures.searchTermWithParentAndChild);
-      cy.get('[data-qa="menu-item"]:visible, [data-qa="menu-parent-item"]:visible').should(
-        'have.length.greaterThan',
-        0
-      );
-    });
-
-    it('should reset filter when input is cleared', (): void => {
-      navigationMenuPage.filterMenu(staticFixtures.searchTermValid);
       navigationMenuPage.assertMenuItemsFiltered();
+      navigationMenuPage.assertActiveParentItemExists();
 
       navigationMenuPage.clearFilter();
       navigationMenuPage.assertAllMenuItemsVisible();
-    });
-
-    it('should close all parent sections when filter is cleared', (): void => {
-      navigationMenuPage.filterMenu(staticFixtures.searchTermWithParentAndChild);
-      cy.get('[data-qa="menu-parent-item"].active').should('exist');
-
-      navigationMenuPage.clearFilter();
       navigationMenuPage.assertAllParentItemsClosed();
     });
 

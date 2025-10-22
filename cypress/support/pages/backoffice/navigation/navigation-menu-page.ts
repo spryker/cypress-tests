@@ -128,4 +128,18 @@ export class NavigationMenuPage extends BackofficePage {
       return $menu.find(`${this.repository.getMenuItemLabelSelector()}:contains("${itemLabel}")`).length > 0;
     });
   };
+
+  assertAnyMenuItemVisible = (): void => {
+    cy.get(`${this.repository.getMenuItemSelector()}, ${this.repository.getMenuParentItemSelector()}`).should(
+      'be.visible'
+    );
+  };
+
+  assertVisibleMenuItemsExist = (): void => {
+    cy.get(this.repository.getVisibleMenuItemsSelector()).should('have.length.greaterThan', 0);
+  };
+
+  assertActiveParentItemExists = (): void => {
+    cy.get(this.repository.getActiveMenuItemSelector()).should('exist');
+  };
 }
