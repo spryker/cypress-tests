@@ -39,9 +39,7 @@ Note: to run tests against different demoshops automatically, use [Multi-Store-R
 
 ## Development workflow in the shop (suite-nonsplit or demoshop)
 
-To update the cypress-tests to use a different branch or commit, you need to modify these three locations:
-
-### 1. Update the dependency version in `require-dev`
+To use a different branch, modify the project `composer.json`
 
 ```json
 "require-dev": {
@@ -49,36 +47,7 @@ To update the cypress-tests to use a different branch or commit, you need to mod
 }
 ```
 
-### 2. Update the package version in the repository definition
-
-```json
-"repositories": [
-    {
-        "type": "package",
-        "package": {
-            "name": "spryker/cypress-tests",
-            "version": "dev-YOUR_BRANCH_NAME",
-            "source": {
-                "url": "https://github.com/spryker/cypress-tests.git",
-                "type": "git",
-                "reference": "YOUR_COMMIT_HASH_OR_BRANCH"
-            },
-            "type": "zend-module",
-            "license": [
-                "MIT"
-            ]
-        }
-    }
-]
-```
-
-### 3. Update the reference (commit hash or branch name)
-
-In the same repository definition, update the `reference` field:
-
-```json
-"reference": "YOUR_COMMIT_HASH_OR_BRANCH"
-```
+and run `composer update spryker/cypress-tests`, then commit `composer.json` and `composer.lock` files.
 
 ## Troubleshooting
 
