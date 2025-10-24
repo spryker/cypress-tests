@@ -22,7 +22,7 @@ export class DeactivateProductScenario {
     this.productManagementEditVariantPage.deactivate();
 
     if (params?.shouldTriggerPublishAndSync) {
-      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+      cy.runCliCommands(['vendor/bin/console queue:worker:start --stop-when-empty']);
     }
   };
 }

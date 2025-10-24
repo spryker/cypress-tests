@@ -77,7 +77,7 @@ describe(
       cy.runCliCommands([
         `console publish:trigger-events -r product_concrete_measurement_unit -i ${dynamicFixtures.productMUnit.id_product_concrete},${dynamicFixtures.productPUnit.id_product_concrete}`,
         `console publish:trigger-events -r product_packaging_unit -i ${dynamicFixtures.productPUnit.id_product_concrete}`,
-        'console queue:worker:start --stop-when-empty',
+        'vendor/bin/console queue:worker:start --stop-when-empty',
       ]);
     }
 

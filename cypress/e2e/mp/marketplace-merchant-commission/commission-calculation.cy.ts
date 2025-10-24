@@ -220,7 +220,7 @@ describe(
       salesDetailPage.triggerOms({ state: 'Pay' });
       salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
 
-      cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+      cy.runCliCommands(['vendor/bin/console oms:check-condition', 'vendor/bin/console oms:check-timeout']);
     }
 
     function assertCommissionTotalsInBackoffice(totalCommission: string, totalRefundedCommission = '€0.00'): void {

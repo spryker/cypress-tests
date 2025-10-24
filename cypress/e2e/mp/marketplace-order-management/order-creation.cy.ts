@@ -97,7 +97,7 @@ describe(
         });
 
         if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
-          cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+          cy.runCliCommands(['vendor/bin/console oms:check-condition', 'vendor/bin/console oms:check-timeout']);
         }
 
         closeOrderFromMerchantPortal(orderReference);

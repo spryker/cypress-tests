@@ -44,7 +44,7 @@ export class CheckoutMpScenario {
 
   private runOmsCommands = (params?: ExecuteParams): void => {
     if (params?.shouldTriggerOmsInCli) {
-      cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+      cy.runCliCommands(['vendor/bin/console oms:check-condition', 'vendor/bin/console oms:check-timeout']);
     }
   };
 

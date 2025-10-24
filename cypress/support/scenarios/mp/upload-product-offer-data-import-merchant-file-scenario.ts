@@ -39,7 +39,7 @@ export class UploadProductOfferDataImportMerchantFileScenario {
       this.dataImportMerchantFilePage.assertImportStartedNotification();
       this.dataImportMerchantFilePage.assertFileStatus(<string>params.fileName, 'Pending');
 
-      cy.runCliCommands(['console data-import-merchant:import']);
+      cy.runCliCommands(['vendor/bin/console data-import-merchant:import']);
     });
 
     return productOfferReference;

@@ -153,7 +153,7 @@ describe(
       customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.localized_attributes[0].name, 1);
       customerOverviewPage.assertProductQuantity(dynamicFixtures.product2.localized_attributes[0].name, 1);
 
-      cy.runCliCommands(['console oms:check-condition']);
+      cy.runCliCommands(['vendor/bin/console oms:check-condition']);
 
       customerOverviewPage.viewLastPlacedOrder();
       customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.localized_attributes[0].name, 3);
@@ -229,7 +229,7 @@ describe(
         shouldTriggerPublishAndSync: true,
       });
 
-      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+      cy.runCliCommands(['vendor/bin/console queue:worker:start --stop-when-empty']);
     }
 
     function assertOrderCancellationForPrevOrder(): void {

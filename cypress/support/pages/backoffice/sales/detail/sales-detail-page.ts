@@ -19,7 +19,7 @@ export class SalesDetailPage extends BackofficePage {
     }
 
     if (params.shouldTriggerOmsInCli) {
-      cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+      cy.runCliCommands(['vendor/bin/console oms:check-condition', 'vendor/bin/console oms:check-timeout']);
     }
 
     cy.url().then((url) => {
@@ -29,7 +29,7 @@ export class SalesDetailPage extends BackofficePage {
         this.repository.getTriggerOmsDivSelector(),
         25,
         5000,
-        params.shouldTriggerOmsInCli ? ['console oms:check-condition', 'console oms:check-timeout'] : []
+        params.shouldTriggerOmsInCli ? ['vendor/bin/console oms:check-condition', 'vendor/bin/console oms:check-timeout'] : []
       );
 
       cy.get(this.repository.getTriggerOmsDivSelector())
