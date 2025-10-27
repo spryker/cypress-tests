@@ -58,7 +58,14 @@
         {
           "type": "helper",
           "name": "haveActiveMerchantWithStore",
-          "key": "merchant"
+          "key": "merchant",
+          "arguments": [
+            {
+              "storeRelation": {
+                "idStores": ["#store.id_store"]
+              }
+            }
+          ]
         },
         {
           "type": "helper",
