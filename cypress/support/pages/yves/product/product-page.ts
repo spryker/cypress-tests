@@ -60,6 +60,15 @@ export class ProductPage extends YvesPage {
     return this.repository.getSoldByProductOfferRadios().filter(`[value="${params.productOfferReference}"]`);
   }
 
+  getProductOfferPrice(params: GetProductOfferRadioParams): Cypress.Chainable {
+    return this.getProductOfferRadio(params)
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .find('[data-qa="component volume-price"]');
+  }
+
   getMerchantRelationRequestLinkAttribute = (): string => {
     return this.repository.getMerchantRelationRequestLinkAttribute();
   };
