@@ -3,7 +3,7 @@ import {
   AssignStoreToDefaultWarehouseScenario,
   CreateProductScenario,
   CreateStoreScenario,
-  UserLoginScenario
+  UserLoginScenario,
 } from '@scenarios/backoffice';
 import { CatalogPage, ProductPage } from '@pages/yves';
 import { PublishAndSynchronizeDmsDynamicFixtures, PublishAndSynchronizeDmsStaticFixtures } from '@interfaces/yves';
@@ -54,7 +54,10 @@ describe(
       });
 
       createStoreScenario.execute({ store: staticFixtures.store, shouldTriggerPublishAndSync: true });
-      assignStoreToDefaultWarehouseScenario.execute({storeName: staticFixtures.store.name, shouldTriggerPublishAndSync: true});
+      assignStoreToDefaultWarehouseScenario.execute({
+        storeName: staticFixtures.store.name,
+        shouldTriggerPublishAndSync: true,
+      });
     });
 
     beforeEach((): void => {
