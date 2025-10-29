@@ -3,6 +3,7 @@ import { inject, injectable } from 'inversify';
 
 import { YvesPage } from '@pages/yves';
 import { ProductRepository } from './product-repository';
+import Chainable = Cypress.Chainable;
 
 @injectable()
 @autoWired
@@ -21,6 +22,10 @@ export class ProductPage extends YvesPage {
 
   getAddToCartSuccessMessage = (): string => {
     return this.repository.getAddToCartSuccessMessage();
+  };
+
+  getAddToCartButton = (): Cypress.Chainable => {
+    return this.repository.getAddToCartButton();
   };
 
   selectSoldByProductOffer = (params: SelectSoldByProductOfferParams): void => {
