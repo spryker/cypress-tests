@@ -1,2 +1,2 @@
-offer_reference,concrete_sku,is_active,store_relations,stock.{WAREHOUSE_NAME}.quantity
-OFFER-{UNIQUE},{PRODUCT_SKU},1,DE,10
+offer_reference,concrete_sku,is_active,store_relations,stock.{WAREHOUSE_NAME}.quantity,price.DE.default.EUR.value_net,price.DE.default.EUR.value_gross
+OFFER-{UNIQUE},{PRODUCT_SKU},1,DE,10,10000,19000

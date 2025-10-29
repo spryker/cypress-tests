@@ -75,6 +75,7 @@ describe(
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
       productPage.getProductOfferRadio({ productOfferReference }).should('exist');
+      productPage.getProductOfferPrice({ productOfferReference }).should('exist');
     });
 
     it('merchant will see failed data import status when uploaded with with invalid data', () => {

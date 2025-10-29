@@ -23,6 +23,10 @@ export class ProductPage extends YvesPage {
     return this.repository.getAddToCartSuccessMessage();
   };
 
+  getAddToCartButton = (): Cypress.Chainable => {
+    return this.repository.getAddToCartButton();
+  };
+
   selectSoldByProductOffer = (params: SelectSoldByProductOfferParams): void => {
     this.repository.getSoldByProductOfferRadios().then(($radios) => {
       const targetRadio = $radios.filter(`[value="${params.productOfferReference}"]`);
@@ -58,6 +62,15 @@ export class ProductPage extends YvesPage {
 
   getProductOfferRadio(params: GetProductOfferRadioParams): Cypress.Chainable {
     return this.repository.getSoldByProductOfferRadios().filter(`[value="${params.productOfferReference}"]`);
+  }
+
+  getProductOfferPrice(params: GetProductOfferRadioParams): Cypress.Chainable {
+    return this.getProductOfferRadio(params)
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .find('[data-qa="component volume-price"]');
   }
 
   getMerchantRelationRequestLinkAttribute = (): string => {
