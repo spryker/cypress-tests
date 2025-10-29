@@ -3,7 +3,6 @@ import { inject, injectable } from 'inversify';
 
 import { YvesPage } from '@pages/yves';
 import { ProductRepository } from './product-repository';
-import Chainable = Cypress.Chainable;
 
 @injectable()
 @autoWired
