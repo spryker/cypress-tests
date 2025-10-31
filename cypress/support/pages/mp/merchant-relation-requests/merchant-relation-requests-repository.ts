@@ -16,8 +16,8 @@ export class MerchantRelationRequestsRepository {
   getBusinessUnitsCheckboxSelector = (): string => '[id="assigneeCompanyBusinessUnits[]"]';
   getBusinessUnitCheckboxSelector = (): string => '[type="checkbox"]';
   getApprovalModalConfirmButton = (): Cypress.Chainable =>
-    cy.get('[ng-reflect-ng-class="ant-modal--confirmation"]').find('button:contains("Confirm approval")');
+    cy.get('.ant-modal--confirmation').find('button:contains("Confirm approval")');
   getRejectionModalConfirmButton = (): Cypress.Chainable =>
-    cy.get('[ng-reflect-ng-class="ant-modal--confirmation"]').find('button:contains("Confirm reject")');
+    cy.get('.ant-modal--confirmation').find('button:contains("Confirm reject")');
   getMessageFromCompanyValue = (): Cypress.Chainable<string> => cy.get('[spy-id="requestNote"]').invoke('val');
 }

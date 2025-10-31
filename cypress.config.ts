@@ -21,6 +21,7 @@ const baseHost = getEnvVar('E2E_BASE_HOST', 'SPRYKER_FE_HOST');
 
 export default defineConfig({
   env: {
+    CI: true,
     repositoryId: process.env.ENV_REPOSITORY_ID,
     isDynamicStoreEnabled: getEnvVar('ENV_IS_DYNAMIC_STORE_ENABLED', 'SPRYKER_DYNAMIC_STORE_MODE') === 'true',
     ENV_IS_SSP_ENABLED: getEnvVar('ENV_IS_SSP_ENABLED', 'ENV_IS_SSP_ENABLED') === 'true',
@@ -33,6 +34,7 @@ export default defineConfig({
     grepFilterSpecs: true,
   },
   e2e: {
+    chromeWebSecurity: false,
     baseUrl: `${protocol}://${baseHost}`,
     setupNodeEvents(on, config) {
       on('task', {
@@ -43,6 +45,21 @@ export default defineConfig({
       if (!config.env.grepTags) {
         config.env.grepFilterSpecs = false;
       }
+
+      // Add Chrome flags for CI stability
+      on('before:browser:launch', (browser, launchOptions) => {
+        if (browser.name === 'chrome' && browser.isHeadless) {
+          launchOptions.args.push('--no-sandbox');
+          launchOptions.args.push('--disable-gpu');
+          launchOptions.args.push('--disable-dev-shm-usage');
+          launchOptions.args.push('--disable-software-rasterizer');
+          launchOptions.args.push('--disable-background-timer-throttling');
+          launchOptions.args.push('--disable-renderer-backgrounding');
+          launchOptions.args.push('--disable-backgrounding-occluded-windows');
+        }
+
+        return launchOptions;
+      });
 
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       require('@cypress/grep/src/plugin')(config);

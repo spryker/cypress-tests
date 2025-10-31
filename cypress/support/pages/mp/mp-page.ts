@@ -19,7 +19,7 @@ export class MpPage extends AbstractPage {
       customFunction();
     }
 
-    cy.wait(`@${interceptAlias}`)
+    cy.wait(`@${interceptAlias}`, { timeout: 10000 })
       .its('response.body.total')
       .should((total: number) => {
         const valueToBeAtMost = expectedCount + Cypress.currentRetry;
