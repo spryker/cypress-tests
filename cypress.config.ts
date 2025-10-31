@@ -47,7 +47,7 @@ export default defineConfig({
       }
 
       // Add Chrome flags for CI stability
-      on('before:browser:launch', (browser = {}, launchOptions) => {
+      on('before:browser:launch', (browser, launchOptions) => {
         if (browser.name === 'chrome' && browser.isHeadless) {
           launchOptions.args.push('--no-sandbox');
           launchOptions.args.push('--disable-gpu');
