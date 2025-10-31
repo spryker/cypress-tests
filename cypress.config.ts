@@ -61,7 +61,6 @@ export default defineConfig({
         return launchOptions;
       });
 
-
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       require('@cypress/grep/src/plugin')(config);
 
