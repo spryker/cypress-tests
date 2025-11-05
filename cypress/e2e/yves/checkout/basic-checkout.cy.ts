@@ -58,6 +58,7 @@ describe(
         idCustomerAddress: dynamicFixtures.address.id_customer_address,
         shouldTriggerOmsInCli: true,
         paymentMethod: getPaymentMethodBasedOnEnv(),
+        isMultiShipment: Cypress.env('ENV_IS_SSP_ENABLED') ? true : false,
       });
 
       cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
@@ -77,6 +78,7 @@ describe(
       checkoutScenario.execute({
         shouldTriggerOmsInCli: true,
         paymentMethod: getPaymentMethodBasedOnEnv(),
+        isMultiShipment: Cypress.env('ENV_IS_SSP_ENABLED') ? true : false,
       });
 
       cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
