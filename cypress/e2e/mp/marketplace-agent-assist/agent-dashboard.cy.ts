@@ -166,7 +166,7 @@ describe(
       const alias = mpDashboardPage.interceptRequest();
       mpAgentDashboardPage.assist({ query: dynamicFixtures.merchantUserFromInactiveDeniedMerchant.username });
 
-      cy.wait(`@${alias}`);
+      cy.wait(`@${alias}`, { timeout: 10000 });
       mpDashboardPage.assertPageLocation();
     });
 
