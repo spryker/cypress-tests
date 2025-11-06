@@ -2,7 +2,7 @@ import { container } from '@utils';
 import { MerchantUserLoginScenario, UploadProductDataImportMerchantFileScenario } from '@scenarios/mp';
 import { ActivateProductScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { MerchantCombinedProductDynamicFixtures, MerchantCombinedProductStaticFixtures } from '@interfaces/mp';
-import { CatalogPage } from '@pages/yves';
+import { CatalogPage, ProductPage } from '@pages/yves';
 import { DataImportMerchantFilePage } from '@pages/mp';
 
 describe(
@@ -34,6 +34,7 @@ describe(
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
     const userLoginScenario = container.get(UserLoginScenario);
     const activateProductScenario = container.get(ActivateProductScenario);
+    const productPage = container.get(ProductPage);
 
     let dynamicFixtures: MerchantCombinedProductDynamicFixtures;
     let staticFixtures: MerchantCombinedProductStaticFixtures;
@@ -68,8 +69,8 @@ describe(
 
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: abstractSku });
-
       cy.contains(abstractSku);
+      productPage.getAddToCartButton().should('not.be.disabled');
     });
 
     it('merchant will see failed data import status when uploaded with with invalid data', () => {

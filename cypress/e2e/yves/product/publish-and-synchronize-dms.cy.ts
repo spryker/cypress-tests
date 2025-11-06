@@ -1,5 +1,10 @@
 import { container } from '@utils';
-import { CreateProductScenario, CreateStoreScenario, UserLoginScenario } from '@scenarios/backoffice';
+import {
+  AssignStoreToDefaultWarehouseScenario,
+  CreateProductScenario,
+  CreateStoreScenario,
+  UserLoginScenario,
+} from '@scenarios/backoffice';
 import { CatalogPage, ProductPage } from '@pages/yves';
 import { PublishAndSynchronizeDmsDynamicFixtures, PublishAndSynchronizeDmsStaticFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario, SelectStoreScenario } from '@scenarios/yves';
@@ -34,6 +39,7 @@ describe(
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const createStoreScenario = container.get(CreateStoreScenario);
     const selectStoreScenario = container.get(SelectStoreScenario);
+    const assignStoreToDefaultWarehouseScenario = container.get(AssignStoreToDefaultWarehouseScenario);
 
     let dynamicFixtures: PublishAndSynchronizeDmsDynamicFixtures;
     let staticFixtures: PublishAndSynchronizeDmsStaticFixtures;
@@ -48,6 +54,10 @@ describe(
       });
 
       createStoreScenario.execute({ store: staticFixtures.store, shouldTriggerPublishAndSync: true });
+      assignStoreToDefaultWarehouseScenario.execute({
+        storeName: staticFixtures.store.name,
+        shouldTriggerPublishAndSync: true,
+      });
     });
 
     beforeEach((): void => {
