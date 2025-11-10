@@ -1,6 +1,5 @@
 import { injectable } from 'inversify';
 import { ProductRepository } from '../product-repository';
-import * as Cypress from 'cypress';
 
 @injectable()
 export class B2cProductRepository implements ProductRepository {
@@ -26,7 +25,10 @@ export class B2cProductRepository implements ProductRepository {
   getAssetOptions = (): Cypress.Chainable => cy.get('[data-qa="asset-option-trigger"');
   getServicePointSearchInput = (): Cypress.Chainable => cy.get('[data-qa="component ssp-service-point-finder"] input');
   getServicePointListItem = (servicePointName: string): Cypress.Chainable =>
-    cy.contains('[data-qa="component service-point"]', servicePointName).find('button');
+    cy
+      .get('[data-qa="component service-point"]')
+      .filter((_, el) => Cypress.$(el).find('.service-point__name').text().trim() === servicePointName)
+      .find('button');
   getSelectedServicePointName = (): Cypress.Chainable => cy.get('[data-qa="component ssp-service-point-selector"]');
   getCloseServicePointPopupButton = (): Cypress.Chainable => cy.get('.js-main-popup__close');
   getSspAssetNameBlock = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-name"]');

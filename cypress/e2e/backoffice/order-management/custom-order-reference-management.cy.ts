@@ -49,6 +49,7 @@ describe(
 
       checkoutScenario.execute({
         paymentMethod: getPaymentMethodBasedOnEnv(),
+        isMultiShipment: Cypress.env('ENV_IS_SSP_ENABLED') ? true : false,
       });
 
       cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
