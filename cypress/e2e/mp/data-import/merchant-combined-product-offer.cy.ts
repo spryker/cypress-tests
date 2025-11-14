@@ -7,6 +7,7 @@ import {
 } from '@interfaces/mp';
 import { DataImportMerchantFilePage } from '@pages/mp';
 import { CatalogPage, ProductPage } from '@pages/yves';
+import { CustomerLoginScenario } from '../../../support/scenarios/yves';
 
 describe(
   'merchant combined product offer',
@@ -38,6 +39,7 @@ describe(
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
     const userLoginScenario = container.get(UserLoginScenario);
     const approveProductOfferScenario = container.get(ApproveProductOfferScenario);
+    const customerLoginScenario = container.get(CustomerLoginScenario);
 
     let dynamicFixtures: MerchantCombinedProductOfferDynamicFixtures;
     let staticFixtures: MerchantCombinedProductOfferStaticFixtures;
@@ -72,6 +74,12 @@ describe(
         productOfferReference,
         shouldTriggerPublishAndSync: true,
       });
+      if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
+        customerLoginScenario.execute({
+          email: dynamicFixtures.customer.email,
+          password: staticFixtures.defaultPassword,
+        });
+      }
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
       productPage.getProductOfferRadio({ productOfferReference }).should('exist');

@@ -1,9 +1,10 @@
-import { User, Merchant, ProductConcrete } from './shared';
+import { User, Merchant, ProductConcrete, Customer } from './shared';
 
 export interface MerchantCombinedProductDynamicFixtures {
   rootUser: User;
   merchantUser: User;
   merchant: Merchant;
+  customer: Customer;
 }
 
 export interface MerchantCombinedProductOfferDynamicFixtures {
@@ -11,6 +12,7 @@ export interface MerchantCombinedProductOfferDynamicFixtures {
   merchantUser: User;
   merchant: Merchant;
   product: ProductConcrete;
+  customer: Customer;
 }
 
 export interface MerchantCombinedProductStaticFixtures {

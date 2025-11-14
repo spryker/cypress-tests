@@ -82,6 +82,48 @@
           "type": "helper",
           "name": "addUserToGroup",
           "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "customer",
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [{ "isActive": true, "status": "approved" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [{ "fkCompany": "#company.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "permission1",
+          "arguments": ["AddCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "arguments": [{ "isDefault": true, "fkCompany": "#company.id_company" }, ["#permission1"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "fkCustomer": "#customer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
         }
       ]
     }

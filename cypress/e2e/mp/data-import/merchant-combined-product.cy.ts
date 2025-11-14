@@ -4,6 +4,7 @@ import { ActivateProductScenario, UserLoginScenario } from '@scenarios/backoffic
 import { MerchantCombinedProductDynamicFixtures, MerchantCombinedProductStaticFixtures } from '@interfaces/mp';
 import { CatalogPage, ProductPage } from '@pages/yves';
 import { DataImportMerchantFilePage } from '@pages/mp';
+import { CustomerLoginScenario } from '../../../support/scenarios/yves';
 
 describe(
   'merchant combined product',
@@ -35,6 +36,7 @@ describe(
     const userLoginScenario = container.get(UserLoginScenario);
     const activateProductScenario = container.get(ActivateProductScenario);
     const productPage = container.get(ProductPage);
+    const customerLoginScenario = container.get(CustomerLoginScenario);
 
     let dynamicFixtures: MerchantCombinedProductDynamicFixtures;
     let staticFixtures: MerchantCombinedProductStaticFixtures;
@@ -66,7 +68,12 @@ describe(
         password: staticFixtures.defaultPassword,
       });
       activateProductScenario.execute({ abstractSku: abstractSku, shouldTriggerPublishAndSync: true });
-
+      if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
+        customerLoginScenario.execute({
+          email: dynamicFixtures.customer.email,
+          password: staticFixtures.defaultPassword,
+        });
+      }
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: abstractSku });
       cy.contains(abstractSku);
