@@ -63,8 +63,8 @@
           "key": "companyUser",
           "arguments": [
             {
-              "customer": "#customer",
-              "fkCustomer": "#customer.id_customer",
+              "customer": "#customer2",
+              "fkCustomer": "#customer2.id_customer",
               "fkCompany": "#company.id_company",
               "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
             },
@@ -77,8 +77,8 @@
           "key": "companyUser2",
           "arguments": [
             {
-              "customer": "#customer2",
-              "fkCustomer": "#customer2.id_customer",
+              "customer": "#customer",
+              "fkCustomer": "#customer.id_customer",
               "fkCompany": "#company.id_company",
               "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
             }
