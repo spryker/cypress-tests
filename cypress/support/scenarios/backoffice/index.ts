@@ -24,3 +24,7 @@ export * from './customer-mfa-remove-scenario';
 export * from './deactivate-product-scenario';
 export * from './activate-product-scenario';
 export * from './approve-product-offer-scenario';
+export * from './merchant-registration-approval-scenario';
+export * from './merchant-registration-rejection-scenario';
+export * from './merchant-activation-scenario';
+export * from './user-activation-scenario';
