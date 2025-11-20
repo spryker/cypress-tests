@@ -59,6 +59,17 @@
         {
           "type": "helper",
           "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit2C1",
+          "arguments": [
+            {
+              "fkCompany": "#company1.id_company",
+              "name": "Test Business Unit 2 C1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
           "key": "businessUnit1C2",
           "arguments": [
             {
@@ -177,18 +188,18 @@
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "downloadFilesPermission",
-          "arguments": ["DownloadFilesPermissionPlugin"]
+          "arguments": ["DownloadCompanyFilesPermissionPlugin"]
         },
         {
           "type": "helper",
           "name": "havePermissionByKey",
-          "key": "permission3",
-          "arguments": ["ViewCompanyUserFilesPermissionPlugin"]
+          "key": "viewCompanyFilesPermission",
+          "arguments": ["ViewCompanyFilesPermissionPlugin"]
         },
         {
           "type": "helper",
           "name": "havePermissionByKey",
-          "key": "viewCompanySspAssetPermissionPlugin",
+          "key": "viewCompanySspAssetPermission",
           "arguments": ["ViewCompanySspAssetPermissionPlugin"]
         },
         {
@@ -205,9 +216,9 @@
             { "isDefault": true, "fkCompany": "#company1.id_company" },
             [
               "#downloadFilesPermission",
-              "#permission3",
+              "#viewCompanyFilesPermission",
               "#viewBusinessUnitSspAssetPermission",
-              "#viewCompanySspAssetPermissionPlugin"
+              "#viewCompanySspAssetPermission"
             ]
           ]
         },
@@ -282,13 +293,78 @@
         {
           "type": "helper",
           "name": "haveFile",
-          "key": "fileSspAsset",
+          "key": "fileSspAsset1",
           "arguments": [
             {
-              "file_name": "ssp_asset_file.pdf"
+              "file_name": "ssp_asset_file1.pdf"
             },
             {
               "extension": "pdf"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFile",
+          "key": "fileSspAsset2",
+          "arguments": [
+            {
+              "file_name": "ssp_asset_file2.pdf"
+            },
+            {
+              "extension": "pdf"
+            }
+          ]
+        },
+
+        {
+          "type": "helper",
+          "name": "haveAsset",
+          "key": "sspAssetBU2C1",
+          "arguments": [
+            {
+              "companyBusinessUnit": "#businessUnit2C1",
+              "businessUnitAssignments": [
+                {
+                  "companyBusinessUnit": {
+                    "idCompanyBusinessUnit": "#businessUnit2C1.id_company_business_unit"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveAsset",
+          "key": "sspAssetBU1C2",
+          "arguments": [
+            {
+              "companyBusinessUnit": "#businessUnit1C2",
+              "businessUnitAssignments": [
+                {
+                  "companyBusinessUnit": {
+                    "idCompanyBusinessUnit": "#businessUnit1C2.id_company_business_unit"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveAsset",
+          "key": "sspAssetBU1C1",
+          "arguments": [
+            {
+              "companyBusinessUnit": "#businessUnit",
+              "businessUnitAssignments": [
+                {
+                  "companyBusinessUnit": {
+                    "idCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+                  }
+                }
+              ]
             }
           ]
         },
@@ -314,28 +390,21 @@
         },
         {
           "type": "helper",
-          "name": "haveCompanyUserFileAttachment",
+          "name": "haveCompanyBusinessUnitFileAttachment",
           "arguments": [
             {
               "idFile": "#file3.id_file",
-              "idCompanyUser": "#companyUser.id_company_user"
+              "idCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
             }
           ]
         },
         {
           "type": "helper",
-          "name": "haveAsset",
-          "key": "sspAsset",
+          "name": "haveCompanyBusinessUnitFileAttachment",
           "arguments": [
             {
-              "companyBusinessUnit": "#businessUnit1C2",
-              "businessUnitAssignments": [
-                {
-                  "companyBusinessUnit": {
-                    "idCompanyBusinessUnit": "#businessUnit1C2.id_company_business_unit"
-                  }
-                }
-              ]
+              "idFile": "#file2.id_file",
+              "idCompanyBusinessUnit": "#businessUnit2C1.id_company_business_unit"
             }
           ]
         },
@@ -344,8 +413,19 @@
           "name": "haveSspAssetFileAttachment",
           "arguments": [
             {
-              "idFile": "#fileSspAsset.id_file",
-              "idSspAsset": "#sspAsset.id_ssp_asset"
+              "idFile": "#fileSspAsset1.id_file",
+              "idFile": "#fileSspAsset1.id_file",
+              "idSspAsset": "#sspAssetBU1C1.id_ssp_asset"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveSspAssetFileAttachment",
+          "arguments": [
+            {
+              "idFile": "#fileSspAsset2.id_file",
+              "idSspAsset": "#sspAssetBU1C2.id_ssp_asset"
             }
           ]
         }

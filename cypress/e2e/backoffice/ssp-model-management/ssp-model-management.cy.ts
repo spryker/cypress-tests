@@ -17,8 +17,8 @@ describe(
     ],
   },
   () => {
-    if (!['suite'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because tests run only for suite', () => {});
+    if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite and b2b-mp', () => {});
       return;
     }
     const userLoginScenario = container.get(UserLoginScenario);
@@ -34,6 +34,7 @@ describe(
     });
 
     beforeEach(() => {
+      console.log('dynamicFixtures', dynamicFixtures);
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,

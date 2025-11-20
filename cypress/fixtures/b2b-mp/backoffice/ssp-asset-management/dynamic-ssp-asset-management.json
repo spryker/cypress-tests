@@ -65,7 +65,13 @@
           "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "key": "companyRole",
-          "arguments": [{ "isDefault": true, "fkCompany": "#company1.id_company" }, ["#viewCompanySspAssetPermission"]]
+          "arguments": [
+            {
+              "isDefault": true,
+              "fkCompany": "#company1.id_company"
+            },
+            ["#viewCompanySspAssetPermission"]
+          ]
         },
         {
           "type": "helper",
@@ -73,7 +79,7 @@
           "key": "customer",
           "arguments": [
             {
-              "locale_name": "en_US",
+              "localeName": "en_US",
               "password": "change123"
             }
           ]
@@ -100,7 +106,11 @@
           "type": "helper",
           "name": "haveUser",
           "key": "rootUser",
-          "arguments": [{ "password": "change123" }]
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
         },
         {
           "type": "helper",
@@ -117,13 +127,99 @@
               "businessUnitAssignments": [
                 {
                   "companyBusinessUnit": {
-                    "idCompanyBusinessUnit": "#businessUnit1.id_company_business_unit",
-                    "idCompanyBusinessUnit": "#businessUnit2.id_company_business_unit"
+                    "idCompanyBusinessUnit": "#businessUnit1.id_company_business_unit"
                   }
                 }
               ]
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "configureTestStateMachine",
+          "arguments": [["DummyPayment01"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product"
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentType",
+          "key": "shipmentType",
+          "arguments": [
+            {
+              "key": "delivery"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentMethod",
+          "key": "shipmentMethod",
+          "arguments": [
+            {
+              "key": "spryker_dummy_shipment-standard"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address",
+          "arguments": [
+            {
+              "fkCustomer": "#customer.id_customer"
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "name": "ShipmentTransfer",
+          "key": "shipment",
+          "arguments": {
+            "shipmentTypeUuid": "#shipmentType.uuid",
+            "idShipmentMethod": "#shipmentMethod.id_shipment_method",
+            "method": "#shipmentMethod",
+            "shippingAddress": "#address"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveProductClass",
+          "key": "productClass",
+          "arguments": [
+            {
+              "key": "Service"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductToProductClass",
+          "arguments": ["#product.id_product_concrete", "#productClass.id_product_class"]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullOrder",
+          "key": "salesOrder",
+          "arguments": [
+            {
+              "item": {
+                "sku": "#product.sku"
+              },
+              "customerReference": "#customer.customer_reference",
+              "shipment": "#shipment"
+            },
+            "DummyPayment01"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveSalesSspAsset",
+          "key": "salesSspAsset",
+          "arguments": ["#salesOrder.id_sales_order", "#sspAsset.id_ssp_asset"]
         }
       ]
     }

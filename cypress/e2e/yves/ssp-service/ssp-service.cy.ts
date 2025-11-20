@@ -65,8 +65,8 @@ describe(
     ],
   },
   (): void => {
-    if (!['suite', 'b2b'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because tests run only for suite and b2b ', () => {});
+    if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite and b2b-mp ', () => {});
       return;
     }
     const customerLoginScenario = container.get(CustomerLoginScenario);
@@ -115,7 +115,7 @@ describe(
 
         const productSku = dynamicFixtures.product1.sku;
 
-        if (['b2b'].includes(Cypress.env('repositoryId'))) {
+        if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
           sspServiceListPage.openFilter();
         }
 
@@ -158,7 +158,7 @@ describe(
         sspServiceListPage.assertServiceListPage();
         sspServiceListPage.assertServiceTableHasAtLeastRows(1);
 
-        if (['b2b'].includes(Cypress.env('repositoryId'))) {
+        if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
           sspServiceListPage.openFilter();
         }
 
