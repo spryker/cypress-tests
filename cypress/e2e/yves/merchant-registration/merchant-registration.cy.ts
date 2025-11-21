@@ -26,7 +26,7 @@ describe(
   },
   (): void => {
     /* Add b2b-mp ones integrated*/
-    if (!['suite'].includes(Cypress.env('repositoryId'))) {
+    if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
       it.skip('skipped because tests run only for suite and b2b-mp', () => {});
       return;
     }
@@ -88,6 +88,79 @@ describe(
         merchantRegistrationPage.assertFooterLinkExists(FOOTER_LINK_TEXT);
         merchantRegistrationPage.clickFooterLink();
         merchantRegistrationPage.assertPageLoaded();
+      });
+    });
+
+    describe('back office list page', (): void => {
+      const merchantRegistrationListPage = container.get(MerchantRegistrationListPage);
+
+      beforeEach((): void => {
+        userLoginScenario.execute({
+          username: dynamicFixtures.rootUser.username,
+          password: staticFixtures.defaultPassword,
+        });
+        merchantRegistrationListPage.visit();
+      });
+
+      it('should display page with table and headers', (): void => {
+        merchantRegistrationListPage.assertPageLoaded();
+        merchantRegistrationListPage.assertTableHeaders();
+      });
+
+      it('should allow sorting by columns', (): void => {
+        merchantRegistrationListPage.sortByColumn('Created');
+        merchantRegistrationListPage.assertTableVisible();
+
+        merchantRegistrationListPage.sortByColumn('Merchant');
+        merchantRegistrationListPage.assertTableVisible();
+      });
+
+      it('should search registrations by email', (): void => {
+        merchantRegistrationPage.visit();
+        const registrationData = merchantRegistrationPage.register();
+        merchantRegistrationPage.assertSuccessMessage();
+
+        merchantRegistrationListPage.visit();
+        merchantRegistrationListPage.searchByTerm(registrationData.email);
+        merchantRegistrationListPage.assertRegistrationExists(registrationData.email);
+      });
+
+      it('should display registration with pending status', (): void => {
+        merchantRegistrationPage.visit();
+        const registrationData = merchantRegistrationPage.register();
+        merchantRegistrationPage.assertSuccessMessage();
+
+        merchantRegistrationListPage.visit();
+        merchantRegistrationListPage.searchByTerm(registrationData.email);
+        merchantRegistrationListPage.assertRegistrationWithStatus(registrationData.email, 'Pending');
+      });
+
+      it('should show status color badges', (): void => {
+        merchantRegistrationPage.visit();
+        merchantRegistrationPage.register();
+        merchantRegistrationPage.assertSuccessMessage();
+
+        merchantRegistrationListPage.visit();
+        merchantRegistrationListPage.assertStatusColor('Pending');
+      });
+
+      it('should view registration by index', (): void => {
+        merchantRegistrationPage.visit();
+        merchantRegistrationPage.register();
+        merchantRegistrationPage.assertSuccessMessage();
+
+        merchantRegistrationListPage.visit();
+        merchantRegistrationListPage.viewRegistrationByIndex(0);
+        cy.url().should('include', '/merchant-registration-request/view');
+      });
+
+      it('should filter registrations by status', (): void => {
+        merchantRegistrationPage.visit();
+        merchantRegistrationPage.register();
+        merchantRegistrationPage.assertSuccessMessage();
+
+        merchantRegistrationListPage.visit();
+        merchantRegistrationListPage.filterByStatus('Pending');
       });
     });
 
