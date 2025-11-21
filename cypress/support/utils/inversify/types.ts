@@ -35,4 +35,5 @@ export const enum REPOSITORIES {
   AgentMultiFactorAuthRepository = 'AgentMultiFactorAuthRepository',
   UserMultiFactorAuthRepository = 'UserMultiFactorAuthRepository',
   SspDashboardManagementRepository = 'SspDashboardManagementRepository',
+  MerchantRegistrationRepository = 'MerchantRegistrationRepository',
 }
