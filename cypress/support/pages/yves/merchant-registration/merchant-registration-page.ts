@@ -117,8 +117,7 @@ export class MerchantRegistrationPage extends YvesPage {
       this.repository.getCompanyNameInput().clear().type(data.companyName);
     }
     if (data.country) {
-      this.repository.getCountrySelectContainer().click();
-      this.repository.getCountrySelectOption().contains(data.country).click();
+      this.repository.selectCountry(data.country);
     }
     if (data.street) {
       this.repository.getStreetInput().clear().type(data.street);
@@ -139,8 +138,7 @@ export class MerchantRegistrationPage extends YvesPage {
 
   fillContactPersonInformation(contactPerson: Partial<MerchantRegistrationData['contactPerson']>): void {
     if (contactPerson.title) {
-      this.repository.getTitleSelectContainer().click();
-      this.repository.getTitleSelectOption().contains(contactPerson.title).click();
+      this.repository.selectTitle(contactPerson.title);
     }
     if (contactPerson.firstName) {
       this.repository.getFirstNameInput().clear().type(contactPerson.firstName);

@@ -53,9 +53,7 @@ export class MerchantRegistrationListPage extends BackofficePage {
   update = (params: UpdateParams): void => {
     this.find({ tableUrl: this.TABLE_URL, searchQuery: params.query }).then(($row) => {
       if ($row && params.action === 'view') {
-        cy.wrap($row).within(() => {
-          cy.get(this.repository.getViewButton()).click();
-        });
+        cy.wrap($row).find(this.repository.getViewButton()).click();
       }
     });
   };
@@ -90,9 +88,9 @@ export class MerchantRegistrationListPage extends BackofficePage {
     this.repository
       .getTableRows()
       .contains(email)
-      .within(() => {
-        cy.get(this.repository.getStatusColumn()).should('contain.text', status);
-      });
+      .closest('tr')
+      .find(this.repository.getStatusColumn())
+      .should('contain.text', status);
   }
 }
 

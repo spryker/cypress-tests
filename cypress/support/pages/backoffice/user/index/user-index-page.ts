@@ -25,27 +25,19 @@ export class UserIndexPage extends BackofficePage {
       tableUrl: '/user/index/table**',
     }).then(($userRow) => {
       if (params.action === ActionEnum.edit) {
-        cy.wrap($userRow).within(() => {
-          cy.get(this.repository.getEditButtonSelector()).should('exist').click({ force: true });
-        });
+        cy.wrap($userRow).find(this.repository.getEditButtonSelector()).should('exist').click({ force: true });
       }
 
       if (params.action === ActionEnum.deactivate) {
-        cy.wrap($userRow).within(() => {
-          cy.get(this.repository.getDeactivateButtonSelector()).should('exist').click({ force: true });
-        });
+        cy.wrap($userRow).find(this.repository.getDeactivateButtonSelector()).should('exist').click({ force: true });
       }
 
       if (params.action === ActionEnum.activate) {
-        cy.wrap($userRow).within(() => {
-          cy.get(this.repository.getActivateButtonSelector()).should('exist').click({ force: true });
-        });
+        cy.wrap($userRow).find(this.repository.getActivateButtonSelector()).should('exist').click({ force: true });
       }
 
       if (params.action === ActionEnum.delete) {
-        cy.wrap($userRow).within(() => {
-          cy.get(this.repository.getDeleteButtonSelector()).should('exist').click({ force: true });
-        });
+        cy.wrap($userRow).find(this.repository.getDeleteButtonSelector()).should('exist').click({ force: true });
       }
     });
   };

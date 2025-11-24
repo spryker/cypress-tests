@@ -5,11 +5,6 @@ import { MerchantRegistrationRepository } from '../merchant-registration-reposit
 export class B2bMpMerchantRegistrationRepository implements MerchantRegistrationRepository {
   getCompanyNameInput = (): Cypress.Chainable => cy.get('input[name="MerchantRegistrationRequestForm[company_name]"]');
 
-  getCountrySelectContainer = (): Cypress.Chainable =>
-    cy.get('#select2-MerchantRegistrationRequestForm_iso2_code-container');
-
-  getCountrySelectOption = (): Cypress.Chainable => cy.get('.select2-results__option');
-
   getStreetInput = (): Cypress.Chainable => cy.get('input[name="MerchantRegistrationRequestForm[address1]"]');
 
   getHouseNumberInput = (): Cypress.Chainable => cy.get('input[name="MerchantRegistrationRequestForm[address2]"]');
@@ -20,11 +15,6 @@ export class B2bMpMerchantRegistrationRepository implements MerchantRegistration
 
   getRegistrationNumberInput = (): Cypress.Chainable =>
     cy.get('input[name="MerchantRegistrationRequestForm[registration_number]"]');
-
-  getTitleSelectContainer = (): Cypress.Chainable =>
-    cy.get('#select2-MerchantRegistrationRequestForm_contact_person_title-container');
-
-  getTitleSelectOption = (): Cypress.Chainable => cy.get('.select2-results__option');
 
   getFirstNameInput = (): Cypress.Chainable =>
     cy.get('input[name="MerchantRegistrationRequestForm[contact_person_first_name]"]');
@@ -43,4 +33,14 @@ export class B2bMpMerchantRegistrationRepository implements MerchantRegistration
     cy.get('input[type="checkbox"][name="MerchantRegistrationRequestForm[accept_terms]"]');
 
   getSubmitButton = (): Cypress.Chainable => cy.get('button.button--wider');
+
+  selectCountry(country: string): void {
+    cy.get('#select2-MerchantRegistrationRequestForm_iso2_code-container').click();
+    cy.get('.select2-results__option').contains(country).click();
+  }
+
+  selectTitle(title: string): void {
+    cy.get('#select2-MerchantRegistrationRequestForm_contact_person_title-container').click();
+    cy.get('.select2-results__option').contains(title).click();
+  }
 }

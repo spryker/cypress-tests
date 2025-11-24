@@ -93,6 +93,13 @@ describe(
 
     describe('back office list page', (): void => {
       const merchantRegistrationListPage = container.get(MerchantRegistrationListPage);
+      let sharedRegistrationData: ReturnType<typeof merchantRegistrationPage.register>;
+
+      before((): void => {
+        merchantRegistrationPage.visit();
+        sharedRegistrationData = merchantRegistrationPage.register();
+        merchantRegistrationPage.assertSuccessMessage();
+      });
 
       beforeEach((): void => {
         userLoginScenario.execute({
@@ -116,50 +123,25 @@ describe(
       });
 
       it('should search registrations by email', (): void => {
-        merchantRegistrationPage.visit();
-        const registrationData = merchantRegistrationPage.register();
-        merchantRegistrationPage.assertSuccessMessage();
-
-        merchantRegistrationListPage.visit();
-        merchantRegistrationListPage.searchByTerm(registrationData.email);
-        merchantRegistrationListPage.assertRegistrationExists(registrationData.email);
+        merchantRegistrationListPage.searchByTerm(sharedRegistrationData.email);
+        merchantRegistrationListPage.assertRegistrationExists(sharedRegistrationData.email);
       });
 
       it('should display registration with pending status', (): void => {
-        merchantRegistrationPage.visit();
-        const registrationData = merchantRegistrationPage.register();
-        merchantRegistrationPage.assertSuccessMessage();
-
-        merchantRegistrationListPage.visit();
-        merchantRegistrationListPage.searchByTerm(registrationData.email);
-        merchantRegistrationListPage.assertRegistrationWithStatus(registrationData.email, 'Pending');
+        merchantRegistrationListPage.searchByTerm(sharedRegistrationData.email);
+        merchantRegistrationListPage.assertRegistrationWithStatus(sharedRegistrationData.email, 'Pending');
       });
 
       it('should show status color badges', (): void => {
-        merchantRegistrationPage.visit();
-        merchantRegistrationPage.register();
-        merchantRegistrationPage.assertSuccessMessage();
-
-        merchantRegistrationListPage.visit();
         merchantRegistrationListPage.assertStatusColor('Pending');
       });
 
       it('should view registration by index', (): void => {
-        merchantRegistrationPage.visit();
-        merchantRegistrationPage.register();
-        merchantRegistrationPage.assertSuccessMessage();
-
-        merchantRegistrationListPage.visit();
         merchantRegistrationListPage.viewRegistrationByIndex(0);
         cy.url().should('include', '/merchant-registration-request/view');
       });
 
       it('should filter registrations by status', (): void => {
-        merchantRegistrationPage.visit();
-        merchantRegistrationPage.register();
-        merchantRegistrationPage.assertSuccessMessage();
-
-        merchantRegistrationListPage.visit();
         merchantRegistrationListPage.filterByStatus('Pending');
       });
     });
