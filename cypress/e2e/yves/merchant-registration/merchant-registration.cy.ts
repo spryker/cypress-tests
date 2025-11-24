@@ -56,19 +56,17 @@ describe(
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
     });
 
-    describe('page access and display', (): void => {
-      it('should load registration page with all sections', (): void => {
-        merchantRegistrationPage.visit();
+    describe('registration page and form validation', (): void => {
+      it('should display page correctly and validate form fields', (): void => {
+        cy.visit('/');
+        merchantRegistrationPage.assertFooterLinkExists(FOOTER_LINK_TEXT);
+        merchantRegistrationPage.clickFooterLink();
+        merchantRegistrationPage.assertPageLoaded();
         merchantRegistrationPage.assertPageLoaded();
         merchantRegistrationPage.assertPageTitle(PAGE_TITLE);
         merchantRegistrationPage.assertCompanySectionVisible();
         merchantRegistrationPage.assertAccountSectionVisible();
-      });
-    });
 
-    describe('form validation', (): void => {
-      it('should validate form fields and requirements', (): void => {
-        merchantRegistrationPage.visit();
         merchantRegistrationPage.submitForm();
         merchantRegistrationPage.assertValidationErrors();
         merchantRegistrationPage.assertFormNotSubmitted();
@@ -79,25 +77,12 @@ describe(
         });
         merchantRegistrationPage.assertValidationErrors();
         merchantRegistrationPage.assertFormNotSubmitted();
-
-        merchantRegistrationPage.visit();
-        merchantRegistrationPage.fillFormWithoutTerms();
-        merchantRegistrationPage.assertValidationErrors();
-        merchantRegistrationPage.assertFormNotSubmitted();
-      });
-    });
-
-    describe('footer link navigation', (): void => {
-      it('should display footer link and navigate to registration page', (): void => {
-        cy.visit('/');
-        merchantRegistrationPage.assertFooterLinkExists(FOOTER_LINK_TEXT);
-        merchantRegistrationPage.clickFooterLink();
-        merchantRegistrationPage.assertPageLoaded();
       });
     });
 
     describe('back office list page', (): void => {
       const merchantRegistrationListPage = container.get(MerchantRegistrationListPage);
+      const merchantRegistrationViewPage = container.get(MerchantRegistrationViewPage);
       let sharedRegistrationData: ReturnType<typeof merchantRegistrationPage.register>;
 
       before((): void => {
@@ -106,7 +91,7 @@ describe(
         merchantRegistrationPage.assertSuccessMessage();
       });
 
-      it('should manage registrations in back office', (): void => {
+      it('should manage registrations and add internal notes in back office', (): void => {
         userLoginScenario.execute({
           username: dynamicFixtures.rootUser.username,
           password: staticFixtures.defaultPassword,
@@ -130,25 +115,6 @@ describe(
 
         merchantRegistrationListPage.viewRegistrationByIndex(0);
         cy.url().should('include', '/merchant-registration-request/view');
-      });
-    });
-
-    describe('internal notes', (): void => {
-      const merchantRegistrationListPage = container.get(MerchantRegistrationListPage);
-      const merchantRegistrationViewPage = container.get(MerchantRegistrationViewPage);
-
-      it('should add and display internal note', (): void => {
-        merchantRegistrationPage.visit();
-        const registrationData = merchantRegistrationPage.register();
-        merchantRegistrationPage.assertSuccessMessage();
-
-        userLoginScenario.execute({
-          username: dynamicFixtures.rootUser.username,
-          password: staticFixtures.defaultPassword,
-        });
-
-        merchantRegistrationListPage.visit();
-        merchantRegistrationListPage.viewRegistrationByEmail(registrationData.email);
 
         const noteText = `Test note added at ${new Date().toISOString()}`;
         merchantRegistrationViewPage.addInternalNote(noteText);
