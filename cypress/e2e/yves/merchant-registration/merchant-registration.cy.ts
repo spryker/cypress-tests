@@ -22,7 +22,17 @@ const PAGE_TITLE = 'Register and get started on the Spryker Marketplace';
 describe(
   'merchant registration',
   {
-    tags: ['@yves', '@backoffice', '@mp', '@merchant-registration', 'merchant', 'registration', 'e2e'],
+    tags: [
+      '@yves',
+      '@backoffice',
+      '@mp',
+      '@merchant-registration',
+      'merchant',
+      'registration',
+      'e2e',
+      'spryker-core-back-office',
+      'spryker-core',
+    ],
   },
   (): void => {
     /* Add b2b-mp ones integrated*/
@@ -57,25 +67,20 @@ describe(
     });
 
     describe('form validation', (): void => {
-      beforeEach((): void => {
+      it('should validate form fields and requirements', (): void => {
         merchantRegistrationPage.visit();
-      });
-
-      it('should show validation errors when submitting empty form', (): void => {
         merchantRegistrationPage.submitForm();
         merchantRegistrationPage.assertValidationErrors();
         merchantRegistrationPage.assertFormNotSubmitted();
-      });
 
-      it('should show validation error for invalid email format', (): void => {
+        merchantRegistrationPage.visit();
         merchantRegistrationPage.register({
           contactPerson: { email: 'invalid-email-format' },
         });
         merchantRegistrationPage.assertValidationErrors();
         merchantRegistrationPage.assertFormNotSubmitted();
-      });
 
-      it('should show validation error when terms are not accepted', (): void => {
+        merchantRegistrationPage.visit();
         merchantRegistrationPage.fillFormWithoutTerms();
         merchantRegistrationPage.assertValidationErrors();
         merchantRegistrationPage.assertFormNotSubmitted();
@@ -101,48 +106,30 @@ describe(
         merchantRegistrationPage.assertSuccessMessage();
       });
 
-      beforeEach((): void => {
+      it('should manage registrations in back office', (): void => {
         userLoginScenario.execute({
           username: dynamicFixtures.rootUser.username,
           password: staticFixtures.defaultPassword,
         });
         merchantRegistrationListPage.visit();
-      });
 
-      it('should display page with table and headers', (): void => {
         merchantRegistrationListPage.assertPageLoaded();
         merchantRegistrationListPage.assertTableHeaders();
-      });
 
-      it('should allow sorting by columns', (): void => {
         merchantRegistrationListPage.sortByColumn('Created');
         merchantRegistrationListPage.assertTableVisible();
-
         merchantRegistrationListPage.sortByColumn('Merchant');
         merchantRegistrationListPage.assertTableVisible();
-      });
 
-      it('should search registrations by email', (): void => {
         merchantRegistrationListPage.searchByTerm(sharedRegistrationData.email);
         merchantRegistrationListPage.assertRegistrationExists(sharedRegistrationData.email);
-      });
-
-      it('should display registration with pending status', (): void => {
-        merchantRegistrationListPage.searchByTerm(sharedRegistrationData.email);
         merchantRegistrationListPage.assertRegistrationWithStatus(sharedRegistrationData.email, 'Pending');
-      });
-
-      it('should show status color badges', (): void => {
         merchantRegistrationListPage.assertStatusColor('Pending');
-      });
 
-      it('should view registration by index', (): void => {
+        merchantRegistrationListPage.filterByStatus('Pending');
+
         merchantRegistrationListPage.viewRegistrationByIndex(0);
         cy.url().should('include', '/merchant-registration-request/view');
-      });
-
-      it('should filter registrations by status', (): void => {
-        merchantRegistrationListPage.filterByStatus('Pending');
       });
     });
 
