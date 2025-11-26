@@ -204,6 +204,7 @@ describe(
       checkoutMpScenario.execute({
         isGuest: !isB2bMp,
         shouldTriggerOmsInCli: true,
+        isMultiShipment: Cypress.env('ENV_IS_SSP_ENABLED'),
       });
     }
 
