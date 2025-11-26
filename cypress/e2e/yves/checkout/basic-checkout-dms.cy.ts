@@ -106,7 +106,7 @@ describe(
       checkoutScenario.execute({
         shouldTriggerOmsInCli: true,
         paymentMethod: getPaymentMethodBasedOnEnv(),
-        isMultiShipment: ['b2b'].includes(Cypress.env('repositoryId')),
+        isMultiShipment: Cypress.env('ENV_IS_SSP_ENABLED'),
       });
 
       cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
