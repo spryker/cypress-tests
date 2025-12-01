@@ -240,7 +240,7 @@ describe(
 
       assetListPage.visit();
 
-      if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      if (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
         assetListPage.openFilters();
       }
 
@@ -248,7 +248,7 @@ describe(
 
       assetListPage.assertTableData([dynamicFixtures.assetBU1C1BU2C1BU1C2, dynamicFixtures.assetBU1C1]);
 
-      if (['b2b'].includes(Cypress.env('repositoryId'))) {
+      if (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
         assetListPage.openFilters();
       }
 

@@ -91,15 +91,21 @@ export class B2bMpSspServiceRepository implements SspServiceRepository {
   }
 
   getRescheduleFormSubmitButton(): Chainable<JQuery<HTMLElement>> {
-    return cy.get('button[data-qa="submit-button"]') as unknown as Chainable<JQuery<HTMLElement>>;
+    return cy.get('form[name="service_item_scheduler_form"] button[data-qa="submit-button"]') as unknown as Chainable<
+      JQuery<HTMLElement>
+    >;
   }
 
   getServiceCancelButton(): Chainable<JQuery<HTMLElement>> {
-    return cy.get('button[data-qa="cancel-service-button"]') as unknown as Chainable<JQuery<HTMLElement>>;
+    cy.get('button[data-qa="cancel-service-popup"]').first().click();
+
+    return cy.get('.main-popup--open button[data-qa="cancel-service-button"]') as unknown as Chainable<
+      JQuery<HTMLElement>
+    >;
   }
 
   getSspServicePageTitle(): Cypress.Chainable {
-    return cy.get('h1');
+    return cy.get('h3');
   }
 
   getFiltersTriggerSelector(): Cypress.Chainable {
