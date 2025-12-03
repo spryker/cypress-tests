@@ -12,8 +12,8 @@ export class ProductManagementListPage extends BackofficePage {
   protected PAGE_URL = '/product-management';
 
   clickEditAction = ($row: JQuery<HTMLElement>): void => {
-    cy.wait;
-    cy.wrap($row).find(this.repository.getEditButtonSelector()).should('exist').click();
+    cy.wrap($row).find(this.repository.getEditButtonSelector()).as('editBtn');
+    cy.get('@editBtn').should('be.visible').should('not.be.disabled').click();
   };
 
   rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
