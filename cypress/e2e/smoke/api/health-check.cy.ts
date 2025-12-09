@@ -21,7 +21,8 @@ describe('health check', { tags: ['@smoke', '@api', 'search', 'catalog', 'spryke
       .should('eq', 200);
   });
 
-  it('GLUE Storefront endpoint should return 200', () => {
+  //we do not support SAPI anymore
+  it.skip('GLUE Storefront endpoint should return 200', () => {
     cy.request({
       method: 'GET',
       url: Cypress.env().glueStorefrontUrl + '/stores',
