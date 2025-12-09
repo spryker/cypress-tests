@@ -10,17 +10,17 @@ export class B2bMpCheckoutAddressRepository implements CheckoutAddressRepository
         return cy.get('#addressesForm_shippingAddress_id_customer_address');
       }
 
-      return cy.get('[name="checkout-full-addresses"]').first();
+      return cy.get('[name="checkout-full-addresses"]').filter(':visible').first();
     });
   };
-  getShippingAddressFirstNameField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_first_name');
-  getShippingAddressLastNameField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_last_name');
-  getShippingAddressAddress1Field = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_address1');
-  getShippingAddressAddress2Field = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_address2');
-  getShippingAddressZipCodeField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_zip_code');
-  getShippingAddressCityField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_city');
-  getShippingAddressCompanyField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_company');
-  getShippingAddressPhoneField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_phone');
+  getShippingAddressFirstNameField = (): Cypress.Chainable => cy.get('#addressesForm_multiShippingAddresses_0_shippingAddress_first_name');
+  getShippingAddressLastNameField = (): Cypress.Chainable => cy.get('#addressesForm_multiShippingAddresses_0_shippingAddress_last_name');
+  getShippingAddressAddress1Field = (): Cypress.Chainable => cy.get('#addressesForm_multiShippingAddresses_0_shippingAddress_address1');
+  getShippingAddressAddress2Field = (): Cypress.Chainable => cy.get('#addressesForm_multiShippingAddresses_0_shippingAddress_address2');
+  getShippingAddressZipCodeField = (): Cypress.Chainable => cy.get('#addressesForm_multiShippingAddresses_0_shippingAddress_zip_code');
+  getShippingAddressCityField = (): Cypress.Chainable => cy.get('#addressesForm_multiShippingAddresses_0_shippingAddress_city');
+  getShippingAddressCompanyField = (): Cypress.Chainable => cy.get('#addressesForm_multiShippingAddresses_0_shippingAddress_company');
+  getShippingAddressPhoneField = (): Cypress.Chainable => cy.get('#addressesForm_multiShippingAddresses_0_shippingAddress_phone');
   getShippingAddressBillingSameAsShippingCheckbox = (): Cypress.Chainable =>
     cy.get('#addressesForm_billingSameAsShipping input');
   getNextButton = (): Cypress.Chainable => cy.get('[data-qa="submit-button"]');
@@ -42,6 +42,7 @@ export class B2bMpCheckoutAddressRepository implements CheckoutAddressRepository
   getBillingAddressCompanyField = (): Cypress.Chainable => cy.get('#addressesForm_billingAddress_company');
   getBillingAddressPhoneField = (): Cypress.Chainable => cy.get('#addressesForm_billingAddress_phone');
   getMultiShipmentTriggerButton = (): Cypress.Chainable => cy.get('[data-qa="multiple-shipment-trigger-button"]');
+  getSameAddressForAllProductsCheckbox = (): Cypress.Chainable => cy.get('input#addressesForm_multiShippingAddresses_0_isSingleAddressPerShipmentType');
   getMultiShipmentAddressItemElement = (): Cypress.Chainable =>
     cy.get('[data-qa="component address-item-form-field-list"]');
   getAddressItemFormFieldListElement = (): Cypress.Chainable =>

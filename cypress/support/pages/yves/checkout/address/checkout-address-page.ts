@@ -40,9 +40,15 @@ export class CheckoutAddressPage extends YvesPage {
   };
 
   fillMultiShippingAddress = (params?: FillShippingAddressParams): void => {
-    if (this.isRepository('b2c', 'b2b', 'b2b-mp')) {
+    if (this.isRepository('b2c', 'b2b')) {
       this.repository.getSelectShippingAddressField().select('-1', { force: true });
-    } else {
+    } if (this.isRepository('b2b-mp')) {
+      this.repository.getSelectShippingAddressField().then($select => {
+        cy.wrap($select).select('customer_address_1', { force: true })
+      this.repository.getSameAddressForAllProductsCheckbox().uncheck({ force: true });
+  });
+    }
+     else {
       this.repository.getMultiShipmentTriggerButton().click();
     }
 
