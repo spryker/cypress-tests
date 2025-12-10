@@ -45,7 +45,7 @@ export class CheckoutAddressPage extends YvesPage {
     }
     if (this.isRepository('b2b-mp')) {
       this.repository.getSelectShippingAddressField().then(($select) => {
-        cy.wrap($select).select('customer_address_1', { force: true });
+        cy.wrap($select).select('0', { force: true });
         this.repository.getSameAddressForAllProductsCheckbox().uncheck({ force: true });
       });
     } else {
