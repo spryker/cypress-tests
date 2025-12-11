@@ -262,7 +262,7 @@ export class SspServiceListPage extends YvesPage {
     this.visit();
     this.viewFirstServiceDetails();
     this.assertOrderDetailsPageUrl();
-    this.getServiceCancelButton().should('have.length', 1);
+    this.getServiceCancelButton().first().should('have.length', 1);
   }
 
   assertServiceListPage(): void {
