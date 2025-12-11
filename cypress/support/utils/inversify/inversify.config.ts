@@ -175,6 +175,8 @@ import { B2bMpSspAssetRepository } from '../../pages/yves/ssp-asset/repositories
 import { SuiteSspDashboardManagementRepository } from '../../pages/yves/ssp-dashboard-management/repositories/suite-ssp-dashboard-management-repository';
 import { B2bMpSspDashboardManagementRepository } from '../../pages/yves/ssp-dashboard-management/repositories/b2b-mp-ssp-dashboard-management-repository';
 import { B2bSspDashboardManagementRepository } from '../../pages/yves/ssp-dashboard-management/repositories/b2b-ssp-dashboard-management-repository';
+import { SuiteMerchantRegistrationRepository } from '../../pages/yves/merchant-registration/repositories/suite-merchant-registration-repository';
+import { B2bMpMerchantRegistrationRepository } from '../../pages/yves/merchant-registration/repositories/b2b-mp-merchant-registration-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -215,6 +217,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.AgentMultiFactorAuthRepository]: SuiteAgentMultiFactorAuthRepository,
   [REPOSITORIES.UserMultiFactorAuthRepository]: SuiteUserMultiFactorAuthRepository,
   [REPOSITORIES.SspDashboardManagementRepository]: SuiteSspDashboardManagementRepository,
+  [REPOSITORIES.MerchantRegistrationRepository]: SuiteMerchantRegistrationRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -362,6 +365,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2bMpUserMultiFactorAuthRepository,
   [REPOSITORIES.SspDashboardManagementRepository]: B2bMpSspDashboardManagementRepository,
   [REPOSITORIES.SspServiceRepository]: B2bMpSspServiceRepository,
+  [REPOSITORIES.MerchantRegistrationRepository]: B2bMpMerchantRegistrationRepository,
   [REPOSITORIES.SspAssetRepository]: B2bMpSspAssetRepository,
 };
 

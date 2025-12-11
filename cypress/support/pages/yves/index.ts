@@ -40,3 +40,4 @@ export * from './ssp-service/ssp-service-list-page';
 export * from './agent/overview/agent-overview-page';
 export * from './multi-factor-auth/agent/agent-multi-factor-auth-page';
 export * from './ssp-dashboard-management/ssp-dashboard-page';
+export * from './merchant-registration/merchant-registration-page';

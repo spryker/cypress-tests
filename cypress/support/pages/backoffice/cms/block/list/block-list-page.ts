@@ -22,7 +22,8 @@ export class BlockListPage extends BackofficePage {
   };
 
   clickEditAction = (row: JQuery<HTMLElement>): void => {
-    cy.wrap(row).find(this.repository.getEditButtonSelector()).should('exist').click();
+    cy.wrap(row).find(this.repository.getEditButtonSelector()).as('editBtn');
+    cy.get('@editBtn').should('be.visible').should('not.be.disabled').click();
   };
 
   rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
