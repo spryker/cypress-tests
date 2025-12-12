@@ -8,7 +8,11 @@
           "type": "helper",
           "name": "haveUser",
           "key": "rootUser",
-          "arguments": [{ "password": "change123" }]
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
         },
         {
           "type": "helper",
@@ -24,25 +28,46 @@
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
-          "arguments": { "id_store": 1, "name": "DE" }
+          "arguments": {
+            "id_store": 1,
+            "name": "DE"
+          }
         },
         {
           "type": "helper",
           "name": "haveCompany",
           "key": "company1",
-          "arguments": [{ "isActive": true, "status": "approved", "name": "Test Company 1" }]
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "name": "Test Company 1"
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveCompany",
           "key": "company2",
-          "arguments": [{ "isActive": true, "status": "approved", "name": "Test Company 2" }]
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "name": "Test Company 2"
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveCompany",
           "key": "company3",
-          "arguments": [{ "isActive": true, "status": "approved", "name": "Test Company 3" }]
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "name": "Test Company 3"
+            }
+          ]
         },
         {
           "type": "helper",
@@ -108,26 +133,6 @@
           "arguments": [
             {
               "file_name": "fileName001.pdf"
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveCompanyFileAttachment",
-          "arguments": [
-            {
-              "idFile": "#file1.id_file",
-              "idCompany": "#company1.id_company"
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveCompanyFileAttachment",
-          "arguments": [
-            {
-              "idFile": "#file2.id_file",
-              "idCompany": "#company1.id_company"
             }
           ]
         }

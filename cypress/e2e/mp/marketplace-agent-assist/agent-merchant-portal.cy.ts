@@ -61,7 +61,11 @@ describe(
       });
 
       addOneProductToCart();
-      checkoutMpScenario.execute({ isGuest: false, shouldTriggerOmsInCli: true });
+      checkoutMpScenario.execute({
+        isGuest: false,
+        shouldTriggerOmsInCli: true,
+        isMultiShipment: Cypress.env('ENV_IS_SSP_ENABLED'),
+      });
 
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,

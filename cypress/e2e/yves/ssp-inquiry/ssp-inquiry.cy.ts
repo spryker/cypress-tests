@@ -25,8 +25,8 @@ describe(
     ],
   },
   (): void => {
-    if (!['suite', 'b2b'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because tests run only for suite and b2b ', () => {});
+    if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite and b2b-mp ', () => {});
       return;
     }
     const sspInquiryListPage = container.get(SspInquiryListPage);
