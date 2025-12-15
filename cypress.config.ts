@@ -73,6 +73,7 @@ export default defineConfig({
     experimentalMemoryManagement: true,
     injectDocumentDomain: true,
     defaultCommandTimeout: parseInt(process.env.DEFAULT_COMMAND_TIMEOUT ?? '4000', 10),
+    video: true,
   },
   viewportWidth: parseInt(process.env.VIEWPORT_WIDGTH ?? '1920', 10),
   viewportHeight: parseInt(process.env.VIEWPORT_HEIGHT ?? '1080', 10),
