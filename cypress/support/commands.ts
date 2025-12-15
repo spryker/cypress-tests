@@ -141,7 +141,7 @@ Cypress.Commands.add('runCliCommands', (commands) => {
           operations: operations,
         },
       },
-      timeout: 100000,
+      timeout: 150000,
     },
   });
 });

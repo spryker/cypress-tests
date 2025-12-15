@@ -14,12 +14,14 @@ export class BackofficePage extends AbstractPage {
     const interceptAlias = this.faker.string.uuid();
 
     cy.intercept('GET', params.url).as(interceptAlias);
+
     return cy
       .wait(`@${interceptAlias}`, { timeout: 10000 })
       .its('response.body.recordsFiltered')
-      .should((total) => {
+      .should((total) => {( Cypress.currentRetry);
         if (params.expectedCount !== null) {
           const valueToBeAtMost = expectedCount + Cypress.currentRetry;
+          console.log('Total:', total, 'Expected:', expectedCount, 'Value to be at most:', valueToBeAtMost);
           assert.isTrue(total === expectedCount || total >= valueToBeAtMost);
         }
       })
