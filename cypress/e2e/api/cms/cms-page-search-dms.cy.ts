@@ -21,7 +21,6 @@ describe('cms page search dms', { tags: ['@api', '@cms', '@dms', 'cms', 'content
   });
 
   it('should be able to see the cms page for new store', (): void => {
-    cy.wait(1000);
     cy.request({
       method: 'GET',
       url: Cypress.env().glueUrl + '/cms-pages',
