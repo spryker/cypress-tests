@@ -35,7 +35,7 @@ export interface RegisteredMerchant {
 export class MerchantRegistrationPage extends YvesPage {
   @inject(REPOSITORIES.MerchantRegistrationRepository) private repository: MerchantRegistrationRepository;
 
-  protected PAGE_URL = '/merchant-registration-request';
+  protected PAGE_URL = '/en/merchant-registration-request';
   protected DEFAULT_TITLE = 'Mr';
   protected DEFAULT_COUNTRY = 'Germany';
 
