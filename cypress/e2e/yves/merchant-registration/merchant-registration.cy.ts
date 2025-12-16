@@ -85,7 +85,6 @@ describe(
       let sharedRegistrationData: ReturnType<typeof merchantRegistrationPage.register>;
 
       before((): void => {
-        cy.visit('/');
         merchantRegistrationPage.visit();
         sharedRegistrationData = merchantRegistrationPage.register();
         merchantRegistrationPage.assertSuccessMessage();
@@ -124,7 +123,6 @@ describe(
 
     describe('e2e workflow', (): void => {
       it('should handle full workflow with rejection and re-registration', (): void => {
-        cy.visit('/');
         merchantRegistrationPage.visit();
         const registrationData = merchantRegistrationPage.register();
         merchantRegistrationPage.assertSuccessMessage();
