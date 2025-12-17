@@ -134,6 +134,7 @@ Cypress.Commands.add('runCliCommands', (commands) => {
     headers: {
       'Content-Type': 'application/vnd.api+json',
     },
+    timeout: 100000, // Cypress request timeout
     body: {
       data: {
         type: 'dynamic-fixtures',
