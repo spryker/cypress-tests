@@ -66,7 +66,7 @@ describe(
       });
 
       addOneProductToCart();
-      checkoutMpScenario.execute();
+      checkoutMpScenario.execute({ isMultiShipment: Cypress.env('ENV_IS_SSP_ENABLED') });
 
       userLoginScenario.execute({
         username: staticFixtures.rootUser.username,
