@@ -62,7 +62,6 @@ describe(
         merchantRegistrationPage.assertFooterLinkExists(FOOTER_LINK_TEXT);
         merchantRegistrationPage.clickFooterLink();
         merchantRegistrationPage.assertPageLoaded();
-        merchantRegistrationPage.assertPageLoaded();
         merchantRegistrationPage.assertPageTitle(PAGE_TITLE);
         merchantRegistrationPage.assertCompanySectionVisible();
         merchantRegistrationPage.assertAccountSectionVisible();
