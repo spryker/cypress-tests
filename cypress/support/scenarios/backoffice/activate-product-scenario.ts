@@ -12,7 +12,7 @@ export class ActivateProductScenario {
     this.productManagementListPage.update({ query: params.abstractSku, action: ActionEnum.approve });
 
     if (params?.shouldTriggerPublishAndSync) {
-      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+      cy.runQueueWorker();
     }
   };
 }

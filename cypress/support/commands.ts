@@ -146,6 +146,14 @@ Cypress.Commands.add('runCliCommands', (commands) => {
   });
 });
 
+Cypress.Commands.add('runQueueWorker', () => {
+  cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(1000); // For some reason.  The delay or racing in processing the queue messages.
+  cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+});
+
 Cypress.Commands.add('confirmCustomerByEmail', (email) => {
   const operation = {
     type: 'helper',
