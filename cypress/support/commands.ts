@@ -120,40 +120,6 @@ Cypress.Commands.add(
   }
 );
 
-Cypress.Commands.add('runCliCommands', (commands) => {
-  const operations = commands.map((command) => {
-    return {
-      type: 'cli-command',
-      name: command,
-    };
-  });
-
-  cy.request({
-    method: 'POST',
-    url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
-    headers: {
-      'Content-Type': 'application/vnd.api+json',
-    },
-    body: {
-      data: {
-        type: 'dynamic-fixtures',
-        attributes: {
-          operations: operations,
-        },
-      },
-    },
-    timeout: 100000,
-  });
-});
-
-Cypress.Commands.add('runQueueWorker', () => {
-  cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(1000); // For some reason.  The delay or racing in processing the queue messages.
-  cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
-});
-
 Cypress.Commands.add('confirmCustomerByEmail', (email) => {
   const operation = {
     type: 'helper',
@@ -337,4 +303,38 @@ Cypress.Commands.add('cleanUpCustomerMultiFactorAuth', () => {
       },
     },
   });
+});
+
+Cypress.Commands.add('runCliCommands', (commands) => {
+  const operations = commands.map((command) => {
+    return {
+      type: 'cli-command',
+      name: command,
+    };
+  });
+
+  cy.request({
+    method: 'POST',
+    url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
+    headers: {
+      'Content-Type': 'application/vnd.api+json',
+    },
+    body: {
+      data: {
+        type: 'dynamic-fixtures',
+        attributes: {
+          operations: operations,
+        },
+      },
+    },
+    timeout: 100000,
+  });
+});
+
+Cypress.Commands.add('runQueueWorker', () => {
+  cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(1000); // For some reason.  The delay or racing in processing the queue messages.
+  cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
 });
