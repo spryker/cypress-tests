@@ -20,7 +20,16 @@ export class BackofficePage extends AbstractPage {
       .should((total) => {
         if (params.expectedCount !== null) {
           const valueToBeAtMost = expectedCount + Cypress.currentRetry;
-          console.log('Total:', total.recordsFiltered, 'Expected:', expectedCount, 'Value to be at most:', valueToBeAtMost, 'Data:', total.data);
+          console.log(
+            'Total:',
+            total.recordsFiltered,
+            'Expected:',
+            expectedCount,
+            'Value to be at most:',
+            valueToBeAtMost,
+            'Data:',
+            total.data
+          );
           assert.isTrue(total.recordsFiltered === expectedCount || total.recordsFiltered >= valueToBeAtMost);
         }
       })
