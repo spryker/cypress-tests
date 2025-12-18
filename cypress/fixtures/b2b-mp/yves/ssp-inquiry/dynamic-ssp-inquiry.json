@@ -202,7 +202,7 @@
         {
           "type": "helper",
           "name": "configureTestStateMachine",
-          "arguments": [["MarketplacePayment01"]]
+          "arguments": [["DummyPayment01"]]
         },
         {
           "type": "helper",
@@ -262,7 +262,7 @@
               "customerReference": "#customer.customer_reference",
               "shipment": "#shipment"
             },
-            "MarketplacePayment01"
+            "DummyPayment01"
           ]
         },
         {

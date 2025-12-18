@@ -1,0 +1,359 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveStore",
+          "key": "store",
+          "arguments": [{ "name": "DE" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [
+            {
+              "fkCompany": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "viewCompanySspAssetPermission",
+          "arguments": ["ViewCompanySspAssetPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "companyRole",
+          "arguments": [{ "isDefault": true, "fkCompany": "#company.id_company" }, ["#viewCompanySspAssetPermission"]]
+        },
+
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "customer",
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "fkCustomer": "#customer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser", ["#companyRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveAsset",
+          "key": "sspAsset",
+          "arguments": [
+            {
+              "companyBusinessUnit": "#businessUnit",
+              "generateImage": true,
+              "businessUnitAssignments": [
+                {
+                  "companyBusinessUnit": {
+                    "idCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+
+        {
+          "type": "helper",
+          "name": "haveProductClass",
+          "key": "productClassService",
+          "arguments": [
+            {
+              "name": "Service"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductClass",
+          "key": "productClassSpareParts",
+          "arguments": [
+            {
+              "name": "Spare parts"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productService",
+          "arguments": [{ "idTaxSet": 1, "isServiceDateTimeEnabled": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productSpareParts",
+          "arguments": [{ "idTaxSet": 1, "isServiceDateTimeEnabled": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productSparePartsWithoutSspAsset",
+          "arguments": [{ "idTaxSet": 1, "isServiceDateTimeEnabled": true }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productService.abstract_sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productSpareParts.abstract_sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productSparePartsWithoutSspAsset.abstract_sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productService.abstract_sku",
+              "skuProduct": "#productService.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productSpareParts.abstract_sku",
+              "skuProduct": "#productSpareParts.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productSparePartsWithoutSspAsset.abstract_sku",
+              "skuProduct": "#productSparePartsWithoutSspAsset.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductToProductClass",
+          "arguments": ["#productService.id_product_concrete", "#productClassService.id_product_class"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductToProductClass",
+          "arguments": ["#productSpareParts.id_product_concrete", "#productClassSpareParts.id_product_class"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductToProductClass",
+          "arguments": [
+            "#productSparePartsWithoutSspAsset.id_product_concrete",
+            "#productClassSpareParts.id_product_class"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
+        },
+        {
+          "type": "array-object",
+          "key": "stores",
+          "arguments": ["#store"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOffer",
+          "key": "productOfferService",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "idProductConcrete": "#productService.id_product_concrete",
+              "concreteSku": "#productService.sku",
+              "merchantReference": "#merchant.merchant_reference",
+              "stores": "#stores"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOffer",
+          "key": "productOfferSpareParts",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "idProductConcrete": "#productSpareParts.id_product_concrete",
+              "concreteSku": "#productSpareParts.sku",
+              "merchantReference": "#merchant.merchant_reference",
+              "stores": "#stores"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOffer",
+          "key": "productOfferSparePartsWithoutSspAsset",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "idProductConcrete": "#productSparePartsWithoutSspAsset.id_product_concrete",
+              "concreteSku": "#productSparePartsWithoutSspAsset.sku",
+              "merchantReference": "#merchant.merchant_reference",
+              "stores": "#stores"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductList",
+          "key": "productListService",
+          "arguments": [
+            {
+              "productListProductConcreteRelation": {
+                "productIds": ["#productService.id_product_concrete"]
+              },
+              "type": "whitelist"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductList",
+          "key": "productListSpareParts",
+          "arguments": [
+            {
+              "productListProductConcreteRelation": {
+                "productIds": ["#productSpareParts.id_product_concrete", "#productService.id_product_concrete"]
+              },
+              "type": "whitelist"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveSspModel",
+          "key": "sspModel",
+          "arguments": [
+            {
+              "sspAssets": [
+                {
+                  "idSspAsset": "#sspAsset.id_ssp_asset"
+                }
+              ],
+              "productLists": [
+                {
+                  "idProductList": "#productListService.id_product_list"
+                },
+                {
+                  "idProductList": "#productListSpareParts.id_product_list"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#productService.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#productSpareParts.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#productSparePartsWithoutSspAsset.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferStock",
+          "arguments": [
+            {
+              "idProductOffer": "#productOfferService.id_product_offer",
+              "productOfferReference": "#productOfferService.product_offer_reference",
+              "isNeverOutOfStock": true
+            },
+            "#merchant.stocks"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferStock",
+          "arguments": [
+            {
+              "idProductOffer": "#productOfferSpareParts.id_product_offer",
+              "productOfferReference": "#productOfferSpareParts.product_offer_reference",
+              "isNeverOutOfStock": true
+            },
+            "#merchant.stocks"
+          ]
+        }
+      ]
+    }
+  }
+}

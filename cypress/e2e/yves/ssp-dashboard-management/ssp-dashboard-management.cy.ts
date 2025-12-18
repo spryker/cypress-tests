@@ -17,11 +17,11 @@ describe(
     ],
   },
   (): void => {
-    if (!['suite', 'b2b'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because tests run only for suite and b2b ', () => {});
+    if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite and b2b-mp', () => {});
       return;
     }
-    const isB2B = ['b2b'].includes(Cypress.env('repositoryId'));
+    const isB2BMp = ['b2b-mp'].includes(Cypress.env('repositoryId'));
     const sspDashboardPage = container.get(SspDashboardPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
 
@@ -89,7 +89,7 @@ describe(
       sspDashboardPage.assertSspDashboardFilesBlockNotPresent();
     });
 
-    !isB2B
+    !isB2BMp
       ? it('customer should see empty files block on dashboard', (): void => {
           customerLoginScenario.execute({
             email: dynamicFixtures.customer3.email,
@@ -141,7 +141,7 @@ describe(
       sspDashboardPage.assertSspDashboardInquiriesBlockNotPresent();
     });
 
-    !isB2B
+    !isB2BMp
       ? it('customer without permission see empty inquiries table on dashboard', (): void => {
           customerLoginScenario.execute({
             email: dynamicFixtures.customer4.email,

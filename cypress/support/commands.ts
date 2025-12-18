@@ -134,6 +134,7 @@ Cypress.Commands.add('runCliCommands', (commands) => {
     headers: {
       'Content-Type': 'application/vnd.api+json',
     },
+    timeout: 100000, // Cypress request timeout
     body: {
       data: {
         type: 'dynamic-fixtures',
@@ -141,8 +142,8 @@ Cypress.Commands.add('runCliCommands', (commands) => {
           operations: operations,
         },
       },
-      timeout: 100000,
     },
+    timeout: 100000,
   });
 });
 
@@ -166,8 +167,8 @@ Cypress.Commands.add('confirmCustomerByEmail', (email) => {
           operations: [operation],
         },
       },
-      timeout: 20000,
     },
+    timeout: 20000,
   });
 });
 
