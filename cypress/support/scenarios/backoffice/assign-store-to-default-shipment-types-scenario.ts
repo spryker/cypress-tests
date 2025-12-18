@@ -67,7 +67,7 @@ export class AssignStoreToDefaultShipmentTypesScenario {
       });
     });
 
-    cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+    cy.runQueueWorker();
   };
 }
 
