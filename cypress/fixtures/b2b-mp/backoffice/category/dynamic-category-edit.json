@@ -1,0 +1,49 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": false,
+      "operations": [
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeEN",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 2, "name": "AT" }
+        },
+        {
+          "type": "helper",
+          "name": "haveLocalizedCategory",
+          "key": "parentCategory",
+          "arguments": [{ "locale": "#localeEN" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCategoryStoreRelation",
+          "arguments": ["#parentCategory.id_category", "#store.id_store"]
+        },
+        {
+          "type": "helper",
+          "name": "haveLocalizedCategory",
+          "key": "childCategory",
+          "arguments": [
+            {
+              "locale": "#localeEN",
+              "parentCategoryNode": "#parentCategory.category_node"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCategoryStoreRelation",
+          "arguments": ["#childCategory.id_category", "#store.id_store"]
+        }
+      ]
+    }
+  }
+}

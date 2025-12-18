@@ -1,6 +1,6 @@
 import { container } from '@utils';
-import { CategoryEditStaticFixtures } from '@interfaces/backoffice';
-import { CategoryEditPage, CategoryListPage, ActionEnum } from '@pages/backoffice';
+import { CategoryEditDynamicFixtures, CategoryEditStaticFixtures } from '@interfaces/backoffice';
+import { CategoryListPage, ActionEnum } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
 describe(
@@ -8,13 +8,13 @@ describe(
   { tags: ['@backoffice', '@catalog', 'category-management', 'spryker-core-back-office', 'spryker-core'] },
   (): void => {
     const categoryListPage = container.get(CategoryListPage);
-    const categoryEditPage = container.get(CategoryEditPage);
     const userLoginScenario = container.get(UserLoginScenario);
 
     let staticFixtures: CategoryEditStaticFixtures;
+    let dynamicFixtures: CategoryEditDynamicFixtures;
 
     before((): void => {
-      staticFixtures = Cypress.env('staticFixtures');
+      ({ dynamicFixtures, staticFixtures } = Cypress.env());
     });
 
     beforeEach((): void => {
@@ -24,16 +24,13 @@ describe(
       });
     });
 
-    it('should not be able to see help text for child category', (): void => {
-      goToCategoryEditPage(staticFixtures.parentCategoryName);
+    it('Backoffice user should not see store help text for parent', (): void => {
+      goToCategoryEditPage(dynamicFixtures.parentCategory.category_key);
       cy.get('body').contains(staticFixtures.helpText).should('not.exist');
     });
 
-    it('should be able to see help text for child category', (): void => {
-      goToCategoryEditPage(staticFixtures.parentCategoryName);
-      categoryEditPage.unassignStore({ storeName: staticFixtures.storeNameToUnassign });
-
-      goToCategoryEditPage(staticFixtures.childCategoryName);
+    it('Backoffice user should see store help text for child category', (): void => {
+      goToCategoryEditPage(dynamicFixtures.childCategory.category_key);
       cy.get('body').contains(staticFixtures.helpText);
     });
 
