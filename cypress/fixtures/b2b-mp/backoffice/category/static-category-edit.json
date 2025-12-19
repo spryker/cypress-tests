@@ -3,5 +3,6 @@
   "rootUser": {
     "username": "admin@spryker.com"
   },
+  "rootCategoryName": "demoshop",
   "helpText": "If a store is not selectable, please make sure that the parent category is assigned to it first."
 }

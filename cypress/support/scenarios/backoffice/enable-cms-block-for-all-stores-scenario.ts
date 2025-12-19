@@ -25,7 +25,7 @@ export class EnableCmsBlockForAllStoresScenario {
             this.blockUpdatePage.save();
 
             if (params?.shouldTriggerPublishAndSync) {
-              cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+              cy.runQueueWorker();
             }
           }
         });

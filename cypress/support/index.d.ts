@@ -59,6 +59,11 @@ declare namespace Cypress {
     runCliCommands(commands: string[]): void;
 
     /**
+     * Run console queue:worker:start --stop-when-empty
+     */
+    runQueueWorker(): void;
+
+    /**
      * @example cy.confirmCustomerByEmail('test@spryker.com')
      */
     confirmCustomerByEmail(email: string): void;

@@ -17,7 +17,7 @@ export class RemoveProductStockScenario {
     this.availabilityEditPage.uncheckFirstStock();
 
     if (params?.shouldTriggerPublishAndSync) {
-      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+      cy.runQueueWorker();
     }
   };
 }

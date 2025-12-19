@@ -25,7 +25,7 @@ describe(
     });
 
     it('Backoffice user should not see store help text for parent', (): void => {
-      goToCategoryEditPage(dynamicFixtures.parentCategory.category_key);
+      goToCategoryEditPage(staticFixtures.rootCategoryName);
       cy.get('body').contains(staticFixtures.helpText).should('not.exist');
     });
 
@@ -34,9 +34,9 @@ describe(
       cy.get('body').contains(staticFixtures.helpText);
     });
 
-    function goToCategoryEditPage(categoryName: string): void {
+    function goToCategoryEditPage(categorySearchQuery: string): void {
       categoryListPage.visit();
-      categoryListPage.update({ query: categoryName, action: ActionEnum.edit });
+      categoryListPage.update({ query: categorySearchQuery, action: ActionEnum.edit });
     }
   }
 );

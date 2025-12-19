@@ -27,7 +27,7 @@ export class AssignStoreToWarehouseScenario {
         this.stockEditPage.assignAllAvailableStore();
 
         if (params.shouldTriggerPublishAndSync) {
-          cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+          cy.runQueueWorker();
         }
       });
   };

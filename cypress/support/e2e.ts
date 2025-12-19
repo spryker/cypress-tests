@@ -24,7 +24,7 @@ registerCypressGrep();
 
 before(() => {
   if (Cypress.env('E2E_BASE_HOST') === 'yves.eu.spryker.local') {
-    cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+    cy.runQueueWorker();
   }
 
   loadFixture();

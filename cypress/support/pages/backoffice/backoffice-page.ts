@@ -16,11 +16,21 @@ export class BackofficePage extends AbstractPage {
     cy.intercept('GET', params.url).as(interceptAlias);
     return cy
       .wait(`@${interceptAlias}`, { timeout: 10000 })
-      .its('response.body.recordsFiltered')
+      .its('response.body')
       .should((total) => {
         if (params.expectedCount !== null) {
           const valueToBeAtMost = expectedCount + Cypress.currentRetry;
-          assert.isTrue(total === expectedCount || total >= valueToBeAtMost);
+          console.log(
+            'Total:',
+            total.recordsFiltered,
+            'Expected:',
+            expectedCount,
+            'Value to be at most:',
+            valueToBeAtMost,
+            'Data:',
+            total.data
+          );
+          assert.isTrue(total.recordsFiltered === expectedCount || total.recordsFiltered >= valueToBeAtMost);
         }
       })
       .then(() => {

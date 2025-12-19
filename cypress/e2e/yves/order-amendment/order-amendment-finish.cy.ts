@@ -229,7 +229,7 @@ describe(
         shouldTriggerPublishAndSync: true,
       });
 
-      cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
+      cy.runQueueWorker();
     }
 
     function assertOrderCancellationForPrevOrder(): void {
