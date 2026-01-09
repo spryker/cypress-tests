@@ -31,11 +31,7 @@ export class SspFileManagementDownloadPage extends YvesPage {
       failOnStatusCode: false,
       followRedirect: true,
     }).then((response) => {
-      expect(response.status).to.eq(200);
-
-      const redirectUrl =
-        response.allRequestResponses?.[response.allRequestResponses.length - 1]?.['Request URL'] || '';
-      expect(redirectUrl).to.include('/error-page/404');
+      expect(response.status).to.eq(404);
     });
   }
 }

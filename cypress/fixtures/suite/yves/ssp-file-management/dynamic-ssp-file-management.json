@@ -316,7 +316,6 @@
             }
           ]
         },
-
         {
           "type": "helper",
           "name": "haveAsset",
@@ -330,7 +329,8 @@
                     "idCompanyBusinessUnit": "#businessUnit2C1.id_company_business_unit"
                   }
                 }
-              ]
+              ],
+              "status": "approved"
             }
           ]
         },
@@ -347,7 +347,8 @@
                     "idCompanyBusinessUnit": "#businessUnit1C2.id_company_business_unit"
                   }
                 }
-              ]
+              ],
+              "status": "approved"
             }
           ]
         },
@@ -364,7 +365,8 @@
                     "idCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
                   }
                 }
-              ]
+              ],
+              "status": "approved"
             }
           ]
         },
@@ -413,7 +415,6 @@
           "name": "haveSspAssetFileAttachment",
           "arguments": [
             {
-              "idFile": "#fileSspAsset1.id_file",
               "idFile": "#fileSspAsset1.id_file",
               "idSspAsset": "#sspAssetBU1C1.id_ssp_asset"
             }
