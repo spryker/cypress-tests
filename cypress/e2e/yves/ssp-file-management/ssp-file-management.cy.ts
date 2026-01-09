@@ -56,7 +56,7 @@ describe(
       sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
 
       sspAssetDetailPage.visit({
-        qs: { reference: dynamicFixtures.sspAssetBU1C2.reference },
+        qs: { reference: dynamicFixtures.sspAssetBU1C1.reference },
       });
 
       sspFileManagementListPage.visit();
@@ -88,13 +88,13 @@ describe(
         idCompanyUser: dynamicFixtures.companyUserBU1C2.id_company_user,
       });
 
-      sspFileManagementDownloadPage.downloadFile({ fileUuid: dynamicFixtures.fileSspAsset1.uuid });
+      sspFileManagementDownloadPage.downloadFile({ fileUuid: dynamicFixtures.fileSspAsset2.uuid });
 
       companyUserSelectPage.selectBusinessUnit({
         idCompanyUser: dynamicFixtures.companyUserBU2C2.id_company_user,
       });
 
-      sspFileManagementDownloadPage.downloadFileForbidden({ fileUuid: dynamicFixtures.fileSspAsset1.uuid });
+      sspFileManagementDownloadPage.downloadFileForbidden({ fileUuid: dynamicFixtures.fileSspAsset2.uuid });
 
       customerLogoutScenario.execute();
 

@@ -10,6 +10,7 @@ export interface SspFileManagementDynamicFixtures {
   fileSspAsset1: FileAttach;
   fileSspAsset2: FileAttach;
   sspAssetBU1C2: SspAsset;
+  sspAssetBU1C1: SspAsset;
   companyUser: CompanyUser;
   companyUserBU1C2: CompanyUser;
   companyUserBU2C2: CompanyUser;
