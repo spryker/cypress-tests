@@ -127,6 +127,13 @@ export class CartPage extends YvesPage {
     this.getCartItemsListTitles().contains('Delivery');
     this.getCartItemsListTitles().contains('In-Center Service');
   };
+
+  assertCartItemAvailabilityDisplayed = (): void => {
+    const availabilityLabel = this.repository.getCartItemAvailabilityLabel();
+
+    availabilityLabel.should('be.visible');
+    availabilityLabel.invoke('text').should('match', /Available|in stock/i);
+  };
 }
 
 interface QuickAddToCartParams {

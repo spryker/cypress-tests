@@ -90,8 +90,8 @@ describe(
 
         productOffers.children().each(($productOffer) => {
           const offerReference = $productOffer.find(productPage.getInputRadioSelector()).attr('value');
-          const stockQuantity = offerReference === productOfferReference ? '10' : '0';
-          productPage.getAvailabilityStatusBlock(cy.wrap($productOffer)).contains(stockQuantity + ' in stock');
+          const stockStatus = offerReference === productOfferReference ? '10 in stock' : 'Out of stock';
+          productPage.getAvailabilityStatusBlock(cy.wrap($productOffer)).contains(stockStatus);
         });
       }
     });
