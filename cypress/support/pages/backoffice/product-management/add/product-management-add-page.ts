@@ -26,6 +26,7 @@ export class ProductManagementAddPage extends BackofficePage {
     this.repository.getProductNameENInput().type(productAbstract.name);
     this.repository.getProductDescriptionENInput().type(productAbstract.description);
     this.repository.getNewFromInput().type(this.getCurrentDate());
+    cy.get('body').click(0, 0);
     this.repository.getNewToInput().type(this.getPlusOneMonthDate());
 
     this.repository.getPriceTaxTab().click();
