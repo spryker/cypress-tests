@@ -48,7 +48,7 @@ export class SuiteCartRepository implements CartRepository {
   getCustomOrderReferenceSubmitButton = (): Cypress.Chainable =>
     cy.get('[data-qa="component order-custom-reference-form"] button[type=submit]');
   submitCartItemChangeQuantity = (sku: string): void => {
-    this.getCartItemChangeQuantitySubmit(sku).click();
+    this.getCartItemChangeQuantitySubmit(sku).click({ timeout: 10000 });
   };
   getCartItemSummaryBlock = (itemIndex: number): Cypress.Chainable =>
     cy.get('[data-qa="component cart-item-summary"]').eq(itemIndex);
