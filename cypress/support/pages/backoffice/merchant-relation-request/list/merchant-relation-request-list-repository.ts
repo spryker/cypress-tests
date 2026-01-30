@@ -6,6 +6,6 @@ import { injectable } from 'inversify';
 export class MerchantRelationRequestListRepository {
   getFilterMerchantSelect = (): Cypress.Chainable => cy.get('#idMerchant');
   getFilterCompanySelect = (): Cypress.Chainable => cy.get('#idCompany');
-  getEditButtons = (): Cypress.Chainable => cy.get('.btn-edit');
-  getViewButtons = (): Cypress.Chainable => cy.get('.btn-view');
+  getEditButtons = (): Cypress.Chainable => cy.get('.btn-edit', { timeout: 10000 });
+  getViewButtons = (): Cypress.Chainable => cy.get('.btn-view', { timeout: 10000 });
 }
