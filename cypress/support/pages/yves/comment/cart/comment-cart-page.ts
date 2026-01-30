@@ -12,7 +12,7 @@ export class CommentCartPage extends YvesPage {
   protected PAGE_URL = '/cart';
 
   add = (params: AddParams): void => {
-    this.repository.getAddCommentForm().last().find('textarea').clear();
+    this.repository.getAddCommentForm().last().find('textarea').clear({ timeout: 10000 });
     this.repository.getAddCommentForm().last().find('textarea').type(params.message);
     this.repository.getAddCommentForm().last().find(this.repository.getAddCommentButtonSelector()).click();
   };

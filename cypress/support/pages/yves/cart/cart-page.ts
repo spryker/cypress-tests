@@ -12,7 +12,7 @@ export class CartPage extends YvesPage {
   protected PAGE_URL = '/cart';
 
   quickAddToCart = (params: QuickAddToCartParams): void => {
-    this.repository.getQuickAddToCartSkuField().clear();
+    this.repository.getQuickAddToCartSkuField().clear({ timeout: 10000 });
     this.repository.getQuickAddToCartSkuField().type(params.sku);
     this.repository.getQuickAddToCartProductListField().click();
 
@@ -35,7 +35,7 @@ export class CartPage extends YvesPage {
       return;
     }
 
-    cartItemRemovalButton.click();
+    cartItemRemovalButton.click({ timeout: 10000 });
   };
 
   changeQuantity = (params: ChangeQuantityParams): void => {
