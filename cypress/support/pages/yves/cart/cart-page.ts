@@ -35,7 +35,7 @@ export class CartPage extends YvesPage {
       return;
     }
 
-    cartItemRemovalButton.click({timeout: 10000});
+    cartItemRemovalButton.click({ timeout: 10000 });
   };
 
   changeQuantity = (params: ChangeQuantityParams): void => {
