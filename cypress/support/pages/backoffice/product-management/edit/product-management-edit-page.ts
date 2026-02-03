@@ -42,6 +42,7 @@ export class ProductManagementEditPage extends BackofficePage {
   };
 
   setDummyDEName = (): void => {
+    this.repository.getCollapsedBlock().click();
     this.repository.getProductNameDEInput().type(this.faker.commerce.productName());
   };
 

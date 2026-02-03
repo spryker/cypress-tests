@@ -13,9 +13,8 @@ export class ProductManagementEditVariantPage extends BackofficePage {
 
   activate = (): void => {
     this.repository.getActivateButton().click();
-
+    this.repository.getCollapsedBlock().click();
     this.repository.getSearchableDECheckbox().check();
-    this.repository.getEnUsCollapsedBlock().click();
     this.repository.getSearchableENCheckbox().check();
 
     this.repository.getPriceStockTab().click();
