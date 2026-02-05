@@ -128,11 +128,11 @@ export class CartPage extends YvesPage {
     this.getCartItemsListTitles().contains('In-Center Service');
   };
 
-  assertCartItemAvailabilityDisplayed = (): void => {
+  assertCartItemAvailabilityDisplayed = (shouldShowMeasurementUnits: boolean = false): void => {
     const availabilityLabel = this.repository.getCartItemAvailabilityLabel();
-
     availabilityLabel.should('be.visible');
-    availabilityLabel.invoke('text').should('match', /Available|in stock/i);
+    const pattern = shouldShowMeasurementUnits ? /(\d+[,.]?\d*\s+[a-z]+\s+)?in stock/i : /Available|in stock/i;
+    availabilityLabel.invoke('text').should('match', pattern);
   };
 }
 
