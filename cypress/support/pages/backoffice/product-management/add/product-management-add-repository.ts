@@ -6,7 +6,7 @@ import { injectable } from 'inversify';
 export class ProductManagementAddRepository {
   getSkuPrefixInput = (): Cypress.Chainable => cy.get('#product_form_add_sku');
   getProductNameDEInput = (): Cypress.Chainable => cy.get('#product_form_add_general_de_DE_name');
-  getEnUsCollapsedBlock = (): Cypress.Chainable =>
+  getCollapsedBlock = (): Cypress.Chainable =>
     cy.get('#tab-content-general > .panel-body > .collapsed > .ibox-title > .collapse-link > .ibox-tools > .fas');
   getProductDescriptionDEInput = (): Cypress.Chainable => cy.get('#product_form_add_general_de_DE_description');
   getProductNameENInput = (): Cypress.Chainable => cy.get('#product_form_add_general_en_US_name');
