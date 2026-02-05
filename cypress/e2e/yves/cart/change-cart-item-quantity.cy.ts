@@ -64,6 +64,11 @@ describe(
       });
 
       cartPage.visit();
+
+      if (['suite'].includes(Cypress.env('repositoryId'))) {
+        cartPage.assertCartItemAvailabilityDisplayed();
+      }
+
       cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: 3 });
 
       cartPage.getCartSummary().contains(staticFixtures.total3);

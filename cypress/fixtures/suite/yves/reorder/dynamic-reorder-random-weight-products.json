@@ -65,7 +65,7 @@
         {
           "type": "helper",
           "name": "haveProductInStockForStore",
-          "arguments": ["#store", { "sku": "#productMUnit.sku", "isNeverOutOfStock": "1" }]
+          "arguments": ["#store", { "sku": "#productMUnit.sku", "isNeverOutOfStock": "0", "quantity": "1012.80" }]
         },
         {
           "type": "helper",
@@ -115,7 +115,7 @@
         {
           "type": "helper",
           "name": "haveProductInStockForStore",
-          "arguments": ["#store", { "sku": "#productPUnit.sku", "isNeverOutOfStock": "1" }]
+          "arguments": ["#store", { "sku": "#productPUnit.sku", "isNeverOutOfStock": "0", "quantity": "543" }]
         },
         {
           "type": "helper",
