@@ -49,6 +49,10 @@ export class BackofficePage extends AbstractPage {
       return cy.get('tbody > tr:visible');
     };
 
+    // Set up intercept BEFORE triggering the search
+    const interceptAlias = this.faker.string.uuid();
+    cy.intercept('GET', params.tableUrl).as(interceptAlias);
+
     // eslint-disable-next-line cypress/unsafe-to-chain-command
     return cy
       .get('input[type="search"][data-qa="table-search"]', { timeout: 40000 })
@@ -56,6 +60,7 @@ export class BackofficePage extends AbstractPage {
       .invoke('val', params.searchQuery)
       .trigger('input')
       .then(() => {
+        // Now wait for the filtered response
         return this.interceptTable({ url: params.tableUrl, expectedCount: params.expectedCount }, () => {
           return getRows().then(($rows) => {
             let rows = Cypress.$($rows);
@@ -85,6 +90,11 @@ export class BackofficePage extends AbstractPage {
 
     const searchAndIntercept = (): Cypress.Chainable => {
       attempts++;
+      
+      // Set up intercept BEFORE page visit
+      const pageLoadInterceptAlias = this.faker.string.uuid();
+      cy.intercept('GET', params.tableUrl).as(pageLoadInterceptAlias);
+      
       // eslint-disable-next-line cypress/unsafe-to-chain-command
       cy.get('input[type="search"][data-qa="table-search"]', { timeout: 40000 })
         .clear()
@@ -93,6 +103,10 @@ export class BackofficePage extends AbstractPage {
         });
 
       return this.interceptTable({ url: params.tableUrl }).then(() => {
+        // Set up intercept BEFORE search trigger
+        const searchInterceptAlias = this.faker.string.uuid();
+        cy.intercept('GET', params.tableUrl).as(searchInterceptAlias);
+        
         // eslint-disable-next-line cypress/unsafe-to-chain-command
         cy.get('input[type="search"][data-qa="table-search"]', { timeout: 40000 })
           .invoke('val', params.searchQuery)
