@@ -57,7 +57,7 @@ Cypress.Commands.add(
               throw new Error(response.body);
             }
           }
-
+          console.log(response.body);
           if (Array.isArray(response.body.data)) {
             return response.body.data.reduce(
               (acc: Record<string, unknown>, item: Record<string, { key: string; data: unknown }>) => {
