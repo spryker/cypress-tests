@@ -54,80 +54,36 @@ export class ProductManagementEditPage extends BackofficePage {
   };
 
   addAttachment = (params: AddAttachmentParams): void => {
-    cy.get('body').then(($body) => {
-      const initialCount = $body.find('.attachment-item').length;
+    const locale = params.locale ?? 'default';
 
-      this.repository.getAddAttachmentButton().click();
+    this.repository.getAddAttachmentButton(locale).click();
 
-      const index = initialCount;
+    this.repository.getAttachmentItems(locale).then(($items) => {
+      const index = params.index ?? $items.length - 1;
 
-      this.repository.getAttachmentLabelInput(index).type(params.label);
-      this.repository.getAttachmentUrlInput(index).type(params.url);
-
-      if (params.sortOrder !== undefined) {
-        this.repository.getAttachmentSortOrderInput(index).clear().type(params.sortOrder.toString());
-      }
-    });
-  };
-
-  addAttachmentWithLocale = (params: AddAttachmentWithLocaleParams): void => {
-    cy.get('body').then(($body) => {
-      const initialCount = $body.find('.attachment-item').length;
-
-      this.repository.getAddAttachmentButton().click();
-
-      const index = initialCount;
-
-      this.repository.getAttachmentLabelInput(index).type(params.label);
-      this.repository.getAttachmentUrlInput(index).type(params.url);
+      this.repository.getAttachmentLabelInput(index, locale).type(params.label);
+      this.repository.getAttachmentUrlInput(index, locale).type(params.url);
 
       if (params.sortOrder !== undefined) {
-        this.repository.getAttachmentSortOrderInput(index).clear().type(params.sortOrder.toString());
+        this.repository.getAttachmentSortOrderInput(index, locale).clear().type(params.sortOrder.toString());
       }
-
-      this.repository
-        .getAttachmentItems()
-        .eq(index)
-        .find('.ibox.nested.collapsed .ibox-title')
-        .first()
-        .click({ force: true });
-
-      const localeIndex = params.localeIndex ?? 0;
-
-      this.repository.getAttachmentLocalizedLabelInput(index, localeIndex).type(params.localizedLabel, {
-        force: true,
-      });
-      this.repository.getAttachmentLocalizedUrlInput(index, localeIndex).type(params.localizedUrl, {
-        force: true,
-      });
     });
-  };
-
-  getAttachmentItems = (): Cypress.Chainable => {
-    return this.repository.getAttachmentItems();
-  };
-
-  getAddAttachmentButton = (): Cypress.Chainable => {
-    return this.repository.getAddAttachmentButton();
   };
 
   getLocalizedIboxToggle = (): Cypress.Chainable => {
     return this.repository.getLocalizedIboxToggle();
   };
 
-  getAttachmentLocalizedLabelInput = (attachmentIndex: number, localeIndex: number): Cypress.Chainable => {
-    return this.repository.getAttachmentLocalizedLabelInput(attachmentIndex, localeIndex);
-  };
-
-  getAttachmentLocalizedUrlInput = (attachmentIndex: number, localeIndex: number): Cypress.Chainable => {
-    return this.repository.getAttachmentLocalizedUrlInput(attachmentIndex, localeIndex);
+  expandLocaleSection = (locale: string): void => {
+    this.repository.expandLocaleSection(locale);
   };
 
   verifyAttachmentExists = (params: VerifyAttachmentParams): void => {
     const index = params.index ?? 0;
+    const locale = params.locale ?? 'default';
 
-    this.repository.getAttachmentLabelInput(index).should('have.value', params.label);
-    this.repository.getAttachmentUrlInput(index).should('have.value', params.url);
+    this.repository.getAttachmentLabelInput(index, locale).should('have.value', params.label);
+    this.repository.getAttachmentUrlInput(index, locale).should('have.value', params.url);
   };
 }
 
@@ -136,20 +92,12 @@ interface AddAttachmentParams {
   url: string;
   sortOrder?: number;
   index?: number;
-}
-
-interface AddAttachmentWithLocaleParams {
-  label: string;
-  url: string;
-  localizedLabel: string;
-  localizedUrl: string;
-  sortOrder?: number;
-  index?: number;
-  localeIndex?: number;
+  locale?: string;
 }
 
 interface VerifyAttachmentParams {
   label: string;
   url: string;
   index?: number;
+  locale?: string;
 }
