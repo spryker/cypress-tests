@@ -84,6 +84,16 @@ describe(
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
       productPage.getProductOfferRadio({ productOfferReference }).should('exist');
       productPage.getProductOfferPrice({ productOfferReference }).should('exist');
+
+      if (['suite'].includes(Cypress.env('repositoryId'))) {
+        const productOffers = productPage.getSoldByProductOffers();
+
+        productOffers.children().each(($productOffer) => {
+          const offerReference = $productOffer.find(productPage.getInputRadioSelector()).attr('value');
+          const stockStatus = offerReference === productOfferReference ? '10 in stock' : 'Out of stock';
+          productPage.getAvailabilityStatusBlock(cy.wrap($productOffer)).contains(stockStatus);
+        });
+      }
     });
 
     it('merchant will see failed data import status when uploaded with with invalid data', () => {
