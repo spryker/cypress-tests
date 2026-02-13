@@ -79,7 +79,7 @@ describe(
       cy.contains(abstractSku);
       productPage.getAddToCartButton().should('not.be.disabled');
 
-      if (['suite'].includes(Cypress.env('repositoryId'))) {
+      if (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
         const merchantProduct = productPage.getSoldByProductOffers().children().first();
         productPage.getAvailabilityStatusBlock(merchantProduct).contains('Available');
       }
