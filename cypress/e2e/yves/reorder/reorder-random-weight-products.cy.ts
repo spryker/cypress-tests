@@ -67,7 +67,7 @@ describe(
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.productPUnit.sku });
       productPage.addToCart();
-      if (['suite'].includes(Cypress.env('repositoryId'))) {
+      if (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
         cartPage.visit();
         cartPage.assertCartItemAvailabilityDisplayed(true);
       }

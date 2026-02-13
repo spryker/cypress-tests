@@ -124,6 +124,37 @@
               "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
             }
           ]
+        },
+
+        {
+          "type": "builder",
+          "name": "MerchantProfileBuilder",
+          "key": "secondMerchantProfileTransfer"
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchant",
+          "key": "merchantSecond",
+          "arguments": [
+            {
+              "merchantProfile": "#secondMerchantProfileTransfer",
+              "isActive": true,
+              "status": "approved",
+              "storeRelation": {
+                "idStores": ["#store.id_store"]
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#product.fk_product_abstract",
+              "idMerchant": "#merchantSecond.id_merchant"
+            }
+          ]
         }
       ]
     }

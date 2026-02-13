@@ -85,7 +85,7 @@ describe(
       productPage.getProductOfferRadio({ productOfferReference }).should('exist');
       productPage.getProductOfferPrice({ productOfferReference }).should('exist');
 
-      if (['suite'].includes(Cypress.env('repositoryId'))) {
+      if (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
         const productOffers = productPage.getSoldByProductOffers();
 
         productOffers.children().each(($productOffer) => {
