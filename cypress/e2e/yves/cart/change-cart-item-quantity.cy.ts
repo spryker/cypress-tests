@@ -65,7 +65,7 @@ describe(
 
       cartPage.visit();
 
-      if (['suite'].includes(Cypress.env('repositoryId'))) {
+      if (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
         cartPage.assertCartItemAvailabilityDisplayed();
       }
 
