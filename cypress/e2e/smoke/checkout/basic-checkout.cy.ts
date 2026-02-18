@@ -37,7 +37,7 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
-  it('customer should checkout to single shipment (with new shipping address)', (): void => {
+  skipB2BMpIt('customer should checkout to single shipment (with new shipping address)', (): void => {
     loginCustomerScenario.execute({
       email: staticFixtures.customer.email,
       password: staticFixtures.defaultPassword,
@@ -63,6 +63,10 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
 
   function skipB2BIt(description: string, testFn: () => void): void {
     (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+  }
+
+  function skipB2BMpIt(description: string, testFn: () => void): void {
+    (Cypress.env('repositoryId') === 'b2b-mp' ? it.skip : it)(description, testFn);
   }
 
   function getPaymentMethodBasedOnEnv(): string {

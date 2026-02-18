@@ -122,6 +122,9 @@ export class ProductPage extends YvesPage {
   }
 
   getSspAssetNameBlock = (): Cypress.Chainable => this.repository.getSspAssetNameBlock();
+
+  getAvailabilityStatusBlock = ($productOffer: Cypress.Chainable<JQuery<HTMLElement>>): Cypress.Chainable =>
+    $productOffer.get('[data-qa="component status"]');
 }
 
 interface SelectSoldByProductOfferParams {

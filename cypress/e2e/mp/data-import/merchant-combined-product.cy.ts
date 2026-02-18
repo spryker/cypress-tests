@@ -78,6 +78,11 @@ describe(
       catalogPage.searchProductFromSuggestions({ query: abstractSku });
       cy.contains(abstractSku);
       productPage.getAddToCartButton().should('not.be.disabled');
+
+      if (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+        const merchantProduct = productPage.getSoldByProductOffers().children().first();
+        productPage.getAvailabilityStatusBlock(merchantProduct).contains('Available');
+      }
     });
 
     it('merchant will see failed data import status when uploaded with with invalid data', () => {

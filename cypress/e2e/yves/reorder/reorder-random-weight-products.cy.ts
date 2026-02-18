@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { ReorderRandomWeightProductsDynamicFixtures, ReorderStaticFixtures } from '@interfaces/yves';
-import { CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
+import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
 describe(
@@ -31,6 +31,7 @@ describe(
     const orderDetailsPage = container.get(OrderDetailsPage);
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
+    const cartPage = container.get(CartPage);
 
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const checkoutScenario = container.get(CheckoutScenario);
@@ -66,6 +67,10 @@ describe(
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.productPUnit.sku });
       productPage.addToCart();
+      if (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+        cartPage.visit();
+        cartPage.assertCartItemAvailabilityDisplayed(true);
+      }
 
       checkoutScenario.execute({
         idCustomerAddress: dynamicFixtures.address.id_customer_address,
