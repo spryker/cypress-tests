@@ -25,6 +25,8 @@ export class ProductManagementListPage extends BackofficePage {
   };
 
   getTableRows = (): Cypress.Chainable => this.repository.getTableRows();
+  
+  getTableEmptyCell = (): Cypress.Chainable => this.repository.getTableEmptyCell();
 
   getResetButton = (): Cypress.Chainable => this.repository.getResetButton();
 
