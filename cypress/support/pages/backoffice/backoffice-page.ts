@@ -104,14 +104,6 @@ export class BackofficePage extends AbstractPage {
           .its('response.body')
           .should((total) => {
             if (params.expectedCount !== null && params.expectedCount !== undefined) {
-              console.log(
-                'Total:',
-                total.recordsFiltered,
-                'Expected:',
-                expectedCount,
-                'Data:',
-                total.data
-              );
               expect(total.recordsFiltered, `Expected exactly ${expectedCount} records`).to.equal(expectedCount);
             }
           })
