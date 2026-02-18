@@ -37,7 +37,7 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
-  it('customer should checkout to single shipment (with new shipping address)', (): void => {
+  skipB2BIt('customer should checkout to single shipment (with new shipping address)', (): void => {
     loginCustomerScenario.execute({
       email: staticFixtures.customer.email,
       password: staticFixtures.defaultPassword,
