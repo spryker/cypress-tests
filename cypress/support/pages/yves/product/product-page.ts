@@ -122,6 +122,10 @@ export class ProductPage extends YvesPage {
   }
 
   getSspAssetNameBlock = (): Cypress.Chainable => this.repository.getSspAssetNameBlock();
+
+  getAttachmentsList = (): Cypress.Chainable => this.repository.getAttachmentsList();
+
+  getAttachmentItems = (): Cypress.Chainable => this.repository.getAttachmentItems();
 }
 
 interface SelectSoldByProductOfferParams {
