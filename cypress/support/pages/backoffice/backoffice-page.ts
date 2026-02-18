@@ -79,6 +79,67 @@ export class BackofficePage extends AbstractPage {
       });
   };
 
+  public findWithInterceptBeforeTriggering = (params: UpdateParams): Cypress.Chainable => {
+    const getRows = (): Cypress.Chainable<JQuery<HTMLElement>> => {
+      if (params.expectedCount !== undefined) {
+        return cy.get('tbody > tr:visible').should('have.length', params.expectedCount);
+      }
+
+      return cy.get('tbody > tr:visible');
+    };
+
+    const expectedCount = params.expectedCount ?? 1;
+    const interceptAlias = this.faker.string.uuid();
+    cy.intercept('GET', params.tableUrl).as(interceptAlias);
+
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
+    return cy
+      .get('input[type="search"][data-qa="table-search"]', { timeout: 10000 })
+      .clear()
+      .invoke('val', params.searchQuery)
+      .trigger('input')
+      .then(() => {
+        return cy
+          .wait(`@${interceptAlias}`, { timeout: 10000 })
+          .its('response.body')
+          .should((total) => {
+            if (params.expectedCount !== null && params.expectedCount !== undefined) {
+              console.log(
+                'Total:',
+                total.recordsFiltered,
+                'Expected:',
+                expectedCount,
+                'Data:',
+                total.data
+              );
+              expect(total.recordsFiltered, `Expected exactly ${expectedCount} records`).to.equal(expectedCount);
+            }
+          })
+          .then(() => {
+            cy.get('.spy-spinner, .data-processing, .loading').should('not.exist');
+
+            return getRows().then(($rows) => {
+              let rows = Cypress.$($rows);
+
+              if (params.rowFilter && params.rowFilter.length > 0) {
+                params.rowFilter.forEach((filterFn) => {
+                  if (rows.length > 0) {
+                    rows = rows.filter((index, row) => filterFn(Cypress.$(row)));
+                  }
+                });
+              }
+
+              if (rows.length > 0) {
+                return cy.wrap(rows.first());
+              } else {
+                cy.log('No rows found after filtering');
+                return null;
+              }
+            });
+          });
+      });
+  };
+
   public findWithRetry = (params: UpdateWithRetryParams): Cypress.Chainable => {
     const retryCount = 2;
     let attempts = 0;
