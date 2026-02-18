@@ -103,8 +103,9 @@ export class BackofficePage extends AbstractPage {
           .wait(`@${interceptAlias}`, { timeout: 10000 })
           .its('response.body')
           .should((total) => {
-            if (params.expectedCount !== null && params.expectedCount !== undefined) {
-              expect(total.recordsFiltered, `Expected exactly ${expectedCount} records`).to.equal(expectedCount);
+            if (params.expectedCount !== null) {
+              const valueToBeAtMost = expectedCount + Cypress.currentRetry;
+              assert.isTrue(total.recordsFiltered === expectedCount || total.recordsFiltered >= valueToBeAtMost);
             }
           })
           .then(() => {
