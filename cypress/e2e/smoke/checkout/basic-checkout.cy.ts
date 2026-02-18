@@ -37,7 +37,7 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
-  skipB2BIt('customer should checkout to single shipment (with new shipping address)', (): void => {
+  skipB2BMpIt('customer should checkout to single shipment (with new shipping address)', (): void => {
     loginCustomerScenario.execute({
       email: staticFixtures.customer.email,
       password: staticFixtures.defaultPassword,
@@ -49,7 +49,7 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
-  skipB2BMpIt('customer should checkout to multi shipment address (with new shipping address)', (): void => {
+  it('customer should checkout to multi shipment address (with new shipping address)', (): void => {
     loginCustomerScenario.execute({
       email: staticFixtures.customer.email,
       password: staticFixtures.defaultPassword,
