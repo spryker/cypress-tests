@@ -4,7 +4,7 @@ import { injectable } from 'inversify';
 @injectable()
 @autoWired
 export class UserUpdateRepository {
-  getAgentMerchantCheckbox = (): Cypress.Chainable => cy.get('#user_is_merchant_agent');
+  getAgentMerchantCheckbox = (): Cypress.Chainable => cy.get('#user_is_merchant_agent', { timeout: 5000 });
   getAgentCustomerCheckbox = (): Cypress.Chainable => cy.get('#user_is_agent');
   getUpdateUserButton = (): Cypress.Chainable => cy.get('form[name=user]').find('[type="submit"]');
   getPasswordInput = (): Cypress.Chainable => cy.get('#user_password_first');
