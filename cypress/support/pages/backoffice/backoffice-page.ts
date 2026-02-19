@@ -60,7 +60,16 @@ export class BackofficePage extends AbstractPage {
         .wait(500) // Intentional wait to ensure clear request is sent before intercept is set up
         .then(() => {
           const interceptAlias = this.faker.string.uuid();
-          cy.intercept('GET', params.interceptTableUrl).as(interceptAlias);
+
+          // Intercept only requests with search value to avoid interference with other table requests
+          cy.intercept('GET', params.interceptTableUrl, (req) => {
+            const url = new URL(req.url);
+            const searchValue = url.searchParams.get('search[value]');
+
+            if (searchValue !== '') {
+              req.alias = interceptAlias;
+            }
+          });
 
           // eslint-disable-next-line cypress/unsafe-to-chain-command, cypress/no-unnecessary-waiting
           return cy
