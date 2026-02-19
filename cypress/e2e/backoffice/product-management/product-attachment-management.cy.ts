@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { ProductManagementListPage, ProductManagementEditPage, ActionEnum, ProductPage } from '@pages/backoffice';
+import { ProductManagementListPage, ProductManagementEditPage, ProductPage } from '@pages/backoffice';
 import { ProductManagementStaticFixtures, ProductManagementDynamicFixtures } from '@interfaces/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
