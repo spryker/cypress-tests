@@ -63,10 +63,9 @@ export class BackofficePage extends AbstractPage {
 
           // Intercept only requests with search value to avoid interference with other table requests
           cy.intercept('GET', params.interceptTableUrl, (req) => {
-            const url = new URL(req.url);
-            const searchValue = url.searchParams.get('search[value]');
+            const searchValue = req.query['search[value]'];
 
-            if (searchValue !== '') {
+            if (searchValue === params.searchQuery) {
               req.alias = interceptAlias;
             }
           });
