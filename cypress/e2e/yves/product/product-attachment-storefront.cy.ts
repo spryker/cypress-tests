@@ -65,9 +65,27 @@ describe(
 
       // Arrange — add in intentionally wrong order to verify sort applies
       clearAllDefaultAttachments();
-      productManagementEditPage.addAttachment({ label: 'Third', url: 'https://example.com/c.pdf', sortOrder: 3, index: 0, locale: 'default' });
-      productManagementEditPage.addAttachment({ label: 'First', url: 'https://example.com/a.pdf', sortOrder: 1, index: 1, locale: 'default' });
-      productManagementEditPage.addAttachment({ label: 'Second', url: 'https://example.com/b.pdf', sortOrder: 2, index: 2, locale: 'default' });
+      productManagementEditPage.addAttachment({
+        label: 'Third',
+        url: 'https://example.com/c.pdf',
+        sortOrder: 3,
+        index: 0,
+        locale: 'default',
+      });
+      productManagementEditPage.addAttachment({
+        label: 'First',
+        url: 'https://example.com/a.pdf',
+        sortOrder: 1,
+        index: 1,
+        locale: 'default',
+      });
+      productManagementEditPage.addAttachment({
+        label: 'Second',
+        url: 'https://example.com/b.pdf',
+        sortOrder: 2,
+        index: 2,
+        locale: 'default',
+      });
       productManagementEditPage.save();
 
       cy.contains(`The product [${dynamicFixtures.product.abstract_sku}] was saved successfully`).should('be.visible');
