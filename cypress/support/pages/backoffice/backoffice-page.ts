@@ -55,7 +55,7 @@ export class BackofficePage extends AbstractPage {
     return cy
       .get('input[type="search"][data-qa="table-search"]', { timeout: 10000 })
       .clear()
-      .wait(200) // Small wait to ensure clear request is sent before intercept is set up
+      .wait(500) // Small wait to ensure clear request is sent before intercept is set up
       .then(() => {
         const interceptAlias = this.faker.string.uuid();
         cy.intercept('GET', params.interceptTableUrl).as(interceptAlias);
