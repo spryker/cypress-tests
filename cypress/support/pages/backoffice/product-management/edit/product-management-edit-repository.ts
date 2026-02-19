@@ -79,9 +79,17 @@ export class ProductManagementEditRepository {
       .click({ force: true });
   };
 
-  getRemoveAttachmentButton = (index: number, locale = 'default'): Cypress.Chainable => {
-    return this.getAttachmentItems(locale).eq(index).find('.remove-attachment');
+  getAttachmentDeleteButtonForLocale = (locale: string): Cypress.Chainable => {
+    const displayName = this.getLocaleDisplayName(locale);
+    return cy
+      .get('.attachment-forms')
+      .contains('.ibox-title', displayName)
+      .closest('.ibox')
+      .find('.attachment-container > div.m-b-md .remove-attachment');
   };
+
+  getSaveSuccessMessage = (sku: string): Cypress.Chainable =>
+    cy.contains(`The product [${sku}] was saved successfully`);
 
   private getFormattedLocale = (locale: string): string => {
     return locale === 'default' ? 'default' : locale;

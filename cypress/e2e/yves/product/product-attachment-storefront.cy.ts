@@ -39,15 +39,13 @@ describe(
 
       // Arrange
       productManagementEditPage.addAttachment({
-        label: 'User Guide',
-        url: 'https://example.com/guide.pdf',
-        sortOrder: 1,
+        ...staticFixtures.attachments.userGuide,
         index: 0,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
       productManagementEditPage.save();
 
-      cy.contains(`The product [${dynamicFixtures.product.abstract_sku}] was saved successfully`).should('be.visible');
+      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -55,40 +53,33 @@ describe(
       visitProductDetailPage();
 
       productPage.getAttachmentItems().should('have.length', 1);
-      productPage.getAttachmentItems().first().should('contain.text', 'User Guide');
-      productPage.getAttachmentItems().first().should('have.attr', 'href', 'https://example.com/guide.pdf');
+      productPage.getAttachmentItems().first().should('contain.text', staticFixtures.attachments.userGuide.label);
+      productPage.getAttachmentItems().first().should('have.attr', 'href', staticFixtures.attachments.userGuide.url);
     });
 
     it('storefront guest can see multiple attachments sorted by sort order on product detail page', (): void => {
       navigateToProductEdit();
       productManagementEditPage.openMediaTab();
 
-      // Arrange — add in intentionally wrong order to verify sort applies
-      clearAllDefaultAttachments();
+      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.locales.default);
       productManagementEditPage.addAttachment({
-        label: 'Third',
-        url: 'https://example.com/c.pdf',
-        sortOrder: 3,
+        ...staticFixtures.attachments.sortThird,
         index: 0,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
       productManagementEditPage.addAttachment({
-        label: 'First',
-        url: 'https://example.com/a.pdf',
-        sortOrder: 1,
+        ...staticFixtures.attachments.sortFirst,
         index: 1,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
       productManagementEditPage.addAttachment({
-        label: 'Second',
-        url: 'https://example.com/b.pdf',
-        sortOrder: 2,
+        ...staticFixtures.attachments.sortSecond,
         index: 2,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
       productManagementEditPage.save();
 
-      cy.contains(`The product [${dynamicFixtures.product.abstract_sku}] was saved successfully`).should('be.visible');
+      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -96,9 +87,9 @@ describe(
       visitProductDetailPage();
 
       productPage.getAttachmentItems().should('have.length', 3);
-      productPage.getAttachmentItems().eq(0).should('contain.text', 'First');
-      productPage.getAttachmentItems().eq(1).should('contain.text', 'Second');
-      productPage.getAttachmentItems().eq(2).should('contain.text', 'Third');
+      productPage.getAttachmentItems().eq(0).should('contain.text', staticFixtures.attachments.sortFirst.label);
+      productPage.getAttachmentItems().eq(1).should('contain.text', staticFixtures.attachments.sortSecond.label);
+      productPage.getAttachmentItems().eq(2).should('contain.text', staticFixtures.attachments.sortThird.label);
     });
 
     it('storefront guest can see localized attachments with higher priority than default locale attachments on product detail page', (): void => {
@@ -106,50 +97,44 @@ describe(
       productManagementEditPage.openMediaTab();
 
       // Arrange
-      clearAllDefaultAttachments();
+      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.locales.default);
       productManagementEditPage.addAttachment({
-        label: 'Default Guide',
-        url: 'https://example.com/default.pdf',
-        sortOrder: 1,
+        ...staticFixtures.attachments.defaultGuide,
         index: 0,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
 
-      productManagementEditPage.expandLocaleSection('de_DE');
+      productManagementEditPage.expandLocaleSection(staticFixtures.locales.de);
 
       productManagementEditPage.addAttachment({
-        label: 'DE Guide',
-        url: 'https://example.com/de.pdf',
-        sortOrder: 1,
+        ...staticFixtures.attachments.deGuide,
         index: 0,
-        locale: 'de_DE',
+        locale: staticFixtures.locales.de,
       });
 
-      productManagementEditPage.expandLocaleSection('en_US');
+      productManagementEditPage.expandLocaleSection(staticFixtures.locales.en);
 
       productManagementEditPage.addAttachment({
-        label: 'EN Guide',
-        url: 'https://example.com/en.pdf',
-        sortOrder: 1,
+        ...staticFixtures.attachments.enGuide,
         index: 0,
-        locale: 'en_US',
+        locale: staticFixtures.locales.en,
       });
 
       productManagementEditPage.save();
 
-      cy.contains(`The product [${dynamicFixtures.product.abstract_sku}] was saved successfully`).should('be.visible');
+      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
       // Assert — on de locale: de_DE attachment appears before default, en_US attachment is not visible
       visitProductDetailPage();
-      productPage.selectLocale('de');
+      productPage.selectLocale(staticFixtures.locales.deStorefront);
 
       productPage.getAttachmentItems().should('have.length', 2);
-      productPage.getAttachmentItems().eq(0).should('contain.text', 'DE Guide');
-      productPage.getAttachmentItems().eq(1).should('contain.text', 'Default Guide');
+      productPage.getAttachmentItems().eq(0).should('contain.text', staticFixtures.attachments.deGuide.label);
+      productPage.getAttachmentItems().eq(1).should('contain.text', staticFixtures.attachments.defaultGuide.label);
       productPage.getAttachmentItems().each(($el) => {
-        cy.wrap($el).should('not.contain.text', 'EN Guide');
+        cy.wrap($el).should('not.contain.text', staticFixtures.attachments.enGuide.label);
       });
     });
 
@@ -158,17 +143,15 @@ describe(
       productManagementEditPage.openMediaTab();
 
       // Arrange
-      clearAllDefaultAttachments();
+      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.locales.default);
       productManagementEditPage.addAttachment({
-        label: 'Temporary Guide',
-        url: 'https://example.com/temp.pdf',
-        sortOrder: 1,
+        ...staticFixtures.attachments.temporaryGuide,
         index: 0,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
       productManagementEditPage.save();
 
-      cy.contains(`The product [${dynamicFixtures.product.abstract_sku}] was saved successfully`).should('be.visible');
+      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -179,11 +162,11 @@ describe(
       // Act
       navigateToProductEdit();
       productManagementEditPage.openMediaTab();
-      clearAllDefaultAttachments();
-      clearAllLocalizedAttachments('en_US');
+      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.locales.default);
+      clearAllLocalizedAttachments(staticFixtures.locales.en);
       productManagementEditPage.save();
 
-      cy.contains(`The product [${dynamicFixtures.product.abstract_sku}] was saved successfully`).should('be.visible');
+      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -198,26 +181,10 @@ describe(
       backofficeProductPage.editProductFromList(dynamicFixtures.product.abstract_sku);
     }
 
-    function clearAllDefaultAttachments(): void {
-      cy.get('.attachment-forms')
-        .contains('.ibox-title', 'Default')
-        .closest('.ibox')
-        .find('.attachment-container > div.m-b-md')
-        .each(($el) => {
-          cy.wrap($el).find('.remove-attachment').click();
-        });
-    }
-
     function clearAllLocalizedAttachments(locale: string): void {
       productManagementEditPage.expandLocaleSection(locale);
 
-      cy.get('.attachment-forms')
-        .contains('.ibox-title', locale)
-        .closest('.ibox')
-        .find('.attachment-container > div.m-b-md')
-        .each(($el) => {
-          cy.wrap($el).find('.remove-attachment').click();
-        });
+      productManagementEditPage.deleteAttachmentsForLocale(locale);
     }
 
     function visitProductDetailPage(): void {

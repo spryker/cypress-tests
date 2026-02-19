@@ -54,19 +54,17 @@ export class ProductManagementEditPage extends BackofficePage {
     this.repository.getMediaTab().click({ force: true });
   };
 
-  addAttachment = (params: AddAttachmentParams): void => {
-    const locale = params.locale ?? 'default';
-
+  addAttachment = ({ locale, label, url, sortOrder, index }: AddAttachmentParams): void => {
     this.repository.getAddAttachmentButton(locale).click();
 
     this.repository.getAttachmentItems(locale).then(($items) => {
-      const index = params.index ?? $items.length - 1;
+      const idx = index ?? $items.length - 1;
 
-      this.repository.getAttachmentLabelInput(index, locale).type(params.label);
-      this.repository.getAttachmentUrlInput(index, locale).type(params.url);
+      this.repository.getAttachmentLabelInput(idx, locale).type(label);
+      this.repository.getAttachmentUrlInput(idx, locale).type(url);
 
-      if (params.sortOrder !== undefined) {
-        this.repository.getAttachmentSortOrderInput(index, locale).clear().type(params.sortOrder.toString());
+      if (sortOrder !== undefined) {
+        this.repository.getAttachmentSortOrderInput(idx, locale).clear().type(sortOrder.toString());
       }
     });
   };
@@ -86,6 +84,16 @@ export class ProductManagementEditPage extends BackofficePage {
     this.repository.getAttachmentLabelInput(index, locale).should('have.value', params.label);
     this.repository.getAttachmentUrlInput(index, locale).should('have.value', params.url);
   };
+
+  verifySaveSuccess = (sku: string): void => {
+    this.repository.getSaveSuccessMessage(sku).should('be.visible');
+  };
+
+  deleteAttachmentsForLocale = (locale: string): void => {
+    this.repository.getAttachmentDeleteButtonForLocale(locale).each(($el) => {
+      cy.wrap($el).click();
+    });
+  };
 }
 
 interface AddAttachmentParams {
@@ -93,7 +101,7 @@ interface AddAttachmentParams {
   url: string;
   sortOrder?: number;
   index?: number;
-  locale?: string;
+  locale: string;
 }
 
 interface VerifyAttachmentParams {

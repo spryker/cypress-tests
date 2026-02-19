@@ -1,3 +1,60 @@
 {
-  "defaultPassword": "change123"
+  "defaultPassword": "change123",
+  "locales": {
+    "de": "de_DE",
+    "en": "en_US",
+    "default": "default"
+  },
+  "attachments": {
+    "userManual": {
+      "label": "User Manual",
+      "url": "https://example.com/manual.pdf",
+      "sortOrder": 1
+    },
+    "installationGuide": {
+      "label": "Installation Guide",
+      "url": "https://example.com/install.pdf",
+      "sortOrder": 1
+    },
+    "installationsanleitung": {
+      "label": "Installationsanleitung",
+      "url": "https://example.com/de/install.pdf",
+      "sortOrder": 1
+    },
+    "warrantyInformation": {
+      "label": "Warranty Information",
+      "url": "https://example.com/warranty.pdf",
+      "sortOrder": 1
+    },
+    "safetyGuidelines": {
+      "label": "Safety Guidelines",
+      "url": "https://example.com/safety.pdf",
+      "sortOrder": 2
+    },
+    "technicalSpecifications": {
+      "label": "Technical Specifications",
+      "url": "https://example.com/specs.pdf",
+      "sortOrder": 3
+    },
+    "temporaryDocument": {
+      "label": "Temporary Document",
+      "url": "https://example.com/temp.pdf",
+      "sortOrder": 1
+    },
+    "defaultManual": {
+      "label": "Default Manual",
+      "url": "https://example.com/manual.pdf",
+      "sortOrder": 1
+    },
+    "localeSpecificManual": {
+      "label": "Locale Specific Manual",
+      "url": "https://example.com/locale/manual.pdf",
+      "sortOrder": 1
+    },
+    "anotherLocaleManual": {
+      "label": "Another Locale Manual",
+      "url": "https://example.com/other/manual.pdf",
+      "sortOrder": 1
+    }
+  }
 }

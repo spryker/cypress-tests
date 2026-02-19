@@ -49,24 +49,21 @@ describe(
       productManagementEditPage.openMediaTab();
 
       productManagementEditPage.addAttachment({
-        label: 'User Manual',
-        url: 'https://example.com/manual.pdf',
-        sortOrder: 1,
+        ...staticFixtures.attachments.userManual,
         index: 0,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
 
       productManagementEditPage.save();
 
-      cy.contains(`The product [${dynamicFixtures.product.abstract_sku}] was saved successfully`).should('be.visible');
+      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       productManagementEditPage.openMediaTab();
 
       productManagementEditPage.verifyAttachmentExists({
-        label: 'User Manual',
-        url: 'https://example.com/manual.pdf',
+        ...staticFixtures.attachments.userManual,
         index: 0,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
     });
 
@@ -76,42 +73,36 @@ describe(
       productManagementEditPage.openMediaTab();
 
       productManagementEditPage.addAttachment({
-        label: 'Installation Guide',
-        url: 'https://example.com/install.pdf',
-        sortOrder: 1,
+        ...staticFixtures.attachments.installationGuide,
         index: 1,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
 
-      productManagementEditPage.expandLocaleSection('de_DE');
+      productManagementEditPage.expandLocaleSection(staticFixtures.locales.de);
       productManagementEditPage.addAttachment({
-        label: 'Installationsanleitung',
-        url: 'https://example.com/de/install.pdf',
-        sortOrder: 1,
+        ...staticFixtures.attachments.installationsanleitung,
         index: 0,
-        locale: 'de_DE',
+        locale: staticFixtures.locales.de,
       });
 
       productManagementEditPage.save();
 
-      cy.contains(`The product [${dynamicFixtures.product.abstract_sku}] was saved successfully`).should('be.visible');
+      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       productManagementEditPage.openMediaTab();
 
       productManagementEditPage.verifyAttachmentExists({
-        label: 'Installation Guide',
-        url: 'https://example.com/install.pdf',
+        ...staticFixtures.attachments.installationGuide,
         index: 1,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
 
       productManagementEditPage.getLocalizedIboxToggle().first().click({ force: true });
 
       productManagementEditPage.verifyAttachmentExists({
-        label: 'Installationsanleitung',
-        url: 'https://example.com/de/install.pdf',
+        ...staticFixtures.attachments.installationsanleitung,
         index: 0,
-        locale: 'de_DE',
+        locale: staticFixtures.locales.de,
       });
     });
 
@@ -121,41 +112,29 @@ describe(
       productManagementEditPage.openMediaTab();
 
       // Remove existing attachments from default locale section
-      cy.get('.attachment-forms')
-        .contains('.ibox-title', 'Default')
-        .closest('.ibox')
-        .find('.attachment-container > div.m-b-md')
-        .each(($el) => {
-          cy.wrap($el).find('.remove-attachment').click();
-        });
+      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.locales.default);
 
       productManagementEditPage.addAttachment({
-        label: 'Warranty Information',
-        url: 'https://example.com/warranty.pdf',
-        sortOrder: 1,
+        ...staticFixtures.attachments.warrantyInformation,
         index: 0,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
 
       productManagementEditPage.addAttachment({
-        label: 'Safety Guidelines',
-        url: 'https://example.com/safety.pdf',
-        sortOrder: 2,
+        ...staticFixtures.attachments.safetyGuidelines,
         index: 1,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
 
       productManagementEditPage.addAttachment({
-        label: 'Technical Specifications',
-        url: 'https://example.com/specs.pdf',
-        sortOrder: 3,
+        ...staticFixtures.attachments.technicalSpecifications,
         index: 2,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
 
       productManagementEditPage.save();
 
-      cy.contains(`The product [${dynamicFixtures.product.abstract_sku}] was saved successfully`).should('be.visible');
+      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       productManagementEditPage.openMediaTab();
 
@@ -166,24 +145,21 @@ describe(
         .should('have.length', 3);
 
       productManagementEditPage.verifyAttachmentExists({
-        label: 'Warranty Information',
-        url: 'https://example.com/warranty.pdf',
+        ...staticFixtures.attachments.warrantyInformation,
         index: 0,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
 
       productManagementEditPage.verifyAttachmentExists({
-        label: 'Safety Guidelines',
-        url: 'https://example.com/safety.pdf',
+        ...staticFixtures.attachments.safetyGuidelines,
         index: 1,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
 
       productManagementEditPage.verifyAttachmentExists({
-        label: 'Technical Specifications',
-        url: 'https://example.com/specs.pdf',
+        ...staticFixtures.attachments.technicalSpecifications,
         index: 2,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
     });
 
@@ -192,24 +168,16 @@ describe(
 
       productManagementEditPage.openMediaTab();
 
-      cy.get('.attachment-forms')
-        .contains('.ibox-title', 'Default')
-        .closest('.ibox')
-        .find('.attachment-container > div.m-b-md')
-        .each(($el) => {
-          cy.wrap($el).find('.remove-attachment').click();
-        });
+      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.locales.default);
 
       productManagementEditPage.addAttachment({
-        label: 'Temporary Document',
-        url: 'https://example.com/temp.pdf',
-        sortOrder: 1,
-        locale: 'default',
+        ...staticFixtures.attachments.temporaryDocument,
+        locale: staticFixtures.locales.default,
       });
 
       productManagementEditPage.save();
 
-      cy.contains(`The product [${dynamicFixtures.product.abstract_sku}] was saved successfully`).should('be.visible');
+      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       productManagementEditPage.openMediaTab();
 
@@ -220,10 +188,9 @@ describe(
         .should('have.length', 1);
 
       productManagementEditPage.verifyAttachmentExists({
-        label: 'Temporary Document',
-        url: 'https://example.com/temp.pdf',
+        ...staticFixtures.attachments.temporaryDocument,
         index: 0,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
 
       cy.get('.attachment-forms')
@@ -236,7 +203,7 @@ describe(
 
       productManagementEditPage.save();
 
-      cy.contains(`The product [${dynamicFixtures.product.abstract_sku}] was saved successfully`).should('be.visible');
+      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       productManagementEditPage.openMediaTab();
 
@@ -252,69 +219,54 @@ describe(
 
       productManagementEditPage.openMediaTab();
 
-      productManagementEditPage.expandLocaleSection('de_DE');
-      cy.get('.attachment-forms')
-        .contains('.ibox-title', 'de_DE')
-        .closest('.ibox')
-        .find('.attachment-container > div.m-b-md')
-        .each(($el) => {
-          cy.wrap($el).find('.remove-attachment').click();
-        });
-      productManagementEditPage.expandLocaleSection('de_DE');
+      productManagementEditPage.expandLocaleSection(staticFixtures.locales.de);
+      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.locales.de);
+      productManagementEditPage.expandLocaleSection(staticFixtures.locales.de);
 
       productManagementEditPage.addAttachment({
-        label: 'Default Manual',
-        url: 'https://example.com/manual.pdf',
-        sortOrder: 1,
+        ...staticFixtures.attachments.defaultManual,
         index: 0,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
 
-      productManagementEditPage.expandLocaleSection('de_DE');
+      productManagementEditPage.expandLocaleSection(staticFixtures.locales.de);
       productManagementEditPage.addAttachment({
-        label: 'Locale Specific Manual',
-        url: 'https://example.com/locale/manual.pdf',
-        sortOrder: 1,
+        ...staticFixtures.attachments.localeSpecificManual,
         index: 0,
-        locale: 'de_DE',
+        locale: staticFixtures.locales.de,
       });
 
-      productManagementEditPage.expandLocaleSection('en_US');
+      productManagementEditPage.expandLocaleSection(staticFixtures.locales.en);
       productManagementEditPage.addAttachment({
-        label: 'Another Locale Manual',
-        url: 'https://example.com/other/manual.pdf',
-        sortOrder: 1,
+        ...staticFixtures.attachments.anotherLocaleManual,
         index: 0,
-        locale: 'en_US',
+        locale: staticFixtures.locales.en,
       });
 
       productManagementEditPage.save();
 
-      cy.contains(`The product [${dynamicFixtures.product.abstract_sku}] was saved successfully`).should('be.visible');
+      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       productManagementEditPage.openMediaTab();
 
       productManagementEditPage.verifyAttachmentExists({
-        label: 'Default Manual',
-        url: 'https://example.com/manual.pdf',
+        ...staticFixtures.attachments.defaultManual,
         index: 0,
-        locale: 'default',
+        locale: staticFixtures.locales.default,
       });
 
       productManagementEditPage.getLocalizedIboxToggle().first().click({ force: true });
       productManagementEditPage.verifyAttachmentExists({
-        label: 'Locale Specific Manual',
-        url: 'https://example.com/locale/manual.pdf',
+        ...staticFixtures.attachments.localeSpecificManual,
         index: 0,
-        locale: 'de_DE',
+        locale: staticFixtures.locales.de,
       });
 
       productManagementEditPage.getLocalizedIboxToggle().eq(1).click({ force: true });
       productManagementEditPage.verifyAttachmentExists({
-        label: 'Another Locale Manual',
-        url: 'https://example.com/other/manual.pdf',
+        ...staticFixtures.attachments.anotherLocaleManual,
         index: 0,
-        locale: 'en_US',
+        locale: staticFixtures.locales.en,
       });
     });
 
