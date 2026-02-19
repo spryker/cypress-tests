@@ -1,14 +1,8 @@
-import { User, Product, Store } from './shared';
-
-interface Attachment {
-  label: string;
-  url: string;
-  sortOrder: number;
-}
+import { User, Product, Store, Locale, Attachment } from './shared';
 
 export interface ProductManagementStaticFixtures {
   defaultPassword: string;
-  locales: Record<string, string>;
+  defaultLocaleName: string;
   attachments: Record<string, Attachment>;
 }
 
@@ -17,4 +11,6 @@ export interface ProductManagementDynamicFixtures {
   storeDE: Store;
   rootUser: User;
   product: Product;
+  localeEN: Locale;
+  localeDE: Locale;
 }

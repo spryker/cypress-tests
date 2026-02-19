@@ -51,7 +51,7 @@ describe(
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.userManual,
         index: 0,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
 
       productManagementEditPage.save();
@@ -63,7 +63,7 @@ describe(
       productManagementEditPage.verifyAttachmentExists({
         ...staticFixtures.attachments.userManual,
         index: 0,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
     });
 
@@ -75,14 +75,14 @@ describe(
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.installationGuide,
         index: 1,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
 
-      productManagementEditPage.expandLocaleSection(staticFixtures.locales.de);
+      productManagementEditPage.expandLocaleSection(dynamicFixtures.localeDE.locale_name);
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.installationsanleitung,
         index: 0,
-        locale: staticFixtures.locales.de,
+        locale: dynamicFixtures.localeDE.locale_name,
       });
 
       productManagementEditPage.save();
@@ -94,7 +94,7 @@ describe(
       productManagementEditPage.verifyAttachmentExists({
         ...staticFixtures.attachments.installationGuide,
         index: 1,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
 
       productManagementEditPage.getLocalizedIboxToggle().first().click({ force: true });
@@ -102,7 +102,7 @@ describe(
       productManagementEditPage.verifyAttachmentExists({
         ...staticFixtures.attachments.installationsanleitung,
         index: 0,
-        locale: staticFixtures.locales.de,
+        locale: dynamicFixtures.localeDE.locale_name,
       });
     });
 
@@ -112,24 +112,24 @@ describe(
       productManagementEditPage.openMediaTab();
 
       // Remove existing attachments from default locale section
-      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.locales.default);
+      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.defaultLocaleName);
 
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.warrantyInformation,
         index: 0,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
 
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.safetyGuidelines,
         index: 1,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
 
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.technicalSpecifications,
         index: 2,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
 
       productManagementEditPage.save();
@@ -138,24 +138,24 @@ describe(
 
       productManagementEditPage.openMediaTab();
 
-      productManagementEditPage.verifyAttachmentCount(staticFixtures.locales.default, 3);
+      productManagementEditPage.verifyAttachmentCount(staticFixtures.defaultLocaleName, 3);
 
       productManagementEditPage.verifyAttachmentExists({
         ...staticFixtures.attachments.warrantyInformation,
         index: 0,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
 
       productManagementEditPage.verifyAttachmentExists({
         ...staticFixtures.attachments.safetyGuidelines,
         index: 1,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
 
       productManagementEditPage.verifyAttachmentExists({
         ...staticFixtures.attachments.technicalSpecifications,
         index: 2,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
     });
 
@@ -164,11 +164,11 @@ describe(
 
       productManagementEditPage.openMediaTab();
 
-      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.locales.default);
+      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.defaultLocaleName);
 
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.temporaryDocument,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
 
       productManagementEditPage.save();
@@ -177,15 +177,15 @@ describe(
 
       productManagementEditPage.openMediaTab();
 
-      productManagementEditPage.verifyAttachmentCount(staticFixtures.locales.default, 1);
+      productManagementEditPage.verifyAttachmentCount(staticFixtures.defaultLocaleName, 1);
 
       productManagementEditPage.verifyAttachmentExists({
         ...staticFixtures.attachments.temporaryDocument,
         index: 0,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
 
-      productManagementEditPage.deleteAttachmentByIndex(staticFixtures.locales.default, 0);
+      productManagementEditPage.deleteAttachmentByIndex(staticFixtures.defaultLocaleName, 0);
 
       productManagementEditPage.save();
 
@@ -193,7 +193,7 @@ describe(
 
       productManagementEditPage.openMediaTab();
 
-      productManagementEditPage.verifyAttachmentCount(staticFixtures.locales.default, 0);
+      productManagementEditPage.verifyAttachmentCount(staticFixtures.defaultLocaleName, 0);
     });
 
     it('backoffice user can add attachments to multiple locales independently', (): void => {
@@ -201,28 +201,28 @@ describe(
 
       productManagementEditPage.openMediaTab();
 
-      productManagementEditPage.expandLocaleSection(staticFixtures.locales.de);
-      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.locales.de);
-      productManagementEditPage.expandLocaleSection(staticFixtures.locales.de);
+      productManagementEditPage.expandLocaleSection(dynamicFixtures.localeDE.locale_name);
+      productManagementEditPage.deleteAttachmentsForLocale(dynamicFixtures.localeDE.locale_name);
+      productManagementEditPage.expandLocaleSection(dynamicFixtures.localeDE.locale_name);
 
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.defaultManual,
         index: 0,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
 
-      productManagementEditPage.expandLocaleSection(staticFixtures.locales.de);
+      productManagementEditPage.expandLocaleSection(dynamicFixtures.localeDE.locale_name);
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.localeSpecificManual,
         index: 0,
-        locale: staticFixtures.locales.de,
+        locale: dynamicFixtures.localeDE.locale_name,
       });
 
-      productManagementEditPage.expandLocaleSection(staticFixtures.locales.en);
+      productManagementEditPage.expandLocaleSection(dynamicFixtures.localeEN.locale_name);
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.anotherLocaleManual,
         index: 0,
-        locale: staticFixtures.locales.en,
+        locale: dynamicFixtures.localeEN.locale_name,
       });
 
       productManagementEditPage.save();
@@ -234,21 +234,21 @@ describe(
       productManagementEditPage.verifyAttachmentExists({
         ...staticFixtures.attachments.defaultManual,
         index: 0,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
 
       productManagementEditPage.getLocalizedIboxToggle().first().click({ force: true });
       productManagementEditPage.verifyAttachmentExists({
         ...staticFixtures.attachments.localeSpecificManual,
         index: 0,
-        locale: staticFixtures.locales.de,
+        locale: dynamicFixtures.localeDE.locale_name,
       });
 
       productManagementEditPage.getLocalizedIboxToggle().eq(1).click({ force: true });
       productManagementEditPage.verifyAttachmentExists({
         ...staticFixtures.attachments.anotherLocaleManual,
         index: 0,
-        locale: staticFixtures.locales.en,
+        locale: dynamicFixtures.localeEN.locale_name,
       });
     });
 

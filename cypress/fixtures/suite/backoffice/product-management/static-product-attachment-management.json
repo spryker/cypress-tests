@@ -1,10 +1,6 @@
 {
   "defaultPassword": "change123",
-  "locales": {
-    "de": "de_DE",
-    "en": "en_US",
-    "default": "default"
-  },
+  "defaultLocaleName": "default",
   "attachments": {
     "userManual": {
       "label": "User Manual",

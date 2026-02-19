@@ -4,9 +4,12 @@ import {
   ProductManagementEditPage,
   ProductPage as BackofficeProductPage,
 } from '@pages/backoffice';
-import { ProductManagementStaticFixtures, ProductManagementDynamicFixtures } from '@interfaces/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CatalogPage, ProductPage } from '@pages/yves';
+import {
+  ProductAttachmentStorefrontStaticFixtures,
+  ProductAttachmentStorefrontDynamicFixtures,
+} from '@interfaces/yves';
 
 describe(
   'product attachment storefront',
@@ -19,8 +22,8 @@ describe(
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
 
-    let dynamicFixtures: ProductManagementDynamicFixtures;
-    let staticFixtures: ProductManagementStaticFixtures;
+    let dynamicFixtures: ProductAttachmentStorefrontDynamicFixtures;
+    let staticFixtures: ProductAttachmentStorefrontStaticFixtures;
 
     before((): void => {
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
@@ -41,7 +44,7 @@ describe(
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.userGuide,
         index: 0,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
       productManagementEditPage.save();
 
@@ -61,21 +64,21 @@ describe(
       navigateToProductEdit();
       productManagementEditPage.openMediaTab();
 
-      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.locales.default);
+      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.defaultLocaleName);
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.sortThird,
         index: 0,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.sortFirst,
         index: 1,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.sortSecond,
         index: 2,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
       productManagementEditPage.save();
 
@@ -97,27 +100,27 @@ describe(
       productManagementEditPage.openMediaTab();
 
       // Arrange
-      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.locales.default);
+      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.defaultLocaleName);
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.defaultGuide,
         index: 0,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
 
-      productManagementEditPage.expandLocaleSection(staticFixtures.locales.de);
+      productManagementEditPage.expandLocaleSection(dynamicFixtures.localeDE.locale_name);
 
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.deGuide,
         index: 0,
-        locale: staticFixtures.locales.de,
+        locale: dynamicFixtures.localeDE.locale_name,
       });
 
-      productManagementEditPage.expandLocaleSection(staticFixtures.locales.en);
+      productManagementEditPage.expandLocaleSection(dynamicFixtures.localeEN.locale_name);
 
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.enGuide,
         index: 0,
-        locale: staticFixtures.locales.en,
+        locale: dynamicFixtures.localeEN.locale_name,
       });
 
       productManagementEditPage.save();
@@ -126,9 +129,8 @@ describe(
 
       cy.runQueueWorker();
 
-      // Assert — on de locale: de_DE attachment appears before default, en_US attachment is not visible
       visitProductDetailPage();
-      productPage.selectLocale(staticFixtures.locales.deStorefront);
+      productPage.selectLocale(staticFixtures.deStorefront);
 
       productPage.getAttachmentItems().should('have.length', 2);
       productPage.getAttachmentItems().eq(0).should('contain.text', staticFixtures.attachments.deGuide.label);
@@ -143,11 +145,11 @@ describe(
       productManagementEditPage.openMediaTab();
 
       // Arrange
-      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.locales.default);
+      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.defaultLocaleName);
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.temporaryGuide,
         index: 0,
-        locale: staticFixtures.locales.default,
+        locale: staticFixtures.defaultLocaleName,
       });
       productManagementEditPage.save();
 
@@ -162,8 +164,8 @@ describe(
       // Act
       navigateToProductEdit();
       productManagementEditPage.openMediaTab();
-      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.locales.default);
-      clearAllLocalizedAttachments(staticFixtures.locales.en);
+      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.defaultLocaleName);
+      clearAllLocalizedAttachments(dynamicFixtures.localeEN.locale_name);
       productManagementEditPage.save();
 
       productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
