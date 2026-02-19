@@ -51,8 +51,8 @@ export class BackofficePage extends AbstractPage {
 
     const expectedCount = params.expectedCount ?? 1;
 
-    // eslint-disable-next-line cypress/unsafe-to-chain-command
     return (
+      // eslint-disable-next-line cypress/unsafe-to-chain-command
       cy
         .get('input[type="search"][data-qa="table-search"]', { timeout: 10000 })
         .clear()
