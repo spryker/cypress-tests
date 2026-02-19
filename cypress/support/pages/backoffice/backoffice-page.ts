@@ -53,6 +53,7 @@ export class BackofficePage extends AbstractPage {
 
     return (
       cy
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
         .get('input[type="search"][data-qa="table-search"]', { timeout: 10000 })
         .clear()
         // eslint-disable-next-line cypress/no-unnecessary-waiting
