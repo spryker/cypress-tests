@@ -13,7 +13,7 @@ export class AssignStoreToShipmentMethodScenario {
     this.shipmentMethodListPage
       .find({
         searchQuery: params.shipmentMethodName,
-        interceptTableUrl: `**/shipment-gui/shipment-method/table**${params.shipmentMethodName}**`,
+        interceptTableUrl: `**/shipment-gui/shipment-method/table**`,
         rowFilter: [
           (row): boolean => !this.shipmentMethodListPage.rowIsAssignedToStore({ row, storeName: params.storeName }),
           (row): boolean =>

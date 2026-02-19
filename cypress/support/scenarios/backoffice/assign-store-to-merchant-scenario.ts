@@ -13,7 +13,7 @@ export class AssignStoreToMerchantScenario {
     this.merchantListPage
       .find({
         searchQuery: params.merchantName,
-        interceptTableUrl: `**/merchant-gui/list-merchant/table**${params.merchantName}**`,
+        interceptTableUrl: `**/merchant-gui/list-merchant/table**`,
       })
       .then(($row) => {
         const isStoreAssigned = this.merchantListPage.rowIsAssignedToStore({

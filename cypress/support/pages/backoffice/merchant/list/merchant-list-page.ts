@@ -12,7 +12,7 @@ export class MerchantListPage extends BackofficePage {
 
   update = (params: UpdateParams): void => {
     this.find({
-      interceptTableUrl: `**/merchant-gui/list-merchant/table**${params.query}**`,
+      interceptTableUrl: `**/merchant-gui/list-merchant/table**`,
       searchQuery: params.query,
     }).then(($merchantRow) => {
       if (params.action === ActionEnum.edit) {

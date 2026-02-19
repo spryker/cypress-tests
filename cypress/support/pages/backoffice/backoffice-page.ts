@@ -60,7 +60,7 @@ export class BackofficePage extends AbstractPage {
         const interceptAlias = this.faker.string.uuid();
         cy.intercept('GET', params.interceptTableUrl).as(interceptAlias);
 
-        // eslint-disable-next-line cypress/unsafe-to-chain-command cypress/no-unnecessary-waiting
+        // eslint-disable-next-line cypress/unsafe-to-chain-command
         return cy
           .get('input[type="search"][data-qa="table-search"]', { timeout: 100 })
           .invoke('val', params.searchQuery)

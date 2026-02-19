@@ -51,7 +51,7 @@ export class ProductManagementListPage extends BackofficePage {
   update = (params: UpdateParams): void => {
     this.find({
       searchQuery: params.query,
-      interceptTableUrl: `**/product-management/index/table**${params.query}**`,
+      interceptTableUrl: `**/product-management/index/table**`,
       expectedCount: 1,
     }).then(($productRow) => {
       if (params.action === ActionEnum.edit) {
