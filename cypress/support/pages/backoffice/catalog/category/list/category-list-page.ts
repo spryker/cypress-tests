@@ -11,14 +11,16 @@ export class CategoryListPage extends BackofficePage {
   protected PAGE_URL = '/category-gui/list';
 
   update = (params: UpdateParams): void => {
-    this.find({ interceptTableUrl: `**/category-gui/list/table**${params.query}**`, searchQuery: params.query }).then(($categoryRow) => {
-      cy.wrap($categoryRow).find(this.repository.getDropdownToggleButtonSelector()).should('exist').click();
+    this.find({ interceptTableUrl: `**/category-gui/list/table**${params.query}**`, searchQuery: params.query }).then(
+      ($categoryRow) => {
+        cy.wrap($categoryRow).find(this.repository.getDropdownToggleButtonSelector()).should('exist').click();
 
-      cy.get(this.repository.getDropdownMenuSelector())
-        .find(this.repository.getEditButtonSelector())
-        .should('exist')
-        .click();
-    });
+        cy.get(this.repository.getDropdownMenuSelector())
+          .find(this.repository.getEditButtonSelector())
+          .should('exist')
+          .click();
+      }
+    );
   };
 }
 

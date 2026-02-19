@@ -26,7 +26,10 @@ export class CustomerIndexPage extends BackofficePage {
   };
 
   findCustomer(params: FindParams): Chainable {
-    return this.find({ searchQuery: params.searchQuery, interceptTableUrl: `**/customer/index/table**${params.searchQuery}**` });
+    return this.find({
+      searchQuery: params.searchQuery,
+      interceptTableUrl: `**/customer/index/table**${params.searchQuery}**`,
+    });
   }
 
   assertRemoveMultiFactorAuthenticationButtonDoesNotExist = (params: FindParams): void => {

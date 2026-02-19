@@ -11,17 +11,18 @@ export class CompanyRoleListPage extends BackofficePage {
   protected PAGE_URL = '/company-role-gui/list-company-role';
 
   update = (params: UpdateParams): void => {
-    this.find({ interceptTableUrl: `**/company-role-gui/list-company-role/table**${params.query}**`, searchQuery: params.query }).then(
-      ($companyRoleRow) => {
-        if (params.action === ActionEnum.edit) {
-          this.clickEditAction($companyRoleRow);
-        }
-
-        if (params.action === ActionEnum.delete) {
-          this.clickDeleteAction($companyRoleRow);
-        }
+    this.find({
+      interceptTableUrl: `**/company-role-gui/list-company-role/table**${params.query}**`,
+      searchQuery: params.query,
+    }).then(($companyRoleRow) => {
+      if (params.action === ActionEnum.edit) {
+        this.clickEditAction($companyRoleRow);
       }
-    );
+
+      if (params.action === ActionEnum.delete) {
+        this.clickDeleteAction($companyRoleRow);
+      }
+    });
   };
 
   clickEditAction = ($row: JQuery<HTMLElement>): void => {
