@@ -52,11 +52,10 @@ export class BackofficePage extends AbstractPage {
     const expectedCount = params.expectedCount ?? 1;
 
     return (
-      // eslint-disable-next-line cypress/unsafe-to-chain-command cypress/no-unnecessary-waiting
       cy
         .get('input[type="search"][data-qa="table-search"]', { timeout: 10000 })
         .clear()
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        // eslint-disable-next-line cypress/no-unnecessary-waiting, cypress/unsafe-to-chain-command
         .wait(500) // Intentional wait to ensure clear request is sent before intercept is set up
         .then(() => {
           const interceptAlias = this.faker.string.uuid();
