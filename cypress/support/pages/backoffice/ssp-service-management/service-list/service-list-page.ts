@@ -21,9 +21,9 @@ export class ServiceListPage extends BackofficePage {
   protected PAGE_URL = '/self-service-portal/list-service';
 
   findServiceTableByName(serviceName: string): Cypress.Chainable {
-    return this.findWithInterceptBeforeTriggering({
+    return this.find({
       searchQuery: serviceName,
-      tableUrl: `**/self-service-portal/list-service/table**${serviceName}**`,
+      interceptTableUrl: `**/self-service-portal/list-service/table**${serviceName}**`,
     });
   }
 

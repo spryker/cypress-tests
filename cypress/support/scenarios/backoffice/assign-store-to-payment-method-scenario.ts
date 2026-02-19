@@ -13,7 +13,7 @@ export class AssignStoreToPaymentMethodScenario {
     this.listPaymentMethodPage
       .find({
         searchQuery: params.paymentMethodName,
-        tableUrl: '/payment-gui/payment-method/table**',
+        interceptTableUrl: `**/payment-gui/payment-method/table**${params.paymentMethodName}**`,
         rowFilter: [
           (row): boolean => !this.listPaymentMethodPage.rowIsAssignedToStore({ row, storeName: params.storeName }),
           (row): boolean =>

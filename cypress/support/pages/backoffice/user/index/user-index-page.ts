@@ -16,13 +16,13 @@ export class UserIndexPage extends BackofficePage {
   };
 
   findUser(params: FindParams): Chainable {
-    return this.find({ searchQuery: params.query, tableUrl: '/user/index/table**' });
+    return this.find({ searchQuery: params.query, interceptTableUrl: `**/user/index/table**${params.query}**` });
   }
 
   update = (params: UpdateParams): void => {
     this.find({
       searchQuery: params.query,
-      tableUrl: '/user/index/table**',
+      interceptTableUrl: `**/user/index/table**${params.query}**`,
     }).then(($userRow) => {
       if (params.action === ActionEnum.edit) {
         cy.wrap($userRow).find(this.repository.getEditButtonSelector()).should('exist').click({ force: true });

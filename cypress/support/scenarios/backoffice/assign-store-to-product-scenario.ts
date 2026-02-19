@@ -15,7 +15,7 @@ export class AssignStoreToProductScenario {
     this.productManagementListPage
       .find({
         searchQuery: params.abstractProductSku,
-        tableUrl: '/product-management/index/table**',
+        interceptTableUrl: `**/product-management/index/table**${params.abstractProductSku}**`,
       })
       .then(($row) => {
         const isStoreAssigned = this.productManagementListPage.rowIsAssignedToStore({

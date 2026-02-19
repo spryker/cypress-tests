@@ -15,7 +15,7 @@ export class BlockListPage extends BackofficePage {
   }
 
   update = (params: UpdateParams): void => {
-    this.find({ searchQuery: params.query, tableUrl: 'cms-block-gui/list-block/table**' }).then(($storeRow) => {
+    this.find({ searchQuery: params.query, interceptTableUrl: `**cms-block-gui/list-block/table**${params.query}**` }).then(($storeRow) => {
       cy.wrap($storeRow).as('row');
       cy.get('@row').find(this.repository.getEditButtonSelector()).should('exist').click();
     });

@@ -13,7 +13,7 @@ export class ProductMeasurementUnitListPage extends BackofficePage {
   protected POST_URL = '/product-measurement-unit-gui/index/table';
 
   findByText = (text: string): Cypress.Chainable => {
-    return this.find({ tableUrl: this.POST_URL + '**', searchQuery: text });
+    return this.find({ interceptTableUrl: `**${this.POST_URL}**${text}**`, searchQuery: text });
   };
 
   getCreateButton = (): Cypress.Chainable => {

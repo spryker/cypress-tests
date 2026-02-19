@@ -15,7 +15,7 @@ export class StoreListPage extends BackofficePage {
   };
 
   update = (params: UpdateParams): void => {
-    this.find({ searchQuery: params.query, tableUrl: '/store-gui/list/table**' }).then(($storeRow) => {
+    this.find({ searchQuery: params.query, interceptTableUrl: `**/store-gui/list/table**${params.query}**` }).then(($storeRow) => {
       if (params.action === ActionEnum.edit) {
         cy.wrap($storeRow).find(this.repository.getEditButtonSelector()).should('exist').click();
       }

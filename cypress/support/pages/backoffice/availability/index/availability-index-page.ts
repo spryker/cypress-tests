@@ -12,7 +12,7 @@ export class AvailabilityIndexPage extends BackofficePage {
 
   update = (params: UpdateParams): void => {
     this.find({
-      tableUrl: '/availability-gui/index/availability-abstract-table**',
+      interceptTableUrl: `**/availability-gui/index/availability-abstract-table**${params.query}**`,
       searchQuery: params.query,
       expectedCount: 1,
     }).then(($availabilityRow) => {
