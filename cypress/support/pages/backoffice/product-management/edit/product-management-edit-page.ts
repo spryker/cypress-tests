@@ -54,7 +54,7 @@ export class ProductManagementEditPage extends BackofficePage {
     this.repository.getMediaTab().click({ force: true });
   };
 
-  addAttachment = ({ locale, label, url, sortOrder, index }: AddAttachmentParams): void => {
+  addAttachment = ({ locale, label, url, sortOrder, index }: AttachmentParams): void => {
     this.repository.getAddAttachmentButton(locale).click();
 
     this.repository.getAttachmentItems(locale).then(($items) => {
@@ -74,19 +74,26 @@ export class ProductManagementEditPage extends BackofficePage {
   };
 
   expandLocaleSection = (locale: string): void => {
-    this.repository.expandLocaleSection(locale);
+    this.repository.getLocaleExpandButton(locale).click({ force: true });
   };
 
-  verifyAttachmentExists = (params: VerifyAttachmentParams): void => {
+  verifyAttachmentExists = (params: AttachmentParams): void => {
     const index = params.index ?? 0;
-    const locale = params.locale ?? 'default';
 
-    this.repository.getAttachmentLabelInput(index, locale).should('have.value', params.label);
-    this.repository.getAttachmentUrlInput(index, locale).should('have.value', params.url);
+    this.repository.getAttachmentLabelInput(index, params.locale).should('have.value', params.label);
+    this.repository.getAttachmentUrlInput(index, params.locale).should('have.value', params.url);
   };
 
   verifySaveSuccess = (sku: string): void => {
     this.repository.getSaveSuccessMessage(sku).should('be.visible');
+  };
+
+  deleteAttachmentByIndex = (locale: string, index: number): void => {
+    this.repository.getAttachmentDeleteButtonByIndex(index, locale).click();
+  };
+
+  verifyAttachmentCount = (locale: string, count: number): void => {
+    this.repository.getAttachmentItems(locale).should('have.length', count);
   };
 
   deleteAttachmentsForLocale = (locale: string): void => {
@@ -96,17 +103,10 @@ export class ProductManagementEditPage extends BackofficePage {
   };
 }
 
-interface AddAttachmentParams {
+interface AttachmentParams {
   label: string;
   url: string;
   sortOrder?: number;
   index?: number;
   locale: string;
-}
-
-interface VerifyAttachmentParams {
-  label: string;
-  url: string;
-  index?: number;
-  locale?: string;
 }

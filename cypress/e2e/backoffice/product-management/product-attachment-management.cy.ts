@@ -138,11 +138,7 @@ describe(
 
       productManagementEditPage.openMediaTab();
 
-      cy.get('.attachment-forms')
-        .contains('.ibox-title', 'Default')
-        .closest('.ibox')
-        .find('.attachment-container > div.m-b-md')
-        .should('have.length', 3);
+      productManagementEditPage.verifyAttachmentCount(staticFixtures.locales.default, 3);
 
       productManagementEditPage.verifyAttachmentExists({
         ...staticFixtures.attachments.warrantyInformation,
@@ -181,11 +177,7 @@ describe(
 
       productManagementEditPage.openMediaTab();
 
-      cy.get('.attachment-forms')
-        .contains('.ibox-title', 'Default')
-        .closest('.ibox')
-        .find('.attachment-container > div.m-b-md')
-        .should('have.length', 1);
+      productManagementEditPage.verifyAttachmentCount(staticFixtures.locales.default, 1);
 
       productManagementEditPage.verifyAttachmentExists({
         ...staticFixtures.attachments.temporaryDocument,
@@ -193,13 +185,7 @@ describe(
         locale: staticFixtures.locales.default,
       });
 
-      cy.get('.attachment-forms')
-        .contains('.ibox-title', 'Default')
-        .closest('.ibox')
-        .find('.attachment-container > div.m-b-md')
-        .first()
-        .find('.remove-attachment')
-        .click();
+      productManagementEditPage.deleteAttachmentByIndex(staticFixtures.locales.default, 0);
 
       productManagementEditPage.save();
 
@@ -207,11 +193,7 @@ describe(
 
       productManagementEditPage.openMediaTab();
 
-      cy.get('.attachment-forms')
-        .contains('.ibox-title', 'Default')
-        .closest('.ibox')
-        .find('.attachment-container > div.m-b-md')
-        .should('have.length', 0);
+      productManagementEditPage.verifyAttachmentCount(staticFixtures.locales.default, 0);
     });
 
     it('backoffice user can add attachments to multiple locales independently', (): void => {

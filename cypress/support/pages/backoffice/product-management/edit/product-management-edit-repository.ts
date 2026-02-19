@@ -18,82 +18,47 @@ export class ProductManagementEditRepository {
     cy.get('#tab-content-general > .panel-body > .collapsed > .ibox-title > .collapse-link > .ibox-tools > .fas');
   getMediaTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-image"]');
 
-  getAddAttachmentButton = (locale = 'default'): Cypress.Chainable => {
-    const displayName = this.getLocaleDisplayName(locale);
-    return cy
+  getAddAttachmentButton = (locale = 'default'): Cypress.Chainable =>
+    this.getAttachmentLocaleContainer(locale).find('.add-another-attachment');
+
+  getAttachmentItems = (locale = 'default'): Cypress.Chainable =>
+    this.getAttachmentLocaleContainer(locale).find('.attachment-container > div.m-b-md');
+
+  getAttachmentLabelInput = (index: number, locale = 'default'): Cypress.Chainable =>
+    this.getAttachmentLocaleContainer(locale).find(
+      `input[name="product_form_edit[attachment_${locale}][${index}][label]"]`
+    );
+
+  getAttachmentUrlInput = (index: number, locale = 'default'): Cypress.Chainable =>
+    this.getAttachmentLocaleContainer(locale).find(
+      `input[name="product_form_edit[attachment_${locale}][${index}][url]"]`
+    );
+
+  getAttachmentSortOrderInput = (index: number, locale = 'default'): Cypress.Chainable =>
+    this.getAttachmentLocaleContainer(locale).find(
+      `input[name="product_form_edit[attachment_${locale}][${index}][sort_order]"]`
+    );
+
+  getLocalizedIboxToggle = (): Cypress.Chainable => cy.get('.ibox.nested.collapsed .ibox-title');
+
+  getLocaleExpandButton = (locale: string): Cypress.Chainable =>
+    cy
       .get('.attachment-forms')
-      .contains('.ibox-title', displayName)
-      .closest('.ibox')
-      .find('.add-another-attachment');
-  };
-
-  getAttachmentItems = (locale = 'default'): Cypress.Chainable => {
-    const displayName = this.getLocaleDisplayName(locale);
-    return cy
-      .get('.attachment-forms')
-      .contains('.ibox-title', displayName)
-      .closest('.ibox')
-      .find('.attachment-container > div.m-b-md');
-  };
-
-  getAttachmentLabelInput = (index: number, locale = 'default'): Cypress.Chainable => {
-    const formattedLocale = this.getFormattedLocale(locale);
-    const displayName = this.getLocaleDisplayName(locale);
-    return cy
-      .get('.attachment-forms')
-      .contains('.ibox-title', displayName)
-      .closest('.ibox')
-      .find(`input[name="product_form_edit[attachment_${formattedLocale}][${index}][label]"]`);
-  };
-
-  getAttachmentUrlInput = (index: number, locale = 'default'): Cypress.Chainable => {
-    const formattedLocale = this.getFormattedLocale(locale);
-    const displayName = this.getLocaleDisplayName(locale);
-    return cy
-      .get('.attachment-forms')
-      .contains('.ibox-title', displayName)
-      .closest('.ibox')
-      .find(`input[name="product_form_edit[attachment_${formattedLocale}][${index}][url]"]`);
-  };
-
-  getAttachmentSortOrderInput = (index: number, locale = 'default'): Cypress.Chainable => {
-    const formattedLocale = this.getFormattedLocale(locale);
-    const displayName = this.getLocaleDisplayName(locale);
-    return cy
-      .get('.attachment-forms')
-      .contains('.ibox-title', displayName)
-      .closest('.ibox')
-      .find(`input[name="product_form_edit[attachment_${formattedLocale}][${index}][sort_order]"]`);
-  };
-
-  getLocalizedIboxToggle = (): Cypress.Chainable => {
-    return cy.get('.ibox.nested.collapsed .ibox-title');
-  };
-
-  expandLocaleSection = (locale: string): void => {
-    const displayName = this.getLocaleDisplayName(locale);
-    cy.get('.attachment-forms')
-      .contains('.ibox-title', displayName)
+      .contains('.ibox-title', this.getLocaleDisplayName(locale))
       .closest('.ibox.nested.collapsed')
-      .find('.ibox-title .collapse-link')
-      .click({ force: true });
-  };
+      .find('.ibox-title .collapse-link');
 
-  getAttachmentDeleteButtonForLocale = (locale: string): Cypress.Chainable => {
-    const displayName = this.getLocaleDisplayName(locale);
-    return cy
-      .get('.attachment-forms')
-      .contains('.ibox-title', displayName)
-      .closest('.ibox')
-      .find('.attachment-container > div.m-b-md .remove-attachment');
-  };
+  getAttachmentDeleteButtonByIndex = (index: number, locale = 'default'): Cypress.Chainable =>
+    this.getAttachmentItems(locale).eq(index).find('.remove-attachment');
+
+  getAttachmentDeleteButtonForLocale = (locale: string): Cypress.Chainable =>
+    this.getAttachmentLocaleContainer(locale).find('.attachment-container > div.m-b-md .remove-attachment');
 
   getSaveSuccessMessage = (sku: string): Cypress.Chainable =>
     cy.contains(`The product [${sku}] was saved successfully`);
 
-  private getFormattedLocale = (locale: string): string => {
-    return locale === 'default' ? 'default' : locale;
-  };
+  private getAttachmentLocaleContainer = (locale: string): Cypress.Chainable =>
+    cy.get('.attachment-forms').contains('.ibox-title', this.getLocaleDisplayName(locale)).closest('.ibox');
 
   private getLocaleDisplayName = (locale: string): string => {
     const localeMap: Record<string, string> = {
