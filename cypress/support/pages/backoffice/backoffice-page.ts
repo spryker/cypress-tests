@@ -40,45 +40,6 @@ export class BackofficePage extends AbstractPage {
       });
   };
 
-  // public find = (params: UpdateParams): Cypress.Chainable => {
-  //   const getRows = (): Cypress.Chainable<JQuery<HTMLElement>> => {
-  //     if (params.expectedCount !== undefined) {
-  //       return cy.get('tbody > tr:visible').should('have.length', params.expectedCount);
-  //     }
-  //
-  //     return cy.get('tbody > tr:visible');
-  //   };
-  //
-  //   // eslint-disable-next-line cypress/unsafe-to-chain-command
-  //   return cy
-  //     .get('input[type="search"][data-qa="table-search"]', { timeout: 10000 })
-  //     .clear()
-  //     .invoke('val', params.searchQuery)
-  //     .trigger('input')
-  //     .then(() => {
-  //       return this.interceptTable({ url: params.tableUrl, expectedCount: params.expectedCount }, () => {
-  //         return getRows().then(($rows) => {
-  //           let rows = Cypress.$($rows);
-  //
-  //           if (params.rowFilter && params.rowFilter.length > 0) {
-  //             params.rowFilter.forEach((filterFn) => {
-  //               if (rows.length > 0) {
-  //                 rows = rows.filter((index, row) => filterFn(Cypress.$(row)));
-  //               }
-  //             });
-  //           }
-  //
-  //           if (rows.length > 0) {
-  //             return cy.wrap(rows.first());
-  //           } else {
-  //             cy.log('No rows found after filtering');
-  //             return null;
-  //           }
-  //         });
-  //       });
-  //     });
-  // };
-
   public find = (params: UpdateParams): Cypress.Chainable => {
     const getRows = (): Cypress.Chainable<JQuery<HTMLElement>> => {
       if (params.expectedCount !== undefined) {
@@ -90,6 +51,7 @@ export class BackofficePage extends AbstractPage {
 
     const expectedCount = params.expectedCount ?? 1;
 
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
     return cy
       .get('input[type="search"][data-qa="table-search"]', { timeout: 10000 })
       .clear()

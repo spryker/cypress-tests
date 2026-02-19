@@ -14,7 +14,7 @@ export class CustomerIndexPage extends BackofficePage {
   update = (params: UpdateParams): void => {
     this.find({
       searchQuery: params.searchQuery,
-      interceptTableUrl: `**/customer/index/table**${params.searchQuery}**`,
+      interceptTableUrl: `**/customer/index/table**`,
     }).then(($userRow) => {
       if (params.action === ActionEnum.removeMultiFactorAuthentication) {
         cy.wrap($userRow)
@@ -28,7 +28,7 @@ export class CustomerIndexPage extends BackofficePage {
   findCustomer(params: FindParams): Chainable {
     return this.find({
       searchQuery: params.searchQuery,
-      interceptTableUrl: `**/customer/index/table**${params.searchQuery}**`,
+      interceptTableUrl: `**/customer/index/table**`,
     });
   }
 

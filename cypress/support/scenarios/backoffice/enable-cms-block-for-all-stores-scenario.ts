@@ -15,7 +15,7 @@ export class EnableCmsBlockForAllStoresScenario {
       this.blockListPage
         .find({
           searchQuery: params.cmsBlockName,
-          interceptTableUrl: `**/cms-block-gui/list-block/table**${params.cmsBlockName}**`,
+          interceptTableUrl: `**/cms-block-gui/list-block/table**`,
         })
         .then(($cmsBlockRow) => {
           if (!this.blockListPage.rowIsAssignedToStore({ row: $cmsBlockRow, storeName: params.storeName })) {
