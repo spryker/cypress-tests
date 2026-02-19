@@ -18,7 +18,7 @@ export class ProductManagementEditRepository {
     cy.get('#tab-content-general > .panel-body > .collapsed > .ibox-title > .collapse-link > .ibox-tools > .fas');
   getMediaTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-image"]');
 
-  getAddAttachmentButton = (locale: string = 'default'): Cypress.Chainable => {
+  getAddAttachmentButton = (locale = 'default'): Cypress.Chainable => {
     const displayName = this.getLocaleDisplayName(locale);
     return cy
       .get('.attachment-forms')
@@ -27,7 +27,7 @@ export class ProductManagementEditRepository {
       .find('.add-another-attachment');
   };
 
-  getAttachmentItems = (locale: string = 'default'): Cypress.Chainable => {
+  getAttachmentItems = (locale = 'default'): Cypress.Chainable => {
     const displayName = this.getLocaleDisplayName(locale);
     return cy
       .get('.attachment-forms')
@@ -36,7 +36,7 @@ export class ProductManagementEditRepository {
       .find('.attachment-container > div.m-b-md');
   };
 
-  getAttachmentLabelInput = (index: number, locale: string = 'default'): Cypress.Chainable => {
+  getAttachmentLabelInput = (index: number, locale = 'default'): Cypress.Chainable => {
     const formattedLocale = this.getFormattedLocale(locale);
     const displayName = this.getLocaleDisplayName(locale);
     return cy
@@ -46,7 +46,7 @@ export class ProductManagementEditRepository {
       .find(`input[name="product_form_edit[attachment_${formattedLocale}][${index}][label]"]`);
   };
 
-  getAttachmentUrlInput = (index: number, locale: string = 'default'): Cypress.Chainable => {
+  getAttachmentUrlInput = (index: number, locale = 'default'): Cypress.Chainable => {
     const formattedLocale = this.getFormattedLocale(locale);
     const displayName = this.getLocaleDisplayName(locale);
     return cy
@@ -56,7 +56,7 @@ export class ProductManagementEditRepository {
       .find(`input[name="product_form_edit[attachment_${formattedLocale}][${index}][url]"]`);
   };
 
-  getAttachmentSortOrderInput = (index: number, locale: string = 'default'): Cypress.Chainable => {
+  getAttachmentSortOrderInput = (index: number, locale = 'default'): Cypress.Chainable => {
     const formattedLocale = this.getFormattedLocale(locale);
     const displayName = this.getLocaleDisplayName(locale);
     return cy
@@ -79,7 +79,7 @@ export class ProductManagementEditRepository {
       .click({ force: true });
   };
 
-  getRemoveAttachmentButton = (index: number, locale: string = 'default'): Cypress.Chainable => {
+  getRemoveAttachmentButton = (index: number, locale = 'default'): Cypress.Chainable => {
     return this.getAttachmentItems(locale).eq(index).find('.remove-attachment');
   };
 
