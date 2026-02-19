@@ -123,6 +123,9 @@ export class ProductPage extends YvesPage {
 
   getSspAssetNameBlock = (): Cypress.Chainable => this.repository.getSspAssetNameBlock();
 
+  getAvailabilityStatusBlock = ($productOffer: Cypress.Chainable<JQuery<HTMLElement>>): Cypress.Chainable =>
+    $productOffer.get('[data-qa="component status"]');
+
   getAttachmentsList = (): Cypress.Chainable => this.repository.getAttachmentsList();
 
   getAttachmentItems = (): Cypress.Chainable => this.repository.getAttachmentItems();

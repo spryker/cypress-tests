@@ -12,7 +12,7 @@ export class CartPage extends YvesPage {
   protected PAGE_URL = '/cart';
 
   quickAddToCart = (params: QuickAddToCartParams): void => {
-    this.repository.getQuickAddToCartSkuField().clear();
+    this.repository.getQuickAddToCartSkuField().clear({ timeout: 10000 });
     this.repository.getQuickAddToCartSkuField().type(params.sku);
     this.repository.getQuickAddToCartProductListField().click();
 
@@ -35,7 +35,7 @@ export class CartPage extends YvesPage {
       return;
     }
 
-    cartItemRemovalButton.click();
+    cartItemRemovalButton.click({ timeout: 10000 });
   };
 
   changeQuantity = (params: ChangeQuantityParams): void => {
@@ -126,6 +126,13 @@ export class CartPage extends YvesPage {
     this.getCartItemsListTitles().should('have.length.at.least', 2);
     this.getCartItemsListTitles().contains('Delivery');
     this.getCartItemsListTitles().contains('In-Center Service');
+  };
+
+  assertCartItemAvailabilityDisplayed = (shouldShowMeasurementUnits = false): void => {
+    const availabilityLabel = this.repository.getCartItemAvailabilityLabel();
+    availabilityLabel.should('be.visible');
+    const pattern = shouldShowMeasurementUnits ? /(\d+[,.]?\d*\s+[a-z]+\s+)?in stock/i : /Available|in stock/i;
+    availabilityLabel.invoke('text').should('match', pattern);
   };
 }
 

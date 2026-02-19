@@ -14,6 +14,8 @@ export class ProductManagementEditRepository {
   getAllPriceInputs = (): Cypress.Chainable => cy.get('#price-table-collection [data-decimal-rounding="2"]');
   getSaveButton = (): Cypress.Chainable => cy.get('[name="product_form_edit"] [value="Save"]');
   getProductNameDEInput = (): Cypress.Chainable => cy.get('#product_form_edit_general_de_DE_name');
+  getCollapsedBlock = (): Cypress.Chainable =>
+    cy.get('#tab-content-general > .panel-body > .collapsed > .ibox-title > .collapse-link > .ibox-tools > .fas');
   getMediaTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-image"]');
 
   getAddAttachmentButton = (locale: string = 'default'): Cypress.Chainable => {

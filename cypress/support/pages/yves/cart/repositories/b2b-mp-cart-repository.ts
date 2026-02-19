@@ -90,4 +90,6 @@ export class B2bMpCartRepository implements CartRepository {
     }
     return cy.get('[data-qa="component product-card-item"] [data-qa="product-title"]');
   };
+  getCartItemAvailabilityLabel = (): Cypress.Chainable =>
+    cy.get('[data-qa="component product-cart-item"] [data-qa="component status"]');
 }
