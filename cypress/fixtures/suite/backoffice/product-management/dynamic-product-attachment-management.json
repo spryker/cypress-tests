@@ -1,0 +1,144 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "storeDE",
+          "arguments": { "id_store": 1, "name": "DE" }
+        },
+        {
+          "type": "helper",
+          "name": "haveLocale",
+          "key": "localeEN",
+          "arguments": [{ "locale_name": "en_US" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveLocale",
+          "key": "localeDE",
+          "arguments": [{ "locale_name": "de_DE" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "localizedAttribute"
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                { "locale": "#localeEN", "name": "#localizedAttribute.name" },
+                { "locale": "#localeDE", "name": "#localizedAttribute.name" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProductAbstract",
+          "key": "productAbstractPrice",
+          "arguments": [
+            "#product.fk_product_abstract",
+            {
+              "skuProductAbstract": "#product.abstract_sku",
+              "priceTypeName": "DEFAULT",
+              "moneyValue": { "netAmount": 40000, "grossAmount": 48000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#product.abstract_sku",
+              "skuProduct": "#product.sku",
+              "moneyValue": { "netAmount": 50000, "grossAmount": 50000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "key": "productWithPriceAndStore",
+          "arguments": ["#storeDE", { "sku": "#product.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product2",
+          "arguments": [
+            {
+              "isActive": false
+            },
+            {
+              "idTaxSet": 1,
+              "storeRelation": {
+                "idStores": ["#storeDE.id_store"]
+              },
+              "localizedAttributes": [
+                { "locale": "#localeEN", "name": "#localizedAttribute.name" },
+                { "locale": "#localeDE", "name": "#localizedAttribute.name" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProductAbstract",
+          "key": "product2AbstractPrice",
+          "arguments": [
+            "#product2.fk_product_abstract",
+            {
+              "skuProductAbstract": "#product2.abstract_sku",
+              "priceTypeName": "DEFAULT",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 36000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#product2.abstract_sku",
+              "skuProduct": "#product2.sku",
+              "moneyValue": { "netAmount": 50000, "grossAmount": 50000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "key": "productWithPriceAndStore",
+          "arguments": ["#storeDE", { "sku": "#product2.sku", "isNeverOutOfStock": "1" }]
+        }
+      ]
+    }
+  }
+}

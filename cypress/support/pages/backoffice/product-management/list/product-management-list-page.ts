@@ -30,7 +30,7 @@ export class ProductManagementListPage extends BackofficePage {
 
   applyFilters = (params: ApplyFiltersParams): void => {
     if (params.query) {
-      this.repository.getFilterSearchInput().type(params.query);
+      this.repository.getFilterSearchInput().clear().invoke('val', params.query).trigger('input');
     }
 
     if (params.status) {

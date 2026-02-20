@@ -1,3 +1,4 @@
+export * from './attachment';
 export * from './address';
 export * from './customer';
 export * from './product-concrete';
@@ -6,6 +7,7 @@ export * from './company';
 export * from './company-user';
 export * from './company-role';
 export * from './company-business-unit';
+export * from './locale';
 export * from './product-offer';
 export * from './url';
 export * from './merchant';
