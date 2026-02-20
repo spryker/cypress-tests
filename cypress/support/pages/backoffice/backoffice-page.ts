@@ -75,10 +75,17 @@ export class BackofficePage extends AbstractPage {
       // eslint-disable-next-line cypress/unsafe-to-chain-command
       cy
         .get('input[type="search"][data-qa="table-search"]', { timeout: 10000 })
-        .clear()
-        .then(() => {
-          // Wait for clear request to complete
-          return cy.wait(`@${clearInterceptAlias}`, { timeout: 10000 });
+        .then(($input) => {
+          const currentValue = $input.val() as string;
+          const hasValue = currentValue && currentValue.trim().length > 0;
+
+          cy.wrap($input).clear();
+
+          if (hasValue) {
+            return cy.wait(`@${clearInterceptAlias}`, { timeout: 10000 });
+          } else {
+            return cy.wrap(null);
+          }
         })
         .then(() => {
           // eslint-disable-next-line cypress/unsafe-to-chain-command
