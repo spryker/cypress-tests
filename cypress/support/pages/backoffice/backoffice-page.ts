@@ -50,34 +50,45 @@ export class BackofficePage extends AbstractPage {
     };
 
     const expectedCount = params.expectedCount ?? 1;
+    const clearInterceptAlias = this.faker.string.uuid();
+    const searchInterceptAlias = this.faker.string.uuid();
+
+    // Intercept clear request (empty search value)
+    cy.intercept('GET', params.interceptTableUrl, (req) => {
+      const searchValue = req.query['search[value]'];
+
+      if (searchValue === '' || searchValue === undefined) {
+        req.alias = clearInterceptAlias;
+      }
+    });
+
+    // Intercept search request (matching search query)
+    cy.intercept('GET', params.interceptTableUrl, (req) => {
+      const searchValue = req.query['search[value]'];
+
+      if (searchValue === params.searchQuery) {
+        req.alias = searchInterceptAlias;
+      }
+    });
 
     return (
-      // eslint-disable-next-line cypress/unsafe-to-chain-command, cypress/no-unnecessary-waiting
+      // eslint-disable-next-line cypress/unsafe-to-chain-command
       cy
         .get('input[type="search"][data-qa="table-search"]', { timeout: 10000 })
         .clear()
-        // eslint-disable-next-line cypress/unsafe-to-chain-command, cypress/no-unnecessary-waiting
-        .wait(200) // Intentional wait to ensure clear request is sent before intercept is set up
         .then(() => {
-          const interceptAlias = this.faker.string.uuid();
-
-          // Intercept only requests with search value to avoid interference with other table requests
-          cy.intercept('GET', params.interceptTableUrl, (req) => {
-            const searchValue = req.query['search[value]'];
-
-            if (searchValue === params.searchQuery) {
-              req.alias = interceptAlias;
-            }
-          });
-
-          // eslint-disable-next-line cypress/unsafe-to-chain-command, cypress/no-unnecessary-waiting
+          // Wait for clear request to complete
+          return cy.wait(`@${clearInterceptAlias}`, { timeout: 10000 });
+        })
+        .then(() => {
+          // eslint-disable-next-line cypress/unsafe-to-chain-command
           return cy
             .get('input[type="search"][data-qa="table-search"]', { timeout: 100 })
             .invoke('val', params.searchQuery)
             .trigger('input')
             .then(() => {
               return cy
-                .wait(`@${interceptAlias}`, { timeout: 10000 })
+                .wait(`@${searchInterceptAlias}`, { timeout: 10000 })
                 .its('response.body')
                 .should((total) => {
                   if (params.expectedCount !== null) {
