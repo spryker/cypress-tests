@@ -11,7 +11,10 @@ export class MerchantListPage extends BackofficePage {
   protected PAGE_URL = '/merchant-gui/list-merchant';
 
   update = (params: UpdateParams): void => {
-    this.find({ tableUrl: '/merchant-gui/list-merchant/table**', searchQuery: params.query }).then(($merchantRow) => {
+    this.find({
+      interceptTableUrl: `**/merchant-gui/list-merchant/table**`,
+      searchQuery: params.query,
+    }).then(($merchantRow) => {
       if (params.action === ActionEnum.edit) {
         this.clickEditAction($merchantRow);
       }

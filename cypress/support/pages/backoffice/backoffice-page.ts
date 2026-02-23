@@ -49,34 +49,85 @@ export class BackofficePage extends AbstractPage {
       return cy.get('tbody > tr:visible');
     };
 
-    // eslint-disable-next-line cypress/unsafe-to-chain-command
-    return cy
-      .get('input[type="search"][data-qa="table-search"]', { timeout: 10000 })
-      .clear()
-      .invoke('val', params.searchQuery)
-      .trigger('input')
-      .then(() => {
-        return this.interceptTable({ url: params.tableUrl, expectedCount: params.expectedCount }, () => {
-          return getRows().then(($rows) => {
-            let rows = Cypress.$($rows);
+    const expectedCount = params.expectedCount ?? 1;
+    const clearInterceptAlias = this.faker.string.uuid();
+    const searchInterceptAlias = this.faker.string.uuid();
 
-            if (params.rowFilter && params.rowFilter.length > 0) {
-              params.rowFilter.forEach((filterFn) => {
-                if (rows.length > 0) {
-                  rows = rows.filter((index, row) => filterFn(Cypress.$(row)));
-                }
-              });
-            }
+    // Intercept clear request (empty search value)
+    cy.intercept('GET', params.interceptTableUrl, (req) => {
+      const searchValue = req.query['search[value]'];
 
-            if (rows.length > 0) {
-              return cy.wrap(rows.first());
-            } else {
-              cy.log('No rows found after filtering');
-              return null;
-            }
-          });
-        });
-      });
+      if (searchValue === '' || searchValue === undefined) {
+        req.alias = clearInterceptAlias;
+      }
+    });
+
+    // Intercept search request (matching search query)
+    cy.intercept('GET', params.interceptTableUrl, (req) => {
+      const searchValue = req.query['search[value]'];
+
+      if (searchValue === params.searchQuery) {
+        req.alias = searchInterceptAlias;
+      }
+    });
+
+    return (
+      // eslint-disable-next-line cypress/unsafe-to-chain-command
+      cy
+        .get('input[type="search"][data-qa="table-search"]', { timeout: 10000 })
+        .then(($input) => {
+          const currentValue = $input.val() as string;
+          const hasValue = currentValue && currentValue.trim().length > 0;
+
+          cy.wrap($input).clear();
+
+          if (hasValue) {
+            return cy.wait(`@${clearInterceptAlias}`, { timeout: 10000 });
+          } else {
+            return cy.wrap(null);
+          }
+        })
+        .then(() => {
+          // eslint-disable-next-line cypress/unsafe-to-chain-command
+          return cy
+            .get('input[type="search"][data-qa="table-search"]', { timeout: 100 })
+            .invoke('val', params.searchQuery)
+            .trigger('input')
+            .then(() => {
+              return cy
+                .wait(`@${searchInterceptAlias}`, { timeout: 10000 })
+                .its('response.body')
+                .should((total) => {
+                  if (params.expectedCount !== null) {
+                    const valueToBeAtMost = expectedCount + Cypress.currentRetry;
+                    assert.isTrue(total.recordsFiltered === expectedCount || total.recordsFiltered >= valueToBeAtMost);
+                  }
+                })
+                .then(() => {
+                  cy.get('.spy-spinner, .data-processing, .loading').should('not.exist');
+
+                  return getRows().then(($rows) => {
+                    let rows = Cypress.$($rows);
+
+                    if (params.rowFilter && params.rowFilter.length > 0) {
+                      params.rowFilter.forEach((filterFn) => {
+                        if (rows.length > 0) {
+                          rows = rows.filter((index, row) => filterFn(Cypress.$(row)));
+                        }
+                      });
+                    }
+
+                    if (rows.length > 0) {
+                      return cy.wrap(rows.first());
+                    } else {
+                      cy.log('No rows found after filtering');
+                      return null;
+                    }
+                  });
+                });
+            });
+        })
+    );
   };
 
   public findWithRetry = (params: UpdateWithRetryParams): Cypress.Chainable => {
@@ -149,7 +200,7 @@ interface InterceptGuiTableParams {
 
 interface UpdateParams {
   searchQuery: string;
-  tableUrl: string;
+  interceptTableUrl: string;
   rowFilter?: Array<(row: JQuery<HTMLElement>) => boolean>;
   expectedCount?: number;
 }
