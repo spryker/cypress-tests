@@ -23,7 +23,7 @@ export class ServiceListPage extends BackofficePage {
   findServiceTableByName(serviceName: string): Cypress.Chainable {
     return this.find({
       searchQuery: serviceName,
-      tableUrl: `**/self-service-portal/list-service/table**${serviceName}**`,
+      interceptTableUrl: `**/self-service-portal/list-service/table**${serviceName}**`,
     });
   }
 

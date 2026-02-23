@@ -13,7 +13,7 @@ export class AssignStoreToWarehouseScenario {
     this.stockListPage
       .find({
         searchQuery: params.warehouseName,
-        tableUrl: '/stock-gui/warehouse/table**',
+        interceptTableUrl: `**/stock-gui/warehouse/table**${params.warehouseName}**`,
         rowFilter: [
           (row): boolean => !this.stockListPage.rowIsAssignedToStore({ row: row, storeName: params.storeName }),
         ],
