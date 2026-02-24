@@ -15,7 +15,6 @@ export class ProductManagementListRepository {
   getSelectOption = (): Cypress.Chainable => cy.get('.select2-results__option');
   getFilterButton = (): Cypress.Chainable => cy.get('#product-management-filter-form button');
   getTableRows = (): Cypress.Chainable => cy.get('.dataTable tbody tr');
-  getTableEmptyCell = (): Cypress.Chainable => cy.get('.dataTable .dt-empty');
   getFilterSearchInput = (): Cypress.Chainable => cy.get('.dt-search [type=search]');
   getResetButton = (): Cypress.Chainable => cy.get('#product-management-filter-form a[href="/product-management"]');
 }
