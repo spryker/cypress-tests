@@ -41,7 +41,7 @@ describe(
         query: dynamicFixtures.product.localized_attributes[0].name,
         stores: [dynamicFixtures.storeAT.name],
       });
-      productManagementListPage.getTableEmptyCell().should('have.length', 1);
+      productManagementListPage.getTableRows().should('have.length', 0);
     });
 
     it('resetting filters restores all search results', (): void => {
@@ -51,7 +51,7 @@ describe(
         query: dynamicFixtures.product.localized_attributes[0].name,
         stores: [dynamicFixtures.storeAT.name],
       });
-      productManagementListPage.getTableEmptyCell().should('have.length', 1);
+      productManagementListPage.getTableRows().should('have.length', 0);
       productManagementListPage.getResetButton().click();
       productManagementListPage.getTableRows().should('have.length', 2);
     });
