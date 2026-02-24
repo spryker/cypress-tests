@@ -87,56 +87,6 @@
           "name": "haveProductInStockForStore",
           "key": "productWithPriceAndStore",
           "arguments": ["#storeDE", { "sku": "#product.sku", "isNeverOutOfStock": "1" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveFullProduct",
-          "key": "product2",
-          "arguments": [
-            {
-              "isActive": false
-            },
-            {
-              "idTaxSet": 1,
-              "storeRelation": {
-                "idStores": ["#storeDE.id_store"]
-              },
-              "localizedAttributes": [
-                { "locale": "#localeEN", "name": "#localizedAttribute.name" },
-                { "locale": "#localeDE", "name": "#localizedAttribute.name" }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "havePriceProductAbstract",
-          "key": "product2AbstractPrice",
-          "arguments": [
-            "#product2.fk_product_abstract",
-            {
-              "skuProductAbstract": "#product2.abstract_sku",
-              "priceTypeName": "DEFAULT",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 36000 }
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "havePriceProduct",
-          "arguments": [
-            {
-              "skuProductAbstract": "#product2.abstract_sku",
-              "skuProduct": "#product2.sku",
-              "moneyValue": { "netAmount": 50000, "grossAmount": 50000 }
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveProductInStockForStore",
-          "key": "productWithPriceAndStore",
-          "arguments": ["#storeDE", { "sku": "#product2.sku", "isNeverOutOfStock": "1" }]
         }
       ]
     }
