@@ -41,7 +41,7 @@ describe(
         query: dynamicFixtures.product.localized_attributes[0].name,
         stores: [dynamicFixtures.storeAT.name],
       });
-      productManagementListPage.getTableRows().should('have.length', 0);
+      productManagementListPage.assertNoTableRecords();
     });
 
     it('resetting filters restores all search results', (): void => {

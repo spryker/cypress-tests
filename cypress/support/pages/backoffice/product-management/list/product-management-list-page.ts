@@ -68,6 +68,10 @@ export class ProductManagementListPage extends BackofficePage {
       }
     });
   };
+
+  assertNoTableRecords(): void {
+    this.getTableRows().should('have.length', 1).first().should('contain', this.repository.getNoTableRecordsText());
+  }
 }
 
 interface UpdateParams {

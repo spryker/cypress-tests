@@ -17,4 +17,6 @@ export class ProductManagementListRepository {
   getTableRows = (): Cypress.Chainable => cy.get('.dataTable tbody tr');
   getFilterSearchInput = (): Cypress.Chainable => cy.get('.dt-search [type=search]');
   getResetButton = (): Cypress.Chainable => cy.get('#product-management-filter-form a[href="/product-management"]');
+
+  getNoTableRecordsText = (): string => 'No matching records found';
 }
