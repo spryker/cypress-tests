@@ -44,7 +44,10 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
     });
 
     addTwoProductsToCart();
-    checkoutScenario.execute({ paymentMethod: getPaymentMethodBasedOnEnv() });
+    checkoutScenario.execute({
+      paymentMethod: getPaymentMethodBasedOnEnv(),
+      isMultiShipment: Cypress.env('ENV_IS_SSP_ENABLED'),
+    });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
