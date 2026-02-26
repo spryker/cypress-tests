@@ -20,5 +20,4 @@ describe('health check', { tags: ['@smoke', '@api', 'search', 'catalog', 'spryke
       .its('status')
       .should('eq', 200);
   });
-
 });
