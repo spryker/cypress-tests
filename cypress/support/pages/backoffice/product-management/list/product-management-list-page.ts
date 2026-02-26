@@ -48,6 +48,22 @@ export class ProductManagementListPage extends BackofficePage {
     this.repository.getFilterButton().click();
   };
 
+  applySearchQuery = (query: string, callback: () => void): void => {
+    cy.get('input[type="search"][data-qa="table-search"]')
+      .clear()
+      .invoke('val', query)
+      .trigger('input')
+      .then(() => {
+        this.interceptTable(
+          {
+            url: '**/product-management/index/table**',
+            expectedCount: 0,
+          },
+          callback
+        );
+      });
+  };
+
   update = (params: UpdateParams): void => {
     this.find({
       searchQuery: params.query,
@@ -69,9 +85,10 @@ export class ProductManagementListPage extends BackofficePage {
     });
   };
 
-  assertNoTableRecords(): void {
-    this.getTableRows().should('have.length', 1).first().should('contain', this.repository.getNoTableRecordsText());
-  }
+  assertNoTableRecords = (): void => {
+    this.getTableRows().should('have.length', 1);
+    this.getTableRows().first().should('contain', this.repository.getNoTableRecordsText());
+  };
 }
 
 interface UpdateParams {
