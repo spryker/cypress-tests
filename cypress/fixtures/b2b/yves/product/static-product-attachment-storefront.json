@@ -1,0 +1,47 @@
+{
+  "defaultPassword": "change123",
+  "defaultLocaleName": "default",
+  "deStorefront": "de",
+  "attachments": {
+    "userGuide": {
+      "label": "User Guide",
+      "url": "https://example.com/guide.pdf",
+      "sortOrder": 1
+    },
+    "sortFirst": {
+      "label": "First",
+      "url": "https://example.com/a.pdf",
+      "sortOrder": 1
+    },
+    "sortSecond": {
+      "label": "Second",
+      "url": "https://example.com/b.pdf",
+      "sortOrder": 2
+    },
+    "sortThird": {
+      "label": "Third",
+      "url": "https://example.com/c.pdf",
+      "sortOrder": 3
+    },
+    "defaultGuide": {
+      "label": "Default Guide",
+      "url": "https://example.com/default.pdf",
+      "sortOrder": 1
+    },
+    "deGuide": {
+      "label": "DE Guide",
+      "url": "https://example.com/de.pdf",
+      "sortOrder": 1
+    },
+    "enGuide": {
+      "label": "EN Guide",
+      "url": "https://example.com/en.pdf",
+      "sortOrder": 1
+    },
+    "temporaryGuide": {
+      "label": "Temporary Guide",
+      "url": "https://example.com/temp.pdf",
+      "sortOrder": 1
+    }
+  }
+}
