@@ -49,10 +49,10 @@ export class ProductManagementListPage extends BackofficePage {
   };
 
   applySearchQuery = (query: string, callback: () => void): void => {
-    cy.get('input[type="search"][data-qa="table-search"]')
+    this.repository
+      .getFilterSearchInput()
       .clear()
       .invoke('val', query)
-      .trigger('input')
       .then(() => {
         this.interceptTable(
           {
