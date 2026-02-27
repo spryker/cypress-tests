@@ -12,7 +12,7 @@ export class ProductMeasurementUnitListRepository {
 
   getTableRowsSelector = (): string => 'table.dataTable tbody tr';
 
-  getPaginationBarSelector = (): string => '.dataTables_paginate';
+  getPaginationBarSelector = (): string => '.dt-paging';
 
   getTableCodeColumnSelector = (): string => 'table.dataTable thead th[data-qa="code"]';
 }

@@ -51,6 +51,9 @@
             {},
             {
               "idTaxSet": 1,
+              "storeRelation": {
+                "idStores": ["#storeDE.id_store"]
+              },
               "localizedAttributes": [{ "locale": "#locale", "name": "#localizedAttribute.name" }]
             }
           ]

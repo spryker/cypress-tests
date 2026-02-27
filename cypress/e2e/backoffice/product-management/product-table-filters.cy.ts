@@ -38,22 +38,26 @@ describe(
       productManagementListPage.visit();
       productManagementListPage.applyFilters({
         status: StatusEnum.active,
-        query: dynamicFixtures.product.localized_attributes[0].name,
         stores: [dynamicFixtures.storeAT.name],
       });
-      productManagementListPage.getTableRows().should('have.length', 0);
+
+      productManagementListPage.applySearchQuery(dynamicFixtures.product.localized_attributes[0].name, () =>
+        productManagementListPage.assertNoTableRecords()
+      );
     });
 
     it('resetting filters restores all search results', (): void => {
       productManagementListPage.visit();
       productManagementListPage.applyFilters({
         status: StatusEnum.active,
-        query: dynamicFixtures.product.localized_attributes[0].name,
         stores: [dynamicFixtures.storeAT.name],
       });
-      productManagementListPage.getTableRows().should('have.length', 0);
-      productManagementListPage.getResetButton().click();
-      productManagementListPage.getTableRows().should('have.length', 2);
+
+      productManagementListPage.applySearchQuery(dynamicFixtures.product.localized_attributes[0].name, () => {
+        productManagementListPage.assertNoTableRecords();
+        productManagementListPage.getResetButton().click();
+        productManagementListPage.getTableRows().should('have.length', 2);
+      });
     });
   }
 );
