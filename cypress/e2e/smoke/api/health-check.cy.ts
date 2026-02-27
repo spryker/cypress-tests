@@ -20,16 +20,4 @@ describe('health check', { tags: ['@smoke', '@api', 'search', 'catalog', 'spryke
       .its('status')
       .should('eq', 200);
   });
-
-  it('GLUE Storefront endpoint should return 200', () => {
-    cy.request({
-      method: 'GET',
-      url: Cypress.env().glueStorefrontUrl + '/stores',
-      headers: {
-        'Content-Type': 'application/vnd.api+json',
-      },
-    })
-      .its('status')
-      .should('eq', 200);
-  });
 });

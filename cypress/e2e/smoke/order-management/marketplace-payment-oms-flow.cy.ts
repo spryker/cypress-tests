@@ -66,7 +66,7 @@ describe(
       });
 
       addOneProductToCart();
-      checkoutMpScenario.execute();
+      checkoutMpScenario.execute({ isMultiShipment: true });
 
       userLoginScenario.execute({
         username: staticFixtures.rootUser.username,
