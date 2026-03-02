@@ -53,7 +53,8 @@ export class MerchantRegistrationListPage extends BackofficePage {
   update = (params: UpdateParams): void => {
     this.find({ interceptTableUrl: this.TABLE_URL, searchQuery: params.query }).then(($row) => {
       if ($row && params.action === 'view') {
-        cy.wrap($row).find(this.repository.getViewButton()).click();
+        cy.wrap($row).find(this.repository.getViewButton()).as('viewBtn');
+        cy.get('@viewBtn').click();
       }
     });
   };

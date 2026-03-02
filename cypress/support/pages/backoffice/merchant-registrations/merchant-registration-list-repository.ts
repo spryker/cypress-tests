@@ -9,7 +9,7 @@ export class MerchantRegistrationListRepository {
   getTable = (): Cypress.Chainable => cy.get('table.table');
   getTableHeader = (): Cypress.Chainable => cy.get('thead');
   getTableRows = (): Cypress.Chainable => cy.get('tbody tr');
-  getSearchInput = (): Cypress.Chainable => cy.get('input[type="search"]');
+  getSearchInput = (): Cypress.Chainable => cy.get('[data-qa="table-search"]');
   getSortableColumn = (): Cypress.Chainable => cy.get('th.sorting, th.sorting_asc, th.sorting_desc');
 
   // Column selectors
