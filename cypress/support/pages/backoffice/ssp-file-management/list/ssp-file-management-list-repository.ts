@@ -12,5 +12,5 @@ export class SspFileManagementListRepository {
   getFileSizeHeaderSelector = (): string => '[data-qa="size"]';
   getFileTypeHeaderSelector = (): string => '[data-qa="type"]';
   getAttachButtonSelector = (): string => '[data-qa="attach-button"]';
-  getSearchInputSelector = (): string => '[type="search"]';
+  getSearchInputSelector = (): string => '[data-qa="table-search"]';
 }
