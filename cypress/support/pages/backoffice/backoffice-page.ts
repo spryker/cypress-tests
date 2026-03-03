@@ -18,7 +18,7 @@ export class BackofficePage extends AbstractPage {
       .wait(`@${interceptAlias}`, { timeout: 10000 })
       .its('response.body')
       .should((total) => {
-        if (params.expectedCount !== null) {
+        if (params.expectedCount !== undefined && params.expectedCount !== null) {
           const valueToBeAtMost = expectedCount + Cypress.currentRetry;
           console.log(
             'Total:',
@@ -30,7 +30,10 @@ export class BackofficePage extends AbstractPage {
             'Data:',
             total.data
           );
-          assert.isTrue(total.recordsFiltered === expectedCount || total.recordsFiltered >= valueToBeAtMost);
+          assert.isTrue(
+            total.recordsFiltered === expectedCount || total.recordsFiltered >= valueToBeAtMost,
+            `Expected recordsFiltered to equal ${expectedCount} or be at least ${valueToBeAtMost}, but got ${total.recordsFiltered}`
+          );
         }
       })
       .then(() => {
