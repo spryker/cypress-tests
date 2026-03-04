@@ -16,13 +16,14 @@ export class UserIndexPage extends BackofficePage {
   };
 
   findUser(params: FindParams): Chainable {
-    return this.find({ searchQuery: params.query, interceptTableUrl: `**/user/index/table**` });
+    return this.find({ searchQuery: params.query, interceptTableUrl: `**/user/index/table**`, expectedToSeeInTable: params.expectedToSeeInTable });
   }
 
   update = (params: UpdateParams): void => {
     this.find({
       searchQuery: params.query,
       interceptTableUrl: `**/user/index/table**`,
+      expectedToSeeInTable: params.expectedToSeeInTable,
     }).then(($userRow) => {
       if (params.action === ActionEnum.edit) {
         cy.wrap($userRow).find(this.repository.getEditButtonSelector()).should('exist').click({ force: true });
@@ -50,9 +51,11 @@ export class UserIndexPage extends BackofficePage {
 interface UpdateParams {
   action: ActionEnum;
   query: string;
+  expectedToSeeInTable?: string;
 }
 
 interface FindParams {
   query: string;
   expectedCount?: number;
+  expectedToSeeInTable?: string;
 }

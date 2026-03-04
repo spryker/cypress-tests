@@ -109,6 +109,10 @@ export class BackofficePage extends AbstractPage {
                 .then(() => {
                   cy.get('.spy-spinner, .data-processing, .loading').should('not.exist');
 
+                  if (params.expectedToSeeInTable) {
+                    cy.get('tbody').should('contain', params.searchQuery);
+                  }
+
                   return getRows().then(($rows) => {
                     let rows = Cypress.$($rows);
 
@@ -206,6 +210,7 @@ interface UpdateParams {
   interceptTableUrl: string;
   rowFilter?: Array<(row: JQuery<HTMLElement>) => boolean>;
   expectedCount?: number;
+  expectedToSeeInTable?: string
 }
 
 interface UpdateWithRetryParams {

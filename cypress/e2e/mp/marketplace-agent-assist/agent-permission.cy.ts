@@ -43,7 +43,7 @@ describe(
 
     it('backoffice user should be able to see new merchant agent permission checkbox', (): void => {
       backofficeUserIndexPage.visit();
-      backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.rootUser.username });
+      backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.rootUser.username, expectedToSeeInTable: dynamicFixtures.rootUser.username });
 
       backofficeUserUpdatePage
         .getAgentMerchantCheckbox()
@@ -54,7 +54,7 @@ describe(
 
     it('backoffice user should be able to see renamed customer agent permission checkbox', (): void => {
       backofficeUserIndexPage.visit();
-      backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.rootUser.username });
+      backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.rootUser.username, expectedToSeeInTable: dynamicFixtures.rootUser.username });
 
       backofficeUserUpdatePage
         .getAgentCustomerCheckbox()
@@ -65,7 +65,7 @@ describe(
 
     it('backoffice user should be able to see existing user with merchant agent permission', (): void => {
       backofficeUserIndexPage.visit();
-      backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.merchantAgentUser.username });
+      backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.merchantAgentUser.username, expectedToSeeInTable: dynamicFixtures.merchantAgentUser.username });
       backofficeUserUpdatePage.getAgentMerchantCheckbox().should('be.checked');
     });
 
@@ -82,7 +82,7 @@ describe(
     it('backoffice user should be able to see imported user with "Agent Customer" permission', (): void => {
       backofficeUserIndexPage.visit();
       backofficeUserIndexPage
-        .findUser({ query: dynamicFixtures.customerAgentUser.username })
+        .findUser({ query: dynamicFixtures.customerAgentUser.username, expectedToSeeInTable: dynamicFixtures.customerAgentUser.username })
         .contains('Agent')
         .should('have.length', 1);
     });
@@ -90,7 +90,7 @@ describe(
     it('backoffice user should be able to see imported user with "Agent Merchant" permission', (): void => {
       backofficeUserIndexPage.visit();
       backofficeUserIndexPage
-        .findUser({ query: dynamicFixtures.merchantAgentUser.username })
+        .findUser({ query: dynamicFixtures.merchantAgentUser.username, expectedToSeeInTable: dynamicFixtures.merchantAgentUser.username })
         .contains('Agent')
         .should('have.length', 1);
     });
@@ -103,13 +103,21 @@ describe(
 
     it('backoffice user should be able to create new user with merchant agent permission', (): void => {
       backofficeUserIndexPage.visit();
-      backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.merchantAgentUser.username });
+      backofficeUserIndexPage.update({
+        action: ActionEnum.edit,
+        query: dynamicFixtures.merchantAgentUser.username,
+        expectedToSeeInTable: dynamicFixtures.merchantAgentUser.username,
+      });
       backofficeUserUpdatePage.getAgentMerchantCheckbox().should('be.checked');
     });
 
     it('backoffice user should be able to modify existing user by setting merchant agent permission', (): void => {
       backofficeUserIndexPage.visit();
-      backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.rootUser.username });
+      backofficeUserIndexPage.update({
+        action: ActionEnum.edit,
+        query: dynamicFixtures.rootUser.username,
+        expectedToSeeInTable: dynamicFixtures.rootUser.username,
+      });
 
       backofficeUserUpdatePage.getAgentMerchantCheckbox().then(($checkbox) => {
         if ($checkbox.is(':checked')) {
@@ -121,7 +129,11 @@ describe(
 
       backofficeUserUpdatePage.checkMerchantAgentCheckbox();
 
-      backofficeUserIndexPage.update({ action: ActionEnum.edit, query: dynamicFixtures.rootUser.username });
+      backofficeUserIndexPage.update({
+        action: ActionEnum.edit,
+        query: dynamicFixtures.rootUser.username,
+        expectedToSeeInTable: dynamicFixtures.rootUser.username,
+      });
       backofficeUserUpdatePage.getAgentMerchantCheckbox().should('be.checked');
     });
   }
