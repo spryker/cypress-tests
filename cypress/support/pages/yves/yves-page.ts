@@ -28,4 +28,12 @@ export class YvesPage extends AbstractPage {
   assertCurrentLocale = (locale: string): Cypress.Chainable => {
     return cy.get('html').last().should('have.attr', this.yvesRepository.getLocaleAttributeName(), locale);
   };
+
+  clearLastVisitedPageCookie = (): void => {
+    const cookieName = this.yvesRepository.getLastVisitedPageCookieName();
+
+    if (cookieName) {
+      cy.clearCookie(cookieName);
+    }
+  };
 }
