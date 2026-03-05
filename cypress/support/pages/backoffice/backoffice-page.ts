@@ -211,7 +211,7 @@ interface UpdateParams {
   interceptTableUrl: string;
   rowFilter?: Array<(row: JQuery<HTMLElement>) => boolean>;
   expectedCount?: number;
-  expectedToSeeInTable?: string
+  expectedToSeeInTable?: string;
 }
 
 interface UpdateWithRetryParams {

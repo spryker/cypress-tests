@@ -16,7 +16,11 @@ export class UserIndexPage extends BackofficePage {
   };
 
   findUser(params: FindParams): Chainable {
-    return this.find({ searchQuery: params.query, interceptTableUrl: `**/user/index/table**`, expectedToSeeInTable: params.expectedToSeeInTable });
+    return this.find({
+      searchQuery: params.query,
+      interceptTableUrl: `**/user/index/table**`,
+      expectedToSeeInTable: params.expectedToSeeInTable,
+    });
   }
 
   update = (params: UpdateParams): void => {
