@@ -73,7 +73,7 @@ export class MerchantRegistrationPage extends YvesPage {
         phone: params?.contactPerson?.phone,
       },
     };
-    console.log('registrationData', registrationData);
+
     this.fillAndSubmitRegistration(registrationData);
 
     return { email, companyName };
