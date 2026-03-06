@@ -18,7 +18,7 @@ export class BackofficePage extends AbstractPage {
       .wait(`@${interceptAlias}`, { timeout: 10000 })
       .its('response.body')
       .should((total) => {
-        if (params.expectedCount !== null) {
+        if (params.expectedCount !== undefined && params.expectedCount !== null) {
           const valueToBeAtMost = expectedCount + Cypress.currentRetry;
           console.log(
             'Total:',
@@ -30,7 +30,10 @@ export class BackofficePage extends AbstractPage {
             'Data:',
             total.data
           );
-          assert.isTrue(total.recordsFiltered === expectedCount || total.recordsFiltered >= valueToBeAtMost);
+          assert.isTrue(
+            total.recordsFiltered === expectedCount || total.recordsFiltered >= valueToBeAtMost,
+            `Expected recordsFiltered to equal ${expectedCount} or be at least ${valueToBeAtMost}, but got ${total.recordsFiltered}`
+          );
         }
       })
       .then(() => {
@@ -40,15 +43,15 @@ export class BackofficePage extends AbstractPage {
       });
   };
 
+  protected getRows = (expectedCount?: number): Cypress.Chainable<JQuery<HTMLElement>> => {
+    if (expectedCount !== undefined) {
+      return cy.get('tbody > tr:visible').should('have.length', expectedCount);
+    }
+
+    return cy.get('tbody > tr:visible');
+  };
+
   public find = (params: UpdateParams): Cypress.Chainable => {
-    const getRows = (): Cypress.Chainable<JQuery<HTMLElement>> => {
-      if (params.expectedCount !== undefined) {
-        return cy.get('tbody > tr:visible').should('have.length', params.expectedCount);
-      }
-
-      return cy.get('tbody > tr:visible');
-    };
-
     const expectedCount = params.expectedCount ?? 1;
     const clearInterceptAlias = this.faker.string.uuid();
     const searchInterceptAlias = this.faker.string.uuid();
@@ -98,7 +101,7 @@ export class BackofficePage extends AbstractPage {
                 .wait(`@${searchInterceptAlias}`, { timeout: 10000 })
                 .its('response.body')
                 .should((total) => {
-                  if (params.expectedCount !== null) {
+                  if (params.expectedCount !== null && params.expectedCount !== undefined) {
                     const valueToBeAtMost = expectedCount + Cypress.currentRetry;
                     assert.isTrue(total.recordsFiltered === expectedCount || total.recordsFiltered >= valueToBeAtMost);
                   }
@@ -106,7 +109,12 @@ export class BackofficePage extends AbstractPage {
                 .then(() => {
                   cy.get('.spy-spinner, .data-processing, .loading').should('not.exist');
 
-                  return getRows().then(($rows) => {
+                  if (params.expectedToSeeInTable) {
+                    cy.get('tbody').should('contain', params.expectedToSeeInTable);
+                  }
+                })
+                .then(() => {
+                  return this.getRows(params.expectedCount).then(($rows) => {
                     let rows = Cypress.$($rows);
 
                     if (params.rowFilter && params.rowFilter.length > 0) {
@@ -203,6 +211,7 @@ interface UpdateParams {
   interceptTableUrl: string;
   rowFilter?: Array<(row: JQuery<HTMLElement>) => boolean>;
   expectedCount?: number;
+  expectedToSeeInTable?: string;
 }
 
 interface UpdateWithRetryParams {
