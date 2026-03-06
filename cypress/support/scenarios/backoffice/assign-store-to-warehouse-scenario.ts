@@ -17,6 +17,7 @@ export class AssignStoreToWarehouseScenario {
         rowFilter: [
           (row): boolean => !this.stockListPage.rowIsAssignedToStore({ row: row, storeName: params.storeName }),
         ],
+        expectedToSeeInTable: params.warehouseName,
       })
       .then(($row) => {
         if ($row === null) {

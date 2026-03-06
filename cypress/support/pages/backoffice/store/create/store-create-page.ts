@@ -35,7 +35,7 @@ export class StoreCreatePage extends BackofficePage {
     });
 
     this.repository.getStoreContextTabButton().click();
-    this.repository.getAddStoreContextButton().click();
+    this.repository.getAddStoreContextButton().click({ force: true });
     this.repository.getTimezoneSelector().select(store.timezone);
 
     this.repository.getSaveButton().click();
