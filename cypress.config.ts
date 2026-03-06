@@ -32,6 +32,9 @@ export default defineConfig({
     glueStorefrontUrl: `${protocol}://${glueStorefrontHost}`,
     mailCatcherUrl: `${protocol}://${mailCatcherHost}`,
     grepFilterSpecs: true,
+    yvesSessionCookieName: baseHost.replace(/\./g, '-'),
+    backofficeSessionCookieName: backofficeHost.replace(/\./g, '-'),
+    merchantPortalSessionCookieName: merchantPortalHost.replace(/\./g, '-'),
   },
   e2e: {
     chromeWebSecurity: false,

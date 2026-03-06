@@ -36,4 +36,8 @@ export class YvesPage extends AbstractPage {
       cy.clearCookie(cookieName);
     }
   };
+
+  clearSessionCookie = (): void => {
+    cy.clearCookie(Cypress.env('yvesSessionCookieName'));
+  };
 }

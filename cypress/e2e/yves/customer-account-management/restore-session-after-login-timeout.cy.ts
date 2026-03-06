@@ -1,6 +1,5 @@
 import { container } from '@utils';
 import { LoginPage } from '@pages/yves';
-import { CustomerLogoutScenario } from '@scenarios/yves';
 import {
   RestoreSessionAfterLoginTimeoutDynamicFixtures,
   RestoreSessionAfterLoginTimeoutStaticFixtures,
@@ -13,7 +12,6 @@ describe(
   },
   (): void => {
     const loginPage = container.get(LoginPage);
-    const customerLogoutScenario = container.get(CustomerLogoutScenario);
 
     let dynamicFixtures: RestoreSessionAfterLoginTimeoutDynamicFixtures;
     let staticFixtures: RestoreSessionAfterLoginTimeoutStaticFixtures;
@@ -31,7 +29,7 @@ describe(
 
       loginPage.clearLastVisitedPageCookie();
       cy.visit(staticFixtures.lastVisitedPageUrl);
-      customerLogoutScenario.execute();
+      loginPage.clearSessionCookie();
       loginPage.visit();
       loginPage.login({
         email: dynamicFixtures.customer.email,

@@ -1,6 +1,5 @@
 import { container } from '@utils';
 import { IndexPage, LoginPage } from '@pages/backoffice';
-import { UserLogoutScenario } from '@scenarios/backoffice';
 import {
   RestoreSessionAfterLoginTimeoutDynamicFixtures,
   RestoreSessionAfterLoginTimeoutStaticFixtures,
@@ -14,7 +13,6 @@ describe(
   (): void => {
     const loginPage = container.get(LoginPage);
     const indexPage = container.get(IndexPage);
-    const userLogoutScenario = container.get(UserLogoutScenario);
 
     let dynamicFixtures: RestoreSessionAfterLoginTimeoutDynamicFixtures;
     let staticFixtures: RestoreSessionAfterLoginTimeoutStaticFixtures;
@@ -31,9 +29,8 @@ describe(
       });
 
       cy.visitBackoffice(staticFixtures.lastVisitedPageUrl);
-      userLogoutScenario.execute();
-
-      loginPage.visit();
+      loginPage.clearSessionCookie();
+      cy.reload();
       loginPage.login({
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,

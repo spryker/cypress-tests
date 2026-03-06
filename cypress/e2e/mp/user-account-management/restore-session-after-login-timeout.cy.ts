@@ -34,9 +34,9 @@ describe(
       cy.visitMerchantPortal(staticFixtures.lastVisitedPageUrl);
       cy.reload();
 
-      dashboardPage.logout();
-      cy.reload();
+      loginPage.clearSessionCookie();
 
+      cy.reload();
       loginPage.login({
         username: dynamicFixtures.merchantUser.username,
         password: staticFixtures.defaultPassword,
