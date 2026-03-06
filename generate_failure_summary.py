@@ -32,7 +32,7 @@ def main():
         print("Directory not found: %s" % cypress_dir, file=sys.stderr)
         sys.exit(1)
 
-    results_path = os.path.join(cypress_dir, "results.json")
+    results_path = os.path.join(cypress_dir, "screenshots", "results.json")
     screenshots_dir = os.path.join(cypress_dir, "screenshots")
 
     if os.path.isfile(results_path):
@@ -116,6 +116,7 @@ def _parse_results_json(results_path):
     with open(results_path, "r") as f:
         data = json.load(f)
 
+    screenshots_dir = os.path.dirname(results_path)
     failures = []
     screenshots_map = {}
 
@@ -141,8 +142,15 @@ def _parse_results_json(results_path):
             for attempt in test.get("attempts", []):
                 for screenshot in attempt.get("screenshots", []):
                     path = screenshot.get("path", "")
-                    if path and os.path.isfile(path):
-                        test_screenshots.append(path)
+
+                    if not path:
+                        continue
+
+                    # Remap container-internal paths to host-side paths
+                    host_path = _remap_screenshot_path(path, screenshots_dir)
+
+                    if os.path.isfile(host_path):
+                        test_screenshots.append(host_path)
 
             if test_screenshots:
                 screenshots_map[test_name] = test_screenshots
@@ -161,7 +169,7 @@ def _parse_screenshots_dir(screenshots_dir):
 
             filepath = os.path.join(root, filename)
             relative = os.path.relpath(root, screenshots_dir)
-            spec_file = relative.split(os.sep)[0] if relative != "." else "unknown"
+            spec_file = _extract_spec_path(relative) if relative != "." else "unknown"
             test_name = os.path.splitext(filename)[0]
             test_name = re.sub(r"\s*\(failed\)\s*$", "", test_name)
             test_name = re.sub(r"\s*--\s*[^-]+\s*$", "", test_name)
@@ -178,6 +186,38 @@ def _parse_screenshots_dir(screenshots_dir):
             screenshots_map.setdefault(test_name, []).append(filepath)
 
     return failures, screenshots_map
+
+
+def _remap_screenshot_path(container_path, screenshots_dir):
+    """Remap container-internal screenshot path to host-side path."""
+    marker = "cypress/screenshots/"
+    idx = container_path.find(marker)
+
+    if idx == -1:
+        return container_path
+
+    relative = container_path[idx + len(marker):]
+
+    return os.path.join(screenshots_dir, relative)
+
+
+def _extract_spec_path(relative_dir):
+    """Extract spec file path from screenshot directory structure.
+
+    Cypress organizes screenshots as: {spec-path}/{test-title}/screenshot.png
+    The spec path ends with .cy.ts (or .cy.js). Return the full spec path
+    up to and including the .cy.ts component.
+    """
+    parts = relative_dir.split(os.sep)
+    spec_parts = []
+
+    for part in parts:
+        spec_parts.append(part)
+
+        if part.endswith((".cy.ts", ".cy.js")):
+            return os.sep.join(spec_parts)
+
+    return os.sep.join(parts)
 
 
 def _encode_screenshot(filepath):

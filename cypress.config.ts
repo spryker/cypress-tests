@@ -63,7 +63,7 @@ export default defineConfig({
 
       on('after:run', (results) => {
         if (results) {
-          const dir = '.cypress';
+          const dir = 'cypress/screenshots';
           if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
           writeFileSync(`${dir}/results.json`, JSON.stringify(results, null, 2));
         }
