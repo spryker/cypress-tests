@@ -16,7 +16,8 @@ export class MerchantUserMultiFactorAuthPage extends MpPage implements MultiFact
     cy.intercept('POST', '**/send-code').as('sendCode');
     this.repository.getVerificationCodeInput().type(code);
     this.repository.getVerifyButton().click();
-    cy.wait('@sendCode');
+    cy.wait('@sendCode', { responseTimeout: 30000 }).its('response.statusCode').should('eq', 200);
+    this.repository.getVerificationPopup().should('not.exist');
   }
 
   activateMfa(type: string): void {
@@ -32,10 +33,10 @@ export class MerchantUserMultiFactorAuthPage extends MpPage implements MultiFact
   }
 
   waitForActivationSuccessMessage(): void {
-    cy.contains(this.repository.getActivationSuccessMessage()).should('be.visible');
+    cy.contains(this.repository.getActivationSuccessMessage(), { timeout: 10000 }).should('be.visible');
   }
 
   waitForDeactivationSuccessMessage(): void {
-    cy.contains(this.repository.getDeactivationSuccessMessage()).should('be.visible');
+    cy.contains(this.repository.getDeactivationSuccessMessage(), { timeout: 10000 }).should('be.visible');
   }
 }

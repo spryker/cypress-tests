@@ -29,11 +29,11 @@ export class MultiFactorAuthPage extends YvesPage {
   }
 
   waitForActivationSuccessMessage(): void {
-    cy.contains(this.repository.getActivationSuccessMessage()).should('be.visible');
+    cy.contains(this.repository.getActivationSuccessMessage(), { timeout: 10000 }).should('be.visible');
   }
 
   waitForDeactivationSuccessMessage(): void {
-    cy.contains(this.repository.getDeactivationSuccessMessage()).should('be.visible');
+    cy.contains(this.repository.getDeactivationSuccessMessage(), { timeout: 10000 }).should('be.visible');
   }
 
   waitForInvalidCodeMessage(): void {
