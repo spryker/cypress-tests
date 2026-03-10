@@ -1,6 +1,6 @@
 import { defineConfig } from 'cypress';
 import dotenv from 'dotenv';
-import { existsSync } from 'fs';
+import { existsSync, mkdirSync, writeFileSync } from 'fs';
 
 dotenv.config();
 
@@ -62,6 +62,14 @@ export default defineConfig({
         }
 
         return launchOptions;
+      });
+
+      on('after:run', (results) => {
+        if (results) {
+          const dir = 'cypress/screenshots';
+          if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+          writeFileSync(`${dir}/results.json`, JSON.stringify(results, null, 2));
+        }
       });
 
       // eslint-disable-next-line @typescript-eslint/no-var-requires
