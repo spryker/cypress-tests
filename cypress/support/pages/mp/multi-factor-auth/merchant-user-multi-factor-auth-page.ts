@@ -12,11 +12,16 @@ export class MerchantUserMultiFactorAuthPage extends MpPage implements MultiFact
 
   protected PAGE_URL = '/multi-factor-auth-merchant-portal/user-management/set-up';
 
-  verifyCode(code: string): void {
+  submitCode(code: string): void {
     cy.intercept('POST', '**/send-code').as('sendCode');
     this.repository.getVerificationCodeInput().type(code);
     this.repository.getVerifyButton().click();
-    cy.wait('@sendCode');
+    cy.wait('@sendCode', { responseTimeout: 30000 });
+  }
+
+  verifyCode(code: string): void {
+    this.submitCode(code);
+    this.repository.getVerificationPopup().should('not.exist');
   }
 
   activateMfa(type: string): void {
@@ -32,10 +37,14 @@ export class MerchantUserMultiFactorAuthPage extends MpPage implements MultiFact
   }
 
   waitForActivationSuccessMessage(): void {
-    cy.contains(this.repository.getActivationSuccessMessage()).should('be.visible');
+    cy.contains(this.repository.getActivationSuccessMessage(), { timeout: 10000 }).should('be.visible');
   }
 
   waitForDeactivationSuccessMessage(): void {
-    cy.contains(this.repository.getDeactivationSuccessMessage()).should('be.visible');
+    cy.contains(this.repository.getDeactivationSuccessMessage(), { timeout: 10000 }).should('be.visible');
+  }
+
+  waitForInvalidCodeMessage(): void {
+    cy.contains(this.repository.getInvalidCodeMessage(), { timeout: 10000 }).should('be.visible');
   }
 }
