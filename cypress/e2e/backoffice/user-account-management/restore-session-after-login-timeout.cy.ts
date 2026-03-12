@@ -8,7 +8,7 @@ import {
 describe(
   'restore session after login timeout',
   {
-    tags: ['@backoffice', '@user-account-management', 'security-gui', 'spryker-core'],
+    tags: ['@backoffice', '@user-account-management', 'spryker-core-back-office'],
   },
   (): void => {
     const loginPage = container.get(LoginPage);

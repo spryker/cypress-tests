@@ -9,7 +9,7 @@ import { MerchantUserLoginScenario } from '@scenarios/mp';
 describe(
   'restore session after login timeout',
   {
-    tags: ['@mp', '@user-account-management', 'security-merchant-portal-gui', 'spryker-core'],
+    tags: ['@mp', '@user-account-management', 'marketplace-merchantportal-core'],
   },
   (): void => {
     const loginPage = container.get(LoginPage);
