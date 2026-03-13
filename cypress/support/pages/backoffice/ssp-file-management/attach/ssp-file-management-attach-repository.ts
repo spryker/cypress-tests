@@ -47,19 +47,13 @@ export class SspFileManagementAttachRepository {
   getSuccessMessageSelector = (): string => '.alert-success, [data-qa="success-message"]';
   getFileAttachmentSuccessText = (): string => 'File attachments have been created successfully.';
 
-  getAssetTableSearchSelector = (): string => '#unattached-ssp-asset-table_filter label input';
-  getBusinessUnitTableSearchSelector = (): string => '#unattached-business-unit-table_filter label input';
-  getCompanyUserTableSearchSelector = (): string => '#unattached-company-user-table_filter label input';
-  getCompanyTableSearchSelector = (): string => '#unattached-company-table_filter label input';
+  getAssetTableSearchSelector = (): string => '#unattached-ssp-asset-table_wrapper .dt-search input';
+  getBusinessUnitTableSearchSelector = (): string => '#unattached-business-unit-table_wrapper .dt-search input';
+  getCompanyUserTableSearchSelector = (): string => '#unattached-company-user-table_wrapper .dt-search input';
+  getCompanyTableSearchSelector = (): string => '#unattached-company-table_wrapper .dt-search input';
 
   getAttachedSspAssetTableSearchSelector = (): string => '#attached-ssp-asset-table_filter label input';
   getAttachedBusinessUnitTableSearchSelector = (): string => '#attached-business-unit-table_filter label input';
   getAttachedCompanyUserTableSearchSelector = (): string => '#attached-company-user-table_filter label input';
-  getAttachedCompanyTableSearchSelector = (): string => '#attached-company-table_filter label input';
-
-  getTableSearchSelector = (): string => '.dataTables_filter input[type="search"]';
-
-  getTablePaginationSelector = (): string => '.dataTables_paginate';
-  getNextPageSelector = (): string => '.dataTables_paginate .next';
-  getPrevPageSelector = (): string => '.dataTables_paginate .previous';
+  getAttachedCompanyTableSearchSelector = (): string => '#attached-company-table_filter . input';
 }

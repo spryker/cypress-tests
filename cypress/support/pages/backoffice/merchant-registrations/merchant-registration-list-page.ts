@@ -57,7 +57,8 @@ export class MerchantRegistrationListPage extends BackofficePage {
       expectedToSeeInTable: params.query,
     }).then(($row) => {
       if ($row && params.action === 'view') {
-        cy.wrap($row).find(this.repository.getViewButton()).click();
+        cy.wrap($row).find(this.repository.getViewButton()).as('viewBtn');
+        cy.get('@viewBtn').click();
       }
     });
   };

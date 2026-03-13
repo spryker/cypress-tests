@@ -18,7 +18,10 @@ export class ProductManagementEditPage extends BackofficePage {
   };
 
   openFirstVariant = (): void => {
+    const variantTableUrl = '**/product-management/edit/variant-table**';
+    cy.intercept('GET', variantTableUrl).as('variantTable');
     this.repository.getVariantsTab().click();
+    cy.wait('@variantTable', { timeout: 1000 });
     this.repository.getVariantFirstTableRow().then(($productVariantRow) => {
       cy.wrap($productVariantRow).find(this.repository.getVariantEditButtonSelector()).as('editVariantButton');
       cy.get('@editVariantButton').should('be.visible').click({ force: true });

@@ -11,11 +11,16 @@ export class AvailabilityViewPage extends BackofficePage {
   protected PAGE_URL = '/availability-gui/index/view';
 
   editFirstVariant = (): void => {
-    this.repository.getVariantFirstTableRow().then(($productVariantRow) => {
-      cy.wrap($productVariantRow)
-        .find(this.repository.getVariantEditStockButtonSelector())
-        .as('editStockVariantButton');
-      cy.get('@editStockVariantButton').should('be.visible').click({ force: true });
-    });
+    this.repository
+      .getVariantFirstTableRow()
+      .should(($productVariantRow) => {
+        expect($productVariantRow.text()).not.to.contain('Loading');
+      })
+      .then(($productVariantRow) => {
+        cy.wrap($productVariantRow)
+          .find(this.repository.getVariantEditStockButtonSelector())
+          .as('editStockVariantButton');
+        cy.get('@editStockVariantButton').should('be.visible').click({ force: true });
+      });
   };
 }
