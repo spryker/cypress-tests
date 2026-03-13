@@ -48,6 +48,22 @@ export class ProductManagementListPage extends BackofficePage {
     this.repository.getFilterButton().click();
   };
 
+  applySearchQuery = (query: string, callback: () => void): void => {
+    this.repository
+      .getFilterSearchInput()
+      .clear()
+      .invoke('val', query)
+      .then(() => {
+        this.interceptTable(
+          {
+            url: '**/product-management/index/table**',
+            expectedCount: 0,
+          },
+          callback
+        );
+      });
+  };
+
   update = (params: UpdateParams): void => {
     this.find({
       searchQuery: params.query,
@@ -67,6 +83,11 @@ export class ProductManagementListPage extends BackofficePage {
         cy.get('@denyButton').click();
       }
     });
+  };
+
+  assertNoTableRecords = (): void => {
+    this.getTableRows().should('have.length', 1);
+    this.getTableRows().first().should('contain', this.repository.getNoTableRecordsText());
   };
 }
 
