@@ -1,0 +1,25 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#merchant", "#merchantUser"]
+        }
+      ]
+    }
+  }
+}

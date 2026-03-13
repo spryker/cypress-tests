@@ -11,4 +11,5 @@ export class B2cMpYvesRepository implements YvesRepository {
       .select(localeName.toUpperCase(), { force: true });
   getLocaleOptionsSelector = (): string => `[data-qa="language-selector"] option`;
   getLocaleAttributeName = (): string => 'data-locale';
+  getLastVisitedPageCookieName = (): string => '';
 }

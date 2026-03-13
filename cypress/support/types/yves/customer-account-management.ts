@@ -17,3 +17,13 @@ export interface CustomerAuthDmsStaticFixtures {
   defaultPassword: string;
   store: Store;
 }
+
+export interface RestoreSessionAfterLoginTimeoutStaticFixtures {
+  defaultPassword: string;
+  lastVisitedPageUrl: string;
+  customerOverviewUrl: string;
+}
+
+export interface RestoreSessionAfterLoginTimeoutDynamicFixtures {
+  customer: Customer;
+}

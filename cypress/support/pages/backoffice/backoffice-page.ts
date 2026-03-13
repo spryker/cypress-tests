@@ -9,6 +9,10 @@ export class BackofficePage extends AbstractPage {
     cy.visitBackoffice(this.PAGE_URL, options);
   };
 
+  clearSessionCookie = (): void => {
+    cy.clearCookie(Cypress.env('backofficeSessionCookieName'));
+  };
+
   public interceptTable = (params: InterceptGuiTableParams, callback?: () => void): Chainable => {
     const expectedCount = params.expectedCount ?? 1;
     const interceptAlias = this.faker.string.uuid();
