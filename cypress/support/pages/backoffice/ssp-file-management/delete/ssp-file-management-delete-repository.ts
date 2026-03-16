@@ -8,4 +8,5 @@ export class SspFileManagementDeleteRepository {
   getDeleteConfirmButtonSelector = (): string => '[data-qa="delete-confirm-button"]';
   getSuccessMessageSelector = (): string => '[data-qa="success-message"]';
   getFileTableRows = (): Chainable => cy.get('table.gui-table-data tbody tr');
+  getEmptyRowSelector = (): string => 'td.dt-empty';
 }

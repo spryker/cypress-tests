@@ -25,9 +25,8 @@ export class SspFileManagementListPage extends BackofficePage {
 
   searchFile(fileName: string): void {
     cy.intercept('GET', '/self-service-portal/list-file/table**').as('fileSearch');
-    cy.get(this.repository.getSearchInputSelector()).clear();
-    cy.get(this.repository.getSearchInputSelector()).type(fileName);
-    cy.wait('@fileSearch');
+    cy.get(this.repository.getSearchInputSelector()).type(`{selectall}${fileName}`);
+    cy.wait('@fileSearch', { timeout: 1000 });
   }
 
   clickViewButton(): void {
