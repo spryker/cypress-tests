@@ -7,6 +7,7 @@ export class StockListRepository {
   getEditButtonSelector = (): string => 'a:contains("Edit")';
   getViewButtonSelector = (): string => 'a:contains("View")';
   getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1):visible');
+  getTableRowsSelector = (): string => 'tbody tr';
   getSearchSelector = (): string => '[type="search"]';
   getStoreCellSelector = (): string => 'td.column-available_in_store';
 }

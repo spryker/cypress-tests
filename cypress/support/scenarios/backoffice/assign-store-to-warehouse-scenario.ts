@@ -24,7 +24,12 @@ export class AssignStoreToWarehouseScenario {
           return;
         }
 
-        cy.wrap($row).find(this.stockListPage.getEditButtonSelector()).click();
+        const rowIndex = $row.index();
+
+        cy.get(this.stockListPage.getTableRowsSelector())
+          .eq(rowIndex)
+          .find(this.stockListPage.getEditButtonSelector())
+          .click();
         this.stockEditPage.assignAllAvailableStore();
 
         if (params.shouldTriggerPublishAndSync) {
