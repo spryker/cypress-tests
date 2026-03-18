@@ -19,6 +19,14 @@ export class SspFileManagementDeletePage extends BackofficePage {
   }
 
   assertDeleteFile(): void {
-    this.repository.getFileTableRows().should('have.length', 0);
+    this.repository
+      .getFileTableRows()
+      .first()
+      .should(($row) => {
+        const hasEmptyState = $row.find(this.repository.getEmptyRowSelector()).length > 0;
+        const hasNoRows = $row.length === 0;
+
+        expect(hasEmptyState || hasNoRows).to.be.true;
+      });
   }
 }

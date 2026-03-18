@@ -9,6 +9,10 @@ export class MpPage extends AbstractPage {
     cy.visitMerchantPortal(this.PAGE_URL, options);
   };
 
+  clearSessionCookie = (): void => {
+    cy.clearCookie(Cypress.env('merchantPortalSessionCookieName'));
+  };
+
   protected interceptTable = (params: InterceptMpGuiTableParams, customFunction?: () => void): void => {
     const expectedCount = params.expectedCount ?? 1;
     const interceptAlias = this.faker.string.uuid();

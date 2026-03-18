@@ -8,4 +8,5 @@ export class SuiteYvesRepository implements YvesRepository {
     cy.get('[data-qa="component header"] [data-qa="language-selector"]').select(localeName, { force: true });
   getLocaleOptionsSelector = (): string => `[data-qa="language-selector"] option`;
   getLocaleAttributeName = (): string => 'data-locale';
+  getLastVisitedPageCookieName = (): string => 'last-visited-page';
 }

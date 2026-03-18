@@ -61,9 +61,10 @@ export class ProductPage extends BackofficePage {
   }
 
   editFirstVariant(): void {
-    this.repository.getVariantFirstTableRow().then(($productVariantRow) => {
-      cy.wrap($productVariantRow).find(this.repository.getVariantEditButtonSelector()).as('editVariantButton');
-      cy.get('@editVariantButton').should('be.visible').click({ force: true });
-    });
+    this.repository
+      .getVariantFirstTableRow()
+      .find(this.repository.getVariantEditButtonSelector())
+      .should('be.visible')
+      .click({ force: true });
   }
 }

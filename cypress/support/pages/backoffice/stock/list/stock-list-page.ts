@@ -10,9 +10,9 @@ export class StockListPage extends BackofficePage {
 
   protected PAGE_URL = '/stock-gui/warehouse/list';
 
-  getEditButtonSelector = (): string => {
-    return this.repository.getEditButtonSelector();
-  };
+  getEditButtonSelector = (): string => this.repository.getEditButtonSelector();
+
+  getTableRowsSelector = (): string => this.repository.getTableRowsSelector();
 
   rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
     if (typeof params.storeName !== 'string') {
