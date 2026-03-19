@@ -56,7 +56,7 @@ describe(
       productManagementListPage.applySearchQuery(dynamicFixtures.product.localized_attributes[0].name, () => {
         productManagementListPage.assertNoTableRecords();
         productManagementListPage.getResetButton().click();
-        cy.wait(3000)
+        cy.wait(6000);
         productManagementListPage.getTableRows().should('have.length', 2);
       });
     });
