@@ -9,6 +9,7 @@ describe(
   (): void => {
     const productManagementListPage = container.get(ProductManagementListPage);
     const userLoginScenario = container.get(UserLoginScenario);
+    const productTableUrl = '**/product-management/index/table**';
 
     let dynamicFixtures: ProductManagementDynamicFixtures;
     let staticFixtures: ProductManagementStaticFixtures;
@@ -35,14 +36,19 @@ describe(
     });
 
     it('search with filters returns no results when criteria don’t match', (): void => {
+      cy.intercept('GET', productTableUrl).as('productTable');
       productManagementListPage.visit();
       productManagementListPage.applyFilters({
         status: StatusEnum.active,
         stores: [dynamicFixtures.storeAT.name],
       });
 
+      
       productManagementListPage.applySearchQuery(dynamicFixtures.product.localized_attributes[0].name, () =>
-        productManagementListPage.assertNoTableRecords()
+        {
+          cy.wait('@productTable');
+          productManagementListPage.assertNoTableRecords()
+        }
       );
     });
 
@@ -54,9 +60,12 @@ describe(
       });
 
       productManagementListPage.applySearchQuery(dynamicFixtures.product.localized_attributes[0].name, () => {
+        cy.intercept('GET', productTableUrl).as('productTable');
+
         productManagementListPage.assertNoTableRecords();
         productManagementListPage.getResetButton().click();
-        cy.wait(6000);
+        cy.wait('@productTable');
+
         productManagementListPage.getTableRows().should('have.length', 2);
       });
     });
