@@ -15,20 +15,22 @@ export class StoreListPage extends BackofficePage {
   };
 
   update = (params: UpdateParams): void => {
-    this.find({ searchQuery: params.query, tableUrl: '/store-gui/list/table**' }).then(($storeRow) => {
-      if (params.action === ActionEnum.edit) {
-        cy.wrap($storeRow).find(this.repository.getEditButtonSelector()).should('exist').click();
-      }
+    this.find({ searchQuery: params.query, interceptTableUrl: `**/store-gui/list/table**${params.query}**` }).then(
+      ($storeRow) => {
+        if (params.action === ActionEnum.edit) {
+          cy.wrap($storeRow).find(this.repository.getEditButtonSelector()).should('exist').click();
+        }
 
-      if (params.action === ActionEnum.view) {
-        cy.wrap($storeRow).find(this.repository.getViewButtonSelector()).should('exist').click();
+        if (params.action === ActionEnum.view) {
+          cy.wrap($storeRow).find(this.repository.getViewButtonSelector()).should('exist').click();
+        }
       }
-    });
+    );
   };
 
   hasStore = (storeName: string): Cypress.Chainable<boolean> => {
     const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector).clear();
+    cy.get(searchSelector, { timeout: 10000 }).clear();
     cy.get(searchSelector).type(storeName);
 
     return this.interceptTable({ url: '/store-gui/list/table**', expectedCount: 0 }).then((recordsFiltered: number) => {
