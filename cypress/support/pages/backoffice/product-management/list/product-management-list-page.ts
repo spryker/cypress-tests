@@ -30,7 +30,7 @@ export class ProductManagementListPage extends BackofficePage {
 
   applyFilters = (params: ApplyFiltersParams): void => {
     if (params.query) {
-      this.repository.getFilterSearchInput().type(params.query);
+      this.repository.getFilterSearchInput().clear().invoke('val', params.query).trigger('input');
     }
 
     if (params.status) {
@@ -48,23 +48,46 @@ export class ProductManagementListPage extends BackofficePage {
     this.repository.getFilterButton().click();
   };
 
+  applySearchQuery = (query: string, callback: () => void): void => {
+    this.repository
+      .getFilterSearchInput()
+      .clear()
+      .invoke('val', query)
+      .then(() => {
+        this.interceptTable(
+          {
+            url: '**/product-management/index/table**',
+            expectedCount: 0,
+          },
+          callback
+        );
+      });
+  };
+
   update = (params: UpdateParams): void => {
-    this.find({ searchQuery: params.query, tableUrl: '/product-management/index/table**', expectedCount: 1 }).then(
-      ($productRow) => {
-        if (params.action === ActionEnum.edit) {
-          cy.wrap($productRow).find(this.repository.getEditButtonSelector()).as('editButton');
-          cy.get('@editButton').click();
-        }
-        if (params.action === ActionEnum.approve) {
-          cy.wrap($productRow).find(this.repository.getApproveButtonSelector()).as('approveButton');
-          cy.get('@approveButton').click();
-        }
-        if (params.action === ActionEnum.deny) {
-          cy.wrap($productRow).find(this.repository.getDenyButtonSelector()).as('denyButton');
-          cy.get('@denyButton').click();
-        }
+    this.find({
+      searchQuery: params.query,
+      interceptTableUrl: `**/product-management/index/table**`,
+      expectedCount: 1,
+    }).then(($productRow) => {
+      if (params.action === ActionEnum.edit) {
+        cy.wrap($productRow).find(this.repository.getEditButtonSelector()).as('editButton');
+        cy.get('@editButton').click();
       }
-    );
+      if (params.action === ActionEnum.approve) {
+        cy.wrap($productRow).find(this.repository.getApproveButtonSelector()).as('approveButton');
+        cy.get('@approveButton').click();
+      }
+      if (params.action === ActionEnum.deny) {
+        cy.wrap($productRow).find(this.repository.getDenyButtonSelector()).as('denyButton');
+        cy.get('@denyButton').click();
+      }
+    });
+  };
+
+  assertNoTableRecords = (): void => {
+    this.getTableRows().should('have.length', 1);
+    this.getTableRows().first().should('contain', this.repository.getNoTableRecordsText());
   };
 }
 

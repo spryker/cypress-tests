@@ -57,9 +57,9 @@ export class SspFileManagementAttachRepository {
   getAttachedCompanyUserTableSearchSelector = (): string => '#attached-company-user-table_filter label input';
   getAttachedCompanyTableSearchSelector = (): string => '#attached-company-table_filter label input';
 
-  getTableSearchSelector = (): string => '.dataTables_filter input[type="search"]';
+  getTableSearchSelector = (): string => '.dt-search input[type="search"]';
 
-  getTablePaginationSelector = (): string => '.dataTables_paginate';
-  getNextPageSelector = (): string => '.dataTables_paginate .next';
-  getPrevPageSelector = (): string => '.dataTables_paginate .previous';
+  getTablePaginationSelector = (): string => '.dt-paging';
+  getNextPageSelector = (): string => '.dt-paging .next';
+  getPrevPageSelector = (): string => '.dt-paging .previous';
 }

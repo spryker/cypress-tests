@@ -10,9 +10,9 @@ export class ProductMeasurementUnitListRepository {
 
   getDeleteButtonSelector = (): string => '[data-qa="delete-button"]';
 
-  getTableRowsSelector = (): string => 'table.dataTable tbody tr';
+  getTableRowsSelector = (): string => '.dataTable tbody tr';
 
-  getPaginationBarSelector = (): string => '.dataTables_paginate';
+  getPaginationBarSelector = (): string => '.dt-paging';
 
-  getTableCodeColumnSelector = (): string => 'table.dataTable thead th[data-qa="code"]';
+  getTableCodeColumnSelector = (): string => '.dataTable thead th[data-qa="code"]';
 }

@@ -11,5 +11,5 @@ export class UserIndexRepository {
   getActivateButtonSelector = (): string => 'button:contains("Activate")';
   getSearchSelector = (): string => '[type="search"]';
   getAddNewUserButton = (): Cypress.Chainable => cy.get('body').find('a:contains("Add New User")');
-  getTableHeader = (): Cypress.Chainable => cy.get('.dataTables_scrollHead');
+  getTableHeader = (): Cypress.Chainable => cy.get('.dataTable thead');
 }
