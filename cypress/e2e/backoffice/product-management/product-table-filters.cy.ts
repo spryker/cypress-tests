@@ -9,8 +9,7 @@ describe(
   (): void => {
     const productManagementListPage = container.get(ProductManagementListPage);
     const userLoginScenario = container.get(UserLoginScenario);
-    const productTableUrl = '**/product-management/index/table**';
-    const loaderVIsibilityTimeout = 12000;
+    const loaderVIsibilityTimeout = 10000;
 
     let dynamicFixtures: ProductManagementDynamicFixtures;
     let staticFixtures: ProductManagementStaticFixtures;
@@ -44,8 +43,9 @@ describe(
         stores: [dynamicFixtures.storeAT.name],
       });
 
+      cy.get('.dt-processing', { timeout: loaderVIsibilityTimeout } ).should('not.be.visible');
+
       productManagementListPage.applySearchQuery(dynamicFixtures.product.localized_attributes[0].name, () => {
-        cy.get('.dt-processing', { timeout: loaderVIsibilityTimeout } ).should('not.be.visible');
         productManagementListPage.assertNoTableRecords();
       });
     });
@@ -57,14 +57,12 @@ describe(
         stores: [dynamicFixtures.storeAT.name],
       });
 
-      productManagementListPage.applySearchQuery(dynamicFixtures.product.localized_attributes[0].name, () => {
-        cy.intercept('GET', productTableUrl).as('productTable');
+      cy.get('.dt-processing', { timeout: loaderVIsibilityTimeout } ).should('not.be.visible');
 
+      productManagementListPage.applySearchQuery(dynamicFixtures.product.localized_attributes[0].name, () => {
         productManagementListPage.assertNoTableRecords();
         productManagementListPage.getResetButton().click();
-        cy.wait('@productTable');
-        cy.get('.dt-processing', { timeout: loaderVIsibilityTimeout } ).should('not.be.visible');
-
+        
         productManagementListPage.getTableRows().should('have.length', 2);
       });
     });
