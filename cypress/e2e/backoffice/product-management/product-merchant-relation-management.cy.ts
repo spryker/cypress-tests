@@ -38,14 +38,10 @@ describe(
       });
     });
 
-    it('backoffice user can see merchant dropdown on product general tab', (): void => {
-      navigateToProductEdit(dynamicFixtures.product.abstract_sku);
-
-      productManagementEditPage.verifyNoMerchantAssigned();
-    });
-
     it('backoffice user can assign a merchant to a product without existing assignment', (): void => {
       navigateToProductEdit(dynamicFixtures.product.abstract_sku);
+
+      productManagementEditPage.verifyMerchantSelected(productManagementEditPage.getMerchantNotAssignedOptionText());
 
       productManagementEditPage.selectMerchant(dynamicFixtures.merchant.name);
       productManagementEditPage.save();
@@ -56,7 +52,7 @@ describe(
       productManagementEditPage.verifyMerchantSelected(dynamicFixtures.merchant.name);
     });
 
-    it('backoffice user can change merchant assignment to a different merchant', (): void => {
+    it('backoffice user can change and remove merchant assignment from a product', (): void => {
       navigateToProductEdit(dynamicFixtures.productWithMerchant.abstract_sku);
 
       productManagementEditPage.verifyMerchantSelected(dynamicFixtures.merchant.name);
@@ -68,12 +64,6 @@ describe(
       navigateToProductEdit(dynamicFixtures.productWithMerchant.abstract_sku);
 
       productManagementEditPage.verifyMerchantSelected(dynamicFixtures.anotherMerchant.name);
-    });
-
-    it('backoffice user can remove merchant assignment from a product', (): void => {
-      navigateToProductEdit(dynamicFixtures.productWithMerchant.abstract_sku);
-
-      productManagementEditPage.verifyMerchantSelected(dynamicFixtures.anotherMerchant.name);
 
       productManagementEditPage.removeMerchantAssignment();
       productManagementEditPage.save();
@@ -81,7 +71,7 @@ describe(
 
       navigateToProductEdit(dynamicFixtures.productWithMerchant.abstract_sku);
 
-      productManagementEditPage.verifyNoMerchantAssigned();
+      productManagementEditPage.verifyMerchantSelected(productManagementEditPage.getMerchantNotAssignedOptionText());
     });
 
     function navigateToProductEdit(abstractSku: string): void {

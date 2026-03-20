@@ -119,9 +119,7 @@ export class ProductManagementEditPage extends BackofficePage {
     this.repository.getMerchantSelectContainer().should('contain.text', merchantName);
   };
 
-  verifyNoMerchantAssigned = (): void => {
-    this.repository.getMerchantSelectContainer().should('contain.text', 'Not assigned');
-  };
+  getMerchantNotAssignedOptionText = (): string => 'Not assigned';
 }
 
 interface AttachmentParams {

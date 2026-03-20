@@ -58,6 +58,8 @@ export class ProductManagementEditRepository {
 
   getMerchantSelectDropdownOptions = (): Cypress.Chainable => cy.get('.select2-results__option');
 
+  getMerchantNotAssignedOptionText = (): string => 'Not assigned';
+
   getSaveSuccessMessage = (sku: string): Cypress.Chainable =>
     cy.contains(`The product [${sku}] was saved successfully`);
 
