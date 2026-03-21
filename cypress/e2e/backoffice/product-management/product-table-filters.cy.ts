@@ -9,7 +9,6 @@ describe(
   (): void => {
     const productManagementListPage = container.get(ProductManagementListPage);
     const userLoginScenario = container.get(UserLoginScenario);
-    const loaderVIsibilityTimeout = 10000;
 
     let dynamicFixtures: ProductManagementDynamicFixtures;
     let staticFixtures: ProductManagementStaticFixtures;
@@ -32,22 +31,19 @@ describe(
         query: dynamicFixtures.product.localized_attributes[0].name,
         stores: [dynamicFixtures.storeDE.name, dynamicFixtures.storeAT.name],
       });
-      cy.get('.dt-processing', { timeout: loaderVIsibilityTimeout } ).should('not.be.visible');
       productManagementListPage.getTableRows().should('have.length', 1);
     });
 
-    it("search with filters returns no results when criteria don’t match", (): void => {
+    it('search with filters returns no results when criteria don’t match', (): void => {
       productManagementListPage.visit();
       productManagementListPage.applyFilters({
         status: StatusEnum.active,
         stores: [dynamicFixtures.storeAT.name],
       });
 
-      cy.get('.dt-processing', { timeout: loaderVIsibilityTimeout } ).should('not.be.visible');
-
-      productManagementListPage.applySearchQuery(dynamicFixtures.product.localized_attributes[0].name, () => {
-        productManagementListPage.assertNoTableRecords();
-      });
+      productManagementListPage.applySearchQuery(dynamicFixtures.product.localized_attributes[0].name, () =>
+        productManagementListPage.assertNoTableRecords()
+      );
     });
 
     it('resetting filters restores all search results', (): void => {
@@ -57,12 +53,9 @@ describe(
         stores: [dynamicFixtures.storeAT.name],
       });
 
-      cy.get('.dt-processing', { timeout: loaderVIsibilityTimeout } ).should('not.be.visible');
-
       productManagementListPage.applySearchQuery(dynamicFixtures.product.localized_attributes[0].name, () => {
         productManagementListPage.assertNoTableRecords();
         productManagementListPage.getResetButton().click();
-        
         productManagementListPage.getTableRows().should('have.length', 2);
       });
     });
