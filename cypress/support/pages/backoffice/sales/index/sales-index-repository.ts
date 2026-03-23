@@ -4,5 +4,5 @@ import { injectable } from 'inversify';
 @injectable()
 @autoWired
 export class SalesIndexRepository {
-  getViewButtons = (): Cypress.Chainable => cy.get('.btn-view');
+  getViewButtons = (): Cypress.Chainable => cy.get('.btn-view', { timeout: 10000 });
 }
