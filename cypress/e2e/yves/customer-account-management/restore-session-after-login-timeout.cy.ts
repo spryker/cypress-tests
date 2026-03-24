@@ -50,7 +50,7 @@ describe(
     });
 
     function suiteIt(description: string, testFn: () => void): void {
-      onlyForRepositoriesIt(['suite'], description, testFn);
+      onlyForRepositoriesIt(['suite', 'b2b-mp'], description, testFn);
     }
 
     function onlyForRepositoriesIt(repositoryIds: string[], description: string, testFn: () => void): void {
