@@ -23,14 +23,35 @@
         },
         {
           "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 1 }
+        },
+        {
+          "type": "transfer",
           "name": "LocaleTransfer",
-          "key": "locale",
+          "key": "localeEN",
           "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeDE",
+          "arguments": { "id_locale": 46, "locale_name": "de_DE" }
         },
         {
           "type": "builder",
           "name": "LocalizedAttributesBuilder",
           "key": "localizedAttribute"
+        },
+        {
+          "type": "transfer",
+          "name": "ProductImageTransfer",
+          "key": "productImage",
+          "arguments": {
+            "externalUrlSmall": "https://images.icecat.biz/img/gallery_mediums/30691822_1486.jpg",
+            "externalUrlLarge": "https://images.icecat.biz/img/gallery/30691822_1486.jpg"
+          }
         },
         {
           "type": "helper",
@@ -51,7 +72,15 @@
               },
               "localizedAttributes": [
                 {
-                  "locale": "#locale",
+                  "locale": "#localeEN",
+                  "name": "#localizedAttribute.name",
+                  "attributes": {
+                    "brand": "Cypress Test Brand",
+                    "color": "Cypress Test Red"
+                  }
+                },
+                {
+                  "locale": "#localeDE",
                   "name": "#localizedAttribute.name",
                   "attributes": {
                     "brand": "Cypress Test Brand",
@@ -61,15 +90,6 @@
               ]
             }
           ]
-        },
-        {
-          "type": "transfer",
-          "name": "ProductImageTransfer",
-          "key": "productImage",
-          "arguments": {
-            "externalUrlSmall": "https://images.icecat.biz/img/gallery_mediums/30691822_1486.jpg",
-            "externalUrlLarge": "https://images.icecat.biz/img/gallery/30691822_1486.jpg"
-          }
         },
         {
           "type": "helper",
@@ -84,24 +104,61 @@
           ]
         },
         {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "storeAT",
+          "arguments": { "id_store": 2 }
+        },
+        {
           "type": "helper",
-          "name": "haveProductInStock",
+          "name": "havePriceProduct",
+          "key": "priceProductConcrete",
           "arguments": [
             {
-              "sku": "#product.sku",
-              "isNeverOutOfStock": "1",
-              "fkStock": 1,
-              "stockType": "Warehouse1"
+              "skuProductAbstract": "#product.abstract_sku",
+              "skuProduct": "#product.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
             }
           ]
         },
         {
           "type": "helper",
           "name": "havePriceProduct",
+          "key": "priceProductAbstract",
           "arguments": [
             {
               "skuProductAbstract": "#product.abstract_sku",
-              "skuProduct": "#product.sku"
+              "idProduct": null,
+              "skuProduct": "",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#product.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#storeAT", { "sku": "#product.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "quote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "quantity": 1,
+                  "unitPrice": 30000
+                }
+              ]
             }
           ]
         }

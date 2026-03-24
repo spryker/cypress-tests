@@ -33,19 +33,24 @@ describe(
     let dynamicFixtures: DynamicFixtures;
 
     const ATTRIBUTE_LIST_URL = '/product-attribute-gui/attribute';
+    const CREATE_ATTRIBUTE_URL = '/product-attribute-gui/attribute/create';
 
     retryableBefore((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
-      // Login to BO and set attribute visibility to PDP+PLP+Cart
       loginToBackoffice();
-      setAttributeVisibility(staticFixtures.attributeKey, ['PDP', 'PLP', 'Cart']);
+
+      // Create the product management attribute with PDP+PLP+Cart visibility
+      createOrUpdateAttribute(staticFixtures.attributeKey, ['PDP', 'PLP', 'Cart']);
       triggerPublishAndSync();
+
+      // Verify product is searchable before running tests
+      visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
     });
 
     describe('PLP attribute badges', (): void => {
       it('should display attribute badges on product listing page', (): void => {
-        cy.visit(`/search?q=${dynamicFixtures.product.abstract_sku}`);
+        visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
 
         cy.get('[data-qa="component product-item"]')
           .first()
@@ -58,8 +63,8 @@ describe(
 
     describe('PDP attribute visibility', (): void => {
       it('should display PDP-visible attributes on product detail page', (): void => {
-        cy.visit(`/search?q=${dynamicFixtures.product.abstract_sku}`);
-        cy.get('[data-qa="component product-item"] a').first().click();
+        visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
+        cy.get('[data-qa="component product-item"]').first().find('a').first().click();
 
         cy.get('[itemprop="additionalProperty"]').should('exist');
         cy.get('[itemprop="additionalProperty"]').should('contain', staticFixtures.attributeValue);
@@ -67,16 +72,9 @@ describe(
     });
 
     describe('Cart attribute badges', (): void => {
-      before((): void => {
-        loginToStorefront();
-
-        // Add product to cart
-        cy.visit(`/search?q=${dynamicFixtures.product.sku}`);
-        cy.get('[data-qa="component product-item"] a').first().click();
-        cy.get('[data-qa="add-to-cart-button"]').click();
-      });
-
       it('should display attribute badges on cart page', (): void => {
+        // Cart is pre-populated via havePersistentQuote in dynamic fixtures
+        loginToStorefront();
         cy.visit('/cart');
 
         cy.get('[data-qa="component product-cart-item"]')
@@ -88,16 +86,16 @@ describe(
       });
     });
 
-    describe('removing visibility hides attributes', (): void => {
+    describe('Removing visibility hides attributes', (): void => {
       before((): void => {
         // Remove PLP and Cart visibility, keep only PDP
         loginToBackoffice();
-        setAttributeVisibility(staticFixtures.attributeKey, ['PDP']);
+        createOrUpdateAttribute(staticFixtures.attributeKey, ['PDP']);
         triggerPublishAndSync();
       });
 
       it('should not show badges on PLP after removing PLP visibility', (): void => {
-        cy.visit(`/search?q=${dynamicFixtures.product.abstract_sku}`);
+        visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
 
         cy.get('[data-qa="component product-item"]')
           .first()
@@ -107,8 +105,8 @@ describe(
       });
 
       it('should still show attribute on PDP', (): void => {
-        cy.visit(`/search?q=${dynamicFixtures.product.abstract_sku}`);
-        cy.get('[data-qa="component product-item"] a').first().click();
+        visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
+        cy.get('[data-qa="component product-item"]').first().find('a').first().click();
 
         cy.get('[itemprop="additionalProperty"]').should('exist');
         cy.get('[itemprop="additionalProperty"]').should('contain', staticFixtures.attributeValue);
@@ -123,6 +121,23 @@ describe(
           .within(() => {
             cy.get('.badge.badge--hollow').should('not.exist');
           });
+      });
+    });
+
+    describe('Removing PDP visibility hides attributes on PDP', (): void => {
+      before((): void => {
+        loginToBackoffice();
+        createOrUpdateAttribute(staticFixtures.attributeKey, []);
+        triggerPublishAndSync();
+      });
+
+      it('should not show attribute on PDP when visibility is removed', (): void => {
+        visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
+        cy.get('[data-qa="component product-item"]').first().find('a').first().click();
+
+        cy.get('[itemprop="additionalProperty"]').each(($el) => {
+          cy.wrap($el).should('not.contain', staticFixtures.attributeValue);
+        });
       });
     });
 
@@ -146,32 +161,54 @@ describe(
       });
     }
 
-    function setAttributeVisibility(attributeKey: string, visibilityTypes: string[]): void {
-      // Navigate to attribute list and find the attribute
+    function visitSearchAndWaitForProduct(query: string): void {
+      cy.reloadUntilFound(
+        `/search?q=${query}`,
+        '[data-qa="component product-item"]',
+        'body',
+        10,
+        3000,
+      );
+    }
+
+    function createOrUpdateAttribute(attributeKey: string, visibilityTypes: string[]): void {
+      // Check if attribute already exists
+      cy.intercept('GET', '**/product-attribute-gui/attribute/table**').as('attrTableLoad');
       cy.visitBackoffice(ATTRIBUTE_LIST_URL);
-      cy.get('input[type="search"]').clear().type(attributeKey);
-      cy.get('table tbody tr').first().contains('Edit').click();
+      cy.wait('@attrTableLoad');
 
-      // Clear existing Select2 selections
-      cy.get('#attributeForm_visibility_types')
-        .siblings('.select2-container')
-        .find('.select2-selection__choice__remove')
-        .each(($btn) => {
-          cy.wrap($btn).click();
-        });
+      cy.intercept('GET', '**/product-attribute-gui/attribute/table**').as('attrTableSearch');
+      cy.get('input[type="search"][data-qa="table-search"]')
+        .should('be.visible')
+        .clear()
+        .type(attributeKey);
+      cy.wait('@attrTableSearch');
 
-      // Select new visibility types via Select2
-      visibilityTypes.forEach((type) => {
-        cy.get('#attributeForm_visibility_types')
-          .siblings('.select2-container')
-          .click();
-
-        cy.get('.select2-results__option').contains(type).click();
+      cy.get('.dataTable tbody tr').first().then(($row) => {
+        if ($row.text().includes('No matching records found')) {
+          // Create new attribute
+          createAttribute(attributeKey, visibilityTypes);
+        } else {
+          // Edit existing attribute
+          cy.wrap($row).contains('Edit').click();
+          cy.get('#attributeForm_visibility_types').invoke('val', visibilityTypes).trigger('change', { force: true });
+          cy.get('input[type="submit"].safe-submit').click();
+          cy.url().should('contain', '/translate');
+        }
       });
+    }
 
-      // Submit the form
-      cy.get('form[name="attributeForm"]').submit();
-      cy.contains('Attribute was successfully updated');
+    function createAttribute(key: string, visibilityTypes: string[]): void {
+      cy.visitBackoffice(CREATE_ATTRIBUTE_URL);
+
+      cy.get('#attributeForm_key').clear().type(key);
+      cy.get('#attributeForm_input_type').select('text');
+      cy.get('#attributeForm_allow_input').check();
+
+      cy.get('#attributeForm_visibility_types').invoke('val', visibilityTypes).trigger('change', { force: true });
+
+      cy.get('input[type="submit"].safe-submit').click();
+      cy.url().should('contain', '/translate');
     }
 
     function triggerPublishAndSync(): void {
