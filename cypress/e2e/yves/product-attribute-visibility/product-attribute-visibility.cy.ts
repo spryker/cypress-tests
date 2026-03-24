@@ -29,7 +29,6 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
       loginToBackoffice();
-
       updateAttributeVisibility(staticFixtures.attributeKey, ['PDP', 'PLP', 'Cart']);
       triggerPublishAndSync();
 
@@ -43,7 +42,6 @@ describe(
         cy.get('[data-qa="component product-item"]')
           .first()
           .within(() => {
-            cy.get('.badge.badge--hollow').should('exist');
             cy.get('.badge.badge--hollow').should('contain', staticFixtures.attributeValue);
           });
       });
@@ -51,10 +49,8 @@ describe(
 
     describe('PDP attribute visibility', (): void => {
       it('should display PDP-visible attributes on product detail page', (): void => {
-        visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
-        cy.get('[data-qa="component product-item"]').first().find('a').first().click();
+        navigateToProductDetailPage();
 
-        cy.get('[itemprop="additionalProperty"]').should('exist');
         cy.get('[itemprop="additionalProperty"]').should('contain', staticFixtures.attributeValue);
       });
     });
@@ -67,63 +63,53 @@ describe(
         cy.get('[data-qa="component product-cart-item"]')
           .first()
           .within(() => {
-            cy.get('.badge.badge--hollow').should('exist');
             cy.get('.badge.badge--hollow').should('contain', staticFixtures.attributeValue);
           });
       });
     });
 
-    describe('Removing visibility hides attributes', (): void => {
-      before((): void => {
+    describe('Removing PLP and Cart visibility', (): void => {
+      retryableBefore((): void => {
         loginToBackoffice();
         updateAttributeVisibility(staticFixtures.attributeKey, ['PDP']);
         triggerPublishAndSync();
       });
 
-      it('should not show badges on PLP after removing PLP visibility', (): void => {
+      it('should not show attribute badge on PLP', (): void => {
         visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
 
         cy.get('[data-qa="component product-item"]')
           .first()
-          .within(() => {
-            cy.get('.badge.badge--hollow').should('not.exist');
-          });
+          .should('not.contain', staticFixtures.attributeValue);
       });
 
       it('should still show attribute on PDP', (): void => {
-        visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
-        cy.get('[data-qa="component product-item"]').first().find('a').first().click();
+        navigateToProductDetailPage();
 
-        cy.get('[itemprop="additionalProperty"]').should('exist');
         cy.get('[itemprop="additionalProperty"]').should('contain', staticFixtures.attributeValue);
       });
 
-      it('should not show badges on cart page after removing Cart visibility', (): void => {
+      it('should not show attribute badge on cart page', (): void => {
         loginToStorefront();
         cy.visit('/cart');
 
         cy.get('[data-qa="component product-cart-item"]')
           .first()
-          .within(() => {
-            cy.get('.badge.badge--hollow').should('not.exist');
-          });
+          .should('not.contain', staticFixtures.attributeValue);
       });
     });
 
-    describe('Removing PDP visibility hides attributes on PDP', (): void => {
-      before((): void => {
+    describe('Removing all visibility', (): void => {
+      retryableBefore((): void => {
         loginToBackoffice();
         updateAttributeVisibility(staticFixtures.attributeKey, []);
         triggerPublishAndSync();
       });
 
-      it('should not show attribute on PDP when visibility is removed', (): void => {
-        visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
-        cy.get('[data-qa="component product-item"]').first().find('a').first().click();
+      it('should not show attribute on PDP', (): void => {
+        navigateToProductDetailPage();
 
-        cy.get('[itemprop="additionalProperty"]').each(($el) => {
-          cy.wrap($el).should('not.contain', staticFixtures.attributeValue);
-        });
+        cy.get('[itemprop="additionalProperty"]').should('not.contain', staticFixtures.attributeValue);
       });
     });
 
@@ -157,14 +143,19 @@ describe(
       );
     }
 
-    function updateAttributeVisibility(attributeKey: string, visibilityTypes: string[]): void {
-      searchAttributeInTable(attributeKey).then(() => {
-        cy.get('.dataTable tbody tr').first().contains('Edit').click();
-        setVisibilityAndSave(visibilityTypes);
-      });
+    function navigateToProductDetailPage(): void {
+      visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
+      cy.get('[data-qa="component product-item"]').first().find('a').first().click();
+      cy.url().should('not.include', '/search');
     }
 
-    function searchAttributeInTable(attributeKey: string): Cypress.Chainable<string> {
+    function updateAttributeVisibility(attributeKey: string, visibilityTypes: string[]): void {
+      searchAttributeInTable(attributeKey);
+      cy.get('.dataTable tbody tr').first().contains('Edit').click();
+      setVisibilityAndSave(visibilityTypes);
+    }
+
+    function searchAttributeInTable(attributeKey: string): void {
       cy.visitBackoffice(ATTRIBUTE_LIST_URL);
 
       cy.get('.dataTable tbody tr').should('be.visible');
@@ -174,10 +165,8 @@ describe(
 
       cy.get('.dataTable tbody').should(($tbody) => {
         const text = $tbody.text();
-        expect(text.includes(attributeKey) || text.includes('No matching records found')).to.be.true;
+        expect(text.includes(attributeKey)).to.be.true;
       });
-
-      return cy.get('.dataTable tbody tr').first().invoke('text');
     }
 
     function setVisibilityAndSave(visibilityTypes: string[]): void {
