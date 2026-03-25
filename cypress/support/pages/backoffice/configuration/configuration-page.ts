@@ -54,17 +54,20 @@ export class ConfigurationPage extends BackofficePage {
 
   setThemeMainColor = (color: string): void => {
     cy.get(this.repository.getThemeMainColorSelector()).invoke('val', color);
-    cy.get(this.repository.getThemeMainColorSelector()).trigger('input').trigger('change');
+    cy.get(this.repository.getThemeMainColorSelector()).trigger('input');
+    cy.get(this.repository.getThemeMainColorSelector()).trigger('change');
   };
 
   setBackofficeColor = (color: string): void => {
     cy.get(this.repository.getBackofficeColorSelector()).invoke('val', color);
-    cy.get(this.repository.getBackofficeColorSelector()).trigger('input').trigger('change');
+    cy.get(this.repository.getBackofficeColorSelector()).trigger('input');
+    cy.get(this.repository.getBackofficeColorSelector()).trigger('change');
   };
 
   setMerchantPortalColor = (color: string): void => {
     cy.get(this.repository.getMerchantPortalColorSelector()).invoke('val', color);
-    cy.get(this.repository.getMerchantPortalColorSelector()).trigger('input').trigger('change');
+    cy.get(this.repository.getMerchantPortalColorSelector()).trigger('input');
+    cy.get(this.repository.getMerchantPortalColorSelector()).trigger('change');
   };
 
   saveConfiguration = (): void => {
