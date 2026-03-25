@@ -1,0 +1,70 @@
+import { autoWired } from '@utils';
+import { inject, injectable } from 'inversify';
+
+import { BackofficePage } from '@pages/backoffice';
+import { ConfigurationRepository } from './configuration-repository';
+
+@injectable()
+@autoWired
+export class ConfigurationPage extends BackofficePage {
+  @inject(ConfigurationRepository) private repository: ConfigurationRepository;
+
+  protected PAGE_URL = '/configuration/manage';
+
+  visitLogosTab = (): void => {
+    cy.visitBackoffice(this.PAGE_URL + '?tab=logos');
+  };
+
+  visitStorefrontTab = (): void => {
+    cy.visitBackoffice(this.PAGE_URL + '?tab=storefront');
+  };
+
+  visitBackofficeTab = (): void => {
+    cy.visitBackoffice(this.PAGE_URL + '?tab=backoffice');
+  };
+
+  visitMerchantPortalTab = (): void => {
+    cy.visitBackoffice(this.PAGE_URL + '?tab=merchant_portal');
+  };
+
+  getScopeSelector = (): Cypress.Chainable => cy.get(this.repository.getScopeSelectorSelector());
+
+  getSaveButton = (): Cypress.Chainable => cy.get(this.repository.getSaveButtonSelector());
+
+  getResetButton = (): Cypress.Chainable => cy.get(this.repository.getResetButtonSelector());
+
+  getBackofficeLogoUploadButton = (): Cypress.Chainable =>
+    cy.get(this.repository.getBackofficeLogoContainerSelector()).find(this.repository.getUploadTriggerSelector());
+
+  getMerchantPortalLogoUploadButton = (): Cypress.Chainable =>
+    cy.get(this.repository.getMerchantPortalLogoContainerSelector()).find(this.repository.getUploadTriggerSelector());
+
+  getStorefrontLogoUploadButton = (): Cypress.Chainable =>
+    cy.get(this.repository.getStorefrontLogoContainerSelector()).find(this.repository.getUploadTriggerSelector());
+
+  getThemeMainColor = (): Cypress.Chainable => cy.get(this.repository.getThemeMainColorSelector());
+
+  getThemeAltColor = (): Cypress.Chainable => cy.get(this.repository.getThemeAltColorSelector());
+
+  getCustomCss = (): Cypress.Chainable => cy.get(this.repository.getCustomCssSelector());
+
+  getBackofficeColor = (): Cypress.Chainable => cy.get(this.repository.getBackofficeColorSelector());
+
+  getMerchantPortalColor = (): Cypress.Chainable => cy.get(this.repository.getMerchantPortalColorSelector());
+
+  setThemeMainColor = (color: string): void => {
+    cy.get(this.repository.getThemeMainColorSelector()).invoke('val', color).trigger('input').trigger('change');
+  };
+
+  setBackofficeColor = (color: string): void => {
+    cy.get(this.repository.getBackofficeColorSelector()).invoke('val', color).trigger('input').trigger('change');
+  };
+
+  setMerchantPortalColor = (color: string): void => {
+    cy.get(this.repository.getMerchantPortalColorSelector()).invoke('val', color).trigger('input').trigger('change');
+  };
+
+  saveConfiguration = (): void => {
+    cy.get(this.repository.getSaveButtonSelector()).click({ force: true });
+  };
+}

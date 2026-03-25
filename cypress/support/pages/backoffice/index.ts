@@ -67,3 +67,4 @@ export * from './navigation/navigation-menu-page';
 export * from './navigation/navigation-menu-repository';
 export * from './merchant-registrations/merchant-registration-list-page';
 export * from './merchant-registrations/merchant-registration-view-page';
+export * from './configuration/configuration-page';
