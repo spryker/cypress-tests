@@ -67,4 +67,41 @@ export class ConfigurationPage extends BackofficePage {
   saveConfiguration = (): void => {
     cy.get(this.repository.getSaveButtonSelector()).click({ force: true });
   };
+
+  private uploadLogoToContainer = (containerSelector: string, filePath: string): void => {
+    cy.intercept('POST', this.repository.getFileUploadUrl()).as('logoUpload');
+    cy.get(containerSelector).find(this.repository.getUploadTriggerSelector()).click({ force: true });
+    cy.get(containerSelector).find(this.repository.getModalFileInputSelector()).selectFile(filePath, { force: true });
+    cy.get(containerSelector).find(this.repository.getModalUploadSubmitSelector()).click();
+    cy.wait('@logoUpload').its('response.statusCode').should('eq', 200);
+  };
+
+  uploadStorefrontLogo = (filePath: string): void => {
+    this.uploadLogoToContainer(this.repository.getStorefrontLogoContainerSelector(), filePath);
+  };
+
+  uploadBackofficeLogo = (filePath: string): void => {
+    this.uploadLogoToContainer(this.repository.getBackofficeLogoContainerSelector(), filePath);
+  };
+
+  uploadMerchantPortalLogo = (filePath: string): void => {
+    this.uploadLogoToContainer(this.repository.getMerchantPortalLogoContainerSelector(), filePath);
+  };
+
+  private verifyLogoUploaded = (containerSelector: string): void => {
+    cy.get(containerSelector).find(this.repository.getUploadTriggerSelector()).should('contain.text', 'Change File');
+    cy.get(containerSelector).find(this.repository.getLogoHiddenValueInputSelector()).should('not.have.value', '');
+  };
+
+  verifyStorefrontLogoUploaded = (): void => {
+    this.verifyLogoUploaded(this.repository.getStorefrontLogoContainerSelector());
+  };
+
+  verifyBackofficeLogoUploaded = (): void => {
+    this.verifyLogoUploaded(this.repository.getBackofficeLogoContainerSelector());
+  };
+
+  verifyMerchantPortalLogoUploaded = (): void => {
+    this.verifyLogoUploaded(this.repository.getMerchantPortalLogoContainerSelector());
+  };
 }

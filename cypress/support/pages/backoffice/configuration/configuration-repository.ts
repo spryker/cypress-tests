@@ -10,7 +10,6 @@ export class ConfigurationRepository {
 
   getResetButtonSelector = (): string => '[data-qa="reset-changes"]';
 
-  // Logos tab — container scoped by hidden input id, upload trigger via data-qa
   getBackofficeLogoContainerSelector = (): string =>
     '.file-upload-setting:has(input[id="setting-theme:logos:logos:bo_logo_url"])';
 
@@ -21,6 +20,14 @@ export class ConfigurationRepository {
     '.file-upload-setting:has(input[id="setting-theme:logos:logos:yves_logo_url"])';
 
   getUploadTriggerSelector = (): string => '[data-qa="file-upload-trigger"]';
+
+  getModalFileInputSelector = (): string => '.js-file-input';
+
+  getModalUploadSubmitSelector = (): string => '.js-file-upload-submit';
+
+  getLogoHiddenValueInputSelector = (): string => '.js-file-setting-value';
+
+  getFileUploadUrl = (): string => '/configuration/file-upload/upload';
 
   getThemeMainColorSelector = (): string => 'input[id="setting-theme:storefront:colors:yves_main_color"]';
 

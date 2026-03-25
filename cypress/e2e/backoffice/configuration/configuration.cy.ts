@@ -1,10 +1,7 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
-import { ConfigurationPage } from  '@pages/backoffice'
-import {
-  ConfigurationDynamicFixtures,
-  ConfigurationStaticFixtures,
-} from '@interfaces/backoffice';
+import { ConfigurationPage } from '@pages/backoffice';
+import { ConfigurationDynamicFixtures, ConfigurationStaticFixtures } from '@interfaces/backoffice';
 
 describe(
   'Configuration - Theme Settings',
@@ -80,7 +77,6 @@ describe(
         expect(color).to.equal(staticFixtures.testColor);
       });
 
-      // Reset to default
       configurationPage.visitStorefrontTab();
       configurationPage.setThemeMainColor(staticFixtures.defaultColors.themeMainColor);
       configurationPage.saveConfiguration();
@@ -119,6 +115,49 @@ describe(
       configurationPage.visitMerchantPortalTab();
       configurationPage.setMerchantPortalColor(staticFixtures.defaultColors.merchantPortalColor);
       configurationPage.saveConfiguration();
+    });
+
+    it('uploads storefront logo and verifies it is applied in yves', (): void => {
+      configurationPage.visitLogosTab();
+      configurationPage.uploadStorefrontLogo(staticFixtures.logoFilePath);
+      configurationPage.verifyStorefrontLogoUploaded();
+      configurationPage.saveConfiguration();
+
+      cy.runQueueWorker();
+
+      cy.visit('/');
+      cy.get('.logo img').should('have.attr', 'src').and('not.be.empty');
+    });
+
+    it('uploads backoffice logo and verifies it is applied in backoffice', (): void => {
+      configurationPage.visitLogosTab();
+      configurationPage.uploadBackofficeLogo(staticFixtures.logoFilePath);
+      configurationPage.verifyBackofficeLogoUploaded();
+      configurationPage.saveConfiguration();
+
+      cy.visitBackoffice('/dashboard');
+      cy.window().then((win): void => {
+        const logoVar = win
+          .getComputedStyle(win.document.documentElement)
+          .getPropertyValue('--zed-spryker-logo-url')
+          .trim();
+
+        expect(logoVar).to.include('url(');
+      });
+    });
+
+    it('uploads merchant portal logo and verifies it is applied in merchant portal', (): void => {
+      configurationPage.visitLogosTab();
+      configurationPage.uploadMerchantPortalLogo(staticFixtures.logoFilePath);
+      configurationPage.verifyMerchantPortalLogoUploaded();
+      configurationPage.saveConfiguration();
+
+      cy.visitMerchantPortal('/security-merchant-portal-gui/login');
+      cy.window().then((win): void => {
+        const logoVar = win.getComputedStyle(win.document.documentElement).getPropertyValue('--spy-logo-full').trim();
+
+        expect(logoVar).to.include('url(');
+      });
     });
   }
 );

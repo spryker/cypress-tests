@@ -3,6 +3,7 @@ import { User } from './shared';
 export interface ConfigurationStaticFixtures {
   defaultPassword: string;
   testColor: string;
+  logoFilePath: string;
   defaultColors: {
     themeMainColor: string;
     themeAltColor: string;
