@@ -53,15 +53,18 @@ export class ConfigurationPage extends BackofficePage {
   getMerchantPortalColor = (): Cypress.Chainable => cy.get(this.repository.getMerchantPortalColorSelector());
 
   setThemeMainColor = (color: string): void => {
-    cy.get(this.repository.getThemeMainColorSelector()).invoke('val', color).trigger('input').trigger('change');
+    cy.get(this.repository.getThemeMainColorSelector()).invoke('val', color);
+    cy.get(this.repository.getThemeMainColorSelector()).trigger('input').trigger('change');
   };
 
   setBackofficeColor = (color: string): void => {
-    cy.get(this.repository.getBackofficeColorSelector()).invoke('val', color).trigger('input').trigger('change');
+    cy.get(this.repository.getBackofficeColorSelector()).invoke('val', color);
+    cy.get(this.repository.getBackofficeColorSelector()).trigger('input').trigger('change');
   };
 
   setMerchantPortalColor = (color: string): void => {
-    cy.get(this.repository.getMerchantPortalColorSelector()).invoke('val', color).trigger('input').trigger('change');
+    cy.get(this.repository.getMerchantPortalColorSelector()).invoke('val', color);
+    cy.get(this.repository.getMerchantPortalColorSelector()).trigger('input').trigger('change');
   };
 
   saveConfiguration = (): void => {
