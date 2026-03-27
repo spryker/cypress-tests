@@ -2,6 +2,15 @@
   "defaultPassword": "change123",
   "testColor": "#ff5500",
   "logoFilePath": "cypress/fixtures/suite/backoffice/configuration/test-files/spryker-yves-logo-290x77.png",
+  "cssVariables": {
+    "storefrontMainColor": "--background-brand-primary",
+    "backofficeMainColor": "--bo-main-color",
+    "backofficeSidenavColor": "--bo-sidenav-color",
+    "backofficeSidenavTextColor": "--bo-sidenav-text-color",
+    "merchantPortalMainColor": "--spy-primary-color",
+    "backofficeLogoUrl": "--zed-spryker-logo-url",
+    "merchantPortalLogoFull": "--spy-logo-full"
+  },
   "defaultColors": {
     "themeMainColor": "#00bebe",
     "themeAltColor": "#eb553c",

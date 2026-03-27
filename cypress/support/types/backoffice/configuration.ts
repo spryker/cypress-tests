@@ -4,6 +4,15 @@ export interface ConfigurationStaticFixtures {
   defaultPassword: string;
   testColor: string;
   logoFilePath: string;
+  cssVariables: {
+    storefrontMainColor: string;
+    backofficeMainColor: string;
+    backofficeSidenavColor: string;
+    backofficeSidenavTextColor: string;
+    merchantPortalMainColor: string;
+    backofficeLogoUrl: string;
+    merchantPortalLogoFull: string;
+  };
   defaultColors: {
     themeMainColor: string;
     themeAltColor: string;

@@ -80,7 +80,7 @@ describe(
       cy.window().then((win): void => {
         const color = win
           .getComputedStyle(win.document.documentElement)
-          .getPropertyValue('--background-brand-primary')
+          .getPropertyValue(staticFixtures.cssVariables.storefrontMainColor)
           .trim();
 
         expect(color).to.equal(staticFixtures.testColor);
@@ -99,7 +99,7 @@ describe(
 
       cy.visitBackoffice('/dashboard');
       cy.window().then((win): void => {
-        const color = win.getComputedStyle(win.document.documentElement).getPropertyValue('--bo-main-color').trim();
+        const color = win.getComputedStyle(win.document.documentElement).getPropertyValue(staticFixtures.cssVariables.backofficeMainColor).trim();
 
         expect(color).to.equal(staticFixtures.testColor);
       });
@@ -116,7 +116,7 @@ describe(
 
       cy.visitBackoffice('/dashboard');
       cy.window().then((win): void => {
-        const color = win.getComputedStyle(win.document.documentElement).getPropertyValue('--bo-sidenav-color').trim();
+        const color = win.getComputedStyle(win.document.documentElement).getPropertyValue(staticFixtures.cssVariables.backofficeSidenavColor).trim();
 
         expect(color).to.equal(staticFixtures.testColor);
       });
@@ -135,7 +135,7 @@ describe(
       cy.window().then((win): void => {
         const color = win
           .getComputedStyle(win.document.documentElement)
-          .getPropertyValue('--bo-sidenav-text-color')
+          .getPropertyValue(staticFixtures.cssVariables.backofficeSidenavTextColor)
           .trim();
 
         expect(color).to.equal(staticFixtures.testColor);
@@ -153,7 +153,7 @@ describe(
 
       cy.visitMerchantPortal('/security-merchant-portal-gui/login');
       cy.window().then((win): void => {
-        const color = win.getComputedStyle(win.document.documentElement).getPropertyValue('--spy-primary-color').trim();
+        const color = win.getComputedStyle(win.document.documentElement).getPropertyValue(staticFixtures.cssVariables.merchantPortalMainColor).trim();
 
         expect(color).to.equal(staticFixtures.testColor);
       });
@@ -185,7 +185,7 @@ describe(
       cy.window().then((win): void => {
         const logoVar = win
           .getComputedStyle(win.document.documentElement)
-          .getPropertyValue('--zed-spryker-logo-url')
+          .getPropertyValue(staticFixtures.cssVariables.backofficeLogoUrl)
           .trim();
 
         expect(logoVar).to.include('url(');
@@ -200,7 +200,7 @@ describe(
 
       cy.visitMerchantPortal('/security-merchant-portal-gui/login');
       cy.window().then((win): void => {
-        const logoVar = win.getComputedStyle(win.document.documentElement).getPropertyValue('--spy-logo-full').trim();
+        const logoVar = win.getComputedStyle(win.document.documentElement).getPropertyValue(staticFixtures.cssVariables.merchantPortalLogoFull).trim();
 
         expect(logoVar).to.include('url(');
       });
