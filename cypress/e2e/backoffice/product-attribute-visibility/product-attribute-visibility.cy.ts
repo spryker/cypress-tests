@@ -129,7 +129,8 @@ describe(
     function createAttribute(key: string, visibilityTypes: string[]): void {
       cy.visitBackoffice(CREATE_ATTRIBUTE_URL);
 
-      cy.get('#attributeForm_key').clear().type(key);
+      cy.get('#attributeForm_key').clear();
+      cy.get('#attributeForm_key').type(key);
       cy.get('#attributeForm_input_type').select('text');
       cy.get('#attributeForm_allow_input').check();
 
@@ -156,7 +157,8 @@ describe(
       cy.wait('@tableFilterLoad');
 
       cy.intercept('GET', TABLE_AJAX_URL).as('tableSearchLoad');
-      cy.get('input[type="search"][data-qa="table-search"]').should('be.visible').clear().type(attributeKey);
+      cy.get('input[type="search"][data-qa="table-search"]').should('be.visible').clear();
+      cy.get('input[type="search"][data-qa="table-search"]').type(attributeKey);
       cy.wait('@tableSearchLoad');
     }
 
