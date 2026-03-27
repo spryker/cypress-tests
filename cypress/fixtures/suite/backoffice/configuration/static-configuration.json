@@ -6,6 +6,8 @@
     "themeMainColor": "#00bebe",
     "themeAltColor": "#eb553c",
     "backofficeColor": "#1ebea0",
+    "backofficeSidenavColor": "#23303c",
+    "backofficeSidenavTextColor": "#e4e4e4",
     "merchantPortalColor": "#1ebea0"
   }
 }

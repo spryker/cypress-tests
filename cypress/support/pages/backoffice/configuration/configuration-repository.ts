@@ -29,13 +29,18 @@ export class ConfigurationRepository {
 
   getFileUploadUrl = (): string => '/configuration/file-upload/upload';
 
-  getThemeMainColorSelector = (): string => 'input[id="setting-theme:storefront:colors:yves_main_color"]';
+  getThemeMainColorSelector = (): string => 'input[id="setting-theme:storefront:colors:background_brand_primary"]';
 
-  getThemeAltColorSelector = (): string => 'input[id="setting-theme:storefront:colors:yves_alt_color"]';
+  getThemeAltColorSelector = (): string => 'input[id="setting-theme:storefront:colors:background_brand_subtle"]';
 
   getCustomCssSelector = (): string => 'textarea[id="setting-theme:storefront:custom_css:yves_custom_css"]';
 
   getBackofficeColorSelector = (): string => 'input[id="setting-theme:backoffice:colors:bo_main_color"]';
+
+  getBackofficeSidenavColorSelector = (): string => 'input[id="setting-theme:backoffice:colors:bo_sidenav_color"]';
+
+  getBackofficeSidenavTextColorSelector = (): string =>
+    'input[id="setting-theme:backoffice:colors:bo_sidenav_text_color"]';
 
   getMerchantPortalColorSelector = (): string => 'input[id="setting-theme:merchant_portal:colors:spy_primary_color"]';
 }

@@ -50,6 +50,11 @@ export class ConfigurationPage extends BackofficePage {
 
   getBackofficeColor = (): Cypress.Chainable => cy.get(this.repository.getBackofficeColorSelector());
 
+  getBackofficeSidenavColor = (): Cypress.Chainable => cy.get(this.repository.getBackofficeSidenavColorSelector());
+
+  getBackofficeSidenavTextColor = (): Cypress.Chainable =>
+    cy.get(this.repository.getBackofficeSidenavTextColorSelector());
+
   getMerchantPortalColor = (): Cypress.Chainable => cy.get(this.repository.getMerchantPortalColorSelector());
 
   setThemeMainColor = (color: string): void => {
@@ -62,6 +67,18 @@ export class ConfigurationPage extends BackofficePage {
     cy.get(this.repository.getBackofficeColorSelector()).invoke('val', color);
     cy.get(this.repository.getBackofficeColorSelector()).trigger('input');
     cy.get(this.repository.getBackofficeColorSelector()).trigger('change');
+  };
+
+  setBackofficeSidenavColor = (color: string): void => {
+    cy.get(this.repository.getBackofficeSidenavColorSelector()).invoke('val', color);
+    cy.get(this.repository.getBackofficeSidenavColorSelector()).trigger('input');
+    cy.get(this.repository.getBackofficeSidenavColorSelector()).trigger('change');
+  };
+
+  setBackofficeSidenavTextColor = (color: string): void => {
+    cy.get(this.repository.getBackofficeSidenavTextColorSelector()).invoke('val', color);
+    cy.get(this.repository.getBackofficeSidenavTextColorSelector()).trigger('input');
+    cy.get(this.repository.getBackofficeSidenavTextColorSelector()).trigger('change');
   };
 
   setMerchantPortalColor = (color: string): void => {

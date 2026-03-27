@@ -46,6 +46,8 @@ describe(
       configurationPage.visitBackofficeTab();
 
       configurationPage.getBackofficeColor().should('have.value', staticFixtures.defaultColors.backofficeColor);
+      configurationPage.getBackofficeSidenavColor().should('have.value', staticFixtures.defaultColors.backofficeSidenavColor);
+      configurationPage.getBackofficeSidenavTextColor().should('have.value', staticFixtures.defaultColors.backofficeSidenavTextColor);
     });
 
     it('displays merchant portal color setting with correct default value', (): void => {
@@ -72,7 +74,7 @@ describe(
 
       cy.visit('/');
       cy.window().then((win): void => {
-        const color = win.getComputedStyle(win.document.documentElement).getPropertyValue('--yves-main-color').trim();
+        const color = win.getComputedStyle(win.document.documentElement).getPropertyValue('--background-brand-primary').trim();
 
         expect(color).to.equal(staticFixtures.testColor);
       });
@@ -97,6 +99,43 @@ describe(
 
       configurationPage.visitBackofficeTab();
       configurationPage.setBackofficeColor(staticFixtures.defaultColors.backofficeColor);
+      configurationPage.saveConfiguration();
+    });
+
+    it('applies backoffice side navigation color change to backoffice CSS variable', (): void => {
+      configurationPage.visitBackofficeTab();
+      configurationPage.setBackofficeSidenavColor(staticFixtures.testColor);
+      configurationPage.saveConfiguration();
+
+      cy.visitBackoffice('/dashboard');
+      cy.window().then((win): void => {
+        const color = win.getComputedStyle(win.document.documentElement).getPropertyValue('--bo-sidenav-color').trim();
+
+        expect(color).to.equal(staticFixtures.testColor);
+      });
+
+      configurationPage.visitBackofficeTab();
+      configurationPage.setBackofficeSidenavColor(staticFixtures.defaultColors.backofficeSidenavColor);
+      configurationPage.saveConfiguration();
+    });
+
+    it('applies backoffice side navigation text color change to backoffice CSS variable', (): void => {
+      configurationPage.visitBackofficeTab();
+      configurationPage.setBackofficeSidenavTextColor(staticFixtures.testColor);
+      configurationPage.saveConfiguration();
+
+      cy.visitBackoffice('/dashboard');
+      cy.window().then((win): void => {
+        const color = win
+          .getComputedStyle(win.document.documentElement)
+          .getPropertyValue('--bo-sidenav-text-color')
+          .trim();
+
+        expect(color).to.equal(staticFixtures.testColor);
+      });
+
+      configurationPage.visitBackofficeTab();
+      configurationPage.setBackofficeSidenavTextColor(staticFixtures.defaultColors.backofficeSidenavTextColor);
       configurationPage.saveConfiguration();
     });
 

@@ -8,6 +8,8 @@ export interface ConfigurationStaticFixtures {
     themeMainColor: string;
     themeAltColor: string;
     backofficeColor: string;
+    backofficeSidenavColor: string;
+    backofficeSidenavTextColor: string;
     merchantPortalColor: string;
   };
 }
