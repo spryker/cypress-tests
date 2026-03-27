@@ -78,9 +78,7 @@ describe(
       it('should not show attribute badge on PLP', (): void => {
         visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
 
-        cy.get('[data-qa="component product-item"]')
-          .first()
-          .should('not.contain', staticFixtures.attributeValue);
+        cy.get('[data-qa="component product-item"]').first().should('not.contain', staticFixtures.attributeValue);
       });
 
       it('should still show attribute on PDP', (): void => {
@@ -93,9 +91,7 @@ describe(
         loginToStorefront();
         cy.visit('/cart');
 
-        cy.get('[data-qa="component product-cart-item"]')
-          .first()
-          .should('not.contain', staticFixtures.attributeValue);
+        cy.get('[data-qa="component product-cart-item"]').first().should('not.contain', staticFixtures.attributeValue);
       });
     });
 
@@ -134,13 +130,7 @@ describe(
     }
 
     function visitSearchAndWaitForProduct(query: string): void {
-      cy.reloadUntilFound(
-        `/search?q=${query}`,
-        '[data-qa="component product-item"]',
-        'body',
-        3,
-        1000,
-      );
+      cy.reloadUntilFound(`/search?q=${query}`, '[data-qa="component product-item"]', 'body', 3, 1000);
     }
 
     function navigateToProductDetailPage(): void {
@@ -159,9 +149,7 @@ describe(
       cy.visitBackoffice(ATTRIBUTE_LIST_URL);
 
       cy.get('.dataTable tbody tr').should('be.visible');
-      cy.get('input[type="search"][data-qa="table-search"]')
-        .should('be.visible')
-        .type(`{selectall}${attributeKey}`);
+      cy.get('input[type="search"][data-qa="table-search"]').should('be.visible').type(`{selectall}${attributeKey}`);
 
       cy.get('.dataTable tbody').should(($tbody) => {
         const text = $tbody.text();
@@ -178,5 +166,5 @@ describe(
     function triggerPublishAndSync(): void {
       cy.runQueueWorker();
     }
-  },
+  }
 );

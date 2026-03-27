@@ -79,9 +79,14 @@ describe(
       applyFilterAndSearch(attributes.none.key, 'None');
 
       assertSingleRow();
-      cy.get('.dataTable tbody tr').first().find('td').eq(4).invoke('text').then((text) => {
-        expect(text.trim()).to.equal('');
-      });
+      cy.get('.dataTable tbody tr')
+        .first()
+        .find('td')
+        .eq(4)
+        .invoke('text')
+        .then((text) => {
+          expect(text.trim()).to.equal('');
+        });
     });
 
     it('combined attribute should appear in PDP filter with all visibility labels', (): void => {
@@ -143,9 +148,7 @@ describe(
     function applyFilterAndSearch(attributeKey: string, visibilityType: string): void {
       visitAttributeListAndWaitForTable();
 
-      cy.get('#table_filter_form_visibilityTypes')
-        .siblings('.select2-container')
-        .click();
+      cy.get('#table_filter_form_visibilityTypes').siblings('.select2-container').click();
       cy.get('.select2-results__option').contains(visibilityType).click();
 
       cy.intercept('GET', TABLE_AJAX_URL).as('tableFilterLoad');
@@ -153,10 +156,7 @@ describe(
       cy.wait('@tableFilterLoad');
 
       cy.intercept('GET', TABLE_AJAX_URL).as('tableSearchLoad');
-      cy.get('input[type="search"][data-qa="table-search"]')
-        .should('be.visible')
-        .clear()
-        .type(attributeKey);
+      cy.get('input[type="search"][data-qa="table-search"]').should('be.visible').clear().type(attributeKey);
       cy.wait('@tableSearchLoad');
     }
 
@@ -168,5 +168,5 @@ describe(
       cy.get('.dataTable tbody tr').should('have.length', 1);
       cy.get('.dataTable tbody tr').first().should('contain', 'No matching records found');
     }
-  },
+  }
 );
