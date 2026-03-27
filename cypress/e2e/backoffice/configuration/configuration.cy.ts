@@ -46,8 +46,12 @@ describe(
       configurationPage.visitBackofficeTab();
 
       configurationPage.getBackofficeColor().should('have.value', staticFixtures.defaultColors.backofficeColor);
-      configurationPage.getBackofficeSidenavColor().should('have.value', staticFixtures.defaultColors.backofficeSidenavColor);
-      configurationPage.getBackofficeSidenavTextColor().should('have.value', staticFixtures.defaultColors.backofficeSidenavTextColor);
+      configurationPage
+        .getBackofficeSidenavColor()
+        .should('have.value', staticFixtures.defaultColors.backofficeSidenavColor);
+      configurationPage
+        .getBackofficeSidenavTextColor()
+        .should('have.value', staticFixtures.defaultColors.backofficeSidenavTextColor);
     });
 
     it('displays merchant portal color setting with correct default value', (): void => {
@@ -74,7 +78,10 @@ describe(
 
       cy.visit('/');
       cy.window().then((win): void => {
-        const color = win.getComputedStyle(win.document.documentElement).getPropertyValue('--background-brand-primary').trim();
+        const color = win
+          .getComputedStyle(win.document.documentElement)
+          .getPropertyValue('--background-brand-primary')
+          .trim();
 
         expect(color).to.equal(staticFixtures.testColor);
       });
