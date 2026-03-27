@@ -54,6 +54,12 @@ export class ProductManagementEditRepository {
   getAttachmentDeleteButtonForLocale = (locale: string): Cypress.Chainable =>
     this.getAttachmentLocaleContainer(locale).find('.attachment-container > div.m-b-md .remove-attachment');
 
+  getMerchantSelectContainer = (): Cypress.Chainable => cy.get('#select2-product_form_edit_idMerchant-container');
+
+  getMerchantSelectDropdownOptions = (): Cypress.Chainable => cy.get('.select2-results__option');
+
+  getMerchantNotAssignedOptionText = (): string => 'Not assigned';
+
   getSaveSuccessMessage = (sku: string): Cypress.Chainable =>
     cy.contains(`The product [${sku}] was saved successfully`);
 
