@@ -99,7 +99,10 @@ describe(
 
       cy.visitBackoffice('/dashboard');
       cy.window().then((win): void => {
-        const color = win.getComputedStyle(win.document.documentElement).getPropertyValue(staticFixtures.cssVariables.backofficeMainColor).trim();
+        const color = win
+          .getComputedStyle(win.document.documentElement)
+          .getPropertyValue(staticFixtures.cssVariables.backofficeMainColor)
+          .trim();
 
         expect(color).to.equal(staticFixtures.testColor);
       });
@@ -116,7 +119,10 @@ describe(
 
       cy.visitBackoffice('/dashboard');
       cy.window().then((win): void => {
-        const color = win.getComputedStyle(win.document.documentElement).getPropertyValue(staticFixtures.cssVariables.backofficeSidenavColor).trim();
+        const color = win
+          .getComputedStyle(win.document.documentElement)
+          .getPropertyValue(staticFixtures.cssVariables.backofficeSidenavColor)
+          .trim();
 
         expect(color).to.equal(staticFixtures.testColor);
       });
@@ -153,7 +159,10 @@ describe(
 
       cy.visitMerchantPortal('/security-merchant-portal-gui/login');
       cy.window().then((win): void => {
-        const color = win.getComputedStyle(win.document.documentElement).getPropertyValue(staticFixtures.cssVariables.merchantPortalMainColor).trim();
+        const color = win
+          .getComputedStyle(win.document.documentElement)
+          .getPropertyValue(staticFixtures.cssVariables.merchantPortalMainColor)
+          .trim();
 
         expect(color).to.equal(staticFixtures.testColor);
       });
@@ -200,7 +209,10 @@ describe(
 
       cy.visitMerchantPortal('/security-merchant-portal-gui/login');
       cy.window().then((win): void => {
-        const logoVar = win.getComputedStyle(win.document.documentElement).getPropertyValue(staticFixtures.cssVariables.merchantPortalLogoFull).trim();
+        const logoVar = win
+          .getComputedStyle(win.document.documentElement)
+          .getPropertyValue(staticFixtures.cssVariables.merchantPortalLogoFull)
+          .trim();
 
         expect(logoVar).to.include('url(');
       });
