@@ -11,13 +11,7 @@ export class ProductAttributeVisibilityPage extends YvesPage {
   protected PAGE_URL = '/search';
 
   visitSearchAndWaitForProduct = (query: string): void => {
-    cy.reloadUntilFound(
-      `/search?q=${query}`,
-      this.repository.getProductItemSelector(),
-      'body',
-      3,
-      1000,
-    );
+    cy.reloadUntilFound(`/search?q=${query}`, this.repository.getProductItemSelector(), 'body', 3, 1000);
   };
 
   navigateToProductDetailPage = (abstractSku: string): void => {
