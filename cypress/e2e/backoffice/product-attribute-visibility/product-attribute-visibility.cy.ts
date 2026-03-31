@@ -1,12 +1,15 @@
+import { container } from '@utils';
 import { retryableBefore } from '../../../support/e2e';
+import { ProductAttributeVisibilityListPage, ProductAttributeVisibilityCreatePage } from '@pages/backoffice';
+import { UserLoginScenario } from '@scenarios/backoffice';
 
 describe(
   'product attribute visibility in backoffice',
   { tags: ['@backoffice', '@product-attribute', 'product-attribute', 'spryker-core'] },
   (): void => {
-    const ATTRIBUTE_LIST_URL = '/product-attribute-gui/attribute';
-    const TABLE_AJAX_URL = '**/product-attribute-gui/attribute/table**';
-    const CREATE_ATTRIBUTE_URL = '/product-attribute-gui/attribute/create';
+    const listPage = container.get(ProductAttributeVisibilityListPage);
+    const createPage = container.get(ProductAttributeVisibilityCreatePage);
+    const userLoginScenario = container.get(UserLoginScenario);
 
     interface StaticFixtures {
       defaultPassword: string;
@@ -31,144 +34,88 @@ describe(
     retryableBefore((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
-      loginToBackoffice();
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
 
       Object.values(attributes).forEach((attr) => {
-        createAttribute(attr.key, attr.visibilityTypes);
+        createPage.createAttribute(attr.key, attr.visibilityTypes);
       });
     });
 
     beforeEach((): void => {
-      loginToBackoffice();
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
     });
 
     it('attribute list table should contain Display At column', (): void => {
-      visitAttributeListAndWaitForTable();
+      listPage.visitAndWaitForTable();
 
-      cy.get('table thead').should('contain', 'Display At');
+      listPage.assertDisplayAtColumnExists();
     });
 
     it('attribute list should have Display At filter dropdown', (): void => {
-      visitAttributeListAndWaitForTable();
+      listPage.visitAndWaitForTable();
 
-      cy.get('#table_filter_form_visibilityTypes').should('exist');
+      listPage.assertVisibilityFilterExists();
     });
 
     it('filtering by PDP should find PDP attribute', (): void => {
-      applyFilterAndSearch(attributes.pdp.key, 'PDP');
+      listPage.applyFilterAndSearch(attributes.pdp.key, 'PDP');
 
-      assertSingleRow();
-      cy.get('.dataTable tbody tr').first().find('td').eq(4).should('contain', 'PDP');
+      listPage.assertSingleRow();
+      listPage.assertDisplayAtContains('PDP');
     });
 
     it('filtering by PLP should find PLP attribute', (): void => {
-      applyFilterAndSearch(attributes.plp.key, 'PLP');
+      listPage.applyFilterAndSearch(attributes.plp.key, 'PLP');
 
-      assertSingleRow();
-      cy.get('.dataTable tbody tr').first().find('td').eq(4).should('contain', 'PLP');
+      listPage.assertSingleRow();
+      listPage.assertDisplayAtContains('PLP');
     });
 
     it('filtering by Cart should find Cart attribute', (): void => {
-      applyFilterAndSearch(attributes.cart.key, 'Cart');
+      listPage.applyFilterAndSearch(attributes.cart.key, 'Cart');
 
-      assertSingleRow();
-      cy.get('.dataTable tbody tr').first().find('td').eq(4).should('contain', 'Cart');
+      listPage.assertSingleRow();
+      listPage.assertDisplayAtContains('Cart');
     });
 
     it('filtering by None should find attribute without visibility', (): void => {
-      applyFilterAndSearch(attributes.none.key, 'None');
+      listPage.applyFilterAndSearch(attributes.none.key, 'None');
 
-      assertSingleRow();
-      cy.get('.dataTable tbody tr')
-        .first()
-        .find('td')
-        .eq(4)
-        .invoke('text')
-        .then((text) => {
-          expect(text.trim()).to.equal('');
-        });
+      listPage.assertSingleRow();
+      listPage.assertDisplayAtEmpty();
     });
 
     it('combined attribute should appear in PDP filter with all visibility labels', (): void => {
-      applyFilterAndSearch(attributes.combined.key, 'PDP');
+      listPage.applyFilterAndSearch(attributes.combined.key, 'PDP');
 
-      assertSingleRow();
-      cy.get('.dataTable tbody tr').first().find('td').eq(4).should('contain', 'PDP');
-      cy.get('.dataTable tbody tr').first().find('td').eq(4).should('contain', 'PLP');
-      cy.get('.dataTable tbody tr').first().find('td').eq(4).should('contain', 'Cart');
+      listPage.assertSingleRow();
+      listPage.assertDisplayAtContains('PDP');
+      listPage.assertDisplayAtContains('PLP');
+      listPage.assertDisplayAtContains('Cart');
     });
 
     it('combined attribute should appear in PLP filter', (): void => {
-      applyFilterAndSearch(attributes.combined.key, 'PLP');
+      listPage.applyFilterAndSearch(attributes.combined.key, 'PLP');
 
-      assertSingleRow();
+      listPage.assertSingleRow();
     });
 
     it('combined attribute should appear in Cart filter', (): void => {
-      applyFilterAndSearch(attributes.combined.key, 'Cart');
+      listPage.applyFilterAndSearch(attributes.combined.key, 'Cart');
 
-      assertSingleRow();
+      listPage.assertSingleRow();
     });
 
     it('PDP attribute should not appear in Cart filter', (): void => {
-      applyFilterAndSearch(attributes.pdp.key, 'Cart');
+      listPage.applyFilterAndSearch(attributes.pdp.key, 'Cart');
 
-      assertNoRecords();
+      listPage.assertNoRecords();
     });
-
-    function loginToBackoffice(): void {
-      cy.session([dynamicFixtures.rootUser.username, staticFixtures.defaultPassword], () => {
-        cy.visitBackoffice('/security-gui/login');
-        cy.get('#auth_username').type(dynamicFixtures.rootUser.username);
-        cy.get('#auth_password').type(staticFixtures.defaultPassword);
-        cy.get('form[name=auth]').find('[type="submit"]').click();
-        cy.url().should('not.include', '/login');
-      });
-    }
-
-    function createAttribute(key: string, visibilityTypes: string[]): void {
-      cy.visitBackoffice(CREATE_ATTRIBUTE_URL);
-
-      cy.get('#attributeForm_key').clear();
-      cy.get('#attributeForm_key').type(key);
-      cy.get('#attributeForm_input_type').select('text');
-      cy.get('#attributeForm_allow_input').check();
-
-      cy.get('#attributeForm_visibility_types').invoke('val', visibilityTypes).trigger('change', { force: true });
-
-      cy.get('input[type="submit"].safe-submit').click();
-      cy.url().should('contain', '/translate');
-    }
-
-    function visitAttributeListAndWaitForTable(): void {
-      cy.intercept('GET', TABLE_AJAX_URL).as('tableLoad');
-      cy.visitBackoffice(ATTRIBUTE_LIST_URL);
-      cy.wait('@tableLoad');
-    }
-
-    function applyFilterAndSearch(attributeKey: string, visibilityType: string): void {
-      visitAttributeListAndWaitForTable();
-
-      cy.get('#table_filter_form_visibilityTypes').siblings('.select2-container').click();
-      cy.get('.select2-results__option').contains(visibilityType).click();
-
-      cy.intercept('GET', TABLE_AJAX_URL).as('tableFilterLoad');
-      cy.get('#product-attribute-gui-filter-form button').click();
-      cy.wait('@tableFilterLoad');
-
-      cy.intercept('GET', TABLE_AJAX_URL).as('tableSearchLoad');
-      cy.get('input[type="search"][data-qa="table-search"]').should('be.visible').clear();
-      cy.get('input[type="search"][data-qa="table-search"]').type(attributeKey);
-      cy.wait('@tableSearchLoad');
-    }
-
-    function assertSingleRow(): void {
-      cy.get('.dataTable tbody tr').should('have.length', 1);
-    }
-
-    function assertNoRecords(): void {
-      cy.get('.dataTable tbody tr').should('have.length', 1);
-      cy.get('.dataTable tbody tr').first().should('contain', 'No matching records found');
-    }
   }
 );

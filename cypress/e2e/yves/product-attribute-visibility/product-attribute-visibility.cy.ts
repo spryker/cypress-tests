@@ -1,9 +1,19 @@
+import { container } from '@utils';
 import { retryableBefore } from '../../../support/e2e';
+import { ProductAttributeVisibilityEditPage } from '@pages/backoffice';
+import { ProductAttributeVisibilityPage } from '@pages/yves';
+import { UserLoginScenario } from '@scenarios/backoffice';
+import { CustomerLoginScenario } from '@scenarios/yves';
 
 describe(
   'product attribute visibility on storefront',
   { tags: ['@yves', '@product-attribute', 'product-attribute', 'catalog', 'cart', 'spryker-core'] },
   (): void => {
+    const editPage = container.get(ProductAttributeVisibilityEditPage);
+    const attributeVisibilityPage = container.get(ProductAttributeVisibilityPage);
+    const userLoginScenario = container.get(UserLoginScenario);
+    const customerLoginScenario = container.get(CustomerLoginScenario);
+
     interface StaticFixtures {
       defaultPassword: string;
       attributeKey: string;
@@ -23,148 +33,96 @@ describe(
     let staticFixtures: StaticFixtures;
     let dynamicFixtures: DynamicFixtures;
 
-    const ATTRIBUTE_LIST_URL = '/product-attribute-gui/attribute';
-
     retryableBefore((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
-      loginToBackoffice();
-      updateAttributeVisibility(staticFixtures.attributeKey, ['PDP', 'PLP', 'Cart']);
-      triggerPublishAndSync();
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
 
-      visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
+      editPage.updateAttributeVisibility(staticFixtures.attributeKey, ['PDP', 'PLP', 'Cart']);
+      cy.runQueueWorker();
+
+      attributeVisibilityPage.visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
     });
 
     describe('PLP attribute badges', (): void => {
       it('should display attribute badges on product listing page', (): void => {
-        visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
+        attributeVisibilityPage.visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
 
-        cy.get('[data-qa="component product-item"]')
-          .first()
-          .within(() => {
-            cy.get('.badge.badge--hollow').should('contain', staticFixtures.attributeValue);
-          });
+        attributeVisibilityPage.assertPlpAttributeBadgeVisible(staticFixtures.attributeValue);
       });
     });
 
     describe('PDP attribute visibility', (): void => {
       it('should display PDP-visible attributes on product detail page', (): void => {
-        navigateToProductDetailPage();
+        attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
 
-        cy.get('[itemprop="additionalProperty"]').should('contain', staticFixtures.attributeValue);
+        attributeVisibilityPage.assertPdpAttributeVisible(staticFixtures.attributeValue);
       });
     });
 
     describe('Cart attribute badges', (): void => {
       it('should display attribute badges on cart page', (): void => {
-        loginToStorefront();
-        cy.visit('/cart');
+        customerLoginScenario.execute({
+          email: dynamicFixtures.customer.email,
+          password: staticFixtures.defaultPassword,
+        });
 
-        cy.get('[data-qa="component product-cart-item"]')
-          .first()
-          .within(() => {
-            cy.get('.badge.badge--hollow').should('contain', staticFixtures.attributeValue);
-          });
+        attributeVisibilityPage.assertCartAttributeBadgeVisible(staticFixtures.attributeValue);
       });
     });
 
     describe('Removing PLP and Cart visibility', (): void => {
       retryableBefore((): void => {
-        loginToBackoffice();
-        updateAttributeVisibility(staticFixtures.attributeKey, ['PDP']);
-        triggerPublishAndSync();
+        userLoginScenario.execute({
+          username: dynamicFixtures.rootUser.username,
+          password: staticFixtures.defaultPassword,
+        });
+
+        editPage.updateAttributeVisibility(staticFixtures.attributeKey, ['PDP']);
+        cy.runQueueWorker();
       });
 
       it('should not show attribute badge on PLP', (): void => {
-        visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
+        attributeVisibilityPage.visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
 
-        cy.get('[data-qa="component product-item"]').first().should('not.contain', staticFixtures.attributeValue);
+        attributeVisibilityPage.assertPlpAttributeBadgeNotVisible(staticFixtures.attributeValue);
       });
 
       it('should still show attribute on PDP', (): void => {
-        navigateToProductDetailPage();
+        attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
 
-        cy.get('[itemprop="additionalProperty"]').should('contain', staticFixtures.attributeValue);
+        attributeVisibilityPage.assertPdpAttributeVisible(staticFixtures.attributeValue);
       });
 
       it('should not show attribute badge on cart page', (): void => {
-        loginToStorefront();
-        cy.visit('/cart');
+        customerLoginScenario.execute({
+          email: dynamicFixtures.customer.email,
+          password: staticFixtures.defaultPassword,
+        });
 
-        cy.get('[data-qa="component product-cart-item"]').first().should('not.contain', staticFixtures.attributeValue);
+        attributeVisibilityPage.assertCartAttributeBadgeNotVisible(staticFixtures.attributeValue);
       });
     });
 
     describe('Removing all visibility', (): void => {
       retryableBefore((): void => {
-        loginToBackoffice();
-        updateAttributeVisibility(staticFixtures.attributeKey, []);
-        triggerPublishAndSync();
+        userLoginScenario.execute({
+          username: dynamicFixtures.rootUser.username,
+          password: staticFixtures.defaultPassword,
+        });
+
+        editPage.updateAttributeVisibility(staticFixtures.attributeKey, []);
+        cy.runQueueWorker();
       });
 
       it('should not show attribute on PDP', (): void => {
-        navigateToProductDetailPage();
+        attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
 
-        cy.get('[itemprop="additionalProperty"]').should('not.contain', staticFixtures.attributeValue);
+        attributeVisibilityPage.assertPdpAttributeNotVisible(staticFixtures.attributeValue);
       });
     });
-
-    function loginToBackoffice(): void {
-      cy.session(['bo', dynamicFixtures.rootUser.username], () => {
-        cy.visitBackoffice('/security-gui/login');
-        cy.get('#auth_username').type(dynamicFixtures.rootUser.username);
-        cy.get('#auth_password').type(staticFixtures.defaultPassword);
-        cy.get('form[name=auth]').find('[type="submit"]').click();
-        cy.url().should('not.include', '/login');
-      });
-    }
-
-    function loginToStorefront(): void {
-      cy.session(['yves', dynamicFixtures.customer.email], () => {
-        cy.visit('/login');
-        cy.get('[name="loginForm[email]"]').type(dynamicFixtures.customer.email);
-        cy.get('[name="loginForm[password]"]').type(staticFixtures.defaultPassword);
-        cy.get('form[name="loginForm"]').submit();
-        cy.url().should('not.include', '/login');
-      });
-    }
-
-    function visitSearchAndWaitForProduct(query: string): void {
-      cy.reloadUntilFound(`/search?q=${query}`, '[data-qa="component product-item"]', 'body', 3, 1000);
-    }
-
-    function navigateToProductDetailPage(): void {
-      visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
-      cy.get('[data-qa="component product-item"]').first().find('a').first().click();
-      cy.url().should('not.include', '/search');
-    }
-
-    function updateAttributeVisibility(attributeKey: string, visibilityTypes: string[]): void {
-      searchAttributeInTable(attributeKey);
-      cy.get('.dataTable tbody tr').first().contains('Edit').click();
-      setVisibilityAndSave(visibilityTypes);
-    }
-
-    function searchAttributeInTable(attributeKey: string): void {
-      cy.visitBackoffice(ATTRIBUTE_LIST_URL);
-
-      cy.get('.dataTable tbody tr').should('be.visible');
-      cy.get('input[type="search"][data-qa="table-search"]').should('be.visible').type(`{selectall}${attributeKey}`);
-
-      cy.get('.dataTable tbody').should(($tbody) => {
-        const text = $tbody.text();
-        expect(text.includes(attributeKey)).to.be.true;
-      });
-    }
-
-    function setVisibilityAndSave(visibilityTypes: string[]): void {
-      cy.get('#attributeForm_visibility_types').invoke('val', visibilityTypes).trigger('change', { force: true });
-      cy.get('input[type="submit"].safe-submit').click();
-      cy.url().should('contain', '/translate');
-    }
-
-    function triggerPublishAndSync(): void {
-      cy.runQueueWorker();
-    }
   }
 );
