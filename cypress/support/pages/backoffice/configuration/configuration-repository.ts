@@ -14,7 +14,7 @@ export class ConfigurationRepository {
     '.file-upload-setting:has(input[id="setting-theme:logos:logos:backoffice_logo_url"])';
 
   getMerchantPortalLogoContainerSelector = (): string =>
-    '.file-upload-setting:has(input[id="setting-theme:logos:logos:spy_logo"])';
+    '.file-upload-setting:has(input[id="setting-theme:logos:logos:merchant_portal_logo"])';
 
   getStorefrontLogoContainerSelector = (): string =>
     '.file-upload-setting:has(input[id="setting-theme:logos:logos:yves_logo_url"])';
