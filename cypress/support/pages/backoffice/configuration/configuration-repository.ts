@@ -11,10 +11,10 @@ export class ConfigurationRepository {
   getResetButtonSelector = (): string => '[data-qa="reset-changes"]';
 
   getBackofficeLogoContainerSelector = (): string =>
-    '.file-upload-setting:has(input[id="setting-theme:logos:logos:bo_logo_url"])';
+    '.file-upload-setting:has(input[id="setting-theme:logos:logos:backoffice_logo_url"])';
 
   getMerchantPortalLogoContainerSelector = (): string =>
-    '.file-upload-setting:has(input[id="setting-theme:logos:logos:spy_logo_full"])';
+    '.file-upload-setting:has(input[id="setting-theme:logos:logos:spy_logo"])';
 
   getStorefrontLogoContainerSelector = (): string =>
     '.file-upload-setting:has(input[id="setting-theme:logos:logos:yves_logo_url"])';
