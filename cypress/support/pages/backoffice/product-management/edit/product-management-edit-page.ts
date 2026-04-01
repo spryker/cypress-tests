@@ -104,6 +104,22 @@ export class ProductManagementEditPage extends BackofficePage {
       cy.wrap($el).click();
     });
   };
+
+  selectMerchant = (merchantName: string): void => {
+    this.repository.getMerchantSelectContainer().click();
+    this.repository.getMerchantSelectDropdownOptions().contains(merchantName).click();
+  };
+
+  removeMerchantAssignment = (): void => {
+    this.repository.getMerchantSelectContainer().click();
+    this.repository.getMerchantSelectDropdownOptions().contains('Not assigned').click();
+  };
+
+  verifyMerchantSelected = (merchantName: string): void => {
+    this.repository.getMerchantSelectContainer().should('contain.text', merchantName);
+  };
+
+  getMerchantNotAssignedOptionText = (): string => 'Not assigned';
 }
 
 interface AttachmentParams {
