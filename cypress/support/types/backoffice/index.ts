@@ -13,4 +13,5 @@ export * from './ssp-model-management';
 export * from './ssp-service-management';
 export * from './product-offer';
 export * from './navigation-menu-filter';
+export * from './product-attribute-visibility';
 export * from './restore-session-after-login-timeout';
