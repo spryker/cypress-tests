@@ -1,5 +1,6 @@
 import { container } from '@utils';
 import { retryableBefore } from '../../../support/e2e';
+import { ProductAttributeVisibilityDynamicFixtures, ProductAttributeVisibilityStaticFixtures } from '@interfaces/yves';
 import { ProductAttributeVisibilityEditPage } from '@pages/backoffice';
 import { ProductAttributeVisibilityPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
@@ -14,24 +15,8 @@ describe(
     const userLoginScenario = container.get(UserLoginScenario);
     const customerLoginScenario = container.get(CustomerLoginScenario);
 
-    interface StaticFixtures {
-      defaultPassword: string;
-      attributeKey: string;
-      attributeValue: string;
-    }
-
-    interface DynamicFixtures {
-      rootUser: { username: string };
-      customer: { email: string };
-      product: {
-        sku: string;
-        abstract_sku: string;
-        localized_attributes: Array<{ name: string }>;
-      };
-    }
-
-    let staticFixtures: StaticFixtures;
-    let dynamicFixtures: DynamicFixtures;
+    let staticFixtures: ProductAttributeVisibilityStaticFixtures;
+    let dynamicFixtures: ProductAttributeVisibilityDynamicFixtures;
 
     retryableBefore((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());

@@ -1,5 +1,6 @@
 import { container } from '@utils';
 import { retryableBefore } from '../../../support/e2e';
+import { ProductAttributeVisibilityBackofficeDynamicFixtures, ProductAttributeVisibilityBackofficeStaticFixtures } from '@interfaces/backoffice';
 import { ProductAttributeVisibilityListPage, ProductAttributeVisibilityCreatePage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
@@ -11,16 +12,8 @@ describe(
     const createPage = container.get(ProductAttributeVisibilityCreatePage);
     const userLoginScenario = container.get(UserLoginScenario);
 
-    interface StaticFixtures {
-      defaultPassword: string;
-    }
-
-    interface DynamicFixtures {
-      rootUser: { username: string };
-    }
-
-    let staticFixtures: StaticFixtures;
-    let dynamicFixtures: DynamicFixtures;
+    let staticFixtures: ProductAttributeVisibilityBackofficeStaticFixtures;
+    let dynamicFixtures: ProductAttributeVisibilityBackofficeDynamicFixtures;
 
     const uid = Math.random().toString(36).substring(2, 8);
     const attributes = {
