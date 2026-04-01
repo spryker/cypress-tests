@@ -1,6 +1,9 @@
 import { container } from '@utils';
 import { retryableBefore } from '../../../support/e2e';
-import { ProductAttributeVisibilityBackofficeDynamicFixtures, ProductAttributeVisibilityBackofficeStaticFixtures } from '@interfaces/backoffice';
+import {
+  ProductAttributeVisibilityBackofficeDynamicFixtures,
+  ProductAttributeVisibilityBackofficeStaticFixtures,
+} from '@interfaces/backoffice';
 import { ProductAttributeVisibilityListPage, ProductAttributeVisibilityCreatePage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
