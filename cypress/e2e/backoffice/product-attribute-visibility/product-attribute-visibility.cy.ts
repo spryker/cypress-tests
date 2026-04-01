@@ -5,7 +5,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 
 describe(
   'product attribute visibility in backoffice',
-  { tags: ['@backoffice', '@product-attribute', 'product-attribute', 'spryker-core'] },
+  { tags: ['@backoffice', '@product', 'spryker-core-back-office'] },
   (): void => {
     const listPage = container.get(ProductAttributeVisibilityListPage);
     const createPage = container.get(ProductAttributeVisibilityCreatePage);
@@ -51,70 +51,45 @@ describe(
       });
     });
 
-    it('attribute list table should contain Display At column', (): void => {
+    it('Attribute list table should contain Display At column and have Display At filter dropdown', (): void => {
       listPage.visitAndWaitForTable();
 
       listPage.assertDisplayAtColumnExists();
-    });
-
-    it('attribute list should have Display At filter dropdown', (): void => {
-      listPage.visitAndWaitForTable();
-
       listPage.assertVisibilityFilterExists();
     });
 
-    it('filtering by PDP should find PDP attribute', (): void => {
+    it('Filtering by visibility type should find respective attribute', (): void => {
       listPage.applyFilterAndSearch(attributes.pdp.key, 'PDP');
-
       listPage.assertSingleRow();
       listPage.assertDisplayAtContains('PDP');
-    });
 
-    it('filtering by PLP should find PLP attribute', (): void => {
       listPage.applyFilterAndSearch(attributes.plp.key, 'PLP');
-
       listPage.assertSingleRow();
       listPage.assertDisplayAtContains('PLP');
-    });
 
-    it('filtering by Cart should find Cart attribute', (): void => {
       listPage.applyFilterAndSearch(attributes.cart.key, 'Cart');
-
       listPage.assertSingleRow();
       listPage.assertDisplayAtContains('Cart');
-    });
 
-    it('filtering by None should find attribute without visibility', (): void => {
       listPage.applyFilterAndSearch(attributes.none.key, 'None');
-
       listPage.assertSingleRow();
       listPage.assertDisplayAtEmpty();
     });
 
-    it('combined attribute should appear in PDP filter with all visibility labels', (): void => {
+    it('Combined attribute should appear in filter with all visibility labels', (): void => {
       listPage.applyFilterAndSearch(attributes.combined.key, 'PDP');
-
       listPage.assertSingleRow();
       listPage.assertDisplayAtContains('PDP');
       listPage.assertDisplayAtContains('PLP');
       listPage.assertDisplayAtContains('Cart');
-    });
 
-    it('combined attribute should appear in PLP filter', (): void => {
       listPage.applyFilterAndSearch(attributes.combined.key, 'PLP');
-
       listPage.assertSingleRow();
-    });
 
-    it('combined attribute should appear in Cart filter', (): void => {
       listPage.applyFilterAndSearch(attributes.combined.key, 'Cart');
-
       listPage.assertSingleRow();
-    });
 
-    it('PDP attribute should not appear in Cart filter', (): void => {
       listPage.applyFilterAndSearch(attributes.pdp.key, 'Cart');
-
       listPage.assertNoRecords();
     });
   }

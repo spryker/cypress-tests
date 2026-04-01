@@ -7,7 +7,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
 describe(
   'product attribute visibility on storefront',
-  { tags: ['@yves', '@product-attribute', 'product-attribute', 'catalog', 'cart', 'spryker-core'] },
+  { tags: ['@yves', '@product', 'catalog', 'cart', 'spryker-core'] },
   (): void => {
     const editPage = container.get(ProductAttributeVisibilityEditPage);
     const attributeVisibilityPage = container.get(ProductAttributeVisibilityPage);
@@ -47,82 +47,62 @@ describe(
       attributeVisibilityPage.visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
     });
 
-    describe('PLP attribute badges', (): void => {
-      it('should display attribute badges on product listing page', (): void => {
-        attributeVisibilityPage.visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
+    it('Should display attribute badges', (): void => {
+      attributeVisibilityPage.visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
+      attributeVisibilityPage.assertPlpAttributeBadgeVisible(staticFixtures.attributeValue);
 
-        attributeVisibilityPage.assertPlpAttributeBadgeVisible(staticFixtures.attributeValue);
+      attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
+      attributeVisibilityPage.assertPdpAttributeVisible(staticFixtures.attributeValue);
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
       });
+      attributeVisibilityPage.assertCartAttributeBadgeVisible(staticFixtures.attributeValue);
     });
 
-    describe('PDP attribute visibility', (): void => {
-      it('should display PDP-visible attributes on product detail page', (): void => {
-        attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
-
-        attributeVisibilityPage.assertPdpAttributeVisible(staticFixtures.attributeValue);
+    it('Should NOT show attribute badge (except PDP)', (): void => {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
       });
+
+      editPage.updateAttributeVisibility(staticFixtures.attributeKey, ['PDP']);
+      cy.runQueueWorker();
+
+      attributeVisibilityPage.visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
+      attributeVisibilityPage.assertPlpAttributeBadgeNotVisible(staticFixtures.attributeValue);
+
+      attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
+      attributeVisibilityPage.assertPdpAttributeVisible(staticFixtures.attributeValue);
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+      });
+      attributeVisibilityPage.assertCartAttributeBadgeNotVisible(staticFixtures.attributeValue);
     });
 
-    describe('Cart attribute badges', (): void => {
-      it('should display attribute badges on cart page', (): void => {
-        customerLoginScenario.execute({
-          email: dynamicFixtures.customer.email,
-          password: staticFixtures.defaultPassword,
-        });
-
-        attributeVisibilityPage.assertCartAttributeBadgeVisible(staticFixtures.attributeValue);
-      });
-    });
-
-    describe('Removing PLP and Cart visibility', (): void => {
-      retryableBefore((): void => {
-        userLoginScenario.execute({
-          username: dynamicFixtures.rootUser.username,
-          password: staticFixtures.defaultPassword,
-        });
-
-        editPage.updateAttributeVisibility(staticFixtures.attributeKey, ['PDP']);
-        cy.runQueueWorker();
+    it('Should not show internal attribute', (): void => {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
       });
 
-      it('should not show attribute badge on PLP', (): void => {
-        attributeVisibilityPage.visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
+      editPage.updateAttributeVisibility(staticFixtures.attributeKey, []);
+      cy.runQueueWorker();
 
-        attributeVisibilityPage.assertPlpAttributeBadgeNotVisible(staticFixtures.attributeValue);
+      attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
+      attributeVisibilityPage.assertPdpAttributeNotVisible(staticFixtures.attributeValue);
+
+      attributeVisibilityPage.visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
+      attributeVisibilityPage.assertPlpAttributeBadgeNotVisible(staticFixtures.attributeValue);
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
       });
-
-      it('should still show attribute on PDP', (): void => {
-        attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
-
-        attributeVisibilityPage.assertPdpAttributeVisible(staticFixtures.attributeValue);
-      });
-
-      it('should not show attribute badge on cart page', (): void => {
-        customerLoginScenario.execute({
-          email: dynamicFixtures.customer.email,
-          password: staticFixtures.defaultPassword,
-        });
-
-        attributeVisibilityPage.assertCartAttributeBadgeNotVisible(staticFixtures.attributeValue);
-      });
-    });
-
-    describe('Removing all visibility', (): void => {
-      retryableBefore((): void => {
-        userLoginScenario.execute({
-          username: dynamicFixtures.rootUser.username,
-          password: staticFixtures.defaultPassword,
-        });
-
-        editPage.updateAttributeVisibility(staticFixtures.attributeKey, []);
-        cy.runQueueWorker();
-      });
-
-      it('should not show attribute on PDP', (): void => {
-        attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
-
-        attributeVisibilityPage.assertPdpAttributeNotVisible(staticFixtures.attributeValue);
-      });
+      attributeVisibilityPage.assertCartAttributeBadgeNotVisible(staticFixtures.attributeValue);
     });
   }
 );
