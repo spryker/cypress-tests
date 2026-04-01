@@ -9,7 +9,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 
 describe(
   'product attribute visibility in backoffice',
-  { tags: ['@backoffice', '@product', 'spryker-core-back-office'] },
+  { tags: ['@backoffice', 'product', 'spryker-core-back-office'] },
   (): void => {
     const listPage = container.get(ProductAttributeVisibilityListPage);
     const createPage = container.get(ProductAttributeVisibilityCreatePage);

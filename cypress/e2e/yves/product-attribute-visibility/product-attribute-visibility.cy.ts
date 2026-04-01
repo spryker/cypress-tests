@@ -8,7 +8,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
 describe(
   'product attribute visibility on storefront',
-  { tags: ['@yves', '@product', 'catalog', 'cart', 'spryker-core'] },
+  { tags: ['@yves', 'product', 'catalog', 'cart', 'spryker-core'] },
   (): void => {
     const editPage = container.get(ProductAttributeVisibilityEditPage);
     const attributeVisibilityPage = container.get(ProductAttributeVisibilityPage);
