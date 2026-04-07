@@ -15,3 +15,5 @@ export * from './product-offer';
 export * from './navigation-menu-filter';
 export * from './product-attribute-visibility';
 export * from './restore-session-after-login-timeout';
+export * from './product-merchant-relation-management';
+export * from './configuration';
