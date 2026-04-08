@@ -10,6 +10,11 @@ describe(
   'product attribute visibility on storefront',
   { tags: ['@yves', 'product', 'catalog', 'cart', 'spryker-core'] },
   (): void => {
+    if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite and b2b-mp', () => {});
+      return;
+    }
+
     const editPage = container.get(ProductAttributeVisibilityEditPage);
     const attributeVisibilityPage = container.get(ProductAttributeVisibilityPage);
     const userLoginScenario = container.get(UserLoginScenario);
