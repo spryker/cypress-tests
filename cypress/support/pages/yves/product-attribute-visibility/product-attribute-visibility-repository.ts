@@ -5,7 +5,7 @@ import { injectable } from 'inversify';
 @autoWired
 export class ProductAttributeVisibilityRepository {
   getProductItemSelector = (): string => '[data-qa="component product-item"]';
-  getAttributeBadgeSelector = (): string => '.badge.badge--hollow';
+  getAttributeBadgeSelector = (): string => '.badge';
   getPdpAttributeSelector = (): string => '[itemprop="additionalProperty"]';
   getCartItemSelector = (): string => '[data-qa="component product-cart-item"]';
 }
