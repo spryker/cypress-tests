@@ -30,12 +30,17 @@ describe(
       });
     });
 
-    it('displays logo upload buttons for all three application contexts', (): void => {
+    it('displays logo upload buttons for backoffice and storefront contexts', (): void => {
       configurationPage.visitLogosTab();
 
       configurationPage.getBackofficeLogoUploadButton().should('exist');
-      configurationPage.getMerchantPortalLogoUploadButton().should('exist');
       configurationPage.getStorefrontLogoUploadButton().should('exist');
+    });
+
+    merchantIt('displays logo upload button for merchant portal context', (): void => {
+      configurationPage.visitLogosTab();
+
+      configurationPage.getMerchantPortalLogoUploadButton().should('exist');
     });
 
     it('displays storefront color settings with correct default values', (): void => {
