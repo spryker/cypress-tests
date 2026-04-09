@@ -11,6 +11,11 @@ describe(
   'product attribute visibility in backoffice',
   { tags: ['@backoffice', 'product', 'spryker-core-back-office'] },
   (): void => {
+    if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite and b2b-mp', () => {});
+      return;
+    }
+
     const listPage = container.get(ProductAttributeVisibilityListPage);
     const createPage = container.get(ProductAttributeVisibilityCreatePage);
     const userLoginScenario = container.get(UserLoginScenario);
