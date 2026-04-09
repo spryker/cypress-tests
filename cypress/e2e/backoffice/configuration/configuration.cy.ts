@@ -9,6 +9,10 @@ describe(
     tags: ['@backoffice', '@configuration', 'shop-theme', 'spryker-core-back-office'],
   },
   (): void => {
+    const merchantIt = (description: string, testFn: () => void): void => {
+      (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it : it.skip)(description, testFn);
+    };
+
     const configurationPage = container.get(ConfigurationPage);
     const userLoginScenario = container.get(UserLoginScenario);
 
@@ -54,7 +58,7 @@ describe(
         .should('have.value', staticFixtures.defaultColors.backofficeSidenavTextColor);
     });
 
-    it('displays merchant portal color setting with correct default value', (): void => {
+    merchantIt('displays merchant portal color setting with correct default value', (): void => {
       configurationPage.visitMerchantPortalTab();
 
       configurationPage.getMerchantPortalColor().should('have.value', staticFixtures.defaultColors.merchantPortalColor);
@@ -152,7 +156,7 @@ describe(
       configurationPage.saveConfiguration();
     });
 
-    it('applies merchant portal theme color change to merchant portal CSS variable', (): void => {
+    merchantIt('applies merchant portal theme color change to merchant portal CSS variable', (): void => {
       configurationPage.visitMerchantPortalTab();
       configurationPage.setMerchantPortalColor(staticFixtures.testColor);
       configurationPage.saveConfiguration();
@@ -201,7 +205,7 @@ describe(
       });
     });
 
-    it('uploads merchant portal logo and verifies it is applied in merchant portal', (): void => {
+    merchantIt('uploads merchant portal logo and verifies it is applied in merchant portal', (): void => {
       configurationPage.visitLogosTab();
       configurationPage.uploadMerchantPortalLogo(staticFixtures.logoFilePath);
       configurationPage.verifyMerchantPortalLogoUploaded();
