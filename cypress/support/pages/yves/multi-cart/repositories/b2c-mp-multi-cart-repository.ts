@@ -8,5 +8,5 @@ export class B2cMpMultiCartRepository implements MultiCartRepository {
   getCreateCartForm = (): Cypress.Chainable => cy.get('form[name=quoteForm]');
   getQuoteTable = (): Cypress.Chainable => cy.get('[data-qa="component quote-table"]');
   getMiniCartRadios = (): Cypress.Chainable =>
-    cy.get('[data-qa="component mini-cart-detail"]').find('[data-qa="component mini-cart-radio"]');
+    cy.get('[data-qa="component header-cart-pill"] [data-qa="component mini-cart-detail"]');
 }
