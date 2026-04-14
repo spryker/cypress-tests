@@ -37,14 +37,14 @@ export class MerchantUserMultiFactorAuthPage extends MpPage implements MultiFact
   }
 
   waitForActivationSuccessMessage(): void {
-    cy.contains(this.repository.getActivationSuccessMessage(), { timeout: 10000 }).should('be.visible');
+    cy.contains(this.repository.getActivationSuccessMessage()).should('be.visible');
   }
 
   waitForDeactivationSuccessMessage(): void {
-    cy.contains(this.repository.getDeactivationSuccessMessage(), { timeout: 10000 }).should('be.visible');
+    cy.contains(this.repository.getDeactivationSuccessMessage()).should('be.visible');
   }
 
   waitForInvalidCodeMessage(): void {
-    cy.contains(this.repository.getInvalidCodeMessage(), { timeout: 10000 }).should('be.visible');
+    cy.contains(this.repository.getInvalidCodeMessage()).should('be.visible');
   }
 }
