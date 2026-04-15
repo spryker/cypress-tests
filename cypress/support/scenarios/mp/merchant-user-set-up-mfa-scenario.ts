@@ -22,9 +22,11 @@ export class MerchantUserSetUpMfaScenario {
       .then((code) => {
         mfaCode = code;
 
+        cy.intercept('POST', '**/*user-management/activate*').as('activateForm');
         this.mfaPage.verifyCode(code);
       })
       .then(() => {
+        cy.wait('@activateForm');
         this.mfaPage.waitForActivationSuccessMessage();
         cy.cleanUpUserMultiFactorAuthCode(mfaCode);
       });
@@ -45,9 +47,11 @@ export class MerchantUserSetUpMfaScenario {
       .then((code) => {
         mfaCode = code;
 
+        cy.intercept('POST', '**/*user-management/deactivate*').as('deactivateForm');
         this.mfaPage.verifyCode(code);
       })
       .then(() => {
+        cy.wait('@deactivateForm');
         this.mfaPage.waitForDeactivationSuccessMessage();
         cy.cleanUpUserMultiFactorAuthCode(mfaCode);
       });
