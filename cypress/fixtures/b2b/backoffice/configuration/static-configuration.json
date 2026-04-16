@@ -12,8 +12,8 @@
     "merchantPortalLogoFull": "--spy-logo-full"
   },
   "defaultColors": {
-    "themeMainColor": "#00bebe",
-    "themeAltColor": "#eb553c",
+    "themeMainColor": "#318272",
+    "themeAltColor": "#f3fffc",
     "backofficeColor": "#1ebea0",
     "backofficeSidenavColor": "#23303c",
     "backofficeSidenavTextColor": "#e4e4e4",
