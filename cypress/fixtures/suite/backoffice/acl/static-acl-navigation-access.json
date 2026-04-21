@@ -1,0 +1,14 @@
+{
+  "restrictedUser": {
+    "password": "Change123@_!",
+    "expectedMenuItems": ["Dashboard", "Catalog", "Products"],
+    "allowedPaths": ["/dashboard", "/product-management"],
+    "deniedPaths": ["/sales", "/customer", "/cms-gui/list-page/index", "/user"]
+  },
+  "combinedUser": {
+    "password": "Change123@_!",
+    "expectedMenuItems": ["Dashboard", "Sales", "Customers"],
+    "allowedPaths": ["/dashboard", "/sales", "/customer"],
+    "deniedPaths": ["/sales/detail", "/cms-gui/list-page/index", "/user", "/product-management"]
+  }
+}
