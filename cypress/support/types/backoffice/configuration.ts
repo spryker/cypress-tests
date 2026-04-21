@@ -26,3 +26,19 @@ export interface ConfigurationStaticFixtures {
 export interface ConfigurationDynamicFixtures {
   rootUser: User;
 }
+
+export interface ConfigurationManagementStaticFixtures {
+  defaultPassword: string;
+  themeSettings: {
+    mainColorKey: string;
+    altColorKey: string;
+    mainColorDefault: string;
+    validColor: string;
+    invalidColor: string;
+  };
+  searchTerm: string;
+}
+
+export interface ConfigurationManagementDynamicFixtures {
+  rootUser: User;
+}

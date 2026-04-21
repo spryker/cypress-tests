@@ -43,4 +43,20 @@ export class ConfigurationRepository {
     'input[id="setting-theme:backoffice:colors:bo_sidenav_text_color"]';
 
   getMerchantPortalColorSelector = (): string => 'input[id="setting-theme:merchant_portal:colors:spy_primary_color"]';
+
+  getConfigSearchSelector = (): string => '[data-qa="config-search"]';
+
+  getChangesCountSelector = (): string => '#changes-count';
+
+  getSaveBarSelector = (): string => '#config-save-bar';
+
+  getSettingRowSelector = (settingKey: string): string => `.setting-row[data-setting-key="${settingKey}"]`;
+
+  getOverridesDefaultBadgeSelector = (): string => '.js-overrides-default-badge';
+
+  getUseDefaultLinkSelector = (): string => '.use-default-link';
+
+  getInvalidFeedbackSelector = (): string => '.invalid-feedback';
+
+  getNavTabSelector = (tabKey: string): string => `.js-nav-tab[data-tab="${tabKey}"]`;
 }
