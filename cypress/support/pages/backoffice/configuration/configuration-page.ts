@@ -11,20 +11,22 @@ export class ConfigurationPage extends BackofficePage {
 
   protected PAGE_URL = '/configuration/manage';
 
+  protected THEME_FEATURE = 'theme';
+
   visitLogosTab = (): void => {
-    cy.visitBackoffice(this.PAGE_URL + '?tab=logos');
+    cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.THEME_FEATURE}&tab=logos`);
   };
 
   visitStorefrontTab = (): void => {
-    cy.visitBackoffice(this.PAGE_URL + '?tab=storefront');
+    cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.THEME_FEATURE}&tab=storefront`);
   };
 
   visitBackofficeTab = (): void => {
-    cy.visitBackoffice(this.PAGE_URL + '?tab=backoffice');
+    cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.THEME_FEATURE}&tab=backoffice`);
   };
 
   visitMerchantPortalTab = (): void => {
-    cy.visitBackoffice(this.PAGE_URL + '?tab=merchant_portal');
+    cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.THEME_FEATURE}&tab=merchant_portal`);
   };
 
   getScopeSelector = (): Cypress.Chainable => cy.get(this.repository.getScopeSelectorSelector());
@@ -127,4 +129,30 @@ export class ConfigurationPage extends BackofficePage {
   verifyMerchantPortalLogoUploaded = (): void => {
     this.verifyLogoUploaded(this.repository.getMerchantPortalLogoContainerSelector());
   };
+
+  resetChanges = (): void => {
+    cy.on('window:confirm', (): boolean => true);
+    cy.get(this.repository.getResetButtonSelector()).click({ force: true });
+  };
+
+  searchSettings = (term: string): void => {
+    cy.get(this.repository.getConfigSearchSelector()).clear();
+    cy.get(this.repository.getConfigSearchSelector()).type(term);
+  };
+
+  clickUseDefaultLink = (settingKey: string): void => {
+    cy.get(this.repository.getSettingRowSelector(settingKey))
+      .find(this.repository.getUseDefaultLinkSelector())
+      .click({ force: true });
+  };
+
+  clickNavTab = (tabKey: string): void => {
+    cy.get(this.repository.getNavTabSelector(tabKey)).click({ force: true });
+  };
+
+  getSaveBar = (): Cypress.Chainable => cy.get(this.repository.getSaveBarSelector());
+
+  getChangesCount = (): Cypress.Chainable => cy.get(this.repository.getChangesCountSelector());
+
+  getSettingRow = (settingKey: string): Cypress.Chainable => cy.get(this.repository.getSettingRowSelector(settingKey));
 }

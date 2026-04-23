@@ -1,0 +1,11 @@
+{
+  "defaultPassword": "change123",
+  "themeSettings": {
+    "mainColorKey": "theme:storefront:colors:background_brand_primary",
+    "altColorKey": "theme:storefront:colors:background_brand_subtle",
+    "mainColorDefault": "#00bebe",
+    "validColor": "#a1b2c3",
+    "invalidColor": "not-a-hex-value"
+  },
+  "searchTerm": "logo"
+}
