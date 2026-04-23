@@ -1,0 +1,145 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        { "type": "helper", "name": "haveRole", "key": "dashboardRole" },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "dashboard",
+              "controller": "*",
+              "action": "*",
+              "type": "allow",
+              "fk_acl_role": "#dashboardRole.id_acl_role"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "product-management",
+              "controller": "index",
+              "action": "*",
+              "type": "allow",
+              "fk_acl_role": "#dashboardRole.id_acl_role"
+            }
+          ]
+        },
+        { "type": "helper", "name": "haveGroup", "key": "dashboardGroup" },
+        {
+          "type": "helper",
+          "name": "addRoleToGroup",
+          "arguments": ["#dashboardRole.id_acl_role", "#dashboardGroup.id_acl_group"]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "restrictedUser",
+          "arguments": [{ "password": "Change123@_!" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#restrictedUser.id_user", "#dashboardGroup.id_acl_group"]
+        },
+
+        { "type": "helper", "name": "haveRole", "key": "salesAllowRole" },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "dashboard",
+              "controller": "*",
+              "action": "*",
+              "type": "allow",
+              "fk_acl_role": "#salesAllowRole.id_acl_role"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "sales",
+              "controller": "*",
+              "action": "*",
+              "type": "allow",
+              "fk_acl_role": "#salesAllowRole.id_acl_role"
+            }
+          ]
+        },
+        { "type": "helper", "name": "haveRole", "key": "salesDenyRole" },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "sales",
+              "controller": "detail",
+              "action": "*",
+              "type": "deny",
+              "fk_acl_role": "#salesDenyRole.id_acl_role"
+            }
+          ]
+        },
+        { "type": "helper", "name": "haveGroup", "key": "salesGroup" },
+        {
+          "type": "helper",
+          "name": "addRoleToGroup",
+          "arguments": ["#salesAllowRole.id_acl_role", "#salesGroup.id_acl_group"]
+        },
+        {
+          "type": "helper",
+          "name": "addRoleToGroup",
+          "arguments": ["#salesDenyRole.id_acl_role", "#salesGroup.id_acl_group"]
+        },
+
+        { "type": "helper", "name": "haveRole", "key": "customerRole" },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "customer",
+              "controller": "*",
+              "action": "*",
+              "type": "allow",
+              "fk_acl_role": "#customerRole.id_acl_role"
+            }
+          ]
+        },
+        { "type": "helper", "name": "haveGroup", "key": "customerGroup" },
+        {
+          "type": "helper",
+          "name": "addRoleToGroup",
+          "arguments": ["#customerRole.id_acl_role", "#customerGroup.id_acl_group"]
+        },
+
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "combinedUser",
+          "arguments": [{ "password": "Change123@_!" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#combinedUser.id_user", "#salesGroup.id_acl_group"]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#combinedUser.id_user", "#customerGroup.id_acl_group"]
+        }
+      ]
+    }
+  }
+}

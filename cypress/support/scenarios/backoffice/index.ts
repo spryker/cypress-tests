@@ -28,3 +28,4 @@ export * from './merchant-registration-approval-scenario';
 export * from './merchant-registration-rejection-scenario';
 export * from './merchant-activation-scenario';
 export * from './user-activation-scenario';
+export * from './acl-navigation-access-scenario';

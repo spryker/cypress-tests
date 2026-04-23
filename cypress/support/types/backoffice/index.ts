@@ -17,3 +17,4 @@ export * from './product-attribute-visibility';
 export * from './restore-session-after-login-timeout';
 export * from './product-merchant-relation-management';
 export * from './configuration';
+export * from './acl-navigation-access';
