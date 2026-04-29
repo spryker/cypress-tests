@@ -1,7 +1,7 @@
 {
   "defaultPassword": "change123",
   "customer": {
-    "email": "sonia@spryker.com"
+    "email": "sonia@acme.com"
   },
   "rootUser": {
     "username": "admin@spryker.com"

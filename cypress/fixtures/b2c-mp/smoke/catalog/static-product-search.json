@@ -2,7 +2,7 @@
   "defaultPassword": "change123",
   "productPrice": "37.50",
   "customer": {
-    "email": "spencor.hopkin@spryker.com"
+    "email": "spencor.hopkin@acme.com"
   },
   "concreteProduct": {
     "name": "Canon IXUS 285",
