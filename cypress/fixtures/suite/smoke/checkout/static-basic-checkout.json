@@ -1,7 +1,7 @@
 {
   "defaultPassword": "change123",
   "customer": {
-    "email": "spencor.hopkin@spryker.com"
+    "email": "spencor.hopkin@acme.com"
   },
   "product1": {
     "sku": "009_30692991"
