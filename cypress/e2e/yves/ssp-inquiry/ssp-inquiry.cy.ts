@@ -1,4 +1,5 @@
 import { container } from '@utils';
+import { retryableBefore } from '../../../support/e2e';
 import {
   SspInquiryListPage,
   SspInquiryCreatePage,
@@ -41,7 +42,7 @@ describe(
     let staticFixtures: SspInquiryStaticFixtures;
     let dynamicFixtures: SspInquiryDynamicFixtures;
 
-    before((): void => {
+    retryableBefore((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 

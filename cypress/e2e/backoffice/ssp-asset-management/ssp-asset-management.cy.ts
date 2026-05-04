@@ -1,4 +1,5 @@
 import { container } from '@utils';
+import { retryableBefore } from '../../../support/e2e';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/backoffice';
 import {
@@ -42,7 +43,7 @@ describe(
     let dynamicFixtures: SspAssetDynamicFixtures;
     let staticFixtures: SspAssetStaticFixtures;
 
-    before((): void => {
+    retryableBefore((): void => {
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
     });
 

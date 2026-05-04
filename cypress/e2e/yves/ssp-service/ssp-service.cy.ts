@@ -1,4 +1,5 @@
 import { container } from '@utils';
+import { retryableBefore } from '../../../support/e2e';
 import { CustomerLoginScenario, CustomerLogoutScenario, CheckoutScenario } from '@scenarios/yves';
 import { SspServiceListPage, CartPage, CatalogPage, ProductPage, CustomerOverviewPage } from '@pages/yves';
 
@@ -82,7 +83,7 @@ describe(
     let dynamicFixtures: DynamicFixtures;
     let isSetupDone = false;
 
-    before((): void => {
+    retryableBefore((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
