@@ -1,4 +1,5 @@
 import { container } from '@utils';
+import { retryableBefore } from '../../../support/e2e';
 import {
   SspAssetCreatePage,
   SspAssetEditPage,
@@ -49,7 +50,7 @@ describe(
     let staticFixtures: SspAssetStaticFixtures;
     let dynamicFixtures: SspAssetDynamicFixtures;
 
-    before((): void => {
+    retryableBefore((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
