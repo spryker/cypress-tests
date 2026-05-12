@@ -44,6 +44,7 @@ describe(
 
       costCenterCreatePage.fillName('New Cost Center');
       costCenterCreatePage.fillDescription('New cost center description');
+      costCenterCreatePage.selectBusinessUnit(dynamicFixtures.businessUnit.id_company_business_unit);
       costCenterCreatePage.submit();
 
       costCenterCreatePage.assertSuccess();
@@ -57,7 +58,7 @@ describe(
       costCenterUpdatePage.submit();
 
       costCenterUpdatePage.assertSuccess();
-      costCenterUpdatePage.getNameValue().should('equal', updatedName);
+      costCenterListPage.assertCostCenterInTable(updatedName);
     });
 
     it('authorized company user should be able to deactivate a cost center', (): void => {
@@ -67,8 +68,8 @@ describe(
 
       costCenterUpdatePage.assertSuccess();
 
-      costCenterListPage.visit();
-      costCenterListPage.assertStatusBadge(dynamicFixtures.preExistingCostCenter.uuid, 'Inactive');
+      costCenterUpdatePage.visitByUuid(dynamicFixtures.preExistingCostCenter.uuid);
+      costCenterUpdatePage.assertIsInactive();
     });
 
     it('authorized company user should be able to reactivate a cost center', (): void => {
@@ -78,8 +79,8 @@ describe(
 
       costCenterUpdatePage.assertSuccess();
 
-      costCenterListPage.visit();
-      costCenterListPage.assertStatusBadge(dynamicFixtures.inactiveCostCenter.uuid, 'Active');
+      costCenterUpdatePage.visitByUuid(dynamicFixtures.inactiveCostCenter.uuid);
+      costCenterUpdatePage.assertIsActive();
     });
 
     it('unauthorized company user should receive 403 when accessing cost center list', (): void => {

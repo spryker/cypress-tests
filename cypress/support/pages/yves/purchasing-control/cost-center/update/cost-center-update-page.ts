@@ -12,7 +12,7 @@ export class YvesCostCenterUpdatePage extends YvesPage {
   protected PAGE_URL = '/company/cost-center/update';
 
   visitByUuid = (uuid: string): void => {
-    cy.visit(`/company/cost-center/update?uuid=${uuid}`);
+    cy.visit(`/company/cost-center/update?costCenterUuid=${uuid}`);
   };
 
   fillName = (name: string): void => {
@@ -37,6 +37,14 @@ export class YvesCostCenterUpdatePage extends YvesPage {
 
   assertSuccess = (): void => {
     this.repository.getSuccessFlashMessage().should('be.visible');
+  };
+
+  assertIsActive = (): void => {
+    this.repository.getIsActiveCheckbox().should('be.checked');
+  };
+
+  assertIsInactive = (): void => {
+    this.repository.getIsActiveCheckbox().should('not.be.checked');
   };
 
   getNameValue = (): Cypress.Chainable<string> => {

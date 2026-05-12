@@ -3,7 +3,7 @@ import { BudgetListRepository } from '../budget-list-repository';
 
 @injectable()
 export class SuiteBudgetListRepository implements BudgetListRepository {
-  getCreateButton = (): Cypress.Chainable => cy.get('[data-qa="create-budget-button"]');
+  getCreateButton = (): Cypress.Chainable => cy.get('a[href*="budget/create"]');
 
   getTableRows = (): Cypress.Chainable => cy.get('[data-qa="component advanced-table"] tbody tr');
 

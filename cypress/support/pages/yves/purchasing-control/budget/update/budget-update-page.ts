@@ -11,8 +11,8 @@ export class YvesBudgetUpdatePage extends YvesPage {
 
   protected PAGE_URL = '/company/cost-center/budget/update';
 
-  visitByUuid = (uuid: string): void => {
-    cy.visit(`/company/cost-center/budget/update?uuid=${uuid}`);
+  visitByUuid = (budgetUuid: string, costCenterUuid: string): void => {
+    cy.visit(`/company/cost-center/budget/update?budgetUuid=${budgetUuid}&costCenterUuid=${costCenterUuid}`);
   };
 
   fillName = (name: string): void => {

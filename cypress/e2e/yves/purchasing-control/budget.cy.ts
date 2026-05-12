@@ -45,7 +45,7 @@ describe(
       budgetCreatePage.fillName('Q2 Budget');
       budgetCreatePage.fillAmount('50000');
       budgetCreatePage.selectCurrency('EUR');
-      budgetCreatePage.selectEnforcementRule('soft');
+      budgetCreatePage.selectEnforcementRule('block');
       budgetCreatePage.fillStartDate('2026-04-01');
       budgetCreatePage.fillEndDate('2026-06-30');
       budgetCreatePage.submit();
@@ -56,12 +56,12 @@ describe(
     it('authorized company user should be able to update a budget', (): void => {
       const updatedName = 'Updated Budget Name';
 
-      budgetUpdatePage.visitByUuid(dynamicFixtures.preExistingBudget.uuid);
+      budgetUpdatePage.visitByUuid(dynamicFixtures.preExistingBudget.uuid, dynamicFixtures.costCenter.uuid);
       budgetUpdatePage.fillName(updatedName);
       budgetUpdatePage.submit();
 
       budgetUpdatePage.assertSuccess();
-      budgetUpdatePage.getNameValue().should('equal', updatedName);
+      budgetListPage.assertBudgetInTable(updatedName);
     });
   }
 );

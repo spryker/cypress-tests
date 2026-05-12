@@ -19,6 +19,10 @@ export class YvesCostCenterCreatePage extends YvesPage {
     this.repository.getDescriptionTextarea().clear().type(description);
   };
 
+  selectBusinessUnit = (idBusinessUnit: number): void => {
+    this.repository.getBusinessUnitCheckbox(idBusinessUnit).check({ force: true });
+  };
+
   submit = (): void => {
     this.repository.getSubmitButton().click();
   };

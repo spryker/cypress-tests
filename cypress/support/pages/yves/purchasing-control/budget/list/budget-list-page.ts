@@ -12,7 +12,7 @@ export class YvesBudgetListPage extends YvesPage {
   protected PAGE_URL = '/company/cost-center/budget';
 
   visitByCostCenterUuid = (costCenterUuid: string): void => {
-    cy.visit(`/company/cost-center/budget?cost-center-uuid=${costCenterUuid}`);
+    cy.visit(`/company/cost-center/budget?costCenterUuid=${costCenterUuid}`);
   };
 
   clickCreateButton = (): void => {

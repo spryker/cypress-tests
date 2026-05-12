@@ -57,7 +57,7 @@ describe(
       costCenterEditPage.submit();
 
       costCenterEditPage.assertSuccess();
-      costCenterEditPage.getNameValue().should('equal', updatedName);
+      costCenterListPage.assertCostCenterInTable(updatedName);
     });
   }
 );

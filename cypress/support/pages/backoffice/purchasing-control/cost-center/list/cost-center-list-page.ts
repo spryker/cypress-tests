@@ -30,6 +30,7 @@ export class CostCenterListPage extends BackofficePage {
 
   assertCostCenterInTable = (name: string): void => {
     cy.intercept('GET', '**/purchasing-control/cost-center/table**').as('costCenterTableAssert');
+    this.visit();
     cy.wait('@costCenterTableAssert');
     cy.get(this.repository.getTableBodySelector()).should('contain', name);
   };

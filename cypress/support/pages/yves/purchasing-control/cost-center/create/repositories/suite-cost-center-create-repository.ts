@@ -7,6 +7,9 @@ export class SuiteCostCenterCreateRepository implements CostCenterCreateReposito
 
   getDescriptionTextarea = (): Cypress.Chainable => cy.get('#costCenterForm_description');
 
+  getBusinessUnitCheckbox = (idBusinessUnit: number): Cypress.Chainable =>
+    cy.get(`[name="costCenterForm[companyBusinessUnitIds][]"][value="${idBusinessUnit}"]`);
+
   getSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="submit-button"]');
 
   getSuccessFlashMessage = (): Cypress.Chainable => cy.get('[data-qa="component notification-area"] flash-message');

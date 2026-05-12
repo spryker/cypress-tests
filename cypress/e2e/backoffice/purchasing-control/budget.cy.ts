@@ -39,12 +39,17 @@ describe(
       budgetCreatePage.fillName('Q1 Budget');
       budgetCreatePage.fillAmount('100000');
       budgetCreatePage.selectCurrency('EUR');
-      budgetCreatePage.selectEnforcementRule('soft');
+      budgetCreatePage.selectEnforcementRule('block');
       budgetCreatePage.fillStartDate('2026-01-01');
       budgetCreatePage.fillEndDate('2026-03-31');
       budgetCreatePage.submit();
 
       budgetCreatePage.assertSuccess();
+    });
+
+    it('admin should see budget in the budget list after creation', (): void => {
+      budgetListPage.visitByCostCenter(dynamicFixtures.costCenter.id_cost_center);
+      budgetListPage.assertBudgetInTable(dynamicFixtures.preExistingBudget.name);
     });
 
     it('admin should be able to edit a budget', (): void => {
@@ -55,12 +60,7 @@ describe(
       budgetEditPage.submit();
 
       budgetEditPage.assertSuccess();
-      budgetEditPage.getNameValue().should('equal', updatedName);
-    });
-
-    it('admin should see budget in the budget list after creation', (): void => {
-      budgetListPage.visitByCostCenter(dynamicFixtures.costCenter.id_cost_center);
-      budgetListPage.assertBudgetInTable(dynamicFixtures.preExistingBudget.name);
+      budgetListPage.assertBudgetInTable(updatedName);
     });
   }
 );

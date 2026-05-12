@@ -20,6 +20,7 @@ export class YvesCostCenterListPage extends YvesPage {
   };
 
   assertCostCenterInTable = (name: string): void => {
+    cy.visit(`/company/cost-center?costCenterSearchForm[name]=${encodeURIComponent(name)}`);
     this.repository.getTableRows().should('contain', name);
   };
 

@@ -11,7 +11,9 @@ export class BackofficeBudgetListPage extends BackofficePage {
   protected PAGE_URL = '/purchasing-control/budget';
 
   visitByCostCenter = (idCostCenter: number): void => {
+    cy.intercept('GET', '**/purchasing-control/budget/table**').as('budgetTable');
     cy.visitBackoffice(`/purchasing-control/budget?id-cost-center=${idCostCenter}`);
+    cy.wait('@budgetTable');
   };
 
   clickCreateButton = (): void => {
@@ -23,8 +25,6 @@ export class BackofficeBudgetListPage extends BackofficePage {
   };
 
   assertBudgetInTable = (name: string): void => {
-    cy.intercept('GET', '**/purchasing-control/budget/table**').as('budgetTableAssert');
-    cy.wait('@budgetTableAssert');
     cy.get(this.repository.getTableBodySelector()).should('contain', name);
   };
 }
