@@ -27,3 +27,17 @@ export interface YvesBudgetCrudDynamicFixtures {
   costCenter: { id_cost_center: number; uuid: string; name: string };
   preExistingBudget: { id_budget: number; uuid: string; name: string };
 }
+
+export interface BudgetEnforcementStaticFixtures {
+  defaultPassword: string;
+}
+
+export interface BudgetEnforcementDynamicFixtures {
+  buyerForWithin: { email: string };
+  buyerForBlock: { email: string };
+  buyerForWarn: { email: string };
+  buyerForRequireApproval: { email: string };
+  buyerForApproved: { email: string };
+  approverCustomer: { email: string };
+  approverCompanyUser: { id_company_user: number };
+}

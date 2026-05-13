@@ -183,6 +183,7 @@ import { SuiteCostCenterUpdateRepository } from '../../pages/yves/purchasing-con
 import { SuiteBudgetListRepository } from '../../pages/yves/purchasing-control/budget/list/repositories/suite-budget-list-repository';
 import { SuiteBudgetCreateRepository } from '../../pages/yves/purchasing-control/budget/create/repositories/suite-budget-create-repository';
 import { SuiteBudgetUpdateRepository } from '../../pages/yves/purchasing-control/budget/update/repositories/suite-budget-update-repository';
+import { SuiteCheckoutSummaryBudgetRepository } from '../../pages/yves/purchasing-control/checkout-summary/repositories/suite-checkout-summary-budget-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -230,6 +231,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.YvesBudgetListRepository]: SuiteBudgetListRepository,
   [REPOSITORIES.YvesBudgetCreateRepository]: SuiteBudgetCreateRepository,
   [REPOSITORIES.YvesBudgetUpdateRepository]: SuiteBudgetUpdateRepository,
+  [REPOSITORIES.YvesCheckoutSummaryBudgetRepository]: SuiteCheckoutSummaryBudgetRepository,
 };
 
 const b2cMappings: BindingsMap = {

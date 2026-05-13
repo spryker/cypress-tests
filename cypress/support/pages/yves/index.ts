@@ -48,3 +48,4 @@ export * from './purchasing-control/cost-center/update/cost-center-update-page';
 export * from './purchasing-control/budget/list/budget-list-page';
 export * from './purchasing-control/budget/create/budget-create-page';
 export * from './purchasing-control/budget/update/budget-update-page';
+export * from './purchasing-control/checkout-summary/checkout-summary-budget-page';
