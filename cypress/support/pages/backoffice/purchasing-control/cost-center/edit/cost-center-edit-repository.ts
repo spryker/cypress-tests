@@ -4,11 +4,11 @@ import { injectable } from 'inversify';
 @injectable()
 @autoWired
 export class CostCenterEditRepository {
-  getNameInput = (): Cypress.Chainable => cy.get('#costCenterForm_name');
-  getDescriptionTextarea = (): Cypress.Chainable => cy.get('#costCenterForm_description');
-  getCompanySelect = (): Cypress.Chainable => cy.get('#costCenterForm_idCompany');
-  getBusinessUnitSelect = (): Cypress.Chainable => cy.get('#costCenterForm_companyBusinessUnitIds');
-  getIsActiveCheckbox = (): Cypress.Chainable => cy.get('#costCenterForm_isActive');
-  getSaveButton = (): Cypress.Chainable => cy.get('button[type="submit"]:contains("Save")');
+  getNameInput = (): Cypress.Chainable => cy.get('[data-qa="cost-center-name"]');
+  getDescriptionTextarea = (): Cypress.Chainable => cy.get('[data-qa="cost-center-description"]');
+  getCompanySelect = (): Cypress.Chainable => cy.get('[data-qa="cost-center-company"]');
+  getBusinessUnitSelect = (): Cypress.Chainable => cy.get('[data-qa="cost-center-business-unit-ids"]');
+  getIsActiveCheckbox = (): Cypress.Chainable => cy.get('[data-qa="cost-center-is-active"]');
+  getSaveButton = (): Cypress.Chainable => cy.get('[data-qa="submit-button"]');
   getSuccessMessage = (): Cypress.Chainable => cy.get('.alert-success');
 }

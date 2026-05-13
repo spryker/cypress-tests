@@ -3,9 +3,9 @@ import { BudgetUpdateRepository } from '../budget-update-repository';
 
 @injectable()
 export class SuiteBudgetUpdateRepository implements BudgetUpdateRepository {
-  getNameInput = (): Cypress.Chainable => cy.get('#budgetForm_name');
+  getNameInput = (): Cypress.Chainable => cy.get('[data-qa="budget-name-input"]');
 
-  getAmountInput = (): Cypress.Chainable => cy.get('#budgetForm_amount');
+  getAmountInput = (): Cypress.Chainable => cy.get('[data-qa="budget-amount-input"]');
 
   getSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="submit-button"]');
 

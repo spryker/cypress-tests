@@ -3,17 +3,17 @@ import { BudgetCreateRepository } from '../budget-create-repository';
 
 @injectable()
 export class SuiteBudgetCreateRepository implements BudgetCreateRepository {
-  getNameInput = (): Cypress.Chainable => cy.get('#budgetForm_name');
+  getNameInput = (): Cypress.Chainable => cy.get('[data-qa="budget-name-input"]');
 
-  getAmountInput = (): Cypress.Chainable => cy.get('#budgetForm_amount');
+  getAmountInput = (): Cypress.Chainable => cy.get('[data-qa="budget-amount-input"]');
 
-  getCurrencySelect = (): Cypress.Chainable => cy.get('#budgetForm_currencyIsoCode');
+  getCurrencySelect = (): Cypress.Chainable => cy.get('[data-qa="budget-currency-select"]');
 
-  getEnforcementRuleSelect = (): Cypress.Chainable => cy.get('#budgetForm_enforcementRule');
+  getEnforcementRuleSelect = (): Cypress.Chainable => cy.get('[data-qa="budget-enforcement-rule-select"]');
 
-  getStartsAtInput = (): Cypress.Chainable => cy.get('#budgetForm_startsAt');
+  getStartsAtInput = (): Cypress.Chainable => cy.get('[data-qa="budget-starts-at-input"]');
 
-  getEndsAtInput = (): Cypress.Chainable => cy.get('#budgetForm_endsAt');
+  getEndsAtInput = (): Cypress.Chainable => cy.get('[data-qa="budget-ends-at-input"]');
 
   getSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="submit-button"]');
 
