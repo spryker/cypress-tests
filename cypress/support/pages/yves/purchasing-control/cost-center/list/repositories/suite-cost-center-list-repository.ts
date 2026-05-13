@@ -5,7 +5,7 @@ import { CostCenterListRepository } from '../cost-center-list-repository';
 export class SuiteCostCenterListRepository implements CostCenterListRepository {
   getCreateButton = (): Cypress.Chainable => cy.get('a[href*="cost-center/create"]');
 
-  getTableRows = (): Cypress.Chainable => cy.get('[data-qa="component advanced-table"] tbody tr');
+  getTableRows = (): Cypress.Chainable => cy.get('[data-qa="component data-table"] tbody tr');
 
   getEditButtonByUuid = (uuid: string): Cypress.Chainable =>
     cy.get(`[data-qa="cell-actions"] a[href*="${uuid}"]`).first();
