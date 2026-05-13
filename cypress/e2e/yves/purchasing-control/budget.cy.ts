@@ -3,6 +3,26 @@ import { YvesBudgetCrudStaticFixtures, YvesBudgetCrudDynamicFixtures } from '@in
 import { YvesBudgetListPage, YvesBudgetCreatePage, YvesBudgetUpdatePage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
+function formatDate(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
+
+function getBudgetStartDate(): string {
+  const date = new Date();
+  date.setMonth(date.getMonth() + 1);
+  date.setDate(1);
+
+  return formatDate(date);
+}
+
+function getBudgetEndDate(): string {
+  const date = new Date();
+  date.setMonth(date.getMonth() + 4);
+  date.setDate(0);
+
+  return formatDate(date);
+}
+
 describe(
   'purchasing control budget crud',
   {
@@ -42,26 +62,24 @@ describe(
     it('authorized company user should be able to create a budget', (): void => {
       budgetCreatePage.visitByCostCenterUuid(dynamicFixtures.costCenter.uuid);
 
-      budgetCreatePage.fillName('Q2 Budget');
-      budgetCreatePage.fillAmount('50000');
-      budgetCreatePage.selectCurrency('EUR');
-      budgetCreatePage.selectEnforcementRule('block');
-      budgetCreatePage.fillStartDate('2026-04-01');
-      budgetCreatePage.fillEndDate('2026-06-30');
+      budgetCreatePage.fillName(staticFixtures.newBudgetName);
+      budgetCreatePage.fillAmount(staticFixtures.budgetAmount);
+      budgetCreatePage.selectCurrency(staticFixtures.budgetCurrency);
+      budgetCreatePage.selectEnforcementRule(staticFixtures.budgetEnforcementRule);
+      budgetCreatePage.fillStartDate(getBudgetStartDate());
+      budgetCreatePage.fillEndDate(getBudgetEndDate());
       budgetCreatePage.submit();
 
       budgetCreatePage.assertSuccess();
     });
 
     it('authorized company user should be able to update a budget', (): void => {
-      const updatedName = 'Updated Budget Name';
-
       budgetUpdatePage.visitByUuid(dynamicFixtures.preExistingBudget.uuid, dynamicFixtures.costCenter.uuid);
-      budgetUpdatePage.fillName(updatedName);
+      budgetUpdatePage.fillName(staticFixtures.updatedBudgetName);
       budgetUpdatePage.submit();
 
       budgetUpdatePage.assertSuccess();
-      budgetListPage.assertBudgetInTable(updatedName);
+      budgetListPage.assertBudgetInTable(staticFixtures.updatedBudgetName);
     });
   }
 );

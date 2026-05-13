@@ -3,6 +3,26 @@ import { BackofficeBudgetCrudStaticFixtures, BackofficeBudgetCrudDynamicFixtures
 import { BackofficeBudgetListPage, BackofficeBudgetCreatePage, BackofficeBudgetEditPage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
+function formatDate(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
+
+function getBudgetStartDate(): string {
+  const date = new Date();
+  date.setMonth(date.getMonth() + 1);
+  date.setDate(1);
+
+  return formatDate(date);
+}
+
+function getBudgetEndDate(): string {
+  const date = new Date();
+  date.setMonth(date.getMonth() + 4);
+  date.setDate(0);
+
+  return formatDate(date);
+}
+
 describe(
   'purchasing control budget crud',
   {
@@ -33,34 +53,32 @@ describe(
       });
     });
 
-    it('admin should be able to create a budget for a cost center', (): void => {
+    it('backoffice user should be able to create a budget for a cost center', (): void => {
       budgetCreatePage.visitByCostCenter(dynamicFixtures.costCenter.id_cost_center);
 
-      budgetCreatePage.fillName('Q1 Budget');
-      budgetCreatePage.fillAmount('100000');
-      budgetCreatePage.selectCurrency('EUR');
-      budgetCreatePage.selectEnforcementRule('block');
-      budgetCreatePage.fillStartDate('2026-01-01');
-      budgetCreatePage.fillEndDate('2026-03-31');
+      budgetCreatePage.fillName(staticFixtures.newBudgetName);
+      budgetCreatePage.fillAmount(staticFixtures.budgetAmount);
+      budgetCreatePage.selectCurrency(staticFixtures.budgetCurrency);
+      budgetCreatePage.selectEnforcementRule(staticFixtures.budgetEnforcementRule);
+      budgetCreatePage.fillStartDate(getBudgetStartDate());
+      budgetCreatePage.fillEndDate(getBudgetEndDate());
       budgetCreatePage.submit();
 
       budgetCreatePage.assertSuccess();
     });
 
-    it('admin should see budget in the budget list after creation', (): void => {
+    it('backoffice user should see budget in the budget list after creation', (): void => {
       budgetListPage.visitByCostCenter(dynamicFixtures.costCenter.id_cost_center);
       budgetListPage.assertBudgetInTable(dynamicFixtures.preExistingBudget.name);
     });
 
-    it('admin should be able to edit a budget', (): void => {
-      const updatedName = 'Updated Budget Name';
-
+    it('backoffice user should be able to edit a budget', (): void => {
       budgetEditPage.visitById(dynamicFixtures.preExistingBudget.id_budget, dynamicFixtures.costCenter.id_cost_center);
-      budgetEditPage.fillName(updatedName);
+      budgetEditPage.fillName(staticFixtures.updatedBudgetName);
       budgetEditPage.submit();
 
       budgetEditPage.assertSuccess();
-      budgetListPage.assertBudgetInTable(updatedName);
+      budgetListPage.assertBudgetInTable(staticFixtures.updatedBudgetName);
     });
   }
 );

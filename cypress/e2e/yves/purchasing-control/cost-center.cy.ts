@@ -42,8 +42,8 @@ describe(
     it('authorized company user should be able to create a cost center', (): void => {
       costCenterCreatePage.visit();
 
-      costCenterCreatePage.fillName('New Cost Center');
-      costCenterCreatePage.fillDescription('New cost center description');
+      costCenterCreatePage.fillName(staticFixtures.newCostCenterName);
+      costCenterCreatePage.fillDescription(staticFixtures.newCostCenterDescription);
       costCenterCreatePage.selectBusinessUnit(dynamicFixtures.businessUnit.id_company_business_unit);
       costCenterCreatePage.submit();
 
@@ -51,14 +51,12 @@ describe(
     });
 
     it('authorized company user should be able to edit a cost center', (): void => {
-      const updatedName = 'Updated Cost Center Name';
-
       costCenterUpdatePage.visitByUuid(dynamicFixtures.preExistingCostCenter.uuid);
-      costCenterUpdatePage.fillName(updatedName);
+      costCenterUpdatePage.fillName(staticFixtures.updatedCostCenterName);
       costCenterUpdatePage.submit();
 
       costCenterUpdatePage.assertSuccess();
-      costCenterListPage.assertCostCenterInTable(updatedName);
+      costCenterListPage.assertCostCenterInTable(staticFixtures.updatedCostCenterName);
     });
 
     it('authorized company user should be able to deactivate a cost center', (): void => {

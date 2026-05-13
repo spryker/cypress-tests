@@ -36,12 +36,12 @@ describe(
       });
     });
 
-    it('admin should be able to create a cost center', (): void => {
+    it('backoffice user should be able to create a cost center', (): void => {
       costCenterListPage.waitForTable();
       costCenterListPage.clickCreateButton();
 
-      costCenterCreatePage.fillName('Test Cost Center');
-      costCenterCreatePage.fillDescription('Test description');
+      costCenterCreatePage.fillName(staticFixtures.newCostCenterName);
+      costCenterCreatePage.fillDescription(staticFixtures.newCostCenterDescription);
       costCenterCreatePage.selectCompany(dynamicFixtures.company.name);
       costCenterCreatePage.selectBusinessUnit(dynamicFixtures.businessUnit.name);
       costCenterCreatePage.submit();
@@ -49,15 +49,13 @@ describe(
       costCenterCreatePage.assertSuccess();
     });
 
-    it('admin should be able to edit a cost center', (): void => {
-      const updatedName = 'Updated Cost Center Name';
-
+    it('backoffice user should be able to edit a cost center', (): void => {
       costCenterEditPage.visitById(dynamicFixtures.preExistingCostCenter.id_cost_center);
-      costCenterEditPage.fillName(updatedName);
+      costCenterEditPage.fillName(staticFixtures.updatedCostCenterName);
       costCenterEditPage.submit();
 
       costCenterEditPage.assertSuccess();
-      costCenterListPage.assertCostCenterInTable(updatedName);
+      costCenterListPage.assertCostCenterInTable(staticFixtures.updatedCostCenterName);
     });
   }
 );

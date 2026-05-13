@@ -2,6 +2,9 @@ import { User } from './shared';
 
 export interface BackofficeCostCenterCrudStaticFixtures {
   defaultPassword: string;
+  newCostCenterName: string;
+  newCostCenterDescription: string;
+  updatedCostCenterName: string;
 }
 
 export interface BackofficeCostCenterCrudDynamicFixtures {
@@ -13,6 +16,11 @@ export interface BackofficeCostCenterCrudDynamicFixtures {
 
 export interface BackofficeBudgetCrudStaticFixtures {
   defaultPassword: string;
+  newBudgetName: string;
+  budgetAmount: string;
+  budgetCurrency: string;
+  budgetEnforcementRule: string;
+  updatedBudgetName: string;
 }
 
 export interface BackofficeBudgetCrudDynamicFixtures {

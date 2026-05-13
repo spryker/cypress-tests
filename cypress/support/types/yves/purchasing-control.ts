@@ -1,5 +1,8 @@
 export interface YvesCostCenterCrudStaticFixtures {
   defaultPassword: string;
+  newCostCenterName: string;
+  newCostCenterDescription: string;
+  updatedCostCenterName: string;
 }
 
 export interface YvesCostCenterCrudDynamicFixtures {
@@ -12,6 +15,11 @@ export interface YvesCostCenterCrudDynamicFixtures {
 
 export interface YvesBudgetCrudStaticFixtures {
   defaultPassword: string;
+  newBudgetName: string;
+  budgetAmount: string;
+  budgetCurrency: string;
+  budgetEnforcementRule: string;
+  updatedBudgetName: string;
 }
 
 export interface YvesBudgetCrudDynamicFixtures {
