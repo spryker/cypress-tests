@@ -79,6 +79,7 @@ describe(
       budgetUpdatePage.submit();
 
       budgetUpdatePage.assertSuccess();
+      budgetListPage.visitByCostCenterUuid(dynamicFixtures.costCenter.uuid);
       budgetListPage.assertBudgetInTable(staticFixtures.updatedBudgetName);
     });
   }

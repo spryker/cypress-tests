@@ -25,7 +25,7 @@
           "type": "helper",
           "name": "haveBudget",
           "key": "preExistingBudget",
-          "arguments": ["#costCenter.id_cost_center", {}]
+          "arguments": ["#costCenter.id_cost_center", { "currency_iso_code": "EUR" }]
         }
       ]
     }

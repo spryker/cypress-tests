@@ -75,13 +75,5 @@ describe(
       checkoutSummaryBudgetPage.assertEnforcementError();
       cy.url().should('include', '/checkout/summary');
     });
-
-    //TODO: Enable this test once the approval process is implemented and we have a way to pre-approve quotes in tests
-    // it('buyer should be able to place order when require_approval budget is exceeded but quote is pre-approved', (): void => {
-    //   proceedThroughCheckoutToSummary(dynamicFixtures.buyerForApproved.email);
-    //   checkoutSummaryPage.placeOrder();
-
-    //   cy.url().should('include', '/checkout/success');
-    // });
   }
 );
