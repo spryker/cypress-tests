@@ -41,6 +41,7 @@ describe(
       productManagementEditPage.openMediaTab();
 
       // Arrange
+      productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.defaultLocaleName);
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.userGuide,
         index: 0,

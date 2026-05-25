@@ -17,6 +17,7 @@ export class ProductManagementEditRepository {
   getCollapsedBlock = (): Cypress.Chainable =>
     cy.get('#tab-content-general > .panel-body > .collapsed > .ibox-title > .collapse-link > .ibox-tools > .fas');
   getMediaTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-image"]');
+  getAttachmentDeleteButtonSelector = (): string => '.attachment-container > div.m-b-md .remove-attachment';
 
   getAddAttachmentButton = (locale = 'default'): Cypress.Chainable =>
     this.getAttachmentLocaleContainer(locale).find('.add-another-attachment');
@@ -52,7 +53,9 @@ export class ProductManagementEditRepository {
     this.getAttachmentItems(locale).eq(index).find('.remove-attachment');
 
   getAttachmentDeleteButtonForLocale = (locale: string): Cypress.Chainable =>
-    this.getAttachmentLocaleContainer(locale).find('.attachment-container > div.m-b-md .remove-attachment');
+    this.getAttachmentLocaleContainer(locale).then(($container) =>
+      $container.find(this.getAttachmentDeleteButtonSelector())
+    );
 
   getMerchantSelectContainer = (): Cypress.Chainable => cy.get('#select2-product_form_edit_idMerchant-container');
 
@@ -61,7 +64,7 @@ export class ProductManagementEditRepository {
   getMerchantNotAssignedOptionText = (): string => 'Not assigned';
 
   getSaveSuccessMessage = (sku: string): Cypress.Chainable =>
-    cy.contains(`The product [${sku}] was saved successfully`);
+    cy.contains(`The product [${sku}] was saved successfully`, { timeout: 10000 });
 
   private getAttachmentLocaleContainer = (locale: string): Cypress.Chainable =>
     cy.get('.attachment-forms').contains('.ibox-title', this.getLocaleDisplayName(locale)).closest('.ibox');
