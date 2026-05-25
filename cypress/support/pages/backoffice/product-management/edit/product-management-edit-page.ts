@@ -100,10 +100,8 @@ export class ProductManagementEditPage extends BackofficePage {
   };
 
   deleteAttachmentsForLocale = (locale: string): void => {
-    this.repository.getAttachmentLocaleContainer(locale).then(($container) => {
-      $container.find('.attachment-container > div.m-b-md .remove-attachment').each((_, el) => {
-        cy.wrap(el).click();
-      });
+    this.repository.getAttachmentDeleteButtonForLocale(locale).each(($el) => {
+      cy.wrap($el).click();
     });
   };
 
