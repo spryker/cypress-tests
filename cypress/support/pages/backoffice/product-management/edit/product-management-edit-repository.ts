@@ -64,9 +64,9 @@ export class ProductManagementEditRepository {
   getMerchantNotAssignedOptionText = (): string => 'Not assigned';
 
   getSaveSuccessMessage = (sku: string): Cypress.Chainable =>
-    cy.contains(`The product [${sku}] was saved successfully`, { timeout: 15000 });
+    cy.contains(`The product [${sku}] was saved successfully`, { timeout: 10000 });
 
-  getAttachmentLocaleContainer = (locale: string): Cypress.Chainable =>
+  private getAttachmentLocaleContainer = (locale: string): Cypress.Chainable =>
     cy.get('.attachment-forms').contains('.ibox-title', this.getLocaleDisplayName(locale)).closest('.ibox');
 
   private getLocaleDisplayName = (locale: string): string => {
