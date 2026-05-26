@@ -1,7 +1,7 @@
 {
   "defaultPassword": "change123",
   "customer": {
-    "email": "andrew@ottom.de"
+    "email": "sonia@spryker.com"
   },
   "inquiry": {
     "subject": "Smoke Test Inquiry",
