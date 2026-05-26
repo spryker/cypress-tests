@@ -8,8 +8,27 @@ import { SspInquiryCreateSmokeStaticFixtures } from '@interfaces/smoke';
  */
 describe(
   'ssp inquiry create',
-  { tags: ['@smoke', '@ssp-inquiry', 'ssp-inquiry', 'spryker-core'] },
+  {
+    tags: [
+      '@smoke',
+      '@ssp',
+      '@ssp-inquiry',
+      'ssp-inquiry-create',
+      'self-service-portal',
+      'spryker-core',
+    ],
+  },
   (): void => {
+    if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite and b2b-mp', () => {});
+      return;
+    }
+
+    if (!Cypress.env('ENV_IS_SSP_ENABLED')) {
+      it.skip('skipped because SSP is not enabled', () => {});
+      return;
+    }
+
     const sspInquiryCreatePage = container.get(SspInquiryCreatePage);
     const sspInquiryListPage = container.get(SspInquiryListPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
@@ -28,13 +47,14 @@ describe(
 
       sspInquiryCreatePage.visit();
 
-      sspInquiryCreatePage.createInquiry({
+      sspInquiryCreatePage.createSspInquiry({
         subject: staticFixtures.inquiry.subject,
-        message: staticFixtures.inquiry.message,
-        file: staticFixtures.inquiry.file,
+        description: staticFixtures.inquiry.description,
+        files: [staticFixtures.inquiry.file],
+        availableTypes: [],
       });
 
-      cy.contains(sspInquiryCreatePage.getInquiryCreatedMessage()).should('exist');
+      cy.contains(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
 
       sspInquiryListPage.visit();
       cy.contains(staticFixtures.inquiry.subject).should('exist');
