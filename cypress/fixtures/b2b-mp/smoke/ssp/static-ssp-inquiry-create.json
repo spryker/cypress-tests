@@ -4,12 +4,12 @@
     "email": "sonia@spryker.com"
   },
   "inquiry": {
-    "subject": "Smoke Test Inquiry",
+    "subject": "Smoke Oryx Inquiry",
     "description": "This is an automated smoke test inquiry.",
     "file": {
-      "name": "b2b-mp/smoke/ssp/files/orix.jpeg",
+      "name": "b2b-mp/smoke/ssp/files/oryx.png",
       "size": "",
-      "extension": "jpeg"
+      "extension": "png"
     }
   }
 }

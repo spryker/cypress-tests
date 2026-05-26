@@ -4,9 +4,9 @@
     "email": "sonia@spryker.com"
   },
   "asset": {
-    "name": "Smoke Test Asset",
+    "name": "Mechanical Oryx",
     "note": "Smoke test asset note",
-    "serial_number": "SMOKE-1234567890",
-    "image": "suite/yves/ssp-asset/files/asset_image.png"
+    "serial_number": "ORYX-1234567890",
+    "image": "suite/smoke/ssp/files/oryx.png"
   }
 }

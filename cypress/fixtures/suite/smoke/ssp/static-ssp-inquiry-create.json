@@ -7,9 +7,9 @@
     "subject": "Smoke Test Inquiry",
     "description": "This is an automated smoke test inquiry.",
     "file": {
-      "name": "suite/smoke/ssp/files/oryx.jpeg",
+      "name": "suite/smoke/ssp/files/oryx.png",
       "size": "",
-      "extension": "jpeg"
+      "extension": "png"
     }
   }
 }
