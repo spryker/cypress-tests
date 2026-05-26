@@ -36,3 +36,15 @@ export interface File {
   size: string;
   extension: string;
 }
+
+export interface SspModelCreateSmokeStaticFixtures {
+  defaultPassword: string;
+  rootUser: {
+    username: string;
+  };
+  sspModel: {
+    name: string;
+    code: string;
+    image: string;
+  };
+}
