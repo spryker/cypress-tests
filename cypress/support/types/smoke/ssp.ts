@@ -12,3 +12,21 @@ export interface SspAssetCreateSmokeStaticFixtures {
   customer: Customer;
   asset: SspAsset;
 }
+
+export interface SspInquiryFile {
+  name: string;
+  size: string;
+  extension: string;
+}
+
+export interface SspInquiry {
+  subject: string;
+  description: string;
+  file: SspInquiryFile;
+}
+
+export interface SspInquiryCreateSmokeStaticFixtures {
+  defaultPassword: string;
+  customer: Customer;
+  inquiry: SspInquiry;
+}
