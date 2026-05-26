@@ -14,6 +14,7 @@ describe(
       '@ssp',
       '@ssp-model',
       'spryker-core',
+      'spryker-core-back-office',
     ],
   },
   (): void => {
