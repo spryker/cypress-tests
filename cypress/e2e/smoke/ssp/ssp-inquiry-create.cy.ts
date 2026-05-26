@@ -1,7 +1,7 @@
 import { container } from '@utils';
 import { SspInquiryCreatePage, SspInquiryListPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
-import { SspInquiryCreateSmokeStaticFixtures } from '@interfaces/smoke';
+import { SspInquirySmokeStaticFixtures } from '@interfaces/smoke';
 
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
@@ -31,7 +31,7 @@ describe(
     const sspInquiryListPage = container.get(SspInquiryListPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
 
-    let staticFixtures: SspInquiryCreateSmokeStaticFixtures;
+    let staticFixtures: SspInquirySmokeStaticFixtures;
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
@@ -45,17 +45,13 @@ describe(
 
       sspInquiryCreatePage.visit();
 
-      sspInquiryCreatePage.createSspInquiry({
-        subject: staticFixtures.inquiry.subject,
-        description: staticFixtures.inquiry.description,
-        files: [staticFixtures.inquiry.file],
-        availableTypes: [],
-      });
+      staticFixtures.generalSspInquiry.availableTypes = staticFixtures.sspInquiryTypes.general;
+      sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
       cy.contains(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
 
       sspInquiryListPage.visit();
-      cy.contains(staticFixtures.inquiry.subject).should('exist');
+      cy.contains(staticFixtures.generalSspInquiry.subject).should('exist');
     });
   }
 );

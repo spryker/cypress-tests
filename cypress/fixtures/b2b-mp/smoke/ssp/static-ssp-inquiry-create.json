@@ -3,13 +3,32 @@
   "customer": {
     "email": "sonia@spryker.com"
   },
-  "inquiry": {
+  "generalSspInquiry": {
     "subject": "Smoke Oryx Inquiry",
     "description": "This is an automated smoke test inquiry.",
-    "file": {
-      "name": "b2b-mp/smoke/ssp/files/oryx.png",
-      "size": "",
-      "extension": "png"
-    }
+      "files": [
+      {
+        "name": "b2b-mp/smoke/ssp/files/oryx.png",
+        "size": "300 kB",
+        "extension": "png"
+      }
+    ],
+    "type": {
+      "key": "general",
+      "value": "General"
+    },
+    "status": "pending"
+  },
+  "sspInquiryTypes": {
+    "general": [
+      {
+        "key": "",
+        "value": ""
+      },
+      {
+        "key": "general",
+        "value": "General"
+      }
+    ]
   }
 }

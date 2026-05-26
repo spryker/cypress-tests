@@ -1,16 +1,19 @@
 import { Customer } from './shared';
 
-export interface SspAsset {
-  name: string;
-  serial_number?: string;
-  note?: string;
-  image?: string;
-}
-
-export interface SspAssetCreateSmokeStaticFixtures {
+export interface SspInquirySmokeStaticFixtures {
   defaultPassword: string;
   customer: Customer;
-  asset: SspAsset;
+  generalSspInquiry: SspInquiry;
+  sspInquiryTypes: SspInquiryTypes;
+}
+
+export interface SspInquiry {
+  subject: string;
+  description: string;
+  files: File[];
+  availableTypes: SspInquiryType[];
+  type: SspInquiryType;
+  status: string;
 }
 
 export interface SspInquiryFile {
@@ -19,14 +22,17 @@ export interface SspInquiryFile {
   extension: string;
 }
 
-export interface SspInquiry {
-  subject: string;
-  description: string;
-  file: SspInquiryFile;
+export interface SspInquiryType {
+  key: string;
+  value: string;
 }
 
-export interface SspInquiryCreateSmokeStaticFixtures {
-  defaultPassword: string;
-  customer: Customer;
-  inquiry: SspInquiry;
+export interface SspInquiryTypes {
+  general: SspInquiryType[];
+}
+
+export interface File {
+  name: string;
+  size: string;
+  extension: string;
 }
