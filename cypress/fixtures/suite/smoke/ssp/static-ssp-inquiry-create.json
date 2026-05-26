@@ -4,7 +4,7 @@
     "email": "sonia@spryker.com"
   },
   "inquiry": {
-    "subject": "Smoke Test Inquiry",
+    "subject": "Smoke Oryx Inquiry",
     "description": "This is an automated smoke test inquiry.",
     "file": {
       "name": "suite/smoke/ssp/files/oryx.png",
