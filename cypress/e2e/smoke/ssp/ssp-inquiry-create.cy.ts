@@ -13,8 +13,6 @@ describe(
       '@smoke',
       '@ssp',
       '@ssp-inquiry',
-      'ssp-inquiry-create',
-      'self-service-portal',
       'spryker-core',
     ],
   },

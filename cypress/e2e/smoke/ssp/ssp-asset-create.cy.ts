@@ -12,8 +12,6 @@ describe(
       '@smoke',
       '@ssp',
       '@ssp-asset',
-      'ssp-asset-create',
-      'self-service-portal',
       'spryker-core',
     ],
   },
