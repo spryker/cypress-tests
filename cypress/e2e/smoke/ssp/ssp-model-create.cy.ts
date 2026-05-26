@@ -53,6 +53,12 @@ describe(
       });
       sspModelAddPage.submitForm();
       sspModelAddPage.verifySuccessMessage();
+
+      cy.get('img[data-qa="ssp-model-image"]')
+        .should('be.visible')
+        .and(($img) => {
+          expect(($img[0] as HTMLImageElement).naturalWidth, 'image should have loaded (naturalWidth > 0)').to.be.greaterThan(0);
+        });
     });
   }
 );

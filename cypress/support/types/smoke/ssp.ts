@@ -45,6 +45,8 @@ export interface SspModelCreateSmokeStaticFixtures {
   sspModel: {
     name: string;
     code: string;
-    image: string;
+    image?: string;
   };
 }
+
+
