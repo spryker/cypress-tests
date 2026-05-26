@@ -1,0 +1,15 @@
+{
+  "defaultPassword": "change123",
+  "customer": {
+    "email": "andrew@ottom.de"
+  },
+  "inquiry": {
+    "subject": "Smoke Test Inquiry",
+    "description": "This is an automated smoke test inquiry.",
+    "file": {
+      "name": "suite/smoke/ssp/files/oryx.jpeg",
+      "size": "",
+      "extension": "jpeg"
+    }
+  }
+}
