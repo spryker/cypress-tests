@@ -1,12 +1,12 @@
 {
   "defaultPassword": "change123",
   "customer": {
-    "email": "andrew@ottom.de"
+    "email": "sonia@spryker.com"
   },
   "asset": {
     "name": "Smoke Test Asset",
     "note": "Smoke test asset note",
     "serial_number": "SMOKE-1234567890",
-    "image": "b2b-mp/yves/ssp-asset/files/asset_image.png"
+    "image": "b2b-mp/smoke/ssp/files/orix.jpeg"
   }
 }
