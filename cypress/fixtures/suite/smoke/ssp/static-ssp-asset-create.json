@@ -1,0 +1,12 @@
+{
+  "defaultPassword": "change123",
+  "customer": {
+    "email": "spencor.hopkin@spryker.com"
+  },
+  "asset": {
+    "name": "Smoke Test Asset",
+    "note": "Smoke test asset note",
+    "serial_number": "SMOKE-1234567890",
+    "image": "suite/yves/ssp-asset/files/asset_image.png"
+  }
+}
