@@ -24,11 +24,11 @@ export class YvesBudgetCreatePage extends YvesPage {
   };
 
   selectCurrency = (currency: string): void => {
-    this.repository.getCurrencySelect().select(currency);
+    this.repository.getCurrencySelect().select(currency, { force: true });
   };
 
   selectEnforcementRule = (rule: string): void => {
-    this.repository.getEnforcementRuleSelect().select(rule);
+    this.repository.getEnforcementRuleSelect().select(rule, { force: true });
   };
 
   fillStartDate = (date: string): void => {

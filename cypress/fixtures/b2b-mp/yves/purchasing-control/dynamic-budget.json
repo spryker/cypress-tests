@@ -1,0 +1,76 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": false,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [{ "status": "approved", "is_active": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [{ "fk_company": "#company.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "manageCostCentersPermission",
+          "arguments": ["ManageCostCentersPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "authorizedRole",
+          "arguments": [{ "fk_company": "#company.id_company" }, ["#manageCostCentersPermission"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "authorizedCustomer",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "authorizedRoleCollection",
+          "arguments": { "roles": ["#authorizedRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "authorizedCompanyUser",
+          "arguments": [
+            {
+              "customer": "#authorizedCustomer",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#authorizedRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#authorizedCompanyUser", ["#authorizedRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveCostCenter",
+          "key": "costCenter",
+          "arguments": [{ "name": "Yves Budget Test Cost Center", "companyBusinessUnit": "#businessUnit", "is_active": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveBudget",
+          "key": "preExistingBudget",
+          "arguments": ["#costCenter.id_cost_center", { "currency_iso_code": "EUR" }]
+        }
+      ]
+    }
+  }
+}

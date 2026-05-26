@@ -14,8 +14,8 @@ describe(
   'purchasing control budget enforcement at checkout',
   { tags: ['@yves', '@purchasing-control', 'purchasing-control', 'spryker-core'] },
   (): void => {
-    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because tests run only for suite, b2b, and b2b-mp', () => {});
+    if (['b2c', 'b2c-mp', 'b2b'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite, and b2b-mp', () => {});
       return;
     }
 

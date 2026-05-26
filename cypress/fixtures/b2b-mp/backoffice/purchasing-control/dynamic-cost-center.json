@@ -1,0 +1,39 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": false,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [{ "status": "approved", "is_active": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [{ "fk_company": "#company.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCostCenter",
+          "key": "preExistingCostCenter",
+          "arguments": [{ "name": "Backoffice CRUD Test Cost Center", "companyBusinessUnit": "#businessUnit" }]
+        }
+      ]
+    }
+  }
+}

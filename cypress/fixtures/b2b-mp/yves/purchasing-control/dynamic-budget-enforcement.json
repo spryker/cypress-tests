@@ -1,0 +1,474 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 1, "name": "DE" }
+        },
+        {
+          "type": "array-object",
+          "key": "stores",
+          "arguments": ["#store"]
+        },
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeEN",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
+        },
+        {
+          "type": "helper",
+          "name": "haveUrl",
+          "arguments": [
+            {
+              "fkLocale": "#localeEN.id_locale",
+              "fkResourceMerchant": "#merchant.id_merchant",
+              "urlPrefix": "dummy-en-prefix-",
+              "url": "#merchant.name"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [{ "status": "approved", "is_active": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [{ "fk_company": "#company.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "manageCostCentersPermission",
+          "arguments": ["ManageCostCentersPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderPermission",
+          "arguments": ["PlaceOrderPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "requestQuoteApprovalPermission",
+          "arguments": ["RequestQuoteApprovalPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "buyerRole",
+          "arguments": [
+            { "fk_company": "#company.id_company" },
+            ["#manageCostCentersPermission", "#placeOrderPermission", "#requestQuoteApprovalPermission"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "approveQuotePermission",
+          "arguments": ["ApproveQuotePermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "approverRole",
+          "arguments": [{ "fk_company": "#company.id_company" }, ["#approveQuotePermission"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveCostCenter",
+          "key": "costCenter",
+          "arguments": [{ "name": "Yves Budget Enforcement Test Cost Center", "companyBusinessUnit": "#businessUnit", "is_active": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveBudget",
+          "key": "blockBudget",
+          "arguments": [
+            "#costCenter.id_cost_center",
+            { "enforcement_rule": "block", "amount": 100, "currency_iso_code": "EUR", "is_active": true }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveBudget",
+          "key": "warnBudget",
+          "arguments": [
+            "#costCenter.id_cost_center",
+            { "enforcement_rule": "warn", "amount": 100, "currency_iso_code": "EUR", "is_active": true }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveBudget",
+          "key": "requireApprovalBudget",
+          "arguments": [
+            "#costCenter.id_cost_center",
+            { "enforcement_rule": "require_approval", "amount": 100, "currency_iso_code": "EUR", "is_active": true }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveBudget",
+          "key": "withinBudget",
+          "arguments": [
+            "#costCenter.id_cost_center",
+            { "enforcement_rule": "block", "amount": 9999900, "currency_iso_code": "EUR", "is_active": true }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#product.abstract_sku",
+              "skuProduct": "#product.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOffer",
+          "key": "productOffer",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "idProductConcrete": "#product.id_product_concrete",
+              "concreteSku": "#product.sku",
+              "merchantReference": "#merchant.merchant_reference",
+              "stores": "#stores"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferStock",
+          "arguments": [
+            {
+              "idProductOffer": "#productOffer.id_product_offer",
+              "productOfferReference": "#productOffer.product_offer_reference",
+              "isNeverOutOfStock": true
+            },
+            "#merchant.stocks"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "buyerForWithin",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerForWithinRoleCollection",
+          "arguments": { "roles": ["#buyerRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerForWithinCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyerForWithin",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerForWithinRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerForWithinCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "withinBudgetQuote",
+          "arguments": [
+            {
+              "customer": "#buyerForWithin",
+              "idCostCenter": "#costCenter.id_cost_center",
+              "idBudget": "#withinBudget.id_budget",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "productOfferReference": "#productOffer.product_offer_reference",
+                  "merchantReference": "#productOffer.merchant_reference",
+                  "quantity": 1,
+                  "unitPrice": 30000
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "buyerForBlock",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerForBlockRoleCollection",
+          "arguments": { "roles": ["#buyerRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerForBlockCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyerForBlock",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerForBlockRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerForBlockCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "blockExceededQuote",
+          "arguments": [
+            {
+              "customer": "#buyerForBlock",
+              "idCostCenter": "#costCenter.id_cost_center",
+              "idBudget": "#blockBudget.id_budget",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "productOfferReference": "#productOffer.product_offer_reference",
+                  "merchantReference": "#productOffer.merchant_reference",
+                  "quantity": 1,
+                  "unitPrice": 30000
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "buyerForWarn",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerForWarnRoleCollection",
+          "arguments": { "roles": ["#buyerRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerForWarnCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyerForWarn",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerForWarnRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerForWarnCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "warnExceededQuote",
+          "arguments": [
+            {
+              "customer": "#buyerForWarn",
+              "idCostCenter": "#costCenter.id_cost_center",
+              "idBudget": "#warnBudget.id_budget",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "productOfferReference": "#productOffer.product_offer_reference",
+                  "merchantReference": "#productOffer.merchant_reference",
+                  "quantity": 1,
+                  "unitPrice": 30000
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "buyerForRequireApproval",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerForRequireApprovalRoleCollection",
+          "arguments": { "roles": ["#buyerRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerForRequireApprovalCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyerForRequireApproval",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerForRequireApprovalRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerForRequireApprovalCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "requireApprovalQuote",
+          "arguments": [
+            {
+              "customer": "#buyerForRequireApproval",
+              "idCostCenter": "#costCenter.id_cost_center",
+              "idBudget": "#requireApprovalBudget.id_budget",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "productOfferReference": "#productOffer.product_offer_reference",
+                  "merchantReference": "#productOffer.merchant_reference",
+                  "quantity": 1,
+                  "unitPrice": 30000
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "buyerForApproved",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerForApprovedRoleCollection",
+          "arguments": { "roles": ["#buyerRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "approverCustomer",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "approverRoleCollection",
+          "arguments": { "roles": ["#approverRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "approverCompanyUser",
+          "arguments": [
+            {
+              "customer": "#approverCustomer",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#approverRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#approverCompanyUser", ["#approverRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerForApprovedCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyerForApproved",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerForApprovedRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerForApprovedCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "approvedQuote",
+          "arguments": [
+            {
+              "customer": "#buyerForApproved",
+              "idCostCenter": "#costCenter.id_cost_center",
+              "idBudget": "#requireApprovalBudget.id_budget",
+              "quoteApprovals": [
+                { "status": "approved", "approverCompanyUserId": "#approverCompanyUser.id_company_user" }
+              ],
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "productOfferReference": "#productOffer.product_offer_reference",
+                  "merchantReference": "#productOffer.merchant_reference",
+                  "quantity": 1,
+                  "unitPrice": 30000
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
