@@ -133,6 +133,11 @@ export class ConfigurationPage extends BackofficePage {
   resetChanges = (): void => {
     cy.on('window:confirm', (): boolean => true);
     cy.get(this.repository.getResetButtonSelector()).click({ force: true });
+    cy.get(this.repository.getResetButtonSelector()).should('not.exist');
+  };
+
+  revertToDefault = (): void => {
+    cy.get(this.repository.getRevertToDefault()).first().click({ force: true });
   };
 
   searchSettings = (term: string): void => {

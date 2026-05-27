@@ -48,37 +48,36 @@ describe(
       configurationPage.uploadStorefrontLogo(`cypress/fixtures/${staticFixtures.logoFile}`);
       configurationPage.verifyStorefrontLogoUploaded();
       configurationPage.saveConfiguration();
+      cy.get('.use-default-link').should("be.visible");
+      configurationPage.getChangesCount().should("not.be.visible")
     });
 
     it('go to storefront and see the uploaded logo', (): void => {
+      cy.wait(4000)
       homePage.visit();
-      cy.get('[data-qa="component logo"]')        
+      cy.get('[data-qa="component logo"]').find('svg[data-qa="component icon"]')      
         .should('be.visible')
-        //.and(($img) => {
-        //  expect(($img[0] as HTMLImageElement).naturalWidth, 'image should have loaded (naturalWidth > 0)').to.be.eq(52);
-        .invoke('attr', 'src')
-        .then((src) => {
-          expect(src, 'logo src').to.be.a('string').and.not.be.empty;
-          expect(String(src), 'logo src contains uploaded filename').to.include('spryker-notext-logo.png');
+        .and(($img) => {
+          expect(($img[0] as HTMLImageElement).naturalWidth, 'image should have loaded (naturalWidth > 0)').to.be.lessThan(100);
         });
 
     });
 
     it('changes in BO can be reverted', (): void => {
       configurationPage.visitLogosTab();
-      configurationPage.resetChanges();
+      configurationPage.revertToDefault();
+      configurationPage.saveConfiguration();
+      cy.get('.use-default-link').should("not.be.visible");
+      configurationPage.getChangesCount().should("not.be.visible")
     });
 
     it('go to storefront and see the changes are reverted', (): void => {
+      cy.wait(4000)
       homePage.visit();
-      cy.get('[data-qa="component logo"]')        
+      cy.get('[data-qa="component logo"]').find('svg[data-qa="component icon"]')      
         .should('be.visible')
-        //.and(($img) => {
-        //  expect(($img[0] as HTMLImageElement).naturalWidth, 'image should have loaded (naturalWidth > 0)').to.be.eq(52);
-        .invoke('attr', 'src')
-        .then((src) => {
-          expect(src, 'logo src').to.be.a('string').and.not.be.empty;
-          expect(String(src), 'logo src does not contain uploaded filename').to.not.include('spryker-notext-logo.png');
+        .and(($img) => {
+          expect(($img[0] as HTMLImageElement).naturalWidth, 'image should have loaded (naturalWidth > 0)').to.be.greaterThan(100);
         });
     });
   }
