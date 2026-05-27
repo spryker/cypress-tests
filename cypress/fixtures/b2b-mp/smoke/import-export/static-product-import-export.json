@@ -1,0 +1,8 @@
+{
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "templateFile": "b2b-mp/smoke/import-export/files/template.csv",
+  "productFile": "b2b-mp/smoke/import-export/files/products.csv"
+}

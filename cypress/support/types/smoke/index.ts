@@ -6,3 +6,4 @@ export * from './product';
 export * from './merchant-portal';
 export * from './ssp';
 export * from './shop-theme';
+export * from './import-export';
