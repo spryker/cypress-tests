@@ -30,7 +30,7 @@ describe(
     const homePage = container.get(HomePage);
 
     let staticFixtures: ShopThemeSmokeStaticFixtures;
-    let uploadedLogoSrc: string;
+
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
@@ -43,14 +43,14 @@ describe(
       });
     });
 
-    it('1 - logo is uploaded in BO successfully', (): void => {
+    it('storefront logo is uploaded in BO configuration successfully', (): void => {
       configurationPage.visitLogosTab();
       configurationPage.uploadStorefrontLogo(`cypress/fixtures/${staticFixtures.logoFile}`);
       configurationPage.verifyStorefrontLogoUploaded();
       configurationPage.saveConfiguration();
     });
 
-    it('2 - go to storefront and see it is there', (): void => {
+    it('go to storefront and see the uploaded logo', (): void => {
       homePage.visit();
       cy.get('[data-qa="component logo"]')        
         .should('be.visible')
@@ -64,12 +64,12 @@ describe(
 
     });
 
-    it('3 - go to BO and revert changes', (): void => {
+    it('changes in BO can be reverted', (): void => {
       configurationPage.visitLogosTab();
       configurationPage.resetChanges();
     });
 
-    it('4 - go to storefront and see the changes are reverted', (): void => {
+    it('go to storefront and see the changes are reverted', (): void => {
       homePage.visit();
       cy.get('[data-qa="component logo"]')        
         .should('be.visible')
