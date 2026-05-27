@@ -1,18 +1,5 @@
 import { Customer } from './shared';
 
-export interface SspAsset {
-  name: string;
-  serial_number?: string;
-  note?: string;
-  image?: string;
-}
-
-export interface SspAssetCreateSmokeStaticFixtures {
-  defaultPassword: string;
-  customer: Customer;
-  asset: SspAsset;
-}
-
 export interface SspInquirySmokeStaticFixtures {
   defaultPassword: string;
   customer: Customer;
@@ -67,5 +54,6 @@ export interface SspFileUploadSmokeStaticFixtures {
   rootUser: {
     username: string;
   };
+  file: string;
   uploadedFileName: string;
 }
