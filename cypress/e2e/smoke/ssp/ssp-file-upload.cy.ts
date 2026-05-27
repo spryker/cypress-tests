@@ -5,7 +5,6 @@ import { SspFileUploadSmokeStaticFixtures } from '@interfaces/smoke';
 
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
- * This test checks that corresponding S3 bucker exists in the infra of the env
  */
 describe(
   'ssp file upload',
@@ -48,11 +47,20 @@ describe(
 
     it('backoffice user should be able to upload a file in the customer portal and verify it appears in the list', (): void => {
       sspFileManagementAddPage.visit();
-      sspFileManagementAddPage.loadTestFiles().then((files) => {
-        sspFileManagementAddPage.uploadFiles(files);
-        sspFileManagementAddPage.submitForm();
-        sspFileManagementAddPage.verifySuccessMessage();
+
+      cy.fixture(staticFixtures.file, 'binary').then((fileContent) => {
+        sspFileManagementAddPage.uploadFiles([
+          {
+            fileContent,
+            fileName: staticFixtures.uploadedFileName,
+            mimeType: 'image/png',
+            filePath: `cypress/fixtures/${staticFixtures.file}`,
+          },
+        ]);
       });
+
+      sspFileManagementAddPage.submitForm();
+      sspFileManagementAddPage.verifySuccessMessage();
 
       sspFileManagementListPage.visit();
       sspFileManagementListPage.verifyListPage();
