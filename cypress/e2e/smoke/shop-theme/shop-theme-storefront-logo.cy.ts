@@ -1,13 +1,12 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ConfigurationPage } from '@pages/backoffice';
-import { StorefrontLogoPage } from '@pages/yves';
 import { ShopThemeSmokeStaticFixtures } from '@interfaces/smoke';
 
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  * This test checks that the storefront logo can be uploaded via Configuration -> Theme -> Logos,
- * verified on the storefront, then reset to default in backoffice.
+ * verified on the storefront, then reverted to default in backoffice and verified again.
  */
 describe(
   'shop theme storefront logo',
@@ -28,9 +27,20 @@ describe(
 
     const userLoginScenario = container.get(UserLoginScenario);
     const configurationPage = container.get(ConfigurationPage);
-    const storefrontLogoPage = container.get(StorefrontLogoPage);
 
     let staticFixtures: ShopThemeSmokeStaticFixtures;
+    let uploadedLogoSrc: string;
+
+    const visitStorefrontHome = (): void => {
+      cy.visit('/');
+    };
+
+    const getStorefrontLogoImg = (): Cypress.Chainable<JQuery<HTMLImageElement>> => {
+      // Generic selector; adjust later if a stable data-qa selector exists in the storefront.
+      return cy.get('img[alt*="logo"], img[class*="logo"], header img, .logo img').first() as Cypress.Chainable<
+        JQuery<HTMLImageElement>
+      >;
+    };
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
@@ -43,20 +53,41 @@ describe(
       });
     });
 
-    it('backoffice user should be able to upload storefront logo and verify it on the storefront, then reset to default', (): void => {
-      // Step 1: Upload storefront logo via Configuration -> Theme -> Logos
+    it('1 - logo is uploaded in BO successfully', (): void => {
       configurationPage.visitLogosTab();
       configurationPage.uploadStorefrontLogo(`cypress/fixtures/${staticFixtures.logoFile}`);
       configurationPage.verifyStorefrontLogoUploaded();
       configurationPage.saveConfiguration();
+    });
 
-      // Step 2: Visit the storefront and verify the logo is visible
-      storefrontLogoPage.visit();
-      storefrontLogoPage.verifyLogoIsVisible();
+    it('2 - go to storefront and see it is there', (): void => {
+      visitStorefrontHome();
+      getStorefrontLogoImg()
+        .should('be.visible')
+        .invoke('attr', 'src')
+        .then((src) => {
+          expect(src, 'logo src').to.be.a('string').and.not.be.empty;
+          uploadedLogoSrc = String(src);
+        });
+    });
 
-      // Step 3: Go back to backoffice and reset the logo to default
+    it('3 - go to BO and revert changes', (): void => {
       configurationPage.visitLogosTab();
       configurationPage.resetChanges();
+    });
+
+    it('4 - go to storefront and see the changes are reverted', (): void => {
+      visitStorefrontHome();
+      getStorefrontLogoImg()
+        .should('be.visible')
+        .invoke('attr', 'src')
+        .then((src) => {
+          expect(src, 'logo src').to.be.a('string').and.not.be.empty;
+
+          if (uploadedLogoSrc) {
+            expect(String(src), 'default logo src differs from uploaded logo src').to.not.equal(uploadedLogoSrc);
+          }
+        });
     });
   }
 );
