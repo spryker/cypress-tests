@@ -21,6 +21,5 @@ export class B2bMpBudgetCreateRepository implements BudgetCreateRepository {
 
   getSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="component budget-form"] [data-qa="submit-button"]');
 
-  getSuccessFlashMessage = (): Cypress.Chainable =>
-    cy.get('[data-qa="component notification-area"] flash-message');
+  getSuccessFlashMessage = (): Cypress.Chainable => cy.get('[data-qa="component notification-area"] flash-message');
 }

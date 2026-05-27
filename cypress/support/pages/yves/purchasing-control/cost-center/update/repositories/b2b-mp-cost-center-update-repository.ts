@@ -7,7 +7,8 @@ export class B2bMpCostCenterUpdateRepository implements CostCenterUpdateReposito
 
   getDescriptionTextarea = (): Cypress.Chainable => cy.get('[data-qa="cost-center-description-input"]');
 
-  getIsActiveCheckbox = (): Cypress.Chainable => cy.get('#costCenterForm_isActive');
+  getIsActiveCheckbox = (): Cypress.Chainable =>
+    cy.get('[data-qa="component checkbox costCenterForm[isActive] costCenterForm_isActive"] input[type="checkbox"]');
 
   getSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="component cost-center-form"] [data-qa="submit-button"]');
 

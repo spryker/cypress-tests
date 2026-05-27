@@ -53,6 +53,30 @@
         {
           "type": "helper",
           "name": "havePermissionByKey",
+          "key": "addCartItemPermission",
+          "arguments": ["AddCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "changeCartItemPermission",
+          "arguments": ["ChangeCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "removeCartItemPermission",
+          "arguments": ["RemoveCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderWithAmountUpToPermission",
+          "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
           "key": "manageCostCentersPermission",
           "arguments": ["ManageCostCentersPermissionPlugin"]
         },
@@ -70,11 +94,26 @@
         },
         {
           "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "seeBusinessUnitOrdersPermission",
+          "arguments": ["SeeBusinessUnitOrdersPermissionPlugin"]
+        },
+        {
+          "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "key": "buyerRole",
           "arguments": [
             { "fk_company": "#company.id_company" },
-            ["#manageCostCentersPermission", "#placeOrderPermission", "#requestQuoteApprovalPermission"]
+            [
+              "#addCartItemPermission",
+              "#changeCartItemPermission",
+              "#removeCartItemPermission",
+              "#placeOrderWithAmountUpToPermission",
+              "#manageCostCentersPermission",
+              "#placeOrderPermission",
+              "#requestQuoteApprovalPermission",
+              "#seeBusinessUnitOrdersPermission"
+            ]
           ]
         },
         {
@@ -93,7 +132,13 @@
           "type": "helper",
           "name": "haveCostCenter",
           "key": "costCenter",
-          "arguments": [{ "name": "Yves Budget Enforcement Test Cost Center", "companyBusinessUnit": "#businessUnit", "is_active": true }]
+          "arguments": [
+            {
+              "name": "Yves Budget Enforcement Test Cost Center",
+              "companyBusinessUnit": "#businessUnit",
+              "is_active": true
+            }
+          ]
         },
         {
           "type": "helper",

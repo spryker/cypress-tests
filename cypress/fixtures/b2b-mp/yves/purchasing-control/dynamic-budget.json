@@ -62,7 +62,9 @@
           "type": "helper",
           "name": "haveCostCenter",
           "key": "costCenter",
-          "arguments": [{ "name": "Yves Budget Test Cost Center", "companyBusinessUnit": "#businessUnit", "is_active": true }]
+          "arguments": [
+            { "name": "Yves Budget Test Cost Center", "companyBusinessUnit": "#businessUnit", "is_active": true }
+          ]
         },
         {
           "type": "helper",

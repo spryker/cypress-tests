@@ -98,13 +98,21 @@
           "type": "helper",
           "name": "haveCostCenter",
           "key": "preExistingCostCenter",
-          "arguments": [{ "name": "Yves Active CRUD Test Cost Center", "companyBusinessUnit": "#businessUnit", "is_active": true }]
+          "arguments": [
+            { "name": "Yves Active CRUD Test Cost Center", "companyBusinessUnit": "#businessUnit", "is_active": true }
+          ]
         },
         {
           "type": "helper",
           "name": "haveCostCenter",
           "key": "inactiveCostCenter",
-          "arguments": [{ "name": "Yves Inactive CRUD Test Cost Center", "companyBusinessUnit": "#businessUnit", "is_active": false }]
+          "arguments": [
+            {
+              "name": "Yves Inactive CRUD Test Cost Center",
+              "companyBusinessUnit": "#businessUnit",
+              "is_active": false
+            }
+          ]
         }
       ]
     }

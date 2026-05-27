@@ -14,6 +14,5 @@ export class B2bMpCostCenterCreateRepository implements CostCenterCreateReposito
 
   getSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="component cost-center-form"] [data-qa="submit-button"]');
 
-  getSuccessFlashMessage = (): Cypress.Chainable =>
-    cy.get('[data-qa="component notification-area"] flash-message');
+  getSuccessFlashMessage = (): Cypress.Chainable => cy.get('[data-qa="component notification-area"] flash-message');
 }
