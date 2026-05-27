@@ -1,12 +1,12 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ConfigurationPage } from '@pages/backoffice';
+import { HomePage} from '@pages/yves';
 import { ShopThemeSmokeStaticFixtures } from '@interfaces/smoke';
 
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
- * This test checks that the storefront logo can be uploaded via Configuration -> Theme -> Logos,
- * verified on the storefront, then reverted to default in backoffice and verified again.
+ * This test checks that S3 bucket for logos is present in the infra
  */
 describe(
   'shop theme storefront logo',
@@ -27,20 +27,10 @@ describe(
 
     const userLoginScenario = container.get(UserLoginScenario);
     const configurationPage = container.get(ConfigurationPage);
+    const homePage = container.get(HomePage);
 
     let staticFixtures: ShopThemeSmokeStaticFixtures;
     let uploadedLogoSrc: string;
-
-    const visitStorefrontHome = (): void => {
-      cy.visit('/');
-    };
-
-    const getStorefrontLogoImg = (): Cypress.Chainable<JQuery<HTMLImageElement>> => {
-      // Generic selector; adjust later if a stable data-qa selector exists in the storefront.
-      return cy.get('img[alt*="logo"], img[class*="logo"], header img, .logo img').first() as Cypress.Chainable<
-        JQuery<HTMLImageElement>
-      >;
-    };
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
@@ -61,14 +51,17 @@ describe(
     });
 
     it('2 - go to storefront and see it is there', (): void => {
-      visitStorefrontHome();
-      getStorefrontLogoImg()
+      homePage.visit();
+      cy.get('[data-qa="component logo"]')        
         .should('be.visible')
+        //.and(($img) => {
+        //  expect(($img[0] as HTMLImageElement).naturalWidth, 'image should have loaded (naturalWidth > 0)').to.be.eq(52);
         .invoke('attr', 'src')
         .then((src) => {
           expect(src, 'logo src').to.be.a('string').and.not.be.empty;
-          uploadedLogoSrc = String(src);
+          expect(String(src), 'logo src contains uploaded filename').to.include('spryker-notext-logo.png');
         });
+
     });
 
     it('3 - go to BO and revert changes', (): void => {
@@ -77,16 +70,15 @@ describe(
     });
 
     it('4 - go to storefront and see the changes are reverted', (): void => {
-      visitStorefrontHome();
-      getStorefrontLogoImg()
+      homePage.visit();
+      cy.get('[data-qa="component logo"]')        
         .should('be.visible')
+        //.and(($img) => {
+        //  expect(($img[0] as HTMLImageElement).naturalWidth, 'image should have loaded (naturalWidth > 0)').to.be.eq(52);
         .invoke('attr', 'src')
         .then((src) => {
           expect(src, 'logo src').to.be.a('string').and.not.be.empty;
-
-          if (uploadedLogoSrc) {
-            expect(String(src), 'default logo src differs from uploaded logo src').to.not.equal(uploadedLogoSrc);
-          }
+          expect(String(src), 'logo src does not contain uploaded filename').to.not.include('spryker-notext-logo.png');
         });
     });
   }
