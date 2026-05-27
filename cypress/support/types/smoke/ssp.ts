@@ -49,4 +49,10 @@ export interface SspModelCreateSmokeStaticFixtures {
   };
 }
 
-
+export interface SspFileUploadSmokeStaticFixtures {
+  defaultPassword: string;
+  rootUser: {
+    username: string;
+  };
+  uploadedFileName: string;
+}
