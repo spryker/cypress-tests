@@ -17,11 +17,6 @@ describe(
       return;
     }
 
-    if (!Cypress.env('ENV_IS_SSP_ENABLED')) {
-      it.skip('skipped because SSP is not enabled', () => {});
-      return;
-    }
-
     const loginPage = container.get(LoginPage);
     const assetCreatePage = container.get(SspAssetCreatePage);
     const assetDetailPage = container.get(SspAssetDetailPage);

@@ -18,11 +18,6 @@ describe(
       return;
     }
 
-    if (!Cypress.env('ENV_IS_SSP_ENABLED')) {
-      it.skip('skipped because SSP is not enabled', () => {});
-      return;
-    }
-
     const userLoginScenario = container.get(UserLoginScenario);
     const sspModelAddPage = container.get(SspModelAddPage);
 
