@@ -5,6 +5,7 @@ import { SspModelCreateSmokeStaticFixtures } from '@interfaces/smoke';
 
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
+ * This test checks that corresponding S3 bucker exists in the infra of the env
  */
 describe(
   'ssp model create',
@@ -44,7 +45,7 @@ describe(
       });
     });
 
-    it('backoffice user should be able to create a new ssp model with an image', (): void => {
+    it('backoffice user should be able to create a new ssp model with an uploaded image image', (): void => {
       sspModelAddPage.visit();
       sspModelAddPage.fillSspModelForm({
         name: staticFixtures.sspModel.name,

@@ -5,6 +5,7 @@ import { SspFileUploadSmokeStaticFixtures } from '@interfaces/smoke';
 
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
+ * This test checks that corresponding S3 bucker exists in the infra of the env
  */
 describe(
   'ssp file upload',
