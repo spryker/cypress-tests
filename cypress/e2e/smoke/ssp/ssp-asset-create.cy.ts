@@ -9,12 +9,7 @@ import { SspAssetCreateSmokeStaticFixtures } from '@interfaces/smoke';
 describe(
   'ssp asset create',
   {
-    tags: [
-      '@smoke',
-      '@ssp',
-      '@ssp-asset',
-      'spryker-core',
-    ],
+    tags: ['@smoke', '@ssp', '@ssp-asset', 'spryker-core'],
   },
   (): void => {
     if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {

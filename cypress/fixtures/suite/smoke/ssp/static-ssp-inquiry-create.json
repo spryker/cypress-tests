@@ -6,7 +6,7 @@
   "generalSspInquiry": {
     "subject": "Smoke Oryx Inquiry",
     "description": "This is an automated smoke test inquiry.",
-      "files": [
+    "files": [
       {
         "name": "suite/smoke/ssp/files/oryx.png",
         "size": "300 kB",

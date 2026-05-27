@@ -10,12 +10,7 @@ import { SspInquirySmokeStaticFixtures } from '@interfaces/smoke';
 describe(
   'ssp inquiry create',
   {
-    tags: [
-      '@smoke',
-      '@ssp',
-      '@ssp-inquiry',
-      'spryker-core',
-    ],
+    tags: ['@smoke', '@ssp', '@ssp-inquiry', 'spryker-core'],
   },
   (): void => {
     if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {

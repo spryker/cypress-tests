@@ -10,13 +10,7 @@ import { SspModelCreateSmokeStaticFixtures } from '@interfaces/smoke';
 describe(
   'ssp model create',
   {
-    tags: [
-      '@smoke',
-      '@ssp',
-      '@ssp-model',
-      'spryker-core',
-      'spryker-core-back-office',
-    ],
+    tags: ['@smoke', '@ssp', '@ssp-model', 'spryker-core', 'spryker-core-back-office'],
   },
   (): void => {
     if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
@@ -58,7 +52,10 @@ describe(
       cy.get('img[data-qa="ssp-model-image"]')
         .should('be.visible')
         .and(($img) => {
-          expect(($img[0] as HTMLImageElement).naturalWidth, 'image should have loaded (naturalWidth > 0)').to.be.greaterThan(0);
+          expect(
+            ($img[0] as HTMLImageElement).naturalWidth,
+            'image should have loaded (naturalWidth > 0)'
+          ).to.be.greaterThan(0);
         });
     });
   }

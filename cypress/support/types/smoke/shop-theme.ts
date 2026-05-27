@@ -1,4 +1,3 @@
-
 export interface ShopThemeSmokeStaticFixtures {
   defaultPassword: string;
   rootUser: {

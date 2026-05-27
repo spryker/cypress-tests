@@ -1,7 +1,7 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ConfigurationPage } from '@pages/backoffice';
-import { HomePage} from '@pages/yves';
+import { HomePage } from '@pages/yves';
 import { ShopThemeSmokeStaticFixtures } from '@interfaces/smoke';
 
 /**
@@ -11,13 +11,7 @@ import { ShopThemeSmokeStaticFixtures } from '@interfaces/smoke';
 describe(
   'shop theme storefront logo',
   {
-    tags: [
-      '@smoke',
-      '@shop-theme',
-      '@configuration',
-      'spryker-core',
-      'spryker-core-back-office',
-    ],
+    tags: ['@smoke', '@shop-theme', '@configuration', 'spryker-core', 'spryker-core-back-office'],
   },
   (): void => {
     if (!['b2b-mp'].includes(Cypress.env('repositoryId'))) {
@@ -30,7 +24,6 @@ describe(
     const homePage = container.get(HomePage);
 
     let staticFixtures: ShopThemeSmokeStaticFixtures;
-
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
@@ -48,31 +41,28 @@ describe(
       configurationPage.uploadStorefrontLogo(`cypress/fixtures/${staticFixtures.logoFile}`);
       configurationPage.verifyStorefrontLogoUploaded();
       configurationPage.saveConfiguration();
-      cy.get('.use-default-link').should("be.visible");
-      configurationPage.getChangesCount().should("not.be.visible")
+      cy.get('.use-default-link').should('be.visible');
+      configurationPage.getChangesCount().should('not.be.visible');
     });
 
     it('go to storefront and see the uploaded logo', (): void => {
-      cy.wait(4000)
-      homePage.visit();  
-      cy.get('[data-qa="component logo"]').find('img').should('be.visible')
-
-
-
+      cy.wait(4000);
+      homePage.visit();
+      cy.get('[data-qa="component logo"]').find('img').should('be.visible');
     });
 
     it('changes in BO can be reverted', (): void => {
       configurationPage.visitLogosTab();
       configurationPage.revertToDefault();
       configurationPage.saveConfiguration();
-      cy.get('.use-default-link').should("not.be.visible");
-      configurationPage.getChangesCount().should("not.be.visible")
+      cy.get('.use-default-link').should('not.be.visible');
+      configurationPage.getChangesCount().should('not.be.visible');
     });
 
     it('go to storefront and see the changes are reverted', (): void => {
-      cy.wait(4000)
+      cy.wait(4000);
       homePage.visit();
-      cy.get('[data-qa="component logo"]').find('svg').should('be.visible')
+      cy.get('[data-qa="component logo"]').find('svg').should('be.visible');
     });
   }
 );

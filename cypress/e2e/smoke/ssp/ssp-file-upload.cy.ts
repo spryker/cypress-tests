@@ -10,13 +10,7 @@ import { SspFileUploadSmokeStaticFixtures } from '@interfaces/smoke';
 describe(
   'ssp file upload',
   {
-    tags: [
-      '@smoke',
-      '@ssp',
-      '@ssp-file-management',
-      'spryker-core',
-      'spryker-core-back-office',
-    ],
+    tags: ['@smoke', '@ssp', '@ssp-file-management', 'spryker-core', 'spryker-core-back-office'],
   },
   (): void => {
     if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
