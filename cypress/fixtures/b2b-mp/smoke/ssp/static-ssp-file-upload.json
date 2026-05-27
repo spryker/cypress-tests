@@ -3,5 +3,6 @@
   "rootUser": {
     "username": "admin@spryker.com"
   },
-  "uploadedFileName": "image1.jpeg"
+  "file": "b2b-mp/smoke/ssp/files/oryx.png",
+  "uploadedFileName": "oryx.png"
 }
