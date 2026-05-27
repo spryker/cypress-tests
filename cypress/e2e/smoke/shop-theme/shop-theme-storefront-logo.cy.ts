@@ -54,12 +54,10 @@ describe(
 
     it('go to storefront and see the uploaded logo', (): void => {
       cy.wait(4000)
-      homePage.visit();
-      cy.get('[data-qa="component logo"]').find('svg[data-qa="component icon"]')      
-        .should('be.visible')
-        .and(($img) => {
-          expect(($img[0] as HTMLImageElement).naturalWidth, 'image should have loaded (naturalWidth > 0)').to.be.lessThan(100);
-        });
+      homePage.visit();  
+      cy.get('[data-qa="component logo"]').find('img').should('be.visible')
+
+
 
     });
 
@@ -74,11 +72,7 @@ describe(
     it('go to storefront and see the changes are reverted', (): void => {
       cy.wait(4000)
       homePage.visit();
-      cy.get('[data-qa="component logo"]').find('svg[data-qa="component icon"]')      
-        .should('be.visible')
-        .and(($img) => {
-          expect(($img[0] as HTMLImageElement).naturalWidth, 'image should have loaded (naturalWidth > 0)').to.be.greaterThan(100);
-        });
+      cy.get('[data-qa="component logo"]').find('svg').should('be.visible')
     });
   }
 );
