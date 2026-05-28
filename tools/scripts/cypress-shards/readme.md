@@ -44,9 +44,9 @@ pbpaste | npm --prefix tests/cypress-tests run cy:repack -- --shards=4 --dry-run
 
 ```json
 {
-    "1": ["cypress/e2e/...", "..."],
-    "2": ["cypress/e2e/...", "..."],
-    "3": ["cypress/e2e/...", "..."]
+  "1": ["cypress/e2e/...", "..."],
+  "2": ["cypress/e2e/...", "..."],
+  "3": ["cypress/e2e/...", "..."]
 }
 ```
 
