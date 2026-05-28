@@ -18,7 +18,6 @@ describe(
       return;
     }
 
-
     const userLoginScenario = container.get(UserLoginScenario);
     const sspFileManagementAddPage = container.get(SspFileManagementAddPage);
     const sspFileManagementListPage = container.get(SspFileManagementListPage);

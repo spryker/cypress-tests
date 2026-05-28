@@ -1,10 +1,8 @@
-
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ImportExportSmokeStaticFixtures } from '@interfaces/smoke';
 
-import {CreateJobPage, JobRunsListPage, CreateRunPage } from '@pages/backoffice';
-
+import { CreateJobPage, JobRunsListPage, CreateRunPage } from '@pages/backoffice';
 
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
@@ -30,7 +28,6 @@ describe(
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
-
     });
 
     beforeEach((): void => {
@@ -49,18 +46,15 @@ describe(
         name: jobName,
         description: 'Smoke: import via downloaded template',
       });
-      
+
       createRunPage.createNewRun(jobName);
       createRunPage.downloadCsvTemplate();
 
       const downloadedPath = `${Cypress.config('downloadsFolder')}/${templateFile}`;
       cy.task<boolean>('isFileExists', downloadedPath).should('eq', true);
 
-
       createRunPage.uploadAndQueueImport(productFile);
-      jobRunsListPage.verifySuccessMessage()
-      
+      jobRunsListPage.verifySuccessMessage();
     });
-
   }
 );

@@ -10,9 +10,7 @@ export class JobRunsListPage extends BackofficePage {
 
   protected PAGE_URL = 'product-experience-management/run/index';
 
-
-  private buildUrl = (importJobId: string): string =>
-    `${this.PAGE_URL}?idImportJob=${encodeURIComponent(importJobId)}`;
+  private buildUrl = (importJobId: string): string => `${this.PAGE_URL}?idImportJob=${encodeURIComponent(importJobId)}`;
 
   seeJobRuns = (importJobId: string): void => {
     cy.visitBackoffice(this.buildUrl(importJobId));
@@ -23,6 +21,4 @@ export class JobRunsListPage extends BackofficePage {
       .should('be.visible')
       .and('contain', 'Import run created successfully. Processing is queued.');
   }
-
-  
 }

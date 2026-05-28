@@ -5,15 +5,12 @@ import { ExportRepository } from './export-repository';
 
 @injectable()
 @autoWired
-
 export class ExportPage extends BackofficePage {
   @inject(ExportRepository) private repository: ExportRepository;
 
   protected PAGE_URL = '/product-experience-management/export';
 
-    exportProducts(): void {
-        this.repository.getExportButton().click();
-    }
-
+  exportProducts(): void {
+    this.repository.getExportButton().click();
+  }
 }
-

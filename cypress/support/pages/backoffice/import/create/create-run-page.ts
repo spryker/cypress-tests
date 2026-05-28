@@ -21,9 +21,7 @@ export class CreateRunPage extends BackofficePage {
     cy.get(this.repository.getDownloadCsvTemplateButtonSelector()).click();
   };
 
-
   uploadAndQueueImport = (downloadedPath: string): void => {
-
     cy.get(this.repository.getChooseFileSelector()).selectFile(downloadedPath, {
       force: true,
     });
