@@ -1,0 +1,120 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": false,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [{ "status": "approved", "is_active": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [{ "fk_company": "#company.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "manageCostCentersPermission",
+          "arguments": ["ManageCostCentersPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "authorizedRole",
+          "arguments": [{ "fk_company": "#company.id_company" }, ["#manageCostCentersPermission"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "authorizedCustomer",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "authorizedRoleCollection",
+          "arguments": { "roles": ["#authorizedRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "authorizedCompanyUser",
+          "arguments": [
+            {
+              "customer": "#authorizedCustomer",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#authorizedRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#authorizedCompanyUser", ["#authorizedRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "unauthorizedRole",
+          "arguments": [{ "fk_company": "#company.id_company" }, []]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "unauthorizedCustomer",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "unauthorizedRoleCollection",
+          "arguments": { "roles": ["#unauthorizedRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "unauthorizedCompanyUser",
+          "arguments": [
+            {
+              "customer": "#unauthorizedCustomer",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#unauthorizedRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#unauthorizedCompanyUser", ["#unauthorizedRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveCostCenter",
+          "key": "preExistingCostCenter",
+          "arguments": [
+            { "name": "Yves Active CRUD Test Cost Center", "companyBusinessUnit": "#businessUnit", "is_active": true }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCostCenter",
+          "key": "inactiveCostCenter",
+          "arguments": [
+            {
+              "name": "Yves Inactive CRUD Test Cost Center",
+              "companyBusinessUnit": "#businessUnit",
+              "is_active": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
