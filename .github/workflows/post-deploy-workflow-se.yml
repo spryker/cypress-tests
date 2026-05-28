@@ -1,4 +1,4 @@
-name: Post Deploy SE Workflow 
+name: Post Deploy SE Workflow
 
 on:
   repository_dispatch:
