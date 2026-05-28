@@ -1,13 +1,13 @@
-name: Post Deploy Workflow
+name: Post Deploy SE Workflow
 
 on:
   repository_dispatch:
-    types: [post-deploy-workflow]
+    types: [post-deploy-se-workflow]
 
-run-name: Post Deploy Workflow:${{ github.event.client_payload.SPRYKER_FE_HOST }}
+run-name: Post Deploy SE Workflow:${{ github.event.client_payload.SPRYKER_FE_HOST }}
 
 jobs:
-  post-deploy-e2e-tests:
+  post-deploy-se-e2e-tests:
     runs-on: ubuntu-22.04
     env:
       CODEBUILD_BUILD_ID: ${{ github.event.client_payload.CODEBUILD_BUILD_ID }}
@@ -42,7 +42,7 @@ jobs:
       - name: Download Cypress Tests Package
         run: composer require spryker/cypress-tests:dev-master
 
-      - name: Execute Post-Deploy-e2e Tests
+      - name: Execute Post-Deploy-SE-e2e Tests
         run: |
           if [ -n "${BASIC_AUTH_CREDENTIALS}" ]; then
             export SPRYKER_FE_HOST="${BASIC_AUTH_CREDENTIALS}@${SPRYKER_FE_HOST}"
