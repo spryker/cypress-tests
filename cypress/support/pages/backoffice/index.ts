@@ -74,5 +74,5 @@ export * from './configuration/configuration-page';
 export * from './import/create/create-job-page';
 export * from './import/create/create-run-page';
 export * from './import/list/jobs-list-page';
-export * from './import/create/create-run-page';
+export * from './import/list/job-runs-list-page';
 export * from './export/export-page';

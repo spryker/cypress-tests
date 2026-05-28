@@ -3,7 +3,7 @@ import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ImportExportSmokeStaticFixtures } from '@interfaces/smoke';
 
-import { ExportPage, CreateJobPage, JobsListPage, CreateRunPage } from '@pages/backoffice';
+import { ExportPage, CreateJobPage, JobRunsListPage, CreateRunPage } from '@pages/backoffice';
 
 
 /**
@@ -23,7 +23,7 @@ describe(
     const userLoginScenario = container.get(UserLoginScenario);
 
     const createJobPage = container.get(CreateJobPage);
-    const jobsListPage = container.get(JobsListPage);
+    const jobRunsListPage = container.get(JobRunsListPage);
     const createRunPage = container.get(CreateRunPage);
 
     const exportPage = container.get(ExportPage);
@@ -43,16 +43,23 @@ describe(
 
     it('import template can be downloaded and imported', (): void => {
       const jobName = `smoke-job-${Date.now()}`;
-
+      const templateFile = staticFixtures.templateFile;
 
       createJobPage.createJob({
         name: jobName,
         description: 'Smoke: import via downloaded template',
       });
-
+      
       createRunPage.createNewRun(jobName);
       createRunPage.downloadCsvTemplate();
-      createRunPage.uploadAndQueueImport(staticFixtures.templateFile);
+
+      const downloadedPath = `${Cypress.config('downloadsFolder')}/${templateFile}`;
+      cy.task<boolean>('isFileExists', downloadedPath).should('eq', true);
+
+
+      createRunPage.uploadAndQueueImport(downloadedPath);
+      jobRunsListPage.verifySuccessMessage()
+      
     });
 
     it('products can be exported and imported', (): void => {

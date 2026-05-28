@@ -21,10 +21,13 @@ export class CreateRunPage extends BackofficePage {
     cy.get(this.repository.getDownloadCsvTemplateButtonSelector()).click();
   };
 
-  uploadAndQueueImport = (fixturePath: string): void => {
-    cy.get(this.repository.getChooseFileSelector()).selectFile(`cypress/fixtures/${fixturePath}`, {
+
+  uploadAndQueueImport = (downloadedPath: string): void => {
+
+    cy.get(this.repository.getChooseFileSelector()).selectFile(downloadedPath, {
       force: true,
     });
+
     this.repository.getUploadAndQueueImportButtonSelector().click();
   };
 }

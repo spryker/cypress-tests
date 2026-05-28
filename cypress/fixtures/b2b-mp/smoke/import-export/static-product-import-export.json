@@ -3,6 +3,6 @@
   "rootUser": {
     "username": "admin@spryker.com"
   },
-  "templateFile": "b2b-mp/smoke/import-export/files/template.csv",
-  "productFile": "b2b-mp/smoke/import-export/files/products.csv"
+  "templateFile": "products-csv-import-template.csv",
+  "productFile": "products-csv-import_export_*.csv"
 }
