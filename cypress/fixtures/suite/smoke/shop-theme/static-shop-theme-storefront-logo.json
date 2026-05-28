@@ -1,7 +1,0 @@
-{
-  "defaultPassword": "change123",
-  "rootUser": {
-    "username": "admin@spryker.com"
-  },
-  "logoFile": "suite/smoke/shop-theme/files/spryker-notext-logo.png"
-}

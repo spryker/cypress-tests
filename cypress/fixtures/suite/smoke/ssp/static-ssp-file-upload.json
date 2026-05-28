@@ -1,8 +1,0 @@
-{
-  "defaultPassword": "change123",
-  "rootUser": {
-    "username": "admin@spryker.com"
-  },
-  "file": "suite/smoke/ssp/files/oryx.png",
-  "uploadedFileName": "oryx.png"
-}
