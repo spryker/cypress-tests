@@ -1,35 +1,19 @@
-import BackofficePage from '../backoffice-page';
-import ExportRepository from './export-repository';
+import { autoWired } from '@utils';
+import { inject, injectable } from 'inversify';
+import { BackofficePage } from '../backoffice-page';
+import { ExportRepository } from './export-repository';
 
-export default class ExportPage extends BackofficePage {
-    exportRepository: ExportRepository;
+@injectable()
+@autoWired
 
-    constructor() {
-        super();
-        this.exportRepository = new ExportRepository();
+export class ExportPage extends BackofficePage {
+  @inject(ExportRepository) private repository: ExportRepository;
+
+  protected PAGE_URL = '/product-experience-management/export';
+
+    exportProducte(): void {
+        this.repository.getExportButton().click();
     }
 
-    protected path = '/data-export-gui';
-
-    /**
-     * Exports a template for a given export type.
-     *
-     * Assumes that user is logged in.
-     */
-    exportTemplate(exportType: string) {
-        this.visit();
-        this.exportRepository.exportTypeSelect().select(exportType);
-        this.exportRepository.exportTemplateButton().click();
-    }
-
-    /**
-     * Exports data for a given export type.
-     *
-     * Assumes that user is logged in.
-     */
-    exportData(exportType: string) {
-        this.visit();
-        this.exportRepository.exportTypeSelect().select(exportType);
-        this.exportRepository.exportButton().click();
-    }
 }
+

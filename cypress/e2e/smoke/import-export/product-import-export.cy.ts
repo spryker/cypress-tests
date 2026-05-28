@@ -1,17 +1,10 @@
 import { injectable } from 'inversify';
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
-import { ShopThemeSmokeStaticFixtures } from '@interfaces/smoke';
+import { ImportExportSmokeStaticFixtures } from '@interfaces/smoke';
 
-import { ExportRepository } from '@pages/backoffice/export/export-repository';
-import { ExportPage } from '@pages/backoffice/export/export-page';
+import { ExportPage, CreateJobPage, JobsListPage, CreateRunPage } from '@pages/backoffice';
 
-import { CreateJobRepository } from '@pages/backoffice/import/create/create-job-repository';
-import { CreateJobPage } from '@pages/backoffice/import/create/create-job-page';
-import { JobsListRepository } from '@pages/backoffice/import/list/jobs-list-repository';
-import { JobsListPage } from '@pages/backoffice/import/list/jobs-list-page';
-import { CreateRunRepository } from '@pages/backoffice/import/create/create-run-repository';
-import { CreateRunPage } from '@pages/backoffice/import/create/create-run-page';
 
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
@@ -29,14 +22,13 @@ describe(
 
     const userLoginScenario = container.get(UserLoginScenario);
 
-    // page objects (constructed with repos to stay consistent with inversify style)
-    const createJobPage = new CreateJobPage(container.get(CreateJobRepository));
-    const jobsListPage = new JobsListPage(container.get(JobsListRepository));
-    const createRunPage = new CreateRunPage(container.get(CreateRunRepository));
+    const createJobPage = container.get(CreateJobPage);
+    const jobsListPage = container.get(JobsListPage);
+    const createRunPage = container.get(CreateRunPage);
 
-    const exportPage = new ExportPage(container.get(ExportRepository));
+    const exportPage = container.get(ExportPage);
 
-    let staticFixtures: ShopThemeSmokeStaticFixtures;
+    let staticFixtures: ImportExportSmokeStaticFixtures;
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
@@ -50,42 +42,21 @@ describe(
     });
 
     it('import template can be downloaded and imported', (): void => {
-      const jobName = `smoke-template-${Date.now()}`;
+      const jobName = `smoke-job-${Date.now()}`;
 
-      // 1) create import job
+
       createJobPage.createJob({
         name: jobName,
         description: 'Smoke: import via downloaded template',
       });
 
-      // 2) create run for that job
-      jobsListPage.clickCreateRunForJob(jobName);
-
-      // 3) export template
-      exportPage.exportTemplate('Product');
-
-      // 4) import downloaded file (draft: uses static fixture as stand-in)
-      // NOTE: In CI we usually move the downloaded file into fixtures or use cypress/downloads.
+      createRunPage.createNewRun(jobName);
+      createRunPage.downloadCsvTemplate();
       createRunPage.uploadAndQueueImport(staticFixtures.templateFile);
     });
 
     it('products can be exported and imported', (): void => {
-      const jobName = `smoke-products-${Date.now()}`;
 
-      // 1) create import job
-      createJobPage.createJob({
-        name: jobName,
-        description: 'Smoke: export all products and import back',
-      });
-
-      // 2) create run for that job
-      jobsListPage.clickCreateRunForJob(jobName);
-
-      // 3) export products
-      exportPage.exportData('Product');
-
-      // 4) import downloaded file (draft: uses static fixture as stand-in)
-      createRunPage.uploadAndQueueImport(staticFixtures.productFile);
     });
   }
 );

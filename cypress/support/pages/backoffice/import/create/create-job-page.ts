@@ -1,14 +1,14 @@
-import { injectable } from 'inversify';
+import { autoWired } from '@utils';
+import { inject, injectable } from 'inversify';
 import { BackofficePage } from '../../backoffice-page';
 import { CreateJobRepository } from './create-job-repository';
 
 @injectable()
+@autoWired
 export class CreateJobPage extends BackofficePage {
-  protected PAGE_URL = '/import-gui/create-job';
+  @inject(CreateJobRepository) private repository: CreateJobRepository;
 
-  constructor(private readonly repository: CreateJobRepository) {
-    super();
-  }
+  protected PAGE_URL = '/product-experience-management/job/create';
 
   createJob = (params: { name: string; description?: string }): void => {
     this.visit();

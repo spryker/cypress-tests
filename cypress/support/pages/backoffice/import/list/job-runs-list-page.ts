@@ -1,27 +1,22 @@
-import { injectable } from 'inversify';
+import { autoWired } from '@utils';
+import { inject, injectable } from 'inversify';
 import { BackofficePage } from '../../backoffice-page';
 import { JobRunsListRepository } from './job-runs-list-repository';
 
 @injectable()
+@autoWired
 export class JobRunsListPage extends BackofficePage {
-  protected PAGE_URL = '/import-gui/list-run';
+  @inject(JobRunsListRepository) private repository: JobRunsListRepository;
 
-  constructor(private readonly repository: JobRunsListRepository) {
-    super();
-  }
+  protected PAGE_URL = 'product-experience-management/run/index';
 
-  openFirstRunDetails = (): void => {
-    // assumes we are navigated here from job runs list
-    this.find({
-      searchQuery: '',
-      interceptTableUrl: '/import-gui/list-run/table',
-      expectedCount: null,
-    }).then(($row) => {
-      if (!$row) {
-        throw new Error('No job runs found');
-      }
 
-      cy.wrap($row).find(this.repository.getDetailsButtonSelector()).click();
-    });
+  private buildUrl = (importJobId: string): string =>
+    `${this.PAGE_URL}?idImportJob=${encodeURIComponent(importJobId)}`;
+
+  seeJobRuns = (importJobId: string): void => {
+    cy.visitBackoffice(this.buildUrl(importJobId));
   };
+
+  
 }
