@@ -11,7 +11,7 @@ export class ExportPage extends BackofficePage {
 
   protected PAGE_URL = '/product-experience-management/export';
 
-    exportProducte(): void {
+    exportProducts(): void {
         this.repository.getExportButton().click();
     }
 

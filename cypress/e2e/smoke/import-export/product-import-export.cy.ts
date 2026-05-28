@@ -1,9 +1,9 @@
-import { injectable } from 'inversify';
+
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ImportExportSmokeStaticFixtures } from '@interfaces/smoke';
 
-import { ExportPage, CreateJobPage, JobRunsListPage, CreateRunPage } from '@pages/backoffice';
+import {CreateJobPage, JobRunsListPage, CreateRunPage } from '@pages/backoffice';
 
 
 /**
@@ -26,12 +26,11 @@ describe(
     const jobRunsListPage = container.get(JobRunsListPage);
     const createRunPage = container.get(CreateRunPage);
 
-    const exportPage = container.get(ExportPage);
-
     let staticFixtures: ImportExportSmokeStaticFixtures;
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
+
     });
 
     beforeEach((): void => {
@@ -41,9 +40,10 @@ describe(
       });
     });
 
-    it('import template can be downloaded and imported', (): void => {
-      const jobName = `smoke-job-${Date.now()}`;
+    it('import template can be downloaded and products can be imported', (): void => {
+      const jobName = `smoke-job-template-${Date.now()}`;
       const templateFile = staticFixtures.templateFile;
+      const productFile = staticFixtures.productFile;
 
       createJobPage.createJob({
         name: jobName,
@@ -57,13 +57,10 @@ describe(
       cy.task<boolean>('isFileExists', downloadedPath).should('eq', true);
 
 
-      createRunPage.uploadAndQueueImport(downloadedPath);
+      createRunPage.uploadAndQueueImport(productFile);
       jobRunsListPage.verifySuccessMessage()
       
     });
 
-    it('products can be exported and imported', (): void => {
-
-    });
   }
 );

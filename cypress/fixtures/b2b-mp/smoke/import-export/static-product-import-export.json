@@ -4,5 +4,5 @@
     "username": "admin@spryker.com"
   },
   "templateFile": "products-csv-import-template.csv",
-  "productFile": "products-csv-import_export_*.csv"
+  "productFile": "cypress/fixtures/b2b-mp/smoke/import-export/files/products.csv"
 }
