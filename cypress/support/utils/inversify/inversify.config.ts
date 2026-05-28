@@ -177,6 +177,13 @@ import { B2bMpSspDashboardManagementRepository } from '../../pages/yves/ssp-dash
 import { B2bSspDashboardManagementRepository } from '../../pages/yves/ssp-dashboard-management/repositories/b2b-ssp-dashboard-management-repository';
 import { SuiteMerchantRegistrationRepository } from '../../pages/yves/merchant-registration/repositories/suite-merchant-registration-repository';
 import { B2bMpMerchantRegistrationRepository } from '../../pages/yves/merchant-registration/repositories/b2b-mp-merchant-registration-repository';
+import { SuiteCostCenterListRepository } from '../../pages/yves/purchasing-control/cost-center/list/repositories/suite-cost-center-list-repository';
+import { SuiteCostCenterCreateRepository } from '../../pages/yves/purchasing-control/cost-center/create/repositories/suite-cost-center-create-repository';
+import { SuiteCostCenterUpdateRepository } from '../../pages/yves/purchasing-control/cost-center/update/repositories/suite-cost-center-update-repository';
+import { SuiteBudgetListRepository } from '../../pages/yves/purchasing-control/budget/list/repositories/suite-budget-list-repository';
+import { SuiteBudgetCreateRepository } from '../../pages/yves/purchasing-control/budget/create/repositories/suite-budget-create-repository';
+import { SuiteBudgetUpdateRepository } from '../../pages/yves/purchasing-control/budget/update/repositories/suite-budget-update-repository';
+import { SuiteCheckoutSummaryBudgetRepository } from '../../pages/yves/purchasing-control/checkout-summary/repositories/suite-checkout-summary-budget-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -218,6 +225,13 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.UserMultiFactorAuthRepository]: SuiteUserMultiFactorAuthRepository,
   [REPOSITORIES.SspDashboardManagementRepository]: SuiteSspDashboardManagementRepository,
   [REPOSITORIES.MerchantRegistrationRepository]: SuiteMerchantRegistrationRepository,
+  [REPOSITORIES.YvesCostCenterListRepository]: SuiteCostCenterListRepository,
+  [REPOSITORIES.YvesCostCenterCreateRepository]: SuiteCostCenterCreateRepository,
+  [REPOSITORIES.YvesCostCenterUpdateRepository]: SuiteCostCenterUpdateRepository,
+  [REPOSITORIES.YvesBudgetListRepository]: SuiteBudgetListRepository,
+  [REPOSITORIES.YvesBudgetCreateRepository]: SuiteBudgetCreateRepository,
+  [REPOSITORIES.YvesBudgetUpdateRepository]: SuiteBudgetUpdateRepository,
+  [REPOSITORIES.YvesCheckoutSummaryBudgetRepository]: SuiteCheckoutSummaryBudgetRepository,
 };
 
 const b2cMappings: BindingsMap = {
