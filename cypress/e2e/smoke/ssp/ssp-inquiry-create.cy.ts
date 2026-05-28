@@ -13,7 +13,7 @@ describe(
     tags: ['@smoke', '@ssp', '@ssp-inquiry', 'spryker-core'],
   },
   (): void => {
-    if (![ 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+    if (!['b2b-mp'].includes(Cypress.env('repositoryId'))) {
       it.skip('skipped because tests run only for b2b-mp', () => {});
       return;
     }
