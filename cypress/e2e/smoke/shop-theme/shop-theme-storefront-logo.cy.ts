@@ -41,7 +41,7 @@ describe(
       configurationPage.uploadStorefrontLogo(`cypress/fixtures/${staticFixtures.logoFile}`);
       configurationPage.verifyStorefrontLogoUploaded();
       configurationPage.saveConfiguration();
-      cy.get('.use-default-link').should('be.visible');
+      configurationPage.getUseDefaultLink(staticFixtures.storefrontLogoConfig).should('be.visible');
       configurationPage.getChangesCount().should('not.be.visible');
     });
 
@@ -49,22 +49,21 @@ describe(
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(4000); // since tests do not take a lot of time and including a looping wait to wait for sync is an overkill
       homePage.visit();
-      cy.get('[data-qa="component logo"]').find('img').should('be.visible');
+      homePage.getLogo().find('img').should('be.visible');
     });
 
     it('changes in BO can be reverted', (): void => {
       configurationPage.visitLogosTab();
-      configurationPage.revertToDefault();
+      configurationPage.clickUseDefaultLink(staticFixtures.storefrontLogoConfig);
       configurationPage.saveConfiguration();
-      cy.get('.use-default-link').should('not.be.visible');
-      configurationPage.getChangesCount().should('not.be.visible');
+      configurationPage.getUseDefaultLink(staticFixtures.storefrontLogoConfig).should('not.be.visible');
     });
 
     it('go to storefront and see the changes are reverted', (): void => {
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(4000); // since tests do not take a lot of time and including a looping wait to wait for sync is an overkill
       homePage.visit();
-      cy.get('[data-qa="component logo"]').find('svg').should('be.visible');
+      homePage.getLogo().find('svg').should('be.visible');
     });
   }
 );

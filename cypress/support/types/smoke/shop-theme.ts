@@ -4,4 +4,5 @@ export interface ShopThemeSmokeStaticFixtures {
     username: string;
   };
   logoFile: string;
+  storefrontLogoConfig: string;
 }

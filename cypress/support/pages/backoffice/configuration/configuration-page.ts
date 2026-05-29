@@ -136,10 +136,6 @@ export class ConfigurationPage extends BackofficePage {
     cy.get(this.repository.getResetButtonSelector()).should('not.exist');
   };
 
-  revertToDefault = (): void => {
-    cy.get(this.repository.getRevertToDefault()).first().click({ force: true });
-  };
-
   searchSettings = (term: string): void => {
     cy.get(this.repository.getConfigSearchSelector()).clear();
     cy.get(this.repository.getConfigSearchSelector()).type(term);
@@ -150,6 +146,9 @@ export class ConfigurationPage extends BackofficePage {
       .find(this.repository.getUseDefaultLinkSelector())
       .click({ force: true });
   };
+
+  getUseDefaultLink = (settingKey: string): Cypress.Chainable =>
+    cy.get(this.repository.getSettingRowSelector(settingKey)).find(this.repository.getUseDefaultLinkSelector());
 
   clickNavTab = (tabKey: string): void => {
     cy.get(this.repository.getNavTabSelector(tabKey)).click({ force: true });
