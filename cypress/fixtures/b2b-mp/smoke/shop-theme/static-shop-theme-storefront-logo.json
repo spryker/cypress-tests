@@ -1,0 +1,8 @@
+{
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "logoFile": "b2b-mp/smoke/shop-theme/files/spryker-notext-logo.png",
+  "storefrontLogoConfig": "theme:logos:logos:yves_logo_url"
+}

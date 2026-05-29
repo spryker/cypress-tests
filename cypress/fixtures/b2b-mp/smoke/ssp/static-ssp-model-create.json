@@ -1,0 +1,11 @@
+{
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "sspModel": {
+    "name": "Oryx Smoke Model",
+    "code": "ORYX-MODEL-SMOKE-001",
+    "image": "b2b-mp/smoke/ssp/files/oryx.png"
+  }
+}
