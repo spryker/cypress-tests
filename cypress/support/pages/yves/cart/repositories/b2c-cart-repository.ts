@@ -47,6 +47,12 @@ export class B2cCartRepository implements CartRepository {
     cy.get('[data-qa="component form quote-item-cart-note-form"]').last().find('textarea').first();
   getFirstCartItemNoteSubmitButton = (): Cypress.Chainable =>
     cy.get('[data-qa="component form quote-item-cart-note-form"] [data-qa="submit-button"]').last();
+  addFirstCartItemNote = (message: string): void => {
+    this.getFirstCartItemNoteField().type(message);
+  };
+  submitFirstCartItemNote = (): void => {
+    this.getFirstCartItemNoteSubmitButton().click();
+  };
   submitCartItemChangeQuantity = (sku: string): void => {
     this.getCartItemChangeQuantityField(sku).type('{enter}', { force: true });
   };

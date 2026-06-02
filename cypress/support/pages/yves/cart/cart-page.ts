@@ -58,7 +58,7 @@ export class CartPage extends YvesPage {
   };
 
   addFirstCartItemNote = (params: CartItemNoteAddParams): void => {
-    this.repository.getFirstCartItemNoteField().clear().type(params.message);
+    this.repository.addFirstCartItemNote(params.message);
   };
 
   clearFirstCartItemNote = (): void => {
@@ -66,11 +66,7 @@ export class CartPage extends YvesPage {
   };
 
   submitFirstCartItemNote = (): void => {
-    cy.intercept('POST', '**/cart-note/**').as('cartNoteSave');
-    cy.intercept('GET', '**/cart/async/view').as('cartAsyncView');
-    this.repository.getFirstCartItemNoteSubmitButton().click();
-    cy.wait('@cartNoteSave', { timeout: 10000 });
-    cy.wait('@cartAsyncView', { timeout: 10000 });
+    this.repository.submitFirstCartItemNote();
   };
 
   getFirstCartItemNoteField = (): Cypress.Chainable => {

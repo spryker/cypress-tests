@@ -23,6 +23,16 @@ export class B2bMpCartRepository implements CartRepository {
   };
   getFirstCartItemNoteSubmitButton = (): Cypress.Chainable =>
     cy.get('[data-qa="component cart-item-note"] [data-qa="submit-button"]').last();
+  addFirstCartItemNote = (message: string): void => {
+    this.getFirstCartItemNoteField().clear().type(message);
+  };
+  submitFirstCartItemNote = (): void => {
+    cy.intercept('POST', '**/cart-note/**').as('cartNoteSave');
+    cy.intercept('GET', '**/cart/async/view').as('cartAsyncView');
+    this.getFirstCartItemNoteSubmitButton().click();
+    cy.wait('@cartNoteSave', { timeout: 10000 });
+    cy.wait('@cartAsyncView', { timeout: 10000 });
+  };
   getQuickAddToCartQuantityField = (): Cypress.Chainable<JQuery<HTMLElement>> => cy.get('#quantity');
   getQuickAddToCartSubmitButton = (): Cypress.Chainable<JQuery<HTMLElement>> =>
     cy.get('.product-quick-add-form__button');
