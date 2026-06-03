@@ -6,30 +6,33 @@ export class B2bCartRepository implements CartRepository {
   getQuickAddToCartSkuField = (): Cypress.Chainable => cy.get('[data-qa="component autocomplete-form"] .input');
   getQuickAddToCartProductListField = (): Cypress.Chainable => cy.get('[data-qa="component products-list"]');
   getFirstCartItemNoteField = (): Cypress.Chainable => {
-    // eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get('[data-qa="component cart-item-note"]')
-      .children()
+      .last()
+      .find('textarea')
       .first()
-      .click()
-      .then(() => {
-        // Check if the textarea has become visible
-        cy.get('[data-qa="component cart-item-note"]')
-          .last()
-          .find('textarea')
-          .first()
-          .then(($textarea) => {
-            if ($textarea.is(':visible')) {
-              return;
-            } else {
-              cy.get('[data-qa="component cart-item-note"]').children().find('[title="edit"]').click();
-            }
-          });
+      .then(($textarea) => {
+        if (!$textarea.is(':visible')) {
+          cy.get('[data-qa="component product-cart-item"]')
+            .first()
+            .find('.product-cart-item__context-item[data-trigger-target*="cart-item-note"]')
+            .click();
+        }
       });
 
     return cy.get('[data-qa="component cart-item-note"]').last().find('textarea').first();
   };
   getFirstCartItemNoteSubmitButton = (): Cypress.Chainable =>
     cy.get('[data-qa="component cart-item-note"] [data-qa="submit-button"]').last();
+  addFirstCartItemNote = (message: string): void => {
+    this.getFirstCartItemNoteField().clear().type(message);
+  };
+  submitFirstCartItemNote = (): void => {
+    cy.intercept('POST', '**/cart-note/**').as('cartNoteSave');
+    cy.intercept('GET', '**/cart/async/view').as('cartAsyncView');
+    this.getFirstCartItemNoteSubmitButton().click();
+    cy.wait('@cartNoteSave', { timeout: 10000 });
+    cy.wait('@cartAsyncView', { timeout: 10000 });
+  };
   getQuickAddToCartQuantityField = (): Cypress.Chainable<JQuery<HTMLElement>> => cy.get('#quantity');
   getQuickAddToCartSubmitButton = (): Cypress.Chainable<JQuery<HTMLElement>> =>
     cy.get('.product-quick-add-form__button');

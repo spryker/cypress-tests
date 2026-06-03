@@ -58,7 +58,7 @@ export class CartPage extends YvesPage {
   };
 
   addFirstCartItemNote = (params: CartItemNoteAddParams): void => {
-    this.repository.getFirstCartItemNoteField().type(params.message);
+    this.repository.addFirstCartItemNote(params.message);
   };
 
   clearFirstCartItemNote = (): void => {
@@ -66,7 +66,7 @@ export class CartPage extends YvesPage {
   };
 
   submitFirstCartItemNote = (): void => {
-    this.repository.getFirstCartItemNoteSubmitButton().click();
+    this.repository.submitFirstCartItemNote();
   };
 
   getFirstCartItemNoteField = (): Cypress.Chainable => {
