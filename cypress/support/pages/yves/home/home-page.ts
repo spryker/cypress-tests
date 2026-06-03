@@ -33,4 +33,8 @@ export class HomePage extends YvesPage {
   getLanguageSwitcher(): Cypress.Chainable {
     return this.repository.getLanguageSwitcher();
   }
+
+  getLogo(): Cypress.Chainable {
+    return this.repository.getLogo();
+  }
 }

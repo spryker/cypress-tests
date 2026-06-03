@@ -10,6 +10,8 @@ export class ConfigurationRepository {
 
   getResetButtonSelector = (): string => '[data-qa="reset-changes"]';
 
+  getRevertToDefault = (): string => '.use-default-link';
+
   getBackofficeLogoContainerSelector = (): string =>
     '.file-upload-setting:has(input[id="setting-theme:logos:logos:backoffice_logo_url"])';
 

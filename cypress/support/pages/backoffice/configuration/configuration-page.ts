@@ -146,6 +146,9 @@ export class ConfigurationPage extends BackofficePage {
       .click({ force: true });
   };
 
+  getUseDefaultLink = (settingKey: string): Cypress.Chainable =>
+    cy.get(this.repository.getSettingRowSelector(settingKey)).find(this.repository.getUseDefaultLinkSelector());
+
   clickNavTab = (tabKey: string): void => {
     cy.get(this.repository.getNavTabSelector(tabKey)).click({ force: true });
   };

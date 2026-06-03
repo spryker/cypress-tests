@@ -1,0 +1,12 @@
+{
+  "defaultPassword": "change123",
+  "customer": {
+    "email": "sonia@spryker.com"
+  },
+  "asset": {
+    "name": "Mechanical Oryx",
+    "note": "Smoke test asset note",
+    "serial_number": "ORYX-1234567890",
+    "image": "b2b-mp/smoke/ssp/files/oryx.png"
+  }
+}
