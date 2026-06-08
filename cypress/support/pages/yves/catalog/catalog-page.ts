@@ -28,7 +28,7 @@ export class CatalogPage extends YvesPage {
       cy.get('.header__search-open').click();
     }
 
-    this.repository.getSearchInput().clear().type(`${params.query}{enter}`);
+    this.repository.getSearchInput().clear().invoke('val', params.query).type('{enter}');
 
     cy.url().then((url) => {
       cy.reloadUntilFound(
