@@ -20,7 +20,7 @@ export class UserIndexPage extends BackofficePage {
       searchQuery: params.query,
       interceptTableUrl: `**/user/index/table**`,
       expectedToSeeInTable: params.expectedToSeeInTable,
-    }).then((getRow) => getRow ? getRow() : null);
+    }).then((getRow) => (getRow ? getRow() : null));
   }
 
   update = (params: UpdateParams): void => {

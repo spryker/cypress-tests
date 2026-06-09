@@ -25,7 +25,10 @@ export class MerchantListPage extends BackofficePage {
         }
 
         if (params.action === ActionEnum.activate) {
-          cy.wrap($merchantRow).find(this.repository.getActivateButtonSelector()).should('exist').click({ force: true });
+          cy.wrap($merchantRow)
+            .find(this.repository.getActivateButtonSelector())
+            .should('exist')
+            .click({ force: true });
         }
 
         if (params.action === ActionEnum.deactivate) {

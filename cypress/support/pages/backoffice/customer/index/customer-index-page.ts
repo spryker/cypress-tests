@@ -21,10 +21,7 @@ export class CustomerIndexPage extends BackofficePage {
       }
 
       if (params.action === ActionEnum.removeMultiFactorAuthentication) {
-        getRow()
-          .find(this.getRemoveMultiFactorAuthenticationButtonSelector())
-          .should('exist')
-          .click({ force: true });
+        getRow().find(this.getRemoveMultiFactorAuthenticationButtonSelector()).should('exist').click({ force: true });
       }
     });
   };
@@ -33,7 +30,7 @@ export class CustomerIndexPage extends BackofficePage {
     return this.find({
       searchQuery: params.searchQuery,
       interceptTableUrl: `**/customer/index/table**`,
-    }).then((getRow) => getRow ? getRow() : null);
+    }).then((getRow) => (getRow ? getRow() : null));
   }
 
   assertRemoveMultiFactorAuthenticationButtonDoesNotExist = (params: FindParams): void => {
