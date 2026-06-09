@@ -41,7 +41,10 @@
         {
           "type": "helper",
           "name": "configureTestStateMachine",
-          "arguments": [["DummyPayment01"]]
+          "arguments": [
+            ["OmsReservationFlow01"],
+            "/data/config/Zed/oms"
+          ]
         },
         {
           "type": "helper",
@@ -136,7 +139,7 @@
               "customerReference": "#customer.customer_reference",
               "shipment": "#shipmentForShipmentOrder"
             },
-            "DummyPayment01"
+            "OmsReservationFlow01"
           ]
         },
         {
@@ -154,7 +157,7 @@
               "customerReference": "#customer.customer_reference",
               "shipment": "#shipmentForCancellationOrder"
             },
-            "DummyPayment01"
+            "OmsReservationFlow01"
           ]
         }
       ]

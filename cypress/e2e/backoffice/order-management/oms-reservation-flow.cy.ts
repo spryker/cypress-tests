@@ -40,23 +40,25 @@ describe(
       });
     });
 
-    it('reservation reflects the order while items are reserved and drops to zero after Close', (): void => {
-      // Items land in the initial `new` state from the fixture; the OMS check moves them
-      // into `grace period started` (reserved), and the reservation hook writes the count.
-      cy.runCliCommands(['console oms:check-condition']);
+    it('reservation reflects the order while items are reserved and drops to zero after complete', (): void => {
+      // Items land in `new` from the fixture; `reserve` advances them to the `reserved` state
+      // (the only reserved state in OmsReservationFlow01), which fires the reservation hook.
+      visitSalesOrderDetail(dynamicFixtures.salesOrderShipment.id_sales_order);
+      salesDetailPage.triggerOms({ state: 'reserve' });
 
       availabilityViewPage.visit({ qs: { 'id-product': dynamicFixtures.productShipment.fk_product_abstract } });
       availabilityViewPage.assertReservedProductsAmount(1);
 
       visitSalesOrderDetail(dynamicFixtures.salesOrderShipment.id_sales_order);
-      driveOrderThroughShipAndClose();
+      salesDetailPage.triggerOms({ state: 'complete' });
 
-      availabilityViewPage.visit({qs: { 'id-product': dynamicFixtures.productShipment.fk_product_abstract }});
+      availabilityViewPage.visit({ qs: { 'id-product': dynamicFixtures.productShipment.fk_product_abstract } });
       availabilityViewPage.assertReservedProductsAmount(0);
     });
 
-    it('reservation drops to zero when the order is cancelled before shipping', (): void => {
-      cy.runCliCommands(['console oms:check-condition']);
+    it('reservation drops to zero when the order is cancelled', (): void => {
+      visitSalesOrderDetail(dynamicFixtures.salesOrderCancellation.id_sales_order);
+      salesDetailPage.triggerOms({ state: 'reserve' });
 
       availabilityViewPage.visit({ qs: { 'id-product': dynamicFixtures.productCancellation.fk_product_abstract } });
       availabilityViewPage.assertReservedProductsAmount(1);
@@ -64,30 +66,12 @@ describe(
       visitSalesOrderDetail(dynamicFixtures.salesOrderCancellation.id_sales_order);
       salesDetailPage.triggerOms({ state: 'Cancel' });
 
-      // availabilityViewPage.visit({ qs: { 'id-product': dynamicFixtures.productCancellation.fk_product_abstract } });
-      // availabilityViewPage.assertReservedProductsAmount(0);
+      availabilityViewPage.visit({ qs: { 'id-product': dynamicFixtures.productCancellation.fk_product_abstract } });
+      availabilityViewPage.assertReservedProductsAmount(0);
     });
 
     function visitSalesOrderDetail(idSalesOrder: number): void {
       cy.visitBackoffice(`/sales/detail?id-sales-order=${idSalesOrder}`);
-    }
-
-    function driveOrderThroughShipAndClose(): void {
-      salesDetailPage.triggerOms({ state: 'skip grace period' });
-      cy.runCliCommands(['console oms:check-timeout']);
-      salesDetailPage.triggerOms({ state: 'Pay' });
-      // salesDetailPage.triggerOms({ state: 'commission-calculate' });
-      cy.runCliCommands(['console oms:check-timeout']);
-      cy.runCliCommands(['console oms:check-condition']);
-      cy.runCliCommands(['console oms:check-timeout']);
-      cy.runCliCommands(['console oms:check-condition']);
-      // salesDetailPage.triggerOms({ state: 'request product review' });
-      salesDetailPage.triggerOms({ state: 'Skip timeout' });
-
-      salesDetailPage.triggerOms({ state: 'skip picking' });
-      salesDetailPage.triggerOms({ state: 'Ship' });
-      salesDetailPage.triggerOms({ state: 'Stock update' });
-      salesDetailPage.triggerOms({ state: 'Close' });
     }
   }
 );
