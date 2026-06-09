@@ -18,6 +18,10 @@ export class AgentMfaLoginScenario {
       this.mfaPage.verifyCode(code);
     });
 
+    // verifyCode() submits the verification popup via fetch, so Cypress does not wait for a page
+    // load and the in-flight POST may not have established the MFA-passed session yet. Block until
+    // the redirect off the login page lands, otherwise the next visit() races that request and the
+    // agent guard bounces it back to /agent/login.
     cy.url({ timeout: 20000 }).should('not.include', '/agent/login');
   }
 
