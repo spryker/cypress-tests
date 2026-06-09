@@ -29,11 +29,18 @@ export class StoreListPage extends BackofficePage {
   };
 
   hasStore = (storeName: string): Cypress.Chainable<boolean> => {
-    // Existence check only: register the intercept before typing and match on the
-    // exact search value so we wait for the full-search response (not a partial
-    // keystroke). Pass no expectedCount — never assert a band on a precondition.
+    // Existence check only — read the real row count, never assert a band on a precondition.
+
+    // Unique name for the request we want to wait on. cy.wait('@alias') below targets a
+    // request by this name, so a fresh id keeps us from clashing with another table
+    // intercept or a stale alias left by a previous retry of this hook.
     const searchInterceptAlias = this.faker.string.uuid();
+
     cy.intercept('GET', '/store-gui/list/table**', (req) => {
+      // The field fires two table requests: an empty one when cleared, then one with the
+      // full value once typing settles (the search is debounced — not one per keystroke).
+      // Tag ONLY the full-store-name request so cy.wait() resolves on the real search
+      // result, not the empty clear.
       if (req.query['search[value]'] === storeName) {
         req.alias = searchInterceptAlias;
       }
