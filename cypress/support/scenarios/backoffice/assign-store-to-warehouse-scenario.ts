@@ -19,17 +19,12 @@ export class AssignStoreToWarehouseScenario {
         ],
         expectedToSeeInTable: params.warehouseName,
       })
-      .then(($row) => {
-        if ($row === null) {
+      .then((getRow) => {
+        if (!getRow) {
           return;
         }
 
-        const rowIndex = $row.index();
-
-        cy.get(this.stockListPage.getTableRowsSelector())
-          .eq(rowIndex)
-          .find(this.stockListPage.getEditButtonSelector())
-          .click();
+        getRow().find(this.stockListPage.getEditButtonSelector()).click();
         this.stockEditPage.assignAllAvailableStore();
 
         if (params.shouldTriggerPublishAndSync) {

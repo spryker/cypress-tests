@@ -16,13 +16,17 @@ export class StoreListPage extends BackofficePage {
 
   update = (params: UpdateParams): void => {
     this.find({ searchQuery: params.query, interceptTableUrl: `**/store-gui/list/table**${params.query}**` }).then(
-      ($storeRow) => {
+      (getRow) => {
+        if (!getRow) {
+          return;
+        }
+
         if (params.action === ActionEnum.edit) {
-          cy.wrap($storeRow).find(this.repository.getEditButtonSelector()).should('exist').click();
+          getRow().find(this.repository.getEditButtonSelector()).should('exist').click();
         }
 
         if (params.action === ActionEnum.view) {
-          cy.wrap($storeRow).find(this.repository.getViewButtonSelector()).should('exist').click();
+          getRow().find(this.repository.getViewButtonSelector()).should('exist').click();
         }
       }
     );

@@ -130,10 +130,13 @@ export class BackofficePage extends AbstractPage {
                     }
 
                     if (rows.length > 0) {
-                      return cy.wrap(rows.first());
+                      const rowIndex = Array.from($rows).indexOf(rows.first()[0]);
+
+                      return cy.wrap((): Cypress.Chainable<JQuery> => cy.get('tbody > tr:visible').eq(rowIndex));
                     } else {
                       cy.log('No rows found after filtering');
-                      return null;
+
+                      return cy.wrap(null);
                     }
                   });
                 });

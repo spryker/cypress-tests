@@ -15,9 +15,13 @@ export class CustomerIndexPage extends BackofficePage {
     this.find({
       searchQuery: params.searchQuery,
       interceptTableUrl: `**/customer/index/table**`,
-    }).then(($userRow) => {
+    }).then((getRow) => {
+      if (!getRow) {
+        return;
+      }
+
       if (params.action === ActionEnum.removeMultiFactorAuthentication) {
-        cy.wrap($userRow)
+        getRow()
           .find(this.getRemoveMultiFactorAuthenticationButtonSelector())
           .should('exist')
           .click({ force: true });
@@ -29,7 +33,7 @@ export class CustomerIndexPage extends BackofficePage {
     return this.find({
       searchQuery: params.searchQuery,
       interceptTableUrl: `**/customer/index/table**`,
-    });
+    }).then((getRow) => getRow ? getRow() : null);
   }
 
   assertRemoveMultiFactorAuthenticationButtonDoesNotExist = (params: FindParams): void => {

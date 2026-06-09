@@ -24,7 +24,7 @@ export class ServiceListPage extends BackofficePage {
     return this.find({
       searchQuery: serviceName,
       interceptTableUrl: `**/self-service-portal/list-service/table**${serviceName}**`,
-    });
+    }).then((getRow) => getRow ? getRow() : null);
   }
 
   assertServiceListPage(param: {

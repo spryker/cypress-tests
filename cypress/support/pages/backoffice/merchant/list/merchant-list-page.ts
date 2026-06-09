@@ -14,35 +14,41 @@ export class MerchantListPage extends BackofficePage {
     this.find({
       interceptTableUrl: `**/merchant-gui/list-merchant/table**`,
       searchQuery: params.query,
-    }).then(($merchantRow) => {
-      if (params.action === ActionEnum.edit) {
-        this.clickEditAction($merchantRow);
+    }).then((getRow) => {
+      if (!getRow) {
+        return;
       }
 
-      if (params.action === ActionEnum.activate) {
-        cy.wrap($merchantRow).find(this.repository.getActivateButtonSelector()).should('exist').click({ force: true });
-      }
+      getRow().then(($merchantRow: JQuery<HTMLElement>) => {
+        if (params.action === ActionEnum.edit) {
+          this.clickEditAction($merchantRow);
+        }
 
-      if (params.action === ActionEnum.deactivate) {
-        cy.wrap($merchantRow)
-          .find(this.repository.getDeactivateButtonSelector())
-          .should('exist')
-          .click({ force: true });
-      }
+        if (params.action === ActionEnum.activate) {
+          cy.wrap($merchantRow).find(this.repository.getActivateButtonSelector()).should('exist').click({ force: true });
+        }
 
-      if (params.action === ActionEnum.approveAccess) {
-        cy.wrap($merchantRow)
-          .find(this.repository.getDeactivateButtonSelector())
-          .should('exist')
-          .click({ force: true });
-      }
+        if (params.action === ActionEnum.deactivate) {
+          cy.wrap($merchantRow)
+            .find(this.repository.getDeactivateButtonSelector())
+            .should('exist')
+            .click({ force: true });
+        }
 
-      if (params.action === ActionEnum.denyAccess) {
-        cy.wrap($merchantRow)
-          .find(this.repository.getDeactivateButtonSelector())
-          .should('exist')
-          .click({ force: true });
-      }
+        if (params.action === ActionEnum.approveAccess) {
+          cy.wrap($merchantRow)
+            .find(this.repository.getDeactivateButtonSelector())
+            .should('exist')
+            .click({ force: true });
+        }
+
+        if (params.action === ActionEnum.denyAccess) {
+          cy.wrap($merchantRow)
+            .find(this.repository.getDeactivateButtonSelector())
+            .should('exist')
+            .click({ force: true });
+        }
+      });
     });
   };
 
