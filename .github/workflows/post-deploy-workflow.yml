@@ -43,7 +43,7 @@ jobs:
         run: composer require spryker/cypress-tests:dev-master
 
       - name: Wait for Environment to Stabilize (P&S and Jenkins processing)
-        run: sleep 300
+        run: sleep 1800
 
       - name: Execute Post-Deploy-e2e Tests
         run: |
