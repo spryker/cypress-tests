@@ -14,11 +14,11 @@ export class CustomerMfaLoginScenario {
 
     this.mfaPage.waitForVerificationPopup();
 
-    console.log('customer');
-
     cy.getMultiFactorAuthCode(credentials.email, 'email').then((code) => {
       this.mfaPage.verifyCode(code);
     });
+
+    cy.url({ timeout: 20000 }).should('not.include', '/login');
   }
 
   executeWithInvalidCode(credentials: LoginCredentials, staticFixtures: CustomerMfaAuthStaticFixtures): void {

@@ -17,6 +17,8 @@ export class AgentMfaLoginScenario {
     cy.getUserMultiFactorAuthCode(credentials.username, 'email').then((code) => {
       this.mfaPage.verifyCode(code);
     });
+
+    cy.url({ timeout: 20000 }).should('not.include', '/agent/login');
   }
 
   executeWithInvalidCode(credentials: LoginCredentials, staticFixtures: AgentMfaAuthStaticFixtures): void {
