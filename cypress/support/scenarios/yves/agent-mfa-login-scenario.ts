@@ -9,20 +9,43 @@ export class AgentMfaLoginScenario {
   @inject(AgentMultiFactorAuthPage) private mfaPage: AgentMultiFactorAuthPage;
 
   execute(credentials: LoginCredentials): void {
+    cy.intercept('POST', '**/multi-factor-auth/send-user-code').as('mfaCodeSubmit');
+
     this.loginPage.visit();
     this.loginPage.login(credentials);
 
     this.mfaPage.waitForVerificationPopup();
 
-    cy.getUserMultiFactorAuthCode(credentials.username, 'email').then((code) => {
+    this.submitNewestCode(credentials.username);
+
+    // After a successful verification the popup reloads the page; wait for the redirect off the
+    // login page to land so the next visit() does not race the just-established session.
+    cy.url({ timeout: 20000 }).should('not.include', '/agent/login');
+  }
+
+  /**
+   * While it initialises, the login MFA popup requests a fresh verification code and can do so more
+   * than once. The backend keeps every code but only accepts the most recently generated one, so the
+   * first code read from the DB may already be stale by the time it is submitted — which left the
+   * test stuck on /agent/login. A rejected submit re-renders the validation form without issuing a
+   * new code, so re-reading the (now stable) newest code and submitting again succeeds. Bounded to
+   * stay within the backend attempt limit.
+   */
+  private submitNewestCode(username: string, attempt = 1): void {
+    const maxAttempts = 3;
+
+    cy.getUserMultiFactorAuthCode(username, 'email').then((code) => {
       this.mfaPage.verifyCode(code);
     });
 
-    // verifyCode() submits the verification popup via fetch, so Cypress does not wait for a page
-    // load and the in-flight POST may not have established the MFA-passed session yet. Block until
-    // the redirect off the login page lands, otherwise the next visit() races that request and the
-    // agent guard bounces it back to /agent/login.
-    cy.url({ timeout: 20000 }).should('not.include', '/agent/login');
+    cy.wait('@mfaCodeSubmit').then((interception) => {
+      const body = interception.response?.body;
+      const verified = typeof body === 'string' && body.includes('data-success');
+
+      if (!verified && attempt < maxAttempts) {
+        this.submitNewestCode(username, attempt + 1);
+      }
+    });
   }
 
   executeWithInvalidCode(credentials: LoginCredentials, staticFixtures: AgentMfaAuthStaticFixtures): void {
