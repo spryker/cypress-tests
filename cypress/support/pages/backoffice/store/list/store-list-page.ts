@@ -29,17 +29,24 @@ export class StoreListPage extends BackofficePage {
   };
 
   hasStore = (storeName: string): Cypress.Chainable<boolean> => {
+    // Existence check only: register the intercept before typing and match on the
+    // exact search value so we wait for the full-search response (not a partial
+    // keystroke). Pass no expectedCount — never assert a band on a precondition.
+    const searchInterceptAlias = this.faker.string.uuid();
+    cy.intercept('GET', '/store-gui/list/table**', (req) => {
+      if (req.query['search[value]'] === storeName) {
+        req.alias = searchInterceptAlias;
+      }
+    });
+
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(storeName);
 
-    return this.interceptTable({ url: '/store-gui/list/table**', expectedCount: 0 }).then((recordsFiltered: number) => {
-      if (recordsFiltered > 0) {
-        return cy.wrap(true);
-      } else {
-        return cy.wrap(false);
-      }
-    });
+    return cy
+      .wait(`@${searchInterceptAlias}`, { timeout: 10000 })
+      .its('response.body')
+      .then((body) => cy.wrap(body.recordsFiltered > 0));
   };
 }
 
