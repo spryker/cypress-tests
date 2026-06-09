@@ -41,9 +41,7 @@
         {
           "type": "helper",
           "name": "configureTestStateMachine",
-          "arguments": [
-            ["OmsReservationFlow01"]
-          ]
+          "arguments": [["OmsReservationFlow01"]]
         },
         {
           "type": "helper",
