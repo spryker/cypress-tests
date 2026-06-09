@@ -23,4 +23,18 @@ export class AvailabilityViewPage extends BackofficePage {
         cy.get('@editStockVariantButton').should('be.visible').click({ force: true });
       });
   };
+
+  visitForSku = (params: { sku: string }): void => {
+    cy.visitBackoffice(`${this.PAGE_URL}?sku=${encodeURIComponent(params.sku)}`);
+  };
+
+  assertReservedProductsAmount = (expected: number): void => {
+    this.repository
+      .getReservedProductsValue()
+      .invoke('text')
+      .then((text) => {
+        const value = Number.parseFloat(text.replace(/[^0-9.\-]/g, ''));
+        expect(value, `Expected reserved-products amount to be ${expected}`).to.equal(expected);
+      });
+  };
 }
