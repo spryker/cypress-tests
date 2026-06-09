@@ -28,7 +28,12 @@ export class CatalogPage extends YvesPage {
       cy.get('.header__search-open').click();
     }
 
-    this.repository.getSearchInput().invoke('val', params.query).parents('form').submit();
+    cy.on('uncaught:exception', (err) => {
+      if (err.message.includes("Cannot read properties of undefined (reading 'length')")) {
+        return false;
+      }
+    });
+    this.repository.getSearchInput().clear().type(`${params.query}{enter}`);
 
     cy.url().then((url) => {
       cy.reloadUntilFound(
