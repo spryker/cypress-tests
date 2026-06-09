@@ -42,8 +42,7 @@
           "type": "helper",
           "name": "configureTestStateMachine",
           "arguments": [
-            ["OmsReservationFlow01"],
-            "/data/config/Zed/oms"
+            ["OmsReservationFlow01"]
           ]
         },
         {
