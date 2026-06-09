@@ -33,7 +33,7 @@ export class AvailabilityViewPage extends BackofficePage {
       .getReservedProductsValue()
       .invoke('text')
       .then((text) => {
-        const value = Number.parseFloat(text.replace(/[^0-9.\-]/g, ''));
+        const value = Number.parseFloat(text.replace(/[^0-9.-]/g, ''));
         expect(value, `Expected reserved-products amount to be ${expected}`).to.equal(expected);
       });
   };
