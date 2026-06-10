@@ -47,7 +47,7 @@ describe(
 
     it('go to storefront and see the uploaded logo', (): void => {
       // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(4000); // since tests do not take a lot of time and including a looping wait to wait for sync is an overkill
+      cy.wait(10000); // since tests do not take a lot of time and including a looping wait to wait for sync is an overkill
       homePage.visit();
       homePage.getLogo().find('img').should('be.visible');
     });
@@ -61,7 +61,7 @@ describe(
 
     it('go to storefront and see the changes are reverted', (): void => {
       // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(4000); // since tests do not take a lot of time and including a looping wait to wait for sync is an overkill
+      cy.wait(10000); // since tests do not take a lot of time and including a looping wait to wait for sync is an overkill
       homePage.visit();
       homePage.getLogo().find('svg').should('be.visible');
     });
