@@ -1,0 +1,26 @@
+{
+  "defaultPassword": "change123",
+  "shoppingListName": "configurable-product-shopping-list",
+  "configuratorKey": "WATER_TREATMENT_CONFIGURATOR",
+  "configuration": "{\"time_of_day\":\"4\"}",
+  "displayData": "{\"Preferred time of the day\":\"Afternoon\",\"Date\":\"09.09.2050\"}",
+  "quantity": 3,
+  "availableQuantity": 4,
+  "prices": [
+    {
+      "priceTypeName": "DEFAULT",
+      "netAmount": 23434,
+      "grossAmount": 42502,
+      "currency": {
+        "code": "EUR",
+        "name": "Euro",
+        "symbol": "€"
+      },
+      "volumePrices": [
+        { "netAmount": 150, "grossAmount": 165, "quantity": 5 },
+        { "netAmount": 145, "grossAmount": 158, "quantity": 10 },
+        { "netAmount": 140, "grossAmount": 152, "quantity": 20 }
+      ]
+    }
+  ]
+}
