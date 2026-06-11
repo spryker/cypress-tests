@@ -3,9 +3,10 @@ import { ProductRepository } from '../product-repository';
 
 @injectable()
 export class B2bProductRepository implements ProductRepository {
-  getSoldByProductOffers = (): Cypress.Chainable => cy.get('[data-qa="component merchant-product-offer-item"]');
+  getSoldByProductOffers = (): Cypress.Chainable =>
+    cy.get('[data-qa="component seller-list"] .seller-list__items').first();
   getSoldByProductOfferRadios = (): Cypress.Chainable =>
-    cy.get('[data-qa="component merchant-product-offer-item"] input[type="radio"]');
+    cy.get('[data-qa="component seller-list-item"] input[type="radio"][name="product_offer_reference"]');
   getMerchantRelationRequestLinkAttribute = (): string => '[data-qa="merchant-relation-request-create-link"]';
   getInputRadioSelector = (): string => 'input[type="radio"]';
   getProductConfigurator = (): Cypress.Chainable => cy.get('[data-qa="component product-configurator"]');
@@ -33,7 +34,7 @@ export class B2bProductRepository implements ProductRepository {
   getCloseServicePointPopupButton = (): Cypress.Chainable => cy.get('.js-main-popup__close');
   getSspAssetNameBlock = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-name"]');
   getAttachmentsList = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-detail"] [data-qa="attachments-table"]');
+    cy.get('[data-qa="component product-detail"] [data-qa="attachments-list"]');
   getAttachmentItems = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-detail"] [data-qa="cell-name"] .link');
+    cy.get('[data-qa="component product-detail"] [data-qa="attachment-item"]');
 }
