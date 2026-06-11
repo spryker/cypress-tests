@@ -47,7 +47,9 @@ describe(
         const itemId = response.body.data.id;
         expect(response.body.data.attributes.quantity).to.eq(staticFixtures.quantity);
         expect(response.body.data.attributes.sku).to.eq(dynamicFixtures.configurableProduct.sku);
-        expect(response.body.data.attributes.productConfigurationInstance.displayData).to.eq(staticFixtures.displayData);
+        expect(response.body.data.attributes.productConfigurationInstance.displayData).to.eq(
+          staticFixtures.displayData
+        );
         expect(response.body.data.attributes.productConfigurationInstance.isComplete).to.eq(true);
 
         cy.request({
@@ -190,7 +192,11 @@ describe(
     const quantityValidations = [
       { description: 'zero quantity', quantity: '0', detail: 'quantity => This value should be greater than 0.' },
       { description: 'negative quantity', quantity: '-1', detail: 'quantity => This value should be greater than 0.' },
-      { description: 'string quantity', quantity: 'string', detail: 'quantity => This value should be of type integer.' },
+      {
+        description: 'string quantity',
+        quantity: 'string',
+        detail: 'quantity => This value should be of type integer.',
+      },
       { description: 'empty quantity', quantity: '', detail: 'quantity => This value should not be blank.' },
       { description: 'missing quantity', quantity: undefined, detail: 'quantity => This field is missing.' },
     ];
@@ -307,7 +313,9 @@ describe(
         method: 'POST',
         url: `${Cypress.env().glueUrl}/shopping-lists/${shoppingListId}/shopping-list-items`,
         headers: authHeaders(accessToken),
-        body: { data: { type: 'shopping-list-items', attributes: { sku: dynamicFixtures.regularProduct.sku, quantity } } },
+        body: {
+          data: { type: 'shopping-list-items', attributes: { sku: dynamicFixtures.regularProduct.sku, quantity } },
+        },
       });
     }
 

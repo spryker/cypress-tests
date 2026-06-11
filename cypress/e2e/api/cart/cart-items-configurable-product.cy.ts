@@ -83,7 +83,9 @@ describe(
           expect(updatedItem.id).to.eq(itemUid);
           expect(updatedItem.attributes.quantity).to.eq(2);
           // amount-based total is product/discount specific in robot; here we assert it stays a positive number.
-          expect(updatedItem.attributes.calculations.sumPriceToPayAggregation).to.be.a('number').and.to.be.greaterThan(0);
+          expect(updatedItem.attributes.calculations.sumPriceToPayAggregation)
+            .to.be.a('number')
+            .and.to.be.greaterThan(0);
         });
       });
     });
@@ -127,8 +129,10 @@ describe(
         description: 'negative price',
         netAmount: -23434,
         grossAmount: -42502,
-        netDetail: 'productConfigurationInstance.prices.0.netAmount => This value should be greater than or equal to 0.',
-        grossDetail: 'productConfigurationInstance.prices.0.grossAmount => This value should be greater than or equal to 0.',
+        netDetail:
+          'productConfigurationInstance.prices.0.netAmount => This value should be greater than or equal to 0.',
+        grossDetail:
+          'productConfigurationInstance.prices.0.grossAmount => This value should be greater than or equal to 0.',
       },
       {
         description: 'empty price',
@@ -177,7 +181,7 @@ describe(
     function buildItemBody(options: ConfigurableItemOptions): Record<string, unknown> {
       const price = applyPriceOverrides(staticFixtures.prices[0] as unknown as Record<string, unknown>, options);
 
-      const isComplete = options.omitIsComplete ? null : options.isComplete ?? true;
+      const isComplete = options.omitIsComplete ? null : (options.isComplete ?? true);
       const productConfigurationInstance = buildProductConfigurationInstance(
         {
           displayData: staticFixtures.displayData,

@@ -1,7 +1,4 @@
-import {
-  CheckoutConfigurableProductDynamicFixtures,
-  CheckoutConfigurableProductStaticFixtures,
-} from '@interfaces/api';
+import { CheckoutConfigurableProductDynamicFixtures, CheckoutConfigurableProductStaticFixtures } from '@interfaces/api';
 import { authHeaders, buildProductConfigurationInstance } from '@utils';
 import { retryableBefore } from '../../../support/e2e';
 
