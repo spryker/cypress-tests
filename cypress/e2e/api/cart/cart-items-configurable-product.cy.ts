@@ -20,6 +20,11 @@ describe(
   'cart items configurable product',
   { tags: ['@api', '@cart', 'product-configuration', 'configurable-product'] },
   (): void => {
+    if (!['b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for b2b-mp', () => {});
+      return;
+    }
+
     let staticFixtures: CartConfigurableProductStaticFixtures;
     let dynamicFixtures: CartConfigurableProductDynamicFixtures;
     let accessToken: string;
