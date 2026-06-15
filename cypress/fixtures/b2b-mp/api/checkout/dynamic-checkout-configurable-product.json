@@ -2,6 +2,7 @@
   "data": {
     "type": "dynamic-fixtures",
     "attributes": {
+      "synchronize": true,
       "operations": [
         {
           "type": "helper",
@@ -72,6 +73,7 @@
           "key": "companyUser",
           "arguments": [
             {
+              "isDefault": true,
               "customer": "#customer",
               "fkCustomer": "#customer.id_customer",
               "fkCompany": "#company.id_company",
