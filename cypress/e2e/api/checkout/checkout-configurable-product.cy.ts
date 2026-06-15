@@ -1,10 +1,10 @@
 import { CheckoutConfigurableProductDynamicFixtures, CheckoutConfigurableProductStaticFixtures } from '@interfaces/api';
-import { authHeaders, buildProductConfigurationInstance } from '@utils';
+import { addCartItem, buildProductConfigurationInstance, submitCheckout } from '@utils';
 import { retryableBefore } from '../../../support/e2e';
 
 describe(
   'checkout configurable product',
-  { tags: ['@api', '@checkout', 'product-configuration', 'configurable-product'] },
+  { tags: ['@api', '@checkout', 'configurable-product'] },
   (): void => {
     if (!['b2b-mp'].includes(Cypress.env('repositoryId'))) {
       it.skip('skipped because tests run only for b2b-mp', () => {});
@@ -45,12 +45,7 @@ describe(
         );
         expect(addResponse.body.included[0].attributes.productConfigurationInstance.isComplete).to.eq(true);
 
-        cy.request({
-          method: 'POST',
-          url: `${Cypress.env().glueUrl}/checkout?include=orders`,
-          headers: authHeaders(accessToken),
-          body: buildCheckoutPayload(),
-        }).then((response) => {
+        submitCheckout(accessToken, buildCheckoutPayload()).then((response) => {
           expect(response.status).to.eq(201);
           expect(response.body.data.type).to.eq('checkout');
           expect(response.body.data.attributes.orderReference).to.contain(`${staticFixtures.store}--`);
@@ -89,19 +84,14 @@ describe(
         prices: staticFixtures.prices,
       });
 
-      return cy.request({
-        method: 'POST',
-        url: `${Cypress.env().glueUrl}/carts/${cartId}/items?include=items`,
-        headers: authHeaders(accessToken),
-        body: {
-          data: {
-            type: 'items',
-            attributes: {
-              sku: staticFixtures.sku,
-              quantity: staticFixtures.quantity,
-              merchantReference: staticFixtures.merchantReference,
-              productConfigurationInstance,
-            },
+      return addCartItem(accessToken, cartId, {
+        data: {
+          type: 'items',
+          attributes: {
+            sku: staticFixtures.sku,
+            quantity: staticFixtures.quantity,
+            merchantReference: staticFixtures.merchantReference,
+            productConfigurationInstance,
           },
         },
       });

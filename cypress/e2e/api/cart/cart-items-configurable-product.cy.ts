@@ -1,10 +1,13 @@
 import { CartConfigurableProductDynamicFixtures, CartConfigurableProductStaticFixtures } from '@interfaces/api';
 import {
+  addCartItem,
   applyPriceOverrides,
-  authHeaders,
   buildProductConfigurationInstance,
+  deleteCartItem,
   expectApiErrorDetail,
   expectApiValidationError,
+  getCart,
+  updateCartItem,
 } from '@utils';
 import { retryableBefore } from '../../../support/e2e';
 
@@ -18,7 +21,7 @@ interface ConfigurableItemOptions {
 
 describe(
   'cart items configurable product',
-  { tags: ['@api', '@cart', 'product-configuration', 'configurable-product'] },
+  { tags: ['@api', '@cart', 'configurable-product'] },
   (): void => {
     if (!['b2b-mp'].includes(Cypress.env('repositoryId'))) {
       it.skip('skipped because tests run only for b2b-mp', () => {});
@@ -73,12 +76,8 @@ describe(
         expect(item.attributes.productConfigurationInstance.isComplete).to.eq(false);
         expect(item.attributes.productConfigurationInstance.configuration).to.eq(staticFixtures.configuration);
 
-        cy.request({
-          method: 'PATCH',
-          url: `${Cypress.env().glueUrl}/carts/${cartId}/items/${itemUid}?include=items`,
-          headers: authHeaders(accessToken),
-          body: buildItemBody({ quantity: 2, isComplete: false }),
-        }).then((response) => {
+        updateCartItem(accessToken, cartId, itemUid, buildItemBody({ quantity: 2, isComplete: false })).then(
+          (response) => {
           expect(response.status).to.eq(200);
           expect(response.body.data.id).to.eq(cartId);
           expect(response.body.data.type).to.eq('carts');
@@ -99,14 +98,10 @@ describe(
       postConfigurableItem({ quantity: 3 }).then((addResponse) => {
         const itemUid = addResponse.body.included[0].id;
 
-        cy.request({
-          method: 'DELETE',
-          url: `${Cypress.env().glueUrl}/carts/${cartId}/items/${itemUid}`,
-          headers: authHeaders(accessToken),
-        }).then((response) => {
+        deleteCartItem(accessToken, cartId, itemUid).then((response) => {
           expect(response.status).to.eq(204);
 
-          getCart().then((cartResponse) => {
+          getCart(accessToken, cartId).then((cartResponse) => {
             expect(cartResponse.status).to.eq(200);
             expect(cartResponse.body.data.attributes.totals.grandTotal).to.eq(0);
           });
@@ -165,22 +160,8 @@ describe(
       });
     });
 
-    function getCart(): Cypress.Chainable {
-      return cy.request({
-        method: 'GET',
-        url: `${Cypress.env().glueUrl}/carts/${cartId}?include=items`,
-        headers: authHeaders(accessToken),
-      });
-    }
-
     function postConfigurableItem(options: ConfigurableItemOptions, failOnStatusCode = true): Cypress.Chainable {
-      return cy.request({
-        method: 'POST',
-        url: `${Cypress.env().glueUrl}/carts/${cartId}/items?include=items`,
-        headers: authHeaders(accessToken),
-        failOnStatusCode,
-        body: buildItemBody(options),
-      });
+      return addCartItem(accessToken, cartId, buildItemBody(options), failOnStatusCode);
     }
 
     function buildItemBody(options: ConfigurableItemOptions): Record<string, unknown> {
@@ -212,7 +193,7 @@ describe(
     }
 
     function expectCartIsEmpty(): void {
-      getCart().then((cartResponse) => {
+      getCart(accessToken, cartId).then((cartResponse) => {
         expect(cartResponse.status).to.eq(200);
         expect(cartResponse.body.data.attributes.totals.priceToPay).to.eq(0);
       });

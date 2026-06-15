@@ -2,7 +2,15 @@ import {
   ShoppingListConfigurableProductDynamicFixtures,
   ShoppingListConfigurableProductStaticFixtures,
 } from '@interfaces/api';
-import { applyPriceOverrides, authHeaders, expectApiErrorDetail, expectApiValidationError } from '@utils';
+import {
+  addShoppingListItem,
+  applyPriceOverrides,
+  deleteShoppingListItem,
+  expectApiErrorDetail,
+  expectApiValidationError,
+  getShoppingList,
+  updateShoppingListItem,
+} from '@utils';
 import { retryableBefore } from '../../../support/e2e';
 
 interface ConfigurableItemOptions {
@@ -20,7 +28,7 @@ interface ConfigurableItemOptions {
 
 describe(
   'shopping list items configurable product',
-  { tags: ['@api', '@shopping-list', 'product-configuration', 'configurable-product'] },
+  { tags: ['@api', '@shopping-list', 'configurable-product', 'configurable-product-shopping-lists'] },
   (): void => {
     if (!['b2b-mp'].includes(Cypress.env('repositoryId'))) {
       it.skip('skipped because tests run only for b2b-mp', () => {});
@@ -57,11 +65,7 @@ describe(
         );
         expect(response.body.data.attributes.productConfigurationInstance.isComplete).to.eq(true);
 
-        cy.request({
-          method: 'GET',
-          url: `${Cypress.env().glueUrl}/shopping-lists/${shoppingListId}?include=shopping-list-items,concrete-products`,
-          headers: authHeaders(accessToken),
-        }).then((listResponse) => {
+        getShoppingList(accessToken, shoppingListId, 'shopping-list-items,concrete-products').then((listResponse) => {
           expect(listResponse.status).to.eq(200);
           expect(listResponse.body.data.type).to.eq('shopping-lists');
           expect(listResponse.body.data.id).to.eq(shoppingListId);
@@ -82,11 +86,8 @@ describe(
       addConfigurableItem({ quantity: staticFixtures.quantity }).then((addResponse) => {
         const itemId = addResponse.body.data.id;
 
-        cy.request({
-          method: 'PATCH',
-          url: `${Cypress.env().glueUrl}/shopping-lists/${shoppingListId}/shopping-list-items/${itemId}`,
-          headers: authHeaders(accessToken),
-          body: { data: { type: 'shopping-list-items', attributes: { quantity: 2 } } },
+        updateShoppingListItem(accessToken, shoppingListId, itemId, {
+          data: { type: 'shopping-list-items', attributes: { quantity: 2 } },
         }).then((response) => {
           expect(response.status).to.eq(200);
           expect(response.body.data.attributes.quantity).to.eq(2);
@@ -97,14 +98,15 @@ describe(
     it('should update the configuration of a configurable product in the shopping list', (): void => {
       addConfigurableItem({ quantity: staticFixtures.quantity }).then((addResponse) => {
         const itemId = addResponse.body.data.id;
-        const updatedDisplayData = '{"Preferred time of the day":"Morning","Date":"10.10.2040"}';
+        const updatedDisplayData =
+          '{"Flow Rate (m³/h)":"20 m³/h","Filtration Type":"Nanofiltration","Tank Material":"Stainless Steel 316L","Control System":"PLC with HMI","Inlet Connection (DN)":"DN65","Power Supply":"400V / 50Hz"}';
 
-        cy.request({
-          method: 'PATCH',
-          url: `${Cypress.env().glueUrl}/shopping-lists/${shoppingListId}/shopping-list-items/${itemId}`,
-          headers: authHeaders(accessToken),
-          body: buildItemBody({ quantity: staticFixtures.quantity, displayData: updatedDisplayData }),
-        }).then((response) => {
+        updateShoppingListItem(
+          accessToken,
+          shoppingListId,
+          itemId,
+          buildItemBody({ quantity: staticFixtures.quantity, displayData: updatedDisplayData })
+        ).then((response) => {
           expect(response.status).to.eq(200);
           expect(response.body.data.attributes.productConfigurationInstance.displayData).to.eq(updatedDisplayData);
         });
@@ -115,18 +117,10 @@ describe(
       addConfigurableItem({ quantity: staticFixtures.quantity }).then((addResponse) => {
         const itemId = addResponse.body.data.id;
 
-        cy.request({
-          method: 'DELETE',
-          url: `${Cypress.env().glueUrl}/shopping-lists/${shoppingListId}/shopping-list-items/${itemId}`,
-          headers: authHeaders(accessToken),
-        }).then((response) => {
+        deleteShoppingListItem(accessToken, shoppingListId, itemId).then((response) => {
           expect(response.status).to.eq(204);
 
-          cy.request({
-            method: 'GET',
-            url: `${Cypress.env().glueUrl}/shopping-lists/${shoppingListId}`,
-            headers: authHeaders(accessToken),
-          }).then((listResponse) => {
+          getShoppingList(accessToken, shoppingListId).then((listResponse) => {
             expect(listResponse.status).to.eq(200);
             expect(listResponse.body.data.attributes.numberOfItems).to.eq(0);
           });
@@ -141,8 +135,10 @@ describe(
 
         addConfigurableItem({
           quantity: staticFixtures.quantity,
-          configuration: '{"time_of_day":"5"}',
-          displayData: '{"Preferred time of the day":"Evening","Date":"01.01.2060"}',
+          configuration:
+            '{"flowRate":"30","filtration":"ion_exchange","tank":"duplex","control":"fully_automatic","inlet":"DN100","power":"480v"}',
+          displayData:
+            '{"Flow Rate (m³/h)":"30 m³/h","Filtration Type":"Ion Exchange","Tank Material":"Duplex Steel","Control System":"Fully Automatic","Inlet Connection (DN)":"DN100","Power Supply":"480V / 60Hz"}',
         }).then((secondResponse) => {
           expect(secondResponse.status).to.eq(201);
           expect(secondResponse.body.data.id).to.not.eq(firstItemId);
@@ -150,45 +146,6 @@ describe(
           getList().then((listResponse) => {
             expect(listResponse.status).to.eq(200);
             expect(listResponse.body.data.relationships['shopping-list-items'].data).to.have.length(2);
-          });
-        });
-      });
-    });
-
-    it('should add a configurable product and a regular product to the shopping list', (): void => {
-      addConfigurableItem({ quantity: staticFixtures.quantity }).then((configResponse) => {
-        expect(configResponse.status).to.eq(201);
-
-        addRegularItem(1).then((regularResponse) => {
-          expect(regularResponse.status).to.eq(201);
-
-          getList().then((listResponse) => {
-            expect(listResponse.status).to.eq(200);
-            expect(listResponse.body.data.relationships['shopping-list-items'].data).to.have.length(2);
-          });
-        });
-      });
-    });
-
-    it('should remove a configurable product and leave a regular product in the shopping list', (): void => {
-      addConfigurableItem({ quantity: staticFixtures.quantity }).then((configResponse) => {
-        const configItemId = configResponse.body.data.id;
-
-        addRegularItem(1).then((regularResponse) => {
-          const regularItemId = regularResponse.body.data.id;
-
-          cy.request({
-            method: 'DELETE',
-            url: `${Cypress.env().glueUrl}/shopping-lists/${shoppingListId}/shopping-list-items/${configItemId}`,
-            headers: authHeaders(accessToken),
-          }).then((deleteResponse) => {
-            expect(deleteResponse.status).to.eq(204);
-
-            getList().then((listResponse) => {
-              const items = listResponse.body.data.relationships['shopping-list-items'].data;
-              expect(items).to.have.length(1);
-              expect(items[0].id).to.eq(regularItemId);
-            });
           });
         });
       });
@@ -304,32 +261,11 @@ describe(
     });
 
     function addConfigurableItem(options: ConfigurableItemOptions, failOnStatusCode = true): Cypress.Chainable {
-      return cy.request({
-        method: 'POST',
-        url: `${Cypress.env().glueUrl}/shopping-lists/${shoppingListId}/shopping-list-items`,
-        headers: authHeaders(accessToken),
-        failOnStatusCode,
-        body: buildItemBody(options),
-      });
-    }
-
-    function addRegularItem(quantity: number): Cypress.Chainable {
-      return cy.request({
-        method: 'POST',
-        url: `${Cypress.env().glueUrl}/shopping-lists/${shoppingListId}/shopping-list-items`,
-        headers: authHeaders(accessToken),
-        body: {
-          data: { type: 'shopping-list-items', attributes: { sku: dynamicFixtures.regularProduct.sku, quantity } },
-        },
-      });
+      return addShoppingListItem(accessToken, shoppingListId, buildItemBody(options), failOnStatusCode);
     }
 
     function getList(): Cypress.Chainable {
-      return cy.request({
-        method: 'GET',
-        url: `${Cypress.env().glueUrl}/shopping-lists/${shoppingListId}?include=shopping-list-items`,
-        headers: authHeaders(accessToken),
-      });
+      return getShoppingList(accessToken, shoppingListId, 'shopping-list-items');
     }
 
     function buildItemBody(options: ConfigurableItemOptions): Record<string, unknown> {

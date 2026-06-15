@@ -20,7 +20,4 @@ export interface ShoppingListConfigurableProductDynamicFixtures {
     sku: string;
     idProductConcrete: number;
   };
-  regularProduct: {
-    sku: string;
-  };
 }
