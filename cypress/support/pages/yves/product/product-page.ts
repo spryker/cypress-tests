@@ -51,6 +51,12 @@ export class ProductPage extends YvesPage {
       .children()
       .each(($productOffer) => {
         if ($productOffer.find('input[type="radio"]').attr('value') === params.productOfferReference) {
+          const $menu = $productOffer.find('details').has(this.repository.getMerchantRelationRequestLinkAttribute());
+
+          if ($menu.length) {
+            cy.wrap($menu).find('summary').click();
+          }
+
           cy.wrap($productOffer).find(this.repository.getMerchantRelationRequestLinkAttribute()).click();
         }
       });
