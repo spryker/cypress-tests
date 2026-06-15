@@ -40,14 +40,14 @@ export class MerchantListPage extends BackofficePage {
 
         if (params.action === ActionEnum.approveAccess) {
           cy.wrap($merchantRow)
-            .find(this.repository.getDeactivateButtonSelector())
+            .find(this.repository.getApproveAccessButtonSelector())
             .should('exist')
             .click({ force: true });
         }
 
         if (params.action === ActionEnum.denyAccess) {
           cy.wrap($merchantRow)
-            .find(this.repository.getDeactivateButtonSelector())
+            .find(this.repository.getDenyAccessButtonSelector())
             .should('exist')
             .click({ force: true });
         }
