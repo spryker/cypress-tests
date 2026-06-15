@@ -142,10 +142,10 @@ export class BackofficePage extends AbstractPage {
                   });
                 });
             });
-        })
-        // Cypress's `.then()` overloads infer a nested Chainable here; the runtime
-        // subject is `TableRowGetter | null`, which is what callers actually receive.
-    ) as unknown as Cypress.Chainable<TableRowGetter | null>;
+        }) as // Cypress's `.then()` overloads infer a nested Chainable here; the runtime
+      // subject is `TableRowGetter | null`, which is what callers actually receive.
+      unknown as Cypress.Chainable<TableRowGetter | null>
+    );
   };
 
   public findWithRetry = (params: UpdateWithRetryParams): Cypress.Chainable => {
