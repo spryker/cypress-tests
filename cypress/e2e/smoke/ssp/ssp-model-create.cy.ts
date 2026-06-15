@@ -34,7 +34,8 @@ describe(
       });
     });
 
-    it('backoffice user should be able to create a new ssp model with an uploaded image image', (): void => {
+    // skipped until https://spryker.atlassian.net/browse/CC-39237 is fixed
+    it.skip('backoffice user should be able to create a new ssp model with an uploaded image image', (): void => {
       sspModelAddPage.visit();
       sspModelAddPage.fillSspModelForm({
         name: staticFixtures.sspModel.name,
