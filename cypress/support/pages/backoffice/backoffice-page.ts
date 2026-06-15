@@ -55,7 +55,7 @@ export class BackofficePage extends AbstractPage {
     return cy.get('tbody > tr:visible');
   };
 
-  public find = (params: UpdateParams): Cypress.Chainable => {
+  public find = (params: UpdateParams): Cypress.Chainable<TableRowGetter | null> => {
     const expectedCount = params.expectedCount ?? 1;
     const clearInterceptAlias = this.faker.string.uuid();
     const searchInterceptAlias = this.faker.string.uuid();
@@ -131,18 +131,21 @@ export class BackofficePage extends AbstractPage {
 
                     if (rows.length > 0) {
                       const rowIndex = Array.from($rows).indexOf(rows.first()[0]);
+                      const getRow: TableRowGetter = () => cy.get('tbody > tr:visible').eq(rowIndex);
 
-                      return cy.wrap((): Cypress.Chainable<JQuery> => cy.get('tbody > tr:visible').eq(rowIndex));
+                      return getRow;
                     } else {
                       cy.log('No rows found after filtering');
 
-                      return cy.wrap(null);
+                      return null;
                     }
                   });
                 });
             });
         })
-    );
+        // Cypress's `.then()` overloads infer a nested Chainable here; the runtime
+        // subject is `TableRowGetter | null`, which is what callers actually receive.
+    ) as unknown as Cypress.Chainable<TableRowGetter | null>;
   };
 
   public findWithRetry = (params: UpdateWithRetryParams): Cypress.Chainable => {
@@ -194,6 +197,13 @@ export class BackofficePage extends AbstractPage {
     return searchAndIntercept();
   };
 }
+
+/**
+ * Lazily re-queries the matched table row from the live DOM at call time.
+ * Returned by {@link BackofficePage.find} instead of a captured jQuery element,
+ * so a DataTables re-render between search and click cannot detach the reference.
+ */
+export type TableRowGetter = () => Cypress.Chainable<JQuery<HTMLElement>>;
 
 export enum ActionEnum {
   view,
