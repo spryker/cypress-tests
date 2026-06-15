@@ -1,0 +1,28 @@
+{
+  "defaultPassword": "change123",
+  "store": "DE",
+  "currency": "EUR",
+  "priceMode": "GROSS_MODE",
+  "configuratorKey": "WATER_TREATMENT_CONFIGURATOR",
+  "configuration": "{\"flowRate\":\"10\",\"filtration\":\"reverse_osmosis\",\"tank\":\"ss316l\",\"control\":\"fully_automatic\",\"inlet\":\"DN50\",\"power\":\"400v\"}",
+  "displayData": "{\"Flow Rate (m³/h)\":\"10 m³/h\",\"Filtration Type\":\"Reverse Osmosis\",\"Tank Material\":\"Stainless Steel 316L\",\"Control System\":\"Fully Automatic\",\"Inlet Connection (DN)\":\"DN50\",\"Power Supply\":\"400V / 50Hz\"}",
+  "quantity": 2,
+  "availableQuantity": 4,
+  "prices": [
+    {
+      "priceTypeName": "DEFAULT",
+      "netAmount": 23434,
+      "grossAmount": 42502,
+      "currency": {
+        "code": "EUR",
+        "name": "Euro",
+        "symbol": "€"
+      },
+      "volumePrices": [
+        { "netAmount": 150, "grossAmount": 165, "quantity": 5 },
+        { "netAmount": 145, "grossAmount": 158, "quantity": 10 },
+        { "netAmount": 140, "grossAmount": 152, "quantity": 20 }
+      ]
+    }
+  ]
+}
