@@ -41,11 +41,7 @@ export function updateShoppingListItem(
 /**
  * Deletes a shopping list item (`DELETE /shopping-lists/{id}/shopping-list-items/{itemId}`).
  */
-export function deleteShoppingListItem(
-  accessToken: string,
-  shoppingListId: string,
-  itemId: string
-): Cypress.Chainable {
+export function deleteShoppingListItem(accessToken: string, shoppingListId: string, itemId: string): Cypress.Chainable {
   return cy.request({
     method: 'DELETE',
     url: `${itemsUrl(shoppingListId)}/${itemId}`,
