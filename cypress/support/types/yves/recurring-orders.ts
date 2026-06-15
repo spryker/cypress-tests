@@ -1,0 +1,31 @@
+export interface CreateRecurringOrderStaticFixtures {
+  defaultPassword: string;
+}
+
+export interface CreateRecurringOrderDynamicFixtures {
+  buyer: { email: string; id_customer: number };
+  product: { sku: string; abstract_sku: string };
+  quote: { id_quote: number };
+}
+
+export interface ManageRecurringOrderStaticFixtures {
+  defaultPassword: string;
+  scheduleName: string;
+  pausedScheduleName: string;
+}
+
+export interface ManageRecurringOrderDynamicFixtures {
+  buyer: { email: string; id_customer: number };
+  schedule: { id_recurring_schedule: number; uuid: string; name: string };
+  buyerForPause: { email: string; id_customer: number };
+  pausedSchedule: { id_recurring_schedule: number; uuid: string; name: string };
+}
+
+export interface RecurringOrderReviewStaticFixtures {
+  defaultPassword: string;
+}
+
+export interface RecurringOrderReviewDynamicFixtures {
+  buyer: { email: string; id_customer: number };
+  schedule: { id_recurring_schedule: number; uuid: string; name: string };
+}

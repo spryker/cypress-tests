@@ -49,3 +49,7 @@ export * from './purchasing-control/budget/list/budget-list-page';
 export * from './purchasing-control/budget/create/budget-create-page';
 export * from './purchasing-control/budget/update/budget-update-page';
 export * from './purchasing-control/checkout-summary/checkout-summary-budget-page';
+export * from './recurring-orders/checkout-summary/checkout-summary-recurring-order-page';
+export * from './recurring-orders/list/recurring-order-list-page';
+export * from './recurring-orders/detail/recurring-order-detail-page';
+export * from './recurring-orders/review/recurring-order-review-page';
