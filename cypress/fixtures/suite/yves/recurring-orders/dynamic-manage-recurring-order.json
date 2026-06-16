@@ -74,6 +74,7 @@
               "name": "Test Monthly Order",
               "cadence_type": "monthly",
               "status": "active",
+              "build_quote_data": true,
               "payment_method": "dummyPaymentInvoice",
               "store_name": "DE",
               "currency_iso_code": "EUR",
@@ -93,7 +94,8 @@
               "sku": "#product.sku",
               "quantity": 1,
               "reference_gross_price": 30000,
-              "reference_net_price": 25000
+              "reference_net_price": 25000,
+              "build_item_data": true
             }
           ]
         },
