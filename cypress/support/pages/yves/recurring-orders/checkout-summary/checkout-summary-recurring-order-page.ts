@@ -20,7 +20,12 @@ export class CheckoutSummaryRecurringOrderPage extends YvesPage {
   };
 
   enableRecurringOrder = (): void => {
-    this.repository.getRecurringOrderToggle().check({ force: true });
+    this.repository.getRecurringOrderToggle().click({ force: true });
+    this.repository.getCadenceTypeSelect().should('be.visible');
+  };
+
+  fillScheduleName = (name: string): void => {
+    this.repository.getScheduleNameInput().clear().type(name);
   };
 
   selectCadenceType = (cadenceType: string): void => {
@@ -28,6 +33,7 @@ export class CheckoutSummaryRecurringOrderPage extends YvesPage {
   };
 
   confirmRecurringOrder = (): void => {
+    this.repository.getConfirmButton().click();
     this.repository.getConfirmButton().click();
   };
 }

@@ -36,12 +36,16 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    const proceedToSummaryWithInvoicePayment = (email: string): void => {
+    const proceedToPaymentStep = (email: string): void => {
       customerLoginScenario.execute({ email, password: staticFixtures.defaultPassword, withoutSession: true });
       cartPage.visit();
       cartPage.startCheckout();
       checkoutAddressPage.fillShippingAddress();
       checkoutShipmentPage.setStandardShippingMethod();
+    };
+
+    const proceedToSummaryWithInvoicePayment = (email: string): void => {
+      proceedToPaymentStep(email);
       checkoutPaymentPage.setDummyPaymentMethod();
     };
 
@@ -50,26 +54,20 @@ describe(
 
       checkoutSummaryRecurringOrderPage.assertRecurringOrderToggleVisible();
       checkoutSummaryRecurringOrderPage.enableRecurringOrder();
+      checkoutSummaryRecurringOrderPage.fillScheduleName(staticFixtures.scheduleName);
       checkoutSummaryRecurringOrderPage.selectCadenceType('monthly');
       checkoutSummaryRecurringOrderPage.confirmRecurringOrder();
+      cy.wait(500);
       checkoutSummaryPage.placeOrder();
 
       cy.url().should('include', '/checkout/success');
 
       recurringOrderListPage.visit();
-      recurringOrderListPage.assertScheduleVisible(dynamicFixtures.buyer.email);
+      recurringOrderListPage.assertScheduleVisible(staticFixtures.scheduleName);
     });
 
     it('recurring order widget is not visible when credit card payment method is selected', (): void => {
-      customerLoginScenario.execute({
-        email: dynamicFixtures.buyer.email,
-        password: staticFixtures.defaultPassword,
-        withoutSession: true,
-      });
-      cartPage.visit();
-      cartPage.startCheckout();
-      checkoutAddressPage.fillShippingAddress();
-      checkoutShipmentPage.setStandardShippingMethod();
+      proceedToPaymentStep(dynamicFixtures.buyerForCreditCard.email);
       checkoutPaymentPage.setDummyPaymentCreditCardMethod();
 
       checkoutSummaryRecurringOrderPage.assertRecurringOrderToggleNotVisible();
