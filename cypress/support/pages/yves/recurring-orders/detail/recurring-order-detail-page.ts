@@ -24,7 +24,7 @@ export class RecurringOrderDetailPage extends YvesPage {
   };
 
   assertStatusBadge = (status: string): void => {
-    this.repository.getStatusBadge().should('contain', status);
+    this.repository.getStatusBadge().invoke('text').invoke('toLowerCase').should('contain', status.toLowerCase());
   };
 
   clickPause = (): void => {
@@ -49,6 +49,10 @@ export class RecurringOrderDetailPage extends YvesPage {
 
   confirmPause = (): void => {
     this.repository.getPauseConfirmButton().click();
+  };
+
+  fillResumeDate = (date: string): void => {
+    this.repository.getResumeDateInput().type(date);
   };
 
   confirmResume = (): void => {

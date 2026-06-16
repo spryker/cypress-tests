@@ -11,4 +11,5 @@ export interface RecurringOrderDetailRepository {
   getCancelConfirmButton(): Cypress.Chainable;
   getPauseConfirmButton(): Cypress.Chainable;
   getResumeConfirmButton(): Cypress.Chainable;
+  getResumeDateInput(): Cypress.Chainable;
 }

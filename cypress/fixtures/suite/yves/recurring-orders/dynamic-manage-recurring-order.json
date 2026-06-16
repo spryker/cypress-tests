@@ -159,6 +159,69 @@
               "reference_net_price": 25000
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "buyerForSkip",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerForSkipRoleCollection",
+          "arguments": { "roles": ["#buyerRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerForSkipCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyerForSkip",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerForSkipRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerForSkipCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "scheduleForSkip",
+          "arguments": [
+            "#buyerForSkip.id_customer",
+            {
+              "name": "Test Skip Order",
+              "cadence_type": "monthly",
+              "status": "active",
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-07-01",
+              "next_trigger_date": "2026-07-01"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItem",
+          "key": "scheduleForSkipItem",
+          "arguments": [
+            "#scheduleForSkip.id_recurring_schedule",
+            {
+              "sku": "#product.sku",
+              "quantity": 1,
+              "reference_gross_price": 30000,
+              "reference_net_price": 25000
+            }
+          ]
         }
       ]
     }

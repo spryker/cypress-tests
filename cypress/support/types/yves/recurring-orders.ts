@@ -15,6 +15,8 @@ export interface ManageRecurringOrderStaticFixtures {
   defaultPassword: string;
   scheduleName: string;
   pausedScheduleName: string;
+  skipScheduleName: string;
+  resumeNextExecutionDate: string;
 }
 
 export interface ManageRecurringOrderDynamicFixtures {
@@ -22,6 +24,8 @@ export interface ManageRecurringOrderDynamicFixtures {
   schedule: { id_recurring_schedule: number; uuid: string; name: string };
   buyerForPause: { email: string; id_customer: number };
   pausedSchedule: { id_recurring_schedule: number; uuid: string; name: string };
+  buyerForSkip: { email: string; id_customer: number };
+  scheduleForSkip: { id_recurring_schedule: number; uuid: string; name: string };
 }
 
 export interface RecurringOrderReviewStaticFixtures {

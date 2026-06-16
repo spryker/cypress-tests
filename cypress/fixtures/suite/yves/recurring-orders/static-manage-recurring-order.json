@@ -1,5 +1,7 @@
 {
   "defaultPassword": "change123",
   "scheduleName": "Test Monthly Order",
-  "pausedScheduleName": "Test Paused Order"
+  "pausedScheduleName": "Test Paused Order",
+  "skipScheduleName": "Test Skip Order",
+  "resumeNextExecutionDate": "2026-12-01"
 }

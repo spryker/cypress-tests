@@ -15,4 +15,5 @@ export class SuiteRecurringOrderDetailRepository implements RecurringOrderDetail
   getCancelConfirmButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-cancel-confirm-button"]');
   getPauseConfirmButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-pause-confirm-button"]');
   getResumeConfirmButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-resume-confirm-button"]');
+  getResumeDateInput = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-resume-date-input"]');
 }

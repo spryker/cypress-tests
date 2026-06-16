@@ -36,6 +36,14 @@ describe(
       recurringOrderListPage.clickViewSchedule(staticFixtures.scheduleName);
     };
 
+    it('recurring orders list shows the buyer\'s active schedule', (): void => {
+      recurringOrderListPage.visit();
+
+      recurringOrderListPage.assertListTableVisible();
+      recurringOrderListPage.assertScheduleVisible(staticFixtures.scheduleName);
+      recurringOrderListPage.assertScheduleRowContains(staticFixtures.scheduleName, 'active');
+    });
+
     it('detail page shows the schedule name, cadence, and status', (): void => {
       openScheduleDetail();
 
@@ -54,6 +62,7 @@ describe(
     });
 
     it('company user can resume a paused recurring schedule', (): void => {
+      cy.clearCookies();
       customerLoginScenario.execute({
         email: dynamicFixtures.buyerForPause.email,
         password: staticFixtures.defaultPassword,
@@ -64,13 +73,22 @@ describe(
       recurringOrderListPage.clickViewSchedule(staticFixtures.pausedScheduleName);
 
       recurringOrderDetailPage.clickResume();
+      recurringOrderDetailPage.fillResumeDate(staticFixtures.resumeNextExecutionDate);
       recurringOrderDetailPage.confirmResume();
 
       recurringOrderDetailPage.assertStatusBadge('active');
     });
 
     it('company user can skip the next occurrence of a recurring schedule', (): void => {
-      openScheduleDetail();
+      cy.clearCookies();
+      customerLoginScenario.execute({
+        email: dynamicFixtures.buyerForSkip.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      recurringOrderListPage.visit();
+      recurringOrderListPage.clickViewSchedule(staticFixtures.skipScheduleName);
 
       recurringOrderDetailPage.clickSkipFromNextExecution();
       recurringOrderDetailPage.confirmSkip();
