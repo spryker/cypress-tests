@@ -910,6 +910,143 @@
               "build_item_data": true
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "packagingProduct",
+          "arguments": [{ "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#packagingProduct.abstract_sku",
+              "skuProduct": "#packagingProduct.sku",
+              "moneyValue": { "netAmount": 28000, "grossAmount": 35000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#packagingProduct.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "arguments": ["#packagingProduct", "#shipmentType"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductMeasurementUnit",
+          "key": "measurementUnit",
+          "arguments": [{ "name": "Kilogram", "code": "KGM" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductMeasurementBaseUnit",
+          "key": "baseUnit",
+          "arguments": [
+            "#packagingProduct.fk_product_abstract",
+            "#measurementUnit.id_product_measurement_unit"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductMeasurementSalesUnit",
+          "key": "salesUnit",
+          "arguments": [
+            "#packagingProduct.id_product_concrete",
+            "#measurementUnit.id_product_measurement_unit",
+            "#baseUnit.id_product_measurement_base_unit"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductPackagingUnitType",
+          "key": "packagingUnitType",
+          "arguments": [{ "name": "packaging_unit_type.box.name" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductPackagingUnit",
+          "key": "packagingUnit",
+          "arguments": [
+            {
+              "fk_product": "#packagingProduct.id_product_concrete",
+              "fk_product_packaging_unit_type": "#packagingUnitType.id_product_packaging_unit_type",
+              "fk_lead_product": "#packagingProduct.id_product_concrete"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "buyerForPackagingUnit",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerForPackagingUnitRoleCollection",
+          "arguments": { "roles": ["#buyerRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerForPackagingUnitCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyerForPackagingUnit",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerForPackagingUnitRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerForPackagingUnitCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "scheduleForPackagingUnit",
+          "arguments": [
+            "#buyerForPackagingUnit.id_customer",
+            {
+              "name": "Review Packaging Unit Order",
+              "cadence_type": "monthly",
+              "status": "review_required",
+              "build_quote_data": true,
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-07-01",
+              "next_trigger_date": "2026-07-01"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItemWithAmountSalesUnit",
+          "key": "scheduleItemForPackagingUnit",
+          "arguments": [
+            "#scheduleForPackagingUnit.id_recurring_schedule",
+            {
+              "sku": "#packagingProduct.sku",
+              "quantity": 1,
+              "reference_gross_price": 35000,
+              "reference_net_price": 28000,
+              "amount": 3,
+              "id_product_measurement_sales_unit": "#salesUnit.id_product_measurement_sales_unit",
+              "build_item_data": true
+            }
+          ]
         }
       ]
     }

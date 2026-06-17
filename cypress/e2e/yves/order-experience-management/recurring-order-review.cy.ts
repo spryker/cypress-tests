@@ -140,6 +140,23 @@ describe(
       recurringOrderDetailPage.assertDetailItemsContain('350');
     });
 
+    it('order placed from review page for a product with packaging unit shows history entry with view order link', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.buyerForPackagingUnit.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      recurringOrderReviewPage.visitReview(dynamicFixtures.scheduleForPackagingUnit.uuid);
+      recurringOrderReviewPage.clickAcceptAndPlaceOrder();
+      recurringOrderReviewPage.confirmApproveReview();
+
+      cy.url().should('not.include', '/review-required');
+
+      recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForPackagingUnit.uuid);
+      recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
+    });
+
     it('review page shows unavailable banner and detail page excludes removed item after acceptance', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.buyerForStockDrift.email,

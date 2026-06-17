@@ -46,4 +46,6 @@ export interface RecurringOrderReviewDynamicFixtures {
   simpleProductForStockDrift: { sku: string; abstract_sku: string };
   buyerForConfigurableProduct: { email: string; id_customer: number };
   scheduleForConfigurableProduct: { id_recurring_schedule: number; uuid: string; name: string };
+  buyerForPackagingUnit: { email: string; id_customer: number };
+  scheduleForPackagingUnit: { id_recurring_schedule: number; uuid: string; name: string };
 }
