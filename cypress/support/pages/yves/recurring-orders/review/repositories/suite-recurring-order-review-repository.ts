@@ -8,4 +8,5 @@ export class SuiteRecurringOrderReviewRepository implements RecurringOrderReview
   getFooterTotal = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-review-footer-total"]');
   getAcceptCta = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-review-accept-cta"]');
   getApproveSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-review-approve-submit"]');
+  getFlaggedItems = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-review-flagged-items"]');
 }

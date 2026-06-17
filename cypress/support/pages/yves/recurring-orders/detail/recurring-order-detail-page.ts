@@ -70,4 +70,12 @@ export class RecurringOrderDetailPage extends YvesPage {
   assertHistoryViewOrderLinkVisible = (): void => {
     this.repository.getHistoryViewOrderLink().should('be.visible');
   };
+
+  assertDetailItemsContain = (text: string): void => {
+    this.repository.getDetailItems().should('contain', text);
+  };
+
+  assertDetailItemsNotContain = (text: string): void => {
+    this.repository.getDetailItems().should('not.contain', text);
+  };
 }

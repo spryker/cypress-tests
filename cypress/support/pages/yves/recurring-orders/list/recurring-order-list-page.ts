@@ -20,7 +20,12 @@ export class RecurringOrderListPage extends YvesPage {
   };
 
   assertScheduleRowContains = (scheduleName: string, text: string): void => {
-    this.repository.getListTable().contains('tr', scheduleName).invoke('text').invoke('toLowerCase').should('contain', text.toLowerCase());
+    this.repository
+      .getListTable()
+      .contains('tr', scheduleName)
+      .invoke('text')
+      .invoke('toLowerCase')
+      .should('contain', text.toLowerCase());
   };
 
   assertEmptyState = (): void => {

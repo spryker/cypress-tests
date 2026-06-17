@@ -51,21 +51,6 @@ describe(
       cy.url().should('include', `/recurring-orders/${dynamicFixtures.schedule.uuid}`);
     });
 
-    it('accepting the review via confirmation modal submits and redirects away from the review page', (): void => {
-      customerLoginScenario.execute({
-        email: dynamicFixtures.buyer.email,
-        password: staticFixtures.defaultPassword,
-        withoutSession: true,
-      });
-
-      recurringOrderReviewPage.visitReview(dynamicFixtures.schedule.uuid);
-
-      recurringOrderReviewPage.clickAcceptAndPlaceOrder();
-      recurringOrderReviewPage.confirmApproveReview();
-
-      cy.url().should('not.include', '/review-required');
-    });
-
     it('order placed from review page for a bundle product shows history entry with view order link', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.buyerForBundle.email,
@@ -115,6 +100,49 @@ describe(
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForConfigurableBundle.uuid);
       recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
+    });
+
+    it('review page shows price change banner and detail page reflects updated price after acceptance', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.buyerForPriceDrift.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      recurringOrderReviewPage.visitReview(dynamicFixtures.scheduleForPriceDrift.uuid);
+
+      recurringOrderReviewPage.assertSummaryBannerContains('1 price change');
+      recurringOrderReviewPage.assertFlaggedItemsVisible();
+
+      recurringOrderReviewPage.clickAcceptAndPlaceOrder();
+      recurringOrderReviewPage.confirmApproveReview();
+
+      cy.url().should('not.include', '/review-required');
+
+      recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForPriceDrift.uuid);
+      recurringOrderDetailPage.assertDetailItemsContain('350');
+    });
+
+    it('review page shows unavailable banner and detail page excludes removed item after acceptance', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.buyerForStockDrift.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      recurringOrderReviewPage.visitReview(dynamicFixtures.scheduleForStockDrift.uuid);
+
+      recurringOrderReviewPage.assertSummaryBannerContains('1 unavailable');
+      recurringOrderReviewPage.assertFlaggedItemsVisible();
+
+      recurringOrderReviewPage.clickAcceptAndPlaceOrder();
+      recurringOrderReviewPage.confirmApproveReview();
+
+      cy.url().should('not.include', '/review-required');
+
+      recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForStockDrift.uuid);
+      recurringOrderDetailPage.assertDetailItemsContain(dynamicFixtures.simpleProductForStockDrift.sku);
+      recurringOrderDetailPage.assertDetailItemsNotContain(dynamicFixtures.stockDriftProduct.sku);
     });
   }
 );

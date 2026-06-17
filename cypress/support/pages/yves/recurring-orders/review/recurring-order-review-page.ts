@@ -38,4 +38,12 @@ export class RecurringOrderReviewPage extends YvesPage {
   confirmApproveReview = (): void => {
     this.repository.getApproveSubmitButton().click();
   };
+
+  assertSummaryBannerContains = (text: string): void => {
+    this.repository.getSummaryBanner().contains(text).should('be.visible');
+  };
+
+  assertFlaggedItemsVisible = (): void => {
+    this.repository.getFlaggedItems().should('be.visible');
+  };
 }
