@@ -31,12 +31,13 @@ describe(
       });
     });
 
-    it("recurring orders list shows the buyer's active schedule", (): void => {
+    it('recurring orders list shows schedules of all statuses', (): void => {
       recurringOrderListPage.visit();
 
       recurringOrderListPage.assertListTableVisible();
-      recurringOrderListPage.assertScheduleVisible(staticFixtures.scheduleName);
       recurringOrderListPage.assertScheduleRowContains(staticFixtures.scheduleName, 'active');
+      recurringOrderListPage.assertScheduleRowContains(staticFixtures.pausedScheduleName, 'paused');
+      recurringOrderListPage.assertScheduleRowContains(staticFixtures.cancelledScheduleName, 'cancelled');
     });
 
     it('detail page shows the schedule name, cadence, and status', (): void => {

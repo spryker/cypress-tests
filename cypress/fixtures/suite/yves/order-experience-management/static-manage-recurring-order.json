@@ -2,6 +2,7 @@
   "defaultPassword": "change123",
   "scheduleName": "Test Monthly Order",
   "pausedScheduleName": "Test Paused Order",
+  "cancelledScheduleName": "Test Cancelled Order",
   "skipScheduleName": "Test Skip Order",
   "resumeNextExecutionDate": "2026-12-01"
 }

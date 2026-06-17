@@ -101,6 +101,44 @@
         },
         {
           "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "pausedScheduleForBuyer",
+          "arguments": [
+            "#buyer.id_customer",
+            {
+              "name": "Test Paused Order",
+              "cadence_type": "monthly",
+              "status": "paused",
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-07-01",
+              "next_trigger_date": "2026-07-01"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "cancelledScheduleForBuyer",
+          "arguments": [
+            "#buyer.id_customer",
+            {
+              "name": "Test Cancelled Order",
+              "cadence_type": "monthly",
+              "status": "cancelled",
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-07-01",
+              "next_trigger_date": "2026-07-01"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveConfirmedCustomer",
           "key": "buyerForPause",
           "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]

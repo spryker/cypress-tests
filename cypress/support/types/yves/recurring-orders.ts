@@ -15,6 +15,7 @@ export interface ManageRecurringOrderStaticFixtures {
   defaultPassword: string;
   scheduleName: string;
   pausedScheduleName: string;
+  cancelledScheduleName: string;
   skipScheduleName: string;
   resumeNextExecutionDate: string;
 }
