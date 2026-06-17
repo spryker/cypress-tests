@@ -474,13 +474,13 @@
         },
         {
           "type": "helper",
-          "name": "haveConfigurableBundleTemplate",
+          "name": "haveConfigurableBundleTemplateWithTranslation",
           "key": "configurableBundleTemplate",
           "arguments": [{ "isActive": true }]
         },
         {
           "type": "helper",
-          "name": "haveConfigurableBundleTemplateSlot",
+          "name": "haveConfigurableBundleTemplateSlotWithTranslation",
           "key": "configurableBundleTemplateSlot",
           "arguments": [
             { "fkConfigurableBundleTemplate": "#configurableBundleTemplate.id_configurable_bundle_template" }
