@@ -102,6 +102,23 @@ describe(
       recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
     });
 
+    it('order placed from review page for a configured product shows history entry with view order link', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.buyerForConfigurableProduct.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      recurringOrderReviewPage.visitReview(dynamicFixtures.scheduleForConfigurableProduct.uuid);
+      recurringOrderReviewPage.clickAcceptAndPlaceOrder();
+      recurringOrderReviewPage.confirmApproveReview();
+
+      cy.url().should('not.include', '/review-required');
+
+      recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForConfigurableProduct.uuid);
+      recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
+    });
+
     it('review page shows price change banner and detail page reflects updated price after acceptance', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.buyerForPriceDrift.email,

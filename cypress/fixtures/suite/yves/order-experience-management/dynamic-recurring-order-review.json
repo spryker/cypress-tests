@@ -803,6 +803,113 @@
               "build_item_data": true
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "configurableProduct",
+          "arguments": [{ "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConfigurationTransferPersisted",
+          "key": "productConfiguration",
+          "arguments": [
+            {
+              "fk_product": "#configurableProduct.id_product_concrete",
+              "configuratorKey": "date-time-configurator-example",
+              "isComplete": true,
+              "defaultDisplayData": "{}",
+              "defaultConfiguration": "{}"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#configurableProduct.abstract_sku",
+              "skuProduct": "#configurableProduct.sku",
+              "moneyValue": { "netAmount": 28000, "grossAmount": 35000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#configurableProduct.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "arguments": ["#configurableProduct", "#shipmentType"]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "buyerForConfigurableProduct",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerForConfigurableProductRoleCollection",
+          "arguments": { "roles": ["#buyerRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerForConfigurableProductCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyerForConfigurableProduct",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerForConfigurableProductRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerForConfigurableProductCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "scheduleForConfigurableProduct",
+          "arguments": [
+            "#buyerForConfigurableProduct.id_customer",
+            {
+              "name": "Review Configurable Product Order",
+              "cadence_type": "monthly",
+              "status": "review_required",
+              "build_quote_data": true,
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-07-01",
+              "next_trigger_date": "2026-07-01"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItemWithProductConfigurationInstance",
+          "key": "scheduleItemForConfigurableProduct",
+          "arguments": [
+            "#scheduleForConfigurableProduct.id_recurring_schedule",
+            {
+              "sku": "#configurableProduct.sku",
+              "quantity": 1,
+              "reference_gross_price": 35000,
+              "reference_net_price": 28000,
+              "configurator_key": "#productConfiguration.configurator_key",
+              "build_item_data": true
+            }
+          ]
         }
       ]
     }
