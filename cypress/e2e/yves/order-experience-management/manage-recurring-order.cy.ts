@@ -31,11 +31,6 @@ describe(
       });
     });
 
-    const openScheduleDetail = (): void => {
-      recurringOrderListPage.visit();
-      recurringOrderListPage.clickViewSchedule(staticFixtures.scheduleName);
-    };
-
     it("recurring orders list shows the buyer's active schedule", (): void => {
       recurringOrderListPage.visit();
 
@@ -45,7 +40,7 @@ describe(
     });
 
     it('detail page shows the schedule name, cadence, and status', (): void => {
-      openScheduleDetail();
+      recurringOrderListPage.openSchedule(staticFixtures.scheduleName);
 
       recurringOrderDetailPage.assertScheduleName(staticFixtures.scheduleName);
       recurringOrderDetailPage.assertCadenceVisible();
@@ -53,7 +48,7 @@ describe(
     });
 
     it('company user can pause an active recurring schedule', (): void => {
-      openScheduleDetail();
+      recurringOrderListPage.openSchedule(staticFixtures.scheduleName);
 
       recurringOrderDetailPage.clickPause();
       recurringOrderDetailPage.confirmPause();
@@ -97,7 +92,7 @@ describe(
     });
 
     it('company user can cancel a recurring schedule (terminal action)', (): void => {
-      openScheduleDetail();
+      recurringOrderListPage.openSchedule(staticFixtures.scheduleName);
 
       recurringOrderDetailPage.clickCancel();
       recurringOrderDetailPage.confirmCancel();

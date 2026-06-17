@@ -32,4 +32,9 @@ export class RecurringOrderListPage extends YvesPage {
       this.repository.getViewButton().click();
     });
   };
+
+  openSchedule = (scheduleName: string): void => {
+    this.visit();
+    this.clickViewSchedule(scheduleName);
+  };
 }
