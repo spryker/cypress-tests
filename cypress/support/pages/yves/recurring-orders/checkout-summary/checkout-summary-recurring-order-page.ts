@@ -35,5 +35,6 @@ export class CheckoutSummaryRecurringOrderPage extends YvesPage {
   confirmRecurringOrder = (): void => {
     this.repository.getConfirmButton().click();
     this.repository.getConfirmButton().click();
+    this.repository.getConfirmButton().should('not.exist');
   };
 }

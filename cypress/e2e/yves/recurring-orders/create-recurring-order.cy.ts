@@ -57,7 +57,6 @@ describe(
       checkoutSummaryRecurringOrderPage.fillScheduleName(staticFixtures.scheduleName);
       checkoutSummaryRecurringOrderPage.selectCadenceType('monthly');
       checkoutSummaryRecurringOrderPage.confirmRecurringOrder();
-      cy.wait(500);
       checkoutSummaryPage.placeOrder();
 
       cy.url().should('include', '/checkout/success');

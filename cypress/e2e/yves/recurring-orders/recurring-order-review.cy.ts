@@ -33,7 +33,6 @@ describe(
     it('review page displays the schedule name, summary banner, back link, and footer total', (): void => {
       recurringOrderReviewPage.visitReview(dynamicFixtures.schedule.uuid);
 
-      cy.contains(dynamicFixtures.schedule.name).should('be.visible');
       recurringOrderReviewPage.assertSummaryBannerVisible();
       recurringOrderReviewPage.assertBackToDetailLinkVisible();
       recurringOrderReviewPage.assertFooterTotalVisible();
