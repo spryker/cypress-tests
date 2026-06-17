@@ -36,7 +36,7 @@ describe(
       recurringOrderListPage.clickViewSchedule(staticFixtures.scheduleName);
     };
 
-    it('recurring orders list shows the buyer\'s active schedule', (): void => {
+    it("recurring orders list shows the buyer's active schedule", (): void => {
       recurringOrderListPage.visit();
 
       recurringOrderListPage.assertListTableVisible();

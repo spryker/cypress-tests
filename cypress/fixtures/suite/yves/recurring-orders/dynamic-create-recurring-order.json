@@ -131,9 +131,7 @@
           "arguments": [
             {
               "customer": "#buyer",
-              "items": [
-                { "sku": "#product.sku", "abstractSku": "#product.abstract_sku", "quantity": 1 }
-              ]
+              "items": [{ "sku": "#product.sku", "abstractSku": "#product.abstract_sku", "quantity": 1 }]
             },
             true
           ]
@@ -175,9 +173,7 @@
           "arguments": [
             {
               "customer": "#buyerForCreditCard",
-              "items": [
-                { "sku": "#product.sku", "abstractSku": "#product.abstract_sku", "quantity": 1 }
-              ]
+              "items": [{ "sku": "#product.sku", "abstractSku": "#product.abstract_sku", "quantity": 1 }]
             },
             true
           ]
