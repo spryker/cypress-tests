@@ -13,16 +13,14 @@ export interface CreateRecurringOrderDynamicFixtures {
 
 export interface ManageRecurringOrderStaticFixtures {
   defaultPassword: string;
-  scheduleName: string;
-  pausedScheduleName: string;
-  cancelledScheduleName: string;
-  skipScheduleName: string;
   resumeNextExecutionDate: string;
 }
 
 export interface ManageRecurringOrderDynamicFixtures {
   buyer: { email: string; id_customer: number };
   schedule: { id_recurring_schedule: number; uuid: string; name: string };
+  pausedScheduleForBuyer: { id_recurring_schedule: number; uuid: string; name: string };
+  cancelledScheduleForBuyer: { id_recurring_schedule: number; uuid: string; name: string };
   buyerForSkip: { email: string; id_customer: number };
   scheduleForSkip: { id_recurring_schedule: number; uuid: string; name: string };
 }

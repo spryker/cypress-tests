@@ -16,11 +16,11 @@ export class RecurringOrderListPage extends YvesPage {
   };
 
   assertScheduleVisible = (scheduleName: string): void => {
-    cy.contains(scheduleName).should('be.visible');
+    this.repository.getListTable().contains(scheduleName).should('be.visible');
   };
 
   assertScheduleRowContains = (scheduleName: string, text: string): void => {
-    cy.contains('tr', scheduleName).invoke('text').invoke('toLowerCase').should('contain', text.toLowerCase());
+    this.repository.getListTable().contains('tr', scheduleName).invoke('text').invoke('toLowerCase').should('contain', text.toLowerCase());
   };
 
   assertEmptyState = (): void => {

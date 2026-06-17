@@ -35,21 +35,21 @@ describe(
       recurringOrderListPage.visit();
 
       recurringOrderListPage.assertListTableVisible();
-      recurringOrderListPage.assertScheduleRowContains(staticFixtures.scheduleName, 'active');
-      recurringOrderListPage.assertScheduleRowContains(staticFixtures.pausedScheduleName, 'paused');
-      recurringOrderListPage.assertScheduleRowContains(staticFixtures.cancelledScheduleName, 'cancelled');
+      recurringOrderListPage.assertScheduleRowContains(dynamicFixtures.schedule.name, 'active');
+      recurringOrderListPage.assertScheduleRowContains(dynamicFixtures.pausedScheduleForBuyer.name, 'paused');
+      recurringOrderListPage.assertScheduleRowContains(dynamicFixtures.cancelledScheduleForBuyer.name, 'cancelled');
     });
 
     it('detail page shows the schedule name, cadence, and status', (): void => {
-      recurringOrderListPage.openSchedule(staticFixtures.scheduleName);
+      recurringOrderListPage.openSchedule(dynamicFixtures.schedule.name);
 
-      recurringOrderDetailPage.assertScheduleName(staticFixtures.scheduleName);
+      recurringOrderDetailPage.assertScheduleName(dynamicFixtures.schedule.name);
       recurringOrderDetailPage.assertCadenceVisible();
       recurringOrderDetailPage.assertStatusBadge('active');
     });
 
     it('company user can pause an active recurring schedule and resume it', (): void => {
-      recurringOrderListPage.openSchedule(staticFixtures.scheduleName);
+      recurringOrderListPage.openSchedule(dynamicFixtures.schedule.name);
 
       recurringOrderDetailPage.clickPause();
       recurringOrderDetailPage.confirmPause();
@@ -71,7 +71,7 @@ describe(
       });
 
       recurringOrderListPage.visit();
-      recurringOrderListPage.clickViewSchedule(staticFixtures.skipScheduleName);
+      recurringOrderListPage.clickViewSchedule(dynamicFixtures.scheduleForSkip.name);
 
       recurringOrderDetailPage.clickSkipFromNextExecution();
       recurringOrderDetailPage.confirmSkip();
@@ -80,7 +80,7 @@ describe(
     });
 
     it('company user can cancel a recurring schedule (terminal action)', (): void => {
-      recurringOrderListPage.openSchedule(staticFixtures.scheduleName);
+      recurringOrderListPage.openSchedule(dynamicFixtures.schedule.name);
 
       recurringOrderDetailPage.clickCancel();
       recurringOrderDetailPage.confirmCancel();
