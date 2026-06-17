@@ -66,4 +66,8 @@ export class RecurringOrderDetailPage extends YvesPage {
   confirmCancel = (): void => {
     this.repository.getCancelConfirmButton().click();
   };
+
+  assertHistoryViewOrderLinkVisible = (): void => {
+    this.repository.getHistoryViewOrderLink().should('be.visible');
+  };
 }

@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { RecurringOrderReviewStaticFixtures, RecurringOrderReviewDynamicFixtures } from '@interfaces/yves';
-import { RecurringOrderReviewPage } from '@pages/yves';
+import { RecurringOrderDetailPage, RecurringOrderReviewPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
 describe(
@@ -14,6 +14,7 @@ describe(
 
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const recurringOrderReviewPage = container.get(RecurringOrderReviewPage);
+    const recurringOrderDetailPage = container.get(RecurringOrderDetailPage);
 
     let staticFixtures: RecurringOrderReviewStaticFixtures;
     let dynamicFixtures: RecurringOrderReviewDynamicFixtures;
@@ -22,15 +23,13 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    beforeEach((): void => {
+    it('review page displays the schedule name, summary banner, back link, and footer total', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.buyer.email,
         password: staticFixtures.defaultPassword,
         withoutSession: true,
       });
-    });
 
-    it('review page displays the schedule name, summary banner, back link, and footer total', (): void => {
       recurringOrderReviewPage.visitReview(dynamicFixtures.schedule.uuid);
 
       recurringOrderReviewPage.assertSummaryBannerVisible();
@@ -39,6 +38,12 @@ describe(
     });
 
     it('back-to-detail link navigates to the schedule detail page', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.buyer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
       recurringOrderReviewPage.visitReview(dynamicFixtures.schedule.uuid);
 
       recurringOrderReviewPage.clickBackToDetail();
@@ -47,12 +52,52 @@ describe(
     });
 
     it('accepting the review via confirmation modal submits and redirects away from the review page', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.buyer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
       recurringOrderReviewPage.visitReview(dynamicFixtures.schedule.uuid);
 
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
       recurringOrderReviewPage.confirmApproveReview();
 
       cy.url().should('not.include', '/review-required');
+    });
+
+    it('order placed from review page for a bundle product shows history entry with view order link', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.buyerForBundle.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      recurringOrderReviewPage.visitReview(dynamicFixtures.scheduleForBundle.uuid);
+      recurringOrderReviewPage.clickAcceptAndPlaceOrder();
+      recurringOrderReviewPage.confirmApproveReview();
+
+      cy.url().should('not.include', '/review-required');
+
+      recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForBundle.uuid);
+      recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
+    });
+
+    it('order placed from review page for a merchant product offer shows history entry with view order link', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.buyerForOffer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      recurringOrderReviewPage.visitReview(dynamicFixtures.scheduleForOffer.uuid);
+      recurringOrderReviewPage.clickAcceptAndPlaceOrder();
+      recurringOrderReviewPage.confirmApproveReview();
+
+      cy.url().should('not.include', '/review-required');
+
+      recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForOffer.uuid);
+      recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
     });
   }
 );
