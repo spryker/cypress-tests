@@ -39,4 +39,6 @@ export interface RecurringOrderReviewDynamicFixtures {
   scheduleForBundle: { id_recurring_schedule: number; uuid: string; name: string };
   buyerForOffer: { email: string; id_customer: number };
   scheduleForOffer: { id_recurring_schedule: number; uuid: string; name: string };
+  buyerForConfigurableBundle: { email: string; id_customer: number };
+  scheduleForConfigurableBundle: { id_recurring_schedule: number; uuid: string; name: string };
 }

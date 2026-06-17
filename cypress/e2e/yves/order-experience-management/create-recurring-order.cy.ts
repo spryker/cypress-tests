@@ -13,7 +13,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
 describe(
   'recurring order creation at checkout',
-  { tags: ['@yves', '@recurring-orders', 'recurring-orders', 'spryker-core'] },
+  { tags: ['@yves', '@order-experience-management', 'order-experience-management', 'spryker-core'] },
   (): void => {
     if (['b2c', 'b2c-mp', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
       it.skip('skipped because tests run only for suite', () => {});

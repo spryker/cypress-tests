@@ -5,7 +5,7 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 
 describe(
   'recurring order review page',
-  { tags: ['@yves', '@recurring-orders', 'recurring-orders', 'spryker-core'] },
+  { tags: ['@yves', '@order-experience-management', 'order-experience-management', 'spryker-core'] },
   (): void => {
     if (['b2c', 'b2c-mp', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
       it.skip('skipped because tests run only for suite', () => {});
@@ -97,6 +97,23 @@ describe(
       cy.url().should('not.include', '/review-required');
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForOffer.uuid);
+      recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
+    });
+
+    it('order placed from review page for a configurable bundle shows history entry with view order link', (): void => {
+      customerLoginScenario.execute({
+        email: dynamicFixtures.buyerForConfigurableBundle.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+
+      recurringOrderReviewPage.visitReview(dynamicFixtures.scheduleForConfigurableBundle.uuid);
+      recurringOrderReviewPage.clickAcceptAndPlaceOrder();
+      recurringOrderReviewPage.confirmApproveReview();
+
+      cy.url().should('not.include', '/review-required');
+
+      recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForConfigurableBundle.uuid);
       recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
     });
   }

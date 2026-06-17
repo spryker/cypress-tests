@@ -471,6 +471,117 @@
               "build_item_data": true
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfigurableBundleTemplate",
+          "key": "configurableBundleTemplate",
+          "arguments": [{ "isActive": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfigurableBundleTemplateSlot",
+          "key": "configurableBundleTemplateSlot",
+          "arguments": [
+            { "fkConfigurableBundleTemplate": "#configurableBundleTemplate.id_configurable_bundle_template" }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "configurableBundleSlotProduct",
+          "arguments": [{ "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#configurableBundleSlotProduct.abstract_sku",
+              "skuProduct": "#configurableBundleSlotProduct.sku",
+              "moneyValue": { "netAmount": 40000, "grossAmount": 50000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#configurableBundleSlotProduct.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "arguments": ["#configurableBundleSlotProduct", "#shipmentType"]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "buyerForConfigurableBundle",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerForConfigurableBundleRoleCollection",
+          "arguments": { "roles": ["#buyerRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerForConfigurableBundleCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyerForConfigurableBundle",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerForConfigurableBundleRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerForConfigurableBundleCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "scheduleForConfigurableBundle",
+          "arguments": [
+            "#buyerForConfigurableBundle.id_customer",
+            {
+              "name": "Review Configurable Bundle Order",
+              "cadence_type": "monthly",
+              "status": "review_required",
+              "build_quote_data": true,
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-07-01",
+              "next_trigger_date": "2026-07-01"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItem",
+          "key": "scheduleItemForConfigurableBundle",
+          "arguments": [
+            "#scheduleForConfigurableBundle.id_recurring_schedule",
+            {
+              "sku": "#configurableBundleSlotProduct.sku",
+              "quantity": 1,
+              "reference_gross_price": 30000,
+              "reference_net_price": 25000,
+              "configurable_bundle_template_uuid": "#configurableBundleTemplate.uuid",
+              "configurable_bundle_template_slot_uuid": "#configurableBundleTemplateSlot.uuid",
+              "configured_bundle_group_key": "cb-group-1",
+              "configurable_bundle_name": "Test Configurable Bundle",
+              "configured_bundle_quantity": 1,
+              "build_item_data": true
+            }
+          ]
         }
       ]
     }
