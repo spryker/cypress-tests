@@ -48,25 +48,12 @@ describe(
       recurringOrderDetailPage.assertStatusBadge('active');
     });
 
-    it('company user can pause an active recurring schedule', (): void => {
+    it('company user can pause an active recurring schedule and resume it', (): void => {
       recurringOrderListPage.openSchedule(staticFixtures.scheduleName);
 
       recurringOrderDetailPage.clickPause();
       recurringOrderDetailPage.confirmPause();
-
       recurringOrderDetailPage.assertStatusBadge('paused');
-    });
-
-    it('company user can resume a paused recurring schedule', (): void => {
-      cy.clearCookies();
-      customerLoginScenario.execute({
-        email: dynamicFixtures.buyerForPause.email,
-        password: staticFixtures.defaultPassword,
-        withoutSession: true,
-      });
-
-      recurringOrderListPage.visit();
-      recurringOrderListPage.clickViewSchedule(staticFixtures.pausedScheduleName);
 
       recurringOrderDetailPage.clickResume();
       recurringOrderDetailPage.fillResumeDate(staticFixtures.resumeNextExecutionDate);

@@ -23,8 +23,6 @@ export interface ManageRecurringOrderStaticFixtures {
 export interface ManageRecurringOrderDynamicFixtures {
   buyer: { email: string; id_customer: number };
   schedule: { id_recurring_schedule: number; uuid: string; name: string };
-  buyerForPause: { email: string; id_customer: number };
-  pausedSchedule: { id_recurring_schedule: number; uuid: string; name: string };
   buyerForSkip: { email: string; id_customer: number };
   scheduleForSkip: { id_recurring_schedule: number; uuid: string; name: string };
 }
