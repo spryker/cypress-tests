@@ -924,7 +924,7 @@
             {
               "skuProductAbstract": "#packagingProduct.abstract_sku",
               "skuProduct": "#packagingProduct.sku",
-              "moneyValue": { "netAmount": 28000, "grossAmount": 35000 }
+              "moneyValue": { "netAmount": 40000, "grossAmount": 50000 }
             }
           ]
         },
@@ -975,6 +975,10 @@
               "fk_product": "#packagingProduct.id_product_concrete",
               "fk_product_packaging_unit_type": "#packagingUnitType.id_product_packaging_unit_type",
               "fk_lead_product": "#packagingProduct.id_product_concrete"
+            },
+            {
+              "defaultAmount": 1,
+              "isAmountVariable": true
             }
           ]
         },
@@ -1037,8 +1041,8 @@
             {
               "sku": "#packagingProduct.sku",
               "quantity": 1,
-              "reference_gross_price": 35000,
-              "reference_net_price": 28000,
+              "reference_gross_price": 50000,
+              "reference_net_price": 40000,
               "amount": 3,
               "id_product_measurement_sales_unit": "#salesUnit.id_product_measurement_sales_unit",
               "build_item_data": true
