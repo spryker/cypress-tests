@@ -20,7 +20,7 @@ export class UserIndexPage extends BackofficePage {
       searchQuery: params.query,
       interceptTableUrl: `**/user/index/table**`,
       expectedToSeeInTable: params.expectedToSeeInTable,
-    });
+    }).then((getRow) => (getRow ? getRow() : null));
   }
 
   update = (params: UpdateParams): void => {
@@ -28,21 +28,25 @@ export class UserIndexPage extends BackofficePage {
       searchQuery: params.query,
       interceptTableUrl: `**/user/index/table**`,
       expectedToSeeInTable: params.expectedToSeeInTable,
-    }).then(($userRow) => {
+    }).then((getRow) => {
+      if (!getRow) {
+        return;
+      }
+
       if (params.action === ActionEnum.edit) {
-        cy.wrap($userRow).find(this.repository.getEditButtonSelector()).should('exist').click({ force: true });
+        getRow().find(this.repository.getEditButtonSelector()).should('exist').click({ force: true });
       }
 
       if (params.action === ActionEnum.deactivate) {
-        cy.wrap($userRow).find(this.repository.getDeactivateButtonSelector()).should('exist').click({ force: true });
+        getRow().find(this.repository.getDeactivateButtonSelector()).should('exist').click({ force: true });
       }
 
       if (params.action === ActionEnum.activate) {
-        cy.wrap($userRow).find(this.repository.getActivateButtonSelector()).should('exist').click({ force: true });
+        getRow().find(this.repository.getActivateButtonSelector()).should('exist').click({ force: true });
       }
 
       if (params.action === ActionEnum.delete) {
-        cy.wrap($userRow).find(this.repository.getDeleteButtonSelector()).should('exist').click({ force: true });
+        getRow().find(this.repository.getDeleteButtonSelector()).should('exist').click({ force: true });
       }
     });
   };

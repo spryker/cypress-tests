@@ -5,8 +5,11 @@ import { ProductRepository } from '../product-repository';
 export class B2bProductRepository implements ProductRepository {
   getSoldByProductOffers = (): Cypress.Chainable =>
     cy.get('[data-qa="component seller-list"] .seller-list__items').first();
+  // using old and new locators. remove old one after June release
   getSoldByProductOfferRadios = (): Cypress.Chainable =>
-    cy.get('[data-qa="component seller-list-item"] input[type="radio"][name="product_offer_reference"]');
+    cy.get(
+      '[data-qa="component merchant-product-offer-item"] input[type="radio"], [data-qa="component seller-list-item"] input[type="radio"][name="product_offer_reference"]'
+    );
   getMerchantRelationRequestLinkAttribute = (): string => '[data-qa="merchant-relation-request-create-link"]';
   getInputRadioSelector = (): string => 'input[type="radio"]';
   getProductConfigurator = (): Cypress.Chainable => cy.get('[data-qa="component product-configurator"]');
