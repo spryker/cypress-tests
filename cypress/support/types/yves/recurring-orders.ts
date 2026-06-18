@@ -32,20 +32,17 @@ export interface RecurringOrderReviewStaticFixtures {
 export interface RecurringOrderReviewDynamicFixtures {
   buyer: { email: string; id_customer: number };
   schedule: { id_recurring_schedule: number; uuid: string; name: string };
-  buyerForBundle: { email: string; id_customer: number };
+  buyerForBundleAndOffer: { email: string; id_customer: number };
   scheduleForBundle: { id_recurring_schedule: number; uuid: string; name: string };
-  buyerForOffer: { email: string; id_customer: number };
   scheduleForOffer: { id_recurring_schedule: number; uuid: string; name: string };
-  buyerForConfigurableBundle: { email: string; id_customer: number };
+  buyerForComplexProducts: { email: string; id_customer: number };
   scheduleForConfigurableBundle: { id_recurring_schedule: number; uuid: string; name: string };
+  scheduleForConfigurableProduct: { id_recurring_schedule: number; uuid: string; name: string };
+  scheduleForPackagingUnit: { id_recurring_schedule: number; uuid: string; name: string };
   buyerForPriceDrift: { email: string; id_customer: number };
   scheduleForPriceDrift: { id_recurring_schedule: number; uuid: string; name: string };
   buyerForStockDrift: { email: string; id_customer: number };
   scheduleForStockDrift: { id_recurring_schedule: number; uuid: string; name: string };
   stockDriftProduct: { sku: string; abstract_sku: string };
   simpleProductForStockDrift: { sku: string; abstract_sku: string };
-  buyerForConfigurableProduct: { email: string; id_customer: number };
-  scheduleForConfigurableProduct: { id_recurring_schedule: number; uuid: string; name: string };
-  buyerForPackagingUnit: { email: string; id_customer: number };
-  scheduleForPackagingUnit: { id_recurring_schedule: number; uuid: string; name: string };
 }
