@@ -18,9 +18,12 @@ export class BlockListPage extends BackofficePage {
     this.find({
       searchQuery: params.query,
       interceptTableUrl: `**cms-block-gui/list-block/table**${params.query}**`,
-    }).then(($storeRow) => {
-      cy.wrap($storeRow).as('row');
-      cy.get('@row').find(this.repository.getEditButtonSelector()).should('exist').click();
+    }).then((getRow) => {
+      if (!getRow) {
+        return;
+      }
+
+      getRow().find(this.repository.getEditButtonSelector()).should('exist').click();
     });
   };
 

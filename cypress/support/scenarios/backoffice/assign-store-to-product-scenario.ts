@@ -17,25 +17,31 @@ export class AssignStoreToProductScenario {
         searchQuery: params.abstractProductSku,
         interceptTableUrl: `**/product-management/index/table**`,
       })
-      .then(($row) => {
-        const isStoreAssigned = this.productManagementListPage.rowIsAssignedToStore({
-          row: $row,
-          storeName: params.storeName,
+      .then((getRow) => {
+        if (!getRow) {
+          return;
+        }
+
+        getRow().then(($row: JQuery<HTMLElement>) => {
+          const isStoreAssigned = this.productManagementListPage.rowIsAssignedToStore({
+            row: $row,
+            storeName: params.storeName,
+          });
+
+          this.productManagementListPage.clickEditAction($row);
+          this.productManagementEditPage.setDummyDEName(); // Gap in dynamic fixtures
+
+          if (!isStoreAssigned) {
+            this.productManagementEditPage.assignAllPossibleStores();
+          }
+
+          this.productManagementEditPage.bulkPriceUpdate(params.bulkProductPrice ?? this.DEFAULT_BULK_PRODUCT_PRICE);
+          this.productManagementEditPage.save();
+
+          if (params.shouldTriggerPublishAndSync) {
+            cy.runQueueWorker();
+          }
         });
-
-        this.productManagementListPage.clickEditAction($row);
-        this.productManagementEditPage.setDummyDEName(); // Gap in dynamic fixtures
-
-        if (!isStoreAssigned) {
-          this.productManagementEditPage.assignAllPossibleStores();
-        }
-
-        this.productManagementEditPage.bulkPriceUpdate(params.bulkProductPrice ?? this.DEFAULT_BULK_PRODUCT_PRICE);
-        this.productManagementEditPage.save();
-
-        if (params.shouldTriggerPublishAndSync) {
-          cy.runQueueWorker();
-        }
       });
   };
 }
