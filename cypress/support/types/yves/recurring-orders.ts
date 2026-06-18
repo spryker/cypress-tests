@@ -33,12 +33,9 @@ export interface RecurringOrderReviewDynamicFixtures {
   buyer: { email: string; id_customer: number };
   schedule: { id_recurring_schedule: number; uuid: string; name: string };
   buyerForBundleAndOffer: { email: string; id_customer: number };
-  scheduleForBundle: { id_recurring_schedule: number; uuid: string; name: string };
-  scheduleForOffer: { id_recurring_schedule: number; uuid: string; name: string };
+  scheduleForBundleAndOffer: { id_recurring_schedule: number; uuid: string; name: string };
   buyerForComplexProducts: { email: string; id_customer: number };
-  scheduleForConfigurableBundle: { id_recurring_schedule: number; uuid: string; name: string };
-  scheduleForConfigurableProduct: { id_recurring_schedule: number; uuid: string; name: string };
-  scheduleForPackagingUnit: { id_recurring_schedule: number; uuid: string; name: string };
+  scheduleForComplexProducts: { id_recurring_schedule: number; uuid: string; name: string };
   buyerForPriceDrift: { email: string; id_customer: number };
   scheduleForPriceDrift: { id_recurring_schedule: number; uuid: string; name: string };
   buyerForStockDrift: { email: string; id_customer: number };
