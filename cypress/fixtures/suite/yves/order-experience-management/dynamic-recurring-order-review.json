@@ -948,10 +948,7 @@
           "type": "helper",
           "name": "haveProductMeasurementBaseUnit",
           "key": "baseUnit",
-          "arguments": [
-            "#packagingProduct.fk_product_abstract",
-            "#measurementUnit.id_product_measurement_unit"
-          ]
+          "arguments": ["#packagingProduct.fk_product_abstract", "#measurementUnit.id_product_measurement_unit"]
         },
         {
           "type": "helper",
