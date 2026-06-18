@@ -29,12 +29,6 @@
           "arguments": [{ "fk_company": "#company.id_company" }, ["#placeOrderPermission"]]
         },
         {
-          "type": "helper",
-          "name": "haveFullProduct",
-          "key": "product",
-          "arguments": [{}, { "idTaxSet": 1 }]
-        },
-        {
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
@@ -45,6 +39,14 @@
           "name": "haveShipmentType",
           "key": "shipmentType",
           "arguments": [{ "key": "delivery" }]
+        },
+
+        { "comment": "=== BUYER + SCHEDULE for page-level UI tests ===" },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product",
+          "arguments": [{}, { "idTaxSet": 1 }]
         },
         {
           "type": "helper",
@@ -132,6 +134,8 @@
             }
           ]
         },
+
+        { "comment": "=== PRODUCTS for mixed bundle + offer schedule ===" },
         {
           "type": "helper",
           "name": "haveFullProduct",
@@ -307,6 +311,8 @@
             "#merchant.stocks"
           ]
         },
+
+        { "comment": "=== BUYER + SCHEDULE: bundle product + merchant offer (combined into 1 schedule) ===" },
         {
           "type": "helper",
           "name": "haveConfirmedCustomer",
@@ -340,11 +346,11 @@
         {
           "type": "helper",
           "name": "haveRecurringSchedule",
-          "key": "scheduleForBundle",
+          "key": "scheduleForBundleAndOffer",
           "arguments": [
             "#buyerForBundleAndOffer.id_customer",
             {
-              "name": "Review Bundle Order",
+              "name": "Review Bundle And Offer Order",
               "cadence_type": "monthly",
               "status": "review_required",
               "build_quote_data": true,
@@ -362,7 +368,7 @@
           "name": "haveRecurringScheduleItem",
           "key": "scheduleItemBundleParent",
           "arguments": [
-            "#scheduleForBundle.id_recurring_schedule",
+            "#scheduleForBundleAndOffer.id_recurring_schedule",
             {
               "sku": "#productBundle.sku",
               "quantity": 1,
@@ -378,7 +384,7 @@
           "name": "haveRecurringScheduleItem",
           "key": "scheduleItemBundledProduct1",
           "arguments": [
-            "#scheduleForBundle.id_recurring_schedule",
+            "#scheduleForBundleAndOffer.id_recurring_schedule",
             {
               "sku": "#bundledProduct1.sku",
               "quantity": 2,
@@ -394,7 +400,7 @@
           "name": "haveRecurringScheduleItem",
           "key": "scheduleItemBundledProduct2",
           "arguments": [
-            "#scheduleForBundle.id_recurring_schedule",
+            "#scheduleForBundleAndOffer.id_recurring_schedule",
             {
               "sku": "#bundledProduct2.sku",
               "quantity": 1,
@@ -407,30 +413,10 @@
         },
         {
           "type": "helper",
-          "name": "haveRecurringSchedule",
-          "key": "scheduleForOffer",
-          "arguments": [
-            "#buyerForBundleAndOffer.id_customer",
-            {
-              "name": "Review Offer Order",
-              "cadence_type": "monthly",
-              "status": "review_required",
-              "build_quote_data": true,
-              "payment_method": "dummyPaymentInvoice",
-              "store_name": "DE",
-              "currency_iso_code": "EUR",
-              "price_mode": "GROSS_MODE",
-              "first_trigger_date": "2026-07-01",
-              "next_trigger_date": "2026-07-01"
-            }
-          ]
-        },
-        {
-          "type": "helper",
           "name": "haveRecurringScheduleItem",
-          "key": "scheduleItemForOffer",
+          "key": "scheduleItemOffer",
           "arguments": [
-            "#scheduleForOffer.id_recurring_schedule",
+            "#scheduleForBundleAndOffer.id_recurring_schedule",
             {
               "sku": "#offerProduct.sku",
               "quantity": 1,
@@ -442,6 +428,8 @@
             }
           ]
         },
+
+        { "comment": "=== PRODUCTS for complex schedule (configurable bundle + configured product + packaging unit) ===" },
         {
           "type": "helper",
           "name": "haveConfigurableBundleTemplateWithTranslation",
@@ -591,6 +579,8 @@
             }
           ]
         },
+
+        { "comment": "=== BUYER + SCHEDULE: configurable bundle + configured product + packaging unit (combined into 1 schedule) ===" },
         {
           "type": "helper",
           "name": "haveConfirmedCustomer",
@@ -624,11 +614,11 @@
         {
           "type": "helper",
           "name": "haveRecurringSchedule",
-          "key": "scheduleForConfigurableBundle",
+          "key": "scheduleForComplexProducts",
           "arguments": [
             "#buyerForComplexProducts.id_customer",
             {
-              "name": "Review Configurable Bundle Order",
+              "name": "Review Complex Products Order",
               "cadence_type": "monthly",
               "status": "review_required",
               "build_quote_data": true,
@@ -646,7 +636,7 @@
           "name": "haveRecurringScheduleItem",
           "key": "scheduleItemForConfigurableBundle",
           "arguments": [
-            "#scheduleForConfigurableBundle.id_recurring_schedule",
+            "#scheduleForComplexProducts.id_recurring_schedule",
             {
               "sku": "#configurableBundleSlotProduct.sku",
               "quantity": 1,
@@ -663,30 +653,10 @@
         },
         {
           "type": "helper",
-          "name": "haveRecurringSchedule",
-          "key": "scheduleForConfigurableProduct",
-          "arguments": [
-            "#buyerForComplexProducts.id_customer",
-            {
-              "name": "Review Configurable Product Order",
-              "cadence_type": "monthly",
-              "status": "review_required",
-              "build_quote_data": true,
-              "payment_method": "dummyPaymentInvoice",
-              "store_name": "DE",
-              "currency_iso_code": "EUR",
-              "price_mode": "GROSS_MODE",
-              "first_trigger_date": "2026-07-01",
-              "next_trigger_date": "2026-07-01"
-            }
-          ]
-        },
-        {
-          "type": "helper",
           "name": "haveRecurringScheduleItemWithProductConfigurationInstance",
           "key": "scheduleItemForConfigurableProduct",
           "arguments": [
-            "#scheduleForConfigurableProduct.id_recurring_schedule",
+            "#scheduleForComplexProducts.id_recurring_schedule",
             {
               "sku": "#configurableProduct.sku",
               "quantity": 1,
@@ -699,30 +669,10 @@
         },
         {
           "type": "helper",
-          "name": "haveRecurringSchedule",
-          "key": "scheduleForPackagingUnit",
-          "arguments": [
-            "#buyerForComplexProducts.id_customer",
-            {
-              "name": "Review Packaging Unit Order",
-              "cadence_type": "monthly",
-              "status": "review_required",
-              "build_quote_data": true,
-              "payment_method": "dummyPaymentInvoice",
-              "store_name": "DE",
-              "currency_iso_code": "EUR",
-              "price_mode": "GROSS_MODE",
-              "first_trigger_date": "2026-07-01",
-              "next_trigger_date": "2026-07-01"
-            }
-          ]
-        },
-        {
-          "type": "helper",
           "name": "haveRecurringScheduleItemWithAmountSalesUnit",
           "key": "scheduleItemForPackagingUnit",
           "arguments": [
-            "#scheduleForPackagingUnit.id_recurring_schedule",
+            "#scheduleForComplexProducts.id_recurring_schedule",
             {
               "sku": "#packagingProduct.sku",
               "quantity": 1,
@@ -734,6 +684,8 @@
             }
           ]
         },
+
+        { "comment": "=== BUYER + SCHEDULE: price drift ===" },
         {
           "type": "helper",
           "name": "haveFullProduct",
@@ -826,6 +778,8 @@
             }
           ]
         },
+
+        { "comment": "=== BUYER + SCHEDULE: stock drift ===" },
         {
           "type": "helper",
           "name": "haveFullProduct",
