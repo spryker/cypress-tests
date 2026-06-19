@@ -76,7 +76,21 @@ SPRYKER_MP_HOST=$(extract_host "merchant-portal")
 SPRYKER_API_HOST=$(extract_host "glue")
 SPRYKER_GLUE_BACKEND_HOST=$(extract_host "glue-backend")
 SPRYKER_GLUE_STOREFRONT_HOST=$(extract_host "glue-storefront")
-SPRYKER_FE_HOST=$(extract_host "yves")
+SPRYKER_FE_HOST=$(awk '
+    /application: yves/ { in_yves=1; next }
+    in_yves && /endpoints:/ { in_endpoints=1; next }
+    in_endpoints && /^[[:space:]]+[^[:space:]]+:[[:space:]]*$/ {
+        match($0, /^[[:space:]]*/)
+        if (endpoint_indent == 0) endpoint_indent=RLENGTH
+        if (RLENGTH == endpoint_indent) {
+            if (host && !skip) { print host; host=""; exit }
+            host=$1; skip=0
+        }
+        next
+    }
+    in_endpoints && /entry-point:/ { skip=1 }
+    END { if (host && !skip) print host }
+    ' "$DEPLOY_FILE" | awk -F: '{gsub(/[ \t]+/, "", $1); print $1}')
 CODEBUILD_BUILD_ID=${CODEBUILD_BUILD_ID}
 
 SPRYKER_VARS="CODEBUILD_BUILD_ID DEMO_SHOP_TYPE NPM_COMMAND SPRYKER_BE_HOST SPRYKER_MP_HOST SPRYKER_API_HOST SPRYKER_GLUE_BACKEND_HOST SPRYKER_GLUE_STOREFRONT_HOST SPRYKER_FE_HOST"
