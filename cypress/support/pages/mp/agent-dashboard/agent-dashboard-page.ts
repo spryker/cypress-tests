@@ -18,7 +18,7 @@ export class AgentDashboardPage extends MpPage {
   // Kept separate from visit() so other agent-dashboard tests are not affected.
   visitAndWaitForTableData = (options?: Partial<Cypress.VisitOptions>): void => {
     cy.intercept('GET', '**/agent-dashboard-merchant-portal-gui/merchant-users/table-data**').as(
-      'agentMerchantUsersTableData',
+      'agentMerchantUsersTableData'
     );
     cy.visitMerchantPortal(this.PAGE_URL, options);
     cy.wait('@agentMerchantUsersTableData', { timeout: 10000 });
