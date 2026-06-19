@@ -40,15 +40,15 @@ describe(
       recurringOrderListPage.assertScheduleRowContains(dynamicFixtures.cancelledScheduleForBuyer.name, 'cancelled');
 
       recurringOrderListPage.getRecurringOrdersAttentionBanner().should('be.visible');
-      recurringOrderListPage.getRecurringOrdersAttentionBanner().should('contain', 'You have 1 recurring schedule(s) that require your attention.');
+      recurringOrderListPage
+        .getRecurringOrdersAttentionBanner()
+        .should('contain', 'You have 1 recurring schedule(s) that require your attention.');
 
       recurringOrderListPage.getActionBannerFilter('View Paused').should('be.visible').click();
 
       recurringOrderListPage.assertScheduleListDoesNotContainScheduleWithStatus('active');
       recurringOrderListPage.assertScheduleRowContains(dynamicFixtures.pausedScheduleForBuyer.name, 'paused');
       recurringOrderListPage.assertScheduleListDoesNotContainScheduleWithStatus('cancelled');
-
-
     });
 
     it('detail page shows the schedule name, cadence, and status', (): void => {
@@ -89,7 +89,7 @@ describe(
 
       cy.url().should('include', '/recurring-orders');
 
-      recurringOrderDetailPage.assertHistoryViewRecordStatus("Skipped");
+      recurringOrderDetailPage.assertHistoryViewRecordStatus('Skipped');
     });
 
     it('company user can cancel a recurring schedule (terminal action)', (): void => {

@@ -39,7 +39,6 @@ describe(
       recurringOrderReviewPage.clickBackToDetail();
 
       cy.url().should('include', `/recurring-orders/${dynamicFixtures.schedule.uuid}`);
-
     });
 
     it('order placed from review page for a bundle product shows history entry with view order link', (): void => {
@@ -57,7 +56,7 @@ describe(
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForBundle.uuid);
       recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
-      recurringOrderDetailPage.assertHistoryViewRecordStatus("Completed");
+      recurringOrderDetailPage.assertHistoryViewRecordStatus('Completed');
     });
 
     it('order placed from review page for a merchant product offer shows history entry with view order link', (): void => {
@@ -75,7 +74,7 @@ describe(
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForOffer.uuid);
       recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
-      recurringOrderDetailPage.assertHistoryViewRecordStatus("Completed");
+      recurringOrderDetailPage.assertHistoryViewRecordStatus('Completed');
     });
 
     it('order placed from review page for a configurable bundle shows history entry with view order link', (): void => {
@@ -93,7 +92,7 @@ describe(
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForConfigurableBundle.uuid);
       recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
-      recurringOrderDetailPage.assertHistoryViewRecordStatus("Completed");
+      recurringOrderDetailPage.assertHistoryViewRecordStatus('Completed');
     });
 
     it('order placed from review page for a configured product shows history entry with view order link', (): void => {
@@ -111,7 +110,7 @@ describe(
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForConfigurableProduct.uuid);
       recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
-      recurringOrderDetailPage.assertHistoryViewRecordStatus("Completed");
+      recurringOrderDetailPage.assertHistoryViewRecordStatus('Completed');
     });
 
     it('review page shows price change banner and detail page reflects updated price after acceptance', (): void => {
@@ -150,7 +149,7 @@ describe(
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForPackagingUnit.uuid);
       recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
-      recurringOrderDetailPage.assertHistoryViewRecordStatus("Completed");
+      recurringOrderDetailPage.assertHistoryViewRecordStatus('Completed');
     });
 
     it('review page shows unavailable banner and detail page excludes removed item after acceptance', (): void => {
