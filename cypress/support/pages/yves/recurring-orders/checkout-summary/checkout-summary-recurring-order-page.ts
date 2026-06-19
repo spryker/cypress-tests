@@ -33,8 +33,15 @@ export class CheckoutSummaryRecurringOrderPage extends YvesPage {
   };
 
   confirmRecurringOrder = (): void => {
+    cy.intercept('POST', '**/recurring-order/save').as('saveRequest');
     this.repository.getConfirmButton().click();
-    this.repository.getConfirmButton().click();
+    cy.wait('@saveRequest');
+    cy.get('body').then(($body) => {
+      if ($body.find('[data-qa="recurring-order-confirm-button"]').length > 0) {
+        cy.get('[data-qa="recurring-order-confirm-button"]').click();
+        cy.wait('@saveRequest');
+      }
+    });
     this.repository.getConfirmButton().should('not.exist');
   };
 }
