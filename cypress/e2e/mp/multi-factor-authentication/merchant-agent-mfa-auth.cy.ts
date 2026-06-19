@@ -42,7 +42,7 @@ describe(
         withoutSession: true,
       });
 
-      mpAgentDashboardPage.visitAndWaitForTableData();
+      mpAgentDashboardPage.visitAndWaitForNetworkIdle();
       mpAgentDashboardPage.assertPageLocation();
 
       mfaSetUpScenario.executeActivation(dynamicFixtures.merchantAgentUserOne.username);
@@ -56,7 +56,7 @@ describe(
 
       // Let the dashboard datatable finish loading before navigating to set-up, so its session write
       // does not overwrite the freshly minted CSRF token (flaky "could not be deactivated").
-      mpAgentDashboardPage.visitAndWaitForTableData();
+      mpAgentDashboardPage.visitAndWaitForNetworkIdle();
       mpAgentDashboardPage.assertPageLocation();
 
       mfaSetUpScenario.executeDeactivation(dynamicFixtures.merchantAgentUserOne.username);
@@ -79,7 +79,7 @@ describe(
         withoutSession: true,
       });
 
-      mpAgentDashboardPage.visitAndWaitForTableData();
+      mpAgentDashboardPage.visitAndWaitForNetworkIdle();
       mpAgentDashboardPage.assertPageLocation();
 
       mfaSetUpScenario.executeActivation(dynamicFixtures.merchantAgentUserTwo.username);
