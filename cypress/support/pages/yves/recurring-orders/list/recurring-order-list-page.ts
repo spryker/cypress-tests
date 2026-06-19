@@ -29,11 +29,7 @@ export class RecurringOrderListPage extends YvesPage {
   };
 
   assertScheduleListDoesNotContainScheduleWithStatus = (status: string): void => {
-    this.repository
-      .getListTable()
-      .invoke('text')
-      .invoke('toLowerCase')
-      .should('not.contain', status.toLowerCase());
+    this.repository.getListTable().invoke('text').invoke('toLowerCase').should('not.contain', status.toLowerCase());
   };
 
   assertEmptyState = (): void => {
