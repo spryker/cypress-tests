@@ -28,6 +28,14 @@ export class RecurringOrderListPage extends YvesPage {
       .should('contain', text.toLowerCase());
   };
 
+  assertScheduleListDoesNotContainScheduleWithStatus = (status: string): void => {
+    this.repository
+      .getListTable()
+      .invoke('text')
+      .invoke('toLowerCase')
+      .should('not.contain', status.toLowerCase());
+  };
+
   assertEmptyState = (): void => {
     this.repository.getListTable().should('be.visible');
   };
@@ -41,5 +49,13 @@ export class RecurringOrderListPage extends YvesPage {
   openSchedule = (scheduleName: string): void => {
     this.visit();
     this.clickViewSchedule(scheduleName);
+  };
+
+  getRecurringOrdersAttentionBanner = (): Cypress.Chainable => {
+    return this.repository.getAttentionBanner();
+  };
+
+  getActionBannerFilter = (name: string): Cypress.Chainable => {
+    return this.repository.getAttentionBanner().find('a').contains(name);
   };
 }

@@ -14,4 +14,5 @@ export interface RecurringOrderDetailRepository {
   getResumeDateInput(): Cypress.Chainable;
   getHistoryViewOrderLink(): Cypress.Chainable;
   getDetailItems(): Cypress.Chainable;
+  getHistoryViewLatestRecordStatus(): Cypress.Chainable;
 }
