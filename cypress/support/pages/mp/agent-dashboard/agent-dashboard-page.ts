@@ -11,6 +11,19 @@ export class AgentDashboardPage extends MpPage {
 
   protected PAGE_URL = '/agent-dashboard-merchant-portal-gui/merchant-users';
 
+  // The merchant-users dashboard loads its datatable via an async `table-data` request that writes the
+  // (non-locking) session. If we navigate away before it finishes, that write can overwrite the CSRF token
+  // freshly minted by the next page (MFA set-up) -> flaky "could not be activated". This opt-in variant
+  // waits for the datatable request to complete so its session write is committed before we move on.
+  // Kept separate from visit() so other agent-dashboard tests are not affected.
+  visitAndWaitForTableData = (options?: Partial<Cypress.VisitOptions>): void => {
+    cy.intercept('GET', '**/agent-dashboard-merchant-portal-gui/merchant-users/table-data**').as(
+      'agentMerchantUsersTableData',
+    );
+    cy.visitMerchantPortal(this.PAGE_URL, options);
+    cy.wait('@agentMerchantUsersTableData', { timeout: 10000 });
+  };
+
   assist = (params: AssistParams): void => {
     const findParams = { query: params.query, expectedCount: 1 };
 
