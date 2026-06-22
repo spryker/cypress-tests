@@ -7,7 +7,7 @@ describe(
   'recurring order management',
   { tags: ['@yves', '@order-experience-management', 'order-experience-management', 'spryker-core'] },
   (): void => {
-    if (['b2c', 'b2c-mp', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+    if (['b2c', 'b2c-mp', 'b2b'].includes(Cypress.env('repositoryId'))) {
       it.skip('skipped because tests run only for suite', () => {});
       return;
     }
