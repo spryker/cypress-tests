@@ -18,4 +18,5 @@ export class SuiteRecurringOrderDetailRepository implements RecurringOrderDetail
   getResumeDateInput = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-resume-date-input"]');
   getHistoryViewOrderLink = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-history-view-order"]');
   getDetailItems = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-detail-items"]');
+  getHistoryViewLatestRecordStatus = (): Cypress.Chainable => cy.get('[data-qa="cell-status"]').first();
 }

@@ -31,13 +31,24 @@ describe(
       });
     });
 
-    it('recurring orders list shows schedules of all statuses', (): void => {
+    it('recurring orders list shows schedules of all statuses and shows actionable attention banner', (): void => {
       recurringOrderListPage.visit();
 
       recurringOrderListPage.assertListTableVisible();
       recurringOrderListPage.assertScheduleRowContains(dynamicFixtures.schedule.name, 'active');
       recurringOrderListPage.assertScheduleRowContains(dynamicFixtures.pausedScheduleForBuyer.name, 'paused');
       recurringOrderListPage.assertScheduleRowContains(dynamicFixtures.cancelledScheduleForBuyer.name, 'cancelled');
+
+      recurringOrderListPage.getRecurringOrdersAttentionBanner().should('be.visible');
+      recurringOrderListPage
+        .getRecurringOrdersAttentionBanner()
+        .should('contain', 'You have 1 recurring schedule(s) that require your attention.');
+
+      recurringOrderListPage.getActionBannerFilter('View Paused').should('be.visible').click();
+
+      recurringOrderListPage.assertScheduleListDoesNotContainScheduleWithStatus('active');
+      recurringOrderListPage.assertScheduleRowContains(dynamicFixtures.pausedScheduleForBuyer.name, 'paused');
+      recurringOrderListPage.assertScheduleListDoesNotContainScheduleWithStatus('cancelled');
     });
 
     it('detail page shows the schedule name, cadence, and status', (): void => {
@@ -77,6 +88,8 @@ describe(
       recurringOrderDetailPage.confirmSkip();
 
       cy.url().should('include', '/recurring-orders');
+
+      recurringOrderDetailPage.assertHistoryViewRecordStatus('Skipped');
     });
 
     it('company user can cancel a recurring schedule (terminal action)', (): void => {
