@@ -91,6 +91,18 @@ SPRYKER_FE_HOST=$(awk '
     in_endpoints && /entry-point:/ { skip=1 }
     END { if (host && !skip) print host }
     ' "$DEPLOY_FILE" | awk -F: '{gsub(/[ \t]+/, "", $1); print $1}')
+
+BASIC_AUTH_USER=$(awk '
+    /engine: basic/ { in_basic=1; next }
+    in_basic && /users:/ { in_users=1; next }
+    in_users && /username:/ { v=$0; sub(/.*username:[[:space:]]*/, "", v); user=v }
+    in_users && /password:/ { v=$0; sub(/.*password:[[:space:]]*/, "", v); print user ":" v; exit }
+    ' "$DEPLOY_FILE")
+
+if [ -n "$BASIC_AUTH_USER" ]; then
+    SPRYKER_FE_HOST="${BASIC_AUTH_USER}@${SPRYKER_FE_HOST}"
+fi
+
 CODEBUILD_BUILD_ID=${CODEBUILD_BUILD_ID}
 
 SPRYKER_VARS="CODEBUILD_BUILD_ID DEMO_SHOP_TYPE NPM_COMMAND SPRYKER_BE_HOST SPRYKER_MP_HOST SPRYKER_API_HOST SPRYKER_GLUE_BACKEND_HOST SPRYKER_GLUE_STOREFRONT_HOST SPRYKER_FE_HOST"
