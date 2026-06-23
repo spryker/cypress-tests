@@ -4,7 +4,6 @@ import { SuiteRecurringOrderDetailRepository } from './suite-recurring-order-det
 @injectable()
 export class B2bMpRecurringOrderDetailRepository extends SuiteRecurringOrderDetailRepository {
   getCancelButton = (): Cypress.Chainable => {
-    cy.get('[data-qa="recurring-order-action-menu-trigger"]').click();
     return cy.get('[data-qa="recurring-order-cancel-button"]');
   };
 
