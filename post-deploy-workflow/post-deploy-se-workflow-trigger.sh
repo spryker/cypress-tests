@@ -96,7 +96,8 @@ BASIC_AUTH_USER=$(awk '
     /engine: basic/ { in_basic=1; next }
     in_basic && /users:/ { in_users=1; next }
     in_users && /username:/ { v=$0; sub(/.*username:[[:space:]]*/, "", v); user=v }
-    in_users && /password:/ { v=$0; sub(/.*password:[[:space:]]*/, "", v); print user ":" v; exit }
+    in_users && /password:/ { v=$0; sub(/.*password:[[:space:]]*/, "", v); pass=v }
+    in_users && user && pass { print user ":" pass; exit }
     ' "$DEPLOY_FILE")
 
 if [ -n "$BASIC_AUTH_USER" ]; then
