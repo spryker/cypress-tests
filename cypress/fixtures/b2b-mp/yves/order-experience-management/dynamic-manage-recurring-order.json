@@ -29,65 +29,49 @@
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "addCartItemPermission",
-          "arguments": [
-            "AddCartItemPermissionPlugin"
-          ]
+          "arguments": ["AddCartItemPermissionPlugin"]
         },
         {
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "changeCartItemPermission",
-          "arguments": [
-            "ChangeCartItemPermissionPlugin"
-          ]
+          "arguments": ["ChangeCartItemPermissionPlugin"]
         },
         {
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "removeCartItemPermission",
-          "arguments": [
-            "RemoveCartItemPermissionPlugin"
-          ]
+          "arguments": ["RemoveCartItemPermissionPlugin"]
         },
         {
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "placeOrderWithAmountUpToPermission",
-          "arguments": [
-            "PlaceOrderWithAmountUpToPermissionPlugin"
-          ]
+          "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
         },
         {
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "placeOrderPermission",
-          "arguments": [
-            "PlaceOrderPermissionPlugin"
-          ]
+          "arguments": ["PlaceOrderPermissionPlugin"]
         },
         {
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "requestQuoteApprovalPermission",
-          "arguments": [
-            "RequestQuoteApprovalPermissionPlugin"
-          ]
+          "arguments": ["RequestQuoteApprovalPermissionPlugin"]
         },
         {
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "seeBusinessUnitOrdersPermission",
-          "arguments": [
-            "SeeBusinessUnitOrdersPermissionPlugin"
-          ]
+          "arguments": ["SeeBusinessUnitOrdersPermissionPlugin"]
         },
         {
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "seeCompanyOrdersPermission",
-          "arguments": [
-            "SeeCompanyOrdersPermissionPlugin"
-          ]
+          "arguments": ["SeeCompanyOrdersPermissionPlugin"]
         },
         {
           "type": "helper",
@@ -137,9 +121,7 @@
           "name": "CompanyRoleCollectionBuilder",
           "key": "buyerRoleCollection",
           "arguments": {
-            "roles": [
-              "#buyerRole"
-            ]
+            "roles": ["#buyerRole"]
           }
         },
         {
@@ -150,9 +132,7 @@
             {
               "customer": "#buyer",
               "fk_company": "#company.id_company",
-              "company_role_collection": [
-                "#buyerRoleCollection"
-              ],
+              "company_role_collection": ["#buyerRoleCollection"],
               "fk_company_business_unit": "#businessUnit.id_company_business_unit"
             }
           ]
@@ -160,12 +140,7 @@
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": [
-            "#buyerCompanyUser",
-            [
-              "#buyerRole"
-            ]
-          ]
+          "arguments": ["#buyerCompanyUser", ["#buyerRole"]]
         },
         {
           "type": "helper",
@@ -258,9 +233,7 @@
           "name": "CompanyRoleCollectionBuilder",
           "key": "buyerForSkipRoleCollection",
           "arguments": {
-            "roles": [
-              "#buyerRole"
-            ]
+            "roles": ["#buyerRole"]
           }
         },
         {
@@ -271,9 +244,7 @@
             {
               "customer": "#buyerForSkip",
               "fk_company": "#company.id_company",
-              "company_role_collection": [
-                "#buyerForSkipRoleCollection"
-              ],
+              "company_role_collection": ["#buyerForSkipRoleCollection"],
               "fk_company_business_unit": "#businessUnit.id_company_business_unit"
             }
           ]
@@ -281,12 +252,7 @@
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": [
-            "#buyerForSkipCompanyUser",
-            [
-              "#buyerRole"
-            ]
-          ]
+          "arguments": ["#buyerForSkipCompanyUser", ["#buyerRole"]]
         },
         {
           "type": "helper",

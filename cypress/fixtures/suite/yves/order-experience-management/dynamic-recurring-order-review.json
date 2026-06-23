@@ -29,57 +29,43 @@
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "addCartItemPermission",
-          "arguments": [
-            "AddCartItemPermissionPlugin"
-          ]
+          "arguments": ["AddCartItemPermissionPlugin"]
         },
         {
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "changeCartItemPermission",
-          "arguments": [
-            "ChangeCartItemPermissionPlugin"
-          ]
+          "arguments": ["ChangeCartItemPermissionPlugin"]
         },
         {
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "removeCartItemPermission",
-          "arguments": [
-            "RemoveCartItemPermissionPlugin"
-          ]
+          "arguments": ["RemoveCartItemPermissionPlugin"]
         },
         {
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "placeOrderWithAmountUpToPermission",
-          "arguments": [
-            "PlaceOrderWithAmountUpToPermissionPlugin"
-          ]
+          "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
         },
         {
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "placeOrderPermission",
-          "arguments": [
-            "PlaceOrderPermissionPlugin"
-          ]
+          "arguments": ["PlaceOrderPermissionPlugin"]
         },
         {
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "requestQuoteApprovalPermission",
-          "arguments": [
-            "RequestQuoteApprovalPermissionPlugin"
-          ]
+          "arguments": ["RequestQuoteApprovalPermissionPlugin"]
         },
         {
           "type": "helper",
           "name": "havePermissionByKey",
           "key": "seeBusinessUnitOrdersPermission",
-          "arguments": [
-            "SeeBusinessUnitOrdersPermissionPlugin"
-          ]
+          "arguments": ["SeeBusinessUnitOrdersPermissionPlugin"]
         },
         {
           "type": "helper",
@@ -159,10 +145,7 @@
         {
           "type": "helper",
           "name": "haveProductConcreteShipmentType",
-          "arguments": [
-            "#product",
-            "#shipmentType"
-          ]
+          "arguments": ["#product", "#shipmentType"]
         },
         {
           "type": "helper",
@@ -180,9 +163,7 @@
           "name": "CompanyRoleCollectionBuilder",
           "key": "buyerRoleCollection",
           "arguments": {
-            "roles": [
-              "#buyerRole"
-            ]
+            "roles": ["#buyerRole"]
           }
         },
         {
@@ -193,9 +174,7 @@
             {
               "customer": "#buyer",
               "fk_company": "#company.id_company",
-              "company_role_collection": [
-                "#buyerRoleCollection"
-              ],
+              "company_role_collection": ["#buyerRoleCollection"],
               "fk_company_business_unit": "#businessUnit.id_company_business_unit"
             }
           ]
@@ -203,12 +182,7 @@
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": [
-            "#buyerCompanyUser",
-            [
-              "#buyerRole"
-            ]
-          ]
+          "arguments": ["#buyerCompanyUser", ["#buyerRole"]]
         },
         {
           "type": "helper",
@@ -304,10 +278,7 @@
         {
           "type": "helper",
           "name": "haveProductConcreteShipmentType",
-          "arguments": [
-            "#bundledProduct1",
-            "#shipmentType"
-          ]
+          "arguments": ["#bundledProduct1", "#shipmentType"]
         },
         {
           "type": "helper",
@@ -337,18 +308,12 @@
         {
           "type": "helper",
           "name": "haveProductConcreteShipmentType",
-          "arguments": [
-            "#bundledProduct2",
-            "#shipmentType"
-          ]
+          "arguments": ["#bundledProduct2", "#shipmentType"]
         },
         {
           "type": "helper",
           "name": "haveProductConcreteShipmentType",
-          "arguments": [
-            "#bundleProduct",
-            "#shipmentType"
-          ]
+          "arguments": ["#bundleProduct", "#shipmentType"]
         },
         {
           "type": "helper",
@@ -402,10 +367,7 @@
         {
           "type": "helper",
           "name": "haveProductConcreteShipmentType",
-          "arguments": [
-            "#productBundle",
-            "#shipmentType"
-          ]
+          "arguments": ["#productBundle", "#shipmentType"]
         },
         {
           "type": "helper",
@@ -423,9 +385,7 @@
           "name": "CompanyRoleCollectionBuilder",
           "key": "buyerForBundleRoleCollection",
           "arguments": {
-            "roles": [
-              "#buyerRole"
-            ]
+            "roles": ["#buyerRole"]
           }
         },
         {
@@ -436,9 +396,7 @@
             {
               "customer": "#buyerForBundle",
               "fk_company": "#company.id_company",
-              "company_role_collection": [
-                "#buyerForBundleRoleCollection"
-              ],
+              "company_role_collection": ["#buyerForBundleRoleCollection"],
               "fk_company_business_unit": "#businessUnit.id_company_business_unit"
             }
           ]
@@ -446,12 +404,7 @@
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": [
-            "#buyerForBundleCompanyUser",
-            [
-              "#buyerRole"
-            ]
-          ]
+          "arguments": ["#buyerForBundleCompanyUser", ["#buyerRole"]]
         },
         {
           "type": "helper",
@@ -525,9 +478,7 @@
         {
           "type": "array-object",
           "key": "stores",
-          "arguments": [
-            "#store"
-          ]
+          "arguments": ["#store"]
         },
         {
           "type": "helper",
@@ -567,10 +518,7 @@
         {
           "type": "helper",
           "name": "haveProductConcreteShipmentType",
-          "arguments": [
-            "#offerProduct",
-            "#shipmentType"
-          ]
+          "arguments": ["#offerProduct", "#shipmentType"]
         },
         {
           "type": "helper",
@@ -625,9 +573,7 @@
           "name": "CompanyRoleCollectionBuilder",
           "key": "buyerForOfferRoleCollection",
           "arguments": {
-            "roles": [
-              "#buyerRole"
-            ]
+            "roles": ["#buyerRole"]
           }
         },
         {
@@ -638,9 +584,7 @@
             {
               "customer": "#buyerForOffer",
               "fk_company": "#company.id_company",
-              "company_role_collection": [
-                "#buyerForOfferRoleCollection"
-              ],
+              "company_role_collection": ["#buyerForOfferRoleCollection"],
               "fk_company_business_unit": "#businessUnit.id_company_business_unit"
             }
           ]
@@ -648,12 +592,7 @@
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": [
-            "#buyerForOfferCompanyUser",
-            [
-              "#buyerRole"
-            ]
-          ]
+          "arguments": ["#buyerForOfferCompanyUser", ["#buyerRole"]]
         },
         {
           "type": "helper",
@@ -751,10 +690,7 @@
         {
           "type": "helper",
           "name": "haveProductConcreteShipmentType",
-          "arguments": [
-            "#configurableBundleSlotProduct",
-            "#shipmentType"
-          ]
+          "arguments": ["#configurableBundleSlotProduct", "#shipmentType"]
         },
         {
           "type": "helper",
@@ -772,9 +708,7 @@
           "name": "CompanyRoleCollectionBuilder",
           "key": "buyerForConfigurableBundleRoleCollection",
           "arguments": {
-            "roles": [
-              "#buyerRole"
-            ]
+            "roles": ["#buyerRole"]
           }
         },
         {
@@ -785,9 +719,7 @@
             {
               "customer": "#buyerForConfigurableBundle",
               "fk_company": "#company.id_company",
-              "company_role_collection": [
-                "#buyerForConfigurableBundleRoleCollection"
-              ],
+              "company_role_collection": ["#buyerForConfigurableBundleRoleCollection"],
               "fk_company_business_unit": "#businessUnit.id_company_business_unit"
             }
           ]
@@ -795,12 +727,7 @@
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": [
-            "#buyerForConfigurableBundleCompanyUser",
-            [
-              "#buyerRole"
-            ]
-          ]
+          "arguments": ["#buyerForConfigurableBundleCompanyUser", ["#buyerRole"]]
         },
         {
           "type": "helper",
@@ -881,10 +808,7 @@
         {
           "type": "helper",
           "name": "haveProductConcreteShipmentType",
-          "arguments": [
-            "#priceDriftProduct",
-            "#shipmentType"
-          ]
+          "arguments": ["#priceDriftProduct", "#shipmentType"]
         },
         {
           "type": "helper",
@@ -902,9 +826,7 @@
           "name": "CompanyRoleCollectionBuilder",
           "key": "buyerForPriceDriftRoleCollection",
           "arguments": {
-            "roles": [
-              "#buyerRole"
-            ]
+            "roles": ["#buyerRole"]
           }
         },
         {
@@ -915,9 +837,7 @@
             {
               "customer": "#buyerForPriceDrift",
               "fk_company": "#company.id_company",
-              "company_role_collection": [
-                "#buyerForPriceDriftRoleCollection"
-              ],
+              "company_role_collection": ["#buyerForPriceDriftRoleCollection"],
               "fk_company_business_unit": "#businessUnit.id_company_business_unit"
             }
           ]
@@ -925,12 +845,7 @@
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": [
-            "#buyerForPriceDriftCompanyUser",
-            [
-              "#buyerRole"
-            ]
-          ]
+          "arguments": ["#buyerForPriceDriftCompanyUser", ["#buyerRole"]]
         },
         {
           "type": "helper",
@@ -995,10 +910,7 @@
         {
           "type": "helper",
           "name": "haveProductConcreteShipmentType",
-          "arguments": [
-            "#stockDriftProduct",
-            "#shipmentType"
-          ]
+          "arguments": ["#stockDriftProduct", "#shipmentType"]
         },
         {
           "type": "helper",
@@ -1016,9 +928,7 @@
           "name": "CompanyRoleCollectionBuilder",
           "key": "buyerForStockDriftRoleCollection",
           "arguments": {
-            "roles": [
-              "#buyerRole"
-            ]
+            "roles": ["#buyerRole"]
           }
         },
         {
@@ -1029,9 +939,7 @@
             {
               "customer": "#buyerForStockDrift",
               "fk_company": "#company.id_company",
-              "company_role_collection": [
-                "#buyerForStockDriftRoleCollection"
-              ],
+              "company_role_collection": ["#buyerForStockDriftRoleCollection"],
               "fk_company_business_unit": "#businessUnit.id_company_business_unit"
             }
           ]
@@ -1039,12 +947,7 @@
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": [
-            "#buyerForStockDriftCompanyUser",
-            [
-              "#buyerRole"
-            ]
-          ]
+          "arguments": ["#buyerForStockDriftCompanyUser", ["#buyerRole"]]
         },
         {
           "type": "helper",
@@ -1120,10 +1023,7 @@
         {
           "type": "helper",
           "name": "haveProductConcreteShipmentType",
-          "arguments": [
-            "#simpleProductForStockDrift",
-            "#shipmentType"
-          ]
+          "arguments": ["#simpleProductForStockDrift", "#shipmentType"]
         },
         {
           "type": "helper",
@@ -1192,10 +1092,7 @@
         {
           "type": "helper",
           "name": "haveProductConcreteShipmentType",
-          "arguments": [
-            "#configurableProduct",
-            "#shipmentType"
-          ]
+          "arguments": ["#configurableProduct", "#shipmentType"]
         },
         {
           "type": "helper",
@@ -1213,9 +1110,7 @@
           "name": "CompanyRoleCollectionBuilder",
           "key": "buyerForConfigurableProductRoleCollection",
           "arguments": {
-            "roles": [
-              "#buyerRole"
-            ]
+            "roles": ["#buyerRole"]
           }
         },
         {
@@ -1226,9 +1121,7 @@
             {
               "customer": "#buyerForConfigurableProduct",
               "fk_company": "#company.id_company",
-              "company_role_collection": [
-                "#buyerForConfigurableProductRoleCollection"
-              ],
+              "company_role_collection": ["#buyerForConfigurableProductRoleCollection"],
               "fk_company_business_unit": "#businessUnit.id_company_business_unit"
             }
           ]
@@ -1236,12 +1129,7 @@
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": [
-            "#buyerForConfigurableProductCompanyUser",
-            [
-              "#buyerRole"
-            ]
-          ]
+          "arguments": ["#buyerForConfigurableProductCompanyUser", ["#buyerRole"]]
         },
         {
           "type": "helper",
@@ -1318,10 +1206,7 @@
         {
           "type": "helper",
           "name": "haveProductConcreteShipmentType",
-          "arguments": [
-            "#packagingProduct",
-            "#shipmentType"
-          ]
+          "arguments": ["#packagingProduct", "#shipmentType"]
         },
         {
           "type": "helper",
@@ -1338,10 +1223,7 @@
           "type": "helper",
           "name": "haveProductMeasurementBaseUnit",
           "key": "baseUnit",
-          "arguments": [
-            "#packagingProduct.fk_product_abstract",
-            "#measurementUnit.id_product_measurement_unit"
-          ]
+          "arguments": ["#packagingProduct.fk_product_abstract", "#measurementUnit.id_product_measurement_unit"]
         },
         {
           "type": "helper",
@@ -1395,9 +1277,7 @@
           "name": "CompanyRoleCollectionBuilder",
           "key": "buyerForPackagingUnitRoleCollection",
           "arguments": {
-            "roles": [
-              "#buyerRole"
-            ]
+            "roles": ["#buyerRole"]
           }
         },
         {
@@ -1408,9 +1288,7 @@
             {
               "customer": "#buyerForPackagingUnit",
               "fk_company": "#company.id_company",
-              "company_role_collection": [
-                "#buyerForPackagingUnitRoleCollection"
-              ],
+              "company_role_collection": ["#buyerForPackagingUnitRoleCollection"],
               "fk_company_business_unit": "#businessUnit.id_company_business_unit"
             }
           ]
@@ -1418,12 +1296,7 @@
         {
           "type": "helper",
           "name": "assignCompanyRoles",
-          "arguments": [
-            "#buyerForPackagingUnitCompanyUser",
-            [
-              "#buyerRole"
-            ]
-          ]
+          "arguments": ["#buyerForPackagingUnitCompanyUser", ["#buyerRole"]]
         },
         {
           "type": "helper",
