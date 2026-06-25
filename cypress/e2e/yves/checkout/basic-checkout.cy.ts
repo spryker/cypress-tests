@@ -21,9 +21,7 @@ describe(
     });
 
     beforeEach((): void => {
-      if (['b2b', 'b2b-mp', 'suite'].includes(Cypress.env('repositoryId'))) {
         cy.deleteCustomerPersistentQuotes(dynamicFixtures.customer.email);
-      }
     });
 
     skipB2BIt('guest customer should checkout to single shipment', (): void => {
