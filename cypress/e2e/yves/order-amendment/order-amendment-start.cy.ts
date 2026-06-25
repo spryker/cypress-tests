@@ -281,7 +281,7 @@ describe(
     }
 
     function skipB2cIt(description: string, testFn: () => void): void {
-      (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+      (['b2c', 'b2c-mp', 'suite'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
     }
 
     function getPaymentMethodBasedOnEnv(): string {
