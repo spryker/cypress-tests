@@ -379,6 +379,31 @@ Cypress.Commands.add('createCart', (accessToken, attributes) => {
     .then((response) => response.body.data.id);
 });
 
+Cypress.Commands.add('deleteCustomerPersistentQuotes', (email) => {
+  cy.request({
+    method: 'POST',
+    url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
+    headers: {
+      'Content-Type': 'application/vnd.api+json',
+    },
+    body: {
+      data: {
+        type: 'dynamic-fixtures',
+        attributes: {
+          operations: [
+            {
+              type: 'helper',
+              name: 'deleteCustomerPersistentQuotes',
+              arguments: { email },
+            },
+          ],
+        },
+      },
+    },
+    failOnStatusCode: false,
+  });
+});
+
 Cypress.Commands.add('createShoppingList', (accessToken, name) => {
   return cy
     .request({
