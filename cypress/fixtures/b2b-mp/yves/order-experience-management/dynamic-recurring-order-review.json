@@ -154,7 +154,8 @@
           "arguments": [
             {
               "registered": "2025-01-01",
-              "password": "change123"
+              "password": "change123",
+              "locale_name": "en_US"
             }
           ]
         },
@@ -376,7 +377,8 @@
           "arguments": [
             {
               "registered": "2025-01-01",
-              "password": "change123"
+              "password": "change123",
+              "locale_name": "en_US"
             }
           ]
         },
@@ -564,7 +566,8 @@
           "arguments": [
             {
               "registered": "2025-01-01",
-              "password": "change123"
+              "password": "change123",
+              "locale_name": "en_US"
             }
           ]
         },
@@ -699,7 +702,8 @@
           "arguments": [
             {
               "registered": "2025-01-01",
-              "password": "change123"
+              "password": "change123",
+              "locale_name": "en_US"
             }
           ]
         },
@@ -817,7 +821,8 @@
           "arguments": [
             {
               "registered": "2025-01-01",
-              "password": "change123"
+              "password": "change123",
+              "locale_name": "en_US"
             }
           ]
         },
@@ -919,7 +924,8 @@
           "arguments": [
             {
               "registered": "2025-01-01",
-              "password": "change123"
+              "password": "change123",
+              "locale_name": "en_US"
             }
           ]
         },
@@ -1101,7 +1107,8 @@
           "arguments": [
             {
               "registered": "2025-01-01",
-              "password": "change123"
+              "password": "change123",
+              "locale_name": "en_US"
             }
           ]
         },
@@ -1268,7 +1275,8 @@
           "arguments": [
             {
               "registered": "2025-01-01",
-              "password": "change123"
+              "password": "change123",
+              "locale_name": "en_US"
             }
           ]
         },

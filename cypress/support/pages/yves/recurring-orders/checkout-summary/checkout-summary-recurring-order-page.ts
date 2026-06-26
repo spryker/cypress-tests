@@ -29,7 +29,7 @@ export class CheckoutSummaryRecurringOrderPage extends YvesPage {
   };
 
   selectCadenceType = (cadenceType: string): void => {
-    this.repository.getCadenceTypeSelect().select(cadenceType);
+    this.repository.getCadenceTypeSelect().select(cadenceType, { force: true });
   };
 
   confirmRecurringOrder = (): void => {

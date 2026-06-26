@@ -247,7 +247,11 @@ describe(
 
       assetListPage.getSspAssetFiltersSubmitButton().click();
 
-      assetListPage.assertTableData([dynamicFixtures.assetBU1C1BU2C1BU1C2, dynamicFixtures.assetBU1C1]);
+      assetListPage.assertTableData([
+        dynamicFixtures.assetBU1C1BU2C1BU1C2,
+        dynamicFixtures.assetBU2C1,
+        dynamicFixtures.assetBU1C1,
+      ]);
 
       if (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
         assetListPage.openFilters();
