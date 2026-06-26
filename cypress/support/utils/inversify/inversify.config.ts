@@ -194,6 +194,7 @@ import { B2bMpRecurringOrderListRepository } from '../../pages/yves/recurring-or
 import { SuiteRecurringOrderDetailRepository } from '../../pages/yves/recurring-orders/detail/repositories/suite-recurring-order-detail-repository';
 import { B2bMpRecurringOrderDetailRepository } from '../../pages/yves/recurring-orders/detail/repositories/b2b-mp-recurring-order-detail-repository';
 import { SuiteRecurringOrderReviewRepository } from '../../pages/yves/recurring-orders/review/repositories/suite-recurring-order-review-repository';
+import { SuiteQuicksightAnalyticsRepository } from '../../pages/backoffice/quicksight-analytics/repositories/suite-quicksight-analytics-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -246,6 +247,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.YvesRecurringOrderListRepository]: SuiteRecurringOrderListRepository,
   [REPOSITORIES.YvesRecurringOrderDetailRepository]: SuiteRecurringOrderDetailRepository,
   [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
+  [REPOSITORIES.QuicksightAnalyticsRepository]: SuiteQuicksightAnalyticsRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -281,6 +283,7 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.CustomerProfileRepository]: B2cCustomerProfileRepository,
   [REPOSITORIES.AgentMultiFactorAuthRepository]: B2cAgentMultiFactorAuthRepository,
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2cUserMultiFactorAuthRepository,
+  [REPOSITORIES.QuicksightAnalyticsRepository]: SuiteQuicksightAnalyticsRepository,
 };
 
 const b2bMappings: BindingsMap = {
@@ -320,6 +323,7 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.SspInquiryRepository]: B2bSspInquiryRepository,
   [REPOSITORIES.SspDashboardManagementRepository]: B2bSspDashboardManagementRepository,
   [REPOSITORIES.SspServiceRepository]: B2bSspServiceRepository,
+  [REPOSITORIES.QuicksightAnalyticsRepository]: SuiteQuicksightAnalyticsRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
@@ -355,6 +359,7 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.CustomerProfileRepository]: B2cMpCustomerProfileRepository,
   [REPOSITORIES.AgentMultiFactorAuthRepository]: B2cMpAgentMultiFactorAuthRepository,
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2cMpUserMultiFactorAuthRepository,
+  [REPOSITORIES.QuicksightAnalyticsRepository]: SuiteQuicksightAnalyticsRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
@@ -406,6 +411,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.YvesRecurringOrderListRepository]: B2bMpRecurringOrderListRepository,
   [REPOSITORIES.YvesRecurringOrderDetailRepository]: B2bMpRecurringOrderDetailRepository,
   [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
+  [REPOSITORIES.QuicksightAnalyticsRepository]: SuiteQuicksightAnalyticsRepository,
 };
 
 const mappings = {
