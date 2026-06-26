@@ -51,11 +51,7 @@
             {
               "fk_company": "#company.id_company"
             },
-            [
-              "#placeOrderPermission",
-              "#requestQuoteApprovalPermission",
-              "#seeBusinessUnitOrdersPermission"
-            ]
+            ["#placeOrderPermission", "#requestQuoteApprovalPermission", "#seeBusinessUnitOrdersPermission"]
           ]
         },
         {
