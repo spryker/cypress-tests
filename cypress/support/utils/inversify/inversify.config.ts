@@ -195,6 +195,15 @@ import { SuiteRecurringOrderDetailRepository } from '../../pages/yves/recurring-
 import { B2bMpRecurringOrderDetailRepository } from '../../pages/yves/recurring-orders/detail/repositories/b2b-mp-recurring-order-detail-repository';
 import { SuiteRecurringOrderReviewRepository } from '../../pages/yves/recurring-orders/review/repositories/suite-recurring-order-review-repository';
 import { SuiteQuicksightAnalyticsRepository } from '../../pages/backoffice/quicksight-analytics/repositories/suite-quicksight-analytics-repository';
+import { SuiteAiConfigurationRepository } from '../../pages/backoffice/ai-configuration/repositories/suite-ai-configuration-repository';
+import { SuiteAuditLogsRepository } from '../../pages/backoffice/audit-logs/repositories/suite-audit-logs-repository';
+import { SuiteAiWorkflowsRepository } from '../../pages/backoffice/ai-workflows/repositories/suite-ai-workflows-repository';
+import { SuiteBackofficeAssistantRepository } from '../../pages/backoffice/backoffice-assistant/repositories/suite-backoffice-assistant-repository';
+import { SuiteSmartPimRepository } from '../../pages/backoffice/smart-pim/repositories/suite-smart-pim-repository';
+import { SuiteSmartCmsRepository } from '../../pages/backoffice/smart-cms/repositories/suite-smart-cms-repository';
+import { SuiteQuickOrderImageToCartRepository } from '../../pages/yves/quick-order-image-to-cart/repositories/suite-quick-order-image-to-cart-repository';
+import { SuiteSearchByImageRepository } from '../../pages/yves/search-by-image/repositories/suite-search-by-image-repository';
+import { SuiteCostPriceRepository } from '../../pages/backoffice/cost-price/repositories/suite-cost-price-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -248,6 +257,15 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.YvesRecurringOrderDetailRepository]: SuiteRecurringOrderDetailRepository,
   [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
   [REPOSITORIES.QuicksightAnalyticsRepository]: SuiteQuicksightAnalyticsRepository,
+  [REPOSITORIES.AiConfigurationRepository]: SuiteAiConfigurationRepository,
+  [REPOSITORIES.AuditLogsRepository]: SuiteAuditLogsRepository,
+  [REPOSITORIES.AiWorkflowsRepository]: SuiteAiWorkflowsRepository,
+  [REPOSITORIES.BackofficeAssistantRepository]: SuiteBackofficeAssistantRepository,
+  [REPOSITORIES.SmartPimRepository]: SuiteSmartPimRepository,
+  [REPOSITORIES.SmartCmsRepository]: SuiteSmartCmsRepository,
+  [REPOSITORIES.QuickOrderImageToCartRepository]: SuiteQuickOrderImageToCartRepository,
+  [REPOSITORIES.SearchByImageRepository]: SuiteSearchByImageRepository,
+  [REPOSITORIES.CostPriceRepository]: SuiteCostPriceRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -284,6 +302,15 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.AgentMultiFactorAuthRepository]: B2cAgentMultiFactorAuthRepository,
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2cUserMultiFactorAuthRepository,
   [REPOSITORIES.QuicksightAnalyticsRepository]: SuiteQuicksightAnalyticsRepository,
+  [REPOSITORIES.AiConfigurationRepository]: SuiteAiConfigurationRepository,
+  [REPOSITORIES.AuditLogsRepository]: SuiteAuditLogsRepository,
+  [REPOSITORIES.AiWorkflowsRepository]: SuiteAiWorkflowsRepository,
+  [REPOSITORIES.BackofficeAssistantRepository]: SuiteBackofficeAssistantRepository,
+  [REPOSITORIES.SmartPimRepository]: SuiteSmartPimRepository,
+  [REPOSITORIES.SmartCmsRepository]: SuiteSmartCmsRepository,
+  [REPOSITORIES.QuickOrderImageToCartRepository]: SuiteQuickOrderImageToCartRepository,
+  [REPOSITORIES.SearchByImageRepository]: SuiteSearchByImageRepository,
+  [REPOSITORIES.CostPriceRepository]: SuiteCostPriceRepository,
 };
 
 const b2bMappings: BindingsMap = {
@@ -324,6 +351,15 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.SspDashboardManagementRepository]: B2bSspDashboardManagementRepository,
   [REPOSITORIES.SspServiceRepository]: B2bSspServiceRepository,
   [REPOSITORIES.QuicksightAnalyticsRepository]: SuiteQuicksightAnalyticsRepository,
+  [REPOSITORIES.AiConfigurationRepository]: SuiteAiConfigurationRepository,
+  [REPOSITORIES.AuditLogsRepository]: SuiteAuditLogsRepository,
+  [REPOSITORIES.AiWorkflowsRepository]: SuiteAiWorkflowsRepository,
+  [REPOSITORIES.BackofficeAssistantRepository]: SuiteBackofficeAssistantRepository,
+  [REPOSITORIES.SmartPimRepository]: SuiteSmartPimRepository,
+  [REPOSITORIES.SmartCmsRepository]: SuiteSmartCmsRepository,
+  [REPOSITORIES.QuickOrderImageToCartRepository]: SuiteQuickOrderImageToCartRepository,
+  [REPOSITORIES.SearchByImageRepository]: SuiteSearchByImageRepository,
+  [REPOSITORIES.CostPriceRepository]: SuiteCostPriceRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
@@ -360,6 +396,15 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.AgentMultiFactorAuthRepository]: B2cMpAgentMultiFactorAuthRepository,
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2cMpUserMultiFactorAuthRepository,
   [REPOSITORIES.QuicksightAnalyticsRepository]: SuiteQuicksightAnalyticsRepository,
+  [REPOSITORIES.AiConfigurationRepository]: SuiteAiConfigurationRepository,
+  [REPOSITORIES.AuditLogsRepository]: SuiteAuditLogsRepository,
+  [REPOSITORIES.AiWorkflowsRepository]: SuiteAiWorkflowsRepository,
+  [REPOSITORIES.BackofficeAssistantRepository]: SuiteBackofficeAssistantRepository,
+  [REPOSITORIES.SmartPimRepository]: SuiteSmartPimRepository,
+  [REPOSITORIES.SmartCmsRepository]: SuiteSmartCmsRepository,
+  [REPOSITORIES.QuickOrderImageToCartRepository]: SuiteQuickOrderImageToCartRepository,
+  [REPOSITORIES.SearchByImageRepository]: SuiteSearchByImageRepository,
+  [REPOSITORIES.CostPriceRepository]: SuiteCostPriceRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
@@ -412,6 +457,15 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.YvesRecurringOrderDetailRepository]: B2bMpRecurringOrderDetailRepository,
   [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
   [REPOSITORIES.QuicksightAnalyticsRepository]: SuiteQuicksightAnalyticsRepository,
+  [REPOSITORIES.AiConfigurationRepository]: SuiteAiConfigurationRepository,
+  [REPOSITORIES.AuditLogsRepository]: SuiteAuditLogsRepository,
+  [REPOSITORIES.AiWorkflowsRepository]: SuiteAiWorkflowsRepository,
+  [REPOSITORIES.BackofficeAssistantRepository]: SuiteBackofficeAssistantRepository,
+  [REPOSITORIES.SmartPimRepository]: SuiteSmartPimRepository,
+  [REPOSITORIES.SmartCmsRepository]: SuiteSmartCmsRepository,
+  [REPOSITORIES.QuickOrderImageToCartRepository]: SuiteQuickOrderImageToCartRepository,
+  [REPOSITORIES.SearchByImageRepository]: SuiteSearchByImageRepository,
+  [REPOSITORIES.CostPriceRepository]: SuiteCostPriceRepository,
 };
 
 const mappings = {

@@ -48,4 +48,13 @@ export const enum REPOSITORIES {
   YvesRecurringOrderDetailRepository = 'YvesRecurringOrderDetailRepository',
   YvesRecurringOrderReviewRepository = 'YvesRecurringOrderReviewRepository',
   QuicksightAnalyticsRepository = 'QuicksightAnalyticsRepository',
+  AiConfigurationRepository = 'AiConfigurationRepository',
+  AuditLogsRepository = 'AuditLogsRepository',
+  AiWorkflowsRepository = 'AiWorkflowsRepository',
+  BackofficeAssistantRepository = 'BackofficeAssistantRepository',
+  SmartPimRepository = 'SmartPimRepository',
+  SmartCmsRepository = 'SmartCmsRepository',
+  QuickOrderImageToCartRepository = 'QuickOrderImageToCartRepository',
+  SearchByImageRepository = 'SearchByImageRepository',
+  CostPriceRepository = 'CostPriceRepository',
 }
