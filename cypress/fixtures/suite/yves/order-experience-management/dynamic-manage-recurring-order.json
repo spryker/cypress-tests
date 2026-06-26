@@ -28,30 +28,6 @@
         {
           "type": "helper",
           "name": "havePermissionByKey",
-          "key": "addCartItemPermission",
-          "arguments": ["AddCartItemPermissionPlugin"]
-        },
-        {
-          "type": "helper",
-          "name": "havePermissionByKey",
-          "key": "changeCartItemPermission",
-          "arguments": ["ChangeCartItemPermissionPlugin"]
-        },
-        {
-          "type": "helper",
-          "name": "havePermissionByKey",
-          "key": "removeCartItemPermission",
-          "arguments": ["RemoveCartItemPermissionPlugin"]
-        },
-        {
-          "type": "helper",
-          "name": "havePermissionByKey",
-          "key": "placeOrderWithAmountUpToPermission",
-          "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
-        },
-        {
-          "type": "helper",
-          "name": "havePermissionByKey",
           "key": "placeOrderPermission",
           "arguments": ["PlaceOrderPermissionPlugin"]
         },
@@ -82,10 +58,6 @@
               "fk_company": "#company.id_company"
             },
             [
-              "#addCartItemPermission",
-              "#changeCartItemPermission",
-              "#removeCartItemPermission",
-              "#placeOrderWithAmountUpToPermission",
               "#placeOrderPermission",
               "#requestQuoteApprovalPermission",
               "#seeBusinessUnitOrdersPermission",
