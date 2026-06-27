@@ -1,0 +1,8 @@
+{
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "cmsPageEditorUrl": "/cms-gui/create-glossary?id-cms-page=6",
+  "cmsBlockEditorUrl": "/cms-block-gui/edit-glossary?id-cms-block=24"
+}

@@ -49,3 +49,5 @@ export * from './purchasing-control/budget/list/budget-list-page';
 export * from './purchasing-control/budget/create/budget-create-page';
 export * from './purchasing-control/budget/update/budget-update-page';
 export * from './purchasing-control/checkout-summary/checkout-summary-budget-page';
+export * from './quick-order-image-to-cart/quick-order-image-to-cart-page';
+export * from './search-by-image/search-by-image-page';
