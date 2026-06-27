@@ -1,4 +1,4 @@
-import { autoWired, REPOSITORIES } from '@utils';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
@@ -7,7 +7,7 @@ import { SmartPimRepository } from './smart-pim-repository';
 @injectable()
 @autoWired
 export class SmartPimPage extends BackofficePage {
-  @inject(REPOSITORIES.SmartPimRepository) private repository: SmartPimRepository;
+  @inject(SmartPimRepository) private repository: SmartPimRepository;
 
   protected PAGE_URL = '/product-management/edit';
 

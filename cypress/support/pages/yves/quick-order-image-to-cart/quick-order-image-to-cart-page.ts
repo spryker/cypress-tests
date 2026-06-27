@@ -1,4 +1,4 @@
-import { autoWired, REPOSITORIES } from '@utils';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { YvesPage } from '@pages/yves';
@@ -7,7 +7,7 @@ import { QuickOrderImageToCartRepository } from './quick-order-image-to-cart-rep
 @injectable()
 @autoWired
 export class QuickOrderImageToCartPage extends YvesPage {
-  @inject(REPOSITORIES.QuickOrderImageToCartRepository) private repository: QuickOrderImageToCartRepository;
+  @inject(QuickOrderImageToCartRepository) private repository: QuickOrderImageToCartRepository;
 
   protected PAGE_URL = '/quick-order';
 

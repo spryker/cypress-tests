@@ -23,7 +23,7 @@
     "cy:ci:yves": "cypress run --spec \"cypress/e2e/yves/**/!(ssp)*.ts\" --headless --browser chrome",
     "cy:ci:ssp": "cypress run --spec \"cypress/e2e/!(smoke)/**/(ssp)*.ts\" --headless --browser chrome",
     "cy:smoke": "cypress run --spec \"cypress/e2e/smoke/**/*.ts\" --headless --browser chrome",
-    "cy:demo": "cypress run --spec \"cypress/e2e/demo/**/*.ts\" --headless --browser chrome",
+    "cy:demo": "ENV_REPOSITORY_ID=b2b-mp cypress run --spec \"cypress/e2e/demo/**/*.ts\" --headless --browser chrome",
     "cy:dms": "cypress run --spec \"cypress/e2e/!(smoke)/**/*dms.cy.ts\" --headless --browser chrome",
     "cy:smoke:demo": "cypress run --spec \"cypress/e2e/smoke/!(product)/*.ts\" --headless --browser chrome",
     "cy:repack": "node tools/scripts/cypress-shards/repack.mjs"

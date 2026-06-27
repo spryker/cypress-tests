@@ -1,4 +1,4 @@
-import { autoWired, REPOSITORIES } from '@utils';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
@@ -7,7 +7,7 @@ import { QuicksightAnalyticsRepository } from './quicksight-analytics-repository
 @injectable()
 @autoWired
 export class QuicksightAnalyticsPage extends BackofficePage {
-  @inject(REPOSITORIES.QuicksightAnalyticsRepository) private repository: QuicksightAnalyticsRepository;
+  @inject(QuicksightAnalyticsRepository) private repository: QuicksightAnalyticsRepository;
 
   protected PAGE_URL = '/analytics-gui/analytics';
 

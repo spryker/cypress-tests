@@ -1,4 +1,4 @@
-import { autoWired, REPOSITORIES } from '@utils';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
@@ -7,7 +7,7 @@ import { BackofficeAssistantRepository } from './backoffice-assistant-repository
 @injectable()
 @autoWired
 export class BackofficeAssistantPage extends BackofficePage {
-  @inject(REPOSITORIES.BackofficeAssistantRepository) private repository: BackofficeAssistantRepository;
+  @inject(BackofficeAssistantRepository) private repository: BackofficeAssistantRepository;
 
   protected PAGE_URL = '/dashboard';
 

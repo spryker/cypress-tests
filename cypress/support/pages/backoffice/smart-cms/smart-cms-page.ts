@@ -1,4 +1,4 @@
-import { autoWired, REPOSITORIES } from '@utils';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
@@ -7,7 +7,7 @@ import { SmartCmsRepository } from './smart-cms-repository';
 @injectable()
 @autoWired
 export class SmartCmsPage extends BackofficePage {
-  @inject(REPOSITORIES.SmartCmsRepository) private repository: SmartCmsRepository;
+  @inject(SmartCmsRepository) private repository: SmartCmsRepository;
 
   protected PAGE_URL = '/cms-gui/create-glossary?id-cms-page=6';
 

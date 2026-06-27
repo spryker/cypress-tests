@@ -1,4 +1,4 @@
-import { autoWired, REPOSITORIES } from '@utils';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
@@ -7,7 +7,7 @@ import { AuditLogsRepository } from './audit-logs-repository';
 @injectable()
 @autoWired
 export class AuditLogsPage extends BackofficePage {
-  @inject(REPOSITORIES.AuditLogsRepository) private repository: AuditLogsRepository;
+  @inject(AuditLogsRepository) private repository: AuditLogsRepository;
 
   protected PAGE_URL = '/ai-foundation/ai-interaction-log';
 

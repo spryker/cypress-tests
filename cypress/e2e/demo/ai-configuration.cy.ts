@@ -3,37 +3,12 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 import { AiConfigurationPage } from '@pages/backoffice';
 import { AiConfigurationDemoStaticFixtures } from '@interfaces/demo';
 
-/**
- * Demo-only smoke coverage for the AI Commerce "AI Configuration" feature (Back Office).
- *
- * Surface: Back Office → Configuration Management (`/configuration/manage`). Two demo-only config
- * surfaces render here as left-nav entries selected via the `feature`/`tab` query params:
- *   - AI VENDOR (OpenAI / Anthropic / AWS Bedrock) — provider API-token + model-price fields.
- *   - AI COMMERCE → Backoffice Assistant — the AI Configuration provider radio with a conditional
- *     model field that follows the selected provider.
- *
- * Scope: confirm each tab loads (HTTP 200, no 500/crash) and renders its config components
- * (token inputs, JSON price editors, the provider radio + conditional model field). This guards the
- * upmerge regression class where a dropped demo-only config block or partial breaks the screen.
- *
- * NO AI provider interaction: no API token is ever entered, the Save Configuration action is never
- * clicked, and nothing is sent to OpenAI/AWS/Anthropic. Static fixtures only — presence/visibility/
- * interactivity, not provider behavior.
- *
- * This spec lives in the isolated `demo` group: run it with `npm run cy:demo`. It is excluded from
- * every other run (`cy:ci`, `cy:run`, `cy:smoke`, `cy:ci:ssp`) and has its own CI step.
- */
 describe(
   'ai configuration',
   {
-    tags: ['@demo', '@ai-configuration', 'spryker-core-back-office'],
+    tags: ['@demo', '@ai-configuration', '@ai-commerce'],
   },
   (): void => {
-    if (!['b2b-mp'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because the AI Configuration demo feature ships only in b2b-mp', () => {});
-      return;
-    }
-
     const userLoginScenario = container.get(UserLoginScenario);
     const aiConfigurationPage = container.get(AiConfigurationPage);
 

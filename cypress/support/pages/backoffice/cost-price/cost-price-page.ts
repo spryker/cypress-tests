@@ -1,4 +1,4 @@
-import { autoWired, REPOSITORIES } from '@utils';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
@@ -7,7 +7,7 @@ import { CostPriceRepository } from './cost-price-repository';
 @injectable()
 @autoWired
 export class CostPricePage extends BackofficePage {
-  @inject(REPOSITORIES.CostPriceRepository) private repository: CostPriceRepository;
+  @inject(CostPriceRepository) private repository: CostPriceRepository;
 
   protected PAGE_URL = '/product-management';
 

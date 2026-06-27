@@ -1,4 +1,4 @@
-import { autoWired, REPOSITORIES } from '@utils';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
@@ -7,7 +7,7 @@ import { AiConfigurationRepository } from './ai-configuration-repository';
 @injectable()
 @autoWired
 export class AiConfigurationPage extends BackofficePage {
-  @inject(REPOSITORIES.AiConfigurationRepository) private repository: AiConfigurationRepository;
+  @inject(AiConfigurationRepository) private repository: AiConfigurationRepository;
 
   protected PAGE_URL = '/configuration/manage';
 

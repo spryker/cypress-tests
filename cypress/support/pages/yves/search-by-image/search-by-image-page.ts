@@ -1,4 +1,4 @@
-import { autoWired, REPOSITORIES } from '@utils';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { YvesPage } from '@pages/yves';
@@ -7,7 +7,7 @@ import { SearchByImageRepository } from './search-by-image-repository';
 @injectable()
 @autoWired
 export class SearchByImagePage extends YvesPage {
-  @inject(REPOSITORIES.SearchByImageRepository) private repository: SearchByImageRepository;
+  @inject(SearchByImageRepository) private repository: SearchByImageRepository;
 
   protected PAGE_URL = '/en/search?q=cable';
 

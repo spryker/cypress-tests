@@ -3,40 +3,12 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 import { AiWorkflowsPage } from '@pages/backoffice';
 import { AiWorkflowsDemoStaticFixtures } from '@interfaces/demo';
 
-/**
- * Demo-only smoke coverage for the AI Commerce "AI Workflows" feature (Back Office).
- *
- * Surface: Back Office → Intelligence → Workflows (`/ai-foundation/ai-workflow`, the AiFoundation
- * `AiWorkflowController::indexAction`). The page renders the "Workflow Items" widget wrapping the
- * Gui DataTable shell whose six columns are ID / Process Name / State / Created At / Updated At /
- * Actions.
- *
- * Scope: confirm the page loads (HTTP 200, no 500/crash) and renders its structure — the "Workflows"
- * section title, the "Workflow Items" widget title, and the table with all six column headers. The
- * table is empty in this environment (zero rows in `spy_ai_workflow_item`); per smoke discipline an
- * empty table is a PASS as long as the columns/structure render. This guards the upmerge regression
- * class where a dropped demo-only AiFoundation block breaks the screen.
- *
- * NO AI provider interaction: no API token is set, no prompt/image is sent, and the per-item manual
- * "Trigger Event" control (a CSRF-protected POST that would fire a state-machine transition and can
- * invoke AI processing) is never reached or submitted. That control only renders on a workflow
- * detail page for an item with a state-machine state — none exist here — and is out of smoke scope.
- * Static fixtures only — presence/visibility of the rendered chrome, not behavior.
- *
- * This spec lives in the isolated `demo` group: run it with `npm run cy:demo`. It is excluded from
- * every other run (`cy:ci`, `cy:run`, `cy:smoke`, `cy:ci:ssp`) and has its own CI step.
- */
 describe(
   'ai workflows',
   {
-    tags: ['@demo', '@ai-workflows', 'spryker-core-back-office'],
+    tags: ['@demo', '@ai-workflows', '@ai-foundation'],
   },
   (): void => {
-    if (!['b2b-mp'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because the AI Workflows demo feature ships only in b2b-mp', () => {});
-      return;
-    }
-
     const userLoginScenario = container.get(UserLoginScenario);
     const aiWorkflowsPage = container.get(AiWorkflowsPage);
 

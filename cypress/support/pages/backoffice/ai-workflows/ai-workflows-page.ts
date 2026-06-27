@@ -1,4 +1,4 @@
-import { autoWired, REPOSITORIES } from '@utils';
+import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
@@ -7,7 +7,7 @@ import { AiWorkflowsRepository } from './ai-workflows-repository';
 @injectable()
 @autoWired
 export class AiWorkflowsPage extends BackofficePage {
-  @inject(REPOSITORIES.AiWorkflowsRepository) private repository: AiWorkflowsRepository;
+  @inject(AiWorkflowsRepository) private repository: AiWorkflowsRepository;
 
   protected PAGE_URL = '/ai-foundation/ai-workflow';
 
