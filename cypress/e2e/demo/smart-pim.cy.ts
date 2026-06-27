@@ -4,7 +4,7 @@ import { SmartPimPage } from '@pages/backoffice';
 import { SmartPimDemoStaticFixtures } from '@interfaces/demo';
 
 describe(
-  'smart pim',
+  'Smart PIM - Back Office product AI-assist controls',
   {
     tags: ['@demo', '@smart-pim', '@ai-commerce'],
   },
@@ -32,7 +32,7 @@ describe(
       });
     });
 
-    it('loads the product edit page with HTTP 200 and the Smart PIM JS bundles', (): void => {
+    it('product edit page opens (HTTP 200) with the Smart PIM JS bundles loaded', (): void => {
       smartPimPage
         .visitProductEdit(staticFixtures.product.idProductAbstract)
         .its('response.statusCode')
@@ -43,7 +43,7 @@ describe(
       smartPimPage.getRequestBuilderScript().should('exist');
     });
 
-    it('renders the 4 AI-assist controls on the product edit form', (): void => {
+    it('product edit form shows the AI-assist triggers — request-builder, category-suggestion and image-alt-text controls', (): void => {
       smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
 
       smartPimPage.getRequestBuilderTriggers().should('have.length.at.least', 1).and('be.visible');
@@ -57,7 +57,7 @@ describe(
       smartPimPage.getAltImageTriggers().should('have.length.at.least', 1);
     });
 
-    it('renders the AI modals and popovers the controls open', (): void => {
+    it('the AI dialogs are present in the DOM — category, alt-text and translation modals plus the all-actions and locale-selector popovers', (): void => {
       smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
 
       smartPimPage.getCategoryModal().should('exist');
@@ -67,7 +67,7 @@ describe(
       smartPimPage.getLocaleSelectorPopover().should('exist');
     });
 
-    it('fires no AI provider POST on load (controls are present but never triggered)', (): void => {
+    it('makes no AI provider request on load — the controls render but are never triggered', (): void => {
       PROVIDER_ENDPOINTS.forEach((endpoint, index): void => {
         cy.intercept('POST', endpoint).as(`providerCall${index}`);
       });

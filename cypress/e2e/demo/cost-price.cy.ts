@@ -4,7 +4,7 @@ import { CostPricePage } from '@pages/backoffice';
 import { CostPriceDemoStaticFixtures } from '@interfaces/demo';
 
 describe(
-  'cost price',
+  'Cost Price - Back Office product price editing & display',
   {
     tags: ['@demo', '@cost-price'],
   },
@@ -25,7 +25,7 @@ describe(
       });
     });
 
-    it('renders the Cost price column with editable cost inputs on the product edit form', (): void => {
+    it('product edit form opens for the SKU and shows a price table with Cost, Gross and Net price columns and editable cost-amount inputs', (): void => {
       costPricePage
         .visitProductEdit(staticFixtures.product.idProductAbstract)
         .its('response.statusCode')
@@ -51,7 +51,7 @@ describe(
         });
     });
 
-    it('renders the Cost price row in the Price & Taxes widget on the product view page', (): void => {
+    it('product view page shows a visible Price & Taxes widget containing the Cost price row', (): void => {
       costPricePage
         .visitProductView(staticFixtures.product.idProductAbstract)
         .its('response.statusCode')

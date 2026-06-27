@@ -4,7 +4,7 @@ import { AiWorkflowsPage } from '@pages/backoffice';
 import { AiWorkflowsDemoStaticFixtures } from '@interfaces/demo';
 
 describe(
-  'ai workflows',
+  'AI Workflows - Back Office workflow runs list',
   {
     tags: ['@demo', '@ai-workflows', '@ai-foundation'],
   },
@@ -34,14 +34,14 @@ describe(
       });
     });
 
-    it('loads the Workflows page with HTTP 200 and renders the section and widget titles', (): void => {
+    it('opens the Workflows page (HTTP 200) and shows the "Workflows" section heading and "Workflow Items" widget title', (): void => {
       aiWorkflowsPage.visitAiWorkflows().its('response.statusCode').should('eq', 200);
 
       aiWorkflowsPage.getSectionTitle().should('contain.text', 'Workflows');
       aiWorkflowsPage.getWidgetTitle().should('contain.text', 'Workflow Items');
     });
 
-    it('renders the Workflow Items DataTable with all six columns', (): void => {
+    it('workflow-items table renders with all six expected column headers', (): void => {
       aiWorkflowsPage.visitAiWorkflows();
 
       aiWorkflowsPage.getTable().should('exist');

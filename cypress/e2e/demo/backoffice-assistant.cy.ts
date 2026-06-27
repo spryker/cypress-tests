@@ -4,7 +4,7 @@ import { BackofficeAssistantPage } from '@pages/backoffice';
 import { BackofficeAssistantDemoStaticFixtures } from '@interfaces/demo';
 
 describe(
-  'backoffice assistant',
+  'Backoffice Assistant - global Back Office chat widget',
   {
     tags: ['@demo', '@backoffice-assistant', '@ai-commerce'],
   },
@@ -27,14 +27,14 @@ describe(
       backofficeAssistantPage.enableAssistant();
     });
 
-    it('renders the assistant launcher on the Back Office dashboard with HTTP 200', (): void => {
+    it('assistant launcher and its chat dialog panel are present on the Back Office dashboard (page loads HTTP 200)', (): void => {
       backofficeAssistantPage.visitDashboard().its('response.statusCode').should('eq', 200);
 
       backofficeAssistantPage.getWidgetToggle().should('be.visible').and('contain.text', 'Assistant');
       backofficeAssistantPage.getWidgetPanel().should('exist').and('have.attr', 'role', 'dialog');
     });
 
-    it('renders the chat panel shell components (agent select, input, action buttons)', (): void => {
+    it('chat panel renders its core controls: agent picker, message input, send, history, new-chat and attach buttons', (): void => {
       backofficeAssistantPage.visitDashboard();
 
       backofficeAssistantPage.getWidgetAgentSelect().find('option').first().should('contain.text', 'Auto');
@@ -45,7 +45,7 @@ describe(
       backofficeAssistantPage.getWidgetAttach().should('exist');
     });
 
-    it('injects the assistant globally — present on a second Back Office page (Sales)', (): void => {
+    it('assistant is injected globally — the launcher also appears on a different Back Office page (Sales)', (): void => {
       backofficeAssistantPage.visitSales().its('response.statusCode').should('eq', 200);
 
       backofficeAssistantPage.getWidgetToggle().should('be.visible').and('contain.text', 'Assistant');

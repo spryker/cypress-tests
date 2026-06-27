@@ -5,7 +5,7 @@ import { SearchByImagePage } from '@pages/yves';
 import { SearchByImageDemoStaticFixtures } from '@interfaces/demo';
 
 describe(
-  'search by image',
+  'Search by Image - storefront search-bar image search',
   {
     tags: ['@demo', '@search-by-image', '@ai-commerce'],
   },
@@ -33,13 +33,13 @@ describe(
       });
     });
 
-    it('renders the search-by-image molecule in the storefront search bar (HTTP 200, non-empty wrapper)', (): void => {
+    it('search-by-image control renders inside the storefront search bar (page loads HTTP 200, wrapper is populated)', (): void => {
       searchByImagePage.visitSearchResults().its('response.statusCode').should('eq', 200);
 
       searchByImagePage.getWrapper().first().children().should('have.length.greaterThan', 0);
     });
 
-    it('shows the file-search trigger, file input and CSRF token; photo trigger exists but is hidden on desktop', (): void => {
+    it('shows a visible file-search trigger, a file input and a hidden CSRF token; the camera trigger exists but stays hidden on desktop', (): void => {
       searchByImagePage.visitSearchResults();
 
       searchByImagePage.getFileButton().should('exist');
@@ -52,7 +52,7 @@ describe(
       searchByImagePage.getPhotoButton().first().should('not.be.visible');
     });
 
-    it('answers the search-by-image endpoint without hitting the AI provider (405 on GET, validation error on empty POST)', (): void => {
+    it('search-by-image endpoint responds without calling the AI provider: GET is rejected (405), an image-less POST returns a validation error', (): void => {
       const endpointUrl = `${Cypress.config('baseUrl')}/search-by-image`;
 
       cy.request({ method: 'GET', url: endpointUrl, failOnStatusCode: false }).then((response) => {

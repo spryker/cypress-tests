@@ -4,7 +4,7 @@ import { AuditLogsPage } from '@pages/backoffice';
 import { AuditLogsDemoStaticFixtures } from '@interfaces/demo';
 
 describe(
-  'audit logs',
+  'Audit Logs - Back Office AI interaction log',
   {
     tags: ['@demo', '@audit-logs', '@ai-foundation'],
   },
@@ -46,13 +46,13 @@ describe(
       });
     });
 
-    it('loads the Audit Logs page with HTTP 200 and renders the section title', (): void => {
+    it('Audit Logs page opens (HTTP 200) and shows the section heading', (): void => {
       auditLogsPage.visitAuditLogs().its('response.statusCode').should('eq', 200);
 
       auditLogsPage.getSectionTitle().should('contain.text', 'Audit Logs');
     });
 
-    it('renders the DataTable with all ten columns including the demo-only Estimated cost', (): void => {
+    it('audit-log table renders all ten expected column headers, including the Estimated cost column', (): void => {
       auditLogsPage.visitAuditLogs();
 
       auditLogsPage.getTable().should('exist');
@@ -63,7 +63,7 @@ describe(
       });
     });
 
-    it('renders the five stats cards including Total estimated cost', (): void => {
+    it('shows the five summary stats cards, including the Total estimated cost card', (): void => {
       auditLogsPage.visitAuditLogs();
 
       auditLogsPage.getStatsCards().should('be.visible');

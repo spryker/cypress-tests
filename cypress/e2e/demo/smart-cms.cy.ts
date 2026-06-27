@@ -4,7 +4,7 @@ import { SmartCmsPage } from '@pages/backoffice';
 import { SmartCmsDemoStaticFixtures } from '@interfaces/demo';
 
 describe(
-  'smart cms',
+  'Smart CMS - Back Office CMS content assistant panel',
   {
     tags: ['@demo', '@smart-cms', '@ai-commerce'],
   },
@@ -27,14 +27,14 @@ describe(
       smartCmsPage.enableSmartCms();
     });
 
-    it('renders the Smart CMS panel on the CMS Page placeholder editor with HTTP 200', (): void => {
+    it('Smart CMS panel renders on the CMS Page placeholder editor (page loads HTTP 200)', (): void => {
       smartCmsPage.visitCmsPageEditor().its('response.statusCode').should('eq', 200);
 
       smartCmsPage.getPanel().should('be.visible');
       smartCmsPage.getPanelToggle().should('be.visible').and('contain.text', 'Smart CMS Content Assistant');
     });
 
-    it('renders the Smart CMS panel on the CMS Block glossary editor with inline config defined', (): void => {
+    it('Smart CMS panel also renders on the CMS Block glossary editor, with its inline config present', (): void => {
       smartCmsPage.visitCmsBlockEditor().its('response.statusCode').should('eq', 200);
 
       smartCmsPage.getPanel().should('be.visible');
@@ -43,7 +43,7 @@ describe(
       cy.window().its('SmartCmsContentConfig').should('be.an', 'object');
     });
 
-    it('expands the panel on toggle, revealing the prompt input, Ask AI and attach controls', (): void => {
+    it('clicking the panel toggle makes the prompt input, the Ask AI button and the attach control visible', (): void => {
       smartCmsPage.visitCmsPageEditor();
 
       smartCmsPage.getPanelInput().should('exist');

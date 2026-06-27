@@ -4,7 +4,7 @@ import { AiConfigurationPage } from '@pages/backoffice';
 import { AiConfigurationDemoStaticFixtures } from '@interfaces/demo';
 
 describe(
-  'ai configuration',
+  'AI Configuration - Back Office AI Vendor & Assistant provider settings',
   {
     tags: ['@demo', '@ai-configuration', '@ai-commerce'],
   },
@@ -30,7 +30,7 @@ describe(
       });
     });
 
-    it('loads the OpenAI AI Vendor tab with HTTP 200 and renders its token + price fields', (): void => {
+    it('OpenAI AI Vendor tab opens (HTTP 200), lists the OpenAI, Anthropic and AWS vendor tabs, and shows a masked API token field and a model-prices JSON editor', (): void => {
       aiConfigurationPage.visitTab('ai_vendor', 'openai').its('response.statusCode').should('eq', 200);
 
       aiConfigurationPage.getCardTitle().should('contain.text', 'Configuration Management');
@@ -46,7 +46,7 @@ describe(
       aiConfigurationPage.getJsonEditor('ai_vendor:openai:general:model_prices').should('be.visible');
     });
 
-    it('renders the Anthropic AI Vendor tab with the API key field and price JSON editor', (): void => {
+    it('Anthropic AI Vendor tab opens (HTTP 200) and shows a masked API token field and a model-prices JSON editor', (): void => {
       aiConfigurationPage.visitTab('ai_vendor', 'anthropic').its('response.statusCode').should('eq', 200);
 
       aiConfigurationPage
@@ -56,7 +56,7 @@ describe(
       aiConfigurationPage.getJsonEditor('ai_vendor:anthropic:general:model_prices').should('be.visible');
     });
 
-    it('renders the AWS Bedrock AI Vendor tab with token, region and price JSON editor', (): void => {
+    it('AWS Bedrock AI Vendor tab opens (HTTP 200) and shows a masked token, the eu-central-1 region and a model-prices JSON editor', (): void => {
       aiConfigurationPage.visitTab('ai_vendor', 'aws').its('response.statusCode').should('eq', 200);
 
       aiConfigurationPage
@@ -70,7 +70,7 @@ describe(
       aiConfigurationPage.getJsonEditor('ai_vendor:aws:general:model_prices').should('be.visible');
     });
 
-    it('renders the Backoffice Assistant AI Configuration radio with three providers, OpenAI preselected', (): void => {
+    it('Backoffice Assistant provider radio offers three providers and pre-selects OpenAI by default', (): void => {
       aiConfigurationPage.visitTab('ai_commerce', 'backoffice_assistant').its('response.statusCode').should('eq', 200);
 
       aiConfigurationPage.getRadioOptions(AI_CONFIGURATION_KEY).should('have.length', 3);
@@ -79,7 +79,7 @@ describe(
         .should('have.value', 'AI_COMMERCE:AI_CONFIGURATION_BACKOFFICE_ASSISTANT_OPENAI');
     });
 
-    it('shows only the model field matching the selected provider (OpenAI default)', (): void => {
+    it('shows only the model field for the selected provider — OpenAI model (gpt-4.1) visible, AWS and Anthropic model fields hidden', (): void => {
       aiConfigurationPage.visitTab('ai_commerce', 'backoffice_assistant');
 
       aiConfigurationPage.getSettingRow(OPENAI_MODEL_KEY).should('be.visible');

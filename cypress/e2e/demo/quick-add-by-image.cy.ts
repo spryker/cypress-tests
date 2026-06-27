@@ -5,7 +5,7 @@ import { QuickOrderImageToCartPage } from '@pages/yves';
 import { QuickAddByImageDemoStaticFixtures } from '@interfaces/demo';
 
 describe(
-  'quick add by image',
+  'Quick Add by Image - storefront Quick Order image-to-cart',
   {
     tags: ['@demo', '@quick-add-by-image', '@ai-commerce'],
   },
@@ -33,7 +33,7 @@ describe(
       });
     });
 
-    it('loads the Quick Order page (HTTP 200) and renders the image-to-cart section', (): void => {
+    it('Quick Order page opens (HTTP 200) and shows the "Add to cart from image" section', (): void => {
       quickOrderImageToCartPage.visitQuickOrder().its('response.statusCode').should('eq', 200);
 
       quickOrderImageToCartPage.getPageTitle().should('be.visible').and('contain.text', 'Quick Order');
@@ -45,7 +45,7 @@ describe(
         .and('contain.text', 'Add to cart from image');
     });
 
-    it('renders the image upload control, browse-file label and Upload submit button as clickable', (): void => {
+    it('image-to-cart control shows an image-only file input, a browse-file label and an enabled Upload button', (): void => {
       quickOrderImageToCartPage.visitQuickOrder();
 
       quickOrderImageToCartPage

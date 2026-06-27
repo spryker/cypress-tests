@@ -4,7 +4,7 @@ import { QuicksightAnalyticsPage } from '@pages/backoffice';
 import { QuicksightAnalyticsDemoStaticFixtures } from '@interfaces/demo';
 
 describe(
-  'quicksight analytics',
+  'QuickSight Analytics - Back Office embedded analytics page',
   {
     tags: ['@demo', '@quicksight-analytics'],
   },
@@ -25,13 +25,13 @@ describe(
       });
     });
 
-    it('loads the Analytics page with HTTP 200 instead of the prior 500 config regression', (): void => {
+    it('Analytics page loads with HTTP 200 and shows the "Analytics" section title — confirms the dropped-config 500 regression stays fixed', (): void => {
       quicksightAnalyticsPage.visitAnalytics().its('response.statusCode').should('eq', 200);
 
       quicksightAnalyticsPage.getSectionTitle().should('contain.text', 'Analytics');
     });
 
-    it('renders the graceful no-permission state with a Synchronize Users action', (): void => {
+    it('when the user has no Analytics permission, shows the "No Analytics permission" message and a "Synchronize Users" action button', (): void => {
       quicksightAnalyticsPage.visitAnalytics();
 
       quicksightAnalyticsPage
