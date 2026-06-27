@@ -39,7 +39,23 @@ describe(
         .should('be.visible')
         .and('contain.text', 'No Analytics permission has been granted to the current user.');
 
-      quicksightAnalyticsPage.getTitleAction().find('button').should('contain.text', 'Synchronize Users');
+      quicksightAnalyticsPage
+        .getSynchronizeUsersButton()
+        .should('be.visible')
+        .and('be.enabled')
+        .and('contain.text', 'Synchronize Users');
+    });
+
+    it('the "Synchronize Users" control is a real POST form wired to the synchronize-quicksight-users endpoint with a CSRF token', (): void => {
+      quicksightAnalyticsPage.visitAnalytics();
+
+      quicksightAnalyticsPage.getSynchronizeUsersForm().should('have.attr', 'method').and('match', /post/i);
+
+      quicksightAnalyticsPage
+        .getSynchronizeUsersForm()
+        .should('have.attr', 'action', '/amazon-quicksight/user/synchronize-quicksight-users');
+
+      quicksightAnalyticsPage.getSynchronizeUsersCsrfToken().should('have.attr', 'value').and('have.length.gt', 0);
     });
   }
 );

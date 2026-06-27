@@ -80,4 +80,22 @@ export class QuickOrderImageToCartPage extends YvesPage {
   getBrowseFileLabel = (): Cypress.Chainable => cy.get(this.repository.getBrowseFileLabelSelector());
 
   getUploadSubmitButton = (): Cypress.Chainable => cy.get(this.repository.getUploadSubmitButtonSelector());
+
+  getFileSelectLabel = (): Cypress.Chainable => cy.get(this.repository.getFileSelectLabelSelector());
+
+  getBrowseFileToggleLabel = (): Cypress.Chainable => cy.get(this.repository.getBrowseFileToggleLabelSelector());
+
+  getErrorDropzone = (): Cypress.Chainable => cy.get(this.repository.getErrorDropzoneSelector());
+
+  getErrorMessage = (): Cypress.Chainable => cy.get(this.repository.getErrorMessageSelector());
+
+  attachImage = (imageFilePath: string): Cypress.Chainable =>
+    this.getImageUploadInput().selectFile(imageFilePath, { force: true });
+
+  submitImageOrder = (): Cypress.Chainable => {
+    cy.intercept('POST', '**/quick-order').as('imageOrderSubmit');
+    this.getUploadSubmitButton().click();
+
+    return cy.wait('@imageOrderSubmit');
+  };
 }

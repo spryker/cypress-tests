@@ -66,5 +66,44 @@ describe(
         .and('not.be.disabled')
         .and('contain.text', 'Upload');
     });
+
+    it('attaching an image file shows it as attached: the file name replaces the placeholder and the browse label releases its input binding', (): void => {
+      quickOrderImageToCartPage.visitQuickOrder();
+
+      quickOrderImageToCartPage.getFileSelectLabel().should('be.visible').and('contain.text', 'Browse file');
+
+      quickOrderImageToCartPage.attachImage(staticFixtures.imageFilePath);
+
+      quickOrderImageToCartPage.getImageUploadInput().should(($input) => {
+        const input = $input[0] as HTMLInputElement;
+        expect(input.files).to.have.length(1);
+        expect(input.files?.[0].name).to.eq(staticFixtures.imageFileName);
+      });
+
+      quickOrderImageToCartPage
+        .getFileSelectLabel()
+        .should('contain.text', staticFixtures.imageFileName)
+        .and('not.contain.text', 'Browse file');
+
+      quickOrderImageToCartPage.getBrowseFileToggleLabel().should('not.have.attr', 'for');
+    });
+
+    it('submitting the attached image issues a multipart image-to-cart POST and the FE handles the no-provider response gracefully', (): void => {
+      quickOrderImageToCartPage.visitQuickOrder();
+      quickOrderImageToCartPage.attachImage(staticFixtures.imageFilePath);
+
+      quickOrderImageToCartPage.submitImageOrder().then((interception) => {
+        expect(interception.request.method).to.eq('POST');
+        expect(interception.request.headers['content-type']).to.contain('multipart/form-data');
+        expect(interception.request.body).to.contain('name="image_order_form[uploadImageOrder]"');
+        expect(interception.request.body).to.contain(staticFixtures.imageFileName);
+        expect(interception.request.body).to.contain('name="uploadImage"');
+        expect(interception.response?.statusCode).to.eq(200);
+      });
+
+      quickOrderImageToCartPage.getImageToCartSection().should('exist');
+      quickOrderImageToCartPage.getErrorDropzone().should('exist');
+      quickOrderImageToCartPage.getErrorMessage().should('be.visible').invoke('text').should('match', /\S/);
+    });
   }
 );

@@ -5,4 +5,8 @@ export interface SmartCmsDemoStaticFixtures {
   };
   cmsPageEditorUrl: string;
   cmsBlockEditorUrl: string;
+  cmsPageEntityType: string;
+  cmsPageIdEntity: number;
+  probeImagePath: string;
+  probeImageMediaType: string;
 }

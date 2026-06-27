@@ -36,4 +36,32 @@ export class CostPricePage extends BackofficePage {
 
   getCostPriceViewRow = (): Cypress.Chainable =>
     cy.get(this.repository.getCostPriceViewRowSelector()).filter(':contains("Cost price")');
+
+  openPriceTaxTab = (): void => {
+    this.repository.getPriceTaxTab().click();
+  };
+
+  setFirstCostAmount = (value: string): void => {
+    this.repository
+      .getFirstVisibleCostAmountInput()
+      .scrollIntoView()
+      .clear({ force: true })
+      .type(value, { force: true, delay: 50 });
+  };
+
+  save = (): void => {
+    this.repository.getSaveButton().click();
+  };
+
+  verifySaveSuccess = (sku: string): void => {
+    this.repository.getSaveSuccessMessage(sku).should('be.visible');
+  };
+
+  getFirstCostAmountValue = (): Cypress.Chainable => this.repository.getFirstCostAmountHiddenInput().invoke('val');
+
+  assertFirstCostAmount = (value: string): void => {
+    this.repository.getFirstCostAmountHiddenInput().should('have.value', value);
+  };
+
+  getCostPriceViewValues = (): Cypress.Chainable => this.repository.getCostPriceViewValueCells();
 }

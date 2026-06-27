@@ -51,6 +51,31 @@ describe(
         });
     });
 
+    it('editing a cost-amount value and saving the product persists the new cost price across a reload', (): void => {
+      costPricePage
+        .visitProductEdit(staticFixtures.product.idProductAbstract)
+        .its('response.statusCode')
+        .should('eq', 200);
+
+      costPricePage.openPriceTaxTab();
+
+      costPricePage.getFirstCostAmountValue().then((originalValue) => {
+        const newCostValue = '333.33';
+
+        costPricePage.setFirstCostAmount(newCostValue);
+        costPricePage.save();
+        costPricePage.verifySaveSuccess(staticFixtures.product.sku);
+
+        costPricePage.visitProductEdit(staticFixtures.product.idProductAbstract);
+        costPricePage.openPriceTaxTab();
+        costPricePage.assertFirstCostAmount(newCostValue);
+
+        costPricePage.setFirstCostAmount(String(originalValue));
+        costPricePage.save();
+        costPricePage.verifySaveSuccess(staticFixtures.product.sku);
+      });
+    });
+
     it('product view page shows a visible Price & Taxes widget containing the Cost price row', (): void => {
       costPricePage
         .visitProductView(staticFixtures.product.idProductAbstract)
@@ -60,6 +85,22 @@ describe(
       costPricePage.getPriceTaxWidget().should('be.visible');
 
       costPricePage.getCostPriceViewRow().should('have.length.at.least', 1).and('be.visible');
+    });
+
+    it('product view page renders a non-empty Cost price value beside the Gross and Net rows', (): void => {
+      costPricePage
+        .visitProductView(staticFixtures.product.idProductAbstract)
+        .its('response.statusCode')
+        .should('eq', 200);
+
+      costPricePage
+        .getCostPriceViewValues()
+        .should('have.length.at.least', 1)
+        .first()
+        .invoke('text')
+        .then((text) => {
+          expect(text.trim()).to.match(/\d/);
+        });
     });
   }
 );

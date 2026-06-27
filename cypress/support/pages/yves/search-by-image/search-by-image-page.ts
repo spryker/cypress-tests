@@ -73,4 +73,21 @@ export class SearchByImagePage extends YvesPage {
   getFileInput = (): Cypress.Chainable => cy.get(this.repository.getFileInputSelector());
 
   getToken = (): Cypress.Chainable => cy.get(this.repository.getTokenSelector());
+
+  getDesktopInstance = (): Cypress.Chainable => cy.get(this.repository.getDesktopInstanceSelector());
+
+  clickFileTrigger = (): void => {
+    this.getDesktopInstance().find(this.repository.getFileButtonSelector()).click({ force: true });
+  };
+
+  getOpenFilePopupUploadButton = (): Cypress.Chainable =>
+    cy.get(this.repository.getOpenFilePopupSelector()).find(this.repository.getUploadFileButtonSelector());
+
+  interceptSearchByImageRequest = (): void => {
+    cy.intercept('POST', '**/search-by-image').as('searchByImageRequest');
+  };
+
+  attachImage = (filePath: string): void => {
+    this.getDesktopInstance().find(this.repository.getFileInputSelector()).selectFile(filePath, { force: true });
+  };
 }

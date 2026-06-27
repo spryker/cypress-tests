@@ -6,5 +6,7 @@
   "rootUser": {
     "username": "admin@spryker.com"
   },
-  "quickOrderPageUrl": "/quick-order"
+  "quickOrderPageUrl": "/quick-order",
+  "imageFilePath": "cypress/fixtures/b2b-mp/demo/files/quick-add-by-image-probe.png",
+  "imageFileName": "quick-add-by-image-probe.png"
 }

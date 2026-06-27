@@ -20,4 +20,10 @@ export class SearchByImageRepository {
   getFileInputSelector = (): string => '.search-by-image__file-input';
 
   getTokenSelector = (): string => '.search-by-image__token';
+
+  getDesktopInstanceSelector = (): string => '.js-search-by-image--desktop';
+
+  getOpenFilePopupSelector = (): string => '.search-by-image__search-by-file-popup.main-popup--open';
+
+  getUploadFileButtonSelector = (): string => '.js-search-by-file-image__upload-file-button';
 }

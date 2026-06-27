@@ -60,4 +60,32 @@ export class SmartCmsPage extends BackofficePage {
   getPanelAsk = (): Cypress.Chainable => cy.get(this.repository.getPanelAskSelector());
 
   getPanelAttach = (): Cypress.Chainable => cy.get(this.repository.getPanelAttachSelector());
+
+  getPanelAttachmentName = (): Cypress.Chainable => cy.get(this.repository.getPanelAttachmentNameSelector());
+
+  getPanelMessage = (): Cypress.Chainable => cy.get(this.repository.getPanelMessageSelector());
+
+  expandPanel = (): void => {
+    this.getPanelToggle().click();
+    this.getPanelInput().should('be.visible');
+  };
+
+  typePrompt = (prompt: string): void => {
+    this.getPanelInput().clear().type(prompt).should('have.value', prompt);
+  };
+
+  attachFile = (filePath: string): void => {
+    cy.get(this.repository.getPanelFileInputSelector()).selectFile(filePath, { force: true });
+  };
+
+  interceptGenerateWithProviderFailure = (): void => {
+    cy.intercept('POST', this.repository.getGenerateEndpointGlob(), {
+      statusCode: 503,
+      body: { error: 'AI provider unavailable' },
+    }).as('generateRequest');
+  };
+
+  clickAskAi = (): void => {
+    this.getPanelAsk().click();
+  };
 }

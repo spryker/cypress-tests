@@ -3,4 +3,7 @@ export interface BackofficeAssistantDemoStaticFixtures {
   rootUser: {
     username: string;
   };
+  contextPageUrl: string;
+  contextFormName: string;
+  attachmentImagePath: string;
 }

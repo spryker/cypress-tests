@@ -27,6 +27,10 @@ export class AiConfigurationPage extends BackofficePage {
 
   getSaveButton = (): Cypress.Chainable => cy.get(this.repository.getSaveButtonSelector());
 
+  getSaveBar = (): Cypress.Chainable => cy.get(this.repository.getSaveBarSelector());
+
+  getChangesCount = (): Cypress.Chainable => cy.get(this.repository.getChangesCountSelector());
+
   getSettingRow = (settingKey: string): Cypress.Chainable => cy.get(this.repository.getSettingRowSelector(settingKey));
 
   getSettingInput = (settingKey: string): Cypress.Chainable =>
@@ -39,4 +43,15 @@ export class AiConfigurationPage extends BackofficePage {
 
   getRadioOptions = (settingKey: string): Cypress.Chainable =>
     cy.get(this.repository.getRadioOptionSelector(settingKey));
+
+  selectRadioOption = (settingKey: string, value: string): Cypress.Chainable =>
+    cy.get(this.repository.getRadioOptionByValueSelector(settingKey, value)).check({ force: true });
+
+  setSettingInputValue = (settingKey: string, value: string): Cypress.Chainable =>
+    this.getSettingInput(settingKey).clear().type(value).blur();
+
+  saveConfiguration = (): void => {
+    cy.intercept('POST', '**/configuration/manage/save').as('saveConfiguration');
+    this.getSaveButton().click();
+  };
 }

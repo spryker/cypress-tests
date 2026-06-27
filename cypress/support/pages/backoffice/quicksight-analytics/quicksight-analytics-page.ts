@@ -25,4 +25,9 @@ export class QuicksightAnalyticsPage extends BackofficePage {
   getSynchronizeUsersButton = (): Cypress.Chainable => cy.get(this.repository.getSynchronizeUsersButtonSelector());
 
   getNoPermissionMessage = (): Cypress.Chainable => cy.get(this.repository.getNoPermissionMessageSelector());
+
+  getSynchronizeUsersForm = (): Cypress.Chainable => cy.get(this.repository.getSynchronizeUsersFormSelector());
+
+  getSynchronizeUsersCsrfToken = (): Cypress.Chainable =>
+    cy.get(this.repository.getSynchronizeUsersCsrfTokenSelector());
 }

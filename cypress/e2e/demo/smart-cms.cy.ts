@@ -59,5 +59,70 @@ describe(
       smartCmsPage.getPanelAsk().should('be.visible').and('contain.text', 'Ask AI');
       smartCmsPage.getPanelAttach().should('be.visible');
     });
+
+    it('the prompt input accepts typed text after the panel is expanded', (): void => {
+      smartCmsPage.visitCmsPageEditor();
+      smartCmsPage.expandPanel();
+
+      smartCmsPage.typePrompt('Write a punchy hero title for this landing page');
+    });
+
+    it('attaching a file via the attach control lists it as an attached item with its file name', (): void => {
+      smartCmsPage.visitCmsPageEditor();
+      smartCmsPage.expandPanel();
+
+      smartCmsPage.attachFile(staticFixtures.probeImagePath);
+
+      smartCmsPage.getPanelAttachmentName().should('have.length', 1).and('contain.text', 'search-by-image-probe.png');
+    });
+
+    it('clicking Ask AI issues the generate POST with the typed prompt and recovers gracefully when the provider fails', (): void => {
+      smartCmsPage.visitCmsPageEditor();
+      smartCmsPage.expandPanel();
+      smartCmsPage.interceptGenerateWithProviderFailure();
+
+      const prompt = 'Write a punchy hero title for this landing page';
+      smartCmsPage.typePrompt(prompt);
+      smartCmsPage.clickAskAi();
+
+      cy.wait('@generateRequest').then((interception): void => {
+        expect(interception.request.method).to.eq('POST');
+
+        const body = interception.request.body;
+        const payload = typeof body === 'string' ? JSON.parse(body) : body;
+
+        expect(payload).to.have.property('userPrompt', prompt);
+        expect(payload).to.have.property('entityType', staticFixtures.cmsPageEntityType);
+        expect(payload).to.have.property('idEntity', staticFixtures.cmsPageIdEntity);
+        expect(payload).to.have.property('_token').that.is.a('string').and.not.empty;
+        expect(payload).to.have.property('placeholders');
+      });
+
+      smartCmsPage.getPanelMessage().should('have.class', 'smart-cms-panel__message--error').and('be.visible');
+      smartCmsPage.getPanelAsk().should('be.visible').and('not.be.disabled');
+    });
+
+    it('clicking Ask AI with a file attached includes the attachment in the generate POST payload', (): void => {
+      smartCmsPage.visitCmsPageEditor();
+      smartCmsPage.expandPanel();
+      smartCmsPage.interceptGenerateWithProviderFailure();
+
+      smartCmsPage.attachFile(staticFixtures.probeImagePath);
+      smartCmsPage.getPanelAttachmentName().should('have.length', 1);
+
+      smartCmsPage.typePrompt('Suggest alt text based on the attached image');
+      smartCmsPage.clickAskAi();
+
+      cy.wait('@generateRequest').then((interception): void => {
+        const body = interception.request.body;
+        const payload = typeof body === 'string' ? JSON.parse(body) : body;
+
+        expect(payload.attachments).to.be.an('array').with.length(1);
+        expect(payload.attachments[0]).to.have.property('mediaType', staticFixtures.probeImageMediaType);
+        expect(payload.attachments[0]).to.have.property('content').that.is.a('string').and.not.empty;
+      });
+
+      smartCmsPage.getPanelMessage().should('be.visible');
+    });
   }
 );

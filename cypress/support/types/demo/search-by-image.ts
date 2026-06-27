@@ -7,4 +7,5 @@ export interface SearchByImageDemoStaticFixtures {
     email: string;
   };
   searchResultsUrl: string;
+  probeImagePath: string;
 }

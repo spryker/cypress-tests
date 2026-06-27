@@ -7,4 +7,6 @@ export interface QuickAddByImageDemoStaticFixtures {
     username: string;
   };
   quickOrderPageUrl: string;
+  imageFilePath: string;
+  imageFileName: string;
 }

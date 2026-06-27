@@ -15,7 +15,11 @@ export class BackofficeAssistantRepository {
 
   getWidgetPanelSelector = (): string => '.js-backoffice-assistant__panel';
 
+  getWidgetPanelOpenClass = (): string => 'backoffice-assistant__panel--open';
+
   getWidgetAgentSelectSelector = (): string => '.js-backoffice-assistant__agent-select';
+
+  getWidgetAgentBadgeSelector = (): string => '.js-backoffice-assistant__agent-badge';
 
   getWidgetInputSelector = (): string => '.js-backoffice-assistant__input';
 
@@ -26,4 +30,28 @@ export class BackofficeAssistantRepository {
   getWidgetNewChatSelector = (): string => '.js-backoffice-assistant__new-chat';
 
   getWidgetAttachSelector = (): string => '.js-backoffice-assistant__attach';
+
+  getWidgetMessagesSelector = (): string => '.js-backoffice-assistant__messages';
+
+  getWidgetRetryButtonSelector = (): string => '.backoffice-assistant__retry-btn';
+
+  getWidgetFileInputSelector = (): string => '.js-backoffice-assistant__file-input';
+
+  getWidgetAttachmentsPreviewSelector = (): string => '.js-backoffice-assistant__attachments-preview';
+
+  getWidgetAttachmentChipSelector = (): string => '.backoffice-assistant__attachment-chip';
+
+  getWidgetAttachmentChipNameSelector = (): string => '.backoffice-assistant__attachment-chip-name';
+
+  getWidgetMessageAttachmentPillSelector = (): string => '.backoffice-assistant__message-attachment-pill';
+
+  getWidgetContextSuggestionsSelector = (): string => '.js-backoffice-assistant__page-context-suggestions';
+
+  getWidgetFormContextSuggestionLabelSelector = (): string => '.js-backoffice-assistant__form-context-suggestion-label';
+
+  getWidgetContextChipSelector = (): string => '.backoffice-assistant__context-chip';
+
+  getWidgetContextChipNameSelector = (): string => '.js-backoffice-assistant__context-chip-name';
+
+  getPromptEndpoint = (): string => '**/ai-commerce/backoffice-assistant-prompt/index';
 }

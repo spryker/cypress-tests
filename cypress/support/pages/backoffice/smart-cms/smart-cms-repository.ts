@@ -20,4 +20,12 @@ export class SmartCmsRepository {
   getPanelAskSelector = (): string => '.js-smart-cms-panel__ask';
 
   getPanelAttachSelector = (): string => '.js-smart-cms-panel__attach';
+
+  getPanelFileInputSelector = (): string => '.js-smart-cms-panel__file-input';
+
+  getPanelAttachmentNameSelector = (): string => '.js-smart-cms-panel__attachment-name';
+
+  getPanelMessageSelector = (): string => '.js-smart-cms-panel__message';
+
+  getGenerateEndpointGlob = (): string => '**/ai-commerce/smart-cms-content/generate';
 }

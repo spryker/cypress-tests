@@ -22,4 +22,14 @@ export class QuickOrderImageToCartRepository {
   getBrowseFileLabelSelector = (): string => 'label[for="image_order_form_uploadImageOrder"]';
 
   getUploadSubmitButtonSelector = (): string => 'button[name="uploadImage"]';
+
+  getFileSelectLabelSelector = (): string =>
+    '[data-qa="component quick-order-image-to-cart"] .quick-order-image-to-cart__file-select';
+
+  getBrowseFileToggleLabelSelector = (): string =>
+    '[data-qa="component quick-order-image-to-cart"] .js-quick-order-image-to-cart__browse-file';
+
+  getErrorDropzoneSelector = (): string => '[data-qa="component quick-order-image-to-cart"] .input-dropzone--error';
+
+  getErrorMessageSelector = (): string => '[data-qa="component quick-order-image-to-cart"] .list--alert .list__item';
 }

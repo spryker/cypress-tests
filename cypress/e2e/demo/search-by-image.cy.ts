@@ -52,6 +52,43 @@ describe(
       searchByImagePage.getPhotoButton().first().should('not.be.visible');
     });
 
+    it('clicking the desktop file-search trigger opens the upload popup and reveals a clickable "Upload image" button', (): void => {
+      searchByImagePage.visitSearchResults();
+
+      searchByImagePage.getDesktopInstance().find('.js-search-by-image__btn-search-by-file').should('be.visible');
+
+      searchByImagePage.clickFileTrigger();
+
+      searchByImagePage.getOpenFilePopupUploadButton().should('be.visible').and('not.be.disabled');
+    });
+
+    it('attaching an image to the file input issues a POST /search-by-image with multipart form-data and the front-end handles the provider-less response without crashing', (): void => {
+      searchByImagePage.visitSearchResults();
+      searchByImagePage.interceptSearchByImageRequest();
+
+      searchByImagePage.attachImage(staticFixtures.probeImagePath);
+
+      cy.wait('@searchByImageRequest').then((interception) => {
+        expect(interception.request.method).to.eq('POST');
+        expect(interception.request.headers['content-type']).to.contain('multipart/form-data');
+
+        const rawBody = interception.request.body as unknown;
+        const isBinaryBody =
+          typeof rawBody === 'object' && rawBody !== null && typeof (rawBody as ArrayBuffer).byteLength === 'number';
+        const requestBody = isBinaryBody
+          ? new TextDecoder().decode(new Uint8Array(rawBody as ArrayBuffer))
+          : String(rawBody ?? '');
+
+        expect(requestBody).to.contain('search_by_image[image]');
+        expect(requestBody).to.contain('search_by_image[_token]');
+        expect(requestBody).to.contain('filename');
+
+        expect(interception.response?.statusCode).to.eq(200);
+      });
+
+      searchByImagePage.getDesktopInstance().should('exist');
+    });
+
     it('search-by-image endpoint responds without calling the AI provider: GET is rejected (405), an image-less POST returns a validation error', (): void => {
       const endpointUrl = `${Cypress.config('baseUrl')}/search-by-image`;
 

@@ -21,6 +21,16 @@ describe(
       { dataQa: 'Actions', label: 'Actions' },
     ];
 
+    const SORTABLE_COLUMNS: Array<string> = [
+      'spy_ai_workflow_item.id_ai_workflow_item',
+      'process_name',
+      'state_name',
+      'spy_ai_workflow_item.created_at',
+      'spy_ai_workflow_item.updated_at',
+    ];
+
+    const NON_SORTABLE_COLUMNS: Array<string> = ['Actions'];
+
     let staticFixtures: AiWorkflowsDemoStaticFixtures;
 
     before((): void => {
@@ -50,6 +60,57 @@ describe(
       EXPECTED_COLUMN_HEADERS.forEach((column): void => {
         aiWorkflowsPage.getColumnHeader(column.dataQa).should('exist').and('contain.text', column.label);
       });
+    });
+
+    it('initializes a live DataTable whose data endpoint returns HTTP 200 JSON with the draw/recordsTotal/recordsFiltered/data shape', (): void => {
+      aiWorkflowsPage.visitAndAwaitTableData().then((interception): void => {
+        expect(interception.response?.statusCode).to.eq(200);
+        expect(interception.response?.headers['content-type']).to.contain('application/json');
+
+        const body = interception.response?.body;
+        expect(body).to.have.property('draw');
+        expect(body).to.have.property('recordsTotal');
+        expect(body).to.have.property('recordsFiltered');
+        expect(body).to.have.property('data');
+        expect(body.data).to.be.an('array');
+      });
+
+      aiWorkflowsPage.getTableWrapper().should('exist');
+      aiWorkflowsPage.getTableInfo().should('be.visible');
+    });
+
+    it('marks the five data columns sortable and the Actions column non-sortable', (): void => {
+      aiWorkflowsPage.visitAndAwaitTableData();
+
+      SORTABLE_COLUMNS.forEach((column): void => {
+        aiWorkflowsPage.getSortableColumnHeader(column).should('exist');
+      });
+
+      NON_SORTABLE_COLUMNS.forEach((column): void => {
+        aiWorkflowsPage.getNonSortableColumnHeader(column).should('exist');
+      });
+    });
+
+    it('changing the page-length control issues a fresh table data request that returns HTTP 200', (): void => {
+      aiWorkflowsPage.visitAndAwaitTableData();
+
+      aiWorkflowsPage.getLengthSelect().should('exist');
+      aiWorkflowsPage.aliasTableData('lengthChangeData');
+      aiWorkflowsPage.selectPageLength('50');
+
+      cy.wait('@lengthChangeData').then((interception): void => {
+        expect(interception.response?.statusCode).to.eq(200);
+        expect(interception.request.url).to.contain('length=50');
+      });
+    });
+
+    it('clicking the Created At sort header issues a fresh table data request that returns HTTP 200', (): void => {
+      aiWorkflowsPage.visitAndAwaitTableData();
+
+      aiWorkflowsPage.aliasTableData('sortChangeData');
+      aiWorkflowsPage.getSortableColumnHeader('spy_ai_workflow_item.created_at').click();
+
+      cy.wait('@sortChangeData').its('response.statusCode').should('eq', 200);
     });
   }
 );

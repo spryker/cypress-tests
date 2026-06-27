@@ -13,6 +13,10 @@ export class AiConfigurationRepository {
 
   getSaveButtonSelector = (): string => '[data-qa="save-configuration"]';
 
+  getSaveBarSelector = (): string => '#config-save-bar';
+
+  getChangesCountSelector = (): string => '#changes-count';
+
   getSettingRowSelector = (settingKey: string): string => `.setting-row[data-setting-key="${settingKey}"]`;
 
   getSettingInputSelector = (settingKey: string): string =>
@@ -22,4 +26,7 @@ export class AiConfigurationRepository {
 
   getRadioOptionSelector = (settingKey: string): string =>
     `.setting-row[data-setting-key="${settingKey}"] input[type="radio"]`;
+
+  getRadioOptionByValueSelector = (settingKey: string, value: string): string =>
+    `.setting-row[data-setting-key="${settingKey}"] input[type="radio"][value="${value}"]`;
 }
