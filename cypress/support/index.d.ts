@@ -115,5 +115,23 @@ declare namespace Cypress {
      * cy.cleanUpUserMultiFactorAuth()
      */
     cleanUpUserMultiFactorAuth(): void;
+
+    /**
+     * Requests a storefront Glue access token for a customer.
+     * @example cy.getCustomerAccessToken('jane@example.com', 'change123').then((token) => {})
+     */
+    getCustomerAccessToken(email: string, password: string): Chainable<string>;
+
+    /**
+     * Creates a cart for an authenticated customer and returns its id.
+     * @example cy.createCart(token, { priceMode: 'GROSS_MODE', currency: 'EUR', store: 'DE', name: 'cart' })
+     */
+    createCart(accessToken: string, attributes: Record<string, unknown>): Chainable<string>;
+
+    /**
+     * Creates a shopping list for an authenticated customer and returns its id.
+     * @example cy.createShoppingList(token, 'My list')
+     */
+    createShoppingList(accessToken: string, name: string): Chainable<string>;
   }
 }

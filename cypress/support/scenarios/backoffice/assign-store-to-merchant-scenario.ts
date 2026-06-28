@@ -15,23 +15,29 @@ export class AssignStoreToMerchantScenario {
         searchQuery: params.merchantName,
         interceptTableUrl: `**/merchant-gui/list-merchant/table**`,
       })
-      .then(($row) => {
-        const isStoreAssigned = this.merchantListPage.rowIsAssignedToStore({
-          row: $row,
-          storeName: params.storeName,
-        });
-
-        this.merchantListPage.clickEditAction($row);
-
-        if (isStoreAssigned) {
+      .then((getRow) => {
+        if (!getRow) {
           return;
         }
 
-        this.merchantUpdatePage.assignAllAvailableStore();
+        getRow().then(($row: JQuery<HTMLElement>) => {
+          const isStoreAssigned = this.merchantListPage.rowIsAssignedToStore({
+            row: $row,
+            storeName: params.storeName,
+          });
 
-        if (params.shouldTriggerPublishAndSync) {
-          cy.runQueueWorker();
-        }
+          this.merchantListPage.clickEditAction($row);
+
+          if (isStoreAssigned) {
+            return;
+          }
+
+          this.merchantUpdatePage.assignAllAvailableStore();
+
+          if (params.shouldTriggerPublishAndSync) {
+            cy.runQueueWorker();
+          }
+        });
       });
   };
 }

@@ -59,6 +59,8 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
     checkoutScenario.execute({ isMultiShipment: true, paymentMethod: getPaymentMethodBasedOnEnv() });
 
     cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+    //check for making sure session is not invalidated after checkout
+    customerOverviewPage.viewLastPlacedOrder();
   });
 
   function skipB2BIt(description: string, testFn: () => void): void {

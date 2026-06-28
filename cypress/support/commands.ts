@@ -338,3 +338,64 @@ Cypress.Commands.add('cleanUpCustomerMultiFactorAuth', () => {
     },
   });
 });
+
+Cypress.Commands.add('getCustomerAccessToken', (email, password) => {
+  return cy
+    .request({
+      method: 'POST',
+      url: Cypress.env().glueUrl + '/access-tokens',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {
+        data: {
+          type: 'access-tokens',
+          attributes: {
+            username: email,
+            password,
+          },
+        },
+      },
+    })
+    .then((response) => response.body.data.attributes.accessToken);
+});
+
+Cypress.Commands.add('createCart', (accessToken, attributes) => {
+  return cy
+    .request({
+      method: 'POST',
+      url: Cypress.env().glueUrl + '/carts',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: {
+        data: {
+          type: 'carts',
+          attributes,
+        },
+      },
+    })
+    .then((response) => response.body.data.id);
+});
+
+Cypress.Commands.add('createShoppingList', (accessToken, name) => {
+  return cy
+    .request({
+      method: 'POST',
+      url: Cypress.env().glueUrl + '/shopping-lists',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: {
+        data: {
+          type: 'shopping-lists',
+          attributes: {
+            name,
+          },
+        },
+      },
+    })
+    .then((response) => response.body.data.id);
+});

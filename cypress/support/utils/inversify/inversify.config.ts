@@ -188,6 +188,12 @@ import { B2bMpBudgetCreateRepository } from '../../pages/yves/purchasing-control
 import { SuiteBudgetUpdateRepository } from '../../pages/yves/purchasing-control/budget/update/repositories/suite-budget-update-repository';
 import { B2bMpBudgetUpdateRepository } from '../../pages/yves/purchasing-control/budget/update/repositories/b2b-mp-budget-update-repository';
 import { SuiteCheckoutSummaryBudgetRepository } from '../../pages/yves/purchasing-control/checkout-summary/repositories/suite-checkout-summary-budget-repository';
+import { SuiteCheckoutSummaryRecurringOrderRepository } from '../../pages/yves/recurring-orders/checkout-summary/repositories/suite-checkout-summary-recurring-order-repository';
+import { SuiteRecurringOrderListRepository } from '../../pages/yves/recurring-orders/list/repositories/suite-recurring-order-list-repository';
+import { B2bMpRecurringOrderListRepository } from '../../pages/yves/recurring-orders/list/repositories/b2b-mp-recurring-order-list-repository';
+import { SuiteRecurringOrderDetailRepository } from '../../pages/yves/recurring-orders/detail/repositories/suite-recurring-order-detail-repository';
+import { B2bMpRecurringOrderDetailRepository } from '../../pages/yves/recurring-orders/detail/repositories/b2b-mp-recurring-order-detail-repository';
+import { SuiteRecurringOrderReviewRepository } from '../../pages/yves/recurring-orders/review/repositories/suite-recurring-order-review-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -236,6 +242,10 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.YvesBudgetCreateRepository]: SuiteBudgetCreateRepository,
   [REPOSITORIES.YvesBudgetUpdateRepository]: SuiteBudgetUpdateRepository,
   [REPOSITORIES.YvesCheckoutSummaryBudgetRepository]: SuiteCheckoutSummaryBudgetRepository,
+  [REPOSITORIES.YvesCheckoutSummaryRecurringOrderRepository]: SuiteCheckoutSummaryRecurringOrderRepository,
+  [REPOSITORIES.YvesRecurringOrderListRepository]: SuiteRecurringOrderListRepository,
+  [REPOSITORIES.YvesRecurringOrderDetailRepository]: SuiteRecurringOrderDetailRepository,
+  [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -392,6 +402,10 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.YvesBudgetCreateRepository]: B2bMpBudgetCreateRepository,
   [REPOSITORIES.YvesBudgetUpdateRepository]: B2bMpBudgetUpdateRepository,
   [REPOSITORIES.YvesCheckoutSummaryBudgetRepository]: SuiteCheckoutSummaryBudgetRepository,
+  [REPOSITORIES.YvesCheckoutSummaryRecurringOrderRepository]: SuiteCheckoutSummaryRecurringOrderRepository,
+  [REPOSITORIES.YvesRecurringOrderListRepository]: B2bMpRecurringOrderListRepository,
+  [REPOSITORIES.YvesRecurringOrderDetailRepository]: B2bMpRecurringOrderDetailRepository,
+  [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
 };
 
 const mappings = {

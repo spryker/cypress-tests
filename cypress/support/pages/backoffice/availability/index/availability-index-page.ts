@@ -15,9 +15,13 @@ export class AvailabilityIndexPage extends BackofficePage {
       interceptTableUrl: `**/availability-gui/index/availability-abstract-table**`,
       searchQuery: params.query,
       expectedCount: 1,
-    }).then(($availabilityRow) => {
+    }).then((getRow) => {
+      if (!getRow) {
+        return;
+      }
+
       if (params.action === ActionEnum.view) {
-        cy.wrap($availabilityRow).find(this.repository.getViewButtonSelector()).should('exist').click({ force: true });
+        getRow().find(this.repository.getViewButtonSelector()).should('exist').click({ force: true });
       }
     });
   };

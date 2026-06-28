@@ -3,9 +3,13 @@ import { ProductRepository } from '../product-repository';
 
 @injectable()
 export class B2bMpProductRepository implements ProductRepository {
-  getSoldByProductOffers = (): Cypress.Chainable => cy.get('[data-qa="component buy-box-item"]');
+  getSoldByProductOffers = (): Cypress.Chainable =>
+    cy.get('[data-qa="component seller-list"] .seller-list__items').first();
+  // using old and new locators. remove old one after June release
   getSoldByProductOfferRadios = (): Cypress.Chainable =>
-    cy.get('[data-qa="component buy-box-item"] input[type="radio"]');
+    cy.get(
+      '[data-qa="component buy-box-item"] input[type="radio"], [data-qa="component seller-list-item"] input[type="radio"][name="product_offer_reference"]'
+    );
   getMerchantRelationRequestLinkAttribute = (): string => '[data-qa="merchant-relation-request-create-link"]';
   getInputRadioSelector = (): string => 'input[type="radio"]';
   getProductConfigurator = (): Cypress.Chainable => cy.get('[data-qa="component product-configurator"]');
@@ -33,7 +37,7 @@ export class B2bMpProductRepository implements ProductRepository {
   getCloseServicePointPopupButton = (): Cypress.Chainable => cy.get('.js-main-popup__close');
   getSspAssetNameBlock = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-name"]');
   getAttachmentsList = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-detail"] [data-qa="attachments-table"]');
+    cy.get('[data-qa="component product-detail"] [data-qa="attachments-list"]');
   getAttachmentItems = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-detail"] [data-qa="cell-name"] .link');
+    cy.get('[data-qa="component product-detail"] [data-qa="attachment-item"]');
 }

@@ -43,4 +43,8 @@ export const enum REPOSITORIES {
   YvesBudgetCreateRepository = 'YvesBudgetCreateRepository',
   YvesBudgetUpdateRepository = 'YvesBudgetUpdateRepository',
   YvesCheckoutSummaryBudgetRepository = 'YvesCheckoutSummaryBudgetRepository',
+  YvesCheckoutSummaryRecurringOrderRepository = 'YvesCheckoutSummaryRecurringOrderRepository',
+  YvesRecurringOrderListRepository = 'YvesRecurringOrderListRepository',
+  YvesRecurringOrderDetailRepository = 'YvesRecurringOrderDetailRepository',
+  YvesRecurringOrderReviewRepository = 'YvesRecurringOrderReviewRepository',
 }
