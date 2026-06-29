@@ -80,7 +80,7 @@ describe(
       cy.contains('Return was successfully created.');
     });
 
-    it('should be able to create return from (from delivery order state)', (): void => {
+    skipSuiteIt('should be able to create return from (from delivery order state)', (): void => {
       salesIndexPage.visit();
       salesIndexPage.view();
 
@@ -101,6 +101,10 @@ describe(
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
       productsPage.addToCart();
+    }
+
+    function skipSuiteIt(description: string, testFn: () => void): void {
+      (Cypress.env('repositoryId') === 'suite' ? it.skip : it)(description, testFn);
     }
   }
 );

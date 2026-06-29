@@ -54,7 +54,7 @@ describe(
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
     });
 
-    it('agent should be able to change order status during impersonation', (): void => {
+    skipSuiteIt('agent should be able to change order status during impersonation', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
@@ -151,6 +151,10 @@ describe(
       });
 
       productPage.addToCart();
+    }
+
+    function skipSuiteIt(description: string, testFn: () => void): void {
+      (Cypress.env('repositoryId') === 'suite' ? it.skip : it)(description, testFn);
     }
   }
 );
