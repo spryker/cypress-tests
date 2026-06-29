@@ -121,7 +121,7 @@ describe(
       });
     });
 
-    skipSuiteIt('merchant commissions should be refunded in Merchant Portal and Backoffice', (): void => {
+    it('merchant commissions should be refunded in Merchant Portal and Backoffice', (): void => {
       placeCustomerOrder();
 
       userLoginScenario.execute({
@@ -239,10 +239,6 @@ describe(
 
       salesOrdersPage.getTotalCommissionBlock().should('contains.text', totalCommission);
       salesOrdersPage.getTotalRefundedCommissionBlock().should('contains.text', totalRefundedCommission);
-    }
-
-    function skipSuiteIt(description: string, testFn: () => void): void {
-      (Cypress.env('repositoryId') === 'suite' ? it.skip : it)(description, testFn);
     }
   }
 );

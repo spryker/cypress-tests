@@ -56,7 +56,7 @@ describe(
       assertMarketplacePaymentOmsTransitions();
     });
 
-    skipSuiteIt('merchant user should be able close an order from customer', (): void => {
+    it('merchant user should be able close an order from customer', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
@@ -127,10 +127,6 @@ describe(
 
     function skipB2BIt(description: string, testFn: () => void): void {
       (['b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
-    }
-
-    function skipSuiteIt(description: string, testFn: () => void): void {
-      (Cypress.env('repositoryId') === 'suite' ? it.skip : it)(description, testFn);
     }
   }
 );

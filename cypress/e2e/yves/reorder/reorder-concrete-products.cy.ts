@@ -33,7 +33,7 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    skipSuiteIt('customer should be able to reorder all items from previous order', (): void => {
+    it('customer should be able to reorder all items from previous order', (): void => {
       placeCustomerOrder(
         dynamicFixtures.customer1.email,
         dynamicFixtures.customer1.addresses.addresses[0].id_customer_address
@@ -82,7 +82,7 @@ describe(
       cartPage.getCartItemChangeQuantityField(dynamicFixtures.product2.sku).should('have.value', '2');
     });
 
-    skipSuiteIt('customer should be able to reorder item with product option', (): void => {
+    it('customer should be able to reorder item with product option', (): void => {
       placeCustomerOrder(
         dynamicFixtures.customer4.email,
         dynamicFixtures.customer4.addresses.addresses[0].id_customer_address
@@ -111,10 +111,6 @@ describe(
 
     function isB2c(): boolean {
       return ['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'));
-    }
-
-    function skipSuiteIt(description: string, testFn: () => void): void {
-      (Cypress.env('repositoryId') === 'suite' ? it.skip : it)(description, testFn);
     }
   }
 );

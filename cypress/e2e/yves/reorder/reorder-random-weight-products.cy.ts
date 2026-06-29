@@ -23,8 +23,8 @@ describe(
     ],
   },
   (): void => {
-    if (['b2c', 'b2c-mp', 'suite'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because tests run only for b2b-mp and b2b ', () => {});
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite b2b-mp and b2b ', () => {});
       return;
     }
     const customerOverviewPage = container.get(CustomerOverviewPage);

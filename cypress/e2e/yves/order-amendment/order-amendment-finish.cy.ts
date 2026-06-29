@@ -66,7 +66,7 @@ describe(
       customerOverviewPage.assertProductQuantity(dynamicFixtures.product2.localized_attributes[0].name, 1);
     });
 
-    skipSuiteIt('customer should be able to finish amended order with updated product quantity', (): void => {
+    it('customer should be able to finish amended order with updated product quantity', (): void => {
       placeCustomerOrder(dynamicFixtures.customer2.email, dynamicFixtures.address2.id_customer_address);
 
       customerOverviewPage.viewLastPlacedOrder();
@@ -263,10 +263,6 @@ describe(
 
     function skipB2cIt(description: string, testFn: () => void): void {
       (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
-    }
-
-    function skipSuiteIt(description: string, testFn: () => void): void {
-      (Cypress.env('repositoryId') === 'suite' ? it.skip : it)(description, testFn);
     }
   }
 );
