@@ -117,6 +117,13 @@ declare namespace Cypress {
     cleanUpUserMultiFactorAuth(): void;
 
     /**
+     * Deletes all persistent quotes for a customer via the dynamic-fixtures backend helper.
+     * Prevents stale checkout data from leaking between tests.
+     * @example cy.deleteCustomerPersistentQuotes('customer@example.com')
+     */
+    deleteCustomerPersistentQuotes(email: string): void;
+
+    /**
      * Requests a storefront Glue access token for a customer.
      * @example cy.getCustomerAccessToken('jane@example.com', 'change123').then((token) => {})
      */
