@@ -245,9 +245,13 @@ describe(
       paymentMethod?: string,
       shouldTriggerOmsInCli?: boolean
     ): void {
+      // Amendment changes cart state server-side between the two checkouts of a test;
+      // a cy.session-restored session would revert to the pre-amendment snapshot and
+      // show an empty/stale cart, so log in without the session cache to re-sync the cart.
       customerLoginScenario.execute({
         email: email,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
 
       checkoutScenario.execute({
