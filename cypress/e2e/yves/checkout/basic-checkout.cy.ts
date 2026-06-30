@@ -43,7 +43,7 @@ describe(
       cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage(), { timeout: 15000 });
     });
 
-    skipSuiteIt('customer should checkout to single shipment (with customer shipping address)', (): void => {
+    it('customer should checkout to single shipment (with customer shipping address)', (): void => {
       loginCustomerScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
@@ -64,7 +64,7 @@ describe(
       cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage(), { timeout: 15000 });
     });
 
-    skipSuiteIt('customer should checkout to single shipment (with new shipping address)', (): void => {
+    it('customer should checkout to single shipment (with new shipping address)', (): void => {
       loginCustomerScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
@@ -84,7 +84,7 @@ describe(
       cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage(), { timeout: 15000 });
     });
 
-    skipSuiteIt('customer should checkout to multi shipment address (with customer shipping address)', (): void => {
+    it('customer should checkout to multi shipment address (with customer shipping address)', (): void => {
       loginCustomerScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
@@ -105,7 +105,7 @@ describe(
       cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage(), { timeout: 15000 });
     });
 
-    skipSuiteIt('customer should checkout to multi shipment address (with new shipping address)', (): void => {
+    it('customer should checkout to multi shipment address (with new shipping address)', (): void => {
       loginCustomerScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
@@ -143,10 +143,6 @@ describe(
 
     function skipB2BIt(description: string, testFn: () => void): void {
       (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
-    }
-
-    function skipSuiteIt(description: string, testFn: () => void): void {
-      (Cypress.env('repositoryId') === 'suite' ? it.skip : it)(description, testFn);
     }
   }
 );
