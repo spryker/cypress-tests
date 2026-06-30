@@ -20,6 +20,9 @@ export class CheckoutScenario {
   @inject(CheckoutSummaryPage) private checkoutSummaryPage: CheckoutSummaryPage;
 
   execute = (params?: ExecuteParams): void => {
+    // Stub recurring-order/clear: its AJAX response replaces summary form HTML,
+    // unchecking T&C and disabling the submit button before placeOrder() can run.
+    cy.intercept('POST', '**/recurring-order/clear', { statusCode: 200, body: '' });
     this.cartPage.visit();
     this.cartPage.startCheckout();
     if (params?.isGuest) {
@@ -34,6 +37,9 @@ export class CheckoutScenario {
 
     if (!params?.shouldSkipPlaceOrder) {
       this.checkoutSummaryPage.placeOrder();
+      // Wait for redirect away from summary — B2B order processing can be slow,
+      // and CLI commands below must not run before the success page is reached.
+      cy.url({ timeout: 15000 }).should('not.include', '/checkout/summary');
     }
 
     if (params?.shouldTriggerOmsInCli) {
