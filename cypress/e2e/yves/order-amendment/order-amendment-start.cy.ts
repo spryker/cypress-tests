@@ -30,13 +30,6 @@ describe(
     ],
   },
   (): void => {
-    // Quarantined on suite: flaky due to disabled address-form submit button (separate registered bug).
-    if (Cypress.env('repositoryId') === 'suite') {
-      it.skip('skipped on suite — flaky, tracked separately', () => {});
-
-      return;
-    }
-
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const orderDetailsPage = container.get(OrderDetailsPage);
     const cartPage = container.get(CartPage);
