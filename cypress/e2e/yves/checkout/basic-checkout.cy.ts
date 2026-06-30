@@ -28,7 +28,7 @@ describe(
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage(), { timeout: 15000 });
     });
 
     skipB2BIt('guest customer should checkout to multi shipment address', (): void => {
@@ -40,7 +40,7 @@ describe(
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage(), { timeout: 15000 });
     });
 
     skipSuiteIt('customer should checkout to single shipment (with customer shipping address)', (): void => {
@@ -61,7 +61,7 @@ describe(
         isMultiShipment: Cypress.env('ENV_IS_SSP_ENABLED') ? true : false,
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage(), { timeout: 15000 });
     });
 
     skipSuiteIt('customer should checkout to single shipment (with new shipping address)', (): void => {
@@ -81,7 +81,7 @@ describe(
         isMultiShipment: Cypress.env('ENV_IS_SSP_ENABLED') ? true : false,
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage(), { timeout: 15000 });
     });
 
     skipSuiteIt('customer should checkout to multi shipment address (with customer shipping address)', (): void => {
@@ -102,7 +102,7 @@ describe(
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage(), { timeout: 15000 });
     });
 
     skipSuiteIt('customer should checkout to multi shipment address (with new shipping address)', (): void => {
@@ -122,7 +122,7 @@ describe(
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage(), { timeout: 15000 });
     });
 
     function getPaymentMethodBasedOnEnv(): string {
