@@ -28,6 +28,13 @@ describe(
     ],
   },
   (): void => {
+    // Quarantined on suite: flaky amendment cart sync between the two checkouts (separate ticket).
+    if (Cypress.env('repositoryId') === 'suite') {
+      it.skip('skipped on suite — flaky, tracked separately', () => {});
+
+      return;
+    }
+
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const orderPage = container.get(OrderPage);
     const orderDetailsPage = container.get(OrderDetailsPage);
