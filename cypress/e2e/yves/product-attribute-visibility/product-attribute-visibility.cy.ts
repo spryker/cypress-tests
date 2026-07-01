@@ -38,8 +38,6 @@ describe(
     });
 
     it('Should display attribute badges', (): void => {
-      // Wait for the badge to actually appear before asserting: the PLP reads from
-      // ES/Redis storage that lags the async publish worker triggered above.
       attributeVisibilityPage.visitSearchAndWaitForBadgeVisible(
         dynamicFixtures.product.abstract_sku,
         staticFixtures.attributeValue
@@ -65,8 +63,6 @@ describe(
       editPage.updateAttributeVisibility(staticFixtures.attributeKey, ['PDP']);
       cy.runQueueWorker();
 
-      // Wait for the badge to actually disappear before asserting: the stale badge
-      // lingers on the PLP until the publish worker's removal propagates to storage.
       attributeVisibilityPage.visitSearchAndWaitForBadgeNotVisible(
         dynamicFixtures.product.abstract_sku,
         staticFixtures.attributeValue
@@ -95,7 +91,6 @@ describe(
       attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
       attributeVisibilityPage.assertPdpAttributeNotVisible(staticFixtures.attributeValue);
 
-      // Wait for the badge to actually disappear before asserting (async publish lag).
       attributeVisibilityPage.visitSearchAndWaitForBadgeNotVisible(
         dynamicFixtures.product.abstract_sku,
         staticFixtures.attributeValue

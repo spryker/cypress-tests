@@ -14,18 +14,28 @@ export class ProductAttributeVisibilityPage extends YvesPage {
     cy.reloadUntilFound(`/search?q=${query}`, this.repository.getProductItemSelector(), 'body', 3, 1000);
   };
 
-  // Flaky fix: the product tile is always indexed from fixtures, so waiting for the
-  // tile returns before the just-published visibility change has propagated to
-  // ES/Redis. Reload the PLP until the badge state itself matches, so the following
-  // assertion no longer races the async publish worker.
+  /**
+   * Reloads the PLP until the attribute badge is visible before returning.
+   * The product tile is always indexed from fixtures, so waiting on the tile returns
+   * before a just-published visibility change has propagated to ES/Redis — this keeps
+   * the following assertion from racing the async publish worker.
+   */
   visitSearchAndWaitForBadgeVisible = (query: string, attributeValue: string): void => {
     this.reloadSearchUntilBadgeState(query, attributeValue, true);
   };
 
+  /**
+   * Reloads the PLP until the attribute badge is no longer visible before returning.
+   * The stale badge lingers on the PLP until the publish worker's removal reaches storage.
+   */
   visitSearchAndWaitForBadgeNotVisible = (query: string, attributeValue: string): void => {
     this.reloadSearchUntilBadgeState(query, attributeValue, false);
   };
 
+  /**
+   * Reloads `/search?q=<query>` until the first tile's attribute badge matches
+   * `shouldBeVisible`, or `retries` is exhausted.
+   */
   private reloadSearchUntilBadgeState = (
     query: string,
     attributeValue: string,
