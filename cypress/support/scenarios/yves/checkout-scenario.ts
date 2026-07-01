@@ -32,7 +32,9 @@ export class CheckoutScenario {
     }
     this.fillPaymentCheckoutStep(params);
 
-    this.checkoutSummaryPage.placeOrder();
+    if (!params?.shouldSkipPlaceOrder) {
+      this.checkoutSummaryPage.placeOrder();
+    }
 
     if (params?.shouldTriggerOmsInCli) {
       cy.runCliCommands(['sleep 1', 'console oms:check-timeout', 'sleep 1', 'console oms:check-condition']);
@@ -75,6 +77,7 @@ interface ExecuteParams {
   shouldTriggerOmsInCli?: boolean;
   paymentMethod?: string;
   shouldSkipShipmentStep?: boolean;
+  shouldSkipPlaceOrder?: boolean;
   shipmentType?: string;
   skipServicePointAddressOverride?: boolean;
 }
