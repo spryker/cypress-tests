@@ -28,13 +28,6 @@ describe(
     ],
   },
   (): void => {
-    // Quarantined on suite: flaky amendment cart sync between the two checkouts (separate ticket).
-    if (Cypress.env('repositoryId') === 'suite') {
-      it.skip('skipped on suite — flaky, tracked separately', () => {});
-
-      return;
-    }
-
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const orderPage = container.get(OrderPage);
     const orderDetailsPage = container.get(OrderDetailsPage);
@@ -255,6 +248,22 @@ describe(
       customerLoginScenario.execute({
         email: email,
         password: staticFixtures.defaultPassword,
+      });
+
+      // Recover from a stale empty session quote: if the persistent cart didn't sync into
+      // the session on login, the cart page is empty and a plain reload can't fix it
+      // (the DB->session sync only runs when the session quote id is empty). Clearing the
+      // cy.session cache and logging in fresh forces the persistent quote to re-sync.
+      cartPage.visit();
+      cy.get('body').then(($body) => {
+        if ($body.find('[data-qa="cart-go-to-checkout"]').length === 0) {
+          cy.log('[placeCustomerOrder] cart empty after login — clearing session and re-logging in to re-sync cart');
+          Cypress.session.clearAllSavedSessions();
+          customerLoginScenario.execute({
+            email: email,
+            password: staticFixtures.defaultPassword,
+          });
+        }
       });
 
       checkoutScenario.execute({
