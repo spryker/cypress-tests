@@ -1,0 +1,9 @@
+{
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "contextPageUrl": "/product-management/edit?id-product-abstract=300",
+  "contextFormName": "product_form_edit",
+  "attachmentImagePath": "cypress/fixtures/b2b-mp/demo/files/backoffice-assistant-attachment.png"
+}

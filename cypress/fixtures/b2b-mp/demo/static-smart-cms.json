@@ -1,0 +1,12 @@
+{
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "cmsPageEditorUrl": "/cms-gui/create-glossary?id-cms-page=6",
+  "cmsBlockEditorUrl": "/cms-block-gui/edit-glossary?id-cms-block=24",
+  "cmsPageEntityType": "cms_page",
+  "cmsPageIdEntity": 6,
+  "probeImagePath": "cypress/fixtures/b2b-mp/demo/files/search-by-image-probe.png",
+  "probeImageMediaType": "image/png"
+}
