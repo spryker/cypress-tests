@@ -58,7 +58,13 @@ describe(
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product2.sku });
       productPage.addToCart();
 
-      placeCustomerOrder(dynamicFixtures.customer1.email, dynamicFixtures.address1.id_customer_address, undefined, undefined, true);
+      placeCustomerOrder(
+        dynamicFixtures.customer1.email,
+        dynamicFixtures.address1.id_customer_address,
+        undefined,
+        undefined,
+        true
+      );
       assertOrderCancellationForPrevOrder();
 
       customerOverviewPage.viewLastPlacedOrder();
@@ -75,7 +81,13 @@ describe(
       cartPage.visit();
       cartPage.changeQuantity({ sku: dynamicFixtures.product1.sku, quantity: 3 });
 
-      placeCustomerOrder(dynamicFixtures.customer2.email, dynamicFixtures.address2.id_customer_address, undefined, undefined, true);
+      placeCustomerOrder(
+        dynamicFixtures.customer2.email,
+        dynamicFixtures.address2.id_customer_address,
+        undefined,
+        undefined,
+        true
+      );
       assertOrderCancellationForPrevOrder();
 
       customerOverviewPage.viewLastPlacedOrder();
@@ -95,7 +107,13 @@ describe(
       cartPage.visit();
       cartPage.removeProduct({ sku: dynamicFixtures.product1.sku });
 
-      placeCustomerOrder(dynamicFixtures.customer3.email, dynamicFixtures.address3new.id_customer_address, undefined, undefined, true);
+      placeCustomerOrder(
+        dynamicFixtures.customer3.email,
+        dynamicFixtures.address3new.id_customer_address,
+        undefined,
+        undefined,
+        true
+      );
 
       customerOverviewPage.viewLastPlacedOrder();
       customerOverviewPage.assertProductQuantity(dynamicFixtures.product2.localized_attributes[0].name, 1);
