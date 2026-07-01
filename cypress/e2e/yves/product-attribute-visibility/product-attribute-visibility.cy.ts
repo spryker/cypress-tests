@@ -38,7 +38,10 @@ describe(
     });
 
     it('Should display attribute badges', (): void => {
-      attributeVisibilityPage.visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
+      attributeVisibilityPage.visitSearchAndWaitForBadgeVisible(
+        dynamicFixtures.product.abstract_sku,
+        staticFixtures.attributeValue
+      );
       attributeVisibilityPage.assertPlpAttributeBadgeVisible(staticFixtures.attributeValue);
 
       attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
@@ -60,7 +63,10 @@ describe(
       editPage.updateAttributeVisibility(staticFixtures.attributeKey, ['PDP']);
       cy.runQueueWorker();
 
-      attributeVisibilityPage.visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
+      attributeVisibilityPage.visitSearchAndWaitForBadgeNotVisible(
+        dynamicFixtures.product.abstract_sku,
+        staticFixtures.attributeValue
+      );
       attributeVisibilityPage.assertPlpAttributeBadgeNotVisible(staticFixtures.attributeValue);
 
       attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
@@ -85,7 +91,10 @@ describe(
       attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
       attributeVisibilityPage.assertPdpAttributeNotVisible(staticFixtures.attributeValue);
 
-      attributeVisibilityPage.visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
+      attributeVisibilityPage.visitSearchAndWaitForBadgeNotVisible(
+        dynamicFixtures.product.abstract_sku,
+        staticFixtures.attributeValue
+      );
       attributeVisibilityPage.assertPlpAttributeBadgeNotVisible(staticFixtures.attributeValue);
 
       customerLoginScenario.execute({
