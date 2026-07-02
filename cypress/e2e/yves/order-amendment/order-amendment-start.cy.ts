@@ -225,6 +225,16 @@ describe(
     function addProductsToCart(sku: string, quantity?: number): void {
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: sku });
+
+      // A freshly created product's availability/concrete data can still be propagating to
+      // storage right after fixture setup. Until it lands, the PDP hides the add-to-cart
+      // button (it is gated on `product.available` and `idProductConcrete`), so clicking it
+      // times out intermittently under CI load. Reload the product page until the button is
+      // published before interacting with it — same publish-wait approach as CatalogPage.search.
+      cy.url().then((productUrl) => {
+        cy.reloadUntilFound(productUrl, '[data-qa="add-to-cart-button"]', 'body', 20, 3000);
+      });
+
       productPage.addToCart({ quantity: quantity ?? 1 });
     }
 
