@@ -28,13 +28,6 @@ describe(
     ],
   },
   (): void => {
-    // Quarantined on suite: flaky amendment cart sync between the two checkouts (separate ticket).
-    if (Cypress.env('repositoryId') === 'suite') {
-      it.skip('skipped on suite — flaky, tracked separately', () => {});
-
-      return;
-    }
-
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const orderPage = container.get(OrderPage);
     const orderDetailsPage = container.get(OrderDetailsPage);
@@ -65,7 +58,13 @@ describe(
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product2.sku });
       productPage.addToCart();
 
-      placeCustomerOrder(dynamicFixtures.customer1.email, dynamicFixtures.address1.id_customer_address);
+      placeCustomerOrder(
+        dynamicFixtures.customer1.email,
+        dynamicFixtures.address1.id_customer_address,
+        undefined,
+        undefined,
+        true
+      );
       assertOrderCancellationForPrevOrder();
 
       customerOverviewPage.viewLastPlacedOrder();
@@ -82,7 +81,13 @@ describe(
       cartPage.visit();
       cartPage.changeQuantity({ sku: dynamicFixtures.product1.sku, quantity: 3 });
 
-      placeCustomerOrder(dynamicFixtures.customer2.email, dynamicFixtures.address2.id_customer_address);
+      placeCustomerOrder(
+        dynamicFixtures.customer2.email,
+        dynamicFixtures.address2.id_customer_address,
+        undefined,
+        undefined,
+        true
+      );
       assertOrderCancellationForPrevOrder();
 
       customerOverviewPage.viewLastPlacedOrder();
@@ -102,7 +107,13 @@ describe(
       cartPage.visit();
       cartPage.removeProduct({ sku: dynamicFixtures.product1.sku });
 
-      placeCustomerOrder(dynamicFixtures.customer3.email, dynamicFixtures.address3new.id_customer_address);
+      placeCustomerOrder(
+        dynamicFixtures.customer3.email,
+        dynamicFixtures.address3new.id_customer_address,
+        undefined,
+        undefined,
+        true
+      );
 
       customerOverviewPage.viewLastPlacedOrder();
       customerOverviewPage.assertProductQuantity(dynamicFixtures.product2.localized_attributes[0].name, 1);
@@ -152,7 +163,8 @@ describe(
         dynamicFixtures.customer5.email,
         dynamicFixtures.address5.id_customer_address,
         staticFixtures.paymentMethodAsyncFlow,
-        false
+        false,
+        true
       );
 
       customerOverviewPage.viewLastPlacedOrder();
@@ -250,12 +262,21 @@ describe(
       email: string,
       idCustomerAddress: number,
       paymentMethod?: string,
-      shouldTriggerOmsInCli?: boolean
+      shouldTriggerOmsInCli?: boolean,
+      skipLogin?: boolean
     ): void {
-      customerLoginScenario.execute({
-        email: email,
-        password: staticFixtures.defaultPassword,
-      });
+      // On the amendment "finish" step the customer is already logged in from the amendment
+      // flow. Re-authenticating there goes through the cached cy.session snapshot taken at the
+      // first login, which drops the active amendment cart and leaves an empty cart at checkout.
+      // Skip the login for that call so the live amendment session is preserved.
+      if (!skipLogin) {
+        customerLoginScenario.execute({
+          email: email,
+          password: staticFixtures.defaultPassword,
+        });
+      }
+
+      cartPage.visit();
 
       checkoutScenario.execute({
         idCustomerAddress: idCustomerAddress,
