@@ -175,10 +175,18 @@ describe(
     }
 
     function placeCustomerOrder(): void {
+      // Log in without the cy.session cache: the cached session snapshot can be taken before
+      // authentication completes, so the checkout then renders as a guest and the saved-address
+      // select (#addressesForm_shippingAddress_id_customer_address) is never built.
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
+        withoutSession: true,
       });
+
+      // login() only submits the form; wait for the post-login redirect so the authenticated
+      // session is established before starting checkout.
+      cy.location('pathname').should('not.include', '/login');
 
       checkoutMpScenario.execute({
         isGuest: false,
