@@ -41,6 +41,26 @@ describe(
       customerOverviewPage.assertPageLocation();
     });
 
+    it('customer should be able to open the forgot password page', (): void => {
+      loginPage.visit();
+      cy.get('[data-qa="customer-forgot-password-link"]').click();
+
+      cy.url().should('include', 'password/forgotten');
+      cy.contains('Recover my password').should('be.visible');
+    });
+
+    it('customer should be able to logout', (): void => {
+      loginPage.visit();
+      loginPage.login({ email: dynamicFixtures.customer.email, password: staticFixtures.defaultPassword });
+      customerOverviewPage.assertPageLocation();
+
+      cy.get('#logout-link').click();
+
+      // After logout the account area is no longer reachable and redirects to login.
+      customerOverviewPage.visit();
+      cy.url().should('include', 'login');
+    });
+
     function skipB2BIt(description: string, testFn: () => void): void {
       (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
     }
