@@ -13,6 +13,14 @@ export interface CustomerAuthStaticFixtures {
   defaultPassword: string;
 }
 
+export interface CustomerOverviewDynamicFixtures {
+  customer: Customer;
+}
+
+export interface CustomerOverviewStaticFixtures {
+  defaultPassword: string;
+}
+
 export interface CustomerAuthDmsStaticFixtures {
   defaultPassword: string;
   store: Store;
