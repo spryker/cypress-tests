@@ -90,8 +90,16 @@ export class SspFileManagementAttachPage extends BackofficePage {
     searchTerms.forEach((searchTerm) => {
       cy.get(searchSelector).clear();
       cy.get(searchSelector).type(searchTerm);
+      // Flaked: DataTables filters via a server-side AJAX. Checking the first row
+      // before its `_processing` overlay settles ticks a stale/empty row, submits
+      // an empty attachment, and (on suite's single seeded asset) removes it from
+      // the unattached list so non-DB-resetting retries find nothing and the
+      // success toast never fires. Wait for the filter to settle and require the
+      // top row to actually match the search term before checking it.
+      cy.get(`${tableSelector}_processing`, { timeout: 10000 }).should('not.be.visible');
       cy.get(`${tableSelector} tbody tr`)
         .first()
+        .should('contain', searchTerm)
         .find(this.repository.getTableRowCheckboxSelector(), { timeout: 10000 })
         .check({ force: true });
     });
