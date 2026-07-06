@@ -5,6 +5,17 @@
       "synchronize": false,
       "operations": [
         {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "localeEN",
@@ -20,30 +31,12 @@
           "type": "helper",
           "name": "haveLocalizedCategory",
           "key": "parentCategory",
-          "arguments": [
-            {
-              "locale": "#localeEN"
-            }
-          ]
+          "arguments": [{ "locale": "#localeEN" }]
         },
         {
           "type": "helper",
           "name": "haveCategoryStoreRelation",
           "arguments": ["#parentCategory.id_category", "#store.id_store"]
-        },
-        {
-          "type": "helper",
-          "name": "haveLocalizedCategory",
-          "key": "childCategory",
-          "arguments": [
-            {
-              "locale": "#localeEN",
-              "parentCategoryNode": "#parentCategory.category_node",
-              "isActive": false,
-              "isInMenu": true,
-              "isSearchable": true
-            }
-          ]
         }
       ]
     }
