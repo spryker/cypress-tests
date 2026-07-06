@@ -49,7 +49,7 @@ describe(
 
     it('customer should be able to change their password', (): void => {
       const currentPassword = staticFixtures.defaultPassword;
-      const newPassword = `${staticFixtures.defaultPassword}New1`;
+      const newPassword = staticFixtures.newPassword;
 
       customerProfilePage.visit();
       customerProfilePage.changePassword(currentPassword, newPassword);
@@ -59,7 +59,7 @@ describe(
 
     it('customer should not be able to change the password when the new passwords do not match', (): void => {
       const currentPassword = staticFixtures.defaultPassword;
-      const newPassword = `${staticFixtures.defaultPassword}New1`;
+      const newPassword = staticFixtures.newPassword;
 
       customerProfilePage.visit();
       customerProfilePage.changePassword(currentPassword, newPassword, 'not matching password');

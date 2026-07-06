@@ -29,9 +29,8 @@ describe(
     it('customer should be able to open the overview page', (): void => {
       customerOverviewPage.visit();
 
-      cy.contains('h5', 'Last orders').should('be.visible');
-      cy.contains('h5', 'Profile').should('be.visible');
-      cy.contains('h5', 'Newsletter').should('be.visible');
+      customerOverviewPage.assertPageLocation();
+      cy.get('[data-id="sidebar-profile"]').should('be.visible');
     });
 
     it('customer without an address should see no default-address boxes', (): void => {

@@ -1,5 +1,6 @@
 import { container } from '@utils';
 import { LoginPage, CustomerOverviewPage } from '@pages/yves';
+import { CustomerLogoutScenario } from '@scenarios/yves';
 import { CustomerAuthDynamicFixtures, CustomerAuthStaticFixtures } from '@interfaces/yves';
 
 describe(
@@ -17,6 +18,7 @@ describe(
   (): void => {
     const loginPage = container.get(LoginPage);
     const customerOverviewPage = container.get(CustomerOverviewPage);
+    const customerLogoutScenario = container.get(CustomerLogoutScenario);
 
     let dynamicFixtures: CustomerAuthDynamicFixtures;
     let staticFixtures: CustomerAuthStaticFixtures;
@@ -54,7 +56,7 @@ describe(
       loginPage.login({ email: dynamicFixtures.customer.email, password: staticFixtures.defaultPassword });
       customerOverviewPage.assertPageLocation();
 
-      cy.get('#logout-link').click();
+      customerLogoutScenario.execute();
 
       // After logout the account area is no longer reachable and redirects to login.
       customerOverviewPage.visit();

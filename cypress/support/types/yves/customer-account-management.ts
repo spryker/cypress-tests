@@ -36,6 +36,7 @@ export interface CustomerProfileManagementDynamicFixtures {
 
 export interface CustomerProfileManagementStaticFixtures {
   defaultPassword: string;
+  newPassword: string;
 }
 
 export interface NewsletterSubscriptionDynamicFixtures {
