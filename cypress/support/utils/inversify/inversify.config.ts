@@ -229,6 +229,11 @@ import { B2cProductOptionRepository } from '../../pages/backoffice/product-optio
 import { B2bProductOptionRepository } from '../../pages/backoffice/product-option/repositories/b2b-product-option-repository';
 import { B2cMpProductOptionRepository } from '../../pages/backoffice/product-option/repositories/b2c-mp-product-option-repository';
 import { B2bMpProductOptionRepository } from '../../pages/backoffice/product-option/repositories/b2b-mp-product-option-repository';
+import { SuiteNavigationTreeRepository } from '../../pages/backoffice/navigation/repositories/suite-navigation-tree-repository';
+import { B2cNavigationTreeRepository } from '../../pages/backoffice/navigation/repositories/b2c-navigation-tree-repository';
+import { B2bNavigationTreeRepository } from '../../pages/backoffice/navigation/repositories/b2b-navigation-tree-repository';
+import { B2cMpNavigationTreeRepository } from '../../pages/backoffice/navigation/repositories/b2c-mp-navigation-tree-repository';
+import { B2bMpNavigationTreeRepository } from '../../pages/backoffice/navigation/repositories/b2b-mp-navigation-tree-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -288,6 +293,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.FileManagerRepository]: SuiteFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: SuiteProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: SuiteProductOptionRepository,
+  [REPOSITORIES.NavigationTreeRepository]: SuiteNavigationTreeRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -330,6 +336,7 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.FileManagerRepository]: B2cFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2cProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2cProductOptionRepository,
+  [REPOSITORIES.NavigationTreeRepository]: B2cNavigationTreeRepository,
 };
 
 const b2bMappings: BindingsMap = {
@@ -376,6 +383,7 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.FileManagerRepository]: B2bFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2bProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2bProductOptionRepository,
+  [REPOSITORIES.NavigationTreeRepository]: B2bNavigationTreeRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
@@ -418,6 +426,7 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.FileManagerRepository]: B2cMpFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2cMpProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2cMpProductOptionRepository,
+  [REPOSITORIES.NavigationTreeRepository]: B2cMpNavigationTreeRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
@@ -476,6 +485,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.FileManagerRepository]: B2bMpFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2bMpProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2bMpProductOptionRepository,
+  [REPOSITORIES.NavigationTreeRepository]: B2bMpNavigationTreeRepository,
 };
 
 const mappings = {
