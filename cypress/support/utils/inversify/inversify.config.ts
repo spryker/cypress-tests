@@ -194,6 +194,11 @@ import { B2bMpRecurringOrderListRepository } from '../../pages/yves/recurring-or
 import { SuiteRecurringOrderDetailRepository } from '../../pages/yves/recurring-orders/detail/repositories/suite-recurring-order-detail-repository';
 import { B2bMpRecurringOrderDetailRepository } from '../../pages/yves/recurring-orders/detail/repositories/b2b-mp-recurring-order-detail-repository';
 import { SuiteRecurringOrderReviewRepository } from '../../pages/yves/recurring-orders/review/repositories/suite-recurring-order-review-repository';
+import { SuiteTaxRateRepository } from '../../pages/backoffice/tax/repositories/suite-tax-rate-repository';
+import { B2cTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2c-tax-rate-repository';
+import { B2bTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2b-tax-rate-repository';
+import { B2cMpTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2c-mp-tax-rate-repository';
+import { B2bMpTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2b-mp-tax-rate-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -246,6 +251,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.YvesRecurringOrderListRepository]: SuiteRecurringOrderListRepository,
   [REPOSITORIES.YvesRecurringOrderDetailRepository]: SuiteRecurringOrderDetailRepository,
   [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
+  [REPOSITORIES.TaxRateRepository]: SuiteTaxRateRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -281,6 +287,7 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.CustomerProfileRepository]: B2cCustomerProfileRepository,
   [REPOSITORIES.AgentMultiFactorAuthRepository]: B2cAgentMultiFactorAuthRepository,
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2cUserMultiFactorAuthRepository,
+  [REPOSITORIES.TaxRateRepository]: B2cTaxRateRepository,
 };
 
 const b2bMappings: BindingsMap = {
@@ -320,6 +327,7 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.SspInquiryRepository]: B2bSspInquiryRepository,
   [REPOSITORIES.SspDashboardManagementRepository]: B2bSspDashboardManagementRepository,
   [REPOSITORIES.SspServiceRepository]: B2bSspServiceRepository,
+  [REPOSITORIES.TaxRateRepository]: B2bTaxRateRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
@@ -355,6 +363,7 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.CustomerProfileRepository]: B2cMpCustomerProfileRepository,
   [REPOSITORIES.AgentMultiFactorAuthRepository]: B2cMpAgentMultiFactorAuthRepository,
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2cMpUserMultiFactorAuthRepository,
+  [REPOSITORIES.TaxRateRepository]: B2cMpTaxRateRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
@@ -406,6 +415,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.YvesRecurringOrderListRepository]: B2bMpRecurringOrderListRepository,
   [REPOSITORIES.YvesRecurringOrderDetailRepository]: B2bMpRecurringOrderDetailRepository,
   [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
+  [REPOSITORIES.TaxRateRepository]: B2bMpTaxRateRepository,
 };
 
 const mappings = {
