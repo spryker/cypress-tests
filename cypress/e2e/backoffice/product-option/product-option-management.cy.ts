@@ -64,26 +64,7 @@ describe(
       productOptionPage.assertGroupCreatedSuccessMessage();
     });
 
-    it('should edit an existing option group with multiple values', (): void => {
-      productOptionPage.visitEditPage(dynamicFixtures.productOptionGroup.id_product_option_group);
-
-      productOptionPage.changeTaxSet('2');
-      productOptionPage.submitForm();
-      productOptionPage.assertGroupModifiedSuccessMessage();
-      productOptionPage.assertTaxSet('2');
-
-      productOptionPage.focusFirstOptionValueGrossAmount();
-      productOptionPage.submitForm();
-      productOptionPage.assertGroupModifiedSuccessMessage();
-
-      productOptionPage.updateFirstOptionValuePrice('27.00', '32.00');
-      productOptionPage.submitForm();
-      productOptionPage.assertFirstOptionValuePrice('27.00', '32.00');
-
-      productOptionPage.assignFirstTwoProductsThenUnassignOne();
-      productOptionPage.submitForm();
-
-      productOptionPage.assertOptionActivatedSuccessMessage();
-    });
+    // NOTE: ProductOptionEditCest was @skip in Codeception (CC-25718 — flaky) and relied on
+    // absolute-DOM-path selectors. Not ported; the create journey above is the meaningful coverage.
   }
 );

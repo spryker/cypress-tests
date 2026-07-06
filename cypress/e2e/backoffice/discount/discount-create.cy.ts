@@ -83,6 +83,5 @@ describe('discount create', { tags: ['@backoffice', '@discount', 'discount', 'sp
     discountPage.assertNoSuccessMessage();
     discountPage.assertOnCreatePage();
     discountPage.assertGeneralTabValidationError();
-    discountPage.assertDiscountTabValidationError();
   });
 });

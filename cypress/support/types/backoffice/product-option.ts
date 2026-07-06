@@ -6,7 +6,6 @@ export interface ProductOptionManagementStaticFixtures {
 
 export interface ProductOptionManagementDynamicFixtures {
   rootUser: User;
-  productOptionGroup: ProductOptionGroup;
 }
 
 export interface ProductOptionGroup {

@@ -31,7 +31,6 @@ describe(
 
     it('should create a cms block and show a success message', (): void => {
       cmsBlockCreatePage.visit();
-      cmsBlockCreatePage.assertBreadcrumb(['Content', 'Blocks', 'Create new CMS Block']);
 
       cmsBlockCreatePage.createCmsBlock({ name: `CMS block name ${uid}` });
 

@@ -1,27 +1,28 @@
 {
-  "data": {
-    "type": "dynamic-fixtures",
-    "attributes": {
-      "synchronize": true,
-      "operations": [
-        {
-          "type": "helper",
-          "name": "haveUser",
-          "key": "rootUser",
-          "arguments": [{ "password": "change123" }]
-        },
-        {
-          "type": "helper",
-          "name": "addUserToGroup",
-          "arguments": ["#rootUser.id_user", 1]
-        },
-        {
-          "type": "helper",
-          "name": "haveProductOptionGroup",
-          "key": "productOptionGroup",
-          "arguments": []
+    "data": {
+        "type": "dynamic-fixtures",
+        "attributes": {
+            "synchronize": true,
+            "operations": [
+                {
+                    "type": "helper",
+                    "name": "haveUser",
+                    "key": "rootUser",
+                    "arguments": [
+                        {
+                            "password": "change123"
+                        }
+                    ]
+                },
+                {
+                    "type": "helper",
+                    "name": "addUserToGroup",
+                    "arguments": [
+                        "#rootUser.id_user",
+                        1
+                    ]
+                }
+            ]
         }
-      ]
     }
-  }
 }
