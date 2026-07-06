@@ -229,6 +229,16 @@ import { B2cProductOptionRepository } from '../../pages/backoffice/product-optio
 import { B2bProductOptionRepository } from '../../pages/backoffice/product-option/repositories/b2b-product-option-repository';
 import { B2cMpProductOptionRepository } from '../../pages/backoffice/product-option/repositories/b2c-mp-product-option-repository';
 import { B2bMpProductOptionRepository } from '../../pages/backoffice/product-option/repositories/b2b-mp-product-option-repository';
+import { SuiteCategoryCreateRepository } from '../../pages/backoffice/catalog/category/create/repositories/suite-category-create-repository';
+import { B2cCategoryCreateRepository } from '../../pages/backoffice/catalog/category/create/repositories/b2c-category-create-repository';
+import { B2bCategoryCreateRepository } from '../../pages/backoffice/catalog/category/create/repositories/b2b-category-create-repository';
+import { B2cMpCategoryCreateRepository } from '../../pages/backoffice/catalog/category/create/repositories/b2c-mp-category-create-repository';
+import { B2bMpCategoryCreateRepository } from '../../pages/backoffice/catalog/category/create/repositories/b2b-mp-category-create-repository';
+import { SuiteCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/suite-category-re-sort-repository';
+import { B2cCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/b2c-category-re-sort-repository';
+import { B2bCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/b2b-category-re-sort-repository';
+import { B2cMpCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/b2c-mp-category-re-sort-repository';
+import { B2bMpCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/b2b-mp-category-re-sort-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -288,6 +298,8 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.FileManagerRepository]: SuiteFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: SuiteProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: SuiteProductOptionRepository,
+  [REPOSITORIES.CategoryCreateRepository]: SuiteCategoryCreateRepository,
+  [REPOSITORIES.CategoryReSortRepository]: SuiteCategoryReSortRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -330,6 +342,8 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.FileManagerRepository]: B2cFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2cProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2cProductOptionRepository,
+  [REPOSITORIES.CategoryCreateRepository]: B2cCategoryCreateRepository,
+  [REPOSITORIES.CategoryReSortRepository]: B2cCategoryReSortRepository,
 };
 
 const b2bMappings: BindingsMap = {
@@ -376,6 +390,8 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.FileManagerRepository]: B2bFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2bProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2bProductOptionRepository,
+  [REPOSITORIES.CategoryCreateRepository]: B2bCategoryCreateRepository,
+  [REPOSITORIES.CategoryReSortRepository]: B2bCategoryReSortRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
@@ -418,6 +434,8 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.FileManagerRepository]: B2cMpFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2cMpProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2cMpProductOptionRepository,
+  [REPOSITORIES.CategoryCreateRepository]: B2cMpCategoryCreateRepository,
+  [REPOSITORIES.CategoryReSortRepository]: B2cMpCategoryReSortRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
@@ -476,6 +494,8 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.FileManagerRepository]: B2bMpFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2bMpProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2bMpProductOptionRepository,
+  [REPOSITORIES.CategoryCreateRepository]: B2bMpCategoryCreateRepository,
+  [REPOSITORIES.CategoryReSortRepository]: B2bMpCategoryReSortRepository,
 };
 
 const mappings = {

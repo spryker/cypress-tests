@@ -1,4 +1,6 @@
 export * from './category-edit';
+export * from './category-create';
+export * from './category-re-sort';
 export * from './tax';
 export * from './cms-block';
 export * from './discount';
