@@ -244,6 +244,16 @@ import { B2cNavigationTreeRepository } from '../../pages/backoffice/navigation/r
 import { B2bNavigationTreeRepository } from '../../pages/backoffice/navigation/repositories/b2b-navigation-tree-repository';
 import { B2cMpNavigationTreeRepository } from '../../pages/backoffice/navigation/repositories/b2c-mp-navigation-tree-repository';
 import { B2bMpNavigationTreeRepository } from '../../pages/backoffice/navigation/repositories/b2b-mp-navigation-tree-repository';
+import { SuiteCartUpSellingProductsRepository } from '../../pages/yves/cart/repositories/suite-cart-up-selling-products-repository';
+import { B2cCartUpSellingProductsRepository } from '../../pages/yves/cart/repositories/b2c-cart-up-selling-products-repository';
+import { B2bCartUpSellingProductsRepository } from '../../pages/yves/cart/repositories/b2b-cart-up-selling-products-repository';
+import { B2cMpCartUpSellingProductsRepository } from '../../pages/yves/cart/repositories/b2c-mp-cart-up-selling-products-repository';
+import { B2bMpCartUpSellingProductsRepository } from '../../pages/yves/cart/repositories/b2b-mp-cart-up-selling-products-repository';
+import { SuiteProductRelationRepository } from '../../pages/backoffice/product-relation/repositories/suite-product-relation-repository';
+import { B2cProductRelationRepository } from '../../pages/backoffice/product-relation/repositories/b2c-product-relation-repository';
+import { B2bProductRelationRepository } from '../../pages/backoffice/product-relation/repositories/b2b-product-relation-repository';
+import { B2cMpProductRelationRepository } from '../../pages/backoffice/product-relation/repositories/b2c-mp-product-relation-repository';
+import { B2bMpProductRelationRepository } from '../../pages/backoffice/product-relation/repositories/b2b-mp-product-relation-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -306,6 +316,8 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.ProductOptionRepository]: SuiteProductOptionRepository,
   [REPOSITORIES.RefundRepository]: SuiteRefundRepository,
   [REPOSITORIES.NavigationTreeRepository]: SuiteNavigationTreeRepository,
+  [REPOSITORIES.CartUpSellingProductsRepository]: SuiteCartUpSellingProductsRepository,
+  [REPOSITORIES.ProductRelationRepository]: SuiteProductRelationRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -351,6 +363,8 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.ProductOptionRepository]: B2cProductOptionRepository,
   [REPOSITORIES.RefundRepository]: B2cRefundRepository,
   [REPOSITORIES.NavigationTreeRepository]: B2cNavigationTreeRepository,
+  [REPOSITORIES.CartUpSellingProductsRepository]: B2cCartUpSellingProductsRepository,
+  [REPOSITORIES.ProductRelationRepository]: B2cProductRelationRepository,
 };
 
 const b2bMappings: BindingsMap = {
@@ -400,6 +414,8 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.ProductOptionRepository]: B2bProductOptionRepository,
   [REPOSITORIES.RefundRepository]: B2bRefundRepository,
   [REPOSITORIES.NavigationTreeRepository]: B2bNavigationTreeRepository,
+  [REPOSITORIES.CartUpSellingProductsRepository]: B2bCartUpSellingProductsRepository,
+  [REPOSITORIES.ProductRelationRepository]: B2bProductRelationRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
@@ -445,6 +461,8 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.ProductOptionRepository]: B2cMpProductOptionRepository,
   [REPOSITORIES.RefundRepository]: B2cMpRefundRepository,
   [REPOSITORIES.NavigationTreeRepository]: B2cMpNavigationTreeRepository,
+  [REPOSITORIES.CartUpSellingProductsRepository]: B2cMpCartUpSellingProductsRepository,
+  [REPOSITORIES.ProductRelationRepository]: B2cMpProductRelationRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
@@ -506,6 +524,8 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.ProductOptionRepository]: B2bMpProductOptionRepository,
   [REPOSITORIES.RefundRepository]: B2bMpRefundRepository,
   [REPOSITORIES.NavigationTreeRepository]: B2bMpNavigationTreeRepository,
+  [REPOSITORIES.CartUpSellingProductsRepository]: B2bMpCartUpSellingProductsRepository,
+  [REPOSITORIES.ProductRelationRepository]: B2bMpProductRelationRepository,
 };
 
 const mappings = {

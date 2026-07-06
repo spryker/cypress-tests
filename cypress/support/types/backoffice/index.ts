@@ -1,6 +1,7 @@
 export * from './category-edit';
 export * from './tax';
 export * from './product-search';
+export * from './product-relation';
 export * from './cms-block';
 export * from './cms-page-management';
 export * from './discount';

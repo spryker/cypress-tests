@@ -57,4 +57,6 @@ export const enum REPOSITORIES {
   RefundRepository = 'RefundRepository',
   NavigationTreeRepository = 'NavigationTreeRepository',
   ProductSearchPreferencesRepository = 'ProductSearchPreferencesRepository',
+  CartUpSellingProductsRepository = 'CartUpSellingProductsRepository',
+  ProductRelationRepository = 'ProductRelationRepository',
 }
