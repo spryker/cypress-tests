@@ -43,7 +43,7 @@ export class ProductSearchPreferencesPage extends BackofficePage {
     this.repository.getFilterKeyInput().clear().type(filterName);
     this.repository.getFilterTypeSelect().select('multi-select');
     this.repository.getFilterNameTranslationInput().first().clear().type(`${filterName} name`);
-    this.repository.getCopyTranslationButton().click();
+    this.repository.getCopyTranslationButton().first().click();
     this.repository.getFilterFormSubmit().click();
 
     return cy

@@ -12,7 +12,7 @@ export class SuiteProductRelationRepository implements ProductRelationRepository
   }
 
   getProductSearchInput(): Cypress.Chainable {
-    return cy.get('.dt-search input');
+    return cy.get('.dt-search input:visible');
   }
 
   getProductTableProcessing(): Cypress.Chainable {

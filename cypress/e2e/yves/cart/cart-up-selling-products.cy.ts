@@ -3,7 +3,11 @@ import { CartUpSellingProductsDynamicFixtures, CartUpSellingProductsStaticFixtur
 import { CartUpSellingProductsPage, CartPage, CatalogPage, ProductPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
-describe(
+// SKIPPED: seeding the up-sell relation requires the `haveProductRelation` helper, which is not
+// registered in the TestifyBackendApi /dynamic-fixtures endpoint ("Action 'haveProductRelation'
+// can't be called"). The source CartUpSellingProductsCest was itself @skip (CC-25718). Re-enable
+// once that helper is exposed for dynamic fixtures.
+describe.skip(
   'cart up-selling products',
   { tags: ['@yves', '@cart', 'cart', 'product', 'product-relation', 'up-selling', 'spryker-core'] },
   (): void => {
