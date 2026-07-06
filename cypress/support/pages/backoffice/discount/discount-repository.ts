@@ -1,0 +1,30 @@
+export interface DiscountRepository {
+  getTypeSelect(): Cypress.Chainable;
+  getNameInput(): Cypress.Chainable;
+  getDescriptionInput(): Cypress.Chainable;
+  getExclusiveRadio(isExclusive: boolean): Cypress.Chainable;
+  getValidFromInput(): Cypress.Chainable;
+  getValidToInput(): Cypress.Chainable;
+  getCalculatorPluginSelect(): Cypress.Chainable;
+  getGrossAmountInput(): Cypress.Chainable;
+  getCalculationGetButton(): Cypress.Chainable;
+  getCollectorQueryStringInput(): Cypress.Chainable;
+  getConditionGetButton(): Cypress.Chainable;
+  getDecisionRuleQueryStringInput(): Cypress.Chainable;
+  getCreateButton(): Cypress.Chainable;
+  getTabLink(tabContentId: string): Cypress.Chainable;
+  getActiveTabError(): Cypress.Chainable;
+  getSuccessAlert(): Cypress.Chainable;
+  getNameErrorContainer(): Cypress.Chainable;
+  getListTable(): Cypress.Chainable;
+  getDecisionRuleContainerSelector(): string;
+  getListTableUrl(): string;
+  getEditActionSelector(): string;
+  getViewActionSelector(): string;
+  getDeactivateActionSelector(): string;
+  getHeadingSelector(): string;
+  getSuccessMessage(): string;
+  getBlankValueError(): string;
+  getEditHeading(): string;
+  getViewHeading(): string;
+}

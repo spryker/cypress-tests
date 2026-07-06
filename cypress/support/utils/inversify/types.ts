@@ -50,4 +50,5 @@ export const enum REPOSITORIES {
   YvesRecurringOrderDetailRepository = 'YvesRecurringOrderDetailRepository',
   YvesRecurringOrderReviewRepository = 'YvesRecurringOrderReviewRepository',
   TaxRateRepository = 'TaxRateRepository',
+  DiscountRepository = 'DiscountRepository',
 }
