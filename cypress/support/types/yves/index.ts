@@ -1,4 +1,5 @@
 export * from './cart';
+export * from './cart-up-selling-products';
 export * from './checkout';
 export * from './availability';
 export * from './comments';

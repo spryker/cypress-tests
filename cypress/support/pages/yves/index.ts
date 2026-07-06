@@ -1,6 +1,7 @@
 export * from './yves-page';
 export * from './home/home-page';
 export * from './cart/cart-page';
+export * from './cart/cart-up-selling-products-page';
 export * from './agent-login/agent-login-page';
 export * from './checkout/address/checkout-address-page';
 export * from './checkout/customer/checkout-customer-page';
