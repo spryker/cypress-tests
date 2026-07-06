@@ -91,3 +91,4 @@ export * from './file-manager/file-manager-page';
 export * from './product-category/product-category-assign-page';
 export * from './product-option/product-option-page';
 export * from './refund/refund-page';
+export * from './product-search/product-search-preferences-page';
