@@ -224,6 +224,11 @@ import { B2cProductCategoryAssignRepository } from '../../pages/backoffice/produ
 import { B2bProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/b2b-product-category-assign-repository';
 import { B2cMpProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/b2c-mp-product-category-assign-repository';
 import { B2bMpProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/b2b-mp-product-category-assign-repository';
+import { SuiteProductOptionRepository } from '../../pages/backoffice/product-option/repositories/suite-product-option-repository';
+import { B2cProductOptionRepository } from '../../pages/backoffice/product-option/repositories/b2c-product-option-repository';
+import { B2bProductOptionRepository } from '../../pages/backoffice/product-option/repositories/b2b-product-option-repository';
+import { B2cMpProductOptionRepository } from '../../pages/backoffice/product-option/repositories/b2c-mp-product-option-repository';
+import { B2bMpProductOptionRepository } from '../../pages/backoffice/product-option/repositories/b2b-mp-product-option-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -282,6 +287,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.DiscountRepository]: SuiteDiscountRepository,
   [REPOSITORIES.FileManagerRepository]: SuiteFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: SuiteProductCategoryAssignRepository,
+  [REPOSITORIES.ProductOptionRepository]: SuiteProductOptionRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -323,6 +329,7 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.DiscountRepository]: B2cDiscountRepository,
   [REPOSITORIES.FileManagerRepository]: B2cFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2cProductCategoryAssignRepository,
+  [REPOSITORIES.ProductOptionRepository]: B2cProductOptionRepository,
 };
 
 const b2bMappings: BindingsMap = {
@@ -368,6 +375,7 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.DiscountRepository]: B2bDiscountRepository,
   [REPOSITORIES.FileManagerRepository]: B2bFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2bProductCategoryAssignRepository,
+  [REPOSITORIES.ProductOptionRepository]: B2bProductOptionRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
@@ -409,6 +417,7 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.DiscountRepository]: B2cMpDiscountRepository,
   [REPOSITORIES.FileManagerRepository]: B2cMpFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2cMpProductCategoryAssignRepository,
+  [REPOSITORIES.ProductOptionRepository]: B2cMpProductOptionRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
@@ -466,6 +475,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.DiscountRepository]: B2bMpDiscountRepository,
   [REPOSITORIES.FileManagerRepository]: B2bMpFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2bMpProductCategoryAssignRepository,
+  [REPOSITORIES.ProductOptionRepository]: B2bMpProductOptionRepository,
 };
 
 const mappings = {

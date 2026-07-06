@@ -53,4 +53,5 @@ export const enum REPOSITORIES {
   DiscountRepository = 'DiscountRepository',
   FileManagerRepository = 'FileManagerRepository',
   ProductCategoryAssignRepository = 'ProductCategoryAssignRepository',
+  ProductOptionRepository = 'ProductOptionRepository',
 }
