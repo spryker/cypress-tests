@@ -209,6 +209,11 @@ import { B2cTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2
 import { B2bTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2b-tax-rate-repository';
 import { B2cMpTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2c-mp-tax-rate-repository';
 import { B2bMpTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2b-mp-tax-rate-repository';
+import { SuiteProductSearchPreferencesRepository } from '../../pages/backoffice/product-search/repositories/suite-product-search-preferences-repository';
+import { B2cProductSearchPreferencesRepository } from '../../pages/backoffice/product-search/repositories/b2c-product-search-preferences-repository';
+import { B2bProductSearchPreferencesRepository } from '../../pages/backoffice/product-search/repositories/b2b-product-search-preferences-repository';
+import { B2cMpProductSearchPreferencesRepository } from '../../pages/backoffice/product-search/repositories/b2c-mp-product-search-preferences-repository';
+import { B2bMpProductSearchPreferencesRepository } from '../../pages/backoffice/product-search/repositories/b2b-mp-product-search-preferences-repository';
 import { SuiteDiscountRepository } from '../../pages/backoffice/discount/repositories/suite-discount-repository';
 import { B2cDiscountRepository } from '../../pages/backoffice/discount/repositories/b2c-discount-repository';
 import { B2bDiscountRepository } from '../../pages/backoffice/discount/repositories/b2b-discount-repository';
@@ -284,6 +289,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.YvesRecurringOrderDetailRepository]: SuiteRecurringOrderDetailRepository,
   [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
   [REPOSITORIES.TaxRateRepository]: SuiteTaxRateRepository,
+  [REPOSITORIES.ProductSearchPreferencesRepository]: SuiteProductSearchPreferencesRepository,
   [REPOSITORIES.DiscountRepository]: SuiteDiscountRepository,
   [REPOSITORIES.FileManagerRepository]: SuiteFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: SuiteProductCategoryAssignRepository,
@@ -326,6 +332,7 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.AgentMultiFactorAuthRepository]: B2cAgentMultiFactorAuthRepository,
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2cUserMultiFactorAuthRepository,
   [REPOSITORIES.TaxRateRepository]: B2cTaxRateRepository,
+  [REPOSITORIES.ProductSearchPreferencesRepository]: B2cProductSearchPreferencesRepository,
   [REPOSITORIES.DiscountRepository]: B2cDiscountRepository,
   [REPOSITORIES.FileManagerRepository]: B2cFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2cProductCategoryAssignRepository,
@@ -372,6 +379,7 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.SspDashboardManagementRepository]: B2bSspDashboardManagementRepository,
   [REPOSITORIES.SspServiceRepository]: B2bSspServiceRepository,
   [REPOSITORIES.TaxRateRepository]: B2bTaxRateRepository,
+  [REPOSITORIES.ProductSearchPreferencesRepository]: B2bProductSearchPreferencesRepository,
   [REPOSITORIES.DiscountRepository]: B2bDiscountRepository,
   [REPOSITORIES.FileManagerRepository]: B2bFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2bProductCategoryAssignRepository,
@@ -414,6 +422,7 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.AgentMultiFactorAuthRepository]: B2cMpAgentMultiFactorAuthRepository,
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2cMpUserMultiFactorAuthRepository,
   [REPOSITORIES.TaxRateRepository]: B2cMpTaxRateRepository,
+  [REPOSITORIES.ProductSearchPreferencesRepository]: B2cMpProductSearchPreferencesRepository,
   [REPOSITORIES.DiscountRepository]: B2cMpDiscountRepository,
   [REPOSITORIES.FileManagerRepository]: B2cMpFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2cMpProductCategoryAssignRepository,
@@ -472,6 +481,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.YvesRecurringOrderDetailRepository]: B2bMpRecurringOrderDetailRepository,
   [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
   [REPOSITORIES.TaxRateRepository]: B2bMpTaxRateRepository,
+  [REPOSITORIES.ProductSearchPreferencesRepository]: B2bMpProductSearchPreferencesRepository,
   [REPOSITORIES.DiscountRepository]: B2bMpDiscountRepository,
   [REPOSITORIES.FileManagerRepository]: B2bMpFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2bMpProductCategoryAssignRepository,
