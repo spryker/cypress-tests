@@ -16,7 +16,6 @@ export * from './product-attribute-visibility';
 export * from './locale';
 export * from './catalog';
 export * from './ssp-inquiry';
-export * from './company-account';
 export * from './ssp-file-management';
 export * from './ssp-asset';
 export * from './ssp-asset-specific-catalog';
