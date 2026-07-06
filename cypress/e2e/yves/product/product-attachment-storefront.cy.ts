@@ -101,22 +101,24 @@ describe(
       productManagementEditPage.openMediaTab();
 
       // Arrange
+      // Clear the localized sections too: a retry inherits the DE/EN attachments saved by the
+      // previous attempt, and adding on top of them corrupts the form so the save never succeeds.
       productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.defaultLocaleName);
+      clearAllLocalizedAttachments(dynamicFixtures.localeDE.locale_name);
+      clearAllLocalizedAttachments(dynamicFixtures.localeEN.locale_name);
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.defaultGuide,
         index: 0,
         locale: staticFixtures.defaultLocaleName,
       });
 
-      productManagementEditPage.expandLocaleSection(dynamicFixtures.localeDE.locale_name);
-
+      // The DE/EN sections are already expanded by clearAllLocalizedAttachments above;
+      // the expand button is a toggle, so clicking it again would collapse them.
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.deGuide,
         index: 0,
         locale: dynamicFixtures.localeDE.locale_name,
       });
-
-      productManagementEditPage.expandLocaleSection(dynamicFixtures.localeEN.locale_name);
 
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.enGuide,
