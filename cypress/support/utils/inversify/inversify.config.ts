@@ -214,6 +214,11 @@ import { B2cDiscountRepository } from '../../pages/backoffice/discount/repositor
 import { B2bDiscountRepository } from '../../pages/backoffice/discount/repositories/b2b-discount-repository';
 import { B2cMpDiscountRepository } from '../../pages/backoffice/discount/repositories/b2c-mp-discount-repository';
 import { B2bMpDiscountRepository } from '../../pages/backoffice/discount/repositories/b2b-mp-discount-repository';
+import { SuiteFileManagerRepository } from '../../pages/backoffice/file-manager/repositories/suite-file-manager-repository';
+import { B2cFileManagerRepository } from '../../pages/backoffice/file-manager/repositories/b2c-file-manager-repository';
+import { B2bFileManagerRepository } from '../../pages/backoffice/file-manager/repositories/b2b-file-manager-repository';
+import { B2cMpFileManagerRepository } from '../../pages/backoffice/file-manager/repositories/b2c-mp-file-manager-repository';
+import { B2bMpFileManagerRepository } from '../../pages/backoffice/file-manager/repositories/b2b-mp-file-manager-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -270,6 +275,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
   [REPOSITORIES.TaxRateRepository]: SuiteTaxRateRepository,
   [REPOSITORIES.DiscountRepository]: SuiteDiscountRepository,
+  [REPOSITORIES.FileManagerRepository]: SuiteFileManagerRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -309,6 +315,7 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2cUserMultiFactorAuthRepository,
   [REPOSITORIES.TaxRateRepository]: B2cTaxRateRepository,
   [REPOSITORIES.DiscountRepository]: B2cDiscountRepository,
+  [REPOSITORIES.FileManagerRepository]: B2cFileManagerRepository,
 };
 
 const b2bMappings: BindingsMap = {
@@ -352,6 +359,7 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.SspServiceRepository]: B2bSspServiceRepository,
   [REPOSITORIES.TaxRateRepository]: B2bTaxRateRepository,
   [REPOSITORIES.DiscountRepository]: B2bDiscountRepository,
+  [REPOSITORIES.FileManagerRepository]: B2bFileManagerRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
@@ -391,6 +399,7 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2cMpUserMultiFactorAuthRepository,
   [REPOSITORIES.TaxRateRepository]: B2cMpTaxRateRepository,
   [REPOSITORIES.DiscountRepository]: B2cMpDiscountRepository,
+  [REPOSITORIES.FileManagerRepository]: B2cMpFileManagerRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
@@ -446,6 +455,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
   [REPOSITORIES.TaxRateRepository]: B2bMpTaxRateRepository,
   [REPOSITORIES.DiscountRepository]: B2bMpDiscountRepository,
+  [REPOSITORIES.FileManagerRepository]: B2bMpFileManagerRepository,
 };
 
 const mappings = {
