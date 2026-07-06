@@ -83,3 +83,4 @@ export * from './purchasing-control/budget/list/budget-list-page';
 export * from './purchasing-control/budget/create/budget-create-page';
 export * from './purchasing-control/budget/edit/budget-edit-page';
 export * from './tax/tax-rate-page';
+export * from './discount/discount-page';
