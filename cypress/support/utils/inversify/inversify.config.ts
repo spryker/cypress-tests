@@ -219,6 +219,11 @@ import { B2cFileManagerRepository } from '../../pages/backoffice/file-manager/re
 import { B2bFileManagerRepository } from '../../pages/backoffice/file-manager/repositories/b2b-file-manager-repository';
 import { B2cMpFileManagerRepository } from '../../pages/backoffice/file-manager/repositories/b2c-mp-file-manager-repository';
 import { B2bMpFileManagerRepository } from '../../pages/backoffice/file-manager/repositories/b2b-mp-file-manager-repository';
+import { SuiteProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/suite-product-category-assign-repository';
+import { B2cProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/b2c-product-category-assign-repository';
+import { B2bProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/b2b-product-category-assign-repository';
+import { B2cMpProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/b2c-mp-product-category-assign-repository';
+import { B2bMpProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/b2b-mp-product-category-assign-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -276,6 +281,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.TaxRateRepository]: SuiteTaxRateRepository,
   [REPOSITORIES.DiscountRepository]: SuiteDiscountRepository,
   [REPOSITORIES.FileManagerRepository]: SuiteFileManagerRepository,
+  [REPOSITORIES.ProductCategoryAssignRepository]: SuiteProductCategoryAssignRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -316,6 +322,7 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.TaxRateRepository]: B2cTaxRateRepository,
   [REPOSITORIES.DiscountRepository]: B2cDiscountRepository,
   [REPOSITORIES.FileManagerRepository]: B2cFileManagerRepository,
+  [REPOSITORIES.ProductCategoryAssignRepository]: B2cProductCategoryAssignRepository,
 };
 
 const b2bMappings: BindingsMap = {
@@ -360,6 +367,7 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.TaxRateRepository]: B2bTaxRateRepository,
   [REPOSITORIES.DiscountRepository]: B2bDiscountRepository,
   [REPOSITORIES.FileManagerRepository]: B2bFileManagerRepository,
+  [REPOSITORIES.ProductCategoryAssignRepository]: B2bProductCategoryAssignRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
@@ -400,6 +408,7 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.TaxRateRepository]: B2cMpTaxRateRepository,
   [REPOSITORIES.DiscountRepository]: B2cMpDiscountRepository,
   [REPOSITORIES.FileManagerRepository]: B2cMpFileManagerRepository,
+  [REPOSITORIES.ProductCategoryAssignRepository]: B2cMpProductCategoryAssignRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
@@ -456,6 +465,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.TaxRateRepository]: B2bMpTaxRateRepository,
   [REPOSITORIES.DiscountRepository]: B2bMpDiscountRepository,
   [REPOSITORIES.FileManagerRepository]: B2bMpFileManagerRepository,
+  [REPOSITORIES.ProductCategoryAssignRepository]: B2bMpProductCategoryAssignRepository,
 };
 
 const mappings = {

@@ -52,4 +52,5 @@ export const enum REPOSITORIES {
   TaxRateRepository = 'TaxRateRepository',
   DiscountRepository = 'DiscountRepository',
   FileManagerRepository = 'FileManagerRepository',
+  ProductCategoryAssignRepository = 'ProductCategoryAssignRepository',
 }

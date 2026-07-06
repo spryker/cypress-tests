@@ -3,6 +3,7 @@ export * from './tax';
 export * from './cms-block';
 export * from './discount';
 export * from './file-manager';
+export * from './product-category-assignment';
 export * from './order-management';
 export * from './return-management';
 export * from './merchant-b2b-contract-requests';

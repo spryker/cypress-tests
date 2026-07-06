@@ -85,3 +85,4 @@ export * from './purchasing-control/budget/edit/budget-edit-page';
 export * from './tax/tax-rate-page';
 export * from './discount/discount-page';
 export * from './file-manager/file-manager-page';
+export * from './product-category/product-category-assign-page';
