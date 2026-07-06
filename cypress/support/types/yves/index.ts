@@ -1,5 +1,6 @@
 export * from './cart';
 export * from './checkout';
+export * from './availability';
 export * from './comments';
 export * from './merchant-b2b-contract-requests';
 export * from './merchant-registration';
