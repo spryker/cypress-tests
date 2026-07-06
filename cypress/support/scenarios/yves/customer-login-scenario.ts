@@ -18,6 +18,11 @@ export class CustomerLoginScenario {
     cy.session([params.email, params.password], () => {
       this.loginPage.visit();
       this.loginPage.login(params);
+
+      // login() only submits the form; without waiting for the post-login redirect the session
+      // snapshot can be taken from a guest/partially authenticated state, and every restore of
+      // that snapshot then renders checkout as a guest (missing saved-address select, empty cart).
+      cy.location('pathname').should('not.include', '/login');
     });
   };
 }

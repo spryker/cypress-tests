@@ -146,11 +146,20 @@ describe(
       productManagementEditPage.openMediaTab();
 
       // Arrange
+      // Seed both attachments here in one publish instead of leaning on the EN
+      // attachment left behind by the previous test: that cross-test coupling made
+      // length==2 race the sibling test's async publish (found 1, expected 2).
       productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.defaultLocaleName);
+      clearAllLocalizedAttachments(dynamicFixtures.localeEN.locale_name);
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.temporaryGuide,
         index: 0,
         locale: staticFixtures.defaultLocaleName,
+      });
+      productManagementEditPage.addAttachment({
+        ...staticFixtures.attachments.enGuide,
+        index: 0,
+        locale: dynamicFixtures.localeEN.locale_name,
       });
       productManagementEditPage.save();
 
@@ -159,7 +168,7 @@ describe(
       cy.runQueueWorker();
 
       visitProductDetailPage();
-      // en_US attachment from previous test + default "Temporary Guide"
+      // EN-locale "EN Guide" + default "Temporary Guide", both seeded above
       productPage.getAttachmentItems().should('have.length', 2);
 
       // Act
