@@ -11,6 +11,7 @@ export * from './cms/block/create/cms-block-create-page';
 export * from './cms/block/list/block-list-page';
 export * from './cms/block/update/block-update-page';
 export * from './cms/page/create/cms-page-create-page';
+export * from './cms/page/list/cms-page-list-page';
 export * from './cms/cms-placeholder/edit/cms-placeholder-edit-page';
 export * from './sales/detail/sales-detail-page';
 export * from './sales/index/sales-index-page';

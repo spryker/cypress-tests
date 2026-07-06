@@ -1,6 +1,7 @@
 export * from './category-edit';
 export * from './tax';
 export * from './cms-block';
+export * from './cms-page-management';
 export * from './discount';
 export * from './file-manager';
 export * from './product-category-assignment';
