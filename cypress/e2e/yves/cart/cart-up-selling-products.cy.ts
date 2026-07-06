@@ -3,11 +3,7 @@ import { CartUpSellingProductsDynamicFixtures, CartUpSellingProductsStaticFixtur
 import { CartUpSellingProductsPage, CartPage, CatalogPage, ProductPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
-// SKIPPED: seeding the up-sell relation requires the `haveProductRelation` helper, which is not
-// registered in the TestifyBackendApi /dynamic-fixtures endpoint ("Action 'haveProductRelation'
-// can't be called"). The source CartUpSellingProductsCest was itself @skip (CC-25718). Re-enable
-// once that helper is exposed for dynamic fixtures.
-describe.skip(
+describe(
   'cart up-selling products',
   { tags: ['@yves', '@cart', 'cart', 'product', 'product-relation', 'up-selling', 'spryker-core'] },
   (): void => {
@@ -26,7 +22,7 @@ describe.skip(
 
     // Ported from Codeception CartUpSellingProductsCest::testAddToCartItemAndCheckUpsellingItemsExist.
     // Kept skipped to mirror the source @skip annotation (CC-25718 flakiness).
-    it.skip('should show the up-selling carousel on the cart page after adding the base product', (): void => {
+    it('should show the up-selling carousel on the cart page after adding the base product', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
