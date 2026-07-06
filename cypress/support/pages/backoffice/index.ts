@@ -67,6 +67,8 @@ export * from './ssp-model-management/update/ssp-model-update-page';
 export * from './ssp-model-management/view/ssp-model-view-page';
 export * from './navigation/navigation-menu-page';
 export * from './navigation/navigation-menu-repository';
+export * from './navigation/navigation-tree-page';
+export * from './navigation/navigation-tree-repository';
 export * from './merchant-registrations/merchant-registration-list-page';
 export * from './merchant-registrations/merchant-registration-view-page';
 export * from './product-attribute-visibility/list/product-attribute-visibility-list-page';

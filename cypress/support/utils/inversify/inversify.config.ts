@@ -234,6 +234,11 @@ import { B2cRefundRepository } from '../../pages/backoffice/refund/repositories/
 import { B2bRefundRepository } from '../../pages/backoffice/refund/repositories/b2b-refund-repository';
 import { B2cMpRefundRepository } from '../../pages/backoffice/refund/repositories/b2c-mp-refund-repository';
 import { B2bMpRefundRepository } from '../../pages/backoffice/refund/repositories/b2b-mp-refund-repository';
+import { SuiteNavigationTreeRepository } from '../../pages/backoffice/navigation/repositories/suite-navigation-tree-repository';
+import { B2cNavigationTreeRepository } from '../../pages/backoffice/navigation/repositories/b2c-navigation-tree-repository';
+import { B2bNavigationTreeRepository } from '../../pages/backoffice/navigation/repositories/b2b-navigation-tree-repository';
+import { B2cMpNavigationTreeRepository } from '../../pages/backoffice/navigation/repositories/b2c-mp-navigation-tree-repository';
+import { B2bMpNavigationTreeRepository } from '../../pages/backoffice/navigation/repositories/b2b-mp-navigation-tree-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -294,6 +299,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.ProductCategoryAssignRepository]: SuiteProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: SuiteProductOptionRepository,
   [REPOSITORIES.RefundRepository]: SuiteRefundRepository,
+  [REPOSITORIES.NavigationTreeRepository]: SuiteNavigationTreeRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -337,6 +343,7 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.ProductCategoryAssignRepository]: B2cProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2cProductOptionRepository,
   [REPOSITORIES.RefundRepository]: B2cRefundRepository,
+  [REPOSITORIES.NavigationTreeRepository]: B2cNavigationTreeRepository,
 };
 
 const b2bMappings: BindingsMap = {
@@ -384,6 +391,7 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.ProductCategoryAssignRepository]: B2bProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2bProductOptionRepository,
   [REPOSITORIES.RefundRepository]: B2bRefundRepository,
+  [REPOSITORIES.NavigationTreeRepository]: B2bNavigationTreeRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
@@ -427,6 +435,7 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.ProductCategoryAssignRepository]: B2cMpProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2cMpProductOptionRepository,
   [REPOSITORIES.RefundRepository]: B2cMpRefundRepository,
+  [REPOSITORIES.NavigationTreeRepository]: B2cMpNavigationTreeRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
@@ -486,6 +495,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.ProductCategoryAssignRepository]: B2bMpProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2bMpProductOptionRepository,
   [REPOSITORIES.RefundRepository]: B2bMpRefundRepository,
+  [REPOSITORIES.NavigationTreeRepository]: B2bMpNavigationTreeRepository,
 };
 
 const mappings = {
