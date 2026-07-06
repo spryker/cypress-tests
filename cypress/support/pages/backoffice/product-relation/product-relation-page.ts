@@ -56,7 +56,7 @@ export class ProductRelationPage extends BackofficePage {
   private selectProductRule(rule: ProductRuleData): void {
     this.repository.getRuleFieldSelect(0).select(rule.field, { force: true });
     this.repository.getRuleOperatorSelect(0).select(rule.operator, { force: true });
-    this.repository.getRuleValueInput(0).clear().type(rule.value);
+    this.repository.getRuleValueInput(0).clear().type(rule.value).blur();
   }
 }
 

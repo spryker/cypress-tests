@@ -33,9 +33,10 @@ describe(
       });
     });
 
-    // SKIPPED: the multi-tab create form (base-product DataTable picker + Assign-products
-    // QueryBuilder rule) does not complete reliably via synthetic driving — the relation is
-    // not persisted (never reaches the "Edit Product Relation" page). Needs interactive verification.
+    // SKIPPED: the QueryBuilder rule registration is fixed (value .blur() so jQuery-QueryBuilder
+    // validates it — was rendering red/invalid). Remaining: after switching tabs the owning-product
+    // selection and/or Store-relation checkbox is not committed, so save stays on the create page.
+    // Needs a bit more interactive iteration against a live backoffice to finish.
     it.skip('should create a product relation and land on the edit page', (): void => {
       productRelationPage.createProductRelation({
         key: relationKey,
