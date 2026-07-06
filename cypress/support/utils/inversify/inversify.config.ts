@@ -209,6 +209,11 @@ import { B2cTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2
 import { B2bTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2b-tax-rate-repository';
 import { B2cMpTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2c-mp-tax-rate-repository';
 import { B2bMpTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2b-mp-tax-rate-repository';
+import { SuiteProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/suite-product-category-assign-repository';
+import { B2cProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/b2c-product-category-assign-repository';
+import { B2bProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/b2b-product-category-assign-repository';
+import { B2cMpProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/b2c-mp-product-category-assign-repository';
+import { B2bMpProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/b2b-mp-product-category-assign-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -264,6 +269,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.YvesRecurringOrderDetailRepository]: SuiteRecurringOrderDetailRepository,
   [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
   [REPOSITORIES.TaxRateRepository]: SuiteTaxRateRepository,
+  [REPOSITORIES.ProductCategoryAssignRepository]: SuiteProductCategoryAssignRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -302,6 +308,7 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.AgentMultiFactorAuthRepository]: B2cAgentMultiFactorAuthRepository,
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2cUserMultiFactorAuthRepository,
   [REPOSITORIES.TaxRateRepository]: B2cTaxRateRepository,
+  [REPOSITORIES.ProductCategoryAssignRepository]: B2cProductCategoryAssignRepository,
 };
 
 const b2bMappings: BindingsMap = {
@@ -344,6 +351,7 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.SspDashboardManagementRepository]: B2bSspDashboardManagementRepository,
   [REPOSITORIES.SspServiceRepository]: B2bSspServiceRepository,
   [REPOSITORIES.TaxRateRepository]: B2bTaxRateRepository,
+  [REPOSITORIES.ProductCategoryAssignRepository]: B2bProductCategoryAssignRepository,
 };
 
 const b2cMpMappings: BindingsMap = {
@@ -382,6 +390,7 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.AgentMultiFactorAuthRepository]: B2cMpAgentMultiFactorAuthRepository,
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2cMpUserMultiFactorAuthRepository,
   [REPOSITORIES.TaxRateRepository]: B2cMpTaxRateRepository,
+  [REPOSITORIES.ProductCategoryAssignRepository]: B2cMpProductCategoryAssignRepository,
 };
 
 const b2bMpMappings: BindingsMap = {
@@ -436,6 +445,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.YvesRecurringOrderDetailRepository]: B2bMpRecurringOrderDetailRepository,
   [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
   [REPOSITORIES.TaxRateRepository]: B2bMpTaxRateRepository,
+  [REPOSITORIES.ProductCategoryAssignRepository]: B2bMpProductCategoryAssignRepository,
 };
 
 const mappings = {

@@ -1,0 +1,83 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": false,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeEN",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 2, "name": "AT" }
+        },
+        {
+          "type": "helper",
+          "name": "haveLocalizedCategory",
+          "key": "category",
+          "arguments": [{ "locale": "#localeEN" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCategoryStoreRelation",
+          "arguments": ["#category.id_category", "#store.id_store"]
+        },
+        {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "localizedAttributeToAssign"
+        },
+        {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "localizedAttributeToDeassign"
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productToAssign",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [{ "locale": "#localeEN", "name": "#localizedAttributeToAssign.name" }]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productToDeassign",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [{ "locale": "#localeEN", "name": "#localizedAttributeToDeassign.name" }]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductCategoryForCategory",
+          "arguments": ["#category.id_category", { "fkProductAbstract": "#productToDeassign.fk_product_abstract" }]
+        }
+      ]
+    }
+  }
+}
