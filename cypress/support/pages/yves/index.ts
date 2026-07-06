@@ -18,6 +18,9 @@ export * from './company/merchant-relation-request/index/merchant-relation-reque
 export * from './merchant/merchant-page';
 export * from './product/product-page';
 export * from './customer/overview/customer-overview-page';
+export * from './customer/profile/customer-profile-page';
+export * from './customer/address/customer-address-page';
+export * from './customer/newsletter/customer-newsletter-page';
 export * from './customer/order/order-page';
 export * from './customer/order/order-details-page';
 export * from './product-comparison/product-comparison-page';

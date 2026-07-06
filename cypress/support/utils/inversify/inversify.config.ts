@@ -76,6 +76,16 @@ import { B2cCustomerOverviewRepository } from '../../pages/yves/customer/overvie
 import { B2bCustomerOverviewRepository } from '../../pages/yves/customer/overview/repositories/b2b-customer-overview-repository';
 import { B2cMpCustomerOverviewRepository } from '../../pages/yves/customer/overview/repositories/b2c-mp-customer-overview-repository';
 import { B2bMpCustomerOverviewRepository } from '../../pages/yves/customer/overview/repositories/b2b-mp-customer-overview-repository';
+import { SuiteCustomerAddressRepository } from '../../pages/yves/customer/address/repositories/suite-customer-address-repository';
+import { B2cCustomerAddressRepository } from '../../pages/yves/customer/address/repositories/b2c-customer-address-repository';
+import { B2bCustomerAddressRepository } from '../../pages/yves/customer/address/repositories/b2b-customer-address-repository';
+import { B2cMpCustomerAddressRepository } from '../../pages/yves/customer/address/repositories/b2c-mp-customer-address-repository';
+import { B2bMpCustomerAddressRepository } from '../../pages/yves/customer/address/repositories/b2b-mp-customer-address-repository';
+import { SuiteCustomerNewsletterRepository } from '../../pages/yves/customer/newsletter/repositories/suite-customer-newsletter-repository';
+import { B2cCustomerNewsletterRepository } from '../../pages/yves/customer/newsletter/repositories/b2c-customer-newsletter-repository';
+import { B2bCustomerNewsletterRepository } from '../../pages/yves/customer/newsletter/repositories/b2b-customer-newsletter-repository';
+import { B2cMpCustomerNewsletterRepository } from '../../pages/yves/customer/newsletter/repositories/b2c-mp-customer-newsletter-repository';
+import { B2bMpCustomerNewsletterRepository } from '../../pages/yves/customer/newsletter/repositories/b2b-mp-customer-newsletter-repository';
 import { B2cMpCatalogRepository } from '../../pages/yves/catalog/repositories/b2c-mp-catalog-repository';
 import { B2cMpProductRepository } from '../../pages/yves/product/repositories/b2c-mp-product-repository';
 import { B2cMultiCartRepository } from '../../pages/yves/multi-cart/repositories/b2c-multi-cart-repository';
@@ -219,6 +229,8 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.MerchantRelationRequestIndexRepository]: SuiteMerchantRelationRequestIndexRepository,
   [REPOSITORIES.MerchantRepository]: SuiteMerchantRepository,
   [REPOSITORIES.CustomerOverviewRepository]: SuiteCustomerOverviewRepository,
+  [REPOSITORIES.CustomerAddressRepository]: SuiteCustomerAddressRepository,
+  [REPOSITORIES.CustomerNewsletterRepository]: SuiteCustomerNewsletterRepository,
   [REPOSITORIES.ContentRepository]: SuiteContentRepository,
   [REPOSITORIES.OrderRepository]: SuiteOrderRepository,
   [REPOSITORIES.OrderDetailsRepository]: SuiteOrderDetailsRepository,
@@ -270,6 +282,8 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2cMerchantRelationRequestIndexRepository,
   [REPOSITORIES.MerchantRepository]: B2cMerchantRepository,
   [REPOSITORIES.CustomerOverviewRepository]: B2cCustomerOverviewRepository,
+  [REPOSITORIES.CustomerAddressRepository]: B2cCustomerAddressRepository,
+  [REPOSITORIES.CustomerNewsletterRepository]: B2cCustomerNewsletterRepository,
   [REPOSITORIES.OrderRepository]: B2cOrderRepository,
   [REPOSITORIES.OrderDetailsRepository]: B2cOrderDetailsRepository,
   [REPOSITORIES.ContentRepository]: B2cContentRepository,
@@ -305,6 +319,8 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2bMerchantRelationRequestIndexRepository,
   [REPOSITORIES.MerchantRepository]: B2bMerchantRepository,
   [REPOSITORIES.CustomerOverviewRepository]: B2bCustomerOverviewRepository,
+  [REPOSITORIES.CustomerAddressRepository]: B2bCustomerAddressRepository,
+  [REPOSITORIES.CustomerNewsletterRepository]: B2bCustomerNewsletterRepository,
   [REPOSITORIES.OrderRepository]: B2bOrderRepository,
   [REPOSITORIES.OrderDetailsRepository]: B2bOrderDetailsRepository,
   [REPOSITORIES.ContentRepository]: B2bContentRepository,
@@ -344,6 +360,8 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2cMpMerchantRelationRequestIndexRepository,
   [REPOSITORIES.MerchantRepository]: B2cMpMerchantRepository,
   [REPOSITORIES.CustomerOverviewRepository]: B2cMpCustomerOverviewRepository,
+  [REPOSITORIES.CustomerAddressRepository]: B2cMpCustomerAddressRepository,
+  [REPOSITORIES.CustomerNewsletterRepository]: B2cMpCustomerNewsletterRepository,
   [REPOSITORIES.OrderRepository]: B2cMpOrderRepository,
   [REPOSITORIES.OrderDetailsRepository]: B2cMpOrderDetailsRepository,
   [REPOSITORIES.ContentRepository]: B2cMpContentRepository,
@@ -379,6 +397,8 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.MerchantRelationRequestIndexRepository]: B2bMpMerchantRelationRequestIndexRepository,
   [REPOSITORIES.MerchantRepository]: B2bMpMerchantRepository,
   [REPOSITORIES.CustomerOverviewRepository]: B2bMpCustomerOverviewRepository,
+  [REPOSITORIES.CustomerAddressRepository]: B2bMpCustomerAddressRepository,
+  [REPOSITORIES.CustomerNewsletterRepository]: B2bMpCustomerNewsletterRepository,
   [REPOSITORIES.OrderRepository]: B2bMpOrderRepository,
   [REPOSITORIES.OrderDetailsRepository]: B2bMpOrderDetailsRepository,
   [REPOSITORIES.ContentRepository]: B2bMpContentRepository,
