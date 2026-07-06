@@ -1,0 +1,15 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "customer",
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
+        }
+      ]
+    }
+  }
+}
