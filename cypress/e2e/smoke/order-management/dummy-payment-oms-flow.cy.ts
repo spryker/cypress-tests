@@ -48,7 +48,7 @@ describe(
       addOneProductToCart();
       checkoutScenario.execute({ isGuest: true });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
 
       userLoginScenario.execute({
         username: staticFixtures.rootUser.username,
@@ -70,7 +70,7 @@ describe(
       addOneProductToCart();
       checkoutScenario.execute();
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
 
       userLoginScenario.execute({
         username: staticFixtures.rootUser.username,

@@ -39,10 +39,10 @@ describe(
       staticFixtures.generalSspInquiry.availableTypes = staticFixtures.sspInquiryTypes.general;
       sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
-      cy.contains(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
+      sspInquiryCreatePage.assertBodyContainsText(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
 
       sspInquiryListPage.visit();
-      cy.contains(staticFixtures.generalSspInquiry.subject).should('exist');
+      sspInquiryListPage.assertBodyContainsText(staticFixtures.generalSspInquiry.subject).should('exist');
     });
   }
 );
