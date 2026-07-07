@@ -126,7 +126,7 @@ describe(
       sspInquiryDetailPage.submitComment('This is a test comment.');
 
       sspInquiryDetailPage.assertPageLocation();
-      cy.contains('This is a test comment.').should('exist');
+      sspInquiryDetailPage.assertBodyContainsText('This is a test comment.').should('exist');
     });
 
     it('should visit the ssp inquiry list page', () => {
