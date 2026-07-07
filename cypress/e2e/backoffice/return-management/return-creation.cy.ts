@@ -77,7 +77,7 @@ describe(
       salesDetailPage.create();
       salesReturnCreatePage.create();
 
-      cy.contains('Return was successfully created.');
+      salesReturnCreatePage.assertBodyContainsText('Return was successfully created.');
     });
 
     it('should be able to create return from (from delivery order state)', (): void => {
@@ -94,7 +94,7 @@ describe(
       salesDetailPage.create();
       salesReturnCreatePage.create();
 
-      cy.contains('Return was successfully created.');
+      salesReturnCreatePage.assertBodyContainsText('Return was successfully created.');
     });
 
     function addOneProductToCart(): void {

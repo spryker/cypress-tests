@@ -47,7 +47,7 @@ describe(
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
 
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
@@ -57,7 +57,7 @@ describe(
       salesIndexPage.visit();
       salesIndexPage.view();
 
-      cy.get('body').contains(dynamicFixtures.product.sku);
+      salesIndexPage.assertBodyContainsText(dynamicFixtures.product.sku);
     });
 
     skipB2BIt('should be able to create an order by guest (credit card)', (): void => {
@@ -68,7 +68,7 @@ describe(
         paymentMethod: 'dummyPaymentCreditCard',
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
 
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
@@ -78,7 +78,7 @@ describe(
       salesIndexPage.visit();
       salesIndexPage.view();
 
-      cy.get('body').contains(dynamicFixtures.product.sku);
+      salesIndexPage.assertBodyContainsText(dynamicFixtures.product.sku);
     });
 
     function getPaymentMethodBasedOnEnv(): string {
