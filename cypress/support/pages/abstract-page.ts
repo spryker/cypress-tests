@@ -13,5 +13,7 @@ export class AbstractPage {
   assertBodyContainsText = (text: string, options?: Partial<Cypress.Timeoutable>): Cypress.Chainable =>
     cy.get('body').contains(text, options);
 
+  getBody = (): Cypress.Chainable => cy.get('body');
+
   isRepository = (...ids: string[]): boolean => ids.includes(Cypress.env('repositoryId'));
 }

@@ -60,7 +60,7 @@ describe(
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
     });
 
     skipB2BIt('guest customer should checkout to multi shipment address', (): void => {
@@ -73,7 +73,7 @@ describe(
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
     });
 
     it('customer should checkout to single shipment (with customer shipping address)', (): void => {
@@ -91,7 +91,7 @@ describe(
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
     });
 
     it('customer should checkout to single shipment (with new shipping address)', (): void => {
@@ -109,7 +109,7 @@ describe(
         isMultiShipment: Cypress.env('ENV_IS_SSP_ENABLED'),
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
     });
 
     it('customer should checkout to multi shipment address (with customer shipping address)', (): void => {
@@ -128,7 +128,7 @@ describe(
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
     });
 
     it('customer should checkout to multi shipment address (with new shipping address)', (): void => {
@@ -146,7 +146,7 @@ describe(
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
     });
 
     function getPaymentMethodBasedOnEnv(): string {

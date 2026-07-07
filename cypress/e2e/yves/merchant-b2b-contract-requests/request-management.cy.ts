@@ -61,7 +61,7 @@ describe(
       merchantRelationRequestIndexPage.filterRequests({ status: 'rejected' });
       merchantRelationRequestIndexPage.openFirstRequest();
 
-      cy.contains(staticFixtures.decisionNote);
+      merchantRelationRequestDetailsPage.assertBodyContainsText(staticFixtures.decisionNote);
     });
 
     it('company user should be able to filter MR requests by status', (): void => {
