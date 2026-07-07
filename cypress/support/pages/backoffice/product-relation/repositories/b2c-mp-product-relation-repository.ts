@@ -19,8 +19,12 @@ export class B2cMpProductRelationRepository implements ProductRelationRepository
     return cy.get('#product-table_processing');
   }
 
+  getProductTableInfo(): Cypress.Chainable {
+    return cy.get('#product-table_info');
+  }
+
   getSelectProductButtons(): Cypress.Chainable {
-    return cy.get('[id^="select-product-"]');
+    return cy.get('a[data-select-product]');
   }
 
   getAssignProductsTab(): Cypress.Chainable {
@@ -53,5 +57,9 @@ export class B2cMpProductRelationRepository implements ProductRelationRepository
 
   getEditRelationHeading(key: string): string {
     return `Edit Product Relation: ${key}`;
+  }
+
+  getOwningProductField(): Cypress.Chainable {
+    return cy.get('#product_relation_fkProductAbstract');
   }
 }

@@ -27,6 +27,10 @@ export class ProductRelationPage extends BackofficePage {
 
     this.switchToRelationTypeTab();
     this.repository.getSaveButton().click();
+    cy.wait(3000);
+    cy.document().then((doc) => {
+      cy.writeFile('/tmp/pr-dom2.html', doc.documentElement.outerHTML);
+    });
   };
 
   assertRelationSaved = (key: string): void => {
@@ -36,9 +40,21 @@ export class ProductRelationPage extends BackofficePage {
   private selectBaseProduct(search: string): void {
     this.repository.getProductSearchInput().clear().type(search);
 
-    // Wait for the DataTables reload triggered by the filter to settle before clicking.
+    // Wait until the filter has actually applied (info row shows "filtered from") and the redraw
+    // finished, so we click the button for our single matching row — not a stale/unfiltered one.
+    // The owning-product picker is server-side; asserting on the settled state avoids the race where
+    // the click fires before the filter narrows the 200+ demo products down to ours.
+    this.repository.getProductTableInfo().should('contain', 'filtered from');
     this.repository.getProductTableProcessing().should('not.be.visible');
-    this.repository.getSelectProductButtons().first().click();
+
+    // The Select anchor's handler reads `$(event.target).data('select-product')`, so the event target
+    // must be the <a> itself — a plain .click() can land on the inner <i> icon, yielding an undefined
+    // id and an AJAX that never populates the owner. trigger('click') fires on the <a> deterministically.
+    this.repository.getSelectProductButtons().filter(':visible').first().click();
+
+    // Selecting the owner is an async AJAX that fills the required #product_relation_fkProductAbstract
+    // field; if it never lands the form silently returns to the create page on save. Assert it committed.
+    this.repository.getOwningProductField().should('not.have.value', '');
   }
 
   private switchToAssignProductsTab(): void {

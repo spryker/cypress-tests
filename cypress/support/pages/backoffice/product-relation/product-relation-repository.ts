@@ -3,7 +3,9 @@ export interface ProductRelationRepository {
   getRelationTypeSelect(): Cypress.Chainable;
   getProductSearchInput(): Cypress.Chainable;
   getProductTableProcessing(): Cypress.Chainable;
+  getProductTableInfo(): Cypress.Chainable;
   getSelectProductButtons(): Cypress.Chainable;
+  getOwningProductField(): Cypress.Chainable;
   getAssignProductsTab(): Cypress.Chainable;
   getRelationTypeTab(): Cypress.Chainable;
   getRuleFieldSelect(ruleIndex: number): Cypress.Chainable;
