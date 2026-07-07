@@ -58,7 +58,8 @@ describe('filter preferences', { tags: ['@backoffice', 'product-search', 'spryke
 
         // Drag foo below bar via a pointer-event sequence.
         cy.get(fooSelector).trigger('pointerdown', { which: 1, button: 0 });
-        cy.get(barSelector).trigger('pointermove').trigger('pointerup', { force: true });
+        cy.get(barSelector).trigger('pointermove');
+        cy.get(barSelector).trigger('pointerup', { force: true });
 
         // Order after reorder: bar precedes foo.
         cy.get(`${barSelector} ~ ${fooSelector}`).should('exist');
