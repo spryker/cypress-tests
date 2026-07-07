@@ -27,10 +27,6 @@ export class ProductRelationPage extends BackofficePage {
 
     this.switchToRelationTypeTab();
     this.repository.getSaveButton().click();
-    cy.wait(3000);
-    cy.document().then((doc) => {
-      cy.writeFile('/tmp/pr-dom2.html', doc.documentElement.outerHTML);
-    });
   };
 
   assertRelationSaved = (key: string): void => {
