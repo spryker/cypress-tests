@@ -27,9 +27,7 @@ export class YvesBudgetUpdatePage extends YvesPage {
     this.repository.getSubmitButton().click();
   };
 
-  assertSuccess = (): void => {
-    this.repository.getSuccessFlashMessage().should('be.visible');
-  };
+  getSuccessFlashMessage = (): Cypress.Chainable => this.repository.getSuccessFlashMessage();
 
   getNameValue = (): Cypress.Chainable<string> => {
     return this.repository.getNameInput().invoke('val') as Cypress.Chainable<string>;

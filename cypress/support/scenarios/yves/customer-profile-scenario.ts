@@ -9,7 +9,7 @@ export class CustomerProfileScenario {
 
   executePasswordChange(credentials: PasswordChangeParams): void {
     this.profilePage.changePassword(credentials.password, credentials.newPassword);
-    this.profilePage.waitForPasswordChangedMessage();
+    this.profilePage.getPasswordChangedMessage().should('be.visible');
   }
 }
 

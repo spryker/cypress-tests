@@ -11,23 +11,26 @@ export class SspInquiryCreatePage extends YvesPage {
 
   public PAGE_URL = '/customer/ssp-inquiry/create';
 
+  getTypeOptions(): Cypress.Chainable {
+    return this.repository.getTypeOptions();
+  }
+
+  getOrderReferenceInput(): Cypress.Chainable {
+    return this.repository.getOrderReferenceInput();
+  }
+
+  getSspAssetReferenceInput(): Cypress.Chainable {
+    return this.repository.getSspAssetReferenceInput();
+  }
+
   createOrderSspInquiry(params: OrderSspInquiryParams): void {
-    this.repository.getOrderReferenceInput().should('have.value', params.orderReference);
     this.createSspInquiry(params);
   }
   createSspAssetSspInquiry(params: SspAssetSspInquiryParams): void {
-    this.repository.getSspAssetReferenceInput().should('have.value', params.sspAssetReference);
     this.createSspInquiry(params);
   }
 
   createSspInquiry(params: SspInquiryParams): void {
-    if (params.availableTypes) {
-      this.repository.getTypeOptions().should('have.length', params.availableTypes.length);
-      params.availableTypes.forEach((type, index) => {
-        this.repository.getTypeOptions().eq(index).should('have.value', type.key);
-      });
-    }
-
     this.repository.getSubjectInput().type(params.subject);
     this.repository.getDescriptionTextarea().type(params.description);
     for (const file of params.files) {

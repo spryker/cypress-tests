@@ -15,17 +15,15 @@ export class RecurringOrderDetailPage extends YvesPage {
     cy.visit(`/recurring-orders/${uuid}`);
   };
 
-  assertScheduleName = (name: string): void => {
-    this.repository.getScheduleName().should('contain', name);
-  };
+  getScheduleName = (): Cypress.Chainable => this.repository.getScheduleName();
 
-  assertCadenceVisible = (): void => {
-    this.repository.getCadence().should('be.visible');
-  };
+  getCadence = (): Cypress.Chainable => this.repository.getCadence();
 
-  assertStatusBadge = (status: string): void => {
-    this.repository.getStatusBadge().invoke('text').invoke('toLowerCase').should('contain', status.toLowerCase());
-  };
+  getStatusBadge = (): Cypress.Chainable => this.repository.getStatusBadge();
+
+  getHistoryViewOrderLink = (): Cypress.Chainable => this.repository.getHistoryViewOrderLink();
+
+  getDetailItems = (): Cypress.Chainable => this.repository.getDetailItems();
 
   clickPause = (): void => {
     this.repository.getPauseButton().click();
@@ -67,19 +65,7 @@ export class RecurringOrderDetailPage extends YvesPage {
     this.repository.getCancelConfirmButton().click();
   };
 
-  assertHistoryViewOrderLinkVisible = (): void => {
-    this.repository.getHistoryViewOrderLink().should('be.visible');
-  };
-
   assertHistoryViewRecordStatus = (status: string): void => {
     this.repository.getHistoryViewLatestRecordStatus().contains(status);
-  };
-
-  assertDetailItemsContain = (text: string): void => {
-    this.repository.getDetailItems().should('contain', text);
-  };
-
-  assertDetailItemsNotContain = (text: string): void => {
-    this.repository.getDetailItems().should('not.contain', text);
   };
 }

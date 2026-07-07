@@ -44,12 +44,53 @@ describe(
       serviceListPage.visit();
 
       serviceListPage.findServiceTableByName(dynamicFixtures.salesOrder?.order_items[0].name).then(() => {
-        serviceListPage.assertServiceListPage({
-          orderReference: dynamicFixtures.salesOrder?.order_reference,
-          customerFullName: `${dynamicFixtures.customer.first_name} ${dynamicFixtures.customer.last_name}`,
-          companyName: dynamicFixtures.company?.name,
-          itemId: dynamicFixtures.salesOrder?.order_items[0].id_sales_order_item,
-          itemName: dynamicFixtures.salesOrder?.order_items[0].name,
+        const orderReference = dynamicFixtures.salesOrder?.order_reference;
+        const customerName = `${dynamicFixtures.customer.first_name} ${dynamicFixtures.customer.last_name}`;
+        const company = dynamicFixtures.company?.name;
+        const itemId = dynamicFixtures.salesOrder?.order_items[0].id_sales_order_item;
+        const itemName = dynamicFixtures.salesOrder?.order_items[0].name;
+
+        serviceListPage
+          .getServiceListTable()
+          .first()
+          .within(() => {
+            serviceListPage.getOrderReferenceHeader().should('exist').and('contain', 'Order Reference');
+            serviceListPage.getCustomerHeader().should('exist').and('contain', 'Customer');
+            serviceListPage.getCompanyHeader().should('exist').and('contain', 'Company');
+            serviceListPage.getServiceHeader().should('exist').and('contain', 'Service');
+            serviceListPage.getScheduledAtHeader().should('exist').and('contain', 'Time and Date');
+            serviceListPage.getCreatedAtHeader().should('exist').and('contain', 'Created');
+            serviceListPage.getActionsHeader().should('exist').and('contain', 'Actions');
+          });
+
+        serviceListPage.getFirstTableRow().within(() => {
+          if (orderReference) {
+            serviceListPage.getOrderReferenceCell().should('contain', orderReference);
+          }
+
+          if (customerName) {
+            serviceListPage.getCustomerNameCell().should('contain', customerName);
+          }
+
+          if (company) {
+            serviceListPage.getCompanyCell().should('contain', company);
+          }
+
+          serviceListPage.getServiceCell().should('contain', itemName);
+
+          serviceListPage
+            .getActionsCell()
+            .should('contain', 'View')
+            .find(serviceListPage.getViewButtonSelector())
+            .should('exist')
+            .and('have.attr', 'href')
+            .and('include', '/self-service-portal/view-service?id-sales-order-item=');
+
+          serviceListPage
+            .getActionsCell()
+            .find(serviceListPage.getViewButtonSelector())
+            .should('have.attr', 'href')
+            .and('include', `/self-service-portal/view-service?id-sales-order-item=${itemId}`);
         });
       });
     });

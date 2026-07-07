@@ -23,7 +23,7 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
     addTwoProductsToCart();
     checkoutScenario.execute({ isGuest: true, paymentMethod: getPaymentMethodBasedOnEnv() });
 
-    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+    customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
   skipB2BIt('guest customer should checkout to multi shipment address', (): void => {
@@ -34,7 +34,7 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
       paymentMethod: getPaymentMethodBasedOnEnv(),
     });
 
-    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+    customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
   skipB2BMpIt('customer should checkout to single shipment (with new shipping address)', (): void => {
@@ -46,7 +46,7 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
     addTwoProductsToCart();
     checkoutScenario.execute({ paymentMethod: getPaymentMethodBasedOnEnv() });
 
-    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+    customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
   it('customer should checkout to multi shipment address (with new shipping address)', (): void => {
@@ -58,7 +58,7 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
     addTwoProductsToCart();
     checkoutScenario.execute({ isMultiShipment: true, paymentMethod: getPaymentMethodBasedOnEnv() });
 
-    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+    customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
     //check for making sure session is not invalidated after checkout
     customerOverviewPage.viewLastPlacedOrder();
   });

@@ -66,10 +66,7 @@ export class AgentDashboardPage extends MpPage {
     const findParams = { query: params.query, expectedCount: 1 };
 
     this.find(findParams).then(($merchantUserRow) => {
-      cy.wrap($merchantUserRow)
-        .find(this.repository.getAssistUserButtonSelector())
-        .should('exist')
-        .click({ force: true });
+      cy.wrap($merchantUserRow).find(this.repository.getAssistUserButtonSelector()).click({ force: true });
       this.repository.getModalConfirmButton().click();
     });
   };
@@ -98,6 +95,14 @@ export class AgentDashboardPage extends MpPage {
 
   getLogoutAgentSelector = (): string => {
     return this.repository.getLogoutAgentSelector();
+  };
+
+  getEndUserAssistanceButton = (): Cypress.Chainable => {
+    return cy.get('body').find(this.repository.getEndUserAssistanceSelector());
+  };
+
+  getLogoutAgentButton = (): Cypress.Chainable => {
+    return cy.get('body').find(this.repository.getLogoutAgentSelector());
   };
 
   logoutAgent = (): void => {

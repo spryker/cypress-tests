@@ -16,7 +16,7 @@ export class MerchantUserSetUpMfaScenario {
     this.mfaPage.activateMfa('Email');
     cy.wait('@getEnabledTypes');
 
-    this.mfaPage.waitForVerificationPopup();
+    this.mfaPage.getVerificationPopup().should('be.visible');
 
     cy.getUserMultiFactorAuthCode(email, 'email')
       .then((code) => {
@@ -24,10 +24,11 @@ export class MerchantUserSetUpMfaScenario {
 
         cy.intercept('POST', '**/*user-management/activate*').as('activateForm');
         this.mfaPage.verifyCode(code);
+        this.mfaPage.getVerificationPopup().should('not.exist');
       })
       .then(() => {
         cy.wait('@activateForm');
-        this.mfaPage.waitForActivationSuccessMessage();
+        this.mfaPage.getActivationSuccessMessage().should('be.visible');
         cy.cleanUpUserMultiFactorAuthCode(mfaCode);
       });
   }
@@ -41,7 +42,7 @@ export class MerchantUserSetUpMfaScenario {
     this.mfaPage.deactivateMfa('Email');
     cy.wait('@getEnabledTypes');
 
-    this.mfaPage.waitForVerificationPopup();
+    this.mfaPage.getVerificationPopup().should('be.visible');
 
     cy.getUserMultiFactorAuthCode(email, 'email')
       .then((code) => {
@@ -49,10 +50,11 @@ export class MerchantUserSetUpMfaScenario {
 
         cy.intercept('POST', '**/*user-management/deactivate*').as('deactivateForm');
         this.mfaPage.verifyCode(code);
+        this.mfaPage.getVerificationPopup().should('not.exist');
       })
       .then(() => {
         cy.wait('@deactivateForm');
-        this.mfaPage.waitForDeactivationSuccessMessage();
+        this.mfaPage.getDeactivationSuccessMessage().should('be.visible');
         cy.cleanUpUserMultiFactorAuthCode(mfaCode);
       });
   }

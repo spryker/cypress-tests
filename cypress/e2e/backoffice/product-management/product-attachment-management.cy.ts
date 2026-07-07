@@ -31,16 +31,12 @@ describe(
 
       productManagementEditPage.openMediaTab();
 
-      cy.contains('Product Attachments').should('be.visible');
-      cy.contains('Add URL-based attachments for different locales.').should('be.visible');
+      productManagementEditPage.getAttachmentsSectionHeading().should('be.visible');
+      productManagementEditPage.getAttachmentsSectionDescription().should('be.visible');
 
-      cy.get('.attachment-forms')
-        .first()
-        .within(() => {
-          cy.contains('.ibox-title', 'Default').should('be.visible');
-          cy.get('.ibox').first().should('not.have.class', 'collapsed');
-          cy.get('.add-another-attachment').first().should('be.visible');
-        });
+      productManagementEditPage.getFirstAttachmentFormLocaleTitle().should('be.visible');
+      productManagementEditPage.getFirstAttachmentFormIbox().should('not.have.class', 'collapsed');
+      productManagementEditPage.getFirstAttachmentFormAddButton().should('be.visible');
     });
 
     it('backoffice user can add and save single attachment to default locale', (): void => {
@@ -56,11 +52,11 @@ describe(
 
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       productManagementEditPage.openMediaTab();
 
-      productManagementEditPage.verifyAttachmentExists({
+      verifyAttachmentExists({
         ...staticFixtures.attachments.userManual,
         index: 0,
         locale: staticFixtures.defaultLocaleName,
@@ -87,11 +83,11 @@ describe(
 
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       productManagementEditPage.openMediaTab();
 
-      productManagementEditPage.verifyAttachmentExists({
+      verifyAttachmentExists({
         ...staticFixtures.attachments.installationGuide,
         index: 1,
         locale: staticFixtures.defaultLocaleName,
@@ -99,7 +95,7 @@ describe(
 
       productManagementEditPage.getLocalizedIboxToggle().first().click({ force: true });
 
-      productManagementEditPage.verifyAttachmentExists({
+      verifyAttachmentExists({
         ...staticFixtures.attachments.installationsanleitung,
         index: 0,
         locale: dynamicFixtures.localeDE.locale_name,
@@ -134,25 +130,25 @@ describe(
 
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       productManagementEditPage.openMediaTab();
 
-      productManagementEditPage.verifyAttachmentCount(staticFixtures.defaultLocaleName, 3);
+      verifyAttachmentCount(staticFixtures.defaultLocaleName, 3);
 
-      productManagementEditPage.verifyAttachmentExists({
+      verifyAttachmentExists({
         ...staticFixtures.attachments.warrantyInformation,
         index: 0,
         locale: staticFixtures.defaultLocaleName,
       });
 
-      productManagementEditPage.verifyAttachmentExists({
+      verifyAttachmentExists({
         ...staticFixtures.attachments.safetyGuidelines,
         index: 1,
         locale: staticFixtures.defaultLocaleName,
       });
 
-      productManagementEditPage.verifyAttachmentExists({
+      verifyAttachmentExists({
         ...staticFixtures.attachments.technicalSpecifications,
         index: 2,
         locale: staticFixtures.defaultLocaleName,
@@ -173,13 +169,13 @@ describe(
 
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       productManagementEditPage.openMediaTab();
 
-      productManagementEditPage.verifyAttachmentCount(staticFixtures.defaultLocaleName, 1);
+      verifyAttachmentCount(staticFixtures.defaultLocaleName, 1);
 
-      productManagementEditPage.verifyAttachmentExists({
+      verifyAttachmentExists({
         ...staticFixtures.attachments.temporaryDocument,
         index: 0,
         locale: staticFixtures.defaultLocaleName,
@@ -189,11 +185,11 @@ describe(
 
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       productManagementEditPage.openMediaTab();
 
-      productManagementEditPage.verifyAttachmentCount(staticFixtures.defaultLocaleName, 0);
+      verifyAttachmentCount(staticFixtures.defaultLocaleName, 0);
     });
 
     it('backoffice user can add attachments to multiple locales independently', (): void => {
@@ -227,25 +223,25 @@ describe(
 
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       productManagementEditPage.openMediaTab();
 
-      productManagementEditPage.verifyAttachmentExists({
+      verifyAttachmentExists({
         ...staticFixtures.attachments.defaultManual,
         index: 0,
         locale: staticFixtures.defaultLocaleName,
       });
 
       productManagementEditPage.getLocalizedIboxToggle().first().click({ force: true });
-      productManagementEditPage.verifyAttachmentExists({
+      verifyAttachmentExists({
         ...staticFixtures.attachments.localeSpecificManual,
         index: 0,
         locale: dynamicFixtures.localeDE.locale_name,
       });
 
       productManagementEditPage.getLocalizedIboxToggle().eq(1).click({ force: true });
-      productManagementEditPage.verifyAttachmentExists({
+      verifyAttachmentExists({
         ...staticFixtures.attachments.anotherLocaleManual,
         index: 0,
         locale: dynamicFixtures.localeEN.locale_name,
@@ -256,6 +252,21 @@ describe(
       productManagementListPage.visit();
       productManagementListPage.applyFilters({ query: dynamicFixtures.product.abstract_sku });
       productPage.editProductFromList(dynamicFixtures.product.abstract_sku);
+    }
+
+    function verifyAttachmentExists(params: { label: string; url: string; index?: number; locale: string }): void {
+      const index = params.index ?? 0;
+
+      productManagementEditPage.getAttachmentLabelInput(index, params.locale).should('have.value', params.label);
+      productManagementEditPage.getAttachmentUrlInput(index, params.locale).should('have.value', params.url);
+    }
+
+    function verifySaveSuccess(sku: string): void {
+      productManagementEditPage.getSaveSuccessMessage(sku).should('be.visible');
+    }
+
+    function verifyAttachmentCount(locale: string, count: number): void {
+      productManagementEditPage.getAttachmentItems(locale).should('have.length', count);
     }
   }
 );

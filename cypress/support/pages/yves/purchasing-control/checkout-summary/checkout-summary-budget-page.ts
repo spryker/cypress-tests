@@ -11,29 +11,9 @@ export class CheckoutSummaryBudgetPage extends YvesPage {
 
   protected PAGE_URL = '/checkout/summary';
 
-  assertEnforcementError = (): void => {
-    this.repository.getCheckoutErrorMessage().should('be.visible');
-  };
+  getCheckoutErrorMessage = (): Cypress.Chainable => this.repository.getCheckoutErrorMessage();
 
-  assertWarnFlashMessage = (): void => {
-    this.repository.getWarnFlashMessage().should('be.visible');
-  };
-
-  assertLockedCostCenterValue = (): void => {
-    this.repository.getCostCenterSelectorValue().should('be.visible');
-  };
-
-  assertBudgetRemainingVisible = (): void => {
-    this.repository.getBudgetRemainingAmount().should('be.visible');
-  };
-
-  assertApproveButtonVisible = (): void => {
-    this.repository.getApproveButton().should('be.visible');
-  };
-
-  assertDeclineButtonVisible = (): void => {
-    this.repository.getDeclineButton().should('be.visible');
-  };
+  getWarnFlashMessage = (): Cypress.Chainable => this.repository.getWarnFlashMessage();
 
   approveQuote = (): void => {
     this.repository.getApproveButton().click();

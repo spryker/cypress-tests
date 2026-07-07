@@ -33,17 +33,19 @@ describe(
       });
       checkoutScenario.execute({ shouldSkipPlaceOrder: true });
 
-      checkoutSummaryRecurringOrderPage.assertRecurringOrderToggleVisible();
+      checkoutSummaryRecurringOrderPage.getRecurringOrderToggle().should('be.visible');
       checkoutSummaryRecurringOrderPage.enableRecurringOrder();
+      checkoutSummaryRecurringOrderPage.getCadenceTypeSelect().should('be.visible');
       checkoutSummaryRecurringOrderPage.fillScheduleName(staticFixtures.scheduleName);
       checkoutSummaryRecurringOrderPage.selectCadenceType('monthly');
       checkoutSummaryRecurringOrderPage.confirmRecurringOrder();
+      checkoutSummaryRecurringOrderPage.getConfirmButton().should('not.exist');
       checkoutSummaryPage.placeOrder();
 
       cy.url().should('include', '/checkout/success');
 
       recurringOrderListPage.visit();
-      recurringOrderListPage.assertScheduleVisible(staticFixtures.scheduleName);
+      recurringOrderListPage.getListTable().contains(staticFixtures.scheduleName).should('be.visible');
     });
 
     it('recurring order widget is not visible when credit card payment method is selected', (): void => {
@@ -54,7 +56,7 @@ describe(
       });
       checkoutScenario.execute({ paymentMethod: 'dummyPaymentCreditCard', shouldSkipPlaceOrder: true });
 
-      checkoutSummaryRecurringOrderPage.assertRecurringOrderToggleNotVisible();
+      checkoutSummaryRecurringOrderPage.getRecurringOrderToggle().should('not.exist');
     });
   }
 );

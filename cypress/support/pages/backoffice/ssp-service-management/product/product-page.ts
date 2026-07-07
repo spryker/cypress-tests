@@ -13,7 +13,6 @@ export class ProductPage extends BackofficePage {
     cy.get(this.repository.getProductClassSelectSelector())
       .siblings(this.repository.getSiblingSelector())
       .find(this.repository.getSelect2Selector())
-      .should('exist')
       .click();
 
     // Then select the option from the dropdown by clicking on it
@@ -25,29 +24,25 @@ export class ProductPage extends BackofficePage {
       .getShipmentTypeSelectSelect()
       .siblings(this.repository.getSiblingSelector())
       .find(this.repository.getSelect2Selector())
-      .should('exist')
       .click();
 
     cy.get('li.select2-results__option').contains(shipmentName).click();
   }
 
   saveProduct(): void {
-    cy.get(this.repository.getSaveButtonSelector()).should('exist').click();
+    cy.get(this.repository.getSaveButtonSelector()).click();
   }
 
-  verifySuccessMessage(): void {
-    cy.get(this.repository.getSuccessMessageSelector())
-      .should('exist')
-      .should('be.visible')
-      .should('contain', 'was saved successfully.');
+  getSuccessMessage(): Cypress.Chainable {
+    return cy.get(this.repository.getSuccessMessageSelector());
   }
 
-  verifyProductClassSelected(typeName: string): void {
-    cy.get(this.repository.getSelectedTypeVerificationSelector()).should('contain', typeName);
+  getSelectedProductClass(): Cypress.Chainable {
+    return cy.get(this.repository.getSelectedTypeVerificationSelector());
   }
 
-  verifyShipmentTypeSelected(shipmentTypeName: string): void {
-    cy.get(this.repository.getShipmentTypeVerificationSelector()).should('contain', shipmentTypeName);
+  getSelectedShipmentType(): Cypress.Chainable {
+    return cy.get(this.repository.getShipmentTypeVerificationSelector());
   }
 
   editProductFromList(sku: string): void {
@@ -64,7 +59,6 @@ export class ProductPage extends BackofficePage {
     this.repository
       .getVariantFirstTableRow()
       .find(this.repository.getVariantEditButtonSelector())
-      .should('be.visible')
       .click({ force: true });
   }
 }

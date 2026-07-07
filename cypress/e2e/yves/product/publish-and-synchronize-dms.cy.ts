@@ -76,19 +76,19 @@ describe(
 
       catalogPage.search({ query: productAbstract.name });
 
-      cy.contains(productAbstract.name);
-      cy.contains(productAbstract.sku);
-      cy.contains(productAbstract.description);
-      cy.get('body').should('satisfy', ($body) => {
+      catalogPage.assertBodyContainsText(productAbstract.name);
+      catalogPage.assertBodyContainsText(productAbstract.sku);
+      catalogPage.assertBodyContainsText(productAbstract.description);
+      catalogPage.getBody().should('satisfy', ($body) => {
         const text = $body.text();
         // Number of in stock items or Available (never out of stock)
         return text.includes('Available') || /\d+(\.\d+)?\s+in stock/.test(text);
       });
 
       if (!['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
-        cy.contains(productAbstract.price);
+        catalogPage.assertBodyContainsText(productAbstract.price);
         productPage.addToCart();
-        cy.contains(productPage.getAddToCartSuccessMessage());
+        productPage.assertBodyContainsText(productPage.getAddToCartSuccessMessage());
       }
     });
 
@@ -104,18 +104,18 @@ describe(
 
       catalogPage.search({ query: productAbstract.name });
 
-      cy.contains(productAbstract.name);
-      cy.contains(productAbstract.sku);
-      cy.contains(productAbstract.description);
-      cy.get('body').should('satisfy', ($body) => {
+      catalogPage.assertBodyContainsText(productAbstract.name);
+      catalogPage.assertBodyContainsText(productAbstract.sku);
+      catalogPage.assertBodyContainsText(productAbstract.description);
+      catalogPage.getBody().should('satisfy', ($body) => {
         const text = $body.text();
         // Number of in stock items or Available (never out of stock)
         return text.includes('Available') || /\d+(\.\d+)?\s+in stock/.test(text);
       });
-      cy.contains(productAbstract.price);
+      catalogPage.assertBodyContainsText(productAbstract.price);
 
       productPage.addToCart();
-      cy.contains(productPage.getAddToCartSuccessMessage());
+      productPage.assertBodyContainsText(productPage.getAddToCartSuccessMessage());
     });
   }
 );

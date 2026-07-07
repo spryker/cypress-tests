@@ -13,6 +13,109 @@ import {
 import { SspAssetDetailPage as YvesSspAssetDetailPage } from '@pages/yves/';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
+interface AssetDetailsData {
+  reference?: string;
+  name?: string;
+  serialNumber?: string;
+  status?: string;
+  note?: string;
+  image?: string;
+  businessUnitOwner?: { name: string };
+  assignedbusinessUnits?: { name: string }[];
+  companies?: { name: string }[];
+  orderReference?: string;
+}
+
+const verifyAssetDetails = (page: SspAssetDetailPage, assetData: AssetDetailsData): void => {
+  page.openCompaniesTab();
+
+  if (assetData.reference) {
+    page.getReferenceValue().should('contain', assetData.reference);
+  }
+
+  if (assetData.name) {
+    page.getNameValue().should('contain', assetData.name);
+  }
+
+  if (assetData.serialNumber) {
+    page.getSerialNumberValue().should('contain', assetData.serialNumber);
+  }
+
+  if (assetData.status) {
+    const expectedStatus = assetData.status.toLowerCase();
+    page.getStatusValue().then(($statusElement) => {
+      const actualStatus = $statusElement.text().trim().toLowerCase();
+      expect(actualStatus).to.include(expectedStatus);
+    });
+  }
+
+  if (assetData.note) {
+    page.getNoteValue().should('contain', assetData.note);
+  }
+
+  if (assetData.image) {
+    page.getImage().should('exist');
+  } else {
+    page.getImage().should('not.exist');
+  }
+
+  page.getCompaniesTab().should('exist');
+  page.getInquiriesTab().should('exist');
+
+  if (assetData.companies) {
+    for (const company of assetData.companies) {
+      page.getCompaniesTabContent().contains(company.name).should('be.visible');
+    }
+  }
+
+  if (assetData.assignedbusinessUnits && assetData.assignedbusinessUnits.length > 0) {
+    page
+      .getCompanyTable()
+      .should('be.visible')
+      .find('tbody tr')
+      .should('have.length.at.least', assetData.assignedbusinessUnits.length);
+
+    for (const businessUnit of assetData.assignedbusinessUnits) {
+      page.getCompaniesTabContent().contains(businessUnit.name).should('be.visible');
+    }
+  }
+
+  if (assetData.businessUnitOwner) {
+    page.getBusinessUnitOwnerValue().should('contain', assetData.businessUnitOwner.name);
+  }
+
+  page.getServicesTab().should('exist');
+
+  if (assetData.orderReference) {
+    page.openServicesTab();
+    page.getOrderReferenceColumn().contains(assetData.orderReference).should('be.visible');
+  }
+};
+
+const assertYvesAssetDetails = (page: YvesSspAssetDetailPage, details: AssetDetailsData): void => {
+  if (details.reference) {
+    page.getReferenceContainer(details.reference).should('exist');
+  }
+
+  if (details.name) {
+    page.getAssetTitle().should('contain', details.name);
+  }
+
+  if (details.serialNumber) {
+    page.getSerialNumberContainer(details.serialNumber).should('exist');
+  }
+
+  if (details.note) {
+    page.getNoteContainer(details.note).should('exist');
+  }
+
+  if (details.image) {
+    page.getImageSrc().should('include', 'customer/ssp-asset/view-image?ssp-asset-reference=');
+  } else {
+    page.getImageSrc().should('not.include', 'customer/ssp-asset/view-image?ssp-asset-reference=');
+  }
+};
+
 describe(
   'ssp asset management',
   {
@@ -56,7 +159,19 @@ describe(
 
     it('should be able to create a new asset', () => {
       assetManagementListPage.visit();
-      assetManagementListPage.verifyListPage();
+
+      assetManagementListPage.getIdHeader().should('exist');
+      assetManagementListPage.getReferenceHeader().should('exist');
+      assetManagementListPage.getImageHeader().should('exist');
+      assetManagementListPage.getNameHeader().should('exist');
+      assetManagementListPage.getSerialNumberHeader().should('exist');
+      assetManagementListPage.getStatusHeader().should('exist');
+
+      assetManagementListPage.getIdColumnValues().then((ids) => {
+        const sortedIds = [...ids].sort((a, b) => b - a);
+        expect(ids).to.deep.equal(sortedIds, 'ID column should be sorted in descending order');
+      });
+
       assetManagementListPage.clickCreateButton();
 
       assetManagementAddPage.fillAssetForm({
@@ -75,10 +190,10 @@ describe(
       assetManagementAddPage.checkCreateSspModelCheckbox();
 
       assetManagementAddPage.submitForm();
-      assetManagementAddPage.verifySuccessMessage();
+      assetManagementAddPage.getSuccessMessageContainer().should('contain', assetManagementAddPage.getSuccessMessage());
 
       assetManagementDetailPage.assertPageLocation();
-      assetManagementDetailPage.verifyAssetDetails({
+      verifyAssetDetails(assetManagementDetailPage, {
         reference: staticFixtures.sspAsset.reference,
         name: staticFixtures.sspAsset.name,
         status: staticFixtures.sspAsset.status,
@@ -100,12 +215,27 @@ describe(
 
         assetManagementListPage.searchAsset(reference);
 
-        assetManagementListPage.assetTableContainsAsset({
-          reference: assetReference,
-          name: staticFixtures.sspAsset.name,
-          status: staticFixtures.sspAsset.status,
-          serialNumber: staticFixtures.sspAsset.serial_number,
-          statuses: staticFixtures.statuses,
+        cy.intercept('GET', '**/self-service-portal/list-asset/table*').as('assetTableData');
+
+        cy.wait('@assetTableData').then(() => {
+          let displayStatus = staticFixtures.sspAsset.status;
+
+          if (Array.isArray(staticFixtures.statuses)) {
+            const matchingStatus = staticFixtures.statuses.find(
+              (statusObj) => statusObj.key === staticFixtures.sspAsset.status
+            );
+
+            if (matchingStatus && matchingStatus.value) {
+              displayStatus = matchingStatus.value;
+            }
+          }
+
+          assetManagementListPage
+            .getTableRows()
+            .should('contain', assetReference)
+            .and('contain', staticFixtures.sspAsset.name)
+            .and('contain', displayStatus)
+            .and('contain', staticFixtures.sspAsset.serial_number);
         });
 
         customerLoginScenario.execute({
@@ -118,7 +248,7 @@ describe(
           qs: { reference: assetReference },
         });
 
-        yvesSspAssetDetailPage.assertAssetDetails({
+        assertYvesAssetDetails(yvesSspAssetDetailPage, {
           reference: assetReference,
           name: staticFixtures.sspAsset.name,
           image: staticFixtures.sspAsset.image,
@@ -150,9 +280,11 @@ describe(
       });
 
       assetManagementUpdatePage.submitForm();
-      assetManagementUpdatePage.verifySuccessMessage();
+      assetManagementUpdatePage
+        .getSuccessMessage()
+        .should('contain', assetManagementUpdatePage.getSuccessMessageText());
       assetManagementDetailPage.assertPageLocation();
-      assetManagementDetailPage.verifyAssetDetails({
+      verifyAssetDetails(assetManagementDetailPage, {
         reference: staticFixtures.sspAsset.reference,
         name: staticFixtures.sspAssetOverride.name,
         serialNumber: staticFixtures.sspAssetOverride.serial_number,

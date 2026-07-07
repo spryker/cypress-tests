@@ -42,7 +42,5 @@ export class BackofficeBudgetCreatePage extends BackofficePage {
     this.repository.getSaveButton().click();
   };
 
-  assertSuccess = (): void => {
-    this.repository.getSuccessMessage().should('be.visible');
-  };
+  getSuccessMessage = (): Cypress.Chainable => this.repository.getSuccessMessage();
 }

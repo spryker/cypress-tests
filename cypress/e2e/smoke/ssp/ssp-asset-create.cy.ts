@@ -2,6 +2,38 @@ import { container } from '@utils';
 import { SspAssetCreatePage, SspAssetDetailPage, LoginPage } from '@pages/yves';
 import { SspAssetCreateSmokeStaticFixtures } from '@interfaces/smoke';
 
+interface AssetDetailsData {
+  reference?: string;
+  name?: string;
+  serialNumber?: string;
+  note?: string;
+  image?: string;
+}
+
+const assertAssetDetails = (page: SspAssetDetailPage, details: AssetDetailsData): void => {
+  if (details.reference) {
+    page.getReferenceContainer(details.reference).should('exist');
+  }
+
+  if (details.name) {
+    page.getAssetTitle().should('contain', details.name);
+  }
+
+  if (details.serialNumber) {
+    page.getSerialNumberContainer(details.serialNumber).should('exist');
+  }
+
+  if (details.note) {
+    page.getNoteContainer(details.note).should('exist');
+  }
+
+  if (details.image) {
+    page.getImageSrc().should('include', 'customer/ssp-asset/view-image?ssp-asset-reference=');
+  } else {
+    page.getImageSrc().should('not.include', 'customer/ssp-asset/view-image?ssp-asset-reference=');
+  }
+};
+
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
  * This test checks that corresponding S3 bucker exists in the infra of the env
@@ -43,11 +75,11 @@ describe(
         image: staticFixtures.asset.image,
       });
 
-      cy.contains(assetCreatePage.getAssetCreatedMessage());
+      assetCreatePage.assertBodyContainsText(assetCreatePage.getAssetCreatedMessage());
 
       assetDetailPage.assertPageLocation();
 
-      assetDetailPage.assertAssetDetails({
+      assertAssetDetails(assetDetailPage, {
         name: staticFixtures.asset.name,
         serialNumber: staticFixtures.asset.serial_number,
         note: staticFixtures.asset.note,

@@ -43,9 +43,11 @@ describe(
         image: staticFixtures.sspModel.image,
       });
       sspModelAddPage.submitForm();
-      sspModelAddPage.verifySuccessMessage();
+      sspModelAddPage.getSuccessMessageContainer().should('be.visible');
+      sspModelAddPage.getSuccessMessageText().should('be.visible');
 
-      cy.get('img[data-qa="ssp-model-image"]')
+      sspModelAddPage
+        .getModelImage()
         .should('be.visible')
         .and(($img) => {
           expect(

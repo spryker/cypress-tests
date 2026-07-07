@@ -62,42 +62,17 @@ export class ProductAttributeVisibilityPage extends YvesPage {
     this.visitSearchAndWaitForProduct(abstractSku);
 
     cy.get(this.repository.getProductItemSelector()).first().find('a').first().click();
-    cy.url().should('not.include', '/search');
   };
 
-  assertPlpAttributeBadgeVisible = (attributeValue: string): void => {
-    cy.get(this.repository.getProductItemSelector())
-      .first()
-      .within(() => {
-        cy.get(this.repository.getAttributeBadgeSelector()).should('contain', attributeValue);
-      });
-  };
-
-  assertPlpAttributeBadgeNotVisible = (attributeValue: string): void => {
-    cy.get(this.repository.getProductItemSelector()).first().should('not.contain', attributeValue);
-  };
-
-  assertPdpAttributeVisible = (attributeValue: string): void => {
-    cy.get(this.repository.getPdpAttributeSelector()).should('contain', attributeValue);
-  };
-
-  assertPdpAttributeNotVisible = (attributeValue: string): void => {
-    cy.get(this.repository.getPdpAttributeSelector()).should('not.contain', attributeValue);
-  };
-
-  assertCartAttributeBadgeVisible = (attributeValue: string): void => {
+  visitCart = (): void => {
     cy.visit('/cart');
-
-    cy.get(this.repository.getCartItemSelector())
-      .first()
-      .within(() => {
-        cy.get(this.repository.getAttributeBadgeSelector()).should('contain', attributeValue);
-      });
   };
 
-  assertCartAttributeBadgeNotVisible = (attributeValue: string): void => {
-    cy.visit('/cart');
+  getFirstProductItem = (): Cypress.Chainable => cy.get(this.repository.getProductItemSelector()).first();
 
-    cy.get(this.repository.getCartItemSelector()).first().should('not.contain', attributeValue);
-  };
+  getAttributeBadge = (): Cypress.Chainable => cy.get(this.repository.getAttributeBadgeSelector());
+
+  getPdpAttribute = (): Cypress.Chainable => cy.get(this.repository.getPdpAttributeSelector());
+
+  getFirstCartItem = (): Cypress.Chainable => cy.get(this.repository.getCartItemSelector()).first();
 }

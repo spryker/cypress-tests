@@ -11,57 +11,46 @@ export class SspInquiryDetailPage extends YvesPage {
 
   public PAGE_URL = '/customer/ssp-inquiry/detail';
 
-  assertOrderSspInquiryDetails = (params: OrderSspInquiryDetails): void => {
-    this.repository.getSspInquiryDetailsOrderReference(params.orderReference);
-    this.assertSspInquiryDetails(params);
-  };
+  getSspInquiryDetailsReference = (reference: string): Cypress.Chainable =>
+    cy.contains(this.repository.getSspInquiryDetailsReference(reference));
 
-  assertSspAssetSspInquiryDetails = (params: SspAssetSspInquiryDetails): void => {
-    this.repository.getSspInquiryDetailsSspAssetReference(params.reference);
-    this.assertSspInquiryDetails(params);
-  };
+  getSspInquiryDetailsDate = (date: string): Cypress.Chainable =>
+    cy.contains(this.repository.getSspInquiryDetailsDate(date));
 
-  assertSspInquiryDetails = (params: SspInquiryDetails): void => {
-    cy.contains(this.repository.getSspInquiryDetailsReference(params.reference)).should('exist');
-    cy.contains(this.repository.getSspInquiryDetailsDate(params.date)).should('exist');
-    cy.contains(new RegExp(this.repository.getSspInquiryDetailsStatus(params.status), 'i')).should('exist');
-    cy.contains(this.repository.getSspInquiryDetailsType(params.type.value)).should('exist');
-    cy.contains(this.repository.getSspInquiryDetailsSubject(params.subject)).should('exist');
-    cy.contains(this.repository.getSspInquiryDetailsDescription(params.description)).should('exist');
-    cy.contains(this.repository.getSspInquiryDetailsCustomerFirstName(params.customer.firstName)).should('exist');
-    cy.contains(this.repository.getSspInquiryDetailsCustomerLastName(params.customer.lastName)).should('exist');
-    cy.contains(this.repository.getSspInquiryDetailsCustomerEmail(params.customer.email)).should('exist');
-    cy.contains(
-      this.repository.getSspInquiryDetailsCompanyAndBusinessUnitName(
-        params.customer.companyName,
-        params.customer.businessUnitName
-      )
-    ).should('exist');
+  getSspInquiryDetailsStatus = (status: string): Cypress.Chainable =>
+    cy.contains(new RegExp(this.repository.getSspInquiryDetailsStatus(status), 'i'));
 
-    const getColumnIndexByName = (columnName: string): number => {
-      const columnNames = ['File name', 'Size', 'Type', 'Actions'];
-      return columnNames.indexOf(columnName);
-    };
+  getSspInquiryDetailsType = (value: string): Cypress.Chainable =>
+    cy.contains(this.repository.getSspInquiryDetailsType(value));
 
-    const extractFileName = (filePath: string): string => {
-      return filePath.split('/').pop() || '';
-    };
+  getSspInquiryDetailsSubject = (subject: string): Cypress.Chainable =>
+    cy.contains(this.repository.getSspInquiryDetailsSubject(subject));
 
-    for (const file of params.files) {
-      cy.get('tr')
-        .contains('td', extractFileName(file.name))
-        .parent()
-        .within(() => {
-          cy.get('td').eq(getColumnIndexByName('File name')).should('contain.text', extractFileName(file.name));
-          cy.get('td').eq(getColumnIndexByName('Size')).should('contain.text', file.size);
-          cy.get('td').eq(getColumnIndexByName('Type')).should('contain.text', file.extension);
-          cy.get('td')
-            .eq(getColumnIndexByName('Actions'))
-            .find(this.repository.getFileDownloadActionSelector())
-            .should('exist');
-        });
-    }
-  };
+  getSspInquiryDetailsDescription = (description: string): Cypress.Chainable =>
+    cy.contains(this.repository.getSspInquiryDetailsDescription(description));
+
+  getSspInquiryDetailsCustomerFirstName = (firstName: string): Cypress.Chainable =>
+    cy.contains(this.repository.getSspInquiryDetailsCustomerFirstName(firstName));
+
+  getSspInquiryDetailsCustomerLastName = (lastName: string): Cypress.Chainable =>
+    cy.contains(this.repository.getSspInquiryDetailsCustomerLastName(lastName));
+
+  getSspInquiryDetailsCustomerEmail = (email: string): Cypress.Chainable =>
+    cy.contains(this.repository.getSspInquiryDetailsCustomerEmail(email));
+
+  getSspInquiryDetailsCompanyAndBusinessUnitName = (companyName: string, businessUnitName: string): Cypress.Chainable =>
+    cy.contains(this.repository.getSspInquiryDetailsCompanyAndBusinessUnitName(companyName, businessUnitName));
+
+  getSspInquiryDetailsOrderReferenceText = (orderReference: string): string =>
+    this.repository.getSspInquiryDetailsOrderReference(orderReference);
+
+  getSspInquiryDetailsSspAssetReferenceText = (reference: string): string =>
+    this.repository.getSspInquiryDetailsSspAssetReference(reference);
+
+  getFileTableRowCell = (fileName: string, columnIndex: number): Cypress.Chainable =>
+    cy.get('tr').contains('td', fileName).parent().find('td').eq(columnIndex);
+
+  getFileDownloadActionSelector = (): string => this.repository.getFileDownloadActionSelector();
 
   clickCancelSspInquiryButton(): void {
     this.repository.getCancelSspInquiryButton().click();
@@ -73,6 +62,10 @@ export class SspInquiryDetailPage extends YvesPage {
 
   getCanceledSspInquiryStatusSelector(): string {
     return this.repository.getCanceledSspInquiryStatusSelector();
+  }
+
+  getCanceledSspInquiryStatus(): Cypress.Chainable {
+    return cy.get(this.repository.getCanceledSspInquiryStatusSelector());
   }
 }
 

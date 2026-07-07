@@ -23,15 +23,6 @@ export class DashboardPage extends MpPage {
     return alias;
   };
 
-  assert500StatusCode = (params: Assert500StatusCodeParams): void => {
-    cy.wait(`@${params.alias}`).then((interception) => {
-      if (interception.response) {
-        expect(interception.response.statusCode).to.equal(500);
-      }
-    });
-  };
-}
-
-interface Assert500StatusCodeParams {
-  alias: string;
+  getTextContainer = (text: string): Cypress.Chainable =>
+    cy.get('body').find(this.repository.getTextContainerSelector(text));
 }

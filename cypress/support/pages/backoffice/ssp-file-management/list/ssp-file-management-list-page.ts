@@ -10,13 +10,15 @@ export class SspFileManagementListPage extends BackofficePage {
 
   protected PAGE_URL = '/self-service-portal/list-file';
 
-  verifyListPage(): void {
-    cy.get(this.repository.getReferenceHeaderSelector()).should('contain', 'Reference');
-    cy.get(this.repository.getFileNameHeaderSelector()).should('contain', 'File Name');
-    cy.get(this.repository.getFileSizeHeaderSelector()).should('contain', 'Size');
-    cy.get(this.repository.getFileTypeHeaderSelector()).should('contain', 'Type');
-    cy.get(this.repository.getUploadedDateHeaderSelector()).should('contain', 'Date Uploaded');
-  }
+  getReferenceHeader = (): Cypress.Chainable => cy.get(this.repository.getReferenceHeaderSelector());
+
+  getFileNameHeader = (): Cypress.Chainable => cy.get(this.repository.getFileNameHeaderSelector());
+
+  getFileSizeHeader = (): Cypress.Chainable => cy.get(this.repository.getFileSizeHeaderSelector());
+
+  getFileTypeHeader = (): Cypress.Chainable => cy.get(this.repository.getFileTypeHeaderSelector());
+
+  getUploadedDateHeader = (): Cypress.Chainable => cy.get(this.repository.getUploadedDateHeaderSelector());
 
   clickAttachButton(): void {
     this.searchFile('image2.png');

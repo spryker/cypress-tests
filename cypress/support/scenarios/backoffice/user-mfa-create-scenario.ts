@@ -12,13 +12,13 @@ export class UserMfaCreateScenario {
     this.userCreatePage.visit();
     this.userCreatePage.create(params);
 
-    this.mfaPage.waitForVerificationPopup();
+    this.mfaPage.getVerificationPopup().should('be.visible');
 
     cy.getUserMultiFactorAuthCode(params.adminUsername, 'email').then((code) => {
       this.mfaPage.verifyCode(code);
     });
 
-    this.userCreatePage.waitForUserCreatedSuccessMessage();
+    this.userCreatePage.getUserCreatedSuccessMessage().should('be.visible');
   }
 }
 

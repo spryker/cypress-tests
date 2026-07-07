@@ -27,10 +27,10 @@ describe(
 
     it('customer should be able to add product to comparison list', (): void => {
       addProductToComparisonList(dynamicFixtures.product1.abstract_sku);
-      cy.contains(productPage.getAddToComparisonListSuccessMessage());
+      productPage.assertBodyContainsText(productPage.getAddToComparisonListSuccessMessage());
 
-      cy.get(productComparisonPage.getComparisonPageNavigationLinkSelector()).click({ force: true });
-      cy.get(productComparisonPage.getProductItemsSelector()).should('have.length', 1);
+      productComparisonPage.getComparisonPageNavigationLink().click({ force: true });
+      productComparisonPage.getProductItems().should('have.length', 1);
     });
 
     it('customer should be redirected to comparison page after adding two products', (): void => {
@@ -38,7 +38,7 @@ describe(
       addProductToComparisonList(dynamicFixtures.product2.abstract_sku);
 
       productComparisonPage.assertPageLocation();
-      cy.get(productComparisonPage.getProductItemsSelector()).should('have.length', 2);
+      productComparisonPage.getProductItems().should('have.length', 2);
     });
 
     it('customer should see product attributes comparison table', (): void => {
@@ -47,7 +47,7 @@ describe(
       addProductToComparisonList(dynamicFixtures.product3.abstract_sku);
       productComparisonPage.assertPageLocation();
 
-      cy.get(productComparisonPage.getComparisonTableRowSelector()).should('have.length', 3);
+      productComparisonPage.getComparisonTableRow().should('have.length', 3);
     });
 
     it('customer should be able to remove product from comparison list', (): void => {
@@ -59,7 +59,7 @@ describe(
       productComparisonPage.removeProductFromComparisonList(dynamicFixtures.product2.sku);
 
       productComparisonPage.assertPageLocation();
-      cy.get(productComparisonPage.getProductItemsSelector()).should('have.length', 2);
+      productComparisonPage.getProductItems().should('have.length', 2);
     });
 
     it('customer should be able to clear the product comparison list', (): void => {
@@ -71,18 +71,18 @@ describe(
       productComparisonPage.clearComparisonList();
 
       productComparisonPage.assertPageLocation();
-      cy.contains(productComparisonPage.getProductComparisonListIsEmptyMessage());
+      productComparisonPage.assertBodyContainsText(productComparisonPage.getProductComparisonListIsEmptyMessage());
     });
 
     it('customer should be able to remove product from comparison from PDP', (): void => {
       addProductToComparisonList(dynamicFixtures.product1.abstract_sku);
-      cy.contains(productPage.getAddToComparisonListSuccessMessage());
+      productPage.assertBodyContainsText(productPage.getAddToComparisonListSuccessMessage());
 
       productPage.toggleProductComparisonList();
-      cy.contains(productPage.getRemoveFromComparisonListSuccessMessage());
+      productPage.assertBodyContainsText(productPage.getRemoveFromComparisonListSuccessMessage());
 
-      cy.get(productComparisonPage.getComparisonPageNavigationLinkSelector()).click({ force: true, multiple: true });
-      cy.contains(productComparisonPage.getProductComparisonListIsEmptyMessage());
+      productComparisonPage.getComparisonPageNavigationLink().click({ force: true, multiple: true });
+      productComparisonPage.assertBodyContainsText(productComparisonPage.getProductComparisonListIsEmptyMessage());
     });
 
     it('customer should be able to add configured number of items to compare list', (): void => {
@@ -93,10 +93,10 @@ describe(
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product4.abstract_sku });
       productPage.toggleProductComparisonList();
 
-      cy.contains(productPage.getAddToComparisonListLimitExceededErrorMessage());
+      productPage.assertBodyContainsText(productPage.getAddToComparisonListLimitExceededErrorMessage());
 
-      cy.get(productComparisonPage.getComparisonPageNavigationLinkSelector()).click({ force: true });
-      cy.get(productComparisonPage.getProductItemsSelector()).should('have.length', 3);
+      productComparisonPage.getComparisonPageNavigationLink().click({ force: true });
+      productComparisonPage.getProductItems().should('have.length', 3);
     });
 
     function addProductToComparisonList(abstractSku: string): void {

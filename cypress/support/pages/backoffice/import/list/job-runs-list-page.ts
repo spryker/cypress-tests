@@ -16,9 +16,5 @@ export class JobRunsListPage extends BackofficePage {
     cy.visitBackoffice(this.buildUrl(importJobId));
   };
 
-  verifySuccessMessage(): void {
-    cy.get(this.repository.getSuccessMessageSelector())
-      .should('be.visible')
-      .and('contain', 'Import run created successfully. Processing is queued.');
-  }
+  getSuccessMessage = (): Cypress.Chainable => cy.get(this.repository.getSuccessMessageSelector());
 }

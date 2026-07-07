@@ -25,31 +25,19 @@ export class MerchantListPage extends BackofficePage {
         }
 
         if (params.action === ActionEnum.activate) {
-          cy.wrap($merchantRow)
-            .find(this.repository.getActivateButtonSelector())
-            .should('exist')
-            .click({ force: true });
+          cy.wrap($merchantRow).find(this.repository.getActivateButtonSelector()).click({ force: true });
         }
 
         if (params.action === ActionEnum.deactivate) {
-          cy.wrap($merchantRow)
-            .find(this.repository.getDeactivateButtonSelector())
-            .should('exist')
-            .click({ force: true });
+          cy.wrap($merchantRow).find(this.repository.getDeactivateButtonSelector()).click({ force: true });
         }
 
         if (params.action === ActionEnum.approveAccess) {
-          cy.wrap($merchantRow)
-            .find(this.repository.getApproveAccessButtonSelector())
-            .should('exist')
-            .click({ force: true });
+          cy.wrap($merchantRow).find(this.repository.getApproveAccessButtonSelector()).click({ force: true });
         }
 
         if (params.action === ActionEnum.denyAccess) {
-          cy.wrap($merchantRow)
-            .find(this.repository.getDenyAccessButtonSelector())
-            .should('exist')
-            .click({ force: true });
+          cy.wrap($merchantRow).find(this.repository.getDenyAccessButtonSelector()).click({ force: true });
         }
       });
     });

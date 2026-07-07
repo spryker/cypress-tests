@@ -36,7 +36,8 @@ describe(
     it('authorized company user should see cost center list', (): void => {
       costCenterListPage.visit();
 
-      costCenterListPage.assertCostCenterInTable(dynamicFixtures.preExistingCostCenter.name);
+      costCenterListPage.visitFilteredByName(dynamicFixtures.preExistingCostCenter.name);
+      costCenterListPage.getTableRows().should('contain', dynamicFixtures.preExistingCostCenter.name);
     });
 
     it('authorized company user should be able to create a cost center', (): void => {
@@ -47,7 +48,7 @@ describe(
       costCenterCreatePage.selectBusinessUnit(dynamicFixtures.businessUnit.id_company_business_unit);
       costCenterCreatePage.submit();
 
-      costCenterCreatePage.assertSuccess();
+      costCenterCreatePage.getSuccessFlashMessage().should('be.visible');
     });
 
     it('authorized company user should be able to edit a cost center', (): void => {
@@ -55,8 +56,9 @@ describe(
       costCenterUpdatePage.fillName(staticFixtures.updatedCostCenterName);
       costCenterUpdatePage.submit();
 
-      costCenterUpdatePage.assertSuccess();
-      costCenterListPage.assertCostCenterInTable(staticFixtures.updatedCostCenterName);
+      costCenterUpdatePage.getSuccessFlashMessage().should('be.visible');
+      costCenterListPage.visitFilteredByName(staticFixtures.updatedCostCenterName);
+      costCenterListPage.getTableRows().should('contain', staticFixtures.updatedCostCenterName);
     });
 
     it('authorized company user should be able to deactivate a cost center', (): void => {
@@ -64,10 +66,10 @@ describe(
       costCenterUpdatePage.deactivate();
       costCenterUpdatePage.submit();
 
-      costCenterUpdatePage.assertSuccess();
+      costCenterUpdatePage.getSuccessFlashMessage().should('be.visible');
 
       costCenterUpdatePage.visitByUuid(dynamicFixtures.preExistingCostCenter.uuid);
-      costCenterUpdatePage.assertIsInactive();
+      costCenterUpdatePage.getIsActiveCheckbox().should('not.be.checked');
     });
 
     it('authorized company user should be able to reactivate a cost center', (): void => {
@@ -75,10 +77,10 @@ describe(
       costCenterUpdatePage.activate();
       costCenterUpdatePage.submit();
 
-      costCenterUpdatePage.assertSuccess();
+      costCenterUpdatePage.getSuccessFlashMessage().should('be.visible');
 
       costCenterUpdatePage.visitByUuid(dynamicFixtures.inactiveCostCenter.uuid);
-      costCenterUpdatePage.assertIsActive();
+      costCenterUpdatePage.getIsActiveCheckbox().should('be.checked');
     });
 
     it('unauthorized company user should receive 403 when accessing cost center list', (): void => {

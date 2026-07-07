@@ -49,7 +49,7 @@ describe(
       });
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -83,7 +83,7 @@ describe(
       });
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -126,7 +126,7 @@ describe(
 
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -163,7 +163,7 @@ describe(
       });
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -178,7 +178,7 @@ describe(
       clearAllLocalizedAttachments(dynamicFixtures.localeEN.locale_name);
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -202,6 +202,10 @@ describe(
     function visitProductDetailPage(): void {
       catalogPage.visit();
       catalogPage.search({ query: dynamicFixtures.product.localized_attributes[0].name });
+    }
+
+    function verifySaveSuccess(sku: string): void {
+      productManagementEditPage.getSaveSuccessMessage(sku).should('be.visible');
     }
   }
 );

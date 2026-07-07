@@ -39,6 +39,7 @@ describe(
       productPage.visit();
       productPage.getFirstTableRow().click();
       productPage.clickAddAttributeButton();
+      productPage.getCreateAttributeRequests().should('have.length', 0);
     });
   }
 );

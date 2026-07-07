@@ -22,4 +22,7 @@ export class B2cMpHomeRepository implements HomeRepository {
   getLogo = (): Cypress.Chainable => {
     return cy.get('[data-qa="component logo"]');
   };
+  getLogoImage = (): Cypress.Chainable => {
+    return cy.get('.logo img');
+  };
 }

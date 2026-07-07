@@ -10,55 +10,43 @@ export class SspInquiryDetailPage extends BackofficePage {
   protected PAGE_URL = '/self-service-portal/view-inquiry';
   @inject(SspInquiryRepository) private repository: SspInquiryRepository;
 
-  assertOrderSspInquiryDetails = (params: OrderSspInquiryDetails): void => {
-    this.repository.getOrderReferenceCell().should('contain.text', params.order.reference);
-    this.assertSspInquiryDetails(params);
-  };
+  getOrderReferenceCell = (): Cypress.Chainable => this.repository.getOrderReferenceCell();
 
-  assertSspInquiryDetails = (params: SspInquiryDetails): void => {
-    this.repository.getSspInquiryReferenceCell().should('contain.text', params.reference);
-    this.repository
-      .getCustomerCell()
-      .should('contain.text', `${params.customer.salutation} ${params.customer.firstName} ${params.customer.lastName}`);
-    this.repository.getDateCell().should('contain.text', params.date);
-    this.repository.getStatusCell().contains(new RegExp(params.status, 'i')).should('exist');
-    this.repository
-      .getCompanyBusinessUnitCell()
-      .should('contain.text', `${params.customer.companyName} / ${params.customer.businessUnitName}`);
-    this.repository.getTypeCell().contains(new RegExp(params.type, 'i')).should('exist');
-    this.repository.getSubjectCell().should('contain.text', params.subject);
-    this.repository.getDescriptionCell().should('contain.text', params.description);
+  getSspInquiryReferenceCell = (): Cypress.Chainable => this.repository.getSspInquiryReferenceCell();
 
-    const getColumnIndexByName = (columnName: string): number => {
-      const columnNames = ['File name', 'Size', 'Type', 'Actions'];
-      return columnNames.indexOf(columnName);
-    };
+  getCustomerCell = (): Cypress.Chainable => this.repository.getCustomerCell();
 
-    for (const file of params.files) {
-      const fileRow = this.repository.getFileTableCell(file.file_name);
-      fileRow.within(() => {
-        cy.get('td').eq(getColumnIndexByName('File name')).should('contain.text', file.file_name);
-        cy.get('td').eq(getColumnIndexByName('Size')).should('exist');
-        cy.get('td').eq(getColumnIndexByName('Type')).should('contain.text', file.extension);
-        cy.get('td').eq(getColumnIndexByName('Actions')).should('contain.text', 'Download');
-      });
-    }
-  };
+  getDateCell = (): Cypress.Chainable => this.repository.getDateCell();
+
+  getStatusCell = (): Cypress.Chainable => this.repository.getStatusCell();
+
+  getCompanyBusinessUnitCell = (): Cypress.Chainable => this.repository.getCompanyBusinessUnitCell();
+
+  getTypeCell = (): Cypress.Chainable => this.repository.getTypeCell();
+
+  getSubjectCell = (): Cypress.Chainable => this.repository.getSubjectCell();
+
+  getDescriptionCell = (): Cypress.Chainable => this.repository.getDescriptionCell();
+
+  getFileTableCell = (fileName: string): Cypress.Chainable => this.repository.getFileTableCell(fileName);
+
+  getFileTableRowCell = (fileName: string, columnIndex: number): Cypress.Chainable =>
+    this.repository.getFileTableCell(fileName).find('td').eq(columnIndex);
+
+  getHistoryDetailsTable = (): Cypress.Chainable => this.repository.getHistoryDetailsTable();
+
+  getSspInquiryStatus = (): Cypress.Chainable => this.repository.getSspInquiryStatus();
+
+  getSspInquiryTableRows = (): Cypress.Chainable => this.repository.getSspInquiryTableRows();
+
+  getSspInquiryTableHeaders = (): Cypress.Chainable => this.repository.getSspInquiryTableHeaders();
 
   openSspInquiryHistory(): void {
     this.repository.getSspInquiryStatusHistory().click();
   }
 
-  assertSspInquiryHistoryIsNotEmpty(): void {
-    this.repository.getHistoryDetailsTable().should('exist').should('be.visible');
-  }
-
   cancelSspInquiry(): void {
     this.repository.getCancelButton().click();
-  }
-
-  assertSspInquiryStatusChangedToCanceled(): void {
-    this.repository.getSspInquiryStatus().contains('Canceled');
   }
 
   submitComment(comment: string): void {
@@ -71,34 +59,9 @@ export class SspInquiryDetailPage extends BackofficePage {
     this.repository.getApproveButton().click();
   }
 
-  assertSspInquiryStatusChangedToApproved(): void {
-    this.repository.getSspInquiryStatus().contains('Approved');
-  }
-
   rejectSspInquiry(): void {
     this.repository.getStartReviewButton().click();
     this.repository.getRejectButton().click();
-  }
-
-  assertSspInquiryStatusChangedToRejected(): void {
-    this.repository.getSspInquiryStatus().contains('Rejected');
-  }
-
-  assertSspInquiryTableIsNotEmpty(): void {
-    this.repository.getSspInquiryTableRows().should('have.length.greaterThan', 0);
-  }
-
-  assertSspInquiryTableColumnsExist(): void {
-    const expectedColumns = ['ID', 'Reference', 'Type', 'Customer', 'Date', 'Status', 'Actions'];
-    this.repository.getSspInquiryTableHeaders().each((header, index) => {
-      if (expectedColumns[index]) {
-        cy.wrap(header).should('contain.text', expectedColumns[index]);
-      }
-    });
-  }
-
-  assertViewSspInquiryTableLinksExist(): void {
-    this.repository.getSspInquiryTableRows().eq(0).find('a.btn-view').should('exist');
   }
 }
 

@@ -11,205 +11,45 @@ export class SspDashboardPage extends YvesPage {
 
   protected PAGE_URL = '/customer/ssp-dashboard';
 
-  assertSspDashboardUserInfoPresent = (): void => {
-    this.repository.getUserInfoBlock().should('exist');
-  };
+  getUserInfoBlock = (): Cypress.Chainable => this.repository.getUserInfoBlock();
 
-  assertSspDashboardUserInfoHasWelcomeText = (name: string): void => {
-    this.repository
-      .getWelcomeBlock()
-      .contains('Welcome, ' + name)
-      .should('exist');
-  };
+  getWelcomeBlock = (): Cypress.Chainable => this.repository.getWelcomeBlock();
 
-  assertSspDashboardUserInfoHasCompanyName = (name: string): void => {
-    this.repository.getWelcomeBlock().contains(name).should('exist');
-  };
+  getOverviewBlock = (): Cypress.Chainable => this.repository.getOverviewBlock();
 
-  assertSspDashboardUserInfoHasCompanyBusinessUnitName = (name: string): void => {
-    this.repository.getWelcomeBlock().contains(name).should('exist');
-  };
+  getOverviewTitle = (): string => this.repository.getOverviewTitle();
 
-  assertSspDashboardHasOverviewBlock = (): void => {
-    this.repository.getOverviewBlock().contains(this.repository.getOverviewTitle()).should('exist');
-  };
+  getStatsColumnBlocks = (): Cypress.Chainable => this.repository.getStatsColumnBlocks();
 
-  assertSspDashboardHasStatsOverviewBlock = (): void => {
-    this.repository.getStatsColumnBlocks().each(($statsBlock, $index) => {
-      cy.wrap($statsBlock)
-        .find(this.repository.getStatsColumnTitleName())
-        .contains(this.repository.getExpectedStatsColumnBlocks()[$index])
-        .should('exist');
-      cy.wrap($statsBlock).find(this.repository.getStatsColumnCounterName()).should('exist');
-    });
-  };
+  getStatsColumnTitleName = (): string => this.repository.getStatsColumnTitleName();
 
-  assertSspDashboardHasSalesRepresentativeBlock = (translations: GlossaryPlaceholders[], idLocale: number): void => {
-    this.repository.getSalesRepresentativeBlocks().should('exist');
+  getStatsColumnCounterName = (): string => this.repository.getStatsColumnCounterName();
 
-    translations.forEach((translation) => {
-      translation.translations.forEach((glossaryPlaceholder: GlossaryPlaceholderTranslations) => {
-        if (glossaryPlaceholder.fk_locale === idLocale) {
-          this.repository.getSalesRepresentativeBlocks().contains(glossaryPlaceholder.translation).should('exist');
-        }
-      });
-    });
-  };
+  getExpectedStatsColumnBlocks = (): string[] => this.repository.getExpectedStatsColumnBlocks();
 
-  assertSspDashboardAssetsWidgetPresent = (): void => {
-    this.repository.getAssetsBlock().should('exist');
-  };
+  getSalesRepresentativeBlocks = (): Cypress.Chainable => this.repository.getSalesRepresentativeBlocks();
 
-  assertSspDashboardAssetsWidgetNotPresent = (): void => {
-    this.repository.getAssetsBlock().should('not.exist');
-  };
+  getAssetsBlock = (): Cypress.Chainable => this.repository.getAssetsBlock();
 
-  assertWidgetData(sspAssets: SspAsset[]): void {
-    this.repository.getAssetPreviewBlock().its('length').should('eq', sspAssets.length);
+  getAssetPreviewBlock = (): Cypress.Chainable => this.repository.getAssetPreviewBlock();
 
-    this.repository.getAssetPreviewBlock().each(($element) => {
-      const assetName = $element.text();
-      const matchingAsset = sspAssets.find((asset) => assetName.includes(asset.name));
+  getPlaceholderImage = (): string => this.repository.getPlaceholderImage();
 
-      if (!matchingAsset) {
-        return;
-      }
+  getFilesBlock = (): Cypress.Chainable => this.repository.getFilesBlock();
 
-      if (matchingAsset.reference) {
-        cy.wrap($element)
-          .find('a.assets-preview__link')
-          .should('have.attr', 'href')
-          .should('have.string', matchingAsset.reference);
-      }
+  getFilesBlockTitle = (): Cypress.Chainable => this.repository.getFilesBlockTitle();
 
-      if (matchingAsset.name) {
-        cy.wrap($element).contains(matchingAsset.name).should('exist');
-      }
+  getNoFilesText = (): string => this.repository.getNoFilesText();
 
-      if (!matchingAsset.image) {
-        cy.wrap($element)
-          .find('lazy-image div')
-          .should('have.css', 'background-image')
-          .and('have.string', this.repository.getPlaceholderImage());
-      }
-    });
-  }
+  getFilesHeaders = (): string[] => this.repository.getFilesHeaders();
 
-  assertSspDashboardFilesBlockPresent = (): void => {
-    this.repository.getFilesBlock().should('exist');
-  };
+  getInquiriesBlock = (): Cypress.Chainable => this.repository.getInquiriesBlock();
 
-  assertSspDashboardFilesBlockNotPresent = (): void => {
-    this.repository.getFilesBlock().should('not.exist');
-  };
+  getInquiriesBlockTitle = (): Cypress.Chainable => this.repository.getInquiriesBlockTitle();
 
-  assertSspDashboardFilesTableEmpty(): void {
-    this.repository.getFilesBlock().should('contain.text', this.repository.getNoFilesText());
-  }
+  getNoInquiriesText = (): string => this.repository.getNoInquiriesText();
 
-  assertSspDashboardFilesTableHasNoDownloadLink(): void {
-    this.repository.getFilesBlock().find('table tbody tr td:last-child').should('not.contain.text', 'Download');
-  }
+  getInquiriesHeaders = (): string[] => this.repository.getInquiriesHeaders();
 
-  assertSspDashboardFilesTable(files: SspFile[], filesCount: number): void {
-    this.repository.getFilesBlockTitle().should('contain.text', 'Files');
-    this.repository.getFilesBlock().find('span.badge').should('contain.text', filesCount);
-    this.repository
-      .getFilesBlock()
-      .find('table thead th')
-      .each(($th, index) => {
-        if (this.repository.getFilesHeaders()[index]) {
-          cy.wrap($th).should('contain.text', this.repository.getFilesHeaders()[index]);
-        }
-      });
-    this.repository.getFilesBlock().find('table tbody tr').should('have.length', files.length);
-    this.repository
-      .getFilesBlock()
-      .find('table tbody tr')
-      .each(($tr, index) => {
-        cy.wrap($tr).should('contain.text', files[index].file_name);
-        cy.wrap($tr).should('contain.text', files[index].file_info[0].extension);
-      });
-  }
-
-  assertSspDashboardInquiriesBlockNotPresent = (): void => {
-    this.repository.getInquiriesBlock().should('not.exist');
-  };
-
-  assertSspDashboardInquiriesBlockPresent = (): void => {
-    this.repository.getInquiriesBlock().should('exist');
-  };
-
-  assertSspDashboardInquiriesTableEmpty(): void {
-    this.repository.getInquiriesBlock().should('contain.text', this.repository.getNoInquiriesText());
-  }
-
-  assertSspDashboardInquiriesTable(inquiries: SspInquiry[], inquiriesCount: number): void {
-    this.repository.getInquiriesBlockTitle().should('contain.text', 'Inquiries');
-    this.repository.getInquiriesBlock().find('.badge').should('contain.text', inquiriesCount);
-    this.repository
-      .getInquiriesBlock()
-      .find('table thead th')
-      .each(($th, index) => {
-        if (this.repository.getInquiriesHeaders()[index]) {
-          cy.wrap($th).should('contain.text', this.repository.getInquiriesHeaders()[index]);
-        }
-      });
-    this.repository.getInquiriesBlock().find('table tbody tr').should('have.length', inquiries.length);
-    this.repository
-      .getInquiriesBlock()
-      .find('table tbody tr')
-      .each(($tr, index) => {
-        cy.wrap($tr).should('contain.text', inquiries[index].reference);
-        cy.wrap($tr).contains(inquiries[index].type, { matchCase: false }).should('exist');
-        cy.wrap($tr).contains(inquiries[index].status, { matchCase: false }).should('exist');
-        cy.wrap($tr)
-          .find(this.repository.getStatusLabelPath())
-          .should('have.class', 'status--' + inquiries[index].status.toLowerCase());
-        cy.wrap($tr).should('contain.text', 'View');
-      });
-  }
-}
-
-interface SspInquiry {
-  subject: string;
-  description: string;
-  reference: string;
-  type: string;
-  availableTypes: SspInquiryType[];
-  status: string;
-}
-
-interface SspInquiryType {
-  key: string;
-  value: string;
-}
-
-export interface SspFile {
-  file_name: string;
-  file_info: SspFileInfo[];
-}
-
-export interface SspFileInfo {
-  extension: string;
-}
-
-interface SspAsset {
-  reference: string;
-  name: string;
-  serial_number: string;
-  image: string;
-}
-
-export interface CmsBlockGlossary {
-  glossary_placeholders: GlossaryPlaceholders[];
-}
-
-export interface GlossaryPlaceholders {
-  translations: GlossaryPlaceholderTranslations[];
-}
-
-export interface GlossaryPlaceholderTranslations {
-  fk_locale: number;
-  translation: string;
+  getStatusLabelPath = (): string => this.repository.getStatusLabelPath();
 }

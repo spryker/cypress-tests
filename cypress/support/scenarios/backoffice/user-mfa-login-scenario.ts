@@ -13,22 +13,22 @@ export class UserMfaLoginScenario {
     this.loginPage.visit();
     this.loginPage.login(params);
 
-    this.mfaPage.waitForVerificationPopup();
+    this.mfaPage.getVerificationPopup().should('be.visible');
 
     cy.getUserMultiFactorAuthCode(params.username, 'email').then((code) => {
       this.mfaPage.verifyCode(code);
     });
 
-    this.indexPage.assertLoginFormDoesNotExist();
+    this.indexPage.getLoginForm().should('not.exist');
   }
 
   executeWithInvalidCode(params: ExecuteParams, staticFixtures: UserMfaAuthStaticFixtures): void {
     this.loginPage.visit();
     this.loginPage.login(params);
 
-    this.mfaPage.waitForVerificationPopup();
+    this.mfaPage.getVerificationPopup().should('be.visible');
     this.mfaPage.verifyCode(staticFixtures.invalidCode);
-    this.mfaPage.waitForInvalidCodeMessage();
+    this.mfaPage.getInvalidCodeMessage().should('be.visible');
 
     cy.reload();
     this.loginPage.assertPageLocation();

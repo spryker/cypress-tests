@@ -3,16 +3,6 @@ import { inject, injectable } from 'inversify';
 import { BackofficePage } from '@pages/backoffice';
 import { ServiceListRepository } from './service-list-repository';
 
-interface ServiceListTableDataParams {
-  orderReference?: string;
-  customerName?: string;
-  company?: string;
-  scheduledDate?: string;
-  createdDate?: string;
-  itemId: number;
-  itemName: string;
-}
-
 @injectable()
 @autoWired
 export class ServiceListPage extends BackofficePage {
@@ -27,76 +17,33 @@ export class ServiceListPage extends BackofficePage {
     }).then((getRow) => (getRow ? getRow() : null));
   }
 
-  assertServiceListPage(param: {
-    orderReference: string;
-    customerFullName: string;
-    companyName?: string;
-    itemId: number;
-    itemName: string;
-  }): void {
-    this.assertServiceListTableColumns();
+  getServiceListTable = (): Cypress.Chainable => this.repository.getServiceListTable();
 
-    this.assertTableData({
-      orderReference: param.orderReference,
-      customerName: param.customerFullName,
-      company: param.companyName,
-      itemId: param.itemId,
-      itemName: param.itemName,
-    });
-  }
+  getOrderReferenceHeader = (): Cypress.Chainable => this.repository.getOrderReferenceHeader();
 
-  assertServiceListTableColumns(): void {
-    this.repository
-      .getServiceListTable()
-      .first()
-      .within(() => {
-        this.repository.getOrderReferenceHeader().should('exist').and('contain', 'Order Reference');
-        this.repository.getCustomerHeader().should('exist').and('contain', 'Customer');
-        this.repository.getCompanyHeader().should('exist').and('contain', 'Company');
-        this.repository.getServiceHeader().should('exist').and('contain', 'Service');
-        this.repository.getScheduledAtHeader().should('exist').and('contain', 'Time and Date');
-        this.repository.getCreatedAtHeader().should('exist').and('contain', 'Created');
-        this.repository.getActionsHeader().should('exist').and('contain', 'Actions');
-      });
-  }
+  getCustomerHeader = (): Cypress.Chainable => this.repository.getCustomerHeader();
 
-  assertTableData(params: ServiceListTableDataParams): void {
-    this.repository.getFirstTableRow().within(() => {
-      if (params.orderReference) {
-        this.repository.getOrderReferenceCell().should('contain', params.orderReference);
-      }
+  getCompanyHeader = (): Cypress.Chainable => this.repository.getCompanyHeader();
 
-      if (params.customerName) {
-        this.repository.getCustomerNameCell().should('contain', params.customerName);
-      }
+  getServiceHeader = (): Cypress.Chainable => this.repository.getServiceHeader();
 
-      if (params.company) {
-        this.repository.getCompanyCell().should('contain', params.company);
-      }
+  getScheduledAtHeader = (): Cypress.Chainable => this.repository.getScheduledAtHeader();
 
-      this.repository.getServiceCell().should('contain', params.itemName);
+  getCreatedAtHeader = (): Cypress.Chainable => this.repository.getCreatedAtHeader();
 
-      if (params.scheduledDate) {
-        this.repository.getScheduledDateCell().should('contain', params.scheduledDate);
-      }
+  getActionsHeader = (): Cypress.Chainable => this.repository.getActionsHeader();
 
-      if (params.createdDate) {
-        this.repository.getCreatedDateCell().should('contain', params.createdDate);
-      }
+  getFirstTableRow = (): Cypress.Chainable => this.repository.getFirstTableRow();
 
-      this.repository
-        .getActionsCell()
-        .should('contain', 'View')
-        .find(this.repository.getViewButtonSelector())
-        .should('exist')
-        .and('have.attr', 'href')
-        .and('include', '/self-service-portal/view-service?id-sales-order-item=');
+  getOrderReferenceCell = (): Cypress.Chainable => this.repository.getOrderReferenceCell();
 
-      this.repository
-        .getActionsCell()
-        .find(this.repository.getViewButtonSelector())
-        .should('have.attr', 'href')
-        .and('include', `/self-service-portal/view-service?id-sales-order-item=${params.itemId}`);
-    });
-  }
+  getCustomerNameCell = (): Cypress.Chainable => this.repository.getCustomerNameCell();
+
+  getCompanyCell = (): Cypress.Chainable => this.repository.getCompanyCell();
+
+  getServiceCell = (): Cypress.Chainable => this.repository.getServiceCell();
+
+  getActionsCell = (): Cypress.Chainable => this.repository.getActionsCell();
+
+  getViewButtonSelector = (): string => this.repository.getViewButtonSelector();
 }
