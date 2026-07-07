@@ -61,7 +61,7 @@ describe(
 
       cy.url().should('match', regex);
 
-      cy.contains(staticFixtures.cmsPageName).should('exist');
+      contentPage.assertBodyContainsText(staticFixtures.cmsPageName).should('exist');
     }
 
     function createStoreAndCmsPage(): void {
