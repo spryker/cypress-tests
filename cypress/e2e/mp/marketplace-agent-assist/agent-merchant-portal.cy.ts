@@ -119,12 +119,13 @@ describe(
 
       productsPage.getDrawer().as('drawer');
 
-      cy.get('@drawer')
+      productsPage
+        .getDrawerAlias()
         .find(productsPage.getTaxIdSetOptionSelector())
         .eq(1)
-        .then((el) => cy.get(productsPage.getTaxIdSetSelector()).select(el.val() ?? '', { force: true }));
+        .then((el) => productsPage.selectTaxIdSetOption(el.val() ?? ''));
 
-      cy.get('@drawer').find(productsPage.getSaveButtonSelector()).click();
+      productsPage.getDrawerAlias().find(productsPage.getSaveButtonSelector()).click();
 
       productsPage.assertBodyContainsText('The Product is saved.');
     });

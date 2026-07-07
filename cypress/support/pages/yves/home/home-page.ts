@@ -43,4 +43,8 @@ export class HomePage extends YvesPage {
   getLogo(): Cypress.Chainable {
     return this.repository.getLogo();
   }
+
+  getLogoImage(): Cypress.Chainable {
+    return this.repository.getLogoImage();
+  }
 }

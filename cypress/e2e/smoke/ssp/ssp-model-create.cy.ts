@@ -45,7 +45,8 @@ describe(
       sspModelAddPage.submitForm();
       sspModelAddPage.verifySuccessMessage();
 
-      cy.get('img[data-qa="ssp-model-image"]')
+      sspModelAddPage
+        .getModelImage()
         .should('be.visible')
         .and(($img) => {
           expect(
