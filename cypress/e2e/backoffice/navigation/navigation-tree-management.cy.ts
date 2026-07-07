@@ -6,12 +6,7 @@ import {
 import { NavigationTreePage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
-// Seeding is now unblocked (haveNavigation/haveLocalizedNavigationNode registered in the
-// TestifyBackendApi DynamicFixture suite), but the tree UI needs interactive verification:
-// the DataTables search selector (`#navigation-table_filter input[type="search"]`) is wrong,
-// the jstree drag-reorder needs mouse* events, and the fixed navigation keys must be made
-// run-unique to survive the fresh-browser rerun. Un-skip once those are sorted in a local session.
-describe.skip(
+describe(
   'navigation tree management',
   { tags: ['@backoffice', 'navigation', 'spryker-core-back-office', 'spryker-core'] },
   (): void => {

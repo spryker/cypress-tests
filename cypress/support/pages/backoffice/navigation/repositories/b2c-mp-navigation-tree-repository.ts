@@ -64,7 +64,7 @@ export class B2cMpNavigationTreeRepository implements NavigationTreeRepository {
   }
 
   getTableSearchInput(): Cypress.Chainable {
-    return cy.get('#navigation-table_filter input[type="search"]');
+    return cy.get('input[aria-controls="navigation-table"]');
   }
 
   getTableRowByText(text: string): Cypress.Chainable {

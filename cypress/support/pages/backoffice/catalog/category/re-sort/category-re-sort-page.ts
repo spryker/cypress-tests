@@ -78,7 +78,7 @@ export class CategoryReSortPage extends BackofficePage {
         const draggingUp = toRect.top < fromRect.top;
         const endY = draggingUp ? toRect.top + toRect.height * 0.25 : toRect.top + toRect.height / 2;
 
-        const at = (clientX: number, clientY: number) => ({
+        const at = (clientX: number, clientY: number): Record<string, number | boolean> => ({
           which: 1,
           button: 0,
           clientX,

@@ -9,6 +9,9 @@ import { NavigationTreeRepository } from './navigation-tree-repository';
 export class NavigationTreePage extends BackofficePage {
   @inject(REPOSITORIES.NavigationTreeRepository) private repository: NavigationTreeRepository;
 
+  // Time for the node-form iframe to finish its delayed second load before we read/type into it.
+  private FORM_SETTLE_MS = 1000;
+
   // -------- Navigation element CRUD --------
 
   createNavigation = (data: NavigationFormData): Cypress.Chainable<number> => {
@@ -64,6 +67,13 @@ export class NavigationTreePage extends BackofficePage {
     this.repository.getTableSearchInput().clear().type(navigationName);
     this.repository.getTableRowByText(navigationName).click();
     cy.get(this.repository.getTreeSelector(), { timeout: 20000 }).should('exist');
+
+    // The tree renders asynchronously (jstree AJAX) and the select→edit-form binding attaches only
+    // after the Zed bundle parses. Wait for jstree to have painted at least the root node, then settle
+    // so a following clickNode actually loads the edit form instead of leaving the default create form.
+    cy.get(this.repository.getTreeNodeSelector(), { timeout: 20000 }).should('have.length.at.least', 1);
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(this.FORM_SETTLE_MS);
   };
 
   assertNumberOfNodes = (count: number): void => {
@@ -100,6 +110,9 @@ export class NavigationTreePage extends BackofficePage {
 
   updateNodeToCategoryType = (categoryUrlEn: string, categoryUrlDe: string): void => {
     this.selectNodeType('category');
+    // The category-node form requires a title per locale. The seeded node only carries an en_US title
+    // (the fixture helper is single-locale), so set both here to avoid a "should not be blank" reject.
+    this.fillLocalizedTitles('foo');
     this.getNodeFormBody().find(this.repository.getLocalizedCategoryUrlSelector(0)).clear().type(categoryUrlEn);
     this.getNodeFormBody().find(this.repository.getLocalizedCategoryUrlSelector(1)).clear().type(categoryUrlDe);
     this.submitNodeForm();
@@ -114,8 +127,12 @@ export class NavigationTreePage extends BackofficePage {
   createChildNodeWithCmsPageType = (title: string, cmsPageUrlEn: string, cmsPageUrlDe: string): void => {
     this.selectNodeType('cms_page');
     this.fillLocalizedTitles(title);
-    this.getNodeFormBody().find(this.repository.getLocalizedCmsPageUrlSelector(0)).clear().type(cmsPageUrlEn);
-    this.getNodeFormBody().find(this.repository.getLocalizedCmsPageUrlSelector(1)).clear().type(cmsPageUrlDe);
+    // In the create-child form the locale sections render de_DE first (index 0) then en_US (index 1) —
+    // the reverse of the edit form. cms_page_url is validated against the locale, so the URLs must be
+    // placed by locale, not by a fixed en/de index order, or the server rejects them as "not valid
+    // for the given locale". (category_url isn't locale-checked, which is why the edit test tolerated it.)
+    this.getNodeFormBody().find(this.repository.getLocalizedCmsPageUrlSelector(0)).clear().type(cmsPageUrlDe);
+    this.getNodeFormBody().find(this.repository.getLocalizedCmsPageUrlSelector(1)).clear().type(cmsPageUrlEn);
     this.checkNodeIsActive();
     this.submitNodeForm();
     this.assertNodeCreateSuccess();
@@ -125,33 +142,47 @@ export class NavigationTreePage extends BackofficePage {
     cy.get(this.repository.getNodeSelector(idParentNode)).should('contain', childTitle);
   };
 
-  // Drag a node onto a target node. jstree is a pointer-driven widget; the tree
-  // state is asserted afterwards (with retry) rather than waiting a fixed time.
+  // Drag a node onto the middle of a target node so jstree re-parents it as a child. jstree's dnd
+  // plugin binds mousedown on the anchor and mousemove/mouseup on the document, positioning by
+  // pageX/pageY — a constructed event can't set those, so drive it with Cypress `.trigger`. Arm the
+  // drag with a small initial move past jstree's threshold, step to the target's vertical centre
+  // (the "make child" zone), then release. The tree state is asserted afterwards (with retry).
   moveNode = (idNavigationNode: number, idTargetNavigationNode: number): void => {
     const source = this.repository.getNodeAnchorSelector(idNavigationNode);
     const target = this.repository.getNodeAnchorSelector(idTargetNavigationNode);
 
     cy.get(source).then(($source) => {
-      const sourceRect = $source[0].getBoundingClientRect();
-
-      cy.get(source).trigger('pointerdown', { which: 1, button: 0, force: true });
-      cy.get(source).trigger('pointermove', {
-        which: 1,
-        clientX: sourceRect.x + 5,
-        clientY: sourceRect.y + 5,
-        force: true,
-      });
-
       cy.get(target).then(($target) => {
-        const targetRect = $target[0].getBoundingClientRect();
+        const from = $source[0].getBoundingClientRect();
+        const to = $target[0].getBoundingClientRect();
+        const win = $source[0].ownerDocument.defaultView;
+        const scrollX = win?.scrollX ?? 0;
+        const scrollY = win?.scrollY ?? 0;
 
-        cy.get(target).trigger('pointermove', {
+        const startX = from.left + from.width / 2;
+        const startY = from.top + from.height / 2;
+        const endX = to.left + to.width / 2;
+        const endY = to.top + to.height / 2;
+
+        const at = (clientX: number, clientY: number): Record<string, number | boolean> => ({
           which: 1,
-          clientX: targetRect.x + 5,
-          clientY: targetRect.y + 5,
+          button: 0,
+          clientX,
+          clientY,
+          pageX: clientX + scrollX,
+          pageY: clientY + scrollY,
           force: true,
         });
-        cy.get(target).trigger('pointerup', { which: 1, button: 0, force: true });
+
+        // jstree's dnd resolves the drop node from the event target (not geometry, as nestable does),
+        // so the moves that matter must be dispatched ON the target anchor — a move on <body> leaves
+        // e.target as <body> and jstree never sees the node. Arm the drag with a move off the source,
+        // then hover the target twice (once to register, once to settle the "inside" drop marker).
+        cy.get(source).trigger('mousedown', at(startX, startY));
+        cy.get('body').trigger('mousemove', at(startX + 10, startY + 10));
+        cy.get(target).trigger('mousemove', at(endX, endY));
+        cy.get(target).trigger('mousemove', at(endX, endY));
+        cy.get(target).trigger('mouseup', at(endX, endY));
       });
     });
   };
@@ -185,9 +216,13 @@ export class NavigationTreePage extends BackofficePage {
       });
   }
 
-  // Same-origin backoffice iframe: read its body fresh on every access so a
-  // form reload (submit redirect / add-child navigation) cannot detach the ref.
+  // Same-origin backoffice iframe. The form issues a delayed second load after the tree selects a
+  // node (Zed re-renders it once the node-type widgets init), which detaches elements mid-chain.
+  // Settle first, then read the body fresh on every access so each interaction targets the final DOM.
   private getNodeFormBody(): Cypress.Chainable<JQuery<HTMLElement>> {
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(this.FORM_SETTLE_MS);
+
     return cy
       .get(this.repository.getNodeFormIframeSelector(), { timeout: 20000 })
       .its('0.contentDocument.body', { timeout: 20000 })
