@@ -64,7 +64,9 @@ export class ProductManagementEditRepository {
   getMerchantNotAssignedOptionText = (): string => 'Not assigned';
 
   getSaveSuccessMessage = (sku: string): Cypress.Chainable =>
-    cy.contains(`The product [${sku}] was saved successfully`, { timeout: 10000 });
+    // Saving a product runs its publish triggers synchronously; on a loaded CI runner the
+    // POST alone can exceed 10s, so the success flash needs a wider window.
+    cy.contains(`The product [${sku}] was saved successfully`, { timeout: 30000 });
 
   private getAttachmentLocaleContainer = (locale: string): Cypress.Chainable =>
     cy.get('.attachment-forms').contains('.ibox-title', this.getLocaleDisplayName(locale)).closest('.ibox');

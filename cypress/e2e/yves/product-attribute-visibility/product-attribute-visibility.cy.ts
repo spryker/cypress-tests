@@ -31,13 +31,17 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      editPage.updateAttributeVisibility(staticFixtures.attributeKey, ['PDP', 'PLP', 'Cart']);
-      cy.runQueueWorker();
-
       attributeVisibilityPage.visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
     });
 
     it('Should display attribute badges', (): void => {
+      // This arrange must stay inside the test: retryableBefore re-runs before every retry
+      // of any test in this spec, and re-setting PDP+PLP+Cart there enqueues the opposite
+      // visibility toggle between the attempts of the "NOT show" test — under a slow publish
+      // pipeline the storefront then stays one delivery behind for all its retries.
+      editPage.updateAttributeVisibility(staticFixtures.attributeKey, ['PDP', 'PLP', 'Cart']);
+      cy.runQueueWorker();
+
       attributeVisibilityPage.visitSearchAndWaitForBadgeVisible(
         dynamicFixtures.product.abstract_sku,
         staticFixtures.attributeValue
