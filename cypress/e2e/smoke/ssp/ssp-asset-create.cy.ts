@@ -43,7 +43,7 @@ describe(
         image: staticFixtures.asset.image,
       });
 
-      cy.contains(assetCreatePage.getAssetCreatedMessage());
+      assetCreatePage.assertBodyContainsText(assetCreatePage.getAssetCreatedMessage());
 
       assetDetailPage.assertPageLocation();
 

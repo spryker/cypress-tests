@@ -55,7 +55,7 @@ describe(
       sspFileManagementListPage.visit();
       sspFileManagementListPage.verifyListPage();
       sspFileManagementListPage.searchFile(staticFixtures.uploadedFileName);
-      cy.contains(staticFixtures.uploadedFileName).should('exist');
+      sspFileManagementListPage.assertBodyContainsText(staticFixtures.uploadedFileName).should('exist');
     });
   }
 );
