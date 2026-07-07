@@ -47,7 +47,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      cy.contains(mpLoginPage.getFailedAuthenticationText());
+      mpLoginPage.assertBodyContainsText(mpLoginPage.getFailedAuthenticationText());
       mpLoginPage.assertPageLocation();
     });
 
@@ -58,7 +58,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      cy.contains(mpLoginPage.getFailedAuthenticationText());
+      mpLoginPage.assertBodyContainsText(mpLoginPage.getFailedAuthenticationText());
       mpLoginPage.assertPageLocation();
     });
 
@@ -69,7 +69,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      cy.contains('Dashboard');
+      mpDashboardPage.assertBodyContainsText('Dashboard');
       mpDashboardPage.assertPageLocation();
     });
 
@@ -80,7 +80,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      cy.contains(mpLoginPage.getFailedAuthenticationText());
+      mpLoginPage.assertBodyContainsText(mpLoginPage.getFailedAuthenticationText());
       mpLoginPage.assertPageLocation();
     });
 
@@ -91,7 +91,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      cy.contains(mpLoginPage.getFailedAuthenticationText());
+      mpLoginPage.assertBodyContainsText(mpLoginPage.getFailedAuthenticationText());
       mpLoginPage.assertPageLocation();
     });
 
@@ -102,7 +102,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      cy.contains(mpAgentLoginPage.getFailedAuthenticationText());
+      mpAgentLoginPage.assertBodyContainsText(mpAgentLoginPage.getFailedAuthenticationText());
       mpAgentLoginPage.assertPageLocation();
     });
 
@@ -113,7 +113,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      cy.contains(mpAgentLoginPage.getFailedAuthenticationText());
+      mpAgentLoginPage.assertBodyContainsText(mpAgentLoginPage.getFailedAuthenticationText());
       mpAgentLoginPage.assertPageLocation();
     });
 
@@ -130,8 +130,8 @@ describe(
     it('agent assist login page in MP should not contain "Forgot password" button', (): void => {
       mpAgentLoginPage.visit();
 
-      cy.contains('Agent Assist Login');
-      cy.get('body').contains('Forgot password').should('not.exist');
+      mpAgentLoginPage.assertBodyContainsText('Agent Assist Login');
+      mpAgentLoginPage.assertBodyContainsText('Forgot password').should('not.exist');
     });
   }
 );

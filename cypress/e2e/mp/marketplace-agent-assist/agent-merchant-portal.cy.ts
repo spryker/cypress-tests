@@ -104,7 +104,7 @@ describe(
       profilePage.visit({ failOnStatusCode: false }); // TODO: Fix JS error
       profilePage.updatePhone();
 
-      cy.get('body').contains('The Profile has been changed successfully.');
+      profilePage.assertBodyContainsText('The Profile has been changed successfully.');
     });
 
     it('agent should be able to modify product information during impersonation', (): void => {
@@ -126,7 +126,7 @@ describe(
 
       cy.get('@drawer').find(productsPage.getSaveButtonSelector()).click();
 
-      cy.get('body').contains('The Product is saved.');
+      productsPage.assertBodyContainsText('The Product is saved.');
     });
 
     it('agent should be able to modify offer information during impersonation', (): void => {
@@ -140,7 +140,7 @@ describe(
       offersPage.find({ query: dynamicFixtures.productOffer.product_offer_reference }).click({ force: true });
       offersPage.getDrawer().find(offersPage.getSaveButtonSelector()).click();
 
-      cy.get('body').contains('The Offer is saved.');
+      offersPage.assertBodyContainsText('The Offer is saved.');
     });
 
     function addOneProductToCart(): void {
