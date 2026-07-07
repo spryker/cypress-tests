@@ -153,6 +153,8 @@ export class ConfigurationPage extends BackofficePage {
     cy.get(this.repository.getNavTabSelector(tabKey)).click({ force: true });
   };
 
+  getNavTab = (tabKey: string): Cypress.Chainable => cy.get(this.repository.getNavTabSelector(tabKey));
+
   getSaveBar = (): Cypress.Chainable => cy.get(this.repository.getSaveBarSelector());
 
   getChangesCount = (): Cypress.Chainable => cy.get(this.repository.getChangesCountSelector());

@@ -1,6 +1,7 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ConfigurationPage } from '@pages/backoffice';
+import { HomePage } from '@pages/yves';
 import { ConfigurationDynamicFixtures, ConfigurationStaticFixtures } from '@interfaces/backoffice';
 
 describe(
@@ -14,6 +15,7 @@ describe(
     };
 
     const configurationPage = container.get(ConfigurationPage);
+    const homePage = container.get(HomePage);
     const userLoginScenario = container.get(UserLoginScenario);
 
     let staticFixtures: ConfigurationStaticFixtures;
@@ -190,7 +192,7 @@ describe(
       cy.runQueueWorker();
 
       cy.visit('/');
-      cy.get('.logo img').should('have.attr', 'src').and('not.be.empty');
+      homePage.getLogoImage().should('have.attr', 'src').and('not.be.empty');
     });
 
     it('uploads backoffice logo and verifies it is applied in backoffice', (): void => {

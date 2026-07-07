@@ -120,6 +120,16 @@ export class ProductManagementEditPage extends BackofficePage {
   };
 
   getMerchantNotAssignedOptionText = (): string => 'Not assigned';
+
+  getAttachmentsSectionHeading = (): Cypress.Chainable => this.repository.getAttachmentsSectionHeading();
+
+  getAttachmentsSectionDescription = (): Cypress.Chainable => this.repository.getAttachmentsSectionDescription();
+
+  getFirstAttachmentFormLocaleTitle = (): Cypress.Chainable => this.repository.getFirstAttachmentFormLocaleTitle();
+
+  getFirstAttachmentFormIbox = (): Cypress.Chainable => this.repository.getFirstAttachmentFormIbox();
+
+  getFirstAttachmentFormAddButton = (): Cypress.Chainable => this.repository.getFirstAttachmentFormAddButton();
 }
 
 interface AttachmentParams {

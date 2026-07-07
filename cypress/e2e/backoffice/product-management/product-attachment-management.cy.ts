@@ -31,16 +31,12 @@ describe(
 
       productManagementEditPage.openMediaTab();
 
-      cy.contains('Product Attachments').should('be.visible');
-      cy.contains('Add URL-based attachments for different locales.').should('be.visible');
+      productManagementEditPage.getAttachmentsSectionHeading().should('be.visible');
+      productManagementEditPage.getAttachmentsSectionDescription().should('be.visible');
 
-      cy.get('.attachment-forms')
-        .first()
-        .within(() => {
-          cy.contains('.ibox-title', 'Default').should('be.visible');
-          cy.get('.ibox').first().should('not.have.class', 'collapsed');
-          cy.get('.add-another-attachment').first().should('be.visible');
-        });
+      productManagementEditPage.getFirstAttachmentFormLocaleTitle().should('be.visible');
+      productManagementEditPage.getFirstAttachmentFormIbox().should('not.have.class', 'collapsed');
+      productManagementEditPage.getFirstAttachmentFormAddButton().should('be.visible');
     });
 
     it('backoffice user can add and save single attachment to default locale', (): void => {

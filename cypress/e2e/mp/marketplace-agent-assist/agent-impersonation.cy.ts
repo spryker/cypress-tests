@@ -54,21 +54,21 @@ describe(
 
     it('agent should be able to see merchant user information during impersonation', (): void => {
       mpDashboardPage.visit();
-      cy.get('body').find(`div:contains("${dynamicFixtures.merchant.name}")`).should('exist');
-      cy.get('body').find(`div:contains("${dynamicFixtures.merchantUser.username}")`).should('exist');
+      mpDashboardPage.getTextContainer(dynamicFixtures.merchant.name).should('exist');
+      mpDashboardPage.getTextContainer(dynamicFixtures.merchantUser.username).should('exist');
 
-      cy.get('body')
-        .find(`div:contains("${dynamicFixtures.merchantUser.first_name} ${dynamicFixtures.merchantUser.last_name}")`)
+      mpDashboardPage
+        .getTextContainer(`${dynamicFixtures.merchantUser.first_name} ${dynamicFixtures.merchantUser.last_name}`)
         .should('exist');
     });
 
     it('agent should be able to see agent assist buttons during impersonation', (): void => {
-      cy.get('body').find(mpAgentDashboardPage.getEndUserAssistanceSelector()).should('exist');
-      cy.get('body').find(mpAgentDashboardPage.getLogoutAgentSelector()).should('exist');
+      mpAgentDashboardPage.getEndUserAssistanceButton().should('exist');
+      mpAgentDashboardPage.getLogoutAgentButton().should('exist');
     });
 
     it('agent should be able to finish impersonation', (): void => {
-      cy.get('body').find(mpAgentDashboardPage.getEndUserAssistanceSelector()).click();
+      mpAgentDashboardPage.getEndUserAssistanceButton().click();
       mpAgentDashboardPage.assertPageLocation();
 
       // Ensure that agent finished assistant session and don't have access to MP dashboard
@@ -78,7 +78,7 @@ describe(
     });
 
     it('agent should be able to fully logout from all sessions', (): void => {
-      cy.get('body').find(mpAgentDashboardPage.getLogoutAgentSelector()).click();
+      mpAgentDashboardPage.getLogoutAgentButton().click();
       mpAgentLoginPage.assertPageLocation();
 
       mpAgentDashboardPage.visit();

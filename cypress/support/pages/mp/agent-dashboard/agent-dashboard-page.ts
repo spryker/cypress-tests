@@ -100,6 +100,14 @@ export class AgentDashboardPage extends MpPage {
     return this.repository.getLogoutAgentSelector();
   };
 
+  getEndUserAssistanceButton = (): Cypress.Chainable => {
+    return cy.get('body').find(this.repository.getEndUserAssistanceSelector());
+  };
+
+  getLogoutAgentButton = (): Cypress.Chainable => {
+    return cy.get('body').find(this.repository.getLogoutAgentSelector());
+  };
+
   logoutAgent = (): void => {
     this.repository.getUserMenu().click();
     cy.contains('a', 'Logout').click({ force: true });

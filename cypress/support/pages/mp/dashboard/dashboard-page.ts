@@ -30,6 +30,9 @@ export class DashboardPage extends MpPage {
       }
     });
   };
+
+  getTextContainer = (text: string): Cypress.Chainable =>
+    cy.get('body').find(this.repository.getTextContainerSelector(text));
 }
 
 interface Assert500StatusCodeParams {

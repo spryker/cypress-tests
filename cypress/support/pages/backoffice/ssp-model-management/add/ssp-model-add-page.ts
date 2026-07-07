@@ -31,4 +31,8 @@ export class SspModelAddPage extends BackofficePage {
     this.repository.getSuccessMessageContainer().should('be.visible');
     cy.contains(this.repository.getSuccessMessage()).should('be.visible');
   }
+
+  public getModelImage(): Cypress.Chainable {
+    return this.repository.getModelImage();
+  }
 }

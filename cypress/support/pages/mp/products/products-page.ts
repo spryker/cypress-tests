@@ -76,6 +76,11 @@ export class ProductsPage extends MpPage {
   getTaxIdSetOptionSelector = (): string => {
     return this.repository.getTaxIdOptionSelector();
   };
+
+  getDrawerAlias = (): Cypress.Chainable => cy.get('@drawer');
+
+  selectTaxIdSetOption = (value: string | number | string[]): Cypress.Chainable =>
+    cy.get(this.repository.getTaxIdSelector()).select(value, { force: true });
 }
 
 interface FindParams {
