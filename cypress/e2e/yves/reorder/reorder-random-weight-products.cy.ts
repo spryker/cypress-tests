@@ -50,8 +50,8 @@ describe(
       customerOverviewPage.viewLastPlacedOrder();
       orderDetailsPage.reorderAll();
 
-      cy.get('body').contains(dynamicFixtures.productMUnit.localized_attributes[0].name).should('exist');
-      cy.get('body').contains(dynamicFixtures.productPUnit.localized_attributes[0].name).should('exist');
+      cartPage.assertBodyContainsText(dynamicFixtures.productMUnit.localized_attributes[0].name).should('exist');
+      cartPage.assertBodyContainsText(dynamicFixtures.productPUnit.localized_attributes[0].name).should('exist');
     });
 
     function placeOrderWithRandomWeightProducts(): void {

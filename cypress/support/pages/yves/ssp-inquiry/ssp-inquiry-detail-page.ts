@@ -74,6 +74,10 @@ export class SspInquiryDetailPage extends YvesPage {
   getCanceledSspInquiryStatusSelector(): string {
     return this.repository.getCanceledSspInquiryStatusSelector();
   }
+
+  getCanceledSspInquiryStatus(): Cypress.Chainable {
+    return cy.get(this.repository.getCanceledSspInquiryStatusSelector());
+  }
 }
 
 export interface SspInquiryDetails {
