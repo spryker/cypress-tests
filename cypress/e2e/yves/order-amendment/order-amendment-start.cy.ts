@@ -63,7 +63,7 @@ describe(
 
         cartPage.assertPageLocation();
         cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
-        cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
+        cartPage.assertBodyContainsText(dynamicFixtures.product.localized_attributes[0].name).should('exist');
 
         customerOverviewPage.viewLastPlacedOrder();
         orderDetailsPage.containsOrderState('Editing in Progress');
@@ -137,7 +137,7 @@ describe(
 
         cartPage.assertPageLocation();
         cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
-        cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
+        cartPage.assertBodyContainsText(dynamicFixtures.product.localized_attributes[0].name).should('exist');
 
         customerOverviewPage.viewLastPlacedOrder();
         orderDetailsPage.containsOrderState('Editing in Progress');
@@ -172,7 +172,7 @@ describe(
 
         cartPage.assertPageLocation();
         cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
-        cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
+        cartPage.assertBodyContainsText(dynamicFixtures.product.localized_attributes[0].name).should('exist');
 
         customerOverviewPage.viewLastPlacedOrder();
         orderDetailsPage.containsOrderState('Editing in Progress');
@@ -217,7 +217,9 @@ describe(
 
         cartPage.changeQuantity({ sku: dynamicFixtures.productOutOfStock2.sku, quantity: 2 });
 
-        cy.contains(`Item ${dynamicFixtures.productOutOfStock2.sku} only has availability of 1.`).should('exist');
+        cartPage
+          .assertBodyContainsText(`Item ${dynamicFixtures.productOutOfStock2.sku} only has availability of 1.`)
+          .should('exist');
         cartPage.getCartItemChangeQuantityField(dynamicFixtures.productOutOfStock2.sku).should('have.value', '1');
       });
     });

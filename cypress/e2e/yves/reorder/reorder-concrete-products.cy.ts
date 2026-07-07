@@ -46,8 +46,8 @@ describe(
         cartPage.assertPageLocation();
         cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Reorder from Order ${orderReference}`);
 
-        cy.get('body').contains(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
-        cy.get('body').contains(dynamicFixtures.product2.localized_attributes[0].name).should('exist');
+        cartPage.assertBodyContainsText(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
+        cartPage.assertBodyContainsText(dynamicFixtures.product2.localized_attributes[0].name).should('exist');
       });
     });
 
@@ -64,8 +64,8 @@ describe(
         cartPage.assertPageLocation();
         cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Reorder from Order ${orderReference}`);
 
-        cy.get('body').contains(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
-        cy.get('body').contains(dynamicFixtures.product2.localized_attributes[0].name).should('not.exist');
+        cartPage.assertBodyContainsText(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
+        cartPage.assertBodyContainsText(dynamicFixtures.product2.localized_attributes[0].name).should('not.exist');
       });
     });
 
@@ -91,7 +91,7 @@ describe(
       customerOverviewPage.viewLastPlacedOrder();
       orderDetailsPage.reorderAll();
 
-      cy.get('body').contains(dynamicFixtures.productOptionValue.value).should('exist');
+      cartPage.assertBodyContainsText(dynamicFixtures.productOptionValue.value).should('exist');
     });
 
     function placeCustomerOrder(email: string, idCustomerAddress: number): void {

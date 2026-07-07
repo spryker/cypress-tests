@@ -72,7 +72,7 @@ describe(
         image: staticFixtures.asset.image,
       });
 
-      cy.contains(assetCreatePage.getAssetCreatedMessage());
+      assetCreatePage.assertBodyContainsText(assetCreatePage.getAssetCreatedMessage());
 
       assetDetailPage.assertPageLocation();
 
@@ -116,7 +116,7 @@ describe(
         image: staticFixtures.assetUpdateData.image,
       });
 
-      cy.contains(assetEditPage.getAssetEditedMessage());
+      assetEditPage.assertBodyContainsText(assetEditPage.getAssetEditedMessage());
 
       assetDetailPage.visit({
         qs: {
@@ -200,7 +200,7 @@ describe(
 
         assetDetailPage.assertPageLocation();
 
-        cy.contains(assetReference).should('exist');
+        assetListPage.assertBodyContainsText(assetReference).should('exist');
       });
 
       assetListPage.visit();
@@ -361,7 +361,7 @@ describe(
 
       assetDetailPage.getUnassignLink().click();
       assetDetailPage.getUnassignButton().click();
-      cy.contains(assetDetailPage.getUnassignmentErrorMessage()).should('exist');
+      assetDetailPage.assertBodyContainsText(assetDetailPage.getUnassignmentErrorMessage()).should('exist');
 
       assetDetailPage.visit({
         qs: {
@@ -399,7 +399,7 @@ describe(
         idCustomerAddress: 0,
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
 
       customerOverviewPage.viewLastPlacedOrder();
 

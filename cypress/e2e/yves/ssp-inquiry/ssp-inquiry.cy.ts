@@ -61,7 +61,7 @@ describe(
       sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
       sspInquiryDetailPage.assertPageLocation();
-      cy.contains(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
+      sspInquiryCreatePage.assertBodyContainsText(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
 
       sspInquiryListPage.visit();
 
@@ -114,7 +114,7 @@ describe(
       });
 
       sspInquiryDetailPage.assertPageLocation();
-      cy.contains(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
+      sspInquiryCreatePage.assertBodyContainsText(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
 
       sspInquiryListPage.visit();
       const sspInquiryReference = sspInquiryListPage.getFirstRowReference();
@@ -168,7 +168,7 @@ describe(
       });
 
       sspInquiryDetailPage.assertPageLocation();
-      cy.contains(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
+      sspInquiryCreatePage.assertBodyContainsText(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
 
       sspInquiryListPage.visit();
       const sspInquiryReference = sspInquiryListPage.getFirstRowReference();
@@ -216,7 +216,7 @@ describe(
       sspInquiryDetailPage.assertPageLocation();
       sspInquiryDetailPage.clickCancelSspInquiryButton();
 
-      cy.get(sspInquiryDetailPage.getCanceledSspInquiryStatusSelector()).should('exist');
+      sspInquiryDetailPage.getCanceledSspInquiryStatus().should('exist');
     });
 
     it('customer should not be able to cancel a ssp inquiry if he is now owner', (): void => {
