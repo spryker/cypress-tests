@@ -10,21 +10,12 @@ export class SspFileManagementListPage extends YvesPage {
 
   protected PAGE_URL = '/customer/ssp-file/list-file';
 
-  verifyListPage(): void {
-    cy.get(this.repository.getFileTableSelector()).should('be.visible');
-  }
+  getFileTable = (): Cypress.Chainable => cy.get(this.repository.getFileTableSelector());
 
-  assertFileExists(fileName: string): void {
-    cy.get(this.repository.getFileTableSelector()).find('tr').contains(fileName).should('be.visible');
-  }
+  getFileRow = (fileName: string): Cypress.Chainable =>
+    cy.get(this.repository.getFileTableSelector()).find('tr').contains(fileName);
 
-  assertFileNotExists(fileName: string): void {
-    cy.get(this.repository.getFileTableSelector()).find('tr').contains(fileName).should('not.exist');
-  }
-
-  assertNoResults(): void {
-    cy.get(this.repository.getFileTableSelector()).find('tr').should('not.exist');
-  }
+  getFileRows = (): Cypress.Chainable => cy.get(this.repository.getFileTableSelector()).find('tr');
 
   downloadFile(fileName: string): void {
     cy.get(this.repository.getFileTableSelector())
@@ -35,9 +26,8 @@ export class SspFileManagementListPage extends YvesPage {
       .click();
   }
 
-  verifyFileDownloaded(fileName: string): void {
-    cy.readFile(Cypress.config('downloadsFolder') + '/' + fileName).should('exist');
-  }
+  getDownloadedFile = (fileName: string): Cypress.Chainable =>
+    cy.readFile(Cypress.config('downloadsFolder') + '/' + fileName);
 
   filterByType(fileType: string): void {
     cy.get(this.repository.getTypeFilterSelector()).select(fileType, { force: true });
@@ -63,11 +53,6 @@ export class SspFileManagementListPage extends YvesPage {
     cy.get(this.repository.getSearchFieldSelector()).type(searchTerm);
     cy.get(this.repository.getTypeFilterSelector()).select(fileType, { force: true });
     cy.get(this.repository.getApplyFiltersButtonSelector()).click();
-  }
-
-  verifyFilterValues(searchTerm: string, fileType: string): void {
-    cy.get(this.repository.getSearchFieldSelector()).should('have.value', searchTerm);
-    cy.get(this.repository.getTypeFilterSelector()).should('have.value', fileType.toLowerCase());
   }
 
   applyFilters(): void {

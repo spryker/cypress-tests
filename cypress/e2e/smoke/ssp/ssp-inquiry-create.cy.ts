@@ -37,6 +37,15 @@ describe(
       sspInquiryCreatePage.visit();
 
       staticFixtures.generalSspInquiry.availableTypes = staticFixtures.sspInquiryTypes.general;
+
+      if (staticFixtures.generalSspInquiry.availableTypes) {
+        sspInquiryCreatePage
+          .getTypeOptions()
+          .should('have.length', staticFixtures.generalSspInquiry.availableTypes.length);
+        staticFixtures.generalSspInquiry.availableTypes.forEach((type, index) => {
+          sspInquiryCreatePage.getTypeOptions().eq(index).should('have.value', type.key);
+        });
+      }
       sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
       sspInquiryCreatePage.assertBodyContainsText(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');

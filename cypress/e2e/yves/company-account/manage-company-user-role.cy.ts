@@ -45,7 +45,7 @@ describe(
     it('customer should be able to assign a user to a company role', (): void => {
       manageCompanyRoleUserPage.unassignUser();
       manageCompanyRoleUserPage.assignUser();
-      manageCompanyRoleUserPage.assertTopRowHasAssignButton();
+      manageCompanyRoleUserPage.getFirstUserUnassignButton().should('be.visible');
     });
 
     it('customer should be unable to unassign a company role without a CSRF token', (): void => {

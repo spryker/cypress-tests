@@ -24,7 +24,5 @@ export class BackofficeBudgetListPage extends BackofficePage {
     cy.visitBackoffice(`/purchasing-control/budget/edit?id-cost-center=${idCostCenter}&id-budget=${idBudget}`);
   };
 
-  assertBudgetInTable = (name: string): void => {
-    cy.get(this.repository.getTableBodySelector()).should('contain', name);
-  };
+  getTableBody = (): Cypress.Chainable => cy.get(this.repository.getTableBodySelector());
 }

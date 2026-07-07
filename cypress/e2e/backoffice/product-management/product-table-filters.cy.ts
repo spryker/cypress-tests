@@ -41,9 +41,13 @@ describe(
         stores: [dynamicFixtures.storeAT.name],
       });
 
-      productManagementListPage.applySearchQuery(dynamicFixtures.product.localized_attributes[0].name, () =>
-        productManagementListPage.assertNoTableRecords()
-      );
+      productManagementListPage.applySearchQuery(dynamicFixtures.product.localized_attributes[0].name, () => {
+        productManagementListPage.getTableRows().should('have.length', 1);
+        productManagementListPage
+          .getTableRows()
+          .first()
+          .should('contain', productManagementListPage.getNoTableRecordsText());
+      });
     });
 
     it('resetting filters restores all search results', (): void => {
@@ -54,7 +58,11 @@ describe(
       });
 
       productManagementListPage.applySearchQuery(dynamicFixtures.product.localized_attributes[0].name, () => {
-        productManagementListPage.assertNoTableRecords();
+        productManagementListPage.getTableRows().should('have.length', 1);
+        productManagementListPage
+          .getTableRows()
+          .first()
+          .should('contain', productManagementListPage.getNoTableRecordsText());
         productManagementListPage.getResetButton().click();
         productManagementListPage.getTableRows().should('have.length', 2);
       });

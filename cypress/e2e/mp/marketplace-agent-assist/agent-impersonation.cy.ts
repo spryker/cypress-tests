@@ -74,7 +74,11 @@ describe(
       // Ensure that agent finished assistant session and don't have access to MP dashboard
       const alias = mpDashboardPage.interceptRequest();
       mpDashboardPage.visit({ failOnStatusCode: false });
-      mpDashboardPage.assert500StatusCode({ alias: alias });
+      cy.wait(`@${alias}`).then((interception) => {
+        if (interception.response) {
+          expect(interception.response.statusCode).to.equal(500);
+        }
+      });
     });
 
     it('agent should be able to fully logout from all sessions', (): void => {

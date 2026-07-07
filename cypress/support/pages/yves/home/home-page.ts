@@ -29,7 +29,6 @@ export class HomePage extends YvesPage {
       .then((storeUrl) => {
         cy.visit(storeUrl as string);
       });
-    cy.url().should('include', store);
   };
 
   navigateToNewPage(newPageLinkText: string): void {

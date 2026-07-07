@@ -37,7 +37,7 @@ describe(
       catalogPage.visit();
       catalogPage.search({ query: productAbstract.name });
 
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      // eslint-disable-next-line cypress/no-unnecessary-waiting, spryker-cypress/no-numeric-wait
       cy.wait(5000); // For some reason URL still not synced in Redis, and after search, we need to wait a bit
       catalogPage.search({ query: productAbstract.name });
 
@@ -61,7 +61,7 @@ describe(
       catalogPage.visit();
       catalogPage.search({ query: productAbstract.name });
 
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      // eslint-disable-next-line cypress/no-unnecessary-waiting, spryker-cypress/no-numeric-wait
       cy.wait(5000); // For some reason URL still not synced in Redis, and after search, we need to wait a bit
       catalogPage.search({ query: productAbstract.name });
 

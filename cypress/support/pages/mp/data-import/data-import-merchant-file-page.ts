@@ -25,8 +25,8 @@ export class DataImportMerchantFilePage extends MpPage {
     this.repository.getFormSubmitButton().click();
   }
 
-  assertImportStartedNotification(): void {
-    cy.get('body').should('contain', 'File import has been started');
+  getImportStartedNotification(): Cypress.Chainable {
+    return cy.get('body');
   }
 
   assertFileStatus(fileName: string, status: string): void {

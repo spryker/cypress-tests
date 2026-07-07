@@ -18,6 +18,7 @@ export class BackofficePage extends AbstractPage {
     const interceptAlias = this.faker.string.uuid();
 
     cy.intercept('GET', params.url).as(interceptAlias);
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Internal retry/settle guard on the GUI-table intercept; not a spec-level assertion.
     return cy
       .wait(`@${interceptAlias}`, { timeout: 10000 })
       .its('response.body')
@@ -49,6 +50,7 @@ export class BackofficePage extends AbstractPage {
 
   protected getRows = (expectedCount?: number): Cypress.Chainable<JQuery<HTMLElement>> => {
     if (expectedCount !== undefined) {
+      // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Retry-settles the visible row count; internal table helper, not a spec assertion.
       return cy.get('tbody > tr:visible').should('have.length', expectedCount);
     }
 
@@ -101,6 +103,7 @@ export class BackofficePage extends AbstractPage {
             .invoke('val', params.searchQuery)
             .trigger('input')
             .then(() => {
+              // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Internal retry/settle guard on the GUI-table intercept; not a spec-level assertion.
               return cy
                 .wait(`@${searchInterceptAlias}`, { timeout: 10000 })
                 .its('response.body')
@@ -111,9 +114,11 @@ export class BackofficePage extends AbstractPage {
                   }
                 })
                 .then(() => {
+                  // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Waits out the table loading spinner; internal settle, not a spec assertion.
                   cy.get('.spy-spinner, .data-processing, .loading').should('not.exist');
 
                   if (params.expectedToSeeInTable) {
+                    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Internal table-content settle before returning the row; not a spec assertion.
                     cy.get('tbody').should('contain', params.expectedToSeeInTable);
                   }
                 })

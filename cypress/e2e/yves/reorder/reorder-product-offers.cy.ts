@@ -50,7 +50,10 @@ describe(
         orderDetailsPage.reorderAll();
 
         cartPage.assertPageLocation();
-        cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Reorder from Order ${orderReference}`);
+        cartPage
+          .getBody()
+          .contains(isB2c() ? 'In Your Cart' : `Reorder from Order ${orderReference}`)
+          .should('exist');
 
         cartPage
           .assertBodyContainsText(`${staticFixtures.soldByText} ${dynamicFixtures.merchant1.name}`)

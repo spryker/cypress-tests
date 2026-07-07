@@ -119,12 +119,11 @@ export class ProductPage extends YvesPage {
 
   selectAsset(): void {
     this.repository.getSelectAssetButton().click();
-    this.repository.getSelectAssetPopup().should('be.visible');
     this.repository.getAssetOptions().first().click();
   }
 
-  assertServicePointIsSelected(servicePointName: string): void {
-    this.repository.getSelectedServicePointName().should('contain', servicePointName);
+  getSelectedServicePointName(): Cypress.Chainable {
+    return this.repository.getSelectedServicePointName();
   }
 
   getSspAssetNameBlock = (): Cypress.Chainable => this.repository.getSspAssetNameBlock();

@@ -91,7 +91,10 @@ describe(
 
       // Ensure that order was canceled
       salesOrdersPage.visit();
-      salesOrdersPage.find({ query: dynamicFixtures.customer.email }).contains('canceled');
+      salesOrdersPage
+        .find({ query: dynamicFixtures.customer.email })
+        .should('contain', dynamicFixtures.customer.email)
+        .contains('canceled');
     });
 
     it('agent should be able to modify merchant profile information during impersonation', (): void => {

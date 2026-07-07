@@ -74,18 +74,11 @@ export class SspFileManagementAddPage extends BackofficePage {
     );
   }
 
-  verifyFileUploadConstraints(): void {
-    cy.get(this.repository.getFileInputSelector()).should('have.attr', 'multiple');
-    cy.get(this.repository.getFileInputSelector()).should('have.attr', 'accept', '.pdf,.jpeg,.jpg,.png,.heic,.heif');
-    cy.get(this.repository.getFileInputSelector()).should('have.attr', 'size', '100M');
-    cy.get(this.repository.getFileInputSelector()).should('have.attr', 'max', '4');
-  }
+  getFileInput = (): Cypress.Chainable => cy.get(this.repository.getFileInputSelector());
 
   submitForm(): void {
     cy.get(this.repository.getSubmitButtonSelector()).click();
   }
 
-  verifySuccessMessage(): void {
-    cy.get(this.repository.getSuccessMessageSelector()).should('be.visible');
-  }
+  getSuccessMessage = (): Cypress.Chainable => cy.get(this.repository.getSuccessMessageSelector());
 }

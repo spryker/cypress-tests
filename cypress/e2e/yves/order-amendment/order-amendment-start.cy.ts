@@ -56,17 +56,20 @@ describe(
       placeCustomerOrder(dynamicFixtures.customer1.email, dynamicFixtures.address1.id_customer_address);
 
       customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.containsOrderState('New');
+      orderDetailsPage.getOrderDetailTableBlock().contains('New').should('exist');
 
       orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
         orderDetailsPage.editOrder();
 
         cartPage.assertPageLocation();
-        cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
+        cartPage
+          .getBody()
+          .contains(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`)
+          .should('exist');
         cartPage.assertBodyContainsText(dynamicFixtures.product.localized_attributes[0].name).should('exist');
 
         customerOverviewPage.viewLastPlacedOrder();
-        orderDetailsPage.containsOrderState('Editing in Progress');
+        orderDetailsPage.getOrderDetailTableBlock().contains('Editing in Progress').should('exist');
       });
     });
 
@@ -80,7 +83,7 @@ describe(
       });
 
       customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.doesNotContainEditOrderButton();
+      orderDetailsPage.getEditOrderForm().should('not.exist');
     });
 
     it('customer should be able to replace current cart (quote) with previous order items', (): void => {
@@ -136,11 +139,14 @@ describe(
         orderDetailsPage.editOrder();
 
         cartPage.assertPageLocation();
-        cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
+        cartPage
+          .getBody()
+          .contains(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`)
+          .should('exist');
         cartPage.assertBodyContainsText(dynamicFixtures.product.localized_attributes[0].name).should('exist');
 
         customerOverviewPage.viewLastPlacedOrder();
-        orderDetailsPage.containsOrderState('Editing in Progress');
+        orderDetailsPage.getOrderDetailTableBlock().contains('Editing in Progress').should('exist');
       });
     });
 
@@ -171,11 +177,14 @@ describe(
         orderDetailsPage.editOrder();
 
         cartPage.assertPageLocation();
-        cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
+        cartPage
+          .getBody()
+          .contains(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`)
+          .should('exist');
         cartPage.assertBodyContainsText(dynamicFixtures.product.localized_attributes[0].name).should('exist');
 
         customerOverviewPage.viewLastPlacedOrder();
-        orderDetailsPage.containsOrderState('Editing in Progress');
+        orderDetailsPage.getOrderDetailTableBlock().contains('Editing in Progress').should('exist');
       });
     });
 

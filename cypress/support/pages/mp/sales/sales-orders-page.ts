@@ -27,7 +27,7 @@ export class SalesOrdersPage extends MpPage {
       }
     );
 
-    return this.repository.getFirstTableRow().should('contain', params.query);
+    return this.repository.getFirstTableRow();
   };
 
   update = (params: UpdateParams): void => {

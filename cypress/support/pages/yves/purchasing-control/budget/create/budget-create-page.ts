@@ -43,7 +43,5 @@ export class YvesBudgetCreatePage extends YvesPage {
     this.repository.getSubmitButton().click();
   };
 
-  assertSuccess = (): void => {
-    this.repository.getSuccessFlashMessage().should('be.visible');
-  };
+  getSuccessFlashMessage = (): Cypress.Chainable => this.repository.getSuccessFlashMessage();
 }

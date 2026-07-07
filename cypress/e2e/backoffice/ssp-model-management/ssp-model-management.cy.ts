@@ -53,7 +53,8 @@ describe(
 
       sspModelAddPage.submitForm();
 
-      sspModelAddPage.verifySuccessMessage();
+      sspModelAddPage.getSuccessMessageContainer().should('be.visible');
+      sspModelAddPage.getSuccessMessageText().should('be.visible');
     });
 
     it('should be able to edit a model and persist changes', () => {
@@ -69,7 +70,8 @@ describe(
 
       sspModelUpdatePage.submitForm();
 
-      sspModelUpdatePage.verifySuccessMessage();
+      sspModelUpdatePage.getSuccessMessageContainer().should('be.visible');
+      sspModelUpdatePage.getSuccessMessageText().should('be.visible');
 
       sspModelViewPage.visit({
         qs: {
@@ -79,9 +81,7 @@ describe(
 
       sspModelViewPage.assertPageLocation();
 
-      sspModelViewPage.verifySspModel({
-        code: staticFixtures.sspModelEdit.code,
-      });
+      sspModelViewPage.getCodeBlock().should('contain', staticFixtures.sspModelEdit.code);
     });
   }
 );

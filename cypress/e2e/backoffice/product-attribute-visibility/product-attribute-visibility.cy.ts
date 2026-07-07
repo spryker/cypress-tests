@@ -42,6 +42,7 @@ describe(
 
       Object.values(attributes).forEach((attr) => {
         createPage.createAttribute(attr.key, attr.visibilityTypes);
+        cy.url().should('contain', '/translate');
       });
     });
 
@@ -55,43 +56,49 @@ describe(
     it('Attribute list table should contain Display At column and have Display At filter dropdown', (): void => {
       listPage.visitAndWaitForTable();
 
-      listPage.assertDisplayAtColumnExists();
-      listPage.assertVisibilityFilterExists();
+      listPage.getTableHead().should('contain', 'Display At');
+      listPage.getVisibilityFilter().should('exist');
     });
 
     it('Filtering by visibility type should find respective attribute', (): void => {
       listPage.applyFilterAndSearch(attributes.pdp.key, 'PDP');
-      listPage.assertSingleRow();
-      listPage.assertDisplayAtContains('PDP');
+      listPage.getTableBodyRows().should('have.length', 1);
+      listPage.getDisplayAtCell().should('contain', 'PDP');
 
       listPage.applyFilterAndSearch(attributes.plp.key, 'PLP');
-      listPage.assertSingleRow();
-      listPage.assertDisplayAtContains('PLP');
+      listPage.getTableBodyRows().should('have.length', 1);
+      listPage.getDisplayAtCell().should('contain', 'PLP');
 
       listPage.applyFilterAndSearch(attributes.cart.key, 'Cart');
-      listPage.assertSingleRow();
-      listPage.assertDisplayAtContains('Cart');
+      listPage.getTableBodyRows().should('have.length', 1);
+      listPage.getDisplayAtCell().should('contain', 'Cart');
 
       listPage.applyFilterAndSearch(attributes.none.key, 'None');
-      listPage.assertSingleRow();
-      listPage.assertDisplayAtEmpty();
+      listPage.getTableBodyRows().should('have.length', 1);
+      listPage
+        .getDisplayAtCell()
+        .invoke('text')
+        .then((text) => {
+          expect(text.trim()).to.equal('');
+        });
     });
 
     it('Combined attribute should appear in filter with all visibility labels', (): void => {
       listPage.applyFilterAndSearch(attributes.combined.key, 'PDP');
-      listPage.assertSingleRow();
-      listPage.assertDisplayAtContains('PDP');
-      listPage.assertDisplayAtContains('PLP');
-      listPage.assertDisplayAtContains('Cart');
+      listPage.getTableBodyRows().should('have.length', 1);
+      listPage.getDisplayAtCell().should('contain', 'PDP');
+      listPage.getDisplayAtCell().should('contain', 'PLP');
+      listPage.getDisplayAtCell().should('contain', 'Cart');
 
       listPage.applyFilterAndSearch(attributes.combined.key, 'PLP');
-      listPage.assertSingleRow();
+      listPage.getTableBodyRows().should('have.length', 1);
 
       listPage.applyFilterAndSearch(attributes.combined.key, 'Cart');
-      listPage.assertSingleRow();
+      listPage.getTableBodyRows().should('have.length', 1);
 
       listPage.applyFilterAndSearch(attributes.pdp.key, 'Cart');
-      listPage.assertNoRecords();
+      listPage.getTableBodyRows().should('have.length', 1);
+      listPage.getTableBodyRows().first().should('contain', 'No matching records found');
     });
   }
 );

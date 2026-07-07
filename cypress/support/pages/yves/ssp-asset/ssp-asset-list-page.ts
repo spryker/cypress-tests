@@ -22,29 +22,12 @@ export class SspAssetListPage extends YvesPage {
     this.repository.getFirstRowViewButton().click();
   }
 
-  assertTableHeaders(expectedHeaders: string[]): void {
-    this.repository.getAssetTableHeaders().each(($header, index) => {
-      if (index < expectedHeaders.length && expectedHeaders[index]) {
-        cy.wrap($header).contains(new RegExp(expectedHeaders[index], 'i')).should('exist');
-      }
-    });
+  getTableHeaders(): Cypress.Chainable {
+    return this.repository.getAssetTableHeaders();
   }
 
   getRows(): Cypress.Chainable {
     return this.repository.getAssetTableRows();
-  }
-
-  assertTableData(sspAssets: SspAsset[]): void {
-    this.getRows().its('length').should('eq', sspAssets.length);
-
-    sspAssets.forEach((sspAsset) => {
-      if (sspAsset.reference) {
-        this.getRows().contains(sspAsset.reference).should('exist');
-      }
-      if (sspAsset.name) {
-        this.getRows().contains(sspAsset.name).should('exist');
-      }
-    });
   }
 
   getSspAssetCustomerMenuItem(): Cypress.Chainable {
@@ -66,9 +49,4 @@ export class SspAssetListPage extends YvesPage {
   openFilters(): void {
     cy.get(this.repository.getFiltersTriggerSelector()).click();
   }
-}
-
-interface SspAsset {
-  reference?: string;
-  name?: string;
 }

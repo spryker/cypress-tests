@@ -98,7 +98,6 @@ export class ConfigurationPage extends BackofficePage {
     cy.get(containerSelector).find(this.repository.getUploadTriggerSelector()).click({ force: true });
     cy.get(containerSelector).find(this.repository.getModalFileInputSelector()).selectFile(filePath, { force: true });
     cy.get(containerSelector).find(this.repository.getModalUploadSubmitSelector()).click();
-    cy.wait('@logoUpload').its('response.statusCode').should('eq', 200);
   };
 
   uploadStorefrontLogo = (filePath: string): void => {
@@ -113,22 +112,20 @@ export class ConfigurationPage extends BackofficePage {
     this.uploadLogoToContainer(this.repository.getMerchantPortalLogoContainerSelector(), filePath);
   };
 
-  private verifyLogoUploaded = (containerSelector: string): void => {
-    cy.get(containerSelector).find(this.repository.getUploadTriggerSelector()).should('contain.text', 'Change File');
-    cy.get(containerSelector).find(this.repository.getLogoHiddenValueInputSelector()).should('not.have.value', '');
-  };
+  getStorefrontLogoHiddenValueInput = (): Cypress.Chainable =>
+    cy
+      .get(this.repository.getStorefrontLogoContainerSelector())
+      .find(this.repository.getLogoHiddenValueInputSelector());
 
-  verifyStorefrontLogoUploaded = (): void => {
-    this.verifyLogoUploaded(this.repository.getStorefrontLogoContainerSelector());
-  };
+  getBackofficeLogoHiddenValueInput = (): Cypress.Chainable =>
+    cy
+      .get(this.repository.getBackofficeLogoContainerSelector())
+      .find(this.repository.getLogoHiddenValueInputSelector());
 
-  verifyBackofficeLogoUploaded = (): void => {
-    this.verifyLogoUploaded(this.repository.getBackofficeLogoContainerSelector());
-  };
-
-  verifyMerchantPortalLogoUploaded = (): void => {
-    this.verifyLogoUploaded(this.repository.getMerchantPortalLogoContainerSelector());
-  };
+  getMerchantPortalLogoHiddenValueInput = (): Cypress.Chainable =>
+    cy
+      .get(this.repository.getMerchantPortalLogoContainerSelector())
+      .find(this.repository.getLogoHiddenValueInputSelector());
 
   resetChanges = (): void => {
     cy.on('window:confirm', (): boolean => true);

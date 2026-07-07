@@ -50,10 +50,14 @@ describe(
       });
 
       sspFileManagementAddPage.submitForm();
-      sspFileManagementAddPage.verifySuccessMessage();
+      sspFileManagementAddPage.getSuccessMessage().should('be.visible');
 
       sspFileManagementListPage.visit();
-      sspFileManagementListPage.verifyListPage();
+      sspFileManagementListPage.getReferenceHeader().should('contain', 'Reference');
+      sspFileManagementListPage.getFileNameHeader().should('contain', 'File Name');
+      sspFileManagementListPage.getFileSizeHeader().should('contain', 'Size');
+      sspFileManagementListPage.getFileTypeHeader().should('contain', 'Type');
+      sspFileManagementListPage.getUploadedDateHeader().should('contain', 'Date Uploaded');
       sspFileManagementListPage.searchFile(staticFixtures.uploadedFileName);
       sspFileManagementListPage.assertBodyContainsText(staticFixtures.uploadedFileName).should('exist');
     });

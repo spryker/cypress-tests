@@ -69,7 +69,10 @@ describe(
       productPage.addToCart();
       if (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
         cartPage.visit();
-        cartPage.assertCartItemAvailabilityDisplayed(true);
+
+        const availabilityLabel = cartPage.getCartItemAvailabilityLabel();
+        availabilityLabel.should('be.visible');
+        availabilityLabel.invoke('text').should('match', /(\d+[,.]?\d*\s+[a-z]+\s+)?in stock/i);
       }
 
       checkoutScenario.execute({

@@ -1,7 +1,7 @@
 import { container } from '@utils';
 import { retryableBefore } from '../../../support/e2e';
 import { SspInquiryStaticFixtures, SspInquiryDynamicFixtures } from '@interfaces/backoffice';
-import { SspInquiryDetailPage } from '@pages/backoffice';
+import { SspInquiryDetailPage, SspInquiryDetails, OrderSspInquiryDetails } from '@pages/backoffice';
 import { SspInquiryListPage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
@@ -48,7 +48,7 @@ describe(
         },
       });
 
-      sspInquiryDetailPage.assertSspInquiryDetails({
+      assertSspInquiryDetails({
         reference: dynamicFixtures.generalSspInquiry.reference,
         date: new Date()
           .toLocaleDateString('en-US', {
@@ -84,7 +84,7 @@ describe(
         },
       });
 
-      sspInquiryDetailPage.assertOrderSspInquiryDetails({
+      assertOrderSspInquiryDetails({
         reference: dynamicFixtures.orderSspInquiry.reference,
         date: new Date()
           .toLocaleDateString('en-US', {
@@ -132,9 +132,16 @@ describe(
     it('should visit the ssp inquiry list page', () => {
       sspInquiryListPage.visit();
 
-      sspInquiryDetailPage.assertSspInquiryTableIsNotEmpty();
-      sspInquiryDetailPage.assertSspInquiryTableColumnsExist();
-      sspInquiryDetailPage.assertViewSspInquiryTableLinksExist();
+      sspInquiryDetailPage.getSspInquiryTableRows().should('have.length.greaterThan', 0);
+
+      const expectedColumns = ['ID', 'Reference', 'Type', 'Customer', 'Date', 'Status', 'Actions'];
+      sspInquiryDetailPage.getSspInquiryTableHeaders().each((header, index) => {
+        if (expectedColumns[index]) {
+          cy.wrap(header).should('contain.text', expectedColumns[index]);
+        }
+      });
+
+      sspInquiryDetailPage.getSspInquiryTableRows().eq(0).find('a.btn-view').should('exist');
     });
 
     it('user can approve ssp inquiry', (): void => {
@@ -145,7 +152,7 @@ describe(
       });
 
       sspInquiryDetailPage.approveSspInquiry();
-      sspInquiryDetailPage.assertSspInquiryStatusChangedToApproved();
+      sspInquiryDetailPage.getSspInquiryStatus().contains('Approved');
     });
 
     it('user can reject ssp inquiry', (): void => {
@@ -156,7 +163,7 @@ describe(
       });
 
       sspInquiryDetailPage.rejectSspInquiry();
-      sspInquiryDetailPage.assertSspInquiryStatusChangedToRejected();
+      sspInquiryDetailPage.getSspInquiryStatus().contains('Rejected');
     });
 
     it('user can cancel ssp inquiry', (): void => {
@@ -167,7 +174,7 @@ describe(
       });
 
       sspInquiryDetailPage.cancelSspInquiry();
-      sspInquiryDetailPage.assertSspInquiryStatusChangedToCanceled();
+      sspInquiryDetailPage.getSspInquiryStatus().contains('Canceled');
     });
 
     it('i can see ssp inquiry history', (): void => {
@@ -178,7 +185,48 @@ describe(
       });
 
       sspInquiryDetailPage.openSspInquiryHistory();
-      sspInquiryDetailPage.assertSspInquiryHistoryIsNotEmpty();
+      sspInquiryDetailPage.getHistoryDetailsTable().should('exist').should('be.visible');
     });
+
+    function assertSspInquiryDetails(params: SspInquiryDetails): void {
+      sspInquiryDetailPage.getSspInquiryReferenceCell().should('contain.text', params.reference);
+      sspInquiryDetailPage
+        .getCustomerCell()
+        .should(
+          'contain.text',
+          `${params.customer.salutation} ${params.customer.firstName} ${params.customer.lastName}`
+        );
+      sspInquiryDetailPage.getDateCell().should('contain.text', params.date);
+      sspInquiryDetailPage.getStatusCell().contains(new RegExp(params.status, 'i')).should('exist');
+      sspInquiryDetailPage
+        .getCompanyBusinessUnitCell()
+        .should('contain.text', `${params.customer.companyName} / ${params.customer.businessUnitName}`);
+      sspInquiryDetailPage.getTypeCell().contains(new RegExp(params.type, 'i')).should('exist');
+      sspInquiryDetailPage.getSubjectCell().should('contain.text', params.subject);
+      sspInquiryDetailPage.getDescriptionCell().should('contain.text', params.description);
+
+      const getColumnIndexByName = (columnName: string): number => {
+        const columnNames = ['File name', 'Size', 'Type', 'Actions'];
+        return columnNames.indexOf(columnName);
+      };
+
+      for (const file of params.files) {
+        sspInquiryDetailPage
+          .getFileTableRowCell(file.file_name, getColumnIndexByName('File name'))
+          .should('contain.text', file.file_name);
+        sspInquiryDetailPage.getFileTableRowCell(file.file_name, getColumnIndexByName('Size')).should('exist');
+        sspInquiryDetailPage
+          .getFileTableRowCell(file.file_name, getColumnIndexByName('Type'))
+          .should('contain.text', file.extension);
+        sspInquiryDetailPage
+          .getFileTableRowCell(file.file_name, getColumnIndexByName('Actions'))
+          .should('contain.text', 'Download');
+      }
+    }
+
+    function assertOrderSspInquiryDetails(params: OrderSspInquiryDetails): void {
+      sspInquiryDetailPage.getOrderReferenceCell().should('contain.text', params.order.reference);
+      assertSspInquiryDetails(params);
+    }
   }
 );

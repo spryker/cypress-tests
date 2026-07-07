@@ -11,6 +11,6 @@ export class MerchantUserAccountScenario {
     this.accountPage.visit();
     this.accountPage.openChangePasswordForm();
     this.accountPage.changePassword(defaultPassword, newPassword);
-    this.accountPage.waitForPasswordChangedMessage();
+    this.accountPage.getPasswordChangedMessage().should('be.visible');
   };
 }

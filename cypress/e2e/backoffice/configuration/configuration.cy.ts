@@ -186,7 +186,9 @@ describe(
     it('uploads storefront logo and verifies it is applied in yves', (): void => {
       configurationPage.visitLogosTab();
       configurationPage.uploadStorefrontLogo(staticFixtures.logoFilePath);
-      configurationPage.verifyStorefrontLogoUploaded();
+      cy.wait('@logoUpload').its('response.statusCode').should('eq', 200);
+      configurationPage.getStorefrontLogoUploadButton().should('contain.text', 'Change File');
+      configurationPage.getStorefrontLogoHiddenValueInput().should('not.have.value', '');
       configurationPage.saveConfiguration();
 
       cy.runQueueWorker();
@@ -198,7 +200,9 @@ describe(
     it('uploads backoffice logo and verifies it is applied in backoffice', (): void => {
       configurationPage.visitLogosTab();
       configurationPage.uploadBackofficeLogo(staticFixtures.logoFilePath);
-      configurationPage.verifyBackofficeLogoUploaded();
+      cy.wait('@logoUpload').its('response.statusCode').should('eq', 200);
+      configurationPage.getBackofficeLogoUploadButton().should('contain.text', 'Change File');
+      configurationPage.getBackofficeLogoHiddenValueInput().should('not.have.value', '');
       configurationPage.saveConfiguration();
 
       cy.visitBackoffice('/dashboard');
@@ -215,7 +219,9 @@ describe(
     merchantIt('uploads merchant portal logo and verifies it is applied in merchant portal', (): void => {
       configurationPage.visitLogosTab();
       configurationPage.uploadMerchantPortalLogo(staticFixtures.logoFilePath);
-      configurationPage.verifyMerchantPortalLogoUploaded();
+      cy.wait('@logoUpload').its('response.statusCode').should('eq', 200);
+      configurationPage.getMerchantPortalLogoUploadButton().should('contain.text', 'Change File');
+      configurationPage.getMerchantPortalLogoHiddenValueInput().should('not.have.value', '');
       configurationPage.saveConfiguration();
 
       cy.visitMerchantPortal('/security-merchant-portal-gui/login');

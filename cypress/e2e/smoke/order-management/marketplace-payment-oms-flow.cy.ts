@@ -145,7 +145,7 @@ describe(
       salesOrdersPage.visit();
       salesOrdersPage.hasOrderByOrderReference(orderReference).then((isVisible) => {
         if (!isVisible) {
-          // eslint-disable-next-line cypress/no-unnecessary-waiting
+          // eslint-disable-next-line cypress/no-unnecessary-waiting, spryker-cypress/no-numeric-wait
           cy.wait(10000);
           checkOrderVisibility(orderReference);
         }

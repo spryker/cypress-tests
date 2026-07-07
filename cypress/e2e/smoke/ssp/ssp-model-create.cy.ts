@@ -43,7 +43,8 @@ describe(
         image: staticFixtures.sspModel.image,
       });
       sspModelAddPage.submitForm();
-      sspModelAddPage.verifySuccessMessage();
+      sspModelAddPage.getSuccessMessageContainer().should('be.visible');
+      sspModelAddPage.getSuccessMessageText().should('be.visible');
 
       sspModelAddPage
         .getModelImage()
