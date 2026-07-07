@@ -10,7 +10,8 @@ export class AbstractPage {
     cy.url({ timeout: 20000 }).should('include', this.PAGE_URL);
   };
 
-  assertBodyContainsText = (text: string): Cypress.Chainable => cy.get('body').contains(text);
+  assertBodyContainsText = (text: string, options?: Partial<Cypress.Timeoutable>): Cypress.Chainable =>
+    cy.get('body').contains(text, options);
 
   isRepository = (...ids: string[]): boolean => ids.includes(Cypress.env('repositoryId'));
 }
