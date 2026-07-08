@@ -13,7 +13,10 @@ export class CheckoutPaymentPage extends YvesPage {
 
   setDummyPaymentMethod = (): void => {
     this.repository.getDummyPaymentInvoiceRadio().click({ force: true });
-    this.repository.getDummyPaymentInvoiceDateField().clear().type('12.12.1999');
+
+    if (!this.isRepository('suite')) {
+      this.repository.getDummyPaymentInvoiceDateField().clear().type('12.12.1999');
+    }
 
     this.repository.getGoToSummaryButton().click();
   };
