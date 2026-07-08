@@ -32,7 +32,10 @@ export class CheckoutPaymentPage extends YvesPage {
 
   setDummyMarketplacePaymentMethod = (): void => {
     this.repository.getDummyMarketplacePaymentInvoiceRadio().click({ force: true });
-    this.repository.getDummyMarketplacePaymentInvoiceDateField().clear().type('12.12.1999');
+
+    if (!this.isRepository('suite')) {
+      this.repository.getDummyMarketplacePaymentInvoiceDateField().clear().type('12.12.1999');
+    }
 
     this.repository.getGoToSummaryButton().click();
   };
