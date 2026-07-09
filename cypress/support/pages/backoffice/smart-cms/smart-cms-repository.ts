@@ -13,6 +13,8 @@ export class SmartCmsRepository {
 
   getPanelSelector = (): string => '.js-smart-cms-panel';
 
+  getPanelCollapsedClass = (): string => 'smart-cms-panel--collapsed';
+
   getPanelToggleSelector = (): string => '.js-smart-cms-panel__toggle';
 
   getPanelInputSelector = (): string => '.js-smart-cms-panel__input';
@@ -25,7 +27,14 @@ export class SmartCmsRepository {
 
   getPanelAttachmentNameSelector = (): string => '.js-smart-cms-panel__attachment-name';
 
+  getPanelAttachmentRemoveSelector = (): string => '.js-smart-cms-panel__attachment-remove';
+
+  getGlossaryEditorSelector = (): string => 'textarea.html-editor';
+
   getPanelMessageSelector = (): string => '.js-smart-cms-panel__message';
+
+  getPanelSuccessMessageSelector = (): string =>
+    '.js-smart-cms-panel__message.smart-cms-panel__message--success:not(.smart-cms-panel__message--error)';
 
   getGenerateEndpointGlob = (): string => '**/ai-commerce/smart-cms-content/generate';
 }

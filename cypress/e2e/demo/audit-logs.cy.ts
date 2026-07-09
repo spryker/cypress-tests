@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
-import { AuditLogsPage } from '@pages/backoffice';
+import { AuditLogsPage, SmartPimPage } from '@pages/backoffice';
 import { AuditLogsDemoStaticFixtures } from '@interfaces/demo';
 
 describe(
@@ -11,6 +11,7 @@ describe(
   (): void => {
     const userLoginScenario = container.get(UserLoginScenario);
     const auditLogsPage = container.get(AuditLogsPage);
+    const smartPimPage = container.get(SmartPimPage);
 
     const EXPECTED_COLUMN_HEADERS: Array<{ dataQa: string; label: string }> = [
       { dataQa: 'spy_ai_interaction_log.prompt', label: 'Prompt' },
@@ -172,5 +173,84 @@ describe(
         cy.wait('@sortChangeData').its('response.statusCode').should('eq', 200);
       }
     );
+
+    describe('real AI audit-log data (full, requires provider token)', { tags: ['@demo-full'] }, (): void => {
+      const REAL_FLOW_TIMEOUT = 15000;
+
+      it(
+        'captures a self-seeded AI interaction as an audit-log row with populated provider/model/tokens/cost/status/inference fields',
+        { tags: ['@demo-full'] },
+        function (): void {
+          if (!Cypress.env('DEMO_AI_PROVIDER_ENABLED')) {
+            this.skip();
+          }
+
+          // 1) Capture a baseline BEFORE seeding: the current unfiltered row count + the newest
+          //    existing row's created_at. The endpoint is hit WITHOUT search[value] (that param 500s
+          //    on this table), so this MUST return HTTP 200. Sort is created_at DESC, so row 0 is the
+          //    newest existing interaction (or none, on an empty log).
+          auditLogsPage.fetchRecentTableData().then((baseline): void => {
+            const baselineTotal = baseline.recordsTotal;
+            const baselineCreatedAt = auditLogsPage.getRowCreatedAt(baseline.rows[0]);
+
+            // 2) Drive the Smart PIM improve-content REAL action — it logs one AI interaction from the
+            //    Back Office product-edit page. We do NOT click the outer product Save, so no product
+            //    mutation persists; only an append-only audit-log row is created.
+            cy.intercept('POST', '**/ai-commerce/content-improver').as('contentImprover');
+
+            smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+            smartPimPage.openAllActionsPopover();
+            smartPimPage.shouldBeOpenPopover(smartPimPage.getAllActionsPopover());
+            smartPimPage.clickImproveContent();
+
+            cy.wait('@contentImprover', { timeout: REAL_FLOW_TIMEOUT })
+              .its('response.statusCode')
+              .should('be.within', 200, 299);
+
+            smartPimPage.shouldBeOpenPopover(smartPimPage.getResponsePopover());
+            smartPimPage.getResponseField().should('not.have.value', '');
+
+            // 3) Fetch the table again (same no-search request). The rows created during THIS test's
+            //    window are exactly the top `recordsTotal - baselineTotal` rows (sort is created_at
+            //    DESC, and the log is append-only). This COUNT delta is immune to same-second
+            //    created_at ties and stays decoupled from every other test's rows: adding/removing
+            //    sibling tests never changes "the row I just created is a new one above my baseline".
+            auditLogsPage.fetchRecentTableData().then((after): void => {
+              const newRowCount = after.recordsTotal - baselineTotal;
+
+              expect(newRowCount, 'at least one interaction was created after the baseline').to.be.at.least(1);
+
+              const newRows = after.rows.slice(0, newRowCount);
+              // The newest of the new rows is the interaction this test just seeded; sanity-check that
+              // its created_at is not older than the baseline's newest row (append-only ordering holds).
+              const row = newRows[0];
+              expect(
+                auditLogsPage.getRowCreatedAt(row) >= baselineCreatedAt,
+                'the new row is at least as recent as the baseline newest row'
+              ).to.eq(true);
+
+              // total_tokens / inference_time_ms come back as integers, but parse defensively so a
+              // formatted variant (e.g. "1 234" or "123 ms") still yields the leading numeric value.
+              const toNumber = (value: unknown): number => parseInt(String(value ?? '').replace(/[^\d-]/g, ''), 10);
+
+              const provider = String(row['spy_ai_interaction_log.provider'] ?? '');
+              const model = String(row['spy_ai_interaction_log.model'] ?? '');
+              const totalTokens = toNumber(row.total_tokens);
+              const estimatedCost = String(row.estimated_cost ?? '');
+              const status = String(row['spy_ai_interaction_log.is_successful'] ?? '');
+              const inferenceMs = toNumber(row['spy_ai_interaction_log.inference_time_ms']);
+
+              // 4) Assert the audit fields are POPULATED / well-formed — never the answer content.
+              expect(provider.trim(), 'provider is captured').to.not.be.empty;
+              expect(model.trim(), 'model is captured').to.not.be.empty;
+              expect(totalTokens, 'total_tokens parses to a positive number').to.be.greaterThan(0);
+              expect(estimatedCost.trim(), 'estimated_cost is present (formatted string)').to.not.be.empty;
+              expect(status, 'status reflects a successful interaction').to.contain('Success');
+              expect(inferenceMs, 'inference_time_ms parses to a non-negative number').to.be.at.least(0);
+            });
+          });
+        }
+      );
+    });
   }
 );

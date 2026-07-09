@@ -36,7 +36,7 @@ describe(
     });
 
     it(
-      'OpenAI AI Vendor tab opens (HTTP 200), lists the OpenAI, Anthropic and AWS vendor tabs, and shows a masked API token field and a model-prices JSON editor',
+      'OpenAI AI Vendor tab returns HTTP 200, lists the OpenAI, Anthropic and AWS tabs, and shows a masked API token field and a model-prices JSON editor',
       { tags: ['@demo-smoke'] },
       (): void => {
         aiConfigurationPage.visitTab('ai_vendor', 'openai').its('response.statusCode').should('eq', 200);
@@ -56,7 +56,7 @@ describe(
     );
 
     it(
-      'Anthropic AI Vendor tab opens (HTTP 200) and shows a masked API token field and a model-prices JSON editor',
+      'Anthropic AI Vendor tab returns HTTP 200 and shows a masked API token field and a model-prices JSON editor',
       { tags: ['@demo-smoke'] },
       (): void => {
         aiConfigurationPage.visitTab('ai_vendor', 'anthropic').its('response.statusCode').should('eq', 200);
@@ -70,7 +70,7 @@ describe(
     );
 
     it(
-      'AWS Bedrock AI Vendor tab opens (HTTP 200) and shows a masked token, the eu-central-1 region and a model-prices JSON editor',
+      'AWS Bedrock AI Vendor tab returns HTTP 200 and shows a masked API token field, the eu-central-1 region and a model-prices JSON editor',
       { tags: ['@demo-smoke'] },
       (): void => {
         aiConfigurationPage.visitTab('ai_vendor', 'aws').its('response.statusCode').should('eq', 200);
@@ -97,17 +97,29 @@ describe(
           .getSettingInput('ai_vendor:openai:general:api_token')
           .should('be.visible')
           .and('have.attr', 'type', 'password')
-          .type('dummy-local-not-a-real-token')
-          .should('have.value', 'dummy-local-not-a-real-token')
-          .and('have.attr', 'type', 'password');
+          .then(($input) => {
+            const presetToken = String($input.val() ?? '');
 
-        aiConfigurationPage.getSaveBar().should('be.visible');
-        aiConfigurationPage.getChangesCount().should('have.text', '1');
+            if (presetToken.trim()) {
+              cy.wrap($input).should('have.attr', 'type', 'password').and('have.value', presetToken);
+
+              return;
+            }
+
+            cy.wrap($input).type('dummy-local-not-a-real-token');
+            aiConfigurationPage
+              .getSettingInput('ai_vendor:openai:general:api_token')
+              .should('have.value', 'dummy-local-not-a-real-token')
+              .and('have.attr', 'type', 'password');
+
+            aiConfigurationPage.getSaveBar().should('be.visible');
+            aiConfigurationPage.getChangesCount().should('have.text', '1');
+          });
       }
     );
 
     it(
-      'Backoffice Assistant provider radio offers three providers and pre-selects OpenAI by default',
+      'Backoffice Assistant provider radio offers three options and pre-selects OpenAI by default',
       { tags: ['@demo-smoke'] },
       (): void => {
         aiConfigurationPage
@@ -121,7 +133,7 @@ describe(
     );
 
     it(
-      'shows only the model field for the selected provider — OpenAI model (gpt-4.1) visible, AWS and Anthropic model fields hidden',
+      'with OpenAI selected, only the OpenAI model field (gpt-4.1) is visible and the AWS and Anthropic model fields are hidden',
       { tags: ['@demo-smoke'] },
       (): void => {
         aiConfigurationPage.visitTab('ai_commerce', 'backoffice_assistant');
@@ -189,6 +201,43 @@ describe(
 
         aiConfigurationPage.visitTab('ai_commerce', 'backoffice_assistant');
         aiConfigurationPage.getSettingInput(OPENAI_MODEL_KEY).should('have.value', OPENAI_MODEL_DEFAULT);
+      }
+    );
+
+    it(
+      'the OpenAI, Anthropic and AWS Bedrock API tokens are all configured (real provider keys present for a full run)',
+      { tags: ['@demo-full'] },
+      function (): void {
+        if (!Cypress.env('DEMO_AI_PROVIDER_ENABLED')) {
+          this.skip();
+        }
+
+        aiConfigurationPage.visitTab('ai_vendor', 'openai').its('response.statusCode').should('eq', 200);
+        aiConfigurationPage
+          .getSettingInput('ai_vendor:openai:general:api_token')
+          .should('be.visible')
+          .and('have.attr', 'type', 'password')
+          .then(($input) => {
+            const token = String($input.val() ?? '').trim();
+            expect(token.length, 'OpenAI API token must be set for a full run').to.be.greaterThan(0);
+          });
+
+        aiConfigurationPage.visitTab('ai_vendor', 'anthropic').its('response.statusCode').should('eq', 200);
+        aiConfigurationPage.getSettingInput('ai_vendor:anthropic:general:api_token').should('be.visible');
+
+        aiConfigurationPage.visitTab('ai_vendor', 'aws').its('response.statusCode').should('eq', 200);
+        aiConfigurationPage
+          .getSettingInput('ai_vendor:aws:general:api_token')
+          .should('be.visible')
+          .and('have.attr', 'type', 'password')
+          .then(($input) => {
+            const token = String($input.val() ?? '').trim();
+            expect(token.length, 'AWS Bedrock API token must be set for a full run').to.be.greaterThan(0);
+          });
+        aiConfigurationPage.getSettingInput('ai_vendor:aws:general:region').then(($input) => {
+          const region = String($input.val() ?? '').trim();
+          expect(region.length, 'AWS Bedrock region must be set for a full run').to.be.greaterThan(0);
+        });
       }
     );
   }

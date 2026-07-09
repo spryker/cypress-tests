@@ -4,4 +4,8 @@ export interface AuditLogsDemoStaticFixtures {
     username: string;
   };
   auditLogsPageUrl: string;
+  product: {
+    idProductAbstract: number;
+    sku: string;
+  };
 }

@@ -27,4 +27,6 @@ export class AuditLogsRepository {
   getLengthSelectSelector = (): string => '.dt-length select';
 
   getTableInfoSelector = (): string => '.dt-info';
+
+  getTableDataPath = (): string => '/ai-foundation/ai-interaction-log/table';
 }

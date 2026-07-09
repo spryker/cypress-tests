@@ -89,8 +89,72 @@ export class QuickOrderImageToCartPage extends YvesPage {
 
   getErrorMessage = (): Cypress.Chainable => cy.get(this.repository.getErrorMessageSelector());
 
+  getFileSelectError = (): Cypress.Chainable => cy.get(this.repository.getFileSelectErrorSelector());
+
+  getRemoveFileIcon = (): Cypress.Chainable => cy.get(this.repository.getRemoveFileIconSelector());
+
   attachImage = (imageFilePath: string): Cypress.Chainable =>
     this.getImageUploadInput().selectFile(imageFilePath, { force: true });
+
+  // Attaches an in-memory file with the given byte size and MIME type without touching the fixtures
+  // directory. Used to drive the pure client-side max-file-size branch and the server-side
+  // MIME/extension validation branch with no real image and no provider call.
+  attachSyntheticFile = (params: { fileName: string; sizeInBytes: number; mimeType: string }): Cypress.Chainable =>
+    this.getImageUploadInput().selectFile(
+      {
+        contents: Cypress.Buffer.alloc(params.sizeInBytes),
+        fileName: params.fileName,
+        mimeType: params.mimeType,
+      },
+      { force: true }
+    );
+
+  removeAttachedFile = (): Cypress.Chainable => this.getRemoveFileIcon().click({ force: true });
+
+  submitEmptyImageOrder = (): Cypress.Chainable => {
+    cy.intercept('POST', '**/quick-order').as('emptyImageOrderSubmit');
+    this.getUploadSubmitButton().click();
+
+    return cy.wait('@emptyImageOrderSubmit');
+  };
+
+  // Posts a raw multipart image-to-cart submit with an attached non-image file, bypassing the input's
+  // `accept` filter (which the browser applies to picker/selectFile). This is the only way to drive the
+  // SERVER-side MIME/extension constraint branch: the browser would otherwise strip the mismatched file
+  // before it ever reaches the endpoint. The CSRF token is scraped from a fresh page render so the form
+  // is submitted (not CSRF-rejected) and validation is exercised on the file itself. Provider-free.
+  submitNonImageFileViaRequest = (params: {
+    fileName: string;
+    contents: string;
+    mimeType: string;
+  }): Cypress.Chainable => {
+    const pageUrl = this.PAGE_URL;
+
+    return cy
+      .visit(pageUrl)
+      .get(this.repository.getImageOrderCsrfTokenSelector())
+      .invoke('attr', 'value')
+      .then((csrfToken) => {
+        const formData = new FormData();
+        formData.append(
+          'image_order_form[uploadImageOrder]',
+          new Blob([params.contents], { type: params.mimeType }),
+          params.fileName
+        );
+        formData.append('image_order_form[_token]', String(csrfToken));
+        formData.append('uploadImage', '');
+
+        return cy.window().then(
+          (win) =>
+            new Cypress.Promise((resolve) => {
+              const xhr = new win.XMLHttpRequest();
+              xhr.open('POST', pageUrl);
+              xhr.onload = (): void => resolve({ status: xhr.status, body: xhr.responseText });
+              xhr.send(formData);
+            })
+        );
+      });
+  };
 
   submitImageOrder = (): Cypress.Chainable => {
     cy.intercept('POST', '**/quick-order').as('imageOrderSubmit');
@@ -98,4 +162,19 @@ export class QuickOrderImageToCartPage extends YvesPage {
 
     return cy.wait('@imageOrderSubmit');
   };
+
+  // Real-AI submit: intercept WITHOUT a stub so the request reaches the live provider, then wait
+  // with a generous timeout for the slow recognition round-trip. Returns the real interception so
+  // the spec can assert only that a 2xx response was received (never on body semantics).
+  submitImageOrderReal = (): Cypress.Chainable => {
+    cy.intercept('POST', '**/quick-order').as('imageOrderSubmitReal');
+    this.getUploadSubmitButton().click();
+
+    return cy.wait('@imageOrderSubmitReal', { timeout: 30000 });
+  };
+
+  getQuickOrderRows = (): Cypress.Chainable => cy.get(this.repository.getQuickOrderRowsSelector(), { timeout: 30000 });
+
+  getRecognizedSkuInputs = (): Cypress.Chainable =>
+    cy.get(this.repository.getRecognizedSkuInputSelector(), { timeout: 30000 });
 }

@@ -36,11 +36,51 @@ export class SmartPimRepository {
 
   getCategorySelectSelector = (): string => '.js-ai-category-select';
 
+  getOuterCategorySelectSelector = (): string => '.js-ai-categories select';
+
+  getCategorySelectOptionSelector = (): string => '.js-ai-category-select option';
+
   getAltTextInputSelector = (): string => '.js-ai-alt-text-input';
+
+  getImageRowAltTextFieldSelector = (): string => '[name*="[alt_text_small]"], [name*="[alt_text_large]"]';
 
   getInformationalFieldSelector = (): string => '.js-infomational-field';
 
   getImageUrlFieldSelector = (): string => '[name*="[external_url_small]"], [name*="[external_url_large]"]';
 
   getOpenPopoverState = (): string => ':popover-open';
+
+  getResponsePopoverSelector = (): string => '.response-popover';
+
+  getResponseFieldSelector = (): string => '#response-field';
+
+  getOriginalFieldSelector = (): string => '#original-field';
+
+  getResponseErrorBlockSelector = (): string => '.js-ai-product-management-modal__error-block';
+
+  getClosePopoverButtonSelector = (): string => '[data-close-popover]';
+
+  getResponseAgainButtonSelector = (): string => '.js-ai-builder-again';
+
+  getResponseApplyButtonSelector = (): string => '.js-ai-builder-apply';
+
+  getModalErrorHolderSelector = (): string => '.js-ai-product-management-modal__error';
+
+  getModalAgainButtonSelector = (): string => '.js-ai-product-management-again';
+
+  getModalApplyButtonSelector = (): string => '.js-ai-product-management-apply';
+
+  getImageAltTextWrapperSelector = (): string => '.js-image-alt-text-wrapper';
+
+  getAltTriggerTemplateSelector = (): string => '#ai-alt-text-trigger-template';
+
+  getAffixClass = (): string => 'form-wrapper-clickable-affix';
+
+  getContentImproverPath = (): string => '/ai-commerce/content-improver';
+
+  getCategorySuggestionPath = (): string => '/ai-commerce/category-suggestion';
+
+  getImageAltTextPath = (): string => '/ai-commerce/image-alt-text';
+
+  getTranslatePath = (): string => '/ai-commerce/translate';
 }

@@ -54,4 +54,24 @@ export class AiConfigurationPage extends BackofficePage {
     cy.intercept('POST', '**/configuration/manage/save').as('saveConfiguration');
     this.getSaveButton().click();
   };
+
+  /**
+   * Idempotently switches a feature's AI-vendor radio (`ai_configuration`) to the given value and persists it.
+   * Visits the feature tab, and only when the target radio is not already checked does it select it and Save
+   * (waiting on the config-save POST — a plain persistence call, NOT an AI provider request). Safe to call as a
+   * restore/safety-net: a no-op when the value is already applied, so it never issues a needless Save.
+   */
+  setVendorConfiguration = (feature: string, tab: string, settingKey: string, value: string): Cypress.Chainable => {
+    this.visitTab(feature, tab);
+
+    return this.getCheckedRadioOption(settingKey).then(($checked) => {
+      if (String($checked.val() ?? '') === value) {
+        return;
+      }
+
+      this.selectRadioOption(settingKey, value);
+      this.saveConfiguration();
+      cy.wait('@saveConfiguration').its('response.body').should('have.property', 'success', true);
+    });
+  };
 }
