@@ -47,17 +47,17 @@ export class SalesOrdersPage extends MpPage {
 
     if (params.action === ActionEnum.deliver) {
       this.repository
-    .getDrawer()
-    .should('be.visible')
-    .find(this.repository.getDeliverButtonSelector(), { timeout: 10000 })
-    .should('be.visible')
-    .click();
+        .getDrawer()
+        .should('be.visible')
+        .find(this.repository.getDeliverButtonSelector(), { timeout: 10000 })
+        .should('be.visible')
+        .click();
 
       this.repository
-    .getDrawer()
-    .find(this.repository.getOrderItemsStateChipSelector(), { timeout: 10000 })
-    .should('be.visible')
-    .and('contain.text', 'Delivered');
+        .getDrawer()
+        .find(this.repository.getOrderItemsStateChipSelector(), { timeout: 10000 })
+        .should('be.visible')
+        .and('contain.text', 'Delivered');
     }
 
     if (params.action === ActionEnum.cancel) {
