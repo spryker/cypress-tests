@@ -22,6 +22,69 @@ describe(
 
     const OPENAI_MODEL_DEFAULT = 'gpt-4.1';
 
+    // CC-38802: LLM system prompts for Smart PIM, Search by Image and Quick Add-to-Cart are configurable via
+    // Configuration Management, each shipping a non-empty default (rendered as a `.config-input` textarea). These
+    // checks assert the defaults are present, non-empty and keep their dynamic placeholders — never the exact wording,
+    // which is intentionally tunable. Structural only: no AI provider token required.
+    type PromptField = {
+      key: string;
+      label: string;
+      placeholders: string[];
+    };
+
+    const PROMPT_TABS: Array<{ tab: string; fields: PromptField[] }> = [
+      {
+        tab: 'quick_order',
+        fields: [
+          {
+            key: 'ai_commerce:quick_order:system_prompts:image_recognition_prompt',
+            label: 'Image Recognition Prompt',
+            placeholders: ['%s'],
+          },
+        ],
+      },
+      {
+        tab: 'search_by_image',
+        fields: [
+          {
+            key: 'ai_commerce:search_by_image:system_prompts:search_term_prompt',
+            label: 'Search Term Prompt',
+            placeholders: [],
+          },
+        ],
+      },
+      {
+        tab: 'smart_pim',
+        fields: [
+          {
+            key: 'ai_commerce:smart_pim:system_prompts:content_improver_prompt',
+            label: 'Content Improver Prompt',
+            placeholders: ['%s'],
+          },
+          {
+            key: 'ai_commerce:smart_pim:system_prompts:translation_prompt',
+            label: 'Translation Prompt',
+            placeholders: ['%s'],
+          },
+          {
+            key: 'ai_commerce:smart_pim:system_prompts:translation_collection_prompt',
+            label: 'Translation Collection Prompt',
+            placeholders: ['%s'],
+          },
+          {
+            key: 'ai_commerce:smart_pim:system_prompts:category_suggestion_prompt',
+            label: 'Category Suggestion Prompt',
+            placeholders: ['%s'],
+          },
+          {
+            key: 'ai_commerce:smart_pim:system_prompts:image_alt_text_prompt',
+            label: 'Image Alt Text Prompt',
+            placeholders: ['%s'],
+          },
+        ],
+      },
+    ];
+
     let staticFixtures: AiConfigurationDemoStaticFixtures;
 
     before((): void => {
@@ -112,7 +175,9 @@ describe(
               .should('have.value', 'dummy-local-not-a-real-token')
               .and('have.attr', 'type', 'password');
 
-            aiConfigurationPage.getSaveBar().should('be.visible');
+            // See the CC-38802 override test below: assert the save bar via computed display, not `be.visible`, so
+            // the Symfony Web Debug Toolbar overlapping the bottom-fixed bar in the dev env can't flake this check.
+            aiConfigurationPage.getSaveBar().should('have.css', 'display', 'block');
             aiConfigurationPage.getChangesCount().should('have.text', '1');
           });
       }
@@ -173,10 +238,10 @@ describe(
         const updatedModel = 'gpt-4.1-mini';
 
         aiConfigurationPage.visitTab('ai_commerce', 'backoffice_assistant');
-        aiConfigurationPage.getSaveBar().should('not.be.visible');
+        aiConfigurationPage.getSaveBar().should('have.css', 'display', 'none');
 
         aiConfigurationPage.setSettingInputValue(OPENAI_MODEL_KEY, updatedModel);
-        aiConfigurationPage.getSaveBar().should('be.visible');
+        aiConfigurationPage.getSaveBar().should('have.css', 'display', 'block');
         aiConfigurationPage.getChangesCount().should('have.text', '1');
 
         aiConfigurationPage.getSaveButton().should('be.enabled');
@@ -193,7 +258,7 @@ describe(
 
         aiConfigurationPage.visitTab('ai_commerce', 'backoffice_assistant');
         aiConfigurationPage.getSettingInput(OPENAI_MODEL_KEY).should('have.value', updatedModel);
-        aiConfigurationPage.getSaveBar().should('not.be.visible');
+        aiConfigurationPage.getSaveBar().should('have.css', 'display', 'none');
 
         aiConfigurationPage.setSettingInputValue(OPENAI_MODEL_KEY, OPENAI_MODEL_DEFAULT);
         aiConfigurationPage.saveConfiguration();
@@ -238,6 +303,115 @@ describe(
           const region = String($input.val() ?? '').trim();
           expect(region.length, 'AWS Bedrock region must be set for a full run').to.be.greaterThan(0);
         });
+      }
+    );
+
+    // --- CC-38802: configurable system prompts (Smart PIM, Search by Image, Quick Add-to-Cart) ---
+
+    PROMPT_TABS.forEach(({ tab, fields }) => {
+      it(
+        `${tab} tab returns HTTP 200 and renders its System Prompts textarea(s) with the non-empty shipped default(s)`,
+        { tags: ['@demo-smoke'] },
+        (): void => {
+          aiConfigurationPage.visitTab('ai_commerce', tab).its('response.statusCode').should('eq', 200);
+
+          // Exactly the expected prompt fields render under this tab's System Prompts group.
+          aiConfigurationPage.getSettingRows('system_prompts').should('have.length', fields.length);
+
+          fields.forEach((field) => {
+            aiConfigurationPage.getSettingRow(field.key).should('be.visible');
+            aiConfigurationPage
+              .getSettingInput(field.key)
+              // AC-1: the default prompt ships out of the box, so the field must be a populated, non-empty textarea.
+              .should('be.visible')
+              .and(($textarea) => {
+                expect($textarea.prop('tagName'), `${field.label} must render as a textarea`).to.eq('TEXTAREA');
+                expect(
+                  String($textarea.val() ?? '').trim().length,
+                  `${field.label} default prompt must not be empty`
+                ).to.be.greaterThan(0);
+              });
+          });
+        }
+      );
+    });
+
+    it(
+      'shipped default prompts keep their dynamic placeholders so runtime substitution stays intact',
+      { tags: ['@demo-smoke'] },
+      (): void => {
+        // AC-4: placeholders (e.g. %s for locale / text) must survive in the defaults; otherwise the feature would
+        // send a broken prompt to the LLM. Asserts token presence only, not the surrounding wording.
+        PROMPT_TABS.filter(({ fields }) => fields.some((field) => field.placeholders.length > 0)).forEach(
+          ({ tab, fields }) => {
+            aiConfigurationPage.visitTab('ai_commerce', tab);
+
+            fields
+              .filter((field) => field.placeholders.length > 0)
+              .forEach((field) => {
+                aiConfigurationPage.getSettingInput(field.key).then(($textarea) => {
+                  const value = String($textarea.val() ?? '');
+                  field.placeholders.forEach((placeholder) => {
+                    expect(value, `${field.label} must retain the ${placeholder} placeholder`).to.contain(placeholder);
+                  });
+                });
+              });
+          }
+        );
+      }
+    );
+
+    it(
+      'editing a Smart PIM prompt raises the unsaved-changes bar and persists the override across a reload before restoring the default',
+      { tags: ['@demo-smoke'] },
+      (): void => {
+        // AC-3: an admin can override a prompt through the Configuration Management UI and it is persisted. Kept
+        // provider-safe by asserting persistence of the stored value only — no AI feature is invoked here.
+        const promptKey = 'ai_commerce:smart_pim:system_prompts:content_improver_prompt';
+        const overridePrompt = 'CC-38802 override: improve this product copy. Text to improve: %s';
+
+        aiConfigurationPage.visitTab('ai_commerce', 'smart_pim');
+        // Assert the save bar via its computed display state, not `be.visible`: the bottom-fixed bar is styled
+        // `position: fixed` and can be overlapped by the Symfony Web Debug Toolbar in the dev env, which trips
+        // Cypress's covered-element check while the bar is functionally shown/hidden by JS (`display: block|none`).
+        aiConfigurationPage.getSaveBar().should('have.css', 'display', 'none');
+
+        // Capture the shipped default so we can restore it, keeping the test idempotent across runs.
+        aiConfigurationPage
+          .getSettingInput(promptKey)
+          .invoke('val')
+          .then((defaultValue) => {
+            const originalPrompt = String(defaultValue ?? '');
+            expect(originalPrompt.trim().length, 'default prompt must exist before overriding').to.be.greaterThan(0);
+
+            aiConfigurationPage.setSettingInputValue(promptKey, overridePrompt);
+            aiConfigurationPage.getSaveBar().should('have.css', 'display', 'block');
+            aiConfigurationPage.getChangesCount().should('have.text', '1');
+
+            aiConfigurationPage.getSaveButton().should('be.enabled');
+            aiConfigurationPage.saveConfiguration();
+            cy.wait('@saveConfiguration').then((interception) => {
+              const change = interception.request.body.changes.find(
+                (entry: { key: string }) => entry.key === promptKey
+              );
+              expect(change, 'the prompt override must be part of the save payload').to.not.be.undefined;
+              expect(change.value).to.eq(overridePrompt);
+              expect(interception.response?.body).to.have.property('success', true);
+            });
+
+            // The override survives a reload.
+            aiConfigurationPage.visitTab('ai_commerce', 'smart_pim');
+            aiConfigurationPage.getSettingInput(promptKey).should('have.value', overridePrompt);
+            aiConfigurationPage.getSaveBar().should('have.css', 'display', 'none');
+
+            // Restore the shipped default so the environment is left as found.
+            aiConfigurationPage.setSettingInputValue(promptKey, originalPrompt);
+            aiConfigurationPage.saveConfiguration();
+            cy.wait('@saveConfiguration').its('response.body').should('have.property', 'success', true);
+
+            aiConfigurationPage.visitTab('ai_commerce', 'smart_pim');
+            aiConfigurationPage.getSettingInput(promptKey).should('have.value', originalPrompt);
+          });
       }
     );
   }

@@ -19,6 +19,14 @@ export class AiConfigurationRepository {
 
   getSettingRowSelector = (settingKey: string): string => `.setting-row[data-setting-key="${settingKey}"]`;
 
+  /**
+   * Selects every field row belonging to a settings group on the current tab (e.g. `system_prompts`), matched on the
+   * middle segment of the `data-setting-key` (`<feature>:<tab>:<group>:<field>`). Filters to rows that actually carry a
+   * `.config-input` so non-field marker rows sharing the key are excluded from the count.
+   */
+  getSettingRowsByGroupSelector = (groupKey: string): string =>
+    `.setting-row[data-setting-key*=":${groupKey}:"]:has(.config-input)`;
+
   getSettingInputSelector = (settingKey: string): string =>
     `.setting-row[data-setting-key="${settingKey}"] .config-input`;
 

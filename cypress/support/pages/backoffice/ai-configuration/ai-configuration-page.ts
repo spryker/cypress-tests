@@ -33,6 +33,8 @@ export class AiConfigurationPage extends BackofficePage {
 
   getSettingRow = (settingKey: string): Cypress.Chainable => cy.get(this.repository.getSettingRowSelector(settingKey));
 
+  getSettingRows = (groupKey: string): Cypress.Chainable => cy.get(this.repository.getSettingRowsByGroupSelector(groupKey));
+
   getSettingInput = (settingKey: string): Cypress.Chainable =>
     cy.get(this.repository.getSettingInputSelector(settingKey));
 
