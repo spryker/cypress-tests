@@ -19,27 +19,19 @@
           "type": "helper",
           "name": "haveNavigation",
           "key": "navigationEmpty",
-          "arguments": [{ "name": "ACC Navigation Empty Tree", "key": "acc-navigation-empty-tree", "isActive": true }]
+          "arguments": [{ "isActive": true }]
         },
         {
           "type": "helper",
           "name": "haveNavigation",
           "key": "navigationWithoutType",
-          "arguments": [
-            {
-              "name": "ACC Navigation Child Without Type",
-              "key": "acc-navigation-child-without-type",
-              "isActive": true
-            }
-          ]
+          "arguments": [{ "isActive": true }]
         },
         {
           "type": "helper",
           "name": "haveNavigation",
           "key": "navigationExternalUrl",
-          "arguments": [
-            { "name": "ACC Navigation External Url", "key": "acc-navigation-external-url", "isActive": true }
-          ]
+          "arguments": [{ "isActive": true }]
         },
         {
           "type": "helper",
@@ -58,9 +50,7 @@
           "type": "helper",
           "name": "haveNavigation",
           "key": "navigationCategory",
-          "arguments": [
-            { "name": "ACC Navigation Category Type", "key": "acc-navigation-category-type", "isActive": true }
-          ]
+          "arguments": [{ "isActive": true }]
         },
         {
           "type": "helper",
@@ -79,9 +69,7 @@
           "type": "helper",
           "name": "haveNavigation",
           "key": "navigationCmsPage",
-          "arguments": [
-            { "name": "ACC Navigation Cms Page Type", "key": "acc-navigation-cms-page-type", "isActive": true }
-          ]
+          "arguments": [{ "isActive": true }]
         },
         {
           "type": "helper",
@@ -100,9 +88,7 @@
           "type": "helper",
           "name": "haveNavigation",
           "key": "navigationStructure",
-          "arguments": [
-            { "name": "ACC Navigation Tree Structure", "key": "acc-navigation-tree-structure", "isActive": true }
-          ]
+          "arguments": [{ "isActive": true }]
         },
         {
           "type": "helper",

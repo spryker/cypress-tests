@@ -16,11 +16,6 @@ describe(
     let staticFixtures: NavigationTreeManagementStaticFixtures;
     let dynamicFixtures: NavigationTreeManagementDynamicFixtures;
 
-    // Navigation element name/key are made run-unique so repeated CI runs never
-    // collide on the create validation. The Codeception original relied on a
-    // Propel teardown to purge fixed names; Cypress has no DB access here.
-    const uid = Math.random().toString(36).substring(2, 8);
-
     before((): void => {
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
     });
@@ -34,6 +29,10 @@ describe(
 
     // Ported from NavigationCRUDCest::testICanCreateReadUpdateAndDeleteNavigation
     it('should create, read, update and delete a navigation element', (): void => {
+      // Name/key are generated per attempt (not once at spec load) so a Cypress test-retry uses a
+      // fresh key instead of colliding on the row the previous attempt already created — there is no
+      // DB teardown between attempts, so a shared id would make every retry fail on a duplicate key.
+      const uid = Math.random().toString(36).substring(2, 8);
       const name = `Acceptance navigation ${uid}`;
 
       navigationTreePage
