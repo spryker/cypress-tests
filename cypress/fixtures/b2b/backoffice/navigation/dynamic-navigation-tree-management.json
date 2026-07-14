@@ -19,19 +19,27 @@
           "type": "helper",
           "name": "haveNavigation",
           "key": "navigationEmpty",
-          "arguments": [{ "isActive": true }]
+          "arguments": [{ "name": "ACC Navigation Empty Tree", "key": "acc-navigation-empty-tree", "isActive": true }]
         },
         {
           "type": "helper",
           "name": "haveNavigation",
           "key": "navigationWithoutType",
-          "arguments": [{ "isActive": true }]
+          "arguments": [
+            {
+              "name": "ACC Navigation Child Without Type",
+              "key": "acc-navigation-child-without-type",
+              "isActive": true
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveNavigation",
           "key": "navigationExternalUrl",
-          "arguments": [{ "isActive": true }]
+          "arguments": [
+            { "name": "ACC Navigation External Url", "key": "acc-navigation-external-url", "isActive": true }
+          ]
         },
         {
           "type": "helper",
@@ -50,7 +58,9 @@
           "type": "helper",
           "name": "haveNavigation",
           "key": "navigationCategory",
-          "arguments": [{ "isActive": true }]
+          "arguments": [
+            { "name": "ACC Navigation Category Type", "key": "acc-navigation-category-type", "isActive": true }
+          ]
         },
         {
           "type": "helper",
@@ -69,7 +79,9 @@
           "type": "helper",
           "name": "haveNavigation",
           "key": "navigationCmsPage",
-          "arguments": [{ "isActive": true }]
+          "arguments": [
+            { "name": "ACC Navigation Cms Page Type", "key": "acc-navigation-cms-page-type", "isActive": true }
+          ]
         },
         {
           "type": "helper",
@@ -88,7 +100,9 @@
           "type": "helper",
           "name": "haveNavigation",
           "key": "navigationStructure",
-          "arguments": [{ "isActive": true }]
+          "arguments": [
+            { "name": "ACC Navigation Tree Structure", "key": "acc-navigation-tree-structure", "isActive": true }
+          ]
         },
         {
           "type": "helper",
