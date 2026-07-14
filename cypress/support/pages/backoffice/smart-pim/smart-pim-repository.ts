@@ -54,8 +54,6 @@ export class SmartPimRepository {
 
   getResponseFieldSelector = (): string => '#response-field';
 
-  getOriginalFieldSelector = (): string => '#original-field';
-
   getResponseErrorBlockSelector = (): string => '.js-ai-product-management-modal__error-block';
 
   getClosePopoverButtonSelector = (): string => '[data-close-popover]';
@@ -66,15 +64,21 @@ export class SmartPimRepository {
 
   getModalErrorHolderSelector = (): string => '.js-ai-product-management-modal__error';
 
-  getModalAgainButtonSelector = (): string => '.js-ai-product-management-again';
-
   getModalApplyButtonSelector = (): string => '.js-ai-product-management-apply';
 
   getImageAltTextWrapperSelector = (): string => '.js-image-alt-text-wrapper';
 
   getAltTriggerTemplateSelector = (): string => '#ai-alt-text-trigger-template';
 
+  getInjectedAltTriggerSelector = (): string => '.js-ai-alt-image-trigger';
+
   getAffixClass = (): string => 'form-wrapper-clickable-affix';
+
+  getLoadingClass = (): string => 'is-loading';
+
+  getEmptyClass = (): string => 'is-empty';
+
+  getCategoryModalId = (): string => 'ai-category-modal';
 
   getContentImproverPath = (): string => '/ai-commerce/content-improver';
 
@@ -83,4 +87,28 @@ export class SmartPimRepository {
   getImageAltTextPath = (): string => '/ai-commerce/image-alt-text';
 
   getTranslatePath = (): string => '/ai-commerce/translate';
+
+  getProviderEndpointGlobs = (): Array<string> =>
+    [
+      this.getContentImproverPath(),
+      this.getCategorySuggestionPath(),
+      this.getImageAltTextPath(),
+      this.getTranslatePath(),
+    ].map((path) => `**${path}`);
+
+  getCategoryEmptyText = (): string => 'Please fill in the product name';
+
+  getAltTextEmptyText = (): string => 'Please fill in the product image url';
+
+  getProviderUnavailableMessage = (): string => 'AI provider unavailable';
+
+  getMissingParamsMessage = (endpoint: 'content-improver' | 'image-alt-text' | 'translate'): string => {
+    const messages = {
+      'content-improver': 'Text is missing from request.',
+      'image-alt-text': 'ImageUrl and/or target locale are missing from request.',
+      translate: 'Text and/or target locales are missing from request.',
+    };
+
+    return messages[endpoint];
+  };
 }

@@ -20,13 +20,19 @@ export class QuicksightAnalyticsPage extends BackofficePage {
 
   getSectionTitle = (): Cypress.Chainable => cy.get(this.repository.getSectionTitleSelector());
 
-  getTitleAction = (): Cypress.Chainable => cy.get(this.repository.getTitleActionSelector());
+  getSectionTitleText = (): string => this.repository.getSectionTitleText();
 
   getSynchronizeUsersButton = (): Cypress.Chainable => cy.get(this.repository.getSynchronizeUsersButtonSelector());
 
-  getNoPermissionMessage = (): Cypress.Chainable => cy.get(this.repository.getNoPermissionMessageSelector());
+  getSynchronizeUsersLabel = (): string => this.repository.getSynchronizeUsersLabel();
+
+  getInfoAlert = (): Cypress.Chainable => cy.get(this.repository.getInfoAlertSelector());
+
+  getNoPermissionText = (): string => this.repository.getNoPermissionText();
 
   getSynchronizeUsersForm = (): Cypress.Chainable => cy.get(this.repository.getSynchronizeUsersFormSelector());
+
+  getSynchronizeUsersFormAction = (): string => this.repository.getSynchronizeUsersFormAction();
 
   getSynchronizeUsersCsrfToken = (): Cypress.Chainable =>
     cy.get(this.repository.getSynchronizeUsersCsrfTokenSelector());

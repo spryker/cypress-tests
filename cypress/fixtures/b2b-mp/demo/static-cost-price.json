@@ -16,10 +16,6 @@
     "idProductAbstract": 300,
     "sku": "M53235"
   },
-  "productWithoutCost": {
-    "idProductAbstract": 450,
-    "sku": "IWT-SYSTEM"
-  },
   "merchantProduct": {
     "sku": "M53235"
   },

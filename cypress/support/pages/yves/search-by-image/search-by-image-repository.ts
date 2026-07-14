@@ -27,11 +27,14 @@ export class SearchByImageRepository {
 
   getUploadFileButtonSelector = (): string => '.js-search-by-file-image__upload-file-button';
 
-  // A search-results SURFACE that is present whether or not the search matched any products: a product
-  // tile / product detail (matches found), OR the empty-catalog state, OR the search-results tabs shell.
-  // A real-provider image search — especially the synthetic probe under a given vendor — may legitimately
-  // resolve to a search term with zero catalog matches, so asserting "landed on a results page" must not
-  // require a product tile.
+  getEndpointPath = (): string => '/search-by-image';
+
+  getNoImageErrorText = (): string => 'Please select an image to search.';
+
+  getCsrfErrorMarker = (): string => 'CSRF';
+
+  getUnsupportedTypeErrorMarker = (): string => 'not supported';
+
   getResultsPageSurfaceSelector = (): string =>
     '[data-qa="component product-item"], [data-qa="component product-detail"], [data-qa="component empty-catalog-state"], [data-qa="component search-tabs"]';
 

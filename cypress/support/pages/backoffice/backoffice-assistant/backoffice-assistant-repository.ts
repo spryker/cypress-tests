@@ -6,6 +6,28 @@ import { injectable } from 'inversify';
 export class BackofficeAssistantRepository {
   private static readonly ENABLE_SETTING_KEY = 'ai_commerce:backoffice_assistant:general:is_enabled';
 
+  getWidgetStateStorageKey = (): string => 'backoffice_assistant_state';
+
+  getWidgetToggleLabel = (): string => 'Assistant';
+
+  getGreetingText = (): string => 'How can I help you today?';
+
+  getInputPlaceholder = (): string => 'Ask me anything...';
+
+  getAutoAgentLabel = (): string => 'Auto';
+
+  getOrderManagementAgentLabel = (): string => 'Order Management';
+
+  getTransportFailureText = (): string => 'Request failed with status 503';
+
+  getUnsupportedFileTypeText = (): string => 'Unsupported file type';
+
+  getHistoriesEmptyText = (): string => 'No conversations yet';
+
+  getValidationGlossaryKey = (): string => 'backoffice_assistant.validation';
+
+  getInvalidCsrfToken = (): string => 'invalid-token';
+
   getEnableToggleSelector = (): string =>
     `.setting-row[data-setting-key="${BackofficeAssistantRepository.ENABLE_SETTING_KEY}"] .config-input`;
 
@@ -68,8 +90,6 @@ export class BackofficeAssistantRepository {
   getWidgetToolCallResultToggleSelector = (): string => '.backoffice-assistant__tool-call-toggle';
 
   getWidgetAttachmentChipRemoveSelector = (): string => '.backoffice-assistant__attachment-chip-remove';
-
-  getWidgetMessageAttachmentPillNameSelector = (): string => '.backoffice-assistant__message-attachment-pill-name';
 
   getWidgetHistoriesSelector = (): string => '.js-backoffice-assistant__histories';
 

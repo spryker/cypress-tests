@@ -14,7 +14,13 @@ export class AgentQuoteRequestRepository {
 
   getGrossMarginSelector = (): string => '.cost-price__gross-margin';
 
-  getGrossMarginUnavailableSelector = (): string => '.cost-price__gross-margin--unavailable';
+  getGrossMarginUnavailableClass = (): string => 'cost-price__gross-margin--unavailable';
+
+  getGrossMarginUnavailableSelector = (): string => `.${this.getGrossMarginUnavailableClass()}`;
+
+  getCostPriceDataAttribute = (): string => 'data-has-cost-price';
+
+  getUnavailableCostPriceText = (): string => '—';
 
   getCostPriceWarningIconSelector = (): string => '.font-icon--cost-price-warning';
 

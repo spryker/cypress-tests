@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, skipUnlessAiProviderEnabled } from '@utils';
 import { CustomerLoginScenario } from '@scenarios/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { QuickOrderImageToCartPage } from '@pages/yves';
@@ -33,41 +33,36 @@ describe(
       });
     });
 
-    it('shows the "Add to cart from image" section on the Quick Order page', { tags: ['@demo-smoke'] }, (): void => {
-      quickOrderImageToCartPage.visitQuickOrder().its('response.statusCode').should('eq', 200);
-
-      quickOrderImageToCartPage.getPageTitle().should('be.visible').and('contain.text', 'Quick Order');
-
-      quickOrderImageToCartPage.getImageToCartSection().should('exist');
-      quickOrderImageToCartPage
-        .getImageToCartTitle()
-        .should('be.visible')
-        .and('contain.text', 'Add to cart from image');
-    });
-
     it(
-      'shows an image-only file input, a browse-file label and an enabled Upload button',
+      'shows the "Add to cart from image" section with an image-only file input, browse-file label and enabled Upload button',
       { tags: ['@demo-smoke'] },
       (): void => {
-        quickOrderImageToCartPage.visitQuickOrder();
+        quickOrderImageToCartPage.visitQuickOrder().its('response.statusCode').should('eq', 200);
+
+        quickOrderImageToCartPage
+          .getPageTitle()
+          .should('be.visible')
+          .and('contain.text', quickOrderImageToCartPage.getPageTitleText());
+        quickOrderImageToCartPage.getImageToCartSection().should('exist');
+        quickOrderImageToCartPage
+          .getImageToCartTitle()
+          .should('be.visible')
+          .and('contain.text', quickOrderImageToCartPage.getImageToCartTitleText());
 
         quickOrderImageToCartPage
           .getImageUploadInput()
           .should('exist')
           .and('have.attr', 'type', 'file')
-          .and('have.attr', 'name', 'image_order_form[uploadImageOrder]')
-          .and('have.attr', 'accept', 'image/jpeg,image/jpg,image/png');
+          .and('have.attr', 'name', quickOrderImageToCartPage.getImageUploadInputName())
+          .and('have.attr', 'accept', quickOrderImageToCartPage.getAcceptedImageMimeTypes());
 
-        quickOrderImageToCartPage
-          .getBrowseFileLabel()
-          .should('be.visible')
-          .and('have.attr', 'for', 'image_order_form_uploadImageOrder');
+        quickOrderImageToCartPage.getBrowseFileLabel().should('be.visible');
 
         quickOrderImageToCartPage
           .getUploadSubmitButton()
           .should('be.visible')
           .and('not.be.disabled')
-          .and('contain.text', 'Upload');
+          .and('contain.text', quickOrderImageToCartPage.getUploadButtonText());
       }
     );
 
@@ -77,7 +72,10 @@ describe(
       (): void => {
         quickOrderImageToCartPage.visitQuickOrder();
 
-        quickOrderImageToCartPage.getFileSelectLabel().should('be.visible').and('contain.text', 'Browse file');
+        quickOrderImageToCartPage
+          .getFileSelectLabel()
+          .should('be.visible')
+          .and('contain.text', quickOrderImageToCartPage.getBrowseFileText());
 
         quickOrderImageToCartPage.attachImage(staticFixtures.imageFilePath);
 
@@ -90,7 +88,7 @@ describe(
         quickOrderImageToCartPage
           .getFileSelectLabel()
           .should('contain.text', staticFixtures.imageFileName)
-          .and('not.contain.text', 'Browse file');
+          .and('not.contain.text', quickOrderImageToCartPage.getBrowseFileText());
 
         quickOrderImageToCartPage.getBrowseFileToggleLabel().should('not.have.attr', 'for');
       }
@@ -138,7 +136,7 @@ describe(
 
         quickOrderImageToCartPage
           .getFileSelectLabel()
-          .should('contain.text', 'Browse file')
+          .should('contain.text', quickOrderImageToCartPage.getBrowseFileText())
           .and('not.contain.text', staticFixtures.imageFileName);
         quickOrderImageToCartPage.getRemoveFileIcon().should('not.be.visible');
         quickOrderImageToCartPage
@@ -213,16 +211,8 @@ describe(
         'submits a real image to the AI provider and re-renders the quick-order rows with the recognition result',
         { tags: ['@demo-full'] },
         function (): void {
-          if (!Cypress.env('DEMO_AI_PROVIDER_ENABLED')) {
-            this.skip();
-          }
+          skipUnlessAiProviderEnabled(this);
 
-          // The static probe fixture is a small logo/icon graphic, not real product photography, so the
-          // provider is not guaranteed to match it to a catalog SKU (recognition confidence depends on the
-          // image and the catalog, neither of which this test controls). The guaranteed, feature-true
-          // outcome is that the real round-trip completes and the rows section is (re-)rendered with
-          // whatever the provider returned — asserting a populated SKU would couple this case to an
-          // external, non-deterministic outcome that is not part of what this test can promise.
           quickOrderImageToCartPage.visitQuickOrder();
           quickOrderImageToCartPage.attachImage(staticFixtures.imageFilePath);
 
@@ -234,20 +224,6 @@ describe(
           quickOrderImageToCartPage.getRecognizedSkuInputs().should('have.length.greaterThan', 0);
         }
       );
-
-      // NOTE — no AWS Bedrock @demo-full case here (deliberate). Quick Order Image-to-Cart resolves its AI
-      // vendor in the Yves/storefront layer via the Redis-published Configuration client
-      // (AiCommerceConfig::getQuickOrderImageToCartAiConfigurationName). The vendor setting
-      // `ai_commerce:quick_order:ai_vendor:ai_configuration` is defined with `storefront: false` in
-      // data/configuration/ai_commerce.configuration.yml, so ConfigurationStorageWriter never exports it to
-      // `kv:configuration:global`; the storefront therefore ALWAYS falls back to the YAML default (OpenAI)
-      // regardless of the Back Office switch. Verified empirically: after a BO switch to AWS + P&S, a real
-      // storefront image-to-cart submit still logs `AI_COMMERCE:AI_CONFIGURATION_QUICK_ORDER_IMAGE_TO_CART_OPENAI`
-      // in spy_ai_interaction_log. A storefront "AWS" case would silently exercise OpenAI, so it is
-      // intentionally omitted. Real AWS Bedrock coverage lives on the Zed-driven features (Smart PIM, Smart
-      // CMS, Back Office Assistant), which read the DB-backed value directly. Flipping `storefront: true`
-      // for this setting is a product/config change (owner sign-off required) that would make a genuine
-      // storefront AWS case possible.
     });
   }
 );

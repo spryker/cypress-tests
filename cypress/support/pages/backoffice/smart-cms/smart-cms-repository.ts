@@ -33,8 +33,26 @@ export class SmartCmsRepository {
 
   getPanelMessageSelector = (): string => '.js-smart-cms-panel__message';
 
+  getPanelMessageErrorClass = (): string => 'smart-cms-panel__message--error';
+
+  getPanelMessageVisibleClass = (): string => 'smart-cms-panel__message--visible';
+
   getPanelSuccessMessageSelector = (): string =>
     '.js-smart-cms-panel__message.smart-cms-panel__message--success:not(.smart-cms-panel__message--error)';
 
   getGenerateEndpointGlob = (): string => '**/ai-commerce/smart-cms-content/generate';
+
+  getPanelToggleTitle = (): string => 'Smart CMS Content Assistant';
+
+  getPanelInputPlaceholder = (): string => 'Ask AI to generate or edit the title and content…';
+
+  getPanelAskLabel = (): string => 'Ask AI';
+
+  getContentConfigWindowKey = (): string => 'SmartCmsContentConfig';
+
+  getHeroPrompt = (): string => 'Write a punchy hero title and a short intro paragraph for this landing page';
+
+  getBlockPrompt = (): string => 'Write a short promotional block heading and a matching one-line description';
+
+  getProbeImageFileName = (): string => 'search-by-image-probe.png';
 }

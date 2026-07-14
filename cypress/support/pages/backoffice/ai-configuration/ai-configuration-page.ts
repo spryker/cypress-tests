@@ -20,6 +20,16 @@ export class AiConfigurationPage extends BackofficePage {
 
   getCardTitle = (): Cypress.Chainable => cy.get(this.repository.getCardTitleSelector());
 
+  getCardTitleText = (): string => this.repository.getCardTitleText();
+
+  getVendorSettingKey = (vendor: string, field: string): string => this.repository.getVendorSettingKey(vendor, field);
+
+  getApiTokenSettingInput = (vendor: string): Cypress.Chainable =>
+    cy.get(this.repository.getApiTokenSettingInputSelector(vendor));
+
+  getModelPricesEditor = (vendor: string): Cypress.Chainable =>
+    cy.get(this.repository.getModelPricesEditorSelector(vendor));
+
   getFeatureNav = (feature: string): Cypress.Chainable => cy.get(this.repository.getFeatureNavSelector(feature));
 
   getTabNav = (feature: string, tab: string): Cypress.Chainable =>
@@ -33,7 +43,8 @@ export class AiConfigurationPage extends BackofficePage {
 
   getSettingRow = (settingKey: string): Cypress.Chainable => cy.get(this.repository.getSettingRowSelector(settingKey));
 
-  getSettingRows = (groupKey: string): Cypress.Chainable => cy.get(this.repository.getSettingRowsByGroupSelector(groupKey));
+  getSettingRows = (groupKey: string): Cypress.Chainable =>
+    cy.get(this.repository.getSettingRowsByGroupSelector(groupKey));
 
   getSettingInput = (settingKey: string): Cypress.Chainable =>
     cy.get(this.repository.getSettingInputSelector(settingKey));
@@ -57,12 +68,19 @@ export class AiConfigurationPage extends BackofficePage {
     this.getSaveButton().click();
   };
 
-  /**
-   * Idempotently switches a feature's AI-vendor radio (`ai_configuration`) to the given value and persists it.
-   * Visits the feature tab, and only when the target radio is not already checked does it select it and Save
-   * (waiting on the config-save POST — a plain persistence call, NOT an AI provider request). Safe to call as a
-   * restore/safety-net: a no-op when the value is already applied, so it never issues a needless Save.
-   */
+  getFeatureVendorSettingKey = (feature: string): string => this.repository.getFeatureVendorSettingKey(feature);
+
+  getFeatureVendorOptionValue = (feature: string, vendor: string): string =>
+    this.repository.getFeatureVendorOptionValue(feature, vendor);
+
+  setFeatureVendor = (feature: string, vendor: string): Cypress.Chainable =>
+    this.setVendorConfiguration(
+      'ai_commerce',
+      feature,
+      this.getFeatureVendorSettingKey(feature),
+      this.getFeatureVendorOptionValue(feature, vendor)
+    );
+
   setVendorConfiguration = (feature: string, tab: string, settingKey: string, value: string): Cypress.Chainable => {
     this.visitTab(feature, tab);
 

@@ -15,22 +15,10 @@ export class SmartCmsPage extends BackofficePage {
 
   private CMS_BLOCK_EDITOR_URL = '/cms-block-gui/edit-glossary?id-cms-block=24';
 
-  /**
-   * Enables the Smart CMS feature flag via the Configuration Management UI and saves.
-   * Idempotent: only checks the toggle when it is currently off, so a re-run on an already-enabled
-   * env still ends in the ON state. The Save action triggers a plain config-save POST
-   * (`/configuration/manage/save`) — NOT an AI provider call.
-   */
   enableSmartCms = (): Cypress.Chainable => this.setSmartCmsEnabled(true);
 
   disableSmartCms = (): Cypress.Chainable => this.setSmartCmsEnabled(false);
 
-  /**
-   * Sets the Smart CMS feature flag via the Configuration Management UI and saves when the toggle
-   * needs to change. Idempotent: only saves on an actual state change, so a re-run leaves the flag
-   * in the requested state. The Save action triggers a plain config-save POST
-   * (`/configuration/manage/save`) — NOT an AI provider call.
-   */
   private setSmartCmsEnabled = (enabled: boolean): Cypress.Chainable => {
     cy.visitBackoffice(this.CONFIGURATION_URL);
 
@@ -63,6 +51,24 @@ export class SmartCmsPage extends BackofficePage {
     return cy.wait('@cmsBlockEditorDocument');
   };
 
+  getPanelToggleTitle = (): string => this.repository.getPanelToggleTitle();
+
+  getPanelInputPlaceholder = (): string => this.repository.getPanelInputPlaceholder();
+
+  getPanelAskLabel = (): string => this.repository.getPanelAskLabel();
+
+  getPanelMessageErrorClass = (): string => this.repository.getPanelMessageErrorClass();
+
+  getPanelMessageVisibleClass = (): string => this.repository.getPanelMessageVisibleClass();
+
+  getContentConfigWindowKey = (): string => this.repository.getContentConfigWindowKey();
+
+  getHeroPrompt = (): string => this.repository.getHeroPrompt();
+
+  getBlockPrompt = (): string => this.repository.getBlockPrompt();
+
+  getProbeImageFileName = (): string => this.repository.getProbeImageFileName();
+
   getPanel = (): Cypress.Chainable => cy.get(this.repository.getPanelSelector());
 
   getPanelCollapsedClass = (): string => this.repository.getPanelCollapsedClass();
@@ -84,7 +90,11 @@ export class SmartCmsPage extends BackofficePage {
   getPanelMessage = (): Cypress.Chainable => cy.get(this.repository.getPanelMessageSelector());
 
   expandPanel = (): void => {
-    this.getPanelToggle().click();
+    this.getPanelToggle().then(($toggle): void => {
+      if ($toggle.attr('aria-expanded') !== 'true') {
+        this.getPanelToggle().click();
+      }
+    });
     this.getPanelInput().should('be.visible');
   };
 
@@ -125,10 +135,14 @@ export class SmartCmsPage extends BackofficePage {
 
   getPanelSuccessMessage = (): Cypress.Chainable => cy.get(this.repository.getPanelSuccessMessageSelector());
 
-  /**
-   * Reads the CSRF token the editor page injected into `window.SmartCmsContentConfig`, so an
-   * authenticated `cy.request` can pass the guard that rejects a missing/invalid token.
-   */
+  assertGlossaryEditorPopulated = (): void => {
+    this.getGlossaryEditor()
+      .invoke('val')
+      .then((value): void => {
+        expect(String(value ?? '')).to.have.length.greaterThan(0);
+      });
+  };
+
   getInjectedCsrfToken = (): Cypress.Chainable<string> =>
     cy
       .window()
@@ -144,7 +158,7 @@ export class SmartCmsPage extends BackofficePage {
   ): Cypress.Chainable<Cypress.Response<{ error?: unknown }>> =>
     cy.request({
       method: options.method ?? 'POST',
-      url: `${Cypress.env('backofficeUrl')}${endpointPath}`,
+      url: this.getBackofficeAbsoluteUrl(endpointPath),
       headers: { 'X-Requested-With': 'XMLHttpRequest' },
       body: options.body,
       failOnStatusCode: false,

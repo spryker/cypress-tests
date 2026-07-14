@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, skipUnlessAiProviderEnabled } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CustomerLoginScenario } from '@scenarios/yves';
 import { SearchByImagePage } from '@pages/yves';
@@ -40,32 +40,19 @@ describe(
     });
 
     it(
-      'shows the file-search trigger, file input and hidden CSRF token, and keeps the camera trigger hidden on desktop',
+      'shows the file-search trigger, file input and hidden CSRF token, keeps the camera trigger hidden on desktop, and opens the upload popup on click',
       { tags: ['@demo-smoke'] },
       (): void => {
         searchByImagePage.visitSearchResults();
-
-        searchByImagePage.getFileButton().should('exist');
-        searchByImagePage.getFileButton().filter(':visible').first().should('be.visible');
 
         searchByImagePage.getFileInput().first().should('exist').and('have.attr', 'type', 'file');
         searchByImagePage.getToken().first().should('exist').and('have.attr', 'type', 'hidden');
 
         searchByImagePage.getPhotoButton().first().should('exist').and('have.class', 'is-hidden');
         searchByImagePage.getPhotoButton().first().should('not.be.visible');
-      }
-    );
 
-    it(
-      'clicking the desktop file-search trigger opens the upload popup and reveals a clickable "Upload image" button',
-      { tags: ['@demo-smoke'] },
-      (): void => {
-        searchByImagePage.visitSearchResults();
-
-        searchByImagePage.getDesktopInstance().find('.js-search-by-image__btn-search-by-file').should('be.visible');
-
+        searchByImagePage.getDesktopFileSearchButton().should('be.visible');
         searchByImagePage.clickFileTrigger();
-
         searchByImagePage.getOpenFilePopupUploadButton().should('be.visible').and('not.be.disabled');
       }
     );
@@ -156,17 +143,15 @@ describe(
       'rejects GET with 405 and returns a validation error for an image-less POST',
       { tags: ['@demo-smoke'] },
       (): void => {
-        const endpointUrl = `${Cypress.config('baseUrl')}/search-by-image`;
-
-        cy.request({ method: 'GET', url: endpointUrl, failOnStatusCode: false }).then((response) => {
+        searchByImagePage.requestEndpoint('GET').then((response) => {
           expect(response.status).to.eq(405);
         });
 
-        cy.request({ method: 'POST', url: endpointUrl, failOnStatusCode: false }).then((response) => {
+        searchByImagePage.requestEndpoint('POST').then((response) => {
           expect(response.status).to.eq(200);
           expect(response.body).to.deep.eq({
             isSuccessful: false,
-            errors: ['Please select an image to search.'],
+            errors: [searchByImagePage.getNoImageErrorText()],
           });
         });
       }
@@ -176,30 +161,23 @@ describe(
       'rejects an image POST carrying an invalid CSRF token with a CSRF validation error and no redirectUrl',
       { tags: ['@demo-smoke'] },
       (): void => {
-        const endpointUrl = `${Cypress.config('baseUrl')}/search-by-image`;
         const boundary = '----cypressSearchByImageBoundary';
-        const multipartBody =
-          `--${boundary}\r\n` +
-          'Content-Disposition: form-data; name="search_by_image[image]"; filename="probe.png"\r\n' +
-          'Content-Type: image/png\r\n\r\n' +
-          'binarystub\r\n' +
-          `--${boundary}\r\n` +
-          'Content-Disposition: form-data; name="search_by_image[_token]"\r\n\r\n' +
-          'INVALID_CSRF_TOKEN\r\n' +
-          `--${boundary}--\r\n`;
-
-        cy.request({
-          method: 'POST',
-          url: endpointUrl,
-          failOnStatusCode: false,
-          headers: { 'content-type': `multipart/form-data; boundary=${boundary}` },
-          body: multipartBody,
-        }).then((response) => {
-          expect(response.status).to.eq(200);
-          expect(response.body.isSuccessful).to.eq(false);
-          expect(response.body).to.not.have.property('redirectUrl');
-          expect(JSON.stringify(response.body.errors)).to.contain('CSRF');
+        const body = searchByImagePage.buildMultipartBody({
+          boundary,
+          fileName: 'probe.png',
+          contentType: 'image/png',
+          contents: 'binarystub',
+          token: 'INVALID_CSRF_TOKEN',
         });
+
+        searchByImagePage
+          .requestEndpoint('POST', { body, contentType: `multipart/form-data; boundary=${boundary}` })
+          .then((response) => {
+            expect(response.status).to.eq(200);
+            expect(response.body.isSuccessful).to.eq(false);
+            expect(response.body).to.not.have.property('redirectUrl');
+            expect(JSON.stringify(response.body.errors)).to.contain(searchByImagePage.getCsrfErrorMarker());
+          });
       }
     );
 
@@ -207,30 +185,23 @@ describe(
       'rejects an unsupported MIME type (text/plain upload) with an unsupported-type error and no redirectUrl',
       { tags: ['@demo-smoke'] },
       (): void => {
-        const endpointUrl = `${Cypress.config('baseUrl')}/search-by-image`;
         const boundary = '----cypressSearchByImageMimeBoundary';
-        const multipartBody =
-          `--${boundary}\r\n` +
-          'Content-Disposition: form-data; name="search_by_image[image]"; filename="not-an-image.txt"\r\n' +
-          'Content-Type: text/plain\r\n\r\n' +
-          'this is plain text, not an image\r\n' +
-          `--${boundary}\r\n` +
-          'Content-Disposition: form-data; name="search_by_image[_token]"\r\n\r\n' +
-          'INVALID_CSRF_TOKEN\r\n' +
-          `--${boundary}--\r\n`;
-
-        cy.request({
-          method: 'POST',
-          url: endpointUrl,
-          failOnStatusCode: false,
-          headers: { 'content-type': `multipart/form-data; boundary=${boundary}` },
-          body: multipartBody,
-        }).then((response) => {
-          expect(response.status).to.eq(200);
-          expect(response.body.isSuccessful).to.eq(false);
-          expect(response.body).to.not.have.property('redirectUrl');
-          expect(JSON.stringify(response.body.errors)).to.contain('not supported');
+        const body = searchByImagePage.buildMultipartBody({
+          boundary,
+          fileName: 'not-an-image.txt',
+          contentType: 'text/plain',
+          contents: 'this is plain text, not an image',
+          token: 'INVALID_CSRF_TOKEN',
         });
+
+        searchByImagePage
+          .requestEndpoint('POST', { body, contentType: `multipart/form-data; boundary=${boundary}` })
+          .then((response) => {
+            expect(response.status).to.eq(200);
+            expect(response.body.isSuccessful).to.eq(false);
+            expect(response.body).to.not.have.property('redirectUrl');
+            expect(JSON.stringify(response.body.errors)).to.contain(searchByImagePage.getUnsupportedTypeErrorMarker());
+          });
       }
     );
 
@@ -262,9 +233,7 @@ describe(
         'refuses to search while disabled: a bodyless POST returns isSuccessful:false with no redirectUrl',
         { tags: ['@demo-smoke'] },
         (): void => {
-          const endpointUrl = `${Cypress.config('baseUrl')}/search-by-image`;
-
-          cy.request({ method: 'POST', url: endpointUrl, failOnStatusCode: false }).then((response) => {
+          searchByImagePage.requestEndpoint('POST').then((response) => {
             expect(response.status).to.eq(200);
             expect(response.body.isSuccessful).to.eq(false);
             expect(response.body).to.not.have.property('redirectUrl');
@@ -278,14 +247,8 @@ describe(
         'submitting a real product image returns a redirect and lands on a results surface',
         { tags: ['@demo-full'] },
         function (): void {
-          if (!Cypress.env('DEMO_AI_PROVIDER_ENABLED')) {
-            this.skip();
-          }
+          skipUnlessAiProviderEnabled(this);
 
-          // A single real-provider round-trip can transiently error (network hiccup, provider timeout);
-          // a real user would just try again, so the submit itself retries up to 3 attempts rather than
-          // hard-failing the test on one flaky call. The helper only returns once it sees a successful
-          // response (or exhausts its attempts), so the assertions below are on a real success.
           searchByImagePage
             .submitImageThroughFilePopupUntilSuccessful(staticFixtures.probeImagePath, {
               maxAttempts: 3,
@@ -299,27 +262,9 @@ describe(
 
           cy.location('pathname', { timeout: 30000 }).should('not.eq', staticFixtures.searchResultsUrl.split('?')[0]);
 
-          // Landed on a search-results page. A real-provider image search can resolve to a term with zero
-          // catalog matches (provider-dependent, and the synthetic probe especially), so assert the results
-          // SURFACE rendered (product tiles, the empty-catalog state, or the results tabs) rather than
-          // requiring at least one product tile — which would couple the test to a given vendor's match quality.
           searchByImagePage.getResultsPageSurface().should('exist').its('length').should('be.greaterThan', 0);
         }
       );
-
-      // NOTE — no AWS Bedrock @demo-full case here (deliberate). Search by Image resolves its AI vendor in
-      // the Yves/storefront layer via the Redis-published Configuration client
-      // (AiCommerceConfig::getSearchByImageAiConfigurationName). The vendor setting
-      // `ai_commerce:search_by_image:ai_vendor:ai_configuration` is defined with `storefront: false` in
-      // data/configuration/ai_commerce.configuration.yml, so ConfigurationStorageWriter never exports it to
-      // `kv:configuration:global`; the storefront therefore ALWAYS falls back to the YAML default (OpenAI)
-      // regardless of the Back Office switch. Verified empirically: after a BO switch to AWS + P&S, a real
-      // storefront image search still logs `AI_COMMERCE:AI_CONFIGURATION_SEARCH_BY_IMAGE_OPENAI` (provider
-      // openai, gpt-4o-mini) in spy_ai_interaction_log. A storefront "AWS" case would silently exercise
-      // OpenAI, so it is intentionally omitted. Real AWS Bedrock coverage lives on the Zed-driven features
-      // (Smart PIM, Smart CMS, Back Office Assistant), which read the DB-backed value directly. Flipping
-      // `storefront: true` for this setting is a product/config change (owner sign-off required) that would
-      // make a genuine storefront AWS case possible.
     });
   }
 );

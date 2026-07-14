@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, skipUnlessAiProviderEnabled } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { AiConfigurationPage } from '@pages/backoffice';
 import { AiConfigurationDemoStaticFixtures } from '@interfaces/demo';
@@ -21,11 +21,20 @@ describe(
     const AWS_OPTION = 'AI_COMMERCE:AI_CONFIGURATION_BACKOFFICE_ASSISTANT_AWS';
 
     const OPENAI_MODEL_DEFAULT = 'gpt-4.1';
+    const OPENAI_MODEL_UPDATED = 'gpt-4.1-mini';
+    const AWS_MODEL_DEFAULT = 'eu.anthropic.claude-sonnet-4-5-20250929-v1:0';
+    const AWS_REGION_DEFAULT = 'eu-central-1';
 
-    // CC-38802: LLM system prompts for Smart PIM, Search by Image and Quick Add-to-Cart are configurable via
-    // Configuration Management, each shipping a non-empty default (rendered as a `.config-input` textarea). These
-    // checks assert the defaults are present, non-empty and keep their dynamic placeholders — never the exact wording,
-    // which is intentionally tunable. Structural only: no AI provider token required.
+    type VendorTab = {
+      vendor: string;
+      extraFields?: Array<{ field: string; value: string }>;
+    };
+
+    const VENDOR_TABS: VendorTab[] = [
+      { vendor: 'openai' },
+      { vendor: 'aws', extraFields: [{ field: 'region', value: AWS_REGION_DEFAULT }] },
+    ];
+
     type PromptField = {
       key: string;
       label: string;
@@ -98,66 +107,47 @@ describe(
       });
     });
 
-    it(
-      'OpenAI AI Vendor tab returns HTTP 200, lists the OpenAI, Anthropic and AWS tabs, and shows a masked API token field and a model-prices JSON editor',
-      { tags: ['@demo-smoke'] },
-      (): void => {
-        aiConfigurationPage.visitTab('ai_vendor', 'openai').its('response.statusCode').should('eq', 200);
+    it('AI Vendor feature lists the OpenAI, Anthropic and AWS tabs', { tags: ['@demo-smoke'] }, (): void => {
+      aiConfigurationPage.visitTab('ai_vendor', 'openai').its('response.statusCode').should('eq', 200);
 
-        aiConfigurationPage.getCardTitle().should('contain.text', 'Configuration Management');
-        aiConfigurationPage.getFeatureNav('ai_vendor').should('exist');
-        aiConfigurationPage.getTabNav('ai_vendor', 'openai').should('exist');
-        aiConfigurationPage.getTabNav('ai_vendor', 'anthropic').should('exist');
-        aiConfigurationPage.getTabNav('ai_vendor', 'aws').should('exist');
+      aiConfigurationPage.getCardTitle().should('contain.text', aiConfigurationPage.getCardTitleText());
+      aiConfigurationPage.getFeatureNav('ai_vendor').should('exist');
 
-        aiConfigurationPage
-          .getSettingInput('ai_vendor:openai:general:api_token')
-          .should('be.visible')
-          .and('have.attr', 'type', 'password');
-        aiConfigurationPage.getJsonEditor('ai_vendor:openai:general:model_prices').should('be.visible');
-      }
-    );
+      VENDOR_TABS.forEach(({ vendor }) => {
+        aiConfigurationPage.getTabNav('ai_vendor', vendor).should('exist');
+      });
+    });
 
-    it(
-      'Anthropic AI Vendor tab returns HTTP 200 and shows a masked API token field and a model-prices JSON editor',
-      { tags: ['@demo-smoke'] },
-      (): void => {
-        aiConfigurationPage.visitTab('ai_vendor', 'anthropic').its('response.statusCode').should('eq', 200);
+    VENDOR_TABS.forEach(({ vendor, extraFields = [] }) => {
+      it(
+        `${vendor} AI Vendor tab returns HTTP 200 and shows a masked API token field and a model-prices JSON editor`,
+        { tags: ['@demo-smoke'] },
+        (): void => {
+          aiConfigurationPage.visitTab('ai_vendor', vendor).its('response.statusCode').should('eq', 200);
 
-        aiConfigurationPage
-          .getSettingInput('ai_vendor:anthropic:general:api_token')
-          .should('be.visible')
-          .and('have.attr', 'type', 'password');
-        aiConfigurationPage.getJsonEditor('ai_vendor:anthropic:general:model_prices').should('be.visible');
-      }
-    );
+          aiConfigurationPage.getApiTokenSettingInput(vendor).should('be.visible').and('have.attr', 'type', 'password');
+          aiConfigurationPage.getModelPricesEditor(vendor).should('be.visible');
+
+          extraFields.forEach(({ field, value }) => {
+            aiConfigurationPage
+              .getSettingInput(aiConfigurationPage.getVendorSettingKey(vendor, field))
+              .should('be.visible')
+              .and('have.value', value);
+          });
+        }
+      );
+    });
 
     it(
-      'AWS Bedrock AI Vendor tab returns HTTP 200 and shows a masked API token field, the eu-central-1 region and a model-prices JSON editor',
+      'the masked OpenAI API token field stays type=password: a preset token is kept, otherwise typed input raises the save bar',
       { tags: ['@demo-smoke'] },
       (): void => {
-        aiConfigurationPage.visitTab('ai_vendor', 'aws').its('response.statusCode').should('eq', 200);
+        const dummyToken = 'dummy-local-not-a-real-token';
 
-        aiConfigurationPage
-          .getSettingInput('ai_vendor:aws:general:api_token')
-          .should('be.visible')
-          .and('have.attr', 'type', 'password');
-        aiConfigurationPage
-          .getSettingInput('ai_vendor:aws:general:region')
-          .should('be.visible')
-          .and('have.value', 'eu-central-1');
-        aiConfigurationPage.getJsonEditor('ai_vendor:aws:general:model_prices').should('be.visible');
-      }
-    );
-
-    it(
-      'masked OpenAI API token field accepts typed input and stays type=password without being saved',
-      { tags: ['@demo-smoke'] },
-      (): void => {
         aiConfigurationPage.visitTab('ai_vendor', 'openai');
 
         aiConfigurationPage
-          .getSettingInput('ai_vendor:openai:general:api_token')
+          .getApiTokenSettingInput('openai')
           .should('be.visible')
           .and('have.attr', 'type', 'password')
           .then(($input) => {
@@ -165,18 +155,20 @@ describe(
 
             if (presetToken.trim()) {
               cy.wrap($input).should('have.attr', 'type', 'password').and('have.value', presetToken);
+              expect(
+                presetToken.trim().length,
+                'preset OpenAI API token must not be trivially short'
+              ).to.be.greaterThan(0);
 
               return;
             }
 
-            cy.wrap($input).type('dummy-local-not-a-real-token');
+            cy.wrap($input).type(dummyToken);
             aiConfigurationPage
-              .getSettingInput('ai_vendor:openai:general:api_token')
-              .should('have.value', 'dummy-local-not-a-real-token')
+              .getApiTokenSettingInput('openai')
+              .should('have.value', dummyToken)
               .and('have.attr', 'type', 'password');
 
-            // See the CC-38802 override test below: assert the save bar via computed display, not `be.visible`, so
-            // the Symfony Web Debug Toolbar overlapping the bottom-fixed bar in the dev env can't flake this check.
             aiConfigurationPage.getSaveBar().should('have.css', 'display', 'block');
             aiConfigurationPage.getChangesCount().should('have.text', '1');
           });
@@ -223,9 +215,7 @@ describe(
 
         aiConfigurationPage.getCheckedRadioOption(AI_CONFIGURATION_KEY).should('have.value', AWS_OPTION);
         aiConfigurationPage.getSettingRow(AWS_MODEL_KEY).should('be.visible');
-        aiConfigurationPage
-          .getSettingInput(AWS_MODEL_KEY)
-          .should('have.value', 'eu.anthropic.claude-sonnet-4-5-20250929-v1:0');
+        aiConfigurationPage.getSettingInput(AWS_MODEL_KEY).should('have.value', AWS_MODEL_DEFAULT);
         aiConfigurationPage.getSettingRow(OPENAI_MODEL_KEY).should('not.be.visible');
         aiConfigurationPage.getSettingRow(ANTHROPIC_MODEL_KEY).should('not.be.visible');
       }
@@ -235,12 +225,10 @@ describe(
       'changing the OpenAI model value shows the unsaved-changes bar, and Save persists the value across a reload',
       { tags: ['@demo-smoke'] },
       (): void => {
-        const updatedModel = 'gpt-4.1-mini';
-
         aiConfigurationPage.visitTab('ai_commerce', 'backoffice_assistant');
         aiConfigurationPage.getSaveBar().should('have.css', 'display', 'none');
 
-        aiConfigurationPage.setSettingInputValue(OPENAI_MODEL_KEY, updatedModel);
+        aiConfigurationPage.setSettingInputValue(OPENAI_MODEL_KEY, OPENAI_MODEL_UPDATED);
         aiConfigurationPage.getSaveBar().should('have.css', 'display', 'block');
         aiConfigurationPage.getChangesCount().should('have.text', '1');
 
@@ -252,12 +240,12 @@ describe(
             (entry: { key: string }) => entry.key === OPENAI_MODEL_KEY
           );
           expect(change).to.not.be.undefined;
-          expect(change.value).to.eq(updatedModel);
+          expect(change.value).to.eq(OPENAI_MODEL_UPDATED);
           expect(interception.response?.body).to.have.property('success', true);
         });
 
         aiConfigurationPage.visitTab('ai_commerce', 'backoffice_assistant');
-        aiConfigurationPage.getSettingInput(OPENAI_MODEL_KEY).should('have.value', updatedModel);
+        aiConfigurationPage.getSettingInput(OPENAI_MODEL_KEY).should('have.value', OPENAI_MODEL_UPDATED);
         aiConfigurationPage.getSaveBar().should('have.css', 'display', 'none');
 
         aiConfigurationPage.setSettingInputValue(OPENAI_MODEL_KEY, OPENAI_MODEL_DEFAULT);
@@ -269,45 +257,6 @@ describe(
       }
     );
 
-    it(
-      'the OpenAI, Anthropic and AWS Bedrock API tokens are all configured (real provider keys present for a full run)',
-      { tags: ['@demo-full'] },
-      function (): void {
-        if (!Cypress.env('DEMO_AI_PROVIDER_ENABLED')) {
-          this.skip();
-        }
-
-        aiConfigurationPage.visitTab('ai_vendor', 'openai').its('response.statusCode').should('eq', 200);
-        aiConfigurationPage
-          .getSettingInput('ai_vendor:openai:general:api_token')
-          .should('be.visible')
-          .and('have.attr', 'type', 'password')
-          .then(($input) => {
-            const token = String($input.val() ?? '').trim();
-            expect(token.length, 'OpenAI API token must be set for a full run').to.be.greaterThan(0);
-          });
-
-        aiConfigurationPage.visitTab('ai_vendor', 'anthropic').its('response.statusCode').should('eq', 200);
-        aiConfigurationPage.getSettingInput('ai_vendor:anthropic:general:api_token').should('be.visible');
-
-        aiConfigurationPage.visitTab('ai_vendor', 'aws').its('response.statusCode').should('eq', 200);
-        aiConfigurationPage
-          .getSettingInput('ai_vendor:aws:general:api_token')
-          .should('be.visible')
-          .and('have.attr', 'type', 'password')
-          .then(($input) => {
-            const token = String($input.val() ?? '').trim();
-            expect(token.length, 'AWS Bedrock API token must be set for a full run').to.be.greaterThan(0);
-          });
-        aiConfigurationPage.getSettingInput('ai_vendor:aws:general:region').then(($input) => {
-          const region = String($input.val() ?? '').trim();
-          expect(region.length, 'AWS Bedrock region must be set for a full run').to.be.greaterThan(0);
-        });
-      }
-    );
-
-    // --- CC-38802: configurable system prompts (Smart PIM, Search by Image, Quick Add-to-Cart) ---
-
     PROMPT_TABS.forEach(({ tab, fields }) => {
       it(
         `${tab} tab returns HTTP 200 and renders its System Prompts textarea(s) with the non-empty shipped default(s)`,
@@ -315,14 +264,12 @@ describe(
         (): void => {
           aiConfigurationPage.visitTab('ai_commerce', tab).its('response.statusCode').should('eq', 200);
 
-          // Exactly the expected prompt fields render under this tab's System Prompts group.
           aiConfigurationPage.getSettingRows('system_prompts').should('have.length', fields.length);
 
           fields.forEach((field) => {
             aiConfigurationPage.getSettingRow(field.key).should('be.visible');
             aiConfigurationPage
               .getSettingInput(field.key)
-              // AC-1: the default prompt ships out of the box, so the field must be a populated, non-empty textarea.
               .should('be.visible')
               .and(($textarea) => {
                 expect($textarea.prop('tagName'), `${field.label} must render as a textarea`).to.eq('TEXTAREA');
@@ -340,8 +287,6 @@ describe(
       'shipped default prompts keep their dynamic placeholders so runtime substitution stays intact',
       { tags: ['@demo-smoke'] },
       (): void => {
-        // AC-4: placeholders (e.g. %s for locale / text) must survive in the defaults; otherwise the feature would
-        // send a broken prompt to the LLM. Asserts token presence only, not the surrounding wording.
         PROMPT_TABS.filter(({ fields }) => fields.some((field) => field.placeholders.length > 0)).forEach(
           ({ tab, fields }) => {
             aiConfigurationPage.visitTab('ai_commerce', tab);
@@ -365,18 +310,12 @@ describe(
       'editing a Smart PIM prompt raises the unsaved-changes bar and persists the override across a reload before restoring the default',
       { tags: ['@demo-smoke'] },
       (): void => {
-        // AC-3: an admin can override a prompt through the Configuration Management UI and it is persisted. Kept
-        // provider-safe by asserting persistence of the stored value only — no AI feature is invoked here.
         const promptKey = 'ai_commerce:smart_pim:system_prompts:content_improver_prompt';
         const overridePrompt = 'CC-38802 override: improve this product copy. Text to improve: %s';
 
         aiConfigurationPage.visitTab('ai_commerce', 'smart_pim');
-        // Assert the save bar via its computed display state, not `be.visible`: the bottom-fixed bar is styled
-        // `position: fixed` and can be overlapped by the Symfony Web Debug Toolbar in the dev env, which trips
-        // Cypress's covered-element check while the bar is functionally shown/hidden by JS (`display: block|none`).
         aiConfigurationPage.getSaveBar().should('have.css', 'display', 'none');
 
-        // Capture the shipped default so we can restore it, keeping the test idempotent across runs.
         aiConfigurationPage
           .getSettingInput(promptKey)
           .invoke('val')
@@ -399,12 +338,10 @@ describe(
               expect(interception.response?.body).to.have.property('success', true);
             });
 
-            // The override survives a reload.
             aiConfigurationPage.visitTab('ai_commerce', 'smart_pim');
             aiConfigurationPage.getSettingInput(promptKey).should('have.value', overridePrompt);
             aiConfigurationPage.getSaveBar().should('have.css', 'display', 'none');
 
-            // Restore the shipped default so the environment is left as found.
             aiConfigurationPage.setSettingInputValue(promptKey, originalPrompt);
             aiConfigurationPage.saveConfiguration();
             cy.wait('@saveConfiguration').its('response.body').should('have.property', 'success', true);
@@ -412,6 +349,31 @@ describe(
             aiConfigurationPage.visitTab('ai_commerce', 'smart_pim');
             aiConfigurationPage.getSettingInput(promptKey).should('have.value', originalPrompt);
           });
+      }
+    );
+
+    it(
+      'the OpenAI, Anthropic and AWS Bedrock API tokens are all configured (real provider keys present for a full run)',
+      { tags: ['@demo-full'] },
+      function (): void {
+        skipUnlessAiProviderEnabled(this);
+
+        VENDOR_TABS.forEach(({ vendor }) => {
+          aiConfigurationPage.visitTab('ai_vendor', vendor).its('response.statusCode').should('eq', 200);
+          aiConfigurationPage
+            .getApiTokenSettingInput(vendor)
+            .should('be.visible')
+            .and('have.attr', 'type', 'password')
+            .then(($input) => {
+              const token = String($input.val() ?? '').trim();
+              expect(token.length, `${vendor} API token must be set for a full run`).to.be.greaterThan(0);
+            });
+        });
+
+        aiConfigurationPage.getSettingInput(aiConfigurationPage.getVendorSettingKey('aws', 'region')).then(($input) => {
+          const region = String($input.val() ?? '').trim();
+          expect(region.length, 'AWS Bedrock region must be set for a full run').to.be.greaterThan(0);
+        });
       }
     );
   }

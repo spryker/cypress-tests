@@ -45,29 +45,24 @@ describe(
     });
 
     it(
-      'opens the Workflows page (HTTP 200) and shows the "Workflows" section heading and "Workflow Items" widget title',
+      'opens the Workflows page (HTTP 200) with the section heading, widget title and all six column headers',
       { tags: ['@demo-smoke'] },
       (): void => {
         aiWorkflowsPage.visitAiWorkflows().its('response.statusCode').should('eq', 200);
 
-        aiWorkflowsPage.getSectionTitle().should('contain.text', 'Workflows');
-        aiWorkflowsPage.getWidgetTitle().should('contain.text', 'Workflow Items');
+        aiWorkflowsPage.getSectionTitle().should('contain.text', aiWorkflowsPage.getSectionTitleText());
+        aiWorkflowsPage.getWidgetTitle().should('contain.text', aiWorkflowsPage.getWidgetTitleText());
+
+        aiWorkflowsPage.getTable().should('exist');
+        aiWorkflowsPage.getTableHeaders().should('have.length', EXPECTED_COLUMN_HEADERS.length);
+        EXPECTED_COLUMN_HEADERS.forEach((column): void => {
+          aiWorkflowsPage.getColumnHeader(column.dataQa).should('exist').and('contain.text', column.label);
+        });
       }
     );
 
-    it('workflow-items table renders with all six expected column headers', { tags: ['@demo-smoke'] }, (): void => {
-      aiWorkflowsPage.visitAiWorkflows();
-
-      aiWorkflowsPage.getTable().should('exist');
-      aiWorkflowsPage.getTableHeaders().should('have.length', EXPECTED_COLUMN_HEADERS.length);
-
-      EXPECTED_COLUMN_HEADERS.forEach((column): void => {
-        aiWorkflowsPage.getColumnHeader(column.dataQa).should('exist').and('contain.text', column.label);
-      });
-    });
-
     it(
-      'initializes a live DataTable whose data endpoint returns HTTP 200 JSON with the draw/recordsTotal/recordsFiltered/data shape',
+      'initializes a live DataTable (HTTP 200 JSON with the draw/recordsTotal/recordsFiltered/data shape) and marks the five data columns sortable and Actions non-sortable',
       { tags: ['@demo-smoke'] },
       (): void => {
         aiWorkflowsPage.visitAndAwaitTableData().then((interception): void => {
@@ -84,19 +79,10 @@ describe(
 
         aiWorkflowsPage.getTableWrapper().should('exist');
         aiWorkflowsPage.getTableInfo().should('be.visible');
-      }
-    );
-
-    it(
-      'marks the five data columns sortable and the Actions column non-sortable',
-      { tags: ['@demo-smoke'] },
-      (): void => {
-        aiWorkflowsPage.visitAndAwaitTableData();
 
         SORTABLE_COLUMNS.forEach((column): void => {
           aiWorkflowsPage.getSortableColumnHeader(column).should('exist');
         });
-
         NON_SORTABLE_COLUMNS.forEach((column): void => {
           aiWorkflowsPage.getNonSortableColumnHeader(column).should('exist');
         });
@@ -104,7 +90,7 @@ describe(
     );
 
     it(
-      'changing the page-length control issues a fresh table data request that returns HTTP 200',
+      'the page-length control and the Created At sort header each issue a fresh table data request that returns HTTP 200',
       { tags: ['@demo-smoke'] },
       (): void => {
         aiWorkflowsPage.visitAndAwaitTableData();
@@ -112,23 +98,13 @@ describe(
         aiWorkflowsPage.getLengthSelect().should('exist');
         aiWorkflowsPage.aliasTableData('lengthChangeData');
         aiWorkflowsPage.selectPageLength('50');
-
         cy.wait('@lengthChangeData').then((interception): void => {
           expect(interception.response?.statusCode).to.eq(200);
           expect(interception.request.url).to.contain('length=50');
         });
-      }
-    );
-
-    it(
-      'clicking the Created At sort header issues a fresh table data request that returns HTTP 200',
-      { tags: ['@demo-smoke'] },
-      (): void => {
-        aiWorkflowsPage.visitAndAwaitTableData();
 
         aiWorkflowsPage.aliasTableData('sortChangeData');
         aiWorkflowsPage.getSortableColumnHeader('spy_ai_workflow_item.created_at').click();
-
         cy.wait('@sortChangeData').its('response.statusCode').should('eq', 200);
       }
     );

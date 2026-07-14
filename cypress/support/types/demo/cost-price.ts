@@ -16,10 +16,6 @@ export interface CostPriceDemoStaticFixtures {
     idProductAbstract: number;
     sku: string;
   };
-  productWithoutCost: {
-    idProductAbstract: number;
-    sku: string;
-  };
   merchantProduct: {
     sku: string;
   };

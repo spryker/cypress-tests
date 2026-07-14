@@ -6,6 +6,12 @@ import { injectable } from 'inversify';
 export class AuditLogsRepository {
   getSectionTitleSelector = (): string => '.page-title-head h2';
 
+  getSectionTitleText = (): string => 'Audit Logs';
+
+  getTotalInteractionsCardText = (): string => 'Total Interactions';
+
+  getSuccessStatusText = (): string => 'Success';
+
   getStatsCardsSelector = (): string => '#stats-cards';
 
   getStatsCardTitleSelector = (): string => '#stats-cards .card .card-body h2';

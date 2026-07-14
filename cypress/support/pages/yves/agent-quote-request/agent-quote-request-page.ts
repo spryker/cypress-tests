@@ -46,9 +46,22 @@ export class AgentQuoteRequestPage extends YvesPage {
   getCostPriceWarningIcon = (): Cypress.Chainable =>
     cy.get('body').then(($body) => $body.find(this.repository.getCostPriceWarningIconSelector()));
 
+  isGrossMarginUnavailable = ($margin: JQuery<HTMLElement>): boolean =>
+    $margin.hasClass(this.repository.getGrossMarginUnavailableClass());
+
+  getCostPriceDataAttribute = (): string => this.repository.getCostPriceDataAttribute();
+
+  getUnavailableCostPriceText = (): string => this.repository.getUnavailableCostPriceText();
+
   save = (): void => {
     cy.intercept('POST', '**/agent/quote-request/edit/**').as('agentQuoteRequestSave');
     this.repository.getSaveButton().click();
     cy.wait('@agentQuoteRequestSave');
+  };
+
+  recalculate = (reference: string): void => {
+    this.visitEdit(reference);
+    this.getCartItems().should('have.length.at.least', 1);
+    this.save();
   };
 }

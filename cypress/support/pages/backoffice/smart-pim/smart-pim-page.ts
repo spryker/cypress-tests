@@ -73,8 +73,6 @@ export class SmartPimPage extends BackofficePage {
 
   getResponseField = (): Cypress.Chainable => cy.get(this.repository.getResponseFieldSelector());
 
-  getOriginalField = (): Cypress.Chainable => cy.get(this.repository.getOriginalFieldSelector());
-
   getResponseErrorBlock = (): Cypress.Chainable => cy.get(this.repository.getResponseErrorBlockSelector());
 
   getResponseAgainButton = (): Cypress.Chainable => cy.get(this.repository.getResponseAgainButtonSelector());
@@ -88,8 +86,6 @@ export class SmartPimPage extends BackofficePage {
     this.getAltTextModal().find(this.repository.getModalErrorHolderSelector());
 
   getAltTriggerTemplate = (): Cypress.Chainable => cy.get(this.repository.getAltTriggerTemplateSelector());
-
-  getBackofficeAbsoluteUrl = (path: string): string => `${Cypress.env('backofficeUrl')}${path}`;
 
   getContentImproverUrl = (): string => this.getBackofficeAbsoluteUrl(this.repository.getContentImproverPath());
 
@@ -148,7 +144,35 @@ export class SmartPimPage extends BackofficePage {
 
   getInjectedWrapper = (marker: string): Cypress.Chainable => cy.get(`.${marker}`);
 
+  getInjectedAltTrigger = (marker: string): Cypress.Chainable =>
+    this.getInjectedWrapper(marker).find(this.repository.getInjectedAltTriggerSelector());
+
   getAffixClass = (): string => this.repository.getAffixClass();
+
+  getLoadingClass = (): string => this.repository.getLoadingClass();
+
+  getEmptyClass = (): string => this.repository.getEmptyClass();
+
+  getCategoryModalId = (): string => this.repository.getCategoryModalId();
+
+  getContentImproverPath = (): string => this.repository.getContentImproverPath();
+
+  getTranslatePath = (): string => this.repository.getTranslatePath();
+
+  getImageAltTextPath = (): string => this.repository.getImageAltTextPath();
+
+  getCategorySuggestionPath = (): string => this.repository.getCategorySuggestionPath();
+
+  getProviderEndpointGlobs = (): Array<string> => this.repository.getProviderEndpointGlobs();
+
+  getCategoryEmptyText = (): string => this.repository.getCategoryEmptyText();
+
+  getAltTextEmptyText = (): string => this.repository.getAltTextEmptyText();
+
+  getProviderUnavailableMessage = (): string => this.repository.getProviderUnavailableMessage();
+
+  getMissingParamsMessage = (endpoint: 'content-improver' | 'image-alt-text' | 'translate'): string =>
+    this.repository.getMissingParamsMessage(endpoint);
 
   shouldBeOpenPopover = (chainable: Cypress.Chainable): Cypress.Chainable =>
     chainable

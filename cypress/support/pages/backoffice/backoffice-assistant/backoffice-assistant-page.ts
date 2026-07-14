@@ -15,12 +15,6 @@ export class BackofficeAssistantPage extends BackofficePage {
 
   private CONTEXT_PAGE_URL = '/product-management/edit?id-product-abstract=300';
 
-  /**
-   * Enables the Backoffice Assistant feature flag via the Configuration Management UI and saves.
-   * Idempotent: only checks the toggle when it is currently off, so a re-run on an already-enabled
-   * env still ends in the ON state. The Save action triggers a plain config-save POST
-   * (`/configuration/manage/save`) — NOT an AI provider call.
-   */
   enableAssistant = (): Cypress.Chainable => {
     cy.visitBackoffice(this.CONFIGURATION_URL);
 
@@ -37,13 +31,6 @@ export class BackofficeAssistantPage extends BackofficePage {
     return cy.get(this.repository.getEnableToggleSelector()).should('be.checked');
   };
 
-  /**
-   * Disables the Backoffice Assistant feature flag via the Configuration Management UI and saves.
-   * Mirror of enableAssistant: idempotent, only unchecks when currently on, and the Save is a plain
-   * config-save POST — NOT an AI provider call. Used to exercise the disabled-feature guard; the
-   * describe-level beforeEach re-enables before every subsequent test, so the disabled state never
-   * leaks past the test that sets it.
-   */
   disableAssistant = (): Cypress.Chainable => {
     cy.visitBackoffice(this.CONFIGURATION_URL);
 
@@ -68,6 +55,29 @@ export class BackofficeAssistantPage extends BackofficePage {
   };
 
   getHistoriesEndpointPath = (): string => this.repository.getHistoriesPath();
+
+  clearWidgetPanelState = (): Cypress.Chainable =>
+    cy.window().then((win): void => win.localStorage.removeItem(this.repository.getWidgetStateStorageKey()));
+
+  getWidgetToggleLabel = (): string => this.repository.getWidgetToggleLabel();
+
+  getGreetingText = (): string => this.repository.getGreetingText();
+
+  getInputPlaceholder = (): string => this.repository.getInputPlaceholder();
+
+  getAutoAgentLabel = (): string => this.repository.getAutoAgentLabel();
+
+  getOrderManagementAgentLabel = (): string => this.repository.getOrderManagementAgentLabel();
+
+  getTransportFailureText = (): string => this.repository.getTransportFailureText();
+
+  getUnsupportedFileTypeText = (): string => this.repository.getUnsupportedFileTypeText();
+
+  getHistoriesEmptyText = (): string => this.repository.getHistoriesEmptyText();
+
+  getValidationGlossaryKey = (): string => this.repository.getValidationGlossaryKey();
+
+  getInvalidCsrfToken = (): string => this.repository.getInvalidCsrfToken();
 
   visitSales = (): Cypress.Chainable => {
     cy.intercept('GET', '**/sales').as('salesDocument');
@@ -133,7 +143,8 @@ export class BackofficeAssistantPage extends BackofficePage {
   getWidgetMessageAttachmentPill = (): Cypress.Chainable =>
     this.getWidgetMessages().find(this.repository.getWidgetMessageAttachmentPillSelector());
 
-  getWidgetContextSuggestions = (): Cypress.Chainable => cy.get(this.repository.getWidgetContextSuggestionsSelector());
+  private getWidgetContextSuggestions = (): Cypress.Chainable =>
+    cy.get(this.repository.getWidgetContextSuggestionsSelector());
 
   getWidgetFormContextSuggestion = (): Cypress.Chainable =>
     this.getWidgetContextSuggestions()
@@ -166,8 +177,6 @@ export class BackofficeAssistantPage extends BackofficePage {
         body: events.map((event) => `data: ${JSON.stringify(event)}\n\n`).join(''),
       })
       .as('assistantPrompt');
-
-  getBackofficeAbsoluteUrl = (path: string): string => `${Cypress.env('backofficeUrl')}${path}`;
 
   repositoryPromptPath = (): string => this.repository.getPromptPath();
 
@@ -230,17 +239,9 @@ export class BackofficeAssistantPage extends BackofficePage {
 
   getWidgetHistoriesEmpty = (): Cypress.Chainable => cy.get(this.repository.getWidgetHistoriesEmptySelector());
 
-  getWidgetMessageAttachmentPillName = (): Cypress.Chainable =>
-    this.getWidgetMessageAttachmentPill().find(this.repository.getWidgetMessageAttachmentPillNameSelector());
-
   removeFirstAttachmentChip = (): Cypress.Chainable =>
     this.getWidgetAttachmentChip().first().find(this.repository.getWidgetAttachmentChipRemoveSelector()).click();
 
-  /**
-   * Stubs the conversation-history list endpoint with a caller-supplied payload so the histories panel
-   * can be exercised without a real provider or any persisted conversation. Mirrors the SSE-stub helpers:
-   * the JS reads `histories` (list render vs empty state) and `available_agents` (agent picker) from this body.
-   */
   interceptHistoriesWith = (
     histories: Array<Record<string, unknown>>,
     availableAgents: string[] = []
@@ -252,10 +253,6 @@ export class BackofficeAssistantPage extends BackofficePage {
       })
       .as('assistantHistories');
 
-  /**
-   * Stubs the conversation-delete endpoint with a success contract ({ success: true }) so the delete
-   * interaction (optimistic row removal on transitionend) can be verified provider-free.
-   */
   interceptDeleteSuccess = (): Cypress.Chainable =>
     cy
       .intercept('POST', this.repository.getDeleteEndpoint(), { statusCode: 200, body: { success: true } })
@@ -274,14 +271,6 @@ export class BackofficeAssistantPage extends BackofficePage {
   getFormFillTargetField = (fieldName: string): Cypress.Chainable =>
     cy.get(this.repository.getFormFillTargetFieldSelector(fieldName));
 
-  /**
-   * The product edit form groups each locale's fields in a collapsible ibox (Spryker Gui
-   * `localized-ibox.twig`); only the first locale in the store's locale collection renders expanded,
-   * so a non-first locale (e.g. en_US on a de_DE-first store) starts with its `.ibox-content` at
-   * `display: none`. Expands the ibox that contains the target field by clicking its `.collapse-link`
-   * — idempotent, only acts when the field is still hidden, so it's a no-op on stores where the
-   * locale already renders expanded.
-   */
   expandFormFillTargetFieldLocale = (fieldName: string): Cypress.Chainable =>
     this.getFormFillTargetField(fieldName).then(($field): void => {
       if ($field.is(':visible')) {

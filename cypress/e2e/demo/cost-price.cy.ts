@@ -19,7 +19,7 @@ describe(
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
 
     const costPricePage = container.get(CostPricePage);
-    const agentQuoteRequestPage = container.get(AgentQuoteRequestPage);
+    const quoteRequestPage = container.get(AgentQuoteRequestPage);
     const productsPage = container.get(ProductsPage);
 
     let staticFixtures: CostPriceDemoStaticFixtures;
@@ -96,7 +96,7 @@ describe(
       );
 
       it(
-        'product view page shows a visible Price & Taxes widget containing the Cost price row',
+        'product view page shows a visible Price & Taxes widget with a Cost price row rendering a non-empty value',
         { tags: ['@demo-smoke'] },
         (): void => {
           costPricePage
@@ -105,19 +105,7 @@ describe(
             .should('eq', 200);
 
           costPricePage.getPriceTaxWidget().should('be.visible');
-
           costPricePage.getCostPriceViewRow().should('have.length.at.least', 1).and('be.visible');
-        }
-      );
-
-      it(
-        'product view page renders a non-empty Cost price value beside the Gross and Net rows',
-        { tags: ['@demo-smoke'] },
-        (): void => {
-          costPricePage
-            .visitProductView(staticFixtures.product.idProductAbstract)
-            .its('response.statusCode')
-            .should('eq', 200);
 
           costPricePage
             .getCostPriceViewValues()
@@ -230,14 +218,14 @@ describe(
         'a plain customer opening their quote request sees the line items but no cost-price molecule or gross-margin',
         { tags: ['@demo-smoke'] },
         (): void => {
-          agentQuoteRequestPage
+          quoteRequestPage
             .visitCustomerDetails(staticFixtures.quoteRequest.calculatedReference)
             .its('response.statusCode')
             .should('eq', 200);
 
-          agentQuoteRequestPage.getCartItems().should('have.length.at.least', 1);
-          agentQuoteRequestPage.getCostPriceMolecules().should('have.length', 0);
-          agentQuoteRequestPage.getGrossMargins().should('have.length', 0);
+          quoteRequestPage.getCartItems().should('have.length.at.least', 1);
+          quoteRequestPage.getCostPriceMolecules().should('have.length', 0);
+          quoteRequestPage.getGrossMargins().should('have.length', 0);
         }
       );
     });
@@ -254,22 +242,19 @@ describe(
         'agent opening a calculated quote request sees a cost-price molecule with a real gross-margin percentage on every line item',
         { tags: ['@demo-smoke'] },
         (): void => {
-          agentQuoteRequestPage.visitEdit(staticFixtures.quoteRequest.calculatedReference);
+          quoteRequestPage.recalculate(staticFixtures.quoteRequest.calculatedReference);
 
-          agentQuoteRequestPage.getCartItems().then(($items) => {
+          quoteRequestPage.getCartItems().then(($items) => {
             const itemCount = $items.length;
 
             expect(itemCount).to.be.greaterThan(0);
 
-            agentQuoteRequestPage.getCostPriceMolecules().should('have.length', itemCount);
-            agentQuoteRequestPage
-              .getCostPriceValues()
-              .filter('[data-has-cost-price="1"]')
-              .should('have.length', itemCount);
-            agentQuoteRequestPage.getGrossMargins().should('have.length', itemCount);
+            quoteRequestPage.getCostPriceMolecules().should('have.length', itemCount);
+            quoteRequestPage.getCostPriceValues().filter('[data-has-cost-price="1"]').should('have.length', itemCount);
+            quoteRequestPage.getGrossMargins().should('have.length', itemCount);
           });
 
-          agentQuoteRequestPage
+          quoteRequestPage
             .getGrossMargins()
             .first()
             .invoke('text')
@@ -283,35 +268,40 @@ describe(
         'each cost-price molecule renders its two branches consistently: an available margin shows a percentage, an unavailable one shows "—" paired with a warning icon',
         { tags: ['@demo-smoke'] },
         (): void => {
-          agentQuoteRequestPage.visitDetails(staticFixtures.quoteRequest.uncalculatedReference);
+          quoteRequestPage.visitDetails(staticFixtures.quoteRequest.uncalculatedReference);
 
-          agentQuoteRequestPage.getCartItems().should('have.length.at.least', 1);
-          agentQuoteRequestPage.getCostPriceMolecules().should('have.length.at.least', 1);
+          quoteRequestPage.getCartItems().should('have.length.at.least', 1);
+          quoteRequestPage.getCostPriceMolecules().should('have.length.at.least', 1);
 
-          agentQuoteRequestPage.getGrossMargins().each(($margin) => {
-            const isUnavailable = $margin.hasClass('cost-price__gross-margin--unavailable');
+          const unavailableText = quoteRequestPage.getUnavailableCostPriceText();
+
+          quoteRequestPage.getGrossMargins().each(($margin) => {
             const text = $margin.text().trim();
 
-            if (isUnavailable) {
-              expect(text).to.eq('—');
+            if (quoteRequestPage.isGrossMarginUnavailable($margin)) {
+              expect(text).to.eq(unavailableText);
             } else {
               expect(text).to.match(/\d+\s*%/);
             }
           });
 
-          agentQuoteRequestPage.getCostPriceValues().each(($value) => {
-            const hasCostPrice = $value.attr('data-has-cost-price');
+          quoteRequestPage.getCostPriceValues().each(($value) => {
+            const hasCostPrice = $value.attr(quoteRequestPage.getCostPriceDataAttribute());
 
             expect(hasCostPrice, 'each cost-price value declares its data state').to.be.oneOf(['0', '1']);
             if (hasCostPrice === '0') {
-              expect($value.text().trim()).to.eq('—');
+              expect($value.text().trim()).to.eq(unavailableText);
             }
           });
 
-          agentQuoteRequestPage.getGrossMarginUnavailable().then(($unavailable) => {
-            if ($unavailable.length) {
-              agentQuoteRequestPage.getCostPriceWarningIcon().should('exist');
-            }
+          quoteRequestPage.getGrossMarginUnavailable().then(($unavailable) => {
+            quoteRequestPage.getCostPriceWarningIcon().then(($icons) => {
+              if ($unavailable.length) {
+                expect($icons.length, 'unavailable margins are paired with a warning icon').to.be.greaterThan(0);
+              } else {
+                expect($icons.length, 'no warning icon without an unavailable margin').to.eq(0);
+              }
+            });
           });
         }
       );
@@ -320,15 +310,11 @@ describe(
         'editing and saving a quote request as agent keeps a real gross-margin percentage on every line item (recalculation applies)',
         { tags: ['@demo-smoke'] },
         (): void => {
-          agentQuoteRequestPage.visitEdit(staticFixtures.quoteRequest.uncalculatedReference);
+          quoteRequestPage.recalculate(staticFixtures.quoteRequest.uncalculatedReference);
 
-          agentQuoteRequestPage.getCartItems().should('have.length.at.least', 1);
-
-          agentQuoteRequestPage.save();
-
-          agentQuoteRequestPage.getGrossMargins().should('have.length.at.least', 1);
-          agentQuoteRequestPage.getGrossMarginUnavailable().should('have.length', 0);
-          agentQuoteRequestPage
+          quoteRequestPage.getGrossMargins().should('have.length.at.least', 1);
+          quoteRequestPage.getGrossMarginUnavailable().should('have.length', 0);
+          quoteRequestPage
             .getGrossMargins()
             .first()
             .invoke('text')

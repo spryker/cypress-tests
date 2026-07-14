@@ -31,41 +31,31 @@ describe(
       (): void => {
         quicksightAnalyticsPage.visitAnalytics().its('response.statusCode').should('eq', 200);
 
-        quicksightAnalyticsPage.getSectionTitle().should('contain.text', 'Analytics');
+        quicksightAnalyticsPage.getSectionTitle().should('contain.text', quicksightAnalyticsPage.getSectionTitleText());
       }
     );
 
     it(
-      'when the user has no Analytics permission, shows the "No Analytics permission" message and a "Synchronize Users" action button',
+      'without Analytics permission, shows the no-permission info alert plus a working "Synchronize Users" POST form wired to the endpoint with a CSRF token',
       { tags: ['@demo-smoke'] },
       (): void => {
         quicksightAnalyticsPage.visitAnalytics();
 
         quicksightAnalyticsPage
-          .getNoPermissionMessage()
+          .getInfoAlert()
           .should('be.visible')
-          .and('contain.text', 'No Analytics permission has been granted to the current user.');
+          .and('contain.text', quicksightAnalyticsPage.getNoPermissionText());
 
         quicksightAnalyticsPage
           .getSynchronizeUsersButton()
           .should('be.visible')
           .and('be.enabled')
-          .and('contain.text', 'Synchronize Users');
-      }
-    );
-
-    it(
-      'the "Synchronize Users" control is a real POST form wired to the synchronize-quicksight-users endpoint with a CSRF token',
-      { tags: ['@demo-smoke'] },
-      (): void => {
-        quicksightAnalyticsPage.visitAnalytics();
+          .and('contain.text', quicksightAnalyticsPage.getSynchronizeUsersLabel());
 
         quicksightAnalyticsPage.getSynchronizeUsersForm().should('have.attr', 'method').and('match', /post/i);
-
         quicksightAnalyticsPage
           .getSynchronizeUsersForm()
-          .should('have.attr', 'action', '/amazon-quicksight/user/synchronize-quicksight-users');
-
+          .should('have.attr', 'action', quicksightAnalyticsPage.getSynchronizeUsersFormAction());
         quicksightAnalyticsPage.getSynchronizeUsersCsrfToken().should('have.attr', 'value').and('have.length.gt', 0);
       }
     );

@@ -17,6 +17,18 @@ export class QuickOrderImageToCartRepository {
 
   getImageToCartTitleSelector = (): string => '.quick-order-image-to-cart__title';
 
+  getPageTitleText = (): string => 'Quick Order';
+
+  getImageToCartTitleText = (): string => 'Add to cart from image';
+
+  getBrowseFileText = (): string => 'Browse file';
+
+  getUploadButtonText = (): string => 'Upload';
+
+  getImageUploadInputName = (): string => 'image_order_form[uploadImageOrder]';
+
+  getAcceptedImageMimeTypes = (): string => 'image/jpeg,image/jpg,image/png';
+
   getImageUploadInputSelector = (): string => '#image_order_form_uploadImageOrder';
 
   getBrowseFileLabelSelector = (): string => 'label[for="image_order_form_uploadImageOrder"]';
@@ -41,15 +53,8 @@ export class QuickOrderImageToCartRepository {
 
   getErrorMessageSelector = (): string => '[data-qa="component quick-order-image-to-cart"] .list--alert .list__item';
 
-  // The project-level quick-order-form override (src/Pyz/.../quick-order-form.twig) renders the rows
-  // wrapper with only the `js-` prefixed class (`{{ embed.jsName }}__rows`), unlike the core component
-  // which also emits `{{ embed.name }}__rows`. Target the class this project actually renders.
   getQuickOrderRowsSelector = (): string => '.js-quick-order-form__rows';
 
-  // Each row's SKU search widget is the `product-search-autocomplete-form` custom element (not a
-  // generic `autocomplete-form`); the recognized SKU is written into its hidden value input
-  // (`js-product-search-autocomplete-form__input-hidden`), while the sibling visible text input only
-  // holds the human-readable search string.
   getRecognizedSkuInputSelector = (): string =>
     '.js-quick-order-form__rows [data-qa="component product-search-autocomplete-form"] .js-product-search-autocomplete-form__input-hidden';
 }
