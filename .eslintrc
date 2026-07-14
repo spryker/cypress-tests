@@ -1,7 +1,7 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "spryker-cypress"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -15,6 +15,26 @@
   },
   "rules": {
     "@typescript-eslint/no-inferrable-types": "error",
-    "@typescript-eslint/explicit-function-return-type": "error"
-  }
+    "@typescript-eslint/explicit-function-return-type": "error",
+    // Local conventions plugin: plugins/eslint-plugin-spryker-cypress (linked via file: devDependency).
+    // Rules with pre-existing violations are registered as "warn" so lint stays green while
+    // new code surfaces the issue; tighten to "error" once the backlog is cleaned up.
+    // ~165 pre-existing selector calls in specs -> warn.
+    "spryker-cypress/no-cy-get-outside-repository": "warn",
+    // 7 pre-existing fixed waits (their inline disables target cypress/no-unnecessary-waiting only) -> warn.
+    "spryker-cypress/no-numeric-wait": "warn",
+    // Convention already followed everywhere (tags on the top-level describe) -> error.
+    "spryker-cypress/require-describe-tags": "error",
+    // Intentionally a warning: ~449 existing assertions live in page objects today.
+    "spryker-cypress/no-assertions-in-page-objects": "warn"
+  },
+  "overrides": [
+    {
+      // Typed fixtures and selector repositories must never fall back to `any`.
+      "files": ["cypress/fixtures/**/*.ts", "cypress/**/repositories/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "error"
+      }
+    }
+  ]
 }
