@@ -185,7 +185,13 @@ describe(
       cy.runQueueWorker();
 
       // Assert
+      // The delete's publish->sync can land after the single PDP load, so a one-shot
+      // not.exist "continuously found" the still-rendered list and failed every retry.
+      // Reload the PDP until the attachment list has actually dropped out of storage.
       visitProductDetailPage();
+      cy.url().then((url) => {
+        cy.reloadUntilGone(url, 'ul.list', '[data-qa="component product-detail"]');
+      });
       productPage.getAttachmentsList().should('not.exist');
     });
 
