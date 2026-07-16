@@ -3,8 +3,24 @@
   "rootUser": {
     "username": "admin@spryker.com"
   },
+  "agent": {
+    "username": "agent123@spryker.com"
+  },
+  "merchant": {
+    "username": "harald@spryker.com"
+  },
+  "customer": {
+    "email": "sonia@acme.com"
+  },
   "product": {
     "idProductAbstract": 300,
     "sku": "M53235"
+  },
+  "merchantProduct": {
+    "sku": "M53235"
+  },
+  "quoteRequest": {
+    "calculatedReference": "DE--21-6",
+    "uncalculatedReference": "DE--21-3"
   }
 }

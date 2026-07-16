@@ -20,6 +20,16 @@ export class AiConfigurationPage extends BackofficePage {
 
   getCardTitle = (): Cypress.Chainable => cy.get(this.repository.getCardTitleSelector());
 
+  getCardTitleText = (): string => this.repository.getCardTitleText();
+
+  getVendorSettingKey = (vendor: string, field: string): string => this.repository.getVendorSettingKey(vendor, field);
+
+  getApiTokenSettingInput = (vendor: string): Cypress.Chainable =>
+    cy.get(this.repository.getApiTokenSettingInputSelector(vendor));
+
+  getModelPricesEditor = (vendor: string): Cypress.Chainable =>
+    cy.get(this.repository.getModelPricesEditorSelector(vendor));
+
   getFeatureNav = (feature: string): Cypress.Chainable => cy.get(this.repository.getFeatureNavSelector(feature));
 
   getTabNav = (feature: string, tab: string): Cypress.Chainable =>
@@ -32,6 +42,9 @@ export class AiConfigurationPage extends BackofficePage {
   getChangesCount = (): Cypress.Chainable => cy.get(this.repository.getChangesCountSelector());
 
   getSettingRow = (settingKey: string): Cypress.Chainable => cy.get(this.repository.getSettingRowSelector(settingKey));
+
+  getSettingRows = (groupKey: string): Cypress.Chainable =>
+    cy.get(this.repository.getSettingRowsByGroupSelector(groupKey));
 
   getSettingInput = (settingKey: string): Cypress.Chainable =>
     cy.get(this.repository.getSettingInputSelector(settingKey));
@@ -53,5 +66,32 @@ export class AiConfigurationPage extends BackofficePage {
   saveConfiguration = (): void => {
     cy.intercept('POST', '**/configuration/manage/save').as('saveConfiguration');
     this.getSaveButton().click();
+  };
+
+  getFeatureVendorSettingKey = (feature: string): string => this.repository.getFeatureVendorSettingKey(feature);
+
+  getFeatureVendorOptionValue = (feature: string, vendor: string): string =>
+    this.repository.getFeatureVendorOptionValue(feature, vendor);
+
+  setFeatureVendor = (feature: string, vendor: string): Cypress.Chainable =>
+    this.setVendorConfiguration(
+      'ai_commerce',
+      feature,
+      this.getFeatureVendorSettingKey(feature),
+      this.getFeatureVendorOptionValue(feature, vendor)
+    );
+
+  setVendorConfiguration = (feature: string, tab: string, settingKey: string, value: string): Cypress.Chainable => {
+    this.visitTab(feature, tab);
+
+    return this.getCheckedRadioOption(settingKey).then(($checked) => {
+      if (String($checked.val() ?? '') === value) {
+        return;
+      }
+
+      this.selectRadioOption(settingKey, value);
+      this.saveConfiguration();
+      cy.wait('@saveConfiguration').its('response.body').should('have.property', 'success', true);
+    });
   };
 }

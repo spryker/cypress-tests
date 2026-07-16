@@ -2,6 +2,7 @@ export * from './yves-page';
 export * from './home/home-page';
 export * from './cart/cart-page';
 export * from './agent-login/agent-login-page';
+export * from './agent-quote-request/agent-quote-request-page';
 export * from './checkout/address/checkout-address-page';
 export * from './checkout/customer/checkout-customer-page';
 export * from './checkout/payment/checkout-payment-page';

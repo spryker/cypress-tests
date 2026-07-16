@@ -6,15 +6,19 @@ import { injectable } from 'inversify';
 export class QuicksightAnalyticsRepository {
   getSectionTitleSelector = (): string => '.page-title-head h2';
 
-  getTitleActionSelector = (): string => '[data-qa="title-action"]';
+  getSynchronizeUsersFormAction = (): string => '/amazon-quicksight/user/synchronize-quicksight-users';
 
-  getSynchronizeUsersFormSelector = (): string => 'form[action="/amazon-quicksight/user/synchronize-quicksight-users"]';
+  getSynchronizeUsersFormSelector = (): string => `form[action="${this.getSynchronizeUsersFormAction()}"]`;
 
-  getSynchronizeUsersButtonSelector = (): string =>
-    'form[action="/amazon-quicksight/user/synchronize-quicksight-users"] button';
+  getSynchronizeUsersButtonSelector = (): string => `${this.getSynchronizeUsersFormSelector()} button`;
 
-  getSynchronizeUsersCsrfTokenSelector = (): string =>
-    'form[action="/amazon-quicksight/user/synchronize-quicksight-users"] input[name="_token"]';
+  getSynchronizeUsersCsrfTokenSelector = (): string => `${this.getSynchronizeUsersFormSelector()} input[name="_token"]`;
 
-  getNoPermissionMessageSelector = (): string => '.alert-info';
+  getInfoAlertSelector = (): string => '.alert-info';
+
+  getNoPermissionText = (): string => 'No Analytics permission has been granted to the current user.';
+
+  getSynchronizeUsersLabel = (): string => 'Synchronize Users';
+
+  getSectionTitleText = (): string => 'Analytics';
 }

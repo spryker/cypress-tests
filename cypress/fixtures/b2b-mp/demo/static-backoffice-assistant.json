@@ -5,5 +5,26 @@
   },
   "contextPageUrl": "/product-management/edit?id-product-abstract=300",
   "contextFormName": "product_form_edit",
-  "attachmentImagePath": "cypress/fixtures/b2b-mp/demo/files/backoffice-assistant-attachment.png"
+  "attachmentImagePath": "cypress/fixtures/b2b-mp/demo/files/backoffice-assistant-attachment.png",
+  "formFill": {
+    "agentName": "Form Fill",
+    "prompt": "Set the English product name field to the text QA Autofill Sample.",
+    "targetFieldName": "product_form_edit[general_en_US][name]"
+  },
+  "orderManagement": {
+    "agentName": "Order Management",
+    "prompt": "How does order management work — explain the OMS states and what actions are available on the order detail page."
+  },
+  "simplePrompt": "Say hello in one short sentence.",
+  "unknownConversationReference": "cypress-nonexistent-conversation-reference-0000",
+  "enabledAgents": ["Order Management", "Discount Management"],
+  "promptRequiredValidationMessage": "Prompt is required.",
+  "attachmentUnsupportedMediaTypeMessage": "One or more attachments have an unsupported file type.",
+  "attachmentCountExceededMessage": "Too many attachments. Please reduce the number of files.",
+  "attachmentMaxCount": 5,
+  "formFillTargetValue": "QA Stubbed Form Fill Value",
+  "xssPromptPayload": "<img src=x onerror=\"window.__baXss=1\">**bold**<script>window.__baXss=1</script>",
+  "stubbedAgentName": "Order Management",
+  "historyEntryName": "QA stubbed conversation",
+  "unsupportedAttachmentPath": "cypress/fixtures/b2b-mp/demo/files/backoffice-assistant-unsupported.svg"
 }

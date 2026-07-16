@@ -15,12 +15,6 @@ export class BackofficeAssistantPage extends BackofficePage {
 
   private CONTEXT_PAGE_URL = '/product-management/edit?id-product-abstract=300';
 
-  /**
-   * Enables the Backoffice Assistant feature flag via the Configuration Management UI and saves.
-   * Idempotent: only checks the toggle when it is currently off, so a re-run on an already-enabled
-   * env still ends in the ON state. The Save action triggers a plain config-save POST
-   * (`/configuration/manage/save`) — NOT an AI provider call.
-   */
   enableAssistant = (): Cypress.Chainable => {
     cy.visitBackoffice(this.CONFIGURATION_URL);
 
@@ -37,12 +31,53 @@ export class BackofficeAssistantPage extends BackofficePage {
     return cy.get(this.repository.getEnableToggleSelector()).should('be.checked');
   };
 
+  disableAssistant = (): Cypress.Chainable => {
+    cy.visitBackoffice(this.CONFIGURATION_URL);
+
+    cy.get(this.repository.getEnableToggleSelector()).then(($toggle) => {
+      if (($toggle[0] as HTMLInputElement).checked) {
+        cy.wrap($toggle).uncheck({ force: true });
+
+        cy.intercept('POST', '**/configuration/manage/save').as('saveConfiguration');
+        cy.get(this.repository.getSaveButtonSelector()).click();
+        cy.wait('@saveConfiguration').its('response.statusCode').should('eq', 200);
+      }
+    });
+
+    return cy.get(this.repository.getEnableToggleSelector()).should('not.be.checked');
+  };
+
   visitDashboard = (): Cypress.Chainable => {
     cy.intercept('GET', '**/dashboard').as('dashboardDocument');
     cy.visitBackoffice(this.PAGE_URL);
 
     return cy.wait('@dashboardDocument');
   };
+
+  getHistoriesEndpointPath = (): string => this.repository.getHistoriesPath();
+
+  clearWidgetPanelState = (): Cypress.Chainable =>
+    cy.window().then((win): void => win.localStorage.removeItem(this.repository.getWidgetStateStorageKey()));
+
+  getWidgetToggleLabel = (): string => this.repository.getWidgetToggleLabel();
+
+  getGreetingText = (): string => this.repository.getGreetingText();
+
+  getInputPlaceholder = (): string => this.repository.getInputPlaceholder();
+
+  getAutoAgentLabel = (): string => this.repository.getAutoAgentLabel();
+
+  getOrderManagementAgentLabel = (): string => this.repository.getOrderManagementAgentLabel();
+
+  getTransportFailureText = (): string => this.repository.getTransportFailureText();
+
+  getUnsupportedFileTypeText = (): string => this.repository.getUnsupportedFileTypeText();
+
+  getHistoriesEmptyText = (): string => this.repository.getHistoriesEmptyText();
+
+  getValidationGlossaryKey = (): string => this.repository.getValidationGlossaryKey();
+
+  getInvalidCsrfToken = (): string => this.repository.getInvalidCsrfToken();
 
   visitSales = (): Cypress.Chainable => {
     cy.intercept('GET', '**/sales').as('salesDocument');
@@ -64,7 +99,7 @@ export class BackofficeAssistantPage extends BackofficePage {
     return this.getWidgetPanel().should('have.class', this.repository.getWidgetPanelOpenClass());
   };
 
-  attachFile = (filePath: string): Cypress.Chainable =>
+  attachFile = (filePath: string | string[]): Cypress.Chainable =>
     cy.get(this.repository.getWidgetFileInputSelector()).selectFile(filePath, { force: true });
 
   addFormContext = (): Cypress.Chainable => this.getWidgetFormContextSuggestion().click();
@@ -108,7 +143,8 @@ export class BackofficeAssistantPage extends BackofficePage {
   getWidgetMessageAttachmentPill = (): Cypress.Chainable =>
     this.getWidgetMessages().find(this.repository.getWidgetMessageAttachmentPillSelector());
 
-  getWidgetContextSuggestions = (): Cypress.Chainable => cy.get(this.repository.getWidgetContextSuggestionsSelector());
+  private getWidgetContextSuggestions = (): Cypress.Chainable =>
+    cy.get(this.repository.getWidgetContextSuggestionsSelector());
 
   getWidgetFormContextSuggestion = (): Cypress.Chainable =>
     this.getWidgetContextSuggestions()
@@ -132,4 +168,115 @@ export class BackofficeAssistantPage extends BackofficePage {
         body: { errors: [{ message: 'AI provider unavailable' }] },
       })
       .as('assistantPrompt');
+
+  interceptPromptWithSseEvents = (events: Array<Record<string, unknown>>): Cypress.Chainable =>
+    cy
+      .intercept('POST', this.repository.getPromptEndpoint(), {
+        statusCode: 200,
+        headers: { 'content-type': 'text/event-stream' },
+        body: events.map((event) => `data: ${JSON.stringify(event)}\n\n`).join(''),
+      })
+      .as('assistantPrompt');
+
+  repositoryPromptPath = (): string => this.repository.getPromptPath();
+
+  repositoryDetailPath = (): string => this.repository.getDetailPath();
+
+  repositoryDeletePath = (): string => this.repository.getDeletePath();
+
+  readCsrfToken = (): Cypress.Chainable<string> =>
+    cy
+      .window()
+      .then((win) =>
+        String(
+          (win as { BackofficeAssistantConfig?: { csrfToken?: string } }).BackofficeAssistantConfig?.csrfToken ?? ''
+        )
+      );
+
+  interceptRealPrompt = (): Cypress.Chainable =>
+    cy.intercept('POST', this.repository.getPromptEndpoint()).as('assistantRealPrompt');
+
+  interceptHistories = (): Cypress.Chainable =>
+    cy.intercept('GET', this.repository.getHistoriesEndpoint()).as('assistantHistories');
+
+  interceptDetail = (): Cypress.Chainable =>
+    cy.intercept('GET', this.repository.getDetailEndpoint()).as('assistantDetail');
+
+  interceptDelete = (): Cypress.Chainable =>
+    cy.intercept('POST', this.repository.getDeleteEndpoint()).as('assistantDelete');
+
+  openHistories = (): Cypress.Chainable => {
+    this.getWidgetHistoryButton().click();
+
+    return this.getWidgetHistories().should('not.have.attr', 'hidden');
+  };
+
+  newChat = (): Cypress.Chainable => this.getWidgetNewChat().click();
+
+  deleteFirstHistoryItem = (): Cypress.Chainable => this.getWidgetFirstHistoryItemDelete().click();
+
+  clickFirstHistoryItem = (): Cypress.Chainable => this.getWidgetHistoryItem().first().click();
+
+  getWidgetAiMessage = (options?: Partial<Cypress.Timeoutable>): Cypress.Chainable =>
+    this.getWidgetMessages().find(this.repository.getWidgetAiMessageSelector(), options);
+
+  getWidgetUserMessage = (): Cypress.Chainable =>
+    this.getWidgetMessages().find(this.repository.getWidgetUserMessageSelector());
+
+  getWidgetReasoningMessage = (): Cypress.Chainable =>
+    this.getWidgetMessages().find(this.repository.getWidgetReasoningMessageSelector());
+
+  getWidgetToolCallMessage = (options?: Partial<Cypress.Timeoutable>): Cypress.Chainable =>
+    this.getWidgetMessages().find(this.repository.getWidgetToolCallMessageSelector(), options);
+
+  getWidgetToolCallNameSelector = (): string => this.repository.getWidgetToolCallNameSelector();
+
+  getWidgetToolCallArgs = (): Cypress.Chainable =>
+    this.getWidgetToolCallMessage().find(this.repository.getWidgetToolCallArgsSelector());
+
+  getWidgetToolCallResultToggle = (): Cypress.Chainable =>
+    this.getWidgetToolCallMessage().find(this.repository.getWidgetToolCallResultToggleSelector());
+
+  getWidgetHistoriesEmpty = (): Cypress.Chainable => cy.get(this.repository.getWidgetHistoriesEmptySelector());
+
+  removeFirstAttachmentChip = (): Cypress.Chainable =>
+    this.getWidgetAttachmentChip().first().find(this.repository.getWidgetAttachmentChipRemoveSelector()).click();
+
+  interceptHistoriesWith = (
+    histories: Array<Record<string, unknown>>,
+    availableAgents: string[] = []
+  ): Cypress.Chainable =>
+    cy
+      .intercept('GET', this.repository.getHistoriesEndpoint(), {
+        statusCode: 200,
+        body: { histories, available_agents: availableAgents.map((name) => ({ name, description: '' })) },
+      })
+      .as('assistantHistories');
+
+  interceptDeleteSuccess = (): Cypress.Chainable =>
+    cy
+      .intercept('POST', this.repository.getDeleteEndpoint(), { statusCode: 200, body: { success: true } })
+      .as('assistantDelete');
+
+  getWidgetHistories = (): Cypress.Chainable => cy.get(this.repository.getWidgetHistoriesSelector());
+
+  getWidgetHistoriesList = (): Cypress.Chainable => cy.get(this.repository.getWidgetHistoriesListSelector());
+
+  getWidgetHistoryItem = (): Cypress.Chainable =>
+    this.getWidgetHistoriesList().find(this.repository.getWidgetHistoryItemSelector());
+
+  getWidgetFirstHistoryItemDelete = (): Cypress.Chainable =>
+    this.getWidgetHistoryItem().first().find(this.repository.getWidgetHistoryItemDeleteSelector());
+
+  getFormFillTargetField = (fieldName: string): Cypress.Chainable =>
+    cy.get(this.repository.getFormFillTargetFieldSelector(fieldName));
+
+  expandFormFillTargetFieldLocale = (fieldName: string): Cypress.Chainable =>
+    this.getFormFillTargetField(fieldName).then(($field): void => {
+      if ($field.is(':visible')) {
+        return;
+      }
+
+      cy.wrap($field).closest('.ibox').find(this.repository.getIboxCollapseLinkSelector()).first().click();
+    });
 }

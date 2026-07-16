@@ -15,26 +15,26 @@ export class SmartCmsPage extends BackofficePage {
 
   private CMS_BLOCK_EDITOR_URL = '/cms-block-gui/edit-glossary?id-cms-block=24';
 
-  /**
-   * Enables the Smart CMS feature flag via the Configuration Management UI and saves.
-   * Idempotent: only checks the toggle when it is currently off, so a re-run on an already-enabled
-   * env still ends in the ON state. The Save action triggers a plain config-save POST
-   * (`/configuration/manage/save`) — NOT an AI provider call.
-   */
-  enableSmartCms = (): Cypress.Chainable => {
+  enableSmartCms = (): Cypress.Chainable => this.setSmartCmsEnabled(true);
+
+  disableSmartCms = (): Cypress.Chainable => this.setSmartCmsEnabled(false);
+
+  private setSmartCmsEnabled = (enabled: boolean): Cypress.Chainable => {
     cy.visitBackoffice(this.CONFIGURATION_URL);
 
     cy.get(this.repository.getEnableToggleSelector()).then(($toggle) => {
-      if (!($toggle[0] as HTMLInputElement).checked) {
-        cy.wrap($toggle).check({ force: true });
-
-        cy.intercept('POST', '**/configuration/manage/save').as('saveConfiguration');
-        cy.get(this.repository.getSaveButtonSelector()).click();
-        cy.wait('@saveConfiguration').its('response.statusCode').should('eq', 200);
+      if (($toggle[0] as HTMLInputElement).checked === enabled) {
+        return;
       }
+
+      cy.wrap($toggle)[enabled ? 'check' : 'uncheck']({ force: true });
+
+      cy.intercept('POST', '**/configuration/manage/save').as('saveConfiguration');
+      cy.get(this.repository.getSaveButtonSelector()).click();
+      cy.wait('@saveConfiguration').its('response.statusCode').should('eq', 200);
     });
 
-    return cy.get(this.repository.getEnableToggleSelector()).should('be.checked');
+    return cy.get(this.repository.getEnableToggleSelector()).should(enabled ? 'be.checked' : 'not.be.checked');
   };
 
   visitCmsPageEditor = (): Cypress.Chainable => {
@@ -51,7 +51,27 @@ export class SmartCmsPage extends BackofficePage {
     return cy.wait('@cmsBlockEditorDocument');
   };
 
+  getPanelToggleTitle = (): string => this.repository.getPanelToggleTitle();
+
+  getPanelInputPlaceholder = (): string => this.repository.getPanelInputPlaceholder();
+
+  getPanelAskLabel = (): string => this.repository.getPanelAskLabel();
+
+  getPanelMessageErrorClass = (): string => this.repository.getPanelMessageErrorClass();
+
+  getPanelMessageVisibleClass = (): string => this.repository.getPanelMessageVisibleClass();
+
+  getContentConfigWindowKey = (): string => this.repository.getContentConfigWindowKey();
+
+  getHeroPrompt = (): string => this.repository.getHeroPrompt();
+
+  getBlockPrompt = (): string => this.repository.getBlockPrompt();
+
+  getProbeImageFileName = (): string => this.repository.getProbeImageFileName();
+
   getPanel = (): Cypress.Chainable => cy.get(this.repository.getPanelSelector());
+
+  getPanelCollapsedClass = (): string => this.repository.getPanelCollapsedClass();
 
   getPanelToggle = (): Cypress.Chainable => cy.get(this.repository.getPanelToggleSelector());
 
@@ -63,10 +83,18 @@ export class SmartCmsPage extends BackofficePage {
 
   getPanelAttachmentName = (): Cypress.Chainable => cy.get(this.repository.getPanelAttachmentNameSelector());
 
+  getPanelAttachmentRemove = (): Cypress.Chainable => cy.get(this.repository.getPanelAttachmentRemoveSelector());
+
+  getGlossaryEditor = (): Cypress.Chainable => cy.get(this.repository.getGlossaryEditorSelector());
+
   getPanelMessage = (): Cypress.Chainable => cy.get(this.repository.getPanelMessageSelector());
 
   expandPanel = (): void => {
-    this.getPanelToggle().click();
+    this.getPanelToggle().then(($toggle): void => {
+      if ($toggle.attr('aria-expanded') !== 'true') {
+        this.getPanelToggle().click();
+      }
+    });
     this.getPanelInput().should('be.visible');
   };
 
@@ -74,8 +102,16 @@ export class SmartCmsPage extends BackofficePage {
     this.getPanelInput().clear().type(prompt).should('have.value', prompt);
   };
 
-  attachFile = (filePath: string): void => {
-    cy.get(this.repository.getPanelFileInputSelector()).selectFile(filePath, { force: true });
+  attachFile = (file: string | Cypress.FileReference): void => {
+    cy.get(this.repository.getPanelFileInputSelector()).selectFile(file, { force: true });
+  };
+
+  attachUnsupportedFile = (mediaType: string): void => {
+    this.attachFile({
+      contents: Cypress.Buffer.from('MZ unsupported binary'),
+      fileName: 'unsupported.bin',
+      mimeType: mediaType,
+    });
   };
 
   interceptGenerateWithProviderFailure = (): void => {
@@ -85,7 +121,46 @@ export class SmartCmsPage extends BackofficePage {
     }).as('generateRequest');
   };
 
+  interceptRealGenerate = (): void => {
+    cy.intercept('POST', this.repository.getGenerateEndpointGlob()).as('generateRequest');
+  };
+
   clickAskAi = (): void => {
     this.getPanelAsk().click();
   };
+
+  removeFirstAttachment = (): void => {
+    this.getPanelAttachmentRemove().first().click();
+  };
+
+  getPanelSuccessMessage = (): Cypress.Chainable => cy.get(this.repository.getPanelSuccessMessageSelector());
+
+  assertGlossaryEditorPopulated = (): void => {
+    this.getGlossaryEditor()
+      .invoke('val')
+      .then((value): void => {
+        expect(String(value ?? '')).to.have.length.greaterThan(0);
+      });
+  };
+
+  getInjectedCsrfToken = (): Cypress.Chainable<string> =>
+    cy
+      .window()
+      .then((win) =>
+        String(
+          (win as unknown as { SmartCmsContentConfig?: { csrfToken?: string } }).SmartCmsContentConfig?.csrfToken ?? ''
+        )
+      );
+
+  requestGenerate = (
+    endpointPath: string,
+    options: { method?: string; body?: Record<string, unknown> } = {}
+  ): Cypress.Chainable<Cypress.Response<{ error?: unknown }>> =>
+    cy.request({
+      method: options.method ?? 'POST',
+      url: this.getBackofficeAbsoluteUrl(endpointPath),
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      body: options.body,
+      failOnStatusCode: false,
+    });
 }

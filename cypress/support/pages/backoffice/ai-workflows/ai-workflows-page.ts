@@ -33,7 +33,11 @@ export class AiWorkflowsPage extends BackofficePage {
 
   getSectionTitle = (): Cypress.Chainable => cy.get(this.repository.getSectionTitleSelector());
 
+  getSectionTitleText = (): string => this.repository.getSectionTitleText();
+
   getWidgetTitle = (): Cypress.Chainable => cy.get(this.repository.getWidgetTitleSelector());
+
+  getWidgetTitleText = (): string => this.repository.getWidgetTitleText();
 
   getTable = (): Cypress.Chainable => cy.get(this.repository.getTableSelector());
 

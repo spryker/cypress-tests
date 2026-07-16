@@ -26,4 +26,21 @@ export class SearchByImageRepository {
   getOpenFilePopupSelector = (): string => '.search-by-image__search-by-file-popup.main-popup--open';
 
   getUploadFileButtonSelector = (): string => '.js-search-by-file-image__upload-file-button';
+
+  getEndpointPath = (): string => '/search-by-image';
+
+  getNoImageErrorText = (): string => 'Please select an image to search.';
+
+  getCsrfErrorMarker = (): string => 'CSRF';
+
+  getUnsupportedTypeErrorMarker = (): string => 'not supported';
+
+  getResultsPageSurfaceSelector = (): string =>
+    '[data-qa="component product-item"], [data-qa="component product-detail"], [data-qa="component empty-catalog-state"], [data-qa="component search-tabs"]';
+
+  getFilePopupErrorSelector = (): string => '.js-search-by-file-image__error';
+
+  getFilePopupErrorItemSelector = (): string => '.js-search-by-file-image__error-text';
+
+  getSearchByImageInstanceSelector = (): string => 'search-by-image';
 }

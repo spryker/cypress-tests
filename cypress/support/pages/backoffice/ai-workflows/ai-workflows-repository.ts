@@ -6,7 +6,11 @@ import { injectable } from 'inversify';
 export class AiWorkflowsRepository {
   getSectionTitleSelector = (): string => '.page-title-head h2';
 
+  getSectionTitleText = (): string => 'Workflows';
+
   getWidgetTitleSelector = (): string => '.ibox-title h5';
+
+  getWidgetTitleText = (): string => 'Workflow Items';
 
   getTableSelector = (): string => '[data-qa="data-table"]';
 

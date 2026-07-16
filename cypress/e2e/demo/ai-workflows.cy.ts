@@ -44,73 +44,69 @@ describe(
       });
     });
 
-    it('opens the Workflows page (HTTP 200) and shows the "Workflows" section heading and "Workflow Items" widget title', (): void => {
-      aiWorkflowsPage.visitAiWorkflows().its('response.statusCode').should('eq', 200);
+    it(
+      'opens the Workflows page (HTTP 200) with the section heading, widget title and all six column headers',
+      { tags: ['@demo-smoke'] },
+      (): void => {
+        aiWorkflowsPage.visitAiWorkflows().its('response.statusCode').should('eq', 200);
 
-      aiWorkflowsPage.getSectionTitle().should('contain.text', 'Workflows');
-      aiWorkflowsPage.getWidgetTitle().should('contain.text', 'Workflow Items');
-    });
+        aiWorkflowsPage.getSectionTitle().should('contain.text', aiWorkflowsPage.getSectionTitleText());
+        aiWorkflowsPage.getWidgetTitle().should('contain.text', aiWorkflowsPage.getWidgetTitleText());
 
-    it('workflow-items table renders with all six expected column headers', (): void => {
-      aiWorkflowsPage.visitAiWorkflows();
+        aiWorkflowsPage.getTable().should('exist');
+        aiWorkflowsPage.getTableHeaders().should('have.length', EXPECTED_COLUMN_HEADERS.length);
+        EXPECTED_COLUMN_HEADERS.forEach((column): void => {
+          aiWorkflowsPage.getColumnHeader(column.dataQa).should('exist').and('contain.text', column.label);
+        });
+      }
+    );
 
-      aiWorkflowsPage.getTable().should('exist');
-      aiWorkflowsPage.getTableHeaders().should('have.length', EXPECTED_COLUMN_HEADERS.length);
+    it(
+      'initializes a live DataTable (HTTP 200 JSON with the draw/recordsTotal/recordsFiltered/data shape) and marks the five data columns sortable and Actions non-sortable',
+      { tags: ['@demo-smoke'] },
+      (): void => {
+        aiWorkflowsPage.visitAndAwaitTableData().then((interception): void => {
+          expect(interception.response?.statusCode).to.eq(200);
+          expect(interception.response?.headers['content-type']).to.contain('application/json');
 
-      EXPECTED_COLUMN_HEADERS.forEach((column): void => {
-        aiWorkflowsPage.getColumnHeader(column.dataQa).should('exist').and('contain.text', column.label);
-      });
-    });
+          const body = interception.response?.body;
+          expect(body).to.have.property('draw');
+          expect(body).to.have.property('recordsTotal');
+          expect(body).to.have.property('recordsFiltered');
+          expect(body).to.have.property('data');
+          expect(body.data).to.be.an('array');
+        });
 
-    it('initializes a live DataTable whose data endpoint returns HTTP 200 JSON with the draw/recordsTotal/recordsFiltered/data shape', (): void => {
-      aiWorkflowsPage.visitAndAwaitTableData().then((interception): void => {
-        expect(interception.response?.statusCode).to.eq(200);
-        expect(interception.response?.headers['content-type']).to.contain('application/json');
+        aiWorkflowsPage.getTableWrapper().should('exist');
+        aiWorkflowsPage.getTableInfo().should('be.visible');
 
-        const body = interception.response?.body;
-        expect(body).to.have.property('draw');
-        expect(body).to.have.property('recordsTotal');
-        expect(body).to.have.property('recordsFiltered');
-        expect(body).to.have.property('data');
-        expect(body.data).to.be.an('array');
-      });
+        SORTABLE_COLUMNS.forEach((column): void => {
+          aiWorkflowsPage.getSortableColumnHeader(column).should('exist');
+        });
+        NON_SORTABLE_COLUMNS.forEach((column): void => {
+          aiWorkflowsPage.getNonSortableColumnHeader(column).should('exist');
+        });
+      }
+    );
 
-      aiWorkflowsPage.getTableWrapper().should('exist');
-      aiWorkflowsPage.getTableInfo().should('be.visible');
-    });
+    it(
+      'the page-length control and the Created At sort header each issue a fresh table data request that returns HTTP 200',
+      { tags: ['@demo-smoke'] },
+      (): void => {
+        aiWorkflowsPage.visitAndAwaitTableData();
 
-    it('marks the five data columns sortable and the Actions column non-sortable', (): void => {
-      aiWorkflowsPage.visitAndAwaitTableData();
+        aiWorkflowsPage.getLengthSelect().should('exist');
+        aiWorkflowsPage.aliasTableData('lengthChangeData');
+        aiWorkflowsPage.selectPageLength('50');
+        cy.wait('@lengthChangeData').then((interception): void => {
+          expect(interception.response?.statusCode).to.eq(200);
+          expect(interception.request.url).to.contain('length=50');
+        });
 
-      SORTABLE_COLUMNS.forEach((column): void => {
-        aiWorkflowsPage.getSortableColumnHeader(column).should('exist');
-      });
-
-      NON_SORTABLE_COLUMNS.forEach((column): void => {
-        aiWorkflowsPage.getNonSortableColumnHeader(column).should('exist');
-      });
-    });
-
-    it('changing the page-length control issues a fresh table data request that returns HTTP 200', (): void => {
-      aiWorkflowsPage.visitAndAwaitTableData();
-
-      aiWorkflowsPage.getLengthSelect().should('exist');
-      aiWorkflowsPage.aliasTableData('lengthChangeData');
-      aiWorkflowsPage.selectPageLength('50');
-
-      cy.wait('@lengthChangeData').then((interception): void => {
-        expect(interception.response?.statusCode).to.eq(200);
-        expect(interception.request.url).to.contain('length=50');
-      });
-    });
-
-    it('clicking the Created At sort header issues a fresh table data request that returns HTTP 200', (): void => {
-      aiWorkflowsPage.visitAndAwaitTableData();
-
-      aiWorkflowsPage.aliasTableData('sortChangeData');
-      aiWorkflowsPage.getSortableColumnHeader('spy_ai_workflow_item.created_at').click();
-
-      cy.wait('@sortChangeData').its('response.statusCode').should('eq', 200);
-    });
+        aiWorkflowsPage.aliasTableData('sortChangeData');
+        aiWorkflowsPage.getSortableColumnHeader('spy_ai_workflow_item.created_at').click();
+        cy.wait('@sortChangeData').its('response.statusCode').should('eq', 200);
+      }
+    );
   }
 );

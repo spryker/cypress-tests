@@ -6,6 +6,28 @@ import { injectable } from 'inversify';
 export class BackofficeAssistantRepository {
   private static readonly ENABLE_SETTING_KEY = 'ai_commerce:backoffice_assistant:general:is_enabled';
 
+  getWidgetStateStorageKey = (): string => 'backoffice_assistant_state';
+
+  getWidgetToggleLabel = (): string => 'Assistant';
+
+  getGreetingText = (): string => 'How can I help you today?';
+
+  getInputPlaceholder = (): string => 'Ask me anything...';
+
+  getAutoAgentLabel = (): string => 'Auto';
+
+  getOrderManagementAgentLabel = (): string => 'Order Management';
+
+  getTransportFailureText = (): string => 'Request failed with status 503';
+
+  getUnsupportedFileTypeText = (): string => 'Unsupported file type';
+
+  getHistoriesEmptyText = (): string => 'No conversations yet';
+
+  getValidationGlossaryKey = (): string => 'backoffice_assistant.validation';
+
+  getInvalidCsrfToken = (): string => 'invalid-token';
+
   getEnableToggleSelector = (): string =>
     `.setting-row[data-setting-key="${BackofficeAssistantRepository.ENABLE_SETTING_KEY}"] .config-input`;
 
@@ -53,5 +75,49 @@ export class BackofficeAssistantRepository {
 
   getWidgetContextChipNameSelector = (): string => '.js-backoffice-assistant__context-chip-name';
 
+  getWidgetAiMessageSelector = (): string => '.backoffice-assistant__message--ai';
+
+  getWidgetReasoningMessageSelector = (): string => '.backoffice-assistant__message--reasoning';
+
+  getWidgetUserMessageSelector = (): string => '.backoffice-assistant__message--user';
+
+  getWidgetToolCallMessageSelector = (): string => '.backoffice-assistant__message--tool-call';
+
+  getWidgetToolCallNameSelector = (): string => '.backoffice-assistant__tool-call-name';
+
+  getWidgetToolCallArgsSelector = (): string => '[data-section="args"] .backoffice-assistant__tool-call-code';
+
+  getWidgetToolCallResultToggleSelector = (): string => '.backoffice-assistant__tool-call-toggle';
+
+  getWidgetAttachmentChipRemoveSelector = (): string => '.backoffice-assistant__attachment-chip-remove';
+
+  getWidgetHistoriesSelector = (): string => '.js-backoffice-assistant__histories';
+
+  getWidgetHistoriesListSelector = (): string => '.js-backoffice-assistant__histories-list';
+
+  getWidgetHistoryItemSelector = (): string => '.backoffice-assistant__histories-item';
+
+  getWidgetHistoryItemDeleteSelector = (): string => '.backoffice-assistant__histories-item-delete';
+
+  getWidgetHistoriesEmptySelector = (): string => '.js-backoffice-assistant__histories-empty';
+
+  getFormFillTargetFieldSelector = (fieldName: string): string => `[name="${fieldName}"]`;
+
+  getIboxCollapseLinkSelector = (): string => '.ibox-title .collapse-link';
+
   getPromptEndpoint = (): string => '**/ai-commerce/backoffice-assistant-prompt/index';
+
+  getHistoriesEndpoint = (): string => '**/ai-commerce/backoffice-assistant-conversation/index';
+
+  getDetailEndpoint = (): string => '**/ai-commerce/backoffice-assistant-conversation/detail**';
+
+  getDeleteEndpoint = (): string => '**/ai-commerce/backoffice-assistant-conversation/delete';
+
+  getPromptPath = (): string => '/ai-commerce/backoffice-assistant-prompt/index';
+
+  getHistoriesPath = (): string => '/ai-commerce/backoffice-assistant-conversation/index';
+
+  getDetailPath = (): string => '/ai-commerce/backoffice-assistant-conversation/detail';
+
+  getDeletePath = (): string => '/ai-commerce/backoffice-assistant-conversation/delete';
 }

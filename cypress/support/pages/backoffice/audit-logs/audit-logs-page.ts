@@ -38,6 +38,12 @@ export class AuditLogsPage extends BackofficePage {
 
   getSectionTitle = (): Cypress.Chainable => cy.get(this.repository.getSectionTitleSelector());
 
+  getSectionTitleText = (): string => this.repository.getSectionTitleText();
+
+  getTotalInteractionsCardText = (): string => this.repository.getTotalInteractionsCardText();
+
+  getSuccessStatusText = (): string => this.repository.getSuccessStatusText();
+
   getStatsCards = (): Cypress.Chainable => cy.get(this.repository.getStatsCardsSelector());
 
   getStatsCardTitles = (): Cypress.Chainable => cy.get(this.repository.getStatsCardTitleSelector());
@@ -61,4 +67,82 @@ export class AuditLogsPage extends BackofficePage {
   getTableInfo = (): Cypress.Chainable => cy.get(this.repository.getTableInfoSelector());
 
   selectPageLength = (value: string): Cypress.Chainable => this.getLengthSelect().select(value);
+
+  private ROW_COLUMNS: Array<string> = [
+    'spy_ai_interaction_log.prompt',
+    'spy_ai_interaction_log.conversation_reference',
+    'spy_ai_interaction_log.provider',
+    'spy_ai_interaction_log.model',
+    'total_tokens',
+    'estimated_cost',
+    'spy_ai_interaction_log.configuration_name',
+    'spy_ai_interaction_log.is_successful',
+    'spy_ai_interaction_log.inference_time_ms',
+    'spy_ai_interaction_log.created_at',
+  ];
+
+  private mapRow = (row: Array<unknown>): Record<string, unknown> =>
+    this.ROW_COLUMNS.reduce(
+      (mapped, column, index) => {
+        mapped[column] = row[index];
+
+        return mapped;
+      },
+      {} as Record<string, unknown>
+    );
+
+  fetchTableData = ({
+    length = 100,
+    configurationName,
+  }: { length?: number; configurationName?: string } = {}): Cypress.Chainable<{
+    recordsTotal: number;
+    rows: Array<Record<string, unknown>>;
+  }> => {
+    const url = this.getBackofficeAbsoluteUrl(this.repository.getTableDataPath());
+    const qs: Record<string, string> = { draw: '1', start: '0', length: String(length) };
+    if (configurationName) {
+      qs.configuration_name = configurationName;
+    }
+
+    return cy
+      .request({ method: 'GET', url, qs, headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+      .then((response) => {
+        expect(response.status, 'audit-log table endpoint responds 200').to.eq(200);
+
+        const body = typeof response.body === 'string' ? JSON.parse(response.body) : response.body;
+        const rawRows = (body.data ?? []) as Array<Array<unknown>>;
+
+        return {
+          recordsTotal: Number(body.recordsTotal ?? 0),
+          rows: rawRows.map(this.mapRow),
+        };
+      });
+  };
+
+  getRowCreatedAt = (row: Record<string, unknown> | undefined): string =>
+    String(row?.['spy_ai_interaction_log.created_at'] ?? '');
+
+  getRowConfigurationName = (row: Record<string, unknown> | undefined): string =>
+    String(row?.['spy_ai_interaction_log.configuration_name'] ?? '');
+
+  assertNewestRowConfigurationIsFilterable = (configurationMarker: string): void => {
+    this.fetchTableData().then(({ recordsTotal, rows }) => {
+      expect(recordsTotal, 'at least one audit-log row exists after the real interaction').to.be.greaterThan(0);
+
+      const newestConfiguration = this.getRowConfigurationName(rows[0]);
+      expect(newestConfiguration, `newest audit-log row is a ${configurationMarker} configuration`).to.contain(
+        configurationMarker
+      );
+
+      this.fetchTableData({ configurationName: newestConfiguration }).then((filtered) => {
+        expect(filtered.rows.length, 'the configuration filter returns rows').to.be.greaterThan(0);
+        filtered.rows.forEach((row) => {
+          expect(this.getRowConfigurationName(row), 'every filtered row matches the configuration').to.eq(
+            newestConfiguration
+          );
+        });
+        expect(filtered.recordsTotal, 'filtered count is <= unfiltered count').to.be.at.most(recordsTotal);
+      });
+    });
+  };
 }
