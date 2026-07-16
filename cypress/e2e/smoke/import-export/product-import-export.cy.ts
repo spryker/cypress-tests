@@ -55,6 +55,7 @@ describe(
 
       createRunPage.uploadAndQueueImport(productFile);
       jobRunsListPage.verifySuccessMessage();
+      jobRunsListPage.waitForSuccessfulJobProcessing();
     });
   }
 );
