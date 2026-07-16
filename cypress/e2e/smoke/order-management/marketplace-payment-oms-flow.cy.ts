@@ -59,7 +59,7 @@ describe(
       assertMarketplacePaymentOmsTransitions();
     });
 
-    it('merchant user should be able close an order from customer', (): void => {
+    it('order can be placed with MP payment', (): void => {
       customerLoginScenario.execute({
         email: staticFixtures.customer.email,
         password: staticFixtures.defaultPassword,
@@ -67,13 +67,19 @@ describe(
 
       addOneProductToCart();
       checkoutMpScenario.execute({ isMultiShipment: true });
+    });
 
+    it('merchant user should be able close an order from customer', (): void => {
       userLoginScenario.execute({
         username: staticFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
 
       assertMarketplacePaymentOmsTransitions();
+    });
+
+    it('order processed by merchant can be closed in backoffice', (): void => {
+      closeOrderFromBackoffice();
     });
 
     function addOneProductToCart(): void {
@@ -101,7 +107,6 @@ describe(
         });
 
         closeOrderFromMerchantPortal(orderReference);
-        closeOrderFromBackoffice();
       });
     }
 
