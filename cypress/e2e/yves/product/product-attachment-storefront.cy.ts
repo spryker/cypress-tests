@@ -190,7 +190,7 @@ describe(
       // Reload the PDP until the attachment list has actually dropped out of storage.
       visitProductDetailPage();
       cy.url().then((url) => {
-        cy.reloadUntilGone(url, 'ul.list', '[data-qa="component product-detail"]');
+        cy.reloadUntilGone(url, productPage.getAttachmentsListSelector());
       });
       productPage.getAttachmentsList().should('not.exist');
     });
