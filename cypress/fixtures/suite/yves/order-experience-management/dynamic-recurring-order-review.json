@@ -161,6 +161,7 @@
             {
               "name": "Review Test Order",
               "cadence_type": "monthly",
+              "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
               "payment_method": "dummyPaymentInvoice",
@@ -383,6 +384,7 @@
             {
               "name": "Review Bundle Order",
               "cadence_type": "monthly",
+              "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
               "payment_method": "dummyPaymentInvoice",
@@ -571,6 +573,7 @@
             {
               "name": "Review Offer Order",
               "cadence_type": "monthly",
+              "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
               "payment_method": "dummyPaymentInvoice",
@@ -706,6 +709,7 @@
             {
               "name": "Review Configurable Bundle Order",
               "cadence_type": "monthly",
+              "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
               "payment_method": "dummyPaymentInvoice",
@@ -824,6 +828,7 @@
             {
               "name": "Review Price Drift Order",
               "cadence_type": "monthly",
+              "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
               "payment_method": "dummyPaymentInvoice",
@@ -926,6 +931,7 @@
             {
               "name": "Review Stock Drift Order",
               "cadence_type": "monthly",
+              "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
               "payment_method": "dummyPaymentInvoice",
@@ -1108,6 +1114,7 @@
             {
               "name": "Review Configurable Product Order",
               "cadence_type": "monthly",
+              "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
               "payment_method": "dummyPaymentInvoice",
@@ -1275,6 +1282,7 @@
             {
               "name": "Review Packaging Unit Order",
               "cadence_type": "monthly",
+              "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
               "payment_method": "dummyPaymentInvoice",

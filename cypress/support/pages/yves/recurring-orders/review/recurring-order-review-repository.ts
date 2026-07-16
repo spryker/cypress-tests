@@ -5,4 +5,5 @@ export interface RecurringOrderReviewRepository {
   getAcceptCta(): Cypress.Chainable;
   getApproveSubmitButton(): Cypress.Chainable;
   getFlaggedItems(): Cypress.Chainable;
+  getScopeOption(scope: string): Cypress.Chainable;
 }

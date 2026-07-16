@@ -35,6 +35,10 @@ export class RecurringOrderReviewPage extends YvesPage {
     this.repository.getAcceptCta().click();
   };
 
+  selectStandingScope = (): void => {
+    this.repository.getScopeOption('standing').check({ force: true });
+  };
+
   confirmApproveReview = (): void => {
     this.repository.getApproveSubmitButton().click();
   };

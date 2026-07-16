@@ -126,6 +126,7 @@ describe(
       recurringOrderReviewPage.assertFlaggedItemsVisible();
 
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
+      recurringOrderReviewPage.selectStandingScope();
       recurringOrderReviewPage.confirmApproveReview();
 
       cy.url().should('not.include', '/review-required');
@@ -165,6 +166,7 @@ describe(
       recurringOrderReviewPage.assertFlaggedItemsVisible();
 
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
+      recurringOrderReviewPage.selectStandingScope();
       recurringOrderReviewPage.confirmApproveReview();
 
       cy.url().should('not.include', '/review-required');
