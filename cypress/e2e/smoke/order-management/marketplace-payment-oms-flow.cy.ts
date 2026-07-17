@@ -5,7 +5,7 @@ import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
 import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
-import { CatalogPage, ProductPage } from '@pages/yves';
+import { CatalogPage, ProductPage, CustomerOverviewPage } from '@pages/yves';
 
 /**
  * Reminder: Use only static fixtures for smoke tests, don't use dynamic fixtures, cli commands.
@@ -41,6 +41,7 @@ describe(
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const checkoutMpScenario = container.get(CheckoutMpScenario);
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
+    const customerOverviewPage = container.get(CustomerOverviewPage);
 
     let staticFixtures: MarketplacePaymentOmsFlowStaticFixtures;
 
@@ -56,6 +57,7 @@ describe(
 
       addOneProductToCart();
       checkoutMpScenario.execute({ isMultiShipment: true });
+      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage(), { timeout: 15000 });
     });
 
     it('order can be sent to merchant', (): void => {
