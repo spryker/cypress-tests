@@ -13,6 +13,8 @@ export class BackofficePage extends AbstractPage {
     cy.clearCookie(Cypress.env('backofficeSessionCookieName'));
   };
 
+  getBackofficeAbsoluteUrl = (path: string): string => `${Cypress.env('backofficeUrl')}${path}`;
+
   public interceptTable = (params: InterceptGuiTableParams, callback?: () => void): Chainable => {
     const expectedCount = params.expectedCount ?? 1;
     const interceptAlias = this.faker.string.uuid();
@@ -60,7 +62,6 @@ export class BackofficePage extends AbstractPage {
     const clearInterceptAlias = this.faker.string.uuid();
     const searchInterceptAlias = this.faker.string.uuid();
 
-    // Intercept clear request (empty search value)
     cy.intercept('GET', params.interceptTableUrl, (req) => {
       const searchValue = req.query['search[value]'];
 
@@ -69,7 +70,6 @@ export class BackofficePage extends AbstractPage {
       }
     });
 
-    // Intercept search request (matching search query)
     cy.intercept('GET', params.interceptTableUrl, (req) => {
       const searchValue = req.query['search[value]'];
 
@@ -142,7 +142,7 @@ export class BackofficePage extends AbstractPage {
                   });
                 });
             });
-        }) as unknown as Cypress.Chainable<TableRowGetter | null> // subject is `TableRowGetter | null`, which is what callers actually receive. // Cypress's `.then()` overloads infer a nested Chainable here; the runtime
+        }) as unknown as Cypress.Chainable<TableRowGetter | null>
     );
   };
 
@@ -196,11 +196,6 @@ export class BackofficePage extends AbstractPage {
   };
 }
 
-/**
- * Lazily re-queries the matched table row from the live DOM at call time.
- * Returned by {@link BackofficePage.find} instead of a captured jQuery element,
- * so a DataTables re-render between search and click cannot detach the reference.
- */
 export type TableRowGetter = () => Cypress.Chainable<JQuery<HTMLElement>>;
 
 export enum ActionEnum {
