@@ -54,6 +54,17 @@ declare namespace Cypress {
     ): void;
 
     /**
+     * @example cy.reloadUntilGone('/product/123', 'ul.list', '[data-qa="component product-detail"]')
+     */
+    reloadUntilGone(
+      url: string,
+      findSelector: string,
+      getSelector?: string,
+      retries?: number,
+      retryWait?: number
+    ): void;
+
+    /**
      * @example cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout'])
      */
     runCliCommands(commands: string[]): void;
