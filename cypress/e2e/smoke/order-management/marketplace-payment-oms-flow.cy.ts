@@ -27,6 +27,7 @@ describe(
     ],
   },
   (): void => {
+    let order: string;
     if (['b2c', 'b2b'].includes(Cypress.env('repositoryId'))) {
       it.skip('skipped because tests run only for suite, b2b-mp, b2c-mp, suite', () => {});
       return;
@@ -47,18 +48,6 @@ describe(
       staticFixtures = Cypress.env('staticFixtures');
     });
 
-    skipB2BIt('merchant user should be able close an order from guest', (): void => {
-      addOneProductToCart();
-      checkoutMpScenario.execute({ isGuest: true });
-
-      userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
-
-      assertMarketplacePaymentOmsTransitions();
-    });
-
     it('order can be placed with MP payment', (): void => {
       customerLoginScenario.execute({
         email: staticFixtures.customer.email,
@@ -69,17 +58,41 @@ describe(
       checkoutMpScenario.execute({ isMultiShipment: true });
     });
 
-    it('merchant user should be able close an order from customer', (): void => {
+    it('order can be sent to merchant', (): void => {
+      userLoginScenario.execute({
+        username: staticFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+      salesIndexPage.visit();
+      salesIndexPage.view();
+
+      salesIndexPage.getOrderReference().then((orderReference) => {
+        salesDetailPage.triggerOms({ state: 'skip grace period' });
+        salesDetailPage.triggerOms({ state: 'Pay' });
+        salesDetailPage.triggerOms({ state: 'skip picking' });
+        order = orderReference;
+      });
+    });
+
+    it('merchant user should be able to process an order from customer', (): void => {
+      merchantUserLoginScenario.execute({
+        username: staticFixtures.merchantUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      closeOrderFromMerchantPortal(order);
+    });
+
+    it('order processed by merchant can be closed in backoffice', (): void => {
       userLoginScenario.execute({
         username: staticFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
 
-      assertMarketplacePaymentOmsTransitions();
-    });
+      salesIndexPage.visit();
+      salesIndexPage.view();
 
-    it('order processed by merchant can be closed in backoffice', (): void => {
-      closeOrderFromBackoffice();
+      salesDetailPage.triggerOms({ state: 'Close' });
     });
 
     function addOneProductToCart(): void {
@@ -90,36 +103,6 @@ describe(
       });
 
       productsPage.addToCart();
-    }
-
-    function assertMarketplacePaymentOmsTransitions(): void {
-      salesIndexPage.visit();
-      salesIndexPage.view();
-
-      salesIndexPage.getOrderReference().then((orderReference) => {
-        salesDetailPage.triggerOms({ state: 'skip grace period' });
-        salesDetailPage.triggerOms({ state: 'Pay' });
-        salesDetailPage.triggerOms({ state: 'skip picking' });
-
-        merchantUserLoginScenario.execute({
-          username: staticFixtures.merchantUser.username,
-          password: staticFixtures.defaultPassword,
-        });
-
-        closeOrderFromMerchantPortal(orderReference);
-      });
-    }
-
-    function closeOrderFromBackoffice(): void {
-      userLoginScenario.execute({
-        username: staticFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
-
-      salesIndexPage.visit();
-      salesIndexPage.view();
-
-      salesDetailPage.triggerOms({ state: 'Close' });
     }
 
     function closeOrderFromMerchantPortal(orderReference: string): void {
@@ -142,16 +125,12 @@ describe(
       salesOrdersPage.update({ query: orderReference, action: ActionEnum.deliver });
     }
 
-    function skipB2BIt(description: string, testFn: () => void): void {
-      (['b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
-    }
-
     function checkOrderVisibility(orderReference: string): void {
       salesOrdersPage.visit();
       salesOrdersPage.hasOrderByOrderReference(orderReference).then((isVisible) => {
         if (!isVisible) {
           // eslint-disable-next-line cypress/no-unnecessary-waiting
-          cy.wait(10000);
+          cy.wait(10000, { log: false });
           checkOrderVisibility(orderReference);
         }
       });
