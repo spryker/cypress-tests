@@ -126,6 +126,9 @@ describe(
       fileManagerAttachmentListPage.visit();
       fileManagerAttachmentListPage.clickAttachButton();
 
+      // Parity with the sibling attach blocks: activate the Asset tab first so the
+      // nav-tabs settle and the unattached table is rendered before we search it.
+      fileManagerAttachmentAttachPage.selectAttachmentScope('asset');
       fileManagerAttachmentAttachPage.selectAvailableItems('asset', [dynamicFixtures.sspAsset.name]);
       fileManagerAttachmentAttachPage.submitForm();
       fileManagerAttachmentAttachPage.verifySuccessMessage();

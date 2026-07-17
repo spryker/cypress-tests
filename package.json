@@ -43,6 +43,7 @@
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-plugin-cypress": "^2.15.2",
+    "eslint-plugin-spryker-cypress": "file:plugins/eslint-plugin-spryker-cypress",
     "inversify": "^6.0.2",
     "prettier": "^3.4.1",
     "reflect-metadata": "^0.2.2",

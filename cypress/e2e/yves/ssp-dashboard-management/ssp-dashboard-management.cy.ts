@@ -50,6 +50,10 @@ describe(
       sspDashboardPage.assertSspDashboardUserInfoHasCompanyBusinessUnitName(dynamicFixtures.businessUnit.name);
       sspDashboardPage.assertSspDashboardHasOverviewBlock();
       sspDashboardPage.assertSspDashboardHasStatsOverviewBlock();
+      sspDashboardPage.waitForSalesRepresentativeBlockContent(
+        dynamicFixtures.cmsBlockGlossary.glossary_placeholders,
+        dynamicFixtures.locale.id_locale
+      );
       sspDashboardPage.assertSspDashboardHasSalesRepresentativeBlock(
         dynamicFixtures.cmsBlockGlossary.glossary_placeholders,
         dynamicFixtures.locale.id_locale
