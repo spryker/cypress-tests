@@ -1,0 +1,32 @@
+export interface ProductOptionRepository {
+  getGroupNameInput(): Cypress.Chainable;
+  getTaxSetSelect(): Cypress.Chainable;
+  getGroupNameTranslationInput(index: number): Cypress.Chainable;
+  getTranslationCopyButton(): Cypress.Chainable;
+  getExpandSecondTranslationBlockLink(): Cypress.Chainable;
+  getOptionValueInput(elementNr: number): Cypress.Chainable;
+  getOptionValueSkuInput(elementNr: number): Cypress.Chainable;
+  getOptionValueNetAmountInput(elementNr: number, currencyIndex: number): Cypress.Chainable;
+  getOptionValueGrossAmountInput(elementNr: number, currencyIndex: number): Cypress.Chainable;
+  getAddAnotherOptionButton(): Cypress.Chainable;
+  getOptionValueTranslationInput(index: number): Cypress.Chainable;
+  getSubmitButton(): Cypress.Chainable;
+  getTopbar(): Cypress.Chainable;
+  getProductTab(): Cypress.Chainable;
+  getDataTableProcessing(): Cypress.Chainable;
+  getProductTableRowCell(rowNumber: number): Cypress.Chainable;
+  getAllProductsCheckbox(idProduct: string): Cypress.Chainable;
+  getProductsToBeAssignedTab(): Cypress.Chainable;
+  getSelectedProductRowCell(): Cypress.Chainable;
+  getUnassignProductLink(idProduct: string): Cypress.Chainable;
+  getAssignedProductsListItem(): Cypress.Chainable;
+  getAssignedTab(): Cypress.Chainable;
+  getProductOptionTableRowCells(): Cypress.Chainable;
+  getActivateButton(): Cypress.Chainable;
+  getActivateSuccessContainer(): Cypress.Chainable;
+  getCreateBreadcrumb(): string;
+  getEditBreadcrumb(): string;
+  getProductCreatedSuccessMessage(): string;
+  getGroupModifiedSuccessMessage(): string;
+  getOptionActivatedSuccessMessage(): string;
+}

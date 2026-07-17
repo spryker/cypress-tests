@@ -1,5 +1,7 @@
 export * from './cart';
+export * from './cart-up-selling-products';
 export * from './checkout';
+export * from './availability';
 export * from './comments';
 export * from './merchant-b2b-contract-requests';
 export * from './merchant-registration';
@@ -14,7 +16,6 @@ export * from './product-attribute-visibility';
 export * from './locale';
 export * from './catalog';
 export * from './ssp-inquiry';
-export * from './company-account';
 export * from './ssp-file-management';
 export * from './ssp-asset';
 export * from './ssp-asset-specific-catalog';
