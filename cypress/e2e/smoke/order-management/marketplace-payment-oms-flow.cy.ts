@@ -125,14 +125,24 @@ describe(
       salesOrdersPage.update({ query: orderReference, action: ActionEnum.deliver });
     }
 
-    function checkOrderVisibility(orderReference: string): void {
+    function checkOrderVisibility(orderReference: string, attempt = 1): void {
+      const maxAttempts = 10;
+
       salesOrdersPage.visit();
       salesOrdersPage.hasOrderByOrderReference(orderReference).then((isVisible) => {
-        if (!isVisible) {
-          // eslint-disable-next-line cypress/no-unnecessary-waiting
-          cy.wait(10000, { log: false });
-          checkOrderVisibility(orderReference);
+        if (isVisible) {
+          return;
         }
+
+        if (attempt >= maxAttempts) {
+          throw new Error(
+            `Order ${orderReference} was not visible in the merchant portal after ${maxAttempts} attempts`
+          );
+        }
+
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(10000, { log: false });
+        checkOrderVisibility(orderReference, attempt + 1);
       });
     }
   }
