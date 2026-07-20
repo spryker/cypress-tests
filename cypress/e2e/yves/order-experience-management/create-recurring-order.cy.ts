@@ -40,7 +40,7 @@ describe(
       checkoutSummaryRecurringOrderPage.confirmRecurringOrder();
       checkoutSummaryPage.placeOrder();
 
-      cy.url().should('include', '/checkout/success');
+      checkoutSummaryPage.assertCheckoutSuccess();
 
       recurringOrderListPage.visit();
       recurringOrderListPage.assertScheduleVisible(staticFixtures.scheduleName);

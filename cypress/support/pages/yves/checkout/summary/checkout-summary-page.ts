@@ -15,4 +15,8 @@ export class CheckoutSummaryPage extends YvesPage {
     this.repository.getaAcceptTermsAndConditionsCheckbox().check({ force: true });
     this.repository.getSummaryForm().submit();
   };
+
+  assertCheckoutSuccess = (): void => {
+    cy.url().should('include', '/checkout/success');
+  };
 }

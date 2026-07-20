@@ -23,6 +23,14 @@ export class RecurringOrderDetailPage extends YvesPage {
     this.repository.getCadence().should('be.visible');
   };
 
+  assertCadenceContains = (text: string): void => {
+    this.repository.getCadence().should('contain', text);
+  };
+
+  assertOnRecurringOrdersUrl = (): void => {
+    cy.url().should('include', '/recurring-orders');
+  };
+
   assertStatusBadge = (status: string): void => {
     this.repository.getStatusBadge().invoke('text').invoke('toLowerCase').should('contain', status.toLowerCase());
   };
@@ -81,5 +89,29 @@ export class RecurringOrderDetailPage extends YvesPage {
 
   assertDetailItemsNotContain = (text: string): void => {
     this.repository.getDetailItems().should('not.contain', text);
+  };
+
+  assertDetailItemQuantity = (quantity: string): void => {
+    this.repository.getDetailItemQuantity().first().should('contain', quantity);
+  };
+
+  openEditModal = (): void => {
+    this.repository.getEditScheduleButton().click();
+  };
+
+  setScheduleName = (name: string): void => {
+    this.repository.getEditNameInput().filter(':visible').first().clear().type(name);
+  };
+
+  selectCadence = (cadenceType: string): void => {
+    this.repository.getEditCadenceSelect().filter(':visible').first().select(cadenceType);
+  };
+
+  setStartDate = (date: string): void => {
+    this.repository.getEditStartDateInput().filter(':visible').first().clear().type(date);
+  };
+
+  confirmEdit = (): void => {
+    this.repository.getEditConfirmButton().filter(':visible').first().click();
   };
 }

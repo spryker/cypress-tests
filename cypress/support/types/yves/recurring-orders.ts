@@ -13,7 +13,16 @@ export interface CreateRecurringOrderDynamicFixtures {
 
 export interface ManageRecurringOrderStaticFixtures {
   defaultPassword: string;
-  resumeNextExecutionDate: string;
+  statuses: {
+    active: string;
+    paused: string;
+    cancelled: string;
+  };
+  attentionBannerText: string;
+  viewPausedFilterLabel: string;
+  skippedHistoryStatus: string;
+  editCadenceType: string;
+  editCadenceLabel: string;
 }
 
 export interface ManageRecurringOrderDynamicFixtures {
@@ -48,4 +57,26 @@ export interface RecurringOrderReviewDynamicFixtures {
   scheduleForConfigurableProduct: { id_recurring_schedule: number; uuid: string; name: string };
   buyerForPackagingUnit: { email: string; id_customer: number };
   scheduleForPackagingUnit: { id_recurring_schedule: number; uuid: string; name: string };
+}
+
+export interface RecurringOrderReviewChangesStaticFixtures {
+  defaultPassword: string;
+  updatedQuantity: number;
+}
+
+export interface RecurringOrderReviewChangesDynamicFixtures {
+  buyerForBudget: { email: string; id_customer: number };
+  scheduleForBudget: { id_recurring_schedule: number; uuid: string; name: string };
+  buyerForQuantity: { email: string; id_customer: number };
+  scheduleForQuantity: { id_recurring_schedule: number; uuid: string; name: string };
+  buyerForRemoval: { email: string; id_customer: number };
+  scheduleForRemoval: { id_recurring_schedule: number; uuid: string; name: string };
+  productFlaggedForRemoval: { sku: string; abstract_sku: string };
+  buyerForSubstitute: { email: string; id_customer: number };
+  scheduleForSubstitute: { id_recurring_schedule: number; uuid: string; name: string };
+  discontinuedProduct: { sku: string; abstract_sku: string };
+  substituteProduct: { sku: string; abstract_sku: string };
+  buyerForAddProduct: { email: string; id_customer: number };
+  scheduleForAddProduct: { id_recurring_schedule: number; uuid: string; name: string };
+  addProduct: { sku: string; abstract_sku: string };
 }

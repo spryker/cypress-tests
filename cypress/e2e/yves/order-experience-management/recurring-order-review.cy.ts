@@ -38,7 +38,7 @@ describe(
 
       recurringOrderReviewPage.clickBackToDetail();
 
-      cy.url().should('include', `/recurring-orders/${dynamicFixtures.schedule.uuid}`);
+      recurringOrderReviewPage.assertScheduleDetailUrl(dynamicFixtures.schedule.uuid);
     });
 
     it('order placed from review page for a bundle product shows history entry with view order link', (): void => {
@@ -52,7 +52,7 @@ describe(
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
       recurringOrderReviewPage.confirmApproveReview();
 
-      cy.url().should('not.include', '/review-required');
+      recurringOrderReviewPage.assertOrderPlaced();
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForBundle.uuid);
       recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
@@ -70,7 +70,7 @@ describe(
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
       recurringOrderReviewPage.confirmApproveReview();
 
-      cy.url().should('not.include', '/review-required');
+      recurringOrderReviewPage.assertOrderPlaced();
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForOffer.uuid);
       recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
@@ -88,7 +88,7 @@ describe(
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
       recurringOrderReviewPage.confirmApproveReview();
 
-      cy.url().should('not.include', '/review-required');
+      recurringOrderReviewPage.assertOrderPlaced();
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForConfigurableBundle.uuid);
       recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
@@ -106,7 +106,7 @@ describe(
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
       recurringOrderReviewPage.confirmApproveReview();
 
-      cy.url().should('not.include', '/review-required');
+      recurringOrderReviewPage.assertOrderPlaced();
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForConfigurableProduct.uuid);
       recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
@@ -129,7 +129,7 @@ describe(
       recurringOrderReviewPage.selectStandingScope();
       recurringOrderReviewPage.confirmApproveReview();
 
-      cy.url().should('not.include', '/review-required');
+      recurringOrderReviewPage.assertOrderPlaced();
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForPriceDrift.uuid);
       recurringOrderDetailPage.assertDetailItemsContain('350');
@@ -146,7 +146,7 @@ describe(
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
       recurringOrderReviewPage.confirmApproveReview();
 
-      cy.url().should('not.include', '/review-required');
+      recurringOrderReviewPage.assertOrderPlaced();
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForPackagingUnit.uuid);
       recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
@@ -169,7 +169,7 @@ describe(
       recurringOrderReviewPage.selectStandingScope();
       recurringOrderReviewPage.confirmApproveReview();
 
-      cy.url().should('not.include', '/review-required');
+      recurringOrderReviewPage.assertOrderPlaced();
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForStockDrift.uuid);
       recurringOrderDetailPage.assertDetailItemsContain(dynamicFixtures.simpleProductForStockDrift.sku);

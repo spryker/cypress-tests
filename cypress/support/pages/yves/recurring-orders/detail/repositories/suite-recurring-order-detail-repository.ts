@@ -18,5 +18,12 @@ export class SuiteRecurringOrderDetailRepository implements RecurringOrderDetail
   getResumeDateInput = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-resume-date-input"]');
   getHistoryViewOrderLink = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-history-view-order"]');
   getDetailItems = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-detail-items"]');
+  getDetailItemQuantity = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-detail-item-quantity"]');
   getHistoryViewLatestRecordStatus = (): Cypress.Chainable => cy.get('[data-qa="cell-status"]').first();
+
+  getEditScheduleButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-edit-schedule-button"]');
+  getEditNameInput = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-edit-name-input"]');
+  getEditCadenceSelect = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-edit-cadence-select"]');
+  getEditStartDateInput = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-edit-date-input"]');
+  getEditConfirmButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-edit-confirm-button"]');
 }
