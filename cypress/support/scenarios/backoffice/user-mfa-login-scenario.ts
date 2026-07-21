@@ -29,8 +29,7 @@ export class UserMfaLoginScenario {
     this.mfaPage.waitForVerificationPopup();
     this.mfaPage.verifyCode(staticFixtures.invalidCode);
     this.mfaPage.waitForInvalidCodeMessage();
-
-    cy.reload();
+    this.mfaPage.waitForVerificationPopup();
     this.loginPage.assertPageLocation();
   }
 }
