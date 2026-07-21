@@ -360,6 +360,26 @@ Cypress.Commands.add('getCustomerAccessToken', (email, password) => {
     .then((response) => response.body.data.attributes.accessToken);
 });
 
+Cypress.Commands.add(
+  'getBackendApiToken',
+  (username = 'admin@spryker.com', password = 'change123') => {
+    return cy
+      .request({
+        method: 'POST',
+        url: Cypress.env().glueBackendUrl + '/token',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: {
+          grant_type: 'password',
+          username,
+          password,
+        },
+      })
+      .then((response) => response.body.access_token);
+  }
+);
+
 Cypress.Commands.add('createCart', (accessToken, attributes) => {
   return cy
     .request({

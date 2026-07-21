@@ -1,3 +1,4 @@
+export * from './abstract-products';
 export * from './api';
 export * from './cart';
 export * from './checkout';
