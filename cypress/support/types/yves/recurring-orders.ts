@@ -59,6 +59,27 @@ export interface RecurringOrderReviewDynamicFixtures {
   scheduleForPackagingUnit: { id_recurring_schedule: number; uuid: string; name: string };
 }
 
+export interface RecurringOrderReviewNegativeStaticFixtures {
+  defaultPassword: string;
+  overStockQuantity: number;
+  allItemsRemovedError: string;
+  notAvailableError: string;
+  budgetBlockError: string;
+}
+
+export interface RecurringOrderReviewNegativeDynamicFixtures {
+  buyerForOverStock: { email: string; id_customer: number };
+  scheduleForOverStock: { id_recurring_schedule: number; uuid: string; name: string };
+  productForOverStock: { sku: string; abstract_sku: string };
+  buyerForRemoveAll: { email: string; id_customer: number };
+  scheduleForRemoveAll: { id_recurring_schedule: number; uuid: string; name: string };
+  buyerForUnavailable: { email: string; id_customer: number };
+  scheduleForUnavailable: { id_recurring_schedule: number; uuid: string; name: string };
+  productForUnavailable: { sku: string; abstract_sku: string };
+  buyerForBudgetBlock: { email: string; id_customer: number };
+  scheduleForBudgetBlock: { id_recurring_schedule: number; uuid: string; name: string };
+}
+
 export interface RecurringOrderReviewChangesStaticFixtures {
   defaultPassword: string;
   updatedQuantity: number;

@@ -15,6 +15,7 @@ export interface RecurringOrderDetailRepository {
   getHistoryViewOrderLink(): Cypress.Chainable;
   getDetailItems(): Cypress.Chainable;
   getDetailItemQuantity(): Cypress.Chainable;
+  getFlashAlert(): Cypress.Chainable;
   getHistoryViewLatestRecordStatus(): Cypress.Chainable;
 
   getEditScheduleButton(): Cypress.Chainable;

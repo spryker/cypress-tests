@@ -119,7 +119,6 @@ describe(
       recurringOrderReviewPage.interceptShipmentMethods();
 
       loginAs(dynamicFixtures.buyerForAddProduct.email);
-      cy.runQueueWorker();
 
       recurringOrderReviewPage.visitReview(dynamicFixtures.scheduleForAddProduct.uuid);
 

@@ -1,0 +1,650 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [{ "status": "approved", "is_active": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [{ "fk_company": "#company.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderPermission",
+          "arguments": ["PlaceOrderPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "requestQuoteApprovalPermission",
+          "arguments": ["RequestQuoteApprovalPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "seeBusinessUnitOrdersPermission",
+          "arguments": ["SeeBusinessUnitOrdersPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "buyerRole",
+          "arguments": [
+            { "fk_company": "#company.id_company" },
+            ["#placeOrderPermission", "#requestQuoteApprovalPermission", "#seeBusinessUnitOrdersPermission"]
+          ]
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 1, "name": "DE", "defaultCurrencyIsoCode": "EUR" }
+        },
+        {
+          "type": "array-object",
+          "key": "stores",
+          "arguments": ["#store"]
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentType",
+          "key": "shipmentType",
+          "arguments": [{ "key": "delivery" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnitAddress",
+          "arguments": ["#businessUnit.id_company_business_unit", "#country.id_country"]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant",
+          "arguments": [{ "isOpenForRelationRequest": true }]
+        },
+
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productForOverStockBase",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productForOverStockBase.abstract_sku",
+              "skuProduct": "#productForOverStockBase.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#productForOverStockBase.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "arguments": ["#productForOverStockBase", "#shipmentType"]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productForOverStock",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productForOverStock.abstract_sku",
+              "skuProduct": "#productForOverStock.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#productForOverStock.sku", "quantity": 5, "isNeverOutOfStock": "0" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "arguments": ["#productForOverStock", "#shipmentType"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOffer",
+          "key": "overStockOffer",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "idProductConcrete": "#productForOverStock.id_product_concrete",
+              "concreteSku": "#productForOverStock.sku",
+              "merchantReference": "#merchant.merchant_reference",
+              "stores": "#stores"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferStock",
+          "arguments": [
+            {
+              "idProductOffer": "#overStockOffer.id_product_offer",
+              "productOfferReference": "#overStockOffer.product_offer_reference",
+              "quantity": 5,
+              "isNeverOutOfStock": false
+            },
+            "#merchant.stocks"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "buyerForOverStock",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerForOverStockRoleCollection",
+          "arguments": { "roles": ["#buyerRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerForOverStockCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyerForOverStock",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerForOverStockRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerForOverStockCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "scheduleForOverStock",
+          "arguments": [
+            "#buyerForOverStock.id_customer",
+            {
+              "name": "Review Over Stock Order",
+              "cadence_type": "monthly",
+              "estimated_total": 30000,
+              "status": "review_required",
+              "build_quote_data": true,
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-08-01",
+              "next_trigger_date": "2026-08-01",
+              "id_company_user": "#buyerForOverStockCompanyUser.id_company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItem",
+          "arguments": [
+            "#scheduleForOverStock.id_recurring_schedule",
+            {
+              "sku": "#productForOverStockBase.sku",
+              "quantity": 1,
+              "reference_gross_price": 30000,
+              "reference_net_price": 30000,
+              "build_item_data": true
+            }
+          ]
+        },
+
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productRemoveAllFirst",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productRemoveAllFirst.abstract_sku",
+              "skuProduct": "#productRemoveAllFirst.sku",
+              "moneyValue": { "netAmount": 28000, "grossAmount": 35000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#productRemoveAllFirst.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "arguments": ["#productRemoveAllFirst", "#shipmentType"]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productRemoveAllSecond",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productRemoveAllSecond.abstract_sku",
+              "skuProduct": "#productRemoveAllSecond.sku",
+              "moneyValue": { "netAmount": 28000, "grossAmount": 35000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#productRemoveAllSecond.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "arguments": ["#productRemoveAllSecond", "#shipmentType"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "buyerForRemoveAll",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerForRemoveAllRoleCollection",
+          "arguments": { "roles": ["#buyerRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerForRemoveAllCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyerForRemoveAll",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerForRemoveAllRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerForRemoveAllCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "scheduleForRemoveAll",
+          "arguments": [
+            "#buyerForRemoveAll.id_customer",
+            {
+              "name": "Review Remove All Order",
+              "cadence_type": "monthly",
+              "estimated_total": 50000,
+              "status": "review_required",
+              "build_quote_data": true,
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-08-01",
+              "next_trigger_date": "2026-08-01",
+              "id_company_user": "#buyerForRemoveAllCompanyUser.id_company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItem",
+          "arguments": [
+            "#scheduleForRemoveAll.id_recurring_schedule",
+            {
+              "sku": "#productRemoveAllFirst.sku",
+              "quantity": 1,
+              "reference_gross_price": 25000,
+              "reference_net_price": 20000,
+              "build_item_data": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItem",
+          "arguments": [
+            "#scheduleForRemoveAll.id_recurring_schedule",
+            {
+              "sku": "#productRemoveAllSecond.sku",
+              "quantity": 1,
+              "reference_gross_price": 25000,
+              "reference_net_price": 20000,
+              "build_item_data": true
+            }
+          ]
+        },
+
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productForUnavailableBase",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productForUnavailableBase.abstract_sku",
+              "skuProduct": "#productForUnavailableBase.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#productForUnavailableBase.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "arguments": ["#productForUnavailableBase", "#shipmentType"]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productForUnavailable",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productForUnavailable.abstract_sku",
+              "skuProduct": "#productForUnavailable.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#productForUnavailable.sku", "quantity": 5, "isNeverOutOfStock": "0" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "arguments": ["#productForUnavailable", "#shipmentType"]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOffer",
+          "key": "unavailableOffer",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "idProductConcrete": "#productForUnavailable.id_product_concrete",
+              "concreteSku": "#productForUnavailable.sku",
+              "merchantReference": "#merchant.merchant_reference",
+              "stores": "#stores"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferStock",
+          "arguments": [
+            {
+              "idProductOffer": "#unavailableOffer.id_product_offer",
+              "productOfferReference": "#unavailableOffer.product_offer_reference",
+              "quantity": 5,
+              "isNeverOutOfStock": false
+            },
+            "#merchant.stocks"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "buyerForUnavailable",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerForUnavailableRoleCollection",
+          "arguments": { "roles": ["#buyerRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerForUnavailableCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyerForUnavailable",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerForUnavailableRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerForUnavailableCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "scheduleForUnavailable",
+          "arguments": [
+            "#buyerForUnavailable.id_customer",
+            {
+              "name": "Review Unavailable Order",
+              "cadence_type": "monthly",
+              "estimated_total": 30000,
+              "status": "review_required",
+              "build_quote_data": true,
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-08-01",
+              "next_trigger_date": "2026-08-01",
+              "id_company_user": "#buyerForUnavailableCompanyUser.id_company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItem",
+          "arguments": [
+            "#scheduleForUnavailable.id_recurring_schedule",
+            {
+              "sku": "#productForUnavailableBase.sku",
+              "quantity": 1,
+              "reference_gross_price": 30000,
+              "reference_net_price": 30000,
+              "build_item_data": true
+            }
+          ]
+        },
+
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "budgetCompany",
+          "arguments": [{ "status": "approved", "is_active": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "budgetBusinessUnit",
+          "arguments": [{ "fk_company": "#budgetCompany.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "budgetBuyerRole",
+          "arguments": [
+            { "fk_company": "#budgetCompany.id_company" },
+            ["#placeOrderPermission", "#requestQuoteApprovalPermission", "#seeBusinessUnitOrdersPermission"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnitAddress",
+          "arguments": ["#budgetBusinessUnit.id_company_business_unit", "#country.id_country"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCostCenter",
+          "key": "costCenterBlock",
+          "arguments": [{ "companyBusinessUnit": "#budgetBusinessUnit", "is_active": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveBudget",
+          "key": "budgetInsufficient",
+          "arguments": [
+            "#costCenterBlock.id_cost_center",
+            { "enforcement_rule": "block", "amount": 10000, "currency_iso_code": "EUR", "is_active": true }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productForBudgetBlock",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productForBudgetBlock.abstract_sku",
+              "skuProduct": "#productForBudgetBlock.sku",
+              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#productForBudgetBlock.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConcreteShipmentType",
+          "arguments": ["#productForBudgetBlock", "#shipmentType"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "buyerForBudgetBlock",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerForBudgetBlockRoleCollection",
+          "arguments": { "roles": ["#budgetBuyerRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerForBudgetBlockCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyerForBudgetBlock",
+              "fk_company": "#budgetCompany.id_company",
+              "company_role_collection": ["#buyerForBudgetBlockRoleCollection"],
+              "fk_company_business_unit": "#budgetBusinessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerForBudgetBlockCompanyUser", ["#budgetBuyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "scheduleForBudgetBlock",
+          "arguments": [
+            "#buyerForBudgetBlock.id_customer",
+            {
+              "name": "Review Budget Block Order",
+              "cadence_type": "monthly",
+              "estimated_total": 30000,
+              "status": "review_required",
+              "build_quote_data": true,
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-08-01",
+              "next_trigger_date": "2026-08-01",
+              "id_company_user": "#buyerForBudgetBlockCompanyUser.id_company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItem",
+          "arguments": [
+            "#scheduleForBudgetBlock.id_recurring_schedule",
+            {
+              "sku": "#productForBudgetBlock.sku",
+              "quantity": 1,
+              "reference_gross_price": 30000,
+              "reference_net_price": 30000,
+              "build_item_data": true
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

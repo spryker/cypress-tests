@@ -83,6 +83,10 @@ export class RecurringOrderDetailPage extends YvesPage {
     this.repository.getHistoryViewLatestRecordStatus().contains(status);
   };
 
+  assertApprovalErrorContains = (text: string): void => {
+    this.repository.getFlashAlert().should('contain', text);
+  };
+
   assertDetailItemsContain = (text: string): void => {
     this.repository.getDetailItems().should('contain', text);
   };

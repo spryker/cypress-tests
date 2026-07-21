@@ -51,6 +51,20 @@ export class RecurringOrderReviewPage extends YvesPage {
     cy.url().should('not.include', '/review-required');
   };
 
+  assertStillOnReview = (uuid: string): void => {
+    cy.url().should('include', `/recurring-orders/${uuid}/review-required`);
+  };
+
+  assertApprovalErrorContains = (text: string): void => {
+    this.repository.getFlashAlert().should('contain', text);
+  };
+
+  removeAllLines = (): void => {
+    this.repository.getLineRemoveToggle().each(($toggle): void => {
+      cy.wrap($toggle).click();
+    });
+  };
+
   assertScheduleDetailUrl = (uuid: string): void => {
     cy.url().should('include', `/recurring-orders/${uuid}`);
   };
