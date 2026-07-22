@@ -3,4 +3,5 @@ export * from './api';
 export * from './cart';
 export * from './checkout';
 export * from './cms';
+export * from './products';
 export * from './shopping-list';

@@ -1,0 +1,57 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeEN",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 1, "name": "DE" }
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "bundled",
+          "arguments": [
+            {
+              "attributes": { "material": "cotton" }
+            },
+            {}
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProduct": "#bundled.sku",
+              "idProduct": "#bundled.id_product_concrete",
+              "skuProductAbstract": "#bundled.abstract_sku",
+              "moneyValue": { "netAmount": 8999, "grossAmount": 9999 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveStockProduct",
+          "arguments": [
+            {
+              "sku": "#bundled.sku",
+              "stockType": "Warehouse1",
+              "quantity": 100,
+              "isNeverOutOfStock": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

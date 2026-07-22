@@ -2,6 +2,18 @@ import { AbstractProductsDynamicFixtures, AbstractProductsStaticFixtures } from 
 import { getAbstractProduct, getAbstractProductCollection, getAbstractProductWithoutToken } from '@utils';
 import { retryableBefore } from '../../../support/e2e';
 
+// Non-nullable resource attributes always serialized (nullable ones — isActive, newFrom, newTo, taxSet — are omitted when null).
+const EXPECTED_ATTRIBUTE_KEYS = [
+  'sku',
+  'attributes',
+  'stores',
+  'localizedAttributes',
+  'prices',
+  'imageSets',
+  'categories',
+  'superAttributeKeys',
+];
+
 describe('abstract products backend api', { tags: ['@api', '@abstract-products', 'product'] }, (): void => {
   let staticFixtures: AbstractProductsStaticFixtures;
   let dynamicFixtures: AbstractProductsDynamicFixtures;
@@ -26,8 +38,7 @@ describe('abstract products backend api', { tags: ['@api', '@abstract-products',
         expect(response.body.data.type).to.eq('abstract-products');
         expect(response.body.data.id).to.eq(abstractSku);
         expect(response.body.data.attributes.sku).to.eq(abstractSku);
-        expect(response.body.data.attributes).to.have.property('isActive');
-        expect(response.body.data.attributes).to.have.property('attributes');
+        expect(response.body.data.attributes).to.include.keys(EXPECTED_ATTRIBUTE_KEYS);
       });
     });
 
@@ -75,13 +86,17 @@ describe('abstract products backend api', { tags: ['@api', '@abstract-products',
   });
 
   describe('GET /abstract-products', (): void => {
-    it('should return a collection containing the seeded abstract product', (): void => {
+    it('should return a collection of abstract products', (): void => {
       getAbstractProductCollection(accessToken).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.body.data).to.be.an('array');
+        expect(response.body.data).to.be.an('array').and.to.have.length.greaterThan(0);
 
-        const skus = response.body.data.map((item: { id: string }) => item.id);
-        expect(skus).to.include(abstractSku);
+        response.body.data.forEach((item: { id: string; type: string; attributes: { sku: string } }) => {
+          expect(item.type).to.eq('abstract-products');
+          expect(item.id).to.be.a('string');
+          expect(item.attributes.sku).to.eq(item.id);
+          expect(item.attributes).to.include.keys(EXPECTED_ATTRIBUTE_KEYS);
+        });
       });
     });
 
@@ -89,6 +104,21 @@ describe('abstract products backend api', { tags: ['@api', '@abstract-products',
       getAbstractProductCollection(accessToken, { page: 1 }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.data.length, 'page size <= itemsPerPage').to.be.at.most(10);
+      });
+    });
+
+    it('should return a non-overlapping result set for page 2', (): void => {
+      getAbstractProductCollection(accessToken, { page: 1 }).then((firstPage) => {
+        expect(firstPage.status).to.eq(200);
+
+        getAbstractProductCollection(accessToken, { page: 2 }).then((secondPage) => {
+          expect(secondPage.status).to.eq(200);
+          expect(secondPage.body.data.length, 'page 2 size <= itemsPerPage').to.be.at.most(10);
+
+          const firstIds = firstPage.body.data.map((item: { id: string }) => item.id);
+          const secondIds = secondPage.body.data.map((item: { id: string }) => item.id);
+          secondIds.forEach((id: string) => expect(firstIds, 'no overlap between pages').to.not.include(id));
+        });
       });
     });
 

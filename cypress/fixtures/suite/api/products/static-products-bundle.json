@@ -1,0 +1,11 @@
+{
+  "storeName": "DE",
+  "currencyCode": "EUR",
+  "priceTypeName": "DEFAULT",
+  "localeName": "en_US",
+  "stockName": "Warehouse1",
+  "bundledStockQuantity": 100,
+  "bundleQuantity": 2,
+  "netAmount": 8999,
+  "grossAmount": 9999
+}

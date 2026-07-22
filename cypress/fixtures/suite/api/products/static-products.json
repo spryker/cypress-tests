@@ -1,0 +1,12 @@
+{
+  "storeName": "DE",
+  "currencyCode": "EUR",
+  "priceTypeName": "DEFAULT",
+  "localeName": "en_US",
+  "stockName": "Warehouse1",
+  "superAttributeKey": "color",
+  "concreteAttributeKey": "material",
+  "concreteAttributeValue": "cotton",
+  "netAmount": 8999,
+  "grossAmount": 9999
+}

@@ -1,0 +1,112 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeEN",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": { "id_store": 1, "name": "DE" }
+        },
+        {
+          "type": "helper",
+          "name": "haveTaxSet",
+          "key": "taxSet"
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentType",
+          "key": "shipmentType"
+        },
+        {
+          "type": "helper",
+          "name": "haveProductClass",
+          "key": "productClass"
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product",
+          "arguments": [
+            {
+              "attributes": { "material": "cotton" }
+            },
+            {
+              "idTaxSet": "#taxSet.id_tax_set",
+              "attributes": { "color": "red" }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductToProductClass",
+          "arguments": ["#product.id_product_concrete", "#productClass.id_product_class"]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProduct": "#product.sku",
+              "idProduct": "#product.id_product_concrete",
+              "skuProductAbstract": "#product.abstract_sku",
+              "moneyValue": { "netAmount": 8999, "grossAmount": 9999 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveStockProduct",
+          "arguments": [
+            {
+              "sku": "#product.sku",
+              "stockType": "Warehouse1",
+              "quantity": 100,
+              "isNeverOutOfStock": false
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "name": "ProductImageTransfer",
+          "key": "productImage",
+          "arguments": {
+            "externalUrlSmall": "https://images.icecat.biz/img/norm/medium/25904006-8438.jpg",
+            "externalUrlLarge": "https://images.icecat.biz/img/norm/high/25904006-8438.jpg"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#product.id_product_concrete",
+              "idProductAbstract": "#product.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveLocalizedCategory",
+          "key": "category",
+          "arguments": [{ "locale": "#localeEN" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductCategoryForCategory",
+          "arguments": ["#category.id_category", { "fkProductAbstract": "#product.fk_product_abstract" }]
+        }
+      ]
+    }
+  }
+}
