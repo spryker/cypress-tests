@@ -81,3 +81,5 @@ export * from './purchasing-control/cost-center/edit/cost-center-edit-page';
 export * from './purchasing-control/budget/list/budget-list-page';
 export * from './purchasing-control/budget/create/budget-create-page';
 export * from './purchasing-control/budget/edit/budget-edit-page';
+export * from './order-experience-management/list/recurring-schedule-list-page';
+export * from './order-experience-management/view/recurring-schedule-view-page';

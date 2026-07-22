@@ -1,0 +1,136 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": false,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [{ "status": "approved", "is_active": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [{ "fk_company": "#company.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "seeBusinessUnitOrdersPermission",
+          "arguments": ["SeeBusinessUnitOrdersPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "buyerRole",
+          "arguments": [{ "fk_company": "#company.id_company" }, ["#seeBusinessUnitOrdersPermission"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "owner",
+          "arguments": [{ "registered": "2025-01-01", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "ownerRoleCollection",
+          "arguments": { "roles": ["#buyerRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser",
+          "arguments": [
+            {
+              "customer": "#owner",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#ownerRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "activeSchedule",
+          "arguments": [
+            "#owner.id_customer",
+            {
+              "name": "Backoffice Active Schedule",
+              "cadence_type": "monthly",
+              "estimated_total": 30000,
+              "status": "active",
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-08-01",
+              "next_trigger_date": "2026-08-01",
+              "id_company_user": "#companyUser.id_company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItem",
+          "arguments": [
+            "#activeSchedule.id_recurring_schedule",
+            {
+              "sku": "#product.sku",
+              "quantity": 1,
+              "reference_gross_price": 30000,
+              "reference_net_price": 25000
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "pausedSchedule",
+          "arguments": [
+            "#owner.id_customer",
+            {
+              "name": "Backoffice Paused Schedule",
+              "cadence_type": "monthly",
+              "estimated_total": 20000,
+              "status": "paused",
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-08-01",
+              "next_trigger_date": "2026-08-01",
+              "id_company_user": "#companyUser.id_company_user"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

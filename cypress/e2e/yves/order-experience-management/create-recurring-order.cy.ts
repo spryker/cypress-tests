@@ -3,6 +3,21 @@ import { CreateRecurringOrderStaticFixtures, CreateRecurringOrderDynamicFixtures
 import { CheckoutSummaryPage, CheckoutSummaryRecurringOrderPage, RecurringOrderListPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
+function formatDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
+function addDaysFromToday(days: number): string {
+  const date = new Date();
+  date.setDate(date.getDate() + days);
+
+  return formatDate(date);
+}
+
 describe(
   'recurring order creation at checkout',
   { tags: ['@yves', '@order-experience-management', 'order-experience-management', 'spryker-core'] },
@@ -40,10 +55,29 @@ describe(
       checkoutSummaryRecurringOrderPage.confirmRecurringOrder();
       checkoutSummaryPage.placeOrder();
 
-      cy.url().should('include', '/checkout/success');
+      checkoutSummaryPage.assertCheckoutSuccess();
 
       recurringOrderListPage.visit();
       recurringOrderListPage.assertScheduleVisible(staticFixtures.scheduleName);
+    });
+
+    it('buyer can pick a start date, with today as the earliest selectable value and past dates rejected', (): void => {
+      const futureDate = addDaysFromToday(30);
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.buyerForStartDate.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+      checkoutScenario.execute({ shouldSkipPlaceOrder: true });
+
+      checkoutSummaryRecurringOrderPage.assertRecurringOrderToggleVisible();
+      checkoutSummaryRecurringOrderPage.enableRecurringOrder();
+
+      checkoutSummaryRecurringOrderPage.assertStartDateEarliestIsToday(formatDate(new Date()));
+      checkoutSummaryRecurringOrderPage.assertStartDateRejectsPastDate(addDaysFromToday(-30));
+      checkoutSummaryRecurringOrderPage.selectStartDate(futureDate);
+      checkoutSummaryRecurringOrderPage.assertStartDateSelected(futureDate);
     });
 
     it('recurring order widget is not visible when credit card payment method is selected', (): void => {

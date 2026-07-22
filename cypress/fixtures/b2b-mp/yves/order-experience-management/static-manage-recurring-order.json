@@ -1,4 +1,13 @@
 {
   "defaultPassword": "change123",
-  "resumeNextExecutionDate": "2026-12-01"
+  "statuses": {
+    "active": "active",
+    "paused": "paused",
+    "cancelled": "cancelled"
+  },
+  "attentionBannerText": "You have 1 recurring schedule(s) that require your attention.",
+  "viewPausedFilterLabel": "View Paused",
+  "skippedHistoryStatus": "Skipped",
+  "editCadenceType": "weekly",
+  "editCadenceLabel": "Weekly"
 }

@@ -32,6 +32,25 @@ export class CheckoutSummaryRecurringOrderPage extends YvesPage {
     this.repository.getCadenceTypeSelect().select(cadenceType, { force: true });
   };
 
+  assertStartDateEarliestIsToday = (today: string): void => {
+    this.repository.getStartDateInput().should('have.attr', 'min', today);
+  };
+
+  assertStartDateRejectsPastDate = (pastDate: string): void => {
+    this.repository.getStartDateInput().clear().type(pastDate);
+    this.repository.getStartDateInput().should(($input): void => {
+      expect(($input[0] as HTMLInputElement).validity.rangeUnderflow).to.eq(true);
+    });
+  };
+
+  selectStartDate = (date: string): void => {
+    this.repository.getStartDateInput().clear().type(date);
+  };
+
+  assertStartDateSelected = (date: string): void => {
+    this.repository.getStartDateInput().should('have.value', date);
+  };
+
   confirmRecurringOrder = (): void => {
     cy.intercept('POST', '**/recurring-order/save').as('saveRequest');
     this.repository.getConfirmButton().click();

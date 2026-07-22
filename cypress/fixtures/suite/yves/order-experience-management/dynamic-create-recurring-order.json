@@ -203,6 +203,48 @@
             },
             true
           ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "buyerForStartDate",
+          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerForStartDateRoleCollection",
+          "arguments": { "roles": ["#buyerRole"] }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerForStartDateCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyerForStartDate",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerForStartDateRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerForStartDateCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "quoteForStartDate",
+          "arguments": [
+            {
+              "customer": "#buyerForStartDate",
+              "items": [{ "sku": "#product.sku", "abstractSku": "#product.abstract_sku", "quantity": 1 }]
+            },
+            true
+          ]
         }
       ]
     }
