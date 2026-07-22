@@ -4,6 +4,7 @@ export interface BackofficeRecurringScheduleStaticFixtures {
   defaultPassword: string;
   activeStatus: string;
   pausedStatus: string;
+  forecastWidgetMonthText: string;
 }
 
 export interface BackofficeRecurringScheduleDynamicFixtures {

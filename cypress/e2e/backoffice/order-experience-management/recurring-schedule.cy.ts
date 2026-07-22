@@ -66,5 +66,13 @@ describe(
       recurringScheduleListPage.assertScheduleInTable(dynamicFixtures.activeSchedule.name);
       recurringScheduleListPage.assertScheduleNotInTable(dynamicFixtures.pausedSchedule.name);
     });
+
+    it('backoffice user sees the committed recurring volume statistic widget on the list page', (): void => {
+      recurringScheduleListPage.waitForTable();
+
+      recurringScheduleListPage.assertForecastWidgetVisible();
+      recurringScheduleListPage.assertForecastMonthContains(staticFixtures.forecastWidgetMonthText);
+      recurringScheduleListPage.assertForecastResultVisible();
+    });
   }
 );

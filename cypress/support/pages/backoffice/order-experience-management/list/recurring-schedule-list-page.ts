@@ -39,4 +39,16 @@ export class RecurringScheduleListPage extends BackofficePage {
   assertScheduleNotInTable = (name: string): void => {
     cy.get(this.repository.getTableBodySelector()).should('not.contain', name);
   };
+
+  assertForecastWidgetVisible = (): void => {
+    cy.get(this.repository.getForecastSummarySelector()).should('be.visible');
+  };
+
+  assertForecastMonthContains = (text: string): void => {
+    cy.get(this.repository.getForecastMonthSelector()).should('contain', text);
+  };
+
+  assertForecastResultVisible = (): void => {
+    cy.get(this.repository.getForecastResultSelector()).should('be.visible');
+  };
 }

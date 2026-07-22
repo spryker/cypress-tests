@@ -1,5 +1,6 @@
 {
   "defaultPassword": "change123",
   "activeStatus": "active",
-  "pausedStatus": "paused"
+  "pausedStatus": "paused",
+  "forecastWidgetMonthText": "Current month"
 }
