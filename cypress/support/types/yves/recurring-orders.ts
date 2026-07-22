@@ -6,9 +6,11 @@ export interface CreateRecurringOrderStaticFixtures {
 export interface CreateRecurringOrderDynamicFixtures {
   buyer: { email: string; id_customer: number };
   buyerForCreditCard: { email: string; id_customer: number };
+  buyerForStartDate: { email: string; id_customer: number };
   product: { sku: string; abstract_sku: string };
   quote: { id_quote: number };
   quoteForCreditCard: { id_quote: number };
+  quoteForStartDate: { id_quote: number };
 }
 
 export interface ManageRecurringOrderStaticFixtures {
