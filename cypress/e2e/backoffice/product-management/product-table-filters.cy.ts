@@ -35,7 +35,7 @@ describe(
       productManagementListPage.getTableRows().should('have.length', 1);
     });
 
-    it("search with filters returns no results when criteria don’t match", (): void => {
+    it('search with filters returns no results when criteria don’t match', (): void => {
       productManagementListPage.visit();
       productManagementListPage.applyFilters({
         status: StatusEnum.active,
