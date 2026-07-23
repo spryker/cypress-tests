@@ -121,12 +121,9 @@ Cypress.Commands.add(
 );
 
 // Inverse of reloadUntilFound: re-visits the page until findSelector is ABSENT.
-// Needed on the storefront delete path, where publish->sync can lag a single PDP
-// load and cy.get().should('not.exist') then keeps finding the still-rendered node.
-// `commands` are re-run before every reload so the publish/sync queue keeps draining
-// while we wait: without it the loop polls a page backed by a multi-stage queue that
-// nothing is processing between reloads, so a lagging sync message never lands and the
-// list never disappears (exhausted retries), even though the delete itself succeeded.
+// `commands` (if given) are re-run before every reload so a lagging publish/sync queue
+// keeps draining while we wait; otherwise a delete that hasn't finished syncing keeps
+// rendering the node and the loop never converges (exhausted retries).
 Cypress.Commands.add(
   'reloadUntilGone',
   (url, findSelector, getSelector = 'body', retries = 25, retryWait = 5000, commands = []) => {
