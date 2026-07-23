@@ -185,12 +185,17 @@ describe(
       cy.runQueueWorker();
 
       // Assert
-      // The delete's publish->sync can land after the single PDP load, so a one-shot
-      // not.exist "continuously found" the still-rendered list and failed every retry.
-      // Reload the PDP until the attachment list has actually dropped out of storage.
+      // The delete's publish->sync is a multi-stage queue chain, so a single runQueueWorker
+      // pass can finish before the sync message removes the attachment from storage. Keep
+      // draining the queue on every reload until the attachment list has actually dropped
+      // out of storage, otherwise the loop polls a page backed by a queue nothing is
+      // processing and never converges.
       visitProductDetailPage();
       cy.url().then((url) => {
-        cy.reloadUntilGone(url, productPage.getAttachmentsListSelector());
+        cy.reloadUntilGone(url, productPage.getAttachmentsListSelector(), 'body', 25, 5000, [
+          'console queue:worker:start --stop-when-empty',
+          'console queue:worker:start --stop-when-empty',
+        ]);
       });
       productPage.getAttachmentsList().should('not.exist');
     });

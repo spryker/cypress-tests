@@ -123,24 +123,35 @@ Cypress.Commands.add(
 // Inverse of reloadUntilFound: re-visits the page until findSelector is ABSENT.
 // Needed on the storefront delete path, where publish->sync can lag a single PDP
 // load and cy.get().should('not.exist') then keeps finding the still-rendered node.
-Cypress.Commands.add('reloadUntilGone', (url, findSelector, getSelector = 'body', retries = 25, retryWait = 5000) => {
-  if (retries === 0) {
-    throw `exhausted retries waiting for ${findSelector} to disappear on ${url}`;
-  }
-
-  cy.visit(url);
-  cy.get(getSelector).then((body) => {
-    const msg = `url:${url} getSelector:${getSelector} findSelector:${findSelector} retries:${retries} retryWait:${retryWait}`;
-
-    if (body.find(findSelector).length === 0) {
-      cy.log(`gone ${msg}`);
-    } else {
-      cy.log(`still present ${msg}`);
-      cy.wait(retryWait);
-      cy.reloadUntilGone(url, findSelector, getSelector, retries - 1, retryWait);
+// `commands` are re-run before every reload so the publish/sync queue keeps draining
+// while we wait: without it the loop polls a page backed by a multi-stage queue that
+// nothing is processing between reloads, so a lagging sync message never lands and the
+// list never disappears (exhausted retries), even though the delete itself succeeded.
+Cypress.Commands.add(
+  'reloadUntilGone',
+  (url, findSelector, getSelector = 'body', retries = 25, retryWait = 5000, commands = []) => {
+    if (retries === 0) {
+      throw `exhausted retries waiting for ${findSelector} to disappear on ${url}`;
     }
-  });
-});
+
+    if (commands.length) {
+      cy.runCliCommands(commands);
+    }
+
+    cy.visit(url);
+    cy.get(getSelector).then((body) => {
+      const msg = `url:${url} getSelector:${getSelector} findSelector:${findSelector} retries:${retries} retryWait:${retryWait}`;
+
+      if (body.find(findSelector).length === 0) {
+        cy.log(`gone ${msg}`);
+      } else {
+        cy.log(`still present ${msg}`);
+        cy.wait(retryWait);
+        cy.reloadUntilGone(url, findSelector, getSelector, retries - 1, retryWait, commands);
+      }
+    });
+  }
+);
 
 Cypress.Commands.add('runCliCommands', (commands) => {
   const operations = commands.map((command) => {
