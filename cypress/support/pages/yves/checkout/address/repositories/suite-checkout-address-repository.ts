@@ -89,15 +89,10 @@ export class SuiteCheckoutAddressRepository implements CheckoutAddressRepository
       | string
       | undefined) || undefined;
 
-  getMultiShipmentAddressItemShipmentTypeRadio = (
-    index: number,
-    shipmentTypeKey: string
-  ): Cypress.Chainable =>
+  getMultiShipmentAddressItemShipmentTypeRadio = (index: number, shipmentTypeKey: string): Cypress.Chainable =>
     cy.get(`#addressesForm_multiShippingAddresses_${index}_shipmentType_key [value="${shipmentTypeKey}"]`);
 
-  getMultiShipmentAddressItemSelectServicePointButton = (
-    $addressItem: JQuery<HTMLElement>,
-  ): Cypress.Chainable =>
+  getMultiShipmentAddressItemSelectServicePointButton = ($addressItem: JQuery<HTMLElement>): Cypress.Chainable =>
     cy.wrap($addressItem).find('[data-qa="service-point-selector"] button');
 
   getServicePointFinderInput = (): Cypress.Chainable =>

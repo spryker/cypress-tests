@@ -190,15 +190,9 @@ export class CheckoutAddressPage extends YvesPage {
     this.repository
       .getMultiShipmentAddressItemShipmentTypeRadio?.(index, servicePointSelection.shipmentTypeKey)
       .click({ force: true });
-    this.repository
-      .getMultiShipmentAddressItemSelectServicePointButton?.($addressItem)
-      .first()
-      .click({ force: true });
+    this.repository.getMultiShipmentAddressItemSelectServicePointButton?.($addressItem).first().click({ force: true });
     this.repository.getServicePointFinderInput?.().clear().type(servicePointSelection.servicePointName);
-    this.repository
-      .getServicePointFinderListItem?.(servicePointSelection.servicePointName)
-      .first()
-      .click();
+    this.repository.getServicePointFinderListItem?.(servicePointSelection.servicePointName).first().click();
 
     this.repository.getMultiShipmentAddressItemServicePointUuidInput?.(index).should(($input: JQuery<HTMLElement>) => {
       const hasUuid = Boolean(($input.val() as string) || '');
