@@ -112,9 +112,10 @@ export class ProductPage extends YvesPage {
   }
 
   selectServicePoint(servicePointName: string): void {
-    this.repository.getSelectServicePointButton().first().click();
-    this.repository.getServicePointSearchInput().clear().type(servicePointName);
-    this.repository.getServicePointListItem(servicePointName).click({ force: true });
+    this.repository.getSelectServicePointButton().first().click({ force: true });
+    this.repository.getServicePointFinderResults?.().should('have.length.at.least', 1);
+    this.repository.getServicePointSearchInput().clear({ force: true }).type(servicePointName, { force: true });
+    this.repository.getServicePointListItem(servicePointName).first().click({ force: true });
   }
 
   selectAsset(): void {

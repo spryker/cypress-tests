@@ -52,6 +52,7 @@ export class CheckoutScenario {
       idCustomerAddress: params?.idCustomerAddress,
       shipmentType: params?.shipmentType,
       skipServicePointAddressOverride: params?.skipServicePointAddressOverride,
+      servicePointSelection: params?.servicePointSelection,
     };
 
     if (params?.isMultiShipment) {
@@ -86,4 +87,9 @@ interface ExecuteParams {
   shouldSkipPlaceOrder?: boolean;
   shipmentType?: string;
   skipServicePointAddressOverride?: boolean;
+  servicePointSelection?: {
+    productName: string;
+    shipmentTypeKey: string;
+    servicePointName: string;
+  };
 }
