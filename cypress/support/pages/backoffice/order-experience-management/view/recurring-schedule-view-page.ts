@@ -25,4 +25,8 @@ export class RecurringScheduleViewPage extends BackofficePage {
   assertItemsContain = (text: string): void => {
     this.repository.getItems().should('contain', text);
   };
+
+  assertConfigurableBundleLabel = (label: string): void => {
+    this.repository.getConfigurableBundleLabels().should('have.length', 1).and('contain', label);
+  };
 }

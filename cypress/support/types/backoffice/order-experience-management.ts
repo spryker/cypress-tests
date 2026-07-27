@@ -5,11 +5,13 @@ export interface BackofficeRecurringScheduleStaticFixtures {
   activeStatus: string;
   pausedStatus: string;
   forecastWidgetMonthText: string;
+  configurableBundleLabel: string;
 }
 
 export interface BackofficeRecurringScheduleDynamicFixtures {
   rootUser: User;
   product: { sku: string; abstract_sku: string };
+  configurableBundleProduct: { sku: string; abstract_sku: string };
   activeSchedule: { id_recurring_schedule: number; uuid: string; name: string };
   pausedSchedule: { id_recurring_schedule: number; uuid: string; name: string };
 }

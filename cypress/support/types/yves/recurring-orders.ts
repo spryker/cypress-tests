@@ -1,6 +1,7 @@
 export interface CreateRecurringOrderStaticFixtures {
   defaultPassword: string;
   scheduleName: string;
+  startDateTooltipText: string;
 }
 
 export interface CreateRecurringOrderDynamicFixtures {

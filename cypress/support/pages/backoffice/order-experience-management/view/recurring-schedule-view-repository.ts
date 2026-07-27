@@ -8,4 +8,6 @@ export class RecurringScheduleViewRepository {
   getStatus = (): Cypress.Chainable => cy.get('[data-qa="recurring-schedule-view-status"]');
   getFrequency = (): Cypress.Chainable => cy.get('[data-qa="recurring-schedule-view-frequency"]');
   getItems = (): Cypress.Chainable => cy.get('[data-qa="recurring-schedule-view-items"]');
+  getConfigurableBundleLabels = (): Cypress.Chainable =>
+    cy.get('[data-qa="recurring-schedule-view-item-configurable-bundle"]');
 }

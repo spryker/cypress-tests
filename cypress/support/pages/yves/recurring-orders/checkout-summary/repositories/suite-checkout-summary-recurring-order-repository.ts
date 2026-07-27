@@ -8,5 +8,6 @@ export class SuiteCheckoutSummaryRecurringOrderRepository implements CheckoutSum
   getCadenceTypeSelect = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-cadence-type-select"]');
   getCadenceValueInput = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-cadence-value-input"]');
   getStartDateInput = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-start-date-input"]');
+  getStartDateTooltip = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-start-date-tooltip"]');
   getConfirmButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-confirm-button"]');
 }

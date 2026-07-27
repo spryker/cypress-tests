@@ -2,5 +2,6 @@
   "defaultPassword": "change123",
   "activeStatus": "active",
   "pausedStatus": "paused",
-  "forecastWidgetMonthText": "Current month"
+  "forecastWidgetMonthText": "Current month",
+  "configurableBundleLabel": "Bundle: Configurable Bundle \"All in\""
 }

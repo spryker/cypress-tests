@@ -52,6 +52,13 @@ describe(
       recurringScheduleViewPage.assertItemsContain(dynamicFixtures.product.sku);
     });
 
+    it('backoffice user sees the configurable bundle name on the items of a recurring schedule', (): void => {
+      recurringScheduleViewPage.visitById(dynamicFixtures.activeSchedule.id_recurring_schedule);
+
+      recurringScheduleViewPage.assertItemsContain(dynamicFixtures.configurableBundleProduct.sku);
+      recurringScheduleViewPage.assertConfigurableBundleLabel(staticFixtures.configurableBundleLabel);
+    });
+
     it('backoffice user can filter the recurring schedules by status', (): void => {
       recurringScheduleListPage.filterByStatus(staticFixtures.pausedStatus);
 

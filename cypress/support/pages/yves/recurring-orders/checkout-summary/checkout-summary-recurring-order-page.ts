@@ -36,6 +36,14 @@ export class CheckoutSummaryRecurringOrderPage extends YvesPage {
     this.repository.getStartDateInput().should('have.attr', 'min', today);
   };
 
+  assertStartDateHasNoDefaultValue = (): void => {
+    this.repository.getStartDateInput().should('have.value', '').and('have.attr', 'required');
+  };
+
+  assertStartDateTooltipContains = (text: string): void => {
+    this.repository.getStartDateTooltip().should('exist').and('contain.text', text);
+  };
+
   assertStartDateRejectsPastDate = (pastDate: string): void => {
     this.repository.getStartDateInput().clear().type(pastDate);
     this.repository.getStartDateInput().should(($input): void => {

@@ -52,6 +52,7 @@ describe(
       checkoutSummaryRecurringOrderPage.enableRecurringOrder();
       checkoutSummaryRecurringOrderPage.fillScheduleName(staticFixtures.scheduleName);
       checkoutSummaryRecurringOrderPage.selectCadenceType('monthly');
+      checkoutSummaryRecurringOrderPage.selectStartDate(formatDate(new Date()));
       checkoutSummaryRecurringOrderPage.confirmRecurringOrder();
       checkoutSummaryPage.placeOrder();
 
@@ -74,6 +75,8 @@ describe(
       checkoutSummaryRecurringOrderPage.assertRecurringOrderToggleVisible();
       checkoutSummaryRecurringOrderPage.enableRecurringOrder();
 
+      checkoutSummaryRecurringOrderPage.assertStartDateHasNoDefaultValue();
+      checkoutSummaryRecurringOrderPage.assertStartDateTooltipContains(staticFixtures.startDateTooltipText);
       checkoutSummaryRecurringOrderPage.assertStartDateEarliestIsToday(formatDate(new Date()));
       checkoutSummaryRecurringOrderPage.assertStartDateRejectsPastDate(addDaysFromToday(-30));
       checkoutSummaryRecurringOrderPage.selectStartDate(futureDate);
