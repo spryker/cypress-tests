@@ -32,9 +32,8 @@ describe('discount create', { tags: ['@backoffice', '@discount', 'discount', 'sp
     });
   });
 
-  // Skipped to mirror the Codeception source, which marks this case
-  // markTestSkipped('Requires refactoring'). Kept as a runnable spec so the
-  // full create flow is documented and ready once the source is un-skipped.
+  // Skipped in source, rebuild when there is a need for. The body is complete,
+  // so un-skipping is all it takes.
   it.skip('should create a valid exclusive discount and show a success message', (): void => {
     discountPage.createDiscount({
       type: 'Cart rule',
@@ -52,7 +51,7 @@ describe('discount create', { tags: ['@backoffice', '@discount', 'discount', 'sp
     discountPage.assertSuccessMessage();
   });
 
-  // Skipped to mirror the Codeception source (markTestSkipped('Requires refactoring')).
+  // Skipped in source, rebuild when there is a need for.
   it.skip('should create a valid non-exclusive discount and show a success message', (): void => {
     discountPage.createDiscount({
       type: 'Cart rule',

@@ -32,15 +32,13 @@ describe(
       refundPage.assertRefundListIsVisible();
     });
 
-    // The three item/order refunded-amount tests below are ported from
-    // RefundCest. In the Codeception source every one of them is disabled at
-    // runtime — RefundCest::_before() calls $i->markTestSkipped('Refactoring
-    // requires.') and each test body calls $scenario->skip('Refactoring
-    // requires.'). They are carried over as it.skip to preserve intent and the
-    // 1:1 test inventory, not as flaky live tests.
+    // Skipped in source, rebuild when there is a need for. The three
+    // item/order refunded-amount tests below come from RefundCest, where every
+    // one of them is disabled at runtime: _before() calls markTestSkipped() and
+    // each body calls $scenario->skip().
     //
-    // Reviving them would require a refundable order precondition that this
-    // suite cannot seed reliably today:
+    // Rebuilding them needs a refundable order precondition this suite cannot
+    // seed reliably today:
     //   1. Place an order (CheckoutScenario) or seed it via dynamic-fixtures.
     //   2. Advance it through the OMS via SalesDetailPage.triggerOms until the
     //      item reaches a refundable state (the source uses a "returned" item
@@ -50,9 +48,8 @@ describe(
     //      data-qa-raw / data-qa="refund-amount-raw") or the order grand total
     //      (td[data-qa="grand-total"] with data-qa-grand-total-raw).
     // The "returned"/"refund" transition and the raw-amount refund-row markup
-    // are not exercised by any existing Cypress page object, and the source
-    // tests themselves were abandoned as "Refactoring requires", so seeding
-    // this precondition here would be speculative and flaky.
+    // are not exercised by any existing Cypress page object, so seeding this
+    // precondition today would be speculative and flaky.
 
     it.skip('should refund one item and the refunded amount equals the item grand total', (): void => {});
 

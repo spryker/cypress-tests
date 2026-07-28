@@ -30,7 +30,7 @@ describe('search preferences', { tags: ['@backoffice', 'product-search', 'spryke
     productSearchPreferencesPage.assertSearchPreferencesListVisible();
   });
 
-  // Skipped in the Codeception source (@skip) due to flakiness — see CC-25718.
+  // Skipped in source, rebuild when there is a need for.
   it.skip('should add, edit and deactivate an attribute to search', (): void => {
     const attributeKey = `foooooo_${uid}`;
 
@@ -39,7 +39,7 @@ describe('search preferences', { tags: ['@backoffice', 'product-search', 'spryke
     productSearchPreferencesPage.deactivateAttributeToSearch(attributeKey);
   });
 
-  // Skipped in the Codeception source (@skip) due to flakiness — see CC-25718.
+  // Skipped in source, rebuild when there is a need for.
   it.skip('should synchronize search preferences', (): void => {
     const attributeKey = `foooooo_${uid}`;
 

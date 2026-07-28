@@ -39,9 +39,8 @@ describe('filter preferences', { tags: ['@backoffice', 'product-search', 'spryke
     });
   });
 
-  // Skipped in the Codeception source (@skip) due to flakiness — see CC-25718.
-  // Ported as a pointer-event drag sequence; the exact drag mechanics are an
-  // unverified guess and must be validated when this is re-enabled.
+  // Skipped in source, rebuild when there is a need for. The drag sequence below
+  // is an unverified guess and has to be validated when it is rebuilt.
   it.skip('should update the filter order via drag and drop', (): void => {
     const fooName = `foooooo_${uid}`;
     const barName = `baaaaar_${uid}`;
@@ -74,7 +73,7 @@ describe('filter preferences', { tags: ['@backoffice', 'product-search', 'spryke
     });
   });
 
-  // Skipped in the Codeception source (@skip) due to flakiness — see CC-25718.
+  // Skipped in source, rebuild when there is a need for.
   it.skip('should synchronize filter preferences', (): void => {
     productSearchPreferencesPage.createFilter(`foooooo_${uid}`).then((): void => {
       productSearchPreferencesPage.visitFilterList();

@@ -21,7 +21,7 @@ describe(
     });
 
     // Ported from Codeception CartUpSellingProductsCest::testAddToCartItemAndCheckUpsellingItemsExist.
-    // Kept skipped to mirror the source @skip annotation (CC-25718 flakiness).
+    // The source was skipped; this runs live now that the up-selling fixture helper is registered.
     it('should show the up-selling carousel on the cart page after adding the base product', (): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,

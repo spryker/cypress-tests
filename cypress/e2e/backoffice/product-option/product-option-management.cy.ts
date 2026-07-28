@@ -64,7 +64,8 @@ describe(
       productOptionPage.assertGroupCreatedSuccessMessage();
     });
 
-    // NOTE: ProductOptionEditCest was @skip in Codeception (CC-25718 — flaky) and relied on
-    // absolute-DOM-path selectors. Not ported; the create journey above is the meaningful coverage.
+    // The product-option edit journey is skipped in source, rebuild when there is a need for.
+    // It relied on absolute-DOM-path selectors, so it needs authoring from scratch rather than
+    // porting; the create journey above is the coverage that carries over.
   }
 );
