@@ -32,6 +32,7 @@ export class SuiteProductRepository implements ProductRepository {
   getSelectedServicePointName = (): Cypress.Chainable => cy.get('[data-qa="component ssp-service-point-selector"]');
   getCloseServicePointPopupButton = (): Cypress.Chainable => cy.get('.js-main-popup__close');
   getSspAssetNameBlock = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-name"]');
-  getAttachmentsList = (): Cypress.Chainable => cy.get('[data-qa="component product-detail"] ul.list');
+  getAttachmentsListSelector = (): string => '[data-qa="component product-detail"] ul.list';
+  getAttachmentsList = (): Cypress.Chainable => cy.get(this.getAttachmentsListSelector());
   getAttachmentItems = (): Cypress.Chainable => cy.get('[data-qa="component product-detail"] .list__item .link');
 }
