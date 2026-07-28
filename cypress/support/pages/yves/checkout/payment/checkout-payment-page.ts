@@ -14,7 +14,7 @@ export class CheckoutPaymentPage extends YvesPage {
   setDummyPaymentMethod = (): void => {
     this.repository.getDummyPaymentInvoiceRadio().click({ force: true });
 
-    if (!this.isRepository('suite')) {
+    if (!this.isRepository('suite', 'b2b-mp', 'b2b')) {
       this.repository.getDummyPaymentInvoiceDateField().clear().type('12.12.1999');
     }
 
@@ -33,9 +33,17 @@ export class CheckoutPaymentPage extends YvesPage {
   setDummyMarketplacePaymentMethod = (): void => {
     this.repository.getDummyMarketplacePaymentInvoiceRadio().click({ force: true });
 
-    if (!this.isRepository('suite')) {
+    if (!this.isRepository('suite', 'b2b-mp', 'b2b')) {
       this.repository.getDummyMarketplacePaymentInvoiceDateField().clear().type('12.12.1999');
     }
+
+    // a workaround for the public demo where we still have the DOB field
+    // should be removed in scope of https://spryker.atlassian.net/browse/CC-39665
+    cy.url().then((url) => {
+      if (url.includes('b2b-marketplace-eu.demo-spryker.com')) {
+        this.repository.getDummyMarketplacePaymentInvoiceDateField().clear().type('12.12.1999');
+      }
+    });
 
     this.repository.getGoToSummaryButton().click();
   };

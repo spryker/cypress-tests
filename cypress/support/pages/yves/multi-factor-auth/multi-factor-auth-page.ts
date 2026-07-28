@@ -11,9 +11,15 @@ export class MultiFactorAuthPage extends YvesPage {
 
   protected PAGE_URL = '/multi-factor-auth/set';
 
-  verifyCode(code: string): void {
+  submitCode(code: string): void {
+    cy.intercept('POST', /.*\/(send-customer-code|send-user-code)$/).as('sendUserCode');
     this.repository.getVerificationCodeInput().type(code);
     this.repository.getVerifyButton().click();
+    cy.wait('@sendUserCode', { responseTimeout: 10000 });
+  }
+
+  verifyCode(code: string): void {
+    this.submitCode(code);
   }
 
   activateMfa(type: string): void {
