@@ -61,24 +61,6 @@ describe(
       productPage.assertServicePointIsSelected(dynamicFixtures.servicePoint.name);
       productPage.addToCart();
 
-      placeOrderWithServiceShipment();
-
-      customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.editOrder();
-
-      cartPage.visit();
-      cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: 2 });
-
-      placeOrderWithServiceShipment();
-
-      customerOverviewPage.viewLastPlacedOrder();
-      customerOverviewPage.getOrderDetailTable().should('contain', `€${staticFixtures.serviceProductPrice}`);
-      customerOverviewPage.getOrderDetailTable().should('contain', `€${staticFixtures.deliveryProductPrice}`);
-      customerOverviewPage.assertProductQuantity(dynamicFixtures.product.localized_attributes[0].name, 2);
-      customerOverviewPage.getOrderDetailTable().should('contain', dynamicFixtures.shipmentType.name);
-    });
-
-    function placeOrderWithServiceShipment(): void {
       checkoutScenario.execute({
         idCustomerAddress: dynamicFixtures.address.id_customer_address,
         paymentMethod: staticFixtures.paymentMethod,
@@ -92,6 +74,32 @@ describe(
         },
         shouldTriggerOmsInCli: true,
       });
-    }
+
+      customerOverviewPage.viewLastPlacedOrder();
+      orderDetailsPage.editOrder();
+
+      cartPage.visit();
+      cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: 2 });
+
+      checkoutScenario.execute({
+        idCustomerAddress: dynamicFixtures.address.id_customer_address,
+        paymentMethod: staticFixtures.paymentMethod,
+        shipmentType: staticFixtures.shipmentTypeKey,
+        isMultiShipment: true,
+        skipServicePointAddressOverride: true,
+        servicePointSelection: {
+          productName: dynamicFixtures.product.localized_attributes[0].name,
+          shipmentTypeKey: staticFixtures.shipmentTypeKey,
+          servicePointName: dynamicFixtures.servicePoint.name,
+        },
+        shouldTriggerOmsInCli: true,
+      });
+
+      customerOverviewPage.viewLastPlacedOrder();
+      customerOverviewPage.getOrderDetailTable().should('contain', `€${staticFixtures.serviceProductPrice}`);
+      customerOverviewPage.getOrderDetailTable().should('contain', `€${staticFixtures.deliveryProductPrice}`);
+      customerOverviewPage.assertProductQuantity(dynamicFixtures.product.localized_attributes[0].name, 2);
+      customerOverviewPage.getOrderDetailTable().should('contain', dynamicFixtures.shipmentType.name);
+    });
   }
 );
