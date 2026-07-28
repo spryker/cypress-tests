@@ -1,6 +1,6 @@
 ### content · cypress-api-to-codeception · 1 scenarios
 
-REVIEW 1   ▸ 0/0 ported
+REVIEW 1   ▸ 0/0 verified
 
 Batches: `content`
 

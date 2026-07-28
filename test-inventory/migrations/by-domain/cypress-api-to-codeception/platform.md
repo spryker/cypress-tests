@@ -1,6 +1,6 @@
 ### platform · cypress-api-to-codeception · 2 scenarios
 
-MIGRATE 1 · REVIEW 1   ▸ 0/1 ported
+MIGRATE 1 · REVIEW 1   ▸ 0/1 verified
 
 Batches: `platform`
 
