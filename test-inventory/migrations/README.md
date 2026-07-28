@@ -13,9 +13,20 @@ no new API spec appears in this repo unnoticed.
 
 Start at [PROGRESS.md](PROGRESS.md).
 
-The reverse direction — Codeception UI journeys arriving *into* this repo — is tracked in
-`spryker/suite` under `tests/test-inventory/migrations/`, not here. A matrix lives in the repo that
-loses the tests.
+## Inbound migrations — not tracked here
+
+This repo is also the *target* of both UI migrations, and those are the bulk of the work: 197
+scenarios become Cypress specs here. Their matrices live in the repos that lose them, because a
+matrix lives in the repo that loses the tests.
+
+| Arriving from | Scenarios | Claim a batch in |
+|---|--:|---|
+| `spryker/suite` (Codeception UI) | 92 | `tests/test-inventory/migrations/by-domain/codeception-ui-to-cypress/` |
+| `spryker/robotframework-suite-tests` (Robot UI) | 105 | `test-inventory/migrations/by-domain/robot-ui-to-cypress/` |
+
+Writing a spec for one of those rows means claiming it *there* and editing that repo's
+`decisions.jsonl`. Do not add inbound rows to this directory — `gate.py` G1 would fail them as
+scenarios with no source inventory.
 
 ---
 
