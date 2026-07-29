@@ -23,16 +23,19 @@ export class B2bMpProductRepository implements ProductRepository {
   getShipmentTypeRadioButton = (shipmentTypeName: string): Cypress.Chainable =>
     cy.contains('[data-qa="component radio shipment_type_uuid"]', shipmentTypeName).find('input');
   getSelectServicePointButton = (): Cypress.Chainable =>
-    cy.get('[data-qa="component ssp-service-point-selector"] button');
+    cy.get('[data-qa="component ssp-service-point-selector"] button:visible');
   getSelectAssetButton = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-trigger"]');
   getSelectAssetPopup = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-results"]', { timeout: 10000 });
   getAssetOptions = (): Cypress.Chainable => cy.get('[data-qa="asset-option-trigger"');
   getServicePointSearchInput = (): Cypress.Chainable => cy.get('[data-qa="component ssp-service-point-finder"] input');
+  getServicePointFinderResults = (): Cypress.Chainable => cy.get('[data-qa="component service-point"]');
+
   getServicePointListItem = (servicePointName: string): Cypress.Chainable =>
     cy
-      .get('[data-qa="component service-point"]')
+      .get('[data-qa="component ssp-service-point-finder"]')
+      .find('[data-qa="component service-point"]')
       .filter((_, el) => Cypress.$(el).find('.service-point__name').text().trim() === servicePointName)
-      .find('button');
+      .find('button[data-qa="available-service-point"]');
   getSelectedServicePointName = (): Cypress.Chainable => cy.get('[data-qa="component ssp-service-point-selector"]');
   getCloseServicePointPopupButton = (): Cypress.Chainable => cy.get('.js-main-popup__close');
   getSspAssetNameBlock = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-name"]');
