@@ -1019,6 +1019,37 @@
               ]
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#company4Customer",
+              "totals": "#totals",
+              "items": [
+                {
+                  "sku": "#product1.sku",
+                  "abstractSku": "#product1.abstract_sku",
+                  "idProductAbstract": "#product1.fk_product_abstract",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference",
+                  "productOfferReference": "#productOffer3.product_offer_reference",
+                  "servicePoint": "#servicePoint",
+                  "shipmentType": "#shipmentType2"
+                },
+                {
+                  "sku": "#product2.sku",
+                  "abstractSku": "#product2.abstract_sku",
+                  "idProductAbstract": "#product2.fk_product_abstract",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference",
+                  "productOfferReference": "#productOffer4.product_offer_reference",
+                  "shipmentType": "#shipmentType1"
+                }
+              ]
+            }
+          ]
         }
       ]
     }
