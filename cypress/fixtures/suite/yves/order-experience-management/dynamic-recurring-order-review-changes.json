@@ -276,6 +276,43 @@
 
         {
           "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "scheduleForQuantityValidation",
+          "arguments": [
+            "#buyerForQuantity.id_customer",
+            {
+              "name": "Review Quantity Validation Order",
+              "cadence_type": "monthly",
+              "estimated_total": 35000,
+              "status": "review_required",
+              "build_quote_data": true,
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-08-01",
+              "next_trigger_date": "2026-08-01",
+              "id_company_user": "#buyerForQuantityCompanyUser.id_company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItem",
+          "arguments": [
+            "#scheduleForQuantityValidation.id_recurring_schedule",
+            {
+              "sku": "#productForQuantity.sku",
+              "quantity": 1,
+              "reference_gross_price": 25000,
+              "reference_net_price": 20000,
+              "build_item_data": true
+            }
+          ]
+        },
+
+        {
+          "type": "helper",
           "name": "haveFullProduct",
           "key": "productFlaggedForRemoval",
           "arguments": [{}, { "idTaxSet": 1 }]
@@ -583,6 +620,57 @@
 
         {
           "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "scheduleForSubstituteValidation",
+          "arguments": [
+            "#buyerForSubstitute.id_customer",
+            {
+              "name": "Review Substitute Validation Order",
+              "cadence_type": "monthly",
+              "estimated_total": 35000,
+              "status": "review_required",
+              "build_quote_data": true,
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-08-01",
+              "next_trigger_date": "2026-08-01",
+              "id_company_user": "#buyerForSubstituteCompanyUser.id_company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItem",
+          "arguments": [
+            "#scheduleForSubstituteValidation.id_recurring_schedule",
+            {
+              "sku": "#discontinuedProduct.sku",
+              "quantity": 1,
+              "reference_gross_price": 35000,
+              "reference_net_price": 28000,
+              "build_item_data": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItem",
+          "arguments": [
+            "#scheduleForSubstituteValidation.id_recurring_schedule",
+            {
+              "sku": "#keptProductForSubstitute.sku",
+              "quantity": 1,
+              "reference_gross_price": 30000,
+              "reference_net_price": 30000,
+              "build_item_data": true
+            }
+          ]
+        },
+
+        {
+          "type": "helper",
           "name": "haveFullProduct",
           "key": "productForAddSchedule",
           "arguments": [{}, { "idTaxSet": 1 }]
@@ -725,6 +813,43 @@
           "name": "haveRecurringScheduleItem",
           "arguments": [
             "#scheduleForAddProduct.id_recurring_schedule",
+            {
+              "sku": "#productForAddSchedule.sku",
+              "quantity": 1,
+              "reference_gross_price": 30000,
+              "reference_net_price": 30000,
+              "build_item_data": true
+            }
+          ]
+        },
+
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "scheduleForAddProductValidation",
+          "arguments": [
+            "#buyerForAddProduct.id_customer",
+            {
+              "name": "Review Add Product Validation Order",
+              "cadence_type": "monthly",
+              "estimated_total": 30000,
+              "status": "review_required",
+              "build_quote_data": true,
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-08-01",
+              "next_trigger_date": "2026-08-01",
+              "id_company_user": "#buyerForAddProductCompanyUser.id_company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItem",
+          "arguments": [
+            "#scheduleForAddProductValidation.id_recurring_schedule",
             {
               "sku": "#productForAddSchedule.sku",
               "quantity": 1,

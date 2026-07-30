@@ -93,14 +93,17 @@ export interface RecurringOrderReviewChangesDynamicFixtures {
   scheduleForBudget: { id_recurring_schedule: number; uuid: string; name: string };
   buyerForQuantity: { email: string; id_customer: number };
   scheduleForQuantity: { id_recurring_schedule: number; uuid: string; name: string };
+  scheduleForQuantityValidation: { id_recurring_schedule: number; uuid: string; name: string };
   buyerForRemoval: { email: string; id_customer: number };
   scheduleForRemoval: { id_recurring_schedule: number; uuid: string; name: string };
   productFlaggedForRemoval: { sku: string; abstract_sku: string };
   buyerForSubstitute: { email: string; id_customer: number };
   scheduleForSubstitute: { id_recurring_schedule: number; uuid: string; name: string };
+  scheduleForSubstituteValidation: { id_recurring_schedule: number; uuid: string; name: string };
   discontinuedProduct: { sku: string; abstract_sku: string };
   substituteProduct: { sku: string; abstract_sku: string };
   buyerForAddProduct: { email: string; id_customer: number };
   scheduleForAddProduct: { id_recurring_schedule: number; uuid: string; name: string };
+  scheduleForAddProductValidation: { id_recurring_schedule: number; uuid: string; name: string };
   addProduct: { sku: string; abstract_sku: string };
 }

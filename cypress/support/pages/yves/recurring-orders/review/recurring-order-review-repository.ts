@@ -4,6 +4,10 @@ export interface RecurringOrderReviewRepository {
   getFooterTotal(): Cypress.Chainable;
   getAcceptCta(): Cypress.Chainable;
   getApproveSubmitButton(): Cypress.Chainable;
+  getModalRemovedCount(): Cypress.Chainable;
+  getModalPriceChangeCount(): Cypress.Chainable;
+  getModalSubstitutedCount(): Cypress.Chainable;
+  getModalAddedCount(): Cypress.Chainable;
   getFlaggedItems(): Cypress.Chainable;
   getScopeOption(scope: string): Cypress.Chainable;
   getFlashAlert(): Cypress.Chainable;
@@ -15,6 +19,7 @@ export interface RecurringOrderReviewRepository {
   getBudgetSummaryRemaining(): Cypress.Chainable;
 
   getLineQuantityInput(): Cypress.Chainable;
+  getLineAcceptedQuantityInput(): Cypress.Chainable;
   getLineRemoveToggle(): Cypress.Chainable;
 
   getSubstituteChangeButton(): Cypress.Chainable;
@@ -31,6 +36,8 @@ export interface RecurringOrderReviewRepository {
   getAddProductPickerQuantityInput(): Cypress.Chainable;
   getAddProductPickerSubmitButton(): Cypress.Chainable;
   getAddProductLine(): Cypress.Chainable;
+  getAddProductLineQuantityInput(): Cypress.Chainable;
+  getAddedItemQuantityFields(): Cypress.Chainable;
 
   getShipmentAddressSelect(): Cypress.Chainable;
   getShipmentMethodSelect(): Cypress.Chainable;

@@ -47,6 +47,22 @@ export class RecurringOrderReviewPage extends YvesPage {
     this.repository.getApproveSubmitButton().click();
   };
 
+  assertModalRemovedCount = (count: number): void => {
+    this.repository.getModalRemovedCount().should('have.text', String(count));
+  };
+
+  assertModalPriceChangeCount = (count: number): void => {
+    this.repository.getModalPriceChangeCount().should('have.text', String(count));
+  };
+
+  assertModalSubstitutedCount = (count: number): void => {
+    this.repository.getModalSubstitutedCount().should('have.text', String(count));
+  };
+
+  assertModalAddedCount = (count: number): void => {
+    this.repository.getModalAddedCount().should('have.text', String(count));
+  };
+
   assertOrderPlaced = (): void => {
     cy.url().should('not.include', '/review-required');
   };
@@ -87,6 +103,14 @@ export class RecurringOrderReviewPage extends YvesPage {
 
   setLineQuantity = (quantity: number): void => {
     this.repository.getLineQuantityInput().first().clear().type(String(quantity)).blur();
+  };
+
+  typeLineQuantity = (quantity: string): void => {
+    this.repository.getLineQuantityInput().first().clear().type(quantity).blur();
+  };
+
+  assertSubmittedLineQuantity = (quantity: number): void => {
+    this.repository.getLineAcceptedQuantityInput().first().should('have.value', String(quantity));
   };
 
   removeFirstLine = (): void => {
@@ -153,6 +177,39 @@ export class RecurringOrderReviewPage extends YvesPage {
 
   assertAddProductLineVisible = (): void => {
     this.repository.getAddProductLine().should('be.visible');
+  };
+
+  typeSubstituteQuantity = (quantity: string): void => {
+    this.repository.getSubstituteQuantityInput().filter(':visible').first().clear().type(quantity).blur();
+  };
+
+  assertSubstituteQuantity = (quantity: number): void => {
+    this.repository.getSubstituteQuantityInput().filter(':visible').first().should('have.value', String(quantity));
+  };
+
+  typeAddProductQuantity = (quantity: string): void => {
+    this.repository.getAddProductPickerQuantityInput().filter(':visible').first().clear().type(quantity).blur();
+  };
+
+  assertAddProductQuantity = (quantity: number): void => {
+    this.repository
+      .getAddProductPickerQuantityInput()
+      .filter(':visible')
+      .first()
+      .should('have.value', String(quantity));
+  };
+
+  typeAddProductLineQuantity = (quantity: string): void => {
+    this.repository.getAddProductLineQuantityInput().first().clear().type(quantity).blur();
+  };
+
+  assertAddProductLineQuantity = (quantity: number): void => {
+    this.repository.getAddProductLineQuantityInput().first().should('have.value', String(quantity));
+  };
+
+  /** Asserts the value actually posted for an added item (substitute or added product), not the visible control. */
+  assertSubmittedAddedItemQuantity = (quantity: number): void => {
+    this.repository.getAddedItemQuantityFields().first().should('have.value', String(quantity));
   };
 
   selectShipmentAddress = (): void => {

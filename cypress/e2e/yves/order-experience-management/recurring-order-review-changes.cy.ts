@@ -62,6 +62,7 @@ describe(
       recurringOrderReviewPage.setLineQuantity(staticFixtures.updatedQuantity);
 
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
+      recurringOrderReviewPage.assertModalPriceChangeCount(1);
       recurringOrderReviewPage.selectStandingScope();
       recurringOrderReviewPage.confirmApproveReview();
 
@@ -69,6 +70,19 @@ describe(
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForQuantity.uuid);
       recurringOrderDetailPage.assertDetailItemQuantity(String(staticFixtures.updatedQuantity));
+    });
+
+    it('line quantity cannot be submitted as zero or negative', (): void => {
+      loginAs(dynamicFixtures.buyerForQuantity.email);
+
+      recurringOrderReviewPage.visitReview(dynamicFixtures.scheduleForQuantityValidation.uuid);
+      recurringOrderReviewPage.assertFlaggedItemsVisible();
+
+      recurringOrderReviewPage.typeLineQuantity('0');
+      recurringOrderReviewPage.assertSubmittedLineQuantity(1);
+
+      recurringOrderReviewPage.typeLineQuantity('-5');
+      recurringOrderReviewPage.assertSubmittedLineQuantity(1);
     });
 
     it('company user can remove a line for this occurrence only and the standing schedule keeps the item', (): void => {
@@ -80,6 +94,8 @@ describe(
       recurringOrderReviewPage.removeFirstLine();
 
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
+      recurringOrderReviewPage.assertModalRemovedCount(1);
+      recurringOrderReviewPage.assertModalPriceChangeCount(0);
       recurringOrderReviewPage.selectOccurrenceScope();
       recurringOrderReviewPage.confirmApproveReview();
 
@@ -105,6 +121,8 @@ describe(
       recurringOrderReviewPage.assertSubstituteApplied();
 
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
+      recurringOrderReviewPage.assertModalSubstitutedCount(1);
+      recurringOrderReviewPage.assertModalRemovedCount(0);
       recurringOrderReviewPage.selectStandingScope();
       recurringOrderReviewPage.confirmApproveReview();
 
@@ -113,6 +131,61 @@ describe(
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForSubstitute.uuid);
       recurringOrderDetailPage.assertDetailItemsContain(dynamicFixtures.substituteProduct.sku);
       recurringOrderDetailPage.assertDetailItemsNotContain(dynamicFixtures.discontinuedProduct.sku);
+    });
+
+    it('substitute quantity cannot be submitted as zero or negative', (): void => {
+      recurringOrderReviewPage.interceptShipmentMethods();
+
+      loginAs(dynamicFixtures.buyerForSubstitute.email);
+
+      recurringOrderReviewPage.visitReview(dynamicFixtures.scheduleForSubstituteValidation.uuid);
+      recurringOrderReviewPage.assertSubstituteVisible();
+
+      recurringOrderReviewPage.openSubstitutePicker();
+      recurringOrderReviewPage.selectShipmentAddress();
+      recurringOrderReviewPage.waitForShipmentMethods();
+      recurringOrderReviewPage.selectShipmentMethod();
+      recurringOrderReviewPage.confirmSubstitute();
+      recurringOrderReviewPage.assertSubstituteApplied();
+
+      recurringOrderReviewPage.typeSubstituteQuantity('0');
+      recurringOrderReviewPage.assertSubstituteQuantity(1);
+      recurringOrderReviewPage.assertSubmittedAddedItemQuantity(1);
+
+      recurringOrderReviewPage.typeSubstituteQuantity('-5');
+      recurringOrderReviewPage.assertSubstituteQuantity(1);
+      recurringOrderReviewPage.assertSubmittedAddedItemQuantity(1);
+    });
+
+    it('added product quantity cannot be submitted as zero or negative', (): void => {
+      recurringOrderReviewPage.interceptShipmentMethods();
+
+      loginAs(dynamicFixtures.buyerForAddProduct.email);
+
+      recurringOrderReviewPage.visitReview(dynamicFixtures.scheduleForAddProductValidation.uuid);
+
+      recurringOrderReviewPage.openAddProductModal();
+      recurringOrderReviewPage.searchAndSelectProduct(dynamicFixtures.addProduct.sku);
+      recurringOrderReviewPage.selectAddProductOffer();
+      recurringOrderReviewPage.selectShipmentAddress();
+      recurringOrderReviewPage.waitForShipmentMethods();
+      recurringOrderReviewPage.selectShipmentMethod();
+
+      recurringOrderReviewPage.typeAddProductQuantity('0');
+      recurringOrderReviewPage.assertAddProductQuantity(1);
+      recurringOrderReviewPage.typeAddProductQuantity('-5');
+      recurringOrderReviewPage.assertAddProductQuantity(1);
+
+      recurringOrderReviewPage.submitAddProduct();
+      recurringOrderReviewPage.assertAddProductLineVisible();
+
+      recurringOrderReviewPage.typeAddProductLineQuantity('0');
+      recurringOrderReviewPage.assertAddProductLineQuantity(1);
+      recurringOrderReviewPage.assertSubmittedAddedItemQuantity(1);
+
+      recurringOrderReviewPage.typeAddProductLineQuantity('-5');
+      recurringOrderReviewPage.assertAddProductLineQuantity(1);
+      recurringOrderReviewPage.assertSubmittedAddedItemQuantity(1);
     });
 
     it('company user can add a product with merchant, address and shipment and place the order', (): void => {
@@ -132,6 +205,7 @@ describe(
       recurringOrderReviewPage.assertAddProductLineVisible();
 
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
+      recurringOrderReviewPage.assertModalAddedCount(1);
       recurringOrderReviewPage.selectStandingScope();
       recurringOrderReviewPage.confirmApproveReview();
 
