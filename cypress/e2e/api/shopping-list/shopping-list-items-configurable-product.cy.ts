@@ -8,6 +8,7 @@ import {
   deleteShoppingListItem,
   expectApiErrorDetail,
   expectApiValidationError,
+  expectApiValidationErrorAnyOf,
   getShoppingList,
   updateShoppingListItem,
 } from '@utils';
@@ -171,33 +172,43 @@ describe(
       });
     });
 
-    // `availableQuantity` is a typed integer leaf of the `productConfigurationInstance` value object.
-    // Any value that cannot be assigned to it — an empty string as much as a non-numeric one — fails
-    // denormalization of the whole object, so the response reports the object and the per-leaf detail
-    // is not preserved. Only an entirely absent leaf still reports the leaf itself.
+    // `availableQuantity` is a leaf of the `productConfigurationInstance` value object, and the details
+    // for an unusable value depend on which version of the resource definition is installed. While the
+    // leaf is untyped it reaches the validator and reports its own violations; once it is a typed
+    // integer, any value that cannot be assigned to it fails denormalization of the whole value object
+    // and only an object-level detail survives. Both are accepted for as long as the demoshops span
+    // both versions. An absent leaf reports itself either way.
     const availableQuantityValidations = [
       {
         description: 'empty availableQuantity',
         options: { availableQuantity: '' },
-        details: ['productConfigurationInstance => This value should be of type object.'],
+        acceptedDetails: [
+          ['productConfigurationInstance => This value should be of type object.'],
+          [
+            'productConfigurationInstance.availableQuantity => This value should not be blank.',
+            'productConfigurationInstance.availableQuantity => This value should be of type numeric.',
+          ],
+        ],
       },
       {
         description: 'string availableQuantity',
         options: { availableQuantity: 'string' },
-        details: ['productConfigurationInstance => This value should be of type object.'],
+        acceptedDetails: [
+          ['productConfigurationInstance => This value should be of type object.'],
+          ['productConfigurationInstance.availableQuantity => This value should be of type numeric.'],
+        ],
       },
       {
         description: 'missing availableQuantity',
         options: { omitAvailableQuantity: true },
-        details: ['productConfigurationInstance.availableQuantity => This field is missing.'],
+        acceptedDetails: [['productConfigurationInstance.availableQuantity => This field is missing.']],
       },
     ];
 
-    availableQuantityValidations.forEach(({ description, options, details }): void => {
+    availableQuantityValidations.forEach(({ description, options, acceptedDetails }): void => {
       it(`should not add a configurable product to the shopping list with ${description}`, (): void => {
         addConfigurableItem({ quantity: staticFixtures.quantity, ...options }, false).then((response) => {
-          expectApiValidationError(response, details[0]);
-          details.slice(1).forEach((detail) => expectApiErrorDetail(response, detail));
+          expectApiValidationErrorAnyOf(response, acceptedDetails);
         });
       });
     });
