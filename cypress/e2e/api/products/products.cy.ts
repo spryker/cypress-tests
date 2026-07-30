@@ -232,8 +232,8 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
 
     it('should round-trip validFrom and validTo', (): void => {
       const newSku = `pxm-dates-${Date.now()}`;
-      const validFrom = '2027-01-01T00:00:00+00:00';
-      const validTo = '2027-12-31T00:00:00+00:00';
+      const validFrom = '2027-01-01 00:00:00';
+      const validTo = '2027-12-31 00:00:00';
 
       createProduct(accessToken, { ...buildValidProductBody(newSku, abstractSku), validFrom, validTo }).then(
         (response) => {
@@ -448,7 +448,7 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
 
         createProduct(accessToken, {
           ...buildValidProductBody(newSku, null),
-          taxSet: taxSetUuid,
+          taxSet: { uuid: taxSetUuid },
           categories: [{ uuid: categoryUuid }],
         }).then((response) => {
           expect(response.status, 'concrete created').to.be.oneOf([200, 201]);
@@ -466,11 +466,58 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       });
     });
 
+    it('should not remove existing abstract categories on PATCH (additive-only)', (): void => {
+      // Regression: the generated resource defaults categories to [] and cannot tell "omitted" from
+      // an explicit empty array, so PATCH must treat both as a no-op — never a clear-all.
+      getAbstractProductCollection(accessToken, { page: 1 }).then((collection) => {
+        expect(collection.status).to.eq(200);
+
+        const withCategory = collection.body.data.find(
+          (item: { attributes: { categories: Array<{ uuid: string }> } }) => item.attributes.categories.length > 0
+        );
+        expect(withCategory, 'a demo abstract with a category exists on page 1').to.not.be.undefined;
+
+        const categoryUuid = withCategory.attributes.categories[0].uuid;
+        const newSku = `pxm-cat-additive-${Date.now()}`;
+        const derivedAbstractSku = `${newSku}-abstract`;
+
+        // Auto-create the abstract with one category assigned.
+        createProduct(accessToken, {
+          ...buildValidProductBody(newSku, null),
+          categories: [{ uuid: categoryUuid }],
+        }).then((createResponse) => {
+          expect(createResponse.status, 'concrete created').to.be.oneOf([200, 201]);
+
+          // PATCH with categories OMITTED must not clear them.
+          updateProduct(accessToken, newSku, { isActive: false }).then((patchOmitResponse) => {
+            expect(patchOmitResponse.status).to.eq(200);
+
+            getAbstractProduct(accessToken, derivedAbstractSku).then((afterOmit) => {
+              const uuidsAfterOmit = afterOmit.body.data.attributes.categories.map((c: { uuid: string }) => c.uuid);
+              expect(uuidsAfterOmit, 'category kept when categories omitted on PATCH').to.include(categoryUuid);
+
+              // PATCH with an explicit empty categories array must also not clear them.
+              updateProduct(accessToken, newSku, { categories: [] }).then((patchEmptyResponse) => {
+                expect(patchEmptyResponse.status).to.eq(200);
+
+                getAbstractProduct(accessToken, derivedAbstractSku).then((afterEmpty) => {
+                  const uuidsAfterEmpty = afterEmpty.body.data.attributes.categories.map(
+                    (c: { uuid: string }) => c.uuid
+                  );
+                  expect(uuidsAfterEmpty, 'category kept when categories = [] on PATCH').to.include(categoryUuid);
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+
     it('should assign newFrom and newTo to the abstract when auto-creating it', (): void => {
       const newSku = `pxm-abs-new-${Date.now()}`;
       const derivedAbstractSku = `${newSku}-abstract`;
-      const newFrom = '2027-01-01T00:00:00+00:00';
-      const newTo = '2027-12-31T00:00:00+00:00';
+      const newFrom = '2027-01-01 00:00:00';
+      const newTo = '2027-12-31 00:00:00';
 
       createProduct(accessToken, { ...buildValidProductBody(newSku, null), newFrom, newTo }).then((response) => {
         expect(response.status, 'concrete created').to.be.oneOf([200, 201]);
@@ -490,8 +537,8 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
         expect(createResponse.status, 'setup product created').to.be.oneOf([200, 201]);
 
         updateProduct(accessToken, patchSku, {
-          newFrom: '2028-03-01T00:00:00+00:00',
-          newTo: '2028-04-01T00:00:00+00:00',
+          newFrom: '2028-03-01 00:00:00',
+          newTo: '2028-04-01 00:00:00',
         }).then((patchResponse) => {
           expect(patchResponse.status).to.eq(200);
 
@@ -562,7 +609,7 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       },
       {
         title: 'invalid taxSet uuid format',
-        override: { taxSet: 'not-a-uuid' },
+        override: { taxSet: { uuid: 'not-a-uuid' } },
       },
       {
         title: 'invalid image url',
@@ -581,11 +628,11 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       },
       {
         title: 'validFrom later than validTo',
-        override: { validFrom: '2027-12-31T00:00:00+00:00', validTo: '2027-01-01T00:00:00+00:00' },
+        override: { validFrom: '2027-12-31 00:00:00', validTo: '2027-01-01 00:00:00' },
       },
       {
         title: 'newFrom later than newTo',
-        override: { newFrom: '2027-12-31T00:00:00+00:00', newTo: '2027-01-01T00:00:00+00:00' },
+        override: { newFrom: '2027-12-31 00:00:00', newTo: '2027-01-01 00:00:00' },
       },
       {
         title: 'unknown abstractSku',
@@ -615,20 +662,23 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       });
     });
 
-    // productClass and taxSet have no facade existence lookup in the validator stack, so an unknown-but-
-    // well-formed uuid is accepted (2xx) and the association is silently not created (unlike category).
-    it('should silently skip unknown productClass and taxSet uuids', (): void => {
-      const newSku = `pxm-skip-${Date.now()}`;
-      const body = {
-        ...buildValidProductBody(newSku, abstractSku),
-        productClass: [{ uuid: NON_EXISTENT_UUID }],
-        taxSet: NON_EXISTENT_UUID,
-      };
+    // productClass and taxSet are existence-checked (TaxSetExistsValidatorPlugin / ProductClassExistsValidatorPlugin);
+    // a well-formed but unknown uuid must be rejected with 422, never silently skipped.
+    it('should reject an unknown taxSet uuid with 422', (): void => {
+      const newSku = `pxm-unknown-taxset-${Date.now()}`;
+      const body = { ...buildValidProductBody(newSku, abstractSku), taxSet: { uuid: NON_EXISTENT_UUID } };
 
       createProduct(accessToken, body, false).then((response) => {
-        expect(response.status, 'unknown productClass/taxSet uuids accepted').to.be.oneOf([200, 201]);
-        // productClass is echoed on the concrete resource — the unknown uuid must not have been assigned.
-        expect(response.body.data.attributes.productClass, 'unknown productClass not assigned').to.be.empty;
+        expect(response.status, 'unknown taxSet uuid rejected').to.eq(422);
+      });
+    });
+
+    it('should reject an unknown productClass uuid with 422', (): void => {
+      const newSku = `pxm-unknown-class-${Date.now()}`;
+      const body = { ...buildValidProductBody(newSku, abstractSku), productClass: [{ uuid: NON_EXISTENT_UUID }] };
+
+      createProduct(accessToken, body, false).then((response) => {
+        expect(response.status, 'unknown productClass uuid rejected').to.eq(422);
       });
     });
   });
@@ -643,7 +693,9 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       });
     });
 
-    // Mirror of the POST validation cases that apply to PATCH (sku is a URL identifier, so it is not patched).
+    // Mirror of the POST validation cases that apply to PATCH. Omitted on purpose:
+    // `blank sku` (sku is the URL identifier, never patched) and `unknown abstractSku`
+    // (abstractSku is immutable on PATCH — covered by the dedicated immutability test above).
     const invalidCases: Array<{ title: string; override: Record<string, unknown> }> = [
       { title: 'invalid validFrom datetime', override: { validFrom: 'not-a-date' } },
       {
@@ -651,6 +703,14 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
         override: {
           prices: [
             { priceTypeName: 'DEFAULT', storeName: 'DE', currencyCode: 'ZZZ', netAmount: 100, grossAmount: 100 },
+          ],
+        },
+      },
+      {
+        title: 'unknown price type',
+        override: {
+          prices: [
+            { priceTypeName: 'NON_EXISTENT_TYPE', storeName: 'DE', currencyCode: 'EUR', netAmount: 100, grossAmount: 100 },
           ],
         },
       },
@@ -665,8 +725,42 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
         override: { stocks: [{ stockName: 'NON_EXISTENT_WAREHOUSE', quantity: 1, isNeverOutOfStock: false }] },
       },
       {
+        title: 'unknown store',
+        override: { stores: ['ZZ'] },
+      },
+      {
+        title: 'invalid taxSet uuid format',
+        override: { taxSet: { uuid: 'not-a-uuid' } },
+      },
+      {
+        title: 'invalid image url',
+        override: {
+          imageSets: [{ localeName: 'en_US', images: [{ externalUrlSmall: 'not-a-url', externalUrlLarge: 'not-a-url' }] }],
+        },
+      },
+      {
+        title: 'non-positive bundle quantity',
+        override: { productBundle: [{ sku: 'some-sku', quantity: 0 }] },
+      },
+      {
         title: 'validFrom later than validTo',
-        override: { validFrom: '2027-12-31T00:00:00+00:00', validTo: '2027-01-01T00:00:00+00:00' },
+        override: { validFrom: '2027-12-31 00:00:00', validTo: '2027-01-01 00:00:00' },
+      },
+      {
+        title: 'newFrom later than newTo',
+        override: { newFrom: '2027-12-31 00:00:00', newTo: '2027-01-01 00:00:00' },
+      },
+      {
+        title: 'unknown shipmentType uuid',
+        override: { shipmentType: [{ uuid: NON_EXISTENT_UUID }] },
+      },
+      {
+        title: 'unknown locale in localizedAttributes',
+        override: { localizedAttributes: { zz_ZZ: { name: 'Unknown locale', isSearchable: true } } },
+      },
+      {
+        title: 'unknown category uuid',
+        override: { categories: [{ uuid: NON_EXISTENT_UUID }] },
       },
     ];
 
@@ -674,6 +768,44 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       it(`should reject ${title} with 422`, (): void => {
         updateProduct(accessToken, patchSku, override, false).then((response) => {
           expect(response.status).to.eq(422);
+        });
+      });
+    });
+
+    // Existence-checked uuids (TaxSetExistsValidatorPlugin / ProductClassExistsValidatorPlugin) must be
+    // rejected on PATCH too — never silently skipped. taxSet writes through to the parent abstract.
+    it('should reject an unknown taxSet uuid with 422', (): void => {
+      updateProduct(accessToken, patchSku, { taxSet: { uuid: NON_EXISTENT_UUID } }, false).then((response) => {
+        expect(response.status, 'unknown taxSet uuid rejected on patch').to.eq(422);
+      });
+    });
+
+    it('should reject an unknown productClass uuid with 422', (): void => {
+      updateProduct(accessToken, patchSku, { productClass: [{ uuid: NON_EXISTENT_UUID }] }, false).then((response) => {
+        expect(response.status, 'unknown productClass uuid rejected on patch').to.eq(422);
+      });
+    });
+
+    // PATCH-only: validation runs before the merge, so a request that fails validation must persist NOTHING —
+    // not even the valid fields sent alongside the invalid one.
+    it('should not apply any field when the patch fails validation', (): void => {
+      updateProduct(
+        accessToken,
+        patchSku,
+        {
+          stocks: [{ stockName: staticFixtures.stockName, quantity: 7, isNeverOutOfStock: false }],
+          categories: [{ uuid: NON_EXISTENT_UUID }],
+        },
+        false,
+      ).then((patchResponse) => {
+        expect(patchResponse.status, 'patch rejected').to.eq(422);
+
+        // The valid stock change must not have been persisted — quantity stays at the created baseline (42).
+        getProduct(accessToken, patchSku).then((getResponse) => {
+          const stock = getResponse.body.data.attributes.stocks.find(
+            (item: Record<string, unknown>) => item.stockName === staticFixtures.stockName
+          );
+          expect(stock.quantity, 'valid stock change rolled back on failed patch').to.eq(42);
         });
       });
     });
