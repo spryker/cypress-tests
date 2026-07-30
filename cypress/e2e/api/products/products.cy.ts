@@ -710,7 +710,13 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
         title: 'unknown price type',
         override: {
           prices: [
-            { priceTypeName: 'NON_EXISTENT_TYPE', storeName: 'DE', currencyCode: 'EUR', netAmount: 100, grossAmount: 100 },
+            {
+              priceTypeName: 'NON_EXISTENT_TYPE',
+              storeName: 'DE',
+              currencyCode: 'EUR',
+              netAmount: 100,
+              grossAmount: 100,
+            },
           ],
         },
       },
@@ -735,7 +741,9 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       {
         title: 'invalid image url',
         override: {
-          imageSets: [{ localeName: 'en_US', images: [{ externalUrlSmall: 'not-a-url', externalUrlLarge: 'not-a-url' }] }],
+          imageSets: [
+            { localeName: 'en_US', images: [{ externalUrlSmall: 'not-a-url', externalUrlLarge: 'not-a-url' }] },
+          ],
         },
       },
       {
@@ -796,7 +804,7 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
           stocks: [{ stockName: staticFixtures.stockName, quantity: 7, isNeverOutOfStock: false }],
           categories: [{ uuid: NON_EXISTENT_UUID }],
         },
-        false,
+        false
       ).then((patchResponse) => {
         expect(patchResponse.status, 'patch rejected').to.eq(422);
 
