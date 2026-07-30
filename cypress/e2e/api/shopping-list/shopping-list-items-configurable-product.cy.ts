@@ -171,15 +171,15 @@ describe(
       });
     });
 
-    // `availableQuantity` is a typed integer leaf of the `productConfigurationInstance` value object,
-    // so the value is coerced before the field constraints run: an empty string reaches `NotBlank` as
-    // null and never trips the numeric type check, while a non-numeric string cannot be coerced at all
-    // and fails denormalization of the whole object, which reports the object rather than the leaf.
+    // `availableQuantity` is a typed integer leaf of the `productConfigurationInstance` value object.
+    // Any value that cannot be assigned to it — an empty string as much as a non-numeric one — fails
+    // denormalization of the whole object, so the response reports the object and the per-leaf detail
+    // is not preserved. Only an entirely absent leaf still reports the leaf itself.
     const availableQuantityValidations = [
       {
         description: 'empty availableQuantity',
         options: { availableQuantity: '' },
-        details: ['productConfigurationInstance.availableQuantity => This value should not be blank.'],
+        details: ['productConfigurationInstance => This value should be of type object.'],
       },
       {
         description: 'string availableQuantity',

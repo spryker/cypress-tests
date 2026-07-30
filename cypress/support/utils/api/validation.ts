@@ -14,7 +14,9 @@ type ApiErrorResponse = Cypress.Response<{ errors: Array<{ code?: string; detail
 export function expectApiErrorDetail(response: ApiErrorResponse, detail: string): void {
   const details = response.body.errors.map((error) => error.detail);
 
-  expect(details, 'response error details').to.include(detail);
+  // Serialized into the assertion message because Chai renders a list of long strings as `Array(n)`,
+  // which hides the very details needed to tell a contract change from a broken expectation.
+  expect(details, `response error details ${JSON.stringify(details)}`).to.include(detail);
 }
 
 /**
