@@ -231,9 +231,6 @@ export class BackofficeAssistantPage extends BackofficePage {
 
   getWidgetToolCallNameSelector = (): string => this.repository.getWidgetToolCallNameSelector();
 
-  getWidgetToolCallArgs = (): Cypress.Chainable =>
-    this.getWidgetToolCallMessage().find(this.repository.getWidgetToolCallArgsSelector());
-
   getWidgetToolCallResultToggle = (): Cypress.Chainable =>
     this.getWidgetToolCallMessage().find(this.repository.getWidgetToolCallResultToggleSelector());
 

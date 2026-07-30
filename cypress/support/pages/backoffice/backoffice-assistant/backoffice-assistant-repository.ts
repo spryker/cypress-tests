@@ -85,8 +85,6 @@ export class BackofficeAssistantRepository {
 
   getWidgetToolCallNameSelector = (): string => '.backoffice-assistant__tool-call-name';
 
-  getWidgetToolCallArgsSelector = (): string => '[data-section="args"] .backoffice-assistant__tool-call-code';
-
   getWidgetToolCallResultToggleSelector = (): string => '.backoffice-assistant__tool-call-toggle';
 
   getWidgetAttachmentChipRemoveSelector = (): string => '.backoffice-assistant__attachment-chip-remove';

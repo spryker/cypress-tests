@@ -316,7 +316,7 @@ describe(
     );
 
     it(
-      'renders a streamed tool_call event as a tool-call block with the tool name and arguments, no result section',
+      'renders no tool-call block for a streamed tool_call, only the final assistant answer',
       { tags: ['@demo-smoke'] },
       (): void => {
         backofficeAssistantPage.interceptPromptWithSseEvents([
@@ -332,13 +332,11 @@ describe(
 
         cy.wait('@assistantPrompt');
 
-        backofficeAssistantPage.getWidgetToolCallMessage().should('have.length', 1);
-        backofficeAssistantPage
-          .getWidgetToolCallMessage()
-          .find(backofficeAssistantPage.getWidgetToolCallNameSelector())
-          .should('contain.text', 'list_orders');
-        backofficeAssistantPage.getWidgetToolCallArgs().should('contain.text', 'limit');
-        backofficeAssistantPage.getWidgetToolCallResultToggle().should('not.exist');
+        // A tool REQUEST is an in-progress signal only — it names the running tool on the
+        // transient loading indicator (removed once the stream closes) and never becomes a
+        // message block. Only tool_call_result renders a block; see the sibling test below.
+        backofficeAssistantPage.getWidgetAiMessage().last().should('contain.text', 'Fetched the orders.');
+        backofficeAssistantPage.getWidgetToolCallMessage().should('not.exist');
       }
     );
 
