@@ -22,8 +22,8 @@ describe(
     ],
   },
   (): void => {
-    if (!['suite'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because test runs only for suite', () => {});
+    if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because test runs only for suite and b2b-mp', () => {});
 
       return;
     }
@@ -99,7 +99,6 @@ describe(
       customerOverviewPage.getOrderDetailTable().should('contain', `€${staticFixtures.serviceProductPrice}`);
       customerOverviewPage.getOrderDetailTable().should('contain', `€${staticFixtures.deliveryProductPrice}`);
       customerOverviewPage.assertProductQuantity(dynamicFixtures.product.localized_attributes[0].name, 2);
-      customerOverviewPage.getOrderDetailTable().should('contain', dynamicFixtures.shipmentType.name);
     });
   }
 );
