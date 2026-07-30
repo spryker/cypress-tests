@@ -172,12 +172,9 @@ describe(
       });
     });
 
-    // `availableQuantity` is a leaf of the `productConfigurationInstance` value object, and the details
-    // for an unusable value depend on which version of the resource definition is installed. While the
-    // leaf is untyped it reaches the validator and reports its own violations; once it is a typed
-    // integer, any value that cannot be assigned to it fails denormalization of the whole value object
-    // and only an object-level detail survives. Both are accepted for as long as the demoshops span
-    // both versions. An absent leaf reports itself either way.
+    // An unusable `availableQuantity` reports the leaf while it is untyped and the whole
+    // `productConfigurationInstance` object once it is a typed integer, so both are accepted for as
+    // long as the demoshops span both versions.
     const availableQuantityValidations = [
       {
         description: 'empty availableQuantity',
