@@ -5,7 +5,6 @@ export interface AuditLogsDemoStaticFixtures {
   };
   auditLogsPageUrl: string;
   product: {
-    idProductAbstract: number;
     sku: string;
   };
 }

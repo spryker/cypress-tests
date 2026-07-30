@@ -18,6 +18,8 @@ describe(
     const auditLogsPage = container.get(AuditLogsPage);
 
     let staticFixtures: SmartPimDemoStaticFixtures;
+    // Resolved from the SKU at runtime — see BackofficePage.resolveProductAbstractIdBySku().
+    let idProductAbstract: number;
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
@@ -28,6 +30,10 @@ describe(
         username: staticFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
+
+      smartPimPage.resolveProductAbstractIdBySku(staticFixtures.product.sku).then((id) => {
+        idProductAbstract = id;
+      });
     });
 
     it(
@@ -35,7 +41,7 @@ describe(
       { tags: ['@demo-smoke'] },
       (): void => {
         smartPimPage
-          .visitProductEdit(staticFixtures.product.idProductAbstract)
+          .visitProductEdit(idProductAbstract)
           .its('response.statusCode')
           .should('eq', 200);
 
@@ -67,7 +73,7 @@ describe(
           cy.intercept('POST', endpoint).as(`providerCall${index}`);
         });
 
-        smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+        smartPimPage.visitProductEdit(idProductAbstract);
         smartPimPage.getCategoryTrigger().should('be.visible');
 
         smartPimPage.openAllActionsPopover();
@@ -138,7 +144,7 @@ describe(
         emptyStateModals.forEach((modal): void => {
           cy.intercept('POST', modal.endpoint).as(modal.alias);
 
-          smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+          smartPimPage.visitProductEdit(idProductAbstract);
           modal.prepare();
           modal.trigger();
 
@@ -191,7 +197,7 @@ describe(
             body: { errors: [{ message: smartPimPage.getProviderUnavailableMessage() }] },
           }).as(call.alias);
 
-          smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+          smartPimPage.visitProductEdit(idProductAbstract);
           call.trigger();
 
           cy.wait(`@${call.alias}`).then((interception): void => {
@@ -213,7 +219,7 @@ describe(
       'answers a param-less request to each of the four AI endpoints with its documented 400 contract',
       { tags: ['@demo-smoke'] },
       (): void => {
-        smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+        smartPimPage.visitProductEdit(idProductAbstract);
 
         const contract: Array<{ url: string; expectedMessage: string | null }> = [
           {
@@ -248,7 +254,7 @@ describe(
       (): void => {
         const marker = 'cypress-injected-image-wrapper';
 
-        smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+        smartPimPage.visitProductEdit(idProductAbstract);
 
         smartPimPage.getAltTriggerTemplate().should('exist');
         smartPimPage.appendImageAltTextWrapper(marker);
@@ -270,7 +276,7 @@ describe(
           body: { errors: [{ message: 'Content generation failed' }] },
         }).as('contentImprover');
 
-        smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+        smartPimPage.visitProductEdit(idProductAbstract);
 
         smartPimPage.openAllActionsPopover();
         smartPimPage.shouldBeOpenPopover(smartPimPage.getAllActionsPopover());
@@ -293,7 +299,7 @@ describe(
           body: { improvedText: 'stubbed improved copy' },
         }).as('contentImprover');
 
-        smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+        smartPimPage.visitProductEdit(idProductAbstract);
 
         smartPimPage.openAllActionsPopover();
         smartPimPage.shouldBeOpenPopover(smartPimPage.getAllActionsPopover());
@@ -319,7 +325,7 @@ describe(
           body: { improvedText: 'applied suggestion text' },
         }).as('contentImprover');
 
-        smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+        smartPimPage.visitProductEdit(idProductAbstract);
 
         smartPimPage.openAllActionsPopover();
         smartPimPage.shouldBeOpenPopover(smartPimPage.getAllActionsPopover());
@@ -338,7 +344,7 @@ describe(
       'hides the locale-selector button for the field locale the trigger was opened from',
       { tags: ['@demo-smoke'] },
       (): void => {
-        smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+        smartPimPage.visitProductEdit(idProductAbstract);
 
         smartPimPage.getFirstRequestBuilderLocale().then((currentLocale): void => {
           expect(currentLocale, 'trigger exposes its field locale').to.be.a('string').and.not.be.empty;
@@ -369,7 +375,7 @@ describe(
 
           cy.intercept('POST', `**${smartPimPage.getContentImproverPath()}`).as('contentImprover');
 
-          smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+          smartPimPage.visitProductEdit(idProductAbstract);
 
           smartPimPage.openAllActionsPopover();
           smartPimPage.shouldBeOpenPopover(smartPimPage.getAllActionsPopover());
@@ -393,7 +399,7 @@ describe(
 
           cy.intercept('POST', `**${smartPimPage.getCategorySuggestionPath()}`).as('categorySuggestion');
 
-          smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+          smartPimPage.visitProductEdit(idProductAbstract);
 
           smartPimPage.clickCategoryTrigger();
 
@@ -421,7 +427,7 @@ describe(
 
           cy.intercept('POST', `**${smartPimPage.getImageAltTextPath()}`).as('imageAltText');
 
-          smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+          smartPimPage.visitProductEdit(idProductAbstract);
 
           smartPimPage.clickFirstAltImageTrigger();
 
@@ -454,7 +460,7 @@ describe(
 
           cy.intercept('POST', `**${smartPimPage.getTranslatePath()}`).as('translate');
 
-          smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+          smartPimPage.visitProductEdit(idProductAbstract);
 
           smartPimPage.getFirstRequestBuilderLocale().then((currentLocale): void => {
             smartPimPage.openAllActionsPopover();
@@ -497,7 +503,7 @@ describe(
 
           cy.intercept('POST', `**${smartPimPage.getContentImproverPath()}`).as('contentImprover');
 
-          smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+          smartPimPage.visitProductEdit(idProductAbstract);
 
           smartPimPage.openAllActionsPopover();
           smartPimPage.shouldBeOpenPopover(smartPimPage.getAllActionsPopover());
@@ -541,7 +547,7 @@ describe(
 
           cy.intercept('POST', `**${smartPimPage.getContentImproverPath()}`).as('contentImprover');
 
-          smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+          smartPimPage.visitProductEdit(idProductAbstract);
 
           smartPimPage.openAllActionsPopover();
           smartPimPage.shouldBeOpenPopover(smartPimPage.getAllActionsPopover());

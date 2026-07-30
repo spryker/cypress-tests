@@ -5,6 +5,10 @@ import Chainable = Cypress.Chainable;
 
 @injectable()
 export class BackofficePage extends AbstractPage {
+  private static readonly PRODUCT_TABLE_COL_ID = 0;
+
+  private static readonly PRODUCT_TABLE_COL_SKU = 2;
+
   visit = (options?: Partial<VisitOptions>): void => {
     cy.visitBackoffice(this.PAGE_URL, options);
   };
@@ -14,6 +18,32 @@ export class BackofficePage extends AbstractPage {
   };
 
   getBackofficeAbsoluteUrl = (path: string): string => `${Cypress.env('backofficeUrl')}${path}`;
+
+  /**
+   * Resolves a product abstract's numeric id from its SKU.
+   *
+   * `id_product_abstract` is an auto-increment value assigned during data import, so it is NOT
+   * stable across environments: the same demo CSV yields different ids on a freshly seeded CI
+   * database than on a locally reused one. Specs must therefore address products by SKU (stable,
+   * authored in the CSV) and resolve the id at runtime rather than hard-coding the pairing.
+   */
+  resolveProductAbstractIdBySku = (sku: string): Cypress.Chainable<number> =>
+    cy
+      .request({
+        url: this.getBackofficeAbsoluteUrl(
+          `/product-management/index/table?length=25&search[value]=${encodeURIComponent(sku)}`
+        ),
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      })
+      .then((response) => {
+        const rows: Array<Array<string>> = response.body.data ?? [];
+        // Column order comes from ProductTable::configure(): [id_product_abstract, name, sku, ...].
+        const row = rows.find((columns) => columns[BackofficePage.PRODUCT_TABLE_COL_SKU] === sku);
+
+        expect(row, `product abstract table row for SKU "${sku}"`).to.not.be.undefined;
+
+        return Number((row as Array<string>)[BackofficePage.PRODUCT_TABLE_COL_ID].replace(/\D/g, ''));
+      });
 
   public interceptTable = (params: InterceptGuiTableParams, callback?: () => void): Chainable => {
     const expectedCount = params.expectedCount ?? 1;

@@ -13,7 +13,6 @@
     "email": "sonia@acme.com"
   },
   "product": {
-    "idProductAbstract": 300,
     "sku": "M53235"
   },
   "merchantProduct": {

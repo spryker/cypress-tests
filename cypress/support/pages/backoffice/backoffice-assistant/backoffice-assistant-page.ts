@@ -13,7 +13,9 @@ export class BackofficeAssistantPage extends BackofficePage {
 
   private CONFIGURATION_URL = '/configuration/manage?feature=ai_commerce&tab=backoffice_assistant';
 
-  private CONTEXT_PAGE_URL = '/product-management/edit?id-product-abstract=300';
+  // Any product edit page works — it is only a host for the form-context/form-fill assertions.
+  // Resolved from a SKU because id_product_abstract is import-order dependent, not stable.
+  private CONTEXT_PAGE_SKU = 'M53235';
 
   enableAssistant = (): Cypress.Chainable => {
     cy.visitBackoffice(this.CONFIGURATION_URL);
@@ -88,7 +90,10 @@ export class BackofficeAssistantPage extends BackofficePage {
 
   visitContextPage = (): Cypress.Chainable => {
     cy.intercept('GET', '**/product-management/edit**').as('contextPageDocument');
-    cy.visitBackoffice(this.CONTEXT_PAGE_URL);
+
+    this.resolveProductAbstractIdBySku(this.CONTEXT_PAGE_SKU).then((id) => {
+      cy.visitBackoffice(`/product-management/edit?id-product-abstract=${id}`);
+    });
 
     return cy.wait('@contextPageDocument');
   };

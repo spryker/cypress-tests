@@ -23,6 +23,8 @@ describe(
     const productsPage = container.get(ProductsPage);
 
     let staticFixtures: CostPriceDemoStaticFixtures;
+    // Resolved from the SKU at runtime — see BackofficePage.resolveProductAbstractIdBySku().
+    let idProductAbstract: number;
 
     before((): void => {
       staticFixtures = Cypress.env('staticFixtures');
@@ -34,6 +36,10 @@ describe(
           username: staticFixtures.rootUser.username,
           password: staticFixtures.defaultPassword,
         });
+
+        costPricePage.resolveProductAbstractIdBySku(staticFixtures.product.sku).then((id) => {
+          idProductAbstract = id;
+        });
       });
 
       it(
@@ -41,7 +47,7 @@ describe(
         { tags: ['@demo-smoke'] },
         (): void => {
           costPricePage
-            .visitProductEdit(staticFixtures.product.idProductAbstract)
+            .visitProductEdit(idProductAbstract)
             .its('response.statusCode')
             .should('eq', 200);
 
@@ -71,7 +77,7 @@ describe(
         { tags: ['@demo-smoke'] },
         (): void => {
           costPricePage
-            .visitProductEdit(staticFixtures.product.idProductAbstract)
+            .visitProductEdit(idProductAbstract)
             .its('response.statusCode')
             .should('eq', 200);
 
@@ -84,7 +90,7 @@ describe(
             costPricePage.save();
             costPricePage.verifySaveSuccess(staticFixtures.product.sku);
 
-            costPricePage.visitProductEdit(staticFixtures.product.idProductAbstract);
+            costPricePage.visitProductEdit(idProductAbstract);
             costPricePage.openPriceTaxTab();
             costPricePage.assertFirstCostAmount(newCostValue);
 
@@ -100,7 +106,7 @@ describe(
         { tags: ['@demo-smoke'] },
         (): void => {
           costPricePage
-            .visitProductView(staticFixtures.product.idProductAbstract)
+            .visitProductView(idProductAbstract)
             .its('response.statusCode')
             .should('eq', 200);
 

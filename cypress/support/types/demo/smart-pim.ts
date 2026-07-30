@@ -4,7 +4,6 @@ export interface SmartPimDemoStaticFixtures {
     username: string;
   };
   product: {
-    idProductAbstract: number;
     sku: string;
   };
 }

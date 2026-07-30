@@ -13,7 +13,6 @@ export interface CostPriceDemoStaticFixtures {
     email: string;
   };
   product: {
-    idProductAbstract: number;
     sku: string;
   };
   merchantProduct: {

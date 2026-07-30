@@ -151,7 +151,10 @@ describe(
 
             cy.intercept('POST', '**/ai-commerce/content-improver').as('contentImprover');
 
-            smartPimPage.visitProductEdit(staticFixtures.product.idProductAbstract);
+            // Resolve by SKU: id_product_abstract is import-order dependent, not stable across envs.
+            smartPimPage
+              .resolveProductAbstractIdBySku(staticFixtures.product.sku)
+              .then((id) => smartPimPage.visitProductEdit(id));
             smartPimPage.openAllActionsPopover();
             smartPimPage.shouldBeOpenPopover(smartPimPage.getAllActionsPopover());
             smartPimPage.clickImproveContent();
