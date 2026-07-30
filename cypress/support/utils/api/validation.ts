@@ -7,9 +7,14 @@ type ApiErrorResponse = Cypress.Response<{ errors: Array<{ code?: string; detail
 
 /**
  * Asserts that the response carries an error with the given `detail` message.
+ *
+ * Asserts against the collected `detail` list rather than a boolean so a mismatch reports the
+ * details the API actually returned instead of `expected false to be true`.
  */
 export function expectApiErrorDetail(response: ApiErrorResponse, detail: string): void {
-  expect(response.body.errors.some((error) => error.detail === detail)).to.be.true;
+  const details = response.body.errors.map((error) => error.detail);
+
+  expect(details, 'response error details').to.include(detail);
 }
 
 /**
@@ -17,6 +22,9 @@ export function expectApiErrorDetail(response: ApiErrorResponse, detail: string)
  */
 export function expectApiValidationError(response: ApiErrorResponse, detail: string): void {
   expect(response.status).to.eq(422);
-  expect(response.body.errors.some((error) => `${error.code}` === API_VALIDATION_ERROR_CODE)).to.be.true;
+
+  const codes = response.body.errors.map((error) => `${error.code}`);
+
+  expect(codes, 'response error codes').to.include(API_VALIDATION_ERROR_CODE);
   expectApiErrorDetail(response, detail);
 }
