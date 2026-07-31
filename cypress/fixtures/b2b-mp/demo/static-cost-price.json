@@ -1,0 +1,10 @@
+{
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "product": {
+    "idProductAbstract": 300,
+    "sku": "M53235"
+  }
+}

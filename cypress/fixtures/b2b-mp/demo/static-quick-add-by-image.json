@@ -1,0 +1,10 @@
+{
+  "defaultPassword": "change123",
+  "customer": {
+    "email": "sonia@acme.com"
+  },
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "quickOrderPageUrl": "/quick-order"
+}
