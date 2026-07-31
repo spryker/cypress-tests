@@ -187,9 +187,12 @@ export class CheckoutAddressPage extends YvesPage {
     index: number,
     servicePointSelection: ServicePointSelection
   ): void => {
-    this.repository
-      .getMultiShipmentAddressItemShipmentTypeRadio?.(index, servicePointSelection.shipmentTypeKey)
-      .click({ force: true });
+    if (this.isRepository('suite')) {
+      this.repository
+        .getMultiShipmentAddressItemShipmentTypeRadio?.(index, servicePointSelection.shipmentTypeKey)
+        .click({ force: true });
+    }
+
     this.repository.getMultiShipmentAddressItemSelectServicePointButton?.($addressItem).first().click({ force: true });
     this.repository.getServicePointFinderInput?.().clear().type(servicePointSelection.servicePointName);
     this.repository.getServicePointFinderListItem?.(servicePointSelection.servicePointName).first().click();
@@ -200,9 +203,12 @@ export class CheckoutAddressPage extends YvesPage {
       const showsLocation = itemText.includes(servicePointSelection.servicePointName);
       expect(hasUuid || showsLocation, 'service point selection is applied to the address item').to.be.true;
     });
-    this.repository
-      .getMultiShipmentAddressItemShipmentTypeRadio?.(index, servicePointSelection.shipmentTypeKey)
-      .should('be.checked');
+
+    if (this.isRepository('suite')) {
+      this.repository
+        .getMultiShipmentAddressItemShipmentTypeRadio?.(index, servicePointSelection.shipmentTypeKey)
+        .should('be.checked');
+    }
   };
 
   fillBillingAddress = (): void => {
