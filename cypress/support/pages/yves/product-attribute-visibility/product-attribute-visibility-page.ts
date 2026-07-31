@@ -45,12 +45,23 @@ export class ProductAttributeVisibilityPage extends YvesPage {
   ): void => {
     cy.visit(`/search?q=${query}`);
     cy.get('body').then(($body) => {
-      const item = $body.find(this.repository.getProductItemSelector()).first();
+      const items = $body.find(this.repository.getProductItemSelector());
       const badgeVisible =
-        item.find(`${this.repository.getAttributeBadgeSelector()}:contains("${attributeValue}")`).length > 0;
+        items.length > 0 &&
+        items.first().find(`${this.repository.getAttributeBadgeSelector()}:contains("${attributeValue}")`).length > 0;
 
-      if (badgeVisible === shouldBeVisible || retries === 0) {
+      // An empty result list must not settle the wait: with no tile rendered the badge is
+      // trivially "not visible" and the negative wait would return before propagation.
+      if (items.length > 0 && badgeVisible === shouldBeVisible) {
         return;
+      }
+
+      if (retries === 0) {
+        throw new Error(
+          `Attribute badge "${attributeValue}" did not become ${
+            shouldBeVisible ? 'visible' : 'hidden'
+          } on the PLP before the reload budget ran out`
+        );
       }
 
       cy.wait(retryWait);

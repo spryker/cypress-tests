@@ -17,10 +17,12 @@ export interface ProductRepository {
   getSelectAssetPopup(): Cypress.Chainable;
   getAssetOptions(): Cypress.Chainable;
   getServicePointSearchInput(): Cypress.Chainable;
+  getServicePointFinderResults?(): Cypress.Chainable;
   getServicePointListItem(servicePointName: string): Cypress.Chainable;
   getSelectedServicePointName(): Cypress.Chainable;
   getCloseServicePointPopupButton(): Cypress.Chainable;
   getSspAssetNameBlock(): Cypress.Chainable;
+  getAttachmentsListSelector(): string;
   getAttachmentsList(): Cypress.Chainable;
   getAttachmentItems(): Cypress.Chainable;
 }

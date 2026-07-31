@@ -26,8 +26,7 @@ export class AgentMfaLoginScenario {
     this.mfaPage.getVerificationPopup().should('be.visible');
     this.mfaPage.verifyCode(staticFixtures.invalidCode);
     this.mfaPage.getInvalidCodeMessage().should('be.visible');
-
-    cy.reload();
+    this.mfaPage.getVerificationPopup().should('be.visible');
     this.loginPage.assertPageLocation();
   }
 }

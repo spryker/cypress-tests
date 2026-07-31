@@ -11,45 +11,262 @@ export class SspDashboardPage extends YvesPage {
 
   protected PAGE_URL = '/customer/ssp-dashboard';
 
-  getUserInfoBlock = (): Cypress.Chainable => this.repository.getUserInfoBlock();
+  assertSspDashboardUserInfoPresent = (): void => {
+    this.repository.getUserInfoBlock().should('exist');
+  };
 
-  getWelcomeBlock = (): Cypress.Chainable => this.repository.getWelcomeBlock();
+  assertSspDashboardUserInfoHasWelcomeText = (name: string): void => {
+    this.repository
+      .getWelcomeBlock()
+      .contains('Welcome, ' + name)
+      .should('exist');
+  };
 
-  getOverviewBlock = (): Cypress.Chainable => this.repository.getOverviewBlock();
+  assertSspDashboardUserInfoHasCompanyName = (name: string): void => {
+    this.repository.getWelcomeBlock().contains(name).should('exist');
+  };
 
-  getOverviewTitle = (): string => this.repository.getOverviewTitle();
+  assertSspDashboardUserInfoHasCompanyBusinessUnitName = (name: string): void => {
+    this.repository.getWelcomeBlock().contains(name).should('exist');
+  };
 
-  getStatsColumnBlocks = (): Cypress.Chainable => this.repository.getStatsColumnBlocks();
+  assertSspDashboardHasOverviewBlock = (): void => {
+    this.repository.getOverviewBlock().contains(this.repository.getOverviewTitle()).should('exist');
+  };
 
-  getStatsColumnTitleName = (): string => this.repository.getStatsColumnTitleName();
+  assertSspDashboardHasStatsOverviewBlock = (): void => {
+    this.repository.getStatsColumnBlocks().each(($statsBlock, $index) => {
+      cy.wrap($statsBlock)
+        .find(this.repository.getStatsColumnTitleName())
+        .contains(this.repository.getExpectedStatsColumnBlocks()[$index])
+        .should('exist');
+      cy.wrap($statsBlock).find(this.repository.getStatsColumnCounterName()).should('exist');
+    });
+  };
 
-  getStatsColumnCounterName = (): string => this.repository.getStatsColumnCounterName();
+  waitForSalesRepresentativeBlockContent = (translations: GlossaryPlaceholders[], idLocale: number): void => {
+    const expectedTranslation = translations
+      .flatMap((translation) => translation.translations)
+      .find(
+        (glossaryPlaceholder: GlossaryPlaceholderTranslations) => glossaryPlaceholder.fk_locale === idLocale
+      )?.translation;
 
-  getExpectedStatsColumnBlocks = (): string[] => this.repository.getExpectedStatsColumnBlocks();
+    if (!expectedTranslation) {
+      return;
+    }
 
-  getSalesRepresentativeBlocks = (): Cypress.Chainable => this.repository.getSalesRepresentativeBlocks();
+    const idCmsBlock = translations[0]?.fk_cms_block;
+    const glossaryKeyIds = translations
+      .map((translation) => translation.fk_glossary_key)
+      .filter(Boolean)
+      .join(',');
 
-  getAssetsBlock = (): Cypress.Chainable => this.repository.getAssetsBlock();
+    this.waitForSalesRepresentativeTranslation(expectedTranslation, idCmsBlock, glossaryKeyIds, 6);
+  };
 
-  getAssetPreviewBlock = (): Cypress.Chainable => this.repository.getAssetPreviewBlock();
+  private waitForSalesRepresentativeTranslation = (
+    expectedTranslation: string,
+    idCmsBlock: number | undefined,
+    glossaryKeyIds: string,
+    retries: number
+  ): void => {
+    this.repository.getSalesRepresentativeBlocks().then(($blocks) => {
+      if ($blocks.text().includes(expectedTranslation)) {
+        return;
+      }
 
-  getPlaceholderImage = (): string => this.repository.getPlaceholderImage();
+      if (retries === 0) {
+        throw new Error(
+          `Translation "${expectedTranslation}" did not reach the sales representative block on the dashboard`
+        );
+      }
 
-  getFilesBlock = (): Cypress.Chainable => this.repository.getFilesBlock();
+      // The sales-rep CMS block and its glossary keys are freshly created by the fixtures;
+      // their publish messages can be lost on the CI stand. Re-publish exactly these
+      // entities from DB truth through the real pipeline before the next reload.
+      if (retries === 3 && idCmsBlock && glossaryKeyIds) {
+        cy.runCliCommands([
+          `console publish:trigger-events -r cms_block -i ${idCmsBlock}`,
+          `console publish:trigger-events -r translation -i ${glossaryKeyIds}`,
+        ]);
+        cy.runQueueWorker();
+      }
 
-  getFilesBlockTitle = (): Cypress.Chainable => this.repository.getFilesBlockTitle();
+      // eslint-disable-next-line cypress/no-unnecessary-waiting, spryker-cypress/no-numeric-wait
+      cy.wait(1000);
+      cy.reload();
+      this.waitForSalesRepresentativeTranslation(expectedTranslation, idCmsBlock, glossaryKeyIds, retries - 1);
+    });
+  };
 
-  getNoFilesText = (): string => this.repository.getNoFilesText();
+  assertSspDashboardHasSalesRepresentativeBlock = (translations: GlossaryPlaceholders[], idLocale: number): void => {
+    this.repository.getSalesRepresentativeBlocks().should('exist');
 
-  getFilesHeaders = (): string[] => this.repository.getFilesHeaders();
+    translations.forEach((translation) => {
+      translation.translations.forEach((glossaryPlaceholder: GlossaryPlaceholderTranslations) => {
+        if (glossaryPlaceholder.fk_locale === idLocale) {
+          this.repository.getSalesRepresentativeBlocks().contains(glossaryPlaceholder.translation).should('exist');
+        }
+      });
+    });
+  };
 
-  getInquiriesBlock = (): Cypress.Chainable => this.repository.getInquiriesBlock();
+  assertSspDashboardAssetsWidgetPresent = (): void => {
+    this.repository.getAssetsBlock().should('exist');
+  };
 
-  getInquiriesBlockTitle = (): Cypress.Chainable => this.repository.getInquiriesBlockTitle();
+  assertSspDashboardAssetsWidgetNotPresent = (): void => {
+    this.repository.getAssetsBlock().should('not.exist');
+  };
 
-  getNoInquiriesText = (): string => this.repository.getNoInquiriesText();
+  assertWidgetData(sspAssets: SspAsset[]): void {
+    this.repository.getAssetPreviewBlock().its('length').should('eq', sspAssets.length);
 
-  getInquiriesHeaders = (): string[] => this.repository.getInquiriesHeaders();
+    this.repository.getAssetPreviewBlock().each(($element) => {
+      const assetName = $element.text();
+      const matchingAsset = sspAssets.find((asset) => assetName.includes(asset.name));
 
-  getStatusLabelPath = (): string => this.repository.getStatusLabelPath();
+      if (!matchingAsset) {
+        return;
+      }
+
+      if (matchingAsset.reference) {
+        cy.wrap($element)
+          .find('a.assets-preview__link')
+          .should('have.attr', 'href')
+          .should('have.string', matchingAsset.reference);
+      }
+
+      if (matchingAsset.name) {
+        cy.wrap($element).contains(matchingAsset.name).should('exist');
+      }
+
+      if (!matchingAsset.image) {
+        cy.wrap($element)
+          .find('lazy-image div')
+          .should('have.css', 'background-image')
+          .and('have.string', this.repository.getPlaceholderImage());
+      }
+    });
+  }
+
+  assertSspDashboardFilesBlockPresent = (): void => {
+    this.repository.getFilesBlock().should('exist');
+  };
+
+  assertSspDashboardFilesBlockNotPresent = (): void => {
+    this.repository.getFilesBlock().should('not.exist');
+  };
+
+  assertSspDashboardFilesTableEmpty(): void {
+    this.repository.getFilesBlock().should('contain.text', this.repository.getNoFilesText());
+  }
+
+  assertSspDashboardFilesTableHasNoDownloadLink(): void {
+    this.repository.getFilesBlock().find('table tbody tr td:last-child').should('not.contain.text', 'Download');
+  }
+
+  assertSspDashboardFilesTable(files: SspFile[], filesCount: number): void {
+    this.repository.getFilesBlockTitle().should('contain.text', 'Files');
+    this.repository.getFilesBlock().find('span.badge').should('contain.text', filesCount);
+    this.repository
+      .getFilesBlock()
+      .find('table thead th')
+      .each(($th, index) => {
+        if (this.repository.getFilesHeaders()[index]) {
+          cy.wrap($th).should('contain.text', this.repository.getFilesHeaders()[index]);
+        }
+      });
+    this.repository.getFilesBlock().find('table tbody tr').should('have.length', files.length);
+    this.repository
+      .getFilesBlock()
+      .find('table tbody tr')
+      .each(($tr, index) => {
+        cy.wrap($tr).should('contain.text', files[index].file_name);
+        cy.wrap($tr).should('contain.text', files[index].file_info[0].extension);
+      });
+  }
+
+  assertSspDashboardInquiriesBlockNotPresent = (): void => {
+    this.repository.getInquiriesBlock().should('not.exist');
+  };
+
+  assertSspDashboardInquiriesBlockPresent = (): void => {
+    this.repository.getInquiriesBlock().should('exist');
+  };
+
+  assertSspDashboardInquiriesTableEmpty(): void {
+    this.repository.getInquiriesBlock().should('contain.text', this.repository.getNoInquiriesText());
+  }
+
+  assertSspDashboardInquiriesTable(inquiries: SspInquiry[], inquiriesCount: number): void {
+    this.repository.getInquiriesBlockTitle().should('contain.text', 'Inquiries');
+    this.repository.getInquiriesBlock().find('.badge').should('contain.text', inquiriesCount);
+    this.repository
+      .getInquiriesBlock()
+      .find('table thead th')
+      .each(($th, index) => {
+        if (this.repository.getInquiriesHeaders()[index]) {
+          cy.wrap($th).should('contain.text', this.repository.getInquiriesHeaders()[index]);
+        }
+      });
+    this.repository.getInquiriesBlock().find('table tbody tr').should('have.length', inquiries.length);
+    this.repository
+      .getInquiriesBlock()
+      .find('table tbody tr')
+      .each(($tr, index) => {
+        cy.wrap($tr).should('contain.text', inquiries[index].reference);
+        cy.wrap($tr).contains(inquiries[index].type, { matchCase: false }).should('exist');
+        cy.wrap($tr).contains(inquiries[index].status, { matchCase: false }).should('exist');
+        cy.wrap($tr)
+          .find(this.repository.getStatusLabelPath())
+          .should('have.class', 'status--' + inquiries[index].status.toLowerCase());
+        cy.wrap($tr).should('contain.text', 'View');
+      });
+  }
+}
+
+interface SspInquiry {
+  subject: string;
+  description: string;
+  reference: string;
+  type: string;
+  availableTypes: SspInquiryType[];
+  status: string;
+}
+
+interface SspInquiryType {
+  key: string;
+  value: string;
+}
+
+export interface SspFile {
+  file_name: string;
+  file_info: SspFileInfo[];
+}
+
+export interface SspFileInfo {
+  extension: string;
+}
+
+interface SspAsset {
+  reference: string;
+  name: string;
+  serial_number: string;
+  image: string;
+}
+
+export interface CmsBlockGlossary {
+  glossary_placeholders: GlossaryPlaceholders[];
+}
+
+export interface GlossaryPlaceholders {
+  fk_cms_block?: number;
+  fk_glossary_key?: number;
+  translations: GlossaryPlaceholderTranslations[];
+}
+
+export interface GlossaryPlaceholderTranslations {
+  fk_locale: number;
+  translation: string;
 }

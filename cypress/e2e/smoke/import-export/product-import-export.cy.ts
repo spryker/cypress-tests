@@ -54,10 +54,8 @@ describe(
       cy.task<boolean>('isFileExists', downloadedPath).should('eq', true);
 
       createRunPage.uploadAndQueueImport(productFile);
-      jobRunsListPage
-        .getSuccessMessage()
-        .should('be.visible')
-        .and('contain', 'Import run created successfully. Processing is queued.');
+      jobRunsListPage.verifySuccessMessage();
+      jobRunsListPage.waitForSuccessfulJobProcessing();
     });
   }
 );

@@ -33,3 +33,17 @@ export interface OrderManagementDmsStaticFixtures {
   store: Store;
   paymentMethods: PaymentMethod[];
 }
+
+export interface OmsReservationFlowDynamicFixtures {
+  customer: Customer;
+  address: Address;
+  productShipment: Product;
+  productCancellation: Product;
+  salesOrderShipment: { id_sales_order: number; order_reference: string };
+  salesOrderCancellation: { id_sales_order: number; order_reference: string };
+  rootUser: User;
+}
+
+export interface OmsReservationFlowStaticFixtures {
+  defaultPassword: string;
+}
