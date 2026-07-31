@@ -12,7 +12,7 @@ export class CheckoutSummaryPage extends YvesPage {
   protected PAGE_URL = '/checkout/summary';
 
   placeOrder = (): void => {
-    this.repository.getaAcceptTermsAndConditionsCheckbox().should('be.visible', { timeout: 10000 });
+    this.repository.getaAcceptTermsAndConditionsCheckbox().should('be.visible', { timeout: 1000 });
     this.repository.getaAcceptTermsAndConditionsCheckbox().check({ force: true });
     this.repository.getSummaryForm().submit();
   };

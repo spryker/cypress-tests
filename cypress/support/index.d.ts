@@ -61,7 +61,8 @@ declare namespace Cypress {
       findSelector: string,
       getSelector?: string,
       retries?: number,
-      retryWait?: number
+      retryWait?: number,
+      commands?: string[]
     ): void;
 
     /**

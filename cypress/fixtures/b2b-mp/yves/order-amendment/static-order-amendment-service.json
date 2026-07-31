@@ -1,0 +1,7 @@
+{
+  "defaultPassword": "change123",
+  "paymentMethod": "dummyPaymentInvoice",
+  "shipmentTypeKey": "in-center-service",
+  "serviceProductPrice": "300.00",
+  "deliveryProductPrice": "200.00"
+}
