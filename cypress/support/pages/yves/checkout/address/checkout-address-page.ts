@@ -63,6 +63,12 @@ export class CheckoutAddressPage extends YvesPage {
         }
 
         if (params?.skipServicePointAddressOverride && hasServicePointUuid) {
+          // The address step renders "Next" disabled and only re-enables it when
+          // validate-next-checkout-step re-evaluates, which needs a change event on one of the
+          // item's inputs. Leaving the item completely untouched keeps the button disabled, so
+          // check the shipment type the already-selected service point implies.
+          this.checkAddressItemShipmentType(index, params.shipmentType);
+
           return;
         }
 
@@ -211,6 +217,19 @@ export class CheckoutAddressPage extends YvesPage {
     }
   };
 
+  private checkAddressItemShipmentType = (index: number, shipmentTypeKey?: string): void => {
+    if (!shipmentTypeKey) {
+      return;
+    }
+
+    // `check()` is a no-op when the radio is already checked, and a radio only fires `change` when
+    // its value actually changes, so trigger the event explicitly to always re-run the validator.
+    this.repository
+      .getMultiShipmentAddressItemShipmentTypeRadio?.(index, shipmentTypeKey)
+      .check({ force: true })
+      .trigger('change', { force: true });
+  };
+
   fillBillingAddress = (): void => {
     const checkoutAddress = this.createDummyCheckoutAddress();
     this.repository.getSelectBillingAddressField().select('0', { force: true });
@@ -248,6 +267,7 @@ export class CheckoutAddressPage extends YvesPage {
 
 interface FillShippingAddressParams {
   idCustomerAddress?: number;
+  shipmentType?: string;
   skipServicePointAddressOverride?: boolean;
   servicePointSelection?: ServicePointSelection;
 }
