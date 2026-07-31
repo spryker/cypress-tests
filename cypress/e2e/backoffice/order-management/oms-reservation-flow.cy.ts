@@ -47,13 +47,13 @@ describe(
       salesDetailPage.triggerOms({ state: 'reserve' });
 
       availabilityViewPage.visit({ qs: { 'id-product': dynamicFixtures.productShipment.fk_product_abstract } });
-      availabilityViewPage.assertReservedProductsAmount(1);
+      availabilityViewPage.getReservedProductsAmount().should('eq', 1);
 
       visitSalesOrderDetail(dynamicFixtures.salesOrderShipment.id_sales_order);
       salesDetailPage.triggerOms({ state: 'complete' });
 
       availabilityViewPage.visit({ qs: { 'id-product': dynamicFixtures.productShipment.fk_product_abstract } });
-      availabilityViewPage.assertReservedProductsAmount(0);
+      availabilityViewPage.getReservedProductsAmount().should('eq', 0);
     });
 
     it('reservation drops to zero when the order is cancelled', (): void => {
@@ -61,13 +61,13 @@ describe(
       salesDetailPage.triggerOms({ state: 'reserve' });
 
       availabilityViewPage.visit({ qs: { 'id-product': dynamicFixtures.productCancellation.fk_product_abstract } });
-      availabilityViewPage.assertReservedProductsAmount(1);
+      availabilityViewPage.getReservedProductsAmount().should('eq', 1);
 
       visitSalesOrderDetail(dynamicFixtures.salesOrderCancellation.id_sales_order);
       salesDetailPage.triggerOms({ state: 'Cancel' });
 
       availabilityViewPage.visit({ qs: { 'id-product': dynamicFixtures.productCancellation.fk_product_abstract } });
-      availabilityViewPage.assertReservedProductsAmount(0);
+      availabilityViewPage.getReservedProductsAmount().should('eq', 0);
     });
 
     function visitSalesOrderDetail(idSalesOrder: number): void {

@@ -23,9 +23,10 @@
     "spryker-cypress/no-numeric-wait": "error",
     // Convention already followed everywhere (tags on the top-level describe) -> error.
     "spryker-cypress/require-describe-tags": "error",
-    // Still a warning: ~449 existing assertions live in page objects today, and the
-    // retry helpers interleave assertions with control flow. Tightened separately.
-    "spryker-cypress/no-assertions-in-page-objects": "warn"
+    // Backlog cleared: assertion-only page-object methods are gone. Synchronization
+    // guards inside methods that also act are permitted by the rule itself; the few
+    // assert-only base-class helpers left carry a justified inline disable.
+    "spryker-cypress/no-assertions-in-page-objects": "error"
   },
   "overrides": [
     {

@@ -11,18 +11,15 @@ export class AvailabilityViewPage extends BackofficePage {
   protected PAGE_URL = '/availability-gui/index/view';
 
   editFirstVariant = (): void => {
-    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Internal synchronization guard: waits out the table "Loading" spinner between actions.
     this.repository
       .getVariantFirstTableRow()
       .should(($productVariantRow) => {
-        // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Internal synchronization guard: waits out the table "Loading" spinner between actions.
         expect($productVariantRow.text()).not.to.contain('Loading');
       })
       .then(($productVariantRow) => {
         cy.wrap($productVariantRow)
           .find(this.repository.getVariantEditStockButtonSelector())
           .as('editStockVariantButton');
-        // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Internal synchronization guard: waits for the edit-stock button to be actionable before clicking.
         cy.get('@editStockVariantButton').should('be.visible').click({ force: true });
       });
   };
@@ -31,13 +28,9 @@ export class AvailabilityViewPage extends BackofficePage {
     cy.visitBackoffice(`${this.PAGE_URL}?sku=${encodeURIComponent(params.sku)}`);
   };
 
-  assertReservedProductsAmount = (expected: number): void => {
+  getReservedProductsAmount = (): Cypress.Chainable<number> =>
     this.repository
       .getReservedProductsValue()
       .invoke('text')
-      .then((text) => {
-        const value = Number.parseFloat(text.replace(/[^0-9.-]/g, ''));
-        expect(value, `Expected reserved-products amount to be ${expected}`).to.equal(expected);
-      });
-  };
+      .then((text: string) => Number.parseFloat(text.replace(/[^0-9.-]/g, '')));
 }

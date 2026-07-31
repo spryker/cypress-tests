@@ -27,7 +27,6 @@ export class MerchantRegistrationViewPage extends BackofficePage {
 
   approveRequest(): void {
     this.clickCreateMerchant();
-    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Internal synchronization guard: waits for navigation to the accept page between clicks.
     cy.url().should('include', '/accept-merchant-registration-request');
     cy.get('button.btn.btn-success.safe-submit').click();
   }
@@ -39,7 +38,6 @@ export class MerchantRegistrationViewPage extends BackofficePage {
 
   rejectRequest(): void {
     this.clickRejectMerchant();
-    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Internal synchronization guard: waits for navigation to the reject page between clicks.
     cy.url().should('include', '/reject-merchant-registration-request');
     cy.get('button.btn.btn-danger.safe-submit').click();
   }
