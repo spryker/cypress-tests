@@ -8,5 +8,7 @@
   "concreteAttributeKey": "material",
   "concreteAttributeValue": "cotton",
   "netAmount": 8999,
-  "grossAmount": 9999
+  "grossAmount": 9999,
+  "bundledStockQuantity": 100,
+  "bundleQuantity": 2
 }

@@ -105,6 +105,41 @@
           "type": "helper",
           "name": "haveProductCategoryForCategory",
           "arguments": ["#category.id_category", { "fkProductAbstract": "#product.fk_product_abstract" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "bundled",
+          "arguments": [
+            {
+              "attributes": { "material": "cotton" }
+            },
+            {}
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProduct": "#bundled.sku",
+              "idProduct": "#bundled.id_product_concrete",
+              "skuProductAbstract": "#bundled.abstract_sku",
+              "moneyValue": { "netAmount": 8999, "grossAmount": 9999 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveStockProduct",
+          "arguments": [
+            {
+              "sku": "#bundled.sku",
+              "stockType": "Warehouse1",
+              "quantity": 100,
+              "isNeverOutOfStock": false
+            }
+          ]
         }
       ]
     }

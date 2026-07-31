@@ -47,8 +47,13 @@ describe('abstract products backend api', { tags: ['@api', '@abstract-products',
         const attributes = response.body.data.attributes;
 
         expect(attributes.stores, 'stores').to.include(staticFixtures.storeName);
-        expect(attributes.localizedAttributes, 'localizedAttributes').to.be.an('array').and.to.have.length.greaterThan(0);
-        expect(attributes.localizedAttributes[0], 'localizedAttributes item carries its locale as a field').to.have.property('localeName');
+        expect(attributes.localizedAttributes, 'localizedAttributes')
+          .to.be.an('array')
+          .and.to.have.length.greaterThan(0);
+        expect(
+          attributes.localizedAttributes[0],
+          'localizedAttributes item carries its locale as a field'
+        ).to.have.property('localeName');
         expect(attributes.localizedAttributes[0]).to.have.property('name');
 
         const price = attributes.prices.find(
