@@ -14,9 +14,9 @@ describe('products backend api — bundles', { tags: ['@api', '@products', 'prod
     sku: bundleSku,
     isActive: true,
     attributes: { color: 'blue' },
-    localizedAttributes: {
-      [staticFixtures.localeName]: { name: `Bundle ${bundleSku}`, isSearchable: true },
-    },
+    localizedAttributes: [
+      { localeName: staticFixtures.localeName, name: `Bundle ${bundleSku}`, isSearchable: true },
+    ],
     prices: [
       {
         priceTypeName: staticFixtures.priceTypeName,

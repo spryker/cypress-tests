@@ -47,7 +47,9 @@ describe('abstract products backend api', { tags: ['@api', '@abstract-products',
         const attributes = response.body.data.attributes;
 
         expect(attributes.stores, 'stores').to.include(staticFixtures.storeName);
-        expect(attributes.localizedAttributes, 'localizedAttributes').to.be.an('object');
+        expect(attributes.localizedAttributes, 'localizedAttributes').to.be.an('array').and.to.have.length.greaterThan(0);
+        expect(attributes.localizedAttributes[0], 'localizedAttributes item carries its locale as a field').to.have.property('localeName');
+        expect(attributes.localizedAttributes[0]).to.have.property('name');
 
         const price = attributes.prices.find(
           (item: Record<string, unknown>) =>
@@ -67,6 +69,8 @@ describe('abstract products backend api', { tags: ['@api', '@abstract-products',
 
         expect(attributes.categories, 'categories').to.be.an('array').and.to.have.length.greaterThan(0);
         expect(attributes.categories[0]).to.have.property('uuid');
+        // Nested localizedAttributes are now a plain collection; each entry carries its locale as a field.
+        expect(attributes.categories[0].localizedAttributes, 'category localizedAttributes').to.be.an('array');
 
         expect(attributes.superAttributeKeys, 'superAttributeKeys').to.include(staticFixtures.superAttributeKey);
       });

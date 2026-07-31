@@ -41,9 +41,9 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
     ...(parentAbstractSku !== null ? { abstractSku: parentAbstractSku } : {}),
     isActive: true,
     attributes: { color: 'blue' },
-    localizedAttributes: {
-      [staticFixtures.localeName]: { name: `Concrete ${concreteSku}`, isSearchable: true },
-    },
+    localizedAttributes: [
+      { localeName: staticFixtures.localeName, name: `Concrete ${concreteSku}`, isSearchable: true },
+    ],
     prices: [
       {
         priceTypeName: staticFixtures.priceTypeName,
@@ -104,8 +104,11 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
         expect(attributes.imageSets, 'imageSets').to.be.an('array').and.to.have.length.greaterThan(0);
         expect(attributes.imageSets[0].images, 'images').to.have.length.greaterThan(0);
 
-        expect(attributes.localizedAttributes, 'localizedAttributes').to.be.an('object');
-        expect(attributes.localizedAttributes[staticFixtures.localeName], 'seeded locale present').to.exist;
+        expect(attributes.localizedAttributes, 'localizedAttributes').to.be.an('array').and.to.have.length.greaterThan(0);
+        expect(
+          attributes.localizedAttributes.find((entry) => entry.localeName === staticFixtures.localeName),
+          'seeded locale present'
+        ).to.exist;
 
         expect(attributes.attributes, 'concrete attributes').to.have.property(
           staticFixtures.concreteAttributeKey,
@@ -327,12 +330,16 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
 
     it('should update localized attributes', (): void => {
       updateProduct(accessToken, patchSku, {
-        localizedAttributes: {
-          [staticFixtures.localeName]: { name: 'Patched name', isSearchable: false },
-        },
+        localizedAttributes: [
+          { localeName: staticFixtures.localeName, name: 'Patched name', isSearchable: false },
+        ],
       }).then((response) => {
         expect(response.status).to.eq(200);
-        expect(response.body.data.attributes.localizedAttributes[staticFixtures.localeName].name).to.eq('Patched name');
+        expect(
+          response.body.data.attributes.localizedAttributes.find(
+            (entry) => entry.localeName === staticFixtures.localeName
+          ).name
+        ).to.eq('Patched name');
       });
     });
 
@@ -644,7 +651,7 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       },
       {
         title: 'unknown locale in localizedAttributes',
-        override: { localizedAttributes: { zz_ZZ: { name: 'Unknown locale', isSearchable: true } } },
+        override: { localizedAttributes: [{ localeName: 'zz_ZZ', name: 'Unknown locale', isSearchable: true }] },
       },
       {
         title: 'unknown category uuid',
@@ -764,7 +771,7 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       },
       {
         title: 'unknown locale in localizedAttributes',
-        override: { localizedAttributes: { zz_ZZ: { name: 'Unknown locale', isSearchable: true } } },
+        override: { localizedAttributes: [{ localeName: 'zz_ZZ', name: 'Unknown locale', isSearchable: true }] },
       },
       {
         title: 'unknown category uuid',
