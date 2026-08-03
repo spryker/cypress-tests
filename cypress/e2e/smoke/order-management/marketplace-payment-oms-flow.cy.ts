@@ -57,7 +57,9 @@ describe(
 
       addOneProductToCart();
       checkoutMpScenario.execute({ isMultiShipment: true });
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage(), { timeout: 15000 });
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage(), {
+        timeout: 15000,
+      });
     });
 
     it('order can be sent to merchant', (): void => {
@@ -142,7 +144,7 @@ describe(
           );
         }
 
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        // eslint-disable-next-line cypress/no-unnecessary-waiting, spryker-cypress/no-numeric-wait
         cy.wait(10000, { log: false });
         checkOrderVisibility(orderReference, attempt + 1);
       });

@@ -28,13 +28,9 @@ export class AvailabilityViewPage extends BackofficePage {
     cy.visitBackoffice(`${this.PAGE_URL}?sku=${encodeURIComponent(params.sku)}`);
   };
 
-  assertReservedProductsAmount = (expected: number): void => {
+  getReservedProductsAmount = (): Cypress.Chainable<number> =>
     this.repository
       .getReservedProductsValue()
       .invoke('text')
-      .then((text) => {
-        const value = Number.parseFloat(text.replace(/[^0-9.-]/g, ''));
-        expect(value, `Expected reserved-products amount to be ${expected}`).to.equal(expected);
-      });
-  };
+      .then((text: string) => Number.parseFloat(text.replace(/[^0-9.-]/g, '')));
 }

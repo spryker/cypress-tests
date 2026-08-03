@@ -12,13 +12,7 @@ export class SspFileManagementDetachPage extends BackofficePage {
     cy.get(this.repository.getDetachButtonSelector()).first().click();
   }
 
-  assertDetachFile(): void {
-    this.repository.getAttachmentTableRows().should('have.length.gte', 1);
-  }
+  getAttachmentTableRows = (): Cypress.Chainable => this.repository.getAttachmentTableRows();
 
-  verifySuccessMessage(): void {
-    cy.get(this.repository.getSuccessMessageSelector())
-      .should('be.visible')
-      .and('contain', 'File attachment successfully unlinked.');
-  }
+  getSuccessMessage = (): Cypress.Chainable => cy.get(this.repository.getSuccessMessageSelector());
 }

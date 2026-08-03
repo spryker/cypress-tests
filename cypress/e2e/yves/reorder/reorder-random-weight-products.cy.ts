@@ -50,8 +50,8 @@ describe(
       customerOverviewPage.viewLastPlacedOrder();
       orderDetailsPage.reorderAll();
 
-      cy.get('body').contains(dynamicFixtures.productMUnit.localized_attributes[0].name).should('exist');
-      cy.get('body').contains(dynamicFixtures.productPUnit.localized_attributes[0].name).should('exist');
+      cartPage.assertBodyContainsText(dynamicFixtures.productMUnit.localized_attributes[0].name).should('exist');
+      cartPage.assertBodyContainsText(dynamicFixtures.productPUnit.localized_attributes[0].name).should('exist');
     });
 
     function placeOrderWithRandomWeightProducts(): void {
@@ -69,7 +69,10 @@ describe(
       productPage.addToCart();
       if (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
         cartPage.visit();
-        cartPage.assertCartItemAvailabilityDisplayed(true);
+
+        const availabilityLabel = cartPage.getCartItemAvailabilityLabel();
+        availabilityLabel.should('be.visible');
+        availabilityLabel.invoke('text').should('match', /(\d+[,.]?\d*\s+[a-z]+\s+)?in stock/i);
       }
 
       checkoutScenario.execute({

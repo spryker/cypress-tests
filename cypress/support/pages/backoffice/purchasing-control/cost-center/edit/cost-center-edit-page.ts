@@ -26,9 +26,7 @@ export class CostCenterEditPage extends BackofficePage {
     this.repository.getSaveButton().click();
   };
 
-  assertSuccess = (): void => {
-    this.repository.getSuccessMessage().should('be.visible');
-  };
+  getSuccessMessage = (): Cypress.Chainable => this.repository.getSuccessMessage();
 
   getNameValue = (): Cypress.Chainable<string> => {
     return this.repository.getNameInput().invoke('val') as Cypress.Chainable<string>;

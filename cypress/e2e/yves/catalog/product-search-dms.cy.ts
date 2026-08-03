@@ -87,7 +87,7 @@ describe(
     });
 
     function assertProductDetailInformation(): void {
-      cy.contains(dynamicFixtures.product.localized_attributes[0].name);
+      productPage.assertBodyContainsText(dynamicFixtures.product.localized_attributes[0].name);
       productPage.getProductConfigurator().should('contain', staticFixtures.productPrice);
       productPage.getProductConfigurator().should('contain', dynamicFixtures.product.sku);
     }

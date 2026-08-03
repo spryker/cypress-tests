@@ -20,6 +20,25 @@ describe(
     const userLoginScenario = container.get(UserLoginScenario);
     const customerLoginScenario = container.get(CustomerLoginScenario);
 
+    const updateAttributeVisibility = (attributeKey: string, visibilityTypes: string[]): void => {
+      editPage.visit();
+
+      editPage.getTableBodyRows().should('be.visible');
+      editPage.getSearchInput().should('be.visible').type(`{selectall}${attributeKey}`);
+
+      editPage.getTableBodyRows().should(($tbody) => {
+        const text = $tbody.text();
+        expect(text.includes(attributeKey)).to.be.true;
+      });
+
+      editPage.getTableBodyRows().first().contains('Edit').click();
+
+      editPage.getVisibilityTypesSelect().invoke('val', visibilityTypes).trigger('change', { force: true });
+      editPage.getSubmitButton().click();
+
+      cy.url().should('contain', '/translate');
+    };
+
     let staticFixtures: ProductAttributeVisibilityStaticFixtures;
     let dynamicFixtures: ProductAttributeVisibilityDynamicFixtures;
 
@@ -39,23 +58,29 @@ describe(
       // of any test in this spec, and re-setting PDP+PLP+Cart there enqueues the opposite
       // visibility toggle between the attempts of the "NOT show" test — under a slow publish
       // pipeline the storefront then stays one delivery behind for all its retries.
-      editPage.updateAttributeVisibility(staticFixtures.attributeKey, ['PDP', 'PLP', 'Cart']);
+      updateAttributeVisibility(staticFixtures.attributeKey, ['PDP', 'PLP', 'Cart']);
       cy.runQueueWorker();
 
       attributeVisibilityPage.visitSearchAndWaitForBadgeVisible(
         dynamicFixtures.product.abstract_sku,
         staticFixtures.attributeValue
       );
-      attributeVisibilityPage.assertPlpAttributeBadgeVisible(staticFixtures.attributeValue);
+      attributeVisibilityPage.getFirstProductItem().within(() => {
+        attributeVisibilityPage.getAttributeBadge().should('contain', staticFixtures.attributeValue);
+      });
 
       attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
-      attributeVisibilityPage.assertPdpAttributeVisible(staticFixtures.attributeValue);
+      cy.url().should('not.include', '/search');
+      attributeVisibilityPage.getPdpAttribute().should('contain', staticFixtures.attributeValue);
 
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
       });
-      attributeVisibilityPage.assertCartAttributeBadgeVisible(staticFixtures.attributeValue);
+      attributeVisibilityPage.visitCart();
+      attributeVisibilityPage.getFirstCartItem().within(() => {
+        attributeVisibilityPage.getAttributeBadge().should('contain', staticFixtures.attributeValue);
+      });
     });
 
     it('Should NOT show attribute badge (except PDP)', (): void => {
@@ -64,23 +89,25 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      editPage.updateAttributeVisibility(staticFixtures.attributeKey, ['PDP']);
+      updateAttributeVisibility(staticFixtures.attributeKey, ['PDP']);
       cy.runQueueWorker();
 
       attributeVisibilityPage.visitSearchAndWaitForBadgeNotVisible(
         dynamicFixtures.product.abstract_sku,
         staticFixtures.attributeValue
       );
-      attributeVisibilityPage.assertPlpAttributeBadgeNotVisible(staticFixtures.attributeValue);
+      attributeVisibilityPage.getFirstProductItem().should('not.contain', staticFixtures.attributeValue);
 
       attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
-      attributeVisibilityPage.assertPdpAttributeVisible(staticFixtures.attributeValue);
+      cy.url().should('not.include', '/search');
+      attributeVisibilityPage.getPdpAttribute().should('contain', staticFixtures.attributeValue);
 
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
       });
-      attributeVisibilityPage.assertCartAttributeBadgeNotVisible(staticFixtures.attributeValue);
+      attributeVisibilityPage.visitCart();
+      attributeVisibilityPage.getFirstCartItem().should('not.contain', staticFixtures.attributeValue);
     });
 
     it('Should not show internal attribute', (): void => {
@@ -89,23 +116,25 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      editPage.updateAttributeVisibility(staticFixtures.attributeKey, []);
+      updateAttributeVisibility(staticFixtures.attributeKey, []);
       cy.runQueueWorker();
 
       attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
-      attributeVisibilityPage.assertPdpAttributeNotVisible(staticFixtures.attributeValue);
+      cy.url().should('not.include', '/search');
+      attributeVisibilityPage.getPdpAttribute().should('not.contain', staticFixtures.attributeValue);
 
       attributeVisibilityPage.visitSearchAndWaitForBadgeNotVisible(
         dynamicFixtures.product.abstract_sku,
         staticFixtures.attributeValue
       );
-      attributeVisibilityPage.assertPlpAttributeBadgeNotVisible(staticFixtures.attributeValue);
+      attributeVisibilityPage.getFirstProductItem().should('not.contain', staticFixtures.attributeValue);
 
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
       });
-      attributeVisibilityPage.assertCartAttributeBadgeNotVisible(staticFixtures.attributeValue);
+      attributeVisibilityPage.visitCart();
+      attributeVisibilityPage.getFirstCartItem().should('not.contain', staticFixtures.attributeValue);
     });
   }
 );

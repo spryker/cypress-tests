@@ -46,43 +46,51 @@ describe(
     it('backoffice user can assign a merchant to a product without existing assignment', (): void => {
       navigateToProductEdit(dynamicFixtures.product.abstract_sku);
 
-      productManagementEditPage.verifyMerchantSelected(productManagementEditPage.getMerchantNotAssignedOptionText());
+      verifyMerchantSelected(productManagementEditPage.getMerchantNotAssignedOptionText());
 
       productManagementEditPage.selectMerchant(dynamicFixtures.merchant.name);
       productManagementEditPage.save();
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       navigateToProductEdit(dynamicFixtures.product.abstract_sku);
 
-      productManagementEditPage.verifyMerchantSelected(dynamicFixtures.merchant.name);
+      verifyMerchantSelected(dynamicFixtures.merchant.name);
     });
 
     it('backoffice user can change and remove merchant assignment from a product', (): void => {
       navigateToProductEdit(dynamicFixtures.productWithMerchant.abstract_sku);
 
-      productManagementEditPage.verifyMerchantSelected(dynamicFixtures.merchant.name);
+      verifyMerchantSelected(dynamicFixtures.merchant.name);
 
       productManagementEditPage.selectMerchant(dynamicFixtures.anotherMerchant.name);
       productManagementEditPage.save();
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.productWithMerchant.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.productWithMerchant.abstract_sku);
 
       navigateToProductEdit(dynamicFixtures.productWithMerchant.abstract_sku);
 
-      productManagementEditPage.verifyMerchantSelected(dynamicFixtures.anotherMerchant.name);
+      verifyMerchantSelected(dynamicFixtures.anotherMerchant.name);
 
       productManagementEditPage.removeMerchantAssignment();
       productManagementEditPage.save();
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.productWithMerchant.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.productWithMerchant.abstract_sku);
 
       navigateToProductEdit(dynamicFixtures.productWithMerchant.abstract_sku);
 
-      productManagementEditPage.verifyMerchantSelected(productManagementEditPage.getMerchantNotAssignedOptionText());
+      verifyMerchantSelected(productManagementEditPage.getMerchantNotAssignedOptionText());
     });
 
     function navigateToProductEdit(abstractSku: string): void {
       productManagementListPage.visit();
       productManagementListPage.applyFilters({ query: abstractSku });
       productPage.editProductFromList(abstractSku);
+    }
+
+    function verifySaveSuccess(sku: string): void {
+      productManagementEditPage.getSaveSuccessMessage(sku).should('be.visible');
+    }
+
+    function verifyMerchantSelected(merchantName: string): void {
+      productManagementEditPage.getMerchantSelectContainer().should('contain.text', merchantName);
     }
   }
 );

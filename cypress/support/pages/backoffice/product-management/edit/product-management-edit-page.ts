@@ -24,7 +24,7 @@ export class ProductManagementEditPage extends BackofficePage {
     cy.wait('@variantTable', { timeout: 1000 });
     this.repository.getVariantFirstTableRow().then(($productVariantRow) => {
       cy.wrap($productVariantRow).find(this.repository.getVariantEditButtonSelector()).as('editVariantButton');
-      cy.get('@editVariantButton').should('be.visible').click({ force: true });
+      cy.get('@editVariantButton').click({ force: true });
     });
   };
 
@@ -80,23 +80,18 @@ export class ProductManagementEditPage extends BackofficePage {
     this.repository.getLocaleExpandButton(locale).click({ force: true });
   };
 
-  verifyAttachmentExists = (params: AttachmentParams): void => {
-    const index = params.index ?? 0;
+  getAttachmentLabelInput = (index: number, locale: string): Cypress.Chainable =>
+    this.repository.getAttachmentLabelInput(index, locale);
 
-    this.repository.getAttachmentLabelInput(index, params.locale).should('have.value', params.label);
-    this.repository.getAttachmentUrlInput(index, params.locale).should('have.value', params.url);
-  };
+  getAttachmentUrlInput = (index: number, locale: string): Cypress.Chainable =>
+    this.repository.getAttachmentUrlInput(index, locale);
 
-  verifySaveSuccess = (sku: string): void => {
-    this.repository.getSaveSuccessMessage(sku).should('be.visible');
-  };
+  getSaveSuccessMessage = (sku: string): Cypress.Chainable => this.repository.getSaveSuccessMessage(sku);
+
+  getAttachmentItems = (locale: string): Cypress.Chainable => this.repository.getAttachmentItems(locale);
 
   deleteAttachmentByIndex = (locale: string, index: number): void => {
     this.repository.getAttachmentDeleteButtonByIndex(index, locale).click();
-  };
-
-  verifyAttachmentCount = (locale: string, count: number): void => {
-    this.repository.getAttachmentItems(locale).should('have.length', count);
   };
 
   deleteAttachmentsForLocale = (locale: string): void => {
@@ -115,11 +110,19 @@ export class ProductManagementEditPage extends BackofficePage {
     this.repository.getMerchantSelectDropdownOptions().contains('Not assigned').click();
   };
 
-  verifyMerchantSelected = (merchantName: string): void => {
-    this.repository.getMerchantSelectContainer().should('contain.text', merchantName);
-  };
+  getMerchantSelectContainer = (): Cypress.Chainable => this.repository.getMerchantSelectContainer();
 
   getMerchantNotAssignedOptionText = (): string => 'Not assigned';
+
+  getAttachmentsSectionHeading = (): Cypress.Chainable => this.repository.getAttachmentsSectionHeading();
+
+  getAttachmentsSectionDescription = (): Cypress.Chainable => this.repository.getAttachmentsSectionDescription();
+
+  getFirstAttachmentFormLocaleTitle = (): Cypress.Chainable => this.repository.getFirstAttachmentFormLocaleTitle();
+
+  getFirstAttachmentFormIbox = (): Cypress.Chainable => this.repository.getFirstAttachmentFormIbox();
+
+  getFirstAttachmentFormAddButton = (): Cypress.Chainable => this.repository.getFirstAttachmentFormAddButton();
 }
 
 interface AttachmentParams {

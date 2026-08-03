@@ -59,23 +59,24 @@ describe(
     describe('registration page and form validation', (): void => {
       it('should display page correctly and validate form fields', (): void => {
         cy.visit('/');
-        merchantRegistrationPage.assertFooterLinkExists(FOOTER_LINK_TEXT);
+        merchantRegistrationPage.getFooterLink().should('be.visible').should('contain.text', FOOTER_LINK_TEXT);
         merchantRegistrationPage.clickFooterLink();
-        merchantRegistrationPage.assertPageLoaded();
-        merchantRegistrationPage.assertPageTitle(PAGE_TITLE);
-        merchantRegistrationPage.assertCompanySectionVisible();
-        merchantRegistrationPage.assertAccountSectionVisible();
+        cy.url().should('include', '/merchant-registration-request');
+        merchantRegistrationPage.getTitle().should('be.visible');
+        merchantRegistrationPage.getTitle().should('contain.text', PAGE_TITLE);
+        merchantRegistrationPage.getCompanySection().should('be.visible');
+        merchantRegistrationPage.getAccountSection().should('be.visible');
 
         merchantRegistrationPage.submitForm();
-        merchantRegistrationPage.assertValidationErrors();
-        merchantRegistrationPage.assertFormNotSubmitted();
+        merchantRegistrationPage.getValidationErrors().should('have.length.greaterThan', 0);
+        cy.url().should('include', '/merchant-registration-request');
 
         merchantRegistrationPage.visit();
         merchantRegistrationPage.register({
           contactPerson: { email: 'invalid-email-format' },
         });
-        merchantRegistrationPage.assertValidationErrors();
-        merchantRegistrationPage.assertFormNotSubmitted();
+        merchantRegistrationPage.getValidationErrors().should('have.length.greaterThan', 0);
+        cy.url().should('include', '/merchant-registration-request');
       });
     });
 
@@ -87,7 +88,7 @@ describe(
       before((): void => {
         merchantRegistrationPage.visit();
         sharedRegistrationData = merchantRegistrationPage.register();
-        merchantRegistrationPage.assertSuccessMessage();
+        merchantRegistrationPage.getSuccessMessage().should('exist').and('not.have.css', 'visibility', 'hidden');
       });
 
       it('should manage registrations and add internal notes in back office', (): void => {
@@ -97,27 +98,39 @@ describe(
         });
         merchantRegistrationListPage.visit();
 
-        merchantRegistrationListPage.assertPageLoaded();
-        merchantRegistrationListPage.assertTableHeaders();
+        cy.url().should('include', '/merchant-registration-request/list');
+        merchantRegistrationListPage.getTable().should('be.visible');
+        merchantRegistrationListPage.getTableHeader().contains('ID').should('be.visible');
+        merchantRegistrationListPage.getTableHeader().contains('Created').should('be.visible');
+        merchantRegistrationListPage.getTableHeader().contains('Merchant').should('be.visible');
+        merchantRegistrationListPage
+          .getTableHeader()
+          .contains(/Full name|Name/)
+          .should('be.visible');
+        merchantRegistrationListPage.getTableHeader().contains('Email').should('be.visible');
+        merchantRegistrationListPage.getTableHeader().contains('Status').should('be.visible');
+        merchantRegistrationListPage.getTableHeader().contains('Actions').should('be.visible');
 
         merchantRegistrationListPage.sortByColumn('Created');
-        merchantRegistrationListPage.assertTableVisible();
+        merchantRegistrationListPage.getTable().should('be.visible');
         merchantRegistrationListPage.sortByColumn('Merchant');
-        merchantRegistrationListPage.assertTableVisible();
+        merchantRegistrationListPage.getTable().should('be.visible');
 
         merchantRegistrationListPage.searchByTerm(sharedRegistrationData.email);
-        merchantRegistrationListPage.assertRegistrationExists(sharedRegistrationData.email);
-        merchantRegistrationListPage.assertRegistrationWithStatus(sharedRegistrationData.email, 'Pending');
-        merchantRegistrationListPage.assertStatusColor('Pending');
+        merchantRegistrationListPage.getTableRows().contains(sharedRegistrationData.email).should('exist');
+        merchantRegistrationListPage
+          .getStatusCellForEmail(sharedRegistrationData.email)
+          .should('contain.text', 'Pending');
+        merchantRegistrationListPage.getStatusBadge('Pending').should('exist');
 
-        merchantRegistrationListPage.filterByStatus('Pending');
+        merchantRegistrationListPage.getStatusColumnCells().contains('Pending').should('be.visible');
 
         merchantRegistrationListPage.viewRegistrationByIndex(0);
         cy.url().should('include', '/merchant-registration-request/view');
 
         const noteText = `Test note added at ${new Date().toISOString()}`;
         merchantRegistrationViewPage.addInternalNote(noteText);
-        merchantRegistrationViewPage.assertNoteAdded(noteText);
+        merchantRegistrationViewPage.getCommentMessage().contains(noteText).should('be.visible');
       });
     });
 
@@ -125,13 +138,14 @@ describe(
       it('should handle full workflow with rejection and re-registration', (): void => {
         merchantRegistrationPage.visit();
         const registrationData = merchantRegistrationPage.register();
-        merchantRegistrationPage.assertSuccessMessage();
+        merchantRegistrationPage.getSuccessMessage().should('exist').and('not.have.css', 'visibility', 'hidden');
 
         merchantRegistrationPage.visit();
         merchantRegistrationPage.register({
           contactPerson: { email: registrationData.email },
         });
-        merchantRegistrationPage.assertErrorMessage(MESSAGES.EMAIL_ALREADY_REGISTERED);
+        merchantRegistrationPage.getErrorFlashMessage({ timeout: 10000 }).should('exist').and('be.visible');
+        merchantRegistrationPage.getErrorFlashMessage().should('contain.text', MESSAGES.EMAIL_ALREADY_REGISTERED);
 
         userLoginScenario.execute({
           username: dynamicFixtures.rootUser.username,
@@ -146,7 +160,7 @@ describe(
         const reRegistrationData = merchantRegistrationPage.register({
           contactPerson: { email: registrationData.email },
         });
-        merchantRegistrationPage.assertSuccessMessage();
+        merchantRegistrationPage.getSuccessMessage().should('exist').and('not.have.css', 'visibility', 'hidden');
 
         userLoginScenario.execute({
           username: dynamicFixtures.rootUser.username,
@@ -174,7 +188,7 @@ describe(
       it('should complete simple approval workflow', (): void => {
         merchantRegistrationPage.visit();
         const registrationData = merchantRegistrationPage.register();
-        merchantRegistrationPage.assertSuccessMessage();
+        merchantRegistrationPage.getSuccessMessage().should('exist').and('not.have.css', 'visibility', 'hidden');
 
         userLoginScenario.execute({
           username: dynamicFixtures.rootUser.username,

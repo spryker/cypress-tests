@@ -21,15 +21,16 @@ export class CustomerOverviewPage extends YvesPage {
     this.repository.getViewOrderButton(tableRowIndex).click();
   };
 
-  assertProductQuantity = (productName: string, quantity: number): void => {
-    cy.get('body').then(($body) => {
-      const occurrences = $body.find(this.repository.getOrderedProductSelector(productName));
-      expect(occurrences).to.have.length(quantity);
-    });
+  getBody = (): Cypress.Chainable => {
+    return cy.get('body');
   };
 
-  assertFirstShippingAddress = (address1: string): void => {
-    this.repository.getFirstShippingAddress().should('exist').should('contain.text', address1);
+  getOrderedProductSelector = (productName: string): string => {
+    return this.repository.getOrderedProductSelector(productName);
+  };
+
+  getFirstShippingAddress = (): Cypress.Chainable => {
+    return this.repository.getFirstShippingAddress();
   };
 
   clickMyFilesLink = (): void => {

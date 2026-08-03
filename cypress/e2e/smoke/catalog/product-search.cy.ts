@@ -59,7 +59,7 @@ describe(
     });
 
     function assertProductDetailInformation(): void {
-      cy.contains(staticFixtures.concreteProduct.name);
+      productPage.assertBodyContainsText(staticFixtures.concreteProduct.name);
 
       productPage.getProductConfigurator().should('contain', staticFixtures.productPrice);
       productPage.getProductConfigurator().should('contain', staticFixtures.concreteProduct.sku);
