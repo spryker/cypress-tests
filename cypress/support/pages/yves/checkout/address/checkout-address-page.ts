@@ -63,11 +63,11 @@ export class CheckoutAddressPage extends YvesPage {
         }
 
         if (params?.skipServicePointAddressOverride && hasServicePointUuid) {
-          // The address step renders "Next" disabled and only re-enables it when
-          // validate-next-checkout-step re-evaluates, which needs a change event on one of the
-          // item's inputs. Leaving the item completely untouched keeps the button disabled, so
-          // check the shipment type the already-selected service point implies.
-          this.checkAddressItemShipmentType(index, params.shipmentType);
+          // An item that already carries a service point must arrive here with its shipment-type
+          // radio pre-checked from the quote — on some repos the radios are hidden, so an
+          // unchecked group is a checkout dead-end no user can recover from. Assert instead of
+          // fixing it up, so a broken render fails loudly with the radio-group state.
+          this.assertAddressItemShipmentTypeChecked(index, params.shipmentType);
 
           return;
         }
@@ -217,17 +217,30 @@ export class CheckoutAddressPage extends YvesPage {
     }
   };
 
-  private checkAddressItemShipmentType = (index: number, shipmentTypeKey?: string): void => {
+  private assertAddressItemShipmentTypeChecked = (index: number, shipmentTypeKey?: string): void => {
     if (!shipmentTypeKey) {
       return;
     }
 
-    // `check()` is a no-op when the radio is already checked, and a radio only fires `change` when
-    // its value actually changes, so trigger the event explicitly to always re-run the validator.
     this.repository
       .getMultiShipmentAddressItemShipmentTypeRadio?.(index, shipmentTypeKey)
-      .check({ force: true })
-      .trigger('change', { force: true });
+      .should(($radio: JQuery<HTMLElement>) => {
+        const radioGroups: Record<string, string[]> = {};
+        $radio[0].ownerDocument
+          .querySelectorAll<HTMLInputElement>('input.js-address__validator-trigger')
+          .forEach((radio) => {
+            const groupName = radio.name || 'UNNAMED';
+            (radioGroups[groupName] = radioGroups[groupName] || []).push(
+              `${radio.value}${radio.checked ? ':checked' : ''}${radio.disabled ? ':disabled' : ''}`
+            );
+          });
+
+        expect(
+          $radio.prop('checked'),
+          `shipment type "${shipmentTypeKey}" is pre-selected for address item ${index} ` +
+            `(validator radio groups: ${JSON.stringify(radioGroups)})`
+        ).to.be.true;
+      });
   };
 
   fillBillingAddress = (): void => {
