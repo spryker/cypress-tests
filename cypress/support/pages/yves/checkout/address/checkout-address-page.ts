@@ -10,6 +10,56 @@ export class CheckoutAddressPage extends YvesPage {
 
   protected PAGE_URL = '/checkout/address';
 
+  // CI-only probe (temporary): captured when an address item is skipped because it already
+  // carries a service point, dumped in the assertion message before the Next click so the
+  // failing state is readable straight from the CI log.
+  private probeStateOnSkip: string | null = null;
+
+  private collectAddressStepState = (doc: Document): Record<string, unknown> => {
+    const radioGroups: Record<string, string[]> = {};
+    doc.querySelectorAll<HTMLInputElement>('input.js-address__validator-trigger').forEach((radio) => {
+      const key = radio.name || 'UNNAMED';
+      (radioGroups[key] = radioGroups[key] || []).push(
+        `${radio.value}${radio.checked ? ':checked' : ''}${radio.disabled ? ':disabled' : ''}`
+      );
+    });
+
+    const dropdowns: string[] = [];
+    doc.querySelectorAll<HTMLSelectElement>('select.js-address__address-select').forEach((select) => {
+      dropdowns.push(
+        `${select.name}=${select.value || 'EMPTY'}${select.closest('.is-hidden') ? ':in-hidden' : ''}`
+      );
+    });
+
+    const emptyRequired: string[] = [];
+    doc
+      .querySelectorAll<HTMLInputElement | HTMLSelectElement>(
+        '.js-address__address-form select[required], .js-address__address-form input[required]'
+      )
+      .forEach((field) => {
+        if (!field.value) {
+          emptyRequired.push(`${field.name}${field.closest('.is-hidden') ? ':in-hidden' : ''}`);
+        }
+      });
+
+    const nextButton = doc.querySelector<HTMLButtonElement>('.js-address__form-submit');
+    const billingSameAsShipping = doc.querySelector<HTMLInputElement>(
+      'input[name="addressesForm[billingSameAsShipping]"]'
+    );
+    const shipmentTypeGroupsHtml = Array.from(doc.querySelectorAll('[id$="_shipmentType_key"]')).map((element) =>
+      element.outerHTML.replace(/\s+/g, ' ').slice(0, 900)
+    );
+
+    return {
+      nextDisabled: nextButton ? nextButton.disabled : 'NO-BUTTON',
+      billingSameAsShippingChecked: billingSameAsShipping ? billingSameAsShipping.checked : 'NO-CHECKBOX',
+      radioGroups,
+      dropdowns,
+      emptyRequired,
+      shipmentTypeGroupsHtml,
+    };
+  };
+
   fillShippingAddress = (params?: FillShippingAddressParams): void => {
     if (params?.idCustomerAddress) {
       this.repository.getSelectShippingAddressField().select(params.idCustomerAddress.toString(), { force: true });
@@ -63,6 +113,10 @@ export class CheckoutAddressPage extends YvesPage {
         }
 
         if (params?.skipServicePointAddressOverride && hasServicePointUuid) {
+          cy.document().then((doc) => {
+            this.probeStateOnSkip = JSON.stringify(this.collectAddressStepState(doc));
+          });
+
           return;
         }
 
@@ -226,6 +280,16 @@ export class CheckoutAddressPage extends YvesPage {
     // Setting optional fields
     this.repository.getBillingAddressCompanyField().clear().type(checkoutAddress.company, { delay: 0 });
     this.repository.getBillingAddressPhoneField().clear().type(checkoutAddress.phone, { delay: 0 });
+
+    if (this.probeStateOnSkip) {
+      this.repository.getNextButton().should(($button: JQuery<HTMLElement>) => {
+        const stateBeforeClick = JSON.stringify(this.collectAddressStepState($button[0].ownerDocument));
+        expect(
+          $button.prop('disabled'),
+          `PROBE onSkip=${this.probeStateOnSkip} beforeClick=${stateBeforeClick}`
+        ).to.be.false;
+      });
+    }
 
     this.repository.getNextButton().click();
   };
