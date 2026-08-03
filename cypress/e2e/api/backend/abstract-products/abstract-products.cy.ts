@@ -1,6 +1,6 @@
 import { AbstractProductsDynamicFixtures, AbstractProductsStaticFixtures } from '@interfaces/api';
 import { getAbstractProduct, getAbstractProductCollection, getAbstractProductWithoutToken } from '@utils';
-import { retryableBefore } from '../../../support/e2e';
+import { retryableBefore } from '../../../../support/e2e';
 
 // Non-nullable resource attributes always serialized (nullable ones — isActive, newFrom, newTo, taxSet — are omitted when null).
 const EXPECTED_ATTRIBUTE_KEYS = [

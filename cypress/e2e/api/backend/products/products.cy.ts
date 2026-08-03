@@ -8,7 +8,7 @@ import {
   getProductWithoutToken,
   updateProduct,
 } from '@utils';
-import { retryableBefore } from '../../../support/e2e';
+import { retryableBefore } from '../../../../support/e2e';
 
 // Non-nullable resource attributes always serialized (nullable ones — abstractSku, isActive,
 // validFrom, validTo — are omitted from the payload when null).
