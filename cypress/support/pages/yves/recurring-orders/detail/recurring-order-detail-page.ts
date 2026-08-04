@@ -15,25 +15,11 @@ export class RecurringOrderDetailPage extends YvesPage {
     cy.visit(`/recurring-orders/${uuid}`);
   };
 
-  assertScheduleName = (name: string): void => {
-    this.repository.getScheduleName().should('contain', name);
-  };
+  getScheduleName = (): Cypress.Chainable => this.repository.getScheduleName();
 
-  assertCadenceVisible = (): void => {
-    this.repository.getCadence().should('be.visible');
-  };
+  getCadence = (): Cypress.Chainable => this.repository.getCadence();
 
-  assertCadenceContains = (text: string): void => {
-    this.repository.getCadence().should('contain', text);
-  };
-
-  assertOnRecurringOrdersUrl = (): void => {
-    cy.url().should('include', '/recurring-orders');
-  };
-
-  assertStatusBadge = (status: string): void => {
-    this.repository.getStatusBadge().invoke('text').invoke('toLowerCase').should('contain', status.toLowerCase());
-  };
+  getStatusBadge = (): Cypress.Chainable => this.repository.getStatusBadge();
 
   clickPause = (): void => {
     this.repository.getPauseButton().click();
@@ -75,29 +61,17 @@ export class RecurringOrderDetailPage extends YvesPage {
     this.repository.getCancelConfirmButton().click();
   };
 
-  assertHistoryViewOrderLinkVisible = (): void => {
-    this.repository.getHistoryViewOrderLink().should('be.visible');
-  };
+  getHistoryViewOrderLink = (): Cypress.Chainable => this.repository.getHistoryViewOrderLink();
 
   assertHistoryViewRecordStatus = (status: string): void => {
     this.repository.getHistoryViewLatestRecordStatus().contains(status);
   };
 
-  assertApprovalErrorContains = (text: string): void => {
-    this.repository.getFlashAlert().should('contain', text);
-  };
+  getFlashAlert = (): Cypress.Chainable => this.repository.getFlashAlert();
 
-  assertDetailItemsContain = (text: string): void => {
-    this.repository.getDetailItems().should('contain', text);
-  };
+  getDetailItems = (): Cypress.Chainable => this.repository.getDetailItems();
 
-  assertDetailItemsNotContain = (text: string): void => {
-    this.repository.getDetailItems().should('not.contain', text);
-  };
-
-  assertDetailItemQuantity = (quantity: string): void => {
-    this.repository.getDetailItemQuantity().first().should('contain', quantity);
-  };
+  getDetailItemQuantity = (): Cypress.Chainable => this.repository.getDetailItemQuantity().first();
 
   openEditModal = (): void => {
     this.repository.getEditScheduleButton().click();

@@ -50,21 +50,21 @@ describe(
       recurringOrderReviewPage.selectShipmentMethod();
       recurringOrderReviewPage.setAddProductQuantity(staticFixtures.overStockQuantity);
       recurringOrderReviewPage.submitAddProduct();
-      recurringOrderReviewPage.assertAddProductLineVisible();
+      recurringOrderReviewPage.getAddProductLine().should('be.visible');
 
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
       recurringOrderReviewPage.selectStandingScope();
       recurringOrderReviewPage.confirmApproveReview();
 
-      recurringOrderReviewPage.assertStillOnReview(dynamicFixtures.scheduleForOverStock.uuid);
-      recurringOrderReviewPage.assertApprovalErrorContains(staticFixtures.notAvailableError);
+      cy.url().should('include', `/recurring-orders/${dynamicFixtures.scheduleForOverStock.uuid}/review-required`);
+      recurringOrderReviewPage.getFlashAlert().should('contain', staticFixtures.notAvailableError);
     });
 
     it('blocks approval when all items are removed from the schedule', (): void => {
       loginAs(dynamicFixtures.buyerForRemoveAll.email);
 
       recurringOrderReviewPage.visitReview(dynamicFixtures.scheduleForRemoveAll.uuid);
-      recurringOrderReviewPage.assertFlaggedItemsVisible();
+      recurringOrderReviewPage.getFlaggedItems().should('be.visible');
 
       recurringOrderReviewPage.removeAllLines();
 
@@ -72,8 +72,8 @@ describe(
       recurringOrderReviewPage.selectStandingScope();
       recurringOrderReviewPage.confirmApproveReview();
 
-      recurringOrderReviewPage.assertStillOnReview(dynamicFixtures.scheduleForRemoveAll.uuid);
-      recurringOrderReviewPage.assertApprovalErrorContains(staticFixtures.allItemsRemovedError);
+      cy.url().should('include', `/recurring-orders/${dynamicFixtures.scheduleForRemoveAll.uuid}/review-required`);
+      recurringOrderReviewPage.getFlashAlert().should('contain', staticFixtures.allItemsRemovedError);
     });
 
     it('blocks approval and surfaces an error when an added product is out of stock', (): void => {
@@ -91,14 +91,14 @@ describe(
       recurringOrderReviewPage.selectShipmentMethod();
       recurringOrderReviewPage.setAddProductQuantity(staticFixtures.overStockQuantity);
       recurringOrderReviewPage.submitAddProduct();
-      recurringOrderReviewPage.assertAddProductLineVisible();
+      recurringOrderReviewPage.getAddProductLine().should('be.visible');
 
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
       recurringOrderReviewPage.selectStandingScope();
       recurringOrderReviewPage.confirmApproveReview();
 
-      recurringOrderReviewPage.assertStillOnReview(dynamicFixtures.scheduleForUnavailable.uuid);
-      recurringOrderReviewPage.assertApprovalErrorContains(staticFixtures.notAvailableError);
+      cy.url().should('include', `/recurring-orders/${dynamicFixtures.scheduleForUnavailable.uuid}/review-required`);
+      recurringOrderReviewPage.getFlashAlert().should('contain', staticFixtures.notAvailableError);
     });
 
     it('surfaces a budget error on the detail page when the selected budget is exceeded', (): void => {
@@ -106,8 +106,8 @@ describe(
 
       recurringOrderReviewPage.visitReview(dynamicFixtures.scheduleForBudgetBlock.uuid);
 
-      recurringOrderReviewPage.assertCostCenterSelectVisible();
-      recurringOrderReviewPage.assertBudgetSelectVisible();
+      recurringOrderReviewPage.getCostCenterSelect().should('be.visible');
+      recurringOrderReviewPage.getBudgetSelect().should('be.visible');
       recurringOrderReviewPage.selectCostCenter();
       recurringOrderReviewPage.selectBudget();
 
@@ -115,7 +115,7 @@ describe(
       recurringOrderReviewPage.selectStandingScope();
       recurringOrderReviewPage.confirmApproveReview();
 
-      recurringOrderDetailPage.assertApprovalErrorContains(staticFixtures.budgetBlockError);
+      recurringOrderDetailPage.getFlashAlert().should('contain', staticFixtures.budgetBlockError);
     });
   }
 );

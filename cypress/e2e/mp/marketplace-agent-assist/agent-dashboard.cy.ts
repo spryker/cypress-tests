@@ -45,12 +45,12 @@ describe(
       mpAgentDashboardPage.assertPageLocation();
       mpAgentDashboardPage.getDashboardSidebarSelector().contains('Merchant Users');
 
-      cy.contains('Merchant');
-      cy.contains('Merchant Approval');
-      cy.contains('First Name');
-      cy.contains('Last Name');
-      cy.contains('Email');
-      cy.contains('User Status');
+      mpAgentDashboardPage.assertBodyContainsText('Merchant');
+      mpAgentDashboardPage.assertBodyContainsText('Merchant Approval');
+      mpAgentDashboardPage.assertBodyContainsText('First Name');
+      mpAgentDashboardPage.assertBodyContainsText('Last Name');
+      mpAgentDashboardPage.assertBodyContainsText('Email');
+      mpAgentDashboardPage.assertBodyContainsText('User Status');
     });
 
     it('agent should be able to see active merchant user in a table', (): void => {

@@ -11,17 +11,14 @@ export class CheckoutSummaryRecurringOrderPage extends YvesPage {
 
   protected PAGE_URL = '/checkout/summary';
 
-  assertRecurringOrderToggleVisible = (): void => {
-    this.repository.getRecurringOrderToggle().should('be.visible');
-  };
+  getRecurringOrderToggle = (): Cypress.Chainable => this.repository.getRecurringOrderToggle();
 
-  assertRecurringOrderToggleNotVisible = (): void => {
-    this.repository.getRecurringOrderToggle().should('not.exist');
-  };
+  getCadenceTypeSelect = (): Cypress.Chainable => this.repository.getCadenceTypeSelect();
+
+  getConfirmButton = (): Cypress.Chainable => this.repository.getConfirmButton();
 
   enableRecurringOrder = (): void => {
     this.repository.getRecurringOrderToggle().click({ force: true });
-    this.repository.getCadenceTypeSelect().should('be.visible');
   };
 
   fillScheduleName = (name: string): void => {
@@ -32,31 +29,12 @@ export class CheckoutSummaryRecurringOrderPage extends YvesPage {
     this.repository.getCadenceTypeSelect().select(cadenceType, { force: true });
   };
 
-  assertStartDateEarliestIsToday = (today: string): void => {
-    this.repository.getStartDateInput().should('have.attr', 'min', today);
-  };
+  getStartDateInput = (): Cypress.Chainable => this.repository.getStartDateInput();
 
-  assertStartDateHasNoDefaultValue = (): void => {
-    this.repository.getStartDateInput().should('have.value', '').and('have.attr', 'required');
-  };
-
-  assertStartDateTooltipContains = (text: string): void => {
-    this.repository.getStartDateTooltip().should('exist').and('contain.text', text);
-  };
-
-  assertStartDateRejectsPastDate = (pastDate: string): void => {
-    this.repository.getStartDateInput().clear().type(pastDate);
-    this.repository.getStartDateInput().should(($input): void => {
-      expect(($input[0] as HTMLInputElement).validity.rangeUnderflow).to.eq(true);
-    });
-  };
+  getStartDateTooltip = (): Cypress.Chainable => this.repository.getStartDateTooltip();
 
   selectStartDate = (date: string): void => {
     this.repository.getStartDateInput().clear().type(date);
-  };
-
-  assertStartDateSelected = (date: string): void => {
-    this.repository.getStartDateInput().should('have.value', date);
   };
 
   confirmRecurringOrder = (): void => {
@@ -69,6 +47,5 @@ export class CheckoutSummaryRecurringOrderPage extends YvesPage {
         cy.wait('@saveRequest');
       }
     });
-    this.repository.getConfirmButton().should('not.exist');
   };
 }

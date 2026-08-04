@@ -45,36 +45,59 @@ describe(
     it('recurring orders list shows schedules of all statuses and shows actionable attention banner', (): void => {
       recurringOrderListPage.visit();
 
-      recurringOrderListPage.assertListTableVisible();
-      recurringOrderListPage.assertScheduleRowContains(dynamicFixtures.schedule.name, staticFixtures.statuses.active);
-      recurringOrderListPage.assertScheduleRowContains(
-        dynamicFixtures.pausedScheduleForBuyer.name,
-        staticFixtures.statuses.paused
-      );
-      recurringOrderListPage.assertScheduleRowContains(
-        dynamicFixtures.cancelledScheduleForBuyer.name,
-        staticFixtures.statuses.cancelled
-      );
+      recurringOrderListPage.getListTable().should('be.visible');
+      recurringOrderListPage
+        .getListTable()
+        .contains('tr', dynamicFixtures.schedule.name)
+        .invoke('text')
+        .invoke('toLowerCase')
+        .should('contain', staticFixtures.statuses.active);
+      recurringOrderListPage
+        .getListTable()
+        .contains('tr', dynamicFixtures.pausedScheduleForBuyer.name)
+        .invoke('text')
+        .invoke('toLowerCase')
+        .should('contain', staticFixtures.statuses.paused);
+      recurringOrderListPage
+        .getListTable()
+        .contains('tr', dynamicFixtures.cancelledScheduleForBuyer.name)
+        .invoke('text')
+        .invoke('toLowerCase')
+        .should('contain', staticFixtures.statuses.cancelled);
 
       recurringOrderListPage.getRecurringOrdersAttentionBanner().should('be.visible');
       recurringOrderListPage.getRecurringOrdersAttentionBanner().should('contain', staticFixtures.attentionBannerText);
 
       recurringOrderListPage.getActionBannerFilter(staticFixtures.viewPausedFilterLabel).should('be.visible').click();
 
-      recurringOrderListPage.assertScheduleListDoesNotContainScheduleWithStatus(staticFixtures.statuses.active);
-      recurringOrderListPage.assertScheduleRowContains(
-        dynamicFixtures.pausedScheduleForBuyer.name,
-        staticFixtures.statuses.paused
-      );
-      recurringOrderListPage.assertScheduleListDoesNotContainScheduleWithStatus(staticFixtures.statuses.cancelled);
+      recurringOrderListPage
+        .getListTable()
+        .invoke('text')
+        .invoke('toLowerCase')
+        .should('not.contain', staticFixtures.statuses.active);
+      recurringOrderListPage
+        .getListTable()
+        .contains('tr', dynamicFixtures.pausedScheduleForBuyer.name)
+        .invoke('text')
+        .invoke('toLowerCase')
+        .should('contain', staticFixtures.statuses.paused);
+      recurringOrderListPage
+        .getListTable()
+        .invoke('text')
+        .invoke('toLowerCase')
+        .should('not.contain', staticFixtures.statuses.cancelled);
     });
 
     it('detail page shows the schedule name, cadence, and status', (): void => {
       recurringOrderListPage.openSchedule(dynamicFixtures.schedule.name);
 
-      recurringOrderDetailPage.assertScheduleName(dynamicFixtures.schedule.name);
-      recurringOrderDetailPage.assertCadenceVisible();
-      recurringOrderDetailPage.assertStatusBadge(staticFixtures.statuses.active);
+      recurringOrderDetailPage.getScheduleName().should('contain', dynamicFixtures.schedule.name);
+      recurringOrderDetailPage.getCadence().should('be.visible');
+      recurringOrderDetailPage
+        .getStatusBadge()
+        .invoke('text')
+        .invoke('toLowerCase')
+        .should('contain', staticFixtures.statuses.active);
     });
 
     it('company user can edit the schedule cadence and start date from the detail page', (): void => {
@@ -85,8 +108,8 @@ describe(
       recurringOrderDetailPage.setStartDate(getFutureDate(30));
       recurringOrderDetailPage.confirmEdit();
 
-      recurringOrderDetailPage.assertScheduleName(dynamicFixtures.schedule.name);
-      recurringOrderDetailPage.assertCadenceContains(staticFixtures.editCadenceLabel);
+      recurringOrderDetailPage.getScheduleName().should('contain', dynamicFixtures.schedule.name);
+      recurringOrderDetailPage.getCadence().should('contain', staticFixtures.editCadenceLabel);
     });
 
     it('company user can pause an active recurring schedule and resume it', (): void => {
@@ -94,13 +117,21 @@ describe(
 
       recurringOrderDetailPage.clickPause();
       recurringOrderDetailPage.confirmPause();
-      recurringOrderDetailPage.assertStatusBadge(staticFixtures.statuses.paused);
+      recurringOrderDetailPage
+        .getStatusBadge()
+        .invoke('text')
+        .invoke('toLowerCase')
+        .should('contain', staticFixtures.statuses.paused);
 
       recurringOrderDetailPage.clickResume();
       recurringOrderDetailPage.fillResumeDate(getFutureDate(60));
       recurringOrderDetailPage.confirmResume();
 
-      recurringOrderDetailPage.assertStatusBadge(staticFixtures.statuses.active);
+      recurringOrderDetailPage
+        .getStatusBadge()
+        .invoke('text')
+        .invoke('toLowerCase')
+        .should('contain', staticFixtures.statuses.active);
     });
 
     it('company user can skip the next occurrence of a recurring schedule', (): void => {
@@ -117,7 +148,7 @@ describe(
       recurringOrderDetailPage.clickSkipFromNextExecution();
       recurringOrderDetailPage.confirmSkip();
 
-      recurringOrderDetailPage.assertOnRecurringOrdersUrl();
+      recurringOrderDetailPage.assertPageLocation();
 
       recurringOrderDetailPage.assertHistoryViewRecordStatus(staticFixtures.skippedHistoryStatus);
     });
@@ -128,7 +159,11 @@ describe(
       recurringOrderDetailPage.clickCancel();
       recurringOrderDetailPage.confirmCancel();
 
-      recurringOrderDetailPage.assertStatusBadge(staticFixtures.statuses.cancelled);
+      recurringOrderDetailPage
+        .getStatusBadge()
+        .invoke('text')
+        .invoke('toLowerCase')
+        .should('contain', staticFixtures.statuses.cancelled);
     });
   }
 );

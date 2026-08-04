@@ -48,18 +48,20 @@ describe(
       });
       checkoutScenario.execute({ shouldSkipPlaceOrder: true });
 
-      checkoutSummaryRecurringOrderPage.assertRecurringOrderToggleVisible();
+      checkoutSummaryRecurringOrderPage.getRecurringOrderToggle().should('be.visible');
       checkoutSummaryRecurringOrderPage.enableRecurringOrder();
+      checkoutSummaryRecurringOrderPage.getCadenceTypeSelect().should('be.visible');
       checkoutSummaryRecurringOrderPage.fillScheduleName(staticFixtures.scheduleName);
       checkoutSummaryRecurringOrderPage.selectCadenceType('monthly');
       checkoutSummaryRecurringOrderPage.selectStartDate(formatDate(new Date()));
       checkoutSummaryRecurringOrderPage.confirmRecurringOrder();
+      checkoutSummaryRecurringOrderPage.getConfirmButton().should('not.exist');
       checkoutSummaryPage.placeOrder();
 
-      checkoutSummaryPage.assertCheckoutSuccess();
+      cy.url().should('include', '/checkout/success');
 
       recurringOrderListPage.visit();
-      recurringOrderListPage.assertScheduleVisible(staticFixtures.scheduleName);
+      recurringOrderListPage.getListTable().contains(staticFixtures.scheduleName).should('be.visible');
     });
 
     it('buyer can pick a start date, with today as the earliest selectable value and past dates rejected', (): void => {
@@ -72,15 +74,24 @@ describe(
       });
       checkoutScenario.execute({ shouldSkipPlaceOrder: true });
 
-      checkoutSummaryRecurringOrderPage.assertRecurringOrderToggleVisible();
+      checkoutSummaryRecurringOrderPage.getRecurringOrderToggle().should('be.visible');
       checkoutSummaryRecurringOrderPage.enableRecurringOrder();
+      checkoutSummaryRecurringOrderPage.getCadenceTypeSelect().should('be.visible');
 
-      checkoutSummaryRecurringOrderPage.assertStartDateHasNoDefaultValue();
-      checkoutSummaryRecurringOrderPage.assertStartDateTooltipContains(staticFixtures.startDateTooltipText);
-      checkoutSummaryRecurringOrderPage.assertStartDateEarliestIsToday(formatDate(new Date()));
-      checkoutSummaryRecurringOrderPage.assertStartDateRejectsPastDate(addDaysFromToday(-30));
+      checkoutSummaryRecurringOrderPage.getStartDateInput().should('have.value', '').and('have.attr', 'required');
+      checkoutSummaryRecurringOrderPage
+        .getStartDateTooltip()
+        .should('exist')
+        .and('contain.text', staticFixtures.startDateTooltipText);
+      checkoutSummaryRecurringOrderPage.getStartDateInput().should('have.attr', 'min', formatDate(new Date()));
+
+      checkoutSummaryRecurringOrderPage.selectStartDate(addDaysFromToday(-30));
+      checkoutSummaryRecurringOrderPage.getStartDateInput().should(($input): void => {
+        expect(($input[0] as HTMLInputElement).validity.rangeUnderflow).to.eq(true);
+      });
+
       checkoutSummaryRecurringOrderPage.selectStartDate(futureDate);
-      checkoutSummaryRecurringOrderPage.assertStartDateSelected(futureDate);
+      checkoutSummaryRecurringOrderPage.getStartDateInput().should('have.value', futureDate);
     });
 
     it('recurring order widget is not visible when credit card payment method is selected', (): void => {
@@ -91,7 +102,7 @@ describe(
       });
       checkoutScenario.execute({ paymentMethod: 'dummyPaymentCreditCard', shouldSkipPlaceOrder: true });
 
-      checkoutSummaryRecurringOrderPage.assertRecurringOrderToggleNotVisible();
+      checkoutSummaryRecurringOrderPage.getRecurringOrderToggle().should('not.exist');
     });
   }
 );

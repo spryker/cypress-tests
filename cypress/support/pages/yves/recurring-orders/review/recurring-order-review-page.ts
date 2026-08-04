@@ -15,21 +15,15 @@ export class RecurringOrderReviewPage extends YvesPage {
     cy.visit(`/recurring-orders/${uuid}/review-required`);
   };
 
-  assertSummaryBannerVisible = (): void => {
-    this.repository.getSummaryBanner().should('be.visible');
-  };
+  getSummaryBanner = (): Cypress.Chainable => this.repository.getSummaryBanner();
 
-  assertBackToDetailLinkVisible = (): void => {
-    this.repository.getBackToDetailLink().should('be.visible');
-  };
+  getBackToDetailLink = (): Cypress.Chainable => this.repository.getBackToDetailLink();
 
   clickBackToDetail = (): void => {
     this.repository.getBackToDetailLink().click();
   };
 
-  assertFooterTotalVisible = (): void => {
-    this.repository.getFooterTotal().should('be.visible');
-  };
+  getFooterTotal = (): Cypress.Chainable => this.repository.getFooterTotal();
 
   clickAcceptAndPlaceOrder = (): void => {
     this.repository.getAcceptCta().click();
@@ -47,42 +41,20 @@ export class RecurringOrderReviewPage extends YvesPage {
     this.repository.getApproveSubmitButton().click();
   };
 
-  assertModalRemovedCount = (count: number): void => {
-    this.repository.getModalRemovedCount().should('have.text', String(count));
-  };
+  getModalRemovedCount = (): Cypress.Chainable => this.repository.getModalRemovedCount();
 
-  assertModalPriceChangeCount = (count: number): void => {
-    this.repository.getModalPriceChangeCount().should('have.text', String(count));
-  };
+  getModalPriceChangeCount = (): Cypress.Chainable => this.repository.getModalPriceChangeCount();
 
-  assertModalSubstitutedCount = (count: number): void => {
-    this.repository.getModalSubstitutedCount().should('have.text', String(count));
-  };
+  getModalSubstitutedCount = (): Cypress.Chainable => this.repository.getModalSubstitutedCount();
 
-  assertModalAddedCount = (count: number): void => {
-    this.repository.getModalAddedCount().should('have.text', String(count));
-  };
+  getModalAddedCount = (): Cypress.Chainable => this.repository.getModalAddedCount();
 
-  assertOrderPlaced = (): void => {
-    cy.url().should('not.include', '/review-required');
-  };
-
-  assertStillOnReview = (uuid: string): void => {
-    cy.url().should('include', `/recurring-orders/${uuid}/review-required`);
-  };
-
-  assertApprovalErrorContains = (text: string): void => {
-    this.repository.getFlashAlert().should('contain', text);
-  };
+  getFlashAlert = (): Cypress.Chainable => this.repository.getFlashAlert();
 
   removeAllLines = (): void => {
     this.repository.getLineRemoveToggle().each(($toggle): void => {
       cy.wrap($toggle).click();
     });
-  };
-
-  assertScheduleDetailUrl = (uuid: string): void => {
-    cy.url().should('include', `/recurring-orders/${uuid}`);
   };
 
   interceptShipmentMethods = (): void => {
@@ -93,13 +65,7 @@ export class RecurringOrderReviewPage extends YvesPage {
     cy.wait('@shipmentMethods');
   };
 
-  assertSummaryBannerContains = (text: string): void => {
-    this.repository.getSummaryBanner().contains(text).should('be.visible');
-  };
-
-  assertFlaggedItemsVisible = (): void => {
-    this.repository.getFlaggedItems().should('be.visible');
-  };
+  getFlaggedItems = (): Cypress.Chainable => this.repository.getFlaggedItems();
 
   setLineQuantity = (quantity: number): void => {
     this.repository.getLineQuantityInput().first().clear().type(String(quantity)).blur();
@@ -109,26 +75,20 @@ export class RecurringOrderReviewPage extends YvesPage {
     this.repository.getLineQuantityInput().first().clear().type(quantity).blur();
   };
 
-  assertSubmittedLineQuantity = (quantity: number): void => {
-    this.repository.getLineAcceptedQuantityInput().first().should('have.value', String(quantity));
-  };
+  /** The field carrying the quantity actually posted for the first line, not the visible control. */
+  getLineAcceptedQuantityInput = (): Cypress.Chainable => this.repository.getLineAcceptedQuantityInput().first();
 
   removeFirstLine = (): void => {
     this.repository.getLineRemoveToggle().first().click();
   };
 
-  assertCostCenterSelectVisible = (): void => {
-    this.repository.getCostCenterSelect().should('be.visible');
-  };
+  getCostCenterSelect = (): Cypress.Chainable => this.repository.getCostCenterSelect();
 
-  assertBudgetSelectVisible = (): void => {
-    this.repository.getBudgetSelect().should('be.visible');
-  };
+  getBudgetSelect = (): Cypress.Chainable => this.repository.getBudgetSelect();
 
-  assertBudgetSummaryVisible = (): void => {
-    this.repository.getBudgetSummaryTotal().should('be.visible');
-    this.repository.getBudgetSummaryRemaining().should('be.visible');
-  };
+  getBudgetSummaryTotal = (): Cypress.Chainable => this.repository.getBudgetSummaryTotal();
+
+  getBudgetSummaryRemaining = (): Cypress.Chainable => this.repository.getBudgetSummaryRemaining();
 
   selectCostCenter = (): void => {
     this.selectFirstRealOption(this.repository.getCostCenterSelect);
@@ -138,9 +98,7 @@ export class RecurringOrderReviewPage extends YvesPage {
     this.selectFirstRealOption(this.repository.getBudgetSelect);
   };
 
-  assertSubstituteVisible = (): void => {
-    this.repository.getSubstituteChangeButton().should('be.visible');
-  };
+  getSubstituteChangeButton = (): Cypress.Chainable => this.repository.getSubstituteChangeButton();
 
   openSubstitutePicker = (): void => {
     this.repository.getSubstituteChangeButton().first().click();
@@ -150,9 +108,11 @@ export class RecurringOrderReviewPage extends YvesPage {
     this.repository.getSubstituteConfirmButton().filter(':visible').first().click();
   };
 
-  assertSubstituteApplied = (): void => {
-    this.repository.getSubstituteRemoveButton().filter(':visible').should('have.length.at.least', 1);
-  };
+  /**
+   * Substitute and add-product controls are rendered per line as well as inside the open modal, so the page
+   * object narrows to the copy the spec interacts with instead of leaking the filter into the spec.
+   */
+  getSubstituteRemoveButtons = (): Cypress.Chainable => this.repository.getSubstituteRemoveButton().filter(':visible');
 
   openAddProductModal = (): void => {
     this.repository.getAddProductOpenModalButton().click();
@@ -168,49 +128,37 @@ export class RecurringOrderReviewPage extends YvesPage {
   };
 
   setAddProductQuantity = (quantity: number): void => {
-    this.repository.getAddProductPickerQuantityInput().filter(':visible').first().clear().type(String(quantity)).blur();
+    this.getAddProductQuantityInput().clear().type(String(quantity)).blur();
   };
 
   submitAddProduct = (): void => {
     this.repository.getAddProductPickerSubmitButton().filter(':visible').first().click();
   };
 
-  assertAddProductLineVisible = (): void => {
-    this.repository.getAddProductLine().should('be.visible');
-  };
+  getAddProductLine = (): Cypress.Chainable => this.repository.getAddProductLine();
 
   typeSubstituteQuantity = (quantity: string): void => {
-    this.repository.getSubstituteQuantityInput().filter(':visible').first().clear().type(quantity).blur();
+    this.getSubstituteQuantityInput().clear().type(quantity).blur();
   };
 
-  assertSubstituteQuantity = (quantity: number): void => {
-    this.repository.getSubstituteQuantityInput().filter(':visible').first().should('have.value', String(quantity));
-  };
+  getSubstituteQuantityInput = (): Cypress.Chainable =>
+    this.repository.getSubstituteQuantityInput().filter(':visible').first();
 
   typeAddProductQuantity = (quantity: string): void => {
-    this.repository.getAddProductPickerQuantityInput().filter(':visible').first().clear().type(quantity).blur();
+    this.getAddProductQuantityInput().clear().type(quantity).blur();
   };
 
-  assertAddProductQuantity = (quantity: number): void => {
-    this.repository
-      .getAddProductPickerQuantityInput()
-      .filter(':visible')
-      .first()
-      .should('have.value', String(quantity));
-  };
+  getAddProductQuantityInput = (): Cypress.Chainable =>
+    this.repository.getAddProductPickerQuantityInput().filter(':visible').first();
 
   typeAddProductLineQuantity = (quantity: string): void => {
-    this.repository.getAddProductLineQuantityInput().first().clear().type(quantity).blur();
+    this.getAddProductLineQuantityInput().clear().type(quantity).blur();
   };
 
-  assertAddProductLineQuantity = (quantity: number): void => {
-    this.repository.getAddProductLineQuantityInput().first().should('have.value', String(quantity));
-  };
+  getAddProductLineQuantityInput = (): Cypress.Chainable => this.repository.getAddProductLineQuantityInput().first();
 
-  /** Asserts the value actually posted for an added item (substitute or added product), not the visible control. */
-  assertSubmittedAddedItemQuantity = (quantity: number): void => {
-    this.repository.getAddedItemQuantityFields().first().should('have.value', String(quantity));
-  };
+  /** The field carrying the quantity actually posted for an added item (substitute or added product). */
+  getAddedItemQuantityField = (): Cypress.Chainable => this.repository.getAddedItemQuantityFields().first();
 
   selectShipmentAddress = (): void => {
     this.selectFirstRealOption(() => this.repository.getShipmentAddressSelect().filter(':visible').first());

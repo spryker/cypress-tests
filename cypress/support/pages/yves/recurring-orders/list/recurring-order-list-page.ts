@@ -11,30 +11,7 @@ export class RecurringOrderListPage extends YvesPage {
 
   protected PAGE_URL = '/recurring-orders';
 
-  assertListTableVisible = (): void => {
-    this.repository.getListTable().should('be.visible');
-  };
-
-  assertScheduleVisible = (scheduleName: string): void => {
-    this.repository.getListTable().contains(scheduleName).should('be.visible');
-  };
-
-  assertScheduleRowContains = (scheduleName: string, text: string): void => {
-    this.repository
-      .getListTable()
-      .contains('tr', scheduleName)
-      .invoke('text')
-      .invoke('toLowerCase')
-      .should('contain', text.toLowerCase());
-  };
-
-  assertScheduleListDoesNotContainScheduleWithStatus = (status: string): void => {
-    this.repository.getListTable().invoke('text').invoke('toLowerCase').should('not.contain', status.toLowerCase());
-  };
-
-  assertEmptyState = (): void => {
-    this.repository.getListTable().should('be.visible');
-  };
+  getListTable = (): Cypress.Chainable => this.repository.getListTable();
 
   clickViewSchedule = (scheduleName: string): void => {
     cy.contains('tr', scheduleName).within(() => {

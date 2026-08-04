@@ -43,7 +43,7 @@ describe(
       customerOverviewPage.viewLastPlacedOrder();
       orderDetailsPage.reorderAll();
 
-      cy.get('body').contains(dynamicFixtures.productBundle.localized_attributes[0].name).should('exist');
+      productPage.assertBodyContainsText(dynamicFixtures.productBundle.localized_attributes[0].name).should('exist');
     });
 
     function placeOrderWithProductBundle(): void {

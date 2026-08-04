@@ -23,6 +23,7 @@ export class MpPage extends AbstractPage {
       customFunction();
     }
 
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Internal retry/settle guard on the GUI-table intercept; not a spec-level assertion.
     cy.wait(`@${interceptAlias}`, { timeout: 10000 })
       .its('response.body.total')
       .should((total: number) => {

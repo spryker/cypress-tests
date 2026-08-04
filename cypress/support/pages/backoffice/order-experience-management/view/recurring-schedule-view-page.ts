@@ -14,19 +14,11 @@ export class RecurringScheduleViewPage extends BackofficePage {
     cy.visitBackoffice(`${this.PAGE_URL}?id-recurring-schedule=${idRecurringSchedule}`);
   };
 
-  assertName = (name: string): void => {
-    this.repository.getName().should('contain', name);
-  };
+  getName = (): Cypress.Chainable => this.repository.getName();
 
-  assertStatus = (status: string): void => {
-    this.repository.getStatus().should('contain', status);
-  };
+  getStatus = (): Cypress.Chainable => this.repository.getStatus();
 
-  assertItemsContain = (text: string): void => {
-    this.repository.getItems().should('contain', text);
-  };
+  getItems = (): Cypress.Chainable => this.repository.getItems();
 
-  assertConfigurableBundleLabel = (label: string): void => {
-    this.repository.getConfigurableBundleLabels().should('have.length', 1).and('contain', label);
-  };
+  getConfigurableBundleLabels = (): Cypress.Chainable => this.repository.getConfigurableBundleLabels();
 }

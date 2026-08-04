@@ -64,7 +64,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      cy.contains(yvesAgentLoginPage.getFailedAuthenticationText());
+      yvesAgentLoginPage.assertBodyContainsText(yvesAgentLoginPage.getFailedAuthenticationText());
       yvesAgentLoginPage.assertPageLocation();
     });
 
@@ -75,7 +75,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      cy.contains(yvesAgentLoginPage.getFailedAuthenticationText());
+      yvesAgentLoginPage.assertBodyContainsText(yvesAgentLoginPage.getFailedAuthenticationText());
       yvesAgentLoginPage.assertPageLocation();
     });
 
@@ -86,7 +86,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      cy.contains(yvesLoginPage.getFailedAuthenticationText());
+      yvesLoginPage.assertBodyContainsText(yvesLoginPage.getFailedAuthenticationText());
       yvesLoginPage.assertPageLocation();
     });
 
@@ -97,7 +97,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      cy.contains(yvesLoginPage.getFailedAuthenticationText());
+      yvesLoginPage.assertBodyContainsText(yvesLoginPage.getFailedAuthenticationText());
       yvesLoginPage.assertPageLocation();
     });
 
@@ -108,7 +108,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      cy.contains(yvesLoginPage.getFailedAuthenticationText());
+      yvesLoginPage.assertBodyContainsText(yvesLoginPage.getFailedAuthenticationText());
       yvesLoginPage.assertPageLocation();
     });
   }

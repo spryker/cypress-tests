@@ -18,6 +18,7 @@ export class BackofficePage extends AbstractPage {
     const interceptAlias = this.faker.string.uuid();
 
     cy.intercept('GET', params.url).as(interceptAlias);
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Internal retry/settle guard on the GUI-table intercept; not a spec-level assertion.
     return cy
       .wait(`@${interceptAlias}`, { timeout: 10000 })
       .its('response.body')
@@ -49,6 +50,7 @@ export class BackofficePage extends AbstractPage {
 
   protected getRows = (expectedCount?: number): Cypress.Chainable<JQuery<HTMLElement>> => {
     if (expectedCount !== undefined) {
+      // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Retry-settles the visible row count; internal table helper, not a spec assertion.
       return cy.get('tbody > tr:visible').should('have.length', expectedCount);
     }
 

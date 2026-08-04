@@ -32,23 +32,11 @@ export class RecurringScheduleListPage extends BackofficePage {
     cy.get(this.repository.getViewLinkSelector(idRecurringSchedule)).click();
   };
 
-  assertScheduleInTable = (name: string): void => {
-    cy.get(this.repository.getTableBodySelector()).should('contain', name);
-  };
+  getTableBody = (): Cypress.Chainable => cy.get(this.repository.getTableBodySelector());
 
-  assertScheduleNotInTable = (name: string): void => {
-    cy.get(this.repository.getTableBodySelector()).should('not.contain', name);
-  };
+  getForecastSummary = (): Cypress.Chainable => cy.get(this.repository.getForecastSummarySelector());
 
-  assertForecastWidgetVisible = (): void => {
-    cy.get(this.repository.getForecastSummarySelector()).should('be.visible');
-  };
+  getForecastMonth = (): Cypress.Chainable => cy.get(this.repository.getForecastMonthSelector());
 
-  assertForecastMonthContains = (text: string): void => {
-    cy.get(this.repository.getForecastMonthSelector()).should('contain', text);
-  };
-
-  assertForecastResultVisible = (): void => {
-    cy.get(this.repository.getForecastResultSelector()).should('be.visible');
-  };
+  getForecastResult = (): Cypress.Chainable => cy.get(this.repository.getForecastResultSelector());
 }

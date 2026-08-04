@@ -15,6 +15,102 @@ import {
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario, CheckoutScenario } from '@scenarios/yves';
 
+interface AssetDetailsData {
+  reference?: string;
+  name?: string;
+  serialNumber?: string;
+  note?: string;
+  image?: string;
+  businessUnitOwner?: { name: string };
+  businessUnitAssignment?: { name: string }[];
+}
+
+interface SspServiceData {
+  name: string;
+  customerFirstName: string;
+  customerLastName: string;
+  companyName: string;
+}
+
+interface SspAssetRow {
+  reference?: string;
+  name?: string;
+}
+
+const assertAssetDetails = (page: SspAssetDetailPage, details: AssetDetailsData): void => {
+  if (details.reference) {
+    page.getReferenceContainer(details.reference).should('exist');
+  }
+
+  if (details.name) {
+    page.getAssetTitle().should('contain', details.name);
+  }
+
+  if (details.serialNumber) {
+    page.getSerialNumberContainer(details.serialNumber).should('exist');
+  }
+
+  if (details.note) {
+    page.getNoteContainer(details.note).should('exist');
+  }
+
+  if (details.image) {
+    page.getImageSrc().should('include', 'customer/ssp-asset/view-image?ssp-asset-reference=');
+  } else {
+    page.getImageSrc().should('not.include', 'customer/ssp-asset/view-image?ssp-asset-reference=');
+  }
+};
+
+const assertSspInquiries = (page: SspAssetDetailPage, sspInquiries: { reference: string }[]): void => {
+  page.getSspAssetInquiriresTable().should('exist');
+  page.getSspAssetInquiriresTable().find('tbody tr').its('length').should('eq', sspInquiries.length);
+
+  sspInquiries.forEach((sspInquiry) => {
+    page.getSspAssetInquiriresTable().should('contain', sspInquiry.reference);
+  });
+};
+
+const assertSspServices = (page: SspAssetDetailPage, sspServices: SspServiceData[]): void => {
+  page.getSspAssetServicesTable().should('exist');
+  page.getSspAssetServicesTable().find('tbody tr').its('length').should('eq', sspServices.length);
+
+  sspServices.forEach((sspService) => {
+    page.getSspAssetServicesTable().should('contain', sspService.name);
+    page.getSspAssetServicesTable().should('contain', sspService.customerFirstName);
+    page.getSspAssetServicesTable().should('contain', sspService.customerLastName);
+    page.getSspAssetServicesTable().should('contain', sspService.companyName);
+  });
+};
+
+const assertSspAssetAssignments = (page: SspAssetDetailPage, assignedBusinessUnits: { name: string }[]): void => {
+  page.getSspAssetAssignments().its('length').should('eq', assignedBusinessUnits.length);
+
+  assignedBusinessUnits.forEach((assignedBusinessUnit) => {
+    page.getSspAssetAssignments().should('contain', assignedBusinessUnit.name);
+  });
+};
+
+const assertTableHeaders = (page: SspAssetListPage, expectedHeaders: string[]): void => {
+  page.getTableHeaders().each(($header, index) => {
+    if (index < expectedHeaders.length && expectedHeaders[index]) {
+      cy.wrap($header).contains(new RegExp(expectedHeaders[index], 'i')).should('exist');
+    }
+  });
+};
+
+const assertTableData = (page: SspAssetListPage, sspAssets: SspAssetRow[]): void => {
+  page.getRows().its('length').should('eq', sspAssets.length);
+
+  sspAssets.forEach((sspAsset) => {
+    if (sspAsset.reference) {
+      page.getRows().contains(sspAsset.reference).should('exist');
+    }
+    if (sspAsset.name) {
+      page.getRows().contains(sspAsset.name).should('exist');
+    }
+  });
+};
+
 describe(
   'ssp asset management',
   {
@@ -72,11 +168,11 @@ describe(
         image: staticFixtures.asset.image,
       });
 
-      cy.contains(assetCreatePage.getAssetCreatedMessage());
+      assetCreatePage.assertBodyContainsText(assetCreatePage.getAssetCreatedMessage());
 
       assetDetailPage.assertPageLocation();
 
-      assetDetailPage.assertAssetDetails({
+      assertAssetDetails(assetDetailPage, {
         name: staticFixtures.asset.name,
         note: staticFixtures.asset.note,
         serialNumber: staticFixtures.asset.serial_number,
@@ -89,11 +185,11 @@ describe(
       assetDetailPage.getUnassignButton().should('exist');
       assetDetailPage.getEditButton().should('exist');
       assetDetailPage.getSspAssetServicesButton().should('exist');
-      assetDetailPage.assertSspAssetAssignments([{ name: dynamicFixtures.businessUnit.name }]);
+      assertSspAssetAssignments(assetDetailPage, [{ name: dynamicFixtures.businessUnit.name }]);
 
       assetListPage.visit();
 
-      assetListPage.assertTableData([{ name: staticFixtures.asset.name }, { name: dynamicFixtures.asset.name }]);
+      assertTableData(assetListPage, [{ name: staticFixtures.asset.name }, { name: dynamicFixtures.asset.name }]);
     });
 
     it('should update an asset successfully', () => {
@@ -116,7 +212,7 @@ describe(
         image: staticFixtures.assetUpdateData.image,
       });
 
-      cy.contains(assetEditPage.getAssetEditedMessage());
+      assetEditPage.assertBodyContainsText(assetEditPage.getAssetEditedMessage());
 
       assetDetailPage.visit({
         qs: {
@@ -124,7 +220,7 @@ describe(
         },
       });
 
-      assetDetailPage.assertAssetDetails({
+      assertAssetDetails(assetDetailPage, {
         name: dynamicFixtures.asset.name,
         serialNumber: dynamicFixtures.asset.serial_number,
       });
@@ -151,14 +247,14 @@ describe(
 
       assetDetailPage.assertPageLocation();
 
-      assetDetailPage.assertSspInquiries([
+      assertSspInquiries(assetDetailPage, [
         { reference: dynamicFixtures.sspInquiry1.reference },
         { reference: dynamicFixtures.sspInquiry3.reference },
       ]);
 
       assetDetailPage.getViewAllInquiriesLink().should('exist');
 
-      assetDetailPage.assertSspServices([
+      assertSspServices(assetDetailPage, [
         {
           name: dynamicFixtures.product1.localized_attributes[0].name,
           customerFirstName: dynamicFixtures.customer.first_name,
@@ -200,7 +296,7 @@ describe(
 
         assetDetailPage.assertPageLocation();
 
-        cy.contains(assetReference).should('exist');
+        assetListPage.assertBodyContainsText(assetReference).should('exist');
       });
 
       assetListPage.visit();
@@ -220,9 +316,9 @@ describe(
 
       assetListPage.visit();
 
-      assetListPage.assertTableHeaders(['Reference', 'Image', 'Asset Name', 'Serial Number', 'Business Unit Owner']);
+      assertTableHeaders(assetListPage, ['Reference', 'Image', 'Asset Name', 'Serial Number', 'Business Unit Owner']);
 
-      assetListPage.assertTableData([
+      assertTableData(assetListPage, [
         dynamicFixtures.assetBU1C1BU2C1BU1C2,
         dynamicFixtures.assetBU2C1,
         dynamicFixtures.assetBU1C1,
@@ -234,7 +330,7 @@ describe(
         },
       });
 
-      assetDetailPage.assertSspAssetAssignments([
+      assertSspAssetAssignments(assetDetailPage, [
         { name: dynamicFixtures.businessUnit1Company1.name },
         { name: dynamicFixtures.businessUnit2Company1.name },
       ]);
@@ -247,7 +343,7 @@ describe(
 
       assetListPage.getSspAssetFiltersSubmitButton().click();
 
-      assetListPage.assertTableData([
+      assertTableData(assetListPage, [
         dynamicFixtures.assetBU1C1BU2C1BU1C2,
         dynamicFixtures.assetBU2C1,
         dynamicFixtures.assetBU1C1,
@@ -262,7 +358,7 @@ describe(
         .select(assetListPage.getAccessTableFilterByCompanyValue(), { force: true });
       assetListPage.getSspAssetFiltersSubmitButton().click();
 
-      assetListPage.assertTableData([
+      assertTableData(assetListPage, [
         dynamicFixtures.assetBU1C1BU2C1BU1C2,
         dynamicFixtures.assetBU2C1,
         dynamicFixtures.assetBU1C1,
@@ -282,7 +378,7 @@ describe(
 
       assetListPage.visit();
 
-      assetListPage.assertTableData([dynamicFixtures.assetBU1C1BU2C1BU1C2, dynamicFixtures.assetBU1C1]);
+      assertTableData(assetListPage, [dynamicFixtures.assetBU1C1BU2C1BU1C2, dynamicFixtures.assetBU1C1]);
 
       companyUserSelectPage.visit();
       companyUserSelectPage.selectBusinessUnit({
@@ -291,7 +387,7 @@ describe(
 
       assetListPage.visit();
 
-      assetListPage.assertTableData([dynamicFixtures.assetBU2C1, dynamicFixtures.assetBU1C1BU2C1BU1C2]);
+      assertTableData(assetListPage, [dynamicFixtures.assetBU2C1, dynamicFixtures.assetBU1C1BU2C1BU1C2]);
 
       assetDetailPage.visit({
         qs: {
@@ -299,7 +395,7 @@ describe(
         },
       });
 
-      assetDetailPage.assertSspAssetAssignments([{ name: dynamicFixtures.businessUnit2Company1.name }]);
+      assertSspAssetAssignments(assetDetailPage, [{ name: dynamicFixtures.businessUnit2Company1.name }]);
     });
 
     it('should not be able to create asset without permission', () => {
@@ -351,7 +447,7 @@ describe(
 
       assetListPage.visit();
 
-      assetListPage.assertTableData([dynamicFixtures.assetBU1C1, dynamicFixtures.assetBU1C1BU2C1BU1C2]);
+      assertTableData(assetListPage, [dynamicFixtures.assetBU1C1, dynamicFixtures.assetBU1C1BU2C1BU1C2]);
 
       assetDetailPage.visit({
         qs: {
@@ -361,7 +457,7 @@ describe(
 
       assetDetailPage.getUnassignLink().click();
       assetDetailPage.getUnassignButton().click();
-      cy.contains(assetDetailPage.getUnassignmentErrorMessage()).should('exist');
+      assetDetailPage.assertBodyContainsText(assetDetailPage.getUnassignmentErrorMessage()).should('exist');
 
       assetDetailPage.visit({
         qs: {
@@ -372,7 +468,7 @@ describe(
       assetDetailPage.getUnassignLink().click();
       assetDetailPage.getUnassignButton().click();
 
-      assetListPage.assertTableData([dynamicFixtures.assetBU1C1]);
+      assertTableData(assetListPage, [dynamicFixtures.assetBU1C1]);
     });
 
     // The flickery test will be fixed later: https://spryker.atlassian.net/browse/SSP-1654
@@ -399,11 +495,11 @@ describe(
         idCustomerAddress: 0,
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
 
       customerOverviewPage.viewLastPlacedOrder();
 
-      orderDetailsPage.containsOrderState(dynamicFixtures.assetBU1C2.name);
+      orderDetailsPage.getOrderDetailTableBlock().contains(dynamicFixtures.assetBU1C2.name).should('exist');
     });
 
     it('should not be able to view assets without permission', () => {
@@ -445,7 +541,7 @@ describe(
 
           assetListPage.openLatestAssetDetailsPage();
 
-          assetDetailPage.assertSspServices([
+          assertSspServices(assetDetailPage, [
             { name: '', companyName: '', customerFirstName: '', customerLastName: '' },
             { name: '', companyName: '', customerFirstName: '', customerLastName: '' },
             { name: '', companyName: '', customerFirstName: '', customerLastName: '' },

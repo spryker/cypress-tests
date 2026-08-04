@@ -46,7 +46,7 @@ describe(
       costCenterCreatePage.selectBusinessUnit(dynamicFixtures.businessUnit.name);
       costCenterCreatePage.submit();
 
-      costCenterCreatePage.assertSuccess();
+      costCenterCreatePage.getSuccessMessage().should('be.visible');
     });
 
     it('backoffice user should be able to edit a cost center', (): void => {
@@ -54,8 +54,9 @@ describe(
       costCenterEditPage.fillName(staticFixtures.updatedCostCenterName);
       costCenterEditPage.submit();
 
-      costCenterEditPage.assertSuccess();
-      costCenterListPage.assertCostCenterInTable(staticFixtures.updatedCostCenterName);
+      costCenterEditPage.getSuccessMessage().should('be.visible');
+      costCenterListPage.waitForTable();
+      costCenterListPage.getTableBody().should('contain', staticFixtures.updatedCostCenterName);
     });
   }
 );
