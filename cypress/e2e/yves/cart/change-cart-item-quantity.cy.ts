@@ -66,7 +66,9 @@ describe(
       cartPage.visit();
 
       if (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
-        cartPage.assertCartItemAvailabilityDisplayed();
+        const availabilityLabel = cartPage.getCartItemAvailabilityLabel();
+        availabilityLabel.should('be.visible');
+        availabilityLabel.invoke('text').should('match', /Available|in stock/i);
       }
 
       cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: 3 });

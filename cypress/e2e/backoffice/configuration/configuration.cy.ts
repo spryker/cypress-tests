@@ -1,6 +1,7 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ConfigurationPage } from '@pages/backoffice';
+import { HomePage } from '@pages/yves';
 import { ConfigurationDynamicFixtures, ConfigurationStaticFixtures } from '@interfaces/backoffice';
 
 describe(
@@ -14,6 +15,7 @@ describe(
     };
 
     const configurationPage = container.get(ConfigurationPage);
+    const homePage = container.get(HomePage);
     const userLoginScenario = container.get(UserLoginScenario);
 
     let staticFixtures: ConfigurationStaticFixtures;
@@ -184,19 +186,23 @@ describe(
     it('uploads storefront logo and verifies it is applied in yves', (): void => {
       configurationPage.visitLogosTab();
       configurationPage.uploadStorefrontLogo(staticFixtures.logoFilePath);
-      configurationPage.verifyStorefrontLogoUploaded();
+      cy.wait('@logoUpload').its('response.statusCode').should('eq', 200);
+      configurationPage.getStorefrontLogoUploadButton().should('contain.text', 'Change File');
+      configurationPage.getStorefrontLogoHiddenValueInput().should('not.have.value', '');
       configurationPage.saveConfiguration();
 
       cy.runQueueWorker();
 
       cy.visit('/');
-      cy.get('.logo img').should('have.attr', 'src').and('not.be.empty');
+      homePage.getLogoImage().should('have.attr', 'src').and('not.be.empty');
     });
 
     it('uploads backoffice logo and verifies it is applied in backoffice', (): void => {
       configurationPage.visitLogosTab();
       configurationPage.uploadBackofficeLogo(staticFixtures.logoFilePath);
-      configurationPage.verifyBackofficeLogoUploaded();
+      cy.wait('@logoUpload').its('response.statusCode').should('eq', 200);
+      configurationPage.getBackofficeLogoUploadButton().should('contain.text', 'Change File');
+      configurationPage.getBackofficeLogoHiddenValueInput().should('not.have.value', '');
       configurationPage.saveConfiguration();
 
       cy.visitBackoffice('/dashboard');
@@ -213,7 +219,9 @@ describe(
     merchantIt('uploads merchant portal logo and verifies it is applied in merchant portal', (): void => {
       configurationPage.visitLogosTab();
       configurationPage.uploadMerchantPortalLogo(staticFixtures.logoFilePath);
-      configurationPage.verifyMerchantPortalLogoUploaded();
+      cy.wait('@logoUpload').its('response.statusCode').should('eq', 200);
+      configurationPage.getMerchantPortalLogoUploadButton().should('contain.text', 'Change File');
+      configurationPage.getMerchantPortalLogoHiddenValueInput().should('not.have.value', '');
       configurationPage.saveConfiguration();
 
       cy.visitMerchantPortal('/security-merchant-portal-gui/login');

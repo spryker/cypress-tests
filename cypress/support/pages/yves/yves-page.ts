@@ -22,10 +22,12 @@ export class YvesPage extends AbstractPage {
 
   selectLocale = (locale: string): void => {
     this.yvesRepository.selectLocale(locale);
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Post-action guard confirming the locale switch took effect.
     cy.url().should('include', `${locale}`);
   };
 
   assertCurrentLocale = (locale: string): Cypress.Chainable => {
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Returns the locale-attribute assertion for the caller to consume.
     return cy.get('html').last().should('have.attr', this.yvesRepository.getLocaleAttributeName(), locale);
   };
 

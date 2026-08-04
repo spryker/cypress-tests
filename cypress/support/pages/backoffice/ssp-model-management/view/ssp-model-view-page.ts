@@ -11,7 +11,7 @@ export class SspModelViewPage extends BackofficePage {
 
   protected readonly PAGE_URL = '/self-service-portal/view-model';
 
-  public verifySspModel(sspModel: { code: string }): void {
-    this.repository.getCodeBlock().should('contain', sspModel.code);
+  public getCodeBlock(): Cypress.Chainable {
+    return this.repository.getCodeBlock();
   }
 }

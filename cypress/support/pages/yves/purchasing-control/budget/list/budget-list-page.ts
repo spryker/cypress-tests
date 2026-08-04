@@ -23,7 +23,5 @@ export class YvesBudgetListPage extends YvesPage {
     this.repository.getEditButtonByUuid(budgetUuid).click();
   };
 
-  assertBudgetInTable = (name: string): void => {
-    this.repository.getTableRows().should('contain', name);
-  };
+  getTableRows = (): Cypress.Chainable => this.repository.getTableRows();
 }

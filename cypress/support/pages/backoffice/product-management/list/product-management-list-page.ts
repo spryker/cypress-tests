@@ -13,7 +13,7 @@ export class ProductManagementListPage extends BackofficePage {
 
   clickEditAction = ($row: JQuery<HTMLElement>): void => {
     cy.wrap($row).find(this.repository.getEditButtonSelector()).as('editBtn');
-    cy.get('@editBtn').should('be.visible').should('not.be.disabled').click();
+    cy.get('@editBtn').click();
   };
 
   rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
@@ -88,10 +88,7 @@ export class ProductManagementListPage extends BackofficePage {
     });
   };
 
-  assertNoTableRecords = (): void => {
-    this.getTableRows().should('have.length', 1);
-    this.getTableRows().first().should('contain', this.repository.getNoTableRecordsText());
-  };
+  getNoTableRecordsText = (): string => this.repository.getNoTableRecordsText();
 }
 
 interface UpdateParams {

@@ -26,12 +26,12 @@ describe(
 
     it('Backoffice user should not see store help text for parent', (): void => {
       goToCategoryEditPage(staticFixtures.rootCategoryName);
-      cy.get('body').contains(staticFixtures.helpText).should('not.exist');
+      categoryListPage.assertBodyContainsText(staticFixtures.helpText).should('not.exist');
     });
 
     it('Backoffice user should see store help text for child category', (): void => {
       goToCategoryEditPage(dynamicFixtures.childCategory.category_key);
-      cy.get('body').contains(staticFixtures.helpText);
+      categoryListPage.assertBodyContainsText(staticFixtures.helpText);
     });
 
     function goToCategoryEditPage(categorySearchQuery: string): void {

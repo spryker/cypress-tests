@@ -23,13 +23,13 @@ export class BlockListPage extends BackofficePage {
         return;
       }
 
-      getRow().find(this.repository.getEditButtonSelector()).should('exist').click();
+      getRow().find(this.repository.getEditButtonSelector()).click();
     });
   };
 
   clickEditAction = (row: JQuery<HTMLElement>): void => {
     cy.wrap(row).find(this.repository.getEditButtonSelector()).as('editBtn');
-    cy.get('@editBtn').should('be.visible').should('not.be.disabled').click();
+    cy.get('@editBtn').click();
   };
 
   rowIsAssignedToStore = (params: IsAssignedParams): boolean => {

@@ -7,6 +7,9 @@ import {
   OrderDetailsPage,
   SspInquiryOrderPage,
   SspAssetDetailPage,
+  SspInquiryDetails,
+  OrderSspInquiryDetails,
+  SspAssetSspInquiryDetails,
 } from '@pages/yves';
 import { SspInquiryStaticFixtures, SspInquiryDynamicFixtures } from '@interfaces/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
@@ -58,17 +61,18 @@ describe(
 
       staticFixtures.generalSspInquiry.availableTypes = staticFixtures.sspInquiryTypes.general;
       sspInquiryCreatePage.assertPageLocation();
+      assertAvailableTypes(staticFixtures.generalSspInquiry.availableTypes);
       sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
       sspInquiryDetailPage.assertPageLocation();
-      cy.contains(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
+      sspInquiryCreatePage.assertBodyContainsText(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
 
       sspInquiryListPage.visit();
 
       const sspInquiryReference = sspInquiryListPage.getFirstRowReference();
       sspInquiryListPage.openLatestSspInquiryDetailsPage();
 
-      sspInquiryDetailPage.assertSspInquiryDetails({
+      assertSspInquiryDetails({
         reference: sspInquiryReference,
         type: staticFixtures.generalSspInquiry.type,
         subject: staticFixtures.generalSspInquiry.subject,
@@ -108,19 +112,21 @@ describe(
 
       sspInquiryCreatePage.assertPageLocation();
       staticFixtures.orderSspInquiry.availableTypes = staticFixtures.sspInquiryTypes.order;
+      sspInquiryCreatePage.getOrderReferenceInput().should('have.value', dynamicFixtures.order.order_reference);
+      assertAvailableTypes(staticFixtures.orderSspInquiry.availableTypes);
       sspInquiryCreatePage.createOrderSspInquiry({
         ...staticFixtures.orderSspInquiry,
         orderReference: dynamicFixtures.order.order_reference,
       });
 
       sspInquiryDetailPage.assertPageLocation();
-      cy.contains(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
+      sspInquiryCreatePage.assertBodyContainsText(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
 
       sspInquiryListPage.visit();
       const sspInquiryReference = sspInquiryListPage.getFirstRowReference();
       sspInquiryListPage.openLatestSspInquiryDetailsPage();
 
-      sspInquiryDetailPage.assertOrderSspInquiryDetails({
+      assertOrderSspInquiryDetails({
         reference: sspInquiryReference,
         type: staticFixtures.orderSspInquiry.type,
         subject: staticFixtures.orderSspInquiry.subject,
@@ -162,19 +168,21 @@ describe(
 
       sspInquiryCreatePage.assertPageLocation();
       staticFixtures.sspAssetSspInquiry.availableTypes = staticFixtures.sspInquiryTypes.ssp_asset;
+      sspInquiryCreatePage.getSspAssetReferenceInput().should('have.value', dynamicFixtures.sspAsset.reference);
+      assertAvailableTypes(staticFixtures.sspAssetSspInquiry.availableTypes);
       sspInquiryCreatePage.createSspAssetSspInquiry({
         ...staticFixtures.sspAssetSspInquiry,
         sspAssetReference: dynamicFixtures.sspAsset.reference,
       });
 
       sspInquiryDetailPage.assertPageLocation();
-      cy.contains(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
+      sspInquiryCreatePage.assertBodyContainsText(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
 
       sspInquiryListPage.visit();
       const sspInquiryReference = sspInquiryListPage.getFirstRowReference();
       sspInquiryListPage.openLatestSspInquiryDetailsPage();
 
-      sspInquiryDetailPage.assertSspAssetSspInquiryDetails({
+      assertSspAssetSspInquiryDetails({
         reference: sspInquiryReference,
         type: staticFixtures.sspAssetSspInquiry.type,
         subject: staticFixtures.sspAssetSspInquiry.subject,
@@ -211,12 +219,13 @@ describe(
       sspInquiryListPage.clickCreateSspInquiryButton();
 
       staticFixtures.generalSspInquiry.availableTypes = staticFixtures.sspInquiryTypes.general;
+      assertAvailableTypes(staticFixtures.generalSspInquiry.availableTypes);
       sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
       sspInquiryDetailPage.assertPageLocation();
       sspInquiryDetailPage.clickCancelSspInquiryButton();
 
-      cy.get(sspInquiryDetailPage.getCanceledSspInquiryStatusSelector()).should('exist');
+      sspInquiryDetailPage.getCanceledSspInquiryStatus().should('exist');
     });
 
     it('customer should not be able to cancel a ssp inquiry if he is now owner', (): void => {
@@ -230,6 +239,7 @@ describe(
 
       sspInquiryListPage.clickCreateSspInquiryButton();
 
+      assertAvailableTypes(staticFixtures.generalSspInquiry.availableTypes);
       sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
       sspInquiryDetailPage.assertPageLocation();
@@ -259,6 +269,7 @@ describe(
 
       sspInquiryListPage.clickCreateSspInquiryButton();
 
+      assertAvailableTypes(staticFixtures.generalSspInquiry.availableTypes);
       sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
       sspInquiryDetailPage.assertPageLocation();
@@ -289,6 +300,7 @@ describe(
 
       sspInquiryListPage.clickCreateSspInquiryButton();
 
+      assertAvailableTypes(staticFixtures.generalSspInquiry.availableTypes);
       sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
       customerLogoutScenario.execute();
@@ -317,6 +329,7 @@ describe(
 
       sspInquiryListPage.clickCreateSspInquiryButton();
 
+      assertAvailableTypes(staticFixtures.generalSspInquiry.availableTypes);
       sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
       sspInquiryDetailPage.assertPageLocation();
@@ -332,7 +345,7 @@ describe(
       sspInquiryListPage.visit();
       sspInquiryListPage.assertPageLocation();
       sspInquiryListPage.submitSspInquirySearchForm();
-      sspInquiryListPage.assetPageHasNoSspInquiries();
+      sspInquiryListPage.getSspInquiryDetailLinks().should('not.exist');
     });
 
     it('customer should not be able to create a ssp inquiry if he has no permission', (): void => {
@@ -346,5 +359,65 @@ describe(
 
       sspInquiryListPage.getCreateSspInquiryButton().should('not.exist');
     });
+
+    function assertAvailableTypes(availableTypes?: Array<{ key: string }>): void {
+      if (availableTypes) {
+        sspInquiryCreatePage.getTypeOptions().should('have.length', availableTypes.length);
+        availableTypes.forEach((type, index) => {
+          sspInquiryCreatePage.getTypeOptions().eq(index).should('have.value', type.key);
+        });
+      }
+    }
+
+    function assertSspInquiryDetails(params: SspInquiryDetails): void {
+      sspInquiryDetailPage.getSspInquiryDetailsReference(params.reference).should('exist');
+      sspInquiryDetailPage.getSspInquiryDetailsDate(params.date).should('exist');
+      sspInquiryDetailPage.getSspInquiryDetailsStatus(params.status).should('exist');
+      sspInquiryDetailPage.getSspInquiryDetailsType(params.type.value).should('exist');
+      sspInquiryDetailPage.getSspInquiryDetailsSubject(params.subject).should('exist');
+      sspInquiryDetailPage.getSspInquiryDetailsDescription(params.description).should('exist');
+      sspInquiryDetailPage.getSspInquiryDetailsCustomerFirstName(params.customer.firstName).should('exist');
+      sspInquiryDetailPage.getSspInquiryDetailsCustomerLastName(params.customer.lastName).should('exist');
+      sspInquiryDetailPage.getSspInquiryDetailsCustomerEmail(params.customer.email).should('exist');
+      sspInquiryDetailPage
+        .getSspInquiryDetailsCompanyAndBusinessUnitName(params.customer.companyName, params.customer.businessUnitName)
+        .should('exist');
+
+      const getColumnIndexByName = (columnName: string): number => {
+        const columnNames = ['File name', 'Size', 'Type', 'Actions'];
+        return columnNames.indexOf(columnName);
+      };
+
+      const extractFileName = (filePath: string): string => {
+        return filePath.split('/').pop() || '';
+      };
+
+      for (const file of params.files) {
+        const fileName = extractFileName(file.name);
+        sspInquiryDetailPage
+          .getFileTableRowCell(fileName, getColumnIndexByName('File name'))
+          .should('contain.text', fileName);
+        sspInquiryDetailPage
+          .getFileTableRowCell(fileName, getColumnIndexByName('Size'))
+          .should('contain.text', file.size);
+        sspInquiryDetailPage
+          .getFileTableRowCell(fileName, getColumnIndexByName('Type'))
+          .should('contain.text', file.extension);
+        sspInquiryDetailPage
+          .getFileTableRowCell(fileName, getColumnIndexByName('Actions'))
+          .find(sspInquiryDetailPage.getFileDownloadActionSelector())
+          .should('exist');
+      }
+    }
+
+    function assertOrderSspInquiryDetails(params: OrderSspInquiryDetails): void {
+      sspInquiryDetailPage.getSspInquiryDetailsOrderReferenceText(params.orderReference);
+      assertSspInquiryDetails(params);
+    }
+
+    function assertSspAssetSspInquiryDetails(params: SspAssetSspInquiryDetails): void {
+      sspInquiryDetailPage.getSspInquiryDetailsSspAssetReferenceText(params.reference);
+      assertSspInquiryDetails(params);
+    }
   }
 );

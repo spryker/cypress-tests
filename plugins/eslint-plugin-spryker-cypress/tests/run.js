@@ -135,6 +135,40 @@ ruleTester.run('no-assertions-in-page-objects', require('../rules/no-assertions-
     { code: 'expect(total).to.equal(3);', filename: supportFile },
     // non-assertion page-object code
     { code: 'this.repository.getLoginForm().submit();', filename: pageFile },
+    // a guard chained straight into the action it protects
+    {
+      code: "function login() { this.repository.getSubmit().should('be.visible').click(); }",
+      filename: pageFile,
+    },
+    // a standalone guard statement in a method that acts further down
+    {
+      code:
+        'function placeOrder() {' +
+        "  this.repository.getTerms().should('be.visible', { timeout: 1000 });" +
+        '  this.repository.getTerms().check({ force: true });' +
+        '  this.repository.getForm().submit();' +
+        '}',
+      filename: pageFile,
+    },
+    // the action sits in a nested callback — still counts for the whole method
+    {
+      code:
+        'function selectOffer() {' +
+        "  this.repository.getRows().should('have.length.at.least', 1);" +
+        '  this.repository.getRows().each(($row) => { cy.wrap($row).click(); });' +
+        '}',
+      filename: pageFile,
+    },
+    // a retry loop that reloads is an acting method, so its exit assertion stays
+    {
+      code:
+        'function waitForDone(attempts) {' +
+        "  this.repository.getStatus().should('be.visible');" +
+        '  cy.reload();' +
+        '  this.waitForDone(attempts + 1);' +
+        '}',
+      filename: pageFile,
+    },
   ],
   invalid: [
     {
@@ -150,6 +184,29 @@ ruleTester.run('no-assertions-in-page-objects', require('../rules/no-assertions-
     {
       code: "cy.get('.row').should('have.length', 2);",
       filename: repositoryFile,
+      errors: [{ messageId: 'assertion' }],
+    },
+    // assertion-only method: traversals and invoke() are not actions
+    {
+      code:
+        'function assertAmount(expected) {' +
+        "  this.repository.getValue().invoke('text').then((text) => { expect(text).to.equal(expected); });" +
+        '}',
+      filename: pageFile,
+      errors: [{ messageId: 'assertion' }],
+    },
+    // renaming an assertion-only method does not exempt it
+    {
+      code: "function ensureVisible() { this.repository.getBlock().should('exist'); }",
+      filename: pageFile,
+      errors: [{ messageId: 'assertion' }],
+    },
+    // an action in a *sibling* method does not license assertions here
+    {
+      code:
+        "function assertPresent() { this.repository.getBlock().should('exist'); }" +
+        'function open() { this.repository.getLink().click(); }',
+      filename: pageFile,
       errors: [{ messageId: 'assertion' }],
     },
   ],

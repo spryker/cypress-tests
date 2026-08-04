@@ -12,7 +12,7 @@ export class CustomerMfaLoginScenario {
     this.loginPage.visit();
     this.loginPage.login(credentials);
 
-    this.mfaPage.waitForVerificationPopup();
+    this.mfaPage.getVerificationPopup().should('be.visible');
 
     console.log('customer');
 
@@ -25,9 +25,9 @@ export class CustomerMfaLoginScenario {
     this.loginPage.visit();
     this.loginPage.login(credentials);
 
-    this.mfaPage.waitForVerificationPopup();
+    this.mfaPage.getVerificationPopup().should('be.visible');
     this.mfaPage.verifyCode(staticFixtures.invalidCode);
-    this.mfaPage.waitForInvalidCodeMessage();
+    this.mfaPage.getInvalidCodeMessage().should('be.visible');
 
     cy.reload();
     this.loginPage.assertPageLocation();

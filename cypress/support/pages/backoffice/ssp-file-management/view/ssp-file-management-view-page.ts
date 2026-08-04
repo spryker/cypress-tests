@@ -8,11 +8,13 @@ import { SspFileManagementViewRepository } from './ssp-file-management-view-repo
 export class SspFileManagementViewPage extends BackofficePage {
   @inject(SspFileManagementViewRepository) private repository: SspFileManagementViewRepository;
 
-  verifyFileDetailsAreVisible(): void {
-    cy.get(this.repository.getFileNameSelector()).should('be.visible');
-    cy.get(this.repository.getUploadedDateSelector()).should('be.visible');
-    cy.get(this.repository.getFileSizeSelector()).should('be.visible');
-    cy.get(this.repository.getFileTypeSelector()).should('be.visible');
-    cy.get(this.repository.getLinkedEntitiesSelector()).should('be.visible');
-  }
+  getFileName = (): Cypress.Chainable => cy.get(this.repository.getFileNameSelector());
+
+  getUploadedDate = (): Cypress.Chainable => cy.get(this.repository.getUploadedDateSelector());
+
+  getFileSize = (): Cypress.Chainable => cy.get(this.repository.getFileSizeSelector());
+
+  getFileType = (): Cypress.Chainable => cy.get(this.repository.getFileTypeSelector());
+
+  getLinkedEntities = (): Cypress.Chainable => cy.get(this.repository.getLinkedEntitiesSelector());
 }

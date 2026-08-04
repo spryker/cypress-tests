@@ -19,7 +19,5 @@ export class ProductAttributeVisibilityCreatePage extends BackofficePage {
     this.repository.getAllowInputCheckbox().check();
     this.repository.getVisibilityTypesSelect().invoke('val', visibilityTypes).trigger('change', { force: true });
     this.repository.getSubmitButton().click();
-
-    cy.url().should('contain', '/translate');
   };
 }

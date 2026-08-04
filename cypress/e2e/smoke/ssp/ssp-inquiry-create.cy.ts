@@ -37,12 +37,21 @@ describe(
       sspInquiryCreatePage.visit();
 
       staticFixtures.generalSspInquiry.availableTypes = staticFixtures.sspInquiryTypes.general;
+
+      if (staticFixtures.generalSspInquiry.availableTypes) {
+        sspInquiryCreatePage
+          .getTypeOptions()
+          .should('have.length', staticFixtures.generalSspInquiry.availableTypes.length);
+        staticFixtures.generalSspInquiry.availableTypes.forEach((type, index) => {
+          sspInquiryCreatePage.getTypeOptions().eq(index).should('have.value', type.key);
+        });
+      }
       sspInquiryCreatePage.createSspInquiry(staticFixtures.generalSspInquiry);
 
-      cy.contains(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
+      sspInquiryCreatePage.assertBodyContainsText(sspInquiryCreatePage.getSspInquiryCreatedMessage()).should('exist');
 
       sspInquiryListPage.visit();
-      cy.contains(staticFixtures.generalSspInquiry.subject).should('exist');
+      sspInquiryListPage.assertBodyContainsText(staticFixtures.generalSspInquiry.subject).should('exist');
     });
   }
 );

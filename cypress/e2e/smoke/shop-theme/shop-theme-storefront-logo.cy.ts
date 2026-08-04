@@ -39,7 +39,9 @@ describe(
     it('storefront logo is uploaded in BO configuration successfully', (): void => {
       configurationPage.visitLogosTab();
       configurationPage.uploadStorefrontLogo(`cypress/fixtures/${staticFixtures.logoFile}`);
-      configurationPage.verifyStorefrontLogoUploaded();
+      cy.wait('@logoUpload').its('response.statusCode').should('eq', 200);
+      configurationPage.getStorefrontLogoUploadButton().should('contain.text', 'Change File');
+      configurationPage.getStorefrontLogoHiddenValueInput().should('not.have.value', '');
       configurationPage.saveConfiguration();
       configurationPage.getUseDefaultLink(staticFixtures.storefrontLogoConfig).should('be.visible');
       configurationPage.getChangesCount().should('not.be.visible');
@@ -47,7 +49,7 @@ describe(
 
     // skipped because for some reason the change of configuration takes more time than we can afford to wait
     it.skip('go to storefront and see the uploaded logo', (): void => {
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      // eslint-disable-next-line cypress/no-unnecessary-waiting, spryker-cypress/no-numeric-wait
       cy.wait(15000); // since tests do not take a lot of time and including a looping wait to wait for sync is an overkill
       homePage.visit();
       homePage.getLogo().find('img').should('be.visible');
@@ -61,7 +63,7 @@ describe(
     });
 
     it('go to storefront and see the changes are reverted', (): void => {
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      // eslint-disable-next-line cypress/no-unnecessary-waiting, spryker-cypress/no-numeric-wait
       cy.wait(15000); // since tests do not take a lot of time and including a looping wait to wait for sync is an overkill
       homePage.visit();
       homePage.getLogo().find('svg').should('be.visible');

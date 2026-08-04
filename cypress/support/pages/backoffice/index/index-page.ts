@@ -8,7 +8,5 @@ import { BackofficePage } from '@pages/backoffice';
 export class IndexPage extends BackofficePage {
   protected PAGE_URL = '/';
 
-  assertLoginFormDoesNotExist = (): void => {
-    cy.get('form[name="auth"]').should('not.exist');
-  };
+  getLoginForm = (): Cypress.Chainable => cy.get('form[name="auth"]');
 }
