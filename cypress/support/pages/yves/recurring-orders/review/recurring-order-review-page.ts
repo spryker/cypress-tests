@@ -15,20 +15,16 @@ export class RecurringOrderReviewPage extends YvesPage {
     cy.visit(`/recurring-orders/${uuid}/review-required`);
   };
 
-  assertSummaryBannerVisible = (): void => {
-    this.repository.getSummaryBanner().should('be.visible');
-  };
+  getSummaryBanner = (): Cypress.Chainable => this.repository.getSummaryBanner();
 
-  assertBackToDetailLinkVisible = (): void => {
-    this.repository.getBackToDetailLink().should('be.visible');
-  };
+  getBackToDetailLink = (): Cypress.Chainable => this.repository.getBackToDetailLink();
+
+  getFooterTotal = (): Cypress.Chainable => this.repository.getFooterTotal();
+
+  getFlaggedItems = (): Cypress.Chainable => this.repository.getFlaggedItems();
 
   clickBackToDetail = (): void => {
     this.repository.getBackToDetailLink().click();
-  };
-
-  assertFooterTotalVisible = (): void => {
-    this.repository.getFooterTotal().should('be.visible');
   };
 
   clickAcceptAndPlaceOrder = (): void => {
@@ -37,13 +33,5 @@ export class RecurringOrderReviewPage extends YvesPage {
 
   confirmApproveReview = (): void => {
     this.repository.getApproveSubmitButton().click();
-  };
-
-  assertSummaryBannerContains = (text: string): void => {
-    this.repository.getSummaryBanner().contains(text).should('be.visible');
-  };
-
-  assertFlaggedItemsVisible = (): void => {
-    this.repository.getFlaggedItems().should('be.visible');
   };
 }

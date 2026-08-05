@@ -38,8 +38,8 @@ export class UserCreatePage extends BackofficePage {
     return user;
   };
 
-  waitForUserCreatedSuccessMessage(): void {
-    cy.contains(this.repository.getSuccessMessage()).should('be.visible');
+  getUserCreatedSuccessMessage(): Cypress.Chainable {
+    return cy.contains(this.repository.getSuccessMessage());
   }
 }
 

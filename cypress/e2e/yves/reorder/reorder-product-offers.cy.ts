@@ -50,13 +50,20 @@ describe(
         orderDetailsPage.reorderAll();
 
         cartPage.assertPageLocation();
-        cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Reorder from Order ${orderReference}`);
+        cartPage
+          .getBody()
+          .contains(isB2c() ? 'In Your Cart' : `Reorder from Order ${orderReference}`)
+          .should('exist');
 
-        cy.get('body').contains(`${staticFixtures.soldByText} ${dynamicFixtures.merchant1.name}`).should('exist');
-        cy.get('body').contains(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
+        cartPage
+          .assertBodyContainsText(`${staticFixtures.soldByText} ${dynamicFixtures.merchant1.name}`)
+          .should('exist');
+        cartPage.assertBodyContainsText(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
 
-        cy.get('body').contains(`${staticFixtures.soldByText} ${dynamicFixtures.merchant2.name}`).should('exist');
-        cy.get('body').contains(dynamicFixtures.product2.localized_attributes[0].name).should('exist');
+        cartPage
+          .assertBodyContainsText(`${staticFixtures.soldByText} ${dynamicFixtures.merchant2.name}`)
+          .should('exist');
+        cartPage.assertBodyContainsText(dynamicFixtures.product2.localized_attributes[0].name).should('exist');
       });
     });
 

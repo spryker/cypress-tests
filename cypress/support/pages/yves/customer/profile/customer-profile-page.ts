@@ -17,8 +17,8 @@ export class CustomerProfilePage extends YvesPage {
     this.repository.getSubmitButton().click();
   }
 
-  waitForPasswordChangedMessage(): void {
-    cy.contains(this.repository.getPasswordChangedMessage()).should('be.visible');
+  getPasswordChangedMessage(): Cypress.Chainable {
+    return cy.contains(this.repository.getPasswordChangedMessage());
   }
 
   updateProfileData(salutation: string, firstName: string, lastName: string): void {

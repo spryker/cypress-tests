@@ -13,7 +13,7 @@ export class UserLoginScenario {
       this.loginPage.visit();
       this.loginPage.login(params);
 
-      this.indexPage.assertLoginFormDoesNotExist();
+      this.indexPage.getLoginForm().should('not.exist');
     });
   };
 }

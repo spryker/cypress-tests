@@ -8,6 +8,7 @@ import {
   deleteShoppingListItem,
   expectApiErrorDetail,
   expectApiValidationError,
+  expectApiValidationErrorAnyOf,
   getShoppingList,
   updateShoppingListItem,
 } from '@utils';
@@ -171,32 +172,40 @@ describe(
       });
     });
 
+    // An unusable `availableQuantity` reports the leaf while it is untyped and the whole
+    // `productConfigurationInstance` object once it is a typed integer, so both are accepted for as
+    // long as the demoshops span both versions.
     const availableQuantityValidations = [
       {
         description: 'empty availableQuantity',
         options: { availableQuantity: '' },
-        details: [
-          'productConfigurationInstance.availableQuantity => This value should not be blank.',
-          'productConfigurationInstance.availableQuantity => This value should be of type numeric.',
+        acceptedDetails: [
+          ['productConfigurationInstance => This value should be of type object.'],
+          [
+            'productConfigurationInstance.availableQuantity => This value should not be blank.',
+            'productConfigurationInstance.availableQuantity => This value should be of type numeric.',
+          ],
         ],
       },
       {
         description: 'string availableQuantity',
         options: { availableQuantity: 'string' },
-        details: ['productConfigurationInstance.availableQuantity => This value should be of type numeric.'],
+        acceptedDetails: [
+          ['productConfigurationInstance => This value should be of type object.'],
+          ['productConfigurationInstance.availableQuantity => This value should be of type numeric.'],
+        ],
       },
       {
         description: 'missing availableQuantity',
         options: { omitAvailableQuantity: true },
-        details: ['productConfigurationInstance.availableQuantity => This field is missing.'],
+        acceptedDetails: [['productConfigurationInstance.availableQuantity => This field is missing.']],
       },
     ];
 
-    availableQuantityValidations.forEach(({ description, options, details }): void => {
+    availableQuantityValidations.forEach(({ description, options, acceptedDetails }): void => {
       it(`should not add a configurable product to the shopping list with ${description}`, (): void => {
         addConfigurableItem({ quantity: staticFixtures.quantity, ...options }, false).then((response) => {
-          expectApiValidationError(response, details[0]);
-          details.slice(1).forEach((detail) => expectApiErrorDetail(response, detail));
+          expectApiValidationErrorAnyOf(response, acceptedDetails);
         });
       });
     });

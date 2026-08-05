@@ -16,11 +16,7 @@ export class JobRunsListPage extends BackofficePage {
     cy.visitBackoffice(this.buildUrl(importJobId));
   };
 
-  verifySuccessMessage(): void {
-    cy.get(this.repository.getSuccessMessageSelector())
-      .should('be.visible')
-      .and('contain', 'Import run created successfully. Processing is queued.');
-  }
+  getSuccessMessage = (): Cypress.Chainable => cy.get(this.repository.getSuccessMessageSelector());
 
   waitForSuccessfulJobProcessing = (attempts = 0, maxAttempts = 20): void => {
     // Optional: Guard to prevent infinite loops if the job is stuck
@@ -39,7 +35,7 @@ export class JobRunsListPage extends BackofficePage {
         if (status === 'pending' || status === 'processing') {
           // waiting for up to 2 minutes (6s * 20 times) because job starting takes up to a minute and processing may take a bit
           // but should usually be done in less than a minute
-          // eslint-disable-next-line cypress/no-unnecessary-waiting
+          // eslint-disable-next-line cypress/no-unnecessary-waiting, spryker-cypress/no-numeric-wait
           cy.wait(6000);
           cy.reload();
           this.waitForSuccessfulJobProcessing(attempts + 1, maxAttempts);

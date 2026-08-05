@@ -43,6 +43,8 @@ export interface CmsBlockGlossary {
 }
 
 export interface GlossaryPlaceholders {
+  fk_cms_block?: number;
+  fk_glossary_key?: number;
   translations: GlossaryPlaceholderTranslations[];
 }
 

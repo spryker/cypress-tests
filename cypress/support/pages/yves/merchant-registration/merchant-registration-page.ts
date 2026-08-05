@@ -47,11 +47,6 @@ export class MerchantRegistrationPage extends YvesPage {
   private readonly validationError = '.input--error, .checkbox--error';
   private readonly footerLink = 'footer a[href*="/merchant-registration-request"]';
 
-  assertPageLoaded(): void {
-    cy.url().should('include', this.PAGE_URL);
-    cy.get(this.pageTitle).should('be.visible');
-  }
-
   register = (params?: PartialMerchantRegistrationData): RegisteredMerchant => {
     const companyName = params?.companyName ?? this.faker.company.name();
     const email = params?.contactPerson?.email ?? this.faker.internet.email();
@@ -100,17 +95,18 @@ export class MerchantRegistrationPage extends YvesPage {
     this.fillAndSubmitRegistration(registrationData, false);
   };
 
-  assertPageTitle(expectedTitle: string): void {
-    cy.get(this.pageTitle).should('contain.text', expectedTitle);
-  }
+  getTitle = (): Cypress.Chainable => cy.get(this.pageTitle);
 
-  assertCompanySectionVisible(): void {
-    cy.get(this.companySection).should('be.visible');
-  }
+  getCompanySection = (): Cypress.Chainable => cy.get(this.companySection);
 
-  assertAccountSectionVisible(): void {
-    cy.get(this.accountSection).should('be.visible');
-  }
+  getAccountSection = (): Cypress.Chainable => cy.get(this.accountSection);
+
+  getSuccessMessage = (): Cypress.Chainable => cy.get(this.successMessage, { timeout: 10000 });
+
+  getErrorFlashMessage = (options?: Partial<Cypress.Timeoutable>): Cypress.Chainable =>
+    cy.get('[data-qa="component flash-message"]', options).filter('.flash-message--error, .flash-message--alert');
+
+  getValidationErrors = (): Cypress.Chainable => cy.get(this.validationError);
 
   fillCompanyInformation(data: Partial<MerchantRegistrationData>): void {
     if (data.companyName) {
@@ -174,40 +170,8 @@ export class MerchantRegistrationPage extends YvesPage {
     this.submitForm();
   }
 
-  assertSuccessMessage(expectedMessage?: string): void {
-    cy.get(this.successMessage, { timeout: 10000 }).should('exist').and('not.have.css', 'visibility', 'hidden');
-    if (expectedMessage) {
-      cy.get(this.successMessage).should('contain.text', expectedMessage);
-    }
-  }
-
-  assertErrorMessage(expectedMessage?: string): void {
-    cy.get('[data-qa="component flash-message"]', { timeout: 10000 })
-      .filter('.flash-message--error, .flash-message--alert')
-      .should('exist')
-      .and('be.visible');
-
-    if (expectedMessage) {
-      cy.get('[data-qa="component flash-message"]')
-        .filter('.flash-message--error, .flash-message--alert')
-        .should('contain.text', expectedMessage);
-    }
-  }
-
-  assertValidationErrors(): void {
-    cy.get(this.validationError).should('have.length.greaterThan', 0);
-  }
-
-  assertFormNotSubmitted(): void {
-    cy.url().should('include', this.PAGE_URL);
-  }
-
   getFooterLink(): Cypress.Chainable {
     return cy.get(this.footerLink);
-  }
-
-  assertFooterLinkExists(linkText: string): void {
-    this.getFooterLink().should('be.visible').should('contain.text', linkText);
   }
 
   clickFooterLink(): void {

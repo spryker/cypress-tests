@@ -18,12 +18,12 @@ export class CustomerMfaRemoveScenario {
 
     this.customerRemoveMfaPage.confirmRemoveMultiFactorAuthentication();
 
-    this.multiFactorAuthPage.waitForDeactivationSuccessMessage();
+    this.multiFactorAuthPage.getDeactivationSuccessMessage().should('be.visible');
 
     this.customerIndexPage.assertPageLocation();
-    this.customerIndexPage.assertRemoveMultiFactorAuthenticationButtonDoesNotExist({
-      searchQuery: params.email,
-    });
+    this.customerIndexPage
+      .findCustomer({ searchQuery: params.email })
+      .should('not.contain', this.customerIndexPage.getRemoveMultiFactorAuthenticationButtonSelector());
   }
 }
 

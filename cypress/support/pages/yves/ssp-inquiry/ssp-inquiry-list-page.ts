@@ -24,8 +24,8 @@ export class SspInquiryListPage extends YvesPage {
     this.repository.getFirstRowViewButton().click();
   }
 
-  assetPageHasNoSspInquiries(): void {
-    this.repository.getSspInquiryDetailLinks().should('not.exist');
+  getSspInquiryDetailLinks(): Chainable {
+    return this.repository.getSspInquiryDetailLinks();
   }
 
   getFirstRowReference(): string {
