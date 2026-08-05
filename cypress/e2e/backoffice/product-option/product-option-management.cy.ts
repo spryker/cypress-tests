@@ -61,11 +61,11 @@ describe(
 
       productOptionPage.submitForm();
 
-      productOptionPage.assertGroupCreatedSuccessMessage();
+      productOptionPage.getGroupCreatedSuccessMessage().should('be.visible');
     });
 
-    // The product-option edit journey is skipped in source, rebuild when there is a need for.
-    // It relied on absolute-DOM-path selectors, so it needs authoring from scratch rather than
-    // porting; the create journey above is the coverage that carries over.
+    // The product-option edit journey is skipped in source, rebuild when there is a need for. It
+    // drove the page through absolute XPath DOM paths, so it needs authoring from scratch rather
+    // than porting; the create journey above is the coverage that carries over.
   }
 );

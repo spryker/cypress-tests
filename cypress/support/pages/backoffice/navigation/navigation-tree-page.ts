@@ -12,6 +12,9 @@ export class NavigationTreePage extends BackofficePage {
   // Time for the node-form iframe to finish its delayed second load before we read/type into it.
   private FORM_SETTLE_MS = 1000;
 
+  // The jstree AJAX load and the node-form iframe both resolve well after the page's load event.
+  private TREE_TIMEOUT_MS = 20000;
+
   // -------- Navigation element CRUD --------
 
   createNavigation = (data: NavigationFormData): Cypress.Chainable<number> => {
@@ -24,13 +27,9 @@ export class NavigationTreePage extends BackofficePage {
     return this.grabIdFromSuccessMessage(this.repository.getCreateSuccessPattern());
   };
 
-  assertOnListPage = (): void => {
-    cy.url().should('include', this.repository.getNavigationListUrl());
-  };
+  getNavigationListUrl = (): string => this.repository.getNavigationListUrl();
 
-  assertListNotEmpty = (): void => {
-    this.repository.getListTableRows().should('have.length.greaterThan', 0);
-  };
+  getListTableRows = (): Cypress.Chainable => this.repository.getListTableRows();
 
   updateNavigation = (idNavigation: number, data: Partial<NavigationFormData>): void => {
     cy.visitBackoffice(this.repository.getNavigationUpdateUrl(idNavigation));
@@ -44,17 +43,13 @@ export class NavigationTreePage extends BackofficePage {
     }
 
     this.repository.getNavigationSaveButton().click();
-    this.assertSuccessMessage(this.repository.getUpdateSuccessPattern());
+    this.repository.getSuccessAlert().invoke('text').should('match', this.repository.getUpdateSuccessPattern());
   };
 
   deleteNavigation = (idNavigation: number): void => {
     cy.visitBackoffice(this.repository.getNavigationDeleteUrl(idNavigation));
     this.repository.getDeleteSubmitButton().click();
-    this.assertSuccessMessage(this.repository.getDeleteSuccessPattern());
-  };
-
-  assertSuccessMessage = (pattern: RegExp): void => {
-    this.repository.getSuccessAlert().invoke('text').should('match', pattern);
+    this.repository.getSuccessAlert().invoke('text').should('match', this.repository.getDeleteSuccessPattern());
   };
 
   // -------- Navigation tree (jstree) --------
@@ -66,31 +61,32 @@ export class NavigationTreePage extends BackofficePage {
     cy.visitBackoffice(this.repository.getNavigationListUrl());
     this.repository.getTableSearchInput().clear().type(navigationName);
     this.repository.getTableRowByText(navigationName).click();
-    cy.get(this.repository.getTreeSelector(), { timeout: 20000 }).should('exist');
+    cy.get(this.repository.getTreeSelector(), { timeout: this.TREE_TIMEOUT_MS }).should('exist');
 
     // The tree renders asynchronously (jstree AJAX) and the select→edit-form binding attaches only
     // after the Zed bundle parses. Wait for jstree to have painted at least the root node, then settle
     // so a following clickNode actually loads the edit form instead of leaving the default create form.
-    cy.get(this.repository.getTreeNodeSelector(), { timeout: 20000 }).should('have.length.at.least', 1);
+    cy.get(this.repository.getTreeNodeSelector(), { timeout: this.TREE_TIMEOUT_MS }).should('have.length.at.least', 1);
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(this.FORM_SETTLE_MS);
   };
 
-  assertNumberOfNodes = (count: number): void => {
-    cy.get(this.repository.getTreeNodeSelector(), { timeout: 20000 }).should('have.length', count);
-  };
+  getTreeNodes = (): Cypress.Chainable =>
+    cy.get(this.repository.getTreeNodeSelector(), { timeout: this.TREE_TIMEOUT_MS });
 
   clickNode = (idNavigationNode: number): void => {
-    cy.get(this.repository.getNodeAnchorSelector(idNavigationNode), { timeout: 20000 }).click();
+    cy.get(this.repository.getNodeAnchorSelector(idNavigationNode), { timeout: this.TREE_TIMEOUT_MS }).click();
   };
 
-  assertNodeFormIsCreate = (): void => {
-    this.getNodeFormBody().should('contain', this.repository.getCreateChildNodeHeading());
-  };
+  getNodeFormContent = (): Cypress.Chainable<JQuery<HTMLElement>> => this.getNodeFormBody();
 
-  assertNodeFormIsEdit = (): void => {
-    this.getNodeFormBody().should('contain', this.repository.getEditNodeHeading());
-  };
+  getCreateChildNodeHeading = (): string => this.repository.getCreateChildNodeHeading();
+
+  getEditNodeHeading = (): string => this.repository.getEditNodeHeading();
+
+  getNodeCreateSuccessPattern = (): RegExp => this.repository.getNodeCreateSuccessPattern();
+
+  getNodeUpdateSuccessPattern = (): RegExp => this.repository.getNodeUpdateSuccessPattern();
 
   createChildNodeWithoutType = (title: string): void => {
     this.fillLocalizedTitles(title);
@@ -116,12 +112,12 @@ export class NavigationTreePage extends BackofficePage {
     this.getNodeFormBody().find(this.repository.getLocalizedCategoryUrlSelector(0)).clear().type(categoryUrlEn);
     this.getNodeFormBody().find(this.repository.getLocalizedCategoryUrlSelector(1)).clear().type(categoryUrlDe);
     this.submitNodeForm();
-    this.getNodeFormBody().should('contain.text', 'was updated successfully.');
+    this.getNodeFormBody().invoke('text').should('match', this.repository.getNodeUpdateSuccessPattern());
   };
 
   clickAddChildNode = (): void => {
     this.getNodeFormBody().find(this.repository.getAddChildNodeButtonSelector()).click();
-    this.assertNodeFormIsCreate();
+    this.getNodeFormBody().should('contain', this.repository.getCreateChildNodeHeading());
   };
 
   createChildNodeWithCmsPageType = (title: string, cmsPageUrlEn: string, cmsPageUrlDe: string): void => {
@@ -138,9 +134,7 @@ export class NavigationTreePage extends BackofficePage {
     this.assertNodeCreateSuccess();
   };
 
-  assertNodeIsChildOf = (idParentNode: number, childTitle: string): void => {
-    cy.get(this.repository.getNodeSelector(idParentNode)).should('contain', childTitle);
-  };
+  getNode = (idNavigationNode: number): Cypress.Chainable => cy.get(this.repository.getNodeSelector(idNavigationNode));
 
   // Drag a node onto the middle of a target node so jstree re-parents it as a child. jstree's dnd
   // plugin binds mousedown on the anchor and mousemove/mouseup on the document, positioning by
@@ -189,7 +183,7 @@ export class NavigationTreePage extends BackofficePage {
 
   saveTreeOrder = (): void => {
     this.repository.getTreeSaveButton().click();
-    cy.get(this.repository.getSweetAlertContainer(), { timeout: 20000 }).should('be.visible');
+    cy.get(this.repository.getSweetAlertContainer(), { timeout: this.TREE_TIMEOUT_MS }).should('be.visible');
     cy.get(this.repository.getSweetAlertContainer()).should('contain', this.repository.getTreeUpdateSuccessMessage());
     cy.get(this.repository.getSweetAlertConfirm()).click();
   };
@@ -209,7 +203,10 @@ export class NavigationTreePage extends BackofficePage {
       .getSuccessAlert()
       .invoke('text')
       .then((text: string) => {
-        expect(text).to.match(pattern);
+        if (!pattern.test(text)) {
+          throw new Error(`Success alert "${text}" does not match ${pattern}.`);
+        }
+
         const match = text.match(/(\d+)/);
 
         return Number(match ? match[1] : NaN);
@@ -223,9 +220,10 @@ export class NavigationTreePage extends BackofficePage {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(this.FORM_SETTLE_MS);
 
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Internal settle guard on the iframe body; not a spec-level assertion.
     return cy
-      .get(this.repository.getNodeFormIframeSelector(), { timeout: 20000 })
-      .its('0.contentDocument.body', { timeout: 20000 })
+      .get(this.repository.getNodeFormIframeSelector(), { timeout: this.TREE_TIMEOUT_MS })
+      .its('0.contentDocument.body', { timeout: this.TREE_TIMEOUT_MS })
       .should('not.be.empty')
       .then((body) => cy.wrap(body as HTMLElement)) as unknown as Cypress.Chainable<JQuery<HTMLElement>>;
   }
@@ -252,8 +250,11 @@ export class NavigationTreePage extends BackofficePage {
     this.getNodeFormBody().find(this.repository.getNodeFormSubmitSelector()).click();
   }
 
+  // Post-submit settle guard: the iframe re-renders after a successful save, and the callers'
+  // following steps (or the spec's node-count assertion) race that re-render without it.
   private assertNodeCreateSuccess(): void {
-    this.getNodeFormBody().should('contain.text', 'was created successfully.');
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Internal post-action guard; the spec asserts the outcome separately.
+    this.getNodeFormBody().invoke('text').should('match', this.repository.getNodeCreateSuccessPattern());
   }
 }
 

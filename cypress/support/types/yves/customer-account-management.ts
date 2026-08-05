@@ -27,6 +27,21 @@ export interface CustomerAddressManagementDynamicFixtures {
 
 export interface CustomerAddressManagementStaticFixtures {
   defaultPassword: string;
+  newAddress: NewCustomerAddress;
+}
+
+export interface NewCustomerAddress {
+  salutation: string;
+  firstName: string;
+  lastName: string;
+  company: string;
+  phone: string;
+  address1: string;
+  address2: string;
+  address3: string;
+  city: string;
+  zipCode: string;
+  iso2Code: string;
 }
 
 export interface CustomerProfileManagementDynamicFixtures {

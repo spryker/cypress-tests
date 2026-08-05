@@ -31,13 +31,9 @@ export class CategoryCreatePage extends BackofficePage {
     this.repository.getSubmitButton().click();
   };
 
-  assertBreadcrumb = (text: string): void => {
-    this.repository.getBreadcrumb().should('contain', text);
-  };
+  getBreadcrumb = (): Cypress.Chainable => this.repository.getBreadcrumb();
 
-  assertSuccessMessage = (): void => {
-    cy.contains(this.repository.getSuccessMessage()).should('be.visible');
-  };
+  getSuccessMessage = (): Cypress.Chainable => cy.contains(this.repository.getSuccessMessage());
 
   buildLocalizedAttributes = (categoryKey: string, position: number, localeName: string): Record<string, string> => ({
     [`category[localized_attributes][${position}][name]`]: `${categoryKey} ${localeName}`,

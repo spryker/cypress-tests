@@ -38,19 +38,34 @@ describe(
     it('should show blank-value errors when creating a directory with an empty name', (): void => {
       fileManagerPage.createDirectory('');
 
-      fileManagerPage.assertBlankValueErrors();
+      assertFieldErrors(fileManagerPage.getBlankValueError());
     });
 
     it('should show max-length errors when creating a directory with an over-long name', (): void => {
       fileManagerPage.createDirectory('a'.repeat(FIELD_MAX_LENGTH + 1), 'a'.repeat(FIELD_MAX_LENGTH + 1));
 
-      fileManagerPage.assertMaxLengthErrors();
+      assertFieldErrors(fileManagerPage.getMaxLengthError());
     });
 
     it('should create a directory and show a success message when the name is valid', (): void => {
       fileManagerPage.createDirectory(nameOfMaxLength, titleOfMaxLength);
 
-      fileManagerPage.assertSuccessMessage();
+      fileManagerPage.getSuccessMessage().should('be.visible');
+      fileManagerPage.getSqlQueryError().should('not.exist');
     });
+
+    // The directory name and every localized title must surface the same validation message, and a
+    // rejected submit must never leak the SQL-query error the FileManager grid renders on failure.
+    function assertFieldErrors(message: string): void {
+      fileManagerPage.getDirectoryNameErrorBlock().should('contain.text', message);
+
+      fileManagerPage.getLocalizedTitleInputIds().then((ids: Array<string>): void => {
+        ids.forEach((id: string): void => {
+          fileManagerPage.getLocalizedTitleErrorBlockById(id).should('contain.text', message);
+        });
+      });
+
+      fileManagerPage.getSqlQueryError().should('not.exist');
+    }
   }
 );

@@ -3,7 +3,7 @@ export interface ProductOptionRepository {
   getTaxSetSelect(): Cypress.Chainable;
   getGroupNameTranslationInput(index: number): Cypress.Chainable;
   getTranslationCopyButton(): Cypress.Chainable;
-  getExpandSecondTranslationBlockLink(): Cypress.Chainable;
+  getCollapsedTranslationBlockToggle(): Cypress.Chainable;
   getOptionValueInput(elementNr: number): Cypress.Chainable;
   getOptionValueSkuInput(elementNr: number): Cypress.Chainable;
   getOptionValueNetAmountInput(elementNr: number, currencyIndex: number): Cypress.Chainable;
@@ -19,14 +19,6 @@ export interface ProductOptionRepository {
   getProductsToBeAssignedTab(): Cypress.Chainable;
   getSelectedProductRowCell(): Cypress.Chainable;
   getUnassignProductLink(idProduct: string): Cypress.Chainable;
-  getAssignedProductsListItem(): Cypress.Chainable;
-  getAssignedTab(): Cypress.Chainable;
-  getProductOptionTableRowCells(): Cypress.Chainable;
-  getActivateButton(): Cypress.Chainable;
-  getActivateSuccessContainer(): Cypress.Chainable;
   getCreateBreadcrumb(): string;
-  getEditBreadcrumb(): string;
   getProductCreatedSuccessMessage(): string;
-  getGroupModifiedSuccessMessage(): string;
-  getOptionActivatedSuccessMessage(): string;
 }

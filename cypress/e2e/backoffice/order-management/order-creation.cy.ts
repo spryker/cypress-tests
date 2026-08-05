@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { OrderCreationDynamicFixtures, OrderManagementStaticFixtures } from '@interfaces/backoffice';
 import { SalesIndexPage } from '@pages/backoffice';
 import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
@@ -80,12 +80,6 @@ describe(
 
       salesIndexPage.assertBodyContainsText(dynamicFixtures.product.sku);
     });
-
-    function getPaymentMethodBasedOnEnv(): string {
-      return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice';
-    }
 
     function addOneProductToCart(): void {
       catalogPage.visit();

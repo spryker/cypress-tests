@@ -39,8 +39,8 @@ describe(
         .createNavigation({ name, key: `acc-navigation-${uid}`, isActive: true })
         .then((idNavigation) => {
           // read: navigation list is shown and not empty
-          navigationTreePage.assertOnListPage();
-          navigationTreePage.assertListNotEmpty();
+          cy.url().should('include', navigationTreePage.getNavigationListUrl());
+          navigationTreePage.getListTableRows().should('have.length.greaterThan', 0);
 
           // update
           navigationTreePage.updateNavigation(idNavigation, { name: `${name} - edited`, isActive: false });
@@ -53,47 +53,47 @@ describe(
     // Ported from NavigationTreeCest::testSeeEmptyNavigationTree
     it('should display an empty navigation tree with a single root node', (): void => {
       navigationTreePage.openNavigationTree(dynamicFixtures.navigationEmpty.name);
-      navigationTreePage.assertNumberOfNodes(1);
+      navigationTreePage.getTreeNodes().should('have.length', 1);
     });
 
     // Ported from NavigationTreeCest::testCreateChildNodeWithoutType
     it('should create a child node without a type', (): void => {
       navigationTreePage.openNavigationTree(dynamicFixtures.navigationWithoutType.name);
-      navigationTreePage.assertNodeFormIsCreate();
+      navigationTreePage.getNodeFormContent().should('contain', navigationTreePage.getCreateChildNodeHeading());
       navigationTreePage.createChildNodeWithoutType('Child 1');
-      navigationTreePage.assertNumberOfNodes(2);
+      navigationTreePage.getTreeNodes().should('have.length', 2);
     });
 
     // Ported from NavigationTreeCest::testCreateChildNodeWithExternalUrlType
     it('should create a child node with an external URL type', (): void => {
       navigationTreePage.openNavigationTree(dynamicFixtures.navigationExternalUrl.name);
-      navigationTreePage.assertNodeFormIsCreate();
+      navigationTreePage.getNodeFormContent().should('contain', navigationTreePage.getCreateChildNodeHeading());
       navigationTreePage.createChildNodeWithExternalUrl('Child 2', 'http://google.com');
-      navigationTreePage.assertNumberOfNodes(3);
+      navigationTreePage.getTreeNodes().should('have.length', 3);
     });
 
     // Ported from NavigationTreeCest::testUpdateNodeToCategoryType
     it('should update a node to a category type', (): void => {
       navigationTreePage.openNavigationTree(dynamicFixtures.navigationCategory.name);
       navigationTreePage.clickNode(dynamicFixtures.categoryNode.id_navigation_node);
-      navigationTreePage.assertNodeFormIsEdit();
+      navigationTreePage.getNodeFormContent().should('contain', navigationTreePage.getEditNodeHeading());
       navigationTreePage.updateNodeToCategoryType(staticFixtures.categoryUrlEn, staticFixtures.categoryUrlDe);
-      navigationTreePage.assertNumberOfNodes(2);
+      navigationTreePage.getTreeNodes().should('have.length', 2);
     });
 
     // Ported from NavigationTreeCest::testCreateChildNodeWithCmsPageType
     it('should create a child node with a CMS page type', (): void => {
       navigationTreePage.openNavigationTree(dynamicFixtures.navigationCmsPage.name);
       navigationTreePage.clickNode(dynamicFixtures.cmsPageNode.id_navigation_node);
-      navigationTreePage.assertNodeFormIsEdit();
+      navigationTreePage.getNodeFormContent().should('contain', navigationTreePage.getEditNodeHeading());
       navigationTreePage.clickAddChildNode();
       navigationTreePage.createChildNodeWithCmsPageType(
         'Child 1.1',
         staticFixtures.cmsPageUrlEn,
         staticFixtures.cmsPageUrlDe
       );
-      navigationTreePage.assertNumberOfNodes(3);
-      navigationTreePage.assertNodeIsChildOf(dynamicFixtures.cmsPageNode.id_navigation_node, 'Child 1.1');
+      navigationTreePage.getTreeNodes().should('have.length', 3);
+      navigationTreePage.getNode(dynamicFixtures.cmsPageNode.id_navigation_node).should('contain', 'Child 1.1');
     });
 
     // Ported from NavigationTreeCest::testChangeNavigationTreeStructure
@@ -103,7 +103,7 @@ describe(
         dynamicFixtures.structureNode11.id_navigation_node,
         dynamicFixtures.structureNode2.id_navigation_node
       );
-      navigationTreePage.assertNodeIsChildOf(dynamicFixtures.structureNode2.id_navigation_node, 'node_1_1');
+      navigationTreePage.getNode(dynamicFixtures.structureNode2.id_navigation_node).should('contain', 'node_1_1');
       navigationTreePage.saveTreeOrder();
     });
   }

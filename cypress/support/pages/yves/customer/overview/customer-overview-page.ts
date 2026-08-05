@@ -1,7 +1,7 @@
 import { autoWired, REPOSITORIES } from '@utils';
 import { inject, injectable } from 'inversify';
 import { YvesPage } from '@pages/yves';
-import { CustomerOverviewRepository } from './customer-overview-repository';
+import { CustomerOverviewRepository, CustomerSidebarSection } from './customer-overview-repository';
 
 @injectable()
 @autoWired
@@ -40,4 +40,10 @@ export class CustomerOverviewPage extends YvesPage {
   getOrderDetailTable = (): Cypress.Chainable => {
     return this.repository.getOrderDetailTableRow();
   };
+
+  getSidebarLink = (section: CustomerSidebarSection): Cypress.Chainable => this.repository.getSidebarLink(section);
+
+  getDefaultBillingAddressHeading = (): string => this.repository.getDefaultBillingAddressHeading();
+
+  getDefaultShippingAddressHeading = (): string => this.repository.getDefaultShippingAddressHeading();
 }

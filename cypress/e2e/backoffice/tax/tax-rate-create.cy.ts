@@ -34,7 +34,7 @@ describe('tax rate create', { tags: ['@backoffice', 'tax', 'spryker-core-back-of
       percentage: '5',
     });
 
-    taxRatePage.assertSuccessMessage();
+    taxRatePage.getSuccessAlert().invoke('text').should('match', taxRatePage.getSuccessMessagePattern());
   });
 
   it('should show error messages when creating an invalid tax rate', (): void => {
@@ -44,7 +44,9 @@ describe('tax rate create', { tags: ['@backoffice', 'tax', 'spryker-core-back-of
       percentage: '888',
     });
 
-    taxRatePage.assertValidationErrors();
+    taxRatePage.getNameBlankError().should('be.visible');
+    taxRatePage.getCountryBlankError().should('be.visible');
+    taxRatePage.getPercentageRangeError().should('be.visible');
   });
 
   it('should open the tax rate list page without saving when navigating back', (): void => {
@@ -57,10 +59,10 @@ describe('tax rate create', { tags: ['@backoffice', 'tax', 'spryker-core-back-of
     });
     taxRatePage.clickListOfTaxRatesButton();
 
-    taxRatePage.assertNoSuccessMessage();
+    taxRatePage.getSuccessAlert().should('not.exist');
 
     taxRatePage.searchTaxRateOnListPage(notCreatedName);
-    taxRatePage.assertEmptyTable();
+    taxRatePage.getEmptyTableMessage().should('be.visible');
   });
 
   it('should show an error when recreating a tax rate that already exists', (): void => {
@@ -70,7 +72,7 @@ describe('tax rate create', { tags: ['@backoffice', 'tax', 'spryker-core-back-of
     taxRatePage.createTaxRate(taxRate);
     taxRatePage.createTaxRate(taxRate);
 
-    taxRatePage.assertAlreadyExistsError();
+    taxRatePage.getAlreadyExistsError().should('be.visible');
   });
 
   it('should show an error when submitting one and the same tax rate twice in a row', (): void => {
@@ -80,6 +82,6 @@ describe('tax rate create', { tags: ['@backoffice', 'tax', 'spryker-core-back-of
       percentage: '5',
     });
 
-    taxRatePage.assertAlreadyExistsError();
+    taxRatePage.getAlreadyExistsError().should('be.visible');
   });
 });

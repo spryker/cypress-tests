@@ -33,15 +33,15 @@ export class CustomerProfilePage extends YvesPage {
     this.repository.getProfileSubmitButton().click();
   }
 
-  assertProfileSaved(): void {
-    cy.contains(this.repository.getProfileSavedMessage()).should('be.visible');
+  getProfileSavedMessage(): Cypress.Chainable {
+    return cy.contains(this.repository.getProfileSavedMessage());
   }
 
-  assertEmailInUseError(): void {
-    cy.contains(this.repository.getEmailInUseErrorMessage()).should('be.visible');
+  getEmailInUseError(): Cypress.Chainable {
+    return cy.contains(this.repository.getEmailInUseErrorMessage());
   }
 
-  assertPasswordsDoNotMatchError(): void {
-    cy.contains(this.repository.getPasswordsDoNotMatchMessage()).should('be.visible');
+  getPasswordsDoNotMatchError(): Cypress.Chainable {
+    return cy.contains(this.repository.getPasswordsDoNotMatchMessage());
   }
 }

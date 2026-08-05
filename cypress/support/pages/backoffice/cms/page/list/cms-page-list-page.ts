@@ -10,10 +10,9 @@ export class CmsPageListPage extends BackofficePage {
 
   protected PAGE_URL = '/cms-gui/list-page';
 
-  // Mirrors the Codeception waitForElementVisible on the DataTables first-row/first-cell:
-  // the grid hydrates via AJAX, so assert the terminal settled cell is visible (Cypress
-  // retries the assertion) instead of a fixed wait.
-  assertPageListTableVisible = (): void => {
-    this.repository.getFirstRowFirstCell().should('be.visible');
-  };
+  // The grid hydrates via AJAX; the caller asserts this terminal settled cell is visible and
+  // Cypress retries until it is, which replaces the Codeception waitForElementVisible.
+  getFirstRowFirstCell = (): Cypress.Chainable => this.repository.getFirstRowFirstCell();
+
+  getPublishedMessage = (): Cypress.Chainable => cy.contains(this.repository.getPublishedMessage());
 }

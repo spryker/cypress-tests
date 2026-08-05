@@ -34,7 +34,7 @@ describe(
 
       cmsBlockCreatePage.createCmsBlock({ name: `CMS block name ${uid}` });
 
-      cmsBlockCreatePage.assertSuccessMessage();
+      cmsBlockCreatePage.getSuccessMessage().should('be.visible');
     });
   }
 );

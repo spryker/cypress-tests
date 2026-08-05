@@ -45,10 +45,10 @@ describe(
 
     it('customer should be able to open the forgot password page', (): void => {
       loginPage.visit();
-      cy.get('[data-qa="customer-forgot-password-link"]').click();
+      loginPage.clickForgotPassword();
 
       cy.url().should('include', 'password/forgotten');
-      cy.contains('Recover my password').should('be.visible');
+      loginPage.getForgotPasswordHeading().should('be.visible');
     });
 
     it('customer should be able to logout', (): void => {

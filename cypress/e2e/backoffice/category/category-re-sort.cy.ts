@@ -28,7 +28,8 @@ describe(
 
     it('Backoffice user should see the sub-categories', (): void => {
       categoryReSortPage.visitReSortPage(idCategoryNode);
-      categoryReSortPage.assertSubCategoryVisible('first');
+
+      categoryReSortPage.getSubCategory('first').should('be.visible');
     });
 
     it('Backoffice user should be able to move sub-categories', (): void => {
@@ -38,7 +39,8 @@ describe(
         categoryReSortPage.reorder('first', 'last');
         categoryReSortPage.reorder('last', 'second');
 
-        categoryReSortPage.assertSubCategoryContains('last', firstItemName);
+        // Cypress retries the assertion, so the re-render after a reorder settles without a fixed wait.
+        categoryReSortPage.getSubCategoryHandle('last').should('contain', firstItemName);
       });
     });
 
@@ -52,10 +54,10 @@ describe(
         categoryReSortPage.reorder('first', 'second');
 
         categoryReSortPage.save();
-        categoryReSortPage.assertSaveSuccess();
+        categoryReSortPage.getAlertBox().should('be.visible').and('contain', 'Success');
 
         categoryReSortPage.visitReSortPage(idCategoryNode);
-        categoryReSortPage.assertSubCategoryContains('first', lastItemName);
+        categoryReSortPage.getSubCategoryHandle('first').should('contain', lastItemName);
       });
     });
   }

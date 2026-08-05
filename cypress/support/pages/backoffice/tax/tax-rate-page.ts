@@ -13,6 +13,9 @@ export class TaxRatePage extends BackofficePage {
 
   private LIST_PAGE_URL = '/tax/rate/list';
 
+  // The list grid hydrates via AJAX; the empty-state row is the last thing to render.
+  private EMPTY_TABLE_TIMEOUT_MS = 10000;
+
   createTaxRate = (taxRate: TaxRateData): void => {
     this.fillTaxRateForm(taxRate);
     this.repository.getSaveButton().click();
@@ -33,32 +36,25 @@ export class TaxRatePage extends BackofficePage {
     this.repository.getListOfTaxRatesButton().click();
   };
 
-  assertSuccessMessage = (): void => {
-    this.repository.getSuccessAlert().invoke('text').should('match', this.repository.getSuccessMessagePattern());
-  };
+  getSuccessAlert = (): Cypress.Chainable => this.repository.getSuccessAlert();
 
-  assertNoSuccessMessage = (): void => {
-    this.repository.getSuccessAlert().should('not.exist');
-  };
+  getSuccessMessagePattern = (): RegExp => this.repository.getSuccessMessagePattern();
 
-  assertValidationErrors = (): void => {
-    cy.contains(this.repository.getNameBlankError()).should('be.visible');
-    cy.contains(this.repository.getCountryBlankError()).should('be.visible');
-    cy.contains(this.repository.getPercentageRangeError()).should('be.visible');
-  };
+  getNameBlankError = (): Cypress.Chainable => cy.contains(this.repository.getNameBlankError());
 
-  assertAlreadyExistsError = (): void => {
-    cy.contains(this.repository.getAlreadyExistsError()).should('be.visible');
-  };
+  getCountryBlankError = (): Cypress.Chainable => cy.contains(this.repository.getCountryBlankError());
+
+  getPercentageRangeError = (): Cypress.Chainable => cy.contains(this.repository.getPercentageRangeError());
+
+  getAlreadyExistsError = (): Cypress.Chainable => cy.contains(this.repository.getAlreadyExistsError());
 
   searchTaxRateOnListPage = (name: string): void => {
     cy.visitBackoffice(this.LIST_PAGE_URL);
     this.repository.getListSearchInput().clear().type(name);
   };
 
-  assertEmptyTable = (): void => {
-    cy.contains(this.repository.getEmptyTableMessage(), { timeout: 10000 }).should('be.visible');
-  };
+  getEmptyTableMessage = (): Cypress.Chainable =>
+    cy.contains(this.repository.getEmptyTableMessage(), { timeout: this.EMPTY_TABLE_TIMEOUT_MS });
 
   private fillTaxRateForm(taxRate: TaxRateData): void {
     this.visit();

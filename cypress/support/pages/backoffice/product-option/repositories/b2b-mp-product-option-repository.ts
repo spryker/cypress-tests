@@ -3,6 +3,12 @@ import { ProductOptionRepository } from '../product-option-repository';
 
 @injectable()
 export class B2bMpProductOptionRepository implements ProductOptionRepository {
+  // Every locale renders its own translation block; `localized-ibox` collapses all but the first
+  // (`collapsed: not loop.first`), so the collapsed block is the non-default locale and its
+  // `.collapse-link` is the toggle — no positional nth-child chain needed.
+  private COLLAPSED_TRANSLATION_BLOCK_TOGGLE =
+    '#option-value-translations [data-locale-code] .ibox.collapsed .ibox-title a.collapse-link';
+
   getGroupNameInput(): Cypress.Chainable {
     return cy.get('#product_option_general_name');
   }
@@ -19,8 +25,8 @@ export class B2bMpProductOptionRepository implements ProductOptionRepository {
     return cy.get('#product_option_general_groupNameTranslations_0 button');
   }
 
-  getExpandSecondTranslationBlockLink(): Cypress.Chainable {
-    return cy.get('#option-value-translations > div:nth-child(2) > div > div:nth-child(1) > a');
+  getCollapsedTranslationBlockToggle(): Cypress.Chainable {
+    return cy.get(this.COLLAPSED_TRANSLATION_BLOCK_TOGGLE).first();
   }
 
   getOptionValueInput(elementNr: number): Cypress.Chainable {
@@ -64,7 +70,7 @@ export class B2bMpProductOptionRepository implements ProductOptionRepository {
   }
 
   getProductTableRowCell(rowNumber: number): Cypress.Chainable {
-    return cy.get(`#product-table tbody tr:nth-child(${rowNumber}) td:nth-child(1)`);
+    return cy.get(`#product-table tbody tr:nth-child(${rowNumber}) td:first-child`);
   }
 
   getAllProductsCheckbox(idProduct: string): Cypress.Chainable {
@@ -75,51 +81,21 @@ export class B2bMpProductOptionRepository implements ProductOptionRepository {
     return cy.get('#products-to-be-assigned');
   }
 
+  // The "Products to be assigned" table is built client-side with a fixed ID/SKU/Name/Selected
+  // column order, so the first cell of the first row is the id of the product just selected.
   getSelectedProductRowCell(): Cypress.Chainable {
-    return cy.get('#selectedProductsTable tbody tr:nth-child(1) td:nth-child(1)');
+    return cy.get('#selectedProductsTable tbody tr:first-child td:first-child');
   }
 
   getUnassignProductLink(idProduct: string): Cypress.Chainable {
     return cy.get(`a[data-id="${idProduct}"]`);
   }
 
-  getAssignedProductsListItem(): Cypress.Chainable {
-    return cy.get('#page-wrapper > div:nth-child(3) > div:nth-child(2) > ul > li:nth-child(2)');
-  }
-
-  getAssignedTab(): Cypress.Chainable {
-    return cy.get('#assigned');
-  }
-
-  getProductOptionTableRowCells(): Cypress.Chainable {
-    return cy.get('#product-option-table tbody tr td:nth-child(1)');
-  }
-
-  getActivateButton(): Cypress.Chainable {
-    return cy.get('#page-wrapper > div:nth-child(2) > div:nth-child(2) > div > form > button');
-  }
-
-  getActivateSuccessContainer(): Cypress.Chainable {
-    return cy.get('#page-wrapper > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div');
-  }
-
   getCreateBreadcrumb(): string {
     return 'Create new Product Option';
   }
 
-  getEditBreadcrumb(): string {
-    return 'Edit Product Option';
-  }
-
   getProductCreatedSuccessMessage(): string {
     return 'Product option group created.';
-  }
-
-  getGroupModifiedSuccessMessage(): string {
-    return 'Product option group modified.';
-  }
-
-  getOptionActivatedSuccessMessage(): string {
-    return 'Option successfully activated.';
   }
 }

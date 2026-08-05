@@ -3,6 +3,12 @@ import { CustomerLoginScenario } from '@scenarios/yves';
 import { CustomerNewsletterPage, CustomerOverviewPage, LoginPage } from '@pages/yves';
 import { NewsletterSubscriptionDynamicFixtures, NewsletterSubscriptionStaticFixtures } from '@interfaces/yves';
 
+// Only the suite storefront renders the guest newsletter form on the homepage.
+const SUITE_REPOSITORY_ID = 'suite';
+
+// The overview page's newsletter row label, shown once a subscription is linked to the account.
+const NEWSLETTER_SUBSCRIBED_LABEL = 'Newsletter subscribed';
+
 describe(
   'newsletter subscription',
   {
@@ -30,28 +36,28 @@ describe(
       customerNewsletterPage.visit();
       customerNewsletterPage.toggleAccountSubscriptionAndSubmit();
 
-      customerNewsletterPage.assertSubscribed();
+      customerNewsletterPage.getSubscribedMessage().should('be.visible');
     });
 
-    it('guest should be able to subscribe with a not-yet-subscribed email on the homepage', (): void => {
+    suiteOnlyIt('guest should be able to subscribe with a not-yet-subscribed email on the homepage', (): void => {
       const email = `newsletter-fresh-${Date.now()}@example.com`;
 
       customerNewsletterPage.visitHomepage();
       customerNewsletterPage.subscribeOnHomepage(email);
 
-      customerNewsletterPage.assertSubscribed();
+      customerNewsletterPage.getSubscribedMessage().should('be.visible');
     });
 
-    it('guest should not be able to subscribe with an already-subscribed email', (): void => {
+    suiteOnlyIt('guest should not be able to subscribe with an already-subscribed email', (): void => {
       const email = `newsletter-dup-${Date.now()}@example.com`;
 
       customerNewsletterPage.visitHomepage();
       customerNewsletterPage.subscribeOnHomepage(email);
-      customerNewsletterPage.assertSubscribed();
+      customerNewsletterPage.getSubscribedMessage().should('be.visible');
 
       customerNewsletterPage.visitHomepage();
       customerNewsletterPage.subscribeOnHomepage(email);
-      customerNewsletterPage.assertAlreadySubscribed();
+      customerNewsletterPage.getAlreadySubscribedMessage().should('be.visible');
     });
 
     skipB2BIt('guest newsletter subscription should be linked to the customer after registration', (): void => {
@@ -59,16 +65,16 @@ describe(
 
       customerNewsletterPage.visitHomepage();
       customerNewsletterPage.subscribeOnHomepage(email);
-      customerNewsletterPage.assertSubscribed();
+      customerNewsletterPage.getSubscribedMessage().should('be.visible');
 
       loginPage.visit();
       const registeredCustomer = loginPage.register({ email });
-      cy.contains(loginPage.getRegistrationCompletedMessage());
+      loginPage.assertBodyContainsText(loginPage.getRegistrationCompletedMessage());
 
       customerLoginScenario.execute({ email: registeredCustomer.email, password: registeredCustomer.password });
 
       customerOverviewPage.visit();
-      cy.contains('Newsletter subscribed').should('be.visible');
+      customerOverviewPage.assertBodyContainsText(NEWSLETTER_SUBSCRIBED_LABEL).should('be.visible');
     });
 
     skipB2BIt('registered customer should be able to unsubscribe a linked newsletter subscription', (): void => {
@@ -76,26 +82,30 @@ describe(
 
       customerNewsletterPage.visitHomepage();
       customerNewsletterPage.subscribeOnHomepage(email);
-      customerNewsletterPage.assertSubscribed();
+      customerNewsletterPage.getSubscribedMessage().should('be.visible');
 
       loginPage.visit();
       const registeredCustomer = loginPage.register({ email });
-      cy.contains(loginPage.getRegistrationCompletedMessage());
+      loginPage.assertBodyContainsText(loginPage.getRegistrationCompletedMessage());
 
       customerLoginScenario.execute({ email: registeredCustomer.email, password: registeredCustomer.password });
 
       customerOverviewPage.visit();
-      cy.contains('Newsletter subscribed').should('be.visible');
+      customerOverviewPage.assertBodyContainsText(NEWSLETTER_SUBSCRIBED_LABEL).should('be.visible');
 
       customerNewsletterPage.visit();
       customerNewsletterPage.toggleAccountSubscriptionAndSubmit();
 
-      customerNewsletterPage.assertUnsubscribed();
-      customerNewsletterPage.assertAccountSubscriptionUnchecked();
+      customerNewsletterPage.getUnsubscribedMessage().should('be.visible');
+      customerNewsletterPage.getAccountSubscriptionCheckboxInput().should('not.be.checked');
     });
 
     function skipB2BIt(description: string, testFn: () => void): void {
       (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
+    }
+
+    function suiteOnlyIt(description: string, testFn: () => void): void {
+      (Cypress.env('repositoryId') === SUITE_REPOSITORY_ID ? it : it.skip)(description, testFn);
     }
   }
 );

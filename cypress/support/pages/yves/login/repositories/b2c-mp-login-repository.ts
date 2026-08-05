@@ -21,4 +21,10 @@ export class B2cMpLoginRepository implements LoginRepository {
     'Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.';
   getRegistrationToggleRadio = (): Cypress.Chainable =>
     cy.get('[data-qa="component toggler-radio accountLoginSwitcher register"]');
+  getForgotPasswordLink(): Cypress.Chainable {
+    return cy.get('[data-qa="customer-forgot-password-link"]');
+  }
+  getForgotPasswordHeading(): string {
+    return 'Recover my password';
+  }
 }

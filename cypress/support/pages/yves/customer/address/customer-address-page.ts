@@ -35,7 +35,5 @@ export class CustomerAddressPage extends YvesPage {
     this.repository.getSubmitButton().click();
   };
 
-  waitForAddressAddedMessage = (): void => {
-    cy.contains(this.repository.getAddressAddedMessage()).should('be.visible');
-  };
+  getAddressAddedMessage = (): Cypress.Chainable => cy.contains(this.repository.getAddressAddedMessage());
 }

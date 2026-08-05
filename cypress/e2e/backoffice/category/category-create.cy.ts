@@ -30,7 +30,7 @@ describe(
       const categoryKey = `category-a-${Date.now()}`;
 
       categoryCreatePage.visit();
-      categoryCreatePage.assertBreadcrumb('Create category');
+      categoryCreatePage.getBreadcrumb().should('contain', 'Create category');
 
       categoryCreatePage.createCategory({
         categoryKey,
@@ -43,7 +43,7 @@ describe(
         ],
       });
 
-      categoryCreatePage.assertSuccessMessage();
+      categoryCreatePage.getSuccessMessage().should('be.visible');
     });
   }
 );

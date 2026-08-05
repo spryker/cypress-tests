@@ -259,6 +259,11 @@ import { B2cCategoryCreateRepository } from '../../pages/backoffice/catalog/cate
 import { B2bCategoryCreateRepository } from '../../pages/backoffice/catalog/category/create/repositories/b2b-category-create-repository';
 import { B2cMpCategoryCreateRepository } from '../../pages/backoffice/catalog/category/create/repositories/b2c-mp-category-create-repository';
 import { B2bMpCategoryCreateRepository } from '../../pages/backoffice/catalog/category/create/repositories/b2b-mp-category-create-repository';
+import { SuiteCategoryEditRepository } from '../../pages/backoffice/catalog/category/edit/repositories/suite-category-edit-repository';
+import { B2cCategoryEditRepository } from '../../pages/backoffice/catalog/category/edit/repositories/b2c-category-edit-repository';
+import { B2bCategoryEditRepository } from '../../pages/backoffice/catalog/category/edit/repositories/b2b-category-edit-repository';
+import { B2cMpCategoryEditRepository } from '../../pages/backoffice/catalog/category/edit/repositories/b2c-mp-category-edit-repository';
+import { B2bMpCategoryEditRepository } from '../../pages/backoffice/catalog/category/edit/repositories/b2b-mp-category-edit-repository';
 import { SuiteCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/suite-category-re-sort-repository';
 import { B2cCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/b2c-category-re-sort-repository';
 import { B2bCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/b2b-category-re-sort-repository';
@@ -329,6 +334,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.CartUpSellingProductsRepository]: SuiteCartUpSellingProductsRepository,
   [REPOSITORIES.ProductRelationRepository]: SuiteProductRelationRepository,
   [REPOSITORIES.CategoryCreateRepository]: SuiteCategoryCreateRepository,
+  [REPOSITORIES.CategoryEditRepository]: SuiteCategoryEditRepository,
   [REPOSITORIES.CategoryReSortRepository]: SuiteCategoryReSortRepository,
 };
 
@@ -378,6 +384,7 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.CartUpSellingProductsRepository]: B2cCartUpSellingProductsRepository,
   [REPOSITORIES.ProductRelationRepository]: B2cProductRelationRepository,
   [REPOSITORIES.CategoryCreateRepository]: B2cCategoryCreateRepository,
+  [REPOSITORIES.CategoryEditRepository]: B2cCategoryEditRepository,
   [REPOSITORIES.CategoryReSortRepository]: B2cCategoryReSortRepository,
 };
 
@@ -431,6 +438,7 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.CartUpSellingProductsRepository]: B2bCartUpSellingProductsRepository,
   [REPOSITORIES.ProductRelationRepository]: B2bProductRelationRepository,
   [REPOSITORIES.CategoryCreateRepository]: B2bCategoryCreateRepository,
+  [REPOSITORIES.CategoryEditRepository]: B2bCategoryEditRepository,
   [REPOSITORIES.CategoryReSortRepository]: B2bCategoryReSortRepository,
 };
 
@@ -480,6 +488,7 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.CartUpSellingProductsRepository]: B2cMpCartUpSellingProductsRepository,
   [REPOSITORIES.ProductRelationRepository]: B2cMpProductRelationRepository,
   [REPOSITORIES.CategoryCreateRepository]: B2cMpCategoryCreateRepository,
+  [REPOSITORIES.CategoryEditRepository]: B2cMpCategoryEditRepository,
   [REPOSITORIES.CategoryReSortRepository]: B2cMpCategoryReSortRepository,
 };
 
@@ -545,6 +554,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.CartUpSellingProductsRepository]: B2bMpCartUpSellingProductsRepository,
   [REPOSITORIES.ProductRelationRepository]: B2bMpProductRelationRepository,
   [REPOSITORIES.CategoryCreateRepository]: B2bMpCategoryCreateRepository,
+  [REPOSITORIES.CategoryEditRepository]: B2bMpCategoryEditRepository,
   [REPOSITORIES.CategoryReSortRepository]: B2bMpCategoryReSortRepository,
 };
 

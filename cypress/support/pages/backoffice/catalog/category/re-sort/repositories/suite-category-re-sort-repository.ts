@@ -3,13 +3,21 @@ import { CategoryReSortRepository, SubCategoryPosition } from '../category-re-so
 
 @injectable()
 export class SuiteCategoryReSortRepository implements CategoryReSortRepository {
-  private CATEGORY_LIST = '#category-list > .dd-list';
+  // The `.dd` container nestable is bound to; the floating `.dd-dragel` clone is appended here,
+  // outside `.dd-list`, so the drop-settle guard has to watch the container rather than the list.
+  private NESTABLE_CONTAINER = '#category-list';
+
+  private CATEGORY_LIST = `${this.NESTABLE_CONTAINER} > .dd-list`;
 
   private SUB_CATEGORY_SELECTORS: Record<SubCategoryPosition, string> = {
     first: `${this.CATEGORY_LIST} > li.dd-item:first-child`,
     second: `${this.CATEGORY_LIST} > li.dd-item:nth-child(2)`,
     last: `${this.CATEGORY_LIST} > li.dd-item:last-child`,
   };
+
+  getNestableContainerSelector(): string {
+    return this.NESTABLE_CONTAINER;
+  }
 
   getCategoryList(): Cypress.Chainable {
     return cy.get(this.CATEGORY_LIST);

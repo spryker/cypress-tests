@@ -11,11 +11,7 @@ export class CartUpSellingProductsPage extends YvesPage {
 
   protected PAGE_URL = '/cart';
 
-  assertUpSellingCarouselVisible = (): void => {
-    this.repository.getUpSellingCarousel().should('be.visible');
-  };
+  getUpSellingCarousel = (): Cypress.Chainable => this.repository.getUpSellingCarousel();
 
-  assertUpSellingProductRendered = (): void => {
-    this.repository.getUpSellingProductItems().should('have.length.at.least', 1);
-  };
+  getUpSellingProductItems = (): Cypress.Chainable => this.repository.getUpSellingProductItems();
 }

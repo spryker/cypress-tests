@@ -78,67 +78,62 @@ export class DiscountPage extends BackofficePage {
     this.repository.getCreateButton().click();
   };
 
-  assertSuccessMessage = (): void => {
-    cy.contains(this.repository.getSuccessMessage()).should('be.visible');
-  };
+  getCreatePageUrl = (): string => this.PAGE_URL;
 
-  assertNoSuccessMessage = (): void => {
-    cy.contains(this.repository.getSuccessMessage()).should('not.exist');
-  };
+  getSuccessMessage = (): Cypress.Chainable => cy.contains(this.repository.getSuccessMessage());
 
-  assertOnCreatePage = (): void => {
-    cy.url().should('include', this.PAGE_URL);
-  };
+  getBlankValueError = (): Cypress.Chainable => cy.contains(this.repository.getBlankValueError());
 
-  assertGeneralTabValidationError = (): void => {
+  getActiveTabError = (): Cypress.Chainable => this.repository.getActiveTabError();
+
+  getNameErrorContainer = (): Cypress.Chainable => this.repository.getNameErrorContainer();
+
+  openGeneralTab = (): void => {
     this.openTab(this.GENERAL_TAB);
-    this.repository.getActiveTabError().should('be.visible');
-    cy.contains(this.repository.getBlankValueError()).should('be.visible');
-    this.repository.getNameErrorContainer().should('contain', 'Name');
   };
 
-  assertDiscountTabValidationError = (): void => {
-    this.openTab(this.DISCOUNT_TAB);
-    this.repository.getActiveTabError().should('be.visible');
-    cy.contains(this.repository.getBlankValueError()).should('be.visible');
-  };
-
-  assertListTableIsShown = (): void => {
+  visitList = (): void => {
     cy.visitBackoffice(this.LIST_PAGE_URL);
-    this.repository.getListTable().should('exist');
   };
 
-  assertDiscountVisibleWithActions = (name: string): void => {
-    this.findRow(name).then((getRow) => {
-      expect(getRow, 'discount row in list').to.not.equal(null);
-      (getRow as TableRowGetter)().within(() => {
-        cy.contains('Edit').should('exist');
-        cy.contains('View').should('exist');
-        cy.contains('Deactivate').should('exist');
-      });
-    });
-  };
+  getListTable = (): Cypress.Chainable => this.repository.getListTable();
+
+  // Every row action the list is expected to offer, resolved inside the discount's own row so the
+  // caller asserts on that row rather than on whatever else the grid happens to render.
+  getDiscountRowActions = (name: string): Cypress.Chainable =>
+    this.getDiscountRow(name).find(
+      [
+        this.repository.getEditActionSelector(),
+        this.repository.getViewActionSelector(),
+        this.repository.getDeactivateActionSelector(),
+      ].join(', ')
+    );
 
   openEditPageFromList = (name: string, idDiscount: number): void => {
-    this.findRow(name).then((getRow) => {
-      expect(getRow, 'discount row in list').to.not.equal(null);
-      (getRow as TableRowGetter)().find(this.repository.getEditActionSelector()).should('exist').click({ force: true });
-    });
+    this.getDiscountRow(name).find(this.repository.getEditActionSelector()).click({ force: true });
 
     cy.url().should('include', this.editUrl(idDiscount));
     cy.get(this.repository.getHeadingSelector()).should('contain', this.repository.getEditHeading());
   };
 
   openViewPageFromList = (name: string, idDiscount: number): void => {
-    this.findRow(name).then((getRow) => {
-      expect(getRow, 'discount row in list').to.not.equal(null);
-      (getRow as TableRowGetter)().find(this.repository.getViewActionSelector()).should('exist').click({ force: true });
-    });
+    this.getDiscountRow(name).find(this.repository.getViewActionSelector()).click({ force: true });
 
     cy.url().should('include', this.viewUrl(idDiscount));
     cy.get(this.repository.getHeadingSelector()).should('contain', this.repository.getViewHeading());
     cy.contains(name).should('be.visible');
   };
+
+  // Throws rather than asserting so the lookup stays a page-object concern while still failing loudly
+  // with the discount name; the caller only ever receives a real row.
+  private getDiscountRow = (name: string): Cypress.Chainable<JQuery<HTMLElement>> =>
+    this.findRow(name).then((getRow) => {
+      if (getRow === null) {
+        throw new Error(`Discount "${name}" was not found in the discount list.`);
+      }
+
+      return (getRow as TableRowGetter)();
+    });
 
   private editUrl(idDiscount: number): string {
     return `${this.EDIT_PAGE_URL}?id-discount=${idDiscount}`;
@@ -153,7 +148,7 @@ export class DiscountPage extends BackofficePage {
   }
 
   private findRow(name: string): Cypress.Chainable<TableRowGetter | null> {
-    cy.visitBackoffice(this.LIST_PAGE_URL);
+    this.visitList();
 
     return this.find({
       searchQuery: name,

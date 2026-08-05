@@ -60,5 +60,6 @@ export const enum REPOSITORIES {
   CartUpSellingProductsRepository = 'CartUpSellingProductsRepository',
   ProductRelationRepository = 'ProductRelationRepository',
   CategoryCreateRepository = 'CategoryCreateRepository',
+  CategoryEditRepository = 'CategoryEditRepository',
   CategoryReSortRepository = 'CategoryReSortRepository',
 }

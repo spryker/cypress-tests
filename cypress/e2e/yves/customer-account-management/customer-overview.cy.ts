@@ -30,40 +30,44 @@ describe(
       customerOverviewPage.visit();
 
       customerOverviewPage.assertPageLocation();
-      cy.get('[data-id="sidebar-profile"]').should('be.visible');
+      customerOverviewPage.getSidebarLink('profile').should('be.visible');
     });
 
     it('customer without an address should see no default-address boxes', (): void => {
       customerOverviewPage.visit();
 
-      cy.contains('Default Billing Address').should('not.exist');
-      cy.contains('Default Shipping Address').should('not.exist');
+      customerOverviewPage
+        .assertBodyContainsText(customerOverviewPage.getDefaultBillingAddressHeading())
+        .should('not.exist');
+      customerOverviewPage
+        .assertBodyContainsText(customerOverviewPage.getDefaultShippingAddressHeading())
+        .should('not.exist');
     });
 
     it('customer should be able to navigate from overview to the profile page', (): void => {
       customerOverviewPage.visit();
-      cy.get('[data-id="sidebar-profile"]').click();
+      customerOverviewPage.getSidebarLink('profile').click();
 
       cy.url().should('include', '/customer/profile');
     });
 
     it('customer should be able to navigate from overview to the addresses page', (): void => {
       customerOverviewPage.visit();
-      cy.get('[data-id="sidebar-address"]').click();
+      customerOverviewPage.getSidebarLink('address').click();
 
       cy.url().should('include', '/customer/address');
     });
 
     it('customer should be able to navigate from overview to the orders page', (): void => {
       customerOverviewPage.visit();
-      cy.get('[data-id="sidebar-order"]').click();
+      customerOverviewPage.getSidebarLink('order').click();
 
       cy.url().should('include', '/customer/order');
     });
 
     it('customer should be able to navigate from overview to the newsletter page', (): void => {
       customerOverviewPage.visit();
-      cy.get('[data-id="sidebar-newsletter"]').click();
+      customerOverviewPage.getSidebarLink('newsletter').click();
 
       cy.url().should('include', '/customer/newsletter');
     });

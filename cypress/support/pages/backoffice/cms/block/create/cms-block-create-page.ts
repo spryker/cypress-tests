@@ -15,18 +15,7 @@ export class CmsBlockCreatePage extends BackofficePage {
     this.repository.getSaveButton().click();
   };
 
-  // The Zed breadcrumb is the <spryker-breadcrumbs> web component; its labels live in
-  // the JSON `breadcrumbs` attribute (mirrors the Codeception seeBreadcrumbNavigation,
-  // which reads the same attribute and asserts each part's label).
-  assertBreadcrumb = (labels: Array<string>): void => {
-    labels.forEach((label) => {
-      this.repository.getBreadcrumbs().should('have.attr', 'breadcrumbs').and('include', label);
-    });
-  };
-
-  assertSuccessMessage = (): void => {
-    cy.contains(this.repository.getSuccessMessage()).should('be.visible');
-  };
+  getSuccessMessage = (): Cypress.Chainable => cy.contains(this.repository.getSuccessMessage());
 }
 
 interface CreateParams {

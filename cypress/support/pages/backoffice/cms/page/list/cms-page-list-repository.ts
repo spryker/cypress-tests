@@ -8,4 +8,7 @@ export class CmsPageListRepository {
   // is the terminal settled node the Codeception waitForElementVisible asserted on.
   getFirstRowFirstCell = (): Cypress.Chainable =>
     cy.get('table.dataTable tbody tr:first-child td:first-child', { timeout: 20000 });
+
+  // Flash shown after publishing; a freshly created page always publishes as version 1.
+  getPublishedMessage = (): string => 'Page with version 1 successfully published.';
 }

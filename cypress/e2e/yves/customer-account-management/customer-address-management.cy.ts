@@ -29,21 +29,9 @@ describe(
     it('customer should be able to add a new address', (): void => {
       customerAddressPage.visitNewAddressPage();
 
-      customerAddressPage.fillAndSubmitNewAddress({
-        salutation: 'Mr',
-        firstName: 'Cat',
-        lastName: 'Face',
-        company: 'Spryker',
-        phone: '123456789',
-        address1: 'address a',
-        address2: '1',
-        address3: 'left side',
-        city: 'Berlin',
-        zipCode: '12345',
-        iso2Code: 'DE',
-      });
+      customerAddressPage.fillAndSubmitNewAddress(staticFixtures.newAddress);
 
-      customerAddressPage.waitForAddressAddedMessage();
+      customerAddressPage.getAddressAddedMessage().should('be.visible');
     });
 
     it('customer should be able to open the add-address page from the addresses list', (): void => {

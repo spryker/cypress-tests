@@ -1,4 +1,4 @@
-import { REPOSITORIES, autoWired } from '@utils';
+import { REPOSITORIES, autoWired, dragNestableItem } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
@@ -22,17 +22,13 @@ export class ProductSearchPreferencesPage extends BackofficePage {
 
   private SEARCH_LIST_URL = '/product-search/search-preferences';
 
-  private SEARCH_CREATE_URL = '/product-search/search-preferences/create';
-
   // --- Filter preferences ---------------------------------------------------
 
   visitFilterList = (): void => {
     cy.visitBackoffice(this.FILTER_LIST_URL);
   };
 
-  assertFilterListVisible = (): void => {
-    this.repository.getFilterListContainer().should('be.visible');
-  };
+  getFilterList = (): Cypress.Chainable => this.repository.getFilterListContainer();
 
   // Mirrors ProductSearchPresentationTester::createFilter — fills the create form,
   // copies the name translation to all locales, submits, and returns the new
@@ -75,21 +71,31 @@ export class ProductSearchPreferencesPage extends BackofficePage {
     cy.contains(this.repository.getFilterDeletedMessage()).should('be.visible');
   };
 
+  // --- Filter reorder -------------------------------------------------------
+
   visitFilterReorder = (): void => {
     cy.visitBackoffice(this.FILTER_REORDER_URL);
   };
 
-  synchronizeFilters = (): void => {
-    this.repository.getSyncFiltersButton().click();
-
-    cy.url().should('include', this.FILTER_LIST_URL);
-
-    // The controller enqueues the sync event; drain the queue so the sync is
-    // actually processed rather than waiting a fixed interval.
-    cy.runQueueWorker();
-
-    cy.contains(this.repository.getFilterSyncSuccessMessage()).should('be.visible');
+  // Drags the `idFilter` row into the slot the `idTargetFilter` row occupies. The reorder page is a
+  // jQuery-nestable list, the same widget the category re-sort page uses, so it is driven by the
+  // shared nestable helper rather than a synthetic pointer-event sequence.
+  reorderFilter = (idFilter: string, idTargetFilter: string): void => {
+    dragNestableItem({
+      listSelector: this.repository.getFilterReorderListSelector(),
+      fromItemSelector: this.repository.getFilterItemSelector(idFilter),
+      toItemSelector: this.repository.getFilterItemSelector(idTargetFilter),
+    });
   };
+
+  getFilterPrecedingSibling = (idBefore: string, idAfter: string): Cypress.Chainable =>
+    this.repository.getFilterPrecedingSibling(idBefore, idAfter);
+
+  saveFilterOrder = (): void => {
+    this.repository.getSaveFilterOrderButton().click();
+  };
+
+  getFilterOrderSaveAlert = (): Cypress.Chainable => this.repository.getFilterOrderSaveAlert();
 
   // --- Search preferences ---------------------------------------------------
 
@@ -97,67 +103,5 @@ export class ProductSearchPreferencesPage extends BackofficePage {
     cy.visitBackoffice(this.SEARCH_LIST_URL);
   };
 
-  assertSearchPreferencesListVisible = (): void => {
-    this.repository.getSearchPreferencesListContainer().should('be.visible');
-  };
-
-  // Mirrors ProductSearchPresentationTester::addAttributeToSearch.
-  addAttributeToSearch = (attributeKey: string): void => {
-    cy.visitBackoffice(this.SEARCH_CREATE_URL);
-
-    this.repository.getSearchKeyInput().clear().type(attributeKey);
-    this.repository.getSearchFullTextSelect().select('yes');
-    this.repository.getSearchSuggestionTermsSelect().select('yes');
-    this.repository.getSearchCompletionTermsSelect().select('yes');
-
-    this.repository.getSearchFormSubmit().click();
-
-    cy.url().should('include', this.SEARCH_LIST_URL);
-    cy.contains(this.repository.getAttributeAddedMessage()).should('be.visible');
-  };
-
-  // Mirrors ProductSearchPresentationTester::updateAttributeToSearch.
-  updateAttributeToSearch = (attributeKey: string): void => {
-    this.searchTableByAttributeKey(attributeKey);
-
-    this.repository.getSearchFirstRowUpdateButton().click();
-
-    cy.url().should('match', /\/product-search\/search-preferences\/edit\?id=\d+/);
-
-    this.repository.getSearchFullTextSelect().select('no');
-    this.repository.getSearchFullTextBoostedSelect().select('yes');
-
-    this.repository.getSearchFormSubmit().click();
-
-    cy.url().should('include', this.SEARCH_LIST_URL);
-    cy.contains(this.repository.getAttributeUpdatedMessage()).should('be.visible');
-  };
-
-  // Mirrors ProductSearchPresentationTester::deactivateAttributeToSearch.
-  deactivateAttributeToSearch = (attributeKey: string): void => {
-    this.searchTableByAttributeKey(attributeKey);
-
-    this.repository.getSearchFirstRowDeleteButton().click();
-
-    cy.url().should('include', this.SEARCH_LIST_URL);
-    cy.contains(this.repository.getAttributeDeactivatedMessage()).should('be.visible');
-  };
-
-  synchronizeSearchPreferences = (): void => {
-    this.repository.getSyncSearchPreferencesButton().click();
-
-    cy.url().should('include', this.SEARCH_LIST_URL);
-
-    // Drain the queue so the enqueued sync event is processed before asserting.
-    cy.runQueueWorker();
-
-    cy.contains(this.repository.getSearchSyncSuccessMessage()).should('be.visible');
-  };
-
-  // Mirrors ProductSearchPresentationTester::searchTableByAttributeKey.
-  private searchTableByAttributeKey(attributeKey: string): void {
-    cy.visitBackoffice(this.SEARCH_LIST_URL);
-    this.repository.getSearchTableSearchInput().clear().type(attributeKey);
-    this.repository.getSearchTableFirstCell().should('be.visible');
-  }
+  getSearchPreferencesList = (): Cypress.Chainable => this.repository.getSearchPreferencesListContainer();
 }

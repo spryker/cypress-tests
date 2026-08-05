@@ -32,9 +32,7 @@ describe('discount create', { tags: ['@backoffice', '@discount', 'discount', 'sp
     });
   });
 
-  // Skipped in source, rebuild when there is a need for. The body is complete,
-  // so un-skipping is all it takes.
-  it.skip('should create a valid exclusive discount and show a success message', (): void => {
+  it('should create a valid exclusive discount and show a success message', (): void => {
     discountPage.createDiscount({
       type: 'Cart rule',
       name: `Exclusive Valid Discount ${uid}`,
@@ -48,25 +46,7 @@ describe('discount create', { tags: ['@backoffice', '@discount', 'discount', 'sp
       applyWhen,
     });
 
-    discountPage.assertSuccessMessage();
-  });
-
-  // Skipped in source, rebuild when there is a need for.
-  it.skip('should create a valid non-exclusive discount and show a success message', (): void => {
-    discountPage.createDiscount({
-      type: 'Cart rule',
-      name: `Not Exclusive Valid Discount ${uid}`,
-      description: 'test test test',
-      isExclusive: false,
-      validFrom,
-      validTo,
-      calculatorPlugin: 'Fixed amount',
-      amount: '18,36',
-      applyTo: "attribute.width = '15'",
-      applyWhen,
-    });
-
-    discountPage.assertSuccessMessage();
+    discountPage.getSuccessMessage().should('be.visible');
   });
 
   it('should show validation errors when creating a discount with a blank name and amount', (): void => {
@@ -79,8 +59,12 @@ describe('discount create', { tags: ['@backoffice', '@discount', 'discount', 'sp
       applyWhen,
     });
 
-    discountPage.assertNoSuccessMessage();
-    discountPage.assertOnCreatePage();
-    discountPage.assertGeneralTabValidationError();
+    discountPage.getSuccessMessage().should('not.exist');
+    cy.url().should('include', discountPage.getCreatePageUrl());
+
+    discountPage.openGeneralTab();
+    discountPage.getActiveTabError().should('be.visible');
+    discountPage.getBlankValueError().should('be.visible');
+    discountPage.getNameErrorContainer().should('contain', 'Name');
   });
 });

@@ -3,6 +3,9 @@ import { FilterPreferencesDynamicFixtures, FilterPreferencesStaticFixtures } fro
 import { ProductSearchPreferencesPage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
+// The reorder save reports through a SweetAlert whose title carries the outcome.
+const SAVE_ORDER_SUCCESS_TITLE = 'Success';
+
 describe('filter preferences', { tags: ['@backoffice', 'product-search', 'spryker-core'] }, (): void => {
   const productSearchPreferencesPage = container.get(ProductSearchPreferencesPage);
   const userLoginScenario = container.get(UserLoginScenario);
@@ -27,7 +30,8 @@ describe('filter preferences', { tags: ['@backoffice', 'product-search', 'spryke
 
   it('should show the list of filter preferences', (): void => {
     productSearchPreferencesPage.visitFilterList();
-    productSearchPreferencesPage.assertFilterListVisible();
+
+    productSearchPreferencesPage.getFilterList().should('be.visible');
   });
 
   it('should create, edit and remove a filter', (): void => {
@@ -39,45 +43,27 @@ describe('filter preferences', { tags: ['@backoffice', 'product-search', 'spryke
     });
   });
 
-  // Skipped in source, rebuild when there is a need for. The drag sequence below
-  // is an unverified guess and has to be validated when it is rebuilt.
-  it.skip('should update the filter order via drag and drop', (): void => {
-    const fooName = `foooooo_${uid}`;
-    const barName = `baaaaar_${uid}`;
-
-    productSearchPreferencesPage.createFilter(fooName).then((idFoo: string): void => {
-      productSearchPreferencesPage.createFilter(barName).then((idBar: string): void => {
+  it('should update the filter order via drag and drop and persist it', (): void => {
+    productSearchPreferencesPage.createFilter(`reorder_first_${uid}`).then((idFirst: string): void => {
+      productSearchPreferencesPage.createFilter(`reorder_second_${uid}`).then((idSecond: string): void => {
         productSearchPreferencesPage.visitFilterReorder();
+        productSearchPreferencesPage.getFilterPrecedingSibling(idFirst, idSecond).should('exist');
 
-        const fooSelector = `li[data-id-product-search-attribute="${idFoo}"]`;
-        const barSelector = `li[data-id-product-search-attribute="${idBar}"]`;
+        productSearchPreferencesPage.reorderFilter(idFirst, idSecond);
+        productSearchPreferencesPage.getFilterPrecedingSibling(idSecond, idFirst).should('exist');
 
-        // Initial order: foo precedes bar.
-        cy.get(`${fooSelector} ~ ${barSelector}`).should('exist');
+        productSearchPreferencesPage.saveFilterOrder();
+        productSearchPreferencesPage
+          .getFilterOrderSaveAlert()
+          .should('be.visible')
+          .and('contain', SAVE_ORDER_SUCCESS_TITLE);
 
-        // Drag foo below bar via a pointer-event sequence.
-        cy.get(fooSelector).trigger('pointerdown', { which: 1, button: 0 });
-        cy.get(barSelector).trigger('pointermove');
-        cy.get(barSelector).trigger('pointerup', { force: true });
+        productSearchPreferencesPage.visitFilterReorder();
+        productSearchPreferencesPage.getFilterPrecedingSibling(idSecond, idFirst).should('exist');
 
-        // Order after reorder: bar precedes foo.
-        cy.get(`${barSelector} ~ ${fooSelector}`).should('exist');
-
-        cy.get('#save-filter-order').click();
-        cy.get('.swal2-title').should('contain', 'Success');
-
-        // Persisted after reload.
-        cy.reload();
-        cy.get(`${barSelector} ~ ${fooSelector}`).should('exist');
+        productSearchPreferencesPage.deleteFilter(idFirst);
+        productSearchPreferencesPage.deleteFilter(idSecond);
       });
-    });
-  });
-
-  // Skipped in source, rebuild when there is a need for.
-  it.skip('should synchronize filter preferences', (): void => {
-    productSearchPreferencesPage.createFilter(`foooooo_${uid}`).then((): void => {
-      productSearchPreferencesPage.visitFilterList();
-      productSearchPreferencesPage.synchronizeFilters();
     });
   });
 });

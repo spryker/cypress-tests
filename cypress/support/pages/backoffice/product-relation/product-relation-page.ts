@@ -29,9 +29,8 @@ export class ProductRelationPage extends BackofficePage {
     this.repository.getSaveButton().click();
   };
 
-  assertRelationSaved = (key: string): void => {
-    cy.contains(this.repository.getEditRelationHeading(key), { timeout: 20000 }).should('be.visible');
-  };
+  getEditRelationHeading = (key: string): Cypress.Chainable =>
+    cy.contains(this.repository.getEditRelationHeading(key), { timeout: 20000 });
 
   private selectBaseProduct(search: string): void {
     this.repository.getProductSearchInput().clear().type(search);

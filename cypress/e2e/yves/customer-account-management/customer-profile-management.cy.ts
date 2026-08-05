@@ -30,21 +30,21 @@ describe(
       customerProfilePage.visit();
       customerProfilePage.updateProfileData('Mr', 'Cat', 'Face');
 
-      customerProfilePage.assertProfileSaved();
+      customerProfilePage.getProfileSavedMessage().should('be.visible');
     });
 
     it('customer should be able to save the profile without changing the email', (): void => {
       customerProfilePage.visit();
       customerProfilePage.updateEmail(dynamicFixtures.customer.email);
 
-      customerProfilePage.assertProfileSaved();
+      customerProfilePage.getProfileSavedMessage().should('be.visible');
     });
 
     it('customer should not be able to update the email to an already used one', (): void => {
       customerProfilePage.visit();
       customerProfilePage.updateEmail(dynamicFixtures.existingCustomer.email);
 
-      customerProfilePage.assertEmailInUseError();
+      customerProfilePage.getEmailInUseError().should('be.visible');
     });
 
     it('customer should be able to change their password', (): void => {
@@ -54,7 +54,7 @@ describe(
       customerProfilePage.visit();
       customerProfilePage.changePassword(currentPassword, newPassword);
 
-      customerProfilePage.waitForPasswordChangedMessage();
+      customerProfilePage.getPasswordChangedMessage().should('be.visible');
     });
 
     it('customer should not be able to change the password when the new passwords do not match', (): void => {
@@ -64,7 +64,7 @@ describe(
       customerProfilePage.visit();
       customerProfilePage.changePassword(currentPassword, newPassword, 'not matching password');
 
-      customerProfilePage.assertPasswordsDoNotMatchError();
+      customerProfilePage.getPasswordsDoNotMatchError().should('be.visible');
     });
   }
 );

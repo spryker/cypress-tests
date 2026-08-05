@@ -1,3 +1,16 @@
 {
-  "defaultPassword": "change123"
+  "defaultPassword": "change123",
+  "newAddress": {
+    "salutation": "Mr",
+    "firstName": "Cat",
+    "lastName": "Face",
+    "company": "Spryker",
+    "phone": "123456789",
+    "address1": "address a",
+    "address2": "1",
+    "address3": "left side",
+    "city": "Berlin",
+    "zipCode": "12345",
+    "iso2Code": "DE"
+  }
 }

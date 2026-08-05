@@ -25,39 +25,26 @@ export class FileManagerPage extends BackofficePage {
     this.repository.getSubmitButton().click();
   };
 
-  assertBlankValueErrors = (): void => {
-    this.assertDirectoryNameError(this.repository.getBlankValueError());
-    this.assertLocalizedTitleErrors(this.repository.getBlankValueError());
-    this.assertNoSqlQueryError();
-  };
+  getBlankValueError = (): string => this.repository.getBlankValueError();
 
-  assertMaxLengthErrors = (): void => {
-    this.assertDirectoryNameError(this.repository.getMaxLengthError());
-    this.assertLocalizedTitleErrors(this.repository.getMaxLengthError());
-    this.assertNoSqlQueryError();
-  };
+  getMaxLengthError = (): string => this.repository.getMaxLengthError();
 
-  assertSuccessMessage = (): void => {
-    cy.contains(this.repository.getSuccessMessage()).should('be.visible');
-    this.assertNoSqlQueryError();
-  };
+  getSuccessMessage = (): Cypress.Chainable => cy.contains(this.repository.getSuccessMessage());
 
-  private assertDirectoryNameError(message: string): void {
-    this.repository.getDirectoryNameErrorBlock().should('contain.text', message);
-  }
+  getSqlQueryError = (): Cypress.Chainable => cy.contains(this.repository.getSqlQueryError());
 
-  // Mirrors the Codeception loop over getLocalizedTitleFieldIds(): every localized
-  // title collected from the (initially collapsed) locale iboxes must surface the
-  // same validation message in its adjacent help-block.
-  private assertLocalizedTitleErrors(message: string): void {
-    this.eachLocalizedTitleId((id) => {
-      this.repository.getLocalizedTitleErrorBlockById(id).should('contain.text', message);
-    });
-  }
+  getDirectoryNameErrorBlock = (): Cypress.Chainable => this.repository.getDirectoryNameErrorBlock();
 
-  private assertNoSqlQueryError(): void {
-    cy.contains(this.repository.getSqlQueryError()).should('not.exist');
-  }
+  getLocalizedTitleErrorBlockById = (id: string): Cypress.Chainable =>
+    this.repository.getLocalizedTitleErrorBlockById(id);
+
+  // The locale iboxes render one localized-title input each and their ids are only known at runtime,
+  // so the caller resolves the ids first and then asserts on every matching help-block. Mirrors the
+  // Codeception loop over getLocalizedTitleFieldIds().
+  getLocalizedTitleInputIds = (): Cypress.Chainable<Array<string>> =>
+    this.repository
+      .getLocalizedTitleInputs()
+      .then(($inputs) => Cypress._.map($inputs.toArray(), 'id')) as unknown as Cypress.Chainable<Array<string>>;
 
   private fillLocalizedTitles(localizedTitle: string): void {
     this.eachLocalizedTitleId((id) => {
@@ -72,10 +59,6 @@ export class FileManagerPage extends BackofficePage {
   }
 
   private eachLocalizedTitleId(callback: (id: string) => void): void {
-    this.repository.getLocalizedTitleInputs().then(($inputs) => {
-      const ids: Array<string> = Cypress._.map($inputs.toArray(), 'id');
-
-      ids.forEach((id) => callback(id));
-    });
+    this.getLocalizedTitleInputIds().then((ids) => ids.forEach((id) => callback(id)));
   }
 }

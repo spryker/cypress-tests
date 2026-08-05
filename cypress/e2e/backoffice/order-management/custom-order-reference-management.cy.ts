@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import {
   CustomOrderReferenceManagementStaticFixtures,
   CustomOrderReferenceManagementDynamicFixtures,
@@ -64,11 +64,5 @@ describe(
 
       salesIndexPage.assertBodyContainsText(staticFixtures.orderReference);
     });
-
-    function getPaymentMethodBasedOnEnv(): string {
-      return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice';
-    }
   }
 );

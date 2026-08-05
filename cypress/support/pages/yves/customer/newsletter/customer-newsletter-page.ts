@@ -25,19 +25,11 @@ export class CustomerNewsletterPage extends YvesPage {
     this.repository.getHomepageSubmitButton().click();
   };
 
-  assertSubscribed = (): void => {
-    cy.contains(this.repository.getSubscribedMessage()).should('be.visible');
-  };
+  getSubscribedMessage = (): Cypress.Chainable => cy.contains(this.repository.getSubscribedMessage());
 
-  assertUnsubscribed = (): void => {
-    cy.contains(this.repository.getUnsubscribedMessage()).should('be.visible');
-  };
+  getUnsubscribedMessage = (): Cypress.Chainable => cy.contains(this.repository.getUnsubscribedMessage());
 
-  assertAlreadySubscribed = (): void => {
-    cy.contains(this.repository.getAlreadySubscribedMessage()).should('be.visible');
-  };
+  getAlreadySubscribedMessage = (): Cypress.Chainable => cy.contains(this.repository.getAlreadySubscribedMessage());
 
-  assertAccountSubscriptionUnchecked = (): void => {
-    this.repository.getAccountSubscriptionCheckboxInput().should('not.be.checked');
-  };
+  getAccountSubscriptionCheckboxInput = (): Cypress.Chainable => this.repository.getAccountSubscriptionCheckboxInput();
 }

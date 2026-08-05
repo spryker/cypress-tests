@@ -38,13 +38,13 @@ describe(
       // mid-animation ibox state.
       createCmsPageScenario.execute({ cmsPageName: `cms-page-${uid}` });
 
-      cy.contains('Page with version 1 successfully published.').should('be.visible');
+      cmsPageListPage.getPublishedMessage().should('be.visible');
     });
 
     it('should open the cms page list and show the pages table', (): void => {
       cmsPageListPage.visit();
 
-      cmsPageListPage.assertPageListTableVisible();
+      cmsPageListPage.getFirstRowFirstCell().should('be.visible');
     });
   }
 );

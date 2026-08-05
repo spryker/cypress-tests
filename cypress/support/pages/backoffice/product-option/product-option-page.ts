@@ -11,23 +11,18 @@ export class ProductOptionPage extends BackofficePage {
 
   protected PAGE_URL = '/product-option/create/index';
 
-  private EDIT_PAGE_URL = '/product-option/edit/index?id-product-option-group=';
-
   visitCreatePage = (): void => {
     this.visit();
-    this.assertBreadcrumb(this.repository.getCreateBreadcrumb());
+    this.getCreateBreadcrumb().should('be.visible');
   };
 
-  visitEditPage = (idProductOptionGroup: number): void => {
-    cy.visitBackoffice(`${this.EDIT_PAGE_URL}${idProductOptionGroup}`);
-    this.assertBreadcrumb(this.repository.getEditBreadcrumb());
-  };
+  getCreateBreadcrumb = (): Cypress.Chainable => cy.contains(this.repository.getCreateBreadcrumb());
 
   // Fills the group name, tax set and both language translation blocks for a
   // brand-new option group plus its option values (mirrors the Codeception
   // fillOptionGroupData + fillOptionValues page-object helpers).
   fillNewProductOptionGroup = (group: ProductOptionGroupFormData): void => {
-    this.expandSecondTranslationBlock();
+    this.repository.getCollapsedTranslationBlockToggle().click();
 
     this.repository.getGroupNameInput().clear().type(group.name);
     this.repository.getTaxSetSelect().select(group.taxSet, { force: true });
@@ -48,28 +43,6 @@ export class ProductOptionPage extends BackofficePage {
     this.repository.getGroupNameTranslationInput(1).should('have.value', translationToCopy);
   };
 
-  changeTaxSet = (taxSet: string): void => {
-    this.repository.getTaxSetSelect().select(taxSet, { force: true });
-  };
-
-  assertTaxSet = (taxSet: string): void => {
-    this.repository.getTaxSetSelect().should('have.value', taxSet);
-  };
-
-  focusFirstOptionValueGrossAmount = (): void => {
-    this.repository.getOptionValueGrossAmountInput(0, 0).click();
-  };
-
-  updateFirstOptionValuePrice = (netAmount: string, grossAmount: string): void => {
-    this.repository.getOptionValueNetAmountInput(0, 0).clear().type(netAmount);
-    this.repository.getOptionValueGrossAmountInput(0, 0).clear().type(grossAmount);
-  };
-
-  assertFirstOptionValuePrice = (netAmount: string, grossAmount: string): void => {
-    this.repository.getOptionValueNetAmountInput(0, 0).should('have.value', netAmount);
-    this.repository.getOptionValueGrossAmountInput(0, 0).should('have.value', grossAmount);
-  };
-
   // Assigns the first two catalog products then removes the first assignment,
   // mirroring the Codeception assignProducts()/unassignProduct() helpers that
   // drive the DataTables product picker.
@@ -82,35 +55,8 @@ export class ProductOptionPage extends BackofficePage {
     this.repository.getSubmitButton().click();
   };
 
-  assertGroupCreatedSuccessMessage = (): void => {
-    cy.contains(this.repository.getProductCreatedSuccessMessage()).should('be.visible');
-  };
-
-  assertGroupModifiedSuccessMessage = (): void => {
-    cy.contains(this.repository.getGroupModifiedSuccessMessage()).should('be.visible');
-  };
-
-  assertOptionActivatedSuccessMessage = (): void => {
-    this.repository.getAssignedProductsListItem().click(20, 20);
-    this.repository.getAssignedTab().click();
-
-    this.repository.getProductOptionTableRowCells().should('have.length.at.least', 2);
-    this.repository.getProductOptionTableRowCells().each(($cell) => {
-      expect(parseInt($cell.text().trim(), 10)).to.be.greaterThan(0);
-    });
-
-    this.repository.getActivateButton().click();
-    this.repository.getActivateSuccessContainer().should('be.visible');
-    cy.contains(this.repository.getOptionActivatedSuccessMessage()).should('be.visible');
-  };
-
-  private assertBreadcrumb(breadcrumb: string): void {
-    cy.contains(breadcrumb).should('be.visible');
-  }
-
-  private expandSecondTranslationBlock(): void {
-    this.repository.getExpandSecondTranslationBlockLink().click();
-  }
+  getGroupCreatedSuccessMessage = (): Cypress.Chainable =>
+    cy.contains(this.repository.getProductCreatedSuccessMessage());
 
   private fillOptionValues(values: ProductOptionValueFormData[]): void {
     values.forEach((value, index) => {

@@ -41,7 +41,7 @@ describe(
         relatedProductSku: dynamicFixtures.relatedProduct.sku,
       });
 
-      productRelationPage.assertRelationSaved(relationKey);
+      productRelationPage.getEditRelationHeading(relationKey).should('be.visible');
     });
   }
 );

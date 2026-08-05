@@ -35,7 +35,10 @@ describe(
         searchTerm: dynamicFixtures.productToAssign.abstract_sku,
       });
 
-      productCategoryAssignPage.assertAssignmentSuccess(dynamicFixtures.productToAssign.fk_product_abstract);
+      productCategoryAssignPage.getSuccessAlert().should('be.visible');
+      productCategoryAssignPage
+        .getAssignedProductCheckbox(dynamicFixtures.productToAssign.fk_product_abstract)
+        .should('exist');
     });
 
     it('should deassign a product from a category', (): void => {
@@ -45,7 +48,10 @@ describe(
         idProductAbstract: dynamicFixtures.productToDeassign.fk_product_abstract,
       });
 
-      productCategoryAssignPage.assertDeassignmentSuccess();
+      productCategoryAssignPage.getSuccessAlert().should('be.visible');
+      productCategoryAssignPage
+        .getAssignedProductCheckbox(dynamicFixtures.productToDeassign.fk_product_abstract)
+        .should('not.exist');
     });
   }
 );

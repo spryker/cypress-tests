@@ -3,6 +3,8 @@ import { ProductSearchPreferencesRepository } from '../product-search-preference
 
 @injectable()
 export class B2bMpProductSearchPreferencesRepository implements ProductSearchPreferencesRepository {
+  private FILTER_REORDER_LIST = '#filter-container';
+
   // Filter preferences
   getFilterListContainer(): Cypress.Chainable {
     return cy.get('.dt-container');
@@ -36,8 +38,23 @@ export class B2bMpProductSearchPreferencesRepository implements ProductSearchPre
     return cy.get('form[name="delete_filter_preferences_form"] button');
   }
 
-  getSyncFiltersButton(): Cypress.Chainable {
-    return cy.get('#syncFilters');
+  getFilterDeletedMessage(): string {
+    return 'Filter successfully deleted.';
+  }
+
+  // Filter reorder
+  getFilterReorderListSelector(): string {
+    return this.FILTER_REORDER_LIST;
+  }
+
+  getFilterItemSelector(idProductSearchAttribute: string): string {
+    return `${this.FILTER_REORDER_LIST} ${this.item(idProductSearchAttribute)}`;
+  }
+
+  // Matches only when the `idAfter` item follows the `idBefore` one among its siblings, which is how
+  // the reorder assertions read the list order without depending on absolute positions.
+  getFilterPrecedingSibling(idBefore: string, idAfter: string): Cypress.Chainable {
+    return cy.get(this.FILTER_REORDER_LIST).find(`${this.item(idBefore)} ~ ${this.item(idAfter)}`);
   }
 
   getSaveFilterOrderButton(): Cypress.Chainable {
@@ -45,15 +62,7 @@ export class B2bMpProductSearchPreferencesRepository implements ProductSearchPre
   }
 
   getFilterOrderSaveAlert(): Cypress.Chainable {
-    return cy.get('.swal2-title');
-  }
-
-  getFilterDeletedMessage(): string {
-    return 'Filter successfully deleted.';
-  }
-
-  getFilterSyncSuccessMessage(): string {
-    return 'Filter preferences synchronization was successful.';
+    return cy.get('.swal2-container');
   }
 
   // Search preferences
@@ -61,63 +70,7 @@ export class B2bMpProductSearchPreferencesRepository implements ProductSearchPre
     return cy.get('.dt-container');
   }
 
-  getSearchKeyInput(): Cypress.Chainable {
-    return cy.get('#searchPreferences_key');
-  }
-
-  getSearchFullTextSelect(): Cypress.Chainable {
-    return cy.get('#searchPreferences_fullText');
-  }
-
-  getSearchFullTextBoostedSelect(): Cypress.Chainable {
-    return cy.get('#searchPreferences_fullTextBoosted');
-  }
-
-  getSearchSuggestionTermsSelect(): Cypress.Chainable {
-    return cy.get('#searchPreferences_suggestionTerms');
-  }
-
-  getSearchCompletionTermsSelect(): Cypress.Chainable {
-    return cy.get('#searchPreferences_completionTerms');
-  }
-
-  getSearchFormSubmit(): Cypress.Chainable {
-    return cy.get('#searchPreferences_submit');
-  }
-
-  getSearchTableSearchInput(): Cypress.Chainable {
-    return cy.get('input#dt-search-0');
-  }
-
-  getSearchTableFirstCell(): Cypress.Chainable {
-    return cy.get('.dataTable tbody tr:first-child td:first-child');
-  }
-
-  getSearchFirstRowUpdateButton(): Cypress.Chainable {
-    return cy.get('.dataTable tbody tr:first-child td:last-child .btn-edit');
-  }
-
-  getSearchFirstRowDeleteButton(): Cypress.Chainable {
-    return cy.get('.dataTable tbody tr:first-child td:last-child .btn-danger');
-  }
-
-  getSyncSearchPreferencesButton(): Cypress.Chainable {
-    return cy.get('#syncSearchPreferences');
-  }
-
-  getAttributeAddedMessage(): string {
-    return 'Attribute to search was added successfully.';
-  }
-
-  getAttributeUpdatedMessage(): string {
-    return 'Attribute to search was successfully updated.';
-  }
-
-  getAttributeDeactivatedMessage(): string {
-    return 'Attribute to search was successfully deactivated.';
-  }
-
-  getSearchSyncSuccessMessage(): string {
-    return 'Search preferences synchronization was successful.';
+  private item(idProductSearchAttribute: string): string {
+    return `li.dd-item[data-id-product-search-attribute="${idProductSearchAttribute}"]`;
   }
 }

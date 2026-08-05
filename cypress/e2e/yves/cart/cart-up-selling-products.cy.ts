@@ -33,8 +33,8 @@ describe(
       productPage.addToCart();
 
       cartPage.visit();
-      cartUpSellingProductsPage.assertUpSellingCarouselVisible();
-      cartUpSellingProductsPage.assertUpSellingProductRendered();
+      cartUpSellingProductsPage.getUpSellingCarousel().should('be.visible');
+      cartUpSellingProductsPage.getUpSellingProductItems().should('have.length.at.least', 1);
     });
   }
 );

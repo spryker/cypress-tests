@@ -36,15 +36,12 @@ export class ProductCategoryAssignPage extends BackofficePage {
     this.repository.getSubmitButton().click();
   };
 
-  assertAssignmentSuccess = (idProductAbstract: number): void => {
-    this.repository.getSuccessAlert().should('be.visible');
-    // After a successful save the product moves into the assigned-products table.
-    this.repository.getAssignedProductCheckbox(idProductAbstract).should('exist');
-  };
+  getSuccessAlert = (): Cypress.Chainable => this.repository.getSuccessAlert();
 
-  assertDeassignmentSuccess = (): void => {
-    this.repository.getSuccessAlert().should('be.visible');
-  };
+  // A successful save moves the product between the available- and assigned-products tables, so the
+  // caller asserts on this checkbox existing (assign) or being gone (deassign).
+  getAssignedProductCheckbox = (idProductAbstract: number): Cypress.Chainable =>
+    this.repository.getAssignedProductCheckbox(idProductAbstract);
 }
 
 interface AssignProductParams {

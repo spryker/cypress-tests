@@ -11,11 +11,24 @@ export class RefundPage extends BackofficePage {
 
   protected PAGE_URL = '/refund/table';
 
-  // Mirrors the Codeception RefundListCest::testThatRefundListIsVisible /
-  // RefundPresentationTester::canOpenRefundListPage: open /refund/table and
-  // assert the DataTables container is rendered.
-  assertRefundListIsVisible = (): void => {
-    this.visit();
-    this.repository.getRefundTable().should('be.visible');
-  };
+  getRefundTable = (): Cypress.Chainable => this.repository.getRefundTable();
+
+  getRefundRows = (): Cypress.Chainable => this.repository.getRefundRows();
+
+  // Sum of every refund recorded against the order currently open on the sales detail page, in the
+  // same minor units the order-item totals are published in.
+  getTotalRefundedAmount = (): Cypress.Chainable<number> => this.sumRawAmounts(this.repository.getRefundAmountCells());
+
+  // Sum of the order's item totals (`sumPriceToPayAggregation`), the figure a full refund must match.
+  getTotalItemAmount = (): Cypress.Chainable<number> => this.sumRawAmounts(this.repository.getItemTotalAmountCells());
+
+  private sumRawAmounts = (cells: Cypress.Chainable): Cypress.Chainable<number> =>
+    cells.then(($cells) => {
+      const rawAmountAttribute = this.repository.getRawAmountAttribute();
+
+      return ($cells.toArray() as Array<HTMLElement>).reduce(
+        (total: number, cell: HTMLElement) => total + Number(cell.getAttribute(rawAmountAttribute)),
+        0
+      );
+    }) as unknown as Cypress.Chainable<number>;
 }

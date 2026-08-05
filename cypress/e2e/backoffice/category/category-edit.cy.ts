@@ -1,12 +1,13 @@
 import { container } from '@utils';
 import { CategoryEditDynamicFixtures, CategoryEditStaticFixtures } from '@interfaces/backoffice';
-import { CategoryListPage, ActionEnum } from '@pages/backoffice';
+import { CategoryEditPage, CategoryListPage, ActionEnum } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
 describe(
   'category edit',
   { tags: ['@backoffice', '@catalog', 'category-management', 'spryker-core-back-office', 'spryker-core'] },
   (): void => {
+    const categoryEditPage = container.get(CategoryEditPage);
     const categoryListPage = container.get(CategoryListPage);
     const userLoginScenario = container.get(UserLoginScenario);
 
@@ -35,27 +36,27 @@ describe(
     });
 
     it('Backoffice user should be able to open the edit category page', (): void => {
-      cy.visitBackoffice(`/category-gui/edit?id-category=${dynamicFixtures.childCategory.id_category}`);
+      categoryEditPage.visitEditPage(dynamicFixtures.childCategory.id_category);
 
-      cy.contains('h2', 'Edit category').should('be.visible');
-      cy.get('[name="category[category_key]"]').should('have.value', dynamicFixtures.childCategory.category_key);
+      categoryEditPage.getHeading().should('contain', categoryEditPage.getHeadingText()).and('be.visible');
+      categoryEditPage.getKeyInput().should('have.value', dynamicFixtures.childCategory.category_key);
     });
 
     it('Backoffice user should be able to edit category checkboxes', (): void => {
-      cy.visitBackoffice(`/category-gui/edit?id-category=${dynamicFixtures.childCategory.id_category}`);
+      categoryEditPage.visitEditPage(dynamicFixtures.childCategory.id_category);
 
       // Defaults seeded on childCategory: inactive, in-menu, searchable.
-      cy.get('[name="category[is_active]"]').should('not.be.checked');
-      cy.get('[name="category[is_in_menu]"]').should('be.checked');
-      cy.get('[name="category[is_searchable]"]').should('be.checked');
+      categoryEditPage.getFlagCheckbox('is_active').should('not.be.checked');
+      categoryEditPage.getFlagCheckbox('is_in_menu').should('be.checked');
+      categoryEditPage.getFlagCheckbox('is_searchable').should('be.checked');
 
-      cy.get('[name="category[is_active]"]').click({ force: true });
-      cy.get('[name="category[is_in_menu]"]').click({ force: true });
-      cy.get('[name="category[is_searchable]"]').click({ force: true });
+      categoryEditPage.toggleFlag('is_active');
+      categoryEditPage.toggleFlag('is_in_menu');
+      categoryEditPage.toggleFlag('is_searchable');
 
-      cy.get('button.btn-primary.safe-submit').click();
+      categoryEditPage.submit();
 
-      cy.contains('The category was updated successfully.').should('be.visible');
+      categoryEditPage.getUpdateSuccessMessage().should('be.visible');
     });
 
     function goToCategoryEditPage(categorySearchQuery: string): void {
