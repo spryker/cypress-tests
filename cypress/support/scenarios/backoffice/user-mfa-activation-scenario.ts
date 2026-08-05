@@ -12,13 +12,13 @@ export class UserMfaActivationScenario {
 
     this.mfaPage.visit();
     this.mfaPage.activateMfa('Email');
-    this.mfaPage.waitForVerificationPopup();
+    this.mfaPage.getVerificationPopup().should('be.visible');
 
     cy.getUserMultiFactorAuthCode(email, 'email')
       .then((code) => {
         mfaCode = code;
         this.mfaPage.verifyCode(code);
-        this.mfaPage.waitForActivationSuccessMessage();
+        this.mfaPage.getActivationSuccessMessage().should('be.visible');
       })
       .then(() => {
         cy.cleanUpUserMultiFactorAuthCode(mfaCode);
@@ -30,13 +30,13 @@ export class UserMfaActivationScenario {
 
     this.mfaPage.visit();
     this.mfaPage.deactivateMfa('Email');
-    this.mfaPage.waitForVerificationPopup();
+    this.mfaPage.getVerificationPopup().should('be.visible');
 
     cy.getUserMultiFactorAuthCode(email, 'email')
       .then((code) => {
         mfaCode = code;
         this.mfaPage.verifyCode(code);
-        this.mfaPage.waitForDeactivationSuccessMessage();
+        this.mfaPage.getDeactivationSuccessMessage().should('be.visible');
       })
       .then(() => {
         cy.cleanUpUserMultiFactorAuthCode(mfaCode);

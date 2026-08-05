@@ -49,7 +49,7 @@ describe(
       });
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -83,7 +83,7 @@ describe(
       });
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -128,7 +128,7 @@ describe(
 
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -165,7 +165,7 @@ describe(
       });
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -180,12 +180,19 @@ describe(
       clearAllLocalizedAttachments(dynamicFixtures.localeEN.locale_name);
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
       // Assert
+      // The delete's publish->sync can still be draining after the single worker run above,
+      // so re-drain the queue on every reload until the attachment list clears from storage.
       visitProductDetailPage();
+      cy.url().then((url) => {
+        cy.reloadUntilGone(url, productPage.getAttachmentsListSelector(), 'body', 25, 5000, [
+          'console queue:worker:start --stop-when-empty',
+        ]);
+      });
       productPage.getAttachmentsList().should('not.exist');
     });
 
@@ -204,6 +211,10 @@ describe(
     function visitProductDetailPage(): void {
       catalogPage.visit();
       catalogPage.search({ query: dynamicFixtures.product.localized_attributes[0].name });
+    }
+
+    function verifySaveSuccess(sku: string): void {
+      productManagementEditPage.getSaveSuccessMessage(sku).should('be.visible');
     }
   }
 );

@@ -83,8 +83,12 @@ export class SspAssetAddPage extends BackofficePage {
     this.repository.getSubmitButton().click();
   }
 
-  verifySuccessMessage(): void {
-    this.repository.getSuccessMessageContainer().should('contain', this.repository.getSuccessMessage());
+  getSuccessMessageContainer(): Cypress.Chainable {
+    return this.repository.getSuccessMessageContainer();
+  }
+
+  getSuccessMessage(): string {
+    return this.repository.getSuccessMessage();
   }
 }
 

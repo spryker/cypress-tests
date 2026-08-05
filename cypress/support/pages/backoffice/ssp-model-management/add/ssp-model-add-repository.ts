@@ -10,4 +10,5 @@ export class SspModelAddRepository {
   getSubmitButton = (): Cypress.Chainable => cy.get('form[name="modelForm"] button[data-qa="submit"]');
   getSuccessMessageContainer = (): Cypress.Chainable => cy.get('[data-qa*="success-message"]');
   getSuccessMessage = (): string => 'Model has been successfully created';
+  getModelImage = (): Cypress.Chainable => cy.get('img[data-qa="ssp-model-image"]');
 }

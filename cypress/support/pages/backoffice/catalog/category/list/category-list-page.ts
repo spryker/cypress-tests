@@ -17,12 +17,9 @@ export class CategoryListPage extends BackofficePage {
           return;
         }
 
-        getRow().find(this.repository.getDropdownToggleButtonSelector()).should('exist').click();
+        getRow().find(this.repository.getDropdownToggleButtonSelector()).click();
 
-        cy.get(this.repository.getDropdownMenuSelector())
-          .find(this.repository.getEditButtonSelector())
-          .should('exist')
-          .click();
+        cy.get(this.repository.getDropdownMenuSelector()).find(this.repository.getEditButtonSelector()).click();
       }
     );
   };

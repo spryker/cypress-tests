@@ -79,7 +79,7 @@ describe(
 
       customerDeletePage.visit();
       customerDeletePage.clickDeleteAccount();
-      mfaPage.waitForVerificationPopup();
+      mfaPage.getVerificationPopup().should('be.visible');
 
       mfaActivationScenario.deactivate(dynamicFixtures.customerTwo.email);
 

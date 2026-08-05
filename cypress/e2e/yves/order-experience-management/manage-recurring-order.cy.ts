@@ -34,10 +34,25 @@ describe(
     it('recurring orders list shows schedules of all statuses and shows actionable attention banner', (): void => {
       recurringOrderListPage.visit();
 
-      recurringOrderListPage.assertListTableVisible();
-      recurringOrderListPage.assertScheduleRowContains(dynamicFixtures.schedule.name, 'active');
-      recurringOrderListPage.assertScheduleRowContains(dynamicFixtures.pausedScheduleForBuyer.name, 'paused');
-      recurringOrderListPage.assertScheduleRowContains(dynamicFixtures.cancelledScheduleForBuyer.name, 'cancelled');
+      recurringOrderListPage.getListTable().should('be.visible');
+      recurringOrderListPage
+        .getListTable()
+        .contains('tr', dynamicFixtures.schedule.name)
+        .invoke('text')
+        .invoke('toLowerCase')
+        .should('contain', 'active');
+      recurringOrderListPage
+        .getListTable()
+        .contains('tr', dynamicFixtures.pausedScheduleForBuyer.name)
+        .invoke('text')
+        .invoke('toLowerCase')
+        .should('contain', 'paused');
+      recurringOrderListPage
+        .getListTable()
+        .contains('tr', dynamicFixtures.cancelledScheduleForBuyer.name)
+        .invoke('text')
+        .invoke('toLowerCase')
+        .should('contain', 'cancelled');
 
       recurringOrderListPage.getRecurringOrdersAttentionBanner().should('be.visible');
       recurringOrderListPage
@@ -46,17 +61,22 @@ describe(
 
       recurringOrderListPage.getActionBannerFilter('View Paused').should('be.visible').click();
 
-      recurringOrderListPage.assertScheduleListDoesNotContainScheduleWithStatus('active');
-      recurringOrderListPage.assertScheduleRowContains(dynamicFixtures.pausedScheduleForBuyer.name, 'paused');
-      recurringOrderListPage.assertScheduleListDoesNotContainScheduleWithStatus('cancelled');
+      recurringOrderListPage.getListTable().invoke('text').invoke('toLowerCase').should('not.contain', 'active');
+      recurringOrderListPage
+        .getListTable()
+        .contains('tr', dynamicFixtures.pausedScheduleForBuyer.name)
+        .invoke('text')
+        .invoke('toLowerCase')
+        .should('contain', 'paused');
+      recurringOrderListPage.getListTable().invoke('text').invoke('toLowerCase').should('not.contain', 'cancelled');
     });
 
     it('detail page shows the schedule name, cadence, and status', (): void => {
       recurringOrderListPage.openSchedule(dynamicFixtures.schedule.name);
 
-      recurringOrderDetailPage.assertScheduleName(dynamicFixtures.schedule.name);
-      recurringOrderDetailPage.assertCadenceVisible();
-      recurringOrderDetailPage.assertStatusBadge('active');
+      recurringOrderDetailPage.getScheduleName().should('contain', dynamicFixtures.schedule.name);
+      recurringOrderDetailPage.getCadence().should('be.visible');
+      recurringOrderDetailPage.getStatusBadge().invoke('text').invoke('toLowerCase').should('contain', 'active');
     });
 
     it('company user can pause an active recurring schedule and resume it', (): void => {
@@ -64,13 +84,13 @@ describe(
 
       recurringOrderDetailPage.clickPause();
       recurringOrderDetailPage.confirmPause();
-      recurringOrderDetailPage.assertStatusBadge('paused');
+      recurringOrderDetailPage.getStatusBadge().invoke('text').invoke('toLowerCase').should('contain', 'paused');
 
       recurringOrderDetailPage.clickResume();
       recurringOrderDetailPage.fillResumeDate(staticFixtures.resumeNextExecutionDate);
       recurringOrderDetailPage.confirmResume();
 
-      recurringOrderDetailPage.assertStatusBadge('active');
+      recurringOrderDetailPage.getStatusBadge().invoke('text').invoke('toLowerCase').should('contain', 'active');
     });
 
     it('company user can skip the next occurrence of a recurring schedule', (): void => {
@@ -98,7 +118,7 @@ describe(
       recurringOrderDetailPage.clickCancel();
       recurringOrderDetailPage.confirmCancel();
 
-      recurringOrderDetailPage.assertStatusBadge('cancelled');
+      recurringOrderDetailPage.getStatusBadge().invoke('text').invoke('toLowerCase').should('contain', 'cancelled');
     });
   }
 );

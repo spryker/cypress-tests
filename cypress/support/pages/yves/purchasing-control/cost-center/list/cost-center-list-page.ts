@@ -19,12 +19,11 @@ export class YvesCostCenterListPage extends YvesPage {
     this.repository.getEditButtonByUuid(uuid).click();
   };
 
-  assertCostCenterInTable = (name: string): void => {
+  visitFilteredByName = (name: string): void => {
     cy.visit(`/company/cost-center?costCenterSearchForm[name]=${encodeURIComponent(name)}`);
-    this.repository.getTableRows().should('contain', name);
   };
 
-  assertStatusBadge = (uuid: string, expectedStatus: string): void => {
-    this.repository.getStatusBadgeByUuid(uuid).should('contain', expectedStatus);
-  };
+  getTableRows = (): Cypress.Chainable => this.repository.getTableRows();
+
+  getStatusBadge = (uuid: string): Cypress.Chainable => this.repository.getStatusBadgeByUuid(uuid);
 }

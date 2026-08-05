@@ -12,21 +12,9 @@ export class SspFileManagementDeletePage extends BackofficePage {
     cy.get(this.repository.getDeleteConfirmButtonSelector()).click();
   }
 
-  verifySuccessMessage(): void {
-    cy.get(this.repository.getSuccessMessageSelector())
-      .should('be.visible')
-      .and('contain', 'File was successfully removed.');
-  }
+  getSuccessMessage = (): Cypress.Chainable => cy.get(this.repository.getSuccessMessageSelector());
 
-  assertDeleteFile(): void {
-    this.repository
-      .getFileTableRows()
-      .first()
-      .should(($row) => {
-        const hasEmptyState = $row.find(this.repository.getEmptyRowSelector()).length > 0;
-        const hasNoRows = $row.length === 0;
+  getFileTableRows = (): Cypress.Chainable => this.repository.getFileTableRows();
 
-        expect(hasEmptyState || hasNoRows).to.be.true;
-      });
-  }
+  getEmptyRowSelector = (): string => this.repository.getEmptyRowSelector();
 }

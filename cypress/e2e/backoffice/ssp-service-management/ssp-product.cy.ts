@@ -49,8 +49,8 @@ describe(
       productPage.editFirstVariant();
       productPage.selectProductClass(dynamicFixtures.productClass.name);
       productPage.saveProduct();
-      productPage.verifySuccessMessage();
-      productPage.verifyProductClassSelected(dynamicFixtures.productClass.name);
+      productPage.getSuccessMessage().should('exist').should('be.visible').should('contain', 'was saved successfully.');
+      productPage.getSelectedProductClass().should('contain', dynamicFixtures.productClass.name);
     });
 
     it('should assign shipment type to a product', () => {
@@ -60,8 +60,8 @@ describe(
       productPage.editFirstVariant();
       productPage.selectShipmentType(dynamicFixtures.shipmentType.name);
       productPage.saveProduct();
-      productPage.verifySuccessMessage();
-      productPage.verifyShipmentTypeSelected(dynamicFixtures.shipmentType.name);
+      productPage.getSuccessMessage().should('exist').should('be.visible').should('contain', 'was saved successfully.');
+      productPage.getSelectedShipmentType().should('contain', dynamicFixtures.shipmentType.name);
     });
   }
 );

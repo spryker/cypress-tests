@@ -34,19 +34,19 @@ export class UserIndexPage extends BackofficePage {
       }
 
       if (params.action === ActionEnum.edit) {
-        getRow().find(this.repository.getEditButtonSelector()).should('exist').click({ force: true });
+        getRow().find(this.repository.getEditButtonSelector()).click({ force: true });
       }
 
       if (params.action === ActionEnum.deactivate) {
-        getRow().find(this.repository.getDeactivateButtonSelector()).should('exist').click({ force: true });
+        getRow().find(this.repository.getDeactivateButtonSelector()).click({ force: true });
       }
 
       if (params.action === ActionEnum.activate) {
-        getRow().find(this.repository.getActivateButtonSelector()).should('exist').click({ force: true });
+        getRow().find(this.repository.getActivateButtonSelector()).click({ force: true });
       }
 
       if (params.action === ActionEnum.delete) {
-        getRow().find(this.repository.getDeleteButtonSelector()).should('exist').click({ force: true });
+        getRow().find(this.repository.getDeleteButtonSelector()).click({ force: true });
       }
     });
   };

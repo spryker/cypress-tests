@@ -42,7 +42,7 @@ describe(
         sspFileManagementListPage.openFilters();
       }
 
-      sspFileManagementListPage.verifyListPage();
+      sspFileManagementListPage.getFileTable().should('be.visible');
     });
 
     it('should display uploaded files in the list', (): void => {
@@ -53,15 +53,15 @@ describe(
 
       customerOverviewPage.visit();
       customerOverviewPage.clickMyFilesLink();
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file1.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file2.file_name).should('be.visible');
 
       sspAssetDetailPage.visit({
         qs: { reference: dynamicFixtures.sspAssetBU1C2.reference },
       });
 
       sspFileManagementListPage.visit();
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.fileSspAsset1.file_name);
+      sspFileManagementListPage.getFileRow(dynamicFixtures.fileSspAsset1.file_name).should('be.visible');
     });
 
     it('should allow downloading a file according to permissions', (): void => {
@@ -73,9 +73,12 @@ describe(
       customerOverviewPage.visit();
       customerOverviewPage.clickMyFilesLink();
       sspFileManagementListPage.downloadFile(dynamicFixtures.file1.file_name);
-      sspFileManagementListPage.verifyFileDownloaded(dynamicFixtures.file1.file_name);
+      sspFileManagementListPage.getDownloadedFile(dynamicFixtures.file1.file_name).should('exist');
 
-      sspFileManagementDownloadPage.downloadFile({ fileUuid: dynamicFixtures.fileSspAsset1.uuid });
+      sspFileManagementDownloadPage.downloadFile({ fileUuid: dynamicFixtures.fileSspAsset1.uuid }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body).to.exist;
+      });
 
       customerLogoutScenario.execute();
 
@@ -89,13 +92,24 @@ describe(
         idCompanyUser: dynamicFixtures.companyUserBU1C2.id_company_user,
       });
 
-      sspFileManagementDownloadPage.downloadFile({ fileUuid: dynamicFixtures.fileSspAsset1.uuid });
+      sspFileManagementDownloadPage.downloadFile({ fileUuid: dynamicFixtures.fileSspAsset1.uuid }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body).to.exist;
+      });
 
       companyUserSelectPage.selectBusinessUnit({
         idCompanyUser: dynamicFixtures.companyUserBU2C2.id_company_user,
       });
 
-      sspFileManagementDownloadPage.downloadFileForbidden({ fileUuid: dynamicFixtures.fileSspAsset1.uuid });
+      sspFileManagementDownloadPage
+        .downloadFileForbidden({ fileUuid: dynamicFixtures.fileSspAsset1.uuid })
+        .then((response) => {
+          expect(response.status).to.eq(200);
+
+          const redirectUrl =
+            response.allRequestResponses?.[response.allRequestResponses.length - 1]?.['Request URL'] || '';
+          expect(redirectUrl).to.include('/error-page/404');
+        });
 
       customerLogoutScenario.execute();
 
@@ -105,7 +119,15 @@ describe(
         withoutSession: true,
       });
 
-      sspFileManagementDownloadPage.downloadFileForbidden({ fileUuid: dynamicFixtures.fileSspAsset1.uuid });
+      sspFileManagementDownloadPage
+        .downloadFileForbidden({ fileUuid: dynamicFixtures.fileSspAsset1.uuid })
+        .then((response) => {
+          expect(response.status).to.eq(200);
+
+          const redirectUrl =
+            response.allRequestResponses?.[response.allRequestResponses.length - 1]?.['Request URL'] || '';
+          expect(redirectUrl).to.include('/error-page/404');
+        });
 
       customerLogoutScenario.execute();
     });
@@ -123,8 +145,8 @@ describe(
         sspFileManagementListPage.openFilters();
       }
       sspFileManagementListPage.filterByType(staticFixtures.filter_value_jpeg);
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file2.file_name);
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file1.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file2.file_name).should('not.exist');
     });
 
     it('should search for files by name', (): void => {
@@ -141,23 +163,23 @@ describe(
       }
 
       sspFileManagementListPage.searchByName(dynamicFixtures.file1.file_name);
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file2.file_name);
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file1.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file2.file_name).should('not.exist');
 
       if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
         sspFileManagementListPage.openFilters();
       }
 
       sspFileManagementListPage.searchByName(dynamicFixtures.file2.file_name);
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file1.file_name);
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file2.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file1.file_name).should('not.exist');
 
       if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
         sspFileManagementListPage.openFilters();
       }
 
       sspFileManagementListPage.searchByName(staticFixtures.prompt_nonexistent);
-      sspFileManagementListPage.assertNoResults();
+      sspFileManagementListPage.getFileRows().should('not.exist');
     });
 
     it('should save filter and search settings during session', (): void => {
@@ -177,9 +199,9 @@ describe(
         dynamicFixtures.file3.file_name,
         staticFixtures.filter_value_pdf
       );
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file3.file_name);
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file2.file_name);
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file1.file_name);
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file3.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file2.file_name).should('not.exist');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file1.file_name).should('not.exist');
     });
 
     it('should filter files by business entity', (): void => {
@@ -196,15 +218,15 @@ describe(
         sspFileManagementListPage.openFilters();
       }
 
-      sspFileManagementListPage.verifyListPage();
+      sspFileManagementListPage.getFileTable().should('be.visible');
 
       sspFileManagementListPage.filterByBusinessEntity('all');
       sspFileManagementListPage.filterBySspAssetEntity('all');
       sspFileManagementListPage.applyFilters();
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file3.file_name);
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.fileSspAsset1.file_name);
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file1.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file2.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file3.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.fileSspAsset1.file_name).should('be.visible');
 
       if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
         sspFileManagementListPage.openFilters();
@@ -214,10 +236,10 @@ describe(
       sspFileManagementListPage.filterBySspAssetEntity('all');
       sspFileManagementListPage.applyFilters();
 
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file3.file_name);
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.fileSspAsset1.file_name);
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file1.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file2.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file3.file_name).should('not.exist');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.fileSspAsset1.file_name).should('be.visible');
 
       if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
         sspFileManagementListPage.openFilters();
@@ -226,10 +248,10 @@ describe(
       sspFileManagementListPage.filterByBusinessEntity('company');
       sspFileManagementListPage.filterBySspAssetEntity('none');
       sspFileManagementListPage.applyFilters();
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file3.file_name);
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.fileSspAsset1.file_name);
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file1.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file2.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file3.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.fileSspAsset1.file_name).should('not.exist');
 
       if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
         sspFileManagementListPage.openFilters();
@@ -238,10 +260,10 @@ describe(
       sspFileManagementListPage.filterByBusinessEntity('none');
       sspFileManagementListPage.filterBySspAssetEntity('all');
       sspFileManagementListPage.applyFilters();
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file1.file_name);
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file2.file_name);
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file3.file_name);
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.fileSspAsset1.file_name);
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file1.file_name).should('not.exist');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file2.file_name).should('not.exist');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file3.file_name).should('not.exist');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.fileSspAsset1.file_name).should('be.visible');
 
       if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
         sspFileManagementListPage.openFilters();
@@ -250,10 +272,10 @@ describe(
       sspFileManagementListPage.filterByBusinessEntity(dynamicFixtures.businessUnit2C1.uuid.toString());
       sspFileManagementListPage.filterBySspAssetEntity('none');
       sspFileManagementListPage.applyFilters();
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file1.file_name);
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.file2.file_name);
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file3.file_name);
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.fileSspAsset1.file_name);
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file1.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file2.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file3.file_name).should('not.exist');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.fileSspAsset1.file_name).should('not.exist');
 
       if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
         sspFileManagementListPage.openFilters();
@@ -262,11 +284,11 @@ describe(
       sspFileManagementListPage.filterByBusinessEntity('none');
       sspFileManagementListPage.filterBySspAssetEntity('all');
       sspFileManagementListPage.applyFilters();
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file1.file_name);
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file2.file_name);
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.file3.file_name);
-      sspFileManagementListPage.assertFileExists(dynamicFixtures.fileSspAsset1.file_name);
-      sspFileManagementListPage.assertFileNotExists(dynamicFixtures.fileSspAsset2.file_name);
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file1.file_name).should('not.exist');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file2.file_name).should('not.exist');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.file3.file_name).should('not.exist');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.fileSspAsset1.file_name).should('be.visible');
+      sspFileManagementListPage.getFileRow(dynamicFixtures.fileSspAsset2.file_name).should('not.exist');
     });
   }
 );

@@ -46,16 +46,22 @@ describe(
 
       orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
         orderDetailsPage.editOrder();
-        cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
+        cartPage
+          .getBody()
+          .contains(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`)
+          .should('exist');
 
-        cartPage.assertCancelOrderAmendmentButton();
+        cartPage.getCancelOrderAmendmentButton().should('be.visible');
         cartPage.cancelOrderAmendment();
 
         cartPage.visit();
-        cartPage.assertCartName(isB2c() ? 'Cart' : 'Shopping cart');
+        cartPage
+          .getBody()
+          .contains(isB2c() ? 'Cart' : 'Shopping cart')
+          .should('exist');
 
         customerOverviewPage.viewLastPlacedOrder();
-        orderDetailsPage.containsOrderState('New');
+        orderDetailsPage.getOrderDetailTableBlock().contains('New').should('exist');
       });
     });
 
