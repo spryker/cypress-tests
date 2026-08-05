@@ -51,7 +51,10 @@ describe('filter preferences', { tags: ['@backoffice', 'product-search', 'spryke
         productSearchPreferencesPage.visitFilterReorder();
         productSearchPreferencesPage.getFilterPrecedingSibling(idFirst, idSecond).should('exist');
 
-        productSearchPreferencesPage.reorderFilter(idFirst, idSecond);
+        // Drag the second filter up onto the first rather than the first down onto the second: the two
+        // are adjacent, and a downward drag between neighbours never crosses the target's midpoint, so
+        // nestable leaves the order untouched. See dragNestableItem.
+        productSearchPreferencesPage.reorderFilter(idSecond, idFirst);
         productSearchPreferencesPage.getFilterPrecedingSibling(idSecond, idFirst).should('exist');
 
         productSearchPreferencesPage.saveFilterOrder();

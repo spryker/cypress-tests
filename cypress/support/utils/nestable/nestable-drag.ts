@@ -50,6 +50,9 @@ export function dragNestableItem(params: NestableDragParams): void {
       // Dragging DOWN, landing on the target's centre crosses the items above it but stops before
       // the target itself. Dragging UP, the centre isn't crossed, so aim at the target's upper
       // quarter to cross its midpoint and land the item in the target's slot.
+      // Only the upward branch reliably lands the item IN the target's slot. A downward drag stops
+      // short of the target, which still moves the item when rows lie between them but is a no-op
+      // between neighbours — drag the lower item up instead of the upper item down for a swap.
       const draggingUp = toRect.top < fromRect.top;
       const endY = draggingUp ? toRect.top + toRect.height * 0.25 : toRect.top + toRect.height / 2;
 
