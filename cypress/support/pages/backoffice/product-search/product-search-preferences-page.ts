@@ -1,4 +1,4 @@
-import { REPOSITORIES, autoWired, dragNestableItem } from '@utils';
+import { REPOSITORIES, autoWired, dragNestableItem, waitForNestableInit } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
@@ -75,6 +75,7 @@ export class ProductSearchPreferencesPage extends BackofficePage {
 
   visitFilterReorder = (): void => {
     cy.visitBackoffice(this.FILTER_REORDER_URL);
+    waitForNestableInit();
   };
 
   // Drags the `idFilter` row into the slot the `idTargetFilter` row occupies. The reorder page is a

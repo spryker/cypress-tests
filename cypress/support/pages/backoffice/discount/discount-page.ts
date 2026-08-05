@@ -98,16 +98,11 @@ export class DiscountPage extends BackofficePage {
 
   getListTable = (): Cypress.Chainable => this.repository.getListTable();
 
-  // Every row action the list is expected to offer, resolved inside the discount's own row so the
-  // caller asserts on that row rather than on whatever else the grid happens to render.
-  getDiscountRowActions = (name: string): Cypress.Chainable =>
-    this.getDiscountRow(name).find(
-      [
-        this.repository.getEditActionSelector(),
-        this.repository.getViewActionSelector(),
-        this.repository.getDeactivateActionSelector(),
-      ].join(', ')
-    );
+  getRowActionLabels = (): Array<string> => this.repository.getRowActionLabels();
+
+  // The discount's own row, so the caller asserts the actions it offers rather than counting matched
+  // elements (an element count tracks DOM nesting, not the actions actually rendered).
+  getDiscountRowText = (name: string): Cypress.Chainable<string> => this.getDiscountRow(name).invoke('text');
 
   openEditPageFromList = (name: string, idDiscount: number): void => {
     this.getDiscountRow(name).find(this.repository.getEditActionSelector()).click({ force: true });

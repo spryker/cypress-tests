@@ -21,7 +21,7 @@ export interface DiscountRepository {
   getListTableUrl(): string;
   getEditActionSelector(): string;
   getViewActionSelector(): string;
-  getDeactivateActionSelector(): string;
+  getRowActionLabels(): Array<string>;
   getHeadingSelector(): string;
   getSuccessMessage(): string;
   getBlankValueError(): string;

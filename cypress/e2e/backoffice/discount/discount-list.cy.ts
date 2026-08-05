@@ -3,9 +3,6 @@ import { DiscountListDynamicFixtures, DiscountListStaticFixtures } from '@interf
 import { DiscountPage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
-// Edit, View and Deactivate — the three actions the discount grid renders per row.
-const EXPECTED_ROW_ACTION_COUNT = 3;
-
 describe('discount list', { tags: ['@backoffice', '@discount', 'discount', 'spryker-discount'] }, (): void => {
   const discountPage = container.get(DiscountPage);
   const userLoginScenario = container.get(UserLoginScenario);
@@ -30,7 +27,11 @@ describe('discount list', { tags: ['@backoffice', '@discount', 'discount', 'spry
     discountPage.visitList();
     discountPage.getListTable().should('exist');
 
-    discountPage.getDiscountRowActions(discountName).should('have.length', EXPECTED_ROW_ACTION_COUNT);
+    discountPage.getDiscountRowText(discountName).then((rowText: string): void => {
+      discountPage.getRowActionLabels().forEach((label: string): void => {
+        expect(rowText, 'discount row actions').to.contain(label);
+      });
+    });
 
     discountPage.openEditPageFromList(discountName, dynamicFixtures.discount.id_discount);
   });

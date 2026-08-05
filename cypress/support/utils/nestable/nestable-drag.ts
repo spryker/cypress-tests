@@ -7,9 +7,22 @@
 
 const DRAG_STEPS = 12;
 
+// Time for the Zed JS bundle to attach the nestable drag handlers after the page loads.
+const WIDGET_INIT_MS = 2500;
+
 // Nestable commits the drop and reflows the list a tick after mouseup; a back-to-back second
 // reorder that reads element positions before that reflow lands on stale coordinates and misses.
 const DROP_SETTLE_MS = 500;
+
+// The list markup renders server-side, but the jQuery-nestable widget that makes it draggable is
+// wired only after the large Zed JS bundle finishes parsing. Dragging before that binds is a silent
+// no-op. Nestable exposes no Cypress-readable ready signal (its instance lives in the app jQuery's
+// private data cache), so settle briefly to let the bundle attach the handlers. Call this after
+// navigating to any page whose list is driven by nestable.
+export function waitForNestableInit(): void {
+  // eslint-disable-next-line cypress/no-unnecessary-waiting -- No observable ready signal on the nestable widget; see above.
+  cy.wait(WIDGET_INIT_MS);
+}
 
 export interface NestableDragParams {
   // Selector of the list container carrying the `dd` class, e.g. `#category-list`.
