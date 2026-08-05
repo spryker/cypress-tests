@@ -63,9 +63,7 @@ export class CheckoutAddressPage extends YvesPage {
         }
 
         if (params?.skipServicePointAddressOverride && hasServicePointUuid) {
-          // The radio arrives pre-checked from the quote. Assert it rather than clicking it back
-          // on — the radios are hidden on some repos, so a silent re-check would mask a render
-          // state that leaves checkout in a dead end no user can recover from.
+          // Pre-checked from the quote — assert instead of re-checking, so a hidden radio cannot mask it
           if (params.shipmentType) {
             this.repository
               .getMultiShipmentAddressItemShipmentTypeRadio?.(index, params.shipmentType)
