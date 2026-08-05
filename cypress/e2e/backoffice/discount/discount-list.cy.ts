@@ -27,7 +27,9 @@ describe('discount list', { tags: ['@backoffice', '@discount', 'discount', 'spry
   it('should show a discount with its actions in the list and open its edit page', (): void => {
     const discountName = dynamicFixtures.discount.display_name;
 
+    discountPage.visitList();
     discountPage.getListTable().should('exist');
+
     discountPage.getDiscountRowActions(discountName).should('have.length', EXPECTED_ROW_ACTION_COUNT);
 
     discountPage.openEditPageFromList(discountName, dynamicFixtures.discount.id_discount);

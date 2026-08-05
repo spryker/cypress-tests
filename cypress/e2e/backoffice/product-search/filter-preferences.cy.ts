@@ -13,9 +13,11 @@ describe('filter preferences', { tags: ['@backoffice', 'product-search', 'spryke
   let staticFixtures: FilterPreferencesStaticFixtures;
   let dynamicFixtures: FilterPreferencesDynamicFixtures;
 
-  // Filter keys are made run-unique so repeated CI runs never collide on the
-  // "already exists" validation. The Codeception original relied on rand().
-  const uid = Math.random().toString(36).substring(2, 8);
+  // Filter keys are generated per attempt, not once at spec load: the create form rejects a key that
+  // already carries a filter preference, so a shared id would make every Cypress retry fail on the
+  // row the previous attempt created and hide the original error. There is no DB teardown between
+  // attempts. The Codeception original relied on rand().
+  const filterKey = (prefix: string): string => `${prefix}_${Math.random().toString(36).substring(2, 8)}`;
 
   before((): void => {
     ({ dynamicFixtures, staticFixtures } = Cypress.env());
@@ -35,7 +37,7 @@ describe('filter preferences', { tags: ['@backoffice', 'product-search', 'spryke
   });
 
   it('should create, edit and remove a filter', (): void => {
-    const filterName = `foooooo_${uid}`;
+    const filterName = filterKey('foooooo');
 
     productSearchPreferencesPage.createFilter(filterName).then((id: string): void => {
       productSearchPreferencesPage.updateFilter(id);
@@ -44,8 +46,8 @@ describe('filter preferences', { tags: ['@backoffice', 'product-search', 'spryke
   });
 
   it('should update the filter order via drag and drop and persist it', (): void => {
-    productSearchPreferencesPage.createFilter(`reorder_first_${uid}`).then((idFirst: string): void => {
-      productSearchPreferencesPage.createFilter(`reorder_second_${uid}`).then((idSecond: string): void => {
+    productSearchPreferencesPage.createFilter(filterKey('foooooo')).then((idFirst: string): void => {
+      productSearchPreferencesPage.createFilter(filterKey('baaaaar')).then((idSecond: string): void => {
         productSearchPreferencesPage.visitFilterReorder();
         productSearchPreferencesPage.getFilterPrecedingSibling(idFirst, idSecond).should('exist');
 
