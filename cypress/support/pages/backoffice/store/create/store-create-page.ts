@@ -18,20 +18,20 @@ export class StoreCreatePage extends BackofficePage {
     this.repository.getDefaultLocaleSelect().select(store.locale, { force: true });
     this.repository.getLocaleSearchInput().clear().type(store.locale, { delay: 0 });
     this.interceptTable({ url: '/locale-gui/index/available-locale-table-selectable**' }).then(() => {
-      this.repository.getAvailableLocaleInput(store.locale).click({ force: true });
+      this.checkRelation(this.repository.getAvailableLocaleInput(store.locale));
     });
 
     this.repository.getCurrenciesTab().click();
     this.repository.getDefaultCurrencySelect().select(store.currency, { force: true });
     this.repository.getCurrencySearchInput().clear().type(store.currency);
     this.interceptTable({ url: '/currency-gui/index/available-currency-table-selectable**' }).then(() => {
-      this.repository.getAvailableCurrencyInput(store.currency).click({ force: true });
+      this.checkRelation(this.repository.getAvailableCurrencyInput(store.currency));
     });
 
     this.repository.getDisplayRegionsTab().click();
     this.repository.getCountrySearchInput().clear().type(store.country);
     this.interceptTable({ url: '/country-gui/index/available-country-table-selectable**' }).then(() => {
-      this.repository.getAvailableCountryInput(store.country).click({ force: true });
+      this.checkRelation(this.repository.getAvailableCountryInput(store.country));
     });
 
     this.repository.getStoreContextTabButton().click();
@@ -39,6 +39,17 @@ export class StoreCreatePage extends BackofficePage {
     this.repository.getTimezoneSelector().select(store.timezone);
 
     this.repository.getSaveButton().click();
+  };
+
+  // The relation tables redraw after their selectable-table request resolves, so a bare
+  // click can land on a row that is about to be replaced. `force: true` then hides the
+  // failure and the store saves without that relation — a store with no locale is
+  // accepted, published into the store list, and only surfaces much later as a 500 from
+  // Yves when something visits it (`defaultLocaleIsoCode` is null). `check()` is
+  // checkbox-aware and idempotent, and the retried assertion makes a lost click fail
+  // here, where the cause is obvious, instead of in an unrelated hook.
+  private checkRelation = (input: Cypress.Chainable): void => {
+    input.check({ force: true }).should('be.checked');
   };
 }
 
