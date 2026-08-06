@@ -3,6 +3,45 @@ import { retryableBefore } from '../../../support/e2e';
 import { CustomerLoginScenario, CustomerLogoutScenario, CheckoutScenario } from '@scenarios/yves';
 import { SspServiceListPage, CartPage, CatalogPage, ProductPage, CustomerOverviewPage } from '@pages/yves';
 
+const assertServiceListPage = (page: SspServiceListPage): void => {
+  const expectedHeaders = ['Order Reference', 'Service Name', 'Time and Date', 'Created At', 'State'];
+
+  page.getPageTitle().should('contain', 'Services');
+  page.getTable().should('exist');
+  page.getTableHeaders().should('have.length.at.least', 5);
+
+  expectedHeaders.forEach((header) => {
+    page.getTableHeaders().contains(header).should('exist');
+  });
+};
+
+const assertSorting = (page: SspServiceListPage, columnName: string, orderByValue: string): void => {
+  page.clickSortColumn(columnName);
+  page.getOrderByInput().should('have.value', orderByValue);
+  page.getOrderDirectionInput().should('have.value', 'ASC');
+
+  page.clickSortColumn(columnName);
+  page.getOrderByInput().should('have.value', orderByValue);
+  page.getOrderDirectionInput().should('have.value', 'DESC');
+};
+
+const assertSearchResult = (page: SspServiceListPage, searchQuery: string, expectedResultsCount: number): void => {
+  page.getTableRows().should('be.visible');
+  cy.url().should('include', searchQuery);
+  page.getTableRows().should('have.length', expectedResultsCount);
+};
+
+const assertBusinessUnitSelectIsVisible = (page: SspServiceListPage): void => {
+  page.getBusinessUnitSelect().should('exist');
+  page.getBusinessUnitSelect().find('option[value*="company"]').should('exist');
+};
+
+const assertShipmentTypeGrouping = (page: CartPage): void => {
+  page.getCartItemsListTitles().should('have.length.at.least', 2);
+  page.getCartItemsListTitles().contains('Delivery');
+  page.getCartItemsListTitles().contains('In-Center Service');
+};
+
 interface CustomerFixture {
   email: string;
   password?: string;
@@ -94,7 +133,7 @@ describe(
           dynamicFixtures.company1CustomerAddress.id_customer_address
         );
 
-        sspServiceListPage.assertServiceListPage();
+        assertServiceListPage(sspServiceListPage);
       });
 
       it('should sort table in both directions', (): void => {
@@ -103,9 +142,9 @@ describe(
           dynamicFixtures.company1CustomerAddress.id_customer_address
         );
 
-        sspServiceListPage.assertSorting('Order Reference', 'order_reference');
-        sspServiceListPage.assertSorting('Service Name', 'product_name');
-        sspServiceListPage.assertSorting('Created At', 'created_at');
+        assertSorting(sspServiceListPage, 'Order Reference', 'order_reference');
+        assertSorting(sspServiceListPage, 'Service Name', 'product_name');
+        assertSorting(sspServiceListPage, 'Created At', 'created_at');
       });
 
       it('should search services by SKU', (): void => {
@@ -121,7 +160,7 @@ describe(
         }
 
         sspServiceListPage.searchFor('SKU', productSku);
-        sspServiceListPage.assertSearchResult(productSku, 1);
+        assertSearchResult(sspServiceListPage, productSku, 1);
       });
     });
 
@@ -133,8 +172,30 @@ describe(
           dynamicFixtures.company1CustomerAddress.id_customer_address
         );
 
-        sspServiceListPage.assertServiceTableHasAtLeastRows(2);
-        sspServiceListPage.rescheduleFirstServiceToTomorrow();
+        sspServiceListPage.getTableRows().should('have.length.at.least', 2);
+
+        sspServiceListPage.viewFirstServiceDetails();
+        cy.url().should('include', '/order/details');
+
+        sspServiceListPage.getDetailsPageRescheduleButton().should('be.visible').first().click();
+        cy.url().should('include', '/update-service-time');
+
+        const tomorrow = sspServiceListPage.updateServiceDateToTomorrow();
+
+        cy.url().should('include', '/customer/ssp-service/list');
+        sspServiceListPage
+          .getTableRows()
+          .first()
+          .find('td')
+          .eq(2)
+          .invoke('text')
+          .then((text) => {
+            const updatedDate = text.trim();
+            const day = tomorrow.getDate();
+            const year = tomorrow.getFullYear();
+
+            expect(updatedDate).to.include(`${day}, ${year}`);
+          });
       });
 
       it('should allow cancelling a service', (): void => {
@@ -143,9 +204,18 @@ describe(
           dynamicFixtures.company1CustomerAddress.id_customer_address
         );
 
-        sspServiceListPage.assertServiceTableHasRows(2);
-        sspServiceListPage.cancelFirstService();
-        sspServiceListPage.assertFirstServiceIsCancelled();
+        sspServiceListPage.getTableRows().should('have.length', 2);
+
+        sspServiceListPage.viewFirstServiceDetails();
+        sspServiceListPage.getServiceCancelButton().should('be.visible').first().click();
+        cy.url().should('include', '/customer/ssp-service/list');
+
+        sspServiceListPage.viewFirstServiceDetails();
+        sspServiceListPage.getServiceCancelButton().first().should('have.length', 1);
+        sspServiceListPage.visit();
+        sspServiceListPage.viewFirstServiceDetails();
+        cy.url().should('include', '/order/details');
+        sspServiceListPage.getServiceCancelButton().first().should('have.length', 1);
       });
     });
 
@@ -156,14 +226,14 @@ describe(
           dynamicFixtures.company1CustomerAddress.id_customer_address
         );
 
-        sspServiceListPage.assertServiceListPage();
-        sspServiceListPage.assertServiceTableHasAtLeastRows(1);
+        assertServiceListPage(sspServiceListPage);
+        sspServiceListPage.getTableRows().should('have.length.at.least', 1);
 
         if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
           sspServiceListPage.openFilter();
         }
 
-        sspServiceListPage.assertBusinessUnitSelectIsVisible();
+        assertBusinessUnitSelectIsVisible(sspServiceListPage);
 
         customerLogoutScenario.execute();
 
@@ -173,8 +243,8 @@ describe(
         });
 
         sspServiceListPage.visit();
-        sspServiceListPage.assertBusinessUnitSelectIsVisible();
-        sspServiceListPage.assertServiceTableIsEmpty();
+        assertBusinessUnitSelectIsVisible(sspServiceListPage);
+        sspServiceListPage.getTableRows().should('not.exist');
       });
     });
 
@@ -188,7 +258,7 @@ describe(
         cartPage.visit();
 
         cartPage.assertServicePointsDisplayed();
-        cartPage.assertShipmentTypeGrouping();
+        assertShipmentTypeGrouping(cartPage);
 
         purchaseServiceAsCustomer(
           dynamicFixtures.company3Customer.email,
@@ -208,13 +278,13 @@ describe(
 
         productPage.selectShipmentType(dynamicFixtures.shipmentType2.name);
         productPage.selectServicePoint(dynamicFixtures.servicePoint.name);
-        productPage.assertServicePointIsSelected(dynamicFixtures.servicePointAddress.address1);
+        productPage.getSelectedServicePointName().should('contain', dynamicFixtures.servicePointAddress.address1);
         productPage.addToCart();
 
         cartPage.visit();
 
         cartPage.assertServicePointsDisplayed();
-        cartPage.assertShipmentTypeGrouping();
+        assertShipmentTypeGrouping(cartPage);
 
         checkoutScenario.execute({
           idCustomerAddress: dynamicFixtures.company4CustomerAddress.id_customer_address,

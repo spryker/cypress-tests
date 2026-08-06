@@ -32,11 +32,11 @@ export class OrderDetailsPage extends YvesPage {
     }
   };
 
-  containsOrderState = (orderState: string): void => {
-    this.repository.getOrderDetailTableBlock().contains(orderState).should('exist');
+  getOrderDetailTableBlock = (): Cypress.Chainable => {
+    return this.repository.getOrderDetailTableBlock();
   };
 
-  doesNotContainEditOrderButton = (): void => {
-    this.repository.getEditOrderForm().should('not.exist');
+  getEditOrderForm = (): Cypress.Chainable => {
+    return this.repository.getEditOrderForm();
   };
 }

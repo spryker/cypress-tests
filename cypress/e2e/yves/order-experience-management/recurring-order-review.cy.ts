@@ -32,9 +32,9 @@ describe(
 
       recurringOrderReviewPage.visitReview(dynamicFixtures.schedule.uuid);
 
-      recurringOrderReviewPage.assertSummaryBannerVisible();
-      recurringOrderReviewPage.assertBackToDetailLinkVisible();
-      recurringOrderReviewPage.assertFooterTotalVisible();
+      recurringOrderReviewPage.getSummaryBanner().should('be.visible');
+      recurringOrderReviewPage.getBackToDetailLink().should('be.visible');
+      recurringOrderReviewPage.getFooterTotal().should('be.visible');
 
       recurringOrderReviewPage.clickBackToDetail();
 
@@ -55,7 +55,7 @@ describe(
       cy.url().should('not.include', '/review-required');
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForBundle.uuid);
-      recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
+      recurringOrderDetailPage.getHistoryViewOrderLink().should('be.visible');
       recurringOrderDetailPage.assertHistoryViewRecordStatus('Completed');
     });
 
@@ -73,7 +73,7 @@ describe(
       cy.url().should('not.include', '/review-required');
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForOffer.uuid);
-      recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
+      recurringOrderDetailPage.getHistoryViewOrderLink().should('be.visible');
       recurringOrderDetailPage.assertHistoryViewRecordStatus('Completed');
     });
 
@@ -91,7 +91,7 @@ describe(
       cy.url().should('not.include', '/review-required');
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForConfigurableBundle.uuid);
-      recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
+      recurringOrderDetailPage.getHistoryViewOrderLink().should('be.visible');
       recurringOrderDetailPage.assertHistoryViewRecordStatus('Completed');
     });
 
@@ -109,7 +109,7 @@ describe(
       cy.url().should('not.include', '/review-required');
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForConfigurableProduct.uuid);
-      recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
+      recurringOrderDetailPage.getHistoryViewOrderLink().should('be.visible');
       recurringOrderDetailPage.assertHistoryViewRecordStatus('Completed');
     });
 
@@ -122,8 +122,8 @@ describe(
 
       recurringOrderReviewPage.visitReview(dynamicFixtures.scheduleForPriceDrift.uuid);
 
-      recurringOrderReviewPage.assertSummaryBannerContains('1 price change');
-      recurringOrderReviewPage.assertFlaggedItemsVisible();
+      recurringOrderReviewPage.getSummaryBanner().contains('1 price change').should('be.visible');
+      recurringOrderReviewPage.getFlaggedItems().should('be.visible');
 
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
       recurringOrderReviewPage.confirmApproveReview();
@@ -131,7 +131,7 @@ describe(
       cy.url().should('not.include', '/review-required');
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForPriceDrift.uuid);
-      recurringOrderDetailPage.assertDetailItemsContain('350');
+      recurringOrderDetailPage.getDetailItems().should('contain', '350');
     });
 
     it('order placed from review page for a product with packaging unit shows history entry with view order link', (): void => {
@@ -148,7 +148,7 @@ describe(
       cy.url().should('not.include', '/review-required');
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForPackagingUnit.uuid);
-      recurringOrderDetailPage.assertHistoryViewOrderLinkVisible();
+      recurringOrderDetailPage.getHistoryViewOrderLink().should('be.visible');
       recurringOrderDetailPage.assertHistoryViewRecordStatus('Completed');
     });
 
@@ -161,8 +161,8 @@ describe(
 
       recurringOrderReviewPage.visitReview(dynamicFixtures.scheduleForStockDrift.uuid);
 
-      recurringOrderReviewPage.assertSummaryBannerContains('1 unavailable');
-      recurringOrderReviewPage.assertFlaggedItemsVisible();
+      recurringOrderReviewPage.getSummaryBanner().contains('1 unavailable').should('be.visible');
+      recurringOrderReviewPage.getFlaggedItems().should('be.visible');
 
       recurringOrderReviewPage.clickAcceptAndPlaceOrder();
       recurringOrderReviewPage.confirmApproveReview();
@@ -170,8 +170,8 @@ describe(
       cy.url().should('not.include', '/review-required');
 
       recurringOrderDetailPage.visitDetail(dynamicFixtures.scheduleForStockDrift.uuid);
-      recurringOrderDetailPage.assertDetailItemsContain(dynamicFixtures.simpleProductForStockDrift.sku);
-      recurringOrderDetailPage.assertDetailItemsNotContain(dynamicFixtures.stockDriftProduct.sku);
+      recurringOrderDetailPage.getDetailItems().should('contain', dynamicFixtures.simpleProductForStockDrift.sku);
+      recurringOrderDetailPage.getDetailItems().should('not.contain', dynamicFixtures.stockDriftProduct.sku);
     });
   }
 );

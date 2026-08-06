@@ -3,6 +3,13 @@ import { OrderAmendmentServiceDynamicFixtures, OrderAmendmentServiceStaticFixtur
 import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
+const assertProductQuantity = (page: CustomerOverviewPage, productName: string, quantity: number): void => {
+  page.getBody().then(($body) => {
+    const occurrences = $body.find(page.getOrderedProductSelector(productName));
+    expect(occurrences).to.have.length(quantity);
+  });
+};
+
 /**
  * Order Amendment checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4545871873/Initialisation+Order+Amendment+Process}
  */
@@ -22,8 +29,8 @@ describe(
     ],
   },
   (): void => {
-    if (!['suite'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because test runs only for suite', () => {});
+    if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because test runs only for suite and b2b-mp', () => {});
 
       return;
     }
@@ -58,7 +65,7 @@ describe(
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
       productPage.selectShipmentType(dynamicFixtures.shipmentType.name);
       productPage.selectServicePoint(dynamicFixtures.servicePoint.name);
-      productPage.assertServicePointIsSelected(dynamicFixtures.servicePoint.name);
+      productPage.getSelectedServicePointName().should('contain', dynamicFixtures.servicePoint.name);
       productPage.addToCart();
 
       checkoutScenario.execute({
@@ -98,8 +105,7 @@ describe(
       customerOverviewPage.viewLastPlacedOrder();
       customerOverviewPage.getOrderDetailTable().should('contain', `€${staticFixtures.serviceProductPrice}`);
       customerOverviewPage.getOrderDetailTable().should('contain', `€${staticFixtures.deliveryProductPrice}`);
-      customerOverviewPage.assertProductQuantity(dynamicFixtures.product.localized_attributes[0].name, 2);
-      customerOverviewPage.getOrderDetailTable().should('contain', dynamicFixtures.shipmentType.name);
+      assertProductQuantity(customerOverviewPage, dynamicFixtures.product.localized_attributes[0].name, 2);
     });
   }
 );

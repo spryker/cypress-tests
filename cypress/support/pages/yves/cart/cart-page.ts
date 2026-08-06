@@ -90,12 +90,12 @@ export class CartPage extends YvesPage {
     this.repository.getCustomOrderReferenceSubmitButton().click();
   };
 
-  assertCartName = (name: string): void => {
-    cy.get('body').contains(name).should('exist');
+  getBody = (): Cypress.Chainable => {
+    return cy.get('body');
   };
 
-  assertCancelOrderAmendmentButton = (): void => {
-    this.repository.getCancelOrderAmendmentButton().should('be.visible');
+  getCancelOrderAmendmentButton = (): Cypress.Chainable => {
+    return this.repository.getCancelOrderAmendmentButton();
   };
 
   getCartItemSummary = (itemIndex: number): Cypress.Chainable => {
@@ -122,17 +122,8 @@ export class CartPage extends YvesPage {
     this.getProductCartItems().contains('Service point');
   };
 
-  assertShipmentTypeGrouping = (): void => {
-    this.getCartItemsListTitles().should('have.length.at.least', 2);
-    this.getCartItemsListTitles().contains('Delivery');
-    this.getCartItemsListTitles().contains('In-Center Service');
-  };
-
-  assertCartItemAvailabilityDisplayed = (shouldShowMeasurementUnits = false): void => {
-    const availabilityLabel = this.repository.getCartItemAvailabilityLabel();
-    availabilityLabel.should('be.visible');
-    const pattern = shouldShowMeasurementUnits ? /(\d+[,.]?\d*\s+[a-z]+\s+)?in stock/i : /Available|in stock/i;
-    availabilityLabel.invoke('text').should('match', pattern);
+  getCartItemAvailabilityLabel = (): Cypress.Chainable => {
+    return this.repository.getCartItemAvailabilityLabel();
   };
 }
 

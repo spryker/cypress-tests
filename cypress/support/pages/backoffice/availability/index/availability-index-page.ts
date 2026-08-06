@@ -21,7 +21,7 @@ export class AvailabilityIndexPage extends BackofficePage {
       }
 
       if (params.action === ActionEnum.view) {
-        getRow().find(this.repository.getViewButtonSelector()).should('exist').click({ force: true });
+        getRow().find(this.repository.getViewButtonSelector()).click({ force: true });
       }
     });
   };

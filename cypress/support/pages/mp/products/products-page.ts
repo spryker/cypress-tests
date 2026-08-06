@@ -40,14 +40,13 @@ export class ProductsPage extends MpPage {
     cy.wait('@dataTable').then(() => {
       cy.get(this.repository.getAttributesTableSelector()).as('attributesTable');
       cy.get('@attributesTable').scrollIntoView();
-      cy.get('@attributesTable')
-        .should('be.visible')
-        .then(() => {
-          this.repository.getAddAttributeButton().click();
-          cy.get('@createAttribute.all').should('have.length', 0);
-        });
+      cy.get('@attributesTable').then(() => {
+        this.repository.getAddAttributeButton().click();
+      });
     });
   };
+
+  getCreateAttributeRequests = (): Cypress.Chainable => cy.get('@createAttribute.all');
 
   getAttributesTableSelector = (): string => {
     return this.repository.getAttributesTableSelector();
@@ -76,6 +75,11 @@ export class ProductsPage extends MpPage {
   getTaxIdSetOptionSelector = (): string => {
     return this.repository.getTaxIdOptionSelector();
   };
+
+  getDrawerAlias = (): Cypress.Chainable => cy.get('@drawer');
+
+  selectTaxIdSetOption = (value: string | number | string[]): Cypress.Chainable =>
+    cy.get(this.repository.getTaxIdSelector()).select(value, { force: true });
 }
 
 interface FindParams {

@@ -22,11 +22,11 @@ export class StoreListPage extends BackofficePage {
         }
 
         if (params.action === ActionEnum.edit) {
-          getRow().find(this.repository.getEditButtonSelector()).should('exist').click();
+          getRow().find(this.repository.getEditButtonSelector()).click();
         }
 
         if (params.action === ActionEnum.view) {
-          getRow().find(this.repository.getViewButtonSelector()).should('exist').click();
+          getRow().find(this.repository.getViewButtonSelector()).click();
         }
       }
     );
