@@ -11,6 +11,15 @@ export class OrderPage extends YvesPage {
   protected PAGE_URL = '/customer/order';
 
   applyCompanyOrdersFilter = (): void => {
+    if (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      cy.get('body').then(($body) => {
+        if ($body.find('[data-qa="order-filter-section"].is-hidden').length) {
+          cy.get('[data-qa="order-filters-toggle"]').click();
+          this.repository.getOrderFilterApplyButton().should('be.visible');
+        }
+      });
+    }
+
     this.repository.getOrderBusinessUnitFilter().select('company', { force: true });
     this.repository.getOrderFilterApplyButton().click();
   };
