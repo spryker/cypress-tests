@@ -21,10 +21,6 @@ export class RecurringOrderDetailPage extends YvesPage {
 
   getStatusBadge = (): Cypress.Chainable => this.repository.getStatusBadge();
 
-  getHistoryViewOrderLink = (): Cypress.Chainable => this.repository.getHistoryViewOrderLink();
-
-  getDetailItems = (): Cypress.Chainable => this.repository.getDetailItems();
-
   clickPause = (): void => {
     this.repository.getPauseButton().click();
   };
@@ -65,7 +61,35 @@ export class RecurringOrderDetailPage extends YvesPage {
     this.repository.getCancelConfirmButton().click();
   };
 
+  getHistoryViewOrderLink = (): Cypress.Chainable => this.repository.getHistoryViewOrderLink();
+
   assertHistoryViewRecordStatus = (status: string): void => {
     this.repository.getHistoryViewLatestRecordStatus().contains(status);
+  };
+
+  getFlashAlert = (): Cypress.Chainable => this.repository.getFlashAlert();
+
+  getDetailItems = (): Cypress.Chainable => this.repository.getDetailItems();
+
+  getDetailItemQuantity = (): Cypress.Chainable => this.repository.getDetailItemQuantity().first();
+
+  openEditModal = (): void => {
+    this.repository.getEditScheduleButton().click();
+  };
+
+  setScheduleName = (name: string): void => {
+    this.repository.getEditNameInput().filter(':visible').first().clear().type(name);
+  };
+
+  selectCadence = (cadenceType: string): void => {
+    this.repository.getEditCadenceSelect().filter(':visible').first().select(cadenceType);
+  };
+
+  setStartDate = (date: string): void => {
+    this.repository.getEditStartDateInput().filter(':visible').first().clear().type(date);
+  };
+
+  confirmEdit = (): void => {
+    this.repository.getEditConfirmButton().filter(':visible').first().click();
   };
 }

@@ -3,6 +3,21 @@ import { CreateRecurringOrderStaticFixtures, CreateRecurringOrderDynamicFixtures
 import { CheckoutSummaryPage, CheckoutSummaryRecurringOrderPage, RecurringOrderListPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
+function formatDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
+function addDaysFromToday(days: number): string {
+  const date = new Date();
+  date.setDate(date.getDate() + days);
+
+  return formatDate(date);
+}
+
 describe(
   'recurring order creation at checkout',
   { tags: ['@yves', '@order-experience-management', 'order-experience-management', 'spryker-core'] },
@@ -38,6 +53,7 @@ describe(
       checkoutSummaryRecurringOrderPage.getCadenceTypeSelect().should('be.visible');
       checkoutSummaryRecurringOrderPage.fillScheduleName(staticFixtures.scheduleName);
       checkoutSummaryRecurringOrderPage.selectCadenceType('monthly');
+      checkoutSummaryRecurringOrderPage.selectStartDate(formatDate(new Date()));
       checkoutSummaryRecurringOrderPage.confirmRecurringOrder();
       checkoutSummaryRecurringOrderPage.getConfirmButton().should('not.exist');
       checkoutSummaryPage.placeOrder();
@@ -46,6 +62,36 @@ describe(
 
       recurringOrderListPage.visit();
       recurringOrderListPage.getListTable().contains(staticFixtures.scheduleName).should('be.visible');
+    });
+
+    it('buyer can pick a start date, with today as the earliest selectable value and past dates rejected', (): void => {
+      const futureDate = addDaysFromToday(30);
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.buyerForStartDate.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+      checkoutScenario.execute({ shouldSkipPlaceOrder: true });
+
+      checkoutSummaryRecurringOrderPage.getRecurringOrderToggle().should('be.visible');
+      checkoutSummaryRecurringOrderPage.enableRecurringOrder();
+      checkoutSummaryRecurringOrderPage.getCadenceTypeSelect().should('be.visible');
+
+      checkoutSummaryRecurringOrderPage.getStartDateInput().should('have.value', '').and('have.attr', 'required');
+      checkoutSummaryRecurringOrderPage
+        .getStartDateTooltip()
+        .should('exist')
+        .and('contain.text', staticFixtures.startDateTooltipText);
+      checkoutSummaryRecurringOrderPage.getStartDateInput().should('have.attr', 'min', formatDate(new Date()));
+
+      checkoutSummaryRecurringOrderPage.selectStartDate(addDaysFromToday(-30));
+      checkoutSummaryRecurringOrderPage.getStartDateInput().should(($input): void => {
+        expect(($input[0] as HTMLInputElement).validity.rangeUnderflow).to.eq(true);
+      });
+
+      checkoutSummaryRecurringOrderPage.selectStartDate(futureDate);
+      checkoutSummaryRecurringOrderPage.getStartDateInput().should('have.value', futureDate);
     });
 
     it('recurring order widget is not visible when credit card payment method is selected', (): void => {

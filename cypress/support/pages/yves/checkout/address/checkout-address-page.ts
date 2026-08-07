@@ -63,6 +63,13 @@ export class CheckoutAddressPage extends YvesPage {
         }
 
         if (params?.skipServicePointAddressOverride && hasServicePointUuid) {
+          // Pre-checked from the quote — assert instead of re-checking, so a hidden radio cannot mask it
+          if (params.shipmentType) {
+            this.repository
+              .getMultiShipmentAddressItemShipmentTypeRadio?.(index, params.shipmentType)
+              .should('be.checked');
+          }
+
           return;
         }
 
@@ -248,6 +255,7 @@ export class CheckoutAddressPage extends YvesPage {
 
 interface FillShippingAddressParams {
   idCustomerAddress?: number;
+  shipmentType?: string;
   skipServicePointAddressOverride?: boolean;
   servicePointSelection?: ServicePointSelection;
 }
