@@ -14,9 +14,6 @@ function toJsonApiBody(attributes: Record<string, unknown>): Record<string, unkn
   return { data: { type: RESOURCE_TYPE, attributes } };
 }
 
-/**
- * Fetches a single concrete product by SKU (`GET /products/{sku}`).
- */
 export function getProduct(accessToken: string, sku: string, failOnStatusCode = true): Cypress.Chainable {
   return cy.request({
     method: 'GET',
@@ -26,11 +23,6 @@ export function getProduct(accessToken: string, sku: string, failOnStatusCode = 
   });
 }
 
-/**
- * Fetches the paginated concrete product collection (`GET /products`).
- *
- * The endpoint supports `filter[sku]`, `filter[skus][]` and `filter[abstractSku]` query params.
- */
 export function getProductCollection(
   accessToken: string,
   params: { page?: number; filterSku?: string; filterAbstractSku?: string } = {},
@@ -57,9 +49,6 @@ export function getProductCollection(
   });
 }
 
-/**
- * Fetches a concrete product without an Authorization header — for the 401 case.
- */
 export function getProductWithoutToken(sku: string): Cypress.Chainable {
   return cy.request({
     method: 'GET',
@@ -69,9 +58,6 @@ export function getProductWithoutToken(sku: string): Cypress.Chainable {
   });
 }
 
-/**
- * Creates a concrete product (`POST /products`).
- */
 export function createProduct(
   accessToken: string,
   body: Record<string, unknown>,
@@ -86,9 +72,6 @@ export function createProduct(
   });
 }
 
-/**
- * Updates a concrete product by SKU (`PATCH /products/{sku}`).
- */
 export function updateProduct(
   accessToken: string,
   sku: string,

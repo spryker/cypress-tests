@@ -22,8 +22,6 @@ declare namespace Cypress {
     loadDynamicFixturesByPayload(dynamicFixturesDefaultFilePath: string, retries?: number): Chainable;
 
     /**
-     * Fetches an OAuth access token for the backend Glue API (password grant).
-     *
      * @example cy.getBackendApiToken().then((token) => cy.request({ headers: authHeaders(token), ... }))
      */
     getBackendApiToken(username?: string, password?: string): Chainable<string>;
