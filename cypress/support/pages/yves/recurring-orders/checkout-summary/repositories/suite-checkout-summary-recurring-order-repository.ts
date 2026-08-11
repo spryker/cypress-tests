@@ -10,4 +10,12 @@ export class SuiteCheckoutSummaryRecurringOrderRepository implements CheckoutSum
   getStartDateInput = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-start-date-input"]');
   getStartDateTooltip = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-start-date-tooltip"]');
   getConfirmButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-confirm-button"]');
+
+  getEarliestSelectableStartDate = (): Cypress.Chainable<string> => this.getStartDateInput().invoke('attr', 'min');
+
+  assertStartDateRejected = (): void => {
+    this.getStartDateInput().then(($input): void => {
+      expect(($input[0] as HTMLInputElement).validity.rangeUnderflow).to.eq(true);
+    });
+  };
 }

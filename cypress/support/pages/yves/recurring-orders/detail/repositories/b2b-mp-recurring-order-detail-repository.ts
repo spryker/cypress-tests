@@ -8,4 +8,9 @@ export class B2bMpRecurringOrderDetailRepository extends SuiteRecurringOrderDeta
   };
 
   getHistoryViewOrderLink = (): Cypress.Chainable => cy.get('[data-qa*="recurring-order-history-view-order"]');
+
+  getFlashAlert = (): Cypress.Chainable => cy.get('flash-message.flash-message--alert');
+
+  getEditCadenceSelect = (): Cypress.Chainable =>
+    cy.get('.main-popup--open [data-qa="recurring-order-edit-cadence-select"]').first();
 }

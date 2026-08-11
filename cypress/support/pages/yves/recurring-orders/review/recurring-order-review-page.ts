@@ -161,11 +161,11 @@ export class RecurringOrderReviewPage extends YvesPage {
   getAddedItemQuantityField = (): Cypress.Chainable => this.repository.getAddedItemQuantityFields().first();
 
   selectShipmentAddress = (): void => {
-    this.selectFirstRealOption(() => this.repository.getShipmentAddressSelect().filter(':visible').first());
+    this.selectFirstRealOption(this.repository.getShipmentAddressSelect);
   };
 
   selectShipmentMethod = (): void => {
-    this.selectFirstRealOption(() => this.repository.getShipmentMethodSelect().filter(':visible').first());
+    this.selectFirstRealOption(this.repository.getShipmentMethodSelect);
   };
 
   private selectFirstRealOption = (getSelect: () => Cypress.Chainable): void => {
@@ -177,7 +177,7 @@ export class RecurringOrderReviewPage extends YvesPage {
           .map((option) => (option as HTMLOptionElement).value)
           .find((optionValue) => optionValue !== '');
 
-        getSelect().select(String(value));
+        getSelect().select(String(value), { force: true });
       });
   };
 }
