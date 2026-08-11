@@ -14,8 +14,6 @@ export class SuiteCheckoutSummaryRecurringOrderRepository implements CheckoutSum
   getEarliestSelectableStartDate = (): Cypress.Chainable<string> => this.getStartDateInput().invoke('attr', 'min');
 
   assertStartDateRejected = (): void => {
-    this.getStartDateInput().then(($input): void => {
-      expect(($input[0] as HTMLInputElement).validity.rangeUnderflow).to.eq(true);
-    });
+    this.getStartDateInput().blur().invoke('prop', 'validity').its('rangeUnderflow').should('eq', true);
   };
 }
