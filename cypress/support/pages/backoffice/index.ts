@@ -96,3 +96,5 @@ export * from './product-option/product-option-page';
 export * from './refund/refund-page';
 export * from './product-search/product-search-preferences-page';
 export * from './product-relation/product-relation-page';
+export * from './order-experience-management/list/recurring-schedule-list-page';
+export * from './order-experience-management/view/recurring-schedule-view-page';

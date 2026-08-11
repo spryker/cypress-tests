@@ -29,6 +29,14 @@ export class CheckoutSummaryRecurringOrderPage extends YvesPage {
     this.repository.getCadenceTypeSelect().select(cadenceType, { force: true });
   };
 
+  getStartDateInput = (): Cypress.Chainable => this.repository.getStartDateInput();
+
+  getStartDateTooltip = (): Cypress.Chainable => this.repository.getStartDateTooltip();
+
+  selectStartDate = (date: string): void => {
+    this.repository.getStartDateInput().clear().type(date);
+  };
+
   confirmRecurringOrder = (): void => {
     cy.intercept('POST', '**/recurring-order/save').as('saveRequest');
     this.repository.getConfirmButton().click();

@@ -32,3 +32,4 @@ export * from './configuration';
 export * from './acl-navigation-access';
 export * from './purchasing-control';
 export * from './refund';
+export * from './order-experience-management';
