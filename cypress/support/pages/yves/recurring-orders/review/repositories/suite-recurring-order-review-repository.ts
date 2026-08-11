@@ -41,7 +41,7 @@ export class SuiteRecurringOrderReviewRepository implements RecurringOrderReview
     cy.get('[data-qa="review-add-product-picker-search"]').find('[data-value]').first();
   getAddProductPickerPrice = (): Cypress.Chainable => cy.get('[data-qa="review-add-product-picker-price"]');
   getAddProductOfferSelect = (): Cypress.Chainable =>
-    cy.get('[data-qa="review-add-product-picker-offer"]').find('select');
+    cy.get('[data-qa="review-add-product-picker-offer"]').find('select').filter(':visible').first();
   getAddProductPickerQuantityInput = (): Cypress.Chainable => cy.get('[data-qa="review-add-product-picker-quantity"]');
   getAddProductPickerSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="review-add-product-picker-submit"]');
   getAddProductLine = (): Cypress.Chainable => cy.get('[data-qa="review-add-product-line"]');

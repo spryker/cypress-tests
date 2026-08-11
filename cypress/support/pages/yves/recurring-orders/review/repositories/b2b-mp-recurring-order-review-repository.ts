@@ -10,4 +10,7 @@ export class B2bMpRecurringOrderReviewRepository extends SuiteRecurringOrderRevi
 
   getShipmentMethodSelect = (): Cypress.Chainable =>
     cy.get('.main-popup--open [data-qa="review-shipment-selection-method"]').first();
+
+  getAddProductOfferSelect = (): Cypress.Chainable =>
+    cy.get('.main-popup--open [data-qa="review-add-product-picker-offer"]').find('select').first();
 }

@@ -49,13 +49,17 @@ Cypress.Commands.add(
           failOnStatusCode: false,
         })
         .then((response) => {
-          if (response.status === 500 || response.status === 408) {
+          if (response.status >= 400) {
             if (retries > 0) {
-              cy.log('Retrying due to error or timeout...');
+              cy.log(`Retrying "${dynamicFixturesFilePath}" after HTTP ${response.status}...`);
               return cy.loadDynamicFixturesByPayload(dynamicFixturesFilePath, retries - 1);
-            } else {
-              throw new Error(response.body);
             }
+
+            throw new Error(
+              `Dynamic fixtures "${dynamicFixturesFilePath}" failed with HTTP ${response.status}: ${JSON.stringify(
+                response.body
+              )}`
+            );
           }
 
           if (Array.isArray(response.body.data)) {

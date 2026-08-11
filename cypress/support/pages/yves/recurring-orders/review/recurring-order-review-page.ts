@@ -119,12 +119,14 @@ export class RecurringOrderReviewPage extends YvesPage {
   };
 
   searchAndSelectProduct = (sku: string): void => {
+    cy.intercept('GET', '**/recurring-order/product-offer-select*').as('productOffers');
     this.repository.getAddProductSearchInput().filter(':visible').first().clear().type(sku);
     this.repository.getAddProductSuggestion().filter(':visible').first().click();
+    cy.wait('@productOffers');
   };
 
   selectAddProductOffer = (): void => {
-    this.selectFirstRealOption(() => this.repository.getAddProductOfferSelect().filter(':visible').first());
+    this.selectFirstRealOption(this.repository.getAddProductOfferSelect);
   };
 
   setAddProductQuantity = (quantity: number): void => {
