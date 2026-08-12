@@ -41,22 +41,13 @@ export class StoreCreatePage extends BackofficePage {
     this.repository.getSaveButton().click();
   };
 
-  // The relation tables redraw after their selectable-table request resolves, so a bare
-  // click can land on a row that is about to be replaced. `force: true` then hides the
-  // failure and the store saves without that relation — a store with no locale is
-  // accepted, published into the store list, and only surfaces much later as a 500 from
-  // Yves when something visits it (`defaultLocaleIsoCode` is null). `check()` is
-  // checkbox-aware and idempotent, and the retried assertion makes a lost click fail
-  // here, where the cause is obvious, instead of in an unrelated hook.
+  // The table redraws when its request resolves, so a plain click can land on a row that is
+  // about to be replaced; `check` is idempotent and the assertion catches a click that lost.
   private checkRelation = (input: Cypress.Chainable): void => {
     input.check({ force: true }).should('be.checked');
   };
 
-  // The default-locale and default-currency dropdowns are populated from the rows checked
-  // in the relation table, so they have to be set after that checkbox, not before it —
-  // selecting first left the store with a null `defaultLocaleIsoCode`, which Yves only
-  // reports as a 500 the next time anything visits the store. The assertion holds the
-  // value against the re-render the checkbox triggers.
+  // Must run after checkRelation: the dropdown only offers relations already checked.
   private selectDefault = (select: Cypress.Chainable, value: string): void => {
     select.select(value, { force: true }).should('have.value', value);
   };
