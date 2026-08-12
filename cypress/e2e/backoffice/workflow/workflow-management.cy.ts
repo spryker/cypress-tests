@@ -9,12 +9,6 @@ describe(
     tags: ['@backoffice', '@workflow', 'workflow', 'spryker-core-back-office', 'spryker-core'],
   },
   (): void => {
-    if (!['suite'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because tests run only for suite', () => {});
-
-      return;
-    }
-
     const workflowManagementPage = container.get(WorkflowManagementPage);
     const userLoginScenario = container.get(UserLoginScenario);
 
