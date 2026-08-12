@@ -15,17 +15,17 @@ export class StoreCreatePage extends BackofficePage {
     this.repository.getNameInput().type(store.name);
 
     this.repository.getLocalesTab().click();
+    this.repository.getDefaultLocaleSelect().select(store.locale, { force: true });
     this.repository.getLocaleSearchInput().clear().type(store.locale, { delay: 0 });
     this.interceptTable({ url: '/locale-gui/index/available-locale-table-selectable**' }).then(() => {
       this.checkRelation(this.repository.getAvailableLocaleInput(store.locale));
-      this.selectDefault(this.repository.getDefaultLocaleSelect(), store.locale);
     });
 
     this.repository.getCurrenciesTab().click();
+    this.repository.getDefaultCurrencySelect().select(store.currency, { force: true });
     this.repository.getCurrencySearchInput().clear().type(store.currency);
     this.interceptTable({ url: '/currency-gui/index/available-currency-table-selectable**' }).then(() => {
       this.checkRelation(this.repository.getAvailableCurrencyInput(store.currency));
-      this.selectDefault(this.repository.getDefaultCurrencySelect(), store.currency);
     });
 
     this.repository.getDisplayRegionsTab().click();
@@ -45,11 +45,6 @@ export class StoreCreatePage extends BackofficePage {
   // about to be replaced; `check` is idempotent and the assertion catches a click that lost.
   private checkRelation = (input: Cypress.Chainable): void => {
     input.check({ force: true }).should('be.checked');
-  };
-
-  // Must run after checkRelation: the dropdown only offers relations already checked.
-  private selectDefault = (select: Cypress.Chainable, value: string): void => {
-    select.select(value, { force: true }).should('have.value', value);
   };
 }
 
