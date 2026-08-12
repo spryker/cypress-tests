@@ -1,0 +1,39 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveWorkflowWithTrigger",
+          "key": "workflow",
+          "arguments": [
+            "Company",
+            "Entity.spy_company.create",
+            "E2E Instance Lifecycle WF",
+            "<?xml version=\"1.0\"?>\n<statemachine xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://static.spryker.com/state-machine-01.xsd\">\n    <process name=\"E2E Instance Lifecycle WF\" main=\"true\">\n        <states>\n            <state name=\"new\" display=\"New\"/>\n            <state name=\"confirmed\" display=\"Confirmed\"/>\n        </states>\n        <transitions>\n            <transition>\n                <source>new</source>\n                <target>confirmed</target>\n                <event>confirm</event>\n            </transition>\n        </transitions>\n        <events>\n            <event name=\"confirm\" manual=\"true\"/>\n        </events>\n    </process>\n</statemachine>",
+            "new"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [{ "name": "E2E Instance Lifecycle Co", "isActive": false, "status": "pending" }]
+        }
+      ]
+    }
+  }
+}
