@@ -15,9 +15,6 @@ describe(
     let staticFixtures: WorkflowManagementStaticFixtures;
     let dynamicFixtures: WorkflowManagementDynamicFixtures;
 
-    // A unique name keeps the run idempotent and satisfies the "unique name" precondition.
-    const workflowName = `E2E Onboarding ${Date.now()}`;
-
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
@@ -31,6 +28,12 @@ describe(
 
     it('admin should be able to create, configure, version and activate a workflow', (): void => {
       const { subjectType, triggerEventLabel, initialState } = staticFixtures;
+
+      // Generate the unique name inside the test so each retry gets a fresh one. A module-scoped name is
+      // computed once and reused across Cypress retries, so a failed first attempt leaves the process
+      // created and every retry then hits "a state machine with this name already exists". The random
+      // suffix guards against two attempts landing in the same millisecond.
+      const workflowName = `E2E Onboarding ${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
 
       // The definition XML lives in the static fixture; only the unique process name is injected here.
       const definition = staticFixtures.definitionTemplate.replace('%process_name%', workflowName);
