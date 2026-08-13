@@ -24,7 +24,7 @@ export class B2bLoginRepository implements LoginRepository {
   getForgotPasswordLink(): Cypress.Chainable {
     return cy.get('[data-qa="customer-forgot-password-link"]');
   }
-  getForgotPasswordHeading(): string {
-    return 'Recover my password';
+  getForgotPasswordEmailInput(): Cypress.Chainable {
+    return cy.get('#forgottenPassword_email');
   }
 }

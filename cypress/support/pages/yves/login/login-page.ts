@@ -65,7 +65,7 @@ export class LoginPage extends YvesPage {
     this.repository.getForgotPasswordLink().click();
   };
 
-  getForgotPasswordHeading = (): Cypress.Chainable => cy.contains(this.repository.getForgotPasswordHeading());
+  getForgotPasswordEmailInput = (): Cypress.Chainable => this.repository.getForgotPasswordEmailInput();
 }
 
 interface LoginParams {

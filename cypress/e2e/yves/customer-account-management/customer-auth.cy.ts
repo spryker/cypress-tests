@@ -48,7 +48,7 @@ describe(
       loginPage.clickForgotPassword();
 
       cy.url().should('include', 'password/forgotten');
-      loginPage.getForgotPasswordHeading().should('be.visible');
+      loginPage.getForgotPasswordEmailInput().should('be.visible');
     });
 
     it('customer should be able to logout', (): void => {

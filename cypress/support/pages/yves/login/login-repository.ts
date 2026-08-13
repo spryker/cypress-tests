@@ -14,5 +14,5 @@ export interface LoginRepository {
   getRegistrationCompletedMessage(): string;
   getRegistrationToggleRadio(): Cypress.Chainable;
   getForgotPasswordLink(): Cypress.Chainable;
-  getForgotPasswordHeading(): string;
+  getForgotPasswordEmailInput(): Cypress.Chainable;
 }
