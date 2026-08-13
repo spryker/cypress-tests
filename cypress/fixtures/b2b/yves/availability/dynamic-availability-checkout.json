@@ -162,13 +162,23 @@
           "type": "helper",
           "name": "havePersistentQuote",
           "key": "quote1",
-          "arguments": [{ "customer": "#customer1" }]
+          "arguments": [
+            {
+              "customer": "#customer1",
+              "items": [{ "sku": "#product.sku", "abstractSku": "#product.abstract_sku", "quantity": 1 }]
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "havePersistentQuote",
           "key": "quote2",
-          "arguments": [{ "customer": "#customer2" }]
+          "arguments": [
+            {
+              "customer": "#customer2",
+              "items": [{ "sku": "#product.sku", "abstractSku": "#product.abstract_sku", "quantity": 1 }]
+            }
+          ]
         }
       ]
     }

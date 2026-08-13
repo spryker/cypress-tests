@@ -3,6 +3,11 @@ import { AvailabilityCheckoutDynamicFixtures, AvailabilityCheckoutStaticFixtures
 import { CartPage, CustomerOverviewPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario, ProductAddToCartScenario } from '@scenarios/yves';
 
+// The B2B storefronts never showed the cart page's quick-add form to these customers, so their
+// fixtures seed the line straight into a persistent quote — the same shape every other B2B cart
+// fixture here uses. The stock cap under test is unaffected by how the line got into the cart.
+const PRESEEDED_CART_REPOSITORY_IDS = ['b2b', 'b2b-mp'];
+
 describe(
   'availability checkout',
   {
@@ -28,7 +33,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      productAddToCartScenario.execute({ sku: dynamicFixtures.product.sku });
+      addProductToCart();
 
       cartPage.visit();
       cartPage.changeQuantity({
@@ -49,7 +54,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      productAddToCartScenario.execute({ sku: dynamicFixtures.product.sku });
+      addProductToCart();
 
       checkoutScenario.execute({
         idCustomerAddress: dynamicFixtures.address.id_customer_address,
@@ -62,5 +67,13 @@ describe(
         timeout: 15000,
       });
     });
+
+    function addProductToCart(): void {
+      if (PRESEEDED_CART_REPOSITORY_IDS.includes(Cypress.env('repositoryId'))) {
+        return;
+      }
+
+      productAddToCartScenario.execute({ sku: dynamicFixtures.product.sku });
+    }
   }
 );
