@@ -157,6 +157,18 @@
           "type": "helper",
           "name": "haveProductInStockForStore",
           "arguments": ["#store", { "sku": "#product.sku", "quantity": 1, "isNeverOutOfStock": false }]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "quote1",
+          "arguments": [{ "customer": "#customer1" }]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "quote2",
+          "arguments": [{ "customer": "#customer2" }]
         }
       ]
     }

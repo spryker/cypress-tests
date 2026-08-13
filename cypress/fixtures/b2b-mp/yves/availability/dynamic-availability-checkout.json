@@ -239,6 +239,18 @@
             },
             "#merchant.stocks"
           ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "quote1",
+          "arguments": [{ "customer": "#customer1" }]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "quote2",
+          "arguments": [{ "customer": "#customer2" }]
         }
       ]
     }
