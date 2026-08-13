@@ -12,7 +12,9 @@ export class B2cProductRelationRepository implements ProductRelationRepository {
   }
 
   getProductSearchInput(): Cypress.Chainable {
-    return cy.get('.dt-search input');
+    // Both the owning-product table and the rule table on the hidden tab render a DataTables search
+    // box, so the box has to be tied to its table rather than picked off the page.
+    return cy.get('input[aria-controls="product-table"]');
   }
 
   getProductTableProcessing(): Cypress.Chainable {
