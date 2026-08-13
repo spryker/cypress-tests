@@ -20,6 +20,10 @@ describe('discount create', { tags: ['@backoffice', '@discount', 'discount', 'sp
   // ISO-8601 day of week (1 = Monday … 7 = Sunday), matching the PHP date('N') the source used.
   const isoDayOfWeek = new Date().getDay() === 0 ? 7 : new Date().getDay();
   const applyWhen = `day-of-week = '${isoDayOfWeek}'`;
+  // The collector query has to name a filter the shop registers. `sku` comes from the core
+  // ItemBySkuCollectorPlugin, so it resolves everywhere; the `attribute.*` filters the Codeception
+  // original used are built from each shop's own product attribute keys and do not.
+  const applyTo = "sku = 'ANY-SKU'";
 
   before((): void => {
     ({ dynamicFixtures, staticFixtures } = Cypress.env());
@@ -42,7 +46,7 @@ describe('discount create', { tags: ['@backoffice', '@discount', 'discount', 'sp
       validTo,
       calculatorPlugin: 'Fixed amount',
       amount: '18,36',
-      applyTo: "attribute.width = '15'",
+      applyTo,
       applyWhen,
     });
 
