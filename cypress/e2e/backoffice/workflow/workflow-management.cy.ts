@@ -29,13 +29,11 @@ describe(
     it('admin should be able to create, configure, version and activate a workflow', (): void => {
       const { subjectType, triggerEventLabel, initialState } = staticFixtures;
 
-    
       const workflowName = `E2E Onboarding ${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
 
       const definition = staticFixtures.definitionTemplate.replace('%process_name%', workflowName);
 
       workflowManagementPage.visit();
-
 
       workflowManagementPage.createWorkflow({ name: workflowName, subjectType });
       workflowManagementPage.getProcessRow(workflowName).should('exist');
@@ -56,7 +54,11 @@ describe(
       // The overview table reflects the active version, active status and trigger summary.
       // Anchored, and not `contain`: the label is translated, and "Inactive" contains "active", so a substring
       // check passes on a workflow that never activated — which is exactly how this went unnoticed.
-      workflowManagementPage.getProcessRowStatus(workflowName).invoke('text').invoke('trim').should('match', /^active$/i);
+      workflowManagementPage
+        .getProcessRowStatus(workflowName)
+        .invoke('text')
+        .invoke('trim')
+        .should('match', /^active$/i);
       workflowManagementPage.getProcessRowActiveVersion(workflowName).should('contain', '1');
       workflowManagementPage.getProcessRowTriggers(workflowName).should('contain', triggerEventLabel);
     });
