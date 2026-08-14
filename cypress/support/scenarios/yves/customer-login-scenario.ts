@@ -9,6 +9,10 @@ export class CustomerLoginScenario {
 
   execute = (params: ExecuteParams): void => {
     if (params.withoutSession) {
+      if (params.resetSession) {
+        cy.clearCookies();
+      }
+
       this.loginPage.visit();
       this.loginPage.login(params);
 
@@ -31,4 +35,5 @@ interface ExecuteParams {
   email: string;
   password: string;
   withoutSession?: boolean;
+  resetSession?: boolean;
 }
