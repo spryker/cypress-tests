@@ -1,0 +1,6 @@
+{
+  "defaultPassword": "change123",
+  "initialState": "new",
+  "manualEvent": "confirm",
+  "targetState": "confirmed"
+}
