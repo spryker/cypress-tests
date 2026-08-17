@@ -265,10 +265,6 @@ describe(
       shouldTriggerOmsInCli?: boolean,
       skipLogin?: boolean
     ): void {
-      // On the amendment "finish" step the customer is already logged in from the amendment
-      // flow. Re-authenticating there goes through the cached cy.session snapshot taken at the
-      // first login, which drops the active amendment cart and leaves an empty cart at checkout.
-      // Skip the login for that call so the live amendment session is preserved.
       if (!skipLogin) {
         customerLoginScenario.execute({
           email: email,
