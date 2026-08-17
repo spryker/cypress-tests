@@ -658,6 +658,20 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
         override: { localizedAttributes: [{ localeName: 'zz_ZZ', name: 'Unknown locale', isSearchable: true }] },
       },
       {
+        // Image urls are deliberately valid so the 422 can only come from the locale check.
+        title: 'unknown locale in imageSets',
+        override: {
+          imageSets: [
+            {
+              localeName: 'zz_ZZ',
+              images: [
+                { externalUrlSmall: 'https://example.org/small.png', externalUrlLarge: 'https://example.org/large.png' },
+              ],
+            },
+          ],
+        },
+      },
+      {
         title: 'unknown category uuid',
         override: { categories: [{ uuid: NON_EXISTENT_UUID }] },
       },
@@ -776,6 +790,20 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       {
         title: 'unknown locale in localizedAttributes',
         override: { localizedAttributes: [{ localeName: 'zz_ZZ', name: 'Unknown locale', isSearchable: true }] },
+      },
+      {
+        // Image urls are deliberately valid so the 422 can only come from the locale check.
+        title: 'unknown locale in imageSets',
+        override: {
+          imageSets: [
+            {
+              localeName: 'zz_ZZ',
+              images: [
+                { externalUrlSmall: 'https://example.org/small.png', externalUrlLarge: 'https://example.org/large.png' },
+              ],
+            },
+          ],
+        },
       },
       {
         title: 'unknown category uuid',
