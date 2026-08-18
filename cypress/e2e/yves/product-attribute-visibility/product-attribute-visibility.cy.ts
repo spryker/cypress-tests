@@ -58,89 +58,89 @@ describe(
       attributeVisibilityPage.visitSearchAndWaitForProduct(dynamicFixtures.product.abstract_sku);
     });
 
-    // it('Should display attribute badges', (): void => {
-    //   // This arrange must stay inside the test: retryableBefore re-runs before every retry
-    //   // of any test in this spec, and re-setting PDP+PLP+Cart there enqueues the opposite
-    //   // visibility toggle between the attempts of the "NOT show" test — under a slow publish
-    //   // pipeline the storefront then stays one delivery behind for all its retries.
-    //   updateAttributeVisibility(staticFixtures.attributeKey, ['PDP', 'PLP', 'Cart']);
-    //   cy.runQueueWorker();
-    //
-    //   attributeVisibilityPage.visitSearchAndWaitForBadgeVisible(
-    //     dynamicFixtures.product.abstract_sku,
-    //     staticFixtures.attributeValue
-    //   );
-    //   attributeVisibilityPage.getFirstProductItem().within(() => {
-    //     attributeVisibilityPage.getAttributeBadge().should('contain', staticFixtures.attributeValue);
-    //   });
-    //
-    //   attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
-    //   cy.url().should('not.include', '/search');
-    //   attributeVisibilityPage.getPdpAttribute().should('contain', staticFixtures.attributeValue);
-    //
-    //   customerLoginScenario.execute({
-    //     email: dynamicFixtures.customer.email,
-    //     password: staticFixtures.defaultPassword,
-    //   });
-    //   attributeVisibilityPage.visitCart();
-    //   attributeVisibilityPage.getFirstCartItem().within(() => {
-    //     attributeVisibilityPage.getAttributeBadge().should('contain', staticFixtures.attributeValue);
-    //   });
-    // });
-    //
-    // it('Should NOT show attribute badge (except PDP)', (): void => {
-    //   userLoginScenario.execute({
-    //     username: dynamicFixtures.rootUser.username,
-    //     password: staticFixtures.defaultPassword,
-    //   });
-    //
-    //   updateAttributeVisibility(staticFixtures.attributeKey, ['PDP']);
-    //   cy.runQueueWorker();
-    //
-    //   attributeVisibilityPage.visitSearchAndWaitForBadgeNotVisible(
-    //     dynamicFixtures.product.abstract_sku,
-    //     staticFixtures.attributeValue
-    //   );
-    //   attributeVisibilityPage.getFirstProductItem().should('not.contain', staticFixtures.attributeValue);
-    //
-    //   attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
-    //   cy.url().should('not.include', '/search');
-    //   attributeVisibilityPage.getPdpAttribute().should('contain', staticFixtures.attributeValue);
-    //
-    //   customerLoginScenario.execute({
-    //     email: dynamicFixtures.customer.email,
-    //     password: staticFixtures.defaultPassword,
-    //   });
-    //   attributeVisibilityPage.visitCart();
-    //   attributeVisibilityPage.getFirstCartItem().should('not.contain', staticFixtures.attributeValue);
-    // });
-    //
-    // it('Should not show internal attribute', (): void => {
-    //   userLoginScenario.execute({
-    //     username: dynamicFixtures.rootUser.username,
-    //     password: staticFixtures.defaultPassword,
-    //   });
-    //
-    //   updateAttributeVisibility(staticFixtures.attributeKey, []);
-    //   cy.runQueueWorker();
-    //
-    //   attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
-    //   cy.url().should('not.include', '/search');
-    //   attributeVisibilityPage.getPdpAttribute().should('not.contain', staticFixtures.attributeValue);
-    //
-    //   attributeVisibilityPage.visitSearchAndWaitForBadgeNotVisible(
-    //     dynamicFixtures.product.abstract_sku,
-    //     staticFixtures.attributeValue
-    //   );
-    //   attributeVisibilityPage.getFirstProductItem().should('not.contain', staticFixtures.attributeValue);
-    //
-    //   customerLoginScenario.execute({
-    //     email: dynamicFixtures.customer.email,
-    //     password: staticFixtures.defaultPassword,
-    //   });
-    //   attributeVisibilityPage.visitCart();
-    //   attributeVisibilityPage.getFirstCartItem().should('not.contain', staticFixtures.attributeValue);
-    // });
+    it('Should display attribute badges', (): void => {
+      // This arrange must stay inside the test: retryableBefore re-runs before every retry
+      // of any test in this spec, and re-setting PDP+PLP+Cart there enqueues the opposite
+      // visibility toggle between the attempts of the "NOT show" test — under a slow publish
+      // pipeline the storefront then stays one delivery behind for all its retries.
+      updateAttributeVisibility(staticFixtures.attributeKey, ['PDP', 'PLP', 'Cart']);
+      cy.runQueueWorker();
+
+      attributeVisibilityPage.visitSearchAndWaitForBadgeVisible(
+        dynamicFixtures.product.abstract_sku,
+        staticFixtures.attributeValue
+      );
+      attributeVisibilityPage.getFirstProductItem().within(() => {
+        attributeVisibilityPage.getAttributeBadge().should('contain', staticFixtures.attributeValue);
+      });
+
+      attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
+      cy.url().should('not.include', '/search');
+      attributeVisibilityPage.getPdpAttribute().should('contain', staticFixtures.attributeValue);
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+      });
+      attributeVisibilityPage.visitCart();
+      attributeVisibilityPage.getFirstCartItem().within(() => {
+        attributeVisibilityPage.getAttributeBadge().should('contain', staticFixtures.attributeValue);
+      });
+    });
+
+    it('Should NOT show attribute badge (except PDP)', (): void => {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      updateAttributeVisibility(staticFixtures.attributeKey, ['PDP']);
+      cy.runQueueWorker();
+
+      attributeVisibilityPage.visitSearchAndWaitForBadgeNotVisible(
+        dynamicFixtures.product.abstract_sku,
+        staticFixtures.attributeValue
+      );
+      attributeVisibilityPage.getFirstProductItem().should('not.contain', staticFixtures.attributeValue);
+
+      attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
+      cy.url().should('not.include', '/search');
+      attributeVisibilityPage.getPdpAttribute().should('contain', staticFixtures.attributeValue);
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+      });
+      attributeVisibilityPage.visitCart();
+      attributeVisibilityPage.getFirstCartItem().should('not.contain', staticFixtures.attributeValue);
+    });
+
+    it('Should not show internal attribute', (): void => {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      updateAttributeVisibility(staticFixtures.attributeKey, []);
+      cy.runQueueWorker();
+
+      attributeVisibilityPage.navigateToProductDetailPage(dynamicFixtures.product.abstract_sku);
+      cy.url().should('not.include', '/search');
+      attributeVisibilityPage.getPdpAttribute().should('not.contain', staticFixtures.attributeValue);
+
+      attributeVisibilityPage.visitSearchAndWaitForBadgeNotVisible(
+        dynamicFixtures.product.abstract_sku,
+        staticFixtures.attributeValue
+      );
+      attributeVisibilityPage.getFirstProductItem().should('not.contain', staticFixtures.attributeValue);
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+      });
+      attributeVisibilityPage.visitCart();
+      attributeVisibilityPage.getFirstCartItem().should('not.contain', staticFixtures.attributeValue);
+    });
 
     suiteOnlyIt(
       'customer should only be offered super attribute values that lead to an existing product variant',
