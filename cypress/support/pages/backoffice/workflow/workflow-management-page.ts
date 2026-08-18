@@ -48,6 +48,10 @@ export class WorkflowManagementPage extends BackofficePage {
     this.repository.getVersionActivationConfirmButton().click();
   };
 
+  activateProcess = (name: string): void => {
+    this.repository.getProcessRowActivateButton(name).click();
+  };
+
   getValidationResult = (): Cypress.Chainable => this.repository.getValidationResult();
 
   getProcessRow = (name: string): Cypress.Chainable => this.repository.getProcessRow(name);
@@ -57,4 +61,6 @@ export class WorkflowManagementPage extends BackofficePage {
   getProcessRowActiveVersion = (name: string): Cypress.Chainable => this.repository.getProcessRowActiveVersion(name);
 
   getProcessRowTriggers = (name: string): Cypress.Chainable => this.repository.getProcessRowTriggers(name);
+
+  getProcessRowActivateButton = (name: string): Cypress.Chainable => this.repository.getProcessRowActivateButton(name);
 }

@@ -83,12 +83,10 @@ describe(
         .getStartDateTooltip()
         .should('exist')
         .and('contain.text', staticFixtures.startDateTooltipText);
-      checkoutSummaryRecurringOrderPage.getStartDateInput().should('have.attr', 'min', formatDate(new Date()));
+      checkoutSummaryRecurringOrderPage.getEarliestSelectableStartDate().should('eq', formatDate(new Date()));
 
       checkoutSummaryRecurringOrderPage.selectStartDate(addDaysFromToday(-30));
-      checkoutSummaryRecurringOrderPage.getStartDateInput().should(($input): void => {
-        expect(($input[0] as HTMLInputElement).validity.rangeUnderflow).to.eq(true);
-      });
+      checkoutSummaryRecurringOrderPage.assertStartDateRejected();
 
       checkoutSummaryRecurringOrderPage.selectStartDate(futureDate);
       checkoutSummaryRecurringOrderPage.getStartDateInput().should('have.value', futureDate);
