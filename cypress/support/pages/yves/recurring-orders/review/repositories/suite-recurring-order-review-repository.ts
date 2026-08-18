@@ -41,7 +41,7 @@ export class SuiteRecurringOrderReviewRepository implements RecurringOrderReview
     cy.get('[data-qa="review-add-product-picker-search"]').find('[data-value]').first();
   getAddProductPickerPrice = (): Cypress.Chainable => cy.get('[data-qa="review-add-product-picker-price"]');
   getAddProductOfferSelect = (): Cypress.Chainable =>
-    cy.get('[data-qa="review-add-product-picker-offer"]').find('select');
+    cy.get('[data-qa="review-add-product-picker-offer"]').find('select').filter(':visible').first();
   getAddProductPickerQuantityInput = (): Cypress.Chainable => cy.get('[data-qa="review-add-product-picker-quantity"]');
   getAddProductPickerSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="review-add-product-picker-submit"]');
   getAddProductLine = (): Cypress.Chainable => cy.get('[data-qa="review-add-product-line"]');
@@ -49,6 +49,8 @@ export class SuiteRecurringOrderReviewRepository implements RecurringOrderReview
   getAddedItemQuantityFields = (): Cypress.Chainable =>
     cy.get('[data-qa="review-added-items-collection"]').find('input[name$="[quantity]"]');
 
-  getShipmentAddressSelect = (): Cypress.Chainable => cy.get('[data-qa="review-shipment-selection-address"]');
-  getShipmentMethodSelect = (): Cypress.Chainable => cy.get('[data-qa="review-shipment-selection-method"]');
+  getShipmentAddressSelect = (): Cypress.Chainable =>
+    cy.get('[data-qa="review-shipment-selection-address"]').filter(':visible').first();
+  getShipmentMethodSelect = (): Cypress.Chainable =>
+    cy.get('[data-qa="review-shipment-selection-method"]').filter(':visible').first();
 }

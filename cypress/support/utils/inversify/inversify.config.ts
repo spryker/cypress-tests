@@ -269,6 +269,8 @@ import { B2cCategoryReSortRepository } from '../../pages/backoffice/catalog/cate
 import { B2bCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/b2b-category-re-sort-repository';
 import { B2cMpCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/b2c-mp-category-re-sort-repository';
 import { B2bMpCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/b2b-mp-category-re-sort-repository';
+import { B2bMpRecurringOrderReviewRepository } from '../../pages/yves/recurring-orders/review/repositories/b2b-mp-recurring-order-review-repository';
+import { B2bMpCheckoutSummaryRecurringOrderRepository } from '../../pages/yves/recurring-orders/checkout-summary/repositories/b2b-mp-checkout-summary-recurring-order-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -539,10 +541,10 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.YvesBudgetCreateRepository]: B2bMpBudgetCreateRepository,
   [REPOSITORIES.YvesBudgetUpdateRepository]: B2bMpBudgetUpdateRepository,
   [REPOSITORIES.YvesCheckoutSummaryBudgetRepository]: SuiteCheckoutSummaryBudgetRepository,
-  [REPOSITORIES.YvesCheckoutSummaryRecurringOrderRepository]: SuiteCheckoutSummaryRecurringOrderRepository,
+  [REPOSITORIES.YvesCheckoutSummaryRecurringOrderRepository]: B2bMpCheckoutSummaryRecurringOrderRepository,
   [REPOSITORIES.YvesRecurringOrderListRepository]: B2bMpRecurringOrderListRepository,
   [REPOSITORIES.YvesRecurringOrderDetailRepository]: B2bMpRecurringOrderDetailRepository,
-  [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
+  [REPOSITORIES.YvesRecurringOrderReviewRepository]: B2bMpRecurringOrderReviewRepository,
   [REPOSITORIES.TaxRateRepository]: B2bMpTaxRateRepository,
   [REPOSITORIES.ProductSearchPreferencesRepository]: B2bMpProductSearchPreferencesRepository,
   [REPOSITORIES.DiscountRepository]: B2bMpDiscountRepository,
