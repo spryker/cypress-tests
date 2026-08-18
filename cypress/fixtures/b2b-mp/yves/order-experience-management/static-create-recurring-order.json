@@ -1,4 +1,5 @@
 {
   "defaultPassword": "change123",
-  "scheduleName": "My Monthly Order"
+  "scheduleName": "My Monthly Order",
+  "startDateTooltipText": "The date your first recurring delivery is placed."
 }

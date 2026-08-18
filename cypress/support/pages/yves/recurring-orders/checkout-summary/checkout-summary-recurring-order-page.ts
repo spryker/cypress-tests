@@ -33,6 +33,12 @@ export class CheckoutSummaryRecurringOrderPage extends YvesPage {
 
   getStartDateTooltip = (): Cypress.Chainable => this.repository.getStartDateTooltip();
 
+  getEarliestSelectableStartDate = (): Cypress.Chainable<string> => this.repository.getEarliestSelectableStartDate();
+
+  assertStartDateRejected = (): void => {
+    this.repository.assertStartDateRejected();
+  };
+
   selectStartDate = (date: string): void => {
     this.repository.getStartDateInput().clear().type(date);
   };
