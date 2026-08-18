@@ -41,7 +41,9 @@ export class B2bProductRepository implements ProductRepository {
   getAttachmentItems = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-detail"] [data-qa="attachment-item"]');
   getVariantAttributeSelect = (attributeKey: string): Cypress.Chainable =>
-    cy.get(`[data-qa="component select attribute[${attributeKey}]"] select`);
+    cy.get(`select[name="attribute[${attributeKey}]"]`);
   getVariantAttributeOptions = (attributeKey: string): Cypress.Chainable =>
     this.getVariantAttributeSelect(attributeKey).find('option[value]:not([value=""])');
+  getSelectedVariantAttributeInput = (attributeKey: string): Cypress.Chainable =>
+    cy.get(`input[type="hidden"][name="attribute[${attributeKey}]"]`);
 }

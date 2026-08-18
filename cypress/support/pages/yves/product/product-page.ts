@@ -150,8 +150,12 @@ export class ProductPage extends YvesPage {
     return this.repository.getVariantAttributeOptions(attributeKey);
   };
 
-  getVariantAttributeSelectedValue = (attributeKey: string): Cypress.Chainable => {
-    return this.repository.getVariantAttributeSelect(attributeKey).invoke('val');
+  getVariantAttributeSelect = (attributeKey: string): Cypress.Chainable => {
+    return this.repository.getVariantAttributeSelect(attributeKey);
+  };
+
+  getSelectedVariantAttributeValue = (attributeKey: string): Cypress.Chainable => {
+    return this.repository.getSelectedVariantAttributeInput(attributeKey).invoke('val');
   };
 }
 

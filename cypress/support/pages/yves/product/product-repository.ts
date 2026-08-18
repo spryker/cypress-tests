@@ -27,4 +27,5 @@ export interface ProductRepository {
   getAttachmentItems(): Cypress.Chainable;
   getVariantAttributeSelect(attributeKey: string): Cypress.Chainable;
   getVariantAttributeOptions(attributeKey: string): Cypress.Chainable;
+  getSelectedVariantAttributeInput(attributeKey: string): Cypress.Chainable;
 }
