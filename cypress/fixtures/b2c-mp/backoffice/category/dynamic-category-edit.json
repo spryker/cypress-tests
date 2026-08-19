@@ -38,7 +38,10 @@
           "arguments": [
             {
               "locale": "#localeEN",
-              "parentCategoryNode": "#parentCategory.category_node"
+              "parentCategoryNode": "#parentCategory.category_node",
+              "isActive": false,
+              "isInMenu": true,
+              "isSearchable": true
             }
           ]
         }

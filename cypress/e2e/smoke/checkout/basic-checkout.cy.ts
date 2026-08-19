@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { CheckoutStaticFixtures } from '@interfaces/smoke';
 import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
@@ -69,12 +69,6 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
 
   function skipB2BMpIt(description: string, testFn: () => void): void {
     (Cypress.env('repositoryId') === 'b2b-mp' ? it.skip : it)(description, testFn);
-  }
-
-  function getPaymentMethodBasedOnEnv(): string {
-    return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-      ? 'dummyMarketplacePaymentInvoice'
-      : 'dummyPaymentInvoice';
   }
 
   function addTwoProductsToCart(): void {

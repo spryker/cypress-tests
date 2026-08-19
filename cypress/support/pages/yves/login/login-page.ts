@@ -60,6 +60,12 @@ export class LoginPage extends YvesPage {
   getRegistrationCompletedMessage = (): string => {
     return this.repository.getRegistrationCompletedMessage();
   };
+
+  clickForgotPassword = (): void => {
+    this.repository.getForgotPasswordLink().click();
+  };
+
+  getForgotPasswordEmailInput = (): Cypress.Chainable => this.repository.getForgotPasswordEmailInput();
 }
 
 interface LoginParams {

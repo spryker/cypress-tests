@@ -1,0 +1,150 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveNavigation",
+          "key": "navigationEmpty",
+          "arguments": [{ "name": "ACC Navigation Empty Tree", "key": "acc-navigation-empty-tree", "isActive": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveNavigation",
+          "key": "navigationWithoutType",
+          "arguments": [
+            {
+              "name": "ACC Navigation Child Without Type",
+              "key": "acc-navigation-child-without-type",
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveNavigation",
+          "key": "navigationExternalUrl",
+          "arguments": [
+            { "name": "ACC Navigation External Url", "key": "acc-navigation-external-url", "isActive": true }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveLocalizedNavigationNode",
+          "key": "externalUrlNode",
+          "arguments": [
+            {
+              "fkNavigation": "#navigationExternalUrl.id_navigation",
+              "fkLocale": 66,
+              "title": "foo",
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveNavigation",
+          "key": "navigationCategory",
+          "arguments": [
+            { "name": "ACC Navigation Category Type", "key": "acc-navigation-category-type", "isActive": true }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveLocalizedNavigationNode",
+          "key": "categoryNode",
+          "arguments": [
+            {
+              "fkNavigation": "#navigationCategory.id_navigation",
+              "fkLocale": 66,
+              "title": "foo",
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveNavigation",
+          "key": "navigationCmsPage",
+          "arguments": [
+            { "name": "ACC Navigation Cms Page Type", "key": "acc-navigation-cms-page-type", "isActive": true }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveLocalizedNavigationNode",
+          "key": "cmsPageNode",
+          "arguments": [
+            {
+              "fkNavigation": "#navigationCmsPage.id_navigation",
+              "fkLocale": 66,
+              "title": "foo",
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveNavigation",
+          "key": "navigationStructure",
+          "arguments": [
+            { "name": "ACC Navigation Tree Structure", "key": "acc-navigation-tree-structure", "isActive": true }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveLocalizedNavigationNode",
+          "key": "structureNode1",
+          "arguments": [
+            {
+              "fkNavigation": "#navigationStructure.id_navigation",
+              "fkLocale": 66,
+              "title": "node_1",
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveLocalizedNavigationNode",
+          "key": "structureNode11",
+          "arguments": [
+            {
+              "fkNavigation": "#navigationStructure.id_navigation",
+              "fkParentNavigationNode": "#structureNode1.id_navigation_node",
+              "fkLocale": 66,
+              "title": "node_1_1",
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveLocalizedNavigationNode",
+          "key": "structureNode2",
+          "arguments": [
+            {
+              "fkNavigation": "#navigationStructure.id_navigation",
+              "fkLocale": 66,
+              "title": "node_2",
+              "isActive": true
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
