@@ -665,7 +665,10 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
             {
               localeName: 'zz_ZZ',
               images: [
-                { externalUrlSmall: 'https://example.org/small.png', externalUrlLarge: 'https://example.org/large.png' },
+                {
+                  externalUrlSmall: 'https://example.org/small.png',
+                  externalUrlLarge: 'https://example.org/large.png',
+                },
               ],
             },
           ],
@@ -799,7 +802,10 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
             {
               localeName: 'zz_ZZ',
               images: [
-                { externalUrlSmall: 'https://example.org/small.png', externalUrlLarge: 'https://example.org/large.png' },
+                {
+                  externalUrlSmall: 'https://example.org/small.png',
+                  externalUrlLarge: 'https://example.org/large.png',
+                },
               ],
             },
           ],
