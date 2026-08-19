@@ -137,6 +137,26 @@ export class ProductPage extends YvesPage {
   getAttachmentsList = (): Cypress.Chainable => this.repository.getAttachmentsList();
 
   getAttachmentItems = (): Cypress.Chainable => this.repository.getAttachmentItems();
+
+  visitProductDetailPage = (params: VisitProductDetailPageParams): void => {
+    cy.visit(params.url);
+  };
+
+  selectVariantAttribute = (params: SelectVariantAttributeParams): void => {
+    this.repository.getVariantAttributeSelect(params.attributeKey).select(params.attributeValue);
+  };
+
+  getVariantAttributeOptions = (attributeKey: string): Cypress.Chainable => {
+    return this.repository.getVariantAttributeOptions(attributeKey);
+  };
+
+  getVariantAttributeSelect = (attributeKey: string): Cypress.Chainable => {
+    return this.repository.getVariantAttributeSelect(attributeKey);
+  };
+
+  getSelectedVariantAttributeValue = (attributeKey: string): Cypress.Chainable => {
+    return this.repository.getSelectedVariantAttributeInput(attributeKey).invoke('val');
+  };
 }
 
 interface SelectSoldByProductOfferParams {
@@ -153,4 +173,13 @@ interface AddToCartParams {
 
 interface GetProductOfferRadioParams {
   productOfferReference: string;
+}
+
+interface VisitProductDetailPageParams {
+  url: string;
+}
+
+interface SelectVariantAttributeParams {
+  attributeKey: string;
+  attributeValue: string;
 }

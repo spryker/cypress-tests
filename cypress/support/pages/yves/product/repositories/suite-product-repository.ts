@@ -38,4 +38,10 @@ export class SuiteProductRepository implements ProductRepository {
   getAttachmentsListSelector = (): string => '[data-qa="component product-detail"] ul.list';
   getAttachmentsList = (): Cypress.Chainable => cy.get(this.getAttachmentsListSelector());
   getAttachmentItems = (): Cypress.Chainable => cy.get('[data-qa="component product-detail"] .list__item .link');
+  getVariantAttributeSelect = (attributeKey: string): Cypress.Chainable =>
+    cy.get(`select[name="attribute[${attributeKey}]"]`);
+  getVariantAttributeOptions = (attributeKey: string): Cypress.Chainable =>
+    this.getVariantAttributeSelect(attributeKey).find('option[value]:not([value=""])');
+  getSelectedVariantAttributeInput = (attributeKey: string): Cypress.Chainable =>
+    cy.get(`input[type="hidden"][name="attribute[${attributeKey}]"]`);
 }
