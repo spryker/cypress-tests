@@ -1,5 +1,19 @@
 {
   "defaultPassword": "change123",
   "attributeKey": "farbe",
-  "attributeValue": "Cypress Test Farbe"
+  "attributeValue": "Cypress Test Farbe",
+  "variantProduct": {
+    "url": "/en/samsung-galaxy-ace-70",
+    "selectedAttribute": {
+      "key": "series",
+      "allValues": ["Ace 2", "Ace 3", "Ace Plus"],
+      "selectedValue": "Ace 2"
+    },
+    "unselectedAttribute": {
+      "key": "internal_storage_capacity",
+      "allValues": ["2.1 GB", "2.7 GB", "8 GB"],
+      "combinableValues": ["2.1 GB", "8 GB"],
+      "selectedValue": "8 GB"
+    }
+  }
 }
