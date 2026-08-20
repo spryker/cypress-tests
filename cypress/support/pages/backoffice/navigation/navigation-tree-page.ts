@@ -106,11 +106,9 @@ export class NavigationTreePage extends BackofficePage {
 
   updateNodeToCategoryType = (categoryUrlEn: string, categoryUrlDe: string): void => {
     this.selectNodeType('category');
-    // The category-node form requires a title per locale. The seeded node only carries an en_US title
-    // (the fixture helper is single-locale), so set both here to avoid a "should not be blank" reject.
     this.fillLocalizedTitles('foo');
-    this.getNodeFormBody().find(this.repository.getLocalizedCategoryUrlSelector(0)).clear().type(categoryUrlEn);
-    this.getNodeFormBody().find(this.repository.getLocalizedCategoryUrlSelector(1)).clear().type(categoryUrlDe);
+    this.getNodeFormBody().find(this.repository.getLocalizedCategoryUrlSelector('en_US')).clear().type(categoryUrlEn);
+    this.getNodeFormBody().find(this.repository.getLocalizedCategoryUrlSelector('de_DE')).clear().type(categoryUrlDe);
     this.submitNodeForm();
     this.getNodeFormBody().invoke('text').should('match', this.repository.getNodeUpdateSuccessPattern());
   };
@@ -123,12 +121,8 @@ export class NavigationTreePage extends BackofficePage {
   createChildNodeWithCmsPageType = (title: string, cmsPageUrlEn: string, cmsPageUrlDe: string): void => {
     this.selectNodeType('cms_page');
     this.fillLocalizedTitles(title);
-    // In the create-child form the locale sections render de_DE first (index 0) then en_US (index 1) —
-    // the reverse of the edit form. cms_page_url is validated against the locale, so the URLs must be
-    // placed by locale, not by a fixed en/de index order, or the server rejects them as "not valid
-    // for the given locale". (category_url isn't locale-checked, which is why the edit test tolerated it.)
-    this.getNodeFormBody().find(this.repository.getLocalizedCmsPageUrlSelector(0)).clear().type(cmsPageUrlDe);
-    this.getNodeFormBody().find(this.repository.getLocalizedCmsPageUrlSelector(1)).clear().type(cmsPageUrlEn);
+    this.getNodeFormBody().find(this.repository.getLocalizedCmsPageUrlSelector('en_US')).clear().type(cmsPageUrlEn);
+    this.getNodeFormBody().find(this.repository.getLocalizedCmsPageUrlSelector('de_DE')).clear().type(cmsPageUrlDe);
     this.checkNodeIsActive();
     this.submitNodeForm();
     this.assertNodeCreateSuccess();
