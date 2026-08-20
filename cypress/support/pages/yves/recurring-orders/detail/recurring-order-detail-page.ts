@@ -82,7 +82,7 @@ export class RecurringOrderDetailPage extends YvesPage {
   };
 
   selectCadence = (cadenceType: string): void => {
-    this.repository.getEditCadenceSelect().filter(':visible').first().select(cadenceType);
+    this.repository.getEditCadenceSelect().select(cadenceType, { force: true });
   };
 
   setStartDate = (date: string): void => {
