@@ -149,10 +149,13 @@ import { B2bMpSspServiceRepository } from '../../pages/yves/ssp-service/reposito
 import { B2bSspServiceRepository } from '../../pages/yves/ssp-service/repositories/b2b-ssp-service-repository';
 import { SuiteCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/suite-company-role-index-repository';
 import { SuiteCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/suite-company-role-create-repository';
+import { SuiteCompanyRegistrationRepository } from '../../pages/yves/company/register/repositories/suite-company-registration-repository';
 import { B2bMpCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2b-mp-company-role-create-repository';
+import { B2bMpCompanyRegistrationRepository } from '../../pages/yves/company/register/repositories/b2b-mp-company-registration-repository';
 import { B2bMpCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/b2b-mp-company-role-index-repository';
 import { B2bCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/b2b-company-role-index-repository';
 import { B2bCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2b-company-role-create-repository';
+import { B2bCompanyRegistrationRepository } from '../../pages/yves/company/register/repositories/b2b-company-registration-repository';
 import { B2cCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/b2c-company-role-index-repository';
 import { B2cCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2c-company-role-create-repository';
 import { B2cMpCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/b2c-mp-company-role-index-repository';
@@ -307,6 +310,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.SspServiceRepository]: SuiteSspServiceRepository,
   [REPOSITORIES.CompanyRoleIndexRepository]: SuiteCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: SuiteCompanyRoleCreateRepository,
+  [REPOSITORIES.CompanyRegistrationRepository]: SuiteCompanyRegistrationRepository,
   [REPOSITORIES.CustomerDeleteRepository]: SuiteCustomerDeleteRepository,
   [REPOSITORIES.CustomerProfileRepository]: SuiteCustomerProfileRepository,
   [REPOSITORIES.SspAssetRepository]: SuiteSspAssetRepository,
@@ -421,6 +425,7 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.ManageCompanyRoleUserRepository]: B2bManageCompanyRoleUserRepository,
   [REPOSITORIES.CompanyRoleIndexRepository]: B2bCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: B2bCompanyRoleCreateRepository,
+  [REPOSITORIES.CompanyRegistrationRepository]: B2bCompanyRegistrationRepository,
   [REPOSITORIES.CustomerDeleteRepository]: B2bCustomerDeleteRepository,
   [REPOSITORIES.CustomerProfileRepository]: B2bCustomerProfileRepository,
   [REPOSITORIES.AgentMultiFactorAuthRepository]: B2bAgentMultiFactorAuthRepository,
@@ -525,6 +530,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.ManageCompanyRoleUserRepository]: B2bMpManageCompanyRoleUserRepository,
   [REPOSITORIES.CompanyRoleIndexRepository]: B2bMpCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: B2bMpCompanyRoleCreateRepository,
+  [REPOSITORIES.CompanyRegistrationRepository]: B2bMpCompanyRegistrationRepository,
   [REPOSITORIES.SspInquiryRepository]: B2bMpSspInquiryRepository,
   [REPOSITORIES.CustomerDeleteRepository]: B2bMpCustomerDeleteRepository,
   [REPOSITORIES.CustomerProfileRepository]: B2bMpCustomerProfileRepository,
