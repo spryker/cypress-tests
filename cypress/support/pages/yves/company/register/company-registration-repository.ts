@@ -8,6 +8,7 @@ export interface CompanyRegistrationRepository {
   getConfirmPasswordInput(): Cypress.Chainable;
   getAcceptTermsCheckbox(): Cypress.Chainable;
   getRegistrationForm(): Cypress.Chainable;
+  getPageTitle(): Cypress.Chainable;
   getPageTitleText(): string;
   getRegistrationCompletedMessage(): string;
 }

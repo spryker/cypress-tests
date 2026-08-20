@@ -11,7 +11,6 @@ export class LoginPage extends YvesPage {
 
   protected PAGE_URL = '/login';
   protected DEFAULT_SALUTATION = 'Mr';
-  protected DEFAULT_PASSWORD_PREFIX = 'Change!23456';
 
   login = (params: LoginParams): void => {
     this.repository.getLoginEmailInput().clear().type(params.email);

@@ -3,7 +3,7 @@ import { injectable } from 'inversify';
 import { CompanyRegistrationRepository } from '../company-registration-repository';
 
 @injectable()
-export class B2bCompanyRegistrationRepository implements CompanyRegistrationRepository {
+export class B2cCompanyRegistrationRepository implements CompanyRegistrationRepository {
   getSalutationSelect = (): Cypress.Chainable => cy.get('[name="company_register_form[salutation]"]');
   getFirstNameInput = (): Cypress.Chainable => cy.get('[name="company_register_form[first_name]"]');
   getLastNameInput = (): Cypress.Chainable => cy.get('[name="company_register_form[last_name]"]');

@@ -14,6 +14,8 @@ export class B2bMpCompanyRegistrationRepository implements CompanyRegistrationRe
   getConfirmPasswordInput = (): Cypress.Chainable => cy.get('#company_register_form_password_confirm');
   getAcceptTermsCheckbox = (): Cypress.Chainable => cy.get('[name="company_register_form[accept_terms]"]');
   getRegistrationForm = (): Cypress.Chainable => cy.get('form[name="company_register_form"]');
+  getPageTitle = (): Cypress.Chainable => cy.get('h2.title');
   getPageTitleText = (): string => 'Create account';
-  getRegistrationCompletedMessage = (): string => 'Registration Successful';
+  getRegistrationCompletedMessage = (): string =>
+    'Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.';
 }
