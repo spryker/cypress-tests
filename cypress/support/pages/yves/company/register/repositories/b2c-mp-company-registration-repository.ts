@@ -12,7 +12,8 @@ export class B2cMpCompanyRegistrationRepository implements CompanyRegistrationRe
   // The repeated password type renders as two subfields, addressed by id rather than by name.
   getPasswordInput = (): Cypress.Chainable => cy.get('#company_register_form_password_pass');
   getConfirmPasswordInput = (): Cypress.Chainable => cy.get('#company_register_form_password_confirm');
-  getAcceptTermsCheckbox = (): Cypress.Chainable => cy.get('[name="company_register_form[accept_terms]"]');
+  // The checkbox atom renders an outer span carrying the same name/id, so the selector must pin the input.
+  getAcceptTermsCheckbox = (): Cypress.Chainable => cy.get('input[name="company_register_form[accept_terms]"]');
   getRegistrationForm = (): Cypress.Chainable => cy.get('form[name="company_register_form"]');
   getPageTitle = (): Cypress.Chainable => cy.get('h2.title');
   getPageTitleText = (): string => 'Create account';
