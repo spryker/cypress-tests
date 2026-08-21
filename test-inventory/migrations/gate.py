@@ -1,14 +1,22 @@
 #!/usr/bin/env python3
 """Migration drift gates. Run in CI; run locally before you push.
 
-G1 coverage      every inventory test is in exactly one matrix row (or is a clone of one),
+G1 coverage      the inventory still matches the working tree,
+                 every inventory test is in exactly one matrix row (or is a clone of one),
                  a deleted source has a recorded target and a settled verdict,
                  every framework-native domain resolves through domains.yaml,
                  the generated files are not stale.
 G3 parity        a row with verified_run recorded must have its target test present.
 G4 skip honesty  a skipped target test can never count as ported, and deleting a source
                  whose target is skipped leaves the scenario untested everywhere.
-D   decisions    each verdict carries the field that makes it reviewable.
+D   decisions    each verdict carries the field that makes it reviewable, and a claim of
+                 existing coverage names a symbol rather than describing one.
+
+The inventory check is what makes the coverage check mean anything. Both the inventory and
+the matrix are generated, so comparing them to each other only ever proves they were
+generated together: a spec added after the last extraction is in neither, and every row
+gate below passes while nothing knows the spec exists. Reconciling the inventory against
+the tree first is what turns "every scenario has a row" into a statement about reality.
 
 A deleted source whose target is present but has no verified_run yet is a warning, not a
 violation: that is an unfinished batch, not drift. Only a lost or skipped target fails.
@@ -24,6 +32,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -32,6 +41,12 @@ try:
     import yaml
 except ImportError:
     sys.exit("PyYAML is required: python3 -m pip install -r requirements.txt")
+
+# A resolvable claim: `<path or FQCN>::<method>`, so a reviewer can open the symbol and a
+# later pass can reflect on it. Prose ("happy path ~ SomeCest"), a bare file and a bare class
+# all fail — naming a file that happens to sit near the subject is how unreplaced tests get
+# recorded as replaced.
+COVERED_BY_SYMBOL = re.compile(r"^[^\s:]+::[A-Za-z_]\w*$")
 
 SETTLED_STATUSES = {"SOURCE_REMOVED", "DROPPED"}
 PORTED_STATUSES = {"TARGET_GREEN", "SOURCE_REMOVED"}
@@ -54,6 +69,30 @@ def selects(row: dict, criteria: dict) -> bool:
     return all(row.get(field) == value for field, value in criteria.items())
 
 
+def inventory_drift(base: Path, sample: int = 10) -> list[str]:
+    """Reconciles the committed inventory against the working tree it was extracted from."""
+    extractor = base.parent / "extract.py"
+    if not extractor.exists():
+        return [f"G1 inventory: {extractor} is missing, the inventory cannot be reconciled"]
+
+    result = subprocess.run(
+        [sys.executable, str(extractor), str(base.parents[1]), "--check"],
+        capture_output=True, text=True,
+    )
+    if result.returncode == 0:
+        return []
+
+    drifted = [line for line in result.stderr.strip().splitlines() if line]
+    shown = [f"G1 inventory drift: {line}" for line in drifted[:sample]]
+    if len(drifted) > sample:
+        shown.append(
+            f"G1 inventory drift: {len(drifted) - sample} more — re-run extract.py and "
+            "enrich.py, then classify what appeared"
+        )
+
+    return shown
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--dir", default=".")
@@ -72,6 +111,8 @@ def main() -> int:
         )
         if result.returncode != 0:
             failures.append(f"G1 stale output: {result.stderr.strip() or script}")
+
+    failures.extend(inventory_drift(base))
 
     for matrix in config["matrices"]:
         name = matrix["name"]
@@ -115,6 +156,12 @@ def main() -> int:
                         f"G4 {row_id}: source deleted but the target test is skipped — "
                         "nothing runs this scenario in any variant"
                     )
+                elif matrix.get("require_verified_run"):
+                    failures.append(
+                        f"G1 {row_id}: source deleted and the target is present, but no "
+                        "verified_run names a green CI run for it — a target nobody watched "
+                        "run is not evidence"
+                    )
                 else:
                     warnings.append(
                         f"{row_id}: ported, awaiting a verified CI run before it counts as done"
@@ -128,6 +175,13 @@ def main() -> int:
             required = REQUIRED_BY_VERDICT.get(row.get("verdict"))
             if required and not row.get(required):
                 failures.append(f"D  {row_id}: verdict {row['verdict']} requires `{required}`")
+            for claim in str(row.get("covered_by") or "").split(","):
+                claim = claim.strip()
+                if claim and not COVERED_BY_SYMBOL.match(claim):
+                    failures.append(
+                        f"D  {row_id}: covered_by must name <path or FQCN>::<method>, "
+                        f"not `{claim}`"
+                    )
             if row.get("verdict") in ("MIGRATE", "RESHAPE") and row["status"] != "TODO" \
                     and not row.get("target_path"):
                 failures.append(f"D  {row_id}: {row['status']} without a target_path")

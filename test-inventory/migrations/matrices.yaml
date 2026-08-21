@@ -7,5 +7,8 @@ matrices:
       source_framework: cypress
       target_framework: codeception
       target_repo: spryker/suite
+      # A spec here is deleted from the repo that runs the E2E lane, so "the target exists"
+      # is not enough to delete one: the run has to have been watched.
+      require_verified_run: true
       select:
           type: api

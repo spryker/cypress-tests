@@ -6,12 +6,19 @@ record per test with structural fields filled. purpose comes free from the it()
 description; only canonical helper mapping needs a later thin pass.
 
 Outputs (next to this script): skeleton.jsonl, helpers_raw.json
-Usage: python3 extract.py <worktree_root>
+Usage: python3 extract.py <worktree_root> [--check]
+
+--check writes nothing and exits 1 when the committed skeleton no longer matches the
+working tree. The migration gate runs it that way: an inventory extracted from an older
+tree cannot see a spec added since, and a scenario the inventory has never heard of is a
+scenario no matrix row can be missing.
 """
 import os, re, json, sys
 from collections import defaultdict
 
-ROOT = sys.argv[1] if len(sys.argv) > 1 else os.getcwd()
+ARGS = [a for a in sys.argv[1:] if not a.startswith("--")]
+CHECK = "--check" in sys.argv[1:]
+ROOT = ARGS[0] if ARGS else os.getcwd()
 E2E = os.path.join(ROOT, "cypress", "e2e")
 D = os.path.dirname(os.path.abspath(__file__))
 
@@ -142,6 +149,24 @@ def signals(rel, tc):
     return t, subs2, auth
 
 
+def report_drift(skeleton_path, skeleton):
+    """Names the scenarios the committed skeleton and the working tree disagree on."""
+    if not os.path.exists(skeleton_path):
+        print("skeleton.jsonl has never been generated", file=sys.stderr)
+        return 1
+
+    with open(skeleton_path) as fh:
+        committed = {json.loads(line)["id"] for line in fh if line.strip()}
+    found = {r["id"] for r in skeleton}
+
+    for scenario in sorted(found - committed):
+        print(f"scenario in the tree but not in the inventory — {scenario}", file=sys.stderr)
+    for scenario in sorted(committed - found):
+        print(f"scenario in the inventory but gone from the tree — {scenario}", file=sys.stderr)
+
+    return 1 if found != committed else 0
+
+
 def main():
     files = []
     for dp, _, fns in os.walk(E2E):
@@ -171,9 +196,14 @@ def main():
             }
             skeleton.append(rec)
 
-    with open(os.path.join(D, "skeleton.jsonl"), "w") as fh:
-        for r in skeleton:
-            fh.write(json.dumps(r, ensure_ascii=False) + "\n")
+    skeleton_path = os.path.join(D, "skeleton.jsonl")
+    rendered = "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in skeleton)
+
+    if CHECK:
+        return report_drift(skeleton_path, skeleton)
+
+    with open(skeleton_path, "w") as fh:
+        fh.write(rendered)
     cat2 = {k: {"count": v["count"], "sources": sorted(v["sources"])[:5]}
             for k, v in sorted(cat.items(), key=lambda x: -x[1]["count"])}
     json.dump(cat2, open(os.path.join(D, "helpers_raw.json"), "w"), ensure_ascii=False, indent=1)
@@ -188,4 +218,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main() or 0)
