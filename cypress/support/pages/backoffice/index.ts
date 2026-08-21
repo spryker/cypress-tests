@@ -100,3 +100,4 @@ export * from './workflow/workflow-management-page';
 export * from './workflow/workflow-instance-lifecycle-page';
 export * from './order-experience-management/list/recurring-schedule-list-page';
 export * from './order-experience-management/view/recurring-schedule-view-page';
+export * from './acl/denied/acl-denied-page';
