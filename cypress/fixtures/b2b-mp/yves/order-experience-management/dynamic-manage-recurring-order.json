@@ -1,0 +1,294 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [
+            {
+              "status": "approved",
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [
+            {
+              "fk_company": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "addCartItemPermission",
+          "arguments": ["AddCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "changeCartItemPermission",
+          "arguments": ["ChangeCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "removeCartItemPermission",
+          "arguments": ["RemoveCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderWithAmountUpToPermission",
+          "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderPermission",
+          "arguments": ["PlaceOrderPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "requestQuoteApprovalPermission",
+          "arguments": ["RequestQuoteApprovalPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "seeBusinessUnitOrdersPermission",
+          "arguments": ["SeeBusinessUnitOrdersPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "seeCompanyOrdersPermission",
+          "arguments": ["SeeCompanyOrdersPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "buyerRole",
+          "arguments": [
+            {
+              "fk_company": "#company.id_company"
+            },
+            [
+              "#addCartItemPermission",
+              "#changeCartItemPermission",
+              "#removeCartItemPermission",
+              "#placeOrderWithAmountUpToPermission",
+              "#placeOrderPermission",
+              "#requestQuoteApprovalPermission",
+              "#seeBusinessUnitOrdersPermission",
+              "#seeCompanyOrdersPermission"
+            ]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "buyer",
+          "arguments": [
+            {
+              "registered": "2025-01-01",
+              "password": "change123",
+              "locale_name": "en_US"
+            }
+          ]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerRoleCollection",
+          "arguments": {
+            "roles": ["#buyerRole"]
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyer",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "schedule",
+          "arguments": [
+            "#buyer.id_customer",
+            {
+              "name": "Test Monthly Order",
+              "cadence_type": "monthly",
+              "status": "active",
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-07-01",
+              "next_trigger_date": "2026-07-01",
+              "id_company_user": "#buyerCompanyUser.id_company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItem",
+          "key": "scheduleItem",
+          "arguments": [
+            "#schedule.id_recurring_schedule",
+            {
+              "sku": "#product.sku",
+              "quantity": 1,
+              "reference_gross_price": 30000,
+              "reference_net_price": 25000
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "pausedScheduleForBuyer",
+          "arguments": [
+            "#buyer.id_customer",
+            {
+              "name": "Test Paused Order",
+              "cadence_type": "monthly",
+              "status": "paused",
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-07-01",
+              "next_trigger_date": "2026-07-01",
+              "id_company_user": "#buyerCompanyUser.id_company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "cancelledScheduleForBuyer",
+          "arguments": [
+            "#buyer.id_customer",
+            {
+              "name": "Test Cancelled Order",
+              "cadence_type": "monthly",
+              "status": "cancelled",
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-07-01",
+              "next_trigger_date": "2026-07-01",
+              "id_company_user": "#buyerCompanyUser.id_company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomer",
+          "key": "buyerForSkip",
+          "arguments": [
+            {
+              "registered": "2025-01-01",
+              "password": "change123",
+              "locale_name": "en_US"
+            }
+          ]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerForSkipRoleCollection",
+          "arguments": {
+            "roles": ["#buyerRole"]
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerForSkipCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyerForSkip",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerForSkipRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerForSkipCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringSchedule",
+          "key": "scheduleForSkip",
+          "arguments": [
+            "#buyerForSkip.id_customer",
+            {
+              "name": "Test Skip Order",
+              "cadence_type": "monthly",
+              "status": "active",
+              "payment_method": "dummyPaymentInvoice",
+              "store_name": "DE",
+              "currency_iso_code": "EUR",
+              "price_mode": "GROSS_MODE",
+              "first_trigger_date": "2026-07-01",
+              "next_trigger_date": "2026-07-01",
+              "id_company_user": "#buyerForSkipCompanyUser.id_company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRecurringScheduleItem",
+          "key": "scheduleForSkipItem",
+          "arguments": [
+            "#scheduleForSkip.id_recurring_schedule",
+            {
+              "sku": "#product.sku",
+              "quantity": 1,
+              "reference_gross_price": 30000,
+              "reference_net_price": 25000
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -16,6 +16,8 @@ export interface CartRepository {
   getCartDiscountSummary(): Cypress.Chainable;
   getCustomOrderReferenceInput(): Cypress.Chainable;
   getCustomOrderReferenceSubmitButton(): Cypress.Chainable;
+  addFirstCartItemNote(message: string): void;
+  submitFirstCartItemNote(): void;
   submitCartItemChangeQuantity(sku: string): void;
   getCartItemSummaryBlock(itemIndex: number): Cypress.Chainable;
   getCancelOrderAmendmentButton(): Cypress.Chainable;

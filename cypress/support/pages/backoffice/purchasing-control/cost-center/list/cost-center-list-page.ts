@@ -28,10 +28,5 @@ export class CostCenterListPage extends BackofficePage {
     cy.visitBackoffice(`/purchasing-control/budget?id-cost-center=${idCostCenter}`);
   };
 
-  assertCostCenterInTable = (name: string): void => {
-    cy.intercept('GET', '**/purchasing-control/cost-center/table**').as('costCenterTableAssert');
-    this.visit();
-    cy.wait('@costCenterTableAssert');
-    cy.get(this.repository.getTableBodySelector()).should('contain', name);
-  };
+  getTableBody = (): Cypress.Chainable => cy.get(this.repository.getTableBodySelector());
 }

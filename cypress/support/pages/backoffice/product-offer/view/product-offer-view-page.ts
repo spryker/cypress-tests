@@ -11,79 +11,27 @@ export class ProductOfferViewPage extends BackofficePage {
 
   protected PAGE_URL = '/product-offer-gui/view';
 
-  assertProductOfferData(param: ProductOffer): void {
-    this.assertDetails(param);
-    this.assertStores(param.stores);
-    this.assertValidity(param);
+  getApprovalStatusContainer = (): Cypress.Chainable => this.repository.getApprovalStatusContainer();
 
-    if (param.stocks && param.stocks.length > 0) {
-      this.assertProductOfferStocks(param.stocks);
-    }
+  getStatusContainer = (): Cypress.Chainable => this.repository.getStatusContainer();
 
-    if (param.serviceTypeName) {
-      this.assertService(param.serviceTypeName);
-    }
-  }
+  getProductSkuContainer = (): Cypress.Chainable => this.repository.getProductSkuContainer();
 
-  assertProductOfferStocks(stocks: ProductOfferStock[]): void {
-    this.repository.getStockTableRows().should('have.length', stocks.length);
+  getMerchantNameContainer = (): Cypress.Chainable => this.repository.getMerchantNameContainer();
 
-    stocks.forEach((stock, index) => {
-      this.repository.getStockNameCell(index).should('contain.text', stock.name);
-      if (stock.storeName) {
-        this.repository.getStockNameCell(index).should('contain.text', stock.storeName);
-      }
+  getStoreContainer = (): Cypress.Chainable => this.repository.getStoreContainer();
 
-      this.repository.getStockQuantityCell(index).should('contain.text', stock.quantity);
+  getValidFromContainer = (): Cypress.Chainable => this.repository.getValidFromContainer();
 
-      const expectedText = stock.neverOutOfStock ? 'Yes' : 'No';
-      this.repository.getStockNeverOutOfStockCell(index).should('contain.text', expectedText);
-    });
-  }
+  getValidToContainer = (): Cypress.Chainable => this.repository.getValidToContainer();
 
-  private assertDetails(param: ProductOffer): void {
-    this.repository.getApprovalStatusContainer().should('contain.text', param.approvalStatus);
-    this.repository.getStatusContainer().should('contain.text', param.status);
-    this.repository.getProductSkuContainer().should('contain.text', param.productSku);
-    this.repository.getMerchantNameContainer().should('contain.text', param.merchantName);
-  }
+  getServicePointContainer = (): Cypress.Chainable => this.repository.getProductOfferServicePointContainer();
 
-  private assertStores(stores: string[]): void {
-    this.repository.getStoreContainer().should('have.length', stores.length);
+  getStockTableRows = (): Cypress.Chainable => this.repository.getStockTableRows();
 
-    stores.forEach((store) => {
-      this.repository.getStoreContainer().filter(`:contains("${store}")`).should('exist');
-    });
-  }
+  getStockNameCell = (row: number): Cypress.Chainable => this.repository.getStockNameCell(row);
 
-  private assertValidity(param: ProductOffer): void {
-    const validFromText = param.validFrom ? param.validFrom : '--';
-    this.repository.getValidFromContainer().should('contain.text', validFromText);
+  getStockQuantityCell = (row: number): Cypress.Chainable => this.repository.getStockQuantityCell(row);
 
-    const validToText = param.validTo ? param.validTo : '--';
-    this.repository.getValidToContainer().should('contain.text', validToText);
-  }
-
-  private assertService(serviceTypeName: string): void {
-    this.repository.getProductOfferServicePointContainer().should('contain.text', serviceTypeName);
-  }
-}
-
-interface ProductOffer {
-  approvalStatus: string;
-  status: string;
-  stores: string[];
-  productSku: string;
-  merchantName: string;
-  validFrom?: string;
-  validTo?: string;
-  stocks?: ProductOfferStock[];
-  serviceTypeName?: string;
-}
-
-interface ProductOfferStock {
-  name: string;
-  storeName?: string;
-  quantity: number;
-  neverOutOfStock: boolean;
+  getStockNeverOutOfStockCell = (row: number): Cypress.Chainable => this.repository.getStockNeverOutOfStockCell(row);
 }

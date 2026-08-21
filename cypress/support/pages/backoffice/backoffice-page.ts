@@ -18,6 +18,7 @@ export class BackofficePage extends AbstractPage {
     const interceptAlias = this.faker.string.uuid();
 
     cy.intercept('GET', params.url).as(interceptAlias);
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Internal retry/settle guard on the GUI-table intercept; not a spec-level assertion.
     return cy
       .wait(`@${interceptAlias}`, { timeout: 10000 })
       .its('response.body')
@@ -49,13 +50,14 @@ export class BackofficePage extends AbstractPage {
 
   protected getRows = (expectedCount?: number): Cypress.Chainable<JQuery<HTMLElement>> => {
     if (expectedCount !== undefined) {
+      // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Retry-settles the visible row count; internal table helper, not a spec assertion.
       return cy.get('tbody > tr:visible').should('have.length', expectedCount);
     }
 
     return cy.get('tbody > tr:visible');
   };
 
-  public find = (params: UpdateParams): Cypress.Chainable => {
+  public find = (params: UpdateParams): Cypress.Chainable<TableRowGetter | null> => {
     const expectedCount = params.expectedCount ?? 1;
     const clearInterceptAlias = this.faker.string.uuid();
     const searchInterceptAlias = this.faker.string.uuid();
@@ -130,15 +132,19 @@ export class BackofficePage extends AbstractPage {
                     }
 
                     if (rows.length > 0) {
-                      return cy.wrap(rows.first());
+                      const rowIndex = Array.from($rows).indexOf(rows.first()[0]);
+                      const getRow: TableRowGetter = () => cy.get('tbody > tr:visible').eq(rowIndex);
+
+                      return getRow;
                     } else {
                       cy.log('No rows found after filtering');
+
                       return null;
                     }
                   });
                 });
             });
-        })
+        }) as unknown as Cypress.Chainable<TableRowGetter | null> // subject is `TableRowGetter | null`, which is what callers actually receive. // Cypress's `.then()` overloads infer a nested Chainable here; the runtime
     );
   };
 
@@ -191,6 +197,13 @@ export class BackofficePage extends AbstractPage {
     return searchAndIntercept();
   };
 }
+
+/**
+ * Lazily re-queries the matched table row from the live DOM at call time.
+ * Returned by {@link BackofficePage.find} instead of a captured jQuery element,
+ * so a DataTables re-render between search and click cannot detach the reference.
+ */
+export type TableRowGetter = () => Cypress.Chainable<JQuery<HTMLElement>>;
 
 export enum ActionEnum {
   view,

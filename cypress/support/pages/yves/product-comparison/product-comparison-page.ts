@@ -34,4 +34,16 @@ export class ProductComparisonPage extends YvesPage {
   getComparisonTableRowSelector = (): string => {
     return this.repository.getComparisonTableRowSelector();
   };
+
+  getComparisonPageNavigationLink = (): Cypress.Chainable => {
+    return cy.get(this.repository.getComparisonPageNavigationLinkSelector());
+  };
+
+  getProductItems = (): Cypress.Chainable => {
+    return cy.get(this.repository.getProductItemSelector());
+  };
+
+  getComparisonTableRow = (): Cypress.Chainable => {
+    return cy.get(this.repository.getComparisonTableRowSelector());
+  };
 }

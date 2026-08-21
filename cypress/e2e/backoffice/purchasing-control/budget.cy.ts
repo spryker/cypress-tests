@@ -64,12 +64,12 @@ describe(
       budgetCreatePage.fillEndDate(getBudgetEndDate());
       budgetCreatePage.submit();
 
-      budgetCreatePage.assertSuccess();
+      budgetCreatePage.getSuccessMessage().should('be.visible');
     });
 
     it('backoffice user should see budget in the budget list after creation', (): void => {
       budgetListPage.visitByCostCenter(dynamicFixtures.costCenter.id_cost_center);
-      budgetListPage.assertBudgetInTable(dynamicFixtures.preExistingBudget.name);
+      budgetListPage.getTableBody().should('contain', dynamicFixtures.preExistingBudget.name);
     });
 
     it('backoffice user should be able to edit a budget', (): void => {
@@ -77,8 +77,8 @@ describe(
       budgetEditPage.fillName(staticFixtures.updatedBudgetName);
       budgetEditPage.submit();
 
-      budgetEditPage.assertSuccess();
-      budgetListPage.assertBudgetInTable(staticFixtures.updatedBudgetName);
+      budgetEditPage.getSuccessMessage().should('be.visible');
+      budgetListPage.getTableBody().should('contain', staticFixtures.updatedBudgetName);
     });
   }
 );

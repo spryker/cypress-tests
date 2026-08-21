@@ -88,4 +88,24 @@ export class SuiteCheckoutAddressRepository implements CheckoutAddressRepository
     ($addressItem.find(`#addressesForm_multiShippingAddresses_${index}_servicePoint_uuid`).val() as
       | string
       | undefined) || undefined;
+
+  getMultiShipmentAddressItemShipmentTypeRadio = (index: number, shipmentTypeKey: string): Cypress.Chainable =>
+    cy.get(`#addressesForm_multiShippingAddresses_${index}_shipmentType_key [value="${shipmentTypeKey}"]`);
+
+  getMultiShipmentAddressItemSelectServicePointButton = ($addressItem: JQuery<HTMLElement>): Cypress.Chainable =>
+    cy.wrap($addressItem).find('[data-qa="service-point-selector"] button');
+
+  getServicePointFinderInput = (): Cypress.Chainable =>
+    cy.get('[data-qa="ssp-service-point-finder-input"] input:visible');
+
+  getServicePointFinderListItem = (servicePointName: string): Cypress.Chainable =>
+    cy
+      .get('[data-qa="available-service-point"]:visible')
+      .filter(
+        (_, el) =>
+          Cypress.$(el).closest('.service-point').find('.service-point__name').text().trim() === servicePointName
+      );
+
+  getMultiShipmentAddressItemServicePointUuidInput = (index: number): Cypress.Chainable =>
+    cy.get(`#addressesForm_multiShippingAddresses_${index}_servicePoint_uuid`);
 }

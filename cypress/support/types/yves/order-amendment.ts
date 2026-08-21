@@ -70,6 +70,24 @@ export interface OrderAmendmentStartDynamicFixtures {
   productOutOfStock2: ProductConcrete;
 }
 
+export interface OrderAmendmentServiceDynamicFixtures {
+  customer: Customer;
+  address: Address;
+  product: ProductConcrete;
+  productDelivery: ProductConcrete;
+  shipmentType: { key: string; name: string };
+  servicePoint: { key: string; name: string };
+  servicePointAddress: { address1: string };
+}
+
+export interface OrderAmendmentServiceStaticFixtures {
+  defaultPassword: string;
+  paymentMethod: string;
+  shipmentTypeKey: string;
+  serviceProductPrice: string;
+  deliveryProductPrice: string;
+}
+
 export interface OrderAmendmentStaticFixtures {
   defaultPassword: string;
   oldProductPrice: string;

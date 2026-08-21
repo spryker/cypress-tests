@@ -17,17 +17,23 @@ export class EnableCmsBlockForAllStoresScenario {
           searchQuery: params.cmsBlockName,
           interceptTableUrl: `**/cms-block-gui/list-block/table**`,
         })
-        .then(($cmsBlockRow) => {
-          if (!this.blockListPage.rowIsAssignedToStore({ row: $cmsBlockRow, storeName: params.storeName })) {
-            this.blockListPage.clickEditAction($cmsBlockRow);
-
-            this.blockUpdatePage.assignAllAvailableStore();
-            this.blockUpdatePage.save();
-
-            if (params?.shouldTriggerPublishAndSync) {
-              cy.runQueueWorker();
-            }
+        .then((getRow) => {
+          if (!getRow) {
+            return;
           }
+
+          getRow().then(($cmsBlockRow: JQuery<HTMLElement>) => {
+            if (!this.blockListPage.rowIsAssignedToStore({ row: $cmsBlockRow, storeName: params.storeName })) {
+              this.blockListPage.clickEditAction($cmsBlockRow);
+
+              this.blockUpdatePage.assignAllAvailableStore();
+              this.blockUpdatePage.save();
+
+              if (params?.shouldTriggerPublishAndSync) {
+                cy.runQueueWorker();
+              }
+            }
+          });
         });
     });
   };

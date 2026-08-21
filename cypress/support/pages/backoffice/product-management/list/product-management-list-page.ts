@@ -13,7 +13,7 @@ export class ProductManagementListPage extends BackofficePage {
 
   clickEditAction = ($row: JQuery<HTMLElement>): void => {
     cy.wrap($row).find(this.repository.getEditButtonSelector()).as('editBtn');
-    cy.get('@editBtn').should('be.visible').should('not.be.disabled').click();
+    cy.get('@editBtn').click();
   };
 
   rowIsAssignedToStore = (params: IsAssignedParams): boolean => {
@@ -69,26 +69,26 @@ export class ProductManagementListPage extends BackofficePage {
       searchQuery: params.query,
       interceptTableUrl: `**/product-management/index/table**`,
       expectedCount: 1,
-    }).then(($productRow) => {
+    }).then((getRow) => {
+      if (!getRow) {
+        return;
+      }
+
       if (params.action === ActionEnum.edit) {
-        cy.wrap($productRow).find(this.repository.getEditButtonSelector()).as('editButton');
-        cy.get('@editButton').click();
+        getRow().find(this.repository.getEditButtonSelector()).click();
       }
+
       if (params.action === ActionEnum.approve) {
-        cy.wrap($productRow).find(this.repository.getApproveButtonSelector()).as('approveButton');
-        cy.get('@approveButton').click();
+        getRow().find(this.repository.getApproveButtonSelector()).click();
       }
+
       if (params.action === ActionEnum.deny) {
-        cy.wrap($productRow).find(this.repository.getDenyButtonSelector()).as('denyButton');
-        cy.get('@denyButton').click();
+        getRow().find(this.repository.getDenyButtonSelector()).click();
       }
     });
   };
 
-  assertNoTableRecords = (): void => {
-    this.getTableRows().should('have.length', 1);
-    this.getTableRows().first().should('contain', this.repository.getNoTableRecordsText());
-  };
+  getNoTableRecordsText = (): string => this.repository.getNoTableRecordsText();
 }
 
 interface UpdateParams {

@@ -65,9 +65,7 @@ export class ProductOfferCreatePage extends BackofficePage {
     return `${year}-10-20`;
   }
 
-  assertSuccessMessage = (): Cypress.Chainable => {
-    return this.repository.getSuccessMessageBox().should('exist');
-  };
+  getSuccessMessageBox = (): Cypress.Chainable => this.repository.getSuccessMessageBox();
 
   private searchAndSelectProduct = (sku: string): void => {
     this.repository.getProductSearchField().clear().invoke('val', sku).trigger('input');
@@ -114,11 +112,9 @@ export class ProductOfferCreatePage extends BackofficePage {
   };
 
   private fillServiceDetails = (params: CreateProductOfferParams): void => {
-    this.repository.getServiceField().should('be.disabled');
     if (params.servicePointId !== undefined) {
       this.repository.getServicePointField().select(params.servicePointId.toString(), { force: true });
     }
-    this.repository.getServiceField().should('not.be.disabled');
 
     if (params.serviceUuid) {
       this.repository.getServiceField().select(params.serviceUuid, { force: true });

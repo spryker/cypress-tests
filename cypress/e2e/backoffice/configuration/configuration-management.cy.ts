@@ -64,7 +64,7 @@ describe(
 
       configurationPage.searchSettings(staticFixtures.searchTerm);
 
-      cy.get('.js-nav-tab[data-tab="logos"]').should('be.visible');
+      configurationPage.getNavTab('logos').should('be.visible');
     });
 
     it('rejects an invalid hex color and keeps the original value', (): void => {

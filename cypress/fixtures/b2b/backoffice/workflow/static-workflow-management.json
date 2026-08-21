@@ -1,0 +1,7 @@
+{
+  "defaultPassword": "change123",
+  "subjectType": "Company",
+  "triggerEventLabel": "Company created",
+  "initialState": "new",
+  "definitionTemplate": "<?xml version=\"1.0\"?>\n<statemachine xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://static.spryker.com/state-machine-01.xsd\">\n    <process name=\"%process_name%\" main=\"true\">\n        <states>\n            <state name=\"new\" display=\"New\"/>\n            <state name=\"done\" display=\"Done\"/>\n        </states>\n        <transitions>\n            <transition>\n                <source>new</source>\n                <target>done</target>\n                <event>finish</event>\n            </transition>\n        </transitions>\n        <events>\n            <event name=\"finish\" manual=\"true\"/>\n        </events>\n    </process>\n</statemachine>"
+}

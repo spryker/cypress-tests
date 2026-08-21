@@ -36,7 +36,7 @@ export class UploadProductOfferDataImportMerchantFileScenario {
       this.dataImportMerchantFilePage.openFormDrawer();
       this.dataImportMerchantFilePage.importFile('Product offer', file);
 
-      this.dataImportMerchantFilePage.assertImportStartedNotification();
+      this.dataImportMerchantFilePage.getImportStartedNotification().should('contain', 'File import has been started');
       this.dataImportMerchantFilePage.assertFileStatus(<string>params.fileName, 'Pending');
 
       cy.runCliCommands(['console data-import-merchant:import']);

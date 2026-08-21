@@ -76,7 +76,7 @@ describe(
       }
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: abstractSku });
-      cy.contains(abstractSku);
+      catalogPage.assertBodyContainsText(abstractSku);
       productPage.getAddToCartButton().should('not.be.disabled');
 
       if (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {

@@ -6,8 +6,8 @@ export interface MultiFactorAuthPageInterface {
   verifyCode(code: string): void;
   activateMfa(type: string): void;
   deactivateMfa(type: string): void;
-  waitForVerificationPopup(): void;
-  waitForActivationSuccessMessage(): void;
-  waitForDeactivationSuccessMessage(): void;
-  waitForInvalidCodeMessage(): void;
+  getVerificationPopup(): Cypress.Chainable;
+  getActivationSuccessMessage(): Cypress.Chainable;
+  getDeactivationSuccessMessage(): Cypress.Chainable;
+  getInvalidCodeMessage(): Cypress.Chainable;
 }

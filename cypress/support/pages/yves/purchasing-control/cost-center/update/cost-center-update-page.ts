@@ -35,17 +35,9 @@ export class YvesCostCenterUpdatePage extends YvesPage {
     this.repository.getSubmitButton().click();
   };
 
-  assertSuccess = (): void => {
-    this.repository.getSuccessFlashMessage().should('be.visible');
-  };
+  getSuccessFlashMessage = (): Cypress.Chainable => this.repository.getSuccessFlashMessage();
 
-  assertIsActive = (): void => {
-    this.repository.getIsActiveCheckbox().should('be.checked');
-  };
-
-  assertIsInactive = (): void => {
-    this.repository.getIsActiveCheckbox().should('not.be.checked');
-  };
+  getIsActiveCheckbox = (): Cypress.Chainable => this.repository.getIsActiveCheckbox();
 
   getNameValue = (): Cypress.Chainable<string> => {
     return this.repository.getNameInput().invoke('val') as Cypress.Chainable<string>;

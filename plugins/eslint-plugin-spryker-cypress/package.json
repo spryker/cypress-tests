@@ -1,0 +1,13 @@
+{
+  "name": "eslint-plugin-spryker-cypress",
+  "version": "1.0.0",
+  "description": "Local ESLint plugin enforcing Spryker Cypress test conventions.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "node tests/run.js"
+  },
+  "peerDependencies": {
+    "eslint": ">=8"
+  }
+}

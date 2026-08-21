@@ -76,7 +76,36 @@ SPRYKER_MP_HOST=$(extract_host "merchant-portal")
 SPRYKER_API_HOST=$(extract_host "glue")
 SPRYKER_GLUE_BACKEND_HOST=$(extract_host "glue-backend")
 SPRYKER_GLUE_STOREFRONT_HOST=$(extract_host "glue-storefront")
-SPRYKER_FE_HOST=$(extract_host "yves")
+SPRYKER_FE_HOST=$(awk '
+    /application: yves/ { in_yves=1; next }
+    in_yves && /endpoints:/ { in_endpoints=1; next }
+    in_endpoints && /^[[:space:]]+[^[:space:]]+:[[:space:]]*$/ {
+        match($0, /^[[:space:]]*/)
+        if (endpoint_indent == 0) endpoint_indent=RLENGTH
+        if (RLENGTH == endpoint_indent) {
+            if (host && !skip) { print host; host=""; exit }
+            host=$1; skip=0
+        }
+        next
+    }
+    in_endpoints && /entry-point:/ { skip=1 }
+    END { if (host && !skip) print host }
+    ' "$DEPLOY_FILE" | awk -F: '{gsub(/[ \t]+/, "", $1); print $1}')
+
+BASIC_AUTH_USER=$(awk '
+    /engine: basic/ { in_basic=1; next }
+    in_basic && /users:/ { in_users=1; next }
+    in_users && /username:/ { v=$0; sub(/.*username:[[:space:]]*/, "", v); user=v }
+    in_users && /password:/ { v=$0; sub(/.*password:[[:space:]]*/, "", v); pass=v }
+    in_users && user && pass { print user ":" pass; exit }
+    ' "$DEPLOY_FILE")
+
+if [ -n "$BASIC_AUTH_USER" ]; then
+    SPRYKER_FE_HOST="${BASIC_AUTH_USER}@${SPRYKER_FE_HOST}"
+    SPRYKER_BE_HOST="${BASIC_AUTH_USER}@${SPRYKER_BE_HOST}"
+    SPRYKER_MP_HOST="${BASIC_AUTH_USER}@${SPRYKER_MP_HOST}"
+fi
+
 CODEBUILD_BUILD_ID=${CODEBUILD_BUILD_ID}
 
 SPRYKER_VARS="CODEBUILD_BUILD_ID DEMO_SHOP_TYPE NPM_COMMAND SPRYKER_BE_HOST SPRYKER_MP_HOST SPRYKER_API_HOST SPRYKER_GLUE_BACKEND_HOST SPRYKER_GLUE_STOREFRONT_HOST SPRYKER_FE_HOST"

@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { CheckoutStaticFixtures, BasicCheckoutDynamicFixtures } from '@interfaces/yves';
 import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
@@ -28,7 +28,9 @@ describe(
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage(), {
+        timeout: 15000,
+      });
     });
 
     skipB2BIt('guest customer should checkout to multi shipment address', (): void => {
@@ -40,7 +42,9 @@ describe(
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage(), {
+        timeout: 15000,
+      });
     });
 
     it('customer should checkout to single shipment (with customer shipping address)', (): void => {
@@ -61,7 +65,9 @@ describe(
         isMultiShipment: Cypress.env('ENV_IS_SSP_ENABLED') ? true : false,
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage(), {
+        timeout: 15000,
+      });
     });
 
     it('customer should checkout to single shipment (with new shipping address)', (): void => {
@@ -81,7 +87,9 @@ describe(
         isMultiShipment: Cypress.env('ENV_IS_SSP_ENABLED') ? true : false,
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage(), {
+        timeout: 15000,
+      });
     });
 
     it('customer should checkout to multi shipment address (with customer shipping address)', (): void => {
@@ -102,7 +110,9 @@ describe(
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage(), {
+        timeout: 15000,
+      });
     });
 
     it('customer should checkout to multi shipment address (with new shipping address)', (): void => {
@@ -122,14 +132,10 @@ describe(
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage(), {
+        timeout: 15000,
+      });
     });
-
-    function getPaymentMethodBasedOnEnv(): string {
-      return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice';
-    }
 
     function addTwoProductsToCart(): void {
       catalogPage.visit();

@@ -3,9 +3,13 @@ import { ProductRepository } from '../product-repository';
 
 @injectable()
 export class B2bProductRepository implements ProductRepository {
-  getSoldByProductOffers = (): Cypress.Chainable => cy.get('[data-qa="component merchant-product-offer-item"]');
+  getSoldByProductOffers = (): Cypress.Chainable =>
+    cy.get('[data-qa="component seller-list"] .seller-list__items').first();
+  // using old and new locators. remove old one after June release
   getSoldByProductOfferRadios = (): Cypress.Chainable =>
-    cy.get('[data-qa="component merchant-product-offer-item"] input[type="radio"]');
+    cy.get(
+      '[data-qa="component merchant-product-offer-item"] input[type="radio"], [data-qa="component seller-list-item"] input[type="radio"][name="product_offer_reference"]'
+    );
   getMerchantRelationRequestLinkAttribute = (): string => '[data-qa="merchant-relation-request-create-link"]';
   getInputRadioSelector = (): string => 'input[type="radio"]';
   getProductConfigurator = (): Cypress.Chainable => cy.get('[data-qa="component product-configurator"]');
@@ -32,8 +36,14 @@ export class B2bProductRepository implements ProductRepository {
   getSelectedServicePointName = (): Cypress.Chainable => cy.get('[data-qa="component ssp-service-point-selector"]');
   getCloseServicePointPopupButton = (): Cypress.Chainable => cy.get('.js-main-popup__close');
   getSspAssetNameBlock = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-name"]');
-  getAttachmentsList = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-detail"] [data-qa="attachments-table"]');
+  getAttachmentsListSelector = (): string => '[data-qa="component product-detail"] [data-qa="attachments-list"]';
+  getAttachmentsList = (): Cypress.Chainable => cy.get(this.getAttachmentsListSelector());
   getAttachmentItems = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-detail"] [data-qa="cell-name"] .link');
+    cy.get('[data-qa="component product-detail"] [data-qa="attachment-item"]');
+  getVariantAttributeSelect = (attributeKey: string): Cypress.Chainable =>
+    cy.get(`select[name="attribute[${attributeKey}]"]`);
+  getVariantAttributeOptions = (attributeKey: string): Cypress.Chainable =>
+    this.getVariantAttributeSelect(attributeKey).find('option[value]:not([value=""])');
+  getSelectedVariantAttributeInput = (attributeKey: string): Cypress.Chainable =>
+    cy.get(`input[type="hidden"][name="attribute[${attributeKey}]"]`);
 }

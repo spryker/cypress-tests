@@ -58,7 +58,7 @@ describe(
           idMerchant: merchant.id_merchant,
         });
 
-        cy.contains(merchant.name);
+        merchantRelationRequestListPage.assertBodyContainsText(merchant.name);
       });
     });
 
@@ -70,8 +70,8 @@ describe(
         idRelationRequest: dynamicFixtures.requestFromMerchant1.id_merchant_relation_request,
       });
 
-      cy.contains(staticFixtures.internalCommentFromMerchantUser1);
-      cy.contains(staticFixtures.internalCommentFromMerchantUser2);
+      merchantRelationRequestListPage.assertBodyContainsText(staticFixtures.internalCommentFromMerchantUser1);
+      merchantRelationRequestListPage.assertBodyContainsText(staticFixtures.internalCommentFromMerchantUser2);
     });
 
     it('operator should be able to add internal comment', (): void => {
@@ -91,7 +91,7 @@ describe(
         idRelationRequest: dynamicFixtures.requestFromMerchant1.id_merchant_relation_request,
       });
 
-      cy.contains(staticFixtures.internalCommentFromRootUser);
+      merchantRelationRequestListPage.assertBodyContainsText(staticFixtures.internalCommentFromRootUser);
     });
 
     it('operator should be able to add internal comment with emoji', (): void => {
@@ -111,7 +111,7 @@ describe(
         idMerchant: dynamicFixtures.merchant1.id_merchant,
       });
 
-      cy.contains(staticFixtures.internalCommentFromRootUserWithEmoji);
+      merchantRelationRequestListPage.assertBodyContainsText(staticFixtures.internalCommentFromRootUserWithEmoji);
     });
 
     it('operator should be able to reject request', (): void => {
@@ -129,7 +129,7 @@ describe(
         idMerchant: dynamicFixtures.merchant3.id_merchant,
       });
 
-      cy.contains('Rejected');
+      merchantRelationRequestListPage.assertBodyContainsText('Rejected');
 
       merchantRelationshipListPage.visit();
       merchantRelationshipListPage.applyFilters({ idCompany: dynamicFixtures.company2.id_company });
@@ -152,13 +152,13 @@ describe(
         idMerchant: dynamicFixtures.merchant1.id_merchant,
         idRelationRequest: dynamicFixtures.requestFromMerchant1.id_merchant_relation_request,
       });
-      cy.contains('Approved');
+      merchantRelationRequestListPage.assertBodyContainsText('Approved');
 
       merchantRelationshipListPage.visit();
       merchantRelationshipListPage.update({ idCompany: dynamicFixtures.company1.id_company });
 
-      cy.contains(staticFixtures.internalCommentFromMerchantUser1);
-      cy.contains(staticFixtures.internalCommentFromMerchantUser2);
+      merchantRelationshipListPage.assertBodyContainsText(staticFixtures.internalCommentFromMerchantUser1);
+      merchantRelationshipListPage.assertBodyContainsText(staticFixtures.internalCommentFromMerchantUser2);
     });
 
     it('operator should be able to approve request with enabled BU splitting', (): void => {
@@ -177,7 +177,7 @@ describe(
         idMerchant: dynamicFixtures.merchant2.id_merchant,
         idRelationRequest: dynamicFixtures.requestFromMerchant2.id_merchant_relation_request,
       });
-      cy.contains('Approved');
+      merchantRelationRequestListPage.assertBodyContainsText('Approved');
 
       merchantRelationshipListPage.visit();
       merchantRelationshipListPage.applyFilters({ idCompany: dynamicFixtures.company2.id_company });

@@ -51,14 +51,14 @@ describe(
 
       catalogPage.search({ query: productAbstract.name });
 
-      cy.contains(productAbstract.name);
-      cy.contains(productAbstract.sku);
-      cy.contains(productAbstract.description);
+      catalogPage.assertBodyContainsText(productAbstract.name);
+      catalogPage.assertBodyContainsText(productAbstract.sku);
+      catalogPage.assertBodyContainsText(productAbstract.description);
 
       if (!['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
-        cy.contains(productAbstract.price);
+        catalogPage.assertBodyContainsText(productAbstract.price);
         productPage.addToCart();
-        cy.contains(productPage.getAddToCartSuccessMessage());
+        productPage.assertBodyContainsText(productPage.getAddToCartSuccessMessage());
       }
     });
 
@@ -73,13 +73,13 @@ describe(
 
       catalogPage.search({ query: productAbstract.name });
 
-      cy.contains(productAbstract.name);
-      cy.contains(productAbstract.sku);
-      cy.contains(productAbstract.description);
-      cy.contains(productAbstract.price);
+      catalogPage.assertBodyContainsText(productAbstract.name);
+      catalogPage.assertBodyContainsText(productAbstract.sku);
+      catalogPage.assertBodyContainsText(productAbstract.description);
+      catalogPage.assertBodyContainsText(productAbstract.price);
 
       productPage.addToCart();
-      cy.contains(productPage.getAddToCartSuccessMessage());
+      productPage.assertBodyContainsText(productPage.getAddToCartSuccessMessage());
     });
   }
 );

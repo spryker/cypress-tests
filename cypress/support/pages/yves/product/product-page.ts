@@ -51,6 +51,12 @@ export class ProductPage extends YvesPage {
       .children()
       .each(($productOffer) => {
         if ($productOffer.find('input[type="radio"]').attr('value') === params.productOfferReference) {
+          const $menu = $productOffer.find('details').has(this.repository.getMerchantRelationRequestLinkAttribute());
+
+          if ($menu.length) {
+            cy.wrap($menu).find('summary').click();
+          }
+
           cy.wrap($productOffer).find(this.repository.getMerchantRelationRequestLinkAttribute()).click();
         }
       });
@@ -106,19 +112,19 @@ export class ProductPage extends YvesPage {
   }
 
   selectServicePoint(servicePointName: string): void {
-    this.repository.getSelectServicePointButton().first().click();
-    this.repository.getServicePointSearchInput().clear().type(servicePointName);
-    this.repository.getServicePointListItem(servicePointName).click({ force: true });
+    this.repository.getSelectServicePointButton().first().click({ force: true });
+    this.repository.getServicePointFinderResults?.().should('have.length.at.least', 1);
+    this.repository.getServicePointSearchInput().clear({ force: true }).type(servicePointName, { force: true });
+    this.repository.getServicePointListItem(servicePointName).first().click({ force: true });
   }
 
   selectAsset(): void {
     this.repository.getSelectAssetButton().click();
-    this.repository.getSelectAssetPopup().should('be.visible');
     this.repository.getAssetOptions().first().click();
   }
 
-  assertServicePointIsSelected(servicePointName: string): void {
-    this.repository.getSelectedServicePointName().should('contain', servicePointName);
+  getSelectedServicePointName(): Cypress.Chainable {
+    return this.repository.getSelectedServicePointName();
   }
 
   getSspAssetNameBlock = (): Cypress.Chainable => this.repository.getSspAssetNameBlock();
@@ -126,9 +132,31 @@ export class ProductPage extends YvesPage {
   getAvailabilityStatusBlock = ($productOffer: Cypress.Chainable<JQuery<HTMLElement>>): Cypress.Chainable =>
     $productOffer.get('[data-qa="component status"]');
 
+  getAttachmentsListSelector = (): string => this.repository.getAttachmentsListSelector();
+
   getAttachmentsList = (): Cypress.Chainable => this.repository.getAttachmentsList();
 
   getAttachmentItems = (): Cypress.Chainable => this.repository.getAttachmentItems();
+
+  visitProductDetailPage = (params: VisitProductDetailPageParams): void => {
+    cy.visit(params.url);
+  };
+
+  selectVariantAttribute = (params: SelectVariantAttributeParams): void => {
+    this.repository.getVariantAttributeSelect(params.attributeKey).select(params.attributeValue);
+  };
+
+  getVariantAttributeOptions = (attributeKey: string): Cypress.Chainable => {
+    return this.repository.getVariantAttributeOptions(attributeKey);
+  };
+
+  getVariantAttributeSelect = (attributeKey: string): Cypress.Chainable => {
+    return this.repository.getVariantAttributeSelect(attributeKey);
+  };
+
+  getSelectedVariantAttributeValue = (attributeKey: string): Cypress.Chainable => {
+    return this.repository.getSelectedVariantAttributeInput(attributeKey).invoke('val');
+  };
 }
 
 interface SelectSoldByProductOfferParams {
@@ -145,4 +173,13 @@ interface AddToCartParams {
 
 interface GetProductOfferRadioParams {
   productOfferReference: string;
+}
+
+interface VisitProductDetailPageParams {
+  url: string;
+}
+
+interface SelectVariantAttributeParams {
+  attributeKey: string;
+  attributeValue: string;
 }

@@ -2,7 +2,7 @@
   "defaultPassword": "change123",
   "productPrice": "227.50",
   "customer": {
-    "email": "sonia@spryker.com"
+    "email": "sonia@acme.com"
   },
   "concreteProduct": {
     "name": "Club chair - Leather covering - black",

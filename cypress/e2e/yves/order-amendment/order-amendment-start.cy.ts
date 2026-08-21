@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { OrderAmendmentStartDynamicFixtures, OrderAmendmentStaticFixtures } from '@interfaces/yves';
 import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage, MultiCartPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
@@ -15,6 +15,7 @@ describe(
     tags: [
       '@yves',
       '@order-amendment',
+      '@quarantine',
       'product',
       'marketplace-product',
       'marketplace-merchant-portal-product-management',
@@ -56,17 +57,20 @@ describe(
       placeCustomerOrder(dynamicFixtures.customer1.email, dynamicFixtures.address1.id_customer_address);
 
       customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.containsOrderState('New');
+      orderDetailsPage.getOrderDetailTableBlock().contains('New').should('exist');
 
       orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
         orderDetailsPage.editOrder();
 
         cartPage.assertPageLocation();
-        cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
-        cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
+        cartPage
+          .getBody()
+          .contains(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`)
+          .should('exist');
+        cartPage.assertBodyContainsText(dynamicFixtures.product.localized_attributes[0].name).should('exist');
 
         customerOverviewPage.viewLastPlacedOrder();
-        orderDetailsPage.containsOrderState('Editing in Progress');
+        orderDetailsPage.getOrderDetailTableBlock().contains('Editing in Progress').should('exist');
       });
     });
 
@@ -80,7 +84,7 @@ describe(
       });
 
       customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.doesNotContainEditOrderButton();
+      orderDetailsPage.getEditOrderForm().should('not.exist');
     });
 
     it('customer should be able to replace current cart (quote) with previous order items', (): void => {
@@ -136,11 +140,14 @@ describe(
         orderDetailsPage.editOrder();
 
         cartPage.assertPageLocation();
-        cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
-        cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
+        cartPage
+          .getBody()
+          .contains(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`)
+          .should('exist');
+        cartPage.assertBodyContainsText(dynamicFixtures.product.localized_attributes[0].name).should('exist');
 
         customerOverviewPage.viewLastPlacedOrder();
-        orderDetailsPage.containsOrderState('Editing in Progress');
+        orderDetailsPage.getOrderDetailTableBlock().contains('Editing in Progress').should('exist');
       });
     });
 
@@ -171,11 +178,14 @@ describe(
         orderDetailsPage.editOrder();
 
         cartPage.assertPageLocation();
-        cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`);
-        cy.get('body').contains(dynamicFixtures.product.localized_attributes[0].name).should('exist');
+        cartPage
+          .getBody()
+          .contains(isB2c() ? 'In Your Cart' : `Editing Order ${orderReference}`)
+          .should('exist');
+        cartPage.assertBodyContainsText(dynamicFixtures.product.localized_attributes[0].name).should('exist');
 
         customerOverviewPage.viewLastPlacedOrder();
-        orderDetailsPage.containsOrderState('Editing in Progress');
+        orderDetailsPage.getOrderDetailTableBlock().contains('Editing in Progress').should('exist');
       });
     });
 
@@ -217,7 +227,9 @@ describe(
 
         cartPage.changeQuantity({ sku: dynamicFixtures.productOutOfStock2.sku, quantity: 2 });
 
-        cy.contains(`Item ${dynamicFixtures.productOutOfStock2.sku} only has availability of 1.`).should('exist');
+        cartPage
+          .assertBodyContainsText(`Item ${dynamicFixtures.productOutOfStock2.sku} only has availability of 1.`)
+          .should('exist');
         cartPage.getCartItemChangeQuantityField(dynamicFixtures.productOutOfStock2.sku).should('have.value', '1');
       });
     });
@@ -225,6 +237,16 @@ describe(
     function addProductsToCart(sku: string, quantity?: number): void {
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: sku });
+
+      // A freshly created product's availability/concrete data can still be propagating to
+      // storage right after fixture setup. Until it lands, the PDP hides the add-to-cart
+      // button (it is gated on `product.available` and `idProductConcrete`), so clicking it
+      // times out intermittently under CI load. Reload the product page until the button is
+      // published before interacting with it — same publish-wait approach as CatalogPage.search.
+      cy.url().then((productUrl) => {
+        cy.reloadUntilFound(productUrl, '[data-qa="add-to-cart-button"]', 'body', 20, 3000);
+      });
+
       productPage.addToCart({ quantity: quantity ?? 1 });
     }
 
@@ -282,12 +304,6 @@ describe(
 
     function skipB2cIt(description: string, testFn: () => void): void {
       (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFn);
-    }
-
-    function getPaymentMethodBasedOnEnv(): string {
-      return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice';
     }
 
     function isB2c(): boolean {

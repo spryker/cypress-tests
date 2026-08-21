@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { CheckoutStaticFixtures } from '@interfaces/smoke';
 import { CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
@@ -23,7 +23,7 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
     addTwoProductsToCart();
     checkoutScenario.execute({ isGuest: true, paymentMethod: getPaymentMethodBasedOnEnv() });
 
-    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+    customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
   skipB2BIt('guest customer should checkout to multi shipment address', (): void => {
@@ -34,7 +34,7 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
       paymentMethod: getPaymentMethodBasedOnEnv(),
     });
 
-    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+    customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
   skipB2BMpIt('customer should checkout to single shipment (with new shipping address)', (): void => {
@@ -46,7 +46,7 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
     addTwoProductsToCart();
     checkoutScenario.execute({ paymentMethod: getPaymentMethodBasedOnEnv() });
 
-    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+    customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
   });
 
   it('customer should checkout to multi shipment address (with new shipping address)', (): void => {
@@ -58,7 +58,9 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
     addTwoProductsToCart();
     checkoutScenario.execute({ isMultiShipment: true, paymentMethod: getPaymentMethodBasedOnEnv() });
 
-    cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+    customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
+    //check for making sure session is not invalidated after checkout
+    customerOverviewPage.viewLastPlacedOrder();
   });
 
   function skipB2BIt(description: string, testFn: () => void): void {
@@ -67,12 +69,6 @@ describe('basic checkout', { tags: ['@smoke', '@checkout', 'checkout', 'shipment
 
   function skipB2BMpIt(description: string, testFn: () => void): void {
     (Cypress.env('repositoryId') === 'b2b-mp' ? it.skip : it)(description, testFn);
-  }
-
-  function getPaymentMethodBasedOnEnv(): string {
-    return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-      ? 'dummyMarketplacePaymentInvoice'
-      : 'dummyPaymentInvoice';
   }
 
   function addTwoProductsToCart(): void {

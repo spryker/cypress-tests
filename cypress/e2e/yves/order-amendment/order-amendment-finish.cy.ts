@@ -4,6 +4,13 @@ import { CartPage, CatalogPage, CustomerOverviewPage, OrderPage, OrderDetailsPag
 import { CheckoutScenario, CustomerLoginScenario, CustomerLogoutScenario } from '@scenarios/yves';
 import { UpdatePriceProductScenario, UserLoginScenario } from '@scenarios/backoffice';
 
+const assertProductQuantity = (page: CustomerOverviewPage, productName: string, quantity: number): void => {
+  page.getBody().then(($body) => {
+    const occurrences = $body.find(page.getOrderedProductSelector(productName));
+    expect(occurrences).to.have.length(quantity);
+  });
+};
+
 /**
  * Order Amendment checklists: {@link https://spryker.atlassian.net/wiki/spaces/CCS/pages/4545871873/Initialisation+Order+Amendment+Process}
  */
@@ -58,12 +65,18 @@ describe(
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product2.sku });
       productPage.addToCart();
 
-      placeCustomerOrder(dynamicFixtures.customer1.email, dynamicFixtures.address1.id_customer_address);
+      placeCustomerOrder(
+        dynamicFixtures.customer1.email,
+        dynamicFixtures.address1.id_customer_address,
+        undefined,
+        undefined,
+        true
+      );
       assertOrderCancellationForPrevOrder();
 
       customerOverviewPage.viewLastPlacedOrder();
-      customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.localized_attributes[0].name, 1);
-      customerOverviewPage.assertProductQuantity(dynamicFixtures.product2.localized_attributes[0].name, 1);
+      assertProductQuantity(customerOverviewPage, dynamicFixtures.product1.localized_attributes[0].name, 1);
+      assertProductQuantity(customerOverviewPage, dynamicFixtures.product2.localized_attributes[0].name, 1);
     });
 
     it('customer should be able to finish amended order with updated product quantity', (): void => {
@@ -75,11 +88,17 @@ describe(
       cartPage.visit();
       cartPage.changeQuantity({ sku: dynamicFixtures.product1.sku, quantity: 3 });
 
-      placeCustomerOrder(dynamicFixtures.customer2.email, dynamicFixtures.address2.id_customer_address);
+      placeCustomerOrder(
+        dynamicFixtures.customer2.email,
+        dynamicFixtures.address2.id_customer_address,
+        undefined,
+        undefined,
+        true
+      );
       assertOrderCancellationForPrevOrder();
 
       customerOverviewPage.viewLastPlacedOrder();
-      customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.localized_attributes[0].name, 3);
+      assertProductQuantity(customerOverviewPage, dynamicFixtures.product1.localized_attributes[0].name, 3);
     });
 
     it('customer should be able to update order item and shipping address', (): void => {
@@ -95,11 +114,20 @@ describe(
       cartPage.visit();
       cartPage.removeProduct({ sku: dynamicFixtures.product1.sku });
 
-      placeCustomerOrder(dynamicFixtures.customer3.email, dynamicFixtures.address3new.id_customer_address);
+      placeCustomerOrder(
+        dynamicFixtures.customer3.email,
+        dynamicFixtures.address3new.id_customer_address,
+        undefined,
+        undefined,
+        true
+      );
 
       customerOverviewPage.viewLastPlacedOrder();
-      customerOverviewPage.assertProductQuantity(dynamicFixtures.product2.localized_attributes[0].name, 1);
-      customerOverviewPage.assertFirstShippingAddress(dynamicFixtures.address3new.address1);
+      assertProductQuantity(customerOverviewPage, dynamicFixtures.product2.localized_attributes[0].name, 1);
+      customerOverviewPage
+        .getFirstShippingAddress()
+        .should('exist')
+        .should('contain.text', dynamicFixtures.address3new.address1);
     });
 
     it('customer should be able to reorder product with old price', (): void => {
@@ -145,19 +173,20 @@ describe(
         dynamicFixtures.customer5.email,
         dynamicFixtures.address5.id_customer_address,
         staticFixtures.paymentMethodAsyncFlow,
-        false
+        false,
+        true
       );
 
       customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.containsOrderState('Editing in Progress');
-      customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.localized_attributes[0].name, 1);
-      customerOverviewPage.assertProductQuantity(dynamicFixtures.product2.localized_attributes[0].name, 1);
+      orderDetailsPage.getOrderDetailTableBlock().contains('Editing in Progress').should('exist');
+      assertProductQuantity(customerOverviewPage, dynamicFixtures.product1.localized_attributes[0].name, 1);
+      assertProductQuantity(customerOverviewPage, dynamicFixtures.product2.localized_attributes[0].name, 1);
 
       cy.runCliCommands(['console oms:check-condition']);
 
       customerOverviewPage.viewLastPlacedOrder();
-      customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.localized_attributes[0].name, 3);
-      customerOverviewPage.assertProductQuantity(dynamicFixtures.product4.localized_attributes[0].name, 1);
+      assertProductQuantity(customerOverviewPage, dynamicFixtures.product1.localized_attributes[0].name, 3);
+      assertProductQuantity(customerOverviewPage, dynamicFixtures.product4.localized_attributes[0].name, 1);
     });
 
     skipB2cIt('customer should be able to update company order', (): void => {
@@ -188,8 +217,8 @@ describe(
       });
 
       customerOverviewPage.viewLastPlacedOrder();
-      customerOverviewPage.assertProductQuantity(dynamicFixtures.product1.localized_attributes[0].name, 3);
-      customerOverviewPage.assertProductQuantity(dynamicFixtures.product4.localized_attributes[0].name, 1);
+      assertProductQuantity(customerOverviewPage, dynamicFixtures.product1.localized_attributes[0].name, 3);
+      assertProductQuantity(customerOverviewPage, dynamicFixtures.product4.localized_attributes[0].name, 1);
     });
 
     function searchAndAssertProductPriceWithRetry(sku: string, price: string, attempt = 1): void {
@@ -236,19 +265,28 @@ describe(
       customerOverviewPage.visit();
       customerOverviewPage.viewOrder(1);
 
-      orderDetailsPage.containsOrderState('New');
+      orderDetailsPage.getOrderDetailTableBlock().contains('New').should('exist');
     }
 
     function placeCustomerOrder(
       email: string,
       idCustomerAddress: number,
       paymentMethod?: string,
-      shouldTriggerOmsInCli?: boolean
+      shouldTriggerOmsInCli?: boolean,
+      skipLogin?: boolean
     ): void {
-      customerLoginScenario.execute({
-        email: email,
-        password: staticFixtures.defaultPassword,
-      });
+      // On the amendment "finish" step the customer is already logged in from the amendment
+      // flow. Re-authenticating there goes through the cached cy.session snapshot taken at the
+      // first login, which drops the active amendment cart and leaves an empty cart at checkout.
+      // Skip the login for that call so the live amendment session is preserved.
+      if (!skipLogin) {
+        customerLoginScenario.execute({
+          email: email,
+          password: staticFixtures.defaultPassword,
+        });
+      }
+
+      cartPage.visit();
 
       checkoutScenario.execute({
         idCustomerAddress: idCustomerAddress,

@@ -52,7 +52,7 @@ describe(
         shouldSkipShipmentStep: true,
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
 
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
@@ -67,7 +67,7 @@ describe(
       salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
       salesDetailPage.triggerOms({ state: 'Close' });
 
-      cy.contains('Status change triggered successfully.');
+      salesDetailPage.assertBodyContainsText('Status change triggered successfully.');
     });
   }
 );

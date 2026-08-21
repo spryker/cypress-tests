@@ -105,6 +105,33 @@ export class B2bMpCheckoutAddressRepository implements CheckoutAddressRepository
     cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shippingAddress_phone`);
   getShipmentTypeRadio = (shipmentType: string): Cypress.Chainable =>
     cy.get(`[data-qa="shipment-type-radio"][value="${shipmentType}"]`);
+  getMultiShipmentAddressItemServicePointUuidValue = (
+    $addressItem: JQuery<HTMLElement>,
+    index: number
+  ): string | undefined =>
+    ($addressItem.find(`#addressesForm_multiShippingAddresses_${index}_servicePoint_uuid`).val() as
+      | string
+      | undefined) || undefined;
+
+  getMultiShipmentAddressItemShipmentTypeRadio = (index: number, shipmentTypeKey: string): Cypress.Chainable =>
+    cy.get(`#addressesForm_multiShippingAddresses_${index}_shipmentType_key [value="${shipmentTypeKey}"]`);
+
+  getMultiShipmentAddressItemSelectServicePointButton = ($addressItem: JQuery<HTMLElement>): Cypress.Chainable =>
+    cy.wrap($addressItem).find('[data-qa="service-point-selector"] button');
+
+  getServicePointFinderInput = (): Cypress.Chainable =>
+    cy.get('[data-qa="ssp-service-point-finder-input"] input:visible');
+
+  getServicePointFinderListItem = (servicePointName: string): Cypress.Chainable =>
+    cy
+      .get('[data-qa="available-service-point"]:visible')
+      .filter(
+        (_, el) =>
+          Cypress.$(el).closest('.service-point').find('.service-point__name').text().trim() === servicePointName
+      );
+
+  getMultiShipmentAddressItemServicePointUuidInput = (index: number): Cypress.Chainable =>
+    cy.get(`#addressesForm_multiShippingAddresses_${index}_servicePoint_uuid`);
 
   private revealAndGet = (selector: string): Cypress.Chainable =>
     cy.get(selector).then(($el) => {

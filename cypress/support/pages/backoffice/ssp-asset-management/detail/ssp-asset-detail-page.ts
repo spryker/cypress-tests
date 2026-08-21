@@ -10,77 +10,67 @@ export class SspAssetDetailPage extends BackofficePage {
 
   protected PAGE_URL = '/self-service-portal/view-asset';
 
-  verifyAssetDetails(assetData: SspAsset): void {
+  openCompaniesTab(): void {
     this.repository
       .getSspAssetRelationTabs()
       .find(this.repository.getCompaniesTabClickSelector())
       .click({ force: true });
-    if (assetData.reference) {
-      cy.get(this.repository.getReferenceValueSelector()).should('contain', assetData.reference);
-    }
-
-    if (assetData.name) {
-      cy.get(this.repository.getNameValueSelector()).should('contain', assetData.name);
-    }
-
-    if (assetData.serialNumber) {
-      cy.get(this.repository.getSerialNumberValueSelector()).should('contain', assetData.serialNumber);
-    }
-
-    if (assetData.status) {
-      const expectedStatus = assetData.status.toLowerCase();
-      cy.get(this.repository.getStatusValueSelector()).then(($statusElement) => {
-        const actualStatus = $statusElement.text().trim().toLowerCase();
-        expect(actualStatus).to.include(expectedStatus);
-      });
-    }
-
-    if (assetData.note) {
-      cy.get(this.repository.getNoteValueSelector()).should('contain', assetData.note);
-    }
-
-    if (assetData.image) {
-      cy.get(this.repository.getImageSelector()).should('exist');
-    } else {
-      cy.get(this.repository.getImageSelector()).should('not.exist');
-    }
-
-    this.repository.getSspAssetRelationTabs().find(this.repository.getCompaniesTabSelector()).should('exist');
-    this.repository.getSspAssetRelationTabs().find(this.repository.getInquiriesTabSelector()).should('exist');
-
-    if (assetData.companies) {
-      for (const company of assetData.companies) {
-        this.repository.getCompaniesTabContent().contains(company.name).should('be.visible');
-      }
-    }
-
-    if (assetData.assignedbusinessUnits && assetData.assignedbusinessUnits.length > 0) {
-      this.repository
-        .getSspAssetRelationTabs()
-        .find(this.repository.getCompanyTableSelector())
-        .should('be.visible')
-        .find('tbody tr')
-        .should('have.length.at.least', assetData.assignedbusinessUnits.length);
-
-      for (const businessUnit of assetData.assignedbusinessUnits) {
-        this.repository.getCompaniesTabContent().contains(businessUnit.name).should('be.visible');
-      }
-    }
-
-    if (assetData.businessUnitOwner) {
-      cy.get(this.repository.getBusinessUnitOwnerValueSelector()).should('contain', assetData.businessUnitOwner.name);
-    }
-
-    this.repository.getSspAssetRelationTabs().find(this.repository.getServicesTabSelector()).should('exist');
-
-    if (assetData.orderReference) {
-      this.repository.getSspAssetRelationTabs().find(this.repository.getServicesTabSelector()).click();
-      cy.get(this.repository.getOrderReferenceColumnSelector()).contains(assetData.orderReference).should('be.visible');
-    }
   }
 
-  verifyImageIsVisible(): void {
-    cy.get(this.repository.getImageSelector()).should('be.visible');
+  openServicesTab(): void {
+    this.repository.getSspAssetRelationTabs().find(this.repository.getServicesTabSelector()).click();
+  }
+
+  getReferenceValue(): Cypress.Chainable {
+    return cy.get(this.repository.getReferenceValueSelector());
+  }
+
+  getNameValue(): Cypress.Chainable {
+    return cy.get(this.repository.getNameValueSelector());
+  }
+
+  getSerialNumberValue(): Cypress.Chainable {
+    return cy.get(this.repository.getSerialNumberValueSelector());
+  }
+
+  getStatusValue(): Cypress.Chainable {
+    return cy.get(this.repository.getStatusValueSelector());
+  }
+
+  getNoteValue(): Cypress.Chainable {
+    return cy.get(this.repository.getNoteValueSelector());
+  }
+
+  getImage(): Cypress.Chainable {
+    return cy.get(this.repository.getImageSelector());
+  }
+
+  getBusinessUnitOwnerValue(): Cypress.Chainable {
+    return cy.get(this.repository.getBusinessUnitOwnerValueSelector());
+  }
+
+  getCompaniesTab(): Cypress.Chainable {
+    return this.repository.getSspAssetRelationTabs().find(this.repository.getCompaniesTabSelector());
+  }
+
+  getInquiriesTab(): Cypress.Chainable {
+    return this.repository.getSspAssetRelationTabs().find(this.repository.getInquiriesTabSelector());
+  }
+
+  getServicesTab(): Cypress.Chainable {
+    return this.repository.getSspAssetRelationTabs().find(this.repository.getServicesTabSelector());
+  }
+
+  getCompanyTable(): Cypress.Chainable {
+    return this.repository.getSspAssetRelationTabs().find(this.repository.getCompanyTableSelector());
+  }
+
+  getCompaniesTabContent(): Cypress.Chainable {
+    return this.repository.getCompaniesTabContent();
+  }
+
+  getOrderReferenceColumn(): Cypress.Chainable {
+    return cy.get(this.repository.getOrderReferenceColumnSelector());
   }
 
   clickEditButton(): void {
@@ -114,25 +104,4 @@ export class SspAssetDetailPage extends BackofficePage {
       .invoke('text')
       .then((text) => text.trim());
   }
-}
-
-interface SspAsset {
-  reference: string;
-  name: string;
-  serialNumber?: string;
-  status?: string;
-  note?: string;
-  image?: string;
-  businessUnitOwner?: BusinessOwner;
-  assignedbusinessUnits?: BusinessOwner[];
-  companies: Company[];
-  orderReference?: string;
-}
-
-interface Company {
-  name: string;
-}
-
-interface BusinessOwner {
-  name: string;
 }

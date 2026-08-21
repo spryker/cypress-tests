@@ -23,4 +23,14 @@ export class AvailabilityViewPage extends BackofficePage {
         cy.get('@editStockVariantButton').should('be.visible').click({ force: true });
       });
   };
+
+  visitForSku = (params: { sku: string }): void => {
+    cy.visitBackoffice(`${this.PAGE_URL}?sku=${encodeURIComponent(params.sku)}`);
+  };
+
+  getReservedProductsAmount = (): Cypress.Chainable<number> =>
+    this.repository
+      .getReservedProductsValue()
+      .invoke('text')
+      .then((text: string) => Number.parseFloat(text.replace(/[^0-9.-]/g, '')));
 }

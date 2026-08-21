@@ -11,15 +11,18 @@ export class MultiCartPage extends YvesPage {
 
   protected PAGE_URL = '/multi-cart';
 
-  createCart = (params?: CreateCartParams): void => {
+  createCart = (params?: CreateCartParams): string => {
     cy.visit(`${this.PAGE_URL}/create`);
     const cartName = params?.name ?? `Cart #${this.faker.string.uuid()}`;
 
     this.repository.getCreateCartNameInput().clear().type(cartName);
     this.repository.getCreateCartForm().submit();
 
-    cy.contains(`Cart '${cartName}' was created successfully`).should('exist');
+    return cartName;
   };
+
+  getCartCreatedMessage = (cartName: string): Cypress.Chainable =>
+    cy.contains(`Cart '${cartName}' was created successfully`);
 
   selectCart = (params: SelectCartParams): void => {
     this.repository.getQuoteTable().contains(params.name).click();

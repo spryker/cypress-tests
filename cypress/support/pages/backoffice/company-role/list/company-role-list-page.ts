@@ -14,14 +14,20 @@ export class CompanyRoleListPage extends BackofficePage {
     this.find({
       interceptTableUrl: `**/company-role-gui/list-company-role/table**${params.query}**`,
       searchQuery: params.query,
-    }).then(($companyRoleRow) => {
-      if (params.action === ActionEnum.edit) {
-        this.clickEditAction($companyRoleRow);
+    }).then((getRow) => {
+      if (!getRow) {
+        return;
       }
 
-      if (params.action === ActionEnum.delete) {
-        this.clickDeleteAction($companyRoleRow);
-      }
+      getRow().then(($companyRoleRow: JQuery<HTMLElement>) => {
+        if (params.action === ActionEnum.edit) {
+          this.clickEditAction($companyRoleRow);
+        }
+
+        if (params.action === ActionEnum.delete) {
+          this.clickDeleteAction($companyRoleRow);
+        }
+      });
     });
   };
 

@@ -22,8 +22,13 @@ export class HomePage extends YvesPage {
   };
 
   selectStore = (store: string): void => {
-    this.repository.selectStore(store);
-    cy.url().should('include', `${store}`);
+    // Cypress does not fire the 'change' event when the option is already selected,
+    // so window.location never gets set. Read the store URL from the option value directly.
+    cy.get(this.repository.getStoreSelectorOption(store))
+      .invoke('val')
+      .then((storeUrl) => {
+        cy.visit(storeUrl as string);
+      });
   };
 
   navigateToNewPage(newPageLinkText: string): void {
@@ -32,5 +37,13 @@ export class HomePage extends YvesPage {
 
   getLanguageSwitcher(): Cypress.Chainable {
     return this.repository.getLanguageSwitcher();
+  }
+
+  getLogo(): Cypress.Chainable {
+    return this.repository.getLogo();
+  }
+
+  getLogoImage(): Cypress.Chainable {
+    return this.repository.getLogoImage();
   }
 }

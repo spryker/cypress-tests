@@ -57,7 +57,7 @@ describe(
     it('buyer should be blocked from placing order when block budget is exceeded', (): void => {
       proceedThroughCheckoutToSummary(dynamicFixtures.buyerForBlock.email);
 
-      checkoutSummaryBudgetPage.assertEnforcementError();
+      checkoutSummaryBudgetPage.getCheckoutErrorMessage().should('be.visible');
       cy.url().should('include', '/checkout/summary');
     });
 
@@ -66,13 +66,13 @@ describe(
       checkoutSummaryPage.placeOrder();
 
       cy.url().should('include', '/checkout/success');
-      checkoutSummaryBudgetPage.assertWarnFlashMessage();
+      checkoutSummaryBudgetPage.getWarnFlashMessage().should('be.visible');
     });
 
     it('buyer should be blocked from placing order when require_approval budget is exceeded without approval', (): void => {
       proceedThroughCheckoutToSummary(dynamicFixtures.buyerForRequireApproval.email);
 
-      checkoutSummaryBudgetPage.assertEnforcementError();
+      checkoutSummaryBudgetPage.getCheckoutErrorMessage().should('be.visible');
       cy.url().should('include', '/checkout/summary');
     });
   }

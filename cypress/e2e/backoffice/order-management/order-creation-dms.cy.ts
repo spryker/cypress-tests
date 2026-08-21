@@ -27,7 +27,7 @@ describe(
     ],
   },
   (): void => {
-    if (!Cypress.env('isDynamicStoreEnabled') || !['suite', 'b2c', 'b2b'].includes(Cypress.env('repositoryId'))) {
+    if (!Cypress.env('isDynamicStoreEnabled') || !['b2c', 'b2b'].includes(Cypress.env('repositoryId'))) {
       it.skip('skipped due to disabled dynamic store feature and it being MP repo ', () => {});
       return;
     }

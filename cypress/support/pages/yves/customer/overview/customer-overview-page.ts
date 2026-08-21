@@ -1,7 +1,7 @@
 import { autoWired, REPOSITORIES } from '@utils';
 import { inject, injectable } from 'inversify';
 import { YvesPage } from '@pages/yves';
-import { CustomerOverviewRepository } from './customer-overview-repository';
+import { CustomerOverviewRepository, CustomerSidebarSection } from './customer-overview-repository';
 
 @injectable()
 @autoWired
@@ -21,15 +21,16 @@ export class CustomerOverviewPage extends YvesPage {
     this.repository.getViewOrderButton(tableRowIndex).click();
   };
 
-  assertProductQuantity = (productName: string, quantity: number): void => {
-    cy.get('body').then(($body) => {
-      const occurrences = $body.find(this.repository.getOrderedProductSelector(productName));
-      expect(occurrences).to.have.length(quantity);
-    });
+  getBody = (): Cypress.Chainable => {
+    return cy.get('body');
   };
 
-  assertFirstShippingAddress = (address1: string): void => {
-    this.repository.getFirstShippingAddress().should('exist').should('contain.text', address1);
+  getOrderedProductSelector = (productName: string): string => {
+    return this.repository.getOrderedProductSelector(productName);
+  };
+
+  getFirstShippingAddress = (): Cypress.Chainable => {
+    return this.repository.getFirstShippingAddress();
   };
 
   clickMyFilesLink = (): void => {
@@ -39,4 +40,10 @@ export class CustomerOverviewPage extends YvesPage {
   getOrderDetailTable = (): Cypress.Chainable => {
     return this.repository.getOrderDetailTableRow();
   };
+
+  getSidebarLink = (section: CustomerSidebarSection): Cypress.Chainable => this.repository.getSidebarLink(section);
+
+  getDefaultBillingAddressHeading = (): string => this.repository.getDefaultBillingAddressHeading();
+
+  getDefaultShippingAddressHeading = (): string => this.repository.getDefaultShippingAddressHeading();
 }
