@@ -17,10 +17,14 @@ describe(
     // The page name is written verbatim into every localized url field and the server rejects a
     // duplicate url, so it has to be unique per run.
     let cmsPageName: string;
+    let titlePlaceholder: string;
+    let contentPlaceholder: string;
 
     before((): void => {
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
       cmsPageName = `${staticFixtures.cmsPageName}-${Date.now()}`;
+      titlePlaceholder = `${cmsPageName} title`;
+      contentPlaceholder = `${cmsPageName} content`;
 
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
@@ -29,10 +33,14 @@ describe(
 
       // Publishing alone leaves the page invisible to the storefront until the queue is drained,
       // which is what shouldTriggerPublishAndSync does.
-      createCmsPageScenario.execute({ cmsPageName: cmsPageName, shouldTriggerPublishAndSync: true });
+      createCmsPageScenario.execute({
+        cmsPageName: cmsPageName,
+        placeholders: { title: titlePlaceholder, content: contentPlaceholder },
+        shouldTriggerPublishAndSync: true,
+      });
     });
 
-    it('Given a cms page published in the back office When its storefront url is opened Then the page renders under that url with its title', (): void => {
+    it('should render a published cms page with its title and content under its localized storefront url', (): void => {
       // Arrange
       const locale = staticFixtures.defaultLocaleName.split('_')[0];
 
@@ -41,7 +49,8 @@ describe(
 
       // Assert
       cy.url().should('include', `/${locale}/${cmsPageName}`);
-      cmsContentPage.assertBodyContainsText(cmsPageName).should('exist');
+      cmsContentPage.assertBodyContainsText(titlePlaceholder).should('exist');
+      cmsContentPage.assertBodyContainsText(contentPlaceholder).should('exist');
     });
   }
 );
