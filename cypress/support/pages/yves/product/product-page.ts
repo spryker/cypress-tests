@@ -109,6 +109,8 @@ export class ProductPage extends YvesPage {
 
   selectShipmentType(shipmentTypeName: string): void {
     this.repository.getShipmentTypeRadioButton(shipmentTypeName).click({ force: true });
+
+    this.repository.getServicePointBlockLoader().should('not.be.visible');
   }
 
   selectServicePoint(servicePointName: string): void {
