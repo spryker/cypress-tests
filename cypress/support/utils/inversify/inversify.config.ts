@@ -158,10 +158,8 @@ import { B2bCompanyRoleCreateRepository } from '../../pages/yves/company/company
 import { B2bCompanyRegistrationRepository } from '../../pages/yves/company/register/repositories/b2b-company-registration-repository';
 import { B2cCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/b2c-company-role-index-repository';
 import { B2cCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2c-company-role-create-repository';
-import { B2cCompanyRegistrationRepository } from '../../pages/yves/company/register/repositories/b2c-company-registration-repository';
 import { B2cMpCompanyRoleIndexRepository } from '../../pages/yves/company/company-role/index/repositories/b2c-mp-company-role-index-repository';
 import { B2cMpCompanyRoleCreateRepository } from '../../pages/yves/company/company-role/create/repositories/b2c-mp-company-role-create-repository';
-import { B2cMpCompanyRegistrationRepository } from '../../pages/yves/company/register/repositories/b2c-mp-company-registration-repository';
 import { B2cMpManageCompanyRoleUserRepository } from '../../pages/yves/company/user/manage/repositories/b2c-mp-manage-company-role-user-repository';
 import { B2cManageCompanyRoleUserRepository } from '../../pages/yves/company/user/manage/repositories/b2c-manage-company-role-user-repository';
 import { SuiteCustomerDeleteRepository } from '../../pages/yves/customer/customer-delete/repositories/suite-customer-delete-repository';
@@ -376,7 +374,6 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.ProductComparisonRepository]: B2cProductComparisonRepository,
   [REPOSITORIES.CompanyRoleIndexRepository]: B2cCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: B2cCompanyRoleCreateRepository,
-  [REPOSITORIES.CompanyRegistrationRepository]: B2cCompanyRegistrationRepository,
   [REPOSITORIES.ManageCompanyRoleUserRepository]: B2cManageCompanyRoleUserRepository,
   [REPOSITORIES.CustomerDeleteRepository]: B2cCustomerDeleteRepository,
   [REPOSITORIES.CustomerProfileRepository]: B2cCustomerProfileRepository,
@@ -482,7 +479,6 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.ProductComparisonRepository]: B2cMpProductComparisonRepository,
   [REPOSITORIES.CompanyRoleIndexRepository]: B2cMpCompanyRoleIndexRepository,
   [REPOSITORIES.CompanyRoleCreateRepository]: B2cMpCompanyRoleCreateRepository,
-  [REPOSITORIES.CompanyRegistrationRepository]: B2cMpCompanyRegistrationRepository,
   [REPOSITORIES.ManageCompanyRoleUserRepository]: B2cMpManageCompanyRoleUserRepository,
   [REPOSITORIES.CustomerDeleteRepository]: B2cMpCustomerDeleteRepository,
   [REPOSITORIES.CustomerProfileRepository]: B2cMpCustomerProfileRepository,
