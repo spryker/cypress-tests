@@ -23,6 +23,10 @@ export class CustomerIndexPage extends BackofficePage {
       if (params.action === ActionEnum.removeMultiFactorAuthentication) {
         getRow().find(this.getRemoveMultiFactorAuthenticationButtonSelector()).click({ force: true });
       }
+
+      if (params.action === ActionEnum.edit) {
+        getRow().find(this.repository.getEditButtonSelector()).click({ force: true });
+      }
     });
   };
 

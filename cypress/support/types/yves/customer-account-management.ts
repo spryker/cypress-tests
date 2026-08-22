@@ -47,6 +47,7 @@ export interface NewCustomerAddress {
 export interface CustomerProfileManagementDynamicFixtures {
   customer: Customer;
   existingCustomer: Customer;
+  rootUser: User;
 }
 
 export interface CustomerProfileManagementStaticFixtures {

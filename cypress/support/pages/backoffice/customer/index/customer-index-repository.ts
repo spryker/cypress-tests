@@ -5,4 +5,5 @@ import { injectable } from 'inversify';
 @autoWired
 export class CustomerIndexRepository {
   getRemoveMultiFactorAuthenticationButtonSelector = (): string => 'a[data-qa="remove-mfa-button"]';
+  getEditButtonSelector = (): string => 'a:contains("Edit")';
 }
