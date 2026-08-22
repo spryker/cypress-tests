@@ -27,6 +27,10 @@ export class CustomerIndexPage extends BackofficePage {
       if (params.action === ActionEnum.edit) {
         getRow().find(this.repository.getEditButtonSelector()).click({ force: true });
       }
+
+      if (params.action === ActionEnum.view) {
+        getRow().find(this.repository.getViewButtonSelector()).click({ force: true });
+      }
     });
   };
 

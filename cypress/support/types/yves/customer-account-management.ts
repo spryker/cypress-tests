@@ -23,11 +23,13 @@ export interface CustomerOverviewStaticFixtures {
 
 export interface CustomerAddressManagementDynamicFixtures {
   customer: Customer;
+  rootUser: User;
 }
 
 export interface CustomerAddressManagementStaticFixtures {
   defaultPassword: string;
   newAddress: NewCustomerAddress;
+  backofficeAddressCountry: string;
 }
 
 export interface NewCustomerAddress {
