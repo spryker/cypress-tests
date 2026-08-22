@@ -20,6 +20,10 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
+    beforeEach((): void => {
+        cy.deleteCustomerPersistentQuotes(dynamicFixtures.customer.email);
+    });
+
     skipB2BIt('guest customer should checkout to single shipment', (): void => {
       addTwoProductsToCart();
       checkoutScenario.execute({
@@ -53,10 +57,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      // Multi-cart feature available only in B2B demo shops
-      if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
-        addTwoProductsToCart();
-      }
+      addTwoProductsToCart();
 
       checkoutScenario.execute({
         idCustomerAddress: dynamicFixtures.address.id_customer_address,
@@ -76,10 +77,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      // Multi-cart feature available only in B2B demo shops
-      if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
-        addTwoProductsToCart();
-      }
+      addTwoProductsToCart();
 
       checkoutScenario.execute({
         shouldTriggerOmsInCli: true,
@@ -98,10 +96,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      // Multi-cart feature available only in B2B demo shops
-      if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
-        addTwoProductsToCart();
-      }
+      addTwoProductsToCart();
 
       checkoutScenario.execute({
         isMultiShipment: true,
@@ -121,10 +116,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      // Multi-cart feature available only in B2B demo shops
-      if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
-        addTwoProductsToCart();
-      }
+      addTwoProductsToCart();
 
       checkoutScenario.execute({
         isMultiShipment: true,
