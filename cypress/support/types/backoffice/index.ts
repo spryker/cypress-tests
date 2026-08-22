@@ -36,3 +36,4 @@ export * from './refund';
 export * from './workflow-management';
 export * from './workflow-instance-lifecycle';
 export * from './order-experience-management';
+export * from './glossary-management';
