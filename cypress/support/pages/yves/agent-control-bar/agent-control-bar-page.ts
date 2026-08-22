@@ -30,4 +30,6 @@ export class AgentControlBarPage extends YvesPage {
   };
 
   getEndAssistanceLink = (): Cypress.Chainable => this.repository.getEndAssistanceLink();
+
+  getCustomerSearchInput = (): Cypress.Chainable => this.repository.getCustomerSearchInput();
 }

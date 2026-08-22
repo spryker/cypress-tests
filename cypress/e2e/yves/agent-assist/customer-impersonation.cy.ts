@@ -49,15 +49,18 @@ describe(
       agentControlBarPage.getEndAssistanceLink().should('exist');
     });
 
-    it('agent should be able to end the assistance session', (): void => {
+    it('agent should be handed back their own session when assistance ends', (): void => {
+      // Arrange
+      agentControlBarPage.getEndAssistanceLink().should('exist');
+
       // Act
       agentControlBarPage.endAssistance();
 
       // Assert
-      // The account area belongs to the customer, so once the session is handed back the agent
-      // is bounced to the login form rather than seeing it.
-      customerOverviewPage.visit();
-      cy.url().should('include', 'login');
+      // The control bar shows the customer search only when nobody is being assisted, and the exit
+      // link only while somebody is, so the swap is what proves the session was handed back.
+      agentControlBarPage.getCustomerSearchInput().should('exist');
+      agentControlBarPage.getEndAssistanceLink().should('not.exist');
     });
 
     it('agent should be able to place an order for the impersonated customer', (): void => {
