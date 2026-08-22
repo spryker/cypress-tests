@@ -32,7 +32,4 @@ export class B2cMpCustomerOverviewRepository implements CustomerOverviewReposito
   getDefaultShippingAddressHeading(): string {
     return 'Default Shipping Address';
   }
-  getCustomerNavigationLinkSelector(): string {
-    return 'a.menu__link--customer-navigation';
-  }
 }

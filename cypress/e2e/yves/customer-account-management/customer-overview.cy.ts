@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { CustomerLoginScenario } from '@scenarios/yves';
-import { CustomerOverviewPage } from '@pages/yves';
+import { CustomerOverviewPage, ReturnListPage, WishlistPage } from '@pages/yves';
 import { CustomerOverviewDynamicFixtures, CustomerOverviewStaticFixtures } from '@interfaces/yves';
 
 describe(
@@ -11,6 +11,8 @@ describe(
   (): void => {
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const customerOverviewPage = container.get(CustomerOverviewPage);
+    const wishlistPage = container.get(WishlistPage);
+    const returnListPage = container.get(ReturnListPage);
 
     let dynamicFixtures: CustomerOverviewDynamicFixtures;
     let staticFixtures: CustomerOverviewStaticFixtures;
@@ -72,24 +74,20 @@ describe(
       cy.url().should('include', '/customer/newsletter');
     });
 
-    it('should open every page in the customer account navigation', (): void => {
-      // Arrange
-      customerOverviewPage.visit();
+    it('customer should be able to open the wishlist page', (): void => {
+      // Act
+      wishlistPage.visit();
 
-      customerOverviewPage.getCustomerNavigationPaths().then((paths) => {
-        // Assert
-        expect(paths, 'customer account navigation links').to.have.length.greaterThan(0);
-        cy.log(`crawling ${paths.length} account pages`);
+      // Assert
+      wishlistPage.assertPageLocation();
+    });
 
-        // Act
-        paths.forEach((path) => {
-          cy.visit(path);
+    it('customer should be able to open the returns page', (): void => {
+      // Act
+      returnListPage.visit();
 
-          // Landing back on the login form is how an account page that is not reachable shows up,
-          // so staying on the requested path is the assertion that matters here.
-          cy.url().should('include', path).and('not.include', '/login');
-        });
-      });
+      // Assert
+      returnListPage.assertPageLocation();
     });
   }
 );

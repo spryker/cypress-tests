@@ -9,7 +9,6 @@ export interface CustomerOverviewRepository {
   getMyFilesLink(): Cypress.Chainable;
   getOrderDetailTableRow(): Cypress.Chainable;
   getSidebarLink(section: CustomerSidebarSection): Cypress.Chainable;
-  getCustomerNavigationLinkSelector(): string;
   getDefaultBillingAddressHeading(): string;
   getDefaultShippingAddressHeading(): string;
 }

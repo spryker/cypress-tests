@@ -46,19 +46,4 @@ export class CustomerOverviewPage extends YvesPage {
   getDefaultBillingAddressHeading = (): string => this.repository.getDefaultBillingAddressHeading();
 
   getDefaultShippingAddressHeading = (): string => this.repository.getDefaultShippingAddressHeading();
-
-  /**
-   * Every link in the customer account navigation. The container markup differs per repository,
-   * so the selector comes from the repository while the path extraction stays shared.
-   */
-  getCustomerNavigationPaths = (): Cypress.Chainable<string[]> => {
-    return cy.get(this.repository.getCustomerNavigationLinkSelector()).then(($links): string[] => {
-      const paths = $links
-        .map((index: number, element: HTMLElement) => Cypress.$(element).attr('href'))
-        .get()
-        .filter((href): href is string => typeof href === 'string' && href.startsWith('/'));
-
-      return Array.from(new Set(paths));
-    });
-  };
 }

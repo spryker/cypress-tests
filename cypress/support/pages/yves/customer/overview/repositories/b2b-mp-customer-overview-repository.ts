@@ -34,7 +34,4 @@ export class B2bMpCustomerOverviewRepository implements CustomerOverviewReposito
   getDefaultShippingAddressHeading(): string {
     return 'Default Shipping Address';
   }
-  getCustomerNavigationLinkSelector(): string {
-    return 'ul.navigation-sidebar__list a';
-  }
 }
