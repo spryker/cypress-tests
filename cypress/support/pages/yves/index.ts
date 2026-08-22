@@ -60,3 +60,4 @@ export * from './recurring-orders/review/recurring-order-review-page';
 export * from './company/register/company-registration-page';
 export * from './wishlist/wishlist-page';
 export * from './return/return-list-page';
+export * from './agent-control-bar/agent-control-bar-page';

@@ -1,0 +1,61 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": {
+            "id_store": 1
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "customer",
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address",
+          "arguments": [
+            {
+              "fkCustomer": "#customer.id_customer",
+              "fkCountry": "#country.id_country"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "agentUser",
+          "arguments": [
+            {
+              "password": "change123",
+              "is_agent": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#agentUser.id_user", 1]
+        }
+      ]
+    }
+  }
+}
