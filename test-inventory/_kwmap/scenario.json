@@ -1,0 +1,266 @@
+{
+  "CustomerLoginScenario.execute": {
+    "canonical_name": "login_as_customer",
+    "kind": "setup",
+    "description": "Log in to the storefront as a registered customer.",
+    "migration_note": "Robot: login_as_customer"
+  },
+  "UserLoginScenario.execute": {
+    "canonical_name": "login_as_admin",
+    "kind": "setup",
+    "description": "Log in to the Backoffice as an admin user.",
+    "migration_note": "Robot: login_as_admin"
+  },
+  "CheckoutScenario.execute": {
+    "canonical_name": "place_order",
+    "kind": "ui",
+    "description": "Run the full storefront checkout flow and place the order.",
+    "migration_note": "Robot: place_order"
+  },
+  "MerchantUserLoginScenario.execute": {
+    "canonical_name": "login_as_merchant",
+    "kind": "setup",
+    "description": "Log in to the Merchant Portal as a merchant user.",
+    "migration_note": "Robot: login_as_merchant"
+  },
+  "MerchantAgentLoginUserScenario.execute": {
+    "canonical_name": "login_as_agent_for_customer",
+    "kind": "setup",
+    "description": "Log in to the Merchant Portal as a merchant agent.",
+    "migration_note": "Robot: login_as_agent_for_customer"
+  },
+  "CustomerLogoutScenario.execute": {
+    "canonical_name": "logout_customer",
+    "kind": "nav",
+    "description": "Log the customer out of the storefront.",
+    "migration_note": "Robot: logout_customer"
+  },
+  "CheckoutMpScenario.execute": {
+    "canonical_name": "place_order_marketplace",
+    "kind": "ui",
+    "description": "Run the marketplace checkout flow (guest/multi-shipment) and place the order.",
+    "migration_note": ""
+  },
+  "UserMfaActivationScenario.execute": {
+    "canonical_name": "activate_admin_mfa",
+    "kind": "ui",
+    "description": "Activate email-based MFA for the Backoffice admin user.",
+    "migration_note": ""
+  },
+  "UserLogoutScenario.execute": {
+    "canonical_name": "logout_admin",
+    "kind": "nav",
+    "description": "Log the admin user out of the Backoffice.",
+    "migration_note": ""
+  },
+  "CustomerMfaActivationScenario.execute": {
+    "canonical_name": "activate_customer_mfa",
+    "kind": "ui",
+    "description": "Activate email-based MFA for the storefront customer.",
+    "migration_note": ""
+  },
+  "ImpersonateAsMerchantUserScenario.execute": {
+    "canonical_name": "impersonate_merchant_user_as_agent",
+    "kind": "setup",
+    "description": "Agent logs in and impersonates a merchant user via the assist flow.",
+    "migration_note": ""
+  },
+  "mfaSetUpScenario.executeActivation": {
+    "canonical_name": "activate_merchant_mfa",
+    "kind": "ui",
+    "description": "Activate email-based MFA for the merchant user.",
+    "migration_note": ""
+  },
+  "AclNavigationAccessScenario.execute": {
+    "canonical_name": "assert_acl_navigation_access",
+    "kind": "ui",
+    "description": "Log in and assert allowed/denied Backoffice menu items and paths.",
+    "migration_note": ""
+  },
+  "UserMfaLoginScenario.execute": {
+    "canonical_name": "login_as_admin_with_mfa",
+    "kind": "setup",
+    "description": "Log in to the Backoffice as admin completing the MFA code step.",
+    "migration_note": ""
+  },
+  "SelectStoreScenario.execute": {
+    "canonical_name": "select_store",
+    "kind": "ui",
+    "description": "Select a store via the storefront store switcher.",
+    "migration_note": ""
+  },
+  "UploadProductOfferDataImportMerchantFileScenario.execute": {
+    "canonical_name": "upload_merchant_product_offer_import_file",
+    "kind": "ui",
+    "description": "Upload a product-offer data-import file in the Merchant Portal.",
+    "migration_note": ""
+  },
+  "UploadProductDataImportMerchantFileScenario.execute": {
+    "canonical_name": "upload_merchant_product_import_file",
+    "kind": "ui",
+    "description": "Upload a product data-import file in the Merchant Portal.",
+    "migration_note": ""
+  },
+  "mfaSetUpScenario.executeDeactivation": {
+    "canonical_name": "deactivate_merchant_mfa",
+    "kind": "ui",
+    "description": "Deactivate email-based MFA for the merchant user.",
+    "migration_note": ""
+  },
+  "MerchantRegistrationApprovalScenario.execute": {
+    "canonical_name": "approve_merchant_registration",
+    "kind": "ui",
+    "description": "Approve a pending merchant registration in the Backoffice.",
+    "migration_note": ""
+  },
+  "MerchantActivationScenario.execute": {
+    "canonical_name": "activate_merchant",
+    "kind": "ui",
+    "description": "Activate a merchant in the Backoffice.",
+    "migration_note": ""
+  },
+  "UserActivationScenario.execute": {
+    "canonical_name": "activate_admin_user",
+    "kind": "ui",
+    "description": "Activate a Backoffice admin user.",
+    "migration_note": ""
+  },
+  "AgentLoginScenario.execute": {
+    "canonical_name": "login_as_agent_for_customer",
+    "kind": "setup",
+    "description": "Log in to the storefront as a customer-service agent.",
+    "migration_note": "Robot: login_as_agent_for_customer"
+  },
+  "AgentMfaActivationScenario.execute": {
+    "canonical_name": "activate_agent_mfa",
+    "kind": "ui",
+    "description": "Activate email-based MFA for the storefront agent.",
+    "migration_note": ""
+  },
+  "AgentLogoutScenario.execute": {
+    "canonical_name": "logout_agent",
+    "kind": "nav",
+    "description": "Log the agent out of the storefront.",
+    "migration_note": "Robot: logout_agent"
+  },
+  "UserMfaLoginScenario.executeWithInvalidCode": {
+    "canonical_name": "login_as_admin_with_invalid_mfa",
+    "kind": "ui",
+    "description": "Attempt Backoffice admin MFA login with an invalid code.",
+    "migration_note": ""
+  },
+  "UserMfaActivationScenario.deactivate": {
+    "canonical_name": "deactivate_admin_mfa",
+    "kind": "ui",
+    "description": "Deactivate email-based MFA for the Backoffice admin user.",
+    "migration_note": ""
+  },
+  "UserMfaCreateScenario.execute": {
+    "canonical_name": "create_admin_user_with_mfa",
+    "kind": "setup",
+    "description": "Create a Backoffice admin user completing the MFA verification step.",
+    "migration_note": "Robot: create_admin_user"
+  },
+  "CustomerMfaRemoveScenario.execute": {
+    "canonical_name": "remove_customer_mfa",
+    "kind": "ui",
+    "description": "Remove/deactivate MFA for a storefront customer.",
+    "migration_note": ""
+  },
+  "CreateProductScenario.execute": {
+    "canonical_name": "create_product",
+    "kind": "setup",
+    "description": "Create, approve, and activate an abstract product in the Backoffice.",
+    "migration_note": ""
+  },
+  "ApproveProductOfferScenario.execute": {
+    "canonical_name": "approve_product_offer",
+    "kind": "ui",
+    "description": "Approve a product offer in the Backoffice.",
+    "migration_note": ""
+  },
+  "ActivateProductScenario.execute": {
+    "canonical_name": "activate_product",
+    "kind": "ui",
+    "description": "Activate an abstract product in the Backoffice.",
+    "migration_note": ""
+  },
+  "MerchantAgentMfaLoginScenario.execute": {
+    "canonical_name": "login_as_merchant_agent_with_mfa",
+    "kind": "setup",
+    "description": "Log in to the Merchant Portal as a merchant agent completing MFA.",
+    "migration_note": ""
+  },
+  "MerchantAgentMfaLoginScenario.executeWithInvalidCode": {
+    "canonical_name": "login_as_merchant_agent_with_invalid_mfa",
+    "kind": "ui",
+    "description": "Attempt merchant agent MFA login with an invalid code.",
+    "migration_note": ""
+  },
+  "MerchantUserMfaLoginScenario.execute": {
+    "canonical_name": "login_as_merchant_with_mfa",
+    "kind": "setup",
+    "description": "Log in to the Merchant Portal as a merchant user completing MFA.",
+    "migration_note": "Robot: login_as_merchant"
+  },
+  "MerchantUserAccountScenario.executeChangePassword": {
+    "canonical_name": "change_merchant_password",
+    "kind": "ui",
+    "description": "Change the merchant user's password from the account page.",
+    "migration_note": ""
+  },
+  "MerchantUserMfaLoginScenario.executeWithInvalidCode": {
+    "canonical_name": "login_as_merchant_with_invalid_mfa",
+    "kind": "ui",
+    "description": "Attempt merchant user MFA login with an invalid code.",
+    "migration_note": ""
+  },
+  "LocaleSwitchingScenario.execute": {
+    "canonical_name": "switch_locale",
+    "kind": "ui",
+    "description": "Switch the storefront locale/language.",
+    "migration_note": ""
+  },
+  "MerchantRegistrationRejectionScenario.execute": {
+    "canonical_name": "reject_merchant_registration",
+    "kind": "ui",
+    "description": "Reject a pending merchant registration in the Backoffice.",
+    "migration_note": ""
+  },
+  "AgentMfaLoginScenario.execute": {
+    "canonical_name": "login_as_agent_with_mfa",
+    "kind": "setup",
+    "description": "Log in to the storefront as an agent completing MFA.",
+    "migration_note": "Robot: login_as_agent_for_customer"
+  },
+  "AgentMfaLoginScenario.executeWithInvalidCode": {
+    "canonical_name": "login_as_agent_with_invalid_mfa",
+    "kind": "ui",
+    "description": "Attempt storefront agent MFA login with an invalid code.",
+    "migration_note": ""
+  },
+  "CustomerMfaLoginScenario.execute": {
+    "canonical_name": "login_as_customer_with_mfa",
+    "kind": "setup",
+    "description": "Log in to the storefront as a customer completing MFA.",
+    "migration_note": "Robot: login_as_customer"
+  },
+  "CustomerMfaActivationScenario.deactivate": {
+    "canonical_name": "deactivate_customer_mfa",
+    "kind": "ui",
+    "description": "Deactivate email-based MFA for the storefront customer.",
+    "migration_note": ""
+  },
+  "CustomerMfaLoginScenario.executeWithInvalidCode": {
+    "canonical_name": "login_as_customer_with_invalid_mfa",
+    "kind": "ui",
+    "description": "Attempt storefront customer MFA login with an invalid code.",
+    "migration_note": ""
+  },
+  "CustomerProfileScenario.executePasswordChange": {
+    "canonical_name": "change_customer_password",
+    "kind": "ui",
+    "description": "Change the customer's password from the profile page.",
+    "migration_note": ""
+  }
+}
