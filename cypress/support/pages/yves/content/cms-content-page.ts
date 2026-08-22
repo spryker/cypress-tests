@@ -11,6 +11,10 @@ export class CmsContentPage extends YvesPage {
 
   protected PAGE_URL = '/search';
 
+  visitCmsPage = (params: VisitCmsPageParams): void => {
+    cy.visit(`/${params.locale}/${params.cmsPageName}`);
+  };
+
   findCmsPageFromSuggestions = (params: SearchParams): void => {
     this.repository.search(params.query);
     cy.intercept('**/search/suggestion**').as('searchSuggestion');
@@ -22,4 +26,9 @@ export class CmsContentPage extends YvesPage {
 
 interface SearchParams {
   query: string;
+}
+
+interface VisitCmsPageParams {
+  locale: string;
+  cmsPageName: string;
 }

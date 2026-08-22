@@ -22,3 +22,5 @@ export * from './ssp-asset-specific-catalog';
 export * from './ssp-dashboard-management';
 export * from './purchasing-control';
 export * from './recurring-orders';
+export * from './agent-assist';
+export * from './company-structure';

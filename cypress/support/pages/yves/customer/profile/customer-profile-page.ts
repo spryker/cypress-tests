@@ -44,4 +44,16 @@ export class CustomerProfilePage extends YvesPage {
   getPasswordsDoNotMatchError(): Cypress.Chainable {
     return cy.contains(this.repository.getPasswordsDoNotMatchMessage());
   }
+
+  getSalutationSelect(): Cypress.Chainable {
+    return this.repository.getSalutationSelect();
+  }
+
+  getFirstNameInput(): Cypress.Chainable {
+    return this.repository.getFirstNameInput();
+  }
+
+  getLastNameInput(): Cypress.Chainable {
+    return this.repository.getLastNameInput();
+  }
 }

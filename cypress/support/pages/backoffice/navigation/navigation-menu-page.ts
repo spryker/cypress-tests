@@ -63,6 +63,31 @@ export class NavigationMenuPage extends BackofficePage {
     });
   };
 
+  getUserNavigationToggler = (): Cypress.Chainable => cy.get(this.repository.getUserNavigationTogglerSelector());
+
+  /**
+   * Every navigable node in the side menu, both levels. The collapsed second level is present in
+   * the DOM already — the parent only toggles a CSS class — so nothing has to be expanded first.
+   * Parent nodes are excluded because their href is an in-page collapse anchor, not a page.
+   */
+  getMenuItemPaths = (): Cypress.Chainable<string[]> => {
+    return cy
+      .get(`${this.repository.getNavigationMenuSelector()} ${this.repository.getMenuItemLinkSelector()}`)
+      .then(($links): string[] => {
+        const paths = $links
+          .map((index: number, element: HTMLElement) => Cypress.$(element).attr('href'))
+          .get()
+          .filter((href): href is string => typeof href === 'string' && href.startsWith('/'));
+
+        return Array.from(new Set(paths));
+      });
+  };
+
+  getTopLevelIcons = (): Cypress.Chainable =>
+    cy
+      .get(this.repository.getNavigationMenuSelector())
+      .find(`> ${this.repository.getMenuItemSelector()} > a i, > ${this.repository.getMenuParentItemSelector()} > a i`);
+
   hasMenuItem = (itemLabel: string): Cypress.Chainable<boolean> => {
     return cy.get(this.repository.getNavigationMenuSelector()).then(($menu) => {
       return $menu.find(`${this.repository.getMenuItemLabelSelector()}:contains("${itemLabel}")`).length > 0;

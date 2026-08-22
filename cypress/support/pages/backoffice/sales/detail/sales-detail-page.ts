@@ -58,6 +58,8 @@ export class SalesDetailPage extends BackofficePage {
   getTotalRefundedCommissionBlock = (): Cypress.Chainable<JQuery<HTMLElement>> => {
     return cy.contains('Total Refunded Commission').parent().parent().parent();
   };
+
+  getOrderItemTables = (): Cypress.Chainable => this.repository.getOrderItemTables();
 }
 
 interface TriggerOmsParams {

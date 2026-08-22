@@ -29,3 +29,16 @@ interface PaymentMethod {
 export interface CheckoutStaticFixtures {
   defaultPassword: string;
 }
+
+export interface SplitDeliveryStaticFixtures {
+  defaultPassword: string;
+  expectedShipmentCount: number;
+}
+
+export interface SplitDeliveryDynamicFixtures {
+  customer: Customer;
+  rootUser: User;
+  product1: ProductConcrete;
+  product2: ProductConcrete;
+  product3: ProductConcrete;
+}
