@@ -31,4 +31,7 @@ export class SuiteCustomerOverviewRepository implements CustomerOverviewReposito
   getDefaultShippingAddressHeading(): string {
     return 'Default Shipping Address';
   }
+  getCustomerNavigationLinkSelector(): string {
+    return 'nav.customer-navigation a';
+  }
 }

@@ -40,5 +40,27 @@ describe(
 
       cy.url().should('include', '/customer/address/new');
     });
+
+    it('customer should be able to delete an address', (): void => {
+      // Arrange
+      // A street unique to this run, so that asserting the address is gone cannot match another
+      // address left behind by an earlier test in this file.
+      const street = `${staticFixtures.newAddress.address1} ${Date.now()}`;
+      const address = { ...staticFixtures.newAddress, address1: street };
+
+      customerAddressPage.visitNewAddressPage();
+      customerAddressPage.fillAndSubmitNewAddress(address);
+      customerAddressPage.getAddressAddedMessage().should('be.visible');
+
+      customerAddressPage.visit();
+      customerAddressPage.getAddressListEntry(street).should('exist');
+
+      // Act
+      customerAddressPage.deleteAddress(street);
+
+      // Assert
+      customerAddressPage.visit();
+      customerAddressPage.getBody().should('not.contain.text', street);
+    });
   }
 );
