@@ -17,13 +17,21 @@ export class GlossaryListPage extends BackofficePage {
   };
 
   findTranslation = (glossaryKey: string): Chainable => {
-    return this.find({ searchQuery: glossaryKey, interceptTableUrl: this.TABLE_URL }).then((getRow) =>
-      getRow ? getRow() : null
-    );
+    return this.find({
+      searchQuery: glossaryKey,
+      interceptTableUrl: this.TABLE_URL,
+      expectedToSeeInTable: glossaryKey,
+    }).then((getRow) => (getRow ? getRow() : null));
   };
 
   edit = (glossaryKey: string): void => {
-    this.find({ searchQuery: glossaryKey, interceptTableUrl: this.TABLE_URL }).then((getRow) => {
+    // Without asserting the key is in the table first, a search that has not narrowed yet leaves
+    // the previous first row in place and the wrong translation gets edited.
+    this.find({
+      searchQuery: glossaryKey,
+      interceptTableUrl: this.TABLE_URL,
+      expectedToSeeInTable: glossaryKey,
+    }).then((getRow) => {
       if (!getRow) {
         return;
       }

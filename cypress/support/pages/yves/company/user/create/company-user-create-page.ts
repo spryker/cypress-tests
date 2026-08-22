@@ -12,12 +12,26 @@ export class CompanyUserCreatePage extends YvesPage {
 
   create = (params: CreateParams): void => {
     this.repository.getCreateButton().click();
-    this.repository.getBusinessUnitSelect().select(params.businessUnitName, { force: true });
+    this.selectBusinessUnitByName(params.businessUnitName);
     this.repository.getRoleCheckboxLabel(params.roleName).check({ force: true });
     this.repository.getEmailInput().clear().type(params.email);
     this.repository.getFirstNameInput().clear().type(params.firstName);
     this.repository.getLastNameInput().clear().type(params.lastName);
     this.repository.getSubmitButton().click();
+  };
+
+  /**
+   * The options are labelled "<name> (ID: <id>)", so an exact-text select can never match a bare
+   * name. Read the id off the option whose label carries the name, then select by that.
+   */
+  private selectBusinessUnitByName = (name: string): void => {
+    this.repository
+      .getBusinessUnitSelect()
+      .find('option')
+      .contains(name)
+      .then(($option) => {
+        this.repository.getBusinessUnitSelect().select($option.val() as string, { force: true });
+      });
   };
 }
 
