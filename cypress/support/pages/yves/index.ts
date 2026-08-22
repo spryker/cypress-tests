@@ -61,3 +61,5 @@ export * from './company/register/company-registration-page';
 export * from './wishlist/wishlist-page';
 export * from './return/return-list-page';
 export * from './agent-control-bar/agent-control-bar-page';
+export * from './company/business-unit/create/company-business-unit-create-page';
+export * from './company/user/create/company-user-create-page';
