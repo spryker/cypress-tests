@@ -1,7 +1,7 @@
-import { container } from '@utils';
+import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { CustomerImpersonationDynamicFixtures, CustomerImpersonationStaticFixtures } from '@interfaces/yves';
 import { AgentControlBarPage, CustomerOverviewPage, CustomerProfilePage } from '@pages/yves';
-import { ImpersonateCustomerScenario } from '@scenarios/yves';
+import { CheckoutScenario, ImpersonateCustomerScenario, ProductAddToCartScenario } from '@scenarios/yves';
 
 describe(
   'customer impersonation',
@@ -13,6 +13,8 @@ describe(
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const customerProfilePage = container.get(CustomerProfilePage);
     const impersonateCustomerScenario = container.get(ImpersonateCustomerScenario);
+    const productAddToCartScenario = container.get(ProductAddToCartScenario);
+    const checkoutScenario = container.get(CheckoutScenario);
 
     let staticFixtures: CustomerImpersonationStaticFixtures;
     let dynamicFixtures: CustomerImpersonationDynamicFixtures;
@@ -56,6 +58,22 @@ describe(
       // is bounced to the login form rather than seeing it.
       customerOverviewPage.visit();
       cy.url().should('include', 'login');
+    });
+
+    it('agent should be able to place an order for the impersonated customer', (): void => {
+      // Arrange
+      productAddToCartScenario.execute({ sku: dynamicFixtures.product.sku });
+
+      // Act
+      checkoutScenario.execute({
+        shouldTriggerOmsInCli: true,
+        paymentMethod: getPaymentMethodBasedOnEnv(),
+      });
+
+      // Assert
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage(), {
+        timeout: 15000,
+      });
     });
   }
 );

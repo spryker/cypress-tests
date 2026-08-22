@@ -1,4 +1,4 @@
-import { Customer, User } from './shared';
+import { Customer, ProductConcrete, User } from './shared';
 
 export interface CustomerImpersonationStaticFixtures {
   defaultPassword: string;
@@ -7,4 +7,5 @@ export interface CustomerImpersonationStaticFixtures {
 export interface CustomerImpersonationDynamicFixtures {
   customer: Customer;
   agentUser: User;
+  product: ProductConcrete;
 }
