@@ -60,6 +60,8 @@ export class SalesDetailPage extends BackofficePage {
   };
 
   getOrderItemTables = (): Cypress.Chainable => this.repository.getOrderItemTables();
+
+  getOrderItemStateSelector = (state: string): string => this.repository.getOrderItemStateSelector(state);
 }
 
 interface TriggerOmsParams {

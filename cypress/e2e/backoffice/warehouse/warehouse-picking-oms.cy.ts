@@ -1,0 +1,95 @@
+import { container } from '@utils';
+import { WarehousePickingOmsDynamicFixtures, WarehousePickingOmsStaticFixtures } from '@interfaces/backoffice';
+import { ActionEnum, SalesDetailPage, UserIndexPage, UserUpdatePage } from '@pages/backoffice';
+import { UserLoginScenario } from '@scenarios/backoffice';
+
+describe(
+  'warehouse picking oms',
+  {
+    tags: [
+      '@backoffice',
+      '@warehouse',
+      'warehouse',
+      'warehouse-picking',
+      'order-management',
+      'state-machine',
+      'spryker-core-back-office',
+      'spryker-core',
+    ],
+  },
+  (): void => {
+    if (!['suite', 'b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because only suite, b2c and b2c-mp wire the warehouse user form and the picking subprocess', () => {});
+
+      return;
+    }
+
+    const userIndexPage = container.get(UserIndexPage);
+    const userUpdatePage = container.get(UserUpdatePage);
+    const salesDetailPage = container.get(SalesDetailPage);
+    const userLoginScenario = container.get(UserLoginScenario);
+
+    let staticFixtures: WarehousePickingOmsStaticFixtures;
+    let dynamicFixtures: WarehousePickingOmsDynamicFixtures;
+
+    before((): void => {
+      ({ staticFixtures, dynamicFixtures } = Cypress.env());
+    });
+
+    beforeEach((): void => {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+    });
+
+    it('should offer the warehouse assignment action when a back-office user is flagged as a warehouse user', (): void => {
+      // Arrange
+      userIndexPage.visit();
+      userIndexPage.update({
+        action: ActionEnum.edit,
+        query: dynamicFixtures.warehouseUser.username,
+        expectedToSeeInTable: dynamicFixtures.warehouseUser.username,
+      });
+      userUpdatePage.getWarehouseUserCheckbox().should('not.be.checked');
+
+      // Act
+      userUpdatePage.checkWarehouseUserCheckbox();
+
+      // Assert
+      userIndexPage.visit();
+      userIndexPage
+        .findUser({
+          query: dynamicFixtures.warehouseUser.username,
+          expectedToSeeInTable: dynamicFixtures.warehouseUser.username,
+        })
+        .contains('Assign Warehouses')
+        .should('have.length', 1);
+    });
+
+    it('should move the order items to ready for picking when picking list generation is scheduled', (): void => {
+      // Arrange
+      salesDetailPage.visit({ qs: { 'id-sales-order': dynamicFixtures.salesOrder.id_sales_order } });
+      salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
+      salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
+      salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
+
+      // Act
+      salesDetailPage.triggerOms({ state: 'picking list generation schedule', shouldTriggerOmsInCli: true });
+
+      // Assert
+      // Generating the lists is an onEnter command and the hand-over to `ready for picking` is
+      // condition guarded, so the item only settles once the OMS console commands have run again.
+      cy.url().then((orderUrl) => {
+        cy.reloadUntilFound(
+          orderUrl,
+          salesDetailPage.getOrderItemStateSelector('ready for picking'),
+          'body',
+          25,
+          5000,
+          ['console oms:check-condition', 'console oms:check-timeout']
+        );
+      });
+    });
+  }
+);
