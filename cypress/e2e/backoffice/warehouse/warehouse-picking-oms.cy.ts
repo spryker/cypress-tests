@@ -84,8 +84,8 @@ describe(
       }
     );
 
-    // Only suite registers an order-building dynamic-fixture helper, so the demoshops have no
-    // fixture order to walk through the picking subprocess.
+    // Only suite installs haveFullOrder, so the b2c shops can build a bare order but not its
+    // shipment, and ShipmentGui renders the order items per shipment group.
     function skipDemoshopIt(description: string, testFn: () => void): void {
       (Cypress.env('repositoryId') === 'suite' ? it : it.skip)(description, testFn);
     }
