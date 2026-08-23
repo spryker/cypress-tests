@@ -30,12 +30,8 @@ export class UserUpdatePage extends BackofficePage {
   };
 
   checkWarehouseUserCheckbox = (): void => {
-    this.getWarehouseUserCheckbox().check();
+    this.repository.getWarehouseUserCheckbox().check();
     this.repository.getUpdateUserButton().click();
-  };
-
-  getWarehouseUserCheckbox = (): Cypress.Chainable => {
-    return this.repository.getWarehouseUserCheckbox();
   };
 
   setDefaultPassword = (): void => {

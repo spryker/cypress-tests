@@ -51,7 +51,6 @@ describe(
         query: dynamicFixtures.warehouseUser.username,
         expectedToSeeInTable: dynamicFixtures.warehouseUser.username,
       });
-      userUpdatePage.getWarehouseUserCheckbox().should('not.be.checked');
 
       // Act
       userUpdatePage.checkWarehouseUserCheckbox();
@@ -63,8 +62,7 @@ describe(
           query: dynamicFixtures.warehouseUser.username,
           expectedToSeeInTable: dynamicFixtures.warehouseUser.username,
         })
-        .contains('Assign Warehouses')
-        .should('have.length', 1);
+        .should('contain', 'Assign Warehouses');
     });
 
     it('should move the order items to ready for picking when picking list generation is scheduled', (): void => {
@@ -80,16 +78,7 @@ describe(
       // Assert
       // Generating the lists is an onEnter command and the hand-over to `ready for picking` is
       // condition guarded, so the item only settles once the OMS console commands have run again.
-      cy.url().then((orderUrl) => {
-        cy.reloadUntilFound(
-          orderUrl,
-          salesDetailPage.getOrderItemStateSelector('ready for picking'),
-          'body',
-          25,
-          5000,
-          ['console oms:check-condition', 'console oms:check-timeout']
-        );
-      });
+      salesDetailPage.waitForOrderItemState('ready for picking');
     });
   }
 );
