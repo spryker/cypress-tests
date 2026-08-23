@@ -65,20 +65,29 @@ describe(
         .should('contain', 'Assign Warehouses');
     });
 
-    it('should move the order items to ready for picking when picking list generation is scheduled', (): void => {
-      // Arrange
-      salesDetailPage.visit({ qs: { 'id-sales-order': dynamicFixtures.salesOrder.id_sales_order } });
-      salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
+    skipDemoshopIt(
+      'should move the order items to ready for picking when picking list generation is scheduled',
+      (): void => {
+        // Arrange
+        salesDetailPage.visit({ qs: { 'id-sales-order': dynamicFixtures.salesOrder.id_sales_order } });
+        salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
+        salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
+        salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
 
-      // Act
-      salesDetailPage.triggerOms({ state: 'picking list generation schedule', shouldTriggerOmsInCli: true });
+        // Act
+        salesDetailPage.triggerOms({ state: 'picking list generation schedule', shouldTriggerOmsInCli: true });
 
-      // Assert
-      // Generating the lists is an onEnter command and the hand-over to `ready for picking` is
-      // condition guarded, so the item only settles once the OMS console commands have run again.
-      salesDetailPage.waitForOrderItemState('ready for picking');
-    });
+        // Assert
+        // Generating the lists is an onEnter command and the hand-over to `ready for picking` is
+        // condition guarded, so the item only settles once the OMS console commands have run again.
+        salesDetailPage.waitForOrderItemState('ready for picking');
+      }
+    );
+
+    // Only suite registers an order-building dynamic-fixture helper, so the demoshops have no
+    // fixture order to walk through the picking subprocess.
+    function skipDemoshopIt(description: string, testFn: () => void): void {
+      (Cypress.env('repositoryId') === 'suite' ? it : it.skip)(description, testFn);
+    }
   }
 );
