@@ -174,3 +174,31 @@ export interface QuoteRequestLifecycleDynamicFixtures {
 interface QuoteRequestCompanyUser {
   id_company_user: number;
 }
+
+export interface ClickAndCollectStaticFixtures {
+  defaultPassword: string;
+  pickupShipmentTypeKey: string;
+  expectedShipmentCount: number;
+}
+
+export interface ClickAndCollectDynamicFixtures {
+  customer: Customer;
+  address: Address;
+  rootUser: User;
+  product1: ProductConcrete;
+  pickupOffer: ClickAndCollectOffer;
+  servicePoint: ClickAndCollectServicePoint;
+  servicePointAddress: ClickAndCollectServicePointAddress;
+}
+
+interface ClickAndCollectOffer {
+  product_offer_reference: string;
+}
+
+interface ClickAndCollectServicePoint {
+  name: string;
+}
+
+interface ClickAndCollectServicePointAddress {
+  address1: string;
+}

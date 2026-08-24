@@ -1,0 +1,5 @@
+{
+  "defaultPassword": "change123",
+  "pickupShipmentTypeKey": "pickup",
+  "expectedShipmentCount": 1
+}
