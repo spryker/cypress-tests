@@ -154,3 +154,23 @@ export interface CartApprovalProcessDynamicFixtures {
 interface CompanyUserReference {
   id_company_user: number;
 }
+
+export interface QuoteRequestLifecycleStaticFixtures {
+  defaultPassword: string;
+  revisedItemPrice: string;
+  revisedItemPriceFormatted: string;
+  originalItemPriceFormatted: string;
+}
+
+export interface QuoteRequestLifecycleDynamicFixtures {
+  customer: Customer;
+  address: Address;
+  companyUser: QuoteRequestCompanyUser;
+  agentUser: User;
+  product1: ProductConcrete;
+  quote: Quote;
+}
+
+interface QuoteRequestCompanyUser {
+  id_company_user: number;
+}
