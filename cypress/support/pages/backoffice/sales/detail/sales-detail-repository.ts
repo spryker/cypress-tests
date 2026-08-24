@@ -11,4 +11,9 @@ export class SalesDetailRepository {
   // ShipmentGui renders one of these tables per shipment on the order detail page, so the count
   // of them is the order's shipment count.
   getOrderItemTables = (): Cypress.Chainable => cy.get('[data-qa="order-item-list"]');
+
+  // The state cell renders the current state as a link to the state-machine drawing and the
+  // superseded states as plain divs below it, so the link text is the state the item is in now.
+  getOrderItemStateSelector = (state: string, sku: string): string =>
+    `[data-qa="order-item-list"] tbody tr:has(div.sku:contains("${sku}")) td.state-history a:contains("${state}")`;
 }

@@ -3,6 +3,12 @@ import { inject, injectable } from 'inversify';
 import { BackofficePage } from '@pages/backoffice';
 import { SalesDetailRepository } from './sales-detail-repository';
 
+const OMS_CONSOLE_COMMANDS = ['console oms:check-condition', 'console oms:check-timeout'];
+
+const OMS_RELOAD_ATTEMPTS = 25;
+
+const OMS_RELOAD_INTERVAL_MS = 5000;
+
 @injectable()
 @autoWired
 export class SalesDetailPage extends BackofficePage {
@@ -19,26 +25,17 @@ export class SalesDetailPage extends BackofficePage {
     }
 
     if (params.shouldTriggerOmsInCli) {
-      cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+      cy.runCliCommands(OMS_CONSOLE_COMMANDS);
     }
 
     cy.url().then((url) => {
-      // a workaround for running tests on envs with basic auth (e.g. smoke tests on SE envs)
-      // because basic auth should be included into the url but the current url returned by cy.url() does not have basic auth credentials
-      const currentUrl = new URL(url);
-      const targetUrl = new URL(Cypress.env('backofficeUrl'));
-
-      targetUrl.pathname = currentUrl.pathname;
-      targetUrl.search = currentUrl.search;
-      const normalizedUrl = targetUrl.toString();
-
       cy.reloadUntilFound(
-        normalizedUrl,
+        this.buildBackofficeUrl(url),
         this.repository.getOmsButtonSelector(params.state),
         this.repository.getTriggerOmsDivSelector(),
-        25,
-        5000,
-        params.shouldTriggerOmsInCli ? ['console oms:check-condition', 'console oms:check-timeout'] : []
+        OMS_RELOAD_ATTEMPTS,
+        OMS_RELOAD_INTERVAL_MS,
+        params.shouldTriggerOmsInCli ? OMS_CONSOLE_COMMANDS : []
       );
 
       cy.get(this.repository.getTriggerOmsDivSelector())
@@ -60,9 +57,39 @@ export class SalesDetailPage extends BackofficePage {
   };
 
   getOrderItemTables = (): Cypress.Chainable => this.repository.getOrderItemTables();
+
+  waitForOrderItemState = (params: WaitForOrderItemStateParams): void => {
+    cy.url().then((url) => {
+      cy.reloadUntilFound(
+        this.buildBackofficeUrl(url),
+        this.repository.getOrderItemStateSelector(params.state, params.sku),
+        'body',
+        OMS_RELOAD_ATTEMPTS,
+        OMS_RELOAD_INTERVAL_MS,
+        OMS_CONSOLE_COMMANDS
+      );
+    });
+  };
+
+  // cy.url() drops the basic-auth credentials that SE envs need, so the path is re-hung on the
+  // configured back-office base url rather than reloaded as-is.
+  private buildBackofficeUrl = (url: string): string => {
+    const currentUrl = new URL(url);
+    const targetUrl = new URL(Cypress.env('backofficeUrl'));
+
+    targetUrl.pathname = currentUrl.pathname;
+    targetUrl.search = currentUrl.search;
+
+    return targetUrl.toString();
+  };
 }
 
 interface TriggerOmsParams {
   state: string;
   shouldTriggerOmsInCli?: boolean;
+}
+
+interface WaitForOrderItemStateParams {
+  state: string;
+  sku: string;
 }
