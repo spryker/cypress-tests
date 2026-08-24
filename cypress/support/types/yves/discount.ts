@@ -14,6 +14,7 @@ export interface DiscountsAndPromotionsDynamicFixtures {
   cartRuleDiscount: Discount;
   promotionDiscount: Discount;
   voucherCode: DiscountVoucherCode;
+  productBundle: ProductConcrete;
 }
 
 export interface DiscountVoucherCode {

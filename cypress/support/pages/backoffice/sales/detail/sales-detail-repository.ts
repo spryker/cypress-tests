@@ -12,6 +12,10 @@ export class SalesDetailRepository {
   // of them is the order's shipment count.
   getOrderItemTables = (): Cypress.Chainable => cy.get('[data-qa="order-item-list"]');
 
+  // ShipmentGui prints the shipment's address as a plain <p> led by a bold "Delivery Address:"
+  // label, with no data-qa of its own, so the label is what identifies it.
+  getShipmentDeliveryAddresses = (): Cypress.Chainable => cy.get('p:has(b:contains("Delivery Address"))');
+
   // The state cell renders the current state as a link to the state-machine drawing and the
   // superseded states as plain divs below it, so the link text is the state the item is in now.
   getOrderItemStateSelector = (state: string, sku: string): string =>

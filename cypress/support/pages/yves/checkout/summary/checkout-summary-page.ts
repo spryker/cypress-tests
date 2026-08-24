@@ -18,6 +18,11 @@ export class CheckoutSummaryPage extends YvesPage {
   // renders it inside a stable container that is the same across shops.
   getThresholdMessage = (message: string): Cypress.Chainable => cy.contains(message);
 
+  // The order-success page carries the reference only as schema.org metadata, which is the sole
+  // handle a guest has on the order it just placed: there is no order history to read it back from.
+  getPlacedOrderReference = (): Cypress.Chainable<string> =>
+    cy.get('meta[itemprop="identifier"]', { timeout: 15000 }).invoke('attr', 'content');
+
   placeOrder = (): void => {
     this.repository.getaAcceptTermsAndConditionsCheckbox().should('be.visible', { timeout: 1000 });
     this.repository.getaAcceptTermsAndConditionsCheckbox().check({ force: true });
