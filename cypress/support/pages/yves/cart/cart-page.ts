@@ -28,6 +28,24 @@ export class CartPage extends YvesPage {
   // data-qa is identical in every shop; the cart-summary markup wrapped around it is not.
   getThresholdSurcharge = (): Cypress.Chainable => cy.get('[data-qa*="sales-order-threshold-expense"]');
 
+  // The code field belongs to CartCodeWidget's form, not the DiscountWidget voucher form, and takes
+  // gift-card codes as well as vouchers. Its id is the one the Robot source used for every shop, so
+  // it is addressed here rather than per repository. The field sits inside a collapsible section, so
+  // the interaction is forced rather than expanding it first.
+  applyVoucherCode = (code: string): void => {
+    cy.get('#cartCodeForm_code').clear({ force: true });
+    cy.get('#cartCodeForm_code').type(code, { force: true });
+    cy.get('form[name="cartCodeForm"]').find('button[data-qa="submit-button"]').click({ force: true });
+  };
+
+  // Scoped to one tile by sku, because any other active promotion discount offers its own product
+  // in the same carousel.
+  getPromotionalProduct = (sku: string): Cypress.Chainable => cy.contains('[data-qa="component product-item"]', sku);
+
+  addPromotionalProduct = (sku: string): void => {
+    this.getPromotionalProduct(sku).find('[data-qa="add-to-cart-button"]').click();
+  };
+
   startCheckout = (): void => {
     this.repository.getCheckoutButton().click({ force: true });
   };
