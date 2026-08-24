@@ -29,7 +29,6 @@ describe(
     it('should open every left navigation node without an error', (): void => {
       // Arrange
       navigationMenuPage.getMenuItemPaths().then((paths) => {
-        // Assert
         expect(paths, 'navigable side-menu nodes').to.have.length.greaterThan(0);
         cy.log(`crawling ${paths.length} navigation nodes`);
 
@@ -37,6 +36,7 @@ describe(
         paths.forEach((path) => {
           cy.visitBackoffice(path);
 
+          // Assert
           // The user-navigation toggler only renders inside the full back-office chrome, so its
           // absence is how a node that errored or bounced to the login page shows up.
           navigationMenuPage.getUserNavigationToggler().should('exist');

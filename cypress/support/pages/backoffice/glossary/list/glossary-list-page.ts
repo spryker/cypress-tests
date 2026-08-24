@@ -21,16 +21,18 @@ export class GlossaryListPage extends BackofficePage {
       searchQuery: glossaryKey,
       interceptTableUrl: this.TABLE_URL,
       expectedToSeeInTable: glossaryKey,
+      expectedCount: 1,
     }).then((getRow) => (getRow ? getRow() : null));
   };
 
   edit = (glossaryKey: string): void => {
-    // Without asserting the key is in the table first, a search that has not narrowed yet leaves
-    // the previous first row in place and the wrong translation gets edited.
+    // expectedCount settles the row count too: the key assertion alone passes on the filtered
+    // render, which a late unfiltered response can replace before the click picks a row.
     this.find({
       searchQuery: glossaryKey,
       interceptTableUrl: this.TABLE_URL,
       expectedToSeeInTable: glossaryKey,
+      expectedCount: 1,
     }).then((getRow) => {
       if (!getRow) {
         return;
