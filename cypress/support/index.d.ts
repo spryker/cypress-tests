@@ -141,6 +141,25 @@ declare namespace Cypress {
     createCart(accessToken: string, attributes: Record<string, unknown>): Chainable<string>;
 
     /**
+     * Adds an item to a cart through the storefront API. Unlike the storefront UI, this can put a
+     * specific merchant's offer on the item, which is what a per-merchant order split needs.
+     *
+     * @example cy.addCartItem(token, cartId, { sku: 'X', quantity: 1, productOfferReference: 'OF--1' })
+     */
+    /**
+     * Returns the id of the customer's existing cart. A customer always has one, and POST /carts
+     * answers 422 rather than making a second, so the existing cart is what an API arrangement
+     * has to fill.
+     */
+    getCustomerCartId(accessToken: string): Chainable<string>;
+
+    addCartItem(
+      accessToken: string,
+      cartId: string,
+      attributes: Record<string, unknown>
+    ): Chainable<Cypress.Response<unknown>>;
+
+    /**
      * Creates a shopping list for an authenticated customer and returns its id.
      * @example cy.createShoppingList(token, 'My list')
      */

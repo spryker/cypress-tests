@@ -1,6 +1,6 @@
 import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { MultiMerchantOrderDynamicFixtures, MultiMerchantOrderStaticFixtures } from '@interfaces/yves';
-import { CartPage, CatalogPage, CheckoutSummaryPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
+import { CartPage, CheckoutSummaryPage, CustomerOverviewPage } from '@pages/yves';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
@@ -28,8 +28,6 @@ describe(
     }
 
     const cartPage = container.get(CartPage);
-    const catalogPage = container.get(CatalogPage);
-    const productPage = container.get(ProductPage);
     const checkoutSummaryPage = container.get(CheckoutSummaryPage);
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const salesIndexPage = container.get(SalesIndexPage);
@@ -52,13 +50,29 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      // Each product is added from its own detail page rather than quick-added by SKU: quick-add
-      // puts the plain product in the cart, so every item would belong to the main merchant and
-      // there would be nothing to split. Reaching the product through its page is what attaches
-      // the merchant's offer to the item.
-      addProductFromItsDetailPage(dynamicFixtures.product1.sku);
-      addProductFromItsDetailPage(dynamicFixtures.product2.sku, dynamicFixtures.productOffer1.product_offer_reference);
-      addProductFromItsDetailPage(dynamicFixtures.product3.sku, dynamicFixtures.productOffer2.product_offer_reference);
+      // The cart is arranged through the storefront API, not the UI. Quick-add by SKU puts the
+      // plain product in the cart, so every item would belong to the main merchant and there
+      // would be nothing to split, and the product detail page - the only UI that can pick a
+      // merchant's offer - is reachable only through catalog search, which this stack cannot
+      // serve. Only the API can put a named offer on an item, and the offer is the premise of
+      // this journey rather than its subject: what is under test is the split and the checkout.
+      cy.getCustomerAccessToken(dynamicFixtures.customer.email, staticFixtures.defaultPassword).then(
+        (accessToken: string) => {
+          cy.getCustomerCartId(accessToken).then((cartId: string) => {
+            cy.addCartItem(accessToken, cartId, { sku: dynamicFixtures.product1.sku, quantity: 1 });
+            cy.addCartItem(accessToken, cartId, {
+              sku: dynamicFixtures.product2.sku,
+              quantity: 1,
+              productOfferReference: dynamicFixtures.productOffer1.product_offer_reference,
+            });
+            cy.addCartItem(accessToken, cartId, {
+              sku: dynamicFixtures.product3.sku,
+              quantity: 1,
+              productOfferReference: dynamicFixtures.productOffer2.product_offer_reference,
+            });
+          });
+        }
+      );
 
       // Assert
       // The cart names the merchant behind every offer, which is what the split is derived from.
@@ -91,16 +105,5 @@ describe(
         salesDetailPage.getOrderItemTables().should('have.length', staticFixtures.expectedShipmentCount);
       });
     });
-
-    function addProductFromItsDetailPage(sku: string, productOfferReference?: string): void {
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: sku });
-
-      if (productOfferReference) {
-        productPage.selectSoldByProductOffer({ productOfferReference });
-      }
-
-      productPage.addToCart();
-    }
   }
 );
