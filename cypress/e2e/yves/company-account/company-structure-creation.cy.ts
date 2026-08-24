@@ -57,7 +57,9 @@ describe(
       });
 
       // Assert
-      companyUserCreatePage.assertBodyContainsText(newCompanyUserEmail).should('exist');
+      // The users table lists name, business unit and role but never the email, so the run-unique
+      // business unit name is what identifies the row this test created.
+      companyUserCreatePage.getUserRow(businessUnitName).should('contain.text', staticFixtures.restrictedRoleName);
     });
 
     it('created company user should reach only what its role allows', (): void => {

@@ -38,3 +38,4 @@ export * from './workflow-instance-lifecycle';
 export * from './order-experience-management';
 export * from './glossary-management';
 export * from './warehouse-picking-oms';
+export * from './company-structure-creation';

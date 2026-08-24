@@ -20,6 +20,9 @@ export class CompanyUserCreatePage extends YvesPage {
     this.repository.getSubmitButton().click();
   };
 
+  getUserRow = (businessUnitName: string): Cypress.Chainable =>
+    this.repository.getUserRowByBusinessUnitName(businessUnitName);
+
   /**
    * The options are labelled "<name> (ID: <id>)", so an exact-text select can never match a bare
    * name. Read the id off the option whose label carries the name, then select by that.
