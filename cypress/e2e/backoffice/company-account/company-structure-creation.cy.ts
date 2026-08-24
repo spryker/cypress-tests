@@ -55,7 +55,7 @@ describe(
       companyUserLastName = `User${unique}`;
     });
 
-    it('should build a company, a business unit, a role and a company user in the back office', (): void => {
+    it('should list the new company user under its company when the company structure is built in the back office', (): void => {
       // Arrange
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,

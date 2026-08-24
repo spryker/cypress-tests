@@ -30,8 +30,6 @@ export class CompanyListPage extends BackofficePage {
       });
     });
   };
-
-  getRow = (companyName: string): Cypress.Chainable => cy.contains('tbody tr', companyName);
 }
 
 interface UpdateParams {
