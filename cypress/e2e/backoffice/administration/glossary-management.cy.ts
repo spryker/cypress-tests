@@ -15,11 +15,13 @@ describe(
     let dynamicFixtures: GlossaryManagementDynamicFixtures;
 
     // A key of its own per run, so the test never edits a translation the storefront renders.
+    // Derived in the test that creates it rather than in before(), which a retry does not re-run:
+    // the create below would then hit the back office's translation-key uniqueness constraint and
+    // every retry would fail. The test that edits it reads whichever key the create last used.
     let glossaryKey: string;
 
     before((): void => {
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
-      glossaryKey = `${staticFixtures.glossaryKeyPrefix}.${Date.now()}`;
     });
 
     beforeEach((): void => {
@@ -31,6 +33,7 @@ describe(
 
     it('should create a translation and list it', (): void => {
       // Arrange
+      glossaryKey = `${staticFixtures.glossaryKeyPrefix}.${Date.now()}`;
       glossaryListPage.visit();
 
       // Act
