@@ -62,47 +62,50 @@ describe('split delivery', { tags: ['@yves', '@checkout', 'checkout', 'shipment'
   // run where a guest may reach the cart at all.
   const guestIt = ['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it;
 
-  guestIt('guest should checkout with a distinct delivery address per item', (): void => {
-    // Arrange
-    // No login, and no seeded quote: a guest cart has to be built from the storefront.
-    productAddToCartScenario.execute({ sku: dynamicFixtures.product1.sku });
-    productAddToCartScenario.execute({ sku: dynamicFixtures.product2.sku });
-    productAddToCartScenario.execute({ sku: dynamicFixtures.product3.sku });
+  guestIt(
+    'given a guest cart of three items when each item is given its own delivery address then the order is split into one shipment per address',
+    (): void => {
+      // Arrange
+      // No login, and no seeded quote: a guest cart has to be built from the storefront.
+      productAddToCartScenario.execute({ sku: dynamicFixtures.product1.sku });
+      productAddToCartScenario.execute({ sku: dynamicFixtures.product2.sku });
+      productAddToCartScenario.execute({ sku: dynamicFixtures.product3.sku });
 
-    // Act
-    // fillMultiShippingAddress generates a fresh address per address item, so the three items
-    // are what produce three different delivery addresses.
-    checkoutScenario.execute({
-      isGuest: true,
-      isMultiShipment: true,
-      shouldTriggerOmsInCli: true,
-      paymentMethod: getPaymentMethodBasedOnEnv(),
-    });
-
-    customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage(), {
-      timeout: 15000,
-    });
-
-    // Assert
-    checkoutSummaryPage.getPlacedOrderReference().then((orderReference: string) => {
-      userLoginScenario.execute({
-        username: dynamicFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
+      // Act
+      // fillMultiShippingAddress generates a fresh address per address item, so the three items
+      // are what produce three different delivery addresses.
+      checkoutScenario.execute({
+        isGuest: true,
+        isMultiShipment: true,
+        shouldTriggerOmsInCli: true,
+        paymentMethod: getPaymentMethodBasedOnEnv(),
       });
-      salesIndexPage.visit();
-      salesIndexPage.viewByReference(orderReference);
 
-      salesDetailPage.getOrderItemTables().should('have.length', staticFixtures.expectedShipmentCount);
-      salesDetailPage
-        .getShipmentDeliveryAddresses()
-        .should('have.length', staticFixtures.expectedShipmentCount)
-        .then(($addresses: JQuery<HTMLElement>) => {
-          const addresses = $addresses.toArray().map((element: HTMLElement) => element.innerText.trim());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage(), {
+        timeout: 15000,
+      });
 
-          expect(new Set(addresses).size, 'each shipment carries its own delivery address').to.equal(
-            staticFixtures.expectedShipmentCount
-          );
+      // Assert
+      checkoutSummaryPage.getPlacedOrderReference().then((orderReference: string) => {
+        userLoginScenario.execute({
+          username: dynamicFixtures.rootUser.username,
+          password: staticFixtures.defaultPassword,
         });
-    });
-  });
+        salesIndexPage.visit();
+        salesIndexPage.viewByReference(orderReference);
+
+        salesDetailPage.getOrderItemTables().should('have.length', staticFixtures.expectedShipmentCount);
+        salesDetailPage
+          .getShipmentDeliveryAddresses()
+          .should('have.length', staticFixtures.expectedShipmentCount)
+          .then(($addresses: JQuery<HTMLElement>) => {
+            const addresses = $addresses.toArray().map((element: HTMLElement) => element.innerText.trim());
+
+            expect(new Set(addresses).size, 'each shipment carries its own delivery address').to.equal(
+              staticFixtures.expectedShipmentCount
+            );
+          });
+      });
+    }
+  );
 });

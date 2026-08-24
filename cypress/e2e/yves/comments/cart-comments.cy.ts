@@ -92,7 +92,7 @@ describe('cart comments', { tags: ['@yves', '@comments', 'cart', 'marketplace-ca
 
     commentCartPage.getCommentThreadListSection().contains(staticFixtures.commentsToRemove).should('not.exist');
   });
-  it('should keep a cart comment on the order details page after checkout', (): void => {
+  it('given a cart carrying a comment when the order is placed then the comment is on the order in the storefront and in the back office', (): void => {
     // Arrange
     // The product is added to whatever cart is active rather than a named fixture cart: checkout
     // consumes the cart, so a retry of this test must not depend on a cart an earlier attempt spent.
