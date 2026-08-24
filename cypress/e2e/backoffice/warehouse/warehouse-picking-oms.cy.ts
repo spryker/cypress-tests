@@ -80,7 +80,7 @@ describe(
         // Assert
         // Generating the lists is an onEnter command and the hand-over to `ready for picking` is
         // condition guarded, so the item only settles once the OMS console commands have run again.
-        salesDetailPage.waitForOrderItemState('ready for picking');
+        salesDetailPage.waitForOrderItemState({ state: 'ready for picking', sku: dynamicFixtures.product.sku });
       }
     );
 

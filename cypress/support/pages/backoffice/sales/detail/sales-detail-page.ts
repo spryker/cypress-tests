@@ -58,11 +58,11 @@ export class SalesDetailPage extends BackofficePage {
 
   getOrderItemTables = (): Cypress.Chainable => this.repository.getOrderItemTables();
 
-  waitForOrderItemState = (state: string): void => {
+  waitForOrderItemState = (params: WaitForOrderItemStateParams): void => {
     cy.url().then((url) => {
       cy.reloadUntilFound(
         this.buildBackofficeUrl(url),
-        this.repository.getOrderItemStateSelector(state),
+        this.repository.getOrderItemStateSelector(params.state, params.sku),
         'body',
         OMS_RELOAD_ATTEMPTS,
         OMS_RELOAD_INTERVAL_MS,
@@ -87,4 +87,9 @@ export class SalesDetailPage extends BackofficePage {
 interface TriggerOmsParams {
   state: string;
   shouldTriggerOmsInCli?: boolean;
+}
+
+interface WaitForOrderItemStateParams {
+  state: string;
+  sku: string;
 }
