@@ -19,6 +19,12 @@ describe(
     let staticFixtures: CustomerImpersonationStaticFixtures;
     let dynamicFixtures: CustomerImpersonationDynamicFixtures;
 
+    // A b2b-style storefront gates the cart behind company-user permissions, and the fixture builds
+    // a customer without a company, so ordering can only be driven where the customer needs none.
+    const skipB2BIt = (description: string, testFunction: () => void): void => {
+      (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFunction);
+    };
+
     before((): void => {
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
     });
@@ -63,7 +69,7 @@ describe(
       agentControlBarPage.getEndAssistanceLink().should('not.exist');
     });
 
-    it('agent should be able to place an order for the impersonated customer', (): void => {
+    skipB2BIt('agent should be able to place an order for the impersonated customer', (): void => {
       // Arrange
       productAddToCartScenario.execute({ sku: dynamicFixtures.product.sku });
 
