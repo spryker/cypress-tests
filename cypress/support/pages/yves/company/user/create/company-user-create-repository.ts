@@ -14,4 +14,8 @@ export class CompanyUserCreateRepository {
   // The roles render as checkboxes whose label carries the role name, so the label is the handle.
   getRoleCheckboxLabel = (roleName: string): Cypress.Chainable =>
     cy.contains('label', roleName).find('input[id*="company_role_collection"]');
+
+  // The users table has no email column, so the business unit name is the only run-unique handle on the row.
+  getUserRowByBusinessUnitName = (businessUnitName: string): Cypress.Chainable =>
+    cy.contains('table tr', businessUnitName);
 }

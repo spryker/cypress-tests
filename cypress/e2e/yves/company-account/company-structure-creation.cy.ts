@@ -6,7 +6,15 @@ import { CustomerLoginScenario, ImpersonateCustomerScenario } from '@scenarios/y
 describe(
   'company structure creation',
   {
-    tags: ['@yves', '@company-account', 'company-account', 'customer-account-management', 'spryker-core', 'acl'],
+    tags: [
+      '@yves',
+      '@company-account',
+      'company-account',
+      'customer-account-management',
+      'spryker-core',
+      'agent-assist',
+      'acl',
+    ],
   },
   (): void => {
     if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
@@ -57,7 +65,7 @@ describe(
       });
 
       // Assert
-      companyUserCreatePage.assertBodyContainsText(newCompanyUserEmail).should('exist');
+      companyUserCreatePage.getUserRow(businessUnitName).should('contain.text', staticFixtures.restrictedRoleName);
     });
 
     it('created company user should reach only what its role allows', (): void => {
