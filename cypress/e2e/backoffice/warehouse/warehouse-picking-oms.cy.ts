@@ -66,7 +66,7 @@ describe(
     });
 
     skipDemoshopIt(
-      'should move the order items to ready for picking when picking list generation is scheduled',
+      'should move the order item to ready for picking when picking list generation is scheduled',
       (): void => {
         // Arrange
         salesDetailPage.visit({ qs: { 'id-sales-order': dynamicFixtures.salesOrder.id_sales_order } });
