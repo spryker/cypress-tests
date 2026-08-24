@@ -26,9 +26,10 @@ describe(
     ],
   },
   (): void => {
-    // Product offers and service points belong to the marketplace storefronts.
-    if (['b2b', 'b2c'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because the non-marketplace storefronts have no product offers', () => {});
+    // Only these two storefronts carry the service point finder the pickup location is chosen
+    // through; elsewhere the selection silently does nothing and the order ships to no store.
+    if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because only suite and b2b-mp offer the service point finder', () => {});
 
       return;
     }
