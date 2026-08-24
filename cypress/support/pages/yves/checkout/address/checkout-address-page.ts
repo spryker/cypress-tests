@@ -251,6 +251,94 @@ export class CheckoutAddressPage extends YvesPage {
       phone: this.faker.phone.number(),
     };
   };
+
+  setBillingSameAsShipping = (isSame: boolean): void => {
+    const checkbox = this.repository.getShippingAddressBillingSameAsShippingCheckbox();
+
+    if (isSame) {
+      checkbox.check({ force: true });
+
+      return;
+    }
+
+    checkbox.uncheck({ force: true });
+  };
+
+  // A business unit address is offered in the same select as the customer's own addresses, but
+  // its option value is not an id_customer_address, so it is chosen by its visible label.
+  selectShippingAddressByText = (addressText: string): void => {
+    this.repository
+      .getShippingAddressSelectElement()
+      .contains('option', addressText)
+      .then(($option: JQuery<HTMLElement>) => {
+        this.repository.getShippingAddressSelectElement().select($option.val() as string, { force: true });
+      });
+  };
+
+  selectExistingShippingAddress = (idCustomerAddress: number): void => {
+    this.repository.getSelectShippingAddressField().select(idCustomerAddress.toString(), { force: true });
+  };
+
+  typeShippingAddress = (address: CheckoutAddressInput): void => {
+    this.repository.getSelectShippingAddressField().select('0', { force: true });
+
+    this.repository.getShippingAddressFirstNameField().clear().type(address.firstName, { delay: 0 });
+    this.repository.getShippingAddressLastNameField().clear().type(address.lastName, { delay: 0 });
+    this.repository.getShippingAddressAddress1Field().clear().type(address.address1, { delay: 0 });
+    this.repository.getShippingAddressAddress2Field().clear().type(address.address2, { delay: 0 });
+    this.repository.getShippingAddressZipCodeField().clear().type(address.zipCode, { delay: 0 });
+    this.repository.getShippingAddressCityField().clear().type(address.city, { delay: 0 });
+    this.repository.getShippingAddressCompanyField().clear().type(address.company, { delay: 0 });
+    this.repository.getShippingAddressPhoneField().clear().type(address.phone, { delay: 0 });
+  };
+
+  typeBillingAddress = (address: CheckoutAddressInput): void => {
+    this.repository.getSelectBillingAddressField().select('0', { force: true });
+
+    this.repository.getBillingAddressFirstNameField().clear().type(address.firstName, { delay: 0 });
+    this.repository.getBillingAddressLastNameField().clear().type(address.lastName, { delay: 0 });
+    this.repository.getBillingAddressAddress1Field().clear().type(address.address1, { delay: 0 });
+    this.repository.getBillingAddressAddress2Field().clear().type(address.address2, { delay: 0 });
+    this.repository.getBillingAddressZipCodeField().clear().type(address.zipCode, { delay: 0 });
+    this.repository.getBillingAddressCityField().clear().type(address.city, { delay: 0 });
+    this.repository.getBillingAddressCompanyField().clear().type(address.company, { delay: 0 });
+    this.repository.getBillingAddressPhoneField().clear().type(address.phone, { delay: 0 });
+  };
+
+  // The checkbox is labelled "Save new address to address book" but is bound to
+  // isAddressSavingSkipped through an inverting transformer, so checked means saved.
+  setShippingAddressSavedToAddressBook = (shouldSave: boolean): void => {
+    this.toggle(this.repository.getShippingAddressSaveToAddressBookCheckbox(), shouldSave);
+  };
+
+  setBillingAddressSavedToAddressBook = (shouldSave: boolean): void => {
+    this.toggle(this.repository.getBillingAddressSaveToAddressBookCheckbox(), shouldSave);
+  };
+
+  submitAddressStep = (): void => {
+    this.repository.getNextButton().click();
+  };
+
+  private toggle = (checkbox: Cypress.Chainable, shouldCheck: boolean): void => {
+    if (shouldCheck) {
+      checkbox.check({ force: true });
+
+      return;
+    }
+
+    checkbox.uncheck({ force: true });
+  };
+}
+
+export interface CheckoutAddressInput {
+  firstName: string;
+  lastName: string;
+  address1: string;
+  address2: string;
+  zipCode: string;
+  city: string;
+  company: string;
+  phone: string;
 }
 
 interface FillShippingAddressParams {

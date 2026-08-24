@@ -11,6 +11,18 @@ export class CheckoutPaymentPage extends YvesPage {
 
   protected PAGE_URL = '/checkout/payment';
 
+  // Mirrors the dispatch CheckoutScenario does internally, for specs that drive the checkout
+  // steps themselves instead of going through the scenario.
+  setPaymentMethod = (paymentMethod: string): void => {
+    const paymentMethods: Record<string, () => void> = {
+      dummyPaymentInvoice: () => this.setDummyPaymentMethod(),
+      dummyPaymentCreditCard: () => this.setDummyPaymentCreditCardMethod(),
+      dummyMarketplacePaymentInvoice: () => this.setDummyMarketplacePaymentMethod(),
+    };
+
+    paymentMethods[paymentMethod]();
+  };
+
   setDummyPaymentMethod = (): void => {
     this.repository.getDummyPaymentInvoiceRadio().click({ force: true });
 

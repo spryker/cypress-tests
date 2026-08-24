@@ -1,0 +1,169 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": {
+            "id_store": 1
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "customer",
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [
+            {
+              "fkCompany": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderPermission",
+          "arguments": ["PlaceOrderPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "arguments": [
+            {
+              "isDefault": true,
+              "fkCompany": "#company.id_company"
+            },
+            ["#placeOrderPermission"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "fkCustomer": "#customer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUnitAddress",
+          "key": "businessUnitAddress",
+          "arguments": [
+            {
+              "fkCompany": "#company.id_company",
+              "fkCountry": "#country.id_country",
+              "address1": "Business Unit Street",
+              "address2": "23",
+              "zipCode": "8002",
+              "city": "Barcelona",
+              "phone": "3490284322"
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "name": "CompanyBusinessUnitTransfer",
+          "key": "businessUnitWithAddress",
+          "arguments": {
+            "idCompanyBusinessUnit": "#businessUnit.id_company_business_unit",
+            "fkCompany": "#company.id_company",
+            "addressCollection": {
+              "companyUnitAddresses": ["#businessUnitAddress"]
+            }
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUnitAddressToCompanyBusinessUnitRelation",
+          "arguments": ["#businessUnitWithAddress"]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product1",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#product1.abstract_sku",
+              "skuProduct": "#product1.sku",
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product1.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
