@@ -4,20 +4,41 @@
     "attributes": {
       "synchronize": true,
       "operations": [
-        { "type": "helper", "name": "haveUser", "key": "rootUser", "arguments": [{ "password": "change123" }] },
-        { "type": "helper", "name": "addUserToGroup", "arguments": ["#rootUser.id_user", 1] },
-
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
         {
           "type": "helper",
           "name": "haveCompany",
           "key": "company",
-          "arguments": [{ "status": "approved", "is_active": true }]
+          "arguments": [
+            {
+              "status": "approved",
+              "is_active": true
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveCompanyBusinessUnit",
           "key": "businessUnit",
-          "arguments": [{ "fk_company": "#company.id_company" }]
+          "arguments": [
+            {
+              "fk_company": "#company.id_company"
+            }
+          ]
         },
         {
           "type": "helper",
@@ -36,23 +57,36 @@
           "name": "haveCompanyRoleWithPermissions",
           "key": "buyerRole",
           "arguments": [
-            { "fk_company": "#company.id_company" },
+            {
+              "fk_company": "#company.id_company"
+            },
             ["#placeOrderPermission", "#requestQuoteApprovalPermission"]
           ]
         },
-
-        { "type": "helper", "name": "haveCountry", "key": "country" },
+        {
+          "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
         {
           "type": "helper",
           "name": "haveConfirmedCustomer",
           "key": "customer",
-          "arguments": [{ "registered": "2025-01-01", "password": "change123", "locale_name": "en_US" }]
+          "arguments": [
+            {
+              "registered": "2025-01-01",
+              "password": "change123",
+              "locale_name": "en_US"
+            }
+          ]
         },
         {
           "type": "builder",
           "name": "CompanyRoleCollectionBuilder",
           "key": "buyerRoleCollection",
-          "arguments": { "roles": ["#buyerRole"] }
+          "arguments": {
+            "roles": ["#buyerRole"]
+          }
         },
         {
           "type": "helper",
@@ -67,21 +101,43 @@
             }
           ]
         },
-        { "type": "helper", "name": "assignCompanyRoles", "arguments": ["#companyUser", ["#buyerRole"]] },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser", ["#buyerRole"]]
+        },
         {
           "type": "helper",
           "name": "haveCustomerAddress",
           "key": "address",
-          "arguments": [{ "fkCustomer": "#customer.id_customer", "fkCountry": "#country.id_country" }]
+          "arguments": [
+            {
+              "fkCustomer": "#customer.id_customer",
+              "fkCountry": "#country.id_country"
+            }
+          ]
         },
-
         {
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
-          "arguments": { "id_store": 1, "name": "DE", "defaultCurrencyIsoCode": "EUR" }
+          "arguments": {
+            "id_store": 1,
+            "name": "DE",
+            "defaultCurrencyIsoCode": "EUR"
+          }
         },
-        { "type": "helper", "name": "haveFullProduct", "key": "product", "arguments": [{}, { "idTaxSet": 1 }] },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
         {
           "type": "helper",
           "name": "havePriceProduct",
@@ -89,21 +145,34 @@
             {
               "skuProductAbstract": "#product.abstract_sku",
               "skuProduct": "#product.sku",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
             }
           ]
         },
         {
           "type": "helper",
           "name": "haveProductInStockForStore",
-          "arguments": ["#store", { "sku": "#product.sku", "isNeverOutOfStock": "1" }]
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
         },
-
         {
           "type": "helper",
           "name": "haveFullProduct",
           "key": "promotionalProduct",
-          "arguments": [{}, { "idTaxSet": 1 }]
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
         },
         {
           "type": "helper",
@@ -112,23 +181,37 @@
             {
               "skuProductAbstract": "#promotionalProduct.abstract_sku",
               "skuProduct": "#promotionalProduct.sku",
-              "moneyValue": { "netAmount": 7500, "grossAmount": 7500 }
+              "moneyValue": {
+                "netAmount": 7500,
+                "grossAmount": 7500
+              }
             }
           ]
         },
         {
           "type": "helper",
           "name": "haveProductInStockForStore",
-          "arguments": ["#store", { "sku": "#promotionalProduct.sku", "isNeverOutOfStock": "1" }]
+          "arguments": [
+            "#store",
+            {
+              "sku": "#promotionalProduct.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
         },
-
         {
           "type": "helper",
           "name": "haveDiscount",
           "key": "voucherDiscount",
           "arguments": [
             {
-              "discountGeneral": { "discountType": "voucher", "isActive": true, "storeRelation": { "idStores": [1] } },
+              "discountGeneral": {
+                "discountType": "voucher",
+                "isActive": true,
+                "storeRelation": {
+                  "idStores": [1]
+                }
+              },
               "discountCalculator": {
                 "calculatorPlugin": "PLUGIN_CALCULATOR_PERCENTAGE",
                 "amount": 500,
@@ -143,10 +226,25 @@
           "name": "haveGeneratedVoucherCodes",
           "key": "voucherCode",
           "arguments": [
-            { "idDiscount": "#voucherDiscount.id_discount", "quantity": 1, "randomGeneratedCodeLength": 10 }
+            {
+              "idDiscount": "#voucherDiscount.id_discount",
+              "quantity": 1,
+              "randomGeneratedCodeLength": 10
+            }
           ]
         },
-
+        {
+          "type": "helper",
+          "name": "haveGeneratedVoucherCodes",
+          "key": "guestVoucherCode",
+          "arguments": [
+            {
+              "idDiscount": "#voucherDiscount.id_discount",
+              "quantity": 1,
+              "randomGeneratedCodeLength": 10
+            }
+          ]
+        },
         {
           "type": "helper",
           "name": "haveDiscount",
@@ -156,7 +254,9 @@
               "discountGeneral": {
                 "discountType": "cart_rule",
                 "isActive": true,
-                "storeRelation": { "idStores": [1] }
+                "storeRelation": {
+                  "idStores": [1]
+                }
               },
               "discountCalculator": {
                 "calculatorPlugin": "PLUGIN_CALCULATOR_PERCENTAGE",
@@ -167,7 +267,6 @@
             }
           ]
         },
-
         {
           "type": "helper",
           "name": "haveDiscount",
@@ -177,7 +276,9 @@
               "discountGeneral": {
                 "discountType": "cart_rule",
                 "isActive": true,
-                "storeRelation": { "idStores": [1] }
+                "storeRelation": {
+                  "idStores": [1]
+                }
               },
               "discountCalculator": {
                 "calculatorPlugin": "PLUGIN_CALCULATOR_PERCENTAGE",
@@ -193,7 +294,138 @@
             }
           ]
         },
-
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "bundleProduct",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "bundledProduct1",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#bundledProduct1.abstract_sku",
+              "skuProduct": "#bundledProduct1.sku",
+              "moneyValue": {
+                "netAmount": 15000,
+                "grossAmount": 15000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#bundledProduct1.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "bundledProduct2",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#bundledProduct2.abstract_sku",
+              "skuProduct": "#bundledProduct2.sku",
+              "moneyValue": {
+                "netAmount": 15000,
+                "grossAmount": 15000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#bundledProduct2.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductBundle",
+          "key": "productBundle",
+          "arguments": [
+            "#bundleProduct",
+            {
+              "bundledProducts": [
+                {
+                  "idProductConcrete": "#bundledProduct1.id_product_concrete",
+                  "idProductBundle": "#bundleProduct.id_product_concrete",
+                  "quantity": 2,
+                  "sku": "#bundledProduct1.sku"
+                },
+                {
+                  "idProductConcrete": "#bundledProduct2.id_product_concrete",
+                  "idProductBundle": "#bundleProduct.id_product_concrete",
+                  "quantity": 3,
+                  "sku": "#bundledProduct2.sku"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productBundle.abstract_sku",
+              "skuProduct": "#productBundle.sku",
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#productBundle.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
         {
           "type": "helper",
           "name": "havePersistentQuote",
@@ -201,7 +433,13 @@
           "arguments": [
             {
               "customer": "#customer",
-              "items": [{ "sku": "#product.sku", "abstractSku": "#product.abstract_sku", "quantity": 1 }]
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "quantity": 1
+                }
+              ]
             },
             true
           ]

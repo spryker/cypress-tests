@@ -56,4 +56,8 @@ export class CustomerProfilePage extends YvesPage {
   getLastNameInput(): Cypress.Chainable {
     return this.repository.getLastNameInput();
   }
+
+  getEmailInput(): Cypress.Chainable {
+    return this.repository.getEmailInput();
+  }
 }

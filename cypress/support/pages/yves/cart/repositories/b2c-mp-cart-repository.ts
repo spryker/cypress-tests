@@ -3,6 +3,18 @@ import { CartRepository } from '../cart-repository';
 
 @injectable()
 export class B2cMpCartRepository implements CartRepository {
+  // The approver's actions live on the cart page, not the summary, and put the approval's id at
+  // the end of the path - /quote-approval/approve/8 - the opposite way round to the requester's
+  // cancel form. A cart waiting for approval is also locked, which the reset-lock form marks.
+  getApproveCartButton = (): Cypress.Chainable => cy.get('form[action*="/quote-approval/approve/"]').find('button');
+  getLockedCartResetForm = (): Cypress.Chainable => cy.get('form[action$="/cart/reset-lock"]');
+  getApprovalStatus = (): Cypress.Chainable => cy.get('.quote-status');
+  // The share widget renders one url-mask-generator per share option group. Clicking the group's
+  // toggler fires the cart/create-link AJAX, which renders the generated link into an input whose
+  // id is the share option - PREVIEW for the external group.
+  getExternalCartShareToggle = (): Cypress.Chainable =>
+    cy.get('url-mask-generator[shareoptiongroup="external"]').find('.js-toggler-radio__trigger');
+  getExternalCartShareLinkInput = (): Cypress.Chainable => cy.get('#PREVIEW');
   getQuickAddToCartSkuField = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-quick-add-form"] input').first();
   getQuickAddToCartProductListField = (): Cypress.Chainable => cy.get('[data-qa="component products-list"]');

@@ -1,0 +1,240 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": {
+            "id_store": 1,
+            "name": "DE"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [
+            {
+              "status": "approved",
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [
+            {
+              "fk_company": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderPermission",
+          "arguments": ["PlaceOrderPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "requestQuoteApprovalPermission",
+          "arguments": ["RequestQuoteApprovalPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "approveQuotePermission",
+          "arguments": ["ApproveQuotePermissionPlugin"]
+        },
+        {
+          "type": "transfer",
+          "name": "PermissionTransfer",
+          "key": "limitedPlaceOrderPermission",
+          "arguments": {
+            "idPermission": "#placeOrderPermission.id_permission",
+            "key": "PlaceOrderPermissionPlugin",
+            "configuration": {
+              "store_multi_currency": {
+                "DE": {
+                  "EUR": 10000
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "buyerRole",
+          "arguments": [
+            {
+              "fk_company": "#company.id_company"
+            },
+            ["#limitedPlaceOrderPermission", "#requestQuoteApprovalPermission"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "approverRole",
+          "arguments": [
+            {
+              "fk_company": "#company.id_company"
+            },
+            ["#placeOrderPermission", "#approveQuotePermission"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "buyer",
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "approver",
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "buyerAddress",
+          "arguments": [
+            {
+              "fkCustomer": "#buyer.id_customer",
+              "fkCountry": "#country.id_country"
+            }
+          ]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerRoleCollection",
+          "arguments": {
+            "roles": ["#buyerRole"]
+          }
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "approverRoleCollection",
+          "arguments": {
+            "roles": ["#approverRole"]
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "buyerCompanyUser",
+          "arguments": [
+            {
+              "customer": "#buyer",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#buyerCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "approverCompanyUser",
+          "arguments": [
+            {
+              "customer": "#approver",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#approverRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#approverCompanyUser", ["#approverRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product1",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#product1.abstract_sku",
+              "skuProduct": "#product1.sku",
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product1.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "quote",
+          "arguments": [
+            {
+              "customer": "#buyer",
+              "items": [
+                {
+                  "sku": "#product1.sku",
+                  "abstractSku": "#product1.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            },
+            true
+          ]
+        }
+      ]
+    }
+  }
+}
