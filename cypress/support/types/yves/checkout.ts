@@ -42,3 +42,14 @@ export interface SplitDeliveryDynamicFixtures {
   product2: ProductConcrete;
   product3: ProductConcrete;
 }
+
+export interface MinimumOrderValueStaticFixtures {
+  defaultPassword: string;
+}
+
+export interface MinimumOrderValueDynamicFixtures {
+  rootUser: User;
+  customer: Customer;
+  address: Address;
+  product: ProductConcrete;
+}

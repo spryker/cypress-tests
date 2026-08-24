@@ -24,3 +24,4 @@ export * from './purchasing-control';
 export * from './recurring-orders';
 export * from './agent-assist';
 export * from './company-structure';
+export * from './discount';

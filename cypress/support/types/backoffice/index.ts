@@ -39,3 +39,4 @@ export * from './order-experience-management';
 export * from './glossary-management';
 export * from './warehouse-picking-oms';
 export * from './company-structure-creation';
+export * from './data-exchange';
