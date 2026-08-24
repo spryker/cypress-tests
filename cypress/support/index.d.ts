@@ -146,13 +146,6 @@ declare namespace Cypress {
      *
      * @example cy.addCartItem(token, cartId, { sku: 'X', quantity: 1, productOfferReference: 'OF--1' })
      */
-    /**
-     * Returns the id of the customer's existing cart. A customer always has one, and POST /carts
-     * answers 422 rather than making a second, so the existing cart is what an API arrangement
-     * has to fill.
-     */
-    getCustomerCartId(accessToken: string): Chainable<string>;
-
     addCartItem(
       accessToken: string,
       cartId: string,

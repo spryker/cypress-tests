@@ -185,6 +185,11 @@
         },
         {
           "type": "helper",
+          "name": "haveProductOfferStore",
+          "arguments": ["#productOffer1", "#store"]
+        },
+        {
+          "type": "helper",
           "name": "haveProductInStockForStore",
           "arguments": [
             "#store",
@@ -265,6 +270,11 @@
             },
             "#merchant2.stocks"
           ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferStore",
+          "arguments": ["#productOffer2", "#store"]
         },
         {
           "type": "helper",

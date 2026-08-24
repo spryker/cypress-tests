@@ -45,12 +45,8 @@ describe(
 
     it('given a cart holding the main merchant product and an offer from each of two merchants when the order is placed then it is split into one shipment per merchant', (): void => {
       // Arrange
-      customerLoginScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-      });
-
-      // The cart is arranged through the storefront API, not the UI. Quick-add by SKU puts the
+      // The cart is arranged through the storefront API, not the UI, and before the browser
+      // session exists so that logging in picks up the filled cart. Quick-add by SKU puts the
       // plain product in the cart, so every item would belong to the main merchant and there
       // would be nothing to split, and the product detail page - the only UI that can pick a
       // merchant's offer - is reachable only through catalog search, which this stack cannot
@@ -58,7 +54,14 @@ describe(
       // this journey rather than its subject: what is under test is the split and the checkout.
       cy.getCustomerAccessToken(dynamicFixtures.customer.email, staticFixtures.defaultPassword).then(
         (accessToken: string) => {
-          cy.getCustomerCartId(accessToken).then((cartId: string) => {
+          // The API runs before any browser session exists, so the customer has no cart yet and
+          // one has to be created. POST /carts requires a name.
+          cy.createCart(accessToken, {
+            name: 'cypress-multi-merchant-cart',
+            priceMode: 'GROSS_MODE',
+            currency: 'EUR',
+            store: 'DE',
+          }).then((cartId: string) => {
             cy.addCartItem(accessToken, cartId, { sku: dynamicFixtures.product1.sku, quantity: 1 });
             cy.addCartItem(accessToken, cartId, {
               sku: dynamicFixtures.product2.sku,
@@ -73,6 +76,12 @@ describe(
           });
         }
       );
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
 
       // Assert
       // The cart names the merchant behind every offer, which is what the split is derived from.
