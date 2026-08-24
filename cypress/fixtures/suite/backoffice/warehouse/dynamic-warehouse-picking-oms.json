@@ -68,8 +68,22 @@
         },
         {
           "type": "helper",
-          "name": "haveProductInStockForStore",
-          "arguments": ["#store", { "sku": "#product.sku", "quantity": 100, "isNeverOutOfStock": "0" }]
+          "name": "haveStock",
+          "key": "warehouse",
+          "arguments": [{ "name": "Warehouse1", "store_relation": { "id_stores": ["#store.id_store"] } }]
+        },
+        {
+          "type": "helper",
+          "name": "haveStockProduct",
+          "arguments": [
+            {
+              "fk_stock": "#warehouse.id_stock",
+              "stock_type": "#warehouse.name",
+              "sku": "#product.sku",
+              "quantity": 100,
+              "isNeverOutOfStock": "0"
+            }
+          ]
         },
         {
           "type": "helper",
