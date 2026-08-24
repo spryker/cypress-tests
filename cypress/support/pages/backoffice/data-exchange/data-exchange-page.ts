@@ -1,7 +1,7 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 import { BackofficePage } from '../backoffice-page';
-import { DataExchangeRepository } from './data-exchange-repository';
+import { DataExchangeRepository, FieldControl } from './data-exchange-repository';
 
 // Regenerates the Backend API schema the configuration list offers for download. Without the
 // interval option the voter is skipped and the schema is rebuilt unconditionally, which is what
@@ -66,16 +66,18 @@ export class DataExchangePage extends BackofficePage {
     this.repository.getIsEnabledCheckbox().uncheck();
   };
 
-  configureField = (field: FieldDefinition): void => {
-    this.repository.getFieldDefinitionRow(field.name).within(() => {
-      cy.get('input[name$="[is_enabled]"]').check();
-      cy.get('input[name$="[field_visible_name]"]').clear();
-      cy.get('input[name$="[field_visible_name]"]').type(field.name);
-      cy.get('select[name$="[type]"]').select(field.type, { force: true });
+  configureField = (field: FieldDefinition, visibleName: string = field.name): void => {
+    const selectorOf = (control: FieldControl): string => this.repository.getFieldControlSelector(control);
 
-      DataExchangePage.toggle('input[name$="[is_creatable]"]', field.isCreatable);
-      DataExchangePage.toggle('input[name$="[is_editable]"]', field.isEditable);
-      DataExchangePage.toggle('input[name$="[is_required]"]', field.isRequired);
+    this.repository.getFieldDefinitionRow(field.name).within(() => {
+      cy.get(selectorOf('enabled')).check();
+      cy.get(selectorOf('visibleName')).clear();
+      cy.get(selectorOf('visibleName')).type(visibleName);
+      cy.get(selectorOf('type')).select(field.type, { force: true });
+
+      DataExchangePage.toggle(selectorOf('creatable'), field.isCreatable);
+      DataExchangePage.toggle(selectorOf('editable'), field.isEditable);
+      DataExchangePage.toggle(selectorOf('required'), field.isRequired);
     });
   };
 
@@ -98,6 +100,13 @@ export class DataExchangePage extends BackofficePage {
   getDownloadSpecificationButton = (): Cypress.Chainable => this.repository.getDownloadSpecificationButton();
 
   getErrorMessage = (): Cypress.Chainable => this.repository.getErrorMessage();
+
+  getConfigurationSavedMessage = (): Cypress.Chainable => cy.contains(this.repository.getConfigurationSavedMessage());
+
+  getIsEnabledCheckbox = (): Cypress.Chainable => this.repository.getIsEnabledCheckbox();
+
+  getFieldControl = (fieldName: string, control: FieldControl): Cypress.Chainable =>
+    this.repository.getFieldDefinitionControl(fieldName, control);
 
   getResourceName = (): Cypress.Chainable => this.repository.getResourceNameInput().invoke('val');
 

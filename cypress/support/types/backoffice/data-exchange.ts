@@ -7,3 +7,11 @@ export interface ApiSpecificationDownloadStaticFixtures {
 export interface ApiSpecificationDownloadDynamicFixtures {
   rootUser: User;
 }
+
+export interface DynamicEntityConfigurationStaticFixtures {
+  defaultPassword: string;
+}
+
+export interface DynamicEntityConfigurationDynamicFixtures {
+  rootUser: User;
+}
