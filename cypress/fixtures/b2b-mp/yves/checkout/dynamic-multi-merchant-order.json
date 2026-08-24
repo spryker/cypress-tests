@@ -185,6 +185,17 @@
         },
         {
           "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product2.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveFullProduct",
           "key": "product3",
           "arguments": [
@@ -253,6 +264,17 @@
               "isNeverOutOfStock": true
             },
             "#merchant2.stocks"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product3.sku",
+              "isNeverOutOfStock": "1"
+            }
           ]
         }
       ]
