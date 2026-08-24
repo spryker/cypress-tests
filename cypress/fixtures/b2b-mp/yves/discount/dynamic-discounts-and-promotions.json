@@ -235,6 +235,18 @@
         },
         {
           "type": "helper",
+          "name": "haveGeneratedVoucherCodes",
+          "key": "guestVoucherCode",
+          "arguments": [
+            {
+              "idDiscount": "#voucherDiscount.id_discount",
+              "quantity": 1,
+              "randomGeneratedCodeLength": 10
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveDiscount",
           "key": "cartRuleDiscount",
           "arguments": [

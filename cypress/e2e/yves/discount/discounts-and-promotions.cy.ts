@@ -90,7 +90,9 @@ describe(
 
       // Act
       cartPage.visit();
-      cartPage.applyVoucherCode(dynamicFixtures.voucherCode.code);
+      // Its own code, not the one the test above redeems: a generated code carries a use count,
+      // and redeeming a spent one fails with "Code could not be applied".
+      cartPage.applyVoucherCode(dynamicFixtures.guestVoucherCode.code);
 
       // Assert
       // Both discounts collect on any sku, so the bundle qualifies for the voucher and the cart rule alike.
