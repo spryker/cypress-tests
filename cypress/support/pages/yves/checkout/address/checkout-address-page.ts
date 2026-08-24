@@ -252,6 +252,18 @@ export class CheckoutAddressPage extends YvesPage {
     };
   };
 
+  // Collecting at a service point on a single-shipment cart: choose the shipment type, then the
+  // location. Picking a service point is what replaces the item's delivery address with the
+  // store's, so no shipping address is filled here.
+  selectPickupAtServicePoint = (params: SelectPickupAtServicePointParams): void => {
+    this.repository.getShipmentTypeRadio(params.shipmentTypeKey).click({ force: true });
+    this.repository.getSelectServicePointButton().first().click({ force: true });
+    this.repository.getServicePointFinderInput?.().clear().type(params.servicePointName);
+    this.repository.getServicePointFinderListItem?.(params.servicePointName).first().click();
+  };
+
+  getSelectedServicePoint = (): Cypress.Chainable => this.repository.getSelectedServicePoint();
+
   setBillingSameAsShipping = (isSame: boolean): void => {
     const checkbox = this.repository.getShippingAddressBillingSameAsShippingCheckbox();
 
@@ -328,6 +340,11 @@ export class CheckoutAddressPage extends YvesPage {
 
     checkbox.uncheck({ force: true });
   };
+}
+
+interface SelectPickupAtServicePointParams {
+  shipmentTypeKey: string;
+  servicePointName: string;
 }
 
 export interface CheckoutAddressInput {

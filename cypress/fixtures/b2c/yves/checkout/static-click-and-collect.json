@@ -1,5 +1,15 @@
 {
   "defaultPassword": "change123",
   "pickupShipmentTypeKey": "pickup",
-  "expectedShipmentCount": 1
+  "expectedShipmentCount": 1,
+  "billingAddress": {
+    "firstName": "Pickup",
+    "lastName": "Buyer",
+    "address1": "Billing Street",
+    "address2": "123",
+    "zipCode": "10247",
+    "city": "Berlin",
+    "company": "Spryker",
+    "phone": "987654321"
+  }
 }

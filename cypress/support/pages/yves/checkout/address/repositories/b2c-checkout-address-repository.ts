@@ -4,6 +4,11 @@ import { CheckoutAddressRepository } from '../checkout-address-repository';
 
 @injectable()
 export class B2cCheckoutAddressRepository implements CheckoutAddressRepository {
+  // The single-shipment address form offers the service point through its own selector component;
+  // the multi-shipment getters above are per address item and do not match here.
+  getSelectServicePointButton = (): Cypress.Chainable =>
+    cy.get('[data-qa="component service-point-selector"]').find('button');
+  getSelectedServicePoint = (): Cypress.Chainable => cy.get('[data-qa="component service-point"]');
   getShippingAddressSaveToAddressBookCheckbox = (): Cypress.Chainable =>
     cy.get('#addressesForm_shippingAddress_isAddressSavingSkipped');
   getBillingAddressSaveToAddressBookCheckbox = (): Cypress.Chainable =>

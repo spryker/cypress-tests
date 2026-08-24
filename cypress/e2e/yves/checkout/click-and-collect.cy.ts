@@ -1,8 +1,15 @@
 import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { ClickAndCollectDynamicFixtures, ClickAndCollectStaticFixtures } from '@interfaces/yves';
-import { CartPage, CheckoutSummaryPage, CustomerOverviewPage } from '@pages/yves';
+import {
+  CartPage,
+  CheckoutAddressPage,
+  CheckoutPaymentPage,
+  CheckoutShipmentPage,
+  CheckoutSummaryPage,
+  CustomerOverviewPage,
+} from '@pages/yves';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
-import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
+import { CustomerLoginScenario } from '@scenarios/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
 describe(
@@ -27,11 +34,13 @@ describe(
     }
 
     const cartPage = container.get(CartPage);
+    const checkoutAddressPage = container.get(CheckoutAddressPage);
+    const checkoutShipmentPage = container.get(CheckoutShipmentPage);
+    const checkoutPaymentPage = container.get(CheckoutPaymentPage);
     const checkoutSummaryPage = container.get(CheckoutSummaryPage);
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const salesIndexPage = container.get(SalesIndexPage);
     const salesDetailPage = container.get(SalesDetailPage);
-    const checkoutScenario = container.get(CheckoutScenario);
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const userLoginScenario = container.get(UserLoginScenario);
 
@@ -73,17 +82,29 @@ describe(
       cartPage.assertBodyContainsText(dynamicFixtures.product1.sku);
 
       // Act
-      // The service point is chosen on the address step rather than the product page: picking
-      // pickup for the item replaces its delivery address with the service point's.
-      checkoutScenario.execute({
-        isMultiShipment: true,
-        paymentMethod: getPaymentMethodBasedOnEnv(),
-        servicePointSelection: {
-          productName: dynamicFixtures.product1.sku,
-          shipmentTypeKey: staticFixtures.pickupShipmentTypeKey,
-          servicePointName: dynamicFixtures.servicePoint.name,
-        },
+      // A single-item cart gets the single-shipment address form, not the multi-shipment one, so
+      // the shipment type and the service point are chosen directly on it. Because this drives the
+      // steps itself rather than going through CheckoutScenario, it repeats that scenario's
+      // recurring-order stub: without it the summary form is re-rendered and submit stays disabled.
+      cy.intercept('POST', '**/recurring-order/clear', { statusCode: 200, body: '' });
+
+      cartPage.visit();
+      cartPage.startCheckout();
+
+      checkoutAddressPage.selectPickupAtServicePoint({
+        shipmentTypeKey: staticFixtures.pickupShipmentTypeKey,
+        servicePointName: dynamicFixtures.servicePoint.name,
       });
+      // Pickup does not offer billing-same-as-shipping - there is no shipping address to
+      // mirror, the goods go to the store - so a billing address has to be entered.
+      checkoutAddressPage.typeBillingAddress(staticFixtures.billingAddress);
+      checkoutAddressPage.submitAddressStep();
+
+      checkoutShipmentPage.setStandardShippingMethod();
+      checkoutPaymentPage.setPaymentMethod(getPaymentMethodBasedOnEnv());
+      checkoutSummaryPage.placeOrder();
+
+      cy.url({ timeout: 15000 }).should('not.include', '/checkout/summary');
 
       // Assert
       customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage(), {

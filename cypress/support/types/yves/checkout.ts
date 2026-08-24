@@ -179,6 +179,7 @@ export interface ClickAndCollectStaticFixtures {
   defaultPassword: string;
   pickupShipmentTypeKey: string;
   expectedShipmentCount: number;
+  billingAddress: CheckoutAddressFixture;
 }
 
 export interface ClickAndCollectDynamicFixtures {
