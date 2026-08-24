@@ -13,8 +13,7 @@ export class CompanyUserCreateRepository {
   getBusinessUnitSelect = (): Cypress.Chainable => cy.get('select#company-user_fk_company_business_unit');
   getSubmitButton = (): Cypress.Chainable => cy.get('input[type="submit"].safe-submit');
 
-  // The role list is re-rendered into this container whenever the company changes, and each role is
-  // labelled "<name> (id: <id>)", so the label text is the only handle a spec can predict.
+  // Each role is labelled "<name> (id: <id>)", so the label text is the only handle a spec can predict.
   getRoleCheckbox = (roleName: string): Cypress.Chainable =>
     cy.contains('#company-user_company_role_collection label', roleName).find('input[type="checkbox"]');
 }

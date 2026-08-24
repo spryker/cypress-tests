@@ -11,8 +11,8 @@ export class CompanyUserCreatePage extends BackofficePage {
   protected PAGE_URL = '/company-user-gui/create-company-user';
 
   /**
-   * The company has to be picked first and on its own: changing it re-fetches the role checkboxes and
-   * resets the business unit field, so filling either one earlier throws the value away.
+   * The company has to be picked first and on its own: anything already filled into the business unit
+   * or role fields is thrown away when it changes.
    */
   create = (params: CreateParams): void => {
     this.selectCompany(params.companyName);
