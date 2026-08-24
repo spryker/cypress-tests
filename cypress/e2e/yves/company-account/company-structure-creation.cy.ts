@@ -6,7 +6,15 @@ import { CustomerLoginScenario, ImpersonateCustomerScenario } from '@scenarios/y
 describe(
   'company structure creation',
   {
-    tags: ['@yves', '@company-account', 'company-account', 'customer-account-management', 'spryker-core', 'acl'],
+    tags: [
+      '@yves',
+      '@company-account',
+      'company-account',
+      'customer-account-management',
+      'spryker-core',
+      'agent-assist',
+      'acl',
+    ],
   },
   (): void => {
     if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
@@ -57,8 +65,6 @@ describe(
       });
 
       // Assert
-      // The users table lists name, business unit and role but never the email, so the run-unique
-      // business unit name is what identifies the row this test created.
       companyUserCreatePage.getUserRow(businessUnitName).should('contain.text', staticFixtures.restrictedRoleName);
     });
 

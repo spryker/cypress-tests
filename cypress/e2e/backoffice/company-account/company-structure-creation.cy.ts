@@ -18,7 +18,15 @@ import { ImpersonateCustomerScenario } from '@scenarios/yves';
 describe(
   'company structure creation',
   {
-    tags: ['@backoffice', '@company-account', 'company-account', 'spryker-core-back-office', 'spryker-core', 'acl'],
+    tags: [
+      '@backoffice',
+      '@company-account',
+      'company-account',
+      'spryker-core-back-office',
+      'spryker-core',
+      'agent-assist',
+      'acl',
+    ],
   },
   (): void => {
     if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
