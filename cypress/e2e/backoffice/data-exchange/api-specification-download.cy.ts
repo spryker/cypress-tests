@@ -62,6 +62,14 @@ describe(
 
     it('given a table is not exposed when its data exchange api configuration is enabled and the specification is regenerated then the downloaded specification gains its resource', (): void => {
       // Arrange
+      // The baseline is established rather than assumed. A retry re-enters the test with the
+      // configuration the previous attempt enabled and its download still on disk, and the two
+      // absence checks below would then fail for the wrong reason and hide what actually broke.
+      dataExchangePage.discardDownloadedApiSpecification();
+      dataExchangePage.openConfiguration(TABLE_NAME);
+      dataExchangePage.setConfigurationEnabled(false);
+      dataExchangePage.saveConfiguration();
+
       dataExchangePage.regenerateApiSpecification();
       dataExchangePage.waitForApiSpecificationToBeCurrent();
 
