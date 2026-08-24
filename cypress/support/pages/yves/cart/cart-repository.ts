@@ -1,4 +1,7 @@
 export interface CartRepository {
+  getApproveCartButton(): Cypress.Chainable;
+  getLockedCartResetForm(): Cypress.Chainable;
+  getApprovalStatus(): Cypress.Chainable;
   getExternalCartShareToggle(): Cypress.Chainable;
   getExternalCartShareLinkInput(): Cypress.Chainable;
   getQuickAddToCartSkuField(): Cypress.Chainable;

@@ -52,6 +52,14 @@ export class CartPage extends YvesPage {
     return this.repository.getExternalCartShareLinkInput().invoke('val');
   };
 
+  approveCart = (): void => {
+    this.repository.getApproveCartButton().click();
+  };
+
+  getLockedCartResetForm = (): Cypress.Chainable => this.repository.getLockedCartResetForm();
+
+  getApprovalStatus = (): Cypress.Chainable => this.repository.getApprovalStatus();
+
   startCheckout = (): void => {
     this.repository.getCheckoutButton().click({ force: true });
   };

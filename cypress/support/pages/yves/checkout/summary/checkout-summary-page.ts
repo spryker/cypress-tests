@@ -23,6 +23,15 @@ export class CheckoutSummaryPage extends YvesPage {
   getPlacedOrderReference = (): Cypress.Chainable<string> =>
     cy.get('meta[itemprop="identifier"]', { timeout: 15000 }).invoke('attr', 'content');
 
+  requestApproval = (idCompanyUser: number): void => {
+    this.repository.getApproverSelect().select(idCompanyUser.toString(), { force: true });
+    this.repository.getSendApprovalRequestButton().click();
+  };
+
+  getApprovalStatus = (): Cypress.Chainable => this.repository.getApprovalStatus();
+
+  getCancelApprovalRequestButton = (): Cypress.Chainable => this.repository.getCancelApprovalRequestButton();
+
   placeOrder = (): void => {
     this.repository.getaAcceptTermsAndConditionsCheckbox().should('be.visible', { timeout: 1000 });
     this.repository.getaAcceptTermsAndConditionsCheckbox().check({ force: true });

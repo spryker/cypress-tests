@@ -1,4 +1,4 @@
-import { Address, Customer, ProductConcrete, Store, User } from './shared';
+import { Address, Customer, ProductConcrete, Quote, Store, User } from './shared';
 
 export interface BasicCheckoutDynamicFixtures {
   customer: Customer;
@@ -133,4 +133,24 @@ interface ProductOffer {
 interface Merchant {
   name: string;
   merchant_reference: string;
+}
+
+export interface CartApprovalProcessStaticFixtures {
+  defaultPassword: string;
+  waitingStatus: string;
+  approvedStatus: string;
+}
+
+export interface CartApprovalProcessDynamicFixtures {
+  buyer: Customer;
+  approver: Customer;
+  buyerAddress: Address;
+  buyerCompanyUser: CompanyUserReference;
+  approverCompanyUser: CompanyUserReference;
+  product1: ProductConcrete;
+  quote: Quote;
+}
+
+interface CompanyUserReference {
+  id_company_user: number;
 }
