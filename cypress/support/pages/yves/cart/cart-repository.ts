@@ -1,4 +1,6 @@
 export interface CartRepository {
+  getExternalCartShareToggle(): Cypress.Chainable;
+  getExternalCartShareLinkInput(): Cypress.Chainable;
   getQuickAddToCartSkuField(): Cypress.Chainable;
   getQuickAddToCartProductListField(): Cypress.Chainable;
   getFirstCartItemNoteField(): Cypress.Chainable;

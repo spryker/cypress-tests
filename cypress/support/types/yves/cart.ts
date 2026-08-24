@@ -33,3 +33,14 @@ export interface RemoveCartItemStaticFixtures {
   defaultPassword: string;
   total1: string;
 }
+
+export interface SharedCartExternalLinkStaticFixtures {
+  defaultPassword: string;
+  cartPreviewTitlePrefix: string;
+}
+
+export interface SharedCartExternalLinkDynamicFixtures {
+  customer: Customer;
+  product1: ProductConcrete;
+  quote: Quote;
+}

@@ -3,6 +3,12 @@ import { CartRepository } from '../cart-repository';
 
 @injectable()
 export class SuiteCartRepository implements CartRepository {
+  // The share widget renders one url-mask-generator per share option group. Clicking the group's
+  // toggler fires the cart/create-link AJAX, which renders the generated link into an input whose
+  // id is the share option - PREVIEW for the external group.
+  getExternalCartShareToggle = (): Cypress.Chainable =>
+    cy.get('url-mask-generator[shareoptiongroup="external"]').find('.js-toggler-radio__trigger');
+  getExternalCartShareLinkInput = (): Cypress.Chainable => cy.get('#PREVIEW');
   getQuickAddToCartSkuField = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-quick-add-form"] input').first();
   getQuickAddToCartProductListField = (): Cypress.Chainable => cy.get('[data-qa="component products-list"]');

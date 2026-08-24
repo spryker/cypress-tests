@@ -106,3 +106,31 @@ export interface BusinessUnitAddressCheckoutDynamicFixtures {
 interface CompanyUser {
   id_company_user: number;
 }
+
+export interface MultiMerchantOrderStaticFixtures {
+  defaultPassword: string;
+  expectedShipmentCount: number;
+  soldByText: string;
+}
+
+export interface MultiMerchantOrderDynamicFixtures {
+  customer: Customer;
+  address: Address;
+  rootUser: User;
+  product1: ProductConcrete;
+  product2: ProductConcrete;
+  product3: ProductConcrete;
+  merchant1: Merchant;
+  merchant2: Merchant;
+  productOffer1: ProductOffer;
+  productOffer2: ProductOffer;
+}
+
+interface ProductOffer {
+  product_offer_reference: string;
+}
+
+interface Merchant {
+  name: string;
+  merchant_reference: string;
+}

@@ -46,6 +46,12 @@ export class CartPage extends YvesPage {
     this.getPromotionalProduct(sku).find('[data-qa="add-to-cart-button"]').click();
   };
 
+  getExternalCartShareLink = (): Cypress.Chainable<string> => {
+    this.repository.getExternalCartShareToggle().click({ force: true });
+
+    return this.repository.getExternalCartShareLinkInput().invoke('val');
+  };
+
   startCheckout = (): void => {
     this.repository.getCheckoutButton().click({ force: true });
   };
