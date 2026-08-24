@@ -16,6 +16,11 @@ export class SalesDetailRepository {
   // label, with no data-qa of its own, so the label is what identifies it.
   getShipmentDeliveryAddresses = (): Cypress.Chainable => cy.get('p:has(b:contains("Delivery Address"))');
 
+  // The comments a customer wrote on the cart reach the back office through CommentSalesConnector,
+  // which renders them in .comment-wrapper. Not to be confused with Sales' own .order-details-chat:
+  // that box reads spy_sales_order_comment, a separate system a storefront comment never lands in.
+  getOrderComments = (): Cypress.Chainable => cy.get('.comment-wrapper');
+
   // The state cell renders the current state as a link to the state-machine drawing and the
   // superseded states as plain divs below it, so the link text is the state the item is in now.
   getOrderItemStateSelector = (state: string, sku: string): string =>

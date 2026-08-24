@@ -53,3 +53,15 @@ export interface MinimumOrderValueDynamicFixtures {
   address: Address;
   product: ProductConcrete;
 }
+
+export interface CheckoutAuthenticationStaticFixtures {
+  defaultPassword: string;
+  registrationPassword: string;
+  salutation: string;
+}
+
+export interface CheckoutAuthenticationDynamicFixtures {
+  customer: Customer;
+  address: Address;
+  product1: ProductConcrete;
+}
