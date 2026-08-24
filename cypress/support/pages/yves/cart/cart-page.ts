@@ -24,6 +24,10 @@ export class CartPage extends YvesPage {
     this.repository.getQuickAddToCartSubmitButton().click();
   };
 
+  // The threshold surcharge is rendered by the core SalesOrderThresholdWidget molecule, whose
+  // data-qa is identical in every shop; the cart-summary markup wrapped around it is not.
+  getThresholdSurcharge = (): Cypress.Chainable => cy.get('[data-qa*="sales-order-threshold-expense"]');
+
   startCheckout = (): void => {
     this.repository.getCheckoutButton().click({ force: true });
   };

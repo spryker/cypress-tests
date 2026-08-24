@@ -112,3 +112,4 @@ export * from './customer/address-create/customer-address-create-page';
 export * from './glossary/list/glossary-list-page';
 export * from './glossary/form/glossary-form-page';
 export * from './data-exchange/data-exchange-page';
+export * from './sales-order-threshold/global-threshold-page';

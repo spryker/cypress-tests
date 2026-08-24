@@ -28,7 +28,11 @@ export class CheckoutScenario {
     if (params?.isGuest) {
       this.checkoutCustomerPage.checkoutAsGuest();
     }
-    this.fillShippingAddress(params);
+    // A checkout resumed after the cart changed re-enters at the first invalidated step, and the
+    // address it already holds is no longer asked for.
+    if (!params?.shouldSkipAddressStep) {
+      this.fillShippingAddress(params);
+    }
 
     if (!params?.shouldSkipShipmentStep) {
       this.checkoutShipmentPage.setStandardShippingMethod();
@@ -83,6 +87,7 @@ interface ExecuteParams {
   idCustomerAddress?: number;
   shouldTriggerOmsInCli?: boolean;
   paymentMethod?: string;
+  shouldSkipAddressStep?: boolean;
   shouldSkipShipmentStep?: boolean;
   shouldSkipPlaceOrder?: boolean;
   shipmentType?: string;
