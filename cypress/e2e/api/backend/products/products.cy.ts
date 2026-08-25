@@ -384,6 +384,210 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       });
     });
 
+    it('should not re-create price rows on a patch that does not touch prices', (): void => {
+      // A stable price uuid is the observable proof that the spy_price_product_store row was
+      // reused rather than deleted and re-inserted.
+      getProduct(accessToken, patchSku).then((beforeResponse) => {
+        expect(beforeResponse.status).to.eq(200);
+
+        const priceBefore = beforeResponse.body.data.attributes.prices.find(
+          (item: Record<string, unknown>) => item.currencyCode === staticFixtures.currencyCode
+        );
+        expect(priceBefore, 'seeded price present').to.not.be.undefined;
+        expect(priceBefore.uuid, 'seeded price has a uuid').to.be.a('string');
+
+        updateProduct(accessToken, patchSku, { attributes: { color: 'green' } }).then((response) => {
+          expect(response.status).to.eq(200);
+
+          const priceAfter = response.body.data.attributes.prices.find(
+            (item: Record<string, unknown>) => item.currencyCode === staticFixtures.currencyCode
+          );
+          expect(priceAfter, 'price still present').to.not.be.undefined;
+          expect(priceAfter.uuid, 'price row reused').to.eq(priceBefore.uuid);
+        });
+      });
+    });
+
+    it('should update a price amount without dropping the other prices', (): void => {
+      updateProduct(accessToken, patchSku, {
+        prices: [
+          {
+            priceTypeName: staticFixtures.priceTypeName,
+            storeName: staticFixtures.storeName,
+            currencyCode: staticFixtures.currencyCode,
+            netAmount: staticFixtures.netAmount + 100,
+            grossAmount: staticFixtures.grossAmount + 100,
+          },
+        ],
+      }).then((response) => {
+        expect(response.status).to.eq(200);
+
+        const prices = response.body.data.attributes.prices;
+        const price = prices.find(
+          (item: Record<string, unknown>) =>
+            item.priceTypeName === staticFixtures.priceTypeName &&
+            item.currencyCode === staticFixtures.currencyCode &&
+            item.storeName === staticFixtures.storeName
+        );
+        expect(price, 'patched price present').to.not.be.undefined;
+        expect(price.netAmount, 'net amount updated').to.eq(staticFixtures.netAmount + 100);
+        expect(price.grossAmount, 'gross amount updated').to.eq(staticFixtures.grossAmount + 100);
+
+        const duplicates = prices.filter(
+          (item: Record<string, unknown>) =>
+            item.priceTypeName === staticFixtures.priceTypeName &&
+            item.currencyCode === staticFixtures.currencyCode &&
+            item.storeName === staticFixtures.storeName
+        );
+        expect(duplicates.length, 'no duplicate price for the same type/currency/store').to.eq(1);
+      });
+    });
+
+    it('should reuse the price row when a price carrying volume prices is re-sent unchanged', (): void => {
+      // Regression: the writer matches the existing row on price_data_checksum, so a price with
+      // volume prices must keep its stored checksum through the merge or it mints a new row.
+      const volumePriceSku = `pxm-volume-idem-${Date.now()}`;
+      const volumePrices = [{ quantity: 10, netPrice: staticFixtures.netAmount - 100, grossPrice: staticFixtures.grossAmount - 100 }];
+      const priceBody = {
+        priceTypeName: staticFixtures.priceTypeName,
+        storeName: staticFixtures.storeName,
+        currencyCode: staticFixtures.currencyCode,
+        netAmount: staticFixtures.netAmount,
+        grossAmount: staticFixtures.grossAmount,
+        volumePrices,
+      };
+      const body = buildValidProductBody(volumePriceSku, abstractSku) as Record<string, unknown>;
+      body.prices = [priceBody];
+
+      createProduct(accessToken, body).then((createResponse) => {
+        expect(createResponse.status, 'product with volume prices created').to.be.oneOf([200, 201]);
+
+        getProduct(accessToken, volumePriceSku).then((beforeResponse) => {
+          const priceBefore = beforeResponse.body.data.attributes.prices.find(
+            (item: Record<string, unknown>) => item.currencyCode === staticFixtures.currencyCode
+          );
+          expect(priceBefore.volumePrices, 'tiers seeded').to.have.length(1);
+
+          updateProduct(accessToken, volumePriceSku, { prices: [priceBody] }).then((response) => {
+            expect(response.status).to.eq(200);
+
+            const priceAfter = response.body.data.attributes.prices.find(
+              (item: Record<string, unknown>) => item.currencyCode === staticFixtures.currencyCode
+            );
+            expect(priceAfter.uuid, 'price row reused for an unchanged volume price').to.eq(priceBefore.uuid);
+            expect(priceAfter.volumePrices, 'tiers intact').to.have.length(1);
+          });
+        });
+      });
+    });
+
+    it('should update volume tiers in place without re-creating the price row', (): void => {
+      const volumePriceSku = `pxm-volume-edit-${Date.now()}`;
+      const priceBody = {
+        priceTypeName: staticFixtures.priceTypeName,
+        storeName: staticFixtures.storeName,
+        currencyCode: staticFixtures.currencyCode,
+        netAmount: staticFixtures.netAmount,
+        grossAmount: staticFixtures.grossAmount,
+        volumePrices: [{ quantity: 10, netPrice: 600, grossPrice: 666 }],
+      };
+      const body = buildValidProductBody(volumePriceSku, abstractSku) as Record<string, unknown>;
+      body.prices = [priceBody];
+
+      createProduct(accessToken, body).then((createResponse) => {
+        expect(createResponse.status, 'product with volume prices created').to.be.oneOf([200, 201]);
+
+        getProduct(accessToken, volumePriceSku).then((beforeResponse) => {
+          const priceBefore = beforeResponse.body.data.attributes.prices.find(
+            (item: Record<string, unknown>) => item.currencyCode === staticFixtures.currencyCode
+          );
+
+          // Amounts unchanged, tiers changed: the row is matched on the stored checksum and updated.
+          updateProduct(accessToken, volumePriceSku, {
+            prices: [{ ...priceBody, volumePrices: [{ quantity: 25, netPrice: 400, grossPrice: 444 }] }],
+          }).then((response) => {
+            expect(response.status).to.eq(200);
+
+            const priceAfter = response.body.data.attributes.prices.find(
+              (item: Record<string, unknown>) => item.currencyCode === staticFixtures.currencyCode
+            );
+            expect(priceAfter.uuid, 'price row reused').to.eq(priceBefore.uuid);
+            expect(priceAfter.volumePrices, 'single tier after edit').to.have.length(1);
+            expect(priceAfter.volumePrices[0].quantity, 'tier replaced').to.eq(25);
+          });
+        });
+      });
+    });
+
+    it('should preserve volume prices when the patch omits volumePrices', (): void => {
+      const volumePriceSku = `pxm-volume-${Date.now()}`;
+      const body = buildValidProductBody(volumePriceSku, abstractSku) as Record<string, unknown>;
+      (body.prices as Record<string, unknown>[])[0].volumePrices = [
+        { quantity: 10, netPrice: staticFixtures.netAmount - 100, grossPrice: staticFixtures.grossAmount - 100 },
+      ];
+
+      createProduct(accessToken, body).then((createResponse) => {
+        expect(createResponse.status, 'product with volume prices created').to.be.oneOf([200, 201]);
+
+        // Re-sends the price with a new amount but WITHOUT volumePrices: omitting the property
+        // must not clear the stored tiers.
+        updateProduct(accessToken, volumePriceSku, {
+          prices: [
+            {
+              priceTypeName: staticFixtures.priceTypeName,
+              storeName: staticFixtures.storeName,
+              currencyCode: staticFixtures.currencyCode,
+              netAmount: staticFixtures.netAmount + 50,
+              grossAmount: staticFixtures.grossAmount + 50,
+            },
+          ],
+        }).then((response) => {
+          expect(response.status).to.eq(200);
+
+          const price = response.body.data.attributes.prices.find(
+            (item: Record<string, unknown>) => item.currencyCode === staticFixtures.currencyCode
+          );
+          expect(price, 'price present').to.not.be.undefined;
+          expect(price.grossAmount, 'gross amount updated').to.eq(staticFixtures.grossAmount + 50);
+          expect(price.volumePrices, 'volume prices preserved').to.have.length(1);
+          expect(price.volumePrices[0].quantity).to.eq(10);
+        });
+      });
+    });
+
+    it('should clear volume prices when the patch sends an empty volumePrices array', (): void => {
+      const volumePriceSku = `pxm-volume-clear-${Date.now()}`;
+      const body = buildValidProductBody(volumePriceSku, abstractSku) as Record<string, unknown>;
+      (body.prices as Record<string, unknown>[])[0].volumePrices = [
+        { quantity: 10, netPrice: staticFixtures.netAmount - 100, grossPrice: staticFixtures.grossAmount - 100 },
+      ];
+
+      createProduct(accessToken, body).then((createResponse) => {
+        expect(createResponse.status, 'product with volume prices created').to.be.oneOf([200, 201]);
+
+        updateProduct(accessToken, volumePriceSku, {
+          prices: [
+            {
+              priceTypeName: staticFixtures.priceTypeName,
+              storeName: staticFixtures.storeName,
+              currencyCode: staticFixtures.currencyCode,
+              netAmount: staticFixtures.netAmount,
+              grossAmount: staticFixtures.grossAmount,
+              volumePrices: [],
+            },
+          ],
+        }).then((response) => {
+          expect(response.status).to.eq(200);
+
+          const price = response.body.data.attributes.prices.find(
+            (item: Record<string, unknown>) => item.currencyCode === staticFixtures.currencyCode
+          );
+          expect(price, 'price present').to.not.be.undefined;
+          expect(price.volumePrices, 'volume prices cleared').to.have.length(0);
+        });
+      });
+    });
+
     it('should reject changing the abstractSku on patch (immutable)', (): void => {
       updateProduct(accessToken, patchSku, { abstractSku: 'some-other-abstract-sku', isActive: true }, false).then(
         (response) => {
