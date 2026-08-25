@@ -41,3 +41,4 @@ export * from './glossary-management';
 export * from './warehouse-picking-oms';
 export * from './company-structure-creation';
 export * from './data-exchange';
+export * from './product-lifecycle-management';
