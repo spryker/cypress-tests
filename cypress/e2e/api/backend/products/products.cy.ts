@@ -28,6 +28,9 @@ const EXPECTED_ATTRIBUTE_KEYS = [
 // Well-formed uuid that matches no row — used for negative/deferred-validation cases.
 const NON_EXISTENT_UUID = '00000000-0000-4000-8000-000000000000';
 
+// productClass is referenced by its natural key, not a uuid.
+const NON_EXISTENT_PRODUCT_CLASS_KEY = 'pxm-non-existent-product-class';
+
 describe('products backend api', { tags: ['@api', '@products', 'product'] }, (): void => {
   let staticFixtures: ProductsStaticFixtures;
   let dynamicFixtures: ProductsDynamicFixtures;
@@ -121,10 +124,10 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
           staticFixtures.concreteAttributeValue
         );
 
-        // Product class is linked to the seeded product via the fixture; the API surfaces it by uuid+name.
+        // Product class is linked to the seeded product via the fixture; the API surfaces it by key+name.
         expect(attributes.productClass, 'productClass').to.be.an('array').and.to.have.length.greaterThan(0);
-        expect(attributes.productClass[0], 'productClass item').to.have.all.keys('uuid', 'name');
-        expect(attributes.productClass[0].uuid, 'productClass uuid').to.be.a('string').and.not.be.empty;
+        expect(attributes.productClass[0], 'productClass item').to.have.all.keys('key', 'name');
+        expect(attributes.productClass[0].key, 'productClass key').to.be.a('string').and.not.be.empty;
       });
     });
 
@@ -701,12 +704,15 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       });
     });
 
-    it('should reject an unknown productClass uuid with 422', (): void => {
+    it('should reject an unknown productClass key with 422', (): void => {
       const newSku = `pxm-unknown-class-${Date.now()}`;
-      const body = { ...buildValidProductBody(newSku, abstractSku), productClass: [{ uuid: NON_EXISTENT_UUID }] };
+      const body = {
+        ...buildValidProductBody(newSku, abstractSku),
+        productClass: [{ key: NON_EXISTENT_PRODUCT_CLASS_KEY }],
+      };
 
       createProduct(accessToken, body, false).then((response) => {
-        expect(response.status, 'unknown productClass uuid rejected').to.eq(422);
+        expect(response.status, 'unknown productClass key rejected').to.eq(422);
       });
     });
   });
@@ -825,17 +831,22 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       });
     });
 
-    // Existence-checked uuids (TaxSetExistsValidatorPlugin / ProductClassExistsValidatorPlugin) must be
-    // rejected on PATCH too — never silently skipped. taxSet writes through to the parent abstract.
+    // Existence-checked references (TaxSetExistsValidatorPlugin by uuid / ProductClassExistsValidatorPlugin by key)
+    // must be rejected on PATCH too — never silently skipped. taxSet writes through to the parent abstract.
     it('should reject an unknown taxSet uuid with 422', (): void => {
       updateProduct(accessToken, patchSku, { taxSet: { uuid: NON_EXISTENT_UUID } }, false).then((response) => {
         expect(response.status, 'unknown taxSet uuid rejected on patch').to.eq(422);
       });
     });
 
-    it('should reject an unknown productClass uuid with 422', (): void => {
-      updateProduct(accessToken, patchSku, { productClass: [{ uuid: NON_EXISTENT_UUID }] }, false).then((response) => {
-        expect(response.status, 'unknown productClass uuid rejected on patch').to.eq(422);
+    it('should reject an unknown productClass key with 422', (): void => {
+      updateProduct(
+        accessToken,
+        patchSku,
+        { productClass: [{ key: NON_EXISTENT_PRODUCT_CLASS_KEY }] },
+        false
+      ).then((response) => {
+        expect(response.status, 'unknown productClass key rejected on patch').to.eq(422);
       });
     });
 
