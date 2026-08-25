@@ -58,6 +58,7 @@ export * from './recurring-orders/list/recurring-order-list-page';
 export * from './recurring-orders/detail/recurring-order-detail-page';
 export * from './recurring-orders/review/recurring-order-review-page';
 export * from './company/register/company-registration-page';
+export * from './quick-order/quick-order-page';
 export * from './shopping-list/shopping-list-page';
 export * from './wishlist/wishlist-page';
 export * from './return/return-list-page';
