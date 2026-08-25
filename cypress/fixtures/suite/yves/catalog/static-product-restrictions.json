@@ -1,0 +1,9 @@
+{
+  "defaultPassword": "change123",
+  "restrictedCustomer": {
+    "email": "spencor.hopkin@acme.com"
+  },
+  "unrestrictedCustomer": {
+    "email": "george.freeman@acme.com"
+  }
+}

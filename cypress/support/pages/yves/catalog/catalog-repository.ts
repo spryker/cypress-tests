@@ -1,6 +1,10 @@
 export interface CatalogRepository {
   getSearchInput(): Cypress.Chainable;
   getFirstSuggestedProduct(): Cypress.Chainable;
+
+  // The suggestion dropdown's product entries, as a selector so a spec can assert their absence —
+  // a restricted product is simply not offered, so there is nothing to query for.
+  getSuggestedProductSelector(): string;
   getSearchButton(): Cypress.Chainable;
   getProductItemBlocks(): Cypress.Chainable;
   getFirstProductItemBlockSelector(): string;

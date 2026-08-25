@@ -23,6 +23,21 @@ export class CatalogPage extends YvesPage {
     });
   };
 
+  // Types the query and waits for the suggestion response without following it, so a spec can assert
+  // whether a product is offered at all. The results page is not usable for that: it does not list a
+  // freshly created product even when the suggestion endpoint already does.
+  searchSuggestionsFor = (params: SearchParams): void => {
+    if (this.isRepository('b2c', 'b2c-mp')) {
+      cy.get('.header__search-open').click();
+    }
+
+    this.repository.getSearchInput().clear().invoke('val', params.query);
+    cy.intercept('**/search/suggestion**').as('searchSuggestion');
+    cy.wait('@searchSuggestion');
+  };
+
+  getSuggestedProducts = (): Cypress.Chainable => cy.get(this.repository.getSuggestedProductSelector());
+
   search = (params: SearchParams): void => {
     if (this.isRepository('b2c', 'b2c-mp')) {
       cy.get('.header__search-open').click();
