@@ -27,4 +27,12 @@ export class SuiteCatalogRepository implements CatalogRepository {
       .first()
       .click();
   };
+
+  getFoundItemsCounterSelector = (): string => '[data-qa="component sort"] strong';
+  getFilterTitlesSelector = (): string => 'section[data-qa="component filter-section"] [class*="title"]';
+  getFilterValueCheckboxSelector = (filterName: string, filterValue: string): string =>
+    `input[type="checkbox"][name="${filterName}[]"][value="${filterValue}"]`;
+  getApplyFiltersButtonSelector = (): string => 'button.js-catalog__trigger.button--small';
+  getSortSelectSelector = (): string => 'select[name="sort"]';
+  getPaginationStepSelector = (): string => 'a[class*="pagination__step"]';
 }

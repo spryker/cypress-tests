@@ -100,6 +100,38 @@ export class CatalogPage extends YvesPage {
     this.repository.selectColorSwatch(params.swatchIdentifier);
   };
 
+  getFoundItemsCounter = (): Cypress.Chainable => cy.get(this.repository.getFoundItemsCounterSelector());
+
+  getFilterTitles = (): Cypress.Chainable => cy.get(this.repository.getFilterTitlesSelector());
+
+  applyFilterValue = (params: ApplyFilterValueParams): void => {
+    cy.get(this.repository.getFilterValueCheckboxSelector(params.filterName, params.filterValue)).check({
+      force: true,
+    });
+
+    this.submitCatalogChange();
+  };
+
+  sortBy = (params: SortByParams): void => {
+    cy.get(this.repository.getSortSelectSelector()).select(params.sortLabel, { force: true });
+
+    this.submitCatalogChange();
+  };
+
+  openCatalogPage = (params: OpenCatalogPageParams): void => {
+    cy.contains(this.repository.getPaginationStepSelector(), String(params.pageNumber)).first().click();
+  };
+
+  // Some themes apply a facet or sort change on the control itself, others only once the catalog
+  // trigger is pressed. Clicking it when it is there covers both without waiting on one that is not.
+  private submitCatalogChange = (): void => {
+    this.getBody().then(($body) => {
+      if ($body.find(this.repository.getApplyFiltersButtonSelector()).length) {
+        cy.get(this.repository.getApplyFiltersButtonSelector()).first().click();
+      }
+    });
+  };
+
   openFirstProductDetailPageFromResults = (): void => {
     this.repository.getProductItemBlocks().first().find(this.repository.getViewButtonSelector()).click();
   };
@@ -116,6 +148,19 @@ export class CatalogPage extends YvesPage {
       .find(this.repository.getSspAssetOptionTriggerButtonSelector())
       .click();
   };
+}
+
+interface ApplyFilterValueParams {
+  filterName: string;
+  filterValue: string;
+}
+
+interface SortByParams {
+  sortLabel: string;
+}
+
+interface OpenCatalogPageParams {
+  pageNumber: number;
 }
 
 interface SelectFirstProductItemColorParams {

@@ -12,6 +12,17 @@ export interface CatalogRepository {
   getProductItemDefaultPriceSelector(): string;
   getProductItemOriginalPriceSelector(): string;
 
+  // The "N items found" counter. This is the one catalog selector the themes genuinely disagree on.
+  getFoundItemsCounterSelector(): string;
+
+  // Facet headings, and the checkbox a facet value is applied through. The checkbox name and value
+  // come from the search request builder rather than from the theme, so they are shared.
+  getFilterTitlesSelector(): string;
+  getFilterValueCheckboxSelector(filterName: string, filterValue: string): string;
+  getApplyFiltersButtonSelector(): string;
+  getSortSelectSelector(): string;
+  getPaginationStepSelector(): string;
+
   // The quick-add button, narrowed to the interactive one: an unbuyable card still renders the
   // button, only disabled, so matching it unconditionally would report an offer that is not there.
   getEnabledAddToCartButtonSelector(): string;

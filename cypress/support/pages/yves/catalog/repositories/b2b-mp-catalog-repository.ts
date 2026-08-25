@@ -31,4 +31,12 @@ export class B2bMpCatalogRepository implements CatalogRepository {
       .first()
       .trigger('mouseover');
   };
+
+  getFoundItemsCounterSelector = (): string => '[class*="catalog-header__count"]';
+  getFilterTitlesSelector = (): string => 'filter-section [class*="filter-section__item-title"]';
+  getFilterValueCheckboxSelector = (filterName: string, filterValue: string): string =>
+    `input[type="checkbox"][name="${filterName}[]"][value="${filterValue}"]`;
+  getApplyFiltersButtonSelector = (): string => 'button.js-catalog__trigger.button--small';
+  getSortSelectSelector = (): string => 'select[name="sort"]';
+  getPaginationStepSelector = (): string => 'a[class*="pagination__step"]';
 }
