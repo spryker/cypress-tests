@@ -12,6 +12,11 @@ export class SalesDetailRepository {
   // of them is the order's shipment count.
   getOrderItemTables = (): Cypress.Chainable => cy.get('[data-qa="order-item-list"]');
 
+  // Unlike the item and refund amounts, Sales renders the order's totals money-formatted with no
+  // raw attribute. The grand total is the second bold figure of the first row in .grandTotal-row,
+  // the first being its label.
+  getGrandTotalValue = (): Cypress.Chainable => cy.get('.grandTotal-row .row').first().find('b').last();
+
   // Sales prints the billing address as the <dd> following a "Billing address" <dt>, with no
   // data-qa, so the term is what identifies it.
   getBillingAddress = (): Cypress.Chainable => cy.get('dt:contains("Billing address") + dd');

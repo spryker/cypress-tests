@@ -73,6 +73,15 @@ export class SalesDetailPage extends BackofficePage {
     return cy.contains('Total Refunded Commission').parent().parent().parent();
   };
 
+  // Returned in the same minor units the item and refund amounts publish on their raw attributes,
+  // so the three are directly comparable. The back office formats money for its own locale, which
+  // is en_US here, so the group separator is the one character dropped besides the currency symbol.
+  getGrandTotal = (): Cypress.Chainable<number> =>
+    this.repository
+      .getGrandTotalValue()
+      .invoke('text')
+      .then((text: string) => Math.round(Number(text.replace(/[^0-9.]/g, '')) * 100));
+
   getOrderItemTables = (): Cypress.Chainable => this.repository.getOrderItemTables();
 
   getShipmentDeliveryAddresses = (): Cypress.Chainable => this.repository.getShipmentDeliveryAddresses();

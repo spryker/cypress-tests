@@ -47,3 +47,16 @@ export interface OmsReservationFlowDynamicFixtures {
 export interface OmsReservationFlowStaticFixtures {
   defaultPassword: string;
 }
+
+export interface OrderRefundDynamicFixtures {
+  rootUser: User;
+  customer: Customer;
+  address: Address;
+  firstRefundedProduct: Product;
+  secondRefundedProduct: Product;
+  thirdRefundedProduct: Product;
+}
+
+export interface OrderRefundStaticFixtures {
+  defaultPassword: string;
+}
