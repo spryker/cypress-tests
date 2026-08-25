@@ -107,8 +107,8 @@ export class NavigationTreePage extends BackofficePage {
   updateNodeToCategoryType = (categoryUrlEn: string, categoryUrlDe: string): void => {
     this.selectNodeType('category');
     this.fillLocalizedTitles('foo');
-    this.getNodeFormBody().find(this.repository.getLocalizedCategoryUrlSelector('en_US')).clear().type(categoryUrlEn);
-    this.getNodeFormBody().find(this.repository.getLocalizedCategoryUrlSelector('de_DE')).clear().type(categoryUrlDe);
+    this.typeLocalizedUrl(this.repository.getLocalizedCategoryUrlSelector.bind(this.repository), 'en_US', categoryUrlEn);
+    this.typeLocalizedUrl(this.repository.getLocalizedCategoryUrlSelector.bind(this.repository), 'de_DE', categoryUrlDe);
     this.submitNodeForm();
     this.getNodeFormBody().invoke('text').should('match', this.repository.getNodeUpdateSuccessPattern());
   };
@@ -121,8 +121,8 @@ export class NavigationTreePage extends BackofficePage {
   createChildNodeWithCmsPageType = (title: string, cmsPageUrlEn: string, cmsPageUrlDe: string): void => {
     this.selectNodeType('cms_page');
     this.fillLocalizedTitles(title);
-    this.getNodeFormBody().find(this.repository.getLocalizedCmsPageUrlSelector('en_US')).clear().type(cmsPageUrlEn);
-    this.getNodeFormBody().find(this.repository.getLocalizedCmsPageUrlSelector('de_DE')).clear().type(cmsPageUrlDe);
+    this.typeLocalizedUrl(this.repository.getLocalizedCmsPageUrlSelector.bind(this.repository), 'en_US', cmsPageUrlEn);
+    this.typeLocalizedUrl(this.repository.getLocalizedCmsPageUrlSelector.bind(this.repository), 'de_DE', cmsPageUrlDe);
     this.checkNodeIsActive();
     this.submitNodeForm();
     this.assertNodeCreateSuccess();
@@ -234,6 +234,12 @@ export class NavigationTreePage extends BackofficePage {
   private fillLocalizedField(selectorFor: (index: number) => string, value: string): void {
     this.getNodeFormBody().find(selectorFor(0)).clear({ force: true }).type(value);
     this.getNodeFormBody().find(selectorFor(1)).clear({ force: true }).type(value);
+  }
+  
+  private typeLocalizedUrl(selectorFor: (localeName: string) => string, localeName: string, value: string): void {
+    const selector = selectorFor(localeName);
+    this.getNodeFormBody().find(selector).clear({ force: true }).type(value, { force: true });
+    this.getNodeFormBody().find(selector).should('have.value', value);
   }
 
   private checkNodeIsActive(): void {
