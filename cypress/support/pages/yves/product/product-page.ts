@@ -160,6 +160,8 @@ export class ProductPage extends YvesPage {
     return this.repository.getSelectedVariantAttributeInput(attributeKey).invoke('val');
   };
 
+  getProductLabels = (): Cypress.Chainable => this.repository.getProductLabels();
+
   getRelatedProductsCarousel = (): Cypress.Chainable => this.repository.getRelatedProductsCarousel();
 
   getRelatedProductsSection = (): Cypress.Chainable => cy.get(this.repository.getRelatedProductsSectionSelector());

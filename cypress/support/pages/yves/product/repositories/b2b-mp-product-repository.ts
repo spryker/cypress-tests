@@ -54,4 +54,5 @@ export class B2bMpProductRepository implements ProductRepository {
   getRelatedProductsSectionSelector = (): string => '[class*="title--product-slider"]:contains("Similar products")';
   getRelatedProductsCarousel = (): Cypress.Chainable =>
     cy.get(this.getRelatedProductsSectionSelector()).first().parent().find('slick-carousel');
+  getProductLabels = (): Cypress.Chainable => cy.get('#main-content [data-qa="component label-group"]');
 }
