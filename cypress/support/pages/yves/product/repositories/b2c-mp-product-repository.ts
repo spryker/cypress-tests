@@ -49,4 +49,7 @@ export class B2cMpProductRepository implements ProductRepository {
     cy.get(this.getRelatedProductsSectionSelector()).first().parent().find('slick-carousel');
   getProductLabels = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-carousel"] [data-qa="component label-group"]');
+  getProductConfigurationStatus = (): Cypress.Chainable =>
+    cy.get('[data-qa="component product-configurator"] [data-qa="component status"]');
+  getConfigureButton = (): Cypress.Chainable => cy.get('[data-qa="component configuration-form"] button');
 }

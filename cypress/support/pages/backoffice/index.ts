@@ -19,6 +19,7 @@ export * from './cms/cms-placeholder/edit/cms-placeholder-edit-page';
 export * from './sales/detail/sales-detail-page';
 export * from './sales/index/sales-index-page';
 export * from './sales-return/create/sales-return-create-page';
+export * from './sales-shipment/form/sales-shipment-form-page';
 export * from './user/create/user-create-page';
 export * from './user/delete/user-delete-page';
 export * from './user/index/user-index-page';

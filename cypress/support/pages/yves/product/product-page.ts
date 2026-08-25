@@ -87,6 +87,14 @@ export class ProductPage extends YvesPage {
     return this.repository.getInputRadioSelector();
   };
 
+  getProductConfigurationStatus = (): Cypress.Chainable => {
+    return this.repository.getProductConfigurationStatus();
+  };
+
+  configure = (): void => {
+    this.repository.getConfigureButton().click();
+  };
+
   getProductConfigurator = (): Cypress.Chainable => {
     return this.repository.getProductConfigurator();
   };

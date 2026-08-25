@@ -12,6 +12,20 @@ export class SalesDetailRepository {
   // of them is the order's shipment count.
   getOrderItemTables = (): Cypress.Chainable => cy.get('[data-qa="order-item-list"]');
 
+  // Unlike the item and refund amounts, Sales renders the order's totals money-formatted with no
+  // raw attribute. The grand total is the second bold figure of the first row in .grandTotal-row,
+  // the first being its label.
+  getGrandTotalValue = (): Cypress.Chainable => cy.get('.grandTotal-row .row').first().find('b').last();
+
+  // ShipmentGui hangs the create link off the Order Items box and one edit link off each shipment,
+  // both routed to its own controller, so the href is what identifies them.
+  getCreateShipmentLink = (): Cypress.Chainable => cy.get('a[href*="/shipment-gui/create"]');
+  getEditShipmentLinks = (): Cypress.Chainable => cy.get('a[href*="/shipment-gui/edit"]');
+
+  // ShipmentGui prints a shipment's method as a plain <p> led by a bold "Shipping Method:" label,
+  // the carrier separately under "Delivery Method:", neither with a data-qa of its own.
+  getShipmentShippingMethods = (): Cypress.Chainable => cy.get('p:has(b:contains("Shipping Method"))');
+
   // Sales prints the billing address as the <dd> following a "Billing address" <dt>, with no
   // data-qa, so the term is what identifies it.
   getBillingAddress = (): Cypress.Chainable => cy.get('dt:contains("Billing address") + dd');
@@ -24,6 +38,17 @@ export class SalesDetailRepository {
   // which renders them in .comment-wrapper. Not to be confused with Sales' own .order-details-chat:
   // that box reads spy_sales_order_comment, a separate system a storefront comment never lands in.
   getOrderComments = (): Cypress.Chainable => cy.get('.comment-wrapper');
+
+  // The non-marketplace shops render each item's manual events in a .oms-trigger-form, the
+  // marketplace ones in a named event_item_trigger_form, so a row's event button is looked up
+  // under both. Triggering per item is what leaves the order's other items where they were.
+  getOrderItemOmsButtonSelector = (sku: string, state: string): string =>
+    ['form.oms-trigger-form', 'form[name="event_item_trigger_form"]']
+      .map(
+        (form) =>
+          `[data-qa="order-item-list"] tbody tr:has(div.sku:contains("${sku}")) ${form} button:contains("${state}")`
+      )
+      .join(', ');
 
   // The state cell renders the current state as a link to the state-machine drawing and the
   // superseded states as plain divs below it, so the link text is the state the item is in now.

@@ -28,4 +28,10 @@ export class B2bMpOrderDetailsRepository implements OrderDetailsRepository {
   getOrderDetailTableBlock(): Cypress.Chainable {
     return cy.get('[data-qa="component order-detail-table"]');
   }
+  getCancelOrderButton(): Cypress.Chainable {
+    return cy.get('form[action*="order/cancel"] button');
+  }
+  getCreateReturnLink(): Cypress.Chainable {
+    return cy.get('[data-qa="component return-create-link"]');
+  }
 }

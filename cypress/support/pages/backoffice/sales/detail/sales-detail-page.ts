@@ -44,6 +44,23 @@ export class SalesDetailPage extends BackofficePage {
     });
   };
 
+  triggerOmsForOrderItem = (params: TriggerOmsForOrderItemParams): void => {
+    const buttonSelector = this.repository.getOrderItemOmsButtonSelector(params.sku, params.state);
+
+    cy.url().then((url) => {
+      cy.reloadUntilFound(
+        this.buildBackofficeUrl(url),
+        buttonSelector,
+        'body',
+        OMS_RELOAD_ATTEMPTS,
+        OMS_RELOAD_INTERVAL_MS,
+        OMS_CONSOLE_COMMANDS
+      );
+
+      cy.get(buttonSelector).click();
+    });
+  };
+
   create = (): void => {
     this.repository.getReturnButton().click();
   };
@@ -55,6 +72,33 @@ export class SalesDetailPage extends BackofficePage {
   getTotalRefundedCommissionBlock = (): Cypress.Chainable<JQuery<HTMLElement>> => {
     return cy.contains('Total Refunded Commission').parent().parent().parent();
   };
+
+  // Returned in the same minor units the item and refund amounts publish on their raw attributes,
+  // so the three are directly comparable. The back office formats money for its own locale, which
+  // is en_US here, so the group separator is the one character dropped besides the currency symbol.
+  getGrandTotal = (): Cypress.Chainable<number> =>
+    this.repository
+      .getGrandTotalValue()
+      .invoke('text')
+      .then((text: string) => Math.round(Number(text.replace(/[^0-9.]/g, '')) * 100));
+
+  createShipment = (): void => {
+    this.repository.getCreateShipmentLink().first().click();
+  };
+
+  editShipment = (shipmentNumber: number): void => {
+    this.repository
+      .getEditShipmentLinks()
+      .eq(shipmentNumber - 1)
+      .click();
+  };
+
+  getShipmentShippingMethods = (): Cypress.Chainable => this.repository.getShipmentShippingMethods();
+
+  // One shipment's own item table. ShipmentGui renders them in the order the shipments are numbered
+  // on the page, so the nth table is the nth shipment.
+  getShipmentItemTable = (shipmentNumber: number): Cypress.Chainable =>
+    this.repository.getOrderItemTables().eq(shipmentNumber - 1);
 
   getOrderItemTables = (): Cypress.Chainable => this.repository.getOrderItemTables();
 
@@ -93,6 +137,11 @@ export class SalesDetailPage extends BackofficePage {
 interface TriggerOmsParams {
   state: string;
   shouldTriggerOmsInCli?: boolean;
+}
+
+interface TriggerOmsForOrderItemParams {
+  sku: string;
+  state: string;
 }
 
 interface WaitForOrderItemStateParams {
