@@ -34,3 +34,4 @@ export * from './shopping-list';
 export * from './quick-order';
 export * from './business-on-behalf';
 export * from './order-cancellation';
+export * from './return-management';

@@ -47,4 +47,8 @@ export class OrderDetailsPage extends YvesPage {
   cancelOrder = (): void => {
     this.repository.getCancelOrderButton().click();
   };
+
+  createReturn = (): void => {
+    this.repository.getCreateReturnLink().first().click();
+  };
 }

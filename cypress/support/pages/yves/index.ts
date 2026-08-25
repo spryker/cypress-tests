@@ -64,6 +64,8 @@ export * from './quick-order/quick-order-page';
 export * from './shopping-list/shopping-list-page';
 export * from './wishlist/wishlist-page';
 export * from './return/return-list-page';
+export * from './return/return-create-page';
+export * from './return/return-view-page';
 export * from './agent-control-bar/agent-control-bar-page';
 export * from './company/business-unit/create/company-business-unit-create-page';
 export * from './company/user/create/company-user-create-page';
