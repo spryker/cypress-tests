@@ -44,6 +44,23 @@ export class SalesDetailPage extends BackofficePage {
     });
   };
 
+  triggerOmsForOrderItem = (params: TriggerOmsForOrderItemParams): void => {
+    const buttonSelector = this.repository.getOrderItemOmsButtonSelector(params.sku, params.state);
+
+    cy.url().then((url) => {
+      cy.reloadUntilFound(
+        this.buildBackofficeUrl(url),
+        buttonSelector,
+        'body',
+        OMS_RELOAD_ATTEMPTS,
+        OMS_RELOAD_INTERVAL_MS,
+        OMS_CONSOLE_COMMANDS
+      );
+
+      cy.get(buttonSelector).click();
+    });
+  };
+
   create = (): void => {
     this.repository.getReturnButton().click();
   };
@@ -93,6 +110,11 @@ export class SalesDetailPage extends BackofficePage {
 interface TriggerOmsParams {
   state: string;
   shouldTriggerOmsInCli?: boolean;
+}
+
+interface TriggerOmsForOrderItemParams {
+  sku: string;
+  state: string;
 }
 
 interface WaitForOrderItemStateParams {
