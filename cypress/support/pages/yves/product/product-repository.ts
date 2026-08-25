@@ -68,4 +68,7 @@ export interface ProductRepository {
   // for the min / max / interval rules that amount has to satisfy.
   setAmount(amount: number): void;
   getPackagingUnitChoice(): Cypress.Chainable;
+
+  // What a bundle product lists on its detail page. The data-qa is the same in every theme.
+  getBundleItems(): Cypress.Chainable;
 }

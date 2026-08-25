@@ -114,4 +114,6 @@ export class B2bMpProductRepository implements ProductRepository {
 
   getPackagingUnitChoice = (): Cypress.Chainable =>
     cy.get('.js-packaging-unit-quantity-selector__packaging-unit-choice');
+
+  getBundleItems = (): Cypress.Chainable => cy.get('[data-qa*="component bundle-items"]');
 }

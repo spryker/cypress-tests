@@ -197,6 +197,8 @@ export class ProductPage extends YvesPage {
   };
 
   getPackagingUnitChoice = (): Cypress.Chainable => this.repository.getPackagingUnitChoice();
+
+  getBundleItems = (): Cypress.Chainable => this.repository.getBundleItems();
 }
 
 interface SelectSoldByProductOfferParams {
