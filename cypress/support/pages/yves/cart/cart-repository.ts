@@ -16,6 +16,7 @@ export interface CartRepository {
   getCartItemChangeQuantityField(sku: string): Cypress.Chainable;
   getCartItemChangeQuantitySubmit(sku: string): Cypress.Chainable;
   findClearCartForm(): Cypress.Chainable;
+  getClearCartFormSelector(): string;
   getCheckoutButton(): Cypress.Chainable;
   getCartSummary(): Cypress.Chainable;
   getCartDiscountSummary(): Cypress.Chainable;

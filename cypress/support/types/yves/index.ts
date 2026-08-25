@@ -21,6 +21,7 @@ export * from './product-detail-visibility';
 export * from './customer-specific-prices';
 export * from './original-price';
 export * from './discontinued-alternative-products';
+export * from './quick-add-to-cart';
 export * from './locale';
 export * from './catalog';
 export * from './ssp-inquiry';

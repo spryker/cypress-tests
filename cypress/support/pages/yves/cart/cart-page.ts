@@ -85,6 +85,16 @@ export class CartPage extends YvesPage {
     this.repository.submitCartItemChangeQuantity(params.sku);
   };
 
+  // cy.get() on the clear form fails outright on an empty cart, so a spec that only needs a known
+  // starting point has to look before it clears.
+  clearCartIfNotEmpty = (): void => {
+    this.getBody().then(($body) => {
+      if ($body.find(this.repository.getClearCartFormSelector()).length) {
+        this.clearCart();
+      }
+    });
+  };
+
   clearCart = (): void => {
     const form = this.repository.findClearCartForm();
 

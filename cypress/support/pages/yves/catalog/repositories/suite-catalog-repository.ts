@@ -20,4 +20,11 @@ export class SuiteCatalogRepository implements CatalogRepository {
 
   getProductItemDefaultPriceSelector = (): string => 'span[class*="default-price"]';
   getProductItemOriginalPriceSelector = (): string => 'span[class*="original-price"]';
+
+  getEnabledAddToCartButtonSelector = (): string => 'ajax-add-to-cart button:not([disabled])';
+  selectColorSwatch = (swatchIdentifier: string): void => {
+    cy.get(`[data-qa="component product-item"] product-item-color-selector button[style*="${swatchIdentifier}"]`)
+      .first()
+      .click();
+  };
 }

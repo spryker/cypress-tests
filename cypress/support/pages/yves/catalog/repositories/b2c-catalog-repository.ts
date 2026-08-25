@@ -20,4 +20,14 @@ export class B2cCatalogRepository implements CatalogRepository {
 
   getProductItemDefaultPriceSelector = (): string => 'span[class*="default-price"]';
   getProductItemOriginalPriceSelector = (): string => 'span[class*="original-price"]';
+
+  getEnabledAddToCartButtonSelector = (): string => 'ajax-add-to-cart button:not([disabled])';
+  selectColorSwatch = (swatchIdentifier: string): void => {
+    cy.get('[data-qa="component product-item"] product-item-color-selector')
+      .first()
+      .contains('[class*="tooltip"]', swatchIdentifier)
+      .parents('button')
+      .first()
+      .trigger('mouseover');
+  };
 }

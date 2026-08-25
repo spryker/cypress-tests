@@ -76,6 +76,30 @@ export class CatalogPage extends YvesPage {
   getFirstProductItemOriginalPrice = (): Cypress.Chainable =>
     this.repository.getProductItemBlocks().first().find(this.repository.getProductItemOriginalPriceSelector());
 
+  getFirstProductItemEnabledAddToCartButton = (): Cypress.Chainable =>
+    this.repository.getProductItemBlocks().first().find(this.repository.getEnabledAddToCartButtonSelector());
+
+  // The quick-add button has no form behind it. It does nothing until its webcomponent attaches the
+  // click handler in init(), and a click that lands before that is swallowed — no request, no error,
+  // no cart change. isMounted is what the component sets once the handler is on, and waiting for the
+  // add-ajax response is what proves the click was not lost.
+  quickAddFirstProductItemToCart = (): void => {
+    cy.intercept('**/cart/add-ajax/**').as('quickAddToCart');
+
+    this.getFirstProductItemEnabledAddToCartButton()
+      .closest('ajax-add-to-cart')
+      .should(($component) => {
+        expect($component[0]).to.have.property('isMounted', true);
+      });
+
+    this.getFirstProductItemEnabledAddToCartButton().click();
+    cy.wait('@quickAddToCart').its('response.statusCode').should('eq', 200);
+  };
+
+  selectFirstProductItemColor = (params: SelectFirstProductItemColorParams): void => {
+    this.repository.selectColorSwatch(params.swatchIdentifier);
+  };
+
   openFirstProductDetailPageFromResults = (): void => {
     this.repository.getProductItemBlocks().first().find(this.repository.getViewButtonSelector()).click();
   };
@@ -92,6 +116,10 @@ export class CatalogPage extends YvesPage {
       .find(this.repository.getSspAssetOptionTriggerButtonSelector())
       .click();
   };
+}
+
+interface SelectFirstProductItemColorParams {
+  swatchIdentifier: string;
 }
 
 interface OpenProductDetailPageFromResultsParams {

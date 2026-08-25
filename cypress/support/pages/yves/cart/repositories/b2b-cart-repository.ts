@@ -115,4 +115,5 @@ export class B2bCartRepository implements CartRepository {
   submitConfiguredBundleQuantity = (bundleName: string): void => {
     this.getConfiguredBundle(bundleName).find('[data-qa="quantity-input-submit"]').first().click({ timeout: 10000 });
   };
+  getClearCartFormSelector = (): string => 'form[name=multi_cart_clear_form]';
 }
