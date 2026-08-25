@@ -118,6 +118,7 @@ export class NavigationTreePage extends BackofficePage {
       categoryUrlDe
     );
     this.submitNodeForm();
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Post-submit success guard; the spec asserts the outcome separately.
     this.getNodeFormBody().invoke('text').should('match', this.repository.getNodeUpdateSuccessPattern());
   };
 
@@ -247,6 +248,10 @@ export class NavigationTreePage extends BackofficePage {
   private typeLocalizedUrl(selectorFor: (localeName: string) => string, localeName: string, value: string): void {
     const selector = selectorFor(localeName);
     this.getNodeFormBody().find(selector).clear({ force: true }).type(value, { force: true });
+    // Guard that the URL landed in THIS locale's field: the node form issues a delayed second render
+    // after the node-type widgets init and can drop the typed value into the wrong locale. This .should()
+    // is a synchronization guard in a method that also acts (it types above), so Cypress retries the
+    // fresh-body lookup + type until the value is present in the target locale's field.
     this.getNodeFormBody().find(selector).should('have.value', value);
   }
 
