@@ -26,6 +26,7 @@ export * from './customer/order/order-page';
 export * from './customer/order/order-details-page';
 export * from './product-comparison/product-comparison-page';
 export * from './product-set/product-sets-page';
+export * from './configurable-bundle/bundle-configurator-page';
 export * from './content/cms-content-page';
 export * from './company/user/manage/manage-company-role-user-page';
 export * from './ssp-inquiry/ssp-inquiry-list-page';

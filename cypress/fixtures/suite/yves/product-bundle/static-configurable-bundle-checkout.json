@@ -1,0 +1,24 @@
+{
+  "defaultPassword": "change123",
+  "templateName": "Smartstation Kit",
+  "firstConfiguration": [
+    {
+      "slotName": "Slot 5",
+      "productIdentifier": "130_24725761"
+    },
+    {
+      "slotName": "Slot 6",
+      "productIdentifier": "042_31040075"
+    }
+  ],
+  "secondConfiguration": [
+    {
+      "slotName": "Slot 5",
+      "productIdentifier": "121_29406823"
+    },
+    {
+      "slotName": "Slot 6",
+      "productIdentifier": "043_31040074"
+    }
+  ]
+}

@@ -9,6 +9,7 @@ export * from './customer-account-management';
 export * from './company-account';
 export * from './cms';
 export * from './product-comparison';
+export * from './configurable-bundle-checkout';
 export * from './product-labels';
 export * from './product-sets';
 export * from './product-relations';
