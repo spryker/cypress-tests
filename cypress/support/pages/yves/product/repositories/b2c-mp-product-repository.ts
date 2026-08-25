@@ -73,6 +73,17 @@ export class B2cMpProductRepository implements ProductRepository {
         return;
       }
 
+      // On a measurement-unit product the quantity is counted in sales units, and the field beside
+      // it holds the resulting amount in base units — writing the amount instead would not convert.
+      if ($body.find('.js-packaging-unit-quantity-selector__formatted-sales-unit-quantity input').length) {
+        cy.get('.js-packaging-unit-quantity-selector__formatted-sales-unit-quantity input').first().clear();
+        cy.get('.js-packaging-unit-quantity-selector__formatted-sales-unit-quantity input')
+          .first()
+          .type(String(quantity));
+
+        return;
+      }
+
       if ($body.find('select[name="quantity"]').length) {
         cy.get('select[name="quantity"]').first().select(String(quantity));
 
@@ -83,4 +94,11 @@ export class B2cMpProductRepository implements ProductRepository {
       cy.get('formatted-number-input input').first().type(String(quantity));
     });
   };
+
+  selectSalesUnit = (salesUnitName: string): void => {
+    cy.get('select[name="id-product-measurement-sales-unit"]').select(salesUnitName);
+  };
+
+  getMeasurementUnitChoice = (): Cypress.Chainable =>
+    cy.get('.js-packaging-unit-quantity-selector__measurement-unit-choice');
 }

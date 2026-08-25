@@ -185,6 +185,12 @@ export class ProductPage extends YvesPage {
   setQuantity = (params: SetQuantityParams): void => {
     this.repository.setQuantity(params.quantity);
   };
+
+  selectSalesUnit = (params: SelectSalesUnitParams): void => {
+    this.repository.selectSalesUnit(params.salesUnitName);
+  };
+
+  getMeasurementUnitChoice = (): Cypress.Chainable => this.repository.getMeasurementUnitChoice();
 }
 
 interface SelectSoldByProductOfferParams {
@@ -205,6 +211,10 @@ interface GetProductOfferRadioParams {
 
 interface VisitProductDetailPageParams {
   url: string;
+}
+
+interface SelectSalesUnitParams {
+  salesUnitName: string;
 }
 
 interface SetQuantityParams {

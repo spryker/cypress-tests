@@ -58,4 +58,9 @@ export interface ProductRepository {
   // others, and the volume-price component only recalculates on a real change event — so setting the
   // quantity is an interaction, not a selector.
   setQuantity(quantity: number): void;
+
+  // The measurement-unit widget's own controls: which sales unit the quantity is counted in, and the
+  // block it reveals when the quantity does not land on a whole base unit.
+  selectSalesUnit(salesUnitName: string): void;
+  getMeasurementUnitChoice(): Cypress.Chainable;
 }
