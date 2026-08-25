@@ -53,4 +53,9 @@ export interface ProductRepository {
   // Rendered next to its own heading, not in the related-products slot — both are the same carousel
   // component in some themes, so the heading is what tells them apart.
   getAlternativeProductsSlider(): Cypress.Chainable;
+
+  // The quantity control renders as a select for some products and as a formatted-number-input for
+  // others, and the volume-price component only recalculates on a real change event — so setting the
+  // quantity is an interaction, not a selector.
+  setQuantity(quantity: number): void;
 }

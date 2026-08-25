@@ -63,4 +63,26 @@ export class SuiteProductRepository implements ProductRepository {
 
   getAlternativeProductsSlider = (): Cypress.Chainable =>
     cy.contains('h2', 'Alternative products').next('simple-carousel');
+
+  setQuantity = (quantity: number): void => {
+    cy.get('body').then(($body) => {
+      // The volume-price component binds its own quantity control. A logged-in detail page also
+      // renders a quantity select for the shopping-list widget, so matching on the name alone finds
+      // two and cy.select() refuses the pair.
+      if ($body.find('select.js-volume-price__quantity').length) {
+        cy.get('select.js-volume-price__quantity').first().select(String(quantity));
+
+        return;
+      }
+
+      if ($body.find('select[name="quantity"]').length) {
+        cy.get('select[name="quantity"]').first().select(String(quantity));
+
+        return;
+      }
+
+      cy.get('formatted-number-input input').first().clear();
+      cy.get('formatted-number-input input').first().type(String(quantity));
+    });
+  };
 }
