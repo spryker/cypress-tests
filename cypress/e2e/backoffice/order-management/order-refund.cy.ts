@@ -1,6 +1,7 @@
 import { container } from '@utils';
 import { OrderRefundDynamicFixtures, OrderRefundStaticFixtures } from '@interfaces/backoffice';
 import { RefundPage, SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
+import { CustomerOverviewPage, OrderDetailsPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
@@ -33,6 +34,8 @@ describe(
       return;
     }
 
+    const customerOverviewPage = container.get(CustomerOverviewPage);
+    const orderDetailsPage = container.get(OrderDetailsPage);
     const salesIndexPage = container.get(SalesIndexPage);
     const salesDetailPage = container.get(SalesDetailPage);
     const refundPage = container.get(RefundPage);
@@ -97,13 +100,16 @@ describe(
         shouldTriggerOmsInCli: true,
       });
 
-      userLoginScenario.execute({
-        username: dynamicFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
+      customerOverviewPage.viewLastPlacedOrder();
+      orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
+        userLoginScenario.execute({
+          username: dynamicFixtures.rootUser.username,
+          password: staticFixtures.defaultPassword,
+        });
 
-      salesIndexPage.visit();
-      salesIndexPage.view();
+        salesIndexPage.visit();
+        salesIndexPage.viewByReference(orderReference.trim());
+      });
     }
 
     // `refund` is reachable from `delivered` only, so the order has to walk the whole happy path
