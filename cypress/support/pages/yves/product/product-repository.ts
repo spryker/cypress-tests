@@ -71,4 +71,12 @@ export interface ProductRepository {
 
   // What a bundle product lists on its detail page. The data-qa is the same in every theme.
   getBundleItems(): Cypress.Chainable;
+
+  // Availability state and the back-in-stock notification form. The form ids come from the Symfony
+  // form types, so they are the same wherever the widget is rendered.
+  getAvailabilityStatus(): Cypress.Chainable;
+  getAvailabilityNotificationEmailField(): Cypress.Chainable;
+  getAvailabilityNotificationSubscribeForm(): Cypress.Chainable;
+  getAvailabilityNotificationUnsubscribeForm(): Cypress.Chainable;
+  getFlashMessages(): Cypress.Chainable;
 }

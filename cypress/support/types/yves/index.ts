@@ -27,6 +27,7 @@ export * from './measurement-unit-checkout';
 export * from './packaging-unit-checkout';
 export * from './product-bundle-checkout';
 export * from './catalog-browsing';
+export * from './back-in-stock-notification';
 export * from './locale';
 export * from './catalog';
 export * from './ssp-inquiry';

@@ -111,4 +111,13 @@ export class B2cProductRepository implements ProductRepository {
     cy.get('.js-packaging-unit-quantity-selector__packaging-unit-choice');
 
   getBundleItems = (): Cypress.Chainable => cy.get('[data-qa*="component bundle-items"]');
+
+  getAvailabilityStatus = (): Cypress.Chainable =>
+    cy.get('[data-qa="component product-availability-widget"] [data-qa="component status"]');
+  getAvailabilityNotificationEmailField = (): Cypress.Chainable =>
+    cy.get('#availabilityNotificationSubscriptionForm_email');
+  getAvailabilityNotificationSubscribeForm = (): Cypress.Chainable =>
+    cy.get('form#availability_notification_subscription');
+  getAvailabilityNotificationUnsubscribeForm = (): Cypress.Chainable => cy.get('form#availability_unsubscribe');
+  getFlashMessages = (): Cypress.Chainable => cy.get('[data-qa="component notification-area"] flash-message');
 }

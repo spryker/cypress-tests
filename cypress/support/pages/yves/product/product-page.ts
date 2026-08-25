@@ -199,6 +199,26 @@ export class ProductPage extends YvesPage {
   getPackagingUnitChoice = (): Cypress.Chainable => this.repository.getPackagingUnitChoice();
 
   getBundleItems = (): Cypress.Chainable => this.repository.getBundleItems();
+
+  getAvailabilityStatus = (): Cypress.Chainable => this.repository.getAvailabilityStatus();
+
+  getAvailabilityNotificationEmailField = (): Cypress.Chainable =>
+    this.repository.getAvailabilityNotificationEmailField();
+
+  getAvailabilityNotificationUnsubscribeForm = (): Cypress.Chainable =>
+    this.repository.getAvailabilityNotificationUnsubscribeForm();
+
+  getFlashMessages = (): Cypress.Chainable => this.repository.getFlashMessages();
+
+  subscribeToAvailabilityNotification = (params: SubscribeToAvailabilityNotificationParams): void => {
+    this.repository.getAvailabilityNotificationEmailField().clear();
+    this.repository.getAvailabilityNotificationEmailField().type(params.email);
+    this.repository.getAvailabilityNotificationSubscribeForm().submit();
+  };
+
+  unsubscribeFromAvailabilityNotification = (): void => {
+    this.repository.getAvailabilityNotificationUnsubscribeForm().submit();
+  };
 }
 
 interface SelectSoldByProductOfferParams {
@@ -219,6 +239,10 @@ interface GetProductOfferRadioParams {
 
 interface VisitProductDetailPageParams {
   url: string;
+}
+
+interface SubscribeToAvailabilityNotificationParams {
+  email: string;
 }
 
 interface SetAmountParams {
