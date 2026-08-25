@@ -49,4 +49,8 @@ export interface ProductRepository {
   // Rendered only when an ORIGINAL price above the default exists, which is what makes it the
   // assertion for a strike-through price rather than a second copy of the default one.
   getProductDetailOriginalPrice(): Cypress.Chainable;
+
+  // Rendered next to its own heading, not in the related-products slot — both are the same carousel
+  // component in some themes, so the heading is what tells them apart.
+  getAlternativeProductsSlider(): Cypress.Chainable;
 }

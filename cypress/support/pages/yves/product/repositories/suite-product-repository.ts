@@ -60,4 +60,7 @@ export class SuiteProductRepository implements ProductRepository {
 
   getProductDetailOriginalPrice = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-configurator"] volume-price span[class*="volume-price"][class*="original"]');
+
+  getAlternativeProductsSlider = (): Cypress.Chainable =>
+    cy.contains('h2', 'Alternative products').next('simple-carousel');
 }

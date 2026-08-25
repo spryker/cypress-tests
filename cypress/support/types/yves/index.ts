@@ -20,6 +20,7 @@ export * from './product-attribute-visibility';
 export * from './product-detail-visibility';
 export * from './customer-specific-prices';
 export * from './original-price';
+export * from './discontinued-alternative-products';
 export * from './locale';
 export * from './catalog';
 export * from './ssp-inquiry';

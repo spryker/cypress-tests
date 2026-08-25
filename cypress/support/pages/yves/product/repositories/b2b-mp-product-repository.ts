@@ -64,4 +64,6 @@ export class B2bMpProductRepository implements ProductRepository {
 
   getProductDetailOriginalPrice = (): Cypress.Chainable =>
     cy.get('volume-price span[class*="volume-price"][class*="original"]:visible').first();
+
+  getAlternativeProductsSlider = (): Cypress.Chainable => cy.get('[data-qa="component product-alternative-slider"]');
 }

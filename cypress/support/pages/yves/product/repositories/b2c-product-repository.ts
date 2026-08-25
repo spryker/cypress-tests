@@ -58,4 +58,7 @@ export class B2cProductRepository implements ProductRepository {
 
   getProductDetailOriginalPrice = (): Cypress.Chainable =>
     cy.get('volume-price span[class*="volume-price"][class*="original"]:visible').first();
+
+  getAlternativeProductsSlider = (): Cypress.Chainable =>
+    cy.get('[class*="product-slider"]:contains("Alternative products")').first().parent().find('slick-carousel');
 }
