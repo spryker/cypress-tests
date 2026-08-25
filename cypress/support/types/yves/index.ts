@@ -26,3 +26,4 @@ export * from './agent-assist';
 export * from './company-structure';
 export * from './discount';
 export * from './wishlist';
+export * from './shopping-list';
