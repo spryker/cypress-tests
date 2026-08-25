@@ -9,6 +9,7 @@ export class B2cMpCatalogRepository implements CatalogRepository {
   getSearchButton = (): Cypress.Chainable => cy.get('[data-qa="component search-form"] [type="submit"]:visible');
   getProductItemBlocks = (): Cypress.Chainable => cy.get('[data-qa="component product-item"]');
   getFirstProductItemBlockSelector = (): string => '[data-qa="component product-item"]:first';
+  getProductItemBlockSelector = (): string => '[data-qa="component product-item"]';
   getViewButtonSelector = (): string => 'a:first';
   getItemBlockSearchQuery = (query: string): string => `span:contains("${query}")`;
   getSspAssetSelectorBlock = (): Cypress.Chainable => cy.get('[data-qa="component asset-selector"]');

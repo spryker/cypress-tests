@@ -58,11 +58,12 @@ export class CatalogPage extends YvesPage {
   // The suggestion dropdown ranks by completion rather than by exact sku, so a sku query can put a
   // different product first. Opening the detail page from the result blocks keeps it exact.
   openProductDetailPageFromResults = (params: OpenProductDetailPageFromResultsParams): void => {
-    this.repository
-      .getProductItemBlocks()
-      .filter(`:contains("${params.productName}")`)
+    // Resolved in one query. Chaining find() off a block reference breaks with a detached subject
+    // when the results page is still settling, which it is right after a reload-until-found loop.
+    cy.get(
+      `${this.repository.getProductItemBlockSelector()}:contains("${params.productName}") ${this.repository.getViewButtonSelector()}`
+    )
       .first()
-      .find(this.repository.getViewButtonSelector())
       .click();
   };
 
@@ -133,7 +134,9 @@ export class CatalogPage extends YvesPage {
   };
 
   openFirstProductDetailPageFromResults = (): void => {
-    this.repository.getProductItemBlocks().first().find(this.repository.getViewButtonSelector()).click();
+    cy.get(`${this.repository.getFirstProductItemBlockSelector()} ${this.repository.getViewButtonSelector()}`)
+      .first()
+      .click();
   };
 
   getSspAssetSelectorBlock = (): Cypress.Chainable => this.repository.getSspAssetSelectorBlock();
