@@ -17,6 +17,15 @@ export class SalesDetailRepository {
   // the first being its label.
   getGrandTotalValue = (): Cypress.Chainable => cy.get('.grandTotal-row .row').first().find('b').last();
 
+  // ShipmentGui hangs the create link off the Order Items box and one edit link off each shipment,
+  // both routed to its own controller, so the href is what identifies them.
+  getCreateShipmentLink = (): Cypress.Chainable => cy.get('a[href*="/shipment-gui/create"]');
+  getEditShipmentLinks = (): Cypress.Chainable => cy.get('a[href*="/shipment-gui/edit"]');
+
+  // ShipmentGui prints a shipment's method as a plain <p> led by a bold "Shipping Method:" label,
+  // the carrier separately under "Delivery Method:", neither with a data-qa of its own.
+  getShipmentShippingMethods = (): Cypress.Chainable => cy.get('p:has(b:contains("Shipping Method"))');
+
   // Sales prints the billing address as the <dd> following a "Billing address" <dt>, with no
   // data-qa, so the term is what identifies it.
   getBillingAddress = (): Cypress.Chainable => cy.get('dt:contains("Billing address") + dd');

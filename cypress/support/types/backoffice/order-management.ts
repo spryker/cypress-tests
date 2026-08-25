@@ -60,3 +60,30 @@ export interface OrderRefundDynamicFixtures {
 export interface OrderRefundStaticFixtures {
   defaultPassword: string;
 }
+
+export interface ShipmentManagementDynamicFixtures {
+  rootUser: User;
+  customer: Customer;
+  address: Address;
+  keptProduct: Product;
+  movedProduct: Product;
+  reassignedProduct: Product;
+}
+
+export interface ShipmentManagementStaticFixtures {
+  defaultPassword: string;
+  newShipmentAddress: ShipmentAddressFixture;
+  editedShipmentAddress: ShipmentAddressFixture;
+}
+
+export interface ShipmentAddressFixture {
+  salutation: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  country: string;
+  address1: string;
+  address2: string;
+  city: string;
+  zipCode: string;
+}

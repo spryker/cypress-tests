@@ -82,6 +82,24 @@ export class SalesDetailPage extends BackofficePage {
       .invoke('text')
       .then((text: string) => Math.round(Number(text.replace(/[^0-9.]/g, '')) * 100));
 
+  createShipment = (): void => {
+    this.repository.getCreateShipmentLink().first().click();
+  };
+
+  editShipment = (shipmentNumber: number): void => {
+    this.repository
+      .getEditShipmentLinks()
+      .eq(shipmentNumber - 1)
+      .click();
+  };
+
+  getShipmentShippingMethods = (): Cypress.Chainable => this.repository.getShipmentShippingMethods();
+
+  // One shipment's own item table. ShipmentGui renders them in the order the shipments are numbered
+  // on the page, so the nth table is the nth shipment.
+  getShipmentItemTable = (shipmentNumber: number): Cypress.Chainable =>
+    this.repository.getOrderItemTables().eq(shipmentNumber - 1);
+
   getOrderItemTables = (): Cypress.Chainable => this.repository.getOrderItemTables();
 
   getShipmentDeliveryAddresses = (): Cypress.Chainable => this.repository.getShipmentDeliveryAddresses();
