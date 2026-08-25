@@ -55,4 +55,7 @@ export class B2cProductRepository implements ProductRepository {
 
   getProductDetailPrice = (): Cypress.Chainable => cy.get('volume-price span.volume-price__price:visible').first();
   getProductOptionSelects = (): Cypress.Chainable => cy.get('select[name^="product-option["]');
+
+  getProductDetailOriginalPrice = (): Cypress.Chainable =>
+    cy.get('volume-price span[class*="volume-price"][class*="original"]:visible').first();
 }

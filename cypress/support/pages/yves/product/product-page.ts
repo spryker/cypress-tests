@@ -177,6 +177,8 @@ export class ProductPage extends YvesPage {
   getProductDetailPrice = (): Cypress.Chainable => this.repository.getProductDetailPrice();
 
   getProductOptionSelects = (): Cypress.Chainable => this.repository.getProductOptionSelects();
+
+  getProductDetailOriginalPrice = (): Cypress.Chainable => this.repository.getProductDetailOriginalPrice();
 }
 
 interface SelectSoldByProductOfferParams {

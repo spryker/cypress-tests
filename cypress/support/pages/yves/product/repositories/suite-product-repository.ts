@@ -57,4 +57,7 @@ export class SuiteProductRepository implements ProductRepository {
   getProductDetailPrice = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-configurator"] volume-price span.volume-price__price');
   getProductOptionSelects = (): Cypress.Chainable => cy.get('select[name^="product-option["]');
+
+  getProductDetailOriginalPrice = (): Cypress.Chainable =>
+    cy.get('[data-qa="component product-configurator"] volume-price span[class*="volume-price"][class*="original"]');
 }

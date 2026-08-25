@@ -68,6 +68,18 @@ export class CatalogPage extends YvesPage {
 
   getProductItemBlocks = (): Cypress.Chainable => this.repository.getProductItemBlocks();
 
+  // A sku query returns a single card, which is why the first block is the product under test — the
+  // same narrowing the Robot suite used before this spec existed.
+  getFirstProductItemDefaultPrice = (): Cypress.Chainable =>
+    this.repository.getProductItemBlocks().first().find(this.repository.getProductItemDefaultPriceSelector());
+
+  getFirstProductItemOriginalPrice = (): Cypress.Chainable =>
+    this.repository.getProductItemBlocks().first().find(this.repository.getProductItemOriginalPriceSelector());
+
+  openFirstProductDetailPageFromResults = (): void => {
+    this.repository.getProductItemBlocks().first().find(this.repository.getViewButtonSelector()).click();
+  };
+
   getSspAssetSelectorBlock = (): Cypress.Chainable => this.repository.getSspAssetSelectorBlock();
 
   getSspAssetNameBlock = (): Cypress.Chainable => this.repository.getSspAssetNameBlock();

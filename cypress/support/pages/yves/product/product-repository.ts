@@ -45,4 +45,8 @@ export interface ProductRepository {
   // Product option groups are only offered once a concrete variant is resolved. The field name is
   // built in PHP, so it is the one selector that does not differ between the storefront themes.
   getProductOptionSelects(): Cypress.Chainable;
+
+  // Rendered only when an ORIGINAL price above the default exists, which is what makes it the
+  // assertion for a strike-through price rather than a second copy of the default one.
+  getProductDetailOriginalPrice(): Cypress.Chainable;
 }

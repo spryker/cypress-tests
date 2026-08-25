@@ -18,4 +18,7 @@ export class B2bMpCatalogRepository implements CatalogRepository {
   getSspAssetOption = (name: string): Cypress.Chainable =>
     cy.get('[data-qa="component asset-option"]').filter(':visible').filter(`:contains("${name}")`);
   getSspAssetOptionTriggerButtonSelector = (): string => '[data-qa="asset-option-trigger"]';
+
+  getProductItemDefaultPriceSelector = (): string => 'span[class*="default-price"]';
+  getProductItemOriginalPriceSelector = (): string => 'span[class*="original-price"]';
 }
