@@ -55,6 +55,17 @@ export class CatalogPage extends YvesPage {
     });
   };
 
+  // The suggestion dropdown ranks by completion rather than by exact sku, so a sku query can put a
+  // different product first. Opening the detail page from the result blocks keeps it exact.
+  openProductDetailPageFromResults = (params: OpenProductDetailPageFromResultsParams): void => {
+    this.repository
+      .getProductItemBlocks()
+      .filter(`:contains("${params.productName}")`)
+      .first()
+      .find(this.repository.getViewButtonSelector())
+      .click();
+  };
+
   getProductItemBlocks = (): Cypress.Chainable => this.repository.getProductItemBlocks();
 
   getSspAssetSelectorBlock = (): Cypress.Chainable => this.repository.getSspAssetSelectorBlock();
@@ -69,6 +80,10 @@ export class CatalogPage extends YvesPage {
       .find(this.repository.getSspAssetOptionTriggerButtonSelector())
       .click();
   };
+}
+
+interface OpenProductDetailPageFromResultsParams {
+  productName: string;
 }
 
 interface SearchParams {

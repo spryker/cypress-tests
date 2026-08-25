@@ -1,0 +1,17 @@
+{
+  "defaultPassword": "change123",
+  "defaultPriceCustomer": {
+    "email": "Richi@acme.com"
+  },
+  "merchantPriceCustomer": {
+    "email": "Elizabet@acme.com"
+  },
+  "product": {
+    "abstractSku": "M70208",
+    "concreteSku": "403125",
+    "name": "EUROKRAFT trolley - with open shovel",
+    "cartItemName": "EUROKRAFT hand truck - with open shovel - load capacity 400 kg",
+    "defaultPrice": "€235.43",
+    "merchantPrice": "€188.34"
+  }
+}
