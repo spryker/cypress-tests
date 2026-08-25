@@ -31,6 +31,7 @@ export * from './back-in-stock-notification';
 export * from './configurable-product-checkout';
 export * from './configurable-product-wishlist';
 export * from './configurable-product-shopping-list';
+export * from './configurable-product-rfq';
 export * from './locale';
 export * from './catalog';
 export * from './ssp-inquiry';
