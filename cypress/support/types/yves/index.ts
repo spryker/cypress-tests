@@ -29,6 +29,7 @@ export * from './product-bundle-checkout';
 export * from './catalog-browsing';
 export * from './back-in-stock-notification';
 export * from './configurable-product-checkout';
+export * from './configurable-product-wishlist';
 export * from './locale';
 export * from './catalog';
 export * from './ssp-inquiry';
