@@ -107,8 +107,16 @@ export class NavigationTreePage extends BackofficePage {
   updateNodeToCategoryType = (categoryUrlEn: string, categoryUrlDe: string): void => {
     this.selectNodeType('category');
     this.fillLocalizedTitles('foo');
-    this.typeLocalizedUrl(this.repository.getLocalizedCategoryUrlSelector.bind(this.repository), 'en_US', categoryUrlEn);
-    this.typeLocalizedUrl(this.repository.getLocalizedCategoryUrlSelector.bind(this.repository), 'de_DE', categoryUrlDe);
+    this.typeLocalizedUrl(
+      this.repository.getLocalizedCategoryUrlSelector.bind(this.repository),
+      'en_US',
+      categoryUrlEn
+    );
+    this.typeLocalizedUrl(
+      this.repository.getLocalizedCategoryUrlSelector.bind(this.repository),
+      'de_DE',
+      categoryUrlDe
+    );
     this.submitNodeForm();
     this.getNodeFormBody().invoke('text').should('match', this.repository.getNodeUpdateSuccessPattern());
   };
@@ -235,7 +243,7 @@ export class NavigationTreePage extends BackofficePage {
     this.getNodeFormBody().find(selectorFor(0)).clear({ force: true }).type(value);
     this.getNodeFormBody().find(selectorFor(1)).clear({ force: true }).type(value);
   }
-  
+
   private typeLocalizedUrl(selectorFor: (localeName: string) => string, localeName: string, value: string): void {
     const selector = selectorFor(localeName);
     this.getNodeFormBody().find(selector).clear({ force: true }).type(value, { force: true });
