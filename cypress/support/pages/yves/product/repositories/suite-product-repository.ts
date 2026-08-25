@@ -53,4 +53,8 @@ export class SuiteProductRepository implements ProductRepository {
   getProductConfigurationStatus = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-configurator"] [data-qa="component status"]');
   getConfigureButton = (): Cypress.Chainable => cy.get('[data-qa="component configuration-form"] button');
+
+  getProductDetailPrice = (): Cypress.Chainable =>
+    cy.get('[data-qa="component product-configurator"] volume-price span.volume-price__price');
+  getProductOptionSelects = (): Cypress.Chainable => cy.get('select[name^="product-option["]');
 }

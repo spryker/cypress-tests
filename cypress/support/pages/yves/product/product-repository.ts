@@ -37,4 +37,12 @@ export interface ProductRepository {
   getProductLabels(): Cypress.Chainable;
   getRelatedProductsCarousel(): Cypress.Chainable;
   getRelatedProductsSectionSelector(): string;
+
+  // The price block on the detail page itself. The related-products carousel prints prices too,
+  // so this must stay narrowed to the product being viewed.
+  getProductDetailPrice(): Cypress.Chainable;
+
+  // Product option groups are only offered once a concrete variant is resolved. The field name is
+  // built in PHP, so it is the one selector that does not differ between the storefront themes.
+  getProductOptionSelects(): Cypress.Chainable;
 }

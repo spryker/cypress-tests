@@ -17,6 +17,7 @@ export * from './product';
 export * from './reorder';
 export * from './order-amendment';
 export * from './product-attribute-visibility';
+export * from './product-detail-visibility';
 export * from './locale';
 export * from './catalog';
 export * from './ssp-inquiry';
