@@ -22,6 +22,20 @@ export class ShoppingListPage extends YvesPage {
 
   getShoppingListItemsTable = (): Cypress.Chainable => cy.get('[data-qa="component shopping-list"]');
 
+  getShoppingListOverviewRow = (name: string): Cypress.Chainable =>
+    cy.contains('[data-qa="component shopping-list-overview"] tbody tr', name);
+
+  // The visible Share button on a list's own page. Scoped to the customer content, because the
+  // collapsed side drawer carries a hidden copy of the same link.
+  openSharePage = (): void => {
+    cy.get('#customer-content a[href*="/shopping-list/share/"]').first().click();
+  };
+
+  shareWithCompanyUser = (params: ShareWithCompanyUserParams): void => {
+    cy.contains('[data-qa="component share-list-item"]', params.name).find('select').select(params.accessLevel);
+    cy.get('form[name="share_shopping_list_form"] [data-qa="submit-button"]').click();
+  };
+
   addAllAvailableProductsToCart = (): void => {
     cy.get('form[name="shopping_list_add_item_to_cart_form"] button[name="add-all-available"]').click();
   };
@@ -36,4 +50,9 @@ export class ShoppingListPage extends YvesPage {
     cy.get('form.js-shopping-list__form select[name="idShoppingList"]').select(name);
     cy.get('[data-qa="add-to-shopping-list-button"]').click();
   };
+}
+
+interface ShareWithCompanyUserParams {
+  name: string;
+  accessLevel: string;
 }

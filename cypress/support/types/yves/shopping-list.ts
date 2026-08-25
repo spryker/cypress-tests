@@ -14,3 +14,18 @@ export interface ShoppingListProductOffersStaticFixtures {
   soldByText: string;
   shoppingListName: string;
 }
+
+export interface ShoppingListSharingDynamicFixtures {
+  ownerCustomer: Customer;
+  receiverCustomer: Customer;
+  product: ProductConcrete;
+  merchant: Merchant;
+  productOffer: ProductOffer;
+}
+
+export interface ShoppingListSharingStaticFixtures {
+  defaultPassword: string;
+  soldByText: string;
+  shoppingListName: string;
+  fullAccessText: string;
+}
