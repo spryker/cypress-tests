@@ -18,7 +18,7 @@ export class ProductSetsPage extends YvesPage {
     cy.contains(this.repository.getProductSetCardSelector(), name);
 
   openProductSet = (name: string): void => {
-    this.getProductSetCard(name).click();
+    this.getProductSetCard(name).find(this.repository.getProductSetCardLinkSelector()).first().click();
   };
 
   getProductSetDetails = (): Cypress.Chainable => this.repository.getProductSetDetails();
@@ -26,12 +26,12 @@ export class ProductSetsPage extends YvesPage {
   getProductSetProductItems = (): Cypress.Chainable => this.repository.getProductSetProductItems();
 
   selectProductVariant = (params: SelectProductVariantParams): void => {
-    this.repository.getVariantSelect(params.productName).select(params.sku);
+    this.repository.getVariantSelect(params.productName, params.attributeKey).select(params.attributeValue);
   };
 
   addAllProductsToCart = (): void => {
-    // The button ships disabled and the storefront javascript enables it once every slot in the set
-    // has a concrete product picked, so clicking before that is a silent no-op.
+    // The button ships disabled and the storefront enables it once every product in the set has a
+    // concrete resolved, so clicking before a variant is picked is a silent no-op.
     this.repository.getAddAllToCartButton().should('be.enabled');
     this.repository.getAddAllToCartButton().click();
   };
@@ -40,6 +40,17 @@ export class ProductSetsPage extends YvesPage {
     cy.reloadUntilFound(`/en/${urlKey}`, this.repository.getProductSetDetailsSelector(), 'body', 15, 3000, [
       'console queue:worker:start --stop-when-empty',
     ]);
+  };
+
+  waitUntilProductSetIsListed = (name: string): void => {
+    cy.reloadUntilFound(
+      this.PAGE_URL,
+      `${this.repository.getProductSetCardSelector()}:contains("${name}")`,
+      'body',
+      15,
+      3000,
+      ['console queue:worker:start --stop-when-empty']
+    );
   };
 
   waitUntilProductSetIsGone = (urlKey: string): void => {
@@ -51,5 +62,6 @@ export class ProductSetsPage extends YvesPage {
 
 interface SelectProductVariantParams {
   productName: string;
-  sku: string;
+  attributeKey: string;
+  attributeValue: string;
 }
