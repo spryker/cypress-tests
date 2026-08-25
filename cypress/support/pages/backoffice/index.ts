@@ -83,6 +83,7 @@ export * from './merchant-registrations/merchant-registration-view-page';
 export * from './product-attribute-visibility/list/product-attribute-visibility-list-page';
 export * from './product-attribute-visibility/create/product-attribute-visibility-create-page';
 export * from './product-attribute-visibility/edit/product-attribute-visibility-edit-page';
+export * from './product-discontinued/product-discontinued-page';
 export * from './configuration/configuration-page';
 export * from './import/create/create-job-page';
 export * from './import/create/create-run-page';

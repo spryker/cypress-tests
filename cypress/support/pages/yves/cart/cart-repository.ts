@@ -16,6 +16,11 @@ export interface CartRepository {
   getCartItemChangeQuantityField(sku: string): Cypress.Chainable;
   getCartItemChangeQuantitySubmit(sku: string): Cypress.Chainable;
   findClearCartForm(): Cypress.Chainable;
+  getClearCartFormSelector(): string;
+
+  // The cart line's own configure form. It is a different component from the detail page's, so the
+  // detail-page selector does not find it.
+  getConfigureButtonSelector(): string;
   getCheckoutButton(): Cypress.Chainable;
   getCartSummary(): Cypress.Chainable;
   getCartDiscountSummary(): Cypress.Chainable;

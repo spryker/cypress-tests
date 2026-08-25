@@ -173,6 +173,52 @@ export class ProductPage extends YvesPage {
   getRelatedProductsCarousel = (): Cypress.Chainable => this.repository.getRelatedProductsCarousel();
 
   getRelatedProductsSection = (): Cypress.Chainable => cy.get(this.repository.getRelatedProductsSectionSelector());
+
+  getProductDetailPrice = (): Cypress.Chainable => this.repository.getProductDetailPrice();
+
+  getProductOptionSelects = (): Cypress.Chainable => this.repository.getProductOptionSelects();
+
+  getProductDetailOriginalPrice = (): Cypress.Chainable => this.repository.getProductDetailOriginalPrice();
+
+  getAlternativeProductsSlider = (): Cypress.Chainable => this.repository.getAlternativeProductsSlider();
+
+  setQuantity = (params: SetQuantityParams): void => {
+    this.repository.setQuantity(params.quantity);
+  };
+
+  selectSalesUnit = (params: SelectSalesUnitParams): void => {
+    this.repository.selectSalesUnit(params.salesUnitName);
+  };
+
+  getMeasurementUnitChoice = (): Cypress.Chainable => this.repository.getMeasurementUnitChoice();
+
+  setAmount = (params: SetAmountParams): void => {
+    this.repository.setAmount(params.amount);
+  };
+
+  getPackagingUnitChoice = (): Cypress.Chainable => this.repository.getPackagingUnitChoice();
+
+  getBundleItems = (): Cypress.Chainable => this.repository.getBundleItems();
+
+  getAvailabilityStatus = (): Cypress.Chainable => this.repository.getAvailabilityStatus();
+
+  getAvailabilityNotificationEmailField = (): Cypress.Chainable =>
+    this.repository.getAvailabilityNotificationEmailField();
+
+  getAvailabilityNotificationUnsubscribeForm = (): Cypress.Chainable =>
+    this.repository.getAvailabilityNotificationUnsubscribeForm();
+
+  getFlashMessages = (): Cypress.Chainable => this.repository.getFlashMessages();
+
+  subscribeToAvailabilityNotification = (params: SubscribeToAvailabilityNotificationParams): void => {
+    this.repository.getAvailabilityNotificationEmailField().clear();
+    this.repository.getAvailabilityNotificationEmailField().type(params.email);
+    this.repository.getAvailabilityNotificationSubscribeForm().submit();
+  };
+
+  unsubscribeFromAvailabilityNotification = (): void => {
+    this.repository.getAvailabilityNotificationUnsubscribeForm().submit();
+  };
 }
 
 interface SelectSoldByProductOfferParams {
@@ -193,6 +239,22 @@ interface GetProductOfferRadioParams {
 
 interface VisitProductDetailPageParams {
   url: string;
+}
+
+interface SubscribeToAvailabilityNotificationParams {
+  email: string;
+}
+
+interface SetAmountParams {
+  amount: number;
+}
+
+interface SelectSalesUnitParams {
+  salesUnitName: string;
+}
+
+interface SetQuantityParams {
+  quantity: number;
 }
 
 interface SelectVariantAttributeParams {

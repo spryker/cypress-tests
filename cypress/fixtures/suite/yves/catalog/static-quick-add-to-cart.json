@@ -1,0 +1,18 @@
+{
+  "defaultPassword": "change123",
+  "customer": {
+    "email": "spencor.hopkin@acme.com"
+  },
+  "buyableProduct": {
+    "searchQuery": "150_29554292",
+    "cartEntry": "150_29554292"
+  },
+  "unbuyableProduct": {
+    "searchQuery": "115_26408656"
+  },
+  "productGroup": {
+    "searchQuery": "002_25904004",
+    "swatchIdentifier": "#D3D3D3",
+    "cartEntry": "003_26138343"
+  }
+}

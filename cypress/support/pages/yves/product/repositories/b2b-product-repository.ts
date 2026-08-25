@@ -55,4 +55,71 @@ export class B2bProductRepository implements ProductRepository {
   getProductConfigurationStatus = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-configurator"] [data-qa="component status"]');
   getConfigureButton = (): Cypress.Chainable => cy.get('[data-qa="component configuration-form"] button');
+
+  getProductDetailPrice = (): Cypress.Chainable => cy.get('volume-price span.volume-price__price:visible').first();
+  getProductOptionSelects = (): Cypress.Chainable => cy.get('select[name^="product-option["]');
+
+  getProductDetailOriginalPrice = (): Cypress.Chainable =>
+    cy.get('volume-price span[class*="volume-price"][class*="original"]:visible').first();
+
+  getAlternativeProductsSlider = (): Cypress.Chainable => cy.get('[data-qa="component product-alternative-slider"]');
+
+  setQuantity = (quantity: number): void => {
+    cy.get('body').then(($body) => {
+      // The volume-price component binds its own quantity control. A logged-in detail page also
+      // renders a quantity select for the shopping-list widget, so matching on the name alone finds
+      // two and cy.select() refuses the pair.
+      if ($body.find('select.js-volume-price__quantity').length) {
+        cy.get('select.js-volume-price__quantity').first().select(String(quantity));
+
+        return;
+      }
+
+      // On a measurement-unit product the quantity is counted in sales units, and the field beside
+      // it holds the resulting amount in base units — writing the amount instead would not convert.
+      if ($body.find('.js-packaging-unit-quantity-selector__formatted-sales-unit-quantity input').length) {
+        cy.get('.js-packaging-unit-quantity-selector__formatted-sales-unit-quantity input').first().clear();
+        cy.get('.js-packaging-unit-quantity-selector__formatted-sales-unit-quantity input')
+          .first()
+          .type(String(quantity));
+
+        return;
+      }
+
+      if ($body.find('select[name="quantity"]').length) {
+        cy.get('select[name="quantity"]').first().select(String(quantity));
+
+        return;
+      }
+
+      cy.get('formatted-number-input input').first().clear();
+      cy.get('formatted-number-input input').first().type(String(quantity));
+    });
+  };
+
+  selectSalesUnit = (salesUnitName: string): void => {
+    cy.get('select[name="id-product-measurement-sales-unit"]').select(salesUnitName);
+  };
+
+  getMeasurementUnitChoice = (): Cypress.Chainable =>
+    cy.get('.js-packaging-unit-quantity-selector__measurement-unit-choice');
+
+  setAmount = (amount: number): void => {
+    cy.get('.js-packaging-unit-quantity-selector__formatted-user-amount input').first().clear();
+    cy.get('.js-packaging-unit-quantity-selector__formatted-user-amount input').first().type(String(amount));
+  };
+
+  getPackagingUnitChoice = (): Cypress.Chainable =>
+    cy.get('.js-packaging-unit-quantity-selector__packaging-unit-choice');
+
+  getBundleItems = (): Cypress.Chainable => cy.get('[data-qa*="component bundle-items"]');
+
+  getAvailabilityStatus = (): Cypress.Chainable =>
+    cy.get('[data-qa="component product-availability-widget"] [data-qa="component status"]');
+  getAvailabilityNotificationEmailField = (): Cypress.Chainable =>
+    cy.get('#availabilityNotificationSubscriptionForm_email');
+  getAvailabilityNotificationSubscribeForm = (): Cypress.Chainable =>
+    cy.get('form#availability_notification_subscription');
+  getAvailabilityNotificationUnsubscribeForm = (): Cypress.Chainable => cy.get('form#availability_unsubscribe');
+  getFlashMessages = (): Cypress.Chainable => cy.get('[data-qa="component notification-area"] flash-message');
 }

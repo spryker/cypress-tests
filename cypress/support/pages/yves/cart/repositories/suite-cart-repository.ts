@@ -83,4 +83,7 @@ export class SuiteCartRepository implements CartRepository {
   submitConfiguredBundleQuantity = (bundleName: string): void => {
     this.getConfiguredBundle(bundleName).find('[data-qa="quantity-input-submit"]').first().click({ timeout: 10000 });
   };
+  getClearCartFormSelector = (): string => '[data-qa="multi-cart-clear-form"]';
+
+  getConfigureButtonSelector = (): string => '[data-qa="component configuration-cart-form"] button';
 }
