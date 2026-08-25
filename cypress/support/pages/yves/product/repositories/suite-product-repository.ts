@@ -46,4 +46,8 @@ export class SuiteProductRepository implements ProductRepository {
     this.getVariantAttributeSelect(attributeKey).find('option[value]:not([value=""])');
   getSelectedVariantAttributeInput = (attributeKey: string): Cypress.Chainable =>
     cy.get(`input[type="hidden"][name="attribute[${attributeKey}]"]`);
+  getRelatedProductsSectionSelector = (): string => 'main simple-carousel[data-qa="component simple-carousel"]';
+  getRelatedProductsCarousel = (): Cypress.Chainable => cy.get(this.getRelatedProductsSectionSelector()).first();
+  getProductLabels = (): Cypress.Chainable =>
+    cy.get('[data-qa="component product-carousel"] [data-qa="component label-group"]');
 }

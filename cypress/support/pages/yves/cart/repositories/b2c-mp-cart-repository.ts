@@ -76,4 +76,12 @@ export class B2cMpCartRepository implements CartRepository {
     cy.get('[data-qa="component product-card-item"] [data-qa="product-title"]');
   getCartItemAvailabilityLabel = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-cart-item"] [data-qa="component availability-product"]');
+  getConfiguredBundles = (): Cypress.Chainable => cy.get('article[data-qa*="configured-bundle-secondary"]');
+  getConfiguredBundle = (bundleName: string): Cypress.Chainable =>
+    cy.contains('article[data-qa*="configured-bundle-secondary"]', bundleName).first();
+  getConfiguredBundleQuantityField = (bundleName: string): Cypress.Chainable =>
+    this.getConfiguredBundle(bundleName).find('input.formatted-number-input__input').first();
+  submitConfiguredBundleQuantity = (bundleName: string): void => {
+    this.getConfiguredBundle(bundleName).find('[data-qa="quantity-input-submit"]').first().click({ timeout: 10000 });
+  };
 }

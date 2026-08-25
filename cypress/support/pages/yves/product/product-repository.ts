@@ -29,4 +29,7 @@ export interface ProductRepository {
   getVariantAttributeSelect(attributeKey: string): Cypress.Chainable;
   getVariantAttributeOptions(attributeKey: string): Cypress.Chainable;
   getSelectedVariantAttributeInput(attributeKey: string): Cypress.Chainable;
+  getProductLabels(): Cypress.Chainable;
+  getRelatedProductsCarousel(): Cypress.Chainable;
+  getRelatedProductsSectionSelector(): string;
 }

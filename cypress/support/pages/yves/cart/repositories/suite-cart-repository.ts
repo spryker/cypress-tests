@@ -75,4 +75,12 @@ export class SuiteCartRepository implements CartRepository {
   getCartItemsListTitles = (): Cypress.Chainable => cy.get('[data-qa="component product-cart-items-list"] .title--h4');
   getCartItemAvailabilityLabel = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-cart-item"] [data-qa="component status"]');
+  getConfiguredBundles = (): Cypress.Chainable => cy.get('article[data-qa*="configured-bundle"]');
+  getConfiguredBundle = (bundleName: string): Cypress.Chainable =>
+    cy.contains('article[data-qa*="configured-bundle"]', bundleName).first();
+  getConfiguredBundleQuantityField = (bundleName: string): Cypress.Chainable =>
+    this.getConfiguredBundle(bundleName).find('input.formatted-number-input__input').first();
+  submitConfiguredBundleQuantity = (bundleName: string): void => {
+    this.getConfiguredBundle(bundleName).find('[data-qa="quantity-input-submit"]').first().click({ timeout: 10000 });
+  };
 }

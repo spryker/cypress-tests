@@ -4,6 +4,7 @@ export * from './category-re-sort';
 export * from './tax';
 export * from './product-search';
 export * from './product-relation';
+export * from './product-set-management';
 export * from './cms-block';
 export * from './cms-page-management';
 export * from './discount';

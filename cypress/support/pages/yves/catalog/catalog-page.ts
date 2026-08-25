@@ -43,6 +43,18 @@ export class CatalogPage extends YvesPage {
     });
   };
 
+  searchForProducts = (params: SearchParams): void => {
+    if (this.isRepository('b2c', 'b2c-mp')) {
+      cy.get('.header__search-open').click();
+    }
+
+    this.repository.getSearchInput().clear().type(`${params.query}{enter}`);
+
+    cy.url().then((url) => {
+      cy.reloadUntilFound(url, this.repository.getFirstProductItemBlockSelector(), 'body', 25, 5000);
+    });
+  };
+
   getProductItemBlocks = (): Cypress.Chainable => this.repository.getProductItemBlocks();
 
   getSspAssetSelectorBlock = (): Cypress.Chainable => this.repository.getSspAssetSelectorBlock();

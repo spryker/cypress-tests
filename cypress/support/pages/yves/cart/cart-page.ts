@@ -146,6 +146,18 @@ export class CartPage extends YvesPage {
     }
   };
 
+  changeConfiguredBundleQuantity = (params: ChangeConfiguredBundleQuantityParams): void => {
+    const input = this.repository.getConfiguredBundleQuantityField(params.bundleName);
+
+    input.type('{selectall}', { force: true });
+    input.type(String(params.quantity), { force: true });
+    this.repository.submitConfiguredBundleQuantity(params.bundleName);
+  };
+
+  getConfiguredBundles = (): Cypress.Chainable => {
+    return this.repository.getConfiguredBundles();
+  };
+
   getProductCartItems = (): Cypress.Chainable => {
     return this.repository.getProductCartItems();
   };
@@ -179,4 +191,9 @@ interface ChangeQuantityParams {
 
 interface CartItemNoteAddParams {
   message: string;
+}
+
+interface ChangeConfiguredBundleQuantityParams {
+  bundleName: string;
+  quantity: number;
 }

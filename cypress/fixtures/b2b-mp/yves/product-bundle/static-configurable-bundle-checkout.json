@@ -1,0 +1,24 @@
+{
+  "defaultPassword": "change123",
+  "templateName": "Presentation bundle",
+  "firstConfiguration": [
+    {
+      "slotName": "Slot 5",
+      "productIdentifier": "408104"
+    },
+    {
+      "slotName": "Slot 6",
+      "productIdentifier": "423172"
+    }
+  ],
+  "secondConfiguration": [
+    {
+      "slotName": "Slot 5",
+      "productIdentifier": "421539"
+    },
+    {
+      "slotName": "Slot 6",
+      "productIdentifier": "424551"
+    }
+  ]
+}

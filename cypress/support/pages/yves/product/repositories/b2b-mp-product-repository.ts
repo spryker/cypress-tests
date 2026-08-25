@@ -51,4 +51,8 @@ export class B2bMpProductRepository implements ProductRepository {
     this.getVariantAttributeSelect(attributeKey).find('option[value]:not([value=""])');
   getSelectedVariantAttributeInput = (attributeKey: string): Cypress.Chainable =>
     cy.get(`input[type="hidden"][name="attribute[${attributeKey}]"]`);
+  getRelatedProductsSectionSelector = (): string => '[class*="title--product-slider"]:contains("Similar products")';
+  getRelatedProductsCarousel = (): Cypress.Chainable =>
+    cy.get(this.getRelatedProductsSectionSelector()).first().parent().find('slick-carousel');
+  getProductLabels = (): Cypress.Chainable => cy.get('#main-content [data-qa="component label-group"]');
 }
