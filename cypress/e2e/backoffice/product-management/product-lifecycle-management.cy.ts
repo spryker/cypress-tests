@@ -12,6 +12,8 @@ const PUBLISH_RELOAD_ATTEMPTS = 15;
 
 const PUBLISH_RELOAD_INTERVAL_MS = 3000;
 
+const PRODUCT_CARD_SELECTOR = '[data-qa="component product-item"]';
+
 describe(
   'product lifecycle management',
   {
@@ -40,10 +42,7 @@ describe(
     });
 
     beforeEach((): void => {
-      userLoginScenario.execute({
-        username: dynamicFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
+      loginAsBackofficeUser();
     });
 
     it('given an abstract product created and approved in the back office when the catalog is searched then the storefront lists it', (): void => {
@@ -63,29 +62,56 @@ describe(
       // Arrange
       const productAbstract = createProductScenario.execute({ shouldTriggerPublishAndSync: true });
 
-      // Act
-      // Creating leaves the browser on the variant it just activated, so it is deactivated from
-      // there — reaching the same page again through the product table only adds a second
-      // asynchronous table render to race with.
-      productManagementEditVariantPage.deactivate();
-      cy.runQueueWorker();
+      // The variant edit page is held by url rather than by staying on it: an absence is only
+      // evidence once the product has been seen in the catalog, and confirming that navigates away.
+      cy.url().then((variantUrl: string): void => {
+        loginAsCustomer();
+        cy.reloadUntilFound(
+          searchUrlFor(productAbstract.name),
+          productCardSelectorFor(productAbstract.name),
+          'body',
+          PUBLISH_RELOAD_ATTEMPTS,
+          PUBLISH_RELOAD_INTERVAL_MS
+        );
 
-      // Assert
-      // Deactivating the last active variant takes the abstract out of the catalog, so no card for
-      // it survives in the search results.
-      loginAsCustomer();
-      cy.reloadUntilGone(
-        `/search?q=${encodeURIComponent(productAbstract.name)}`,
-        `[data-qa="component product-item"]:contains("${productAbstract.name}")`,
-        'body',
-        PUBLISH_RELOAD_ATTEMPTS,
-        PUBLISH_RELOAD_INTERVAL_MS
-      );
+        // Act
+        loginAsBackofficeUser();
+        cy.visit(variantUrl);
+        productManagementEditVariantPage.deactivate();
+        cy.runQueueWorker();
+
+        // Assert
+        // Deactivating the last active variant takes the abstract out of the catalog, so the card
+        // that was just seen there does not survive.
+        loginAsCustomer();
+        cy.reloadUntilGone(
+          searchUrlFor(productAbstract.name),
+          productCardSelectorFor(productAbstract.name),
+          'body',
+          PUBLISH_RELOAD_ATTEMPTS,
+          PUBLISH_RELOAD_INTERVAL_MS
+        );
+      });
     });
+
+    function searchUrlFor(productName: string): string {
+      return `/search?q=${encodeURIComponent(productName)}`;
+    }
+
+    function productCardSelectorFor(productName: string): string {
+      return `${PRODUCT_CARD_SELECTOR}:contains("${productName}")`;
+    }
 
     function loginAsCustomer(): void {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+      });
+    }
+
+    function loginAsBackofficeUser(): void {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
     }
