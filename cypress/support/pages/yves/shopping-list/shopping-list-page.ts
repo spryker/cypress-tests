@@ -42,6 +42,14 @@ export class ShoppingListPage extends YvesPage {
     cy.get('form[name="share_shopping_list_form"] [data-qa="submit-button"]').click();
   };
 
+  // A shopping-list row reaches the configurator through the generic remote-form-submit molecule, so
+  // the configurator route in its form-action is what tells it apart from the row's other actions.
+  configureProduct = (params: ConfigureProductParams): void => {
+    cy.contains('[data-qa="component shopping-list"] tr', params.sku)
+      .find('[data-qa="component remote-form-submit"][form-action*="configurator"] button')
+      .click();
+  };
+
   addAllAvailableProductsToCart = (): void => {
     cy.get('form[name="shopping_list_add_item_to_cart_form"] button[name="add-all-available"]').click();
   };
@@ -61,4 +69,8 @@ export class ShoppingListPage extends YvesPage {
 interface ShareWithCompanyUserParams {
   name: string;
   accessLevel: string;
+}
+
+interface ConfigureProductParams {
+  sku: string;
 }
