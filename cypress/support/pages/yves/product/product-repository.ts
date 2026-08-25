@@ -63,4 +63,9 @@ export interface ProductRepository {
   // block it reveals when the quantity does not land on a whole base unit.
   selectSalesUnit(salesUnitName: string): void;
   getMeasurementUnitChoice(): Cypress.Chainable;
+
+  // A packaging unit is ordered by amount rather than by quantity, and it has its own choice block
+  // for the min / max / interval rules that amount has to satisfy.
+  setAmount(amount: number): void;
+  getPackagingUnitChoice(): Cypress.Chainable;
 }

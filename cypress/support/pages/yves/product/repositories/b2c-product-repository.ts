@@ -101,4 +101,12 @@ export class B2cProductRepository implements ProductRepository {
 
   getMeasurementUnitChoice = (): Cypress.Chainable =>
     cy.get('.js-packaging-unit-quantity-selector__measurement-unit-choice');
+
+  setAmount = (amount: number): void => {
+    cy.get('.js-packaging-unit-quantity-selector__formatted-user-amount input').first().clear();
+    cy.get('.js-packaging-unit-quantity-selector__formatted-user-amount input').first().type(String(amount));
+  };
+
+  getPackagingUnitChoice = (): Cypress.Chainable =>
+    cy.get('.js-packaging-unit-quantity-selector__packaging-unit-choice');
 }

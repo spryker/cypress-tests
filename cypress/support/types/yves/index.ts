@@ -24,6 +24,7 @@ export * from './discontinued-alternative-products';
 export * from './quick-add-to-cart';
 export * from './volume-prices';
 export * from './measurement-unit-checkout';
+export * from './packaging-unit-checkout';
 export * from './locale';
 export * from './catalog';
 export * from './ssp-inquiry';
