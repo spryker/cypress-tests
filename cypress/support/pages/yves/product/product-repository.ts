@@ -4,6 +4,11 @@ export interface ProductRepository {
   getMerchantRelationRequestLinkAttribute(): string;
   getInputRadioSelector(): string;
   getProductConfigurator(): Cypress.Chainable;
+
+  // ProductConfigurationWidget prints whether the product is configured yet, and the form whose
+  // button hands over to the external configurator.
+  getProductConfigurationStatus(): Cypress.Chainable;
+  getConfigureButton(): Cypress.Chainable;
   getAddToCartButton(): Cypress.Chainable;
   getAddToCartSuccessMessage(): string;
   getQuantityInput(): Cypress.Chainable;

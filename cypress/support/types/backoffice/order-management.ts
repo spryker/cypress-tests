@@ -87,3 +87,16 @@ export interface ShipmentAddressFixture {
   city: string;
   zipCode: string;
 }
+
+export interface ConfigurableProductOmsDynamicFixtures {
+  rootUser: User;
+  customer: Customer;
+  address: Address;
+  product: Product;
+}
+
+export interface ConfigurableProductOmsStaticFixtures {
+  defaultPassword: string;
+  configurationNotCompleteStatus: string;
+  configurationCompleteStatus: string;
+}
