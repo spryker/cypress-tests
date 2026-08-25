@@ -233,6 +233,58 @@
               ]
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#firstRefundedProduct.sku",
+                  "abstractSku": "#firstRefundedProduct.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#secondRefundedProduct.sku",
+                  "abstractSku": "#secondRefundedProduct.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#thirdRefundedProduct.sku",
+                  "abstractSku": "#thirdRefundedProduct.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#firstRefundedProduct.sku",
+                  "abstractSku": "#firstRefundedProduct.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#secondRefundedProduct.sku",
+                  "abstractSku": "#secondRefundedProduct.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#thirdRefundedProduct.sku",
+                  "abstractSku": "#thirdRefundedProduct.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
         }
       ]
     }

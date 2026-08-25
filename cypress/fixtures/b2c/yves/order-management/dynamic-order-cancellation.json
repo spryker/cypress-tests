@@ -251,6 +251,80 @@
           "name": "havePersistentQuote",
           "arguments": [
             {
+              "customer": "#wholeOrderCustomer",
+              "items": [
+                {
+                  "sku": "#wholeOrderProduct.sku",
+                  "abstractSku": "#wholeOrderProduct.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#wholeOrderCustomer",
+              "items": [
+                {
+                  "sku": "#wholeOrderProduct.sku",
+                  "abstractSku": "#wholeOrderProduct.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#mixedStateCustomer",
+              "items": [
+                {
+                  "sku": "#advancedItemProduct.sku",
+                  "abstractSku": "#advancedItemProduct.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#cancellableItemProduct.sku",
+                  "abstractSku": "#cancellableItemProduct.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#mixedStateCustomer",
+              "items": [
+                {
+                  "sku": "#advancedItemProduct.sku",
+                  "abstractSku": "#advancedItemProduct.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#cancellableItemProduct.sku",
+                  "abstractSku": "#cancellableItemProduct.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
               "customer": "#mixedStateCustomer",
               "items": [
                 {
