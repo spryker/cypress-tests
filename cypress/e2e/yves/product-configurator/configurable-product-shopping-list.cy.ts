@@ -59,7 +59,7 @@ describe(
       cartPage.clearCartIfNotEmpty();
     });
 
-    it('given a configurable product added to the cart without being configured then the cart states that it cannot be processed', (): void => {
+    it('given a configurable product when it is added to the cart without being configured then the cart states that it cannot be processed', (): void => {
       // Arrange
       openProductDetailPage();
       productPage.getProductConfigurationStatus().should('contain', staticFixtures.configurationNotCompleteStatus);
