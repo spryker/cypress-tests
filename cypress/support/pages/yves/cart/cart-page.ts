@@ -87,6 +87,15 @@ export class CartPage extends YvesPage {
 
   // cy.get() on the clear form fails outright on an empty cart, so a spec that only needs a known
   // starting point has to look before it clears.
+  configureProduct = (params: ConfigureProductParams): void => {
+    this.repository
+      .getProductCartItems()
+      .filter(`:contains("${params.sku}")`)
+      .first()
+      .find(this.repository.getConfigureButtonSelector())
+      .click();
+  };
+
   clearCartIfNotEmpty = (): void => {
     this.getBody().then(($body) => {
       if ($body.find(this.repository.getClearCartFormSelector()).length) {
@@ -183,6 +192,10 @@ export class CartPage extends YvesPage {
   getCartItemAvailabilityLabel = (): Cypress.Chainable => {
     return this.repository.getCartItemAvailabilityLabel();
   };
+}
+
+interface ConfigureProductParams {
+  sku: string;
 }
 
 interface QuickAddToCartParams {

@@ -28,6 +28,7 @@ export * from './packaging-unit-checkout';
 export * from './product-bundle-checkout';
 export * from './catalog-browsing';
 export * from './back-in-stock-notification';
+export * from './configurable-product-checkout';
 export * from './locale';
 export * from './catalog';
 export * from './ssp-inquiry';
