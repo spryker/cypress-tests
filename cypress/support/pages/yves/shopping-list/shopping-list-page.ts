@@ -7,10 +7,16 @@ import { YvesPage } from '@pages/yves';
 export class ShoppingListPage extends YvesPage {
   protected PAGE_URL = '/shopping-list';
 
-  createShoppingList = (name: string): void => {
+  // Generated here, not taken from a fixture, so a retry creates a list of its own rather than a
+  // second one under the name the failed attempt already used.
+  createShoppingList = (name?: string): string => {
+    const shoppingListName = name ?? `Shopping list ${this.faker.string.uuid()}`;
+
     cy.get('#shopping_list_form_name').clear();
-    cy.get('#shopping_list_form_name').type(name);
+    cy.get('#shopping_list_form_name').type(shoppingListName);
     cy.get('form[name="shopping_list_form"] [data-qa="submit-button"]').click();
+
+    return shoppingListName;
   };
 
   getShoppingListOverviewEntry = (name: string): Cypress.Chainable =>

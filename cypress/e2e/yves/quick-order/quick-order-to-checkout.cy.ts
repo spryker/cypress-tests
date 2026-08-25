@@ -30,7 +30,7 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    it('company user should be able to quick order two merchant products, buy them and reorder them', (): void => {
+    it('given a pasted quick order of two products sold by different merchants when it is bought and reordered then every destination keeps both merchants', (): void => {
       // Arrange
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
@@ -38,7 +38,7 @@ describe(
       });
 
       shoppingListPage.visit();
-      shoppingListPage.createShoppingList(staticFixtures.shoppingListName);
+      const shoppingListName = shoppingListPage.createShoppingList();
 
       // Each product is sold by a merchant of its own, so every destination below has to carry both
       // merchants for the quick order to have kept the relation.
@@ -64,7 +64,7 @@ describe(
       // The same rows must reach a shopping list just as they reached the cart.
       quickOrderPage.visit();
       quickOrderPage.verifyPastedOrder(pastedOrder);
-      quickOrderPage.addRowsToShoppingList(staticFixtures.shoppingListName);
+      quickOrderPage.addRowsToShoppingList(shoppingListName);
       assertSkusPresent(shoppingListPage.getShoppingListItemsTable());
       assertMerchantsPresent(shoppingListPage.getShoppingListItemsTable());
 

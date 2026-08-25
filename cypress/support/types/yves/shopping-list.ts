@@ -12,7 +12,6 @@ export interface ShoppingListProductOffersDynamicFixtures {
 export interface ShoppingListProductOffersStaticFixtures {
   defaultPassword: string;
   soldByText: string;
-  shoppingListName: string;
 }
 
 export interface ShoppingListSharingDynamicFixtures {
@@ -26,6 +25,5 @@ export interface ShoppingListSharingDynamicFixtures {
 export interface ShoppingListSharingStaticFixtures {
   defaultPassword: string;
   soldByText: string;
-  shoppingListName: string;
   fullAccessText: string;
 }

@@ -32,7 +32,7 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    it('company user should be able to order from a cart a colleague shared at full access', (): void => {
+    it('given a cart shared with a colleague at full access when the colleague orders it then the order is placed and keeps the merchant relation', (): void => {
       // Arrange
       // The share form lists colleagues last name first, which is not the order the account pages use.
       const receiverName = `${dynamicFixtures.receiverCustomer.last_name} ${dynamicFixtures.receiverCustomer.first_name}`;
@@ -42,9 +42,9 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      multiCartPage.createCart({ name: staticFixtures.cartName });
+      const cartName = multiCartPage.createCart();
       multiCartPage.visit();
-      multiCartPage.getCartRow(staticFixtures.cartName).should('contain.text', staticFixtures.ownerAccessText);
+      multiCartPage.getCartRow(cartName).should('contain.text', staticFixtures.ownerAccessText);
 
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
@@ -52,7 +52,7 @@ describe(
 
       // Act
       multiCartPage.visit();
-      multiCartPage.openShareCartPage(staticFixtures.cartName);
+      multiCartPage.openShareCartPage(cartName);
       multiCartPage.shareCartWithCompanyUser({ name: receiverName, accessLevel: staticFixtures.fullAccessText });
 
       // Assert
@@ -62,9 +62,9 @@ describe(
       });
 
       multiCartPage.visit();
-      multiCartPage.getCartRow(staticFixtures.cartName).should('contain.text', staticFixtures.fullAccessText);
+      multiCartPage.getCartRow(cartName).should('contain.text', staticFixtures.fullAccessText);
 
-      multiCartPage.selectCart({ name: staticFixtures.cartName });
+      multiCartPage.selectCart({ name: cartName });
       cartPage.visit();
       cartPage
         .getProductCartItems()

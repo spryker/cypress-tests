@@ -37,7 +37,7 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    it('customer should be able to keep two merchant offers of one product on a shopping list and in the cart', (): void => {
+    it('given a product sold by two merchants when both offers are added to one shopping list then the list and the cart keep a line per merchant', (): void => {
       // Arrange
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
@@ -45,7 +45,7 @@ describe(
       });
 
       shoppingListPage.visit();
-      shoppingListPage.createShoppingList(staticFixtures.shoppingListName);
+      const shoppingListName = shoppingListPage.createShoppingList();
 
       // The same product is on sale from two merchants, so every step below has to stay tied to the
       // offer it started from rather than to the product.
@@ -61,12 +61,12 @@ describe(
         productPage.selectSoldByProductOffer({ productOfferReference: offer.product_offer_reference });
         shoppingListPage.getAddToShoppingListProductOfferInput().should('have.value', offer.product_offer_reference);
 
-        shoppingListPage.addDisplayedProductToShoppingList(staticFixtures.shoppingListName);
+        shoppingListPage.addDisplayedProductToShoppingList(shoppingListName);
       });
 
       // Assert
       shoppingListPage.visit();
-      shoppingListPage.openShoppingList(staticFixtures.shoppingListName);
+      shoppingListPage.openShoppingList(shoppingListName);
 
       competingOffers.forEach(({ merchant }): void => {
         shoppingListPage

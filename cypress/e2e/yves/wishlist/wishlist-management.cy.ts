@@ -27,34 +27,27 @@ describe(
       });
     });
 
-    it('customer should be able to keep two products in two separate wishlists', (): void => {
+    it('given a customer owning two wishlists when a product is added to each of them then each wishlist holds only its own product', (): void => {
       // Arrange
-      // The customer owns no wishlist yet, so adding from the product detail page without picking
-      // one creates the default wishlist and puts the product straight into it.
-      visitProductDetailPage(dynamicFixtures.product1.sku);
-      wishlistPage.addDisplayedProductToDefaultWishlist();
+      wishlistPage.visit();
+      const firstWishlistName = wishlistPage.createWishlist();
 
       wishlistPage.visit();
-      wishlistPage.createWishlist(staticFixtures.secondWishlistName);
+      const secondWishlistName = wishlistPage.createWishlist();
 
       // Act
+      visitProductDetailPage(dynamicFixtures.product1.sku);
+      wishlistPage.addDisplayedProductToWishlist(firstWishlistName);
+
       visitProductDetailPage(dynamicFixtures.product2.sku);
-      wishlistPage.addDisplayedProductToWishlist(staticFixtures.secondWishlistName);
+      wishlistPage.addDisplayedProductToWishlist(secondWishlistName);
 
       // Assert
       // Each wishlist holds its own product and not the other one, which is what proves the picker
       // routed the second product somewhere else than the first.
       const wishlistContents = [
-        {
-          name: staticFixtures.defaultWishlistName,
-          ownSku: dynamicFixtures.product1.sku,
-          otherSku: dynamicFixtures.product2.sku,
-        },
-        {
-          name: staticFixtures.secondWishlistName,
-          ownSku: dynamicFixtures.product2.sku,
-          otherSku: dynamicFixtures.product1.sku,
-        },
+        { name: firstWishlistName, ownSku: dynamicFixtures.product1.sku, otherSku: dynamicFixtures.product2.sku },
+        { name: secondWishlistName, ownSku: dynamicFixtures.product2.sku, otherSku: dynamicFixtures.product1.sku },
       ];
 
       wishlistContents.forEach(({ name, ownSku, otherSku }): void => {
@@ -65,7 +58,7 @@ describe(
       });
     });
 
-    it('customer should be sent to login when adding to a wishlist without a session', (): void => {
+    it('given a product detail page rendered for a logged-in customer when the session is dropped and the product is added to a wishlist then the customer is sent to the login page', (): void => {
       // Arrange
       // The page is rendered for a logged-in customer, then the session is dropped, so the add
       // request reaches the server unauthenticated with the form already on screen.

@@ -8,8 +8,6 @@ export interface WishlistManagementDynamicFixtures {
 
 export interface WishlistManagementStaticFixtures {
   defaultPassword: string;
-  defaultWishlistName: string;
-  secondWishlistName: string;
 }
 
 export interface WishlistProductOffersDynamicFixtures {
@@ -24,5 +22,4 @@ export interface WishlistProductOffersDynamicFixtures {
 export interface WishlistProductOffersStaticFixtures {
   defaultPassword: string;
   soldByText: string;
-  wishlistName: string;
 }

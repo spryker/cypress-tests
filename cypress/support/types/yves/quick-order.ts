@@ -12,7 +12,6 @@ export interface QuickOrderToCheckoutDynamicFixtures {
 export interface QuickOrderToCheckoutStaticFixtures {
   defaultPassword: string;
   soldByText: string;
-  shoppingListName: string;
   firstProductQuantity: number;
   secondProductQuantity: number;
 }

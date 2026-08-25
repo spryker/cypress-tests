@@ -57,7 +57,6 @@ export interface SharedCartCheckoutDynamicFixtures {
 export interface SharedCartCheckoutStaticFixtures {
   defaultPassword: string;
   soldByText: string;
-  cartName: string;
   ownerAccessText: string;
   fullAccessText: string;
 }

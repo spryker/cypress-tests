@@ -21,7 +21,7 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    it('guest should be able to buy a product from the detail page into the cart', (): void => {
+    it('given a guest when a product is added from its detail page then the cart holds the product and its total', (): void => {
       // Arrange
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
@@ -44,7 +44,7 @@ describe(
     ];
 
     customerOnlyPages.forEach(({ name, page }): void => {
-      it(`guest should be sent to login when opening the ${name} page`, (): void => {
+      it(`given a guest when the ${name} page is opened then the guest is sent to the login page`, (): void => {
         // Act
         page.visit();
 

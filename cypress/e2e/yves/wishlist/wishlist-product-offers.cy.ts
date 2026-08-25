@@ -36,7 +36,7 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    it('customer should be able to keep two merchant offers of one product in a wishlist and in the cart', (): void => {
+    it('given a product sold by two merchants when both offers are added to one wishlist then the wishlist and the cart keep a line per merchant', (): void => {
       // Arrange
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
@@ -44,7 +44,7 @@ describe(
       });
 
       wishlistPage.visit();
-      wishlistPage.createWishlist(staticFixtures.wishlistName);
+      const wishlistName = wishlistPage.createWishlist();
 
       // The same product is on sale from two merchants, so every step below has to stay tied to the
       // offer it started from rather than to the product.
@@ -60,12 +60,12 @@ describe(
         productPage.selectSoldByProductOffer({ productOfferReference: offer.product_offer_reference });
         wishlistPage.getAddToWishlistProductOfferInput().should('have.value', offer.product_offer_reference);
 
-        wishlistPage.addDisplayedProductToWishlist(staticFixtures.wishlistName);
+        wishlistPage.addDisplayedProductToWishlist(wishlistName);
       });
 
       // Assert
       wishlistPage.visit();
-      wishlistPage.openWishlist(staticFixtures.wishlistName);
+      wishlistPage.openWishlist(wishlistName);
 
       competingOffers.forEach(({ merchant }): void => {
         wishlistPage.getWishlistItemsTable().should('contain.text', `${staticFixtures.soldByText} ${merchant.name}`);

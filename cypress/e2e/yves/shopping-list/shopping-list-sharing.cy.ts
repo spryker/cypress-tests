@@ -27,7 +27,7 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    it('company user should be able to share a shopping list with a colleague at full access', (): void => {
+    it('given a shopping list shared with a colleague at full access when the colleague opens it then it is on their overview and its products reach their cart', (): void => {
       // Arrange
       const ownerName = `${dynamicFixtures.ownerCustomer.first_name} ${dynamicFixtures.ownerCustomer.last_name}`;
       const receiverName = `${dynamicFixtures.receiverCustomer.first_name} ${dynamicFixtures.receiverCustomer.last_name}`;
@@ -38,15 +38,15 @@ describe(
       });
 
       shoppingListPage.visit();
-      shoppingListPage.createShoppingList(staticFixtures.shoppingListName);
+      const shoppingListName = shoppingListPage.createShoppingList();
 
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
-      shoppingListPage.addDisplayedProductToShoppingList(staticFixtures.shoppingListName);
+      shoppingListPage.addDisplayedProductToShoppingList(shoppingListName);
 
       // Act
       shoppingListPage.visit();
-      shoppingListPage.openShoppingList(staticFixtures.shoppingListName);
+      shoppingListPage.openShoppingList(shoppingListName);
       shoppingListPage.openSharePage();
       shoppingListPage.shareWithCompanyUser({ name: receiverName, accessLevel: staticFixtures.fullAccessText });
 
@@ -60,12 +60,10 @@ describe(
 
       // What the colleague's own overview has to say about a list somebody else owns.
       [ownerName, staticFixtures.fullAccessText].forEach((expectedText): void => {
-        shoppingListPage
-          .getShoppingListOverviewRow(staticFixtures.shoppingListName)
-          .should('contain.text', expectedText);
+        shoppingListPage.getShoppingListOverviewRow(shoppingListName).should('contain.text', expectedText);
       });
 
-      shoppingListPage.openShoppingList(staticFixtures.shoppingListName);
+      shoppingListPage.openShoppingList(shoppingListName);
       shoppingListPage
         .getShoppingListItemsTable()
         .should('contain.text', `${staticFixtures.soldByText} ${dynamicFixtures.merchant.name}`);

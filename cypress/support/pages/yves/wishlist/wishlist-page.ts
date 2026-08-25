@@ -7,10 +7,16 @@ import { YvesPage } from '@pages/yves';
 export class WishlistPage extends YvesPage {
   protected PAGE_URL = '/wishlist';
 
-  createWishlist = (name: string): void => {
+  // Generated here, not taken from a fixture, so a retry creates a wishlist of its own rather than a
+  // second one under the failed attempt's name. The form's name validation allows only [ A-Za-z0-9_-].
+  createWishlist = (name?: string): string => {
+    const wishlistName = name ?? `Wishlist ${this.faker.string.uuid()}`;
+
     cy.get('#wishlist_form_name').clear();
-    cy.get('#wishlist_form_name').type(name);
+    cy.get('#wishlist_form_name').type(wishlistName);
     cy.get('[data-qa="component wishlist-form"] input[type="submit"]').click();
+
+    return wishlistName;
   };
 
   getWishlistOverviewEntry = (name: string): Cypress.Chainable =>
@@ -23,15 +29,8 @@ export class WishlistPage extends YvesPage {
   getWishlistItemsTable = (): Cypress.Chainable => cy.get('[data-qa="component wishlist-table"]');
 
   // The wishlist selector is a widget on the product detail page: it posts the displayed product
-  // to `wishlist/add-item`. Its wishlist picker is filled in by an ajax call after page load, so
-  // both entry points below wait for that call to have rendered its field first.
-  addDisplayedProductToDefaultWishlist = (): void => {
-    // A customer who owns no wishlist gets an empty hidden field rather than a picker, and the
-    // server turns that into the default wishlist.
-    cy.get('[data-qa="component wishlist-selector-default"] input[name="wishlist-name"]').should('exist');
-    this.getAddToWishlistForm().submit();
-  };
-
+  // to `wishlist/add-item`. Its picker is filled in by an ajax call after page load, so reading it
+  // is what waits for that call to have rendered.
   getWishlistPicker = (): Cypress.Chainable =>
     cy.get('[data-qa="component wishlist-selector-default"] [name="wishlist-name"]');
 
