@@ -1,3 +1,5 @@
+export type CustomerSidebarSection = 'profile' | 'address' | 'order' | 'newsletter';
+
 export interface CustomerOverviewRepository {
   getPlacedOrderSuccessMessage(): string;
   getLastViewOrderButton(): Cypress.Chainable;
@@ -6,4 +8,7 @@ export interface CustomerOverviewRepository {
   getViewOrderButton(tableRowIndex: number): Cypress.Chainable;
   getMyFilesLink(): Cypress.Chainable;
   getOrderDetailTableRow(): Cypress.Chainable;
+  getSidebarLink(section: CustomerSidebarSection): Cypress.Chainable;
+  getDefaultBillingAddressHeading(): string;
+  getDefaultShippingAddressHeading(): string;
 }

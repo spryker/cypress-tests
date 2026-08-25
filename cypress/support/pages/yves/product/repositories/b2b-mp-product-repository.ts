@@ -22,18 +22,20 @@ export class B2bMpProductRepository implements ProductRepository {
   getAddToComparisonListLimitExceededErrorMessage = (): string => 'The limit has already been reached';
   getShipmentTypeRadioButton = (shipmentTypeName: string): Cypress.Chainable =>
     cy.contains('[data-qa="component radio shipment_type_uuid"]', shipmentTypeName).find('input');
+  getServicePointBlockLoader = (): Cypress.Chainable =>
+    cy.get('ajax-loader[provider-class-name="js-service-point-shipment-types-provider"]');
   getSelectServicePointButton = (): Cypress.Chainable =>
     cy.get('[data-qa="component ssp-service-point-selector"] button:visible');
   getSelectAssetButton = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-trigger"]');
   getSelectAssetPopup = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-results"]', { timeout: 10000 });
   getAssetOptions = (): Cypress.Chainable => cy.get('[data-qa="asset-option-trigger"');
   getServicePointSearchInput = (): Cypress.Chainable => cy.get('[data-qa="component ssp-service-point-finder"] input');
-  getServicePointFinderResults = (): Cypress.Chainable => cy.get('[data-qa="component service-point"]');
+  getServicePointFinderResults = (): Cypress.Chainable => cy.get('[data-qa="component service-point"]:visible');
 
   getServicePointListItem = (servicePointName: string): Cypress.Chainable =>
     cy
-      .get('[data-qa="component ssp-service-point-finder"]')
-      .find('[data-qa="component service-point"]')
+      .get('[data-qa="component ssp-service-point-finder"]:visible')
+      .find('[data-qa="component service-point"]:visible')
       .filter((_, el) => Cypress.$(el).find('.service-point__name').text().trim() === servicePointName)
       .find('button[data-qa="available-service-point"]');
   getSelectedServicePointName = (): Cypress.Chainable => cy.get('[data-qa="component ssp-service-point-selector"]');

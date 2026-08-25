@@ -11,5 +11,5 @@ export interface CategoryEditStaticFixtures {
 export interface CategoryEditDynamicFixtures {
   store: Store;
   parentCategory: Category;
-  childCategory: Category;
+  childCategory: Category & { id_category: number };
 }

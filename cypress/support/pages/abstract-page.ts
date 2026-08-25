@@ -4,6 +4,7 @@ import { injectable } from 'inversify';
 @injectable()
 export class AbstractPage {
   protected PAGE_URL = '';
+  protected DEFAULT_PASSWORD_PREFIX = 'Change!23456';
   protected faker = faker;
 
   assertPageLocation = (): void => {

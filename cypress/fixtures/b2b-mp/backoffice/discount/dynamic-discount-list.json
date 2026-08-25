@@ -1,0 +1,43 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "transfer",
+          "name": "CurrencyTransfer",
+          "key": "currency",
+          "arguments": { "id_currency": 93, "code": "EUR" }
+        },
+        {
+          "type": "helper",
+          "name": "haveDiscount",
+          "key": "discount",
+          "arguments": [
+            {},
+            [
+              {
+                "netAmount": 100,
+                "grossAmount": 100,
+                "fkCurrency": "#currency.id_currency",
+                "currency": "#currency"
+              }
+            ]
+          ]
+        }
+      ]
+    }
+  }
+}

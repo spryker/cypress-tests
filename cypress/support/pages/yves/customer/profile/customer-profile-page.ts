@@ -10,14 +10,38 @@ export class CustomerProfilePage extends YvesPage {
 
   protected PAGE_URL = '/customer/profile';
 
-  changePassword(currentPassword: string, newPassword: string): void {
+  changePassword(currentPassword: string, newPassword: string, confirmPassword: string = newPassword): void {
     this.repository.getCurrentPasswordInput().type(currentPassword);
     this.repository.getNewPasswordInput().type(newPassword);
-    this.repository.getConfirmPasswordInput().type(newPassword);
+    this.repository.getConfirmPasswordInput().type(confirmPassword);
     this.repository.getSubmitButton().click();
   }
 
   getPasswordChangedMessage(): Cypress.Chainable {
     return cy.contains(this.repository.getPasswordChangedMessage());
+  }
+
+  updateProfileData(salutation: string, firstName: string, lastName: string): void {
+    this.repository.getSalutationSelect().select(salutation, { force: true });
+    this.repository.getFirstNameInput().clear().type(firstName);
+    this.repository.getLastNameInput().clear().type(lastName);
+    this.repository.getProfileSubmitButton().click();
+  }
+
+  updateEmail(email: string): void {
+    this.repository.getEmailInput().clear().type(email);
+    this.repository.getProfileSubmitButton().click();
+  }
+
+  getProfileSavedMessage(): Cypress.Chainable {
+    return cy.contains(this.repository.getProfileSavedMessage());
+  }
+
+  getEmailInUseError(): Cypress.Chainable {
+    return cy.contains(this.repository.getEmailInUseErrorMessage());
+  }
+
+  getPasswordsDoNotMatchError(): Cypress.Chainable {
+    return cy.contains(this.repository.getPasswordsDoNotMatchMessage());
   }
 }
