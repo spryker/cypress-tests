@@ -1,4 +1,4 @@
-import { Customer, ProductConcrete, Quote, Discount } from './shared';
+import { Address, Customer, Discount, Merchant, ProductConcrete, ProductOffer, Quote } from './shared';
 
 export interface CartItemNoteManagementDynamicFixtures {
   customer: Customer;
@@ -43,4 +43,20 @@ export interface SharedCartExternalLinkDynamicFixtures {
   customer: Customer;
   product1: ProductConcrete;
   quote: Quote;
+}
+
+export interface SharedCartCheckoutDynamicFixtures {
+  ownerCustomer: Customer;
+  receiverCustomer: Customer;
+  receiverAddress: Address;
+  product: ProductConcrete;
+  merchant: Merchant;
+  productOffer: ProductOffer;
+}
+
+export interface SharedCartCheckoutStaticFixtures {
+  defaultPassword: string;
+  soldByText: string;
+  ownerAccessText: string;
+  fullAccessText: string;
 }

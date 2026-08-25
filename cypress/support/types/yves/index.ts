@@ -25,3 +25,7 @@ export * from './recurring-orders';
 export * from './agent-assist';
 export * from './company-structure';
 export * from './discount';
+export * from './wishlist';
+export * from './shopping-list';
+export * from './quick-order';
+export * from './business-on-behalf';

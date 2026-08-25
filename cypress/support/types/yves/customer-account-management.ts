@@ -1,4 +1,4 @@
-import { Customer, Store, User } from './shared';
+import { Customer, ProductConcrete, Store, User } from './shared';
 
 export interface CustomerAuthDynamicFixtures {
   customer: Customer;
@@ -78,4 +78,12 @@ export interface RestoreSessionAfterLoginTimeoutStaticFixtures {
 
 export interface RestoreSessionAfterLoginTimeoutDynamicFixtures {
   customer: Customer;
+}
+
+export interface GuestAccessRestrictionsDynamicFixtures {
+  product: ProductConcrete;
+}
+
+export interface GuestAccessRestrictionsStaticFixtures {
+  cartTotal: string;
 }
