@@ -1,4 +1,4 @@
-import { ProductConcrete, User } from './shared';
+import { Merchant, ProductConcrete, ProductOffer, User } from './shared';
 
 export interface MultistoreCmsPageDynamicFixtures {
   rootUser: User;
@@ -24,4 +24,21 @@ export interface MultistoreProductStaticFixtures {
   secondaryStorePrice: string;
   unassignedStoreProductPrice: string;
   currencySymbol: string;
+}
+
+export interface MultistoreProductOfferDynamicFixtures {
+  rootUser: User;
+  product: ProductConcrete;
+  merchant: Merchant;
+  merchantToUnassign: Merchant;
+  productOffer: ProductOffer;
+  productOfferToUnassign: ProductOffer;
+}
+
+export interface MultistoreProductOfferStaticFixtures {
+  defaultPassword: string;
+  primaryStoreName: string;
+  secondaryStoreName: string;
+  primaryStorePrice: string;
+  secondaryStorePrice: string;
 }

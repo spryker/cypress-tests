@@ -72,6 +72,7 @@ export * from './ssp-model-management/list/ssp-model-list-page';
 export * from './ssp-model-management/add/ssp-model-add-page';
 export * from './product-offer/list/product-offer-list-page';
 export * from './product-offer/create/product-offer-create-page';
+export * from './product-offer/edit/product-offer-edit-page';
 export * from './product-offer/view/product-offer-view-page';
 export * from './ssp-model-management/update/ssp-model-update-page';
 export * from './ssp-model-management/view/ssp-model-view-page';
