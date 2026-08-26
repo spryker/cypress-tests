@@ -61,6 +61,12 @@ describe(
       });
       productManagementEditPage.save();
       cy.runQueueWorker();
+
+      // A retry re-runs the test but not this hook, and by then the offer is already off the store,
+      // so the test can no longer establish that it was ever there. That precondition is checked
+      // here instead, while it still holds.
+      openProductDetailPageOnStore(staticFixtures.secondaryStoreName);
+      assertOfferIsListed(dynamicFixtures.productOfferToUnassign.product_offer_reference);
     });
 
     it('given a product offer is assigned to both stores when a shopper opens the detail page on each store then the offer is listed', (): void => {
@@ -79,14 +85,12 @@ describe(
 
     it('given a store is unassigned from a product offer when a shopper opens the detail page then only the remaining store still lists that offer', (): void => {
       // Arrange
-      openProductDetailPageOnStore(staticFixtures.secondaryStoreName);
-      assertOfferIsListed(dynamicFixtures.productOfferToUnassign.product_offer_reference);
-
-      // Act
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
+
+      // Act
       productOfferEditPage.visitOffer(dynamicFixtures.productOfferToUnassign.id_product_offer);
       productOfferEditPage.keepOnlyStores([staticFixtures.primaryStoreName]);
       productOfferEditPage.save();

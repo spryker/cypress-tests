@@ -28,7 +28,6 @@ describe(
     const selectStoreScenario = container.get(SelectStoreScenario);
     const assignStoreToProductScenario = container.get(AssignStoreToProductScenario);
 
-    const HTTP_STATUS_OK = 200;
     const HTTP_STATUS_NOT_FOUND = 404;
     // A store that no longer carries the product answers with a redirect to its own error page
     // instead of a bare 404, so "not found" is recognised by that target as well.
@@ -72,6 +71,14 @@ describe(
         bulkProductPrice: staticFixtures.unassignedStoreProductPrice,
         shouldTriggerPublishAndSync: true,
       });
+
+      // A retry re-runs the test but not this hook, and by then the product is off the store — its
+      // detail page could no longer be opened to read the url off. So it is read here, while the
+      // product is still there, and the test only has to unassign and re-request it.
+      openProductDetailPageOnStore(staticFixtures.secondaryStoreName, dynamicFixtures.productToUnassign);
+      cy.url().then((detailPageUrl: string) => {
+        productDetailPageUrl = detailPageUrl;
+      });
     });
 
     it('given a product is priced per store when a shopper opens its detail page on each store then each store shows its own price', (): void => {
@@ -94,16 +101,12 @@ describe(
 
     it('given a product is unassigned from a store when a shopper opens its detail page on that store then the page is not found', (): void => {
       // Arrange
-      openProductDetailPageOnStore(staticFixtures.secondaryStoreName, dynamicFixtures.productToUnassign);
-      cy.url().then((detailPageUrl: string) => {
-        productDetailPageUrl = detailPageUrl;
-      });
-
-      // Act
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
+
+      // Act
       productManagementEditPage.visitProduct(String(dynamicFixtures.productToUnassign.fk_product_abstract));
       productManagementEditPage.setDummyDEName(); // Gap in dynamic fixtures
       productManagementEditPage.unassignStore(staticFixtures.secondaryStoreName);
@@ -111,7 +114,7 @@ describe(
       cy.runQueueWorker();
 
       // Assert
-      waitForProductDetailPageStatus(false);
+      waitForProductDetailPageToBeNotFound();
     });
 
     // The suggestion dropdown ranks by completion, so a sku query can put a sibling fixture product
@@ -128,22 +131,20 @@ describe(
       productPage.getProductConfigurator().should('contain', product.sku);
     }
 
-    function waitForProductDetailPageStatus(shouldBeServed: boolean, attemptsLeft = PUBLISH_AND_SYNC_ATTEMPTS): void {
+    function waitForProductDetailPageToBeNotFound(attemptsLeft = PUBLISH_AND_SYNC_ATTEMPTS): void {
       cy.then(() => {
         cy.request({ url: productDetailPageUrl, failOnStatusCode: false, followRedirect: false }).then((response) => {
-          const isServed = response.status === HTTP_STATUS_OK;
           const isNotFound =
             response.status === HTTP_STATUS_NOT_FOUND || String(response.redirectedToUrl).includes(NOT_FOUND_PAGE_PATH);
-          const isSettled = shouldBeServed ? isServed : isNotFound;
 
-          if (isSettled || attemptsLeft === 0) {
-            expect(isSettled, `store url ${productDetailPageUrl} serves the product: ${shouldBeServed}`).to.equal(true);
+          if (isNotFound || attemptsLeft === 0) {
+            expect(isNotFound, `store url ${productDetailPageUrl} no longer serves the product`).to.equal(true);
 
             return;
           }
 
           cy.runQueueWorker();
-          waitForProductDetailPageStatus(shouldBeServed, attemptsLeft - 1);
+          waitForProductDetailPageToBeNotFound(attemptsLeft - 1);
         });
       });
     }
