@@ -12,6 +12,19 @@ export class ProductManagementEditRepository {
   getPriceTaxTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-price_and_tax"]');
   getAllStockInputs = (): Cypress.Chainable => cy.get('input[name="product_form_edit[store_relation][id_stores][]"]');
   getAllPriceInputs = (): Cypress.Chainable => cy.get('#price-table-collection [data-decimal-rounding="2"]');
+
+  // The store checkbox carries the store id the price rows are keyed by, so reading it is how a
+  // caller turns a store name into the id without hard-coding an environment-specific number.
+  getStoreRelationCheckbox = (storeName: string): Cypress.Chainable =>
+    cy
+      .get('#tab-content-general label')
+      .contains(new RegExp(`^\\s*${storeName}\\s*$`))
+      .find('input[name="product_form_edit[store_relation][id_stores][]"]');
+
+  // Every money field of one store, across currencies and across gross/net, so the store carries
+  // that price whichever mode the shop runs in.
+  getStorePriceInputs = (idStore: string): Cypress.Chainable =>
+    cy.get(`#price-table-collection [data-decimal-rounding="2"][id^="product_form_edit_prices_${idStore}-"]`);
   getSaveButton = (): Cypress.Chainable => cy.get('[name="product_form_edit"] [value="Save"]');
   getProductNameDEInput = (): Cypress.Chainable => cy.get('#product_form_edit_general_de_DE_name');
   getCollapsedBlock = (): Cypress.Chainable =>
