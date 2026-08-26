@@ -1256,6 +1256,7 @@
             "#scheduleForConfigurableProduct.id_recurring_schedule",
             {
               "sku": "#configurableProduct.sku",
+              "merchant_reference": "#merchant.merchant_reference",
               "quantity": 1,
               "reference_gross_price": 35000,
               "reference_net_price": 28000,
@@ -1432,6 +1433,7 @@
             "#scheduleForPackagingUnit.id_recurring_schedule",
             {
               "sku": "#packagingProduct.sku",
+              "merchant_reference": "#merchant.merchant_reference",
               "quantity": 1,
               "reference_gross_price": 50000,
               "reference_net_price": 40000,
