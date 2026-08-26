@@ -88,6 +88,16 @@
         },
         {
           "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant",
+          "arguments": [
+            {
+              "isOpenForRelationRequest": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveFullProduct",
           "key": "product",
           "arguments": [
@@ -96,6 +106,11 @@
               "idTaxSet": 1
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [{ "idProductAbstract": "#product.fk_product_abstract", "idMerchant": "#merchant.id_merchant" }]
         },
         {
           "type": "transfer",
@@ -197,7 +212,7 @@
               "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
-              "payment_method": "dummyPaymentInvoice",
+              "payment_method": "dummyMarketplacePaymentInvoice",
               "store_name": "DE",
               "currency_iso_code": "EUR",
               "price_mode": "GROSS_MODE",
@@ -215,6 +230,7 @@
             "#schedule.id_recurring_schedule",
             {
               "sku": "#product.sku",
+              "merchant_reference": "#merchant.merchant_reference",
               "quantity": 1,
               "reference_gross_price": 30000,
               "reference_net_price": 25000,
@@ -234,6 +250,13 @@
         },
         {
           "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            { "idProductAbstract": "#bundleProduct.fk_product_abstract", "idMerchant": "#merchant.id_merchant" }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveFullProduct",
           "key": "bundledProduct1",
           "arguments": [
@@ -244,12 +267,26 @@
         },
         {
           "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            { "idProductAbstract": "#bundledProduct1.fk_product_abstract", "idMerchant": "#merchant.id_merchant" }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveFullProduct",
           "key": "bundledProduct2",
           "arguments": [
             {
               "idTaxSet": 1
             }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            { "idProductAbstract": "#bundledProduct2.fk_product_abstract", "idMerchant": "#merchant.id_merchant" }
           ]
         },
         {
@@ -421,7 +458,7 @@
               "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
-              "payment_method": "dummyPaymentInvoice",
+              "payment_method": "dummyMarketplacePaymentInvoice",
               "store_name": "DE",
               "currency_iso_code": "EUR",
               "price_mode": "GROSS_MODE",
@@ -439,6 +476,7 @@
             "#scheduleForBundle.id_recurring_schedule",
             {
               "sku": "#productBundle.sku",
+              "merchant_reference": "#merchant.merchant_reference",
               "quantity": 1,
               "reference_gross_price": 30000,
               "reference_net_price": 25000,
@@ -455,6 +493,7 @@
             "#scheduleForBundle.id_recurring_schedule",
             {
               "sku": "#bundledProduct1.sku",
+              "merchant_reference": "#merchant.merchant_reference",
               "quantity": 2,
               "reference_gross_price": 30000,
               "reference_net_price": 25000,
@@ -471,6 +510,7 @@
             "#scheduleForBundle.id_recurring_schedule",
             {
               "sku": "#bundledProduct2.sku",
+              "merchant_reference": "#merchant.merchant_reference",
               "quantity": 1,
               "reference_gross_price": 30000,
               "reference_net_price": 25000,
@@ -492,6 +532,13 @@
             {
               "idTaxSet": 1
             }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            { "idProductAbstract": "#offerProduct.fk_product_abstract", "idMerchant": "#merchant.id_merchant" }
           ]
         },
         {
@@ -523,16 +570,6 @@
           "type": "helper",
           "name": "haveProductConcreteShipmentType",
           "arguments": ["#offerProduct", "#shipmentType"]
-        },
-        {
-          "type": "helper",
-          "name": "haveActiveMerchantWithStore",
-          "key": "merchant",
-          "arguments": [
-            {
-              "isOpenForRelationRequest": true
-            }
-          ]
         },
         {
           "type": "helper",
@@ -611,7 +648,7 @@
               "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
-              "payment_method": "dummyPaymentInvoice",
+              "payment_method": "dummyMarketplacePaymentInvoice",
               "store_name": "DE",
               "currency_iso_code": "EUR",
               "price_mode": "GROSS_MODE",
@@ -665,6 +702,16 @@
           "arguments": [
             {
               "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#configurableBundleSlotProduct.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
             }
           ]
         },
@@ -748,7 +795,7 @@
               "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
-              "payment_method": "dummyPaymentInvoice",
+              "payment_method": "dummyMarketplacePaymentInvoice",
               "store_name": "DE",
               "currency_iso_code": "EUR",
               "price_mode": "GROSS_MODE",
@@ -766,6 +813,7 @@
             "#scheduleForConfigurableBundle.id_recurring_schedule",
             {
               "sku": "#configurableBundleSlotProduct.sku",
+              "merchant_reference": "#merchant.merchant_reference",
               "quantity": 1,
               "reference_gross_price": 30000,
               "reference_net_price": 25000,
@@ -786,6 +834,13 @@
             {
               "idTaxSet": 1
             }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            { "idProductAbstract": "#priceDriftProduct.fk_product_abstract", "idMerchant": "#merchant.id_merchant" }
           ]
         },
         {
@@ -868,7 +923,7 @@
               "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
-              "payment_method": "dummyPaymentInvoice",
+              "payment_method": "dummyMarketplacePaymentInvoice",
               "store_name": "DE",
               "currency_iso_code": "EUR",
               "price_mode": "GROSS_MODE",
@@ -886,6 +941,7 @@
             "#scheduleForPriceDrift.id_recurring_schedule",
             {
               "sku": "#priceDriftProduct.sku",
+              "merchant_reference": "#merchant.merchant_reference",
               "quantity": 1,
               "reference_gross_price": 25000,
               "reference_net_price": 20000,
@@ -901,6 +957,13 @@
             {
               "idTaxSet": 1
             }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            { "idProductAbstract": "#stockDriftProduct.fk_product_abstract", "idMerchant": "#merchant.id_merchant" }
           ]
         },
         {
@@ -972,7 +1035,7 @@
               "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
-              "payment_method": "dummyPaymentInvoice",
+              "payment_method": "dummyMarketplacePaymentInvoice",
               "store_name": "DE",
               "currency_iso_code": "EUR",
               "price_mode": "GROSS_MODE",
@@ -990,6 +1053,7 @@
             "#scheduleForStockDrift.id_recurring_schedule",
             {
               "sku": "#stockDriftProduct.sku",
+              "merchant_reference": "#merchant.merchant_reference",
               "quantity": 1,
               "reference_gross_price": 30000,
               "reference_net_price": 24000,
@@ -1004,6 +1068,16 @@
           "arguments": [
             {
               "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#simpleProductForStockDrift.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
             }
           ]
         },
@@ -1045,6 +1119,7 @@
             "#scheduleForStockDrift.id_recurring_schedule",
             {
               "sku": "#simpleProductForStockDrift.sku",
+              "merchant_reference": "#merchant.merchant_reference",
               "quantity": 1,
               "reference_gross_price": 22000,
               "reference_net_price": 18000,
@@ -1060,6 +1135,13 @@
             {
               "idTaxSet": 1
             }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            { "idProductAbstract": "#configurableProduct.fk_product_abstract", "idMerchant": "#merchant.id_merchant" }
           ]
         },
         {
@@ -1156,7 +1238,7 @@
               "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
-              "payment_method": "dummyPaymentInvoice",
+              "payment_method": "dummyMarketplacePaymentInvoice",
               "store_name": "DE",
               "currency_iso_code": "EUR",
               "price_mode": "GROSS_MODE",
@@ -1190,6 +1272,13 @@
             {
               "idTaxSet": 1
             }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            { "idProductAbstract": "#packagingProduct.fk_product_abstract", "idMerchant": "#merchant.id_merchant" }
           ]
         },
         {
@@ -1325,7 +1414,7 @@
               "estimated_total": 30000,
               "status": "review_required",
               "build_quote_data": true,
-              "payment_method": "dummyPaymentInvoice",
+              "payment_method": "dummyMarketplacePaymentInvoice",
               "store_name": "DE",
               "currency_iso_code": "EUR",
               "price_mode": "GROSS_MODE",
