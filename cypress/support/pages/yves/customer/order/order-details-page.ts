@@ -39,4 +39,16 @@ export class OrderDetailsPage extends YvesPage {
   getEditOrderForm = (): Cypress.Chainable => {
     return this.repository.getEditOrderForm();
   };
+
+  getCancelOrderButton = (): Cypress.Chainable => {
+    return this.repository.getCancelOrderButton();
+  };
+
+  cancelOrder = (): void => {
+    this.repository.getCancelOrderButton().click();
+  };
+
+  createReturn = (): void => {
+    this.repository.getCreateReturnLink().first().click();
+  };
 }

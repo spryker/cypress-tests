@@ -21,6 +21,8 @@ export class HomePage extends YvesPage {
     );
   };
 
+  getStoreSelectorOption = (store: string): Cypress.Chainable => cy.get(this.repository.getStoreSelectorOption(store));
+
   selectStore = (store: string): void => {
     // Cypress does not fire the 'change' event when the option is already selected,
     // so window.location never gets set. Read the store URL from the option value directly.

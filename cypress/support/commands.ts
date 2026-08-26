@@ -413,6 +413,23 @@ Cypress.Commands.add('createCart', (accessToken, attributes) => {
     .then((response) => response.body.data.id);
 });
 
+Cypress.Commands.add('addCartItem', (accessToken, cartId, attributes) => {
+  return cy.request({
+    method: 'POST',
+    url: `${Cypress.env().glueUrl}/carts/${cartId}/items`,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: {
+      data: {
+        type: 'items',
+        attributes,
+      },
+    },
+  });
+});
+
 Cypress.Commands.add('createShoppingList', (accessToken, name) => {
   return cy
     .request({

@@ -1,0 +1,17 @@
+{
+  "defaultPassword": "change123",
+  "defaultPriceCustomer": {
+    "email": "george.freeman@acme.com"
+  },
+  "merchantPriceCustomer": {
+    "email": "spencor.hopkin@acme.com"
+  },
+  "product": {
+    "abstractSku": "205",
+    "concreteSku": "205_6350138",
+    "name": "Toshiba CAMILEO S30",
+    "cartItemName": "Toshiba CAMILEO S30",
+    "defaultPrice": "€116.11",
+    "merchantPrice": "€100.22"
+  }
+}

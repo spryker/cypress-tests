@@ -1,4 +1,4 @@
-import { Customer, Store, User } from './shared';
+import { Customer, ProductConcrete, Store, User } from './shared';
 
 export interface CustomerAuthDynamicFixtures {
   customer: Customer;
@@ -23,11 +23,13 @@ export interface CustomerOverviewStaticFixtures {
 
 export interface CustomerAddressManagementDynamicFixtures {
   customer: Customer;
+  rootUser: User;
 }
 
 export interface CustomerAddressManagementStaticFixtures {
   defaultPassword: string;
   newAddress: NewCustomerAddress;
+  backofficeAddressCountry: string;
 }
 
 export interface NewCustomerAddress {
@@ -47,6 +49,7 @@ export interface NewCustomerAddress {
 export interface CustomerProfileManagementDynamicFixtures {
   customer: Customer;
   existingCustomer: Customer;
+  rootUser: User;
 }
 
 export interface CustomerProfileManagementStaticFixtures {
@@ -75,4 +78,12 @@ export interface RestoreSessionAfterLoginTimeoutStaticFixtures {
 
 export interface RestoreSessionAfterLoginTimeoutDynamicFixtures {
   customer: Customer;
+}
+
+export interface GuestAccessRestrictionsDynamicFixtures {
+  product: ProductConcrete;
+}
+
+export interface GuestAccessRestrictionsStaticFixtures {
+  cartTotal: string;
 }

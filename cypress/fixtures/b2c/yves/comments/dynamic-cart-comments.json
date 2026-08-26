@@ -6,27 +6,59 @@
       "operations": [
         {
           "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "helper",
           "name": "haveConfirmedCustomer",
           "key": "customer",
-          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
+            }
+          ]
         },
         {
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
-          "arguments": { "id_store": 1 }
+          "arguments": {
+            "id_store": 1
+          }
         },
         {
           "type": "helper",
           "name": "haveFullProduct",
           "key": "product1",
-          "arguments": [{}, { "idTaxSet": 1 }]
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveFullProduct",
           "key": "product2",
-          "arguments": [{}, { "idTaxSet": 1 }]
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
         },
         {
           "type": "helper",
@@ -35,7 +67,10 @@
             {
               "skuProductAbstract": "#product1.abstract_sku",
               "skuProduct": "#product1.sku",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
             }
           ]
         },
@@ -46,19 +81,34 @@
             {
               "skuProductAbstract": "#product2.abstract_sku",
               "skuProduct": "#product2.sku",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
             }
           ]
         },
         {
           "type": "helper",
           "name": "haveProductInStockForStore",
-          "arguments": ["#store", { "sku": "#product1.sku", "isNeverOutOfStock": "1" }]
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product1.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
         },
         {
           "type": "helper",
           "name": "haveProductInStockForStore",
-          "arguments": ["#store", { "sku": "#product2.sku", "isNeverOutOfStock": "1" }]
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product2.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
         },
         {
           "type": "transfer",
@@ -119,7 +169,11 @@
           "type": "helper",
           "name": "havePersistentQuote",
           "key": "emptyQuote",
-          "arguments": [{ "customer": "#customer" }]
+          "arguments": [
+            {
+              "customer": "#customer"
+            }
+          ]
         }
       ]
     }

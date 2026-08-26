@@ -24,6 +24,42 @@ export class CartPage extends YvesPage {
     this.repository.getQuickAddToCartSubmitButton().click();
   };
 
+  // The threshold surcharge is rendered by the core SalesOrderThresholdWidget molecule, whose
+  // data-qa is identical in every shop; the cart-summary markup wrapped around it is not.
+  getThresholdSurcharge = (): Cypress.Chainable => cy.get('[data-qa*="sales-order-threshold-expense"]');
+
+  // The code field belongs to CartCodeWidget's form, not the DiscountWidget voucher form, and takes
+  // gift-card codes as well as vouchers. Its id is the one the Robot source used for every shop, so
+  // it is addressed here rather than per repository. The field sits inside a collapsible section, so
+  // the interaction is forced rather than expanding it first.
+  applyVoucherCode = (code: string): void => {
+    cy.get('#cartCodeForm_code').clear({ force: true });
+    cy.get('#cartCodeForm_code').type(code, { force: true });
+    cy.get('form[name="cartCodeForm"]').find('button[data-qa="submit-button"]').click({ force: true });
+  };
+
+  // Scoped to one tile by sku, because any other active promotion discount offers its own product
+  // in the same carousel.
+  getPromotionalProduct = (sku: string): Cypress.Chainable => cy.contains('[data-qa="component product-item"]', sku);
+
+  addPromotionalProduct = (sku: string): void => {
+    this.getPromotionalProduct(sku).find('[data-qa="add-to-cart-button"]').click();
+  };
+
+  getExternalCartShareLink = (): Cypress.Chainable<string> => {
+    this.repository.getExternalCartShareToggle().click({ force: true });
+
+    return this.repository.getExternalCartShareLinkInput().invoke('val');
+  };
+
+  approveCart = (): void => {
+    this.repository.getApproveCartButton().click();
+  };
+
+  getLockedCartResetForm = (): Cypress.Chainable => this.repository.getLockedCartResetForm();
+
+  getApprovalStatus = (): Cypress.Chainable => this.repository.getApprovalStatus();
+
   startCheckout = (): void => {
     this.repository.getCheckoutButton().click({ force: true });
   };
@@ -47,6 +83,25 @@ export class CartPage extends YvesPage {
 
     input.type('{selectall}', { force: true }).type(String(params.quantity), { force: true });
     this.repository.submitCartItemChangeQuantity(params.sku);
+  };
+
+  // cy.get() on the clear form fails outright on an empty cart, so a spec that only needs a known
+  // starting point has to look before it clears.
+  configureProduct = (params: ConfigureProductParams): void => {
+    this.repository
+      .getProductCartItems()
+      .filter(`:contains("${params.sku}")`)
+      .first()
+      .find(this.repository.getConfigureButtonSelector())
+      .click();
+  };
+
+  clearCartIfNotEmpty = (): void => {
+    this.getBody().then(($body) => {
+      if ($body.find(this.repository.getClearCartFormSelector()).length) {
+        this.clearCart();
+      }
+    });
   };
 
   clearCart = (): void => {
@@ -110,6 +165,18 @@ export class CartPage extends YvesPage {
     }
   };
 
+  changeConfiguredBundleQuantity = (params: ChangeConfiguredBundleQuantityParams): void => {
+    const input = this.repository.getConfiguredBundleQuantityField(params.bundleName);
+
+    input.type('{selectall}', { force: true });
+    input.type(String(params.quantity), { force: true });
+    this.repository.submitConfiguredBundleQuantity(params.bundleName);
+  };
+
+  getConfiguredBundles = (): Cypress.Chainable => {
+    return this.repository.getConfiguredBundles();
+  };
+
   getProductCartItems = (): Cypress.Chainable => {
     return this.repository.getProductCartItems();
   };
@@ -125,6 +192,10 @@ export class CartPage extends YvesPage {
   getCartItemAvailabilityLabel = (): Cypress.Chainable => {
     return this.repository.getCartItemAvailabilityLabel();
   };
+}
+
+interface ConfigureProductParams {
+  sku: string;
 }
 
 interface QuickAddToCartParams {
@@ -143,4 +214,9 @@ interface ChangeQuantityParams {
 
 interface CartItemNoteAddParams {
   message: string;
+}
+
+interface ChangeConfiguredBundleQuantityParams {
+  bundleName: string;
+  quantity: number;
 }

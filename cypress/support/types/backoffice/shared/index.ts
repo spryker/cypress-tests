@@ -3,6 +3,7 @@ export * from './address';
 export * from './customer';
 export * from './product';
 export * from './product-concrete';
+export * from './product-localized-attributes';
 export * from './product-offer';
 export * from './quote';
 export * from './user';
