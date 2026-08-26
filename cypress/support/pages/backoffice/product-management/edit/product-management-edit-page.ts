@@ -37,6 +37,31 @@ export class ProductManagementEditPage extends BackofficePage {
     return this.repository.getGeneralTab();
   }
 
+  visitProduct = (idProductAbstract: string): void => {
+    cy.visitBackoffice(`${this.PAGE_URL}?id-product-abstract=${idProductAbstract}`);
+  };
+
+  unassignStore = (storeName: string): void => {
+    this.repository.getGeneralTab().click({ force: true });
+    this.repository.getStoreRelationCheckbox(storeName).uncheck();
+  };
+
+  // The price rows are keyed by store id, which is only readable from the store checkbox on the
+  // general tab — hence the tab switch in the middle.
+  setStorePrice = (params: SetStorePriceParams): void => {
+    this.repository.getGeneralTab().click({ force: true });
+    this.repository
+      .getStoreRelationCheckbox(params.storeName)
+      .invoke('val')
+      .then((idStore) => {
+        this.repository.getPriceTaxTab().click();
+        this.repository.getStorePriceInputs(String(idStore)).each(($priceInput) => {
+          cy.wrap($priceInput).clear({ force: true });
+          cy.wrap($priceInput).type(params.price, { force: true, delay: 0 });
+        });
+      });
+  };
+
   bulkPriceUpdate = (productPrice: string): void => {
     this.repository.getPriceTaxTab().click();
     this.repository.getAllPriceInputs().each(($el) => {
@@ -123,6 +148,11 @@ export class ProductManagementEditPage extends BackofficePage {
   getFirstAttachmentFormIbox = (): Cypress.Chainable => this.repository.getFirstAttachmentFormIbox();
 
   getFirstAttachmentFormAddButton = (): Cypress.Chainable => this.repository.getFirstAttachmentFormAddButton();
+}
+
+interface SetStorePriceParams {
+  storeName: string;
+  price: string;
 }
 
 interface AttachmentParams {

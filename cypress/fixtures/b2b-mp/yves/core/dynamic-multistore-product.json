@@ -1,0 +1,45 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStock",
+          "arguments": [{ "sku": "#product.sku", "isNeverOutOfStock": "1", "fkStock": 1, "stockType": "Warehouse1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productToUnassign",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStock",
+          "arguments": [
+            { "sku": "#productToUnassign.sku", "isNeverOutOfStock": "1", "fkStock": 1, "stockType": "Warehouse1" }
+          ]
+        }
+      ]
+    }
+  }
+}
