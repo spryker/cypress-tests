@@ -1,0 +1,136 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": false,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": {
+            "id_store": 1,
+            "name": "DE",
+            "defaultCurrencyIsoCode": "EUR"
+          }
+        },
+        {
+          "type": "array-object",
+          "key": "stores",
+          "arguments": ["#store"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "helper",
+          "name": "haveServicePoint",
+          "key": "servicePoint",
+          "arguments": [
+            {
+              "isActive": true,
+              "storeRelation": {
+                "stores": [
+                  {
+                    "idStore": "#store.id_store"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveServicePointAddress",
+          "key": "servicePointAddress",
+          "arguments": [
+            {
+              "servicePoint": "#servicePoint",
+              "country": "#country",
+              "address1": "Cypress Street",
+              "address2": "1",
+              "city": "Cypress City",
+              "zipCode": "10115"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveServiceType",
+          "key": "serviceType",
+          "arguments": [
+            {
+              "key": "cypress-service-type"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveService",
+          "key": "service",
+          "arguments": [
+            {
+              "isActive": true,
+              "servicePoint": {
+                "id_service_point": "#servicePoint.id_service_point"
+              },
+              "serviceType": {
+                "id_service_type": "#serviceType.id_service_type"
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product",
+          "arguments": [{ "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOffer",
+          "key": "productOffer",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "idProductConcrete": "#product.id_product_concrete",
+              "concreteSku": "#product.sku",
+              "merchantReference": "#merchant.merchant_reference",
+              "stores": "#stores"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferService",
+          "key": "productOfferService",
+          "arguments": [
+            {
+              "idProductOffer": "#productOffer.id_product_offer",
+              "idService": "#service.id_service"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
