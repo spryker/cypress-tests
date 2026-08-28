@@ -182,7 +182,7 @@
               "customerReference": "#customer.customer_reference",
               "shipment": "#shipment"
             },
-            "DummyPayment01"
+            "MarketplacePayment01"
           ]
         }
       ]

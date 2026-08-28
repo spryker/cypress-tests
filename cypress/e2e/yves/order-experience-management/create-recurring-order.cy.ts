@@ -92,15 +92,19 @@ describe(
       checkoutSummaryRecurringOrderPage.getStartDateInput().should('have.value', futureDate);
     });
 
-    it('recurring order widget is not visible when credit card payment method is selected', (): void => {
-      customerLoginScenario.execute({
-        email: dynamicFixtures.buyerForCreditCard.email,
-        password: staticFixtures.defaultPassword,
-        withoutSession: true,
-      });
-      checkoutScenario.execute({ paymentMethod: 'dummyPaymentCreditCard', shouldSkipPlaceOrder: true });
+    // b2b-mp ships only the marketplace invoice payment method, so there is no credit card to select
+    (Cypress.env('repositoryId') === 'b2b-mp' ? it.skip : it)(
+      'recurring order widget is not visible when credit card payment method is selected',
+      (): void => {
+        customerLoginScenario.execute({
+          email: dynamicFixtures.buyerForCreditCard.email,
+          password: staticFixtures.defaultPassword,
+          withoutSession: true,
+        });
+        checkoutScenario.execute({ paymentMethod: 'dummyPaymentCreditCard', shouldSkipPlaceOrder: true });
 
-      checkoutSummaryRecurringOrderPage.getRecurringOrderToggle().should('not.exist');
-    });
+        checkoutSummaryRecurringOrderPage.getRecurringOrderToggle().should('not.exist');
+      }
+    );
   }
 );
