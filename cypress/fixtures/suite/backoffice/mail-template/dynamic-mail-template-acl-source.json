@@ -1,0 +1,105 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": false,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+
+        { "type": "helper", "name": "haveRole", "key": "mailTemplateEditorRole" },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "dashboard",
+              "controller": "*",
+              "action": "*",
+              "type": "allow",
+              "fk_acl_role": "#mailTemplateEditorRole.id_acl_role"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "mail-template",
+              "controller": "index",
+              "action": "*",
+              "type": "allow",
+              "fk_acl_role": "#mailTemplateEditorRole.id_acl_role"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "mail-template",
+              "controller": "manage",
+              "action": "index",
+              "type": "allow",
+              "fk_acl_role": "#mailTemplateEditorRole.id_acl_role"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "mail-template",
+              "controller": "manage",
+              "action": "save",
+              "type": "allow",
+              "fk_acl_role": "#mailTemplateEditorRole.id_acl_role"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "mail-template",
+              "controller": "manage",
+              "action": "publish",
+              "type": "allow",
+              "fk_acl_role": "#mailTemplateEditorRole.id_acl_role"
+            }
+          ]
+        },
+        { "type": "helper", "name": "haveGroup", "key": "mailTemplateEditorGroup" },
+        {
+          "type": "helper",
+          "name": "addRoleToGroup",
+          "arguments": ["#mailTemplateEditorRole.id_acl_role", "#mailTemplateEditorGroup.id_acl_group"]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "editorWithoutSourceUser",
+          "arguments": [{ "password": "Change123@_!" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#editorWithoutSourceUser.id_user", "#mailTemplateEditorGroup.id_acl_group"]
+        }
+      ]
+    }
+  }
+}

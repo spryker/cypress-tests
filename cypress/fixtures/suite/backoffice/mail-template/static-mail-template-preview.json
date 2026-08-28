@@ -1,0 +1,7 @@
+{
+  "defaultPassword": "change123",
+  "editableMailType": "customer registration mail",
+  "scanCommand": "console mail-template:scan",
+  "expectedIframeSandbox": "allow-same-origin",
+  "forbiddenIframeSandboxToken": "allow-scripts"
+}

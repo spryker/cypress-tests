@@ -1,0 +1,6 @@
+{
+  "defaultPassword": "change123",
+  "editableMailType": "customer registration mail",
+  "scanCommand": "console mail-template:scan",
+  "chipType": "variable"
+}
