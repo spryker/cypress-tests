@@ -1,4 +1,3 @@
-export * from './abstract-products-requests';
 export * from './auth';
 export * from './cart-requests';
 export * from './checkout-requests';

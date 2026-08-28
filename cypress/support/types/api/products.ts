@@ -37,4 +37,8 @@ export interface ProductsDynamicFixtures {
   shipmentType: {
     uuid: string;
   };
+  productClass: {
+    id_product_class: number;
+    key: string;
+  };
 }

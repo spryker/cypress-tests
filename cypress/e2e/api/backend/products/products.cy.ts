@@ -1,17 +1,9 @@
 import { ProductsDynamicFixtures, ProductsStaticFixtures } from '@interfaces/api';
-import {
-  createProduct,
-  getAbstractProduct,
-  getAbstractProductCollection,
-  getProduct,
-  getProductCollection,
-  getProductWithoutToken,
-  updateProduct,
-} from '@utils';
+import { createProduct, getProduct, getProductCollection, getProductWithoutToken, updateProduct } from '@utils';
 import { retryableBefore } from '../../../../support/e2e';
 
 // Non-nullable resource attributes always serialized (nullable ones — abstractSku, isActive,
-// validFrom, validTo — are omitted from the payload when null).
+// validFrom, validTo, taxSet — are omitted from the payload when null).
 const EXPECTED_ATTRIBUTE_KEYS = [
   'sku',
   'attributes',
@@ -23,6 +15,8 @@ const EXPECTED_ATTRIBUTE_KEYS = [
   'productBundle',
   'productClass',
   'shipmentType',
+  'stores',
+  'categories',
 ];
 
 // Well-formed uuid that matches no row — used for negative/deferred-validation cases.
@@ -30,6 +24,9 @@ const NON_EXISTENT_UUID = '00000000-0000-4000-8000-000000000000';
 
 // productClass is referenced by its natural key, not a uuid.
 const NON_EXISTENT_PRODUCT_CLASS_KEY = 'pxm-non-existent-product-class';
+
+// Value written under the super-attribute key, so superAttributeValues can be asserted against it.
+const SUPER_ATTRIBUTE_VALUE = 'blue';
 
 describe('products backend api', { tags: ['@api', '@products', 'product'] }, (): void => {
   let staticFixtures: ProductsStaticFixtures;
@@ -44,7 +41,7 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
     sku: concreteSku,
     ...(parentAbstractSku !== null ? { abstractSku: parentAbstractSku } : {}),
     isActive: true,
-    attributes: { color: 'blue' },
+    attributes: { [staticFixtures.superAttributeKey]: SUPER_ATTRIBUTE_VALUE },
     localizedAttributes: [
       { localeName: staticFixtures.localeName, name: `Concrete ${concreteSku}`, isSearchable: true },
     ],
@@ -127,15 +124,20 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
         // Product class is linked to the seeded product via the fixture; the API surfaces it by key+name.
         expect(attributes.productClass, 'productClass').to.be.an('array').and.to.have.length.greaterThan(0);
         expect(attributes.productClass[0], 'productClass item').to.have.all.keys('key', 'name');
-        expect(attributes.productClass[0].key, 'productClass key').to.be.a('string').and.not.be.empty;
+        expect(
+          attributes.productClass.map((item: { key: string }) => item.key),
+          'seeded product class linked'
+        ).to.include(dynamicFixtures.productClass.key);
       });
     });
 
-    it('should not expand abstract-level stores and categories on the concrete resource', (): void => {
-      // Concrete /products intentionally does not expand abstract-owned collections — they stay empty.
+    it('should expand abstract-level data read from the parent abstract', (): void => {
+      // /products is self-contained: the abstract-owned fields it accepts on write are read back here.
       getProduct(accessToken, sku).then((response) => {
-        expect(response.body.data.attributes.stores, 'stores not expanded').to.be.an('array').and.to.be.empty;
-        expect(response.body.data.attributes.categories, 'categories not expanded').to.be.an('array').and.to.be.empty;
+        const attributes = response.body.data.attributes;
+
+        expect(attributes.stores, 'stores').to.be.an('array').and.to.have.length.greaterThan(0);
+        expect(attributes.categories, 'categories').to.be.an('array');
       });
     });
 
@@ -228,6 +230,12 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
           (item: Record<string, unknown>) => item.uuid === dynamicFixtures.shipmentType.uuid
         );
         expect(shipmentType, 'shipment type assigned').to.not.be.undefined;
+
+        // Derived server-side by the super-attribute expander: the subset of `attributes` whose keys
+        // are super-attribute keys of the parent abstract. Empty here would mean the expander is unwired.
+        expect(attributes.superAttributeValues, 'superAttributeValues derived from attributes').to.deep.include({
+          [staticFixtures.superAttributeKey]: SUPER_ATTRIBUTE_VALUE,
+        });
       });
     });
 
@@ -447,7 +455,9 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       // Regression: the writer matches the existing row on price_data_checksum, so a price with
       // volume prices must keep its stored checksum through the merge or it mints a new row.
       const volumePriceSku = `pxm-volume-idem-${Date.now()}`;
-      const volumePrices = [{ quantity: 10, netPrice: staticFixtures.netAmount - 100, grossPrice: staticFixtures.grossAmount - 100 }];
+      const volumePrices = [
+        { quantity: 10, netPrice: staticFixtures.netAmount - 100, grossPrice: staticFixtures.grossAmount - 100 },
+      ];
       const priceBody = {
         priceTypeName: staticFixtures.priceTypeName,
         storeName: staticFixtures.storeName,
@@ -609,22 +619,22 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
     });
   });
 
-  // Abstract-level fields (stores, taxSet, categories) written through the concrete /products endpoint
-  // are not echoed in the /products response — they are verified via GET /abstract-products/{abstractSku}.
+  // Abstract-level fields (stores, taxSet, categories, newFrom, newTo) are written through the concrete
+  // /products endpoint and read back from the same resource — PXM resolves the parent abstract itself.
   describe('abstract-level writes via /products', (): void => {
     it('should assign abstract stores when auto-creating the abstract (abstractSku omitted)', (): void => {
       const newSku = `pxm-abs-create-${Date.now()}`;
-      const derivedAbstractSku = `${newSku}-abstract`;
 
       createProduct(accessToken, { ...buildValidProductBody(newSku, null), stores: [staticFixtures.storeName] }).then(
         (response) => {
           expect(response.status, 'concrete created').to.be.oneOf([200, 201]);
+          expect(response.body.data.attributes.stores, 'stores echoed on the write response').to.include(
+            staticFixtures.storeName
+          );
 
-          getAbstractProduct(accessToken, derivedAbstractSku).then((abstractResponse) => {
-            expect(abstractResponse.status).to.eq(200);
-            expect(abstractResponse.body.data.attributes.stores, 'abstract stores').to.include(
-              staticFixtures.storeName
-            );
+          getProduct(accessToken, newSku).then((getResponse) => {
+            expect(getResponse.status).to.eq(200);
+            expect(getResponse.body.data.attributes.stores, 'abstract stores').to.include(staticFixtures.storeName);
           });
         }
       );
@@ -639,30 +649,29 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
         updateProduct(accessToken, patchSku, { stores: ['DE', 'AT'] }).then((patchResponse) => {
           expect(patchResponse.status).to.eq(200);
 
-          getAbstractProduct(accessToken, abstractSku).then((abstractResponse) => {
-            expect(abstractResponse.status).to.eq(200);
-            expect(abstractResponse.body.data.attributes.stores, 'abstract stores').to.include.members(['DE', 'AT']);
+          getProduct(accessToken, patchSku).then((getResponse) => {
+            expect(getResponse.status).to.eq(200);
+            expect(getResponse.body.data.attributes.stores, 'abstract stores').to.include.members(['DE', 'AT']);
           });
         });
       });
     });
 
-    it('should assign taxSet and categories via POST and reflect them on the abstract', (): void => {
+    it('should assign taxSet and categories via POST and read them back', (): void => {
       // Real uuids are sourced from demo catalog products (seed helpers do not expose behaviour-generated
       // uuids, and the freshly seeded abstract carries none). Demo abstracts are taxed + categorised.
-      getAbstractProductCollection(accessToken, { page: 1 }).then((collection) => {
+      getProductCollection(accessToken, { page: 1 }).then((collection) => {
         expect(collection.status).to.eq(200);
 
         const withRefs = collection.body.data.find(
           (item: { attributes: { taxSet?: { uuid?: string }; categories: Array<{ uuid: string }> } }) =>
             item.attributes.taxSet?.uuid && item.attributes.categories.length > 0
         );
-        expect(withRefs, 'a demo abstract with a taxSet and category exists on page 1').to.not.be.undefined;
+        expect(withRefs, 'a demo product with a taxSet and category exists on page 1').to.not.be.undefined;
 
         const taxSetUuid = withRefs.attributes.taxSet.uuid;
         const categoryUuid = withRefs.attributes.categories[0].uuid;
         const newSku = `pxm-abs-refs-${Date.now()}`;
-        const derivedAbstractSku = `${newSku}-abstract`;
 
         createProduct(accessToken, {
           ...buildValidProductBody(newSku, null),
@@ -671,14 +680,18 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
         }).then((response) => {
           expect(response.status, 'concrete created').to.be.oneOf([200, 201]);
 
-          getAbstractProduct(accessToken, derivedAbstractSku).then((abstractResponse) => {
-            expect(abstractResponse.status).to.eq(200);
-            expect(abstractResponse.body.data.attributes.taxSet.uuid, 'taxSet assigned').to.eq(taxSetUuid);
+          getProduct(accessToken, newSku).then((getResponse) => {
+            expect(getResponse.status).to.eq(200);
+            expect(getResponse.body.data.attributes.taxSet.uuid, 'taxSet assigned').to.eq(taxSetUuid);
+            expect(getResponse.body.data.attributes.taxSet.name, 'taxSet name read back').to.be.a('string').and.not.be
+              .empty;
 
-            const categoryUuids = abstractResponse.body.data.attributes.categories.map(
-              (item: { uuid: string }) => item.uuid
+            const category = getResponse.body.data.attributes.categories.find(
+              (item: { uuid: string }) => item.uuid === categoryUuid
             );
-            expect(categoryUuids, 'category assigned').to.include(categoryUuid);
+            expect(category, 'category assigned').to.not.be.undefined;
+            expect(category.categoryKey, 'category key read back').to.be.a('string').and.not.be.empty;
+            expect(category.localizedAttributes, 'category localizedAttributes read back').to.be.an('array');
           });
         });
       });
@@ -687,17 +700,16 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
     it('should not remove existing abstract categories on PATCH (additive-only)', (): void => {
       // Regression: the generated resource defaults categories to [] and cannot tell "omitted" from
       // an explicit empty array, so PATCH must treat both as a no-op — never a clear-all.
-      getAbstractProductCollection(accessToken, { page: 1 }).then((collection) => {
+      getProductCollection(accessToken, { page: 1 }).then((collection) => {
         expect(collection.status).to.eq(200);
 
         const withCategory = collection.body.data.find(
           (item: { attributes: { categories: Array<{ uuid: string }> } }) => item.attributes.categories.length > 0
         );
-        expect(withCategory, 'a demo abstract with a category exists on page 1').to.not.be.undefined;
+        expect(withCategory, 'a demo product with a category exists on page 1').to.not.be.undefined;
 
         const categoryUuid = withCategory.attributes.categories[0].uuid;
         const newSku = `pxm-cat-additive-${Date.now()}`;
-        const derivedAbstractSku = `${newSku}-abstract`;
 
         // Auto-create the abstract with one category assigned.
         createProduct(accessToken, {
@@ -710,7 +722,7 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
           updateProduct(accessToken, newSku, { isActive: false }).then((patchOmitResponse) => {
             expect(patchOmitResponse.status).to.eq(200);
 
-            getAbstractProduct(accessToken, derivedAbstractSku).then((afterOmit) => {
+            getProduct(accessToken, newSku).then((afterOmit) => {
               const uuidsAfterOmit = afterOmit.body.data.attributes.categories.map((c: { uuid: string }) => c.uuid);
               expect(uuidsAfterOmit, 'category kept when categories omitted on PATCH').to.include(categoryUuid);
 
@@ -718,7 +730,7 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
               updateProduct(accessToken, newSku, { categories: [] }).then((patchEmptyResponse) => {
                 expect(patchEmptyResponse.status).to.eq(200);
 
-                getAbstractProduct(accessToken, derivedAbstractSku).then((afterEmpty) => {
+                getProduct(accessToken, newSku).then((afterEmpty) => {
                   const uuidsAfterEmpty = afterEmpty.body.data.attributes.categories.map(
                     (c: { uuid: string }) => c.uuid
                   );
@@ -733,17 +745,16 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
 
     it('should assign newFrom and newTo to the abstract when auto-creating it', (): void => {
       const newSku = `pxm-abs-new-${Date.now()}`;
-      const derivedAbstractSku = `${newSku}-abstract`;
       const newFrom = '2027-01-01 00:00:00';
       const newTo = '2027-12-31 00:00:00';
 
       createProduct(accessToken, { ...buildValidProductBody(newSku, null), newFrom, newTo }).then((response) => {
         expect(response.status, 'concrete created').to.be.oneOf([200, 201]);
 
-        getAbstractProduct(accessToken, derivedAbstractSku).then((abstractResponse) => {
-          expect(abstractResponse.status).to.eq(200);
-          expect(abstractResponse.body.data.attributes.newFrom, 'newFrom assigned').to.contain('2027-01-01');
-          expect(abstractResponse.body.data.attributes.newTo, 'newTo assigned').to.contain('2027-12-31');
+        getProduct(accessToken, newSku).then((getResponse) => {
+          expect(getResponse.status).to.eq(200);
+          expect(getResponse.body.data.attributes.newFrom, 'newFrom assigned').to.contain('2027-01-01');
+          expect(getResponse.body.data.attributes.newTo, 'newTo assigned').to.contain('2027-12-31');
         });
       });
     });
@@ -759,11 +770,14 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
           newTo: '2028-04-01 00:00:00',
         }).then((patchResponse) => {
           expect(patchResponse.status).to.eq(200);
+          expect(patchResponse.body.data.attributes.newFrom, 'newFrom echoed on the write response').to.contain(
+            '2028-03-01'
+          );
 
-          getAbstractProduct(accessToken, abstractSku).then((abstractResponse) => {
-            expect(abstractResponse.status).to.eq(200);
-            expect(abstractResponse.body.data.attributes.newFrom, 'newFrom edited').to.contain('2028-03-01');
-            expect(abstractResponse.body.data.attributes.newTo, 'newTo edited').to.contain('2028-04-01');
+          getProduct(accessToken, patchSku).then((getResponse) => {
+            expect(getResponse.status).to.eq(200);
+            expect(getResponse.body.data.attributes.newFrom, 'newFrom edited').to.contain('2028-03-01');
+            expect(getResponse.body.data.attributes.newTo, 'newTo edited').to.contain('2028-04-01');
           });
         });
       });
@@ -1044,14 +1058,11 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
     });
 
     it('should reject an unknown productClass key with 422', (): void => {
-      updateProduct(
-        accessToken,
-        patchSku,
-        { productClass: [{ key: NON_EXISTENT_PRODUCT_CLASS_KEY }] },
-        false
-      ).then((response) => {
-        expect(response.status, 'unknown productClass key rejected on patch').to.eq(422);
-      });
+      updateProduct(accessToken, patchSku, { productClass: [{ key: NON_EXISTENT_PRODUCT_CLASS_KEY }] }, false).then(
+        (response) => {
+          expect(response.status, 'unknown productClass key rejected on patch').to.eq(422);
+        }
+      );
     });
 
     // PATCH-only: validation runs before the merge, so a request that fails validation must persist NOTHING —
