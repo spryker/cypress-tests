@@ -25,6 +25,9 @@ const NON_EXISTENT_UUID = '00000000-0000-4000-8000-000000000000';
 // productClass is referenced by its natural key, not a uuid.
 const NON_EXISTENT_PRODUCT_CLASS_KEY = 'pxm-non-existent-product-class';
 
+// Stores are referenced by name; used for the abstract-side price validation case.
+const NON_EXISTENT_STORE_NAME = 'pxm-non-existent-store';
+
 // Value written under the super-attribute key, so superAttributeValues can be asserted against it.
 const SUPER_ATTRIBUTE_VALUE = 'blue';
 
@@ -141,6 +144,26 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       });
     });
 
+    it('should return empty abstract-level data when the parent abstract carries none', (): void => {
+      // Graceful-empty contract: a parent abstract with no stores/taxSet/categories must read back as
+      // empty rather than erroring. Array properties serialize as [], the nullable ones are omitted.
+      const bareSku = `pxm-bare-${Date.now()}`;
+
+      createProduct(accessToken, buildValidProductBody(bareSku, null)).then((createResponse) => {
+        expect(createResponse.status, 'concrete created').to.be.oneOf([200, 201]);
+
+        getProduct(accessToken, bareSku).then((response) => {
+          expect(response.status).to.eq(200);
+
+          const attributes = response.body.data.attributes;
+          expect(attributes.abstractSku, 'parent abstract auto-created').to.eq(`${bareSku}-abstract`);
+          expect(attributes.stores, 'stores empty, not missing').to.be.an('array').and.to.be.empty;
+          expect(attributes.categories, 'categories empty, not missing').to.be.an('array').and.to.be.empty;
+          expect(attributes.taxSet, 'nullable taxSet omitted when unset').to.be.undefined;
+        });
+      });
+    });
+
     it('should return 404 for an unknown sku', (): void => {
       getProduct(accessToken, 'non-existent-concrete-sku', false).then((response) => {
         expect(response.status).to.eq(404);
@@ -189,6 +212,86 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
           // Pages must not overlap — every page-2 id is absent from page 1.
           secondIds.forEach((id: string) => expect(firstIds, 'no overlap between pages').to.not.include(id));
         });
+      });
+    });
+
+    it('should filter the collection by concrete sku', (): void => {
+      getProductCollection(accessToken, { filterSku: sku }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.data, 'exactly the requested concrete').to.have.length(1);
+        expect(response.body.data[0].attributes.sku).to.eq(sku);
+      });
+    });
+
+    it('should filter the collection by parent abstract sku', (): void => {
+      getProductCollection(accessToken, { filterAbstractSku: abstractSku }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.data, 'at least the seeded variant').to.have.length.greaterThan(0);
+
+        const skus = response.body.data.map((item: { attributes: { sku: string } }) => item.attributes.sku);
+        expect(skus, 'seeded variant present').to.include(sku);
+
+        // Every returned concrete must belong to the requested abstract — not just the one we seeded.
+        response.body.data.forEach((item: { attributes: { abstractSku: string } }) => {
+          expect(item.attributes.abstractSku, 'only variants of the requested abstract').to.eq(abstractSku);
+        });
+      });
+    });
+
+    it('should attach each product its own parent abstract data', (): void => {
+      // Regression: the collection resolves all abstracts in one batched query and re-attaches them by
+      // SKU. A keying bug would cross-wire abstract-level data between unrelated products on the page,
+      // which per-product assertions on a single item cannot detect.
+      const skuA = `pxm-own-a-${Date.now()}`;
+      const skuB = `pxm-own-b-${Date.now()}`;
+
+      const bodyA = {
+        ...buildValidProductBody(skuA, null),
+        stores: [staticFixtures.storeName],
+        newFrom: '2027-01-01 00:00:00',
+        newTo: '2027-12-31 00:00:00',
+      };
+      const bodyB = {
+        ...buildValidProductBody(skuB, null),
+        stores: [staticFixtures.storeName, 'AT'],
+        newFrom: '2029-01-01 00:00:00',
+        newTo: '2029-12-31 00:00:00',
+      };
+
+      createProduct(accessToken, bodyA).then((responseA) => {
+        expect(responseA.status, 'product A created').to.be.oneOf([200, 201]);
+
+        createProduct(accessToken, bodyB).then((responseB) => {
+          expect(responseB.status, 'product B created').to.be.oneOf([200, 201]);
+
+          getProductCollection(accessToken, { filterSkus: [skuA, skuB] }).then((response) => {
+            expect(response.status).to.eq(200);
+            expect(response.body.data, 'both products returned').to.have.length(2);
+
+            const attributesBySku: Record<string, Record<string, unknown>> = {};
+            response.body.data.forEach((item: { attributes: { sku: string } }) => {
+              attributesBySku[item.attributes.sku] = item.attributes;
+            });
+
+            expect(attributesBySku[skuA].abstractSku).to.eq(`${skuA}-abstract`);
+            expect(attributesBySku[skuB].abstractSku).to.eq(`${skuB}-abstract`);
+
+            expect(attributesBySku[skuA].newFrom, 'A keeps its own newFrom').to.contain('2027-01-01');
+            expect(attributesBySku[skuB].newFrom, 'B keeps its own newFrom').to.contain('2029-01-01');
+
+            expect(attributesBySku[skuA].stores, 'A did not inherit B stores').to.not.include('AT');
+            expect(attributesBySku[skuB].stores, 'B keeps its own stores').to.include('AT');
+          });
+        });
+      });
+    });
+
+    it('should return an empty collection for an unknown abstract sku', (): void => {
+      // Regression: an unresolvable filter value must match nothing. Dropping the condition instead
+      // would silently return the whole unfiltered catalog with a 200.
+      getProductCollection(accessToken, { filterAbstractSku: 'pxm-non-existent-abstract-sku' }).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.data, 'unknown abstract sku matches nothing').to.be.an('array').and.to.be.empty;
       });
     });
 
@@ -305,6 +408,30 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
         expect(response.body.data.attributes.imageSets, 'imageSets persisted')
           .to.be.an('array')
           .and.to.have.length.greaterThan(0);
+      });
+    });
+
+    it('should reject an invalid price on the auto-created abstract with 422', (): void => {
+      // The only path that validates prices on the ABSTRACT: with abstractSku omitted the concrete's
+      // prices are cloned onto the new abstract and checked by
+      // PriceProductAbstractCollectionCreateValidatorPlugin, which runs before the concrete is created.
+      // Every other invalid-POST case passes an explicit abstractSku and so never reaches it.
+      const newSku = `pxm-abs-price-${Date.now()}`;
+      const body = {
+        ...buildValidProductBody(newSku, null),
+        prices: [
+          {
+            priceTypeName: staticFixtures.priceTypeName,
+            storeName: NON_EXISTENT_STORE_NAME,
+            currencyCode: staticFixtures.currencyCode,
+            netAmount: staticFixtures.netAmount,
+            grossAmount: staticFixtures.grossAmount,
+          },
+        ],
+      };
+
+      createProduct(accessToken, body, false).then((response) => {
+        expect(response.status, 'invalid price rejected on the abstract auto-create path').to.eq(422);
       });
     });
 
@@ -743,6 +870,46 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       });
     });
 
+    it('should replace the abstract taxSet via PATCH', (): void => {
+      getProductCollection(accessToken, { perPage: 60 }).then((collection) => {
+        expect(collection.status).to.eq(200);
+
+        const taxSetUuids: string[] = [];
+        collection.body.data.forEach((item: { attributes: { taxSet?: { uuid?: string } } }) => {
+          const uuid = item.attributes.taxSet?.uuid;
+
+          if (uuid && !taxSetUuids.includes(uuid)) {
+            taxSetUuids.push(uuid);
+          }
+        });
+        expect(taxSetUuids.length, 'demo data exposes at least two distinct tax sets').to.be.at.least(2);
+
+        const [firstTaxSetUuid, secondTaxSetUuid] = taxSetUuids;
+        const newSku = `pxm-tax-edit-${Date.now()}`;
+
+        createProduct(accessToken, {
+          ...buildValidProductBody(newSku, null),
+          taxSet: { uuid: firstTaxSetUuid },
+        }).then((createResponse) => {
+          expect(createResponse.status, 'concrete created').to.be.oneOf([200, 201]);
+          expect(createResponse.body.data.attributes.taxSet.uuid, 'initial taxSet assigned').to.eq(firstTaxSetUuid);
+
+          updateProduct(accessToken, newSku, { taxSet: { uuid: secondTaxSetUuid } }).then((patchResponse) => {
+            expect(patchResponse.status).to.eq(200);
+            expect(patchResponse.body.data.attributes.taxSet.uuid, 'taxSet replaced on the write response').to.eq(
+              secondTaxSetUuid
+            );
+
+            getProduct(accessToken, newSku).then((getResponse) => {
+              expect(getResponse.body.data.attributes.taxSet.uuid, 'taxSet replacement persisted').to.eq(
+                secondTaxSetUuid
+              );
+            });
+          });
+        });
+      });
+    });
+
     it('should assign newFrom and newTo to the abstract when auto-creating it', (): void => {
       const newSku = `pxm-abs-new-${Date.now()}`;
       const newFrom = '2027-01-01 00:00:00';
@@ -1013,6 +1180,27 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       {
         title: 'unknown shipmentType uuid',
         override: { shipmentType: [{ uuid: NON_EXISTENT_UUID }] },
+      },
+      {
+        // Regression: an imageSet uuid the product does not own used to be silently discarded,
+        // returning 200 with the stored image sets echoed back. Image urls are valid so the 422
+        // can only come from the uuid ownership check.
+        title: 'unknown imageSet uuid',
+        override: {
+          imageSets: [
+            {
+              uuid: NON_EXISTENT_UUID,
+              localeName: 'en_US',
+              images: [
+                {
+                  externalUrlSmall: 'https://example.org/small.png',
+                  externalUrlLarge: 'https://example.org/large.png',
+                  sortOrder: 0,
+                },
+              ],
+            },
+          ],
+        },
       },
       {
         title: 'unknown locale in localizedAttributes',

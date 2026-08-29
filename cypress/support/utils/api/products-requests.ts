@@ -25,25 +25,42 @@ export function getProduct(accessToken: string, sku: string, failOnStatusCode = 
 
 export function getProductCollection(
   accessToken: string,
-  params: { page?: number; filterSku?: string; filterAbstractSku?: string } = {},
+  params: {
+    page?: number;
+    perPage?: number;
+    filterSku?: string;
+    filterSkus?: string[];
+    filterAbstractSku?: string;
+  } = {},
   failOnStatusCode = true
 ): Cypress.Chainable {
-  const qs: Record<string, string | number> = {};
+  // The query string is built by hand rather than via `qs` so the repeated-array form is exact:
+  // JSON:API filter keys must be `filter[<resource>.<field>]`, and a key without the resource prefix
+  // is rejected upstream with a 400.
+  const queryParameters: string[] = [];
+  const addParameter = (key: string, value: string | number): void => {
+    queryParameters.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`);
+  };
 
   if (params.page) {
-    qs.page = params.page;
+    addParameter('page', params.page);
+  }
+  if (params.perPage) {
+    addParameter('perPage', params.perPage);
   }
   if (params.filterSku) {
-    qs['filter[sku]'] = params.filterSku;
+    addParameter('filter[products.sku]', params.filterSku);
   }
+  (params.filterSkus ?? []).forEach((sku) => addParameter('filter[products.skus][]', sku));
   if (params.filterAbstractSku) {
-    qs['filter[abstractSku]'] = params.filterAbstractSku;
+    addParameter('filter[products.abstractSku]', params.filterAbstractSku);
   }
+
+  const url = queryParameters.length ? `${productsUrl()}?${queryParameters.join('&')}` : productsUrl();
 
   return cy.request({
     method: 'GET',
-    url: productsUrl(),
-    qs,
+    url,
     headers: authHeaders(accessToken),
     failOnStatusCode,
   });
