@@ -1,4 +1,4 @@
-import { REPOSITORIES, autoWired } from '@utils';
+import { REPOSITORIES, autoWired, getPaymentMethodBasedOnEnv } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { YvesPage } from '@pages/yves';
@@ -10,6 +10,17 @@ export class CheckoutPaymentPage extends YvesPage {
   @inject(REPOSITORIES.CheckoutPaymentRepository) private repository: CheckoutPaymentRepository;
 
   protected PAGE_URL = '/checkout/payment';
+
+  // Marketplace repositories ship only the marketplace invoice method, the others only the dummy invoice one.
+  setDefaultPaymentMethod = (): void => {
+    if (getPaymentMethodBasedOnEnv() === 'dummyMarketplacePaymentInvoice') {
+      this.setDummyMarketplacePaymentMethod();
+
+      return;
+    }
+
+    this.setDummyPaymentMethod();
+  };
 
   setDummyPaymentMethod = (): void => {
     this.repository.getDummyPaymentInvoiceRadio().click({ force: true });

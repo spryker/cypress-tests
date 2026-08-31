@@ -208,6 +208,13 @@
         },
         {
           "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            { "idProductAbstract": "#productDelivery.fk_product_abstract", "idMerchant": "#merchant.id_merchant" }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveShipmentType",
           "key": "shipmentTypeDelivery",
           "arguments": [
