@@ -40,10 +40,7 @@ describe(
       'renders the Smart PIM bundles and AI-assist controls on the product edit page',
       { tags: ['@demo-smoke'] },
       (): void => {
-        smartPimPage
-          .visitProductEdit(idProductAbstract)
-          .its('response.statusCode')
-          .should('eq', 200);
+        smartPimPage.visitProductEdit(idProductAbstract).its('response.statusCode').should('eq', 200);
 
         cy.title().should('contain', staticFixtures.product.sku);
         smartPimPage.getSmartPimScript().should('exist');

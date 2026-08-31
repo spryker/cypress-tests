@@ -46,10 +46,7 @@ describe(
         'product edit form opens for the SKU and shows a price table with Cost, Gross and Net price columns and editable cost-amount inputs',
         { tags: ['@demo-smoke'] },
         (): void => {
-          costPricePage
-            .visitProductEdit(idProductAbstract)
-            .its('response.statusCode')
-            .should('eq', 200);
+          costPricePage.visitProductEdit(idProductAbstract).its('response.statusCode').should('eq', 200);
 
           cy.title().should('contain', staticFixtures.product.sku);
 
@@ -76,10 +73,7 @@ describe(
         'editing a cost-amount value and saving the product persists the new cost price across a reload',
         { tags: ['@demo-smoke'] },
         (): void => {
-          costPricePage
-            .visitProductEdit(idProductAbstract)
-            .its('response.statusCode')
-            .should('eq', 200);
+          costPricePage.visitProductEdit(idProductAbstract).its('response.statusCode').should('eq', 200);
 
           costPricePage.openPriceTaxTab();
 
@@ -105,10 +99,7 @@ describe(
         'product view page shows a visible Price & Taxes widget with a Cost price row rendering a non-empty value',
         { tags: ['@demo-smoke'] },
         (): void => {
-          costPricePage
-            .visitProductView(idProductAbstract)
-            .its('response.statusCode')
-            .should('eq', 200);
+          costPricePage.visitProductView(idProductAbstract).its('response.statusCode').should('eq', 200);
 
           costPricePage.getPriceTaxWidget().should('be.visible');
           costPricePage.getCostPriceViewRow().should('have.length.at.least', 1).and('be.visible');
