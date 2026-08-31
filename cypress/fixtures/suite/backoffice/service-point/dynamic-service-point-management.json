@@ -146,6 +146,18 @@
         },
         {
           "type": "helper",
+          "name": "haveProductOfferStock",
+          "arguments": [
+            {
+              "idProductOffer": "#productOffer.id_product_offer",
+              "productOfferReference": "#productOffer.product_offer_reference",
+              "isNeverOutOfStock": true
+            },
+            "#merchant.stocks"
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveProductOfferService",
           "key": "productOfferService",
           "arguments": [

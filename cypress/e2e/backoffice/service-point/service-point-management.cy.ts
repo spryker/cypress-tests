@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
-import { ServicePointListPage, ServicePointViewPage } from '@pages/backoffice';
+import { ProductOfferViewPage, ServicePointListPage, ServicePointViewPage } from '@pages/backoffice';
 import {
   ServicePointManagementDynamicFixtures,
   ServicePointManagementStaticFixtures,
@@ -20,6 +20,7 @@ describe(
 
     const servicePointListPage = container.get(ServicePointListPage);
     const servicePointViewPage = container.get(ServicePointViewPage);
+    const productOfferViewPage = container.get(ProductOfferViewPage);
     const userLoginScenario = container.get(UserLoginScenario);
 
     let staticFixtures: ServicePointManagementStaticFixtures;
@@ -76,6 +77,11 @@ describe(
         .getConnectedOffersSection()
         .should('contain', dynamicFixtures.productOffer.product_offer_reference)
         .and('contain', dynamicFixtures.product.sku);
+
+      servicePointViewPage.getConnectedOfferViewButton().click();
+
+      cy.url().should('contain', `id-product-offer=${dynamicFixtures.productOffer.id_product_offer}`);
+      productOfferViewPage.getProductSkuContainer().should('contain', dynamicFixtures.product.sku);
     });
 
     it('shows an inactive service point without an address in the list and on its detail page', (): void => {

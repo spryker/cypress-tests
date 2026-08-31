@@ -21,4 +21,7 @@ export class ServicePointViewRepository {
   getEmptyServicesMessage = (): Cypress.Chainable => cy.get('[data-qa="service-point-services-empty"]');
 
   getConnectedOffersSection = (): Cypress.Chainable => cy.get('[data-qa="service-point-product-offers"]');
+
+  getConnectedOfferViewButton = (): Cypress.Chainable =>
+    this.getConnectedOffersSection().find('a[href*="/product-offer-gui/view"]');
 }

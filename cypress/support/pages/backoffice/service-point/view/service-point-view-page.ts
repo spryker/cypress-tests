@@ -28,4 +28,6 @@ export class ServicePointViewPage extends BackofficePage {
   getEmptyServicesMessage = (): Cypress.Chainable => this.repository.getEmptyServicesMessage();
 
   getConnectedOffersSection = (): Cypress.Chainable => this.repository.getConnectedOffersSection();
+
+  getConnectedOfferViewButton = (): Cypress.Chainable => this.repository.getConnectedOfferViewButton();
 }

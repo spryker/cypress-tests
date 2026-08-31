@@ -38,6 +38,7 @@ export interface ServicePointManagementDynamicFixtures {
     sku: string;
   };
   productOffer: {
+    id_product_offer: number;
     product_offer_reference: string;
   };
 }
