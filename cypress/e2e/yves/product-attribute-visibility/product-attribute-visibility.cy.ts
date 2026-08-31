@@ -2,7 +2,7 @@ import { container } from '@utils';
 import { retryableBefore } from '../../../support/e2e';
 import { ProductAttributeVisibilityDynamicFixtures, ProductAttributeVisibilityStaticFixtures } from '@interfaces/yves';
 import { ProductAttributeVisibilityEditPage } from '@pages/backoffice';
-import { ProductAttributeVisibilityPage } from '@pages/yves';
+import { ProductAttributeVisibilityPage, ProductPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
@@ -17,8 +17,13 @@ describe(
 
     const editPage = container.get(ProductAttributeVisibilityEditPage);
     const attributeVisibilityPage = container.get(ProductAttributeVisibilityPage);
+    const productPage = container.get(ProductPage);
     const userLoginScenario = container.get(UserLoginScenario);
     const customerLoginScenario = container.get(CustomerLoginScenario);
+
+    const suiteOnlyIt = (description: string, testFunction: () => void): void => {
+      (Cypress.env('repositoryId') === 'suite' ? it : it.skip)(description, testFunction);
+    };
 
     const updateAttributeVisibility = (attributeKey: string, visibilityTypes: string[]): void => {
       editPage.visit();
@@ -136,5 +141,61 @@ describe(
       attributeVisibilityPage.visitCart();
       attributeVisibilityPage.getFirstCartItem().should('not.contain', staticFixtures.attributeValue);
     });
+
+    suiteOnlyIt(
+      'customer should only be offered super attribute values that lead to an existing product variant',
+      (): void => {
+        const { url, selectedAttribute, unselectedAttribute } = staticFixtures.variantProduct;
+        const valuesNotCombinable = unselectedAttribute.allValues.filter(
+          (value) => !unselectedAttribute.combinableValues.includes(value)
+        );
+
+        productPage.visitProductDetailPage({ url: url });
+
+        // Nothing selected yet, so every value of both super attributes is on offer.
+        productPage
+          .getVariantAttributeOptions(selectedAttribute.key)
+          .should('have.length', selectedAttribute.allValues.length);
+        productPage
+          .getVariantAttributeOptions(unselectedAttribute.key)
+          .should('have.length', unselectedAttribute.allValues.length);
+
+        // Selecting a value that is not sold with the full range must drop the values it is not sold with.
+        productPage.selectVariantAttribute({
+          attributeKey: selectedAttribute.key,
+          attributeValue: selectedAttribute.selectedValue,
+        });
+
+        // A selected value is rendered as text with a hidden input, its select is gone until reset.
+        productPage
+          .getSelectedVariantAttributeValue(selectedAttribute.key)
+          .should('equal', selectedAttribute.selectedValue);
+        productPage.getVariantAttributeSelect(selectedAttribute.key).should('not.exist');
+
+        productPage
+          .getVariantAttributeOptions(unselectedAttribute.key)
+          .should('have.length', unselectedAttribute.combinableValues.length)
+          .then(($options: JQuery<HTMLOptionElement>) => {
+            const offeredValues = $options.toArray().map((option) => option.textContent?.trim());
+
+            expect(offeredValues).to.deep.equal(unselectedAttribute.combinableValues);
+            valuesNotCombinable.forEach((value) => expect(offeredValues).to.not.include(value));
+          });
+
+        // Completing the selection resolves a concrete product, which is what makes it buyable.
+        productPage.selectVariantAttribute({
+          attributeKey: unselectedAttribute.key,
+          attributeValue: unselectedAttribute.selectedValue,
+        });
+
+        productPage
+          .getSelectedVariantAttributeValue(unselectedAttribute.key)
+          .should('equal', unselectedAttribute.selectedValue);
+        productPage.getAddToCartButton().should('be.enabled');
+
+        productPage.addToCart();
+        productPage.assertBodyContainsText(productPage.getAddToCartSuccessMessage());
+      }
+    );
   }
 );

@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { retryableBefore } from '../../../support/e2e';
 import { CustomerLoginScenario, CustomerLogoutScenario, CheckoutScenario } from '@scenarios/yves';
 import { SspServiceListPage, CartPage, CatalogPage, ProductPage, CustomerOverviewPage } from '@pages/yves';
@@ -288,7 +288,7 @@ describe(
 
         checkoutScenario.execute({
           idCustomerAddress: dynamicFixtures.company4CustomerAddress.id_customer_address,
-          paymentMethod: 'dummyPaymentInvoice',
+          paymentMethod: getPaymentMethodBasedOnEnv(),
           shipmentType: 'in-center-service',
           isMultiShipment: true,
           skipServicePointAddressOverride: true,
@@ -308,7 +308,7 @@ describe(
       if (!isSetupDone) {
         checkoutScenario.execute({
           idCustomerAddress: idCustomerAddress,
-          paymentMethod: 'dummyPaymentInvoice',
+          paymentMethod: getPaymentMethodBasedOnEnv(),
           shipmentType: shipmentType,
           isMultiShipment: true,
         });

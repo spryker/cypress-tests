@@ -44,7 +44,7 @@ describe(
       cartPage.startCheckout();
       checkoutAddressPage.fillShippingAddress();
       checkoutShipmentPage.setStandardShippingMethod();
-      checkoutPaymentPage.setDummyPaymentMethod();
+      checkoutPaymentPage.setDefaultPaymentMethod();
     };
 
     it('buyer should be able to place order when grand total is within budget', (): void => {

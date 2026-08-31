@@ -22,6 +22,8 @@ export class B2bProductRepository implements ProductRepository {
   getAddToComparisonListLimitExceededErrorMessage = (): string => 'The limit has already been reached';
   getShipmentTypeRadioButton = (shipmentTypeName: string): Cypress.Chainable =>
     cy.contains('[data-qa="component radio shipment_type_uuid"]', shipmentTypeName).find('input');
+  getServicePointBlockLoader = (): Cypress.Chainable =>
+    cy.get('ajax-loader[provider-class-name="js-service-point-shipment-types-provider"]');
   getSelectServicePointButton = (): Cypress.Chainable =>
     cy.get('[data-qa="component ssp-service-point-selector"] button');
   getServicePointSearchInput = (): Cypress.Chainable => cy.get('[data-qa="component ssp-service-point-finder"] input');
@@ -40,4 +42,10 @@ export class B2bProductRepository implements ProductRepository {
   getAttachmentsList = (): Cypress.Chainable => cy.get(this.getAttachmentsListSelector());
   getAttachmentItems = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-detail"] [data-qa="attachment-item"]');
+  getVariantAttributeSelect = (attributeKey: string): Cypress.Chainable =>
+    cy.get(`select[name="attribute[${attributeKey}]"]`);
+  getVariantAttributeOptions = (attributeKey: string): Cypress.Chainable =>
+    this.getVariantAttributeSelect(attributeKey).find('option[value]:not([value=""])');
+  getSelectedVariantAttributeInput = (attributeKey: string): Cypress.Chainable =>
+    cy.get(`input[type="hidden"][name="attribute[${attributeKey}]"]`);
 }

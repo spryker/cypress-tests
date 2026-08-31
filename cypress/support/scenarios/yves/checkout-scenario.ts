@@ -6,7 +6,7 @@ import {
   CheckoutShipmentPage,
   CheckoutSummaryPage,
 } from '@pages/yves';
-import { autoWired } from '@utils';
+import { autoWired, getPaymentMethodBasedOnEnv } from '@utils';
 import { inject, injectable } from 'inversify';
 
 @injectable()
@@ -70,7 +70,7 @@ export class CheckoutScenario {
       dummyMarketplacePaymentInvoice: () => this.checkoutPaymentPage.setDummyMarketplacePaymentMethod(),
     };
 
-    const paymentMethod = params?.paymentMethod || 'dummyPaymentInvoice';
+    const paymentMethod = params?.paymentMethod || getPaymentMethodBasedOnEnv();
     const paymentFunction = paymentMethods[paymentMethod as keyof typeof paymentMethods];
 
     paymentFunction();

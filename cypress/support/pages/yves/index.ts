@@ -1,6 +1,7 @@
 export * from './yves-page';
 export * from './home/home-page';
 export * from './cart/cart-page';
+export * from './cart/cart-up-selling-products-page';
 export * from './agent-login/agent-login-page';
 export * from './agent-quote-request/agent-quote-request-page';
 export * from './checkout/address/checkout-address-page';
@@ -19,6 +20,9 @@ export * from './company/merchant-relation-request/index/merchant-relation-reque
 export * from './merchant/merchant-page';
 export * from './product/product-page';
 export * from './customer/overview/customer-overview-page';
+export * from './customer/profile/customer-profile-page';
+export * from './customer/address/customer-address-page';
+export * from './customer/newsletter/customer-newsletter-page';
 export * from './customer/order/order-page';
 export * from './customer/order/order-details-page';
 export * from './product-comparison/product-comparison-page';
@@ -56,3 +60,4 @@ export * from './recurring-orders/checkout-summary/checkout-summary-recurring-or
 export * from './recurring-orders/list/recurring-order-list-page';
 export * from './recurring-orders/detail/recurring-order-detail-page';
 export * from './recurring-orders/review/recurring-order-review-page';
+export * from './company/register/company-registration-page';

@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { ReorderProductBundlesDynamicFixtures, ReorderStaticFixtures } from '@interfaces/yves';
 import { CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
@@ -60,12 +60,6 @@ describe(
         idCustomerAddress: dynamicFixtures.address.id_customer_address,
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
-    }
-
-    function getPaymentMethodBasedOnEnv(): string {
-      return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice';
     }
   }
 );
