@@ -20,6 +20,14 @@ export interface ServicePointManagementDynamicFixtures {
     name: string;
     key: string;
   };
+  inactiveServicePoint: {
+    id_service_point: number;
+    name: string;
+    key: string;
+  };
+  country: {
+    name: string;
+  };
   serviceType: {
     name: string;
   };

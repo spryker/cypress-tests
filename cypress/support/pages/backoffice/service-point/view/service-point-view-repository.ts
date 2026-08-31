@@ -14,7 +14,11 @@ export class ServicePointViewRepository {
 
   getAddressContainer = (): Cypress.Chainable => cy.get('[data-qa="service-point-address"]');
 
+  getEmptyAddressContainer = (): Cypress.Chainable => cy.get('[data-qa="service-point-address-empty"]');
+
   getServicesTable = (): Cypress.Chainable => cy.get('[data-qa="service-point-services"]');
+
+  getEmptyServicesMessage = (): Cypress.Chainable => cy.get('[data-qa="service-point-services-empty"]');
 
   getConnectedOffersSection = (): Cypress.Chainable => cy.get('[data-qa="service-point-product-offers"]');
 }

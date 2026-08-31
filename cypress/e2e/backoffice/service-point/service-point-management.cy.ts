@@ -36,7 +36,7 @@ describe(
       });
     });
 
-    it('renders the service point list with address, stores and service types', (): void => {
+    it('renders the service point list and its detail page with services and connected offers', (): void => {
       servicePointListPage.visit();
 
       servicePointListPage.getAddressColumn().should('exist');
@@ -51,17 +51,14 @@ describe(
         .and('contain', `${staticFixtures.servicePointAddress.zipCode} ${staticFixtures.servicePointAddress.city}`)
         .and('contain', dynamicFixtures.store.name)
         .and('contain', dynamicFixtures.serviceType.name);
-      servicePointListPage
-        .getViewButton()
-        .should('have.attr', 'href')
-        .and('contain', `id-service-point=${dynamicFixtures.servicePoint.id_service_point}`);
-    });
+      servicePointListPage.getStatusCell().should('contain', 'Active').and('not.contain', 'Inactive');
 
-    it('renders the service point detail page with its address, services and connected offers', (): void => {
-      servicePointViewPage.visitServicePoint(dynamicFixtures.servicePoint.id_service_point);
+      servicePointListPage.getViewButton().click();
 
+      cy.url().should('contain', `id-service-point=${dynamicFixtures.servicePoint.id_service_point}`);
       servicePointViewPage.getNameContainer().should('contain', dynamicFixtures.servicePoint.name);
       servicePointViewPage.getKeyContainer().should('contain', dynamicFixtures.servicePoint.key);
+      servicePointViewPage.getStatusContainer().should('contain', 'Active').and('not.contain', 'Inactive');
       servicePointViewPage.getStoresContainer().should('contain', dynamicFixtures.store.name);
       servicePointViewPage
         .getAddressContainer()
@@ -69,7 +66,8 @@ describe(
           'contain',
           `${staticFixtures.servicePointAddress.address1} ${staticFixtures.servicePointAddress.address2}`
         )
-        .and('contain', `${staticFixtures.servicePointAddress.zipCode} ${staticFixtures.servicePointAddress.city}`);
+        .and('contain', `${staticFixtures.servicePointAddress.zipCode} ${staticFixtures.servicePointAddress.city}`)
+        .and('contain', dynamicFixtures.country.name);
       servicePointViewPage
         .getServicesTable()
         .should('contain', dynamicFixtures.serviceType.name)
@@ -78,6 +76,25 @@ describe(
         .getConnectedOffersSection()
         .should('contain', dynamicFixtures.productOffer.product_offer_reference)
         .and('contain', dynamicFixtures.product.sku);
+    });
+
+    it('shows an inactive service point without an address in the list and on its detail page', (): void => {
+      servicePointListPage.visit();
+
+      servicePointListPage.findByKey(dynamicFixtures.inactiveServicePoint.key);
+
+      servicePointListPage.getTableRows().should('contain', dynamicFixtures.inactiveServicePoint.name);
+      servicePointListPage.getStatusCell().should('contain', 'Inactive');
+      servicePointListPage.getAddressCell().should('contain', 'Not set');
+
+      servicePointListPage.getViewButton().click();
+
+      cy.url().should('contain', `id-service-point=${dynamicFixtures.inactiveServicePoint.id_service_point}`);
+      servicePointViewPage.getNameContainer().should('contain', dynamicFixtures.inactiveServicePoint.name);
+      servicePointViewPage.getStatusContainer().should('contain', 'Inactive');
+      servicePointViewPage.getEmptyAddressContainer().should('contain', 'Not set');
+      servicePointViewPage.getEmptyServicesMessage().should('exist');
+      servicePointViewPage.getConnectedOffersSection().should('contain', 'No data found');
     });
   }
 );

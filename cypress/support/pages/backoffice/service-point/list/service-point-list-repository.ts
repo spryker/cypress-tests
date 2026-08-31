@@ -12,5 +12,9 @@ export class ServicePointListRepository {
 
   getServiceTypesColumnSelector = (): string => 'table.dataTable thead th[data-qa="service_types"]';
 
+  getAddressCellSelector = (): string => 'td:nth-child(3)';
+
+  getStatusCellSelector = (): string => 'td:nth-child(6)';
+
   getViewButtonSelector = (): string => 'a[href*="/service-point/view"]';
 }

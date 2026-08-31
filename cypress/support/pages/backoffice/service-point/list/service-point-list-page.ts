@@ -34,6 +34,14 @@ export class ServicePointListPage extends BackofficePage {
     return cy.get(this.repository.getServiceTypesColumnSelector());
   };
 
+  getAddressCell = (): Cypress.Chainable => {
+    return this.getTableRows().find(this.repository.getAddressCellSelector());
+  };
+
+  getStatusCell = (): Cypress.Chainable => {
+    return this.getTableRows().find(this.repository.getStatusCellSelector());
+  };
+
   getViewButton = (): Cypress.Chainable => {
     return cy.get(this.repository.getViewButtonSelector());
   };

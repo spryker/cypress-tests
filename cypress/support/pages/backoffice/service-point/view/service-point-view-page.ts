@@ -10,13 +10,6 @@ export class ServicePointViewPage extends BackofficePage {
   @inject(ServicePointViewRepository) private repository: ServicePointViewRepository;
 
   protected PAGE_URL = '/service-point/view';
-  protected CONNECTED_OFFERS_TABLE_URL = '/product-offer-service-point/service-point-product-offer/table';
-
-  visitServicePoint = (idServicePoint: number): Cypress.Chainable => {
-    this.visit({ qs: { 'id-service-point': idServicePoint } });
-
-    return this.interceptTable({ url: this.CONNECTED_OFFERS_TABLE_URL + '**' });
-  };
 
   getNameContainer = (): Cypress.Chainable => this.repository.getNameContainer();
 
@@ -28,7 +21,11 @@ export class ServicePointViewPage extends BackofficePage {
 
   getAddressContainer = (): Cypress.Chainable => this.repository.getAddressContainer();
 
+  getEmptyAddressContainer = (): Cypress.Chainable => this.repository.getEmptyAddressContainer();
+
   getServicesTable = (): Cypress.Chainable => this.repository.getServicesTable();
+
+  getEmptyServicesMessage = (): Cypress.Chainable => this.repository.getEmptyServicesMessage();
 
   getConnectedOffersSection = (): Cypress.Chainable => this.repository.getConnectedOffersSection();
 }
