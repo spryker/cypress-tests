@@ -34,11 +34,13 @@ describe(
     ): GenerateInterception | undefined => allInterceptions.slice(requestCountBeforeClick).find(isSettledInterception);
 
     const clickAskAiAndAwaitRealGenerate = (attemptsLeft = AWS_GENERATE_MAX_ATTEMPTS): void => {
+      // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
       cy.get('@generateRequest.all').then((before: unknown): void => {
         const requestCountBeforeClick = (before as Array<GenerateInterception>).length;
 
         smartCmsPage.clickAskAi();
 
+        // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
         cy.get('@generateRequest.all', { timeout: AWS_GENERATE_ATTEMPT_TIMEOUT_MS })
           .should((interceptions: unknown): void => {
             const settled = findSettledInterceptionForClick(
@@ -311,6 +313,7 @@ describe(
         smartCmsPage.getPanelInput().clear();
         smartCmsPage.clickAskAi();
 
+        // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
         cy.get('@generateRequest.all').should('have.length', 0);
         smartCmsPage.getPanelMessage().should('not.have.class', smartCmsPage.getPanelMessageVisibleClass());
       }
@@ -379,7 +382,7 @@ describe(
 
           smartCmsPage.getPanelSuccessMessage().should('be.visible');
           smartCmsPage.getPanelAsk().should('be.visible').and('not.be.disabled');
-          smartCmsPage.assertGlossaryEditorPopulated();
+          smartCmsPage.getGlossaryEditorValue().should('have.length.greaterThan', 0);
 
           smartCmsPage.visitCmsPageEditor();
           smartCmsPage.expandPanel();
@@ -429,7 +432,7 @@ describe(
           clickAskAiAndAwaitRealGenerate();
 
           smartCmsPage.getPanelSuccessMessage().should('be.visible');
-          smartCmsPage.assertGlossaryEditorPopulated();
+          smartCmsPage.getGlossaryEditorValue().should('have.length.greaterThan', 0);
         };
 
         it(

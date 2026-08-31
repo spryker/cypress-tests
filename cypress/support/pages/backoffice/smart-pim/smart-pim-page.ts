@@ -174,6 +174,12 @@ export class SmartPimPage extends BackofficePage {
   getMissingParamsMessage = (endpoint: 'content-improver' | 'image-alt-text' | 'translate'): string =>
     this.repository.getMissingParamsMessage(endpoint);
 
+  /**
+   * Popover open/closed state is a repository-owned CSS-state selector rather than
+   * plain visibility, so the check is encapsulated here instead of leaking the
+   * selector into every spec. Returns the chainable for the caller to continue.
+   */
+  /* eslint-disable spryker-cypress/no-assertions-in-page-objects -- Encapsulates a repository-owned popover state selector; asserting IS these helpers' contract. */
   shouldBeOpenPopover = (chainable: Cypress.Chainable): Cypress.Chainable =>
     chainable
       .should('be.visible')
@@ -181,4 +187,5 @@ export class SmartPimPage extends BackofficePage {
 
   shouldBeClosedPopover = (chainable: Cypress.Chainable): Cypress.Chainable =>
     chainable.should(($el) => expect($el[0].matches(this.repository.getOpenPopoverState())).to.eq(false));
+  /* eslint-enable spryker-cypress/no-assertions-in-page-objects */
 }

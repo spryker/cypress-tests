@@ -115,7 +115,7 @@ export class SearchByImagePage extends YvesPage {
   };
 
   submitImageThroughFilePopup = (filePath: string): void => {
-    this.clickFileTrigger();
+    this.getDesktopInstance().find(this.repository.getFileButtonSelector()).click({ force: true });
     this.getOpenFilePopupUploadButton().should('be.visible').and('not.be.disabled');
     this.attachImage(filePath);
   };

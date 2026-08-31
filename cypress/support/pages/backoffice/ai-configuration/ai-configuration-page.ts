@@ -91,6 +91,7 @@ export class AiConfigurationPage extends BackofficePage {
 
       this.selectRadioOption(settingKey, value);
       this.saveConfiguration();
+      // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Post-action guard: the setter must not return before the save round-trip succeeds.
       cy.wait('@saveConfiguration').its('response.body').should('have.property', 'success', true);
     });
   };

@@ -107,6 +107,7 @@ export class AuditLogsPage extends BackofficePage {
     return cy
       .request({ method: 'GET', url, qs, headers: { 'X-Requested-With': 'XMLHttpRequest' } })
       .then((response) => {
+        // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Request guard: fail fast before parsing a non-200 body below.
         expect(response.status, 'audit-log table endpoint responds 200').to.eq(200);
 
         const body = typeof response.body === 'string' ? JSON.parse(response.body) : response.body;
@@ -125,7 +126,15 @@ export class AuditLogsPage extends BackofficePage {
   getRowConfigurationName = (row: Record<string, unknown> | undefined): string =>
     String(row?.['spy_ai_interaction_log.configuration_name'] ?? '');
 
+  /**
+   * Reusable multi-step audit-log verification shared by the backoffice-assistant,
+   * smart-cms and smart-pim specs: the newest row must carry the expected
+   * configuration marker, and filtering by that configuration must round-trip.
+   * Kept here rather than duplicated three times in the specs; the assertions are
+   * the helper's whole purpose, hence the rule exemptions below.
+   */
   assertNewestRowConfigurationIsFilterable = (configurationMarker: string): void => {
+    /* eslint-disable spryker-cypress/no-assertions-in-page-objects -- Shared audit-log verification helper; asserting IS this method's contract. */
     this.fetchTableData().then(({ recordsTotal, rows }) => {
       expect(recordsTotal, 'at least one audit-log row exists after the real interaction').to.be.greaterThan(0);
 
@@ -144,5 +153,6 @@ export class AuditLogsPage extends BackofficePage {
         expect(filtered.recordsTotal, 'filtered count is <= unfiltered count').to.be.at.most(recordsTotal);
       });
     });
+    /* eslint-enable spryker-cypress/no-assertions-in-page-objects */
   };
 }

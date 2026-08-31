@@ -61,6 +61,7 @@ export class AgentQuoteRequestPage extends YvesPage {
 
   recalculate = (reference: string): void => {
     this.visitEdit(reference);
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Readiness guard: the cart must be rendered before the save below is clicked.
     this.getCartItems().should('have.length.at.least', 1);
     this.save();
   };

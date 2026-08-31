@@ -53,15 +53,11 @@ export class CostPricePage extends BackofficePage {
     this.repository.getSaveButton().click();
   };
 
-  verifySaveSuccess = (sku: string): void => {
-    this.repository.getSaveSuccessMessage(sku).should('be.visible');
-  };
+  getSaveSuccessMessage = (sku: string): Cypress.Chainable => this.repository.getSaveSuccessMessage(sku);
 
   getFirstCostAmountValue = (): Cypress.Chainable => this.repository.getFirstCostAmountHiddenInput().invoke('val');
 
-  assertFirstCostAmount = (value: string): void => {
-    this.repository.getFirstCostAmountHiddenInput().should('have.value', value);
-  };
+  getFirstCostAmountInput = (): Cypress.Chainable => this.repository.getFirstCostAmountHiddenInput();
 
   getCostPriceViewValues = (): Cypress.Chainable => this.repository.getCostPriceViewValueCells();
 }

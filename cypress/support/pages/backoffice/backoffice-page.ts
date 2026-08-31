@@ -40,6 +40,7 @@ export class BackofficePage extends AbstractPage {
         // Column order comes from ProductTable::configure(): [id_product_abstract, name, sku, ...].
         const row = rows.find((columns) => columns[BackofficePage.PRODUCT_TABLE_COL_SKU] === sku);
 
+        // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Lookup guard: fails fast with a readable message before the row is dereferenced below.
         expect(row, `product abstract table row for SKU "${sku}"`).to.not.be.undefined;
 
         return Number((row as Array<string>)[BackofficePage.PRODUCT_TABLE_COL_ID].replace(/\D/g, ''));

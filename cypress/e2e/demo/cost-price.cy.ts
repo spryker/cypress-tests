@@ -82,15 +82,15 @@ describe(
 
             costPricePage.setFirstCostAmount(newCostValue);
             costPricePage.save();
-            costPricePage.verifySaveSuccess(staticFixtures.product.sku);
+            costPricePage.getSaveSuccessMessage(staticFixtures.product.sku).should('be.visible');
 
             costPricePage.visitProductEdit(idProductAbstract);
             costPricePage.openPriceTaxTab();
-            costPricePage.assertFirstCostAmount(newCostValue);
+            costPricePage.getFirstCostAmountInput().should('have.value', newCostValue);
 
             costPricePage.setFirstCostAmount(String(originalValue));
             costPricePage.save();
-            costPricePage.verifySaveSuccess(staticFixtures.product.sku);
+            costPricePage.getSaveSuccessMessage(staticFixtures.product.sku).should('be.visible');
           });
         }
       );

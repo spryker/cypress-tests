@@ -135,13 +135,10 @@ export class SmartCmsPage extends BackofficePage {
 
   getPanelSuccessMessage = (): Cypress.Chainable => cy.get(this.repository.getPanelSuccessMessageSelector());
 
-  assertGlossaryEditorPopulated = (): void => {
+  getGlossaryEditorValue = (): Cypress.Chainable<string> =>
     this.getGlossaryEditor()
       .invoke('val')
-      .then((value): void => {
-        expect(String(value ?? '')).to.have.length.greaterThan(0);
-      });
-  };
+      .then((value): string => String(value ?? ''));
 
   getInjectedCsrfToken = (): Cypress.Chainable<string> =>
     cy

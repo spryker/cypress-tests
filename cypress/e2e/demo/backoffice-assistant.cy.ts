@@ -234,7 +234,9 @@ describe(
         backofficeAssistantPage.getWidgetMessages().should('contain.text', backofficeAssistantPage.getGreetingText());
         backofficeAssistantPage.getWidgetUserMessage().should('not.exist');
 
+        // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
         cy.get('@assistantPrompt.all').should('have.length', 0);
+        // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
         cy.get('@assistantDetail.all').should('have.length', 0);
       }
     );
@@ -416,6 +418,7 @@ describe(
         backofficeAssistantPage.newChat();
         backofficeAssistantPage.getWidgetMessages().should('contain.text', backofficeAssistantPage.getGreetingText());
         backofficeAssistantPage.getWidgetUserMessage().should('not.exist');
+        // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
         cy.get('@assistantDetail.all').should('have.length', 0);
       }
     );
@@ -443,11 +446,13 @@ describe(
         backofficeAssistantPage
           .getWidgetAiMessage()
           .last()
+          /* eslint-disable spryker-cypress/no-cy-get-outside-repository -- XSS sanitization probe: generic HTML tag/attribute names scoped by .within(), not page selectors to move into a repository. */
           .within((): void => {
             cy.get('strong').should('contain.text', 'bold');
             cy.get('script').should('not.exist');
             cy.get('[onerror]').should('not.exist');
           });
+        /* eslint-enable spryker-cypress/no-cy-get-outside-repository */
 
         cy.window().its('__baXss').should('be.undefined');
       }
@@ -473,6 +478,7 @@ describe(
           const serialized = typeof body === 'string' ? body : JSON.stringify(body);
           expect(serialized).to.include('Retry me');
         });
+        // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
         cy.get('@assistantPrompt.all').should('have.length.at.least', 2);
       }
     );

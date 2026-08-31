@@ -98,6 +98,7 @@ describe(
           .and('have.attr', 'data-request-url', smartPimPage.getTranslatePath());
 
         smartPimPage.getProviderEndpointGlobs().forEach((_endpoint, index): void => {
+          // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
           cy.get(`@providerCall${index}.all`).should('have.length', 0);
         });
       }
@@ -150,6 +151,7 @@ describe(
           modal.getEmptyText().should('be.visible').and('contain', modal.emptyText);
           modal.getField().should('exist');
 
+          // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
           cy.get(`@${modal.alias}.all`).should('have.length', 0);
         });
       }
@@ -308,6 +310,7 @@ describe(
         smartPimPage.clickResponseAgain();
 
         cy.wait('@contentImprover');
+        // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
         cy.get('@contentImprover.all').should('have.length', 2);
         smartPimPage.shouldBeOpenPopover(smartPimPage.getResponsePopover());
       }
