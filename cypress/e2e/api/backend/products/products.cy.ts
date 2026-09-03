@@ -107,7 +107,13 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
         expect(stock.quantity).to.eq(100);
 
         expect(attributes.imageSets, 'imageSets').to.be.an('array').and.to.have.length.greaterThan(0);
+        expect(attributes.imageSets[0], 'image set identity and name exposed').to.include.keys(['uuid', 'name']);
         expect(attributes.imageSets[0].images, 'images').to.have.length.greaterThan(0);
+        expect(attributes.imageSets[0].images[0], 'image alt texts exposed').to.include.keys([
+          'altTextSmall',
+          'altTextLarge',
+        ]);
+        expect(stock, 'stock uuid exposed').to.have.property('uuid');
 
         expect(attributes.localizedAttributes, 'localizedAttributes')
           .to.be.an('array')
@@ -391,11 +397,14 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
         ...buildValidProductBody(newSku, abstractSku),
         imageSets: [
           {
+            name: 'pxm-created-set',
             localeName: staticFixtures.localeName,
             images: [
               {
                 externalUrlSmall: 'https://example.com/small.jpg',
                 externalUrlLarge: 'https://example.com/large.jpg',
+                altTextSmall: 'Created image, small',
+                altTextLarge: 'Created image, large',
                 sortOrder: 0,
               },
             ],
@@ -405,9 +414,12 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
 
       createProduct(accessToken, body).then((response) => {
         expect(response.status).to.be.oneOf([200, 201]);
-        expect(response.body.data.attributes.imageSets, 'imageSets persisted')
-          .to.be.an('array')
-          .and.to.have.length.greaterThan(0);
+
+        const imageSets = response.body.data.attributes.imageSets;
+        expect(imageSets, 'imageSets persisted').to.be.an('array').and.to.have.length.greaterThan(0);
+        expect(imageSets[0].name, 'image set name persisted').to.eq('pxm-created-set');
+        expect(imageSets[0].images[0].altTextSmall, 'small alt text persisted').to.eq('Created image, small');
+        expect(imageSets[0].images[0].altTextLarge, 'large alt text persisted').to.eq('Created image, large');
       });
     });
 
@@ -725,6 +737,108 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       });
     });
 
+    it('should add an image set with its name and alt texts', (): void => {
+      updateProduct(accessToken, patchSku, {
+        imageSets: [
+          {
+            name: 'pxm-set',
+            localeName: staticFixtures.localeName,
+            images: [
+              {
+                externalUrlSmall: 'https://example.com/images/small/added.jpg',
+                externalUrlLarge: 'https://example.com/images/large/added.jpg',
+                altTextSmall: 'Added image, small',
+                altTextLarge: 'Added image, large',
+                sortOrder: 0,
+              },
+            ],
+          },
+        ],
+      }).then((response) => {
+        expect(response.status).to.eq(200);
+
+        const imageSet = response.body.data.attributes.imageSets.find(
+          (item: Record<string, unknown>) => item.name === 'pxm-set'
+        );
+        expect(imageSet, 'added image set present').to.not.be.undefined;
+        expect(imageSet.uuid, 'added image set has a uuid').to.be.a('string');
+        expect(imageSet.images[0].altTextSmall, 'small alt text persisted').to.eq('Added image, small');
+        expect(imageSet.images[0].altTextLarge, 'large alt text persisted').to.eq('Added image, large');
+      });
+    });
+
+    it('should update an image set in place when its uuid is sent', (): void => {
+      const addImageSet = {
+        imageSets: [
+          {
+            name: 'pxm-set',
+            localeName: staticFixtures.localeName,
+            images: [
+              {
+                externalUrlSmall: 'https://example.com/images/small/before.jpg',
+                externalUrlLarge: 'https://example.com/images/large/before.jpg',
+                sortOrder: 0,
+              },
+            ],
+          },
+        ],
+      };
+
+      updateProduct(accessToken, patchSku, addImageSet).then((addResponse) => {
+        expect(addResponse.status, 'image set added').to.eq(200);
+
+        const uuid = addResponse.body.data.attributes.imageSets[0].uuid;
+        expect(uuid, 'added image set has a uuid').to.be.a('string');
+
+        // No name in this payload: the stored one must survive the whole-row overwrite the writer performs.
+        updateProduct(accessToken, patchSku, {
+          imageSets: [
+            {
+              uuid,
+              localeName: staticFixtures.localeName,
+              images: [
+                {
+                  externalUrlSmall: 'https://example.com/images/small/after.jpg',
+                  externalUrlLarge: 'https://example.com/images/large/after.jpg',
+                  sortOrder: 0,
+                },
+              ],
+            },
+          ],
+        }).then((response) => {
+          expect(response.status).to.eq(200);
+
+          const imageSets = response.body.data.attributes.imageSets;
+          expect(imageSets, 'no second image set created').to.have.length(1);
+          expect(imageSets[0].uuid, 'image set updated in place').to.eq(uuid);
+          expect(imageSets[0].name, 'omitted name preserved').to.eq('pxm-set');
+          expect(imageSets[0].images[0].externalUrlSmall, 'images replaced').to.eq(
+            'https://example.com/images/small/after.jpg'
+          );
+        });
+      });
+    });
+
+    // Read-only properties (price/stock uuid, productClass/shipmentType name) are part of every GET payload,
+    // so a client editing a fetched body and sending it back must not be punished for leaving them in.
+    it('should accept a patch that echoes back read-only properties', (): void => {
+      getProduct(accessToken, patchSku).then((getResponse) => {
+        const attributes = getResponse.body.data.attributes;
+
+        updateProduct(accessToken, patchSku, {
+          prices: attributes.prices,
+          stocks: attributes.stocks,
+        }).then((response) => {
+          expect(response.status, 'read-only properties ignored, not rejected').to.eq(200);
+
+          const stock = response.body.data.attributes.stocks.find(
+            (item: Record<string, unknown>) => item.stockName === staticFixtures.stockName
+          );
+          expect(stock.quantity, 'stock unchanged').to.eq(42);
+        });
+      });
+    });
+
     it('should reject changing the abstractSku on patch (immutable)', (): void => {
       updateProduct(accessToken, patchSku, { abstractSku: 'some-other-abstract-sku', isActive: true }, false).then(
         (response) => {
@@ -1022,6 +1136,41 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
         },
       },
       {
+        title: 'invalid imageSet uuid format',
+        override: {
+          imageSets: [
+            {
+              uuid: 'not-a-uuid',
+              localeName: 'en_US',
+              images: [
+                {
+                  externalUrlSmall: 'https://example.org/small.png',
+                  externalUrlLarge: 'https://example.org/large.png',
+                },
+              ],
+            },
+          ],
+        },
+      },
+      {
+        // A product being created owns no image set yet, so any uuid it references is unknown by definition.
+        title: 'imageSet uuid on create',
+        override: {
+          imageSets: [
+            {
+              uuid: NON_EXISTENT_UUID,
+              localeName: 'en_US',
+              images: [
+                {
+                  externalUrlSmall: 'https://example.org/small.png',
+                  externalUrlLarge: 'https://example.org/large.png',
+                },
+              ],
+            },
+          ],
+        },
+      },
+      {
         title: 'non-positive bundle quantity',
         override: { productBundle: [{ sku: 'some-sku', quantity: 0 }] },
       },
@@ -1233,6 +1382,37 @@ describe('products backend api', { tags: ['@api', '@products', 'product'] }, ():
       it(`should reject ${title} with 422`, (): void => {
         updateProduct(accessToken, patchSku, override, false).then((response) => {
           expect(response.status).to.eq(422);
+        });
+      });
+    });
+
+    // Regression guard for the stray-set defect: before the imageSet uuid was part of the resource schema the
+    // uuid never reached the validator, so the set was appended as a new one and the patch answered 200.
+    it('should not persist an image set when its uuid is unknown', (): void => {
+      updateProduct(
+        accessToken,
+        patchSku,
+        {
+          imageSets: [
+            {
+              uuid: NON_EXISTENT_UUID,
+              localeName: staticFixtures.localeName,
+              images: [
+                {
+                  externalUrlSmall: 'https://example.org/small.png',
+                  externalUrlLarge: 'https://example.org/large.png',
+                  sortOrder: 0,
+                },
+              ],
+            },
+          ],
+        },
+        false
+      ).then((patchResponse) => {
+        expect(patchResponse.status, 'unknown imageSet uuid rejected').to.eq(422);
+
+        getProduct(accessToken, patchSku).then((getResponse) => {
+          expect(getResponse.body.data.attributes.imageSets, 'no image set persisted').to.have.length(0);
         });
       });
     });
