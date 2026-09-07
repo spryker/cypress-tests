@@ -10,16 +10,16 @@ export class StoreCreateRepository {
   getCurrenciesTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-locale_currency_relation"]');
   getDefaultCurrencySelect = (): Cypress.Chainable => cy.get('[name="store[defaultCurrencyIsoCode]"]');
   getLocaleSearchInput = (): Cypress.Chainable =>
-    cy.get('#available-locale-table_wrapper input[data-qa="table-search"]');
+    cy.get('input[aria-controls="available-locale-table"]', { timeout: 15000 });
   getCurrencySearchInput = (): Cypress.Chainable =>
-    cy.get('input[data-qa="table-search"][aria-controls="available-currency-table"]');
+    cy.get('input[aria-controls="available-currency-table"]', { timeout: 15000 });
   getAvailableLocaleInput = (locale: string): Cypress.Chainable =>
     cy.get(`#available-locale-table_wrapper [value="${locale}"]`);
   getAvailableCurrencyInput = (currency: string): Cypress.Chainable =>
     cy.get(`#available-currency-table [value="${currency}"]`);
   getDisplayRegionsTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-country_store_relation"]');
   getCountrySearchInput = (): Cypress.Chainable =>
-    cy.get('input[data-qa="table-search"][aria-controls="available-country-table"]');
+    cy.get('input[aria-controls="available-country-table"]', { timeout: 15000 });
   getAvailableCountryInput = (country: string): Cypress.Chainable =>
     cy.get(`#available-country-table [value="${country}"]`);
   getSaveButton = (): Cypress.Chainable => cy.get('[type="submit"]');

@@ -4,7 +4,7 @@ import { ProductCategoryAssignRepository } from '../product-category-assign-repo
 @injectable()
 export class B2cProductCategoryAssignRepository implements ProductCategoryAssignRepository {
   getAvailableProductsSearchInput(): Cypress.Chainable {
-    return cy.get('#dt-search-0');
+    return cy.get('input[aria-controls="product-table"]', { timeout: 15000 });
   }
 
   getAvailableProductCheckbox(idProductAbstract: number): Cypress.Chainable {
