@@ -1,0 +1,9 @@
+{
+  "defaultPassword": "change123",
+  "servicePointAddress": {
+    "address1": "Cypress Street",
+    "address2": "1",
+    "city": "Cypress City",
+    "zipCode": "10115"
+  }
+}

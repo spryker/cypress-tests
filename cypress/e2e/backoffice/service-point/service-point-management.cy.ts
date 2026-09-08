@@ -12,8 +12,8 @@ describe(
     tags: ['@backoffice', '@service-point', 'service-points', 'click-and-collect', 'spryker-core-back-office'],
   },
   (): void => {
-    if (Cypress.env('repositoryId') !== 'suite') {
-      it.skip('skipped due to it being enabled for the suite repository only', () => {});
+    if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped due to it being enabled for the suite and b2b-mp repository only', () => {});
 
       return;
     }
