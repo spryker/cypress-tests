@@ -113,6 +113,16 @@
         },
         {
           "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant",
+          "arguments": [
+            {
+              "isOpenForRelationRequest": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveShipmentType",
           "key": "shipmentType",
           "arguments": [
