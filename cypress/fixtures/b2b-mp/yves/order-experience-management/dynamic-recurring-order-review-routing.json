@@ -103,6 +103,16 @@
         },
         {
           "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant",
+          "arguments": [
+            {
+              "isOpenForRelationRequest": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveShipmentType",
           "key": "shipmentType",
           "arguments": [
@@ -154,6 +164,16 @@
             {},
             {
               "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#productWithDriftAndWarnBudget.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
             }
           ]
         },
@@ -238,7 +258,7 @@
               "status": "pre_trigger_notified",
               "enable_state_machine": true,
               "build_quote_data": true,
-              "payment_method": "dummyPaymentInvoice",
+              "payment_method": "dummyMarketplacePaymentInvoice",
               "store_name": "DE",
               "currency_iso_code": "EUR",
               "price_mode": "GROSS_MODE",
@@ -257,6 +277,7 @@
             "#scheduleWithDriftAndWarnBudget.id_recurring_schedule",
             {
               "sku": "#productWithDriftAndWarnBudget.sku",
+              "merchant_reference": "#merchant.merchant_reference",
               "quantity": 1,
               "reference_gross_price": 25000,
               "reference_net_price": 25000,
@@ -286,6 +307,16 @@
             {},
             {
               "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#productWithBlockBudget.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
             }
           ]
         },
@@ -370,7 +401,7 @@
               "status": "pre_trigger_notified",
               "enable_state_machine": true,
               "build_quote_data": true,
-              "payment_method": "dummyPaymentInvoice",
+              "payment_method": "dummyMarketplacePaymentInvoice",
               "store_name": "DE",
               "currency_iso_code": "EUR",
               "price_mode": "GROSS_MODE",
@@ -389,6 +420,7 @@
             "#scheduleWithBlockBudget.id_recurring_schedule",
             {
               "sku": "#productWithBlockBudget.sku",
+              "merchant_reference": "#merchant.merchant_reference",
               "quantity": 1,
               "reference_gross_price": 30000,
               "reference_net_price": 30000,
@@ -418,6 +450,16 @@
             {},
             {
               "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#productWithWarnBudgetOnly.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
             }
           ]
         },
@@ -502,7 +544,7 @@
               "status": "pre_trigger_notified",
               "enable_state_machine": true,
               "build_quote_data": true,
-              "payment_method": "dummyPaymentInvoice",
+              "payment_method": "dummyMarketplacePaymentInvoice",
               "store_name": "DE",
               "currency_iso_code": "EUR",
               "price_mode": "GROSS_MODE",
@@ -521,6 +563,7 @@
             "#scheduleWithWarnBudgetOnly.id_recurring_schedule",
             {
               "sku": "#productWithWarnBudgetOnly.sku",
+              "merchant_reference": "#merchant.merchant_reference",
               "quantity": 1,
               "reference_gross_price": 30000,
               "reference_net_price": 30000,
