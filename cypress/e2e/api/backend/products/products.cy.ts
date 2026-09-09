@@ -32,6 +32,12 @@ const NON_EXISTENT_STORE_NAME = 'pxm-non-existent-store';
 const SUPER_ATTRIBUTE_VALUE = 'blue';
 
 describe('products backend api', { tags: ['@api', '@products', 'product'] }, (): void => {
+  if (Cypress.env('repositoryId') !== 'suite') {
+    it.skip('skipped because the products backend api is only installed in suite', () => {});
+
+    return;
+  }
+
   let staticFixtures: ProductsStaticFixtures;
   let dynamicFixtures: ProductsDynamicFixtures;
   let accessToken: string;
