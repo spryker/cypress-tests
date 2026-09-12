@@ -1,0 +1,3350 @@
+{
+  "CatalogPage.visit": {
+    "canonical_name": "open_catalog_page",
+    "kind": "nav",
+    "description": "Open catalog page",
+    "migration_note": "Robot: open_catalog_page"
+  },
+  "CustomerOverviewPage.getPlacedOrderSuccessMessage": {
+    "canonical_name": "assert_order_success",
+    "kind": "data",
+    "description": "Get placed-order success message",
+    "migration_note": "Robot: assert_order_success"
+  },
+  "CompanyUserSelectPage.selectBusinessUnit": {
+    "canonical_name": "assert_business_unit_dropdown",
+    "kind": "ui",
+    "description": "Select business unit for company user",
+    "migration_note": "Robot: assert_business_unit_dropdown (related)"
+  },
+  "CustomerOverviewPage.viewLastPlacedOrder": {
+    "canonical_name": "navigate_to_my_order_detail",
+    "kind": "nav",
+    "description": "View last placed order",
+    "migration_note": "Robot: navigate_to_my_order_detail"
+  },
+  "CatalogPage.searchProductFromSuggestions": {
+    "canonical_name": "search_product",
+    "kind": "ui",
+    "description": "Search product from suggestions",
+    "migration_note": "Robot: search_product (search_catalog)"
+  },
+  "SspFileManagementListPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open file list page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "AgentDashboardPage.visit": {
+    "canonical_name": "open_agent_quote_requests_page",
+    "kind": "nav",
+    "description": "Open agent dashboard page",
+    "migration_note": "Robot: open_agent_quote_requests_page (closest agent page)"
+  },
+  "MerchantRelationRequestIndexPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open MRR index page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "SspAssetDetailPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open SSP asset detail page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "CustomerOverviewPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert customer overview page",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "CartPage.visit": {
+    "canonical_name": "open_cart",
+    "kind": "nav",
+    "description": "Open cart page",
+    "migration_note": "Robot: open_cart"
+  },
+  "ProductManagementEditPage.save": {
+    "canonical_name": "save_abstract_product",
+    "kind": "ui",
+    "description": "Save product in management edit",
+    "migration_note": "Robot: save_abstract_product"
+  },
+  "ProductManagementEditPage.verifySaveSuccess": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert product save success",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "OrderDetailsPage.editOrder": {
+    "canonical_name": "return_to_checkout_step",
+    "kind": "ui",
+    "description": "Edit order (amend)",
+    "migration_note": "Robot: return_to_checkout_step (order edit)"
+  },
+  "SalesIndexPage.visit": {
+    "canonical_name": "open_order_history_page",
+    "kind": "nav",
+    "description": "Open sales index page",
+    "migration_note": "Robot: open_order_history_page (related)"
+  },
+  "SalesIndexPage.view": {
+    "canonical_name": "open_order_details_page",
+    "kind": "nav",
+    "description": "View an order from sales index",
+    "migration_note": "Robot: open_order_details_page"
+  },
+  "ProductManagementEditPage.openMediaTab": {
+    "canonical_name": "navigate_to_tab",
+    "kind": "nav",
+    "description": "Open product media tab",
+    "migration_note": "Robot: navigate_to_tab"
+  },
+  "SspInquiryListPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open SSP inquiry list",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "DashboardPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert dashboard page displayed",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "UserIndexPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open user index page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "SspDashboardPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open SSP dashboard",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "ConfigurationPage.saveConfiguration": {
+    "canonical_name": "save_data_exchange_api_config",
+    "kind": "ui",
+    "description": "Save configuration",
+    "migration_note": "Robot: save_data_exchange_api_config (closest config save)"
+  },
+  "ProductManagementEditPage.addAttachment": {
+    "canonical_name": "add_product_attachment",
+    "kind": "ui",
+    "description": "Add product attachment",
+    "migration_note": ""
+  },
+  "SspAssetListPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open SSP asset list",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "SspInquiryDetailPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert inquiry detail page",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "LoginPage.visit": {
+    "canonical_name": "login_as_customer",
+    "kind": "nav",
+    "description": "Open login page",
+    "migration_note": "Robot: login_as_customer (page)"
+  },
+  "LoginPage.login": {
+    "canonical_name": "login_as_customer",
+    "kind": "setup",
+    "description": "Log in as customer",
+    "migration_note": "Robot: login_as_customer"
+  },
+  "ProductPage.addToCart": {
+    "canonical_name": "add_product_to_cart",
+    "kind": "ui",
+    "description": "Add product to cart from PDP",
+    "migration_note": "Robot: add_product_to_cart"
+  },
+  "MerchantRelationRequestIndexPage.filterRequests": {
+    "canonical_name": "filter_by_merchant",
+    "kind": "ui",
+    "description": "Filter merchant relation requests",
+    "migration_note": "Robot: filter_by_merchant"
+  },
+  "ConfigurationPage.visitStorefrontTab": {
+    "canonical_name": "navigate_to_tab",
+    "kind": "nav",
+    "description": "Open configuration storefront tab",
+    "migration_note": "Robot: navigate_to_tab"
+  },
+  "SspFileManagementListPage.clickAttachButton": {
+    "canonical_name": "click_row_action_button",
+    "kind": "ui",
+    "description": "Click attach button",
+    "migration_note": "Robot: click_row_action_button"
+  },
+  "SspFileManagementAttachPage.submitForm": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit file attach form",
+    "migration_note": "Robot: submit_form"
+  },
+  "SspFileManagementAttachPage.verifySuccessMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert file attached",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "OrderDetailsPage.getOrderReferenceBlock": {
+    "canonical_name": "get_last_order_id",
+    "kind": "data",
+    "description": "Get order reference block",
+    "migration_note": "Robot: get_last_order_id (related)"
+  },
+  "CustomerOverviewPage.visit": {
+    "canonical_name": "open_order_history_page",
+    "kind": "nav",
+    "description": "Open customer overview page",
+    "migration_note": "Robot: open_order_history_page (related)"
+  },
+  "MerchantRelationRequestListPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open MRR list page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "MerchantRelationRequestListPage.update": {
+    "canonical_name": "update_merchant",
+    "kind": "ui",
+    "description": "Update MRR from list",
+    "migration_note": "Robot: update_merchant (related)"
+  },
+  "ProductManagementEditPage.deleteAttachmentsForLocale": {
+    "canonical_name": "delete_product_attachment",
+    "kind": "ui",
+    "description": "Delete attachments for locale",
+    "migration_note": ""
+  },
+  "SspInquiryDetailPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open SSP inquiry detail",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "DashboardPage.interceptRequest": {
+    "canonical_name": "intercept_request",
+    "kind": "setup",
+    "description": "Intercept a network request",
+    "migration_note": ""
+  },
+  "MerchantRelationRequestsPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open MRR backoffice page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "MerchantRelationRequestsPage.find": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Find MRR row",
+    "migration_note": "Robot: search_table"
+  },
+  "CartPage.assertCartName": {
+    "canonical_name": "assert_cart_title",
+    "kind": "assert",
+    "description": "Assert cart name/title",
+    "migration_note": "Robot: assert_cart_title"
+  },
+  "CustomerOverviewPage.clickMyFilesLink": {
+    "canonical_name": "open_navigation_item",
+    "kind": "ui",
+    "description": "Click My Files link",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "ConfigurationPage.getThemeMainColor": {
+    "canonical_name": "get_theme_color",
+    "kind": "data",
+    "description": "Get theme main color",
+    "migration_note": ""
+  },
+  "SspFileManagementAttachPage.selectAttachmentScope": {
+    "canonical_name": "select_attachment_scope",
+    "kind": "ui",
+    "description": "Select attachment scope",
+    "migration_note": ""
+  },
+  "AgentDashboardPage.assist": {
+    "canonical_name": "login_as_agent_for_customer",
+    "kind": "setup",
+    "description": "Agent starts assisting a customer",
+    "migration_note": "Robot: login_as_agent_for_customer"
+  },
+  "UserIndexPage.update": {
+    "canonical_name": "update_admin_user",
+    "kind": "ui",
+    "description": "Update user from index",
+    "migration_note": "Robot: update_admin_user"
+  },
+  "MerchantRelationRequestsPage.getDrawer": {
+    "canonical_name": "get_drawer",
+    "kind": "data",
+    "description": "Get MRR drawer",
+    "migration_note": ""
+  },
+  "CatalogPage.search": {
+    "canonical_name": "search_catalog",
+    "kind": "ui",
+    "description": "Search the catalog",
+    "migration_note": "Robot: search_catalog"
+  },
+  "ProductPage.getAddToCartSuccessMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "data",
+    "description": "Get add-to-cart success message",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "CartPage.changeQuantity": {
+    "canonical_name": "change_cart_quantity",
+    "kind": "ui",
+    "description": "Change cart item quantity",
+    "migration_note": "Robot: change_cart_quantity"
+  },
+  "CartPage.getCartItemChangeQuantityField": {
+    "canonical_name": "get_cart_item_change_quantity_field",
+    "kind": "data",
+    "description": "Get cart item quantity input selector",
+    "migration_note": ""
+  },
+  "CommentCartPage.add": {
+    "canonical_name": "add_cart_comment",
+    "kind": "ui",
+    "description": "Add a cart comment",
+    "migration_note": "Robot: add_cart_comment"
+  },
+  "CommentCartPage.getCommentThreadListSection": {
+    "canonical_name": "assert_cart_comments_visible",
+    "kind": "data",
+    "description": "Get comment thread list section",
+    "migration_note": "Robot: assert_cart_comments_visible (related)"
+  },
+  "MerchantRelationRequestIndexPage.openFirstRequest": {
+    "canonical_name": "click_row_action_button",
+    "kind": "ui",
+    "description": "Open first MRR",
+    "migration_note": "Robot: click_row_action_button"
+  },
+  "CartPage.assertPageLocation": {
+    "canonical_name": "assert_cart_shown",
+    "kind": "assert",
+    "description": "Assert cart page displayed",
+    "migration_note": "Robot: assert_cart_shown"
+  },
+  "OrderDetailsPage.reorderAll": {
+    "canonical_name": "reorder_order",
+    "kind": "ui",
+    "description": "Reorder all items",
+    "migration_note": "Robot: reorder_order"
+  },
+  "SspInquiryListPage.clickCreateSspInquiryButton": {
+    "canonical_name": "click_create_entity_button",
+    "kind": "ui",
+    "description": "Click create inquiry button",
+    "migration_note": "Robot: click_create_entity_button"
+  },
+  "SspInquiryCreatePage.createSspInquiry": {
+    "canonical_name": "create_ssp_inquiry",
+    "kind": "ui",
+    "description": "Create an SSP inquiry",
+    "migration_note": ""
+  },
+  "SspInquiryListPage.openLatestSspInquiryDetailsPage": {
+    "canonical_name": "open_latest_inquiry_details",
+    "kind": "nav",
+    "description": "Open latest inquiry details",
+    "migration_note": ""
+  },
+  "ConfigurationPage.setThemeMainColor": {
+    "canonical_name": "set_theme_color",
+    "kind": "ui",
+    "description": "Set theme main color",
+    "migration_note": ""
+  },
+  "IndexPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert index page displayed",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "IndexPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open index/landing page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "ProductManagementEditPage.verifyAttachmentExists": {
+    "canonical_name": "assert_product_attachment",
+    "kind": "assert",
+    "description": "Assert attachment exists",
+    "migration_note": ""
+  },
+  "ProductManagementListPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open product management list",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "SspAssetDetailPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert SSP asset detail page",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "AgentDashboardPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert agent dashboard page displayed",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "AgentDashboardPage.find": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Find row in agent dashboard table",
+    "migration_note": "Robot: search_table"
+  },
+  "DashboardPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open backoffice dashboard",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "MpLoginPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert MP login page displayed",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "MpLoginPage.visit": {
+    "canonical_name": "login_as_merchant",
+    "kind": "nav",
+    "description": "Open merchant-portal login",
+    "migration_note": "Robot: login_as_merchant (page)"
+  },
+  "MpLoginPage.login": {
+    "canonical_name": "login_as_merchant",
+    "kind": "setup",
+    "description": "Log in to merchant portal",
+    "migration_note": "Robot: login_as_merchant"
+  },
+  "MerchantRelationRequestCreatePage.create": {
+    "canonical_name": "create_merchant_relation_request",
+    "kind": "ui",
+    "description": "Create a merchant relation request",
+    "migration_note": ""
+  },
+  "MerchantRelationRequestDetailsPage.getCancelButton": {
+    "canonical_name": "get_cancel_button",
+    "kind": "data",
+    "description": "Get MRR cancel button",
+    "migration_note": ""
+  },
+  "SspFileManagementListPage.openFilters": {
+    "canonical_name": "open_filters",
+    "kind": "ui",
+    "description": "Open file list filters",
+    "migration_note": ""
+  },
+  "SspFileManagementListPage.assertFileExists": {
+    "canonical_name": "assert_file_exists",
+    "kind": "assert",
+    "description": "Assert file exists",
+    "migration_note": ""
+  },
+  "ConfigurationPage.visitBackofficeTab": {
+    "canonical_name": "navigate_to_tab",
+    "kind": "nav",
+    "description": "Open configuration backoffice tab",
+    "migration_note": "Robot: navigate_to_tab"
+  },
+  "SalesDetailPage.triggerOms": {
+    "canonical_name": "trigger_oms",
+    "kind": "ui",
+    "description": "Trigger OMS transition",
+    "migration_note": "Robot: trigger_oms"
+  },
+  "SspFileManagementAttachPage.selectAvailableItems": {
+    "canonical_name": "select_available_items",
+    "kind": "ui",
+    "description": "Select available items to attach",
+    "migration_note": ""
+  },
+  "SspFileManagementAttachPage.uploadCsvFile": {
+    "canonical_name": "upload_file",
+    "kind": "ui",
+    "description": "Upload CSV file",
+    "migration_note": ""
+  },
+  "DataImportMerchantFilePage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open data-import merchant file page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "DataImportMerchantFilePage.assertFileStatus": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert imported file status",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "LoginPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert login page displayed",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "MpLoginPage.getFailedAuthenticationText": {
+    "canonical_name": "assert_login_fails",
+    "kind": "assert",
+    "description": "Get MP failed-auth text",
+    "migration_note": "Robot: assert_login_fails"
+  },
+  "UserUpdatePage.getAgentMerchantCheckbox": {
+    "canonical_name": "get_agent_merchant_checkbox",
+    "kind": "data",
+    "description": "Get agent-merchant checkbox",
+    "migration_note": ""
+  },
+  "CommentCartPage.visit": {
+    "canonical_name": "open_cart",
+    "kind": "nav",
+    "description": "Open cart with comments",
+    "migration_note": "Robot: open_cart"
+  },
+  "MerchantRelationRequestDetailsPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert MRR details page",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "MerchantRelationRequestIndexPage.getFirstRequest": {
+    "canonical_name": "get_first_company_user",
+    "kind": "data",
+    "description": "Get first MRR row",
+    "migration_note": "Robot: get_first_company_user (first-row pattern)"
+  },
+  "OrderDetailsPage.containsOrderState": {
+    "canonical_name": "assert_order_history_status",
+    "kind": "assert",
+    "description": "Assert order contains state",
+    "migration_note": "Robot: assert_order_history_status"
+  },
+  "ProductComparisonPage.getProductItemsSelector": {
+    "canonical_name": "get_product_items_selector",
+    "kind": "data",
+    "description": "Get comparison product items selector",
+    "migration_note": ""
+  },
+  "ProductComparisonPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert comparison page displayed",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "ProductPage.getAttachmentItems": {
+    "canonical_name": "get_attachment_items",
+    "kind": "data",
+    "description": "Get PDP attachment items",
+    "migration_note": ""
+  },
+  "SspAssetListPage.assertTableData": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert asset table data",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "SspFileManagementListPage.assertFileNotExists": {
+    "canonical_name": "assert_file_not_exists",
+    "kind": "assert",
+    "description": "Assert file not exists",
+    "migration_note": ""
+  },
+  "ConfigurationPage.visitLogosTab": {
+    "canonical_name": "navigate_to_tab",
+    "kind": "nav",
+    "description": "Open configuration logos tab",
+    "migration_note": "Robot: navigate_to_tab"
+  },
+  "MerchantRelationshipListPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open merchant relationship list",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "NavigationMenuPage.filterMenu": {
+    "canonical_name": "filter_navigation_menu",
+    "kind": "ui",
+    "description": "Filter navigation menu",
+    "migration_note": ""
+  },
+  "ProductManagementEditPage.expandLocaleSection": {
+    "canonical_name": "expand_locale_section",
+    "kind": "ui",
+    "description": "Expand locale section",
+    "migration_note": ""
+  },
+  "ProductManagementListPage.applyFilters": {
+    "canonical_name": "filter_by_merchant",
+    "kind": "ui",
+    "description": "Apply product list filters",
+    "migration_note": "Robot: filter_by_merchant (filter)"
+  },
+  "ProductPage.saveProduct": {
+    "canonical_name": "save_concrete_product",
+    "kind": "ui",
+    "description": "Save product",
+    "migration_note": "Robot: save_concrete_product"
+  },
+  "SspFileManagementListPage.verifyListPage": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert file list page",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "ProductPage.getSoldByProductOffers": {
+    "canonical_name": "get_sold_by_offers",
+    "kind": "data",
+    "description": "Get sold-by product offers",
+    "migration_note": ""
+  },
+  "LoginPage.getFailedAuthenticationText": {
+    "canonical_name": "assert_login_fails",
+    "kind": "assert",
+    "description": "Get failed-auth text",
+    "migration_note": "Robot: assert_login_fails"
+  },
+  "MpAgentLoginPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert MP agent login page displayed",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "DashboardPage.logout": {
+    "canonical_name": "logout_customer",
+    "kind": "ui",
+    "description": "Log out from dashboard",
+    "migration_note": "Robot: logout_customer (logout)"
+  },
+  "MpAgentLoginPage.visit": {
+    "canonical_name": "login_as_agent_for_customer",
+    "kind": "nav",
+    "description": "Open merchant-portal agent login page",
+    "migration_note": "Robot: login_as_agent_for_customer (page)"
+  },
+  "MerchantRelationRequestsPage.approve": {
+    "canonical_name": "approve_cart",
+    "kind": "ui",
+    "description": "Approve MRR",
+    "migration_note": "Robot: approve_cart (approve concept)"
+  },
+  "CartPage.getCartSummary": {
+    "canonical_name": "assert_cart_elements",
+    "kind": "data",
+    "description": "Get cart summary block",
+    "migration_note": "Robot: assert_cart_elements (related)"
+  },
+  "MerchantRegistrationPage.visit": {
+    "canonical_name": "navigate_to_url",
+    "kind": "nav",
+    "description": "Open merchant registration page",
+    "migration_note": "Robot: navigate_to_url"
+  },
+  "MerchantRegistrationPage.register": {
+    "canonical_name": "register_customer",
+    "kind": "setup",
+    "description": "Submit merchant registration",
+    "migration_note": "Robot: register_customer (related)"
+  },
+  "CustomerOverviewPage.assertProductQuantity": {
+    "canonical_name": "assert_order_product_count",
+    "kind": "assert",
+    "description": "Assert product quantity on order",
+    "migration_note": "Robot: assert_order_product_count"
+  },
+  "ProductAttributeVisibilityPage.visitSearchAndWaitForProduct": {
+    "canonical_name": "search_catalog",
+    "kind": "ui",
+    "description": "Search and wait for product (attr visibility)",
+    "migration_note": "Robot: search_catalog"
+  },
+  "ProductAttributeVisibilityPage.navigateToProductDetailPage": {
+    "canonical_name": "open_product_page",
+    "kind": "nav",
+    "description": "Open product detail page",
+    "migration_note": "Robot: open_product_page"
+  },
+  "ProductComparisonPage.getComparisonPageNavigationLinkSelector": {
+    "canonical_name": "get_comparison_nav_link_selector",
+    "kind": "data",
+    "description": "Get comparison nav link selector",
+    "migration_note": ""
+  },
+  "YvesCostCenterUpdatePage.visitByUuid": {
+    "canonical_name": "navigate_to_url",
+    "kind": "nav",
+    "description": "Open storefront cost-center update",
+    "migration_note": "Robot: navigate_to_url"
+  },
+  "YvesCostCenterUpdatePage.submit": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit cost-center update",
+    "migration_note": "Robot: submit_form"
+  },
+  "YvesCostCenterUpdatePage.assertSuccess": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert cost-center updated",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "CatalogPage.getSspAssetNameBlock": {
+    "canonical_name": "get_ssp_asset_name_block",
+    "kind": "data",
+    "description": "Get SSP asset name block on catalog",
+    "migration_note": ""
+  },
+  "SspAssetDetailPage.getEditButton": {
+    "canonical_name": "get_edit_button",
+    "kind": "data",
+    "description": "Get asset edit button",
+    "migration_note": ""
+  },
+  "SspAssetDetailPage.assertSspAssetAssignments": {
+    "canonical_name": "assert_asset_assignments",
+    "kind": "assert",
+    "description": "Assert SSP asset assignments",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertSspDashboardFilesBlockPresent": {
+    "canonical_name": "assert_dashboard_block_present",
+    "kind": "assert",
+    "description": "Assert files block present",
+    "migration_note": ""
+  },
+  "SspInquiryCreatePage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert SSP inquiry create page",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "SspInquiryCreatePage.getSspInquiryCreatedMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "data",
+    "description": "Get inquiry-created message",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "SspInquiryListPage.getFirstRowReference": {
+    "canonical_name": "get_first_row_reference",
+    "kind": "data",
+    "description": "Get first inquiry row reference",
+    "migration_note": ""
+  },
+  "CompanyRoleCreatePage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert company role create page",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "ConfigurationPage.getSaveBar": {
+    "canonical_name": "get_save_bar",
+    "kind": "data",
+    "description": "Get configuration save bar",
+    "migration_note": ""
+  },
+  "ConfigurationPage.getChangesCount": {
+    "canonical_name": "get_changes_count",
+    "kind": "data",
+    "description": "Get configuration changes count",
+    "migration_note": ""
+  },
+  "ConfigurationPage.getThemeAltColor": {
+    "canonical_name": "get_theme_color",
+    "kind": "data",
+    "description": "Get theme alt color",
+    "migration_note": ""
+  },
+  "MerchantRelationRequestEditPage.addInternalComment": {
+    "canonical_name": "add_order_comment",
+    "kind": "ui",
+    "description": "Add internal comment to MRR",
+    "migration_note": "Robot: add_order_comment"
+  },
+  "MerchantRelationshipListPage.applyFilters": {
+    "canonical_name": "filter_by_merchant",
+    "kind": "ui",
+    "description": "Apply filters on relationship list",
+    "migration_note": "Robot: filter_by_merchant"
+  },
+  "MerchantRelationshipListPage.getEditButtons": {
+    "canonical_name": "get_edit_button",
+    "kind": "data",
+    "description": "Get relationship edit buttons",
+    "migration_note": ""
+  },
+  "MerchantRelationRequestEditPage.approve": {
+    "canonical_name": "approve_cart",
+    "kind": "ui",
+    "description": "Approve merchant relation request",
+    "migration_note": "Robot: approve_cart (approve concept)"
+  },
+  "NavigationMenuPage.hasMenuItem": {
+    "canonical_name": "assert_first_nav_root_menus",
+    "kind": "assert",
+    "description": "Check menu item presence",
+    "migration_note": "Robot: assert_first_nav_root_menus (related)"
+  },
+  "NavigationMenuPage.clearFilter": {
+    "canonical_name": "clear_navigation_filter",
+    "kind": "ui",
+    "description": "Clear navigation menu filter",
+    "migration_note": ""
+  },
+  "ProductAttributeVisibilityListPage.applyFilterAndSearch": {
+    "canonical_name": "apply_filter_and_search",
+    "kind": "ui",
+    "description": "Apply filter and search attribute visibility",
+    "migration_note": "Robot: search_table (related)"
+  },
+  "ProductAttributeVisibilityListPage.assertSingleRow": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert single attribute-visibility row",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "ProductAttributeVisibilityListPage.assertDisplayAtContains": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert display-at column contains",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "ProductManagementEditPage.getLocalizedIboxToggle": {
+    "canonical_name": "get_localized_ibox_toggle",
+    "kind": "data",
+    "description": "Get localized ibox toggle",
+    "migration_note": ""
+  },
+  "ProductManagementEditPage.verifyAttachmentCount": {
+    "canonical_name": "assert_product_attachment_count",
+    "kind": "assert",
+    "description": "Assert attachment count",
+    "migration_note": ""
+  },
+  "ProductManagementEditPage.verifyMerchantSelected": {
+    "canonical_name": "assert_merchant_profile",
+    "kind": "assert",
+    "description": "Assert merchant selected",
+    "migration_note": "Robot: assert_merchant_profile (related)"
+  },
+  "ProductManagementEditPage.getMerchantNotAssignedOptionText": {
+    "canonical_name": "get_merchant_not_assigned_option",
+    "kind": "data",
+    "description": "Get merchant-not-assigned option text",
+    "migration_note": ""
+  },
+  "ProductManagementEditPage.selectMerchant": {
+    "canonical_name": "select_merchant_offer",
+    "kind": "ui",
+    "description": "Select merchant for product",
+    "migration_note": "Robot: select_merchant_offer (related)"
+  },
+  "ProductManagementListPage.getTableRows": {
+    "canonical_name": "get_table_rows",
+    "kind": "data",
+    "description": "Get product list table rows",
+    "migration_note": ""
+  },
+  "ProductManagementListPage.applySearchQuery": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Apply product list search query",
+    "migration_note": "Robot: search_table"
+  },
+  "ProductManagementListPage.assertNoTableRecords": {
+    "canonical_name": "assert_no_table_records",
+    "kind": "assert",
+    "description": "Assert no product records",
+    "migration_note": ""
+  },
+  "ProductMeasurementUnitListPage.findByText": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Find measurement unit by text",
+    "migration_note": "Robot: search_table"
+  },
+  "ProductPage.selectProductClass": {
+    "canonical_name": "select_product_class",
+    "kind": "ui",
+    "description": "Select product class",
+    "migration_note": ""
+  },
+  "BackofficeBudgetListPage.assertBudgetInTable": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert budget present in table",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "SalesDetailPage.create": {
+    "canonical_name": "create_order_shipment",
+    "kind": "ui",
+    "description": "Create from sales detail",
+    "migration_note": "Robot: create_order_shipment (related)"
+  },
+  "SalesReturnCreatePage.create": {
+    "canonical_name": "create_order_return",
+    "kind": "ui",
+    "description": "Create sales return",
+    "migration_note": "Robot: create_order_return"
+  },
+  "SspAssetDetailPage.verifyAssetDetails": {
+    "canonical_name": "assert_asset_details",
+    "kind": "assert",
+    "description": "Assert SSP asset details (verify)",
+    "migration_note": ""
+  },
+  "SspFileManagementListPage.clickViewButton": {
+    "canonical_name": "click_row_action_button",
+    "kind": "ui",
+    "description": "Click view button",
+    "migration_note": "Robot: click_row_action_button"
+  },
+  "SspInquiryDetailPage.assertSspInquiryDetails": {
+    "canonical_name": "assert_inquiry_details",
+    "kind": "assert",
+    "description": "Assert inquiry details",
+    "migration_note": ""
+  },
+  "SspInquiryDetailPage.assertOrderSspInquiryDetails": {
+    "canonical_name": "assert_inquiry_details",
+    "kind": "assert",
+    "description": "Assert order inquiry details",
+    "migration_note": ""
+  },
+  "ProductPage.editProductFromList": {
+    "canonical_name": "update_concrete_product",
+    "kind": "ui",
+    "description": "Edit product from list",
+    "migration_note": "Robot: update_concrete_product (related)"
+  },
+  "ProductPage.goToVariansTab": {
+    "canonical_name": "navigate_to_tab",
+    "kind": "nav",
+    "description": "Open product variants tab",
+    "migration_note": "Robot: navigate_to_tab"
+  },
+  "ProductPage.editFirstVariant": {
+    "canonical_name": "update_concrete_product",
+    "kind": "ui",
+    "description": "Edit first variant",
+    "migration_note": "Robot: update_concrete_product"
+  },
+  "ProductPage.verifySuccessMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert product success message",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "ProductPage.selectShipmentType": {
+    "canonical_name": "select_shipment_type",
+    "kind": "ui",
+    "description": "Select shipment type",
+    "migration_note": "Robot: select_shipment_type"
+  },
+  "ProductPage.getInputRadioSelector": {
+    "canonical_name": "get_input_radio_selector",
+    "kind": "data",
+    "description": "Get radio input selector",
+    "migration_note": ""
+  },
+  "ProductPage.getAvailabilityStatusBlock": {
+    "canonical_name": "assert_product_availability_status_changed",
+    "kind": "data",
+    "description": "Get availability status block",
+    "migration_note": "Robot: assert_product_availability_status_changed (related)"
+  },
+  "AgentLoginPage.visit": {
+    "canonical_name": "login_as_agent_for_customer",
+    "kind": "nav",
+    "description": "Open agent login page",
+    "migration_note": "Robot: login_as_agent_for_customer (page)"
+  },
+  "AgentLoginPage.login": {
+    "canonical_name": "login_as_agent_for_customer",
+    "kind": "setup",
+    "description": "Log in as agent",
+    "migration_note": "Robot: login_as_agent_for_customer"
+  },
+  "AgentLoginPage.getFailedAuthenticationText": {
+    "canonical_name": "assert_login_fails",
+    "kind": "assert",
+    "description": "Get failed-authentication text on agent login",
+    "migration_note": "Robot: assert_login_fails"
+  },
+  "AgentLoginPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert agent login page displayed",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "AgentDashboardPage.getEndUserAssistanceSelector": {
+    "canonical_name": "get_end_user_assistance_selector",
+    "kind": "data",
+    "description": "Get end-user assistance selector",
+    "migration_note": ""
+  },
+  "AgentDashboardPage.getLogoutAgentSelector": {
+    "canonical_name": "get_logout_agent_selector",
+    "kind": "data",
+    "description": "Get logout-agent selector",
+    "migration_note": ""
+  },
+  "MpAgentLoginPage.login": {
+    "canonical_name": "login_as_agent_for_customer",
+    "kind": "setup",
+    "description": "Log in as merchant-portal agent",
+    "migration_note": "Robot: login_as_agent_for_customer"
+  },
+  "MpAgentLoginPage.getFailedAuthenticationText": {
+    "canonical_name": "assert_login_fails",
+    "kind": "assert",
+    "description": "Get failed-auth text on MP agent login",
+    "migration_note": "Robot: assert_login_fails"
+  },
+  "ProductsPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open products page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "UserIndexPage.getUserTableHeader": {
+    "canonical_name": "get_user_table_header",
+    "kind": "data",
+    "description": "Get user table header",
+    "migration_note": ""
+  },
+  "SalesIndexPage.getOrderReference": {
+    "canonical_name": "get_last_order_id",
+    "kind": "data",
+    "description": "Get order reference",
+    "migration_note": "Robot: get_last_order_id (related)"
+  },
+  "MerchantRelationRequestsPage.addInternalComment": {
+    "canonical_name": "add_order_comment",
+    "kind": "ui",
+    "description": "Add internal comment to MRR",
+    "migration_note": "Robot: add_order_comment"
+  },
+  "MerchantRelationsPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open merchant relations page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "MerchantRelationsPage.find": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Find merchant relation row",
+    "migration_note": "Robot: search_table"
+  },
+  "MerchantRelationsPage.getDrawer": {
+    "canonical_name": "get_drawer",
+    "kind": "data",
+    "description": "Get merchant relations drawer",
+    "migration_note": ""
+  },
+  "MerchantRelationRequestsPage.uncheckBusinessUnits": {
+    "canonical_name": "uncheck_business_units",
+    "kind": "ui",
+    "description": "Uncheck business units on MRR",
+    "migration_note": ""
+  },
+  "AgentDashboardPage.logoutAgent": {
+    "canonical_name": "logout_agent",
+    "kind": "ui",
+    "description": "Log the assisting agent out",
+    "migration_note": "Robot: logout_agent"
+  },
+  "CartPage.removeProduct": {
+    "canonical_name": "remove_cart_product",
+    "kind": "ui",
+    "description": "Remove product from cart",
+    "migration_note": "Robot: remove_cart_product"
+  },
+  "CmsContentPage.findCmsPageFromSuggestions": {
+    "canonical_name": "search_product",
+    "kind": "ui",
+    "description": "Find CMS page from search suggestions",
+    "migration_note": "Robot: search_product (reused search concept)"
+  },
+  "MultiCartPage.visit": {
+    "canonical_name": "open_shopping_carts_page",
+    "kind": "nav",
+    "description": "Open multi-cart page",
+    "migration_note": "Robot: open_shopping_carts_page"
+  },
+  "MultiCartPage.selectCart": {
+    "canonical_name": "open_named_cart",
+    "kind": "ui",
+    "description": "Select a named cart",
+    "migration_note": "Robot: open_named_cart"
+  },
+  "CommentCartPage.update": {
+    "canonical_name": "edit_cart_comment",
+    "kind": "ui",
+    "description": "Edit a cart comment",
+    "migration_note": "Robot: edit_cart_comment"
+  },
+  "CommentCartPage.remove": {
+    "canonical_name": "delete_cart_comment",
+    "kind": "ui",
+    "description": "Delete a cart comment",
+    "migration_note": "Robot: delete_cart_comment"
+  },
+  "HomePage.visit": {
+    "canonical_name": "go_home",
+    "kind": "nav",
+    "description": "Open home page",
+    "migration_note": "Robot: go_home"
+  },
+  "LoginPage.register": {
+    "canonical_name": "register_customer",
+    "kind": "setup",
+    "description": "Register a customer",
+    "migration_note": "Robot: register_customer"
+  },
+  "LoginPage.getRegistrationCompletedMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "data",
+    "description": "Get registration-completed message",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "MerchantRelationRequestIndexPage.create": {
+    "canonical_name": "create_merchant_relation_request",
+    "kind": "ui",
+    "description": "Create MRR from index",
+    "migration_note": ""
+  },
+  "MerchantRegistrationPage.assertSuccessMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert registration success",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "AgentOverviewPage.visit": {
+    "canonical_name": "open_agent_quote_requests_page",
+    "kind": "nav",
+    "description": "Open agent overview page",
+    "migration_note": "Robot: open_agent_quote_requests_page"
+  },
+  "AgentOverviewPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert agent overview page displayed",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "ProductAttributeVisibilityPage.assertPdpAttributeVisible": {
+    "canonical_name": "assert_pdp_contains",
+    "kind": "assert",
+    "description": "Assert PDP attribute visible",
+    "migration_note": "Robot: assert_pdp_contains"
+  },
+  "ProductAttributeVisibilityEditPage.updateAttributeVisibility": {
+    "canonical_name": "update_attribute_visibility",
+    "kind": "ui",
+    "description": "Update product attribute visibility",
+    "migration_note": ""
+  },
+  "ProductAttributeVisibilityPage.assertPlpAttributeBadgeNotVisible": {
+    "canonical_name": "assert_element_absent",
+    "kind": "assert",
+    "description": "Assert PLP attribute badge not visible",
+    "migration_note": "Robot: assert_element_absent"
+  },
+  "ProductAttributeVisibilityPage.assertCartAttributeBadgeNotVisible": {
+    "canonical_name": "assert_element_absent",
+    "kind": "assert",
+    "description": "Assert cart attribute badge not visible",
+    "migration_note": "Robot: assert_element_absent"
+  },
+  "ProductPage.getAddToComparisonListSuccessMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "data",
+    "description": "Get add-to-comparison success message",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "ProductComparisonPage.getProductComparisonListIsEmptyMessage": {
+    "canonical_name": "get_comparison_empty_message",
+    "kind": "data",
+    "description": "Get comparison-empty message",
+    "migration_note": ""
+  },
+  "ProductPage.toggleProductComparisonList": {
+    "canonical_name": "toggle_comparison_list",
+    "kind": "ui",
+    "description": "Toggle product in comparison list",
+    "migration_note": ""
+  },
+  "CheckoutSummaryPage.placeOrder": {
+    "canonical_name": "place_order",
+    "kind": "ui",
+    "description": "Place the order from summary",
+    "migration_note": "Robot: place_order"
+  },
+  "CheckoutSummaryBudgetPage.assertEnforcementError": {
+    "canonical_name": "assert_checkout_blocked",
+    "kind": "assert",
+    "description": "Assert budget enforcement error blocks checkout",
+    "migration_note": "Robot: assert_checkout_blocked"
+  },
+  "YvesBudgetListPage.visitByCostCenterUuid": {
+    "canonical_name": "navigate_to_url",
+    "kind": "nav",
+    "description": "Open storefront budget list",
+    "migration_note": "Robot: navigate_to_url"
+  },
+  "YvesBudgetListPage.assertBudgetInTable": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert budget in table",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "YvesCostCenterListPage.assertCostCenterInTable": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert cost-center in table",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "CatalogPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert catalog page displayed",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "CatalogPage.getProductItemBlocks": {
+    "canonical_name": "assert_catalog_products",
+    "kind": "data",
+    "description": "Get catalog product item blocks",
+    "migration_note": "Robot: assert_catalog_products (related)"
+  },
+  "SspAssetDetailPage.getSspAssetServicesButton": {
+    "canonical_name": "get_asset_services_button",
+    "kind": "data",
+    "description": "Get asset services button",
+    "migration_note": ""
+  },
+  "SspAssetDetailPage.assertAssetDetails": {
+    "canonical_name": "assert_asset_details",
+    "kind": "assert",
+    "description": "Assert SSP asset details",
+    "migration_note": ""
+  },
+  "SspAssetDetailPage.getUnassignButton": {
+    "canonical_name": "get_unassign_button",
+    "kind": "data",
+    "description": "Get unassign button",
+    "migration_note": ""
+  },
+  "SspAssetDetailPage.assertSspServices": {
+    "canonical_name": "assert_ssp_services",
+    "kind": "assert",
+    "description": "Assert SSP asset services",
+    "migration_note": ""
+  },
+  "SspAssetListPage.openLatestAssetDetailsPage": {
+    "canonical_name": "open_latest_asset_details",
+    "kind": "nav",
+    "description": "Open latest asset details",
+    "migration_note": ""
+  },
+  "SspAssetListPage.getCreateAssetButton": {
+    "canonical_name": "get_create_button",
+    "kind": "data",
+    "description": "Get create-asset button",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertSspDashboardInquiriesBlockPresent": {
+    "canonical_name": "assert_dashboard_block_present",
+    "kind": "assert",
+    "description": "Assert inquiries block present",
+    "migration_note": ""
+  },
+  "SspServiceListPage.assertServiceListPage": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert service list page",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "SspServiceListPage.openFilter": {
+    "canonical_name": "open_filters",
+    "kind": "ui",
+    "description": "Open service list filter",
+    "migration_note": ""
+  },
+  "SspServiceListPage.assertServiceTableHasAtLeastRows": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert service table has at least N rows",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "CartPage.assertServicePointsDisplayed": {
+    "canonical_name": "assert_store_availability",
+    "kind": "assert",
+    "description": "Assert service points displayed on cart",
+    "migration_note": "Robot: assert_store_availability (related)"
+  },
+  "CartPage.assertShipmentTypeGrouping": {
+    "canonical_name": "assert_shipment_data",
+    "kind": "assert",
+    "description": "Assert shipment-type grouping on cart",
+    "migration_note": "Robot: assert_shipment_data (related)"
+  },
+  "CompanyRoleListPage.visit": {
+    "canonical_name": "open_company_menu_item",
+    "kind": "nav",
+    "description": "Open company role list",
+    "migration_note": "Robot: open_company_menu_item"
+  },
+  "CompanyRoleListPage.clickAddCompanyUserRoleButton": {
+    "canonical_name": "click_create_entity_button",
+    "kind": "ui",
+    "description": "Click add company role button",
+    "migration_note": "Robot: click_create_entity_button"
+  },
+  "CompanyRoleCreatePage.getCompanyRoleCreateForm": {
+    "canonical_name": "get_company_role_form",
+    "kind": "data",
+    "description": "Get company role create form",
+    "migration_note": ""
+  },
+  "ConfigurationPage.resetChanges": {
+    "canonical_name": "reset_configuration_changes",
+    "kind": "ui",
+    "description": "Reset configuration changes",
+    "migration_note": ""
+  },
+  "ConfigurationPage.searchSettings": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Search configuration settings",
+    "migration_note": "Robot: search_table"
+  },
+  "ConfigurationPage.clickUseDefaultLink": {
+    "canonical_name": "click_use_default_setting",
+    "kind": "ui",
+    "description": "Click use-default link",
+    "migration_note": ""
+  },
+  "ConfigurationPage.getBackofficeLogoUploadButton": {
+    "canonical_name": "get_logo_upload_button",
+    "kind": "data",
+    "description": "Get backoffice logo upload button",
+    "migration_note": ""
+  },
+  "ConfigurationPage.getStorefrontLogoUploadButton": {
+    "canonical_name": "get_logo_upload_button",
+    "kind": "data",
+    "description": "Get storefront logo upload button",
+    "migration_note": ""
+  },
+  "ConfigurationPage.getCustomCss": {
+    "canonical_name": "get_custom_css_field",
+    "kind": "data",
+    "description": "Get custom CSS field",
+    "migration_note": ""
+  },
+  "ConfigurationPage.getBackofficeColor": {
+    "canonical_name": "get_theme_color",
+    "kind": "data",
+    "description": "Get backoffice color",
+    "migration_note": ""
+  },
+  "ConfigurationPage.getScopeSelector": {
+    "canonical_name": "get_scope_selector",
+    "kind": "data",
+    "description": "Get configuration scope selector",
+    "migration_note": ""
+  },
+  "ConfigurationPage.setBackofficeColor": {
+    "canonical_name": "set_theme_color",
+    "kind": "ui",
+    "description": "Set backoffice color",
+    "migration_note": ""
+  },
+  "ConfigurationPage.setBackofficeSidenavColor": {
+    "canonical_name": "set_theme_color",
+    "kind": "ui",
+    "description": "Set backoffice sidenav color",
+    "migration_note": ""
+  },
+  "ConfigurationPage.setBackofficeSidenavTextColor": {
+    "canonical_name": "set_theme_color",
+    "kind": "ui",
+    "description": "Set backoffice sidenav text color",
+    "migration_note": ""
+  },
+  "ConfigurationPage.uploadStorefrontLogo": {
+    "canonical_name": "upload_logo",
+    "kind": "ui",
+    "description": "Upload storefront logo",
+    "migration_note": ""
+  },
+  "ConfigurationPage.verifyStorefrontLogoUploaded": {
+    "canonical_name": "assert_logo_uploaded",
+    "kind": "assert",
+    "description": "Assert storefront logo uploaded",
+    "migration_note": ""
+  },
+  "ConfigurationPage.uploadBackofficeLogo": {
+    "canonical_name": "upload_logo",
+    "kind": "ui",
+    "description": "Upload backoffice logo",
+    "migration_note": ""
+  },
+  "ConfigurationPage.verifyBackofficeLogoUploaded": {
+    "canonical_name": "assert_logo_uploaded",
+    "kind": "assert",
+    "description": "Assert backoffice logo uploaded",
+    "migration_note": ""
+  },
+  "MerchantRelationRequestEditPage.reject": {
+    "canonical_name": "reject_merchant_relation_request",
+    "kind": "ui",
+    "description": "Reject merchant relation request",
+    "migration_note": ""
+  },
+  "MerchantRelationshipListPage.update": {
+    "canonical_name": "update_merchant",
+    "kind": "ui",
+    "description": "Update merchant relationship",
+    "migration_note": "Robot: update_merchant"
+  },
+  "ResetPasswordPage.visit": {
+    "canonical_name": "navigate_to_url",
+    "kind": "nav",
+    "description": "Open reset-password page",
+    "migration_note": "Robot: navigate_to_url"
+  },
+  "ResetPasswordPage.changePassword": {
+    "canonical_name": "change_password",
+    "kind": "ui",
+    "description": "Change password",
+    "migration_note": ""
+  },
+  "NavigationMenuPage.assertFilterInputVisible": {
+    "canonical_name": "assert_element_absent",
+    "kind": "assert",
+    "description": "Assert nav filter input visible",
+    "migration_note": "Robot: assert_element_absent (inverse)"
+  },
+  "NavigationMenuPage.assertAnyMenuItemVisible": {
+    "canonical_name": "assert_first_nav_root_menus",
+    "kind": "assert",
+    "description": "Assert any menu item visible",
+    "migration_note": "Robot: assert_first_nav_root_menus"
+  },
+  "NavigationMenuPage.assertMenuItemsFiltered": {
+    "canonical_name": "assert_menu_items_filtered",
+    "kind": "assert",
+    "description": "Assert menu items filtered",
+    "migration_note": ""
+  },
+  "NavigationMenuPage.assertItemVisible": {
+    "canonical_name": "assert_first_nav_root_menus",
+    "kind": "assert",
+    "description": "Assert specific menu item visible",
+    "migration_note": "Robot: assert_first_nav_root_menus"
+  },
+  "NavigationMenuPage.assertAllMenuItemsVisible": {
+    "canonical_name": "assert_first_nav_root_menus",
+    "kind": "assert",
+    "description": "Assert all menu items visible",
+    "migration_note": "Robot: assert_first_nav_root_menus"
+  },
+  "NavigationMenuPage.assertAllParentItemsClosed": {
+    "canonical_name": "assert_parent_items_closed",
+    "kind": "assert",
+    "description": "Assert all parent items closed",
+    "migration_note": ""
+  },
+  "NavigationMenuPage.assertParentItemVisible": {
+    "canonical_name": "assert_first_nav_root_menus",
+    "kind": "assert",
+    "description": "Assert parent item visible",
+    "migration_note": "Robot: assert_first_nav_root_menus"
+  },
+  "NavigationMenuPage.assertParentItemExpanded": {
+    "canonical_name": "assert_parent_item_expanded",
+    "kind": "assert",
+    "description": "Assert parent item expanded",
+    "migration_note": ""
+  },
+  "NavigationMenuPage.assertOnlyMatchingChildrenVisible": {
+    "canonical_name": "assert_menu_items_filtered",
+    "kind": "assert",
+    "description": "Assert only matching children visible",
+    "migration_note": ""
+  },
+  "NavigationMenuPage.getMenuItemsOrder": {
+    "canonical_name": "get_menu_items_order",
+    "kind": "data",
+    "description": "Get nav menu items order",
+    "migration_note": ""
+  },
+  "NavigationMenuPage.assertMenuOrderUnchanged": {
+    "canonical_name": "assert_menu_order_unchanged",
+    "kind": "assert",
+    "description": "Assert menu order unchanged",
+    "migration_note": ""
+  },
+  "NavigationMenuPage.pressEnter": {
+    "canonical_name": "press_enter",
+    "kind": "ui",
+    "description": "Press Enter in nav filter",
+    "migration_note": ""
+  },
+  "NavigationMenuPage.assertFilterValueEmpty": {
+    "canonical_name": "assert_filter_value_empty",
+    "kind": "assert",
+    "description": "Assert nav filter value empty",
+    "migration_note": ""
+  },
+  "CartPage.addCustomOrderReferenceInput": {
+    "canonical_name": "add_custom_order_reference",
+    "kind": "ui",
+    "description": "Add custom order reference input on cart",
+    "migration_note": ""
+  },
+  "ProductAttributeVisibilityListPage.visitAndWaitForTable": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open attribute-visibility list and wait",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "ProductAttributeVisibilityListPage.assertDisplayAtColumnExists": {
+    "canonical_name": "assert_header_contains",
+    "kind": "assert",
+    "description": "Assert display-at column exists",
+    "migration_note": "Robot: assert_header_contains"
+  },
+  "ProductAttributeVisibilityListPage.assertVisibilityFilterExists": {
+    "canonical_name": "assert_element_absent",
+    "kind": "assert",
+    "description": "Assert visibility filter exists",
+    "migration_note": "Robot: assert_element_absent (inverse)"
+  },
+  "ProductAttributeVisibilityListPage.assertDisplayAtEmpty": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert display-at empty",
+    "migration_note": "Robot: assert_table_contains_value (related)"
+  },
+  "ProductAttributeVisibilityListPage.assertNoRecords": {
+    "canonical_name": "assert_no_table_records",
+    "kind": "assert",
+    "description": "Assert no attribute-visibility records",
+    "migration_note": ""
+  },
+  "ProductManagementEditPage.deleteAttachmentByIndex": {
+    "canonical_name": "delete_product_attachment",
+    "kind": "ui",
+    "description": "Delete attachment by index",
+    "migration_note": ""
+  },
+  "ProductManagementEditPage.removeMerchantAssignment": {
+    "canonical_name": "remove_merchant_assignment",
+    "kind": "ui",
+    "description": "Remove merchant assignment",
+    "migration_note": ""
+  },
+  "ProductManagementListPage.getResetButton": {
+    "canonical_name": "get_reset_button",
+    "kind": "data",
+    "description": "Get product list reset button",
+    "migration_note": ""
+  },
+  "ProductMeasurementUnitCreatePage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open measurement-unit create page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "ProductMeasurementUnitCreatePage.fillCreateForm": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill measurement-unit create form",
+    "migration_note": ""
+  },
+  "ProductMeasurementUnitCreatePage.submitCreateForm": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit measurement-unit create form",
+    "migration_note": "Robot: submit_form"
+  },
+  "ProductMeasurementUnitListPage.getTableRows": {
+    "canonical_name": "get_table_rows",
+    "kind": "data",
+    "description": "Get measurement-unit table rows",
+    "migration_note": ""
+  },
+  "ProductMeasurementUnitListPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open measurement-unit list",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "ProductMeasurementUnitListPage.getCreateButton": {
+    "canonical_name": "get_create_button",
+    "kind": "data",
+    "description": "Get measurement-unit create button",
+    "migration_note": ""
+  },
+  "ProductMeasurementUnitListPage.getTableCodeColumn": {
+    "canonical_name": "get_table_code_column",
+    "kind": "data",
+    "description": "Get measurement-unit code column",
+    "migration_note": ""
+  },
+  "ProductMeasurementUnitListPage.getPaginationBar": {
+    "canonical_name": "get_pagination_bar",
+    "kind": "data",
+    "description": "Get pagination bar",
+    "migration_note": ""
+  },
+  "ProductMeasurementUnitListPage.getTableEditButton": {
+    "canonical_name": "get_table_edit_button",
+    "kind": "data",
+    "description": "Get table edit button",
+    "migration_note": ""
+  },
+  "ProductMeasurementUnitListPage.getTableDeleteButton": {
+    "canonical_name": "get_table_delete_button",
+    "kind": "data",
+    "description": "Get table delete button",
+    "migration_note": ""
+  },
+  "ProductManagementEditPage.getGeneralTab": {
+    "canonical_name": "navigate_to_tab",
+    "kind": "data",
+    "description": "Get product general tab",
+    "migration_note": "Robot: navigate_to_tab (related)"
+  },
+  "ProductOfferListPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open product offer list",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "ProductOfferListPage.getCreateButton": {
+    "canonical_name": "get_create_button",
+    "kind": "data",
+    "description": "Get offer create button",
+    "migration_note": ""
+  },
+  "ProductOfferCreatePage.getCurrentDate": {
+    "canonical_name": "get_current_date",
+    "kind": "data",
+    "description": "Get current date helper",
+    "migration_note": ""
+  },
+  "ProductOfferCreatePage.getFutureDate": {
+    "canonical_name": "get_future_date",
+    "kind": "data",
+    "description": "Get future date helper",
+    "migration_note": ""
+  },
+  "ProductOfferCreatePage.assertSuccessMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert offer create success",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "ProductOfferListPage.clickViewButton": {
+    "canonical_name": "click_row_action_button",
+    "kind": "ui",
+    "description": "Click offer view button",
+    "migration_note": "Robot: click_row_action_button"
+  },
+  "ProductOfferViewPage.assertProductOfferData": {
+    "canonical_name": "assert_offer_product_view_contains",
+    "kind": "assert",
+    "description": "Assert product offer data",
+    "migration_note": "Robot: assert_offer_product_view_contains"
+  },
+  "BackofficeBudgetCreatePage.visitByCostCenter": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open budget create page for a cost center",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "BackofficeBudgetCreatePage.fillName": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill budget name field",
+    "migration_note": "Robot: fill_offer_fields (generic form fill)"
+  },
+  "BackofficeBudgetCreatePage.fillAmount": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill budget amount field",
+    "migration_note": ""
+  },
+  "BackofficeBudgetCreatePage.selectCurrency": {
+    "canonical_name": "select_currency",
+    "kind": "ui",
+    "description": "Select budget currency",
+    "migration_note": "Robot: select_currency"
+  },
+  "BackofficeBudgetCreatePage.selectEnforcementRule": {
+    "canonical_name": "select_enforcement_rule",
+    "kind": "ui",
+    "description": "Select budget enforcement rule",
+    "migration_note": ""
+  },
+  "BackofficeBudgetCreatePage.fillStartDate": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill budget start date",
+    "migration_note": ""
+  },
+  "BackofficeBudgetCreatePage.fillEndDate": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill budget end date",
+    "migration_note": ""
+  },
+  "BackofficeBudgetCreatePage.submit": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit budget create form",
+    "migration_note": "Robot: submit_form"
+  },
+  "BackofficeBudgetCreatePage.assertSuccess": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert budget created success",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "BackofficeBudgetListPage.visitByCostCenter": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open budget list for a cost center",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "BackofficeBudgetEditPage.visitById": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open budget edit page by id",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "BackofficeBudgetEditPage.fillName": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill budget name on edit",
+    "migration_note": ""
+  },
+  "BackofficeBudgetEditPage.submit": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit budget edit form",
+    "migration_note": "Robot: submit_form"
+  },
+  "BackofficeBudgetEditPage.assertSuccess": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert budget edit success",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "CostCenterListPage.waitForTable": {
+    "canonical_name": "wait_for_element_visible",
+    "kind": "ui",
+    "description": "Wait for cost-center table",
+    "migration_note": "Robot: wait_for_element_visible"
+  },
+  "CostCenterListPage.clickCreateButton": {
+    "canonical_name": "click_create_entity_button",
+    "kind": "ui",
+    "description": "Click create cost center",
+    "migration_note": "Robot: click_create_entity_button"
+  },
+  "CostCenterCreatePage.fillName": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill cost center name",
+    "migration_note": ""
+  },
+  "CostCenterCreatePage.fillDescription": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill cost center description",
+    "migration_note": ""
+  },
+  "CostCenterCreatePage.selectCompany": {
+    "canonical_name": "select_company",
+    "kind": "ui",
+    "description": "Select company for cost center",
+    "migration_note": ""
+  },
+  "CostCenterCreatePage.selectBusinessUnit": {
+    "canonical_name": "select_business_unit",
+    "kind": "ui",
+    "description": "Select business unit for cost center",
+    "migration_note": ""
+  },
+  "CostCenterCreatePage.submit": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit cost center create",
+    "migration_note": "Robot: submit_form"
+  },
+  "CostCenterCreatePage.assertSuccess": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert cost center created",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "CostCenterEditPage.visitById": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open cost center edit by id",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "CostCenterEditPage.fillName": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill cost center name on edit",
+    "migration_note": ""
+  },
+  "CostCenterEditPage.submit": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit cost center edit",
+    "migration_note": "Robot: submit_form"
+  },
+  "CostCenterEditPage.assertSuccess": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert cost center edit success",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "CostCenterListPage.assertCostCenterInTable": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert cost center in table",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "SspAssetListPage.verifyListPage": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert SSP asset list page",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "SspAssetListPage.clickCreateButton": {
+    "canonical_name": "click_create_entity_button",
+    "kind": "ui",
+    "description": "Click create asset button",
+    "migration_note": "Robot: click_create_entity_button"
+  },
+  "SspAssetAddPage.fillAssetForm": {
+    "canonical_name": "fill_asset_form",
+    "kind": "ui",
+    "description": "Fill SSP asset form",
+    "migration_note": ""
+  },
+  "SspAssetAddPage.checkCreateSspModelCheckbox": {
+    "canonical_name": "check_create_ssp_model_checkbox",
+    "kind": "ui",
+    "description": "Check create-SSP-model checkbox",
+    "migration_note": ""
+  },
+  "SspAssetAddPage.submitForm": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit SSP asset form",
+    "migration_note": "Robot: submit_form"
+  },
+  "SspAssetAddPage.verifySuccessMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert SSP asset created",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "SspAssetDetailPage.getReference": {
+    "canonical_name": "get_asset_reference",
+    "kind": "data",
+    "description": "Get SSP asset reference",
+    "migration_note": ""
+  },
+  "SspAssetListPage.searchAsset": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Search SSP asset",
+    "migration_note": "Robot: search_table"
+  },
+  "SspAssetListPage.assetTableContainsAsset": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert asset present in table",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "YvesSspAssetDetailPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open storefront SSP asset detail",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "YvesSspAssetDetailPage.assertAssetDetails": {
+    "canonical_name": "assert_asset_details",
+    "kind": "assert",
+    "description": "Assert storefront asset details",
+    "migration_note": ""
+  },
+  "SspModelListPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open SSP model list",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "SspModelListPage.verifyModelInTable": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert SSP model in table",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "SspAssetUpdatePage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open SSP asset update page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "SspAssetUpdatePage.updateAssetForm": {
+    "canonical_name": "update_ssp_asset",
+    "kind": "ui",
+    "description": "Update SSP asset form",
+    "migration_note": ""
+  },
+  "SspAssetUpdatePage.submitForm": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit SSP asset update",
+    "migration_note": "Robot: submit_form"
+  },
+  "SspAssetUpdatePage.verifySuccessMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert SSP asset updated",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "SspFileManagementAddPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open file add page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "SspFileManagementAddPage.verifyFileUploadConstraints": {
+    "canonical_name": "assert_file_upload_constraints",
+    "kind": "assert",
+    "description": "Assert file upload constraints",
+    "migration_note": ""
+  },
+  "SspFileManagementAddPage.loadTestFiles": {
+    "canonical_name": "load_test_files",
+    "kind": "setup",
+    "description": "Load test files",
+    "migration_note": ""
+  },
+  "SspFileManagementAddPage.uploadFiles": {
+    "canonical_name": "upload_file",
+    "kind": "ui",
+    "description": "Upload files",
+    "migration_note": ""
+  },
+  "SspFileManagementAddPage.submitForm": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit file add form",
+    "migration_note": "Robot: submit_form"
+  },
+  "SspFileManagementAddPage.verifySuccessMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert file added",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "SspFileManagementListPage.clickDeleteButton": {
+    "canonical_name": "click_row_action_button",
+    "kind": "ui",
+    "description": "Click delete button",
+    "migration_note": "Robot: click_row_action_button"
+  },
+  "SspFileManagementDeletePage.confirmDelete": {
+    "canonical_name": "confirm_delete",
+    "kind": "ui",
+    "description": "Confirm file delete",
+    "migration_note": ""
+  },
+  "SspFileManagementDeletePage.verifySuccessMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert file deleted",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "SspFileManagementDeletePage.assertDeleteFile": {
+    "canonical_name": "assert_file_not_exists",
+    "kind": "assert",
+    "description": "Assert file deleted",
+    "migration_note": ""
+  },
+  "SspFileManagementViewPage.verifyFileDetailsAreVisible": {
+    "canonical_name": "assert_file_details",
+    "kind": "assert",
+    "description": "Assert file details visible",
+    "migration_note": ""
+  },
+  "SspFileManagementDetachPage.detachFile": {
+    "canonical_name": "detach_file",
+    "kind": "ui",
+    "description": "Detach a file",
+    "migration_note": ""
+  },
+  "SspFileManagementDetachPage.verifySuccessMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert file detached",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "SspFileManagementDetachPage.assertDetachFile": {
+    "canonical_name": "assert_file_detached",
+    "kind": "assert",
+    "description": "Assert file detached",
+    "migration_note": ""
+  },
+  "SspInquiryDetailPage.submitComment": {
+    "canonical_name": "add_order_comment",
+    "kind": "ui",
+    "description": "Submit inquiry comment",
+    "migration_note": "Robot: add_order_comment (comment)"
+  },
+  "SspInquiryDetailPage.assertSspInquiryTableIsNotEmpty": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert inquiry table not empty",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "SspInquiryDetailPage.assertSspInquiryTableColumnsExist": {
+    "canonical_name": "assert_header_contains",
+    "kind": "assert",
+    "description": "Assert inquiry table columns exist",
+    "migration_note": "Robot: assert_header_contains"
+  },
+  "SspInquiryDetailPage.assertViewSspInquiryTableLinksExist": {
+    "canonical_name": "assert_element_absent",
+    "kind": "assert",
+    "description": "Assert inquiry table links exist",
+    "migration_note": "Robot: assert_element_absent (inverse)"
+  },
+  "SspInquiryDetailPage.approveSspInquiry": {
+    "canonical_name": "approve_ssp_inquiry",
+    "kind": "ui",
+    "description": "Approve SSP inquiry",
+    "migration_note": ""
+  },
+  "SspInquiryDetailPage.assertSspInquiryStatusChangedToApproved": {
+    "canonical_name": "assert_inquiry_status",
+    "kind": "assert",
+    "description": "Assert inquiry status approved",
+    "migration_note": ""
+  },
+  "SspInquiryDetailPage.rejectSspInquiry": {
+    "canonical_name": "reject_ssp_inquiry",
+    "kind": "ui",
+    "description": "Reject SSP inquiry",
+    "migration_note": ""
+  },
+  "SspInquiryDetailPage.assertSspInquiryStatusChangedToRejected": {
+    "canonical_name": "assert_inquiry_status",
+    "kind": "assert",
+    "description": "Assert inquiry status rejected",
+    "migration_note": ""
+  },
+  "SspInquiryDetailPage.cancelSspInquiry": {
+    "canonical_name": "cancel_ssp_inquiry",
+    "kind": "ui",
+    "description": "Cancel SSP inquiry",
+    "migration_note": ""
+  },
+  "SspInquiryDetailPage.assertSspInquiryStatusChangedToCanceled": {
+    "canonical_name": "assert_inquiry_status",
+    "kind": "assert",
+    "description": "Assert inquiry status canceled",
+    "migration_note": ""
+  },
+  "SspInquiryDetailPage.openSspInquiryHistory": {
+    "canonical_name": "open_inquiry_history",
+    "kind": "nav",
+    "description": "Open inquiry history",
+    "migration_note": ""
+  },
+  "SspInquiryDetailPage.assertSspInquiryHistoryIsNotEmpty": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert inquiry history not empty",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "SspModelAddPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open SSP model add page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "SspModelAddPage.fillSspModelForm": {
+    "canonical_name": "fill_ssp_model_form",
+    "kind": "ui",
+    "description": "Fill SSP model form",
+    "migration_note": ""
+  },
+  "SspModelAddPage.submitForm": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit SSP model add",
+    "migration_note": "Robot: submit_form"
+  },
+  "SspModelAddPage.verifySuccessMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert SSP model created",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "SspModelUpdatePage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open SSP model update page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "SspModelUpdatePage.fillSspModelForm": {
+    "canonical_name": "fill_ssp_model_form",
+    "kind": "ui",
+    "description": "Fill SSP model update form",
+    "migration_note": ""
+  },
+  "SspModelUpdatePage.submitForm": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit SSP model update",
+    "migration_note": "Robot: submit_form"
+  },
+  "SspModelUpdatePage.verifySuccessMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert SSP model updated",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "SspModelViewPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open SSP model view page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "SspModelViewPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert SSP model view page",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "SspModelViewPage.verifySspModel": {
+    "canonical_name": "assert_ssp_model",
+    "kind": "assert",
+    "description": "Assert SSP model data",
+    "migration_note": ""
+  },
+  "ProductPage.verifyProductClassSelected": {
+    "canonical_name": "assert_product_class_selected",
+    "kind": "assert",
+    "description": "Assert product class selected",
+    "migration_note": ""
+  },
+  "ProductPage.verifyShipmentTypeSelected": {
+    "canonical_name": "assert_shipment_type_selected",
+    "kind": "assert",
+    "description": "Assert shipment type selected",
+    "migration_note": ""
+  },
+  "ServiceListPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open service list page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "ServiceListPage.findServiceTableByName": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Find service in table by name",
+    "migration_note": "Robot: search_table"
+  },
+  "ServiceListPage.assertServiceListPage": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert service list page displayed",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "ProductPage.getProductOfferRadio": {
+    "canonical_name": "get_product_offer_radio",
+    "kind": "data",
+    "description": "Get product offer radio",
+    "migration_note": ""
+  },
+  "ProductPage.getProductOfferPrice": {
+    "canonical_name": "assert_offer_price",
+    "kind": "data",
+    "description": "Get product offer price",
+    "migration_note": "Robot: assert_offer_price (related)"
+  },
+  "ProductPage.getAddToCartButton": {
+    "canonical_name": "get_add_to_cart_button",
+    "kind": "data",
+    "description": "Get add-to-cart button",
+    "migration_note": ""
+  },
+  "AgentDashboardPage.getDashboardSidebarSelector": {
+    "canonical_name": "get_dashboard_sidebar_selector",
+    "kind": "data",
+    "description": "Get agent dashboard sidebar selector",
+    "migration_note": ""
+  },
+  "DashboardPage.assert500StatusCode": {
+    "canonical_name": "assert_error_code",
+    "kind": "assert",
+    "description": "Assert HTTP 500 status",
+    "migration_note": "Robot: assert_error_code"
+  },
+  "SalesOrdersPage.visit": {
+    "canonical_name": "open_order_history_page",
+    "kind": "nav",
+    "description": "Open sales orders page",
+    "migration_note": "Robot: open_order_history_page (related)"
+  },
+  "SalesOrdersPage.update": {
+    "canonical_name": "update_order_status",
+    "kind": "ui",
+    "description": "Update sales order",
+    "migration_note": "Robot: update_order_status (related)"
+  },
+  "SalesOrdersPage.find": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Find sales order row",
+    "migration_note": "Robot: search_table"
+  },
+  "ProfilePage.visit": {
+    "canonical_name": "update_customer_profile",
+    "kind": "nav",
+    "description": "Open profile page",
+    "migration_note": "Robot: update_customer_profile (page)"
+  },
+  "ProfilePage.updatePhone": {
+    "canonical_name": "update_customer_profile",
+    "kind": "ui",
+    "description": "Update phone number",
+    "migration_note": "Robot: update_customer_profile"
+  },
+  "ProductsPage.find": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Find product row",
+    "migration_note": "Robot: search_table"
+  },
+  "ProductsPage.getDrawer": {
+    "canonical_name": "get_drawer",
+    "kind": "data",
+    "description": "Get products drawer",
+    "migration_note": ""
+  },
+  "ProductsPage.getTaxIdSetOptionSelector": {
+    "canonical_name": "get_tax_id_set_option_selector",
+    "kind": "data",
+    "description": "Get tax-id-set option selector",
+    "migration_note": ""
+  },
+  "ProductsPage.getTaxIdSetSelector": {
+    "canonical_name": "get_tax_id_set_selector",
+    "kind": "data",
+    "description": "Get tax-id-set selector",
+    "migration_note": ""
+  },
+  "ProductsPage.getSaveButtonSelector": {
+    "canonical_name": "get_save_button_selector",
+    "kind": "data",
+    "description": "Get save button selector",
+    "migration_note": ""
+  },
+  "OffersPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open offers page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "OffersPage.find": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Find offer row",
+    "migration_note": "Robot: search_table"
+  },
+  "OffersPage.getDrawer": {
+    "canonical_name": "get_drawer",
+    "kind": "data",
+    "description": "Get offers drawer",
+    "migration_note": ""
+  },
+  "OffersPage.getSaveButtonSelector": {
+    "canonical_name": "get_save_button_selector",
+    "kind": "data",
+    "description": "Get offers save button selector",
+    "migration_note": ""
+  },
+  "UserUpdatePage.uncheckMerchantAgentCheckbox": {
+    "canonical_name": "uncheck_merchant_agent_checkbox",
+    "kind": "ui",
+    "description": "Uncheck merchant-agent checkbox",
+    "migration_note": ""
+  },
+  "UserUpdatePage.checkMerchantAgentCheckbox": {
+    "canonical_name": "check_merchant_agent_checkbox",
+    "kind": "ui",
+    "description": "Check merchant-agent checkbox",
+    "migration_note": ""
+  },
+  "ProductsPage.getFirstTableRow": {
+    "canonical_name": "get_first_table_row",
+    "kind": "data",
+    "description": "Get first table row",
+    "migration_note": ""
+  },
+  "ProductsPage.clickAddAttributeButton": {
+    "canonical_name": "click_add_attribute_button",
+    "kind": "ui",
+    "description": "Click add attribute button",
+    "migration_note": ""
+  },
+  "VariantsPage.visit": {
+    "canonical_name": "navigate_to_tab",
+    "kind": "nav",
+    "description": "Open variants page/tab",
+    "migration_note": "Robot: navigate_to_tab"
+  },
+  "VariantsPage.getProductConcretesCountSelector": {
+    "canonical_name": "get_product_concretes_count_selector",
+    "kind": "data",
+    "description": "Get product concretes count selector",
+    "migration_note": ""
+  },
+  "MerchantRelationRequestsPage.getMessageFromCompanyValue": {
+    "canonical_name": "get_message_from_company",
+    "kind": "data",
+    "description": "Get message-from-company value",
+    "migration_note": ""
+  },
+  "MerchantRelationRequestsPage.reject": {
+    "canonical_name": "reject_merchant_relation_request",
+    "kind": "ui",
+    "description": "Reject MRR",
+    "migration_note": ""
+  },
+  "CartPage.assertCartItemAvailabilityDisplayed": {
+    "canonical_name": "assert_product_available",
+    "kind": "assert",
+    "description": "Assert cart item availability shown",
+    "migration_note": "Robot: assert_product_available"
+  },
+  "CartPage.getCartDiscountSummary": {
+    "canonical_name": "assert_discount_applied",
+    "kind": "data",
+    "description": "Get cart discount summary",
+    "migration_note": "Robot: assert_discount_applied (related)"
+  },
+  "ManageCompanyRoleUserPage.unassignUser": {
+    "canonical_name": "unassign_company_role_user",
+    "kind": "ui",
+    "description": "Unassign user from company role",
+    "migration_note": ""
+  },
+  "ManageCompanyRoleUserPage.assignUser": {
+    "canonical_name": "assign_company_role_permissions",
+    "kind": "ui",
+    "description": "Assign user to company role",
+    "migration_note": "Robot: assign_company_role_permissions (related)"
+  },
+  "ManageCompanyRoleUserPage.assertTopRowHasAssignButton": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert top row has assign button",
+    "migration_note": "Robot: assert_table_contains_value (related)"
+  },
+  "CompanyRoleIndexPage.visit": {
+    "canonical_name": "open_company_menu_item",
+    "kind": "nav",
+    "description": "Open company role index",
+    "migration_note": "Robot: open_company_menu_item"
+  },
+  "CompanyRoleIndexPage.clickAddNewRole": {
+    "canonical_name": "click_create_entity_button",
+    "kind": "ui",
+    "description": "Click add new role",
+    "migration_note": "Robot: click_create_entity_button"
+  },
+  "CompanyRoleCreatePage.getCompanyRoleForm": {
+    "canonical_name": "get_company_role_form",
+    "kind": "data",
+    "description": "Get company role form",
+    "migration_note": ""
+  },
+  "HomePage.getAvailableLocales": {
+    "canonical_name": "get_available_locales",
+    "kind": "data",
+    "description": "Get available locales",
+    "migration_note": ""
+  },
+  "HomePage.navigateToNewPage": {
+    "canonical_name": "navigate_to_url",
+    "kind": "nav",
+    "description": "Navigate to a new page",
+    "migration_note": "Robot: navigate_to_url"
+  },
+  "ProductPage.createMerchantRelationRequest": {
+    "canonical_name": "create_merchant_relation_request",
+    "kind": "ui",
+    "description": "Create MRR from PDP",
+    "migration_note": ""
+  },
+  "MerchantPage.sendMerchantRelationRequest": {
+    "canonical_name": "send_merchant_relation_request",
+    "kind": "ui",
+    "description": "Send a merchant relation request",
+    "migration_note": ""
+  },
+  "MerchantRelationRequestCreatePage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert MRR create page",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "MerchantRelationRequestCreatePage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open MRR create page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "ProductPage.getMerchantRelationRequestLinkAttribute": {
+    "canonical_name": "get_mrr_link_attribute",
+    "kind": "data",
+    "description": "Get MRR link attribute",
+    "migration_note": ""
+  },
+  "MerchantRelationRequestIndexPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert MRR index page",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "MerchantRegistrationPage.assertFooterLinkExists": {
+    "canonical_name": "assert_element_absent",
+    "kind": "assert",
+    "description": "Assert footer link exists",
+    "migration_note": "Robot: assert_element_absent (inverse)"
+  },
+  "MerchantRegistrationPage.clickFooterLink": {
+    "canonical_name": "open_navigation_item",
+    "kind": "ui",
+    "description": "Click footer link",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "MerchantRegistrationPage.assertPageLoaded": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert registration page loaded",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "MerchantRegistrationPage.assertPageTitle": {
+    "canonical_name": "assert_page_title",
+    "kind": "assert",
+    "description": "Assert registration page title",
+    "migration_note": "Robot: assert_page_title"
+  },
+  "MerchantRegistrationPage.assertCompanySectionVisible": {
+    "canonical_name": "assert_element_absent",
+    "kind": "assert",
+    "description": "Assert company section visible",
+    "migration_note": "Robot: assert_element_absent (inverse)"
+  },
+  "MerchantRegistrationPage.assertAccountSectionVisible": {
+    "canonical_name": "assert_element_absent",
+    "kind": "assert",
+    "description": "Assert account section visible",
+    "migration_note": "Robot: assert_element_absent (inverse)"
+  },
+  "MerchantRegistrationPage.submitForm": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit merchant registration form",
+    "migration_note": "Robot: submit_form"
+  },
+  "MerchantRegistrationPage.assertValidationErrors": {
+    "canonical_name": "assert_error_message",
+    "kind": "assert",
+    "description": "Assert validation errors",
+    "migration_note": "Robot: assert_error_message"
+  },
+  "MerchantRegistrationPage.assertFormNotSubmitted": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert form not submitted",
+    "migration_note": "Robot: assert_page_displayed (related)"
+  },
+  "MerchantRegistrationListPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open merchant registration list",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "MerchantRegistrationListPage.assertPageLoaded": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert registration list loaded",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "MerchantRegistrationListPage.assertTableHeaders": {
+    "canonical_name": "assert_header_contains",
+    "kind": "assert",
+    "description": "Assert registration table headers",
+    "migration_note": "Robot: assert_header_contains"
+  },
+  "MerchantRegistrationListPage.sortByColumn": {
+    "canonical_name": "set_catalog_sorting",
+    "kind": "ui",
+    "description": "Sort registration table by column",
+    "migration_note": "Robot: set_catalog_sorting (sorting)"
+  },
+  "MerchantRegistrationListPage.assertTableVisible": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert registration table visible",
+    "migration_note": "Robot: assert_table_contains_value (related)"
+  },
+  "MerchantRegistrationListPage.searchByTerm": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Search registrations by term",
+    "migration_note": "Robot: search_table"
+  },
+  "MerchantRegistrationListPage.assertRegistrationExists": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert registration exists",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "MerchantRegistrationListPage.assertRegistrationWithStatus": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert registration with status",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "MerchantRegistrationListPage.assertStatusColor": {
+    "canonical_name": "assert_status_color",
+    "kind": "assert",
+    "description": "Assert registration status color",
+    "migration_note": ""
+  },
+  "MerchantRegistrationListPage.filterByStatus": {
+    "canonical_name": "filter_by_merchant",
+    "kind": "ui",
+    "description": "Filter registrations by status",
+    "migration_note": "Robot: filter_by_merchant (filter)"
+  },
+  "MerchantRegistrationListPage.viewRegistrationByIndex": {
+    "canonical_name": "click_row_action_button",
+    "kind": "ui",
+    "description": "View registration by index",
+    "migration_note": "Robot: click_row_action_button"
+  },
+  "MerchantRegistrationViewPage.addInternalNote": {
+    "canonical_name": "add_order_comment",
+    "kind": "ui",
+    "description": "Add internal note to registration",
+    "migration_note": "Robot: add_order_comment (note add)"
+  },
+  "MerchantRegistrationViewPage.assertNoteAdded": {
+    "canonical_name": "assert_order_comment_present",
+    "kind": "assert",
+    "description": "Assert internal note added",
+    "migration_note": "Robot: assert_order_comment_present"
+  },
+  "MerchantRegistrationPage.assertErrorMessage": {
+    "canonical_name": "assert_error_message",
+    "kind": "assert",
+    "description": "Assert registration error",
+    "migration_note": "Robot: assert_error_message"
+  },
+  "CustomerDeletePage.visit": {
+    "canonical_name": "navigate_to_url",
+    "kind": "nav",
+    "description": "Open customer delete page",
+    "migration_note": "Robot: navigate_to_url"
+  },
+  "CustomerDeletePage.clickDeleteAccount": {
+    "canonical_name": "delete_customer",
+    "kind": "ui",
+    "description": "Click delete account",
+    "migration_note": "Robot: delete_customer"
+  },
+  "MultiFactorAuthPage.waitForVerificationPopup": {
+    "canonical_name": "wait_for_element_visible",
+    "kind": "ui",
+    "description": "Wait for MFA verification popup",
+    "migration_note": "Robot: wait_for_element_visible"
+  },
+  "HomePage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert home page displayed",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "CustomerProfilePage.visit": {
+    "canonical_name": "update_customer_profile",
+    "kind": "nav",
+    "description": "Open customer profile page",
+    "migration_note": "Robot: update_customer_profile (page)"
+  },
+  "CartPage.assertCancelOrderAmendmentButton": {
+    "canonical_name": "assert_cancel_order_button",
+    "kind": "assert",
+    "description": "Assert cancel order amendment button",
+    "migration_note": "Robot: assert_cancel_order_button"
+  },
+  "CartPage.cancelOrderAmendment": {
+    "canonical_name": "cancel_order",
+    "kind": "ui",
+    "description": "Cancel order amendment",
+    "migration_note": "Robot: cancel_order"
+  },
+  "CustomerOverviewPage.assertFirstShippingAddress": {
+    "canonical_name": "assert_order_shipping_address",
+    "kind": "assert",
+    "description": "Assert first shipping address",
+    "migration_note": "Robot: assert_order_shipping_address"
+  },
+  "CartPage.getCartItemSummary": {
+    "canonical_name": "assert_cart_products",
+    "kind": "data",
+    "description": "Get cart item summary",
+    "migration_note": "Robot: assert_cart_products (related)"
+  },
+  "CustomerOverviewPage.getOrderDetailTable": {
+    "canonical_name": "assert_order_history_order",
+    "kind": "data",
+    "description": "Get order detail table",
+    "migration_note": "Robot: assert_order_history_order (related)"
+  },
+  "OrderDetailsPage.doesNotContainEditOrderButton": {
+    "canonical_name": "assert_element_absent",
+    "kind": "assert",
+    "description": "Assert no edit-order button",
+    "migration_note": "Robot: assert_element_absent"
+  },
+  "ProductAttributeVisibilityPage.assertPlpAttributeBadgeVisible": {
+    "canonical_name": "assert_catalog_card_contains",
+    "kind": "assert",
+    "description": "Assert PLP attribute badge visible",
+    "migration_note": "Robot: assert_catalog_card_contains"
+  },
+  "ProductAttributeVisibilityPage.assertCartAttributeBadgeVisible": {
+    "canonical_name": "assert_cart_elements",
+    "kind": "assert",
+    "description": "Assert cart attribute badge visible",
+    "migration_note": "Robot: assert_cart_elements (related)"
+  },
+  "ProductAttributeVisibilityPage.assertPdpAttributeNotVisible": {
+    "canonical_name": "assert_element_absent",
+    "kind": "assert",
+    "description": "Assert PDP attribute not visible",
+    "migration_note": "Robot: assert_element_absent"
+  },
+  "ProductComparisonPage.getComparisonTableRowSelector": {
+    "canonical_name": "get_comparison_table_row_selector",
+    "kind": "data",
+    "description": "Get comparison table row selector",
+    "migration_note": ""
+  },
+  "ProductComparisonPage.removeProductFromComparisonList": {
+    "canonical_name": "remove_from_comparison_list",
+    "kind": "ui",
+    "description": "Remove product from comparison list",
+    "migration_note": ""
+  },
+  "ProductComparisonPage.clearComparisonList": {
+    "canonical_name": "clear_comparison_list",
+    "kind": "ui",
+    "description": "Clear comparison list",
+    "migration_note": ""
+  },
+  "ProductPage.getRemoveFromComparisonListSuccessMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "data",
+    "description": "Get remove-from-comparison success message",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "ProductPage.getAddToComparisonListLimitExceededErrorMessage": {
+    "canonical_name": "assert_error_message",
+    "kind": "data",
+    "description": "Get comparison limit-exceeded error",
+    "migration_note": "Robot: assert_error_message"
+  },
+  "ProductPage.selectLocale": {
+    "canonical_name": "select_locale",
+    "kind": "ui",
+    "description": "Select PDP locale",
+    "migration_note": ""
+  },
+  "ProductPage.getAttachmentsList": {
+    "canonical_name": "get_attachment_items",
+    "kind": "data",
+    "description": "Get PDP attachments list",
+    "migration_note": ""
+  },
+  "CheckoutSummaryBudgetPage.assertWarnFlashMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert budget warning flash message",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "YvesBudgetCreatePage.visitByCostCenterUuid": {
+    "canonical_name": "navigate_to_url",
+    "kind": "nav",
+    "description": "Open storefront budget create page",
+    "migration_note": "Robot: navigate_to_url"
+  },
+  "YvesBudgetCreatePage.fillName": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill budget name",
+    "migration_note": ""
+  },
+  "YvesBudgetCreatePage.fillAmount": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill budget amount",
+    "migration_note": ""
+  },
+  "YvesBudgetCreatePage.selectCurrency": {
+    "canonical_name": "select_currency",
+    "kind": "ui",
+    "description": "Select budget currency",
+    "migration_note": "Robot: select_currency"
+  },
+  "YvesBudgetCreatePage.selectEnforcementRule": {
+    "canonical_name": "select_enforcement_rule",
+    "kind": "ui",
+    "description": "Select budget enforcement rule",
+    "migration_note": ""
+  },
+  "YvesBudgetCreatePage.fillStartDate": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill budget start date",
+    "migration_note": ""
+  },
+  "YvesBudgetCreatePage.fillEndDate": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill budget end date",
+    "migration_note": ""
+  },
+  "YvesBudgetCreatePage.submit": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit storefront budget create",
+    "migration_note": "Robot: submit_form"
+  },
+  "YvesBudgetCreatePage.assertSuccess": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert budget created",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "YvesBudgetUpdatePage.visitByUuid": {
+    "canonical_name": "navigate_to_url",
+    "kind": "nav",
+    "description": "Open storefront budget update",
+    "migration_note": "Robot: navigate_to_url"
+  },
+  "YvesBudgetUpdatePage.fillName": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill budget name on update",
+    "migration_note": ""
+  },
+  "YvesBudgetUpdatePage.submit": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit storefront budget update",
+    "migration_note": "Robot: submit_form"
+  },
+  "YvesBudgetUpdatePage.assertSuccess": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert budget updated",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "YvesCostCenterListPage.visit": {
+    "canonical_name": "navigate_to_url",
+    "kind": "nav",
+    "description": "Open storefront cost-center list",
+    "migration_note": "Robot: navigate_to_url"
+  },
+  "YvesCostCenterCreatePage.visit": {
+    "canonical_name": "navigate_to_url",
+    "kind": "nav",
+    "description": "Open storefront cost-center create",
+    "migration_note": "Robot: navigate_to_url"
+  },
+  "YvesCostCenterCreatePage.fillName": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill cost-center name",
+    "migration_note": ""
+  },
+  "YvesCostCenterCreatePage.fillDescription": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill cost-center description",
+    "migration_note": ""
+  },
+  "YvesCostCenterCreatePage.selectBusinessUnit": {
+    "canonical_name": "select_business_unit",
+    "kind": "ui",
+    "description": "Select business unit",
+    "migration_note": ""
+  },
+  "YvesCostCenterCreatePage.submit": {
+    "canonical_name": "submit_form",
+    "kind": "ui",
+    "description": "Submit cost-center create",
+    "migration_note": "Robot: submit_form"
+  },
+  "YvesCostCenterCreatePage.assertSuccess": {
+    "canonical_name": "assert_flash_message",
+    "kind": "assert",
+    "description": "Assert cost-center created",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "YvesCostCenterUpdatePage.fillName": {
+    "canonical_name": "fill_offer_fields",
+    "kind": "ui",
+    "description": "Fill cost-center name on update",
+    "migration_note": ""
+  },
+  "YvesCostCenterUpdatePage.deactivate": {
+    "canonical_name": "change_store_status",
+    "kind": "ui",
+    "description": "Deactivate cost center",
+    "migration_note": "Robot: change_store_status (status toggle)"
+  },
+  "YvesCostCenterUpdatePage.assertIsInactive": {
+    "canonical_name": "assert_status_inactive",
+    "kind": "assert",
+    "description": "Assert cost center inactive",
+    "migration_note": ""
+  },
+  "YvesCostCenterUpdatePage.activate": {
+    "canonical_name": "change_store_status",
+    "kind": "ui",
+    "description": "Activate cost center",
+    "migration_note": "Robot: change_store_status (status toggle)"
+  },
+  "YvesCostCenterUpdatePage.assertIsActive": {
+    "canonical_name": "assert_status_active",
+    "kind": "assert",
+    "description": "Assert cost center active",
+    "migration_note": ""
+  },
+  "OrderDetailsPage.reorderFirstSalesOrderItem": {
+    "canonical_name": "reorder_order",
+    "kind": "ui",
+    "description": "Reorder first order item",
+    "migration_note": "Robot: reorder_order"
+  },
+  "CatalogPage.getSspAssetSelectorBlock": {
+    "canonical_name": "get_ssp_asset_selector_block",
+    "kind": "data",
+    "description": "Get SSP asset selector block",
+    "migration_note": ""
+  },
+  "CatalogPage.selectSspAsset": {
+    "canonical_name": "select_ssp_asset",
+    "kind": "ui",
+    "description": "Select an SSP asset on catalog",
+    "migration_note": ""
+  },
+  "SspAssetDetailPage.getSspAssetSparePartsButton": {
+    "canonical_name": "get_asset_spare_parts_button",
+    "kind": "data",
+    "description": "Get asset spare-parts button",
+    "migration_note": ""
+  },
+  "ProductPage.getSspAssetNameBlock": {
+    "canonical_name": "get_ssp_asset_name_block",
+    "kind": "data",
+    "description": "Get SSP asset name block on PDP",
+    "migration_note": ""
+  },
+  "SspAssetCreatePage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open SSP asset create page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "SspAssetListPage.getSspAssetCustomerMenuItem": {
+    "canonical_name": "get_asset_customer_menu_item",
+    "kind": "data",
+    "description": "Get asset customer menu item",
+    "migration_note": ""
+  },
+  "SspAssetCreatePage.createAsset": {
+    "canonical_name": "create_ssp_asset",
+    "kind": "ui",
+    "description": "Create SSP asset",
+    "migration_note": ""
+  },
+  "SspAssetCreatePage.getAssetCreatedMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "data",
+    "description": "Get asset-created message",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "SspAssetEditPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open SSP asset edit page",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "SspAssetEditPage.editAsset": {
+    "canonical_name": "update_ssp_asset",
+    "kind": "ui",
+    "description": "Edit SSP asset",
+    "migration_note": ""
+  },
+  "SspAssetEditPage.getAssetEditedMessage": {
+    "canonical_name": "assert_flash_message",
+    "kind": "data",
+    "description": "Get asset-edited message",
+    "migration_note": "Robot: assert_flash_message"
+  },
+  "SspAssetDetailPage.assertSspInquiries": {
+    "canonical_name": "assert_asset_inquiries",
+    "kind": "assert",
+    "description": "Assert SSP asset inquiries",
+    "migration_note": ""
+  },
+  "SspAssetDetailPage.getViewAllInquiriesLink": {
+    "canonical_name": "get_view_all_inquiries_link",
+    "kind": "data",
+    "description": "Get view-all-inquiries link",
+    "migration_note": ""
+  },
+  "SspAssetEditPage.getAssetForm": {
+    "canonical_name": "get_asset_form",
+    "kind": "data",
+    "description": "Get SSP asset edit form",
+    "migration_note": ""
+  },
+  "SspAssetListPage.getFirstRowReference": {
+    "canonical_name": "get_first_row_reference",
+    "kind": "data",
+    "description": "Get first row reference",
+    "migration_note": ""
+  },
+  "SspAssetCreatePage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert SSP asset create page",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "SspAssetCreatePage.getAssetForm": {
+    "canonical_name": "get_asset_form",
+    "kind": "data",
+    "description": "Get SSP asset form",
+    "migration_note": ""
+  },
+  "SspAssetListPage.assertTableHeaders": {
+    "canonical_name": "assert_header_contains",
+    "kind": "assert",
+    "description": "Assert asset table headers",
+    "migration_note": "Robot: assert_header_contains"
+  },
+  "SspAssetListPage.openFilters": {
+    "canonical_name": "open_filters",
+    "kind": "ui",
+    "description": "Open SSP asset filters",
+    "migration_note": ""
+  },
+  "SspAssetListPage.getSspAssetFiltersSubmitButton": {
+    "canonical_name": "get_asset_filters_submit_button",
+    "kind": "data",
+    "description": "Get asset filters submit button",
+    "migration_note": ""
+  },
+  "SspAssetListPage.getAccessTableFilterByCompanyValue": {
+    "canonical_name": "get_access_filter_by_company",
+    "kind": "data",
+    "description": "Get access filter-by-company value",
+    "migration_note": ""
+  },
+  "CompanyUserSelectPage.visit": {
+    "canonical_name": "open_company_menu_item",
+    "kind": "nav",
+    "description": "Open company user select page",
+    "migration_note": "Robot: open_company_menu_item"
+  },
+  "SspAssetDetailPage.getUnassignLink": {
+    "canonical_name": "get_unassign_button",
+    "kind": "data",
+    "description": "Get unassign link",
+    "migration_note": ""
+  },
+  "SspAssetDetailPage.getUnassignmentErrorMessage": {
+    "canonical_name": "assert_error_message",
+    "kind": "data",
+    "description": "Get unassignment error message",
+    "migration_note": "Robot: assert_error_message"
+  },
+  "SspDashboardPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert SSP dashboard page",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "SspDashboardPage.assertSspDashboardUserInfoPresent": {
+    "canonical_name": "assert_dashboard_block_present",
+    "kind": "assert",
+    "description": "Assert user-info block present",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertSspDashboardUserInfoHasWelcomeText": {
+    "canonical_name": "assert_dashboard_user_info",
+    "kind": "assert",
+    "description": "Assert user-info welcome text",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertSspDashboardUserInfoHasCompanyName": {
+    "canonical_name": "assert_dashboard_user_info",
+    "kind": "assert",
+    "description": "Assert user-info company name",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertSspDashboardUserInfoHasCompanyBusinessUnitName": {
+    "canonical_name": "assert_dashboard_user_info",
+    "kind": "assert",
+    "description": "Assert user-info business unit name",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertSspDashboardHasOverviewBlock": {
+    "canonical_name": "assert_dashboard_block_present",
+    "kind": "assert",
+    "description": "Assert overview block present",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertSspDashboardHasStatsOverviewBlock": {
+    "canonical_name": "assert_dashboard_block_present",
+    "kind": "assert",
+    "description": "Assert stats overview block present",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertSspDashboardHasSalesRepresentativeBlock": {
+    "canonical_name": "assert_dashboard_block_present",
+    "kind": "assert",
+    "description": "Assert sales-rep block present",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertSspDashboardAssetsWidgetNotPresent": {
+    "canonical_name": "assert_dashboard_block_absent",
+    "kind": "assert",
+    "description": "Assert assets widget absent",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertSspDashboardAssetsWidgetPresent": {
+    "canonical_name": "assert_dashboard_block_present",
+    "kind": "assert",
+    "description": "Assert assets widget present",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertWidgetData": {
+    "canonical_name": "assert_widget_data",
+    "kind": "assert",
+    "description": "Assert dashboard widget data",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertSspDashboardFilesBlockNotPresent": {
+    "canonical_name": "assert_dashboard_block_absent",
+    "kind": "assert",
+    "description": "Assert files block absent",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertSspDashboardFilesTableEmpty": {
+    "canonical_name": "assert_no_table_records",
+    "kind": "assert",
+    "description": "Assert dashboard files table empty",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertSspDashboardFilesTable": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert dashboard files table",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "SspDashboardPage.assertSspDashboardFilesTableHasNoDownloadLink": {
+    "canonical_name": "assert_element_absent",
+    "kind": "assert",
+    "description": "Assert no download link in files table",
+    "migration_note": "Robot: assert_element_absent"
+  },
+  "SspDashboardPage.assertSspDashboardInquiriesBlockNotPresent": {
+    "canonical_name": "assert_dashboard_block_absent",
+    "kind": "assert",
+    "description": "Assert inquiries block absent",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertSspDashboardInquiriesTableEmpty": {
+    "canonical_name": "assert_no_table_records",
+    "kind": "assert",
+    "description": "Assert dashboard inquiries table empty",
+    "migration_note": ""
+  },
+  "SspDashboardPage.assertSspDashboardInquiriesTable": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert dashboard inquiries table",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "SspFileManagementListPage.downloadFile": {
+    "canonical_name": "download_file",
+    "kind": "ui",
+    "description": "Download file from list",
+    "migration_note": ""
+  },
+  "SspFileManagementListPage.verifyFileDownloaded": {
+    "canonical_name": "assert_file_downloaded",
+    "kind": "assert",
+    "description": "Assert file downloaded",
+    "migration_note": ""
+  },
+  "SspFileManagementDownloadPage.downloadFile": {
+    "canonical_name": "download_file",
+    "kind": "ui",
+    "description": "Download a file",
+    "migration_note": ""
+  },
+  "SspFileManagementDownloadPage.downloadFileForbidden": {
+    "canonical_name": "assert_download_forbidden",
+    "kind": "assert",
+    "description": "Assert download forbidden",
+    "migration_note": ""
+  },
+  "SspFileManagementListPage.filterByType": {
+    "canonical_name": "apply_filters",
+    "kind": "ui",
+    "description": "Filter files by type",
+    "migration_note": ""
+  },
+  "SspFileManagementListPage.searchByName": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Search files by name",
+    "migration_note": "Robot: search_table"
+  },
+  "SspFileManagementListPage.assertNoResults": {
+    "canonical_name": "assert_no_table_records",
+    "kind": "assert",
+    "description": "Assert no file results",
+    "migration_note": ""
+  },
+  "SspFileManagementListPage.applyFilterByTypeAndSearchTerm": {
+    "canonical_name": "apply_filters",
+    "kind": "ui",
+    "description": "Apply type filter and search",
+    "migration_note": ""
+  },
+  "SspFileManagementListPage.filterByBusinessEntity": {
+    "canonical_name": "apply_filters",
+    "kind": "ui",
+    "description": "Filter files by business entity",
+    "migration_note": ""
+  },
+  "SspFileManagementListPage.filterBySspAssetEntity": {
+    "canonical_name": "apply_filters",
+    "kind": "ui",
+    "description": "Filter files by SSP asset entity",
+    "migration_note": ""
+  },
+  "SspFileManagementListPage.applyFilters": {
+    "canonical_name": "apply_filters",
+    "kind": "ui",
+    "description": "Apply file list filters",
+    "migration_note": ""
+  },
+  "OrderDetailsPage.visit": {
+    "canonical_name": "open_order_details_page",
+    "kind": "nav",
+    "description": "Open order details page",
+    "migration_note": "Robot: open_order_details_page"
+  },
+  "SspInquiryOrderPage.clickCreateSspInquiryButton": {
+    "canonical_name": "click_create_entity_button",
+    "kind": "ui",
+    "description": "Click create inquiry from order",
+    "migration_note": "Robot: click_create_entity_button"
+  },
+  "SspInquiryCreatePage.createOrderSspInquiry": {
+    "canonical_name": "create_ssp_inquiry",
+    "kind": "ui",
+    "description": "Create order-scoped SSP inquiry",
+    "migration_note": ""
+  },
+  "SspAssetDetailPage.clickCreateClaimButton": {
+    "canonical_name": "click_create_claim_button",
+    "kind": "ui",
+    "description": "Click create-claim button",
+    "migration_note": ""
+  },
+  "SspInquiryCreatePage.createSspAssetSspInquiry": {
+    "canonical_name": "create_ssp_inquiry",
+    "kind": "ui",
+    "description": "Create asset-scoped SSP inquiry",
+    "migration_note": ""
+  },
+  "SspInquiryDetailPage.assertSspAssetSspInquiryDetails": {
+    "canonical_name": "assert_inquiry_details",
+    "kind": "assert",
+    "description": "Assert asset inquiry details",
+    "migration_note": ""
+  },
+  "SspInquiryDetailPage.clickCancelSspInquiryButton": {
+    "canonical_name": "cancel_ssp_inquiry",
+    "kind": "ui",
+    "description": "Click cancel inquiry button",
+    "migration_note": ""
+  },
+  "SspInquiryDetailPage.getCanceledSspInquiryStatusSelector": {
+    "canonical_name": "get_inquiry_status_selector",
+    "kind": "data",
+    "description": "Get canceled inquiry status selector",
+    "migration_note": ""
+  },
+  "SspInquiryDetailPage.getCancelSspInquiryButton": {
+    "canonical_name": "get_cancel_button",
+    "kind": "data",
+    "description": "Get cancel inquiry button",
+    "migration_note": ""
+  },
+  "SspInquiryListPage.assertPageLocation": {
+    "canonical_name": "assert_page_displayed",
+    "kind": "assert",
+    "description": "Assert inquiry list page",
+    "migration_note": "Robot: assert_page_displayed"
+  },
+  "SspInquiryListPage.submitSspInquirySearchForm": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Submit inquiry search form",
+    "migration_note": "Robot: search_table"
+  },
+  "SspInquiryListPage.assetPageHasNoSspInquiries": {
+    "canonical_name": "assert_no_table_records",
+    "kind": "assert",
+    "description": "Assert no inquiries on page",
+    "migration_note": ""
+  },
+  "SspInquiryListPage.getCreateSspInquiryButton": {
+    "canonical_name": "get_create_button",
+    "kind": "data",
+    "description": "Get create-inquiry button",
+    "migration_note": ""
+  },
+  "SspServiceListPage.assertSorting": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert service list sorting",
+    "migration_note": "Robot: assert_table_contains_value (related)"
+  },
+  "SspServiceListPage.searchFor": {
+    "canonical_name": "search_table",
+    "kind": "ui",
+    "description": "Search service list",
+    "migration_note": "Robot: search_table"
+  },
+  "SspServiceListPage.assertSearchResult": {
+    "canonical_name": "assert_search_results",
+    "kind": "assert",
+    "description": "Assert service search result",
+    "migration_note": "Robot: assert_search_results"
+  },
+  "SspServiceListPage.rescheduleFirstServiceToTomorrow": {
+    "canonical_name": "reschedule_service",
+    "kind": "ui",
+    "description": "Reschedule first service",
+    "migration_note": ""
+  },
+  "SspServiceListPage.assertServiceTableHasRows": {
+    "canonical_name": "assert_table_contains_value",
+    "kind": "assert",
+    "description": "Assert service table has rows",
+    "migration_note": "Robot: assert_table_contains_value"
+  },
+  "SspServiceListPage.cancelFirstService": {
+    "canonical_name": "cancel_service",
+    "kind": "ui",
+    "description": "Cancel first service",
+    "migration_note": ""
+  },
+  "SspServiceListPage.assertFirstServiceIsCancelled": {
+    "canonical_name": "assert_service_cancelled",
+    "kind": "assert",
+    "description": "Assert first service cancelled",
+    "migration_note": ""
+  },
+  "SspServiceListPage.assertBusinessUnitSelectIsVisible": {
+    "canonical_name": "assert_business_unit_dropdown",
+    "kind": "assert",
+    "description": "Assert business unit select visible",
+    "migration_note": "Robot: assert_business_unit_dropdown"
+  },
+  "SspServiceListPage.visit": {
+    "canonical_name": "open_navigation_item",
+    "kind": "nav",
+    "description": "Open SSP service list",
+    "migration_note": "Robot: open_navigation_item"
+  },
+  "SspServiceListPage.assertServiceTableIsEmpty": {
+    "canonical_name": "assert_no_table_records",
+    "kind": "assert",
+    "description": "Assert service table empty",
+    "migration_note": ""
+  },
+  "ProductPage.selectServicePoint": {
+    "canonical_name": "select_pickup_service_point",
+    "kind": "ui",
+    "description": "Select service point on PDP",
+    "migration_note": "Robot: select_pickup_service_point"
+  },
+  "ProductPage.assertServicePointIsSelected": {
+    "canonical_name": "assert_store_availability",
+    "kind": "assert",
+    "description": "Assert service point selected",
+    "migration_note": "Robot: assert_store_availability (related)"
+  }
+}

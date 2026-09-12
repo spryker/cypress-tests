@@ -1,0 +1,11 @@
+# Which migrations this repo owns. A matrix lives in the repo that loses the tests.
+inventory: ../tests.jsonl
+batch_cap: 40
+
+matrices:
+    - name: cypress-api-to-codeception
+      source_framework: cypress
+      target_framework: codeception
+      target_repo: spryker/suite
+      select:
+          type: api

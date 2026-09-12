@@ -1,0 +1,1 @@
+{"cy.contains": 69, "cy.get": 34, "cy.url": 14, "cy.runQueueWorker": 10, "cy.wait": 8, "cy.visit": 5, "cy.window": 5, "cy.visitBackoffice": 4, "cy.wrap": 4, "cy.request": 3, "cy.reload": 1, "cy.runCliCommands": 1, "cy.location": 1, "cy.intercept": 1, "cy.log": 1}
