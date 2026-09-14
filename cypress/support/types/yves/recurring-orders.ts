@@ -107,3 +107,19 @@ export interface RecurringOrderReviewChangesDynamicFixtures {
   scheduleForAddProductValidation: { id_recurring_schedule: number; uuid: string; name: string };
   addProduct: { sku: string; abstract_sku: string };
 }
+
+export interface RecurringOrderReviewRoutingStaticFixtures {
+  defaultPassword: string;
+  reviewRequiredStatus: string;
+  priceChangeSummary: string;
+  budgetExceededError: string;
+}
+
+export interface RecurringOrderReviewRoutingDynamicFixtures {
+  buyerWithDriftAndWarnBudget: { email: string; id_customer: number };
+  scheduleWithDriftAndWarnBudget: { id_recurring_schedule: number; uuid: string; name: string };
+  buyerWithBlockBudget: { email: string; id_customer: number };
+  scheduleWithBlockBudget: { id_recurring_schedule: number; uuid: string; name: string };
+  buyerWithWarnBudgetOnly: { email: string; id_customer: number };
+  scheduleWithWarnBudgetOnly: { id_recurring_schedule: number; uuid: string; name: string };
+}

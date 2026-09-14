@@ -67,6 +67,8 @@ export class RecurringOrderReviewPage extends YvesPage {
 
   getFlaggedItems = (): Cypress.Chainable => this.repository.getFlaggedItems();
 
+  getBlockingErrors = (): Cypress.Chainable => this.repository.getBlockingErrors();
+
   setLineQuantity = (quantity: number): void => {
     this.repository.getLineQuantityInput().first().clear().type(String(quantity)).blur();
   };

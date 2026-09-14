@@ -108,3 +108,5 @@ export * from './backoffice-assistant/backoffice-assistant-page';
 export * from './smart-pim/smart-pim-page';
 export * from './smart-cms/smart-cms-page';
 export * from './cost-price/cost-price-page';
+export * from './service-point/list/service-point-list-page';
+export * from './service-point/view/service-point-view-page';
