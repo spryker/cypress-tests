@@ -1,0 +1,4029 @@
+{
+ "CustomerLoginScenario.execute": {
+  "count": 92,
+  "sources": [
+   "cypress/e2e/backoffice/gift-cards/order-gift-card.cy.ts",
+   "cypress/e2e/backoffice/multi-factor-authentication/user-mfa-auth.cy.ts",
+   "cypress/e2e/backoffice/order-management/custom-order-reference-management.cy.ts",
+   "cypress/e2e/backoffice/order-management/order-creation-dms.cy.ts",
+   "cypress/e2e/backoffice/order-management/order-creation.cy.ts"
+  ]
+ },
+ "cy.contains": {
+  "count": 69,
+  "sources": [
+   "cypress/e2e/backoffice/gift-cards/order-gift-card.cy.ts",
+   "cypress/e2e/backoffice/merchant-b2b-contract-requests/request-management.cy.ts",
+   "cypress/e2e/backoffice/order-management/custom-order-reference-management.cy.ts",
+   "cypress/e2e/backoffice/order-management/order-creation.cy.ts",
+   "cypress/e2e/backoffice/product-management/product-attachment-management.cy.ts"
+  ]
+ },
+ "cy.get": {
+  "count": 34,
+  "sources": [
+   "cypress/e2e/backoffice/category/category-edit.cy.ts",
+   "cypress/e2e/backoffice/configuration/configuration-management.cy.ts",
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts",
+   "cypress/e2e/backoffice/order-management/custom-order-reference-management.cy.ts",
+   "cypress/e2e/backoffice/order-management/order-creation.cy.ts"
+  ]
+ },
+ "UserLoginScenario.execute": {
+  "count": 34,
+  "sources": [
+   "cypress/e2e/backoffice/gift-cards/order-gift-card.cy.ts",
+   "cypress/e2e/backoffice/multi-factor-authentication/user-mfa-auth.cy.ts",
+   "cypress/e2e/backoffice/order-management/custom-order-reference-management.cy.ts",
+   "cypress/e2e/backoffice/order-management/order-creation-dms.cy.ts",
+   "cypress/e2e/backoffice/order-management/order-creation.cy.ts"
+  ]
+ },
+ "CheckoutScenario.execute": {
+  "count": 30,
+  "sources": [
+   "cypress/e2e/backoffice/gift-cards/order-gift-card.cy.ts",
+   "cypress/e2e/backoffice/order-management/custom-order-reference-management.cy.ts",
+   "cypress/e2e/backoffice/order-management/order-creation-dms.cy.ts",
+   "cypress/e2e/backoffice/order-management/order-creation.cy.ts",
+   "cypress/e2e/smoke/checkout/basic-checkout.cy.ts"
+  ]
+ },
+ "CatalogPage.visit": {
+  "count": 23,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts",
+   "cypress/e2e/mp/data-import/merchant-combined-product.cy.ts",
+   "cypress/e2e/smoke/catalog/product-search.cy.ts",
+   "cypress/e2e/smoke/product/publish-and-synchronize.cy.ts",
+   "cypress/e2e/yves/catalog/product-search-dms.cy.ts"
+  ]
+ },
+ "CustomerOverviewPage.getPlacedOrderSuccessMessage": {
+  "count": 22,
+  "sources": [
+   "cypress/e2e/backoffice/gift-cards/order-gift-card.cy.ts",
+   "cypress/e2e/backoffice/order-management/custom-order-reference-management.cy.ts",
+   "cypress/e2e/backoffice/order-management/order-creation.cy.ts",
+   "cypress/e2e/smoke/checkout/basic-checkout.cy.ts",
+   "cypress/e2e/smoke/order-management/dummy-payment-oms-flow.cy.ts"
+  ]
+ },
+ "CompanyUserSelectPage.selectBusinessUnit": {
+  "count": 21,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts",
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts",
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts",
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "CustomerOverviewPage.viewLastPlacedOrder": {
+  "count": 20,
+  "sources": [
+   "cypress/e2e/yves/order-amendment/order-amendment-cancel.cy.ts",
+   "cypress/e2e/yves/order-amendment/order-amendment-finish.cy.ts",
+   "cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts",
+   "cypress/e2e/yves/reorder/reorder-concrete-products.cy.ts",
+   "cypress/e2e/yves/reorder/reorder-product-bundles.cy.ts"
+  ]
+ },
+ "CatalogPage.searchProductFromSuggestions": {
+  "count": 17,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts",
+   "cypress/e2e/mp/data-import/merchant-combined-product.cy.ts",
+   "cypress/e2e/smoke/catalog/product-search.cy.ts",
+   "cypress/e2e/yves/catalog/product-search-dms.cy.ts",
+   "cypress/e2e/yves/core/locale-switching.cy.ts"
+  ]
+ },
+ "MerchantUserLoginScenario.execute": {
+  "count": 15,
+  "sources": [
+   "cypress/e2e/mp/marketplace-merchant-commission/commission-calculation.cy.ts",
+   "cypress/e2e/mp/marketplace-product-attributes/product-attribute-management.cy.ts",
+   "cypress/e2e/mp/marketplace-product-concretes/product-concrete-management.cy.ts",
+   "cypress/e2e/mp/merchant-b2b-contract-requests/request-management.cy.ts",
+   "cypress/e2e/mp/multi-factor-authentication/merchant-user-mfa-auth.cy.ts"
+  ]
+ },
+ "cy.url": {
+  "count": 14,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts",
+   "cypress/e2e/yves/company-account/manage-company-user-role.cy.ts",
+   "cypress/e2e/yves/core/locale-switching.cy.ts",
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts",
+   "cypress/e2e/yves/purchasing-control/budget-enforcement.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.visit": {
+  "count": 13,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts",
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "MerchantAgentLoginUserScenario.execute": {
+  "count": 13,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-authorization.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-dashboard.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-login.cy.ts",
+   "cypress/e2e/mp/multi-factor-authentication/merchant-agent-mfa-auth.cy.ts"
+  ]
+ },
+ "AgentDashboardPage.visit": {
+  "count": 13,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-dashboard.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-impersonation.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-login.cy.ts",
+   "cypress/e2e/mp/multi-factor-authentication/merchant-agent-mfa-auth.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestIndexPage.visit": {
+  "count": 12,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts",
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.visit": {
+  "count": 12,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset-specific-catalog.cy.ts",
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts",
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts",
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "CustomerOverviewPage.assertPageLocation": {
+  "count": 11,
+  "sources": [
+   "cypress/e2e/backoffice/multi-factor-authentication/user-mfa-auth.cy.ts",
+   "cypress/e2e/smoke/customer-account-management/customer-auth.cy.ts",
+   "cypress/e2e/yves/cms/cms-page-search-dms.cy.ts",
+   "cypress/e2e/yves/customer-account-management/customer-auth-dms.cy.ts",
+   "cypress/e2e/yves/customer-account-management/customer-auth.cy.ts"
+  ]
+ },
+ "CartPage.visit": {
+  "count": 11,
+  "sources": [
+   "cypress/e2e/backoffice/order-management/custom-order-reference-management.cy.ts",
+   "cypress/e2e/yves/cart/change-cart-item-quantity.cy.ts",
+   "cypress/e2e/yves/cart/remove-cart-item.cy.ts",
+   "cypress/e2e/yves/order-amendment/order-amendment-cancel.cy.ts",
+   "cypress/e2e/yves/order-amendment/order-amendment-finish.cy.ts"
+  ]
+ },
+ "ProductManagementEditPage.save": {
+  "count": 11,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-attachment-management.cy.ts",
+   "cypress/e2e/backoffice/product-management/product-merchant-relation-management.cy.ts",
+   "cypress/e2e/yves/product/product-attachment-storefront.cy.ts"
+  ]
+ },
+ "ProductManagementEditPage.verifySaveSuccess": {
+  "count": 11,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-attachment-management.cy.ts",
+   "cypress/e2e/backoffice/product-management/product-merchant-relation-management.cy.ts",
+   "cypress/e2e/yves/product/product-attachment-storefront.cy.ts"
+  ]
+ },
+ "container.get": {
+  "count": 11,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "OrderDetailsPage.editOrder": {
+  "count": 11,
+  "sources": [
+   "cypress/e2e/yves/order-amendment/order-amendment-cancel.cy.ts",
+   "cypress/e2e/yves/order-amendment/order-amendment-finish.cy.ts",
+   "cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts"
+  ]
+ },
+ "cy.runQueueWorker": {
+  "count": 10,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration-management.cy.ts",
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts",
+   "cypress/e2e/yves/product-attribute-visibility/product-attribute-visibility.cy.ts",
+   "cypress/e2e/yves/product/product-attachment-storefront.cy.ts"
+  ]
+ },
+ "SalesIndexPage.visit": {
+  "count": 10,
+  "sources": [
+   "cypress/e2e/backoffice/gift-cards/order-gift-card.cy.ts",
+   "cypress/e2e/backoffice/order-management/custom-order-reference-management.cy.ts",
+   "cypress/e2e/backoffice/order-management/order-creation.cy.ts",
+   "cypress/e2e/backoffice/return-management/return-creation.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "SalesIndexPage.view": {
+  "count": 10,
+  "sources": [
+   "cypress/e2e/backoffice/gift-cards/order-gift-card.cy.ts",
+   "cypress/e2e/backoffice/order-management/custom-order-reference-management.cy.ts",
+   "cypress/e2e/backoffice/order-management/order-creation.cy.ts",
+   "cypress/e2e/backoffice/return-management/return-creation.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "ProductManagementEditPage.openMediaTab": {
+  "count": 10,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-attachment-management.cy.ts",
+   "cypress/e2e/yves/product/product-attachment-storefront.cy.ts"
+  ]
+ },
+ "SspInquiryListPage.visit": {
+  "count": 10,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts",
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "DashboardPage.assertPageLocation": {
+  "count": 10,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-dashboard.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-login.cy.ts",
+   "cypress/e2e/mp/multi-factor-authentication/merchant-user-mfa-auth.cy.ts",
+   "cypress/e2e/smoke/merchant-portal/login.cy.ts"
+  ]
+ },
+ "UserIndexPage.visit": {
+  "count": 10,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-permission.cy.ts"
+  ]
+ },
+ "SspDashboardPage.visit": {
+  "count": 10,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "ConfigurationPage.saveConfiguration": {
+  "count": 9,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration-management.cy.ts",
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "ProductManagementEditPage.addAttachment": {
+  "count": 9,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-attachment-management.cy.ts",
+   "cypress/e2e/yves/product/product-attachment-storefront.cy.ts"
+  ]
+ },
+ "SspAssetListPage.visit": {
+  "count": 9,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts",
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.assertPageLocation": {
+  "count": 9,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts",
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "LoginPage.visit": {
+  "count": 9,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-authorization.cy.ts",
+   "cypress/e2e/smoke/customer-account-management/customer-auth.cy.ts",
+   "cypress/e2e/smoke/merchant-portal/login.cy.ts",
+   "cypress/e2e/yves/customer-account-management/customer-auth-dms.cy.ts",
+   "cypress/e2e/yves/customer-account-management/customer-auth.cy.ts"
+  ]
+ },
+ "LoginPage.login": {
+  "count": 9,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-authorization.cy.ts",
+   "cypress/e2e/smoke/customer-account-management/customer-auth.cy.ts",
+   "cypress/e2e/smoke/merchant-portal/login.cy.ts",
+   "cypress/e2e/yves/customer-account-management/customer-auth-dms.cy.ts",
+   "cypress/e2e/yves/customer-account-management/customer-auth.cy.ts"
+  ]
+ },
+ "ProductPage.addToCart": {
+  "count": 9,
+  "sources": [
+   "cypress/e2e/smoke/product/publish-and-synchronize.cy.ts",
+   "cypress/e2e/yves/order-amendment/order-amendment-finish.cy.ts",
+   "cypress/e2e/yves/product/publish-and-synchronize-dms.cy.ts",
+   "cypress/e2e/yves/product/publish-and-synchronize.cy.ts",
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestIndexPage.filterRequests": {
+  "count": 9,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "CustomerLogoutScenario.execute": {
+  "count": 9,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/customer-mfa-auth.cy.ts",
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts",
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts",
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "ConfigurationPage.visitStorefrontTab": {
+  "count": 8,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration-management.cy.ts",
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.clickAttachButton": {
+  "count": 8,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementAttachPage.submitForm": {
+  "count": 8,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementAttachPage.verifySuccessMessage": {
+  "count": 8,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "cy.wait": {
+  "count": 8,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-dashboard.cy.ts",
+   "cypress/e2e/smoke/product/publish-and-synchronize.cy.ts"
+  ]
+ },
+ "OrderDetailsPage.getOrderReferenceBlock": {
+  "count": 8,
+  "sources": [
+   "cypress/e2e/yves/order-amendment/order-amendment-cancel.cy.ts",
+   "cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts",
+   "cypress/e2e/yves/reorder/reorder-concrete-products.cy.ts",
+   "cypress/e2e/yves/reorder/reorder-product-offers.cy.ts"
+  ]
+ },
+ "CustomerOverviewPage.visit": {
+  "count": 8,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts",
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestListPage.visit": {
+  "count": 7,
+  "sources": [
+   "cypress/e2e/backoffice/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestListPage.update": {
+  "count": 7,
+  "sources": [
+   "cypress/e2e/backoffice/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "ProductManagementEditPage.deleteAttachmentsForLocale": {
+  "count": 7,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-attachment-management.cy.ts",
+   "cypress/e2e/yves/product/product-attachment-storefront.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.visit": {
+  "count": 7,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts"
+  ]
+ },
+ "DashboardPage.interceptRequest": {
+  "count": 7,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-dashboard.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-impersonation.cy.ts"
+  ]
+ },
+ "CheckoutMpScenario.execute": {
+  "count": 7,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts",
+   "cypress/e2e/mp/marketplace-order-management/order-creation-dms.cy.ts",
+   "cypress/e2e/mp/marketplace-order-management/order-creation.cy.ts",
+   "cypress/e2e/smoke/order-management/marketplace-payment-oms-flow.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestsPage.visit": {
+  "count": 7,
+  "sources": [
+   "cypress/e2e/mp/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestsPage.find": {
+  "count": 7,
+  "sources": [
+   "cypress/e2e/mp/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "CartPage.assertCartName": {
+  "count": 7,
+  "sources": [
+   "cypress/e2e/yves/order-amendment/order-amendment-cancel.cy.ts",
+   "cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts",
+   "cypress/e2e/yves/reorder/reorder-concrete-products.cy.ts",
+   "cypress/e2e/yves/reorder/reorder-product-offers.cy.ts"
+  ]
+ },
+ "CustomerOverviewPage.clickMyFilesLink": {
+  "count": 7,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "ConfigurationPage.getThemeMainColor": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration-management.cy.ts",
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "SspFileManagementAttachPage.selectAttachmentScope": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "AgentDashboardPage.assist": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-dashboard.cy.ts"
+  ]
+ },
+ "UserIndexPage.update": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-permission.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestsPage.getDrawer": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/mp/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "CatalogPage.search": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/smoke/product/publish-and-synchronize.cy.ts",
+   "cypress/e2e/yves/product/publish-and-synchronize-dms.cy.ts",
+   "cypress/e2e/yves/product/publish-and-synchronize.cy.ts"
+  ]
+ },
+ "ProductPage.getAddToCartSuccessMessage": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/smoke/product/publish-and-synchronize.cy.ts",
+   "cypress/e2e/yves/product/publish-and-synchronize-dms.cy.ts",
+   "cypress/e2e/yves/product/publish-and-synchronize.cy.ts"
+  ]
+ },
+ "CartPage.changeQuantity": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/yves/cart/change-cart-item-quantity.cy.ts",
+   "cypress/e2e/yves/order-amendment/order-amendment-finish.cy.ts",
+   "cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts"
+  ]
+ },
+ "CartPage.getCartItemChangeQuantityField": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/yves/cart/change-cart-item-quantity.cy.ts",
+   "cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts",
+   "cypress/e2e/yves/reorder/reorder-concrete-products.cy.ts"
+  ]
+ },
+ "CommentCartPage.add": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/yves/comments/cart-comments.cy.ts"
+  ]
+ },
+ "CommentCartPage.getCommentThreadListSection": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/yves/comments/cart-comments.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestIndexPage.openFirstRequest": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "CartPage.assertPageLocation": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts",
+   "cypress/e2e/yves/reorder/reorder-concrete-products.cy.ts",
+   "cypress/e2e/yves/reorder/reorder-product-offers.cy.ts"
+  ]
+ },
+ "OrderDetailsPage.reorderAll": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/yves/reorder/reorder-concrete-products.cy.ts",
+   "cypress/e2e/yves/reorder/reorder-product-bundles.cy.ts",
+   "cypress/e2e/yves/reorder/reorder-product-offers.cy.ts",
+   "cypress/e2e/yves/reorder/reorder-random-weight-products.cy.ts"
+  ]
+ },
+ "SspInquiryListPage.clickCreateSspInquiryButton": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspInquiryCreatePage.createSspInquiry": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspInquiryListPage.openLatestSspInquiryDetailsPage": {
+  "count": 6,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "ConfigurationPage.setThemeMainColor": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration-management.cy.ts",
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "cy.visit": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts",
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts",
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts",
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "cy.window": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "IndexPage.assertPageLocation": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/backoffice/multi-factor-authentication/user-mfa-auth.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-authorization.cy.ts"
+  ]
+ },
+ "IndexPage.visit": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/backoffice/multi-factor-authentication/user-mfa-auth.cy.ts",
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-authorization.cy.ts"
+  ]
+ },
+ "ProductManagementEditPage.verifyAttachmentExists": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-attachment-management.cy.ts"
+  ]
+ },
+ "ProductManagementListPage.visit": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-table-filters.cy.ts",
+   "cypress/e2e/backoffice/ssp-service-management/ssp-product.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.assertPageLocation": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts",
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "AgentDashboardPage.assertPageLocation": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-dashboard.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-impersonation.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-login.cy.ts",
+   "cypress/e2e/mp/multi-factor-authentication/merchant-agent-mfa-auth.cy.ts"
+  ]
+ },
+ "AgentDashboardPage.find": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-dashboard.cy.ts"
+  ]
+ },
+ "DashboardPage.visit": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-impersonation.cy.ts",
+   "cypress/e2e/mp/multi-factor-authentication/merchant-user-mfa-auth.cy.ts"
+  ]
+ },
+ "MpLoginPage.assertPageLocation": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-impersonation.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-login.cy.ts"
+  ]
+ },
+ "MpLoginPage.visit": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-login.cy.ts"
+  ]
+ },
+ "MpLoginPage.login": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-login.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestCreatePage.create": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestDetailsPage.getCancelButton": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.openFilters": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.assertFileExists": {
+  "count": 5,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "ConfigurationPage.visitBackofficeTab": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "to.equal": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "cy.visitBackoffice": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "SalesDetailPage.triggerOms": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/backoffice/gift-cards/order-gift-card.cy.ts",
+   "cypress/e2e/backoffice/return-management/return-creation.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "UserMfaActivationScenario.execute": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/backoffice/multi-factor-authentication/user-mfa-auth.cy.ts"
+  ]
+ },
+ "UserLogoutScenario.execute": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/backoffice/multi-factor-authentication/user-mfa-auth.cy.ts"
+  ]
+ },
+ "CustomerMfaActivationScenario.execute": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/backoffice/multi-factor-authentication/user-mfa-auth.cy.ts",
+   "cypress/e2e/yves/multi-factor-authentication/customer-mfa-auth.cy.ts"
+  ]
+ },
+ "SspFileManagementAttachPage.selectAvailableItems": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementAttachPage.uploadCsvFile": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "DataImportMerchantFilePage.visit": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts",
+   "cypress/e2e/mp/data-import/merchant-combined-product.cy.ts"
+  ]
+ },
+ "DataImportMerchantFilePage.assertFileStatus": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts",
+   "cypress/e2e/mp/data-import/merchant-combined-product.cy.ts"
+  ]
+ },
+ "cy.wrap": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts",
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts",
+   "cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts",
+   "cypress/e2e/yves/product/product-attachment-storefront.cy.ts"
+  ]
+ },
+ "LoginPage.assertPageLocation": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-authorization.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-impersonation.cy.ts"
+  ]
+ },
+ "MpLoginPage.getFailedAuthenticationText": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-login.cy.ts"
+  ]
+ },
+ "ImpersonateAsMerchantUserScenario.execute": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "UserUpdatePage.getAgentMerchantCheckbox": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-permission.cy.ts"
+  ]
+ },
+ "mfaSetUpScenario.executeActivation": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/mp/multi-factor-authentication/merchant-agent-mfa-auth.cy.ts",
+   "cypress/e2e/mp/multi-factor-authentication/merchant-user-mfa-auth.cy.ts"
+  ]
+ },
+ "CommentCartPage.visit": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/yves/comments/cart-comments.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestDetailsPage.assertPageLocation": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestIndexPage.getFirstRequest": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "OrderDetailsPage.containsOrderState": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/yves/order-amendment/order-amendment-cancel.cy.ts",
+   "cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts"
+  ]
+ },
+ "ProductComparisonPage.getProductItemsSelector": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/yves/product-comparison/product-comparison.cy.ts"
+  ]
+ },
+ "ProductComparisonPage.assertPageLocation": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/yves/product-comparison/product-comparison.cy.ts"
+  ]
+ },
+ "ProductPage.getAttachmentItems": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/yves/product/product-attachment-storefront.cy.ts"
+  ]
+ },
+ "SspAssetListPage.assertTableData": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.assertFileNotExists": {
+  "count": 4,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "cy.request": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/api/cms/cms-page-search-dms.cy.ts",
+   "cypress/e2e/smoke/api/health-check.cy.ts"
+  ]
+ },
+ "ConfigurationPage.visitLogosTab": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "MerchantRelationshipListPage.visit": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/backoffice/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.filterMenu": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "ProductManagementEditPage.expandLocaleSection": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-attachment-management.cy.ts",
+   "cypress/e2e/yves/product/product-attachment-storefront.cy.ts"
+  ]
+ },
+ "ProductManagementListPage.applyFilters": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-table-filters.cy.ts"
+  ]
+ },
+ "ProductPage.saveProduct": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/backoffice/product-offer/product-offer.cy.ts",
+   "cypress/e2e/backoffice/ssp-service-management/ssp-product.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.verifyListPage": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts",
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "ProductPage.getSoldByProductOffers": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts",
+   "cypress/e2e/mp/data-import/merchant-combined-product.cy.ts",
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts"
+  ]
+ },
+ "LoginPage.getFailedAuthenticationText": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-authorization.cy.ts"
+  ]
+ },
+ "MpAgentLoginPage.assertPageLocation": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-impersonation.cy.ts",
+   "cypress/e2e/mp/marketplace-agent-assist/agent-login.cy.ts"
+  ]
+ },
+ "DashboardPage.logout": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-impersonation.cy.ts",
+   "cypress/e2e/mp/multi-factor-authentication/merchant-user-mfa-auth.cy.ts"
+  ]
+ },
+ "MpAgentLoginPage.visit": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-login.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestsPage.approve": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/mp/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "CartPage.getCartSummary": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/cart/change-cart-item-quantity.cy.ts",
+   "cypress/e2e/yves/cart/remove-cart-item.cy.ts"
+  ]
+ },
+ "foundRequest.should": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantRegistrationPage.visit": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationPage.register": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "CustomerOverviewPage.assertProductQuantity": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/order-amendment/order-amendment-finish.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityPage.visitSearchAndWaitForProduct": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityPage.navigateToProductDetailPage": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductComparisonPage.getComparisonPageNavigationLinkSelector": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/product-comparison/product-comparison.cy.ts"
+  ]
+ },
+ "YvesCostCenterUpdatePage.visitByUuid": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "YvesCostCenterUpdatePage.submit": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "YvesCostCenterUpdatePage.assertSuccess": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "CatalogPage.getSspAssetNameBlock": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset-specific-catalog.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.getEditButton": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.assertSspAssetAssignments": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardFilesBlockPresent": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspInquiryCreatePage.assertPageLocation": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspInquiryCreatePage.getSspInquiryCreatedMessage": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspInquiryListPage.getFirstRowReference": {
+  "count": 3,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "AclNavigationAccessScenario.execute": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/acl/acl-navigation-access.cy.ts"
+  ]
+ },
+ "CompanyRoleCreatePage.assertPageLocation": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/company-account/company-role-create.cy.ts",
+   "cypress/e2e/yves/company-account/user-company-role.cy.ts"
+  ]
+ },
+ "ConfigurationPage.getSaveBar": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration-management.cy.ts"
+  ]
+ },
+ "ConfigurationPage.getChangesCount": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration-management.cy.ts"
+  ]
+ },
+ "ConfigurationPage.getThemeAltColor": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "merchants.forEach": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/merchant-b2b-contract-requests/request-management.cy.ts",
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestEditPage.addInternalComment": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantRelationshipListPage.applyFilters": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantRelationshipListPage.getEditButtons": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestEditPage.approve": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "UserMfaLoginScenario.execute": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/multi-factor-authentication/user-mfa-auth.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.hasMenuItem": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.clearFilter": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "SelectStoreScenario.execute": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/order-management/order-creation-dms.cy.ts",
+   "cypress/e2e/mp/marketplace-order-management/order-creation-dms.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityListPage.applyFilterAndSearch": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityListPage.assertSingleRow": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityListPage.assertDisplayAtContains": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductManagementEditPage.getLocalizedIboxToggle": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-attachment-management.cy.ts"
+  ]
+ },
+ "ProductManagementEditPage.verifyAttachmentCount": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-attachment-management.cy.ts"
+  ]
+ },
+ "ProductManagementEditPage.verifyMerchantSelected": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-merchant-relation-management.cy.ts"
+  ]
+ },
+ "ProductManagementEditPage.getMerchantNotAssignedOptionText": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-merchant-relation-management.cy.ts"
+  ]
+ },
+ "ProductManagementEditPage.selectMerchant": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-merchant-relation-management.cy.ts"
+  ]
+ },
+ "ProductManagementListPage.getTableRows": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-table-filters.cy.ts"
+  ]
+ },
+ "ProductManagementListPage.applySearchQuery": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-table-filters.cy.ts"
+  ]
+ },
+ "ProductManagementListPage.assertNoTableRecords": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-table-filters.cy.ts"
+  ]
+ },
+ "ProductMeasurementUnitListPage.findByText": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/product-measurement-unit/product-measurement-unit-create.cy.ts",
+   "cypress/e2e/backoffice/product-measurement-unit/product-measurement-unit-list.cy.ts"
+  ]
+ },
+ "ProductPage.selectProductClass": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/product-offer/product-offer.cy.ts",
+   "cypress/e2e/backoffice/ssp-service-management/ssp-product.cy.ts"
+  ]
+ },
+ "BackofficeBudgetListPage.assertBudgetInTable": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "SalesDetailPage.create": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/return-management/return-creation.cy.ts"
+  ]
+ },
+ "SalesReturnCreatePage.create": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/return-management/return-creation.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.verifyAssetDetails": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.clickViewButton": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.assertSspInquiryDetails": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts",
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "files.map": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.assertOrderSspInquiryDetails": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts",
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "ProductPage.editProductFromList": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-service-management/ssp-product.cy.ts"
+  ]
+ },
+ "ProductPage.goToVariansTab": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-service-management/ssp-product.cy.ts"
+  ]
+ },
+ "ProductPage.editFirstVariant": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-service-management/ssp-product.cy.ts"
+  ]
+ },
+ "ProductPage.verifySuccessMessage": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-service-management/ssp-product.cy.ts"
+  ]
+ },
+ "ProductPage.selectShipmentType": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-service-management/ssp-product.cy.ts",
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "UploadProductOfferDataImportMerchantFileScenario.execute": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts"
+  ]
+ },
+ "productOffers.children": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts",
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts"
+  ]
+ },
+ "productOffer.find": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts",
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts"
+  ]
+ },
+ "ProductPage.getInputRadioSelector": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts",
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts"
+  ]
+ },
+ "ProductPage.getAvailabilityStatusBlock": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts",
+   "cypress/e2e/mp/data-import/merchant-combined-product.cy.ts"
+  ]
+ },
+ "UploadProductDataImportMerchantFileScenario.execute": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product.cy.ts"
+  ]
+ },
+ "AgentLoginPage.visit": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-authorization.cy.ts"
+  ]
+ },
+ "AgentLoginPage.login": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-authorization.cy.ts"
+  ]
+ },
+ "AgentLoginPage.getFailedAuthenticationText": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-authorization.cy.ts"
+  ]
+ },
+ "AgentLoginPage.assertPageLocation": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-authorization.cy.ts"
+  ]
+ },
+ "AgentDashboardPage.getEndUserAssistanceSelector": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-impersonation.cy.ts"
+  ]
+ },
+ "AgentDashboardPage.getLogoutAgentSelector": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-impersonation.cy.ts"
+  ]
+ },
+ "MpAgentLoginPage.login": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-login.cy.ts"
+  ]
+ },
+ "MpAgentLoginPage.getFailedAuthenticationText": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-login.cy.ts"
+  ]
+ },
+ "ProductsPage.visit": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts",
+   "cypress/e2e/mp/marketplace-product-attributes/product-attribute-management.cy.ts"
+  ]
+ },
+ "UserIndexPage.getUserTableHeader": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-permission.cy.ts"
+  ]
+ },
+ "SalesIndexPage.getOrderReference": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/marketplace-merchant-commission/commission-calculation.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestsPage.addInternalComment": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantRelationsPage.visit": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantRelationsPage.find": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantRelationsPage.getDrawer": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestsPage.uncheckBusinessUnits": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "AgentDashboardPage.logoutAgent": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/multi-factor-authentication/merchant-agent-mfa-auth.cy.ts"
+  ]
+ },
+ "mfaSetUpScenario.executeDeactivation": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/mp/multi-factor-authentication/merchant-agent-mfa-auth.cy.ts",
+   "cypress/e2e/mp/multi-factor-authentication/merchant-user-mfa-auth.cy.ts"
+  ]
+ },
+ "CartPage.removeProduct": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/cart/remove-cart-item.cy.ts",
+   "cypress/e2e/yves/order-amendment/order-amendment-finish.cy.ts"
+  ]
+ },
+ "CmsContentPage.findCmsPageFromSuggestions": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/cms/cms-page-search-dms.cy.ts"
+  ]
+ },
+ "MultiCartPage.visit": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/comments/cart-comments.cy.ts"
+  ]
+ },
+ "MultiCartPage.selectCart": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/comments/cart-comments.cy.ts"
+  ]
+ },
+ "commentsToAdd.forEach": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/comments/cart-comments.cy.ts"
+  ]
+ },
+ "CommentCartPage.update": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/comments/cart-comments.cy.ts"
+  ]
+ },
+ "CommentCartPage.remove": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/comments/cart-comments.cy.ts"
+  ]
+ },
+ "HomePage.visit": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/core/locale-switching.cy.ts"
+  ]
+ },
+ "LoginPage.register": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/customer-account-management/customer-auth-dms.cy.ts",
+   "cypress/e2e/yves/customer-account-management/customer-auth.cy.ts"
+  ]
+ },
+ "LoginPage.getRegistrationCompletedMessage": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/customer-account-management/customer-auth-dms.cy.ts",
+   "cypress/e2e/yves/customer-account-management/customer-auth.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestIndexPage.create": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts"
+  ]
+ },
+ "MerchantRegistrationPage.assertSuccessMessage": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationApprovalScenario.execute": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantActivationScenario.execute": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "UserActivationScenario.execute": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "AgentLoginScenario.execute": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/agent-mfa-auth.cy.ts"
+  ]
+ },
+ "AgentOverviewPage.visit": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/agent-mfa-auth.cy.ts"
+  ]
+ },
+ "AgentOverviewPage.assertPageLocation": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/agent-mfa-auth.cy.ts"
+  ]
+ },
+ "AgentMfaActivationScenario.execute": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/agent-mfa-auth.cy.ts"
+  ]
+ },
+ "AgentLogoutScenario.execute": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/agent-mfa-auth.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityPage.assertPdpAttributeVisible": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityEditPage.updateAttributeVisibility": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityPage.assertPlpAttributeBadgeNotVisible": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityPage.assertCartAttributeBadgeNotVisible": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductPage.getAddToComparisonListSuccessMessage": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/product-comparison/product-comparison.cy.ts"
+  ]
+ },
+ "ProductComparisonPage.getProductComparisonListIsEmptyMessage": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/product-comparison/product-comparison.cy.ts"
+  ]
+ },
+ "ProductPage.toggleProductComparisonList": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/product-comparison/product-comparison.cy.ts"
+  ]
+ },
+ "body.text": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/product/publish-and-synchronize-dms.cy.ts"
+  ]
+ },
+ "text.includes": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/product/publish-and-synchronize-dms.cy.ts"
+  ]
+ },
+ "CheckoutSummaryPage.placeOrder": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget-enforcement.cy.ts"
+  ]
+ },
+ "CheckoutSummaryBudgetPage.assertEnforcementError": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget-enforcement.cy.ts"
+  ]
+ },
+ "YvesBudgetListPage.visitByCostCenterUuid": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "YvesBudgetListPage.assertBudgetInTable": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "YvesCostCenterListPage.assertCostCenterInTable": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "CatalogPage.assertPageLocation": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset-specific-catalog.cy.ts"
+  ]
+ },
+ "CatalogPage.getProductItemBlocks": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset-specific-catalog.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.getSspAssetServicesButton": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset-specific-catalog.cy.ts",
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.assertAssetDetails": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.getUnassignButton": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.assertSspServices": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetListPage.openLatestAssetDetailsPage": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetListPage.getCreateAssetButton": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardInquiriesBlockPresent": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspServiceListPage.assertServiceListPage": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "SspServiceListPage.openFilter": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "SspServiceListPage.assertServiceTableHasAtLeastRows": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "CartPage.assertServicePointsDisplayed": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "CartPage.assertShipmentTypeGrouping": {
+  "count": 2,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "to.eq": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/api/cms/cms-page-search-dms.cy.ts"
+  ]
+ },
+ "data.some": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/api/cms/cms-page-search-dms.cy.ts"
+  ]
+ },
+ "CompanyRoleListPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/company-account/company-role-create.cy.ts"
+  ]
+ },
+ "CompanyRoleListPage.clickAddCompanyUserRoleButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/company-account/company-role-create.cy.ts"
+  ]
+ },
+ "CompanyRoleCreatePage.getCompanyRoleCreateForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/company-account/company-role-create.cy.ts"
+  ]
+ },
+ "ConfigurationPage.resetChanges": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration-management.cy.ts"
+  ]
+ },
+ "ConfigurationPage.searchSettings": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration-management.cy.ts"
+  ]
+ },
+ "ConfigurationPage.clickUseDefaultLink": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration-management.cy.ts"
+  ]
+ },
+ "ConfigurationPage.getBackofficeLogoUploadButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "ConfigurationPage.getStorefrontLogoUploadButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "ConfigurationPage.getCustomCss": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "ConfigurationPage.getBackofficeColor": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "ConfigurationPage.getScopeSelector": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "ConfigurationPage.setBackofficeColor": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "ConfigurationPage.setBackofficeSidenavColor": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "ConfigurationPage.setBackofficeSidenavTextColor": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "ConfigurationPage.uploadStorefrontLogo": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "ConfigurationPage.verifyStorefrontLogoUploaded": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "ConfigurationPage.uploadBackofficeLogo": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "ConfigurationPage.verifyBackofficeLogoUploaded": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "to.include": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/configuration/configuration.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestEditPage.reject": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantRelationshipListPage.update": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "UserMfaLoginScenario.executeWithInvalidCode": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/multi-factor-authentication/user-mfa-auth.cy.ts"
+  ]
+ },
+ "ResetPasswordPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/multi-factor-authentication/user-mfa-auth.cy.ts"
+  ]
+ },
+ "ResetPasswordPage.changePassword": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/multi-factor-authentication/user-mfa-auth.cy.ts"
+  ]
+ },
+ "UserMfaActivationScenario.deactivate": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/multi-factor-authentication/user-mfa-auth.cy.ts"
+  ]
+ },
+ "UserMfaCreateScenario.execute": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/multi-factor-authentication/user-mfa-auth.cy.ts"
+  ]
+ },
+ "CustomerMfaRemoveScenario.execute": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/multi-factor-authentication/user-mfa-auth.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.assertFilterInputVisible": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.assertAnyMenuItemVisible": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.assertMenuItemsFiltered": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "searchTermValid.toLowerCase": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.assertItemVisible": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.assertAllMenuItemsVisible": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.assertAllParentItemsClosed": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.assertParentItemVisible": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.assertParentItemExpanded": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.assertOnlyMatchingChildrenVisible": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.getMenuItemsOrder": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.assertMenuOrderUnchanged": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.pressEnter": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "NavigationMenuPage.assertFilterValueEmpty": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "cy.reload": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/navigation/menu-filter.cy.ts"
+  ]
+ },
+ "CartPage.addCustomOrderReferenceInput": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/order-management/custom-order-reference-management.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityListPage.visitAndWaitForTable": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityListPage.assertDisplayAtColumnExists": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityListPage.assertVisibilityFilterExists": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityListPage.assertDisplayAtEmpty": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityListPage.assertNoRecords": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductManagementEditPage.deleteAttachmentByIndex": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-attachment-management.cy.ts"
+  ]
+ },
+ "ProductManagementEditPage.removeMerchantAssignment": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-merchant-relation-management.cy.ts"
+  ]
+ },
+ "ProductManagementListPage.getResetButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-management/product-table-filters.cy.ts"
+  ]
+ },
+ "ProductMeasurementUnitCreatePage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-measurement-unit/product-measurement-unit-create.cy.ts"
+  ]
+ },
+ "Date.now": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-measurement-unit/product-measurement-unit-create.cy.ts"
+  ]
+ },
+ "ProductMeasurementUnitCreatePage.fillCreateForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-measurement-unit/product-measurement-unit-create.cy.ts"
+  ]
+ },
+ "ProductMeasurementUnitCreatePage.submitCreateForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-measurement-unit/product-measurement-unit-create.cy.ts"
+  ]
+ },
+ "ProductMeasurementUnitListPage.getTableRows": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-measurement-unit/product-measurement-unit-create.cy.ts"
+  ]
+ },
+ "ProductMeasurementUnitListPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-measurement-unit/product-measurement-unit-list.cy.ts"
+  ]
+ },
+ "ProductMeasurementUnitListPage.getCreateButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-measurement-unit/product-measurement-unit-list.cy.ts"
+  ]
+ },
+ "ProductMeasurementUnitListPage.getTableCodeColumn": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-measurement-unit/product-measurement-unit-list.cy.ts"
+  ]
+ },
+ "ProductMeasurementUnitListPage.getPaginationBar": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-measurement-unit/product-measurement-unit-list.cy.ts"
+  ]
+ },
+ "ProductMeasurementUnitListPage.getTableEditButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-measurement-unit/product-measurement-unit-list.cy.ts"
+  ]
+ },
+ "ProductMeasurementUnitListPage.getTableDeleteButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-measurement-unit/product-measurement-unit-list.cy.ts"
+  ]
+ },
+ "CreateProductScenario.execute": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-offer/product-offer.cy.ts"
+  ]
+ },
+ "ProductManagementEditPage.getGeneralTab": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-offer/product-offer.cy.ts"
+  ]
+ },
+ "ProductOfferListPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-offer/product-offer.cy.ts"
+  ]
+ },
+ "ProductOfferListPage.getCreateButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-offer/product-offer.cy.ts"
+  ]
+ },
+ "ProductOfferCreatePage.getCurrentDate": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-offer/product-offer.cy.ts"
+  ]
+ },
+ "ProductOfferCreatePage.getFutureDate": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-offer/product-offer.cy.ts"
+  ]
+ },
+ "ProductOfferCreatePage.assertSuccessMessage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-offer/product-offer.cy.ts"
+  ]
+ },
+ "ProductOfferListPage.clickViewButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-offer/product-offer.cy.ts"
+  ]
+ },
+ "ProductOfferViewPage.assertProductOfferData": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/product-offer/product-offer.cy.ts"
+  ]
+ },
+ "BackofficeBudgetCreatePage.visitByCostCenter": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "BackofficeBudgetCreatePage.fillName": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "BackofficeBudgetCreatePage.fillAmount": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "BackofficeBudgetCreatePage.selectCurrency": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "BackofficeBudgetCreatePage.selectEnforcementRule": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "BackofficeBudgetCreatePage.fillStartDate": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "BackofficeBudgetCreatePage.fillEndDate": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "BackofficeBudgetCreatePage.submit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "BackofficeBudgetCreatePage.assertSuccess": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "BackofficeBudgetListPage.visitByCostCenter": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "BackofficeBudgetEditPage.visitById": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "BackofficeBudgetEditPage.fillName": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "BackofficeBudgetEditPage.submit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "BackofficeBudgetEditPage.assertSuccess": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "CostCenterListPage.waitForTable": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "CostCenterListPage.clickCreateButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "CostCenterCreatePage.fillName": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "CostCenterCreatePage.fillDescription": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "CostCenterCreatePage.selectCompany": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "CostCenterCreatePage.selectBusinessUnit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "CostCenterCreatePage.submit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "CostCenterCreatePage.assertSuccess": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "CostCenterEditPage.visitById": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "CostCenterEditPage.fillName": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "CostCenterEditPage.submit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "CostCenterEditPage.assertSuccess": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "CostCenterListPage.assertCostCenterInTable": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "SspAssetListPage.verifyListPage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspAssetListPage.clickCreateButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspAssetAddPage.fillAssetForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspAssetAddPage.checkCreateSspModelCheckbox": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspAssetAddPage.submitForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspAssetAddPage.verifySuccessMessage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.getReference": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspAssetListPage.searchAsset": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspAssetListPage.assetTableContainsAsset": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "YvesSspAssetDetailPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "YvesSspAssetDetailPage.assertAssetDetails": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspModelListPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspModelListPage.verifyModelInTable": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspAssetUpdatePage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspAssetUpdatePage.updateAssetForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspAssetUpdatePage.submitForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspAssetUpdatePage.verifySuccessMessage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts"
+  ]
+ },
+ "SspFileManagementAddPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementAddPage.verifyFileUploadConstraints": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementAddPage.loadTestFiles": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementAddPage.uploadFiles": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementAddPage.submitForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementAddPage.verifySuccessMessage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.clickDeleteButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementDeletePage.confirmDelete": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementDeletePage.verifySuccessMessage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementDeletePage.assertDeleteFile": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementViewPage.verifyFileDetailsAreVisible": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementDetachPage.detachFile": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementDetachPage.verifySuccessMessage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementDetachPage.assertDetachFile": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.submitComment": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.assertSspInquiryTableIsNotEmpty": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.assertSspInquiryTableColumnsExist": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.assertViewSspInquiryTableLinksExist": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.approveSspInquiry": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.assertSspInquiryStatusChangedToApproved": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.rejectSspInquiry": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.assertSspInquiryStatusChangedToRejected": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.cancelSspInquiry": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.assertSspInquiryStatusChangedToCanceled": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.openSspInquiryHistory": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.assertSspInquiryHistoryIsNotEmpty": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-inquiry/ssp-inquiry-view.cy.ts"
+  ]
+ },
+ "SspModelAddPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-model-management/ssp-model-management.cy.ts"
+  ]
+ },
+ "SspModelAddPage.fillSspModelForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-model-management/ssp-model-management.cy.ts"
+  ]
+ },
+ "SspModelAddPage.submitForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-model-management/ssp-model-management.cy.ts"
+  ]
+ },
+ "SspModelAddPage.verifySuccessMessage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-model-management/ssp-model-management.cy.ts"
+  ]
+ },
+ "SspModelUpdatePage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-model-management/ssp-model-management.cy.ts"
+  ]
+ },
+ "SspModelUpdatePage.fillSspModelForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-model-management/ssp-model-management.cy.ts"
+  ]
+ },
+ "SspModelUpdatePage.submitForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-model-management/ssp-model-management.cy.ts"
+  ]
+ },
+ "SspModelUpdatePage.verifySuccessMessage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-model-management/ssp-model-management.cy.ts"
+  ]
+ },
+ "SspModelViewPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-model-management/ssp-model-management.cy.ts"
+  ]
+ },
+ "SspModelViewPage.assertPageLocation": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-model-management/ssp-model-management.cy.ts"
+  ]
+ },
+ "SspModelViewPage.verifySspModel": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-model-management/ssp-model-management.cy.ts"
+  ]
+ },
+ "ProductPage.verifyProductClassSelected": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-service-management/ssp-product.cy.ts"
+  ]
+ },
+ "ProductPage.verifyShipmentTypeSelected": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-service-management/ssp-product.cy.ts"
+  ]
+ },
+ "ServiceListPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-service-management/ssp-service-list.cy.ts"
+  ]
+ },
+ "ServiceListPage.findServiceTableByName": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-service-management/ssp-service-list.cy.ts"
+  ]
+ },
+ "ServiceListPage.assertServiceListPage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/backoffice/ssp-service-management/ssp-service-list.cy.ts"
+  ]
+ },
+ "ApproveProductOfferScenario.execute": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts"
+  ]
+ },
+ "ProductPage.getProductOfferRadio": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts"
+  ]
+ },
+ "ProductPage.getProductOfferPrice": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts"
+  ]
+ },
+ "ActivateProductScenario.execute": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product.cy.ts"
+  ]
+ },
+ "ProductPage.getAddToCartButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/data-import/merchant-combined-product.cy.ts"
+  ]
+ },
+ "AgentDashboardPage.getDashboardSidebarSelector": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-dashboard.cy.ts"
+  ]
+ },
+ "DashboardPage.assert500StatusCode": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-impersonation.cy.ts"
+  ]
+ },
+ "SalesOrdersPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "SalesOrdersPage.update": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "SalesOrdersPage.find": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "cy.runCliCommands": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "ProfilePage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "ProfilePage.updatePhone": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "ProductsPage.find": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "ProductsPage.getDrawer": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "ProductsPage.getTaxIdSetOptionSelector": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "ProductsPage.getTaxIdSetSelector": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "el.val": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "ProductsPage.getSaveButtonSelector": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "OffersPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "OffersPage.find": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "OffersPage.getDrawer": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "OffersPage.getSaveButtonSelector": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts"
+  ]
+ },
+ "checkbox.is": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-permission.cy.ts"
+  ]
+ },
+ "UserUpdatePage.uncheckMerchantAgentCheckbox": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-permission.cy.ts"
+  ]
+ },
+ "UserUpdatePage.checkMerchantAgentCheckbox": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-agent-assist/agent-permission.cy.ts"
+  ]
+ },
+ "ProductsPage.getFirstTableRow": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-product-attributes/product-attribute-management.cy.ts"
+  ]
+ },
+ "ProductsPage.clickAddAttributeButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-product-attributes/product-attribute-management.cy.ts"
+  ]
+ },
+ "VariantsPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-product-concretes/product-concrete-management.cy.ts"
+  ]
+ },
+ "VariantsPage.getProductConcretesCountSelector": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/marketplace-product-concretes/product-concrete-management.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestsPage.getMessageFromCompanyValue": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestsPage.reject": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantAgentMfaLoginScenario.execute": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/multi-factor-authentication/merchant-agent-mfa-auth.cy.ts"
+  ]
+ },
+ "MerchantAgentMfaLoginScenario.executeWithInvalidCode": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/multi-factor-authentication/merchant-agent-mfa-auth.cy.ts"
+  ]
+ },
+ "MerchantUserMfaLoginScenario.execute": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/multi-factor-authentication/merchant-user-mfa-auth.cy.ts"
+  ]
+ },
+ "MerchantUserAccountScenario.executeChangePassword": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/multi-factor-authentication/merchant-user-mfa-auth.cy.ts"
+  ]
+ },
+ "MerchantUserMfaLoginScenario.executeWithInvalidCode": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/mp/multi-factor-authentication/merchant-user-mfa-auth.cy.ts"
+  ]
+ },
+ "CartPage.assertCartItemAvailabilityDisplayed": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/cart/change-cart-item-quantity.cy.ts"
+  ]
+ },
+ "CartPage.getCartDiscountSummary": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/cart/change-cart-item-quantity.cy.ts"
+  ]
+ },
+ "ManageCompanyRoleUserPage.unassignUser": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/company-account/manage-company-user-role.cy.ts"
+  ]
+ },
+ "ManageCompanyRoleUserPage.assignUser": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/company-account/manage-company-user-role.cy.ts"
+  ]
+ },
+ "ManageCompanyRoleUserPage.assertTopRowHasAssignButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/company-account/manage-company-user-role.cy.ts"
+  ]
+ },
+ "CompanyRoleIndexPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/company-account/user-company-role.cy.ts"
+  ]
+ },
+ "CompanyRoleIndexPage.clickAddNewRole": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/company-account/user-company-role.cy.ts"
+  ]
+ },
+ "CompanyRoleCreatePage.getCompanyRoleForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/company-account/user-company-role.cy.ts"
+  ]
+ },
+ "HomePage.getAvailableLocales": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/core/locale-switching.cy.ts"
+  ]
+ },
+ "LocaleSwitchingScenario.execute": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/core/locale-switching.cy.ts"
+  ]
+ },
+ "HomePage.navigateToNewPage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/core/locale-switching.cy.ts"
+  ]
+ },
+ "ProductPage.createMerchantRelationRequest": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts"
+  ]
+ },
+ "MerchantPage.sendMerchantRelationRequest": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestCreatePage.assertPageLocation": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestCreatePage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts"
+  ]
+ },
+ "ProductPage.getMerchantRelationRequestLinkAttribute": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts"
+  ]
+ },
+ "statuses.forEach": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "status.toLowerCase": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "businessUnits.forEach": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantRelationRequestIndexPage.assertPageLocation": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts"
+  ]
+ },
+ "MerchantRegistrationPage.assertFooterLinkExists": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationPage.clickFooterLink": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationPage.assertPageLoaded": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationPage.assertPageTitle": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationPage.assertCompanySectionVisible": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationPage.assertAccountSectionVisible": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationPage.submitForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationPage.assertValidationErrors": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationPage.assertFormNotSubmitted": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationListPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationListPage.assertPageLoaded": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationListPage.assertTableHeaders": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationListPage.sortByColumn": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationListPage.assertTableVisible": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationListPage.searchByTerm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationListPage.assertRegistrationExists": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationListPage.assertRegistrationWithStatus": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationListPage.assertStatusColor": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationListPage.filterByStatus": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationListPage.viewRegistrationByIndex": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationViewPage.addInternalNote": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationViewPage.assertNoteAdded": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationPage.assertErrorMessage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "MerchantRegistrationRejectionScenario.execute": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/merchant-registration/merchant-registration.cy.ts"
+  ]
+ },
+ "AgentMfaLoginScenario.execute": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/agent-mfa-auth.cy.ts"
+  ]
+ },
+ "AgentMfaLoginScenario.executeWithInvalidCode": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/agent-mfa-auth.cy.ts"
+  ]
+ },
+ "CustomerMfaLoginScenario.execute": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/customer-mfa-auth.cy.ts"
+  ]
+ },
+ "CustomerDeletePage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/customer-mfa-auth.cy.ts"
+  ]
+ },
+ "CustomerDeletePage.clickDeleteAccount": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/customer-mfa-auth.cy.ts"
+  ]
+ },
+ "MultiFactorAuthPage.waitForVerificationPopup": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/customer-mfa-auth.cy.ts"
+  ]
+ },
+ "CustomerMfaActivationScenario.deactivate": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/customer-mfa-auth.cy.ts"
+  ]
+ },
+ "HomePage.assertPageLocation": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/customer-mfa-auth.cy.ts"
+  ]
+ },
+ "CustomerMfaLoginScenario.executeWithInvalidCode": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/customer-mfa-auth.cy.ts"
+  ]
+ },
+ "CustomerProfilePage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/customer-mfa-auth.cy.ts"
+  ]
+ },
+ "CustomerProfileScenario.executePasswordChange": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/multi-factor-authentication/customer-mfa-auth.cy.ts"
+  ]
+ },
+ "CartPage.assertCancelOrderAmendmentButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/order-amendment/order-amendment-cancel.cy.ts"
+  ]
+ },
+ "CartPage.cancelOrderAmendment": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/order-amendment/order-amendment-cancel.cy.ts"
+  ]
+ },
+ "CustomerOverviewPage.assertFirstShippingAddress": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/order-amendment/order-amendment-finish.cy.ts"
+  ]
+ },
+ "CartPage.getCartItemSummary": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/order-amendment/order-amendment-finish.cy.ts"
+  ]
+ },
+ "CustomerOverviewPage.getOrderDetailTable": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/order-amendment/order-amendment-finish.cy.ts"
+  ]
+ },
+ "OrderDetailsPage.doesNotContainEditOrderButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityPage.assertPlpAttributeBadgeVisible": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityPage.assertCartAttributeBadgeVisible": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductAttributeVisibilityPage.assertPdpAttributeNotVisible": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/product-attribute-visibility/product-attribute-visibility.cy.ts"
+  ]
+ },
+ "ProductComparisonPage.getComparisonTableRowSelector": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/product-comparison/product-comparison.cy.ts"
+  ]
+ },
+ "ProductComparisonPage.removeProductFromComparisonList": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/product-comparison/product-comparison.cy.ts"
+  ]
+ },
+ "ProductComparisonPage.clearComparisonList": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/product-comparison/product-comparison.cy.ts"
+  ]
+ },
+ "ProductPage.getRemoveFromComparisonListSuccessMessage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/product-comparison/product-comparison.cy.ts"
+  ]
+ },
+ "ProductPage.getAddToComparisonListLimitExceededErrorMessage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/product-comparison/product-comparison.cy.ts"
+  ]
+ },
+ "ProductPage.selectLocale": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/product/product-attachment-storefront.cy.ts"
+  ]
+ },
+ "ProductPage.getAttachmentsList": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/product/product-attachment-storefront.cy.ts"
+  ]
+ },
+ "CheckoutSummaryBudgetPage.assertWarnFlashMessage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget-enforcement.cy.ts"
+  ]
+ },
+ "YvesBudgetCreatePage.visitByCostCenterUuid": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "YvesBudgetCreatePage.fillName": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "YvesBudgetCreatePage.fillAmount": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "YvesBudgetCreatePage.selectCurrency": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "YvesBudgetCreatePage.selectEnforcementRule": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "YvesBudgetCreatePage.fillStartDate": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "YvesBudgetCreatePage.fillEndDate": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "YvesBudgetCreatePage.submit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "YvesBudgetCreatePage.assertSuccess": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "YvesBudgetUpdatePage.visitByUuid": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "YvesBudgetUpdatePage.fillName": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "YvesBudgetUpdatePage.submit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "YvesBudgetUpdatePage.assertSuccess": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/budget.cy.ts"
+  ]
+ },
+ "YvesCostCenterListPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "YvesCostCenterCreatePage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "YvesCostCenterCreatePage.fillName": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "YvesCostCenterCreatePage.fillDescription": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "YvesCostCenterCreatePage.selectBusinessUnit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "YvesCostCenterCreatePage.submit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "YvesCostCenterCreatePage.assertSuccess": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "YvesCostCenterUpdatePage.fillName": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "YvesCostCenterUpdatePage.deactivate": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "YvesCostCenterUpdatePage.assertIsInactive": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "YvesCostCenterUpdatePage.activate": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "YvesCostCenterUpdatePage.assertIsActive": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/purchasing-control/cost-center.cy.ts"
+  ]
+ },
+ "OrderDetailsPage.reorderFirstSalesOrderItem": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/reorder/reorder-concrete-products.cy.ts"
+  ]
+ },
+ "CatalogPage.getSspAssetSelectorBlock": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset-specific-catalog.cy.ts"
+  ]
+ },
+ "CatalogPage.selectSspAsset": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset-specific-catalog.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.getSspAssetSparePartsButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset-specific-catalog.cy.ts"
+  ]
+ },
+ "ProductPage.getSspAssetNameBlock": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset-specific-catalog.cy.ts"
+  ]
+ },
+ "SspAssetCreatePage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetListPage.getSspAssetCustomerMenuItem": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetCreatePage.createAsset": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetCreatePage.getAssetCreatedMessage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetEditPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetEditPage.editAsset": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetEditPage.getAssetEditedMessage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.assertSspInquiries": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.getViewAllInquiriesLink": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetEditPage.getAssetForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetListPage.getFirstRowReference": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetCreatePage.assertPageLocation": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetCreatePage.getAssetForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "cy.location": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetListPage.assertTableHeaders": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetListPage.openFilters": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetListPage.getSspAssetFiltersSubmitButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetListPage.getAccessTableFilterByCompanyValue": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "CompanyUserSelectPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.getUnassignLink": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.getUnassignmentErrorMessage": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "cy.intercept": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "url.includes": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "assert.isTrue": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "cy.log": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-asset/ssp-asset.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertPageLocation": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardUserInfoPresent": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardUserInfoHasWelcomeText": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardUserInfoHasCompanyName": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardUserInfoHasCompanyBusinessUnitName": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardHasOverviewBlock": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardHasStatsOverviewBlock": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardHasSalesRepresentativeBlock": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardAssetsWidgetNotPresent": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardAssetsWidgetPresent": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertWidgetData": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardFilesBlockNotPresent": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardFilesTableEmpty": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardFilesTable": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardFilesTableHasNoDownloadLink": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardInquiriesBlockNotPresent": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardInquiriesTableEmpty": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspDashboardPage.assertSspDashboardInquiriesTable": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-dashboard-management/ssp-dashboard-management.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.downloadFile": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.verifyFileDownloaded": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementDownloadPage.downloadFile": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementDownloadPage.downloadFileForbidden": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.filterByType": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.searchByName": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.assertNoResults": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.applyFilterByTypeAndSearchTerm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.filterByBusinessEntity": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.filterBySspAssetEntity": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "SspFileManagementListPage.applyFilters": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "uuid.toString": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-file-management/ssp-file-management.cy.ts"
+  ]
+ },
+ "OrderDetailsPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspInquiryOrderPage.clickCreateSspInquiryButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspInquiryCreatePage.createOrderSspInquiry": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspAssetDetailPage.clickCreateClaimButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspInquiryCreatePage.createSspAssetSspInquiry": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.assertSspAssetSspInquiryDetails": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.clickCancelSspInquiryButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.getCanceledSspInquiryStatusSelector": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspInquiryDetailPage.getCancelSspInquiryButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspInquiryListPage.assertPageLocation": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspInquiryListPage.submitSspInquirySearchForm": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspInquiryListPage.assetPageHasNoSspInquiries": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspInquiryListPage.getCreateSspInquiryButton": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-inquiry/ssp-inquiry.cy.ts"
+  ]
+ },
+ "SspServiceListPage.assertSorting": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "SspServiceListPage.searchFor": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "SspServiceListPage.assertSearchResult": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "SspServiceListPage.rescheduleFirstServiceToTomorrow": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "SspServiceListPage.assertServiceTableHasRows": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "SspServiceListPage.cancelFirstService": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "SspServiceListPage.assertFirstServiceIsCancelled": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "SspServiceListPage.assertBusinessUnitSelectIsVisible": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "SspServiceListPage.visit": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "SspServiceListPage.assertServiceTableIsEmpty": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "ProductPage.selectServicePoint": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ },
+ "ProductPage.assertServicePointIsSelected": {
+  "count": 1,
+  "sources": [
+   "cypress/e2e/yves/ssp-service/ssp-service.cy.ts"
+  ]
+ }
+}
