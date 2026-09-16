@@ -22,11 +22,6 @@ declare namespace Cypress {
     loadDynamicFixturesByPayload(dynamicFixturesDefaultFilePath: string, retries?: number): Chainable;
 
     /**
-     * @example cy.getBackendApiToken().then((token) => cy.request({ headers: authHeaders(token), ... }))
-     */
-    getBackendApiToken(username?: string, password?: string): Chainable<string>;
-
-    /**
      * @example cy.resetBackofficeCookies()
      */
     resetBackofficeCookies(): void;
