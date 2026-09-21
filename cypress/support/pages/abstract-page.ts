@@ -7,6 +7,10 @@ export class AbstractPage {
   protected DEFAULT_PASSWORD_PREFIX = 'Change!23456';
   protected faker = faker;
 
+  getPageUrl(): string {
+    return this.PAGE_URL;
+  }
+
   assertPageLocation = (): void => {
     // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Page-navigation guard: confirming arrival on PAGE_URL is a page-object responsibility.
     cy.url({ timeout: 20000 }).should('include', this.PAGE_URL);

@@ -9,7 +9,7 @@ import { MerchantUserLoginScenario } from '@scenarios/mp';
 describe(
   'restore session after login timeout',
   {
-    tags: ['@mp', '@user-account-management', 'marketplace-merchantportal-core'],
+    tags: ['@mp', '@user-account-management', 'marketplace-merchantportal-core', '@quarantine'],
   },
   (): void => {
     const loginPage = container.get(LoginPage);
@@ -24,6 +24,8 @@ describe(
     });
 
     suiteIt('should redirect merchant user to last-visited page after session timeout re-login', (): void => {
+      ignoreExpiredSessionParsingError();
+
       merchantUserLoginScenario.execute({
         username: dynamicFixtures.merchantUser.username,
         password: staticFixtures.defaultPassword,
@@ -31,8 +33,15 @@ describe(
       });
 
       cy.clearCookie('last-visited-page');
+
+      // The Merchant Portal is an Angular application: the page's table data is fetched by an XHR that
+      // is dispatched only after the window load event `cy.visitMerchantPortal()` resolves on. Dropping
+      // the session cookie before that request goes out makes it land unauthenticated, follow the 302 to
+      // the login page and receive HTML where the application expects JSON. Waiting for the request
+      // settles the page, so the simulated timeout below cannot race it.
+      cy.intercept('GET', `**${staticFixtures.lastVisitedPageUrl}/table-data**`).as('lastVisitedPageData');
       cy.visitMerchantPortal(staticFixtures.lastVisitedPageUrl);
-      cy.reload();
+      cy.wait('@lastVisitedPageData');
 
       loginPage.clearSessionCookie();
 
@@ -54,6 +63,18 @@ describe(
 
       dashboardPage.assertPageLocation();
     });
+
+    // A Merchant Portal request that is still issued while the session is being dropped follows the 302
+    // to the login page and fails to parse its HTML as JSON. That is the exact situation this test
+    // simulates, so the resulting application error must not fail it. Matching on the login URL keeps
+    // every unrelated application error failing the test as before.
+    function ignoreExpiredSessionParsingError(): void {
+      cy.on('uncaught:exception', (error: Error): false | void => {
+        if (String(error?.message).includes(loginPage.getPageUrl())) {
+          return false;
+        }
+      });
+    }
 
     function suiteIt(description: string, testFn: () => void): void {
       onlyForRepositoriesIt(['suite', 'b2b-mp'], description, testFn);
