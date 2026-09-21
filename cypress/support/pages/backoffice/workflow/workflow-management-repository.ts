@@ -32,8 +32,17 @@ export class WorkflowManagementRepository {
   getTriggerSaveButton = (): Cypress.Chainable => cy.get('[data-qa="workflow-trigger-save"]');
 
   getCreateVersionButton = (): Cypress.Chainable => cy.get('a:contains("Create Version")');
-  getVersionInitialStateInput = (): Cypress.Chainable => cy.get('[data-qa="workflow-version-initial-state-input"]');
-  getVersionDefinitionInput = (): Cypress.Chainable => cy.get('[data-qa="workflow-version-definition-input"]');
+
+  // The version form is driven by the visual builder: the raw initialState/definition inputs are hidden
+  // (js-version-fields). The definition is seeded through the builder's "Advanced: raw XML" escape hatch,
+  // and the initial state is set by selecting a state on the canvas and ticking its "initial" checkbox.
+  getAdvancedXmlToggle = (): Cypress.Chainable => cy.get('[data-qa="workflow-advanced-toggle"]');
+  getAdvancedXmlEditor = (): Cypress.Chainable => cy.get('[data-qa="workflow-xml-editor"]');
+  getCanvas = (): Cypress.Chainable => cy.get('[data-qa="workflow-canvas"]');
+  // State nodes are JointJS SVG shapes labelled with the state's display name; the node carries no
+  // data-qa, so it is reached by its rendered label text within the canvas.
+  getCanvasStateByLabel = (label: string): Cypress.Chainable => this.getCanvas().find('text').contains(label);
+  getStateInitialCheckbox = (): Cypress.Chainable => cy.get('[data-qa="workflow-state-initial"]');
   getValidateDefinitionButton = (): Cypress.Chainable => cy.get('[data-qa="workflow-validate-definition"]');
   getValidationResult = (): Cypress.Chainable => cy.get('[data-qa="workflow-definition-validation-result"]');
   getVersionSaveButton = (): Cypress.Chainable => cy.get('[data-qa="workflow-version-save"]');

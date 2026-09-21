@@ -1,0 +1,6 @@
+{
+  "defaultPassword": "change123",
+  "reviewRequiredStatus": "Review Required",
+  "priceChangeSummary": "1 price change",
+  "budgetExceededError": "exceeds the allocated budget"
+}

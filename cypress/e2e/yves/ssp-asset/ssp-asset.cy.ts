@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { retryableBefore } from '../../../support/e2e';
 import {
   SspAssetCreatePage,
@@ -234,7 +234,7 @@ describe(
       });
 
       checkoutScenario.execute({
-        paymentMethod: 'dummyPaymentInvoice',
+        paymentMethod: getPaymentMethodBasedOnEnv(),
         idCustomerAddress: 0,
         isMultiShipment: true,
       });
@@ -491,7 +491,7 @@ describe(
       cartPage.startCheckout();
 
       checkoutScenario.execute({
-        paymentMethod: 'dummyPaymentInvoice',
+        paymentMethod: getPaymentMethodBasedOnEnv(),
         idCustomerAddress: 0,
       });
 

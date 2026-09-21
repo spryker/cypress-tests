@@ -127,6 +127,16 @@
         },
         {
           "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [{ "idProductAbstract": "#product.fk_product_abstract", "idMerchant": "#merchant.id_merchant" }]
+        },
+        {
+          "type": "helper",
           "name": "haveProductImageSet",
           "arguments": [
             {
@@ -185,7 +195,14 @@
           "arguments": [
             {
               "customer": "#buyer",
-              "items": [{ "sku": "#product.sku", "abstractSku": "#product.abstract_sku", "quantity": 1 }]
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "merchantReference": "#merchant.merchant_reference",
+                  "quantity": 1
+                }
+              ]
             },
             true
           ]
@@ -227,7 +244,14 @@
           "arguments": [
             {
               "customer": "#buyerForCreditCard",
-              "items": [{ "sku": "#product.sku", "abstractSku": "#product.abstract_sku", "quantity": 1 }]
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "merchantReference": "#merchant.merchant_reference",
+                  "quantity": 1
+                }
+              ]
             },
             true
           ]
@@ -269,7 +293,14 @@
           "arguments": [
             {
               "customer": "#buyerForStartDate",
-              "items": [{ "sku": "#product.sku", "abstractSku": "#product.abstract_sku", "quantity": 1 }]
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "merchantReference": "#merchant.merchant_reference",
+                  "quantity": 1
+                }
+              ]
             },
             true
           ]
