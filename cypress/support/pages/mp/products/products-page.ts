@@ -81,8 +81,74 @@ export class ProductsPage extends MpPage {
   selectTaxIdSetOption = (value: string | number | string[]): Cypress.Chainable =>
     cy.get(this.repository.getTaxIdSelector()).select(value, { force: true });
 
+  // The create wizard runs in two steps: naming the abstract product, then choosing the super
+  // attribute whose values become its concrete products.
+  createMultiConcreteProduct = (params: CreateMultiConcreteProductParams): void => {
+    cy.intercept('POST', '**/product-merchant-portal-gui/create-product-abstract**').as('abstractProductCreated');
+
+    this.repository.getCreateProductButton().click();
+    this.repository.getCreateProductSkuInput().type(params.sku);
+    this.repository.getCreateProductNameInput().type(params.name);
+    this.repository.getMultipleConcretesRadioLabel().click();
+    this.repository.getWizardNextButton().click();
+
+    this.selectOption(this.repository.getSuperAttributeSelect(), params.attributeName);
+    this.selectOptions(this.repository.getSuperAttributeValuesSelect(), params.attributeValues);
+
+    this.repository.getAddConcretesButton().click();
+    this.repository.getWizardCreateButton().click();
+
+    cy.wait('@abstractProductCreated');
+  };
+
+  // The create wizard names the product in one locale only, and the abstract product form refuses
+  // to save while any other locale's name is empty.
+  fillLocalizedNames = (params: FillLocalizedNamesParams): void => {
+    this.repository.getLocalizedNameInputs().each(($input: JQuery<HTMLElement>) => {
+      cy.wrap($input).clear({ force: true }).type(params.name, { force: true });
+    });
+  };
+
+  // The tax set has no default, and which one is chosen does not matter to any journey — only that
+  // the abstract product carries one, without which it cannot be saved.
+  selectFirstTaxSet = (): void => {
+    cy.get(this.repository.getTaxIdOptionSelector())
+      .eq(1)
+      .then(($option: JQuery<HTMLElement>) => {
+        cy.get(this.repository.getTaxIdSelector()).select(String($option.val()), { force: true });
+      });
+  };
+
+  selectStores = (params: SelectStoresParams): void => {
+    this.selectOptions(this.repository.getStoresSelect(), params.storeNames);
+  };
+
+  openConcreteProductsTab = (): void => {
+    this.repository.getConcreteProductsTab().click();
+  };
+
+  openFirstConcreteProduct = (): void => {
+    this.repository.getVariantRows().first().click();
+  };
+
+  // A concrete product has to be named in every locale before it can be saved, and taking the
+  // abstract product's name is what the merchant does rather than retyping it per locale. Without a
+  // searchable locale the product never reaches the storefront catalog.
+  activateConcreteProduct = (params: ActivateConcreteProductParams): void => {
+    this.repository.getConcreteIsActiveLabel().click();
+    this.repository.getConcreteStockQuantityInput().clear().type(String(params.stockQuantity));
+    this.repository.getUseAbstractProductNameLabel().click();
+    this.selectOptions(this.repository.getSearchabilitySelect(), params.searchableLocales);
+  };
+
+  sendForApproval = (): void => {
+    this.repository.getSendForApprovalButton().click();
+  };
+
+  getApprovalStatus = (): Cypress.Chainable => this.repository.getApprovalStatusChip();
+
   // A row added to the price table is submitted with the abstract product form, not on its own.
-  addCustomerPriceRow = (params: AddCustomerPriceRowParams): void => {
+  addPriceRow = (params: AddPriceRowParams): void => {
     cy.intercept('POST', '**/product-merchant-portal-gui/update-product-abstract**').as('abstractProductSaved');
 
     this.repository.getPriceTableAddButton().click();
@@ -93,7 +159,10 @@ export class ProductsPage extends MpPage {
 
       // The customer options are labelled '<merchant relation id> - <business unit name>', and the
       // id is only known once the relation has been created.
-      this.selectInEditableRow(columnIndexOf(CUSTOMER_COLUMN_TITLE), params.customerBusinessUnitName);
+      if (params.customerBusinessUnitName) {
+        this.selectInEditableRow(columnIndexOf(CUSTOMER_COLUMN_TITLE), params.customerBusinessUnitName);
+      }
+
       this.selectInEditableRow(columnIndexOf(STORE_COLUMN_TITLE), params.storeName);
       this.selectInEditableRow(columnIndexOf(CURRENCY_COLUMN_TITLE), params.currency);
       this.typeInEditableRow(columnIndexOf(NET_DEFAULT_COLUMN_TITLE), params.netAmount);
@@ -108,8 +177,27 @@ export class ProductsPage extends MpPage {
   // The cell renders an Angular select whose options only reach the form when they are picked from
   // its own dropdown; writing the native mirror select leaves the row empty on save.
   private selectInEditableRow = (columnIndex: number, optionText: string): void => {
-    this.repository.getEditableRowCell(columnIndex).find(this.repository.getEditableSelectSelector()).click();
-    this.repository.getEditableSelectOption(optionText).click();
+    this.selectOption(
+      this.repository.getEditableRowCell(columnIndex).find(this.repository.getEditableSelectSelector()),
+      optionText
+    );
+  };
+
+  private selectOption = (select: Cypress.Chainable, optionText: string): void => {
+    select.click();
+    this.repository.getSelectOption(optionText).click();
+  };
+
+  // A multiple select keeps its dropdown open between picks, so it is opened once and dismissed
+  // afterwards rather than re-opened per value.
+  private selectOptions = (select: Cypress.Chainable, optionTexts: string[]): void => {
+    select.click();
+
+    optionTexts.forEach((optionText) => {
+      this.repository.getSelectOption(optionText).click();
+    });
+
+    cy.get('body').type('{esc}');
   };
 
   private typeInEditableRow = (columnIndex: number, amount: number): void => {
@@ -142,8 +230,10 @@ export class ProductsPage extends MpPage {
     });
   };
 
+  // A concrete drawer opens on top of the abstract one, so the last Save in the DOM is the one
+  // belonging to the drawer in front.
   save = (): void => {
-    cy.get(this.repository.getSaveButtonSelector()).click();
+    cy.get(this.repository.getSaveButtonSelector()).last().click();
   };
 }
 
@@ -153,12 +243,32 @@ const CURRENCY_COLUMN_TITLE = 'Currency';
 const NET_DEFAULT_COLUMN_TITLE = 'Net Default';
 const GROSS_DEFAULT_COLUMN_TITLE = 'Gross Default';
 
-interface AddCustomerPriceRowParams {
-  customerBusinessUnitName: string;
+interface ActivateConcreteProductParams {
+  stockQuantity: number;
+  searchableLocales: string[];
+}
+
+interface FillLocalizedNamesParams {
+  name: string;
+}
+
+interface SelectStoresParams {
+  storeNames: string[];
+}
+
+interface AddPriceRowParams {
+  customerBusinessUnitName?: string;
   storeName: string;
   currency: string;
   netAmount: number;
   grossAmount: number;
+}
+
+interface CreateMultiConcreteProductParams {
+  sku: string;
+  name: string;
+  attributeName: string;
+  attributeValues: string[];
 }
 
 interface CustomerPriceRowParams {

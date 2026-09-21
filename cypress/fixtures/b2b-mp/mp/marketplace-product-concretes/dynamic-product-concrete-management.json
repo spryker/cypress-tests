@@ -5,22 +5,47 @@
       "synchronize": true,
       "operations": [
         {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "localeEN",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+          "arguments": {
+            "id_locale": 66,
+            "locale_name": "en_US"
+          }
         },
         {
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "localeDE",
-          "arguments": { "id_locale": 46, "locale_name": "de_DE" }
+          "arguments": {
+            "id_locale": 46,
+            "locale_name": "de_DE"
+          }
         },
         {
           "type": "helper",
           "name": "haveUser",
           "key": "merchantUser",
-          "arguments": [{ "password": "change123" }]
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
         },
         {
           "type": "helper",
@@ -50,8 +75,14 @@
             {
               "idTaxSet": 1,
               "localizedAttributes": [
-                { "locale": "#localeEN", "name": "#localizedAttribute1.name" },
-                { "locale": "#localeDE", "name": "#localizedAttribute1.name" }
+                {
+                  "locale": "#localeEN",
+                  "name": "#localizedAttribute1.name"
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#localizedAttribute1.name"
+                }
               ]
             }
           ]
@@ -64,8 +95,14 @@
             {
               "idTaxSet": 1,
               "localizedAttributes": [
-                { "locale": "#localeEN", "name": "#localizedAttribute2.name" },
-                { "locale": "#localeDE", "name": "#localizedAttribute2.name" }
+                {
+                  "locale": "#localeEN",
+                  "name": "#localizedAttribute2.name"
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#localizedAttribute2.name"
+                }
               ]
             }
           ]
@@ -119,7 +156,10 @@
             {
               "skuProductAbstract": "#concreteProduct1.abstract_sku",
               "skuProduct": "#concreteProduct1.sku",
-              "moneyValue": { "netAmount": 30000, "grossAmount": 30000 }
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
             }
           ]
         },
@@ -130,7 +170,10 @@
             {
               "skuProductAbstract": "#concreteProduct2.abstract_sku",
               "skuProduct": "#concreteProduct2.sku",
-              "moneyValue": { "netAmount": 20000, "grossAmount": 20000 }
+              "moneyValue": {
+                "netAmount": 20000,
+                "grossAmount": 20000
+              }
             }
           ]
         },

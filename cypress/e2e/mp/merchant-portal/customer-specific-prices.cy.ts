@@ -66,7 +66,7 @@ describe(
 
       // Act
       openMerchantProductInPortal();
-      productsPage.addCustomerPriceRow({
+      productsPage.addPriceRow({
         customerBusinessUnitName: dynamicFixtures.businessUnit.name,
         storeName: staticFixtures.storeName,
         currency: staticFixtures.currency,
