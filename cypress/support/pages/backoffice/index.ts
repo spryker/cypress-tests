@@ -31,6 +31,7 @@ export * from './merchant-relationship/list/merchant-relationship-list-page';
 export * from './product-management/add/product-management-add-page';
 export * from './product-management/edit/product-management-edit-page';
 export * from './product-management/list/product-management-list-page';
+export * from './product-management/view/product-management-view-page';
 export * from './product-management/edit/variant/product-management-edit-variant-page';
 export * from './availability/view/availability-view-page';
 export * from './availability/edit/availability-edit-page';

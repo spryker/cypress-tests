@@ -30,3 +30,17 @@ export interface OfferApprovalDynamicFixtures {
 export interface OfferApprovalStaticFixtures {
   defaultPassword: string;
 }
+
+export interface OfferViewAndFilterDynamicFixtures {
+  rootUser: User;
+  merchant1: Merchant;
+  merchant2: Merchant;
+  merchantProduct1: ProductConcrete;
+  merchantProduct2: ProductConcrete;
+  productOffer1: ProductOffer;
+  productOffer2: ProductOffer;
+}
+
+export interface OfferViewAndFilterStaticFixtures {
+  defaultPassword: string;
+}

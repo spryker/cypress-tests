@@ -41,6 +41,11 @@ export class ProductOfferListPage extends BackofficePage {
     return this.getTableRows().eq(rowIndex).find(this.repository.getDenyButtonSelector()).click();
   };
 
+  // The merchant switcher is a plain select that reloads the table through its own GET form.
+  filterByMerchant = (params: FilterByMerchantParams): void => {
+    this.repository.getMerchantFilterSelect().select(String(params.idMerchant));
+  };
+
   findOffer = (params: FindOfferParams): Cypress.Chainable => {
     return this.find({
       interceptTableUrl: `**${this.POST_URL}**`,
@@ -51,6 +56,10 @@ export class ProductOfferListPage extends BackofficePage {
   getReference = (rowIndex = 0): Cypress.Chainable<string> => {
     return this.getTableRows().eq(rowIndex).find(this.repository.getReferenceColumnSelector()).invoke('text');
   };
+}
+
+interface FilterByMerchantParams {
+  idMerchant: number;
 }
 
 interface FindOfferParams {

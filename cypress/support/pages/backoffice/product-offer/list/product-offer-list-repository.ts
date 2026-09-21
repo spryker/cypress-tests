@@ -21,4 +21,6 @@ export class ProductOfferListRepository {
   getApproveButtonSelector = (): string => 'form[action*="approval-status=approved"] button';
 
   getDenyButtonSelector = (): string => 'form[action*="approval-status=denied"] button';
+
+  getMerchantFilterSelect = (): Cypress.Chainable => cy.get('select[name="id-merchant"]');
 }
