@@ -82,34 +82,20 @@ export class ProductsPage extends MpPage {
     cy.get(this.repository.getTaxIdSelector()).select(value, { force: true });
 
   deletePriceRowByQuantity = (params: PriceRowParams): void => {
-    cy.intercept('GET', '**/product-merchant-portal-gui/delete-price-product-abstract**').as('priceRowDeleted');
-
-    // The price columns are configured server-side, so the quantity column is located by its
-    // heading rather than by a position that a configuration change would silently move.
-    this.repository.getPriceTableQuantityHeaderCell().then(($headerCell: JQuery<HTMLElement>) => {
-      const columnIndex = $headerCell.index();
-
-      this.repository
-        .getPriceTableRows()
-        .filter(
-          (_rowIndex, row) => Cypress.$(row).find('td').eq(columnIndex).text().trim() === String(params.quantity),
-          { timeout: 20000 }
-        )
-        .find(this.repository.getRowActionTriggerSelector(), { timeout: 20000 })
-        .click();
+    this.deletePriceTableRowByQuantity({
+      getQuantityHeaderCell: this.repository.getPriceTableQuantityHeaderCell,
+      getRows: this.repository.getPriceTableRows,
+      getActionItem: this.repository.getRowActionItem,
+      rowActionTriggerSelector: this.repository.getRowActionTriggerSelector(),
+      deleteUrlPattern: this.repository.getDeletePriceUrlPattern(),
+      quantity: params.quantity,
     });
-
-    this.repository.getRowActionItem(DELETE_ACTION_TITLE).click();
-
-    cy.wait('@priceRowDeleted');
   };
 
   save = (): void => {
     cy.get(this.repository.getSaveButtonSelector()).click();
   };
 }
-
-const DELETE_ACTION_TITLE = 'Delete';
 
 interface PriceRowParams {
   quantity: number;

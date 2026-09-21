@@ -32,6 +32,21 @@ export class OffersPage extends MpPage {
   getSaveButtonSelector = (): string => {
     return this.repository.getSaveButtonSelector();
   };
+
+  deletePriceRowByQuantity = (params: PriceRowParams): void => {
+    this.deletePriceTableRowByQuantity({
+      getQuantityHeaderCell: this.repository.getPriceTableQuantityHeaderCell,
+      getRows: this.repository.getPriceTableRows,
+      getActionItem: this.repository.getRowActionItem,
+      rowActionTriggerSelector: this.repository.getRowActionTriggerSelector(),
+      deleteUrlPattern: this.repository.getDeletePriceUrlPattern(),
+      quantity: params.quantity,
+    });
+  };
+}
+
+interface PriceRowParams {
+  quantity: number;
 }
 
 interface FindParams {

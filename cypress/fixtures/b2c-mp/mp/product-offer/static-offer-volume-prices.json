@@ -1,0 +1,9 @@
+{
+  "defaultPassword": "change123",
+  "offerPrice": "€200.00",
+  "volumeTier": {
+    "threshold": 2,
+    "quantity": 4,
+    "price": "€10.00"
+  }
+}

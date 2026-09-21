@@ -23,6 +23,8 @@ export class ProductsRepository {
 
   getRowActionTriggerSelector = (): string => '.ant-table-row-actions-feature .ant-dropdown-trigger';
 
+  getDeletePriceUrlPattern = (): string => '**/product-merchant-portal-gui/delete-price-product-abstract**';
+
   // The row-action menu is rendered into the page-level overlay container, not inside the row.
   getRowActionItem = (title: string): Cypress.Chainable =>
     cy.get('.ant-dropdown-menu:visible li.ant-dropdown-menu-item').contains(title);

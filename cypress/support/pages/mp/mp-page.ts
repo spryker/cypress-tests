@@ -31,6 +31,47 @@ export class MpPage extends AbstractPage {
         assert.isTrue(total === expectedCount || total >= valueToBeAtMost);
       });
   };
+
+  /**
+   * The Merchant Portal renders abstract-product prices and offer prices with the same editable
+   * table, so the deletion mechanics are shared and only the selectors and the endpoint differ.
+   */
+  protected deletePriceTableRowByQuantity = (params: DeletePriceTableRowParams): void => {
+    cy.intercept('GET', params.deleteUrlPattern).as('priceRowDeleted');
+
+    // The price columns are configured server-side, so the quantity column is located by its
+    // heading rather than by a position that a configuration change would silently move.
+    params.getQuantityHeaderCell().then(($headerCell: JQuery<HTMLElement>) => {
+      const columnIndex = $headerCell.index();
+
+      params
+        .getRows()
+        .filter(
+          (_rowIndex, row) => Cypress.$(row).find('td').eq(columnIndex).text().trim() === String(params.quantity),
+          { timeout: PRICE_TABLE_TIMEOUT }
+        )
+        .find(params.rowActionTriggerSelector, { timeout: PRICE_TABLE_TIMEOUT })
+        .click();
+    });
+
+    params.getActionItem(DELETE_ACTION_TITLE).click();
+
+    cy.wait('@priceRowDeleted');
+  };
+}
+
+// The Angular bundle paints the table well after page load, and re-renders it once more when the
+// row actions arrive.
+const PRICE_TABLE_TIMEOUT = 20000;
+const DELETE_ACTION_TITLE = 'Delete';
+
+interface DeletePriceTableRowParams {
+  getQuantityHeaderCell: () => Cypress.Chainable;
+  getRows: () => Cypress.Chainable;
+  getActionItem: (title: string) => Cypress.Chainable;
+  rowActionTriggerSelector: string;
+  deleteUrlPattern: string;
+  quantity: number;
 }
 
 export enum ActionEnum {
