@@ -1,0 +1,63 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeEN",
+          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+        },
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeDE",
+          "arguments": { "id_locale": 46, "locale_name": "de_DE" }
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
+        },
+        {
+          "type": "helper",
+          "name": "haveUrl",
+          "key": "merchantUrlEN",
+          "arguments": [
+            {
+              "fkLocale": "#localeEN.id_locale",
+              "fkResourceMerchant": "#merchant.id_merchant",
+              "urlPrefix": "/en/merchant/profile-update-en-",
+              "url": "#merchant.name"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveUrl",
+          "arguments": [
+            {
+              "fkLocale": "#localeDE.id_locale",
+              "fkResourceMerchant": "#merchant.id_merchant",
+              "urlPrefix": "/de/merchant/profile-update-de-",
+              "url": "#merchant.name"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#merchant", "#merchantUser"]
+        }
+      ]
+    }
+  }
+}
