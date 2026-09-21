@@ -104,10 +104,6 @@ export class ProductsRepository {
 
   getEditableSelectSelector = (): string => 'nz-select-top-control';
 
-  // ng-zorro renders the open dropdown into the page-level overlay container.
-  getSelectOption = (optionText: string): Cypress.Chainable =>
-    cy.get('.ant-select-dropdown:visible .ant-select-item-option').contains(optionText);
-
   getNumberInputSelector = (): string => 'input[type="number"]';
 
   getPriceTableRows = (): Cypress.Chainable =>

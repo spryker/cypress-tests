@@ -21,3 +21,25 @@ interface VolumeTier {
   quantity: number;
   price: string;
 }
+
+export interface OfferCreationDynamicFixtures {
+  customer: Customer;
+  productMerchant: Merchant;
+  offerMerchant: Merchant;
+  offerMerchantUser: User;
+  merchantProduct: ProductConcrete;
+}
+
+export interface OfferCreationStaticFixtures {
+  defaultPassword: string;
+  storeName: string;
+  currency: string;
+  offer: OfferUnderTest;
+}
+
+interface OfferUnderTest {
+  netAmount: number;
+  grossAmount: number;
+  displayedPrice: string;
+  stockQuantity: number;
+}

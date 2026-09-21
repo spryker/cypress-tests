@@ -33,6 +33,31 @@ export class MpPage extends AbstractPage {
   };
 
   /**
+   * ng-zorro renders an open dropdown into the page-level overlay container, and an option only
+   * reaches the Angular form when it is picked there — writing the native mirror select leaves the
+   * control empty on save.
+   */
+  protected getSelectOption = (optionText: string): Cypress.Chainable =>
+    cy.get('.ant-select-dropdown:visible .ant-select-item-option').contains(optionText);
+
+  protected selectOption = (select: Cypress.Chainable, optionText: string): void => {
+    select.click();
+    this.getSelectOption(optionText).click();
+  };
+
+  // A multiple select keeps its dropdown open between picks, so it is opened once and dismissed
+  // afterwards rather than re-opened per value.
+  protected selectOptions = (select: Cypress.Chainable, optionTexts: string[]): void => {
+    select.click();
+
+    optionTexts.forEach((optionText) => {
+      this.getSelectOption(optionText).click();
+    });
+
+    cy.get('body').type('{esc}');
+  };
+
+  /**
    * The Merchant Portal renders abstract-product prices and offer prices with the same editable
    * table, so the deletion mechanics are shared and only the selectors and the endpoint differ.
    */

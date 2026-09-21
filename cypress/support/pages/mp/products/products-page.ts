@@ -203,23 +203,6 @@ export class ProductsPage extends MpPage {
     );
   };
 
-  private selectOption = (select: Cypress.Chainable, optionText: string): void => {
-    select.click();
-    this.repository.getSelectOption(optionText).click();
-  };
-
-  // A multiple select keeps its dropdown open between picks, so it is opened once and dismissed
-  // afterwards rather than re-opened per value.
-  private selectOptions = (select: Cypress.Chainable, optionTexts: string[]): void => {
-    select.click();
-
-    optionTexts.forEach((optionText) => {
-      this.repository.getSelectOption(optionText).click();
-    });
-
-    cy.get('body').type('{esc}');
-  };
-
   private typeInEditableRow = (columnIndex: number, amount: number): void => {
     this.repository
       .getEditableRowCell(columnIndex)
