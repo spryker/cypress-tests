@@ -1,0 +1,19 @@
+{
+  "defaultPassword": "change123",
+  "storeName": "DE",
+  "currency": "EUR",
+  "createdProduct": {
+    "attributeName": "color",
+    "attributeValues": ["white", "black"],
+    "netAmount": 90,
+    "grossAmount": 100,
+    "displayedPrice": "€100.00",
+    "stockQuantity": 10,
+    "searchableLocales": ["en_US", "de_DE"]
+  },
+  "addedConcrete": {
+    "attributeValue": "Grey",
+    "stockQuantity": 5,
+    "searchableLocales": ["en_US", "de_DE"]
+  }
+}

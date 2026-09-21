@@ -25,3 +25,21 @@ interface CreatedProduct {
   stockQuantity: number;
   searchableLocales: string[];
 }
+
+export interface MerchantProductManagementDynamicFixtures {
+  rootUser: User;
+  merchant: Merchant;
+  merchantUser: User;
+  variantProduct: ProductConcrete;
+}
+
+export interface MerchantProductManagementStaticFixtures {
+  defaultPassword: string;
+  addedConcrete: AddedConcrete;
+}
+
+interface AddedConcrete {
+  attributeValue: string;
+  stockQuantity: number;
+  searchableLocales: string[];
+}

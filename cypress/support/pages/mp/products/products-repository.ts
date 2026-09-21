@@ -20,8 +20,11 @@ export class ProductsRepository {
 
   getConcreteProductsTab = (): Cypress.Chainable => cy.contains('.ant-tabs-tab-btn', 'Concrete Products');
 
+  // The table renders a hidden measuring copy of every row beside the one on screen.
   getVariantRows = (): Cypress.Chainable =>
-    cy.get('web-mp-edit-abstract-product-variants tbody.ant-table-tbody tr.ant-table-row', { timeout: 20000 });
+    cy
+      .get('web-mp-edit-abstract-product-variants tbody.ant-table-tbody tr.ant-table-row', { timeout: 20000 })
+      .filter(':visible');
 
   // The checkbox only reaches the Angular form when its own label is clicked.
   getConcreteIsActiveLabel = (): Cypress.Chainable =>
@@ -38,6 +41,15 @@ export class ProductsRepository {
     cy.get('input[name="productConcreteEdit[productConcrete][stocks][quantity]"]', { timeout: 20000 });
 
   // Rendered as a link rather than a button, and only once the abstract product is complete.
+  getAddConcreteProductsButton = (): Cypress.Chainable =>
+    cy.contains('.spy-drawer-wrapper button', 'Add Concrete Products');
+
+  getConcreteAttributeValuesSelect = (): Cypress.Chainable =>
+    cy.get('.mp-concrete-product-attributes-selector nz-select-top-control', { timeout: 20000 });
+
+  getCreateConcreteProductsButton = (): Cypress.Chainable =>
+    cy.get('web-mp-create-concrete-products-overlay').contains('button', 'Create');
+
   getSearchabilitySelect = (): Cypress.Chainable =>
     cy.get('web-spy-select[spy-id="productConcreteEdit_searchability"] nz-select-top-control', { timeout: 20000 });
 

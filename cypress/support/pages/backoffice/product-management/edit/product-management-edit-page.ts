@@ -74,6 +74,17 @@ export class ProductManagementEditPage extends BackofficePage {
     this.repository.getProductNameDEInput().type(this.faker.commerce.productName());
   };
 
+  // The locale blocks are collapsed, so the inputs are written where they stand.
+  renameProduct = (params: RenameProductParams): void => {
+    this.repository.getGeneralTab().click({ force: true });
+    this.repository.getLocalizedNameInputs().each(($nameInput: JQuery<HTMLElement>) => {
+      cy.wrap($nameInput).clear({ force: true });
+      cy.wrap($nameInput).type(params.name, { force: true, delay: 0 });
+    });
+
+    this.save();
+  };
+
   save = (): void => {
     this.repository.getSaveButton().click();
   };
@@ -148,6 +159,10 @@ export class ProductManagementEditPage extends BackofficePage {
   getFirstAttachmentFormIbox = (): Cypress.Chainable => this.repository.getFirstAttachmentFormIbox();
 
   getFirstAttachmentFormAddButton = (): Cypress.Chainable => this.repository.getFirstAttachmentFormAddButton();
+}
+
+interface RenameProductParams {
+  name: string;
 }
 
 interface SetStorePriceParams {

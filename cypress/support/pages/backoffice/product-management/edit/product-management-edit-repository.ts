@@ -27,6 +27,9 @@ export class ProductManagementEditRepository {
     cy.get(`#price-table-collection [data-decimal-rounding="2"][id^="product_form_edit_prices_${idStore}-"]`);
   getSaveButton = (): Cypress.Chainable => cy.get('[name="product_form_edit"] [value="Save"]');
   getProductNameDEInput = (): Cypress.Chainable => cy.get('#product_form_edit_general_de_DE_name');
+
+  // One name input per locale, each inside its own collapsible block on the general tab.
+  getLocalizedNameInputs = (): Cypress.Chainable => cy.get('input[id^="product_form_edit_general_"][id$="_name"]');
   getCollapsedBlock = (): Cypress.Chainable =>
     cy.get('#tab-content-general > .panel-body > .collapsed > .ibox-title > .collapse-link > .ibox-tools > .fas');
   getMediaTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-image"]');
