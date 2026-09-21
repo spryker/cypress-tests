@@ -15,8 +15,23 @@ export class MerchantUpdatePage extends BackofficePage {
     this.repository.getAddMerchantUserButton().click();
   };
 
+  rename = (params: RenameParams): void => {
+    this.repository.getNameInput().clear().type(params.name);
+    this.repository.getSaveButton().click();
+  };
+
+  // Taking every store off the relation is what retires the merchant's storefront page.
+  unassignAllStores = (): void => {
+    this.repository.getAllAvailableStoresInputs().uncheck({ force: true });
+    this.repository.getSaveButton().click();
+  };
+
   assignAllAvailableStore = (): void => {
     this.repository.getAllAvailableStoresInputs().check();
     this.repository.getSaveButton().click();
   };
+}
+
+interface RenameParams {
+  name: string;
 }

@@ -1,0 +1,190 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeEN",
+          "arguments": {
+            "id_locale": 66,
+            "locale_name": "en_US"
+          }
+        },
+        {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeDE",
+          "arguments": {
+            "id_locale": 46,
+            "locale_name": "de_DE"
+          }
+        },
+        {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "localizedAttribute"
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": {
+            "id_store": 1,
+            "name": "DE"
+          }
+        },
+        {
+          "type": "array-object",
+          "key": "stores",
+          "arguments": ["#store"]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "merchantUser",
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
+        },
+        {
+          "type": "helper",
+          "name": "haveUrl",
+          "key": "merchantUrlEN",
+          "arguments": [
+            {
+              "fkLocale": "#localeEN.id_locale",
+              "fkResourceMerchant": "#merchant.id_merchant",
+              "urlPrefix": "/en/merchant/deactivation-en-",
+              "url": "#merchant.name"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveUrl",
+          "arguments": [
+            {
+              "fkLocale": "#localeDE.id_locale",
+              "fkResourceMerchant": "#merchant.id_merchant",
+              "urlPrefix": "/de/merchant/deactivation-de-",
+              "url": "#merchant.name"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#merchant", "#merchantUser"]
+        },
+        {
+          "type": "transfer",
+          "name": "ProductImageTransfer",
+          "key": "productImage",
+          "arguments": {
+            "externalUrlSmall": "https://images.icecat.biz/img/gallery_mediums/30691822_1486.jpg",
+            "externalUrlLarge": "https://images.icecat.biz/img/gallery/30691822_1486.jpg"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "merchantProduct",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                {
+                  "locale": "#localeEN",
+                  "name": "#localizedAttribute.name"
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#localizedAttribute.name"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#merchantProduct.id_product_concrete",
+              "idProductAbstract": "#merchantProduct.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#merchantProduct.abstract_sku",
+              "skuProduct": "#merchantProduct.sku",
+              "moneyValue": {
+                "netAmount": 10000,
+                "grossAmount": 10000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOffer",
+          "key": "productOffer",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "idProductConcrete": "#merchantProduct.id_product_concrete",
+              "concreteSku": "#merchantProduct.sku",
+              "merchantReference": "#merchant.merchant_reference",
+              "stores": "#stores"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferStock",
+          "arguments": [
+            {
+              "idProductOffer": "#productOffer.id_product_offer",
+              "productOfferReference": "#productOffer.product_offer_reference",
+              "isNeverOutOfStock": true
+            },
+            "#merchant.stocks"
+          ]
+        }
+      ]
+    }
+  }
+}

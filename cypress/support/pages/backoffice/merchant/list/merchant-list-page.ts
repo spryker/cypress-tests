@@ -43,6 +43,13 @@ export class MerchantListPage extends BackofficePage {
     });
   };
 
+  findRow = (params: FindRowParams): Cypress.Chainable => {
+    return this.find({
+      interceptTableUrl: `**/merchant-gui/list-merchant/table**`,
+      searchQuery: params.query,
+    }).then((getRow) => (getRow ? getRow() : cy.wrap(null)));
+  };
+
   clickEditAction = ($row: JQuery<HTMLElement>): void => {
     cy.wrap($row).find(this.repository.getEditButtonSelector()).click();
   };
@@ -58,6 +65,10 @@ export class MerchantListPage extends BackofficePage {
 
 interface UpdateParams {
   action: ActionEnum;
+  query: string;
+}
+
+interface FindRowParams {
   query: string;
 }
 

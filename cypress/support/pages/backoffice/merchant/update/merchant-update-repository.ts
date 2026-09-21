@@ -4,6 +4,7 @@ import { injectable } from 'inversify';
 @injectable()
 @autoWired
 export class MerchantUpdateRepository {
+  getNameInput = (): Cypress.Chainable => cy.get('#merchant_name');
   getUsersTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-merchant-user"]');
   getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1):visible');
   getSearchSelector = (): string => '.dt-search input[type="search"]';

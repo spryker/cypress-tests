@@ -11,4 +11,8 @@ export class MerchantCreateRepository {
   getDEUrlInput = (): Cypress.Chainable => cy.get('#merchant_urlCollection_0_url');
   getENUrlInput = (): Cypress.Chainable => cy.get('#merchant_urlCollection_1_url');
   getSaveButton = (): Cypress.Chainable => cy.get('form[name=merchant]').find('[type="submit"]');
+
+  // Store checkboxes are only distinguishable by their label, their ids being positional.
+  getStoreCheckbox = (storeName: string): Cypress.Chainable =>
+    cy.contains('label', storeName).parent().find('input[name="merchant[storeRelation][id_stores][]"]');
 }
