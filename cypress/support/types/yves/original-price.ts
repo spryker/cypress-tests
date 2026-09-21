@@ -1,4 +1,4 @@
-import { Customer, ProductConcrete } from './shared';
+import { Customer, Merchant, ProductConcrete } from './shared';
 
 export interface OriginalPriceStaticFixtures {
   defaultPassword: string;
@@ -20,4 +20,15 @@ export interface OriginalPriceDynamicFixtures {
   customer: Customer;
   product: ProductConcrete;
   discountedVariant: ProductConcrete;
+}
+
+export interface MerchantProductOriginalPriceStaticFixtures {
+  defaultPassword: string;
+  abstractPrice: DisplayedPrice;
+}
+
+export interface MerchantProductOriginalPriceDynamicFixtures {
+  customer: Customer;
+  merchant: Merchant;
+  merchantProduct: ProductConcrete;
 }
