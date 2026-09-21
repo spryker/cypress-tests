@@ -44,3 +44,12 @@ export interface OfferViewAndFilterDynamicFixtures {
 export interface OfferViewAndFilterStaticFixtures {
   defaultPassword: string;
 }
+
+export interface MerchantUserManagementDynamicFixtures {
+  rootUser: User;
+  merchant: Merchant;
+}
+
+export interface MerchantUserManagementStaticFixtures {
+  defaultPassword: string;
+}

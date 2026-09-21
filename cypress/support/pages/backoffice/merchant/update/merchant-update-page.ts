@@ -1,6 +1,6 @@
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
-import { BackofficePage } from '@pages/backoffice';
+import { ActionEnum, BackofficePage } from '@pages/backoffice';
 import { MerchantUpdateRepository } from './merchant-update-repository';
 
 @injectable()
@@ -11,8 +11,35 @@ export class MerchantUpdatePage extends BackofficePage {
   protected PAGE_URL = '/merchant-gui/edit-merchant';
 
   create = (): void => {
-    this.repository.getUsersTab().click();
+    this.openUsersTab();
     this.repository.getAddMerchantUserButton().click();
+  };
+
+  openUsersTab = (): void => {
+    this.repository.getUsersTab().click();
+  };
+
+  // The merchant-user table declares every column non-searchable, so its rows are matched on the
+  // e-mail text rather than through the table search.
+  findMerchantUserRow = (params: FindMerchantUserRowParams): Cypress.Chainable =>
+    this.repository.getMerchantUserTableRows().filter(`:contains("${params.email}")`, { timeout: 20000 });
+
+  updateMerchantUser = (params: UpdateMerchantUserParams): void => {
+    const selectors = {
+      [ActionEnum.edit]: this.repository.getMerchantUserEditButtonSelector(),
+      [ActionEnum.activate]: this.repository.getMerchantUserActivateButtonSelector(),
+      [ActionEnum.deactivate]: this.repository.getMerchantUserDeactivateButtonSelector(),
+      [ActionEnum.delete]: this.repository.getMerchantUserDeleteButtonSelector(),
+    };
+
+    // DataTables re-renders the row when its ajax settles, so the action is clicked through an
+    // alias, which Cypress re-queries instead of holding a detached element.
+    this.findMerchantUserRow({ email: params.email }).find(selectors[params.action]).as('merchantUserAction');
+    cy.get('@merchantUserAction').click();
+
+    if (params.action === ActionEnum.delete) {
+      this.repository.getConfirmDeleteButton().click();
+    }
   };
 
   rename = (params: RenameParams): void => {
@@ -34,4 +61,13 @@ export class MerchantUpdatePage extends BackofficePage {
 
 interface RenameParams {
   name: string;
+}
+
+interface FindMerchantUserRowParams {
+  email: string;
+}
+
+interface UpdateMerchantUserParams {
+  email: string;
+  action: ActionEnum.edit | ActionEnum.activate | ActionEnum.deactivate | ActionEnum.delete;
 }

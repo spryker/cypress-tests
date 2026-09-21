@@ -23,10 +23,20 @@ export class MerchantUserCreatePage extends BackofficePage {
     this.repository.getFirstNameInput().clear().type(merchantUser.firstName);
     this.repository.getLastNameInput().clear().type(merchantUser.lastName);
 
-    this.repository.getCreateButton().click();
+    this.repository.getSubmitButton().click();
 
     return merchantUser;
   };
+
+  rename = (params: RenameParams): void => {
+    this.repository.getFirstNameInput().clear().type(params.firstName);
+
+    this.repository.getSubmitButton().click();
+  };
+}
+
+interface RenameParams {
+  firstName: string;
 }
 
 interface User {
