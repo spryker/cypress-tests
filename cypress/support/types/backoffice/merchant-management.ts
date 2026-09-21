@@ -1,4 +1,4 @@
-import { Merchant, ProductConcrete, Url, User } from '../mp/shared';
+import { Merchant, ProductConcrete, ProductOffer, Url, User } from '../mp/shared';
 
 export interface MerchantDeactivationDynamicFixtures {
   rootUser: User;
@@ -17,5 +17,16 @@ export interface MerchantCrudDynamicFixtures {
 }
 
 export interface MerchantCrudStaticFixtures {
+  defaultPassword: string;
+}
+
+export interface OfferApprovalDynamicFixtures {
+  rootUser: User;
+  merchant: Merchant;
+  merchantProduct: ProductConcrete;
+  productOffer: ProductOffer;
+}
+
+export interface OfferApprovalStaticFixtures {
   defaultPassword: string;
 }

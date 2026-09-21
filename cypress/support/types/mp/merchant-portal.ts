@@ -20,3 +20,13 @@ export interface MerchantStoreStatusDynamicFixtures {
 export interface MerchantStoreStatusStaticFixtures {
   defaultPassword: string;
 }
+
+export interface MerchantUserAccountDynamicFixtures {
+  rootUser: User;
+  merchantUser: User;
+  merchant: Merchant;
+}
+
+export interface MerchantUserAccountStaticFixtures {
+  defaultPassword: string;
+}

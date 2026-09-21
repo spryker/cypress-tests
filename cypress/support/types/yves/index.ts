@@ -53,3 +53,4 @@ export * from './business-on-behalf';
 export * from './order-cancellation';
 export * from './return-management';
 export * from './multistore';
+export * from './catalog-merchant-search';
