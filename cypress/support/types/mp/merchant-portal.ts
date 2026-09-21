@@ -1,4 +1,4 @@
-import { Customer, Merchant, ProductConcrete, Url, User } from './shared';
+import { Company, CompanyBusinessUnit, Customer, Merchant, ProductConcrete, Url, User } from './shared';
 
 export interface MerchantProfileUpdateDynamicFixtures {
   merchantUser: User;
@@ -40,4 +40,29 @@ interface VolumeTier {
   threshold: number;
   quantity: number;
   price: string;
+}
+
+export interface CustomerSpecificPricesDynamicFixtures {
+  rootUser: User;
+  merchantUser: User;
+  merchant: Merchant;
+  company: Company;
+  businessUnit: CompanyBusinessUnit;
+  companyCustomer: Customer;
+  customer: Customer;
+  merchantProduct: ProductConcrete;
+}
+
+export interface CustomerSpecificPricesStaticFixtures {
+  defaultPassword: string;
+  storeName: string;
+  currency: string;
+  defaultPrice: string;
+  customerPrice: CustomerPrice;
+}
+
+interface CustomerPrice {
+  netAmount: number;
+  grossAmount: number;
+  displayed: string;
 }

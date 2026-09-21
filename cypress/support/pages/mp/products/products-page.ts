@@ -81,20 +81,88 @@ export class ProductsPage extends MpPage {
   selectTaxIdSetOption = (value: string | number | string[]): Cypress.Chainable =>
     cy.get(this.repository.getTaxIdSelector()).select(value, { force: true });
 
+  // A row added to the price table is submitted with the abstract product form, not on its own.
+  addCustomerPriceRow = (params: AddCustomerPriceRowParams): void => {
+    cy.intercept('POST', '**/product-merchant-portal-gui/update-product-abstract**').as('abstractProductSaved');
+
+    this.repository.getPriceTableAddButton().click();
+
+    this.repository.getPriceTableHeaderCells().then(($headerCells: JQuery<HTMLElement>) => {
+      const columnIndexOf = (title: string): number =>
+        Array.from($headerCells).findIndex((headerCell) => Cypress.$(headerCell).text().trim() === title);
+
+      // The customer options are labelled '<merchant relation id> - <business unit name>', and the
+      // id is only known once the relation has been created.
+      this.selectInEditableRow(columnIndexOf(CUSTOMER_COLUMN_TITLE), params.customerBusinessUnitName);
+      this.selectInEditableRow(columnIndexOf(STORE_COLUMN_TITLE), params.storeName);
+      this.selectInEditableRow(columnIndexOf(CURRENCY_COLUMN_TITLE), params.currency);
+      this.typeInEditableRow(columnIndexOf(NET_DEFAULT_COLUMN_TITLE), params.netAmount);
+      this.typeInEditableRow(columnIndexOf(GROSS_DEFAULT_COLUMN_TITLE), params.grossAmount);
+    });
+
+    this.save();
+
+    cy.wait('@abstractProductSaved');
+  };
+
+  // The cell renders an Angular select whose options only reach the form when they are picked from
+  // its own dropdown; writing the native mirror select leaves the row empty on save.
+  private selectInEditableRow = (columnIndex: number, optionText: string): void => {
+    this.repository.getEditableRowCell(columnIndex).find(this.repository.getEditableSelectSelector()).click();
+    this.repository.getEditableSelectOption(optionText).click();
+  };
+
+  private typeInEditableRow = (columnIndex: number, amount: number): void => {
+    this.repository
+      .getEditableRowCell(columnIndex)
+      .find(this.repository.getNumberInputSelector())
+      .type(String(amount), { force: true });
+  };
+
   deletePriceRowByQuantity = (params: PriceRowParams): void => {
-    this.deletePriceTableRowByQuantity({
-      getQuantityHeaderCell: this.repository.getPriceTableQuantityHeaderCell,
+    this.deletePriceTableRow({
+      getMatchColumnHeaderCell: this.repository.getPriceTableQuantityHeaderCell,
       getRows: this.repository.getPriceTableRows,
       getActionItem: this.repository.getRowActionItem,
+      isMatchingCell: (cellText) => cellText === String(params.quantity),
       rowActionTriggerSelector: this.repository.getRowActionTriggerSelector(),
       deleteUrlPattern: this.repository.getDeletePriceUrlPattern(),
-      quantity: params.quantity,
+    });
+  };
+
+  deletePriceRowByCustomer = (params: CustomerPriceRowParams): void => {
+    this.deletePriceTableRow({
+      getMatchColumnHeaderCell: this.repository.getPriceTableCustomerHeaderCell,
+      getRows: this.repository.getPriceTableRows,
+      getActionItem: this.repository.getRowActionItem,
+      // The customer cell reads '<merchant relation id> - <business unit name>'.
+      isMatchingCell: (cellText) => cellText.includes(params.customerBusinessUnitName),
+      rowActionTriggerSelector: this.repository.getRowActionTriggerSelector(),
+      deleteUrlPattern: this.repository.getDeletePriceUrlPattern(),
     });
   };
 
   save = (): void => {
     cy.get(this.repository.getSaveButtonSelector()).click();
   };
+}
+
+const CUSTOMER_COLUMN_TITLE = 'Customer';
+const STORE_COLUMN_TITLE = 'Store';
+const CURRENCY_COLUMN_TITLE = 'Currency';
+const NET_DEFAULT_COLUMN_TITLE = 'Net Default';
+const GROSS_DEFAULT_COLUMN_TITLE = 'Gross Default';
+
+interface AddCustomerPriceRowParams {
+  customerBusinessUnitName: string;
+  storeName: string;
+  currency: string;
+  netAmount: number;
+  grossAmount: number;
+}
+
+interface CustomerPriceRowParams {
+  customerBusinessUnitName: string;
 }
 
 interface PriceRowParams {

@@ -34,13 +34,13 @@ export class OffersPage extends MpPage {
   };
 
   deletePriceRowByQuantity = (params: PriceRowParams): void => {
-    this.deletePriceTableRowByQuantity({
-      getQuantityHeaderCell: this.repository.getPriceTableQuantityHeaderCell,
+    this.deletePriceTableRow({
+      getMatchColumnHeaderCell: this.repository.getPriceTableQuantityHeaderCell,
       getRows: this.repository.getPriceTableRows,
       getActionItem: this.repository.getRowActionItem,
+      isMatchingCell: (cellText) => cellText === String(params.quantity),
       rowActionTriggerSelector: this.repository.getRowActionTriggerSelector(),
       deleteUrlPattern: this.repository.getDeletePriceUrlPattern(),
-      quantity: params.quantity,
     });
   };
 }
