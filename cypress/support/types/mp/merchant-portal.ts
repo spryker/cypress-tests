@@ -1,4 +1,4 @@
-import { Merchant, ProductConcrete, Url, User } from './shared';
+import { Customer, Merchant, ProductConcrete, Url, User } from './shared';
 
 export interface MerchantProfileUpdateDynamicFixtures {
   merchantUser: User;
@@ -19,4 +19,25 @@ export interface MerchantStoreStatusDynamicFixtures {
 
 export interface MerchantStoreStatusStaticFixtures {
   defaultPassword: string;
+}
+
+export interface ProductVolumePricesDynamicFixtures {
+  customer: Customer;
+  merchantUser: User;
+  merchant: Merchant;
+  merchantProduct: ProductConcrete;
+}
+
+export interface ProductVolumePricesStaticFixtures {
+  defaultPassword: string;
+  unitPrice: string;
+  volumeTier: VolumeTier;
+}
+
+interface VolumeTier {
+  // The quantity from which the tier price applies, and a quantity above it that the storefront
+  // is driven to.
+  threshold: number;
+  quantity: number;
+  price: string;
 }
