@@ -66,3 +66,15 @@ interface CustomerPrice {
   grossAmount: number;
   displayed: string;
 }
+
+export interface MerchantUserAccountDynamicFixtures {
+  rootUser: User;
+  merchantUser: User;
+  merchant: Merchant;
+}
+
+export interface MerchantUserAccountStaticFixtures {
+  defaultPassword: string;
+  merchantUserPassword: string;
+  updatedMerchantUserPassword: string;
+}
