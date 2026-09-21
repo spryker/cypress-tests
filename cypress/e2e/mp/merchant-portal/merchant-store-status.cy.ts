@@ -1,7 +1,7 @@
 import { container } from '@utils';
 import { MerchantStoreStatusDynamicFixtures, MerchantStoreStatusStaticFixtures } from '@interfaces/mp';
 import { ProfilePage } from '@pages/mp';
-import { CatalogPage, MerchantPage, ProductPage } from '@pages/yves';
+import { CatalogPage, ProductPage } from '@pages/yves';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
 
 describe(
@@ -24,7 +24,6 @@ describe(
     }
 
     const profilePage = container.get(ProfilePage);
-    const merchantPage = container.get(MerchantPage);
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
@@ -80,7 +79,7 @@ describe(
       // An offline merchant takes its whole buy-box entry with it, so the merchant name has to be
       // gone from the detail page rather than merely absent from a block that no longer exists.
       openMerchantProductDetailPage();
-      cy.get('body').should('not.contain.text', dynamicFixtures.merchant.name);
+      productPage.getBody().should('not.contain.text', dynamicFixtures.merchant.name);
     });
 
     function setStoreStatus(params: { isOnline: boolean }): void {

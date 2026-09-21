@@ -104,8 +104,9 @@ export class ProductsPage extends MpPage {
   // The create wizard names the product in one locale only, and the abstract product form refuses
   // to save while any other locale's name is empty.
   fillLocalizedNames = (params: FillLocalizedNamesParams): void => {
-    this.repository.getLocalizedNameInputs().each(($input: JQuery<HTMLElement>) => {
-      cy.wrap($input).clear({ force: true }).type(params.name, { force: true });
+    this.repository.getLocalizedNameInputs().each(($nameInput: JQuery<HTMLElement>) => {
+      cy.wrap($nameInput).clear({ force: true });
+      cy.wrap($nameInput).type(params.name, { force: true });
     });
   };
 

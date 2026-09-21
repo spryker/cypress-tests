@@ -62,7 +62,7 @@ describe(
       // A denied offer takes its whole buy-box entry with it, so the merchant name has to be gone
       // from the detail page rather than merely absent from a block that no longer exists.
       openProductDetailPage();
-      cy.get('body').should('not.contain.text', dynamicFixtures.merchant.name);
+      productPage.getBody().should('not.contain.text', dynamicFixtures.merchant.name);
 
       setApprovalStatus({ isApproved: true });
 

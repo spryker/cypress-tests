@@ -2,7 +2,7 @@ import { container } from '@utils';
 import { MerchantDeactivationDynamicFixtures, MerchantDeactivationStaticFixtures } from '@interfaces/backoffice';
 import { ActionEnum, MerchantListPage } from '@pages/backoffice';
 import { ProfilePage } from '@pages/mp';
-import { CatalogPage, MerchantPage, ProductPage } from '@pages/yves';
+import { CatalogPage, ProductPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
 
@@ -27,7 +27,6 @@ describe(
 
     const merchantListPage = container.get(MerchantListPage);
     const profilePage = container.get(ProfilePage);
-    const merchantPage = container.get(MerchantPage);
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const userLoginScenario = container.get(UserLoginScenario);
@@ -92,7 +91,7 @@ describe(
       // A deactivated merchant takes its whole buy-box entry with it, so the merchant name has to be
       // gone from the detail page rather than merely absent from a block that no longer exists.
       openMerchantProductDetailPage();
-      cy.get('body').should('not.contain.text', dynamicFixtures.merchant.name);
+      productPage.getBody().should('not.contain.text', dynamicFixtures.merchant.name);
     });
 
     function openMerchantProductDetailPage(): void {

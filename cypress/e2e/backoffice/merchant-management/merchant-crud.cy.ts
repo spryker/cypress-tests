@@ -1,6 +1,7 @@
 import { container } from '@utils';
 import { MerchantCrudDynamicFixtures, MerchantCrudStaticFixtures } from '@interfaces/backoffice';
 import { ActionEnum, MerchantCreatePage, MerchantListPage, MerchantUpdatePage } from '@pages/backoffice';
+import { MerchantPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
 describe(
@@ -25,6 +26,7 @@ describe(
     const merchantCreatePage = container.get(MerchantCreatePage);
     const merchantListPage = container.get(MerchantListPage);
     const merchantUpdatePage = container.get(MerchantUpdatePage);
+    const merchantPage = container.get(MerchantPage);
     const userLoginScenario = container.get(UserLoginScenario);
 
     const publishAndSyncCommands = [
@@ -77,7 +79,7 @@ describe(
       );
 
       // The merchant name is the page heading, which sits outside the profile component itself.
-      cy.get('body').should('contain.text', renamedMerchant);
+      merchantPage.getBody().should('contain.text', renamedMerchant);
 
       merchantListPage.visit();
       merchantListPage.update({ query: renamedMerchant, action: ActionEnum.edit });
