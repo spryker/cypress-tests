@@ -39,9 +39,7 @@
         {
           "type": "array-object",
           "key": "stores",
-          "arguments": [
-            "#store"
-          ]
+          "arguments": ["#store"]
         },
         {
           "type": "helper",
@@ -87,10 +85,7 @@
         {
           "type": "helper",
           "name": "haveMerchantUserWithAclEntities",
-          "arguments": [
-            "#merchant",
-            "#merchantUser"
-          ]
+          "arguments": ["#merchant", "#merchantUser"]
         },
         {
           "type": "transfer",
@@ -130,9 +125,7 @@
               "name": "default",
               "idProduct": "#merchantProduct.id_product_concrete",
               "idProductAbstract": "#merchantProduct.fk_product_abstract",
-              "productImages": [
-                "#productImage"
-              ]
+              "productImages": ["#productImage"]
             }
           ]
         },

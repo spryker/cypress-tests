@@ -66,10 +66,7 @@
         {
           "type": "helper",
           "name": "haveMerchantUserWithAclEntities",
-          "arguments": [
-            "#merchant",
-            "#merchantUser"
-          ]
+          "arguments": ["#merchant", "#merchantUser"]
         }
       ]
     }
