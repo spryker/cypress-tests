@@ -9,7 +9,9 @@ export class ProfileRepository {
 
   getProfileForm = (): Cypress.Chainable => cy.get('form[name=merchantProfile]');
 
-  getBusinessInformationTabLabel = (): string => 'Business Info';
+  // The portal paints its tabs from the Angular bundle after the page load, so these wait like
+  // every other control on the page rather than on the default timeout.
+  getProfileTabs = (): Cypress.Chainable => cy.get('button.ant-tabs-tab-btn', { timeout: 20000 });
 
   getOnlineProfileTabLabel = (): string => 'Online Profile';
 

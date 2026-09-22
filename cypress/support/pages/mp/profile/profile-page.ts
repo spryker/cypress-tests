@@ -20,18 +20,14 @@ export class ProfilePage extends MpPage {
     this.repository.getProfileForm().submit();
   };
 
-  // The profile page has been observed to carry no tab strip at all under CI concurrency, which a
-  // bare not-found cannot explain. Confirming the URL and then naming the text the page really
-  // rendered says whether the browser is on a login form, an error page or the profile itself.
+  // The tab this opens has been observed to be absent in CI while the page itself is fine, and a
+  // bare not-found names neither the page nor the tabs it did render. Confirming the URL and then
+  // asserting on the tab strip's own text reports both.
   openOnlineProfileTab = (): void => {
     this.assertPageLocation();
 
-    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Reports the rendered page text instead of a bare not-found.
-    this.getBody()
-      .invoke('text')
-      .invoke('replace', /\s+/g, ' ')
-      .invoke('slice', 0, 400)
-      .should('include', this.repository.getBusinessInformationTabLabel());
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Reports the rendered tab labels instead of a bare not-found.
+    this.repository.getProfileTabs().invoke('text').should('include', this.repository.getOnlineProfileTabLabel());
 
     this.repository.getOnlineProfileTab().click();
   };
