@@ -20,9 +20,12 @@ export class ProfilePage extends MpPage {
     this.repository.getProfileForm().submit();
   };
 
-  // The tab labels follow the merchant user's locale, so when the expected one is absent the
-  // failure should name the tabs that were actually rendered rather than only the one that was not.
+  // The portal sends a session it does not accept back to its login page, and the profile page then
+  // has no tabs to open at all. Confirming arrival first makes that say where the browser actually
+  // is, instead of reporting a missing tab strip.
   openOnlineProfileTab = (): void => {
+    this.assertPageLocation();
+
     // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Surfaces the rendered tab labels instead of a bare not-found.
     this.repository.getProfileTabs().should('contain.text', this.repository.getOnlineProfileTabLabel());
 
