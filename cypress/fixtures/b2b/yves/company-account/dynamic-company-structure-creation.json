@@ -1,0 +1,131 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": false,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [
+            {
+              "status": "approved",
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "companyBusinessUnit",
+          "arguments": [
+            {
+              "fk_company": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "seeCompanyRoles",
+          "arguments": ["SeeCompanyRolesPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "createCompanyRoles",
+          "arguments": ["CreateCompanyRolesPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "seeCompanyUsers",
+          "arguments": ["SeeCompanyUsersPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "addCompanyUser",
+          "arguments": ["AddCompanyUserPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "adminRole",
+          "arguments": [
+            {
+              "fk_company": "#company.id_company"
+            },
+            ["#seeCompanyRoles", "#createCompanyRoles", "#seeCompanyUsers", "#addCompanyUser"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "restrictedRole",
+          "arguments": [
+            {
+              "fk_company": "#company.id_company",
+              "name": "ViewCompanyUsersOnly"
+            },
+            ["#seeCompanyUsers"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "adminCustomer",
+          "arguments": [
+            {
+              "password": "change123",
+              "locale_name": "en_US"
+            }
+          ]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "adminRoleCollection",
+          "arguments": {
+            "roles": ["#adminRole"]
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "adminCompanyUser",
+          "arguments": [
+            {
+              "customer": "#adminCustomer",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#adminRoleCollection"],
+              "fk_company_business_unit": "#companyBusinessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#adminCompanyUser", ["#adminRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "agentUser",
+          "arguments": [
+            {
+              "password": "change123",
+              "is_agent": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#agentUser.id_user", 1]
+        }
+      ]
+    }
+  }
+}

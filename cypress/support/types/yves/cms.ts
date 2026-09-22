@@ -10,3 +10,13 @@ export interface CmsPageSearchDmsStaticFixtures {
   store: Store;
   cmsPageName: string;
 }
+
+export interface CmsPagePublishDynamicFixtures {
+  rootUser: User;
+}
+
+export interface CmsPagePublishStaticFixtures {
+  defaultPassword: string;
+  defaultLocaleName: string;
+  cmsPageName: string;
+}

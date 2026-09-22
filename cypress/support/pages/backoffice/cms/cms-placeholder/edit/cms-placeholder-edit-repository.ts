@@ -5,6 +5,8 @@ import { injectable } from 'inversify';
 @autoWired
 export class CmsPlaceholderEditRepository {
   getTitleBlock = (): Cypress.Chainable => cy.get('#tab-content-title');
+  getContentBlock = (): Cypress.Chainable => cy.get('#tab-content-content');
+  getTabLink = (hrefFragment: string): Cypress.Chainable => cy.get(`a[href*="${hrefFragment}"]`);
   getAllIboxesSelector = (): string => '.placeholder-translation-container > .ibox.nested';
   getAllCollapsedIboxButtonsSelector = (): string => '.placeholder-translation-container >  .collapsed .collapse-link';
   getLocalizedTextareaSelector = (): string => '.note-editor .note-editable';

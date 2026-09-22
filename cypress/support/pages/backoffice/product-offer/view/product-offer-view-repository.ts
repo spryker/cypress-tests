@@ -13,6 +13,14 @@ export class ProductOfferViewRepository {
   getValidToContainer = (): Cypress.Chainable => cy.get('[data-qa="product-offer-valid-to"]');
   getProductOfferServicePointContainer = (): Cypress.Chainable => cy.get('[data-qa="product-offer-service-point"]');
 
+  // Zed renders the merchant SKU as a label/value column pair with no data attribute.
+  getMerchantSkuContainer = (): Cypress.Chainable =>
+    cy
+      .get('.ibox-content > .row')
+      .filter((_index, row) => Cypress.$(row).children().first().text().trim() === 'Merchant SKU')
+      .children()
+      .last();
+
   getStockTable = (): Cypress.Chainable => cy.get('.table.table--expand');
   getStockTableRows = (): Cypress.Chainable => this.getStockTable().find('tbody > tr');
   getStockNameCell = (row: number): Cypress.Chainable => this.getStockTableRows().eq(row).find('td').eq(0);

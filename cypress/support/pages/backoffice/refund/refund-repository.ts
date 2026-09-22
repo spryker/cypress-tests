@@ -3,5 +3,6 @@ export interface RefundRepository {
   getRefundRows(): Cypress.Chainable;
   getRefundAmountCells(): Cypress.Chainable;
   getItemTotalAmountCells(): Cypress.Chainable;
+  getItemTotalAmountCellsBySku(sku: string): Cypress.Chainable;
   getRawAmountAttribute(): string;
 }

@@ -18,5 +18,8 @@ export class ProductManagementListRepository {
   getFilterSearchInput = (): Cypress.Chainable => cy.get('.dt-search [type=search]');
   getResetButton = (): Cypress.Chainable => cy.get('#product-management-filter-form a[href="/product-management"]');
 
+  getMerchantFilterSelect = (): Cypress.Chainable => cy.get('select[name="id-merchant"]');
+  getViewButtonSelector = (): string => 'a:contains("View")';
+
   getNoTableRecordsText = (): string => 'No matching records found';
 }

@@ -1,0 +1,33 @@
+{
+  "defaultPassword": "change123",
+  "discardedBillingAddress": {
+    "firstName": "Discarded",
+    "lastName": "Billing",
+    "address1": "Discarded Billing Street",
+    "address2": "1",
+    "zipCode": "10247",
+    "city": "Berlin",
+    "company": "Spryker",
+    "phone": "987654321"
+  },
+  "orderBillingAddress": {
+    "firstName": "Changed",
+    "lastName": "Billing",
+    "address1": "Changed Billing Street",
+    "address2": "98",
+    "zipCode": "09876",
+    "city": "Berlin",
+    "company": "Spryker",
+    "phone": "987654321"
+  },
+  "savedShippingAddress": {
+    "firstName": "Saved",
+    "lastName": "Shipping",
+    "address1": "Saved Shipping Street",
+    "address2": "7",
+    "zipCode": "10247",
+    "city": "Geneva",
+    "company": "Spryker",
+    "phone": "123456789"
+  }
+}

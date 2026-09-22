@@ -16,6 +16,8 @@ export class LoginPage extends BackofficePage {
 
     this.repository.getSubmitButton().click();
   };
+
+  getErrorMessage = (): Cypress.Chainable => this.repository.getErrorMessage();
 }
 
 interface LoginParams {

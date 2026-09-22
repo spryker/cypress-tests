@@ -1,0 +1,18 @@
+{
+  "defaultPassword": "change123",
+  "customer": {
+    "email": "george.freeman@acme.com"
+  },
+  "buyableProduct": {
+    "searchQuery": "NEX-VG20EH",
+    "cartEntry": "NEX-VG20EH"
+  },
+  "unbuyableProduct": {
+    "searchQuery": "115_26408656"
+  },
+  "productGroup": {
+    "searchQuery": "002_25904004",
+    "swatchIdentifier": "silver",
+    "cartEntry": "Canon IXUS 160"
+  }
+}

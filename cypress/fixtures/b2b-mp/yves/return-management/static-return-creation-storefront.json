@@ -1,0 +1,6 @@
+{
+  "defaultPassword": "change123",
+  "returnDetailsTitle": "Return Details",
+  "waitingForReturnState": "Waiting for return",
+  "shippedState": "Shipped"
+}

@@ -1,0 +1,292 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": {
+            "id_store": 1,
+            "name": "DE"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "transfer",
+          "name": "ProductImageTransfer",
+          "key": "productImage",
+          "arguments": {
+            "externalUrlSmall": "https://images.icecat.biz/img/gallery_mediums/30691822_1486.jpg",
+            "externalUrlLarge": "https://images.icecat.biz/img/gallery/30691822_1486.jpg"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "customer",
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address",
+          "arguments": [
+            {
+              "fkCustomer": "#customer.id_customer",
+              "fkCountry": "#country.id_country"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "keptProduct",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#keptProduct.abstract_sku",
+              "skuProduct": "#keptProduct.sku",
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#keptProduct.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#keptProduct.id_product_concrete",
+              "idProductAbstract": "#keptProduct.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "movedProduct",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#movedProduct.abstract_sku",
+              "skuProduct": "#movedProduct.sku",
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#movedProduct.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#movedProduct.id_product_concrete",
+              "idProductAbstract": "#movedProduct.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "reassignedProduct",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#reassignedProduct.abstract_sku",
+              "skuProduct": "#reassignedProduct.sku",
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#reassignedProduct.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#reassignedProduct.id_product_concrete",
+              "idProductAbstract": "#reassignedProduct.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#keptProduct.sku",
+                  "abstractSku": "#keptProduct.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#movedProduct.sku",
+                  "abstractSku": "#movedProduct.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#reassignedProduct.sku",
+                  "abstractSku": "#reassignedProduct.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#keptProduct.sku",
+                  "abstractSku": "#keptProduct.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#movedProduct.sku",
+                  "abstractSku": "#movedProduct.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#reassignedProduct.sku",
+                  "abstractSku": "#reassignedProduct.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#keptProduct.sku",
+                  "abstractSku": "#keptProduct.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#movedProduct.sku",
+                  "abstractSku": "#movedProduct.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#reassignedProduct.sku",
+                  "abstractSku": "#reassignedProduct.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

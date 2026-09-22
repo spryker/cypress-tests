@@ -1,0 +1,10 @@
+{
+  "searchTerm": "canon",
+  "colorFilter": {
+    "name": "color",
+    "value": "Blue"
+  },
+  "filterTitles": ["Price", "Rating", "Label", "Brand", "Color", "Merchant"],
+  "ascendingPriceSortLabel": "Sort by price ascending",
+  "descendingPriceSortLabel": "Sort by price descending"
+}

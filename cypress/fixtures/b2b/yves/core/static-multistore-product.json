@@ -1,0 +1,9 @@
+{
+  "defaultPassword": "change123",
+  "primaryStoreName": "DE",
+  "secondaryStoreName": "AT",
+  "primaryStorePrice": "150",
+  "secondaryStorePrice": "250",
+  "unassignedStoreProductPrice": "180",
+  "currencySymbol": "€"
+}

@@ -1,0 +1,11 @@
+{
+  "defaultPassword": "change123",
+  "wholeSalesUnit": {
+    "name": "Meter",
+    "quantity": 10
+  },
+  "fractionalSalesUnit": {
+    "name": "Foot",
+    "quantity": 3
+  }
+}

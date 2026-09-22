@@ -14,6 +14,20 @@ export class SalesIndexPage extends BackofficePage {
     this.repository.getViewButtons().first().click();
   };
 
+  /**
+   * Opens a named order rather than the newest one. The shards run concurrently against one
+   * application, so the first row of the sales table is not reliably this test's order.
+   */
+  viewByReference = (orderReference: string): void => {
+    this.find({ searchQuery: orderReference, interceptTableUrl: '**/sales/index/table**' }).then((getRow) => {
+      if (!getRow) {
+        return;
+      }
+
+      getRow().find(this.repository.getViewButtonSelector()).first().click({ force: true });
+    });
+  };
+
   getOrderReference = (): Cypress.Chainable => {
     cy.get('dt').contains('Order Reference').next('dd').invoke('text').as('orderReference');
 

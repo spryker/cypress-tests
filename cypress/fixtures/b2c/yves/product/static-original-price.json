@@ -1,0 +1,13 @@
+{
+  "defaultPassword": "change123",
+  "abstractPrice": {
+    "default": "€100.00",
+    "original": "€200.00"
+  },
+  "variant": {
+    "attributeKey": "storage_capacity",
+    "attributeValue": "128 GB",
+    "default": "€15.00",
+    "original": "€50.00"
+  }
+}

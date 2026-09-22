@@ -1,0 +1,24 @@
+{
+  "defaultPassword": "change123",
+  "templateName": "Smartstation Kit",
+  "firstConfiguration": [
+    {
+      "slotName": "Slot 5",
+      "productIdentifier": "Sony Cyber-shot DSC-W830"
+    },
+    {
+      "slotName": "Slot 6",
+      "productIdentifier": "Sony NEX-VG30E"
+    }
+  ],
+  "secondConfiguration": [
+    {
+      "slotName": "Slot 5",
+      "productIdentifier": "Canon IXUS 165"
+    },
+    {
+      "slotName": "Slot 6",
+      "productIdentifier": "Sony HDR-MV1"
+    }
+  ]
+}

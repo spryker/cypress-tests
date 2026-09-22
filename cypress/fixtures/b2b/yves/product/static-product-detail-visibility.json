@@ -1,0 +1,14 @@
+{
+  "customer": {
+    "email": "sonia@acme.com",
+    "password": "change123"
+  },
+  "product": {
+    "url": "/en/acer-chromebook-cb5-311-135",
+    "variantAttribute": {
+      "key": "storage_media",
+      "value": "Flash"
+    },
+    "optionGroupLabels": ["limited warranty", "Gift wrapping"]
+  }
+}
