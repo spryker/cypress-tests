@@ -8,13 +8,19 @@
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "localeEN",
-          "arguments": { "id_locale": 66, "locale_name": "en_US" }
+          "arguments": {
+            "id_locale": 66,
+            "locale_name": "en_US"
+          }
         },
         {
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "localeDE",
-          "arguments": { "id_locale": 46, "locale_name": "de_DE" }
+          "arguments": {
+            "id_locale": 46,
+            "locale_name": "de_DE"
+          }
         },
         {
           "type": "builder",
@@ -25,18 +31,28 @@
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
-          "arguments": { "id_store": 1, "name": "DE" }
+          "arguments": {
+            "id_store": 1,
+            "name": "DE"
+          }
         },
         {
           "type": "array-object",
           "key": "stores",
-          "arguments": ["#store"]
+          "arguments": [
+            "#store"
+          ]
         },
         {
           "type": "helper",
           "name": "haveUser",
           "key": "merchantUser",
-          "arguments": [{ "password": "change123" }]
+          "arguments": [
+            {
+              "password": "change123",
+              "fkLocale": 66
+            }
+          ]
         },
         {
           "type": "helper",
@@ -71,7 +87,10 @@
         {
           "type": "helper",
           "name": "haveMerchantUserWithAclEntities",
-          "arguments": ["#merchant", "#merchantUser"]
+          "arguments": [
+            "#merchant",
+            "#merchantUser"
+          ]
         },
         {
           "type": "transfer",
@@ -91,8 +110,14 @@
             {
               "idTaxSet": 1,
               "localizedAttributes": [
-                { "locale": "#localeEN", "name": "#localizedAttribute.name" },
-                { "locale": "#localeDE", "name": "#localizedAttribute.name" }
+                {
+                  "locale": "#localeEN",
+                  "name": "#localizedAttribute.name"
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#localizedAttribute.name"
+                }
               ]
             }
           ]
@@ -105,7 +130,9 @@
               "name": "default",
               "idProduct": "#merchantProduct.id_product_concrete",
               "idProductAbstract": "#merchantProduct.fk_product_abstract",
-              "productImages": ["#productImage"]
+              "productImages": [
+                "#productImage"
+              ]
             }
           ]
         },
@@ -116,7 +143,10 @@
             {
               "skuProductAbstract": "#merchantProduct.abstract_sku",
               "skuProduct": "#merchantProduct.sku",
-              "moneyValue": { "netAmount": 10000, "grossAmount": 10000 }
+              "moneyValue": {
+                "netAmount": 10000,
+                "grossAmount": 10000
+              }
             }
           ]
         },

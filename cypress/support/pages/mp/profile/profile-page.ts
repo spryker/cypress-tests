@@ -20,7 +20,12 @@ export class ProfilePage extends MpPage {
     this.repository.getProfileForm().submit();
   };
 
+  // The tab labels follow the merchant user's locale, so when the expected one is absent the
+  // failure should name the tabs that were actually rendered rather than only the one that was not.
   openOnlineProfileTab = (): void => {
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Surfaces the rendered tab labels instead of a bare not-found.
+    this.repository.getProfileTabs().should('contain.text', this.repository.getOnlineProfileTabLabel());
+
     this.repository.getOnlineProfileTab().click();
   };
 
