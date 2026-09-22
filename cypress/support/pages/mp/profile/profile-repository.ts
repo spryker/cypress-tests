@@ -9,8 +9,12 @@ export class ProfileRepository {
 
   getProfileForm = (): Cypress.Chainable => cy.get('form[name=merchantProfile]');
 
-  // The portal paints its tabs from the Angular bundle after the page load, so these wait like
-  // every other control on the page rather than on the default timeout.
+  // Nothing on this page exists until its Angular component upgrades, which it marks with
+  // ng-version. It is the largest form in the portal and under CI load the upgrade takes
+  // appreciably longer than any single control's own timeout allows, so it is waited for on its
+  // own rather than through whichever descendant is wanted next.
+  getUpgradedProfile = (): Cypress.Chainable => cy.get('web-mp-profile[ng-version]', { timeout: 60000 });
+
   getProfileTabs = (): Cypress.Chainable => cy.get('button.ant-tabs-tab-btn', { timeout: 20000 });
 
   getOnlineProfileTabLabel = (): string => 'Online Profile';

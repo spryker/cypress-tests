@@ -20,11 +20,9 @@ export class ProfilePage extends MpPage {
     this.repository.getProfileForm().submit();
   };
 
-  // The tab this opens has been observed to be absent in CI while the page itself is fine, and a
-  // bare not-found names neither the page nor the tabs it did render. Confirming the URL and then
-  // asserting on the tab strip's own text reports both.
   openOnlineProfileTab = (): void => {
     this.assertPageLocation();
+    this.repository.getUpgradedProfile();
 
     // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Reports the rendered tab labels instead of a bare not-found.
     this.repository.getProfileTabs().invoke('text').should('include', this.repository.getOnlineProfileTabLabel());
