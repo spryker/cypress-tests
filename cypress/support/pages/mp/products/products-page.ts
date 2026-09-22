@@ -11,16 +11,22 @@ export class ProductsPage extends MpPage {
 
   protected PAGE_URL = '/product-merchant-portal-gui/products';
 
+  // The search request fires on enter, so the intercept is registered before the key is pressed —
+  // pressing first races the response and the wait then never sees a request at all.
   find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
     cy.get(searchSelector).clear();
     cy.get(searchSelector).type(params.query, { delay: 0 });
-    cy.get(searchSelector).type('{enter}');
 
-    this.interceptTable({
-      url: '/product-merchant-portal-gui/products/table-data**',
-      expectedCount: params.expectedCount,
-    });
+    this.interceptTable(
+      {
+        url: '/product-merchant-portal-gui/products/table-data**',
+        expectedCount: params.expectedCount,
+      },
+      () => {
+        cy.get(searchSelector).type('{enter}');
+      }
+    );
 
     return this.repository.getFirstTableRow();
   };
