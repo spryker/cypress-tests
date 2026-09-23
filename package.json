@@ -24,7 +24,8 @@
     "cy:ci:ssp": "cypress run --spec \"cypress/e2e/!(smoke)/**/(ssp)*.ts\" --headless --browser chrome",
     "cy:smoke": "cypress run --spec \"cypress/e2e/smoke/**/*.ts\" --headless --browser chrome",
     "cy:dms": "cypress run --spec \"cypress/e2e/!(smoke)/**/*dms.cy.ts\" --headless --browser chrome",
-    "cy:smoke:demo": "cypress run --spec \"cypress/e2e/smoke/!(product)/*.ts\" --headless --browser chrome"
+    "cy:smoke:demo": "cypress run --spec \"cypress/e2e/smoke/!(product)/*.ts\" --headless --browser chrome",
+    "cy:repack": "node tools/scripts/cypress-shards/repack.mjs"
   },
   "engines": {
     "node": ">=18.0.0",
@@ -40,6 +41,7 @@
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-plugin-cypress": "^2.15.2",
+    "eslint-plugin-spryker-cypress": "file:plugins/eslint-plugin-spryker-cypress",
     "inversify": "^6.0.2",
     "prettier": "^3.4.1",
     "reflect-metadata": "^0.2.2",

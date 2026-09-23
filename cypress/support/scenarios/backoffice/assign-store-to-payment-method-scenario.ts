@@ -20,12 +20,12 @@ export class AssignStoreToPaymentMethodScenario {
             row.find(this.listPaymentMethodPage.getMethodKeyRowSelector()).text().trim() === params.paymentMethodKey,
         ],
       })
-      .then(($row) => {
-        if ($row === null) {
+      .then((getRow) => {
+        if (!getRow) {
           return;
         }
 
-        cy.wrap($row).find(this.listPaymentMethodPage.getEditButtonSelector()).click();
+        getRow().find(this.listPaymentMethodPage.getEditButtonSelector()).click();
 
         this.editPaymentMethodPage.assignAllAvailableStore();
         this.editPaymentMethodPage.save();

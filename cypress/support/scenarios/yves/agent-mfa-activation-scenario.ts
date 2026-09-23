@@ -12,13 +12,13 @@ export class AgentMfaActivationScenario {
 
     this.agentMfaPage.visit();
     this.agentMfaPage.activateMfa('Email');
-    this.agentMfaPage.waitForVerificationPopup();
+    this.agentMfaPage.getVerificationPopup().should('be.visible');
 
     cy.getUserMultiFactorAuthCode(username, 'email')
       .then((code) => {
         mfaCode = code;
         this.agentMfaPage.verifyCode(code);
-        this.agentMfaPage.waitForActivationSuccessMessage();
+        this.agentMfaPage.getActivationSuccessMessage().should('be.visible');
       })
       .then(() => {
         cy.cleanUpUserMultiFactorAuthCode(mfaCode);
@@ -30,13 +30,13 @@ export class AgentMfaActivationScenario {
 
     this.agentMfaPage.visit();
     this.agentMfaPage.deactivateMfa('Email');
-    this.agentMfaPage.waitForVerificationPopup();
+    this.agentMfaPage.getVerificationPopup().should('be.visible');
 
     cy.getUserMultiFactorAuthCode(username, 'email')
       .then((code) => {
         mfaCode = code;
         this.agentMfaPage.verifyCode(code);
-        this.agentMfaPage.waitForDeactivationSuccessMessage();
+        this.agentMfaPage.getDeactivationSuccessMessage().should('be.visible');
       })
       .then(() => {
         cy.cleanUpUserMultiFactorAuthCode(mfaCode);

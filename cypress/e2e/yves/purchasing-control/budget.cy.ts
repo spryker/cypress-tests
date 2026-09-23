@@ -56,7 +56,7 @@ describe(
     it('authorized company user should see budget list for a cost center', (): void => {
       budgetListPage.visitByCostCenterUuid(dynamicFixtures.costCenter.uuid);
 
-      budgetListPage.assertBudgetInTable(dynamicFixtures.preExistingBudget.name);
+      budgetListPage.getTableRows().should('contain', dynamicFixtures.preExistingBudget.name);
     });
 
     it('authorized company user should be able to create a budget', (): void => {
@@ -70,7 +70,7 @@ describe(
       budgetCreatePage.fillEndDate(getBudgetEndDate());
       budgetCreatePage.submit();
 
-      budgetCreatePage.assertSuccess();
+      budgetCreatePage.getSuccessFlashMessage().should('be.visible');
     });
 
     it('authorized company user should be able to update a budget', (): void => {
@@ -78,9 +78,9 @@ describe(
       budgetUpdatePage.fillName(staticFixtures.updatedBudgetName);
       budgetUpdatePage.submit();
 
-      budgetUpdatePage.assertSuccess();
+      budgetUpdatePage.getSuccessFlashMessage().should('be.visible');
       budgetListPage.visitByCostCenterUuid(dynamicFixtures.costCenter.uuid);
-      budgetListPage.assertBudgetInTable(staticFixtures.updatedBudgetName);
+      budgetListPage.getTableRows().should('contain', staticFixtures.updatedBudgetName);
     });
   }
 );

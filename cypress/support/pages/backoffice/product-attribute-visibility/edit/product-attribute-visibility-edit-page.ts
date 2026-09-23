@@ -10,22 +10,11 @@ export class ProductAttributeVisibilityEditPage extends BackofficePage {
 
   protected PAGE_URL = '/product-attribute-gui/attribute';
 
-  updateAttributeVisibility = (attributeKey: string, visibilityTypes: string[]): void => {
-    this.visit();
+  getTableBodyRows = (): Cypress.Chainable => cy.get(this.repository.getTableBodyRowsSelector());
 
-    cy.get(this.repository.getTableBodyRowsSelector()).should('be.visible');
-    cy.get(this.repository.getSearchInputSelector()).should('be.visible').type(`{selectall}${attributeKey}`);
+  getSearchInput = (): Cypress.Chainable => cy.get(this.repository.getSearchInputSelector());
 
-    cy.get(this.repository.getTableBodyRowsSelector()).should(($tbody) => {
-      const text = $tbody.text();
-      expect(text.includes(attributeKey)).to.be.true;
-    });
+  getVisibilityTypesSelect = (): Cypress.Chainable => this.repository.getVisibilityTypesSelect();
 
-    cy.get(this.repository.getTableBodyRowsSelector()).first().contains('Edit').click();
-
-    this.repository.getVisibilityTypesSelect().invoke('val', visibilityTypes).trigger('change', { force: true });
-    this.repository.getSubmitButton().click();
-
-    cy.url().should('contain', '/translate');
-  };
+  getSubmitButton = (): Cypress.Chainable => this.repository.getSubmitButton();
 }

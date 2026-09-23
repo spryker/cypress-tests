@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import {
   CustomOrderReferenceManagementStaticFixtures,
   CustomOrderReferenceManagementDynamicFixtures,
@@ -52,7 +52,7 @@ describe(
         isMultiShipment: Cypress.env('ENV_IS_SSP_ENABLED') ? true : false,
       });
 
-      cy.contains(customerOverviewPage.getPlacedOrderSuccessMessage());
+      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());
 
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
@@ -62,13 +62,7 @@ describe(
       salesIndexPage.visit();
       salesIndexPage.view();
 
-      cy.get('body').contains(staticFixtures.orderReference);
+      salesIndexPage.assertBodyContainsText(staticFixtures.orderReference);
     });
-
-    function getPaymentMethodBasedOnEnv(): string {
-      return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice';
-    }
   }
 );

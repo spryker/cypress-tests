@@ -11,9 +11,15 @@ export class MultiFactorAuthPage extends YvesPage {
 
   protected PAGE_URL = '/multi-factor-auth/set';
 
-  verifyCode(code: string): void {
+  submitCode(code: string): void {
+    cy.intercept('POST', /.*\/(send-customer-code|send-user-code)$/).as('sendUserCode');
     this.repository.getVerificationCodeInput().type(code);
     this.repository.getVerifyButton().click();
+    cy.wait('@sendUserCode', { responseTimeout: 10000 });
+  }
+
+  verifyCode(code: string): void {
+    this.submitCode(code);
   }
 
   activateMfa(type: string): void {
@@ -24,20 +30,20 @@ export class MultiFactorAuthPage extends YvesPage {
     });
   }
 
-  waitForVerificationPopup(): void {
-    this.repository.getVerificationPopup().should('be.visible');
+  getVerificationPopup(): Cypress.Chainable {
+    return this.repository.getVerificationPopup();
   }
 
-  waitForActivationSuccessMessage(): void {
-    cy.contains(this.repository.getActivationSuccessMessage(), { timeout: 10000 }).should('be.visible');
+  getActivationSuccessMessage(): Cypress.Chainable {
+    return cy.contains(this.repository.getActivationSuccessMessage(), { timeout: 10000 });
   }
 
-  waitForDeactivationSuccessMessage(): void {
-    cy.contains(this.repository.getDeactivationSuccessMessage(), { timeout: 10000 }).should('be.visible');
+  getDeactivationSuccessMessage(): Cypress.Chainable {
+    return cy.contains(this.repository.getDeactivationSuccessMessage(), { timeout: 10000 });
   }
 
-  waitForInvalidCodeMessage(): void {
-    cy.contains(this.repository.getInvalidCodeMessage()).should('be.visible');
+  getInvalidCodeMessage(): Cypress.Chainable {
+    return cy.contains(this.repository.getInvalidCodeMessage());
   }
 
   deactivateMfa(type: string): void {

@@ -10,14 +10,17 @@ Status is observed from **this branch's** working tree, so a branch that has not
 
 | Matrix | Domains | Scenarios | left to port | in scope | ported | authored | target skipped | dropped | review | blocked | done % |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
-| cypress-api-to-codeception | 2 | 3 | 1 | 1 | 0 | 0 | 0 | 0 | 2 | 0 | 0% |
+| cypress-api-to-codeception | 5 | 15 | 1 | 9 | 8 | 0 | 0 | 0 | 3 | 0 | 0% |
 
 ## cypress-api-to-codeception by domain
 
 | Domain | Scenarios | left to port | in scope | ported | authored | target skipped | dropped | review | blocked | batches |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|---|
+| [cart](by-domain/cypress-api-to-codeception/cart.md) | 5 | 0 | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 1 |
+| [checkout](by-domain/cypress-api-to-codeception/checkout.md) | 1 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
 | [content](by-domain/cypress-api-to-codeception/content.md) | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 |
 | [platform](by-domain/cypress-api-to-codeception/platform.md) | 2 | 1 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 1 |
+| [shopping-list](by-domain/cypress-api-to-codeception/shopping-list.md) | 6 | 0 | 3 | 3 | 0 | 0 | 0 | 1 | 0 | 1 |
 
 ## Review — unresolved judgement calls
 
@@ -25,3 +28,4 @@ Status is observed from **this branch's** working tree, so a branch that has not
 |---|---|---|
 | content | should be able to see the cms page for new store | keep in Cypress until store + CMS page can be seeded as dynamic fixtures, then migrate |
 | platform | GLUE endpoint should return 200 | drop unless the smoke lane's fail-fast gating is worth keeping the duplicate |
+| shopping-list | should update the configuration of a configurable product in the shopping list | add a PATCH test that changes displayData and asserts the new value before this spec is deleted |

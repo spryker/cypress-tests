@@ -21,7 +21,6 @@ export class MerchantUserMultiFactorAuthPage extends MpPage implements MultiFact
 
   verifyCode(code: string): void {
     this.submitCode(code);
-    this.repository.getVerificationPopup().should('not.exist');
   }
 
   activateMfa(type: string): void {
@@ -32,19 +31,19 @@ export class MerchantUserMultiFactorAuthPage extends MpPage implements MultiFact
     this.repository.getMfaTypeSection(type).click();
   }
 
-  waitForVerificationPopup(): void {
-    this.repository.getVerificationPopup().should('be.visible');
+  getVerificationPopup(): Cypress.Chainable {
+    return this.repository.getVerificationPopup();
   }
 
-  waitForActivationSuccessMessage(): void {
-    cy.contains(this.repository.getActivationSuccessMessage()).should('be.visible');
+  getActivationSuccessMessage(): Cypress.Chainable {
+    return cy.contains(this.repository.getActivationSuccessMessage());
   }
 
-  waitForDeactivationSuccessMessage(): void {
-    cy.contains(this.repository.getDeactivationSuccessMessage()).should('be.visible');
+  getDeactivationSuccessMessage(): Cypress.Chainable {
+    return cy.contains(this.repository.getDeactivationSuccessMessage());
   }
 
-  waitForInvalidCodeMessage(): void {
-    cy.contains(this.repository.getInvalidCodeMessage()).should('be.visible');
+  getInvalidCodeMessage(): Cypress.Chainable {
+    return cy.contains(this.repository.getInvalidCodeMessage());
   }
 }

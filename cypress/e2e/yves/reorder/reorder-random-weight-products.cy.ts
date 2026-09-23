@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { ReorderRandomWeightProductsDynamicFixtures, ReorderStaticFixtures } from '@interfaces/yves';
 import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
@@ -50,8 +50,8 @@ describe(
       customerOverviewPage.viewLastPlacedOrder();
       orderDetailsPage.reorderAll();
 
-      cy.get('body').contains(dynamicFixtures.productMUnit.localized_attributes[0].name).should('exist');
-      cy.get('body').contains(dynamicFixtures.productPUnit.localized_attributes[0].name).should('exist');
+      cartPage.assertBodyContainsText(dynamicFixtures.productMUnit.localized_attributes[0].name).should('exist');
+      cartPage.assertBodyContainsText(dynamicFixtures.productPUnit.localized_attributes[0].name).should('exist');
     });
 
     function placeOrderWithRandomWeightProducts(): void {
@@ -69,7 +69,10 @@ describe(
       productPage.addToCart();
       if (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
         cartPage.visit();
-        cartPage.assertCartItemAvailabilityDisplayed(true);
+
+        const availabilityLabel = cartPage.getCartItemAvailabilityLabel();
+        availabilityLabel.should('be.visible');
+        availabilityLabel.invoke('text').should('match', /(\d+[,.]?\d*\s+[a-z]+\s+)?in stock/i);
       }
 
       checkoutScenario.execute({
@@ -84,12 +87,6 @@ describe(
         `console publish:trigger-events -r product_packaging_unit -i ${dynamicFixtures.productPUnit.id_product_concrete}`,
         'console queue:worker:start --stop-when-empty',
       ]);
-    }
-
-    function getPaymentMethodBasedOnEnv(): string {
-      return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice';
     }
   }
 );

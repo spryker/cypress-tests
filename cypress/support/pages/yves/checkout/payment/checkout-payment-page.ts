@@ -1,4 +1,4 @@
-import { REPOSITORIES, autoWired } from '@utils';
+import { REPOSITORIES, autoWired, getPaymentMethodBasedOnEnv } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { YvesPage } from '@pages/yves';
@@ -11,9 +11,23 @@ export class CheckoutPaymentPage extends YvesPage {
 
   protected PAGE_URL = '/checkout/payment';
 
+  // Marketplace repositories ship only the marketplace invoice method, the others only the dummy invoice one.
+  setDefaultPaymentMethod = (): void => {
+    if (getPaymentMethodBasedOnEnv() === 'dummyMarketplacePaymentInvoice') {
+      this.setDummyMarketplacePaymentMethod();
+
+      return;
+    }
+
+    this.setDummyPaymentMethod();
+  };
+
   setDummyPaymentMethod = (): void => {
     this.repository.getDummyPaymentInvoiceRadio().click({ force: true });
-    this.repository.getDummyPaymentInvoiceDateField().clear().type('12.12.1999');
+
+    if (!this.isRepository('suite', 'b2b-mp', 'b2b')) {
+      this.repository.getDummyPaymentInvoiceDateField().clear().type('12.12.1999');
+    }
 
     this.repository.getGoToSummaryButton().click();
   };
@@ -29,7 +43,10 @@ export class CheckoutPaymentPage extends YvesPage {
 
   setDummyMarketplacePaymentMethod = (): void => {
     this.repository.getDummyMarketplacePaymentInvoiceRadio().click({ force: true });
-    this.repository.getDummyMarketplacePaymentInvoiceDateField().clear().type('12.12.1999');
+
+    if (!this.isRepository('suite', 'b2b-mp', 'b2b')) {
+      this.repository.getDummyMarketplacePaymentInvoiceDateField().clear().type('12.12.1999');
+    }
 
     this.repository.getGoToSummaryButton().click();
   };

@@ -1,0 +1,49 @@
+{
+  "defaultPassword": "change123",
+  "sku": "IWT-SYSTEM-1",
+  "merchantReference": "MER000008",
+  "store": "DE",
+  "currency": "EUR",
+  "priceMode": "GROSS_MODE",
+  "configuratorKey": "WATER_TREATMENT_CONFIGURATOR",
+  "configuration": "{\"flowRate\":\"20\",\"filtration\":\"ultrafiltration\",\"tank\":\"frp\",\"control\":\"plc_hmi\",\"inlet\":\"DN80\",\"power\":\"400v\"}",
+  "displayData": "{\"Flow Rate (m³/h)\":\"20 m³/h\",\"Filtration Type\":\"Ultrafiltration\",\"Tank Material\":\"FRP (Fiberglass)\",\"Control System\":\"PLC with HMI\",\"Inlet Connection (DN)\":\"DN80\",\"Power Supply\":\"400V / 50Hz\"}",
+  "quantity": 1,
+  "availableQuantity": 4,
+  "idShipmentMethod": 1,
+  "prices": [
+    {
+      "priceTypeName": "DEFAULT",
+      "netAmount": 23434,
+      "grossAmount": 42502,
+      "currency": {
+        "code": "EUR",
+        "name": "Euro",
+        "symbol": "€"
+      },
+      "volumePrices": [
+        { "netAmount": 150, "grossAmount": 165, "quantity": 5 },
+        { "netAmount": 145, "grossAmount": 158, "quantity": 10 },
+        { "netAmount": 140, "grossAmount": 152, "quantity": 20 }
+      ]
+    }
+  ],
+  "payment": {
+    "paymentProviderName": "dummyMarketplacePayment",
+    "paymentMethodName": "invoice",
+    "paymentSelection": "dummyMarketplacePaymentInvoice"
+  },
+  "address": {
+    "salutation": "Ms",
+    "firstName": "Test",
+    "lastName": "Customer",
+    "address1": "Third, 33, 11",
+    "address2": "33-B",
+    "address3": "third. address. line",
+    "zipCode": "12312",
+    "city": "Berlin",
+    "iso2Code": "DE",
+    "company": "Spryker",
+    "phone": "22111-3-4-5"
+  }
+}

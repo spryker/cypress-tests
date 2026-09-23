@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--
+  Minimal OMS state machine tailored for the reservation Cypress tests
+  (cypress/e2e/backoffice/order-management/oms-reservation-flow.cy.ts).
+-->
+<statemachine
+    xmlns="spryker:oms-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd"
+>
+
+    <process name="OmsReservationFlow01" main="true">
+
+        <states>
+            <state name="new" display="oms.state.new">
+                <flag>cancellable</flag>
+            </state>
+            <state name="reserved" reserved="true" display="oms.state.payment-pending">
+                <flag>cancellable</flag>
+            </state>
+            <state name="cancelled" display="oms.state.canceled">
+                <flag>exclude from customer</flag>
+            </state>
+            <state name="closed" display="oms.state.closed"/>
+        </states>
+
+        <transitions>
+            <transition happy="true">
+                <source>new</source>
+                <target>reserved</target>
+                <event>reserve</event>
+            </transition>
+
+            <transition happy="true">
+                <source>reserved</source>
+                <target>closed</target>
+                <event>complete</event>
+            </transition>
+
+            <transition>
+                <source>new</source>
+                <target>cancelled</target>
+                <event>cancel</event>
+            </transition>
+
+            <transition>
+                <source>reserved</source>
+                <target>cancelled</target>
+                <event>cancel</event>
+            </transition>
+        </transitions>
+
+        <events>
+            <event name="reserve" manual="true"/>
+            <event name="complete" manual="true"/>
+            <event name="cancel" manual="true"/>
+        </events>
+
+    </process>
+
+</statemachine>

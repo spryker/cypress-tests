@@ -23,8 +23,17 @@ export class SalesDetailPage extends BackofficePage {
     }
 
     cy.url().then((url) => {
+      // a workaround for running tests on envs with basic auth (e.g. smoke tests on SE envs)
+      // because basic auth should be included into the url but the current url returned by cy.url() does not have basic auth credentials
+      const currentUrl = new URL(url);
+      const targetUrl = new URL(Cypress.env('backofficeUrl'));
+
+      targetUrl.pathname = currentUrl.pathname;
+      targetUrl.search = currentUrl.search;
+      const normalizedUrl = targetUrl.toString();
+
       cy.reloadUntilFound(
-        url,
+        normalizedUrl,
         this.repository.getOmsButtonSelector(params.state),
         this.repository.getTriggerOmsDivSelector(),
         25,

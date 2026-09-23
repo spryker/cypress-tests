@@ -5,11 +5,13 @@ This directory tracks the API tests that have to leave this repo.
 
 | Matrix | Target repo | Canonical scenarios | Checklists |
 |---|---|--:|---|
-| `cypress-api-to-codeception` | `spryker/suite` | 3 | `by-domain/cypress-api-to-codeception/*.md` |
+| `cypress-api-to-codeception` | `spryker/suite` | 15 | `by-domain/cypress-api-to-codeception/*.md` |
 
-Three scenarios: two GLUE health-check smokes and one DMS store-resolution check. Small enough for
-a single batch — but it is generated and gated like every other matrix so gate G1 can assert that
-no new API spec appears in this repo unnoticed.
+Fifteen scenarios: twelve from the configurable-product cart, checkout and shopping-list specs, two
+GLUE health-check smokes and one DMS store-resolution check. The configurable-product specs run only
+for `b2b-mp`, so they are deleted only once their Glue replacements have reached
+`b2b-demo-marketplace`. The matrix is generated and gated like every other so gate G1 can assert
+that no new API spec appears in this repo unnoticed.
 
 Start at [PROGRESS.md](PROGRESS.md).
 

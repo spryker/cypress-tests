@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { CustomerOverviewRepository } from '../customer-overview-repository';
+import { CustomerOverviewRepository, CustomerSidebarSection } from '../customer-overview-repository';
 
 @injectable()
 export class B2cMpCustomerOverviewRepository implements CustomerOverviewRepository {
@@ -22,5 +22,14 @@ export class B2cMpCustomerOverviewRepository implements CustomerOverviewReposito
   }
   getOrderDetailTableRow(): Cypress.Chainable {
     return cy.get('[data-qa="component order-detail-table"]');
+  }
+  getSidebarLink(section: CustomerSidebarSection): Cypress.Chainable {
+    return cy.get(`[data-id="sidebar-${section}"]`);
+  }
+  getDefaultBillingAddressHeading(): string {
+    return 'Default Billing Address';
+  }
+  getDefaultShippingAddressHeading(): string {
+    return 'Default Shipping Address';
   }
 }

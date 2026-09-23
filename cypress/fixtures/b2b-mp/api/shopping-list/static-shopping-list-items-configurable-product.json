@@ -1,0 +1,26 @@
+{
+  "defaultPassword": "change123",
+  "shoppingListName": "configurable-product-shopping-list",
+  "configuratorKey": "WATER_TREATMENT_CONFIGURATOR",
+  "configuration": "{\"flowRate\":\"15\",\"filtration\":\"activated_carbon\",\"tank\":\"ss304\",\"control\":\"semi_automatic\",\"inlet\":\"DN40\",\"power\":\"230v\"}",
+  "displayData": "{\"Flow Rate (m³/h)\":\"15 m³/h\",\"Filtration Type\":\"Activated Carbon\",\"Tank Material\":\"Stainless Steel 304\",\"Control System\":\"Semi-Automatic\",\"Inlet Connection (DN)\":\"DN40\",\"Power Supply\":\"230V / 50Hz\"}",
+  "quantity": 3,
+  "availableQuantity": 4,
+  "prices": [
+    {
+      "priceTypeName": "DEFAULT",
+      "netAmount": 23434,
+      "grossAmount": 42502,
+      "currency": {
+        "code": "EUR",
+        "name": "Euro",
+        "symbol": "€"
+      },
+      "volumePrices": [
+        { "netAmount": 150, "grossAmount": 165, "quantity": 5 },
+        { "netAmount": 145, "grossAmount": 158, "quantity": 10 },
+        { "netAmount": 140, "grossAmount": 152, "quantity": 20 }
+      ]
+    }
+  ]
+}

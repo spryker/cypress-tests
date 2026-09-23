@@ -28,44 +28,17 @@ export class ProductAttributeVisibilityListPage extends BackofficePage {
     cy.wait('@tableFilterLoad');
 
     cy.intercept('GET', this.TABLE_AJAX_URL).as('tableSearchLoad');
-    cy.get(this.repository.getSearchInputSelector()).should('be.visible').clear();
+    cy.get(this.repository.getSearchInputSelector()).clear();
     cy.get(this.repository.getSearchInputSelector()).type(attributeKey);
     cy.wait('@tableSearchLoad');
   };
 
-  assertDisplayAtColumnExists = (): void => {
-    cy.get(this.repository.getTableHeadSelector()).should('contain', 'Display At');
-  };
+  getTableHead = (): Cypress.Chainable => cy.get(this.repository.getTableHeadSelector());
 
-  assertVisibilityFilterExists = (): void => {
-    cy.get(this.repository.getVisibilityFilterSelector()).should('exist');
-  };
+  getVisibilityFilter = (): Cypress.Chainable => cy.get(this.repository.getVisibilityFilterSelector());
 
-  assertSingleRow = (): void => {
-    cy.get(this.repository.getTableBodyRowsSelector()).should('have.length', 1);
-  };
+  getTableBodyRows = (): Cypress.Chainable => cy.get(this.repository.getTableBodyRowsSelector());
 
-  assertNoRecords = (): void => {
-    cy.get(this.repository.getTableBodyRowsSelector()).should('have.length', 1);
-    cy.get(this.repository.getTableBodyRowsSelector()).first().should('contain', 'No matching records found');
-  };
-
-  assertDisplayAtContains = (text: string): void => {
-    cy.get(this.repository.getTableBodyRowsSelector())
-      .first()
-      .find('td')
-      .eq(this.repository.getDisplayAtColumnIndex())
-      .should('contain', text);
-  };
-
-  assertDisplayAtEmpty = (): void => {
-    cy.get(this.repository.getTableBodyRowsSelector())
-      .first()
-      .find('td')
-      .eq(this.repository.getDisplayAtColumnIndex())
-      .invoke('text')
-      .then((text) => {
-        expect(text.trim()).to.equal('');
-      });
-  };
+  getDisplayAtCell = (): Cypress.Chainable =>
+    cy.get(this.repository.getTableBodyRowsSelector()).first().find('td').eq(this.repository.getDisplayAtColumnIndex());
 }

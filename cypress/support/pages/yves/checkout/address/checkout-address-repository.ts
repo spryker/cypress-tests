@@ -37,4 +37,9 @@ export interface CheckoutAddressRepository {
     $addressItem: JQuery<HTMLElement>,
     index: number
   ): string | undefined;
+  getMultiShipmentAddressItemShipmentTypeRadio?(index: number, shipmentTypeKey: string): Cypress.Chainable;
+  getMultiShipmentAddressItemSelectServicePointButton?($addressItem: JQuery<HTMLElement>): Cypress.Chainable;
+  getServicePointFinderInput?(): Cypress.Chainable;
+  getServicePointFinderListItem?(servicePointName: string): Cypress.Chainable;
+  getMultiShipmentAddressItemServicePointUuidInput?(index: number): Cypress.Chainable;
 }

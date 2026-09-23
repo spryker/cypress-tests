@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { CustomerOverviewRepository } from '../customer-overview-repository';
+import { CustomerOverviewRepository, CustomerSidebarSection } from '../customer-overview-repository';
 
 @injectable()
 export class B2bCustomerOverviewRepository implements CustomerOverviewRepository {
@@ -22,5 +22,16 @@ export class B2bCustomerOverviewRepository implements CustomerOverviewRepository
   }
   getOrderDetailTableRow(): Cypress.Chainable {
     return cy.get('[data-qa="component order-detail-table"]');
+  }
+  // The B2B shops replace the vendor customer navigation with the sidebar molecule, which carries no
+  // per-section marker, so the section is matched on the link target instead.
+  getSidebarLink(section: CustomerSidebarSection): Cypress.Chainable {
+    return cy.get(`[data-qa="component navigation-sidebar-item"] a[href$="/customer/${section}"]`);
+  }
+  getDefaultBillingAddressHeading(): string {
+    return 'Default Billing Address';
+  }
+  getDefaultShippingAddressHeading(): string {
+    return 'Default Shipping Address';
   }
 }

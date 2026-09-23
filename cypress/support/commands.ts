@@ -49,13 +49,17 @@ Cypress.Commands.add(
           failOnStatusCode: false,
         })
         .then((response) => {
-          if (response.status === 500 || response.status === 408) {
+          if (response.status >= 400) {
             if (retries > 0) {
-              cy.log('Retrying due to error or timeout...');
+              cy.log(`Retrying "${dynamicFixturesFilePath}" after HTTP ${response.status}...`);
               return cy.loadDynamicFixturesByPayload(dynamicFixturesFilePath, retries - 1);
-            } else {
-              throw new Error(response.body);
             }
+
+            throw new Error(
+              `Dynamic fixtures "${dynamicFixturesFilePath}" failed with HTTP ${response.status}: ${JSON.stringify(
+                response.body
+              )}`
+            );
           }
 
           if (Array.isArray(response.body.data)) {
@@ -120,6 +124,36 @@ Cypress.Commands.add(
   }
 );
 
+// Inverse of reloadUntilFound: re-visits the page until findSelector is ABSENT.
+// `commands` (if given) are re-run before every reload so a lagging publish/sync queue
+// keeps draining while we wait; otherwise a delete that hasn't finished syncing keeps
+// rendering the node and the loop never converges (exhausted retries).
+Cypress.Commands.add(
+  'reloadUntilGone',
+  (url, findSelector, getSelector = 'body', retries = 25, retryWait = 5000, commands = []) => {
+    if (retries === 0) {
+      throw `exhausted retries waiting for ${findSelector} to disappear on ${url}`;
+    }
+
+    if (commands.length) {
+      cy.runCliCommands(commands);
+    }
+
+    cy.visit(url);
+    cy.get(getSelector).then((body) => {
+      const msg = `url:${url} getSelector:${getSelector} findSelector:${findSelector} retries:${retries} retryWait:${retryWait}`;
+
+      if (body.find(findSelector).length === 0) {
+        cy.log(`gone ${msg}`);
+      } else {
+        cy.log(`still present ${msg}`);
+        cy.wait(retryWait);
+        cy.reloadUntilGone(url, findSelector, getSelector, retries - 1, retryWait, commands);
+      }
+    });
+  }
+);
+
 Cypress.Commands.add('runCliCommands', (commands) => {
   const operations = commands.map((command) => {
     return {
@@ -149,7 +183,7 @@ Cypress.Commands.add('runCliCommands', (commands) => {
 Cypress.Commands.add('runQueueWorker', () => {
   cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
 
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  // eslint-disable-next-line cypress/no-unnecessary-waiting, spryker-cypress/no-numeric-wait
   cy.wait(1000); // For some reason.  The delay or racing in processing the queue messages.
   cy.runCliCommands(['console queue:worker:start --stop-when-empty']);
 });
@@ -337,4 +371,65 @@ Cypress.Commands.add('cleanUpCustomerMultiFactorAuth', () => {
       },
     },
   });
+});
+
+Cypress.Commands.add('getCustomerAccessToken', (email, password) => {
+  return cy
+    .request({
+      method: 'POST',
+      url: Cypress.env().glueUrl + '/access-tokens',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {
+        data: {
+          type: 'access-tokens',
+          attributes: {
+            username: email,
+            password,
+          },
+        },
+      },
+    })
+    .then((response) => response.body.data.attributes.accessToken);
+});
+
+Cypress.Commands.add('createCart', (accessToken, attributes) => {
+  return cy
+    .request({
+      method: 'POST',
+      url: Cypress.env().glueUrl + '/carts',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: {
+        data: {
+          type: 'carts',
+          attributes,
+        },
+      },
+    })
+    .then((response) => response.body.data.id);
+});
+
+Cypress.Commands.add('createShoppingList', (accessToken, name) => {
+  return cy
+    .request({
+      method: 'POST',
+      url: Cypress.env().glueUrl + '/shopping-lists',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: {
+        data: {
+          type: 'shopping-lists',
+          attributes: {
+            name,
+          },
+        },
+      },
+    })
+    .then((response) => response.body.data.id);
 });

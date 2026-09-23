@@ -13,8 +13,9 @@ export class B2bMpCatalogRepository implements CatalogRepository {
   getItemBlockSearchQuery = (query: string): string => `a:contains("${query}")`;
   getSspAssetSelectorBlock = (): Cypress.Chainable => cy.get('[data-qa="component asset-selector"]');
   getSspAssetNameBlock = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-name"]');
-  getSspAssetSelectorTriggerButton = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-trigger"]');
+  getSspAssetSelectorTriggerButton = (): Cypress.Chainable =>
+    cy.get('[data-qa="asset-selector-trigger"]').filter(':visible');
   getSspAssetOption = (name: string): Cypress.Chainable =>
-    cy.get('[data-qa="component asset-option"]').filter(`:contains("${name}")`);
+    cy.get('[data-qa="component asset-option"]').filter(':visible').filter(`:contains("${name}")`);
   getSspAssetOptionTriggerButtonSelector = (): string => '[data-qa="asset-option-trigger"]';
 }

@@ -1,0 +1,7 @@
+{
+  "defaultPassword": "change123",
+  "overStockQuantity": 10,
+  "allItemsRemovedError": "without items",
+  "notAvailableError": "is not available",
+  "budgetBlockError": "exceeds the allocated budget"
+}

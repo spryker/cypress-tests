@@ -19,4 +19,10 @@ export class B2cMpHomeRepository implements HomeRepository {
   getLanguageSwitcher = (): Cypress.Chainable => {
     return cy.get('[data-qa="component language-switcher"]');
   };
+  getLogo = (): Cypress.Chainable => {
+    return cy.get('[data-qa="component logo"]');
+  };
+  getLogoImage = (): Cypress.Chainable => {
+    return cy.get('.logo img');
+  };
 }

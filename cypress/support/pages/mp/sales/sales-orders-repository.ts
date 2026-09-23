@@ -14,4 +14,5 @@ export class SalesOrdersRepository {
   getDeliverButtonSelector = (): string => 'button:contains("Deliver")';
   getRefundButtonSelector = (): string => 'button:contains("Refund")';
   getDrawer = (): Cypress.Chainable => cy.get('.spy-drawer-wrapper');
+  getOrderItemsStateChipSelector = (): string => 'web-spy-chips.mp-manage-order__states-col';
 }

@@ -55,8 +55,12 @@ export class SspAssetUpdatePage extends BackofficePage {
     cy.get(this.repository.getSubmitButtonSelector()).click();
   }
 
-  verifySuccessMessage(): void {
-    cy.get(this.repository.getSuccessMessageSelector()).should('contain', this.repository.getSuccessMessage());
+  getSuccessMessage(): Cypress.Chainable {
+    return cy.get(this.repository.getSuccessMessageSelector());
+  }
+
+  getSuccessMessageText(): string {
+    return this.repository.getSuccessMessage();
   }
 
   updateBusinessUnitOwner(businessUnitOwner: BusinessUnit): void {

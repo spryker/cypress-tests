@@ -48,7 +48,7 @@ export class B2bMpSspAssetRepository implements SspAssetRepository {
   }
 
   getAssetDetailsTitle(): Cypress.Chainable {
-    return cy.get('[data-qa="component asset-details-title"] .title--h3');
+    return cy.get('[data-qa*="asset-details-title"]');
   }
 
   getUnassignmentErrorMessage(): string {

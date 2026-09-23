@@ -1,8 +1,29 @@
+{"id": "cypress:cypress/e2e/api/cart/cart-items-configurable-product.cy.ts::should add a configurable product to the cart", "source_state": "ACTIVE", "target_state": "PRESENT"}
+{"id": "cypress:cypress/e2e/api/cart/cart-items-configurable-product.cy.ts::should delete a configurable product item from the cart", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/api/cart/cart-items-configurable-product.cy.ts::should not add a configurable product to the cart with ${description}", "source_state": "ACTIVE", "target_state": "PRESENT"}
+{"id": "cypress:cypress/e2e/api/cart/cart-items-configurable-product.cy.ts::should not add a configurable product to the cart with missing isComplete", "source_state": "ACTIVE", "target_state": "PRESENT"}
+{"id": "cypress:cypress/e2e/api/cart/cart-items-configurable-product.cy.ts::should update configuration and quantity of a configurable product in the cart", "source_state": "ACTIVE", "target_state": "PRESENT"}
+{"id": "cypress:cypress/e2e/api/checkout/checkout-configurable-product.cy.ts::should create an order with a configurable product", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "cypress:cypress/e2e/api/cms/cms-page-search-dms.cy.ts::should be able to see the cms page for new store", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/api/shopping-list/shopping-list-items-configurable-product.cy.ts::should add a configurable product to the shopping list", "source_state": "ACTIVE", "target_state": "PRESENT"}
+{"id": "cypress:cypress/e2e/api/shopping-list/shopping-list-items-configurable-product.cy.ts::should add two configurable products with different configurations to the shopping list", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/api/shopping-list/shopping-list-items-configurable-product.cy.ts::should not add a configurable product to the shopping list with ${description}", "source_state": "ACTIVE", "target_state": "PRESENT"}
+{"id": "cypress:cypress/e2e/api/shopping-list/shopping-list-items-configurable-product.cy.ts::should remove a configurable product from the shopping list", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/api/shopping-list/shopping-list-items-configurable-product.cy.ts::should update the configuration of a configurable product in the shopping list", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/api/shopping-list/shopping-list-items-configurable-product.cy.ts::should update the quantity of a configurable product in the shopping list", "source_state": "ACTIVE", "target_state": "PRESENT"}
 {"id": "cypress:cypress/e2e/backoffice/acl/acl-navigation-access.cy.ts::multi-group user combining allow + deny rules across groups", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/acl/acl-navigation-access.cy.ts::single-role user with product-management permissions", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/category/category-create.cy.ts::Backoffice user should be able to create a category", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/category/category-edit.cy.ts::Backoffice user should be able to edit category checkboxes", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/category/category-edit.cy.ts::Backoffice user should be able to open the edit category page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/category/category-edit.cy.ts::Backoffice user should not see store help text for parent", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/category/category-edit.cy.ts::Backoffice user should see store help text for child category", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/category/category-re-sort.cy.ts::Backoffice user should be able to move sub-categories", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/category/category-re-sort.cy.ts::Backoffice user should be able to save the re-sorted sub-categories", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/category/category-re-sort.cy.ts::Backoffice user should see the sub-categories", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/cms/cms-block-create.cy.ts::should create a cms block and show a success message", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/cms/cms-page-management.cy.ts::should create a cms page with translated placeholders and publish it", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/cms/cms-page-management.cy.ts::should open the cms page list and show the pages table", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/company-account/company-role-create.cy.ts::should be able to access company role create page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/configuration/configuration-management.cy.ts::filters sidebar navigation when searching for a term", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/configuration/configuration-management.cy.ts::rejects an invalid hex color and keeps the original value", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
@@ -19,6 +40,13 @@
 {"id": "cypress:cypress/e2e/backoffice/configuration/configuration.cy.ts::displays storefront color settings with correct default values", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/configuration/configuration.cy.ts::uploads backoffice logo and verifies it is applied in backoffice", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/configuration/configuration.cy.ts::uploads storefront logo and verifies it is applied in yves", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/discount/discount-create.cy.ts::should create a valid exclusive discount and show a success message", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/discount/discount-create.cy.ts::should show validation errors when creating a discount with a blank name and amount", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/discount/discount-list.cy.ts::should open the discount view page from the list", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/discount/discount-list.cy.ts::should show a discount with its actions in the list and open its edit page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/file-manager/file-directory-create.cy.ts::should create a directory and show a success message when the name is valid", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/file-manager/file-directory-create.cy.ts::should show blank-value errors when creating a directory with an empty name", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/file-manager/file-directory-create.cy.ts::should show max-length errors when creating a directory with an over-long name", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/gift-cards/order-gift-card.cy.ts::should be able to ship a gift card", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/merchant-b2b-contract-requests/request-management.cy.ts::operator should be able to add internal comment", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/merchant-b2b-contract-requests/request-management.cy.ts::operator should be able to add internal comment with emoji", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
@@ -36,14 +64,29 @@
 {"id": "cypress:cypress/e2e/backoffice/navigation/menu-filter.cy.ts::should filter menu items correctly", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/navigation/menu-filter.cy.ts::should handle parent-child filtering logic", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/navigation/menu-filter.cy.ts::should preserve menu order and support keyboard navigation", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/navigation/navigation-tree-management.cy.ts::should change the navigation tree structure and persist it", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/navigation/navigation-tree-management.cy.ts::should create a child node with a CMS page type", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/navigation/navigation-tree-management.cy.ts::should create a child node with an external URL type", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/navigation/navigation-tree-management.cy.ts::should create a child node without a type", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/navigation/navigation-tree-management.cy.ts::should create, read, update and delete a navigation element", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/navigation/navigation-tree-management.cy.ts::should display an empty navigation tree with a single root node", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/order-experience-management/recurring-schedule.cy.ts::backoffice user can filter the recurring schedules by status", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/order-experience-management/recurring-schedule.cy.ts::backoffice user can find a recurring schedule in the list and open its detail", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/order-experience-management/recurring-schedule.cy.ts::backoffice user can search recurring schedules by name", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/order-experience-management/recurring-schedule.cy.ts::backoffice user sees the committed recurring volume statistic widget on the list page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/order-experience-management/recurring-schedule.cy.ts::backoffice user sees the configurable bundle name on the items of a recurring schedule", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/order-management/custom-order-reference-management.cy.ts::should be able to create an order with custom order reference", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/order-management/oms-reservation-flow.cy.ts::reservation drops to zero when the order is cancelled", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/order-management/oms-reservation-flow.cy.ts::reservation reflects the order while items are reserved and drops to zero after complete", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/order-management/order-creation-dms.cy.ts::backoffice user should be able close an order from customer", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/backoffice/order-management/order-creation-dms.cy.ts::backoffice user should be able close an order from guest", "source_state": "GONE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/order-management/order-creation-dms.cy.ts::backoffice user should be able close an order from guest", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/order-management/order-creation.cy.ts::should be able to create an order by existing customer (invoice)", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/backoffice/order-management/order-creation.cy.ts::should be able to create an order by guest (credit card)", "source_state": "GONE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/order-management/order-creation.cy.ts::should be able to create an order by guest (credit card)", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/product-attribute-visibility/product-attribute-visibility.cy.ts::Attribute list table should contain Display At column and have Display At filter dropdown", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/product-attribute-visibility/product-attribute-visibility.cy.ts::Combined attribute should appear in filter with all visibility labels", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/product-attribute-visibility/product-attribute-visibility.cy.ts::Filtering by visibility type should find respective attribute", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/product-category/product-category-assignment.cy.ts::should assign a product to a category", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/product-category/product-category-assignment.cy.ts::should deassign a product from a category", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/product-management/product-attachment-management.cy.ts::backoffice user can add and save single attachment to default locale", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/product-management/product-attachment-management.cy.ts::backoffice user can add attachments to different locale sections", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/product-management/product-attachment-management.cy.ts::backoffice user can add attachments to multiple locales independently", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
@@ -58,13 +101,22 @@
 {"id": "cypress:cypress/e2e/backoffice/product-measurement-unit/product-measurement-unit-create.cy.ts::allows back office user to create a new Measurement Unit", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/product-measurement-unit/product-measurement-unit-list.cy.ts::renders the Measurement unit list page with searchable measurement units", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/product-offer/product-offer.cy.ts::should create a product for product offer", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/product-option/product-option-management.cy.ts::should create a product option group with option values", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/product-relation/product-relation-create.cy.ts::should create a product relation and land on the edit page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/product-search/filter-preferences.cy.ts::should create, edit and remove a filter", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/product-search/filter-preferences.cy.ts::should show the list of filter preferences", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/product-search/filter-preferences.cy.ts::should update the filter order via drag and drop and persist it", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/product-search/search-preferences.cy.ts::should show the list of search preferences", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/purchasing-control/budget.cy.ts::backoffice user should be able to create a budget for a cost center", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/purchasing-control/budget.cy.ts::backoffice user should be able to edit a budget", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/purchasing-control/budget.cy.ts::backoffice user should see budget in the budget list after creation", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/purchasing-control/cost-center.cy.ts::backoffice user should be able to create a cost center", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/purchasing-control/cost-center.cy.ts::backoffice user should be able to edit a cost center", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/refund/refund-management.cy.ts::should display the refund list page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/return-management/return-creation.cy.ts::should be able to create return from (from delivery order state)", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/return-management/return-creation.cy.ts::should be able to create return from (from shipped order state)", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/service-point/service-point-management.cy.ts::renders the service point list and its detail page with services and connected offers", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/service-point/service-point-management.cy.ts::shows an inactive service point without an address in the list and on its detail page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts::should be able to create a new asset", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/ssp-asset-management/ssp-asset-management.cy.ts::should update an existing asset", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/ssp-file-management/ssp-file-management.cy.ts::should access the Files List page in Backoffice", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
@@ -93,6 +145,13 @@
 {"id": "cypress:cypress/e2e/backoffice/ssp-service-management/ssp-product.cy.ts::should assign product class to a product", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/ssp-service-management/ssp-product.cy.ts::should assign shipment type to a product", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/backoffice/ssp-service-management/ssp-service-list.cy.ts::should display service list table with order containing service product", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/tax/tax-rate-create.cy.ts::should create a valid tax rate and show a success message", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/tax/tax-rate-create.cy.ts::should open the tax rate list page without saving when navigating back", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/tax/tax-rate-create.cy.ts::should show an error when recreating a tax rate that already exists", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/tax/tax-rate-create.cy.ts::should show an error when submitting one and the same tax rate twice in a row", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/tax/tax-rate-create.cy.ts::should show error messages when creating an invalid tax rate", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/workflow/workflow-instance-lifecycle.cy.ts::admin should see a new instance and advance its state via a manual action", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/backoffice/workflow/workflow-management.cy.ts::admin should be able to create, configure, version and activate a workflow", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts::merchant can import a product offer and access its PDP", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/mp/data-import/merchant-combined-product-offer.cy.ts::merchant will see failed data import status when uploaded with with invalid data", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/mp/data-import/merchant-combined-product.cy.ts::merchant can import a combined product and access its PDP", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
@@ -126,7 +185,6 @@
 {"id": "cypress:cypress/e2e/mp/marketplace-agent-assist/agent-login.cy.ts::deleted merchant user should not be able to login to MP dashboard", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/mp/marketplace-agent-assist/agent-login.cy.ts::merchant user should be able to login to MP dashboard", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/mp/marketplace-agent-assist/agent-login.cy.ts::merchant user should not be able to login to MP agent dashboard", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts::agent should be able to change order status during impersonation", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts::agent should be able to modify merchant profile information during impersonation", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts::agent should be able to modify offer information during impersonation", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/mp/marketplace-agent-assist/agent-merchant-portal.cy.ts::agent should be able to modify product information during impersonation", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
@@ -146,7 +204,7 @@
 {"id": "cypress:cypress/e2e/mp/marketplace-merchant-commission/commission-calculation.cy.ts::merchant commissions should be calculated based on price/category conditions in Merchant Portal", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/mp/marketplace-merchant-commission/commission-calculation.cy.ts::merchant commissions should be refunded in Merchant Portal and Backoffice", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/mp/marketplace-order-management/order-creation-dms.cy.ts::merchant user should be able close an order from customer", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/mp/marketplace-order-management/order-creation-dms.cy.ts::merchant user should be able close an order from guest", "source_state": "GONE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/mp/marketplace-order-management/order-creation-dms.cy.ts::merchant user should be able close an order from guest", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/mp/marketplace-product-attributes/product-attribute-management.cy.ts::Additional requests should not be sent on adding attribute", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/mp/marketplace-product-concretes/product-concrete-management.cy.ts::merchant user should be able to see table with product concretes", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/mp/merchant-b2b-contract-requests/request-management.cy.ts::all merchant users should be able see merchant relation requests", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
@@ -164,20 +222,31 @@
 {"id": "cypress:cypress/e2e/smoke/api/health-check.cy.ts::GLUE endpoint should return 200", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/smoke/catalog/product-search.cy.ts::customer should be able to find product abstract in catalog", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/smoke/catalog/product-search.cy.ts::customer should be able to find product concrete in catalog", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/smoke/catalog/product-search.cy.ts::guest should be able to find product abstract in catalog", "source_state": "GONE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/smoke/catalog/product-search.cy.ts::guest should be able to find product concrete in catalog", "source_state": "GONE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/catalog/product-search.cy.ts::guest should be able to find product abstract in catalog", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/catalog/product-search.cy.ts::guest should be able to find product concrete in catalog", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/smoke/checkout/basic-checkout.cy.ts::customer should checkout to multi shipment address (with new shipping address)", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/smoke/checkout/basic-checkout.cy.ts::customer should checkout to single shipment (with new shipping address)", "source_state": "GONE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/smoke/checkout/basic-checkout.cy.ts::guest customer should checkout to multi shipment address", "source_state": "GONE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/smoke/checkout/basic-checkout.cy.ts::guest customer should checkout to single shipment", "source_state": "GONE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/checkout/basic-checkout.cy.ts::customer should checkout to single shipment (with new shipping address)", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/checkout/basic-checkout.cy.ts::guest customer should checkout to multi shipment address", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/checkout/basic-checkout.cy.ts::guest customer should checkout to single shipment", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/smoke/customer-account-management/customer-auth.cy.ts::customer should be able to login into storefront application", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/import-export/product-import-export.cy.ts::import template can be downloaded and products can be imported", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/smoke/merchant-portal/login.cy.ts::merchant user should login to merchant portal", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/smoke/order-management/dummy-payment-oms-flow.cy.ts::backoffice operator should be able close an order from customer", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/smoke/order-management/dummy-payment-oms-flow.cy.ts::backoffice operator should be able close an order from guest", "source_state": "GONE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/smoke/order-management/marketplace-payment-oms-flow.cy.ts::merchant user should be able close an order from customer", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/smoke/order-management/marketplace-payment-oms-flow.cy.ts::merchant user should be able close an order from guest", "source_state": "GONE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/order-management/dummy-payment-oms-flow.cy.ts::backoffice operator should be able close an order from guest", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/order-management/marketplace-payment-oms-flow.cy.ts::merchant user should be able to process an order from customer", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/order-management/marketplace-payment-oms-flow.cy.ts::order can be placed with MP payment", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/order-management/marketplace-payment-oms-flow.cy.ts::order can be sent to merchant", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/order-management/marketplace-payment-oms-flow.cy.ts::order processed by merchant can be closed in backoffice", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/smoke/product/publish-and-synchronize.cy.ts::backoffice user should be able to create new product that will be available for customers in storefront", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/smoke/product/publish-and-synchronize.cy.ts::backoffice user should be able to create new product that will be available for guests in storefront", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/shop-theme/shop-theme-storefront-logo.cy.ts::changes in BO can be reverted", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/shop-theme/shop-theme-storefront-logo.cy.ts::go to storefront and see the changes are reverted", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/shop-theme/shop-theme-storefront-logo.cy.ts::storefront logo is uploaded in BO configuration successfully", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/ssp/ssp-asset-create.cy.ts::customer should be able to create an asset with an image on Yves", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/ssp/ssp-file-upload.cy.ts::backoffice user should be able to upload a file in the customer portal and verify it appears in the list", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/smoke/ssp/ssp-inquiry-create.cy.ts::customer should be able to create an inquiry with an image attachment", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/availability/availability-checkout.cy.ts::customer should be able to check out a product limited to its available stock", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/availability/availability-checkout.cy.ts::customer should not be able to add a larger quantity than the available stock", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/cart/change-cart-item-quantity.cy.ts::customer should be able to apply a discount increasing a cart item quantity", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/cart/change-cart-item-quantity.cy.ts::customer should be able to decrease a cart item quantity", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/cart/change-cart-item-quantity.cy.ts::customer should be able to increase a cart item quantity", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
@@ -192,6 +261,8 @@
 {"id": "cypress:cypress/e2e/yves/comments/cart-comments.cy.ts::customer should be able to modify comment in empty cart", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/comments/cart-comments.cy.ts::customer should be able to remove comment in cart with items", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/comments/cart-comments.cy.ts::customer should be able to remove comment in empty cart", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/company-account/company-registration.cy.ts::guest opens the company registration page \u2192 the create-account form is shown", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/company-account/company-registration.cy.ts::guest submits valid company data \u2192 the company is registered", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/company-account/manage-company-user-role.cy.ts::customer should be able to assign a user to a company role", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/company-account/manage-company-user-role.cy.ts::customer should be unable to unassign a company role without a CSRF token", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/company-account/user-company-role.cy.ts::customer should be access / see company role add page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
@@ -199,18 +270,36 @@
 {"id": "cypress:cypress/e2e/yves/core/locale-switching.cy.ts::should be able to switch locales at the home page.", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/core/locale-switching.cy.ts::should be able to switch locales at the product detailed page.", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/core/locale-switching.cy.ts::should maintain locale when navigating to New page after switching locale.", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-auth-dms.cy.ts::guest should be able to register and login as new customer", "source_state": "GONE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-address-management.cy.ts::customer should be able to add a new address", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-address-management.cy.ts::customer should be able to open the add-address page from the addresses list", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-auth-dms.cy.ts::guest should be able to register and login as new customer", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-auth.cy.ts::customer should be able to logout", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-auth.cy.ts::customer should be able to open the forgot password page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-overview.cy.ts::customer should be able to navigate from overview to the addresses page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-overview.cy.ts::customer should be able to navigate from overview to the newsletter page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-overview.cy.ts::customer should be able to navigate from overview to the orders page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-overview.cy.ts::customer should be able to navigate from overview to the profile page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-overview.cy.ts::customer should be able to open the overview page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-overview.cy.ts::customer without an address should see no default-address boxes", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-profile-management.cy.ts::customer should be able to change their password", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-profile-management.cy.ts::customer should be able to save the profile without changing the email", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-profile-management.cy.ts::customer should be able to update their profile data", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-profile-management.cy.ts::customer should not be able to change the password when the new passwords do not match", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/customer-profile-management.cy.ts::customer should not be able to update the email to an already used one", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/newsletter-subscription.cy.ts::guest newsletter subscription should be linked to the customer after registration", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/newsletter-subscription.cy.ts::logged-in customer should be able to subscribe to the newsletter on the account page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/customer-account-management/newsletter-subscription.cy.ts::registered customer should be able to unsubscribe a linked newsletter subscription", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts::company user should be able to create request from MR request create page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts::company user should be able to create request from PDP", "source_state": "GONE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts::company user should be able to create request from merchant profile page", "source_state": "GONE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts::company user should be able to create request from PDP", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts::company user should be able to create request from merchant profile page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts::company user should be able to create request with only one business unit", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts::company user should not be able to create request without business units", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts::sold by merchant contains MR request links", "source_state": "GONE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-creation.cy.ts::sold by merchant contains MR request links", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts::company user from same company should be able to see requests from another user", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts::company user from same company should not be able to cancel request from another user", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts::company user should be able to cancel request from pending status", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts::company user should be able to filter MR requests by business unit owner", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
-{"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts::company user should be able to filter MR requests by merchant", "source_state": "GONE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts::company user should be able to filter MR requests by merchant", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts::company user should be able to filter MR requests by status", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts::company user should be able to see decision note from rejected request", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/merchant-b2b-contract-requests/request-management.cy.ts::company user should not be able to cancel request from approved status", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
@@ -226,6 +315,7 @@
 {"id": "cypress:cypress/e2e/yves/order-amendment/order-amendment-finish.cy.ts::customer should be able to finish amended order with updated product quantity", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/order-amendment/order-amendment-finish.cy.ts::customer should be able to reorder product with old price", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/order-amendment/order-amendment-finish.cy.ts::customer should be able to update order item and shipping address", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-amendment/order-amendment-service.cy.ts::customer should be able to finish amended order with increased service product quantity", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts::customer should be able to amend order when item was deactivated", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts::customer should be able to amend order when item was out-of-stock", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts::customer should be able to create order amendment and lock previous order", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
@@ -233,6 +323,37 @@
 {"id": "cypress:cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts::customer should be able to replace current cart (quote) with previous order items", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts::customer should not be able to create order amendment when order not in \"grace period started\" state", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/order-amendment/order-amendment-start.cy.ts::customer should not be able to increase the out-of-stock item quantity for more than stock plus original item quantity", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/create-recurring-order.cy.ts::buyer can pick a start date, with today as the earliest selectable value and past dates rejected", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/create-recurring-order.cy.ts::company user can create a recurring order at checkout and see it in the recurring orders list", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/manage-recurring-order.cy.ts::company user can cancel a recurring schedule (terminal action)", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/manage-recurring-order.cy.ts::company user can edit the schedule cadence and start date from the detail page", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/manage-recurring-order.cy.ts::company user can pause an active recurring schedule and resume it", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/manage-recurring-order.cy.ts::company user can skip the next occurrence of a recurring schedule", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/manage-recurring-order.cy.ts::detail page shows the schedule name, cadence, and status", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/manage-recurring-order.cy.ts::recurring orders list shows schedules of all statuses and shows actionable attention banner", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review-changes.cy.ts::added product quantity cannot be submitted as zero or negative", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review-changes.cy.ts::company user can add a product with merchant, address and shipment and place the order", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review-changes.cy.ts::company user can assign a cost center and budget on the review page and place the order", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review-changes.cy.ts::company user can change a line quantity and apply it to all future orders (standing scope)", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review-changes.cy.ts::company user can remove a line for this occurrence only and the standing schedule keeps the item", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review-changes.cy.ts::company user can substitute a discontinued product and place the order", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review-changes.cy.ts::line quantity cannot be submitted as zero or negative", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review-changes.cy.ts::substitute quantity cannot be submitted as zero or negative", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review-negative.cy.ts::blocks approval and surfaces an error when an added product is out of stock", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review-negative.cy.ts::blocks approval when all items are removed from the schedule", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review-negative.cy.ts::blocks approval when an added product quantity exceeds the available warehouse stock", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review-negative.cy.ts::surfaces a budget error on the detail page when the selected budget is exceeded", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review-routing.cy.ts::moves the schedule to review when a price drift is combined with a soft budget warning", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review-routing.cy.ts::moves the schedule to review when the budget blocks placement and no price drifted", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review-routing.cy.ts::places the order without review when the only checkout error is a soft budget warning", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review.cy.ts::order placed from review page for a bundle product shows history entry with view order link", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review.cy.ts::order placed from review page for a configurable bundle shows history entry with view order link", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review.cy.ts::order placed from review page for a configured product shows history entry with view order link", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review.cy.ts::order placed from review page for a merchant product offer shows history entry with view order link", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review.cy.ts::order placed from review page for a product with packaging unit shows history entry with view order link", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review.cy.ts::review page displays the schedule name, summary banner, back link, and footer total and user can go back to the details", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review.cy.ts::review page shows price change banner and detail page reflects updated price after acceptance", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
+{"id": "cypress:cypress/e2e/yves/order-experience-management/recurring-order-review.cy.ts::review page shows unavailable banner and detail page excludes removed item after acceptance", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/product-attribute-visibility/product-attribute-visibility.cy.ts::Should NOT show attribute badge (except PDP)", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/product-attribute-visibility/product-attribute-visibility.cy.ts::Should display attribute badges", "source_state": "ACTIVE", "target_state": "UNKNOWN"}
 {"id": "cypress:cypress/e2e/yves/product-attribute-visibility/product-attribute-visibility.cy.ts::Should not show internal attribute", "source_state": "ACTIVE", "target_state": "UNKNOWN"}

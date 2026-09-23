@@ -18,20 +18,20 @@ export class StoreCreatePage extends BackofficePage {
     this.repository.getDefaultLocaleSelect().select(store.locale, { force: true });
     this.repository.getLocaleSearchInput().clear().type(store.locale, { delay: 0 });
     this.interceptTable({ url: '/locale-gui/index/available-locale-table-selectable**' }).then(() => {
-      this.repository.getAvailableLocaleInput(store.locale).click({ force: true });
+      this.checkRelation(this.repository.getAvailableLocaleInput(store.locale));
     });
 
     this.repository.getCurrenciesTab().click();
     this.repository.getDefaultCurrencySelect().select(store.currency, { force: true });
     this.repository.getCurrencySearchInput().clear().type(store.currency);
     this.interceptTable({ url: '/currency-gui/index/available-currency-table-selectable**' }).then(() => {
-      this.repository.getAvailableCurrencyInput(store.currency).click({ force: true });
+      this.checkRelation(this.repository.getAvailableCurrencyInput(store.currency));
     });
 
     this.repository.getDisplayRegionsTab().click();
     this.repository.getCountrySearchInput().clear().type(store.country);
     this.interceptTable({ url: '/country-gui/index/available-country-table-selectable**' }).then(() => {
-      this.repository.getAvailableCountryInput(store.country).click({ force: true });
+      this.checkRelation(this.repository.getAvailableCountryInput(store.country));
     });
 
     this.repository.getStoreContextTabButton().click();
@@ -39,6 +39,12 @@ export class StoreCreatePage extends BackofficePage {
     this.repository.getTimezoneSelector().select(store.timezone);
 
     this.repository.getSaveButton().click();
+  };
+
+  // The table redraws when its request resolves, so a plain click can land on a row that is
+  // about to be replaced; `check` is idempotent and the assertion catches a click that lost.
+  private checkRelation = (input: Cypress.Chainable): void => {
+    input.check({ force: true }).should('be.checked');
   };
 }
 

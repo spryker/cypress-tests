@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { ReorderProductOffersDynamicFixtures, ReorderProductOfferStaticFixtures } from '@interfaces/yves';
 import { CartPage, CatalogPage, CustomerOverviewPage, OrderDetailsPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
@@ -50,13 +50,20 @@ describe(
         orderDetailsPage.reorderAll();
 
         cartPage.assertPageLocation();
-        cartPage.assertCartName(isB2c() ? 'In Your Cart' : `Reorder from Order ${orderReference}`);
+        cartPage
+          .getBody()
+          .contains(isB2c() ? 'In Your Cart' : `Reorder from Order ${orderReference}`)
+          .should('exist');
 
-        cy.get('body').contains(`${staticFixtures.soldByText} ${dynamicFixtures.merchant1.name}`).should('exist');
-        cy.get('body').contains(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
+        cartPage
+          .assertBodyContainsText(`${staticFixtures.soldByText} ${dynamicFixtures.merchant1.name}`)
+          .should('exist');
+        cartPage.assertBodyContainsText(dynamicFixtures.product1.localized_attributes[0].name).should('exist');
 
-        cy.get('body').contains(`${staticFixtures.soldByText} ${dynamicFixtures.merchant2.name}`).should('exist');
-        cy.get('body').contains(dynamicFixtures.product2.localized_attributes[0].name).should('exist');
+        cartPage
+          .assertBodyContainsText(`${staticFixtures.soldByText} ${dynamicFixtures.merchant2.name}`)
+          .should('exist');
+        cartPage.assertBodyContainsText(dynamicFixtures.product2.localized_attributes[0].name).should('exist');
       });
     });
 
@@ -78,12 +85,6 @@ describe(
         idCustomerAddress: dynamicFixtures.address.id_customer_address,
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
-    }
-
-    function getPaymentMethodBasedOnEnv(): string {
-      return ['b2c-mp', 'b2b-mp'].includes(Cypress.env('repositoryId'))
-        ? 'dummyMarketplacePaymentInvoice'
-        : 'dummyPaymentInvoice';
     }
 
     function isB2c(): boolean {

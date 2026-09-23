@@ -32,7 +32,6 @@ export class CheckoutAddressPage extends YvesPage {
     this.repository.getShippingAddressCityField().clear().type(checkoutAddress.city, { delay: 0 });
     this.repository.getShippingAddressBillingSameAsShippingCheckbox().check({ force: true });
 
-    // Setting optional fields
     this.repository.getShippingAddressCompanyField().clear().type(checkoutAddress.company, { delay: 0 });
     this.repository.getShippingAddressPhoneField().clear().type(checkoutAddress.phone, { delay: 0 });
 
@@ -50,10 +49,27 @@ export class CheckoutAddressPage extends YvesPage {
       .getMultiShipmentAddressItemElement()
       .children()
       .each(($addressItem, index) => {
-        if (
-          params?.skipServicePointAddressOverride &&
+        const hasServicePointUuid = Boolean(
           this.repository.getMultiShipmentAddressItemServicePointUuidValue?.($addressItem, index)
+        );
+
+        if (
+          params?.servicePointSelection &&
+          (hasServicePointUuid || $addressItem.text().includes(params.servicePointSelection.productName))
         ) {
+          this.selectServicePointForAddressItem($addressItem, index, params.servicePointSelection);
+
+          return;
+        }
+
+        if (params?.skipServicePointAddressOverride && hasServicePointUuid) {
+          // Pre-checked from the quote — assert instead of re-checking, so a hidden radio cannot mask it
+          if (params.shipmentType) {
+            this.repository
+              .getMultiShipmentAddressItemShipmentTypeRadio?.(index, params.shipmentType)
+              .should('be.checked');
+          }
+
           return;
         }
 
@@ -99,7 +115,6 @@ export class CheckoutAddressPage extends YvesPage {
           .clear()
           .type(checkoutAddress.city, { delay: 0 });
 
-        // Setting optional fields
         this.repository
           .getMultiShipmentAddressItemAddressCompanyField($addressItem, index)
           .clear()
@@ -174,6 +189,35 @@ export class CheckoutAddressPage extends YvesPage {
     this.repository.getNextButton().click();
   };
 
+  selectServicePointForAddressItem = (
+    $addressItem: JQuery<HTMLElement>,
+    index: number,
+    servicePointSelection: ServicePointSelection
+  ): void => {
+    if (this.isRepository('suite')) {
+      this.repository
+        .getMultiShipmentAddressItemShipmentTypeRadio?.(index, servicePointSelection.shipmentTypeKey)
+        .click({ force: true });
+    }
+
+    this.repository.getMultiShipmentAddressItemSelectServicePointButton?.($addressItem).first().click({ force: true });
+    this.repository.getServicePointFinderInput?.().clear().type(servicePointSelection.servicePointName);
+    this.repository.getServicePointFinderListItem?.(servicePointSelection.servicePointName).first().click();
+
+    this.repository.getMultiShipmentAddressItemServicePointUuidInput?.(index).should(($input: JQuery<HTMLElement>) => {
+      const hasUuid = Boolean(($input.val() as string) || '');
+      const itemText = $input.closest('[data-qa="component address-item-form-field-list"] > *').text() || '';
+      const showsLocation = itemText.includes(servicePointSelection.servicePointName);
+      expect(hasUuid || showsLocation, 'service point selection is applied to the address item').to.be.true;
+    });
+
+    if (this.isRepository('suite')) {
+      this.repository
+        .getMultiShipmentAddressItemShipmentTypeRadio?.(index, servicePointSelection.shipmentTypeKey)
+        .should('be.checked');
+    }
+  };
+
   fillBillingAddress = (): void => {
     const checkoutAddress = this.createDummyCheckoutAddress();
     this.repository.getSelectBillingAddressField().select('0', { force: true });
@@ -211,7 +255,15 @@ export class CheckoutAddressPage extends YvesPage {
 
 interface FillShippingAddressParams {
   idCustomerAddress?: number;
+  shipmentType?: string;
   skipServicePointAddressOverride?: boolean;
+  servicePointSelection?: ServicePointSelection;
+}
+
+interface ServicePointSelection {
+  productName: string;
+  shipmentTypeKey: string;
+  servicePointName: string;
 }
 
 interface Address {

@@ -1,0 +1,31 @@
+import { injectable } from 'inversify';
+import { RecurringOrderDetailRepository } from '../recurring-order-detail-repository';
+
+@injectable()
+export class SuiteRecurringOrderDetailRepository implements RecurringOrderDetailRepository {
+  getScheduleName = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-name"]');
+  getCadence = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-cadence"]');
+  getStatusBadge = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-status-badge"]');
+  getPauseButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-pause-button"]');
+  getResumeButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-resume-button"]');
+  getCancelButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-cancel-button"]');
+  getSkipButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-skip-button"]');
+  getReviewButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-review-button"]');
+  getSkipConfirmButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-skip-confirm-button"]');
+  getCancelConfirmButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-cancel-confirm-button"]');
+  getPauseConfirmButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-pause-confirm-button"]');
+  getResumeConfirmButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-resume-confirm-button"]');
+  getResumeDateInput = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-resume-date-input"]');
+  getHistoryViewOrderLink = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-history-view-order"]');
+  getDetailItems = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-detail-items"]');
+  getDetailItemQuantity = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-detail-item-quantity"]');
+  getHistoryViewLatestRecordStatus = (): Cypress.Chainable => cy.get('[data-qa="cell-status"]').first();
+  getFlashAlert = (): Cypress.Chainable => cy.get('[data-qa~="flash-message-alert"]');
+
+  getEditScheduleButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-edit-schedule-button"]');
+  getEditNameInput = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-edit-name-input"]');
+  getEditCadenceSelect = (): Cypress.Chainable =>
+    cy.get('[data-qa="recurring-order-edit-cadence-select"]').filter(':visible').first();
+  getEditStartDateInput = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-edit-date-input"]');
+  getEditConfirmButton = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-edit-confirm-button"]');
+}

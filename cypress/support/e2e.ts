@@ -51,7 +51,7 @@ export const retryableBefore = (fn: any) => {
 
 const loadFixture = (): void => {
   const currentSuite = Cypress.mocha.getRunner().suite.suites[0];
-  if (currentSuite.title.includes('[skip]')) {
+  if (currentSuite?.title.includes('[skip]')) {
     return;
   }
 

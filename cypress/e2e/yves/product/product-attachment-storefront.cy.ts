@@ -49,7 +49,7 @@ describe(
       });
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -83,7 +83,7 @@ describe(
       });
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -101,22 +101,24 @@ describe(
       productManagementEditPage.openMediaTab();
 
       // Arrange
+      // Clear the localized sections too: a retry inherits the DE/EN attachments saved by the
+      // previous attempt, and adding on top of them corrupts the form so the save never succeeds.
       productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.defaultLocaleName);
+      clearAllLocalizedAttachments(dynamicFixtures.localeDE.locale_name);
+      clearAllLocalizedAttachments(dynamicFixtures.localeEN.locale_name);
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.defaultGuide,
         index: 0,
         locale: staticFixtures.defaultLocaleName,
       });
 
-      productManagementEditPage.expandLocaleSection(dynamicFixtures.localeDE.locale_name);
-
+      // The DE/EN sections are already expanded by clearAllLocalizedAttachments above;
+      // the expand button is a toggle, so clicking it again would collapse them.
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.deGuide,
         index: 0,
         locale: dynamicFixtures.localeDE.locale_name,
       });
-
-      productManagementEditPage.expandLocaleSection(dynamicFixtures.localeEN.locale_name);
 
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.enGuide,
@@ -126,7 +128,7 @@ describe(
 
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
@@ -146,20 +148,29 @@ describe(
       productManagementEditPage.openMediaTab();
 
       // Arrange
+      // Seed both attachments here in one publish instead of leaning on the EN
+      // attachment left behind by the previous test: that cross-test coupling made
+      // length==2 race the sibling test's async publish (found 1, expected 2).
       productManagementEditPage.deleteAttachmentsForLocale(staticFixtures.defaultLocaleName);
+      clearAllLocalizedAttachments(dynamicFixtures.localeEN.locale_name);
       productManagementEditPage.addAttachment({
         ...staticFixtures.attachments.temporaryGuide,
         index: 0,
         locale: staticFixtures.defaultLocaleName,
       });
+      productManagementEditPage.addAttachment({
+        ...staticFixtures.attachments.enGuide,
+        index: 0,
+        locale: dynamicFixtures.localeEN.locale_name,
+      });
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
       visitProductDetailPage();
-      // en_US attachment from previous test + default "Temporary Guide"
+      // EN-locale "EN Guide" + default "Temporary Guide", both seeded above
       productPage.getAttachmentItems().should('have.length', 2);
 
       // Act
@@ -169,12 +180,19 @@ describe(
       clearAllLocalizedAttachments(dynamicFixtures.localeEN.locale_name);
       productManagementEditPage.save();
 
-      productManagementEditPage.verifySaveSuccess(dynamicFixtures.product.abstract_sku);
+      verifySaveSuccess(dynamicFixtures.product.abstract_sku);
 
       cy.runQueueWorker();
 
       // Assert
+      // The delete's publish->sync can still be draining after the single worker run above,
+      // so re-drain the queue on every reload until the attachment list clears from storage.
       visitProductDetailPage();
+      cy.url().then((url) => {
+        cy.reloadUntilGone(url, productPage.getAttachmentsListSelector(), 'body', 25, 5000, [
+          'console queue:worker:start --stop-when-empty',
+        ]);
+      });
       productPage.getAttachmentsList().should('not.exist');
     });
 
@@ -193,6 +211,10 @@ describe(
     function visitProductDetailPage(): void {
       catalogPage.visit();
       catalogPage.search({ query: dynamicFixtures.product.localized_attributes[0].name });
+    }
+
+    function verifySaveSuccess(sku: string): void {
+      productManagementEditPage.getSaveSuccessMessage(sku).should('be.visible');
     }
   }
 );

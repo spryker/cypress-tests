@@ -1,0 +1,45 @@
+import { injectable } from 'inversify';
+import { CategoryReSortRepository, SubCategoryPosition } from '../category-re-sort-repository';
+
+@injectable()
+export class B2cCategoryReSortRepository implements CategoryReSortRepository {
+  // The `.dd` container nestable is bound to; the floating `.dd-dragel` clone is appended here,
+  // outside `.dd-list`, so the drop-settle guard has to watch the container rather than the list.
+  private NESTABLE_CONTAINER = '#category-list';
+
+  private CATEGORY_LIST = `${this.NESTABLE_CONTAINER} > .dd-list`;
+
+  private SUB_CATEGORY_SELECTORS: Record<SubCategoryPosition, string> = {
+    first: `${this.CATEGORY_LIST} > li.dd-item:first-child`,
+    second: `${this.CATEGORY_LIST} > li.dd-item:nth-child(2)`,
+    last: `${this.CATEGORY_LIST} > li.dd-item:last-child`,
+  };
+
+  getNestableContainerSelector(): string {
+    return this.NESTABLE_CONTAINER;
+  }
+
+  getCategoryList(): Cypress.Chainable {
+    return cy.get(this.CATEGORY_LIST);
+  }
+
+  getSubCategorySelector(position: SubCategoryPosition): string {
+    return this.SUB_CATEGORY_SELECTORS[position];
+  }
+
+  getSubCategory(position: SubCategoryPosition): Cypress.Chainable {
+    return cy.get(this.getSubCategorySelector(position));
+  }
+
+  getSubCategoryHandle(position: SubCategoryPosition): Cypress.Chainable {
+    return cy.get(`${this.getSubCategorySelector(position)} > .dd-handle`);
+  }
+
+  getSaveButton(): Cypress.Chainable {
+    return cy.get('#save-button');
+  }
+
+  getAlertBox(): Cypress.Chainable {
+    return cy.get('.swal2-container');
+  }
+}

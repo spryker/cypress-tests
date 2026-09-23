@@ -1,0 +1,44 @@
+import { User } from './shared';
+
+export interface ServicePointManagementStaticFixtures {
+  defaultPassword: string;
+  servicePointAddress: {
+    address1: string;
+    address2: string;
+    city: string;
+    zipCode: string;
+  };
+}
+
+export interface ServicePointManagementDynamicFixtures {
+  rootUser: User;
+  store: {
+    name: string;
+  };
+  servicePoint: {
+    id_service_point: number;
+    name: string;
+    key: string;
+  };
+  inactiveServicePoint: {
+    id_service_point: number;
+    name: string;
+    key: string;
+  };
+  country: {
+    name: string;
+  };
+  serviceType: {
+    name: string;
+  };
+  service: {
+    key: string;
+  };
+  product: {
+    sku: string;
+  };
+  productOffer: {
+    id_product_offer: number;
+    product_offer_reference: string;
+  };
+}

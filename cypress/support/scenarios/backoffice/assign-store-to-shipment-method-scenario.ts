@@ -20,13 +20,12 @@ export class AssignStoreToShipmentMethodScenario {
             row.find(this.shipmentMethodListPage.getMethodKeyRowSelector()).text().trim() === params.shipmentMethodKey,
         ],
       })
-      .then(($row) => {
-        if ($row === null) {
+      .then((getRow) => {
+        if (!getRow) {
           return;
         }
 
-        cy.wrap($row).find(this.shipmentMethodListPage.getEditButtonSelector()).as('editButton');
-        cy.get('@editButton').click();
+        getRow().find(this.shipmentMethodListPage.getEditButtonSelector()).click();
 
         this.shipmentMethodEditPage.assignAllAvailableStore();
         this.shipmentMethodEditPage.addPrices();
