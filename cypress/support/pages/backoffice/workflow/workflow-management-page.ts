@@ -28,11 +28,14 @@ export class WorkflowManagementPage extends BackofficePage {
   createVersion = (params: { name: string; initialState: string; definition: string }): void => {
     this.repository.getProcessRowVersionsButton(params.name).click();
     this.repository.getCreateVersionButton().click();
-    this.repository.getVersionInitialStateInput().clear().type(params.initialState);
+    this.repository.getAdvancedXmlToggle().click();
     this.repository
-      .getVersionDefinitionInput()
+      .getAdvancedXmlEditor()
       .clear()
       .type(params.definition, { parseSpecialCharSequences: false, delay: 0 });
+
+    this.repository.getCanvasStateByLabel(params.initialState).click();
+    this.repository.getStateInitialCheckbox().check();
   };
 
   validateDefinition = (): void => {

@@ -41,8 +41,8 @@ export interface NavigationTreeRepository {
   getAddChildNodeButtonSelector(): string;
   getLocalizedTitleSelector(index: number): string;
   getLocalizedExternalUrlSelector(index: number): string;
-  getLocalizedCategoryUrlSelector(index: number): string;
-  getLocalizedCmsPageUrlSelector(index: number): string;
+  getLocalizedCategoryUrlSelector(localeName: string): string;
+  getLocalizedCmsPageUrlSelector(localeName: string): string;
   getCreateChildNodeHeading(): string;
   getEditNodeHeading(): string;
   getNodeCreateSuccessPattern(): RegExp;

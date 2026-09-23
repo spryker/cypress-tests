@@ -135,12 +135,12 @@ export class B2bMpNavigationTreeRepository implements NavigationTreeRepository {
     return `[name="navigation_node[navigation_node_localized_attributes][${index}][external_url]"]`;
   }
 
-  getLocalizedCategoryUrlSelector(index: number): string {
-    return `[name="navigation_node[navigation_node_localized_attributes][${index}][category_url]"]`;
+  getLocalizedCategoryUrlSelector(localeName: string): string {
+    return `#localized_attributes_container-${localeName} [name$="[category_url]"]`;
   }
 
-  getLocalizedCmsPageUrlSelector(index: number): string {
-    return `[name="navigation_node[navigation_node_localized_attributes][${index}][cms_page_url]"]`;
+  getLocalizedCmsPageUrlSelector(localeName: string): string {
+    return `#localized_attributes_container-${localeName} [name$="[cms_page_url]"]`;
   }
 
   getCreateChildNodeHeading(): string {

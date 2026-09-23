@@ -13,6 +13,7 @@ export class SuiteRecurringOrderReviewRepository implements RecurringOrderReview
   getModalSubstitutedCount = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-review-modal-substituted"]');
   getModalAddedCount = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-review-modal-added"]');
   getFlaggedItems = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-review-flagged-items"]');
+  getBlockingErrors = (): Cypress.Chainable => cy.get('[data-qa="recurring-order-review-blocking-errors"]');
   getScopeOption = (scope: string): Cypress.Chainable => cy.get(`[data-qa="recurring-order-review-scope-${scope}"]`);
   getFlashAlert = (): Cypress.Chainable => cy.get('[data-qa~="flash-message-alert"]');
 

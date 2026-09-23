@@ -9,6 +9,7 @@ export interface RecurringOrderReviewRepository {
   getModalSubstitutedCount(): Cypress.Chainable;
   getModalAddedCount(): Cypress.Chainable;
   getFlaggedItems(): Cypress.Chainable;
+  getBlockingErrors(): Cypress.Chainable;
   getScopeOption(scope: string): Cypress.Chainable;
   getFlashAlert(): Cypress.Chainable;
 

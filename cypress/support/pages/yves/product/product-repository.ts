@@ -12,6 +12,7 @@ export interface ProductRepository {
   getRemoveFromComparisonListSuccessMessage(): string;
   getAddToComparisonListLimitExceededErrorMessage(): string;
   getShipmentTypeRadioButton(shipmentTypeName: string): Cypress.Chainable;
+  getServicePointBlockLoader(): Cypress.Chainable;
   getSelectServicePointButton(): Cypress.Chainable;
   getSelectAssetButton(): Cypress.Chainable;
   getSelectAssetPopup(): Cypress.Chainable;

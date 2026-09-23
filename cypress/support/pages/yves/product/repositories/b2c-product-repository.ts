@@ -18,6 +18,8 @@ export class B2cProductRepository implements ProductRepository {
   getAddToComparisonListLimitExceededErrorMessage = (): string => 'The limit has already been reached';
   getShipmentTypeRadioButton = (shipmentTypeName: string): Cypress.Chainable =>
     cy.contains('[data-qa="component radio shipment_type_uuid"]', shipmentTypeName).find('input');
+  getServicePointBlockLoader = (): Cypress.Chainable =>
+    cy.get('ajax-loader[provider-class-name="js-service-point-shipment-types-provider"]');
   getSelectServicePointButton = (): Cypress.Chainable =>
     cy.get('[data-qa="component ssp-service-point-selector"] button');
   getSelectAssetButton = (): Cypress.Chainable => cy.get('[data-qa="asset-selector-trigger"]');

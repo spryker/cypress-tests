@@ -106,12 +106,19 @@ export class NavigationTreePage extends BackofficePage {
 
   updateNodeToCategoryType = (categoryUrlEn: string, categoryUrlDe: string): void => {
     this.selectNodeType('category');
-    // The category-node form requires a title per locale. The seeded node only carries an en_US title
-    // (the fixture helper is single-locale), so set both here to avoid a "should not be blank" reject.
     this.fillLocalizedTitles('foo');
-    this.getNodeFormBody().find(this.repository.getLocalizedCategoryUrlSelector(0)).clear().type(categoryUrlEn);
-    this.getNodeFormBody().find(this.repository.getLocalizedCategoryUrlSelector(1)).clear().type(categoryUrlDe);
+    this.typeLocalizedUrl(
+      this.repository.getLocalizedCategoryUrlSelector.bind(this.repository),
+      'en_US',
+      categoryUrlEn
+    );
+    this.typeLocalizedUrl(
+      this.repository.getLocalizedCategoryUrlSelector.bind(this.repository),
+      'de_DE',
+      categoryUrlDe
+    );
     this.submitNodeForm();
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Post-submit success guard; the spec asserts the outcome separately.
     this.getNodeFormBody().invoke('text').should('match', this.repository.getNodeUpdateSuccessPattern());
   };
 
@@ -123,12 +130,8 @@ export class NavigationTreePage extends BackofficePage {
   createChildNodeWithCmsPageType = (title: string, cmsPageUrlEn: string, cmsPageUrlDe: string): void => {
     this.selectNodeType('cms_page');
     this.fillLocalizedTitles(title);
-    // In the create-child form the locale sections render de_DE first (index 0) then en_US (index 1) —
-    // the reverse of the edit form. cms_page_url is validated against the locale, so the URLs must be
-    // placed by locale, not by a fixed en/de index order, or the server rejects them as "not valid
-    // for the given locale". (category_url isn't locale-checked, which is why the edit test tolerated it.)
-    this.getNodeFormBody().find(this.repository.getLocalizedCmsPageUrlSelector(0)).clear().type(cmsPageUrlDe);
-    this.getNodeFormBody().find(this.repository.getLocalizedCmsPageUrlSelector(1)).clear().type(cmsPageUrlEn);
+    this.typeLocalizedUrl(this.repository.getLocalizedCmsPageUrlSelector.bind(this.repository), 'en_US', cmsPageUrlEn);
+    this.typeLocalizedUrl(this.repository.getLocalizedCmsPageUrlSelector.bind(this.repository), 'de_DE', cmsPageUrlDe);
     this.checkNodeIsActive();
     this.submitNodeForm();
     this.assertNodeCreateSuccess();
@@ -240,6 +243,16 @@ export class NavigationTreePage extends BackofficePage {
   private fillLocalizedField(selectorFor: (index: number) => string, value: string): void {
     this.getNodeFormBody().find(selectorFor(0)).clear({ force: true }).type(value);
     this.getNodeFormBody().find(selectorFor(1)).clear({ force: true }).type(value);
+  }
+
+  private typeLocalizedUrl(selectorFor: (localeName: string) => string, localeName: string, value: string): void {
+    const selector = selectorFor(localeName);
+    this.getNodeFormBody().find(selector).clear({ force: true }).type(value, { force: true });
+    // Guard that the URL landed in THIS locale's field: the node form issues a delayed second render
+    // after the node-type widgets init and can drop the typed value into the wrong locale. This .should()
+    // is a synchronization guard in a method that also acts (it types above), so Cypress retries the
+    // fresh-body lookup + type until the value is present in the target locale's field.
+    this.getNodeFormBody().find(selector).should('have.value', value);
   }
 
   private checkNodeIsActive(): void {

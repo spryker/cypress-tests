@@ -1,4 +1,4 @@
-import { REPOSITORIES, autoWired } from '@utils';
+import { REPOSITORIES, autoWired, getPaymentMethodBasedOnEnv } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { YvesPage } from '@pages/yves';
@@ -10,6 +10,17 @@ export class CheckoutPaymentPage extends YvesPage {
   @inject(REPOSITORIES.CheckoutPaymentRepository) private repository: CheckoutPaymentRepository;
 
   protected PAGE_URL = '/checkout/payment';
+
+  // Marketplace repositories ship only the marketplace invoice method, the others only the dummy invoice one.
+  setDefaultPaymentMethod = (): void => {
+    if (getPaymentMethodBasedOnEnv() === 'dummyMarketplacePaymentInvoice') {
+      this.setDummyMarketplacePaymentMethod();
+
+      return;
+    }
+
+    this.setDummyPaymentMethod();
+  };
 
   setDummyPaymentMethod = (): void => {
     this.repository.getDummyPaymentInvoiceRadio().click({ force: true });
@@ -36,14 +47,6 @@ export class CheckoutPaymentPage extends YvesPage {
     if (!this.isRepository('suite', 'b2b-mp', 'b2b')) {
       this.repository.getDummyMarketplacePaymentInvoiceDateField().clear().type('12.12.1999');
     }
-
-    // a workaround for the public demo where we still have the DOB field
-    // should be removed in scope of https://spryker.atlassian.net/browse/CC-39665
-    cy.url().then((url) => {
-      if (url.includes('b2b-marketplace-eu.demo-spryker.com')) {
-        this.repository.getDummyMarketplacePaymentInvoiceDateField().clear().type('12.12.1999');
-      }
-    });
 
     this.repository.getGoToSummaryButton().click();
   };
