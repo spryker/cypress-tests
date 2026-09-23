@@ -49,6 +49,7 @@ domains:
     description: "Shopping lists and shopping-list items, including sharing and list-to-cart flows."
     aliases:
       robot:       [shopping_list]
+      cypress:     [shopping-list]
   - domain: wishlist
     description: "Wishlists and wishlist items on storefront and API."
     aliases:
