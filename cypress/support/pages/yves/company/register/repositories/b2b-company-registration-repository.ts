@@ -15,7 +15,7 @@ export class B2bCompanyRegistrationRepository implements CompanyRegistrationRepo
   // The checkbox atom renders an outer span carrying the same name/id, so the selector must pin the input.
   getAcceptTermsCheckbox = (): Cypress.Chainable => cy.get('input[name="company_register_form[accept_terms]"]');
   getRegistrationForm = (): Cypress.Chainable => cy.get('form[name="company_register_form"]');
-  getPageTitle = (): Cypress.Chainable => cy.get('h2.title');
+  getPageTitle = (): Cypress.Chainable => cy.get('data-qa="title"');
   getPageTitleText = (): string => 'Create account';
   getRegistrationCompletedMessage = (): string =>
     'Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.';
