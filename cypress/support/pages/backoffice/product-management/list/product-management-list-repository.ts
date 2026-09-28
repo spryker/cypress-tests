@@ -14,7 +14,9 @@ export class ProductManagementListRepository {
   getFilterStoresSelect = (): Cypress.Chainable => cy.get('#table_filter_form_stores').next();
   getSelectOption = (): Cypress.Chainable => cy.get('.select2-results__option');
   getFilterButton = (): Cypress.Chainable =>
-    cy.get('#product-management-filter-form button:not(.select2-selection__choice__remove)');
+    cy.get(
+      '#product-management-filter-form button:not(.select2-selection__choice__remove):not(.select2-selection__clear)'
+    );
   getTableRows = (): Cypress.Chainable => cy.get('.dataTable tbody tr');
   getFilterSearchInput = (): Cypress.Chainable => cy.get('.dt-search [type=search]');
   getResetButton = (): Cypress.Chainable => cy.get('#product-management-filter-form a[href="/product-management"]');
