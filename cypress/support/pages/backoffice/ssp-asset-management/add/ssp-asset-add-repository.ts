@@ -9,7 +9,7 @@ export class SspAssetAddRepository {
   getStatusSelect = (): Cypress.Chainable => cy.get('select[name="assetForm[status]"]');
   getNoteTextarea = (): Cypress.Chainable => cy.get('textarea[name="assetForm[note]"]');
 
-  getSearchFieldSelector = (): string => 'input.select2-search__field';
+  getSearchFieldSelector = (): string => '.select2-search__field';
   getBusinessUnitOwnerSearchField = (): Cypress.Chainable =>
     cy.get('[aria-controls="select2-assetForm_companyBusinessUnit-results"]');
   getDropdownOption = (): Cypress.Chainable => cy.get('.select2-results__option');
