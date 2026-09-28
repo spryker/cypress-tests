@@ -16,7 +16,8 @@ export class ProductOfferCreateRepository {
   getIsNeverOfStockCheckbox = (): Cypress.Chainable => cy.get('[name="create_offer_form[isNeverOutOfStock]"]');
   getShipmentTypesField = (): Cypress.Chainable => cy.get('[name="create_offer_form[shipmentTypes][]"]');
 
-  getSaveButton = (): Cypress.Chainable => cy.get('[name="create_offer_form"]').find('button');
+  getSaveButton = (): Cypress.Chainable =>
+    cy.get('[name="create_offer_form"]').find('button:not(.select2-selection__choice__remove)');
 
   getSuccessMessageBox = (): Cypress.Chainable => cy.get('.alert-success', { timeout: 10000 });
 
