@@ -1,0 +1,140 @@
+{
+  "container.get": {
+    "canonical_name": "get_container_element",
+    "kind": "ui",
+    "description": "Locate a child element scoped within a container element.",
+    "migration_note": ""
+  },
+  "to.equal": {
+    "canonical_name": "assert_equals",
+    "kind": "assert",
+    "description": "Assert deep equality between actual and expected values.",
+    "migration_note": ""
+  },
+  "foundRequest.should": {
+    "canonical_name": "assert_intercepted_request",
+    "kind": "assert",
+    "description": "Assert on a captured intercepted network request.",
+    "migration_note": ""
+  },
+  "merchants.forEach": {
+    "canonical_name": "for_each_merchant",
+    "kind": "data",
+    "description": "Iterate over a collection of merchants.",
+    "migration_note": ""
+  },
+  "files.map": {
+    "canonical_name": "map_files",
+    "kind": "data",
+    "description": "Transform a list of files into a derived collection.",
+    "migration_note": ""
+  },
+  "productOffers.children": {
+    "canonical_name": "get_product_offer_children",
+    "kind": "data",
+    "description": "Read child nodes of a product offers structure.",
+    "migration_note": ""
+  },
+  "productOffer.find": {
+    "canonical_name": "find_product_offer",
+    "kind": "data",
+    "description": "Find a single product offer within a collection.",
+    "migration_note": ""
+  },
+  "commentsToAdd.forEach": {
+    "canonical_name": "for_each_comment",
+    "kind": "data",
+    "description": "Iterate over comments queued to be added.",
+    "migration_note": ""
+  },
+  "body.text": {
+    "canonical_name": "get_response_body_text",
+    "kind": "data",
+    "description": "Read the text content of a response or element body.",
+    "migration_note": ""
+  },
+  "text.includes": {
+    "canonical_name": "assert_text_includes",
+    "kind": "assert",
+    "description": "Check whether a text string contains a substring.",
+    "migration_note": ""
+  },
+  "to.eq": {
+    "canonical_name": "assert_equals",
+    "kind": "assert",
+    "description": "Assert strict equality between actual and expected values.",
+    "migration_note": ""
+  },
+  "data.some": {
+    "canonical_name": "any_element_matches",
+    "kind": "data",
+    "description": "Test whether any element in a collection satisfies a predicate.",
+    "migration_note": ""
+  },
+  "to.include": {
+    "canonical_name": "assert_includes",
+    "kind": "assert",
+    "description": "Assert that a value or collection includes the expected item.",
+    "migration_note": ""
+  },
+  "searchTermValid.toLowerCase": {
+    "canonical_name": "to_lower_case",
+    "kind": "utility",
+    "description": "Normalize a string to lower case.",
+    "migration_note": ""
+  },
+  "Date.now": {
+    "canonical_name": "current_timestamp",
+    "kind": "utility",
+    "description": "Return the current epoch timestamp in milliseconds.",
+    "migration_note": ""
+  },
+  "el.val": {
+    "canonical_name": "get_element_value",
+    "kind": "ui",
+    "description": "Read the value of a form element.",
+    "migration_note": ""
+  },
+  "checkbox.is": {
+    "canonical_name": "get_checkbox_state",
+    "kind": "ui",
+    "description": "Test the state of a checkbox (checked/disabled/etc.).",
+    "migration_note": ""
+  },
+  "statuses.forEach": {
+    "canonical_name": "for_each_status",
+    "kind": "data",
+    "description": "Iterate over a collection of statuses.",
+    "migration_note": ""
+  },
+  "status.toLowerCase": {
+    "canonical_name": "to_lower_case",
+    "kind": "utility",
+    "description": "Normalize a status string to lower case.",
+    "migration_note": ""
+  },
+  "businessUnits.forEach": {
+    "canonical_name": "for_each_business_unit",
+    "kind": "data",
+    "description": "Iterate over a collection of business units.",
+    "migration_note": ""
+  },
+  "url.includes": {
+    "canonical_name": "assert_url_includes",
+    "kind": "assert",
+    "description": "Check whether a URL contains the expected substring.",
+    "migration_note": ""
+  },
+  "assert.isTrue": {
+    "canonical_name": "assert_true",
+    "kind": "assert",
+    "description": "Assert that a value is strictly true.",
+    "migration_note": ""
+  },
+  "uuid.toString": {
+    "canonical_name": "to_string",
+    "kind": "utility",
+    "description": "Coerce a value (UUID) to its string representation.",
+    "migration_note": ""
+  }
+}
