@@ -1,0 +1,92 @@
+{
+  "cy.contains": {
+    "canonical_name": "assert_contains",
+    "kind": "assert",
+    "description": "Assert that the page or an element contains the given text.",
+    "migration_note": ""
+  },
+  "cy.get": {
+    "canonical_name": "select_element",
+    "kind": "ui",
+    "description": "Locate a DOM element by selector for further interaction.",
+    "migration_note": ""
+  },
+  "cy.url": {
+    "canonical_name": "save_current_url",
+    "kind": "nav",
+    "description": "Read or assert the current browser URL.",
+    "migration_note": "Robot: save_current_url"
+  },
+  "cy.runQueueWorker": {
+    "canonical_name": "run_publish_and_sync",
+    "kind": "setup",
+    "description": "Drain the queue worker to flush publish-and-sync events.",
+    "migration_note": "Robot: run_publish_and_sync"
+  },
+  "cy.wait": {
+    "canonical_name": "wait_for_element_visible",
+    "kind": "ui",
+    "description": "Pause execution until an element, alias, or timeout resolves.",
+    "migration_note": "Robot: wait_for_element_visible"
+  },
+  "cy.visit": {
+    "canonical_name": "open_url",
+    "kind": "nav",
+    "description": "Open a storefront URL in the browser.",
+    "migration_note": "Robot: open_url"
+  },
+  "cy.window": {
+    "canonical_name": "get_window_object",
+    "kind": "ui",
+    "description": "Access the browser window object of the current page.",
+    "migration_note": ""
+  },
+  "cy.visitBackoffice": {
+    "canonical_name": "navigate_to_url",
+    "kind": "nav",
+    "description": "Open a Backoffice URL in the browser.",
+    "migration_note": "Robot: navigate_to_url"
+  },
+  "cy.wrap": {
+    "canonical_name": "wrap_value",
+    "kind": "data",
+    "description": "Wrap a plain value into a chainable subject for assertions.",
+    "migration_note": ""
+  },
+  "cy.request": {
+    "canonical_name": "send_get_request",
+    "kind": "api",
+    "description": "Send an HTTP API request and capture the response.",
+    "migration_note": "Robot: send_get_request"
+  },
+  "cy.reload": {
+    "canonical_name": "reload_page",
+    "kind": "nav",
+    "description": "Reload the current page.",
+    "migration_note": "Robot: reload_page"
+  },
+  "cy.runCliCommands": {
+    "canonical_name": "run_cli_command",
+    "kind": "setup",
+    "description": "Run one or more CLI/console commands against the environment.",
+    "migration_note": ""
+  },
+  "cy.location": {
+    "canonical_name": "get_location_part",
+    "kind": "nav",
+    "description": "Read a part of the current URL (pathname, hash, search).",
+    "migration_note": ""
+  },
+  "cy.intercept": {
+    "canonical_name": "intercept_request",
+    "kind": "api",
+    "description": "Stub or spy on a network request matching a route.",
+    "migration_note": ""
+  },
+  "cy.log": {
+    "canonical_name": "log_message",
+    "kind": "setup",
+    "description": "Emit a message to the test log.",
+    "migration_note": "Robot: log_message"
+  }
+}
