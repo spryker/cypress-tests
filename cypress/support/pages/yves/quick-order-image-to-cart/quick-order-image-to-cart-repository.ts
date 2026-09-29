@@ -51,7 +51,8 @@ export class QuickOrderImageToCartRepository {
 
   getErrorDropzoneSelector = (): string => '[data-qa="component quick-order-image-to-cart"] .input-dropzone--error';
 
-  getErrorMessageSelector = (): string => '[data-qa="component quick-order-image-to-cart"] .list--alert .list__item';
+  getErrorMessageSelector = (): string =>
+    '[data-qa="component quick-order-image-to-cart"] :is(.list--error, .list--alert) .list__item';
 
   getQuickOrderRowsSelector = (): string => '.js-quick-order-form__rows';
 
