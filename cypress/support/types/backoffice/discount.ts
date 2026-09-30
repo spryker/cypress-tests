@@ -12,12 +12,3 @@ export interface DiscountCreateStaticFixtures {
 export interface DiscountCreateDynamicFixtures {
   rootUser: User;
 }
-
-export interface DiscountListStaticFixtures {
-  defaultPassword: string;
-}
-
-export interface DiscountListDynamicFixtures {
-  rootUser: User;
-  discount: Discount;
-}

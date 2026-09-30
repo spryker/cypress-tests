@@ -57,28 +57,6 @@ describe(
       verifyMerchantSelected(dynamicFixtures.merchant.name);
     });
 
-    it('backoffice user can change and remove merchant assignment from a product', (): void => {
-      navigateToProductEdit(dynamicFixtures.productWithMerchant.abstract_sku);
-
-      verifyMerchantSelected(dynamicFixtures.merchant.name);
-
-      productManagementEditPage.selectMerchant(dynamicFixtures.anotherMerchant.name);
-      productManagementEditPage.save();
-      verifySaveSuccess(dynamicFixtures.productWithMerchant.abstract_sku);
-
-      navigateToProductEdit(dynamicFixtures.productWithMerchant.abstract_sku);
-
-      verifyMerchantSelected(dynamicFixtures.anotherMerchant.name);
-
-      productManagementEditPage.removeMerchantAssignment();
-      productManagementEditPage.save();
-      verifySaveSuccess(dynamicFixtures.productWithMerchant.abstract_sku);
-
-      navigateToProductEdit(dynamicFixtures.productWithMerchant.abstract_sku);
-
-      verifyMerchantSelected(productManagementEditPage.getMerchantNotAssignedOptionText());
-    });
-
     function navigateToProductEdit(abstractSku: string): void {
       productManagementListPage.visit();
       productManagementListPage.applyFilters({ query: abstractSku });

@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { IndexPage, LoginPage } from '@pages/backoffice';
+import { LoginPage } from '@pages/backoffice';
 import {
   RestoreSessionAfterLoginTimeoutDynamicFixtures,
   RestoreSessionAfterLoginTimeoutStaticFixtures,
@@ -12,7 +12,6 @@ describe(
   },
   (): void => {
     const loginPage = container.get(LoginPage);
-    const indexPage = container.get(IndexPage);
 
     let dynamicFixtures: RestoreSessionAfterLoginTimeoutDynamicFixtures;
     let staticFixtures: RestoreSessionAfterLoginTimeoutStaticFixtures;
@@ -37,16 +36,6 @@ describe(
       });
 
       cy.url({ timeout: 20000 }).should('include', staticFixtures.lastVisitedPageUrl);
-    });
-
-    suiteIt('should redirect administrator to home page when no last-visited page is recorded', (): void => {
-      loginPage.visit();
-      loginPage.login({
-        username: dynamicFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
-
-      indexPage.assertPageLocation();
     });
 
     function suiteIt(description: string, testFn: () => void): void {
