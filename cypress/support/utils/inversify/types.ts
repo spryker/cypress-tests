@@ -50,9 +50,7 @@ export const enum REPOSITORIES {
   YvesRecurringOrderListRepository = 'YvesRecurringOrderListRepository',
   YvesRecurringOrderDetailRepository = 'YvesRecurringOrderDetailRepository',
   YvesRecurringOrderReviewRepository = 'YvesRecurringOrderReviewRepository',
-  TaxRateRepository = 'TaxRateRepository',
   DiscountRepository = 'DiscountRepository',
-  FileManagerRepository = 'FileManagerRepository',
   ProductCategoryAssignRepository = 'ProductCategoryAssignRepository',
   ProductOptionRepository = 'ProductOptionRepository',
   RefundRepository = 'RefundRepository',
@@ -61,6 +59,5 @@ export const enum REPOSITORIES {
   CartUpSellingProductsRepository = 'CartUpSellingProductsRepository',
   ProductRelationRepository = 'ProductRelationRepository',
   CategoryCreateRepository = 'CategoryCreateRepository',
-  CategoryEditRepository = 'CategoryEditRepository',
   CategoryReSortRepository = 'CategoryReSortRepository',
 }

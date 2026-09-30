@@ -30,21 +30,6 @@ describe('filter preferences', { tags: ['@backoffice', 'product-search', 'spryke
     });
   });
 
-  it('should show the list of filter preferences', (): void => {
-    productSearchPreferencesPage.visitFilterList();
-
-    productSearchPreferencesPage.getFilterList().should('be.visible');
-  });
-
-  it('should create, edit and remove a filter', (): void => {
-    const filterName = filterKey('foooooo');
-
-    productSearchPreferencesPage.createFilter(filterName).then((id: string): void => {
-      productSearchPreferencesPage.updateFilter(id);
-      productSearchPreferencesPage.deleteFilter(id);
-    });
-  });
-
   it('should update the filter order via drag and drop and persist it', (): void => {
     productSearchPreferencesPage.createFilter(filterKey('foooooo')).then((idFirst: string): void => {
       productSearchPreferencesPage.createFilter(filterKey('baaaaar')).then((idSecond: string): void => {

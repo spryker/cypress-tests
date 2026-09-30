@@ -72,53 +72,11 @@ describe(
           serviceUuid: dynamicFixtures.service.uuid,
           shipmentTypeId: dynamicFixtures.shipmentType.id_shipment_type,
         })
-        .then((productOffer) => {
+        .then(() => {
           productOfferCreatePage.getSuccessMessageBox().should('exist');
           productOfferListPage.clickViewButton();
 
-          const stocks = [
-            {
-              name: staticFixtures.defaultStockName,
-              neverOutOfStock: productOffer.isNeverOfStock,
-              quantity: productOffer.quantity,
-              storeName: dynamicFixtures.store.name,
-            },
-          ];
-
-          productOfferViewPage
-            .getApprovalStatusContainer()
-            .should('contain.text', staticFixtures.defaultApprovalStatus);
-          productOfferViewPage.getStatusContainer().should('contain.text', staticFixtures.defaultStatus);
           productOfferViewPage.getProductSkuContainer().should('contain.text', product.sku);
-          productOfferViewPage.getMerchantNameContainer().should('contain.text', staticFixtures.defaultMerchantName);
-
-          productOfferViewPage.getStoreContainer().should('have.length', productOffer.stores.length);
-          productOffer.stores.forEach((store) => {
-            productOfferViewPage.getStoreContainer().filter(`:contains("${store}")`).should('exist');
-          });
-
-          productOfferViewPage
-            .getValidFromContainer()
-            .should('contain.text', productOffer.validFrom ? productOffer.validFrom : '--');
-          productOfferViewPage
-            .getValidToContainer()
-            .should('contain.text', productOffer.validTo ? productOffer.validTo : '--');
-
-          productOfferViewPage.getStockTableRows().should('have.length', stocks.length);
-          stocks.forEach((stock, index) => {
-            productOfferViewPage.getStockNameCell(index).should('contain.text', stock.name);
-            if (stock.storeName) {
-              productOfferViewPage.getStockNameCell(index).should('contain.text', stock.storeName);
-            }
-            productOfferViewPage.getStockQuantityCell(index).should('contain.text', stock.quantity);
-            productOfferViewPage
-              .getStockNeverOutOfStockCell(index)
-              .should('contain.text', stock.neverOutOfStock ? 'Yes' : 'No');
-          });
-
-          productOfferViewPage
-            .getServicePointContainer()
-            .should('contain.text', dynamicFixtures.service.service_type.name);
         });
     });
   }

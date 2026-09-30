@@ -207,11 +207,6 @@ import { B2bMpRecurringOrderListRepository } from '../../pages/yves/recurring-or
 import { SuiteRecurringOrderDetailRepository } from '../../pages/yves/recurring-orders/detail/repositories/suite-recurring-order-detail-repository';
 import { B2bMpRecurringOrderDetailRepository } from '../../pages/yves/recurring-orders/detail/repositories/b2b-mp-recurring-order-detail-repository';
 import { SuiteRecurringOrderReviewRepository } from '../../pages/yves/recurring-orders/review/repositories/suite-recurring-order-review-repository';
-import { SuiteTaxRateRepository } from '../../pages/backoffice/tax/repositories/suite-tax-rate-repository';
-import { B2cTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2c-tax-rate-repository';
-import { B2bTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2b-tax-rate-repository';
-import { B2cMpTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2c-mp-tax-rate-repository';
-import { B2bMpTaxRateRepository } from '../../pages/backoffice/tax/repositories/b2b-mp-tax-rate-repository';
 import { SuiteProductSearchPreferencesRepository } from '../../pages/backoffice/product-search/repositories/suite-product-search-preferences-repository';
 import { B2cProductSearchPreferencesRepository } from '../../pages/backoffice/product-search/repositories/b2c-product-search-preferences-repository';
 import { B2bProductSearchPreferencesRepository } from '../../pages/backoffice/product-search/repositories/b2b-product-search-preferences-repository';
@@ -222,11 +217,6 @@ import { B2cDiscountRepository } from '../../pages/backoffice/discount/repositor
 import { B2bDiscountRepository } from '../../pages/backoffice/discount/repositories/b2b-discount-repository';
 import { B2cMpDiscountRepository } from '../../pages/backoffice/discount/repositories/b2c-mp-discount-repository';
 import { B2bMpDiscountRepository } from '../../pages/backoffice/discount/repositories/b2b-mp-discount-repository';
-import { SuiteFileManagerRepository } from '../../pages/backoffice/file-manager/repositories/suite-file-manager-repository';
-import { B2cFileManagerRepository } from '../../pages/backoffice/file-manager/repositories/b2c-file-manager-repository';
-import { B2bFileManagerRepository } from '../../pages/backoffice/file-manager/repositories/b2b-file-manager-repository';
-import { B2cMpFileManagerRepository } from '../../pages/backoffice/file-manager/repositories/b2c-mp-file-manager-repository';
-import { B2bMpFileManagerRepository } from '../../pages/backoffice/file-manager/repositories/b2b-mp-file-manager-repository';
 import { SuiteProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/suite-product-category-assign-repository';
 import { B2cProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/b2c-product-category-assign-repository';
 import { B2bProductCategoryAssignRepository } from '../../pages/backoffice/product-category/repositories/b2b-product-category-assign-repository';
@@ -262,11 +252,6 @@ import { B2cCategoryCreateRepository } from '../../pages/backoffice/catalog/cate
 import { B2bCategoryCreateRepository } from '../../pages/backoffice/catalog/category/create/repositories/b2b-category-create-repository';
 import { B2cMpCategoryCreateRepository } from '../../pages/backoffice/catalog/category/create/repositories/b2c-mp-category-create-repository';
 import { B2bMpCategoryCreateRepository } from '../../pages/backoffice/catalog/category/create/repositories/b2b-mp-category-create-repository';
-import { SuiteCategoryEditRepository } from '../../pages/backoffice/catalog/category/edit/repositories/suite-category-edit-repository';
-import { B2cCategoryEditRepository } from '../../pages/backoffice/catalog/category/edit/repositories/b2c-category-edit-repository';
-import { B2bCategoryEditRepository } from '../../pages/backoffice/catalog/category/edit/repositories/b2b-category-edit-repository';
-import { B2cMpCategoryEditRepository } from '../../pages/backoffice/catalog/category/edit/repositories/b2c-mp-category-edit-repository';
-import { B2bMpCategoryEditRepository } from '../../pages/backoffice/catalog/category/edit/repositories/b2b-mp-category-edit-repository';
 import { SuiteCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/suite-category-re-sort-repository';
 import { B2cCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/b2c-category-re-sort-repository';
 import { B2bCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/b2b-category-re-sort-repository';
@@ -329,10 +314,8 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.YvesRecurringOrderListRepository]: SuiteRecurringOrderListRepository,
   [REPOSITORIES.YvesRecurringOrderDetailRepository]: SuiteRecurringOrderDetailRepository,
   [REPOSITORIES.YvesRecurringOrderReviewRepository]: SuiteRecurringOrderReviewRepository,
-  [REPOSITORIES.TaxRateRepository]: SuiteTaxRateRepository,
   [REPOSITORIES.ProductSearchPreferencesRepository]: SuiteProductSearchPreferencesRepository,
   [REPOSITORIES.DiscountRepository]: SuiteDiscountRepository,
-  [REPOSITORIES.FileManagerRepository]: SuiteFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: SuiteProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: SuiteProductOptionRepository,
   [REPOSITORIES.RefundRepository]: SuiteRefundRepository,
@@ -340,7 +323,6 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.CartUpSellingProductsRepository]: SuiteCartUpSellingProductsRepository,
   [REPOSITORIES.ProductRelationRepository]: SuiteProductRelationRepository,
   [REPOSITORIES.CategoryCreateRepository]: SuiteCategoryCreateRepository,
-  [REPOSITORIES.CategoryEditRepository]: SuiteCategoryEditRepository,
   [REPOSITORIES.CategoryReSortRepository]: SuiteCategoryReSortRepository,
 };
 
@@ -379,10 +361,8 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.CustomerProfileRepository]: B2cCustomerProfileRepository,
   [REPOSITORIES.AgentMultiFactorAuthRepository]: B2cAgentMultiFactorAuthRepository,
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2cUserMultiFactorAuthRepository,
-  [REPOSITORIES.TaxRateRepository]: B2cTaxRateRepository,
   [REPOSITORIES.ProductSearchPreferencesRepository]: B2cProductSearchPreferencesRepository,
   [REPOSITORIES.DiscountRepository]: B2cDiscountRepository,
-  [REPOSITORIES.FileManagerRepository]: B2cFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2cProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2cProductOptionRepository,
   [REPOSITORIES.RefundRepository]: B2cRefundRepository,
@@ -390,7 +370,6 @@ const b2cMappings: BindingsMap = {
   [REPOSITORIES.CartUpSellingProductsRepository]: B2cCartUpSellingProductsRepository,
   [REPOSITORIES.ProductRelationRepository]: B2cProductRelationRepository,
   [REPOSITORIES.CategoryCreateRepository]: B2cCategoryCreateRepository,
-  [REPOSITORIES.CategoryEditRepository]: B2cCategoryEditRepository,
   [REPOSITORIES.CategoryReSortRepository]: B2cCategoryReSortRepository,
 };
 
@@ -434,10 +413,8 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.SspInquiryRepository]: B2bSspInquiryRepository,
   [REPOSITORIES.SspDashboardManagementRepository]: B2bSspDashboardManagementRepository,
   [REPOSITORIES.SspServiceRepository]: B2bSspServiceRepository,
-  [REPOSITORIES.TaxRateRepository]: B2bTaxRateRepository,
   [REPOSITORIES.ProductSearchPreferencesRepository]: B2bProductSearchPreferencesRepository,
   [REPOSITORIES.DiscountRepository]: B2bDiscountRepository,
-  [REPOSITORIES.FileManagerRepository]: B2bFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2bProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2bProductOptionRepository,
   [REPOSITORIES.RefundRepository]: B2bRefundRepository,
@@ -445,7 +422,6 @@ const b2bMappings: BindingsMap = {
   [REPOSITORIES.CartUpSellingProductsRepository]: B2bCartUpSellingProductsRepository,
   [REPOSITORIES.ProductRelationRepository]: B2bProductRelationRepository,
   [REPOSITORIES.CategoryCreateRepository]: B2bCategoryCreateRepository,
-  [REPOSITORIES.CategoryEditRepository]: B2bCategoryEditRepository,
   [REPOSITORIES.CategoryReSortRepository]: B2bCategoryReSortRepository,
 };
 
@@ -484,10 +460,8 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.CustomerProfileRepository]: B2cMpCustomerProfileRepository,
   [REPOSITORIES.AgentMultiFactorAuthRepository]: B2cMpAgentMultiFactorAuthRepository,
   [REPOSITORIES.UserMultiFactorAuthRepository]: B2cMpUserMultiFactorAuthRepository,
-  [REPOSITORIES.TaxRateRepository]: B2cMpTaxRateRepository,
   [REPOSITORIES.ProductSearchPreferencesRepository]: B2cMpProductSearchPreferencesRepository,
   [REPOSITORIES.DiscountRepository]: B2cMpDiscountRepository,
-  [REPOSITORIES.FileManagerRepository]: B2cMpFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2cMpProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2cMpProductOptionRepository,
   [REPOSITORIES.RefundRepository]: B2cMpRefundRepository,
@@ -495,7 +469,6 @@ const b2cMpMappings: BindingsMap = {
   [REPOSITORIES.CartUpSellingProductsRepository]: B2cMpCartUpSellingProductsRepository,
   [REPOSITORIES.ProductRelationRepository]: B2cMpProductRelationRepository,
   [REPOSITORIES.CategoryCreateRepository]: B2cMpCategoryCreateRepository,
-  [REPOSITORIES.CategoryEditRepository]: B2cMpCategoryEditRepository,
   [REPOSITORIES.CategoryReSortRepository]: B2cMpCategoryReSortRepository,
 };
 
@@ -551,10 +524,8 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.YvesRecurringOrderListRepository]: B2bMpRecurringOrderListRepository,
   [REPOSITORIES.YvesRecurringOrderDetailRepository]: B2bMpRecurringOrderDetailRepository,
   [REPOSITORIES.YvesRecurringOrderReviewRepository]: B2bMpRecurringOrderReviewRepository,
-  [REPOSITORIES.TaxRateRepository]: B2bMpTaxRateRepository,
   [REPOSITORIES.ProductSearchPreferencesRepository]: B2bMpProductSearchPreferencesRepository,
   [REPOSITORIES.DiscountRepository]: B2bMpDiscountRepository,
-  [REPOSITORIES.FileManagerRepository]: B2bMpFileManagerRepository,
   [REPOSITORIES.ProductCategoryAssignRepository]: B2bMpProductCategoryAssignRepository,
   [REPOSITORIES.ProductOptionRepository]: B2bMpProductOptionRepository,
   [REPOSITORIES.RefundRepository]: B2bMpRefundRepository,
@@ -562,7 +533,6 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.CartUpSellingProductsRepository]: B2bMpCartUpSellingProductsRepository,
   [REPOSITORIES.ProductRelationRepository]: B2bMpProductRelationRepository,
   [REPOSITORIES.CategoryCreateRepository]: B2bMpCategoryCreateRepository,
-  [REPOSITORIES.CategoryEditRepository]: B2bMpCategoryEditRepository,
   [REPOSITORIES.CategoryReSortRepository]: B2bMpCategoryReSortRepository,
 };
 
