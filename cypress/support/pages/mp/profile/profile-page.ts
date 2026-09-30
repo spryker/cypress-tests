@@ -22,11 +22,6 @@ export class ProfilePage extends MpPage {
 
   openOnlineProfileTab = (): void => {
     this.assertPageLocation();
-    this.repository.getUpgradedProfile();
-
-    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Reports the rendered tab labels instead of a bare not-found.
-    this.repository.getProfileTabs().invoke('text').should('include', this.repository.getOnlineProfileTabLabel());
-
     this.repository.getOnlineProfileTab().click();
   };
 
