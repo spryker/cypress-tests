@@ -26,6 +26,12 @@ export class B2bMpRefundRepository implements RefundRepository {
     return cy.get('table[data-qa="order-item-list"] tbody td[data-qa="item-total-amount"]');
   }
 
+  getItemTotalAmountCellsBySku(sku: string): Cypress.Chainable {
+    return cy.get(
+      `table[data-qa="order-item-list"] tbody tr:has(div.sku:contains("${sku}")) td[data-qa="item-total-amount"]`
+    );
+  }
+
   getRawAmountAttribute(): string {
     return this.RAW_AMOUNT_ATTRIBUTE;
   }

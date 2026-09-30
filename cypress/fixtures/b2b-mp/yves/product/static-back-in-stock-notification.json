@@ -1,0 +1,6 @@
+{
+  "defaultPassword": "change123",
+  "outOfStockLabel": "Out of stock",
+  "subscribedMessage": "Successfully subscribed",
+  "unsubscribedMessage": "Successfully unsubscribed"
+}

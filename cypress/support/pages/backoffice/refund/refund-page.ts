@@ -22,6 +22,12 @@ export class RefundPage extends BackofficePage {
   // Sum of the order's item totals (`sumPriceToPayAggregation`), the figure a full refund must match.
   getTotalItemAmount = (): Cypress.Chainable<number> => this.sumRawAmounts(this.repository.getItemTotalAmountCells());
 
+  // One item's own total, for comparing a single-item refund against the item it refunded. Read it
+  // before triggering the refund: the recalculation that follows writes the item's canceled amount
+  // and the row then reports what is left to pay, not what was ordered.
+  getItemTotalAmount = (sku: string): Cypress.Chainable<number> =>
+    this.sumRawAmounts(this.repository.getItemTotalAmountCellsBySku(sku));
+
   private sumRawAmounts = (cells: Cypress.Chainable): Cypress.Chainable<number> =>
     cells.then(($cells) => {
       const rawAmountAttribute = this.repository.getRawAmountAttribute();

@@ -10,3 +10,4 @@ export * from './agent-logout-scenario';
 export * from './agent-mfa-login-scenario';
 export * from './customer-mfa-activation-scenario';
 export * from './product-add-to-cart-scenario';
+export * from './impersonate-customer-scenario';

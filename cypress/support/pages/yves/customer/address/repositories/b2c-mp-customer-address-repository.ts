@@ -45,4 +45,10 @@ export class B2cMpCustomerAddressRepository implements CustomerAddressRepository
   getAddressAddedMessage(): string {
     return 'Address was successfully added';
   }
+  getAddressListEntrySelector(): string {
+    return 'ul.display-address li';
+  }
+  getAddressDeleteFormSelector(): string {
+    return 'form[action*="address/delete"]';
+  }
 }

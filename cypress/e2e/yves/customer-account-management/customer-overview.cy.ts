@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { CustomerLoginScenario } from '@scenarios/yves';
-import { CustomerOverviewPage } from '@pages/yves';
+import { CustomerOverviewPage, ReturnListPage, WishlistPage } from '@pages/yves';
 import { CustomerOverviewDynamicFixtures, CustomerOverviewStaticFixtures } from '@interfaces/yves';
 
 describe(
@@ -11,6 +11,8 @@ describe(
   (): void => {
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const customerOverviewPage = container.get(CustomerOverviewPage);
+    const wishlistPage = container.get(WishlistPage);
+    const returnListPage = container.get(ReturnListPage);
 
     let dynamicFixtures: CustomerOverviewDynamicFixtures;
     let staticFixtures: CustomerOverviewStaticFixtures;
@@ -70,6 +72,22 @@ describe(
       customerOverviewPage.getSidebarLink('newsletter').click();
 
       cy.url().should('include', '/customer/newsletter');
+    });
+
+    it('customer should be able to open the wishlist page', (): void => {
+      // Act
+      wishlistPage.visit();
+
+      // Assert
+      wishlistPage.assertPageLocation();
+    });
+
+    it('customer should be able to open the returns page', (): void => {
+      // Act
+      returnListPage.visit();
+
+      // Assert
+      returnListPage.assertPageLocation();
     });
   }
 );

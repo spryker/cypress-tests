@@ -78,6 +78,12 @@ export class DiscountPage extends BackofficePage {
     this.repository.getCreateButton().click();
   };
 
+  // Discounts created by a fixture stay active for the whole environment, so a spec that seeds them
+  // takes them back out again.
+  deactivateDiscount = (name: string): void => {
+    this.getDiscountRow(name).find(this.repository.getDeactivateActionSelector()).click({ force: true });
+  };
+
   getCreatePageUrl = (): string => this.PAGE_URL;
 
   getSuccessMessage = (): Cypress.Chainable => cy.contains(this.repository.getSuccessMessage());

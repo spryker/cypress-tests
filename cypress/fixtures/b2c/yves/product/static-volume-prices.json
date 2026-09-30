@@ -1,0 +1,8 @@
+{
+  "defaultPassword": "change123",
+  "unitPrice": "€100.00",
+  "volumeTier": {
+    "quantity": 3,
+    "price": "€80.00"
+  }
+}

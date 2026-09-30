@@ -1,6 +1,8 @@
 import { container } from '@utils';
 import { CustomerLoginScenario } from '@scenarios/yves';
 import { CustomerProfilePage } from '@pages/yves';
+import { ActionEnum, CustomerEditPage, CustomerIndexPage } from '@pages/backoffice';
+import { UserLoginScenario } from '@scenarios/backoffice';
 import { CustomerProfileManagementDynamicFixtures, CustomerProfileManagementStaticFixtures } from '@interfaces/yves';
 
 describe(
@@ -11,6 +13,9 @@ describe(
   (): void => {
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const customerProfilePage = container.get(CustomerProfilePage);
+    const customerIndexPage = container.get(CustomerIndexPage);
+    const customerEditPage = container.get(CustomerEditPage);
+    const userLoginScenario = container.get(UserLoginScenario);
 
     let dynamicFixtures: CustomerProfileManagementDynamicFixtures;
     let staticFixtures: CustomerProfileManagementStaticFixtures;
@@ -65,6 +70,35 @@ describe(
       customerProfilePage.changePassword(currentPassword, newPassword, 'not matching password');
 
       customerProfilePage.getPasswordsDoNotMatchError().should('be.visible');
+    });
+
+    it('customer should see a profile change an administrator made in the back office', (): void => {
+      // Arrange
+      const salutation = 'Dr';
+      const firstName = 'BackofficeEdited';
+      const lastName = 'BackofficeEdited';
+
+      // Act
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+      customerIndexPage.visit();
+      customerIndexPage.update({ action: ActionEnum.edit, searchQuery: dynamicFixtures.customer.email });
+      customerEditPage.update({ salutation: salutation, firstName: firstName, lastName: lastName });
+
+      // Logging in to the back office cleared the storefront session, so it has to be
+      // re-established before the profile page is reachable again.
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+      });
+      customerProfilePage.visit();
+
+      // Assert
+      customerProfilePage.getSalutationSelect().should('have.value', salutation);
+      customerProfilePage.getFirstNameInput().should('have.value', firstName);
+      customerProfilePage.getLastNameInput().should('have.value', lastName);
     });
   }
 );

@@ -29,4 +29,40 @@ export class CheckoutCustomerPage extends YvesPage {
 
     return guest.email;
   };
+
+  loginDuringCheckout = (params: LoginDuringCheckoutParams): void => {
+    this.repository.getLoginRadioButton().click({ force: true });
+
+    this.repository.getLoginEmailField().clear().type(params.email);
+    this.repository.getLoginPasswordField().clear().type(params.password, { log: false });
+
+    this.repository.getLoginSubmitButton().click();
+  };
+
+  registerDuringCheckout = (params: RegisterDuringCheckoutParams): void => {
+    this.repository.getLoginRadioButton().click({ force: true });
+
+    this.repository.getRegisterSalutationField().select(params.salutation, { force: true });
+    this.repository.getRegisterFirstNameField().clear().type(params.firstName);
+    this.repository.getRegisterLastNameField().clear().type(params.lastName);
+    this.repository.getRegisterEmailField().clear().type(params.email);
+    this.repository.getRegisterPasswordField().clear().type(params.password, { log: false });
+    this.repository.getRegisterConfirmPasswordField().clear().type(params.password, { log: false });
+    this.repository.getRegisterTermsCheckbox().check({ force: true });
+
+    this.repository.getRegisterSubmitButton().click();
+  };
+}
+
+interface LoginDuringCheckoutParams {
+  email: string;
+  password: string;
+}
+
+interface RegisterDuringCheckoutParams {
+  salutation: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
 }

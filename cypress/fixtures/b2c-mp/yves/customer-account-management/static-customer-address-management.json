@@ -12,5 +12,6 @@
     "city": "Berlin",
     "zipCode": "12345",
     "iso2Code": "DE"
-  }
+  },
+  "backofficeAddressCountry": "Austria"
 }

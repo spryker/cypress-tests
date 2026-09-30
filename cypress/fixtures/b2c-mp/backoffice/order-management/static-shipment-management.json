@@ -1,0 +1,25 @@
+{
+  "defaultPassword": "change123",
+  "newShipmentAddress": {
+    "salutation": "Mr",
+    "firstName": "Split",
+    "lastName": "Receiver",
+    "email": "split.receiver@spryker.local",
+    "country": "Austria",
+    "address1": "Hartmanngasse",
+    "address2": "1",
+    "city": "Vienna",
+    "zipCode": "1050"
+  },
+  "editedShipmentAddress": {
+    "salutation": "Mr",
+    "firstName": "Corrected",
+    "lastName": "Receiver",
+    "email": "corrected.receiver@spryker.local",
+    "country": "Germany",
+    "address1": "Julie-Wolfthorn-Strasse",
+    "address2": "1",
+    "city": "Berlin",
+    "zipCode": "10115"
+  }
+}

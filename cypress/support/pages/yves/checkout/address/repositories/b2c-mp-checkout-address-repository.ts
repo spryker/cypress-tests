@@ -4,6 +4,19 @@ import { CheckoutAddressRepository } from '../checkout-address-repository';
 
 @injectable()
 export class B2cMpCheckoutAddressRepository implements CheckoutAddressRepository {
+  // The single-shipment address form offers the service point through its own selector component;
+  // the multi-shipment getters above are per address item and do not match here.
+  getSelectServicePointButton = (): Cypress.Chainable =>
+    cy.get('[data-qa="component service-point-selector"]').find('button');
+  getSelectedServicePoint = (): Cypress.Chainable => cy.get('[data-qa="component service-point"]');
+  getShippingAddressSaveToAddressBookCheckbox = (): Cypress.Chainable =>
+    cy.get('#addressesForm_shippingAddress_isAddressSavingSkipped');
+  getBillingAddressSaveToAddressBookCheckbox = (): Cypress.Chainable =>
+    cy.get('#addressesForm_billingAddress_isAddressSavingSkipped');
+  // With an active company user the shipping select is rendered with no id and named
+  // checkout-full-addresses, so an id-based getter finds nothing. This class sits on the select
+  // in both layouts, and is what a business unit address has to be picked through.
+  getShippingAddressSelectElement = (): Cypress.Chainable => cy.get('.js-address__form-select-shippingAddress');
   getSelectShippingAddressField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_id_customer_address');
   getShippingAddressFirstNameField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_first_name');
   getShippingAddressLastNameField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_last_name');
