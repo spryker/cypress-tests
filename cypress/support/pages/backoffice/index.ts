@@ -105,3 +105,5 @@ export * from './service-point/view/service-point-view-page';
 export * from './content-experience-management/hub/content-hub-page';
 export * from './content-experience-management/workspace/page-workspace-page';
 export * from './content-experience-management/usage/content-usage-page';
+export * from './content-experience-management/page-builder/page-builder-page';
+export * from './content-experience-management/page-create/page-create-page';

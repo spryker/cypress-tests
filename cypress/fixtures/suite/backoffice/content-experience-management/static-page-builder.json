@@ -1,0 +1,9 @@
+{
+  "defaultPassword": "change123",
+  "templateName": "Placeholders Title & Content + Slot",
+  "storeName": "DE",
+  "localeName": "en_US",
+  "otherLocaleName": "de_DE",
+  "slotName": "Bottom",
+  "cmsBlockName": "Teaser for home page"
+}
