@@ -44,6 +44,7 @@ describe('page builder', { tags: ['@backoffice', '@content-experience-management
     pageBuilderPage.createBanner({
       name: bannerName,
       title: 'Spring',
+      subtitle: 'New season picks',
       imageUrl: '/assets/current/default/images/logo.png',
       clickUrl: '/en/spring',
       altText: 'Spring',

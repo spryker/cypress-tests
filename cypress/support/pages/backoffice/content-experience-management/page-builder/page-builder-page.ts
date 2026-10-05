@@ -17,9 +17,13 @@ export class PageBuilderPage extends BackofficePage {
     this.repository.getPlaceholder(placeholder).find(this.repository.getRichTextSelector()).type(text);
   };
 
+  // The Back Office top bar is fixed; scrolling the library controls to the centre keeps them out from under it.
   searchLibrary = (searchTerm: string, componentType = ''): void => {
     this.repository.getLibraryTypeSelect().select(componentType);
-    this.repository.getLibrarySearchInput().clear().type(searchTerm);
+    this.repository
+      .getLibrarySearchInput()
+      .clear({ scrollBehavior: 'center' })
+      .type(searchTerm, { scrollBehavior: 'center' });
   };
 
   addLibraryComponent = (componentText: string, targetText: string): void => {
@@ -31,7 +35,7 @@ export class PageBuilderPage extends BackofficePage {
 
   openBannerDialog = (): void => {
     this.repository.getCreateBannerButton().click();
-    this.repository.getBannerModal().should('be.visible');
+    this.repository.getBannerInput('name').should('have.focus');
   };
 
   submitBannerDialog = (): void => {
@@ -44,6 +48,7 @@ export class PageBuilderPage extends BackofficePage {
     this.openBannerDialog();
     this.repository.getBannerInput('name').type(params.name);
     this.repository.getBannerInput('title').type(params.title);
+    this.repository.getBannerInput('subtitle').type(params.subtitle);
     this.repository.getBannerInput('imageUrl').type(params.imageUrl);
     this.repository.getBannerInput('clickUrl').type(params.clickUrl);
     this.repository.getBannerInput('altText').type(params.altText);
@@ -87,6 +92,7 @@ export class PageBuilderPage extends BackofficePage {
 interface CreateBannerParams {
   name: string;
   title: string;
+  subtitle: string;
   imageUrl: string;
   clickUrl: string;
   altText: string;
