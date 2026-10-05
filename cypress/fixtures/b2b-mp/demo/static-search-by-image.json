@@ -1,0 +1,11 @@
+{
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "customer": {
+    "email": "spencor.hopkin@acme.com"
+  },
+  "searchResultsUrl": "/en/search?q=cable",
+  "probeImagePath": "cypress/fixtures/b2b-mp/demo/files/search-by-image-probe.png"
+}
