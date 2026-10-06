@@ -87,6 +87,27 @@ export class PageBuilderPage extends BackofficePage {
     this.repository.getSlot(slotName).find(this.repository.getSlotBlockSelector());
 
   getLibraryCard = (text: string): Cypress.Chainable => this.repository.getLibraryCard(text);
+
+  openPreviewPane = (): void => {
+    this.repository.getPreviewPaneToggle().click();
+    this.repository.getPreviewPane().should('be.visible');
+  };
+
+  choosePreviewDevice = (device: 'phone' | 'tablet' | 'desktop'): void => {
+    this.repository.getPreviewDeviceButton(device).click();
+  };
+
+  resizePreviewWithKey = (key: string): void => {
+    this.repository.getPreviewResizer().focus().type(key);
+  };
+
+  resetPreviewWidth = (): void => {
+    this.repository.getPreviewResizer().dblclick();
+  };
+
+  getPreviewWidth = (): Cypress.Chainable => this.repository.getPreviewWidth();
+
+  getPreviewDeviceButton = (device: string): Cypress.Chainable => this.repository.getPreviewDeviceButton(device);
 }
 
 interface CreateBannerParams {

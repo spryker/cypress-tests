@@ -88,4 +88,36 @@ describe('page builder', { tags: ['@backoffice', '@content-experience-management
 
     pageBuilderPage.getBannerFieldError('name').should('contain', 'Enter a name for the banner.');
   });
+
+  it('should size the preview pane by device and keyboard and remember the width', (): void => {
+    pageCreatePage.visit();
+    pageCreatePage.createPage({
+      templateName: staticFixtures.templateName,
+      storeName: staticFixtures.storeName,
+      localeName: staticFixtures.localeName,
+      name: `Builder preview page ${uid}`,
+      url: `/builder-preview-page-${uid}`,
+    });
+    pageBuilderPage.getPlaceholder('content').should('be.visible');
+
+    pageBuilderPage.openPreviewPane();
+    pageBuilderPage.choosePreviewDevice('tablet');
+
+    pageBuilderPage.getPreviewWidth().should('have.text', '768 px');
+    pageBuilderPage.getPreviewDeviceButton('tablet').should('have.attr', 'aria-pressed', 'true');
+
+    pageBuilderPage.resizePreviewWithKey('{leftArrow}');
+
+    pageBuilderPage.getPreviewWidth().should('have.text', '800 px');
+    pageBuilderPage.getPreviewDeviceButton('tablet').should('have.attr', 'aria-pressed', 'false');
+
+    cy.reload();
+    pageBuilderPage.openPreviewPane();
+
+    pageBuilderPage.getPreviewWidth().should('have.text', '800 px');
+
+    pageBuilderPage.choosePreviewDevice('phone');
+
+    pageBuilderPage.getPreviewWidth().should('have.text', '375 px');
+  });
 });

@@ -52,4 +52,15 @@ export class PageBuilderRepository {
   getBannerSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="page-builder-banner-submit"]');
 
   getBannerModal = (): Cypress.Chainable => cy.get('[data-qa="page-builder-banner-modal"]');
+
+  getPreviewPaneToggle = (): Cypress.Chainable => cy.get('[data-qa="page-builder-preview-pane-toggle"]');
+
+  getPreviewPane = (): Cypress.Chainable => cy.get('[data-qa="page-builder-preview-pane"]');
+
+  getPreviewResizer = (): Cypress.Chainable => cy.get('[data-qa="page-builder-preview-resizer"]');
+
+  getPreviewDeviceButton = (device: string): Cypress.Chainable =>
+    cy.get(`[data-qa="page-builder-preview-device-${device}"]`);
+
+  getPreviewWidth = (): Cypress.Chainable => cy.get('[data-qa="page-builder-preview-width"]');
 }
