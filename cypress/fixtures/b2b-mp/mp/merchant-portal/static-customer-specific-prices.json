@@ -1,0 +1,11 @@
+{
+  "defaultPassword": "change123",
+  "storeName": "DE",
+  "currency": "EUR",
+  "defaultPrice": "€500.00",
+  "customerPrice": {
+    "netAmount": 90,
+    "grossAmount": 100,
+    "displayed": "€100.00"
+  }
+}

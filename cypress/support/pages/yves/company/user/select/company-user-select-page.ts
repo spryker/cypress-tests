@@ -10,6 +10,10 @@ export class CompanyUserSelectPage extends YvesPage {
 
   protected PAGE_URL = '/company/user/select';
 
+  getBusinessUnitOptions = (): Cypress.Chainable => this.repository.getBusinessUnitOptions();
+
+  getActiveBusinessUnitLink = (): Cypress.Chainable => this.repository.getActiveBusinessUnitLink();
+
   selectBusinessUnit = (params: SelectBusinessUnitParams): void => {
     this.repository.getBusinessUnitSelect().select(params.idCompanyUser.toString(), { force: true });
     this.repository.getSubmitButton().click();

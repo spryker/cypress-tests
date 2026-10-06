@@ -19,4 +19,8 @@ export class ProductOfferListRepository {
   getSkuColumnSelector = (): string => 'td:nth-child(2)';
 
   getApproveButtonSelector = (): string => 'form[action*="approval-status=approved"] button';
+
+  getDenyButtonSelector = (): string => 'form[action*="approval-status=denied"] button';
+
+  getMerchantFilterSelect = (): Cypress.Chainable => cy.get('select[name="id-merchant"]');
 }

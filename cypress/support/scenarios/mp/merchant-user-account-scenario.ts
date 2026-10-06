@@ -8,7 +8,7 @@ export class MerchantUserAccountScenario {
   @inject(AccountPage) private accountPage: AccountPage;
 
   executeChangePassword = (defaultPassword: string, newPassword: string): void => {
-    this.accountPage.visit();
+    this.accountPage.visitAccount();
     this.accountPage.openChangePasswordForm();
     this.accountPage.changePassword(defaultPassword, newPassword);
     this.accountPage.getPasswordChangedMessage().should('be.visible');

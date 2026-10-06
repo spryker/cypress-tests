@@ -1,6 +1,6 @@
 import { defineConfig } from 'cypress';
 import dotenv from 'dotenv';
-import { existsSync, mkdirSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs';
 
 dotenv.config();
 
@@ -43,6 +43,13 @@ export default defineConfig({
       on('task', {
         isFileExists(filename: string): boolean {
           return existsSync(filename);
+        },
+        deleteFile(filename: string): null {
+          if (existsSync(filename)) {
+            rmSync(filename);
+          }
+
+          return null;
         },
       });
       if (!config.env.grepTags) {

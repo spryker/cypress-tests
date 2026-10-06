@@ -1,0 +1,6 @@
+{
+  "defaultPassword": "change123",
+  "seeCompanyUsersPermissionName": "View company users",
+  "companyUserPagePath": "/company/user",
+  "companyRolePagePath": "/company/company-role"
+}

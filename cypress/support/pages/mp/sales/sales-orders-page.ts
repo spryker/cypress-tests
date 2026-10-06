@@ -69,6 +69,27 @@ export class SalesOrdersPage extends MpPage {
     }
   };
 
+  openOrder = (params: OpenOrderParams): void => {
+    this.find({ query: params.query }).click({ force: true });
+  };
+
+  openItemsTab = (): void => {
+    this.repository.getItemsTab().click();
+  };
+
+  getOrderItemState = (params: OrderItemParams): Cypress.Chainable =>
+    this.repository
+      .getOrderItemHeaderCell(STATE_COLUMN_TITLE)
+      .then(($headerCell: JQuery<HTMLElement>) => this.getOrderItemRow(params.sku).find('td').eq($headerCell.index()));
+
+  changeOrderItemState = (params: ChangeOrderItemStateParams): void => {
+    this.getOrderItemRow(params.sku).find(this.repository.getRowActionTriggerSelector()).click();
+    this.repository.getRowActionItem(params.state).click();
+  };
+
+  private getOrderItemRow = (sku: string): Cypress.Chainable =>
+    this.repository.getOrderItemRows().filter(`:contains("${sku}")`).first();
+
   hasOrderByOrderReference = (query: string): Cypress.Chainable<boolean> => {
     return cy.get('tbody').then((body) => {
       if (body.find(`tr:contains("${query}")`).length > 0) {
@@ -86,6 +107,21 @@ export class SalesOrdersPage extends MpPage {
   getTotalRefundedCommissionBlock = (): Cypress.Chainable<JQuery<HTMLElement>> => {
     return this.repository.getDrawer().contains('Total Refunded Commission').parent();
   };
+}
+
+const STATE_COLUMN_TITLE = 'State';
+
+interface OpenOrderParams {
+  query: string;
+}
+
+interface OrderItemParams {
+  sku: string;
+}
+
+interface ChangeOrderItemStateParams {
+  sku: string;
+  state: string;
 }
 
 interface FindParams {

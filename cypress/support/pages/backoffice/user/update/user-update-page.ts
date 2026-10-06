@@ -29,6 +29,11 @@ export class UserUpdatePage extends BackofficePage {
     return this.repository.getAgentCustomerCheckbox();
   };
 
+  checkWarehouseUserCheckbox = (): void => {
+    this.repository.getWarehouseUserCheckbox().check();
+    this.repository.getUpdateUserButton().click();
+  };
+
   setDefaultPassword = (): void => {
     this.repository.getPasswordInput().clear().type(this.DEFAULT_PASSWORD);
     this.repository.getRepeatPasswordInput().clear().type(this.DEFAULT_PASSWORD);

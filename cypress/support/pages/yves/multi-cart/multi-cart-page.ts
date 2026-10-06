@@ -31,6 +31,18 @@ export class MultiCartPage extends YvesPage {
   getMiniCartRadios = (): Cypress.Chainable => {
     return this.repository.getMiniCartRadios();
   };
+
+  getCartRow = (name: string): Cypress.Chainable => this.repository.getQuoteTable().contains('tr', name);
+
+  openShareCartPage = (name: string): void => {
+    this.getCartRow(name).find('a[href*="/shared-cart/share/"]').click();
+  };
+
+  // The share form lists every other company user by name and one access level each.
+  shareCartWithCompanyUser = (params: ShareCartWithCompanyUserParams): void => {
+    cy.contains('[data-qa="component user-share-list"] li', params.name).find('select').select(params.accessLevel);
+    cy.get('form[name="shareCartForm"] button[type="submit"]').click();
+  };
 }
 
 interface CreateCartParams {
@@ -39,4 +51,9 @@ interface CreateCartParams {
 
 interface SelectCartParams {
   name: string;
+}
+
+interface ShareCartWithCompanyUserParams {
+  name: string;
+  accessLevel: string;
 }

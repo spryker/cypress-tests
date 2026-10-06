@@ -36,4 +36,25 @@ export class CustomerAddressPage extends YvesPage {
   };
 
   getAddressAddedMessage = (): Cypress.Chainable => cy.contains(this.repository.getAddressAddedMessage());
+
+  getBody = (): Cypress.Chainable => cy.get('body');
+
+  getAddressListEntry = (text: string): Cypress.Chainable =>
+    cy.contains(this.repository.getAddressListEntrySelector(), text);
+
+  /**
+   * The delete button sits on the card wrapping the address, and that wrapper is a different
+   * element in every repository. Walking up to the nearest ancestor holding exactly one delete
+   * form finds it without naming any of them, and cannot reach a neighbouring address's button.
+   */
+  deleteAddress = (text: string): void => {
+    const deleteForm = this.repository.getAddressDeleteFormSelector();
+
+    this.getAddressListEntry(text)
+      .parents()
+      .filter((index: number, element: HTMLElement) => Cypress.$(element).find(deleteForm).length === 1)
+      .first()
+      .find(`${deleteForm} button`)
+      .click();
+  };
 }

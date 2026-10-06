@@ -11,7 +11,31 @@ export class MerchantPage extends YvesPage {
 
   protected PAGE_URL = '/merchant';
 
+  visitProfile = (params: VisitProfileParams): void => {
+    cy.visit(params.url);
+  };
+
   sendMerchantRelationRequest = (): void => {
     this.repository.getMerchantRelationRequestButton().click();
   };
+
+  // The profile renders label/value pairs as information items; the label is the only stable handle.
+  getInformationItemValue = (params: GetInformationItemValueParams): Cypress.Chainable => {
+    return cy
+      .get('[data-qa="component merchant-profile"]')
+      .contains('[data-qa="component information-item"] strong', params.label)
+      .parent();
+  };
+
+  getProfileContent = (): Cypress.Chainable => {
+    return cy.get('[data-qa="component merchant-profile"]');
+  };
+}
+
+interface VisitProfileParams {
+  url: string;
+}
+
+interface GetInformationItemValueParams {
+  label: string;
 }

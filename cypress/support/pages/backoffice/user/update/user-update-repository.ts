@@ -6,6 +6,7 @@ import { injectable } from 'inversify';
 export class UserUpdateRepository {
   getAgentMerchantCheckbox = (): Cypress.Chainable => cy.get('#user_is_merchant_agent');
   getAgentCustomerCheckbox = (): Cypress.Chainable => cy.get('#user_is_agent');
+  getWarehouseUserCheckbox = (): Cypress.Chainable => cy.get('#user_is_warehouse_user');
   getUpdateUserButton = (): Cypress.Chainable => cy.get('form[name=user]').find('[type="submit"]');
   getPasswordInput = (): Cypress.Chainable => cy.get('#user_password_first');
   getRepeatPasswordInput = (): Cypress.Chainable => cy.get('#user_password_second');
