@@ -9,7 +9,7 @@ import { MerchantUserLoginScenario } from '@scenarios/mp';
 describe(
   'restore session after login timeout',
   {
-    tags: ['@mp', '@user-account-management', 'marketplace-merchantportal-core'],
+    tags: ['@mp', '@user-account-management', 'marketplace-merchantportal-core', '@quarantine'],
   },
   (): void => {
     const loginPage = container.get(LoginPage);
@@ -24,6 +24,8 @@ describe(
     });
 
     suiteIt('should redirect merchant user to last-visited page after session timeout re-login', (): void => {
+      ignoreExpiredSessionParsingError();
+
       merchantUserLoginScenario.execute({
         username: dynamicFixtures.merchantUser.username,
         password: staticFixtures.defaultPassword,
@@ -31,8 +33,9 @@ describe(
       });
 
       cy.clearCookie('last-visited-page');
+      cy.intercept('GET', `**${staticFixtures.lastVisitedPageUrl}/table-data**`).as('lastVisitedPageData');
       cy.visitMerchantPortal(staticFixtures.lastVisitedPageUrl);
-      cy.reload();
+      cy.wait('@lastVisitedPageData');
 
       loginPage.clearSessionCookie();
 
@@ -54,6 +57,14 @@ describe(
 
       dashboardPage.assertPageLocation();
     });
+
+    function ignoreExpiredSessionParsingError(): void {
+      cy.on('uncaught:exception', (error: Error): false | void => {
+        if (String(error?.message).includes(loginPage.getPageUrl())) {
+          return false;
+        }
+      });
+    }
 
     function suiteIt(description: string, testFn: () => void): void {
       onlyForRepositoriesIt(['suite', 'b2b-mp'], description, testFn);

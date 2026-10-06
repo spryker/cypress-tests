@@ -175,6 +175,14 @@ describe(
     // An unusable `availableQuantity` reports the leaf while it is untyped and the whole
     // `productConfigurationInstance` object once it is a typed integer, so both are accepted for as
     // long as the demoshops span both versions.
+    //
+    // A third, unprefixed `availableQuantity => ...` shape (CC-40714) shows up on shops whose
+    // spryker/api-platform validates `productConfigurationInstance` as its own top-level constraint
+    // tree rather than as one field nested under the request's `attributes`. Symfony's Collection
+    // validator then raises the leaf violation with a property path relative to that tree, not to
+    // `attributes`, so `TranslatingConstraintViolationListNormalizer::extractFieldName()` (which keeps
+    // only the last `/`-delimited pointer segment) has no `productConfigurationInstance` segment left
+    // to keep.
     const availableQuantityValidations = [
       {
         description: 'empty availableQuantity',
@@ -185,6 +193,7 @@ describe(
             'productConfigurationInstance.availableQuantity => This value should not be blank.',
             'productConfigurationInstance.availableQuantity => This value should be of type numeric.',
           ],
+          ['availableQuantity => This value should be of type numeric.'],
         ],
       },
       {
@@ -193,6 +202,7 @@ describe(
         acceptedDetails: [
           ['productConfigurationInstance => This value should be of type object.'],
           ['productConfigurationInstance.availableQuantity => This value should be of type numeric.'],
+          ['availableQuantity => This value should be of type numeric.'],
         ],
       },
       {
