@@ -1,0 +1,74 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": false,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [{ "status": "approved", "is_active": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [{ "fk_company": "#company.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "companyToKeep",
+          "arguments": [{ "status": "approved", "is_active": true }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnitToKeep",
+          "arguments": [{ "fk_company": "#companyToKeep.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerGroup",
+          "key": "customerGroup",
+          "arguments": [{}]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerGroup",
+          "key": "customerGroupWithMemberships",
+          "arguments": [
+            {
+              "companyAssignment": {
+                "idsCompanyToAssign": ["#company.id_company", "#companyToKeep.id_company"]
+              },
+              "companyBusinessUnitAssignment": {
+                "idsCompanyBusinessUnitToAssign": [
+                  "#businessUnit.id_company_business_unit",
+                  "#businessUnitToKeep.id_company_business_unit"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "builder",
+          "name": "CustomerGroupBuilder",
+          "key": "newCustomerGroup"
+        }
+      ]
+    }
+  }
+}
