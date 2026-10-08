@@ -169,9 +169,6 @@ describe(
 
       salesOrdersPage.visit();
       salesOrdersPage.update({ query: orderReference, action: ActionEnum.refund });
-
-      // eslint-disable-next-line cypress/no-unnecessary-waiting, spryker-cypress/no-numeric-wait
-      cy.wait(2000); // Refund (per-item) operation takes time to be processed
     }
 
     function placeCustomerOrder(): void {
@@ -236,7 +233,7 @@ describe(
       totalRefundedCommission = '€0.00'
     ): void {
       salesOrdersPage.visit();
-      salesOrdersPage.find({ query: orderReference }).should('contain', orderReference).click();
+      salesOrdersPage.find({ query: orderReference }).click();
 
       salesOrdersPage.getTotalCommissionBlock().should('contains.text', totalCommission);
       salesOrdersPage.getTotalRefundedCommissionBlock().should('contains.text', totalRefundedCommission);

@@ -4,7 +4,7 @@ import { injectable } from 'inversify';
 @injectable()
 @autoWired
 export class MerchantRelationRequestsRepository {
-  getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1):visible');
+  getTableRowContaining = (text: string): Cypress.Chainable => cy.contains('tbody > tr:visible', text);
   getSearchSelector = (): string => '.spy-table-search-feature input[type="text"]';
   getDrawer = (): Cypress.Chainable => cy.get('.spy-drawer-wrapper');
   getInternalCommentTextarea = (): Cypress.Chainable => cy.get('.mp-add-comment__form textarea');
