@@ -16,7 +16,7 @@ export class SspAssetUpdateRepository {
   getSelectContainer = (): string => '.select2';
 
   // Select2 helper selectors
-  getSearchFieldSelector = (): string => 'input.select2-search__field';
+  getSearchFieldSelector = (): string => '.select2-search__field';
   getDropdownOptionSelector = (): string => '.select2-results__option';
   getSelectContainerSelector = (): string => '.select2-container--open';
   getSelectionChoiceRemoveSelector = (): string => '.select2-selection__choice__remove';
