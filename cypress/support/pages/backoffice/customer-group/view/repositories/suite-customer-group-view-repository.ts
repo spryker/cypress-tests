@@ -22,4 +22,17 @@ export class SuiteCustomerGroupViewRepository implements CustomerGroupViewReposi
   getBusinessUnitTableCheckboxes(): Cypress.Chainable {
     return cy.get('#assigned-company-business-unit-table input[type="checkbox"]');
   }
+
+  getCompanyEditButton(idCompany: number): Cypress.Chainable {
+    return cy.get(`#assigned-company-table a[href="/company-gui/edit-company/index?id-company=${idCompany}"]`, {
+      timeout: 20000,
+    });
+  }
+
+  getBusinessUnitEditButton(idCompanyBusinessUnit: number): Cypress.Chainable {
+    return cy.get(
+      `#assigned-company-business-unit-table a[href="/company-business-unit-gui/edit-company-business-unit?id-company-business-unit=${idCompanyBusinessUnit}"]`,
+      { timeout: 20000 }
+    );
+  }
 }

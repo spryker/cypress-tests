@@ -12,8 +12,19 @@ export class CustomerGroupFormPage extends BackofficePage {
   protected PAGE_URL = '/customer-group/add';
 
   visitEditPage = (idCustomerGroup: number): void => {
-    cy.visitBackoffice(`/customer-group/edit?id-customer-group=${idCustomerGroup}`);
+    cy.visitBackoffice(this.getEditPageUrl(idCustomerGroup));
   };
+
+  getEditPageUrl = (idCustomerGroup: number): string => `/customer-group/edit?id-customer-group=${idCustomerGroup}`;
+
+  openCompaniesToBeAssignedTab = (): void => {
+    this.repository.getCompaniesTab().click();
+    this.repository.getCompaniesToBeAssignedTab().click();
+  };
+
+  getCompaniesTab = (): Cypress.Chainable => this.repository.getCompaniesTab();
+
+  getSuccessMessage = (): Cypress.Chainable => this.repository.getSuccessMessage();
 
   fillName = (name: string): void => {
     this.repository.getNameInput().clear().type(name);

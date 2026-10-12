@@ -11,6 +11,10 @@ export class CustomerGroupViewPage extends BackofficePage {
 
   protected PAGE_URL = '/customer-group/view';
 
+  visitViewPage = (idCustomerGroup: number): void => {
+    cy.visitBackoffice(`${this.PAGE_URL}?id-customer-group=${idCustomerGroup}`);
+  };
+
   getSuccessMessage = (): Cypress.Chainable => this.repository.getSuccessMessage();
 
   getCompanyTable = (): Cypress.Chainable => this.repository.getCompanyTable();
@@ -20,4 +24,9 @@ export class CustomerGroupViewPage extends BackofficePage {
   getBusinessUnitTable = (): Cypress.Chainable => this.repository.getBusinessUnitTable();
 
   getBusinessUnitTableCheckboxes = (): Cypress.Chainable => this.repository.getBusinessUnitTableCheckboxes();
+
+  getCompanyEditButton = (idCompany: number): Cypress.Chainable => this.repository.getCompanyEditButton(idCompany);
+
+  getBusinessUnitEditButton = (idCompanyBusinessUnit: number): Cypress.Chainable =>
+    this.repository.getBusinessUnitEditButton(idCompanyBusinessUnit);
 }

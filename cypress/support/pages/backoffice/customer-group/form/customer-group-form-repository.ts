@@ -2,6 +2,7 @@ export interface CustomerGroupFormRepository {
   getNameInput(): Cypress.Chainable;
   getCompaniesTab(): Cypress.Chainable;
   getBusinessUnitsTab(): Cypress.Chainable;
+  getCompaniesToBeAssignedTab(): Cypress.Chainable;
   getAvailableCompaniesSearchInput(): Cypress.Chainable;
   getAvailableBusinessUnitsSearchInput(): Cypress.Chainable;
   getAvailableCompanyCheckbox(idCompany: number): Cypress.Chainable;
@@ -13,4 +14,5 @@ export interface CustomerGroupFormRepository {
   getBusinessUnitToBeAssignedRemoveLink(idCompanyBusinessUnit: number): Cypress.Chainable;
   getBusinessUnitToBeDeassignedRemoveLink(idCompanyBusinessUnit: number): Cypress.Chainable;
   getSaveButton(): Cypress.Chainable;
+  getSuccessMessage(): Cypress.Chainable;
 }

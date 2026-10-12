@@ -15,6 +15,10 @@ export class SuiteCustomerGroupFormRepository implements CustomerGroupFormReposi
     return cy.get('[data-qa="tab-company-business-unit-assignment"]');
   }
 
+  getCompaniesToBeAssignedTab(): Cypress.Chainable {
+    return cy.get('[data-qa="tab-companies-to-be-assigned"]');
+  }
+
   getAvailableCompaniesSearchInput(): Cypress.Chainable {
     return cy.get('[data-qa="tab-content-available-companies"] [data-qa="table-search"]');
   }
@@ -61,5 +65,9 @@ export class SuiteCustomerGroupFormRepository implements CustomerGroupFormReposi
 
   getSaveButton(): Cypress.Chainable {
     return cy.get('form[name="customer_group"] input[type="submit"]');
+  }
+
+  getSuccessMessage(): Cypress.Chainable {
+    return cy.get('[data-qa="success-message"]');
   }
 }
