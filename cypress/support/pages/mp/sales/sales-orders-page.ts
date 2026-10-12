@@ -27,46 +27,34 @@ export class SalesOrdersPage extends MpPage {
       }
     );
 
-    return this.repository.getFirstTableRow();
+    return this.repository.getTableRowContaining(params.query);
   };
 
   update = (params: UpdateParams): void => {
     this.find({ query: params.query }).click({ force: true });
+    this.triggerDrawerAction(this.getActionButtonSelector(params.action));
+  };
 
-    if (params.action === ActionEnum.sendToDistribution) {
-      this.repository.getDrawer().find(this.repository.getSendToDistributionButtonSelector()).click();
-    }
+  private triggerDrawerAction = (actionButtonSelector: string): void => {
+    const triggerAlias = this.faker.string.uuid();
+    cy.intercept({ pathname: '/sales-merchant-portal-gui/trigger-merchant-oms' }).as(triggerAlias);
 
-    if (params.action === ActionEnum.confirmAtCenter) {
-      this.repository.getDrawer().find(this.repository.getConfirmAtCenterButtonSelector()).click();
-    }
+    this.repository.getDrawer().find(actionButtonSelector, { timeout: 10000 }).click();
 
-    if (params.action === ActionEnum.ship) {
-      this.repository.getDrawer().find(this.repository.getShipButtonSelector()).click();
-    }
+    cy.wait(`@${triggerAlias}`);
+  };
 
-    if (params.action === ActionEnum.deliver) {
-      this.repository
-        .getDrawer()
-        .should('be.visible')
-        .find(this.repository.getDeliverButtonSelector(), { timeout: 10000 })
-        .should('be.visible')
-        .click();
+  private getActionButtonSelector = (action: ActionEnum): string => {
+    const actionButtonSelectors: Record<ActionEnum, string> = {
+      [ActionEnum.sendToDistribution]: this.repository.getSendToDistributionButtonSelector(),
+      [ActionEnum.confirmAtCenter]: this.repository.getConfirmAtCenterButtonSelector(),
+      [ActionEnum.ship]: this.repository.getShipButtonSelector(),
+      [ActionEnum.deliver]: this.repository.getDeliverButtonSelector(),
+      [ActionEnum.cancel]: this.repository.getCancelButtonSelector(),
+      [ActionEnum.refund]: this.repository.getRefundButtonSelector(),
+    };
 
-      this.repository
-        .getDrawer()
-        .find(this.repository.getOrderItemsStateChipSelector(), { timeout: 10000 })
-        .should('be.visible')
-        .and('contain.text', 'Delivered');
-    }
-
-    if (params.action === ActionEnum.cancel) {
-      this.repository.getDrawer().find(this.repository.getCancelButtonSelector()).click();
-    }
-
-    if (params.action === ActionEnum.refund) {
-      this.repository.getDrawer().find(this.repository.getRefundButtonSelector()).click();
-    }
+    return actionButtonSelectors[action];
   };
 
   hasOrderByOrderReference = (query: string): Cypress.Chainable<boolean> => {

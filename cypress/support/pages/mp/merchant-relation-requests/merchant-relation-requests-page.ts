@@ -13,16 +13,20 @@ export class MerchantRelationRequestsPage extends MpPage {
 
   find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(params.query, { delay: 0 });
-    cy.get(searchSelector).type('{enter}');
 
-    this.interceptTable({
-      url: '/merchant-relation-request-merchant-portal-gui/merchant-relation-requests/table-data**',
-      expectedCount: params.expectedCount,
-    });
+    this.interceptTable(
+      {
+        url: '/merchant-relation-request-merchant-portal-gui/merchant-relation-requests/table-data**',
+        expectedCount: params.expectedCount,
+      },
+      () => {
+        cy.get(searchSelector).clear();
+        cy.get(searchSelector).type(params.query, { delay: 0 });
+        cy.get(searchSelector).type('{enter}');
+      }
+    );
 
-    return this.repository.getFirstTableRow();
+    return this.repository.getTableRowContaining(params.query);
   };
 
   getDrawer = (): Cypress.Chainable => {
@@ -30,8 +34,13 @@ export class MerchantRelationRequestsPage extends MpPage {
   };
 
   addInternalComment = (params: AddInternalCommentParams): void => {
+    const createCommentAlias = this.faker.string.uuid();
+    cy.intercept({ pathname: '/comment-merchant-portal-gui/comment/create' }).as(createCommentAlias);
+
     this.repository.getInternalCommentTextarea().type(params.comment);
     this.repository.getInternalCommentAddCommentButton().click();
+
+    cy.wait(`@${createCommentAlias}`);
   };
 
   approve = (params?: ApproveParams): void => {
