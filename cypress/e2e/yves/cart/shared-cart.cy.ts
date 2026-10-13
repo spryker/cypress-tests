@@ -1,32 +1,40 @@
 import { container, getPaymentMethodBasedOnEnv } from '@utils';
-import { CartPage, CatalogPage, CustomerOverviewPage, MultiCartPage, OrderDetailsPage, ProductPage } from '@pages/yves';
-import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
-import { SharedCartCheckoutDynamicFixtures, SharedCartCheckoutStaticFixtures } from '@interfaces/yves';
+import { CartPage, CustomerOverviewPage, MultiCartPage, OrderDetailsPage } from '@pages/yves';
+import { CheckoutScenario, CustomerLoginScenario, CustomerLogoutScenario } from '@scenarios/yves';
+import { SharedCartDynamicFixtures, SharedCartStaticFixtures } from '@interfaces/yves';
 
 describe(
-  'shared cart checkout',
+  'shared cart',
   {
-    tags: ['@yves', '@cart', 'cart', 'shared-carts', 'multiple-carts', 'persistent-cart-sharing', 'checkout'],
+    tags: [
+      '@yves',
+      '@cart',
+      'cart',
+      'shared-carts',
+      'multiple-carts',
+      'persistent-cart-sharing',
+      'checkout',
+      'spryker-core',
+    ],
   },
   (): void => {
     // Sharing a cart is a multiple-carts feature, which the B2C storefronts do not carry.
-    if (!['suite', 'b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
       it.skip('skipped because the B2C storefronts have no shared carts', (): void => {});
 
       return;
     }
 
-    const catalogPage = container.get(CatalogPage);
-    const productPage = container.get(ProductPage);
     const cartPage = container.get(CartPage);
     const multiCartPage = container.get(MultiCartPage);
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const orderDetailsPage = container.get(OrderDetailsPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
+    const customerLogoutScenario = container.get(CustomerLogoutScenario);
     const checkoutScenario = container.get(CheckoutScenario);
 
-    let dynamicFixtures: SharedCartCheckoutDynamicFixtures;
-    let staticFixtures: SharedCartCheckoutStaticFixtures;
+    let dynamicFixtures: SharedCartDynamicFixtures;
+    let staticFixtures: SharedCartStaticFixtures;
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
@@ -36,19 +44,12 @@ describe(
       // Arrange
       // The share form lists colleagues last name first, which is not the order the account pages use.
       const receiverName = `${dynamicFixtures.receiverCustomer.last_name} ${dynamicFixtures.receiverCustomer.first_name}`;
+      const cartName = dynamicFixtures.colleagueSharedQuote.name;
 
       customerLoginScenario.execute({
         email: dynamicFixtures.ownerCustomer.email,
         password: staticFixtures.defaultPassword,
       });
-
-      const cartName = multiCartPage.createCart();
-      multiCartPage.visit();
-      multiCartPage.getCartRow(cartName).should('contain.text', staticFixtures.ownerAccessText);
-
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
-      productPage.addToCart();
 
       // Act
       multiCartPage.visit();
@@ -80,6 +81,30 @@ describe(
       orderDetailsPage
         .getOrderDetailTableBlock()
         .should('contain.text', `${staticFixtures.soldByText} ${dynamicFixtures.merchant.name}`);
+    });
+
+    it('given a cart shared by external link when an anonymous visitor opens it then the cart is shown as a read-only preview', (): void => {
+      // Arrange
+      customerLoginScenario.execute({
+        email: dynamicFixtures.ownerCustomer.email,
+        password: staticFixtures.defaultPassword,
+      });
+      multiCartPage.visit();
+      multiCartPage.selectCart({ name: dynamicFixtures.linkSharedQuote.name });
+      cartPage.visit();
+
+      // Act
+      cartPage.getExternalCartShareLink().then((externalCartShareLink: string) => {
+        // The point of the external link is that it works for someone who is not signed in.
+        customerLogoutScenario.execute();
+        cy.visit(externalCartShareLink);
+
+        // Assert
+        cartPage.assertBodyContainsText(
+          `${staticFixtures.cartPreviewTitlePrefix} ${dynamicFixtures.linkSharedQuote.name}`
+        );
+        cartPage.assertBodyContainsText(dynamicFixtures.product.sku);
+      });
     });
   }
 );
