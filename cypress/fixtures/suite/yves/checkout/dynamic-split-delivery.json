@@ -212,6 +212,34 @@
               "isNeverOutOfStock": "1"
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "quote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#product1.sku",
+                  "abstractSku": "#product1.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#product2.sku",
+                  "abstractSku": "#product2.abstract_sku",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#product3.sku",
+                  "abstractSku": "#product3.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            },
+            true
+          ]
         }
       ]
     }

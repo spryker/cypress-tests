@@ -67,6 +67,26 @@
         },
         {
           "type": "helper",
+          "name": "haveShipmentMethod",
+          "key": "pickupShipmentMethod",
+          "arguments": [
+            {},
+            {},
+            {
+              "DE": {
+                "EUR": {}
+              }
+            },
+            ["#store.id_store"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveShipmentMethodShipmentTypeRelation",
+          "arguments": ["#pickupShipmentMethod.id_shipment_method", "#pickupShipmentType.id_shipment_type"]
+        },
+        {
+          "type": "helper",
           "name": "haveServiceType",
           "key": "pickupServiceType",
           "arguments": [
@@ -212,6 +232,27 @@
               "idProductOffer": "#pickupOffer.id_product_offer",
               "idService": "#pickupService.id_service"
             }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "quote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#product1.sku",
+                  "abstractSku": "#product1.abstract_sku",
+                  "idProductAbstract": "#product1.fk_product_abstract",
+                  "productOfferReference": "#pickupOffer.product_offer_reference",
+                  "merchantReference": "#pickupOffer.merchant_reference",
+                  "quantity": 1
+                }
+              ]
+            },
+            true
           ]
         }
       ]

@@ -25,76 +25,92 @@ describe(
 
     let dynamicFixtures: QuickOrderToCheckoutDynamicFixtures;
     let staticFixtures: QuickOrderToCheckoutStaticFixtures;
+    let pastedOrder: string;
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
+
+      // Each product is sold by a merchant of its own, so every destination has to carry both
+      // merchants for the quick order to have kept the relation.
+      pastedOrder = [
+        `${dynamicFixtures.product1.sku},${staticFixtures.firstProductQuantity}`,
+        `${dynamicFixtures.product2.sku},${staticFixtures.secondProductQuantity}`,
+      ].join('\n');
     });
 
-    it('given a pasted quick order of two products sold by different merchants when it is bought and reordered then every destination keeps both merchants', (): void => {
+    it('given a pasted quick order of two products sold by different merchants when it is added to the cart then the cart keeps both merchants', (): void => {
       // Arrange
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
       });
-
-      shoppingListPage.visit();
-      const shoppingListName = shoppingListPage.createShoppingList();
-
-      // Each product is sold by a merchant of its own, so every destination below has to carry both
-      // merchants for the quick order to have kept the relation.
-      const orderedProducts = [
-        { product: dynamicFixtures.product1, merchant: dynamicFixtures.merchant1 },
-        { product: dynamicFixtures.product2, merchant: dynamicFixtures.merchant2 },
-      ];
-      const pastedOrder = [
-        `${dynamicFixtures.product1.sku},${staticFixtures.firstProductQuantity}`,
-        `${dynamicFixtures.product2.sku},${staticFixtures.secondProductQuantity}`,
-      ].join('\n');
-
-      // Act
       quickOrderPage.visit();
       quickOrderPage.verifyPastedOrder(pastedOrder);
+
+      // Act
       quickOrderPage.addRowsToCart();
 
       // Assert
       cartPage.visit();
-      assertSkusPresent(cartPage.getProductCartItems());
-      assertMerchantsPresent(cartPage.getProductCartItems());
+      cartPage
+        .getProductCartItems()
+        .should('contain.text', dynamicFixtures.product1.sku)
+        .and('contain.text', dynamicFixtures.product2.sku)
+        .and('contain.text', `${staticFixtures.soldByText} ${dynamicFixtures.merchant1.name}`)
+        .and('contain.text', `${staticFixtures.soldByText} ${dynamicFixtures.merchant2.name}`);
+    });
 
-      // The same rows must reach a shopping list just as they reached the cart.
+    it('given a pasted quick order of two products sold by different merchants when it is added to a shopping list then the list keeps both merchants', (): void => {
+      // Arrange
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+      });
       quickOrderPage.visit();
       quickOrderPage.verifyPastedOrder(pastedOrder);
-      quickOrderPage.addRowsToShoppingList(shoppingListName);
-      assertSkusPresent(shoppingListPage.getShoppingListItemsTable());
-      assertMerchantsPresent(shoppingListPage.getShoppingListItemsTable());
 
+      // Act
+      quickOrderPage.addRowsToShoppingList(dynamicFixtures.shoppingList.name);
+
+      // Assert
+      shoppingListPage
+        .getShoppingListItemsTable()
+        .should('contain.text', dynamicFixtures.product1.sku)
+        .and('contain.text', dynamicFixtures.product2.sku)
+        .and('contain.text', `${staticFixtures.soldByText} ${dynamicFixtures.merchant1.name}`)
+        .and('contain.text', `${staticFixtures.soldByText} ${dynamicFixtures.merchant2.name}`);
+    });
+
+    it('given an order of offers from two merchants when it is reordered then the cart keeps both merchants', (): void => {
+      // Arrange
+      customerLoginScenario.execute({
+        email: dynamicFixtures.reorderCustomer.email,
+        password: staticFixtures.defaultPassword,
+      });
       checkoutScenario.execute({
-        idCustomerAddress: dynamicFixtures.address.id_customer_address,
+        idCustomerAddress: dynamicFixtures.reorderAddress.id_customer_address,
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
       // The placed order lists products by name rather than by sku, so the merchant line is what
       // carries the relation through this step.
       customerOverviewPage.viewLastPlacedOrder();
-      assertMerchantsPresent(orderDetailsPage.getOrderDetailTableBlock());
+      orderDetailsPage
+        .getOrderDetailTableBlock()
+        .should('contain.text', `${staticFixtures.soldByText} ${dynamicFixtures.merchant1.name}`)
+        .and('contain.text', `${staticFixtures.soldByText} ${dynamicFixtures.merchant2.name}`);
 
-      // Reordering has to reproduce the order, merchants included.
+      // Act
       orderDetailsPage.reorderAll();
+
+      // Assert
       cartPage.visit();
-      assertSkusPresent(cartPage.getProductCartItems());
-      assertMerchantsPresent(cartPage.getProductCartItems());
-
-      function assertSkusPresent(block: Cypress.Chainable): void {
-        orderedProducts.forEach(({ product }): void => {
-          block.should('contain.text', product.sku);
-        });
-      }
-
-      function assertMerchantsPresent(block: Cypress.Chainable): void {
-        orderedProducts.forEach(({ merchant }): void => {
-          block.should('contain.text', `${staticFixtures.soldByText} ${merchant.name}`);
-        });
-      }
+      cartPage
+        .getProductCartItems()
+        .should('contain.text', dynamicFixtures.product1.sku)
+        .and('contain.text', dynamicFixtures.product2.sku)
+        .and('contain.text', `${staticFixtures.soldByText} ${dynamicFixtures.merchant1.name}`)
+        .and('contain.text', `${staticFixtures.soldByText} ${dynamicFixtures.merchant2.name}`);
     });
   }
 );

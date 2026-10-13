@@ -41,6 +41,63 @@
         },
         {
           "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [
+            {
+              "fkCompany": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderPermission",
+          "arguments": ["PlaceOrderPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "buyerRole",
+          "arguments": [
+            {
+              "isDefault": true,
+              "fkCompany": "#company.id_company"
+            },
+            ["#placeOrderPermission"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "fkCustomer": "#customer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
           "name": "haveUser",
           "key": "agentUser",
           "arguments": [
@@ -112,6 +169,24 @@
               "sku": "#product.sku",
               "isNeverOutOfStock": "1"
             }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "quote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            },
+            true
           ]
         }
       ]

@@ -1,4 +1,4 @@
-import { Address, Customer, ProductConcrete, Quote, Store, User } from './shared';
+import { Address, Customer, ProductConcrete, Quote, ShipmentMethod, Store, User } from './shared';
 
 export interface BasicCheckoutDynamicFixtures {
   customer: Customer;
@@ -163,6 +163,7 @@ export interface ClickAndCollectDynamicFixtures {
   rootUser: User;
   product1: ProductConcrete;
   pickupOffer: ClickAndCollectOffer;
+  pickupShipmentMethod: ShipmentMethod;
   servicePoint: ClickAndCollectServicePoint;
   servicePointAddress: ClickAndCollectServicePointAddress;
 }

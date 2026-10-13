@@ -34,29 +34,20 @@ export interface RemoveCartItemStaticFixtures {
   total1: string;
 }
 
-export interface SharedCartExternalLinkStaticFixtures {
-  defaultPassword: string;
-  cartPreviewTitlePrefix: string;
-}
-
-export interface SharedCartExternalLinkDynamicFixtures {
-  customer: Customer;
-  product1: ProductConcrete;
-  quote: Quote;
-}
-
-export interface SharedCartCheckoutDynamicFixtures {
+export interface SharedCartDynamicFixtures {
   ownerCustomer: Customer;
   receiverCustomer: Customer;
   receiverAddress: Address;
   product: ProductConcrete;
   merchant: Merchant;
   productOffer: ProductOffer;
+  colleagueSharedQuote: Quote;
+  linkSharedQuote: Quote;
 }
 
-export interface SharedCartCheckoutStaticFixtures {
+export interface SharedCartStaticFixtures {
   defaultPassword: string;
   soldByText: string;
-  ownerAccessText: string;
   fullAccessText: string;
+  cartPreviewTitlePrefix: string;
 }

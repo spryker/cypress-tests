@@ -99,6 +99,47 @@
         },
         {
           "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "reorderCustomer",
+          "arguments": [
+            {
+              "registered": "2025-01-01",
+              "password": "change123",
+              "locale_name": "en_US"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "reorderAddress",
+          "arguments": [
+            {
+              "fkCustomer": "#reorderCustomer.id_customer",
+              "fkCountry": "#country.id_country"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "reorderCompanyUser",
+          "arguments": [
+            {
+              "customer": "#reorderCustomer",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#reorderCompanyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
           "name": "assignCompanyRoles",
           "arguments": ["#companyUser", ["#buyerRole"]]
         },
@@ -269,6 +310,46 @@
               "isNeverOutOfStock": true
             },
             "#merchant2.stocks"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveShoppingList",
+          "key": "shoppingList",
+          "arguments": [
+            {
+              "customerReference": "#customer.customer_reference",
+              "idCompanyUser": "#companyUser.id_company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "reorderQuote",
+          "arguments": [
+            {
+              "customer": "#reorderCustomer",
+              "items": [
+                {
+                  "sku": "#product1.sku",
+                  "abstractSku": "#product1.abstract_sku",
+                  "idProductAbstract": "#product1.fk_product_abstract",
+                  "productOfferReference": "#productOffer1.product_offer_reference",
+                  "merchantReference": "#productOffer1.merchant_reference",
+                  "quantity": 1
+                },
+                {
+                  "sku": "#product2.sku",
+                  "abstractSku": "#product2.abstract_sku",
+                  "idProductAbstract": "#product2.fk_product_abstract",
+                  "productOfferReference": "#productOffer2.product_offer_reference",
+                  "merchantReference": "#productOffer2.merchant_reference",
+                  "quantity": 1
+                }
+              ]
+            },
+            true
           ]
         }
       ]

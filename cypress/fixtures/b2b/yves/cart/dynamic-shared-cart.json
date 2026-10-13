@@ -180,6 +180,17 @@
         },
         {
           "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveProductImageSet",
           "arguments": [
             {
@@ -225,6 +236,45 @@
               "isNeverOutOfStock": true
             },
             "#merchant.stocks"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "colleagueSharedQuote",
+          "arguments": [
+            {
+              "customer": "#ownerCustomer",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "idProductAbstract": "#product.fk_product_abstract",
+                  "productOfferReference": "#productOffer.product_offer_reference",
+                  "merchantReference": "#productOffer.merchant_reference",
+                  "quantity": 1
+                }
+              ]
+            },
+            true
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "linkSharedQuote",
+          "arguments": [
+            {
+              "customer": "#ownerCustomer",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            },
+            true
           ]
         }
       ]

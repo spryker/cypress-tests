@@ -21,4 +21,7 @@ export class SuiteOrderRepository implements OrderRepository {
   getOrderFilters(): Cypress.Chainable {
     return cy.get('[data-qa="component order-filters"]');
   }
+  getOrderTable(): Cypress.Chainable {
+    return cy.get('[data-qa="component order-table"]');
+  }
 }
