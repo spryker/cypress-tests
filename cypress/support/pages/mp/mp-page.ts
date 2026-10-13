@@ -82,6 +82,15 @@ export class MpPage extends AbstractPage {
 
     cy.wait('@priceRowDeleted');
   };
+
+  protected getPriceTableRowsByCell = (params: FindPriceTableRowsParams): Cypress.Chainable =>
+    params.getMatchColumnHeaderCell().then(($headerCell: JQuery<HTMLElement>) => {
+      const columnIndex = $headerCell.index();
+
+      return params
+        .getRows()
+        .filter((_rowIndex, row) => params.isMatchingCell(Cypress.$(row).find('td').eq(columnIndex).text().trim()));
+    });
 }
 
 // The Angular bundle paints the table well after page load, and re-renders it once more when the
@@ -96,6 +105,12 @@ interface DeletePriceTableRowParams {
   isMatchingCell: (cellText: string) => boolean;
   rowActionTriggerSelector: string;
   deleteUrlPattern: string;
+}
+
+interface FindPriceTableRowsParams {
+  getMatchColumnHeaderCell: () => Cypress.Chainable;
+  getRows: () => Cypress.Chainable;
+  isMatchingCell: (cellText: string) => boolean;
 }
 
 export enum ActionEnum {

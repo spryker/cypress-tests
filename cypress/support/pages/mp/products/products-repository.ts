@@ -15,9 +15,6 @@ export class ProductsRepository {
 
   getCreateProductButton = (): Cypress.Chainable => cy.contains('a, button', 'Create Product');
 
-  getStoresSelect = (): Cypress.Chainable =>
-    cy.get('web-spy-select[spy-id="productAbstract_stores"] nz-select-top-control', { timeout: 20000 });
-
   getConcreteProductsTab = (): Cypress.Chainable => cy.contains('.ant-tabs-tab-btn', 'Concrete Products');
 
   // The table renders a hidden measuring copy of every row beside the one on screen.
@@ -55,13 +52,6 @@ export class ProductsRepository {
 
   getSendForApprovalButton = (): Cypress.Chainable =>
     cy.get('a[href*="product-abstract-approval"][href*="waiting_for_approval"]', { timeout: 20000 });
-
-  getApprovalStatusChip = (): Cypress.Chainable =>
-    cy.get('.mp-edit-abstract-product__approval-status', { timeout: 20000 });
-
-  // One input per locale, each rendered behind its own locale tab but all present in the form.
-  getLocalizedNameInputs = (): Cypress.Chainable =>
-    cy.get('input[name^="productAbstract[localizedAttributes]"][name$="[name]"]', { timeout: 20000 });
 
   getCreateProductSkuInput = (): Cypress.Chainable =>
     cy.get('input[name="create_product_abstract_form[sku]"]', { timeout: 20000 });
