@@ -17,6 +17,12 @@
         },
         {
           "type": "helper",
+          "name": "haveCustomer",
+          "key": "customer",
+          "arguments": [{}]
+        },
+        {
+          "type": "helper",
           "name": "haveCompany",
           "key": "company",
           "arguments": [{ "status": "approved", "is_active": true }]
@@ -38,12 +44,6 @@
           "name": "haveCompanyBusinessUnit",
           "key": "businessUnitToKeep",
           "arguments": [{ "fk_company": "#companyToKeep.id_company" }]
-        },
-        {
-          "type": "helper",
-          "name": "haveCustomerGroup",
-          "key": "customerGroup",
-          "arguments": [{}]
         },
         {
           "type": "helper",

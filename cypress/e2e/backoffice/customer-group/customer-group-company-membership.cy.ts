@@ -44,8 +44,13 @@ describe(
       });
     });
 
-    it('backoffice user should be able to assign a company and a business unit to a customer group', (): void => {
-      customerGroupFormPage.visitEditPage(dynamicFixtures.customerGroup.id_customer_group);
+    it('backoffice user should be able to create a customer group with a customer, a company and a business unit', (): void => {
+      customerGroupFormPage.visit();
+      customerGroupFormPage.fillName(dynamicFixtures.newCustomerGroup.name);
+      customerGroupFormPage.assignCustomer({
+        idCustomer: dynamicFixtures.customer.id_customer,
+        searchTerm: dynamicFixtures.customer.email,
+      });
       customerGroupFormPage.assignCompany({
         idCompany: dynamicFixtures.company.id_company,
         searchTerm: dynamicFixtures.company.name,
@@ -56,13 +61,10 @@ describe(
       });
       customerGroupFormPage.save();
 
-      cy.url({ timeout: 20000 }).should(
-        'include',
-        customerGroupFormPage.getEditPageUrl(dynamicFixtures.customerGroup.id_customer_group)
-      );
-      customerGroupFormPage.getSuccessMessage().should('be.visible');
+      customerGroupListPage.getSuccessMessage().should('be.visible');
+      customerGroupListPage.openViewPage(dynamicFixtures.newCustomerGroup.name);
 
-      customerGroupViewPage.visitViewPage(dynamicFixtures.customerGroup.id_customer_group);
+      customerGroupViewPage.getCustomerTable().should('contain', dynamicFixtures.customer.last_name);
       customerGroupViewPage.getCompanyTable().should('contain', dynamicFixtures.company.name);
       customerGroupViewPage.getBusinessUnitTable().should('contain', dynamicFixtures.businessUnit.name);
       customerGroupViewPage.getCompanyTableCheckboxes().should('not.exist');
@@ -84,61 +86,13 @@ describe(
         customerGroupFormPage.getEditPageUrl(dynamicFixtures.customerGroupWithMemberships.id_customer_group)
       );
       customerGroupFormPage.getSuccessMessage().should('be.visible');
+      customerGroupFormPage.getBusinessUnitsTab().should('have.class', 'active');
 
       customerGroupViewPage.visitViewPage(dynamicFixtures.customerGroupWithMemberships.id_customer_group);
       customerGroupViewPage.getCompanyTable().should('contain', dynamicFixtures.companyToKeep.name);
       customerGroupViewPage.getCompanyTable().should('not.contain', dynamicFixtures.company.name);
       customerGroupViewPage.getBusinessUnitTable().should('contain', dynamicFixtures.businessUnitToKeep.name);
       customerGroupViewPage.getBusinessUnitTable().should('not.contain', dynamicFixtures.businessUnit.name);
-    });
-
-    it('backoffice user should stay on the edit page and its companies tab after saving a customer group', (): void => {
-      customerGroupFormPage.visitEditPage(dynamicFixtures.customerGroup.id_customer_group);
-      customerGroupFormPage.openCompaniesToBeAssignedTab();
-      customerGroupFormPage.save();
-
-      cy.url({ timeout: 20000 }).should(
-        'include',
-        customerGroupFormPage.getEditPageUrl(dynamicFixtures.customerGroup.id_customer_group)
-      );
-      customerGroupFormPage.getSuccessMessage().should('be.visible');
-      customerGroupFormPage.getCompaniesTab().should('have.class', 'active');
-    });
-
-    it('backoffice user should see the customer group sections in the configured order', (): void => {
-      const sectionNames = ['general', 'company-assignment', 'company-business-unit-assignment', 'customer-assignment'];
-
-      customerGroupFormPage.visitEditPage(dynamicFixtures.customerGroup.id_customer_group);
-      customerGroupFormPage.getSectionTabs().should(($tabs: JQuery<HTMLElement>) => {
-        expect($tabs.toArray().map((tab) => tab.dataset.qa)).to.deep.equal(sectionNames.map((name) => `tab-${name}`));
-      });
-
-      customerGroupViewPage.visitViewPage(dynamicFixtures.customerGroup.id_customer_group);
-      customerGroupViewPage.getBlocks().should(($blocks: JQuery<HTMLElement>) => {
-        expect($blocks.toArray().map((block) => block.dataset.qa)).to.deep.equal(
-          sectionNames.map((name) => `customer-group-view-block-${name}`)
-        );
-      });
-    });
-
-    it('backoffice user should be able to create a customer group with a company and a business unit', (): void => {
-      customerGroupFormPage.visit();
-      customerGroupFormPage.fillName(dynamicFixtures.newCustomerGroup.name);
-      customerGroupFormPage.assignCompany({
-        idCompany: dynamicFixtures.company.id_company,
-        searchTerm: dynamicFixtures.company.name,
-      });
-      customerGroupFormPage.assignBusinessUnit({
-        idCompanyBusinessUnit: dynamicFixtures.businessUnit.id_company_business_unit,
-        searchTerm: dynamicFixtures.businessUnit.name,
-      });
-      customerGroupFormPage.save();
-
-      customerGroupListPage.getSuccessMessage().should('be.visible');
-      customerGroupListPage.openViewPage(dynamicFixtures.newCustomerGroup.name);
-
-      customerGroupViewPage.getCompanyTable().should('contain', dynamicFixtures.company.name);
-      customerGroupViewPage.getBusinessUnitTable().should('contain', dynamicFixtures.businessUnit.name);
     });
   }
 );

@@ -6,13 +6,19 @@ export interface CustomerGroupCompanyMembershipStaticFixtures {
 
 export interface CustomerGroupCompanyMembershipDynamicFixtures {
   rootUser: User;
+  customer: CustomerGroupCompanyMembershipCustomer;
   company: Company;
   businessUnit: CompanyBusinessUnit;
   companyToKeep: Company;
   businessUnitToKeep: CompanyBusinessUnit;
-  customerGroup: CustomerGroupCompanyMembershipCustomerGroup;
   customerGroupWithMemberships: CustomerGroupCompanyMembershipCustomerGroup;
   newCustomerGroup: { name: string };
+}
+
+interface CustomerGroupCompanyMembershipCustomer {
+  id_customer: number;
+  email: string;
+  last_name: string;
 }
 
 interface CustomerGroupCompanyMembershipCustomerGroup {

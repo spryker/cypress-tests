@@ -17,19 +17,22 @@ export class CustomerGroupFormPage extends BackofficePage {
 
   getEditPageUrl = (idCustomerGroup: number): string => `/customer-group/edit?id-customer-group=${idCustomerGroup}`;
 
-  openCompaniesToBeAssignedTab = (): void => {
-    this.repository.getCompaniesTab().click();
-    this.repository.getCompaniesToBeAssignedTab().click();
-  };
-
-  getCompaniesTab = (): Cypress.Chainable => this.repository.getCompaniesTab();
+  getBusinessUnitsTab = (): Cypress.Chainable => this.repository.getBusinessUnitsTab();
 
   getSuccessMessage = (): Cypress.Chainable => this.repository.getSuccessMessage();
 
-  getSectionTabs = (): Cypress.Chainable => this.repository.getSectionTabs();
-
   fillName = (name: string): void => {
     this.repository.getNameInput().clear().type(name);
+  };
+
+  assignCustomer = (params: AssignCustomerParams): void => {
+    this.repository.getCustomersTab().click();
+
+    this.repository.getAvailableCustomersSearchInput().clear().type(params.searchTerm);
+    this.repository.getAvailableCustomerCheckbox(params.idCustomer).check();
+
+    this.repository.getCustomersToBeAssignedTab().click();
+    this.repository.getCustomerToBeAssignedRemoveLink(params.idCustomer).should('exist');
   };
 
   assignCompany = (params: AssignCompanyParams): void => {
@@ -67,6 +70,11 @@ export class CustomerGroupFormPage extends BackofficePage {
   save = (): void => {
     this.repository.getSaveButton().click();
   };
+}
+
+interface AssignCustomerParams {
+  idCustomer: number;
+  searchTerm: string;
 }
 
 interface AssignCompanyParams {

@@ -7,6 +7,10 @@ export class SuiteCustomerGroupViewRepository implements CustomerGroupViewReposi
     return cy.get('[data-qa="success-message"]');
   }
 
+  getCustomerTable(): Cypress.Chainable {
+    return cy.get('[data-qa="customer-group-view-block-customer-assignment"] table', { timeout: 20000 });
+  }
+
   getCompanyTable(): Cypress.Chainable {
     return cy.get('#assigned-company-table', { timeout: 20000 });
   }
@@ -34,9 +38,5 @@ export class SuiteCustomerGroupViewRepository implements CustomerGroupViewReposi
       `#assigned-company-business-unit-table a[href="/company-business-unit-gui/edit-company-business-unit?id-company-business-unit=${idCompanyBusinessUnit}"]`,
       { timeout: 20000 }
     );
-  }
-
-  getBlocks(): Cypress.Chainable {
-    return cy.get('[data-qa^="customer-group-view-block-"]', { timeout: 20000 });
   }
 }

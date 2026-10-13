@@ -7,6 +7,10 @@ export class SuiteCustomerGroupFormRepository implements CustomerGroupFormReposi
     return cy.get('#customer_group_name');
   }
 
+  getCustomersTab(): Cypress.Chainable {
+    return cy.get('[data-qa="tab-customer-assignment"]');
+  }
+
   getCompaniesTab(): Cypress.Chainable {
     return cy.get('[data-qa="tab-company-assignment"]');
   }
@@ -15,8 +19,12 @@ export class SuiteCustomerGroupFormRepository implements CustomerGroupFormReposi
     return cy.get('[data-qa="tab-company-business-unit-assignment"]');
   }
 
-  getCompaniesToBeAssignedTab(): Cypress.Chainable {
-    return cy.get('[data-qa="tab-companies-to-be-assigned"]');
+  getCustomersToBeAssignedTab(): Cypress.Chainable {
+    return cy.get('#available-items-destination-tab-label');
+  }
+
+  getAvailableCustomersSearchInput(): Cypress.Chainable {
+    return cy.get('#available-items-source-tab [data-qa="table-search"]');
   }
 
   getAvailableCompaniesSearchInput(): Cypress.Chainable {
@@ -25,6 +33,10 @@ export class SuiteCustomerGroupFormRepository implements CustomerGroupFormReposi
 
   getAvailableBusinessUnitsSearchInput(): Cypress.Chainable {
     return cy.get('[data-qa="tab-content-available-company-business-units"] [data-qa="table-search"]');
+  }
+
+  getAvailableCustomerCheckbox(idCustomer: number): Cypress.Chainable {
+    return cy.get(`#available-items-source-tab input[type="checkbox"][value="${idCustomer}"]`, { timeout: 20000 });
   }
 
   getAvailableCompanyCheckbox(idCompany: number): Cypress.Chainable {
@@ -45,6 +57,10 @@ export class SuiteCustomerGroupFormRepository implements CustomerGroupFormReposi
     return cy.get(`#assigned-company-business-unit-table input[type="checkbox"][value="${idCompanyBusinessUnit}"]`, {
       timeout: 20000,
     });
+  }
+
+  getCustomerToBeAssignedRemoveLink(idCustomer: number): Cypress.Chainable {
+    return cy.get(`#available-items-destination-tab-table [data-id="${idCustomer}"]`);
   }
 
   getCompanyToBeAssignedRemoveLink(idCompany: number): Cypress.Chainable {
@@ -69,11 +85,5 @@ export class SuiteCustomerGroupFormRepository implements CustomerGroupFormReposi
 
   getSuccessMessage(): Cypress.Chainable {
     return cy.get('[data-qa="success-message"]');
-  }
-
-  getSectionTabs(): Cypress.Chainable {
-    return cy.get(
-      '[data-qa="tab-general"], [data-qa="tab-customer-assignment"], [data-qa="tab-company-assignment"], [data-qa="tab-company-business-unit-assignment"]'
-    );
   }
 }
