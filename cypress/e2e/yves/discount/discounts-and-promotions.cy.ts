@@ -21,7 +21,7 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    it('given a cart rule, a voucher and a promotional product discount when the voucher is redeemed and the promotional product is added then all three are applied and the order is placed', (): void => {
+    it('given a cart rule, a voucher and a promotional product discount when both codes are redeemed and the promotional product is added then all three are applied and the order is placed', (): void => {
       // Arrange
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
@@ -42,6 +42,9 @@ describe(
       cartPage.getCartDiscountSummary().should('contain', dynamicFixtures.voucherDiscount.display_name);
 
       // Act
+      // The promotion is redeemed by a code of its own, so it is offered to this cart only and never
+      // to a cart of another run carrying the same fixture product brand.
+      cartPage.applyVoucherCode(dynamicFixtures.promotionVoucherCode.code);
       cartPage.addPromotionalProduct(dynamicFixtures.promotionalProduct.sku);
 
       // Assert

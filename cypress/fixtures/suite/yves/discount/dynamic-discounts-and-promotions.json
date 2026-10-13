@@ -119,7 +119,7 @@
           "arguments": [
             {
               "attributes": {
-                "brand": "Cypress discount journey"
+                "brand": "Discounts and promotions fixture"
               }
             },
             {
@@ -204,10 +204,10 @@
               "discountCalculator": {
                 "calculatorPlugin": "PLUGIN_CALCULATOR_PERCENTAGE",
                 "amount": 500,
-                "collectorQueryString": "attribute.brand = 'Cypress discount journey'"
+                "collectorQueryString": "attribute.brand = 'Discounts and promotions fixture'"
               },
               "discountCondition": {
-                "decisionRuleQueryString": "attribute.brand = 'Cypress discount journey'"
+                "decisionRuleQueryString": "attribute.brand = 'Discounts and promotions fixture'"
               }
             }
           ]
@@ -240,10 +240,10 @@
               "discountCalculator": {
                 "calculatorPlugin": "PLUGIN_CALCULATOR_PERCENTAGE",
                 "amount": 1000,
-                "collectorQueryString": "attribute.brand = 'Cypress discount journey'"
+                "collectorQueryString": "attribute.brand = 'Discounts and promotions fixture'"
               },
               "discountCondition": {
-                "decisionRuleQueryString": "attribute.brand = 'Cypress discount journey'"
+                "decisionRuleQueryString": "attribute.brand = 'Discounts and promotions fixture'"
               }
             }
           ]
@@ -255,7 +255,7 @@
           "arguments": [
             {
               "discountGeneral": {
-                "discountType": "cart_rule",
+                "discountType": "voucher",
                 "isActive": true,
                 "storeRelation": {
                   "idStores": [1]
@@ -272,8 +272,20 @@
                 }
               },
               "discountCondition": {
-                "decisionRuleQueryString": "attribute.brand = 'Cypress discount journey'"
+                "decisionRuleQueryString": "attribute.brand = 'Discounts and promotions fixture'"
               }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveGeneratedVoucherCodes",
+          "key": "promotionVoucherCode",
+          "arguments": [
+            {
+              "idDiscount": "#promotionDiscount.id_discount",
+              "quantity": 1,
+              "randomGeneratedCodeLength": 10
             }
           ]
         },

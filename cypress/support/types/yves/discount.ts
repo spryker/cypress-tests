@@ -12,6 +12,7 @@ export interface DiscountsAndPromotionsDynamicFixtures {
   cartRuleDiscount: Discount;
   promotionDiscount: Discount;
   voucherCode: DiscountVoucherCode;
+  promotionVoucherCode: DiscountVoucherCode;
 }
 
 export interface DiscountVoucherCode {
