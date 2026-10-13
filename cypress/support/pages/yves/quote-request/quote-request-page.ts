@@ -24,8 +24,10 @@ export class QuoteRequestPage extends YvesPage {
       .then((href) => (href as string).split('/send-to-user/')[1]);
 
   sendToAgent = (): void => {
-    cy.get('a[href*="/quote-request/send-to-user/"]').click();
+    this.getSendToAgentLink().click();
   };
+
+  getSendToAgentLink = (): Cypress.Chainable => cy.get('a[href*="/quote-request/send-to-user/"]');
 
   visitDetails = (reference: string): void => {
     cy.visit(`/quote-request/details/${reference}`);
