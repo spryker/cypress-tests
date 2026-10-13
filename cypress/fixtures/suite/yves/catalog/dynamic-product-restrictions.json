@@ -130,6 +130,20 @@
               }
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductList",
+          "key": "blacklist",
+          "arguments": [
+            {
+              "fkMerchantRelationship": 9,
+              "type": "blacklist",
+              "productListProductConcreteRelation": {
+                "productIds": ["#hiddenProduct.id_product_concrete"]
+              }
+            }
+          ]
         }
       ]
     }
