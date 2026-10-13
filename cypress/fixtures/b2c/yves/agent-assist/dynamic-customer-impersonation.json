@@ -113,6 +113,24 @@
               "isNeverOutOfStock": "1"
             }
           ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "quote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            },
+            true
+          ]
         }
       ]
     }

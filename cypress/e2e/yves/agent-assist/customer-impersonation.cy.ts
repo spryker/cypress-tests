@@ -1,7 +1,13 @@
 import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { CustomerImpersonationDynamicFixtures, CustomerImpersonationStaticFixtures } from '@interfaces/yves';
-import { AgentControlBarPage, CustomerOverviewPage, CustomerProfilePage } from '@pages/yves';
-import { CheckoutScenario, ImpersonateCustomerScenario, ProductAddToCartScenario } from '@scenarios/yves';
+import {
+  AgentControlBarPage,
+  CheckoutSummaryPage,
+  CustomerOverviewPage,
+  CustomerProfilePage,
+  OrderPage,
+} from '@pages/yves';
+import { CheckoutScenario, ImpersonateCustomerScenario } from '@scenarios/yves';
 
 describe(
   'customer impersonation',
@@ -12,18 +18,13 @@ describe(
     const agentControlBarPage = container.get(AgentControlBarPage);
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const customerProfilePage = container.get(CustomerProfilePage);
+    const checkoutSummaryPage = container.get(CheckoutSummaryPage);
+    const orderPage = container.get(OrderPage);
     const impersonateCustomerScenario = container.get(ImpersonateCustomerScenario);
-    const productAddToCartScenario = container.get(ProductAddToCartScenario);
     const checkoutScenario = container.get(CheckoutScenario);
 
     let staticFixtures: CustomerImpersonationStaticFixtures;
     let dynamicFixtures: CustomerImpersonationDynamicFixtures;
-
-    // A b2b-style storefront gates the cart behind company-user permissions, and the fixture builds
-    // a customer without a company, so ordering can only be driven where the customer needs none.
-    const skipB2BIt = (description: string, testFunction: () => void): void => {
-      (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(description, testFunction);
-    };
 
     before((): void => {
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
@@ -37,7 +38,7 @@ describe(
       });
     });
 
-    it('agent should see the impersonated customer own profile data', (): void => {
+    it('given an agent impersonating a customer when the agent opens the profile then the customer profile data is shown', (): void => {
       // Act
       customerProfilePage.visit();
 
@@ -46,7 +47,7 @@ describe(
       customerProfilePage.getLastNameInput().should('have.value', dynamicFixtures.customer.last_name);
     });
 
-    it('agent should be able to open the customer account area while impersonating', (): void => {
+    it('given an agent impersonating a customer when the agent opens the account overview then it is shown with the assistance still running', (): void => {
       // Act
       customerOverviewPage.visit();
 
@@ -55,7 +56,7 @@ describe(
       agentControlBarPage.getEndAssistanceLink().should('exist');
     });
 
-    it('agent should be handed back their own session when assistance ends', (): void => {
+    it('given an agent impersonating a customer when the agent ends the assistance then the agent own session is back', (): void => {
       // Arrange
       agentControlBarPage.getEndAssistanceLink().should('exist');
 
@@ -69,19 +70,17 @@ describe(
       agentControlBarPage.getEndAssistanceLink().should('not.exist');
     });
 
-    skipB2BIt('agent should be able to place an order for the impersonated customer', (): void => {
-      // Arrange
-      productAddToCartScenario.execute({ sku: dynamicFixtures.product.sku });
-
+    it('given an agent impersonating a customer with a filled cart when the agent checks out then the order is in the customer order history', (): void => {
       // Act
       checkoutScenario.execute({
-        shouldTriggerOmsInCli: true,
+        idCustomerAddress: dynamicFixtures.address.id_customer_address,
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
 
       // Assert
-      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage(), {
-        timeout: 15000,
+      checkoutSummaryPage.getPlacedOrderReference().then((orderReference: string) => {
+        orderPage.visit();
+        orderPage.getOrderHistoryRow(orderReference).should('exist');
       });
     });
   }
