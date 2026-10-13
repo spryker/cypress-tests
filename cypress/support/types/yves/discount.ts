@@ -1,11 +1,10 @@
-import { Address, Customer, Discount, ProductConcrete, User } from './shared';
+import { Address, Customer, Discount, ProductConcrete } from './shared';
 
 export interface DiscountsAndPromotionsStaticFixtures {
   defaultPassword: string;
 }
 
 export interface DiscountsAndPromotionsDynamicFixtures {
-  rootUser: User;
   customer: Customer;
   address: Address;
   promotionalProduct: ProductConcrete;
