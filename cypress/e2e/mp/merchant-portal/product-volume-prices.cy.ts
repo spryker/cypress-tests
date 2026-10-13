@@ -46,67 +46,58 @@ describe(
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
+
+      cy.runCliCommands(publishAndSyncCommands);
     });
 
-    it('given a merchant product carrying a volume price when the merchant deletes that price row then the storefront falls back to the default price', (): void => {
+    it('given a merchant product carrying a volume price when the merchant deletes that price row then the product no longer lists it', (): void => {
       // Arrange
-      cy.runCliCommands(publishAndSyncCommands);
-      loginAsCustomer();
-      openProductDetailPage();
+      const abstractSku = dynamicFixtures.editableProduct.abstract_sku;
 
-      // The tier is what the storefront charges while the volume price row exists.
+      merchantUserLoginScenario.execute({
+        username: dynamicFixtures.merchantUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      // Act
+      productsPage.openProduct({ query: abstractSku });
+      productsPage.deletePriceRowByQuantity({ quantity: staticFixtures.volumeTier.threshold });
+
+      // Assert
+      productsPage.openProduct({ query: abstractSku });
+      productsPage.getPriceRowsByQuantity({ quantity: staticFixtures.volumeTier.threshold }).should('have.length', 0);
+    });
+
+    it('given a merchant product carrying a volume price when a customer orders more than its threshold then the storefront charges the volume price', (): void => {
+      // Arrange
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      cartPage.visit();
+      cartPage.clearCartIfNotEmpty();
+
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.merchantProduct.abstract_sku });
       productPage.getProductDetailPrice().should('contain', staticFixtures.unitPrice);
+
+      // Act
       productPage.setQuantity({ quantity: staticFixtures.volumeTier.quantity });
+
+      // Assert
       productPage.getProductDetailPrice().should('contain', staticFixtures.volumeTier.price);
 
+      // Act
       productPage.addToCart();
+
+      // Assert
       cartPage.visit();
       cartPage
         .getProductCartItems()
         .filter(`:contains("${dynamicFixtures.merchantProduct.sku}")`)
         .should('have.length', 1)
         .and('contain.text', staticFixtures.volumeTier.price);
-
-      cartPage.clearCartIfNotEmpty();
-
-      // Act
-      merchantUserLoginScenario.execute({
-        username: dynamicFixtures.merchantUser.username,
-        password: staticFixtures.defaultPassword,
-      });
-
-      productsPage.visit();
-      productsPage.find({ query: dynamicFixtures.merchantProduct.abstract_sku }).click();
-      productsPage.deletePriceRowByQuantity({ quantity: staticFixtures.volumeTier.threshold });
-
-      cy.runCliCommands(publishAndSyncCommands);
-
-      // Assert
-      loginAsCustomer();
-      openProductDetailPage();
-
-      productPage.setQuantity({ quantity: staticFixtures.volumeTier.quantity });
-      productPage.getProductDetailPrice().should('contain', staticFixtures.unitPrice);
-
-      productPage.addToCart();
-      cartPage.visit();
-      cartPage
-        .getProductCartItems()
-        .filter(`:contains("${dynamicFixtures.merchantProduct.sku}")`)
-        .should('have.length', 1)
-        .and('contain.text', staticFixtures.unitPrice);
     });
-
-    function loginAsCustomer(): void {
-      customerLoginScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-      });
-    }
-
-    function openProductDetailPage(): void {
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.merchantProduct.abstract_sku });
-    }
   }
 );
