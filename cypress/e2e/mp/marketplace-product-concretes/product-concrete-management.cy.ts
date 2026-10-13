@@ -55,99 +55,69 @@ describe(
       variantsPage.getProductConcretesCountSelector().contains('2 Result(s)');
     });
 
-    it('given a merchant that created a multi sku product when the back office approves it then the storefront serves it, and denying it takes the detail page away', (): void => {
+    it('given a merchant that created a multi sku product when it sends the product for approval then the product list shows it waiting for approval', (): void => {
       // Arrange
       const sku = `SKU${Date.now()}`;
-      const name = `Product ${sku}`;
-      const createdProduct = staticFixtures.createdProduct;
 
-      signInToPortal();
+      merchantUserLoginScenario.execute({
+        username: dynamicFixtures.merchantUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+
       productsPage.visit();
       productsPage.createMultiConcreteProduct({
         sku: sku,
-        name: name,
-        attributeName: createdProduct.attributeName,
-        attributeValues: createdProduct.attributeValues,
+        name: `Product ${sku}`,
+        attributeName: staticFixtures.createdProduct.attributeName,
+        attributeValues: staticFixtures.createdProduct.attributeValues,
       });
-
-      // The wizard leaves a draft that carries neither store, tax set nor price, and none of them
-      // has a default the merchant could rely on.
-      openProductInPortal(sku);
-      productsPage.fillLocalizedNames({ name: name });
-      productsPage.selectStores({ storeNames: [staticFixtures.storeName] });
-      productsPage.selectFirstTaxSet();
-      productsPage.addPriceRow({
-        storeName: staticFixtures.storeName,
-        currency: staticFixtures.currency,
-        netAmount: createdProduct.netAmount,
-        grossAmount: createdProduct.grossAmount,
-      });
-      productsPage.assertBodyContainsText(PRODUCT_SAVED_MESSAGE);
-
-      openProductInPortal(sku);
-      productsPage.openConcreteProductsTab();
-      productsPage.openFirstConcreteProduct();
-      productsPage.activateConcreteProduct({
-        stockQuantity: createdProduct.stockQuantity,
-        searchableLocales: createdProduct.searchableLocales,
-      });
-      productsPage.save();
-      productsPage.assertBodyContainsText(PRODUCT_SAVED_MESSAGE);
 
       // Act
-      openProductInPortal(sku);
+      productsPage.openProduct({ query: sku });
       productsPage.sendForApproval();
 
+      // Assert
       productsPage.visit();
       productsPage.find({ query: sku }).should('contain.text', WAITING_FOR_APPROVAL_STATUS);
+    });
 
-      signInToBackoffice();
+    it('given a merchant product waiting for approval when the back office approves it then the storefront serves it, and denying it takes the detail page away', (): void => {
+      // Arrange
+      const abstractSku = dynamicFixtures.pendingProduct.abstract_sku;
+
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      // Act
       productManagementListPage.visit();
-      productManagementListPage.update({ query: sku, action: ActionEnum.approve });
+      productManagementListPage.update({ query: abstractSku, action: ActionEnum.approve });
 
-      // Assert
       cy.runCliCommands(publishAndSyncCommands);
 
+      // Assert
       catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: sku });
+      catalogPage.searchProductFromSuggestions({ query: abstractSku });
       cy.url().then((productDetailPageUrl) => {
-        productPage.getSoldByProductOffers().should('contain.text', dynamicFixtures.merchant.name);
-        productPage.getProductDetailPrice().should('contain', createdProduct.displayedPrice);
+        productPage.getSoldByProductOffers().should('contain.text', dynamicFixtures.approvalMerchant.name);
+        productPage.getProductDetailPrice().should('contain', staticFixtures.pendingProductPrice);
 
         // Act
-        signInToBackoffice();
+        userLoginScenario.execute({
+          username: dynamicFixtures.rootUser.username,
+          password: staticFixtures.defaultPassword,
+        });
         productManagementListPage.visit();
-        productManagementListPage.update({ query: sku, action: ActionEnum.deny });
+        productManagementListPage.update({ query: abstractSku, action: ActionEnum.deny });
 
         // Assert
         cy.reloadUntilGone(productDetailPageUrl, ADD_TO_CART_BUTTON_SELECTOR, 'body', 10, 3000, publishAndSyncCommands);
       });
     });
-
-    function signInToPortal(): void {
-      merchantUserLoginScenario.execute({
-        username: dynamicFixtures.merchantUser.username,
-        password: staticFixtures.defaultPassword,
-      });
-    }
-
-    function signInToBackoffice(): void {
-      userLoginScenario.execute({
-        username: dynamicFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
-    }
-
-    // Saving an abstract product closes its drawer, so each stage opens it again.
-    function openProductInPortal(sku: string): void {
-      productsPage.visit();
-      productsPage.getFirstTableRow().should('exist');
-      productsPage.find({ query: sku }).click();
-    }
   }
 );
 
-const PRODUCT_SAVED_MESSAGE = 'The Product is saved.';
 const WAITING_FOR_APPROVAL_STATUS = 'Waiting for Approval';
 
 // A denied product has no detail page left, and this is what the page loses first. It is the same

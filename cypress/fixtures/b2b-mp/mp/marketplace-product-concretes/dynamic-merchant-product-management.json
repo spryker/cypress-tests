@@ -5,21 +5,6 @@
       "synchronize": true,
       "operations": [
         {
-          "type": "helper",
-          "name": "haveUser",
-          "key": "rootUser",
-          "arguments": [
-            {
-              "password": "change123"
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "addUserToGroup",
-          "arguments": ["#rootUser.id_user", 1]
-        },
-        {
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "localeEN",
