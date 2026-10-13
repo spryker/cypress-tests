@@ -47,10 +47,7 @@ describe(
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
-    });
 
-    it('given a merchant relation to a business unit when the merchant prices a product for it then only that business unit is charged that price, and deleting the row restores the default one', (): void => {
-      // Arrange
       // There is no dynamic-fixture helper for a merchant relation, so the back office creates it.
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
@@ -63,9 +60,19 @@ describe(
         idCompany: dynamicFixtures.company.id_company,
         idCompanyBusinessUnit: dynamicFixtures.businessUnit.id_company_business_unit,
       });
+    });
+
+    it('given a merchant relation to a business unit when the merchant prices a product for it then only that business unit is charged that price, and deleting the row restores the default one', (): void => {
+      // Arrange
+      const abstractSku = dynamicFixtures.merchantProduct.abstract_sku;
+
+      merchantUserLoginScenario.execute({
+        username: dynamicFixtures.merchantUser.username,
+        password: staticFixtures.defaultPassword,
+      });
 
       // Act
-      openMerchantProductInPortal();
+      productsPage.openProduct({ query: abstractSku });
       productsPage.addPriceRow({
         customerBusinessUnitName: dynamicFixtures.businessUnit.name,
         storeName: staticFixtures.storeName,
@@ -77,38 +84,40 @@ describe(
       cy.runCliCommands(publishAndSyncCommands);
 
       // Assert
-      openProductDetailPageAs(dynamicFixtures.companyCustomer.email);
+      customerLoginScenario.execute({
+        email: dynamicFixtures.companyCustomer.email,
+        password: staticFixtures.defaultPassword,
+      });
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: abstractSku });
       productPage.getProductDetailPrice().should('contain', staticFixtures.customerPrice.displayed);
 
-      openProductDetailPageAs(dynamicFixtures.customer.email);
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+      });
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: abstractSku });
       productPage.getProductDetailPrice().should('contain', staticFixtures.defaultPrice);
 
       // Act
-      openMerchantProductInPortal();
+      merchantUserLoginScenario.execute({
+        username: dynamicFixtures.merchantUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+      productsPage.openProduct({ query: abstractSku });
       productsPage.deletePriceRowByCustomer({ customerBusinessUnitName: dynamicFixtures.businessUnit.name });
 
       cy.runCliCommands(publishAndSyncCommands);
 
       // Assert
-      openProductDetailPageAs(dynamicFixtures.companyCustomer.email);
-      productPage.getProductDetailPrice().should('contain', staticFixtures.defaultPrice);
-    });
-
-    function openMerchantProductInPortal(): void {
-      merchantUserLoginScenario.execute({
-        username: dynamicFixtures.merchantUser.username,
+      customerLoginScenario.execute({
+        email: dynamicFixtures.companyCustomer.email,
         password: staticFixtures.defaultPassword,
       });
-
-      productsPage.visit();
-      productsPage.find({ query: dynamicFixtures.merchantProduct.abstract_sku }).click();
-    }
-
-    function openProductDetailPageAs(email: string): void {
-      customerLoginScenario.execute({ email: email, password: staticFixtures.defaultPassword });
-
       catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.merchantProduct.abstract_sku });
-    }
+      catalogPage.searchProductFromSuggestions({ query: abstractSku });
+      productPage.getProductDetailPrice().should('contain', staticFixtures.defaultPrice);
+    });
   }
 );
