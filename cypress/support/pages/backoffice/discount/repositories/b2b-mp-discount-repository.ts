@@ -91,10 +91,6 @@ export class B2bMpDiscountRepository implements DiscountRepository {
     return 'a:contains("View")';
   }
 
-  getDeactivateActionSelector(): string {
-    return 'form[action*="visibility=Deactivate"] button';
-  }
-
   getRowActionLabels(): Array<string> {
     return ['Edit', 'View', 'Deactivate'];
   }
