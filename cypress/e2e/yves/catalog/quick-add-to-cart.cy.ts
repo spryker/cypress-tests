@@ -18,7 +18,7 @@ describe(
       ({ staticFixtures } = Cypress.env());
     });
 
-    const loginAndEmptyTheCart = (): void => {
+    beforeEach((): void => {
       customerLoginScenario.execute({
         email: staticFixtures.customer.email,
         password: staticFixtures.defaultPassword,
@@ -26,11 +26,10 @@ describe(
 
       cartPage.visit();
       cartPage.clearCartIfNotEmpty();
-    };
+    });
 
     it('given a buyable product in the catalog when it is quick added from its card then it lands in the cart', (): void => {
       // Arrange
-      loginAndEmptyTheCart();
       catalogPage.visit();
       catalogPage.searchForProducts({ query: staticFixtures.buyableProduct.searchQuery });
 
@@ -44,7 +43,6 @@ describe(
 
     it('given an unbuyable product in the catalog when its card is read then no usable add to cart is offered', (): void => {
       // Arrange
-      loginAndEmptyTheCart();
       catalogPage.visit();
 
       // Act
@@ -58,7 +56,6 @@ describe(
 
     it('given a product card offering its group siblings by colour when a sibling colour is picked and quick added then the sibling is what lands in the cart', (): void => {
       // Arrange
-      loginAndEmptyTheCart();
       catalogPage.visit();
       catalogPage.searchForProducts({ query: staticFixtures.productGroup.searchQuery });
 
