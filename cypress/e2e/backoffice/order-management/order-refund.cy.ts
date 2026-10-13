@@ -1,6 +1,6 @@
 import { container } from '@utils';
 import { OrderRefundDynamicFixtures, OrderRefundStaticFixtures } from '@interfaces/backoffice';
-import { RefundPage, SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
+import { RefundPage, SalesDetailPage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CustomerLoginScenario, PlaceOrderScenario } from '@scenarios/yves';
 
@@ -33,7 +33,6 @@ describe(
       return;
     }
 
-    const salesIndexPage = container.get(SalesIndexPage);
     const salesDetailPage = container.get(SalesDetailPage);
     const refundPage = container.get(RefundPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
@@ -42,7 +41,7 @@ describe(
 
     let staticFixtures: OrderRefundStaticFixtures;
     let dynamicFixtures: OrderRefundDynamicFixtures;
-    let orderReference: string;
+    let idSalesOrder: number;
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
@@ -54,15 +53,14 @@ describe(
 
       placeOrderScenario
         .execute({ idCustomerAddress: dynamicFixtures.address.id_customer_address, shouldTriggerOmsInCli: true })
-        .then((placedOrderReference: string): void => {
-          orderReference = placedOrderReference;
+        .then((placedIdSalesOrder: number): void => {
+          idSalesOrder = placedIdSalesOrder;
 
           userLoginScenario.execute({
             username: dynamicFixtures.rootUser.username,
             password: staticFixtures.defaultPassword,
           });
-          salesIndexPage.visit();
-          salesIndexPage.viewByReference(orderReference);
+          salesDetailPage.visit({ qs: { 'id-sales-order': idSalesOrder } });
 
           // `refund` is reachable from `delivered` only, so the order has to walk the whole happy path
           // first. Every event on it is manual, which is why each one is triggered rather than waited for.
@@ -80,8 +78,7 @@ describe(
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
-      salesIndexPage.visit();
-      salesIndexPage.viewByReference(orderReference);
+      salesDetailPage.visit({ qs: { 'id-sales-order': idSalesOrder } });
     });
 
     it('given a delivered order of three items when they are refunded one by one then each refund is recorded and the grand total reaches zero', (): void => {

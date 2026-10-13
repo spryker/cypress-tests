@@ -8,7 +8,7 @@ import {
   ProductConfiguratorPage,
   ProductPage,
 } from '@pages/yves';
-import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
+import { SalesDetailPage } from '@pages/backoffice';
 import { CustomerLoginScenario, PlaceOrderScenario } from '@scenarios/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
@@ -42,7 +42,6 @@ describe(
     const cartPage = container.get(CartPage);
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const orderDetailsPage = container.get(OrderDetailsPage);
-    const salesIndexPage = container.get(SalesIndexPage);
     const salesDetailPage = container.get(SalesDetailPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const userLoginScenario = container.get(UserLoginScenario);
@@ -51,7 +50,7 @@ describe(
     let staticFixtures: ConfigurableProductOmsStaticFixtures;
     let dynamicFixtures: ConfigurableProductOmsDynamicFixtures;
     let configuredOptionTitle: string;
-    let orderReference: string;
+    let idSalesOrder: number;
 
     // The order item has to carry a configuration the customer saved, and no fixture helper persists
     // one onto a sales order item, so the order is placed through the storefront once for both tests.
@@ -84,8 +83,8 @@ describe(
           paymentMethod: getPaymentMethodBasedOnEnv(),
           shouldTriggerOmsInCli: true,
         })
-        .then((placedOrderReference: string): void => {
-          orderReference = placedOrderReference;
+        .then((placedIdSalesOrder: number): void => {
+          idSalesOrder = placedIdSalesOrder;
         });
     });
 
@@ -95,8 +94,7 @@ describe(
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
-      salesIndexPage.visit();
-      salesIndexPage.viewByReference(orderReference);
+      salesDetailPage.visit({ qs: { 'id-sales-order': idSalesOrder } });
 
       salesDetailPage.getOrderItemTables().should((tables: JQuery<HTMLElement>): void => {
         expect(tables.text()).to.contain(configuredOptionTitle);

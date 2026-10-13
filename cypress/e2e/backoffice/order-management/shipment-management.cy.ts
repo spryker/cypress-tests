@@ -1,6 +1,6 @@
 import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { ShipmentManagementDynamicFixtures, ShipmentManagementStaticFixtures } from '@interfaces/backoffice';
-import { SalesDetailPage, SalesIndexPage, SalesShipmentFormPage } from '@pages/backoffice';
+import { SalesDetailPage, SalesShipmentFormPage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CustomerLoginScenario, PlaceOrderScenario } from '@scenarios/yves';
 
@@ -19,7 +19,6 @@ describe(
     ],
   },
   (): void => {
-    const salesIndexPage = container.get(SalesIndexPage);
     const salesDetailPage = container.get(SalesDetailPage);
     const salesShipmentFormPage = container.get(SalesShipmentFormPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
@@ -28,7 +27,7 @@ describe(
 
     let staticFixtures: ShipmentManagementStaticFixtures;
     let dynamicFixtures: ShipmentManagementDynamicFixtures;
-    let orderReference: string;
+    let idSalesOrder: number;
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
@@ -44,8 +43,8 @@ describe(
           paymentMethod: getPaymentMethodBasedOnEnv(),
           shouldTriggerOmsInCli: true,
         })
-        .then((placedOrderReference: string): void => {
-          orderReference = placedOrderReference;
+        .then((placedIdSalesOrder: number): void => {
+          idSalesOrder = placedIdSalesOrder;
         });
     });
 
@@ -54,8 +53,7 @@ describe(
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
-      salesIndexPage.visit();
-      salesIndexPage.viewByReference(orderReference);
+      salesDetailPage.visit({ qs: { 'id-sales-order': idSalesOrder } });
     });
 
     it('given an order delivered as one shipment when a second shipment is created and then edited then the item moves and the edited address is kept', (): void => {
