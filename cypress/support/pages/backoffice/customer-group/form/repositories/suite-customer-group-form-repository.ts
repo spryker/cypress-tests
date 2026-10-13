@@ -70,4 +70,10 @@ export class SuiteCustomerGroupFormRepository implements CustomerGroupFormReposi
   getSuccessMessage(): Cypress.Chainable {
     return cy.get('[data-qa="success-message"]');
   }
+
+  getSectionTabs(): Cypress.Chainable {
+    return cy.get(
+      '[data-qa="tab-general"], [data-qa="tab-customer-assignment"], [data-qa="tab-company-assignment"], [data-qa="tab-company-business-unit-assignment"]'
+    );
+  }
 }

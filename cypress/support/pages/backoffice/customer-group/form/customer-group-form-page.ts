@@ -26,6 +26,8 @@ export class CustomerGroupFormPage extends BackofficePage {
 
   getSuccessMessage = (): Cypress.Chainable => this.repository.getSuccessMessage();
 
+  getSectionTabs = (): Cypress.Chainable => this.repository.getSectionTabs();
+
   fillName = (name: string): void => {
     this.repository.getNameInput().clear().type(name);
   };

@@ -6,4 +6,5 @@ export interface CustomerGroupViewRepository {
   getBusinessUnitTableCheckboxes(): Cypress.Chainable;
   getCompanyEditButton(idCompany: number): Cypress.Chainable;
   getBusinessUnitEditButton(idCompanyBusinessUnit: number): Cypress.Chainable;
+  getBlocks(): Cypress.Chainable;
 }

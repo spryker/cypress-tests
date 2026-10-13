@@ -35,4 +35,8 @@ export class SuiteCustomerGroupViewRepository implements CustomerGroupViewReposi
       { timeout: 20000 }
     );
   }
+
+  getBlocks(): Cypress.Chainable {
+    return cy.get('[data-qa^="customer-group-view-block-"]', { timeout: 20000 });
+  }
 }

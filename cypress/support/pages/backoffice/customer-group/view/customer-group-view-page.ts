@@ -29,4 +29,6 @@ export class CustomerGroupViewPage extends BackofficePage {
 
   getBusinessUnitEditButton = (idCompanyBusinessUnit: number): Cypress.Chainable =>
     this.repository.getBusinessUnitEditButton(idCompanyBusinessUnit);
+
+  getBlocks = (): Cypress.Chainable => this.repository.getBlocks();
 }

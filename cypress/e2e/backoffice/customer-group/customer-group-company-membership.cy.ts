@@ -105,6 +105,22 @@ describe(
       customerGroupFormPage.getCompaniesTab().should('have.class', 'active');
     });
 
+    it('backoffice user should see the customer group sections in the configured order', (): void => {
+      const sectionNames = ['general', 'company-assignment', 'company-business-unit-assignment', 'customer-assignment'];
+
+      customerGroupFormPage.visitEditPage(dynamicFixtures.customerGroup.id_customer_group);
+      customerGroupFormPage.getSectionTabs().should(($tabs: JQuery<HTMLElement>) => {
+        expect($tabs.toArray().map((tab) => tab.dataset.qa)).to.deep.equal(sectionNames.map((name) => `tab-${name}`));
+      });
+
+      customerGroupViewPage.visitViewPage(dynamicFixtures.customerGroup.id_customer_group);
+      customerGroupViewPage.getBlocks().should(($blocks: JQuery<HTMLElement>) => {
+        expect($blocks.toArray().map((block) => block.dataset.qa)).to.deep.equal(
+          sectionNames.map((name) => `customer-group-view-block-${name}`)
+        );
+      });
+    });
+
     it('backoffice user should be able to create a customer group with a company and a business unit', (): void => {
       customerGroupFormPage.visit();
       customerGroupFormPage.fillName(dynamicFixtures.newCustomerGroup.name);

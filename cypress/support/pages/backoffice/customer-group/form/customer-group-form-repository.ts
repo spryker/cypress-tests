@@ -15,4 +15,5 @@ export interface CustomerGroupFormRepository {
   getBusinessUnitToBeDeassignedRemoveLink(idCompanyBusinessUnit: number): Cypress.Chainable;
   getSaveButton(): Cypress.Chainable;
   getSuccessMessage(): Cypress.Chainable;
+  getSectionTabs(): Cypress.Chainable;
 }
