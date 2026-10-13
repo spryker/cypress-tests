@@ -32,17 +32,19 @@ describe(
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
     const userLoginScenario = container.get(UserLoginScenario);
 
-    // A tree-wide publish times the gateway out, so this stays narrowed to the catalog.
-    const publishAndSyncCommands = [
-      'console publish:trigger-events -r product_abstract',
-      'console queue:worker:start --stop-when-empty',
-    ];
+    let publishAndSyncCommands: string[];
 
     let dynamicFixtures: ProductConcreteManagementDynamicFixtures;
     let staticFixtures: ProductConcreteManagementStaticFixtures;
 
     before((): void => {
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
+
+      // A tree-wide publish times the gateway out, so this stays narrowed to the product under test.
+      publishAndSyncCommands = [
+        `console publish:trigger-events -r product_abstract -i ${dynamicFixtures.pendingProduct.fk_product_abstract}`,
+        'console queue:worker:start --stop-when-empty',
+      ];
     });
 
     it('merchant user should be able to see table with product concretes', (): void => {

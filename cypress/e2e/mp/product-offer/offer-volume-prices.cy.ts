@@ -34,21 +34,19 @@ describe(
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
     const customerLoginScenario = container.get(CustomerLoginScenario);
 
-    // A tree-wide publish times the gateway out, so this stays narrowed to what the journey reads.
-    const publishAndSyncCommands = [
-      'console publish:trigger-events -r product_abstract',
-      'console publish:trigger-events -r product_offer',
-      'console publish:trigger-events -r price_product_offer',
-      'console queue:worker:start --stop-when-empty',
-    ];
-
     let staticFixtures: OfferVolumePricesStaticFixtures;
     let dynamicFixtures: OfferVolumePricesDynamicFixtures;
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
-      cy.runCliCommands(publishAndSyncCommands);
+      // A tree-wide publish times the gateway out, so this stays narrowed to what the storefront reads.
+      cy.runCliCommands([
+        `console publish:trigger-events -r product_abstract -i ${dynamicFixtures.merchantProduct.fk_product_abstract}`,
+        `console publish:trigger-events -r product_offer -i ${dynamicFixtures.productOffer.id_product_offer}`,
+        `console publish:trigger-events -r price_product_offer -i ${dynamicFixtures.productOfferPrice.id_price_product_offer}`,
+        'console queue:worker:start --stop-when-empty',
+      ]);
     });
 
     it('given an offer carrying a volume price when the merchant deletes that price row then the offer no longer lists it', (): void => {

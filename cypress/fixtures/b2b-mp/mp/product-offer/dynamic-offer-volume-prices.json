@@ -158,6 +158,7 @@
         {
           "type": "helper",
           "name": "havePriceProductOffer",
+          "key": "productOfferPrice",
           "arguments": [
             {
               "fkProductOffer": "#productOffer.id_product_offer",

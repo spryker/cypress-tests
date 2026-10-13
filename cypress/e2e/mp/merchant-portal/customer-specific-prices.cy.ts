@@ -35,18 +35,20 @@ describe(
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
     const customerLoginScenario = container.get(CustomerLoginScenario);
 
-    // A tree-wide publish times the gateway out, so this stays narrowed to what the journey reads.
-    const publishAndSyncCommands = [
-      'console publish:trigger-events -r product_abstract',
-      'console publish:trigger-events -r price_product_abstract',
-      'console queue:worker:start --stop-when-empty',
-    ];
+    let publishAndSyncCommands: string[];
 
     let staticFixtures: CustomerSpecificPricesStaticFixtures;
     let dynamicFixtures: CustomerSpecificPricesDynamicFixtures;
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
+
+      // A tree-wide publish times the gateway out, so this stays narrowed to the product under test.
+      publishAndSyncCommands = [
+        `console publish:trigger-events -r product_abstract -i ${dynamicFixtures.merchantProduct.fk_product_abstract}`,
+        `console publish:trigger-events -r price_product_abstract -i ${dynamicFixtures.merchantProduct.fk_product_abstract}`,
+        'console queue:worker:start --stop-when-empty',
+      ];
 
       // There is no dynamic-fixture helper for a merchant relation, so the back office creates it.
       userLoginScenario.execute({
