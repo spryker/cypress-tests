@@ -4,9 +4,11 @@ import { inject, injectable } from 'inversify';
 import { YvesPage } from '@pages/yves';
 import { CatalogRepository } from './catalog-repository';
 
-const SEARCH_INDEX_RELOAD_ATTEMPTS = 15;
+const SEARCH_INDEX_RELOAD_ATTEMPTS = 25;
 
-const SEARCH_INDEX_RELOAD_INTERVAL_MS = 3000;
+const SEARCH_INDEX_RELOAD_INTERVAL_MS = 5000;
+
+const SEARCH_INDEX_SYNC_COMMANDS = ['console queue:worker:start --stop-when-empty'];
 
 @injectable()
 @autoWired
@@ -159,14 +161,16 @@ export class CatalogPage extends YvesPage {
   };
 
   // The search results are read from the search index, which a back office change reaches only
-  // through publish and sync, so the results page is reloaded until the product's card shows up.
+  // through publish and sync, so the queue is drained and the results page reloaded until the card
+  // shows up.
   waitUntilProductIsListed = (productName: string): void => {
     cy.reloadUntilFound(
       this.getSearchUrl(productName),
       this.getProductItemBlockSelectorFor(productName),
       'body',
       SEARCH_INDEX_RELOAD_ATTEMPTS,
-      SEARCH_INDEX_RELOAD_INTERVAL_MS
+      SEARCH_INDEX_RELOAD_INTERVAL_MS,
+      SEARCH_INDEX_SYNC_COMMANDS
     );
   };
 
@@ -176,7 +180,8 @@ export class CatalogPage extends YvesPage {
       this.getProductItemBlockSelectorFor(productName),
       'body',
       SEARCH_INDEX_RELOAD_ATTEMPTS,
-      SEARCH_INDEX_RELOAD_INTERVAL_MS
+      SEARCH_INDEX_RELOAD_INTERVAL_MS,
+      SEARCH_INDEX_SYNC_COMMANDS
     );
   };
 
