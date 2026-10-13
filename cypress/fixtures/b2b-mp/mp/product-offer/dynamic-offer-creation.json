@@ -194,6 +194,142 @@
               "isNeverOutOfStock": "1"
             }
           ]
+        },
+        {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "offeredLocalizedAttribute"
+        },
+        {
+          "type": "transfer",
+          "name": "ProductImageTransfer",
+          "key": "offeredProductImage",
+          "arguments": {
+            "externalUrlSmall": "https://images.icecat.biz/img/gallery_mediums/30691822_1486.jpg",
+            "externalUrlLarge": "https://images.icecat.biz/img/gallery/30691822_1486.jpg"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "offeredProduct",
+          "arguments": [
+            {
+              "localizedAttributes": [
+                {
+                  "locale": "#localeEN",
+                  "name": "#offeredLocalizedAttribute.name"
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#offeredLocalizedAttribute.name"
+                }
+              ]
+            },
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                {
+                  "locale": "#localeEN",
+                  "name": "#offeredLocalizedAttribute.name"
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#offeredLocalizedAttribute.name"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idMerchant": "#productMerchant.id_merchant",
+              "idProductAbstract": "#offeredProduct.fk_product_abstract"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#offeredProduct.id_product_concrete",
+              "idProductAbstract": "#offeredProduct.fk_product_abstract",
+              "productImages": ["#offeredProductImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#offeredProduct.abstract_sku",
+              "idProduct": null,
+              "skuProduct": "",
+              "moneyValue": {
+                "netAmount": 9000,
+                "grossAmount": 10000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#offeredProduct.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOffer",
+          "key": "productOffer",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "idProductConcrete": "#offeredProduct.id_product_concrete",
+              "concreteSku": "#offeredProduct.sku",
+              "merchantReference": "#offerMerchant.merchant_reference",
+              "stores": "#stores"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProductOffer",
+          "arguments": [
+            {
+              "fkProductOffer": "#productOffer.id_product_offer",
+              "skuProductAbstract": "#offeredProduct.abstract_sku",
+              "skuProduct": "#offeredProduct.sku",
+              "moneyValue": {
+                "netAmount": 18000,
+                "grossAmount": 20000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferStock",
+          "arguments": [
+            {
+              "idProductOffer": "#productOffer.id_product_offer",
+              "productOfferReference": "#productOffer.product_offer_reference",
+              "isNeverOutOfStock": true
+            },
+            "#offerMerchant.stocks"
+          ]
         }
       ]
     }

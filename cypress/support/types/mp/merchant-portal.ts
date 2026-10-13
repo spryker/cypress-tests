@@ -15,6 +15,7 @@ export interface ProductVolumePricesDynamicFixtures {
   merchantUser: User;
   merchant: Merchant;
   merchantProduct: ProductConcrete;
+  editableProduct: ProductConcrete;
 }
 
 export interface ProductVolumePricesStaticFixtures {

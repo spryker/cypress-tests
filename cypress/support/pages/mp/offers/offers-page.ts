@@ -25,6 +25,11 @@ export class OffersPage extends MpPage {
     return this.repository.getFirstTableRow();
   };
 
+  openOffer = (params: FindParams): void => {
+    this.visit();
+    this.find(params).click({ force: true });
+  };
+
   getDrawer = (): Cypress.Chainable => {
     return this.repository.getDrawer();
   };
@@ -81,6 +86,13 @@ export class OffersPage extends MpPage {
       .find(this.repository.getNumberInputSelector())
       .type(String(amount), { force: true });
   };
+
+  getPriceRowsByQuantity = (params: PriceRowParams): Cypress.Chainable =>
+    this.getPriceTableRowsByCell({
+      getMatchColumnHeaderCell: this.repository.getPriceTableQuantityHeaderCell,
+      getRows: this.repository.getPriceTableRows,
+      isMatchingCell: (cellText) => cellText === String(params.quantity),
+    });
 
   deletePriceRowByQuantity = (params: PriceRowParams): void => {
     this.deletePriceTableRow({

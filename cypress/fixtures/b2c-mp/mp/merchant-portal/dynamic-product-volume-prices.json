@@ -155,6 +155,69 @@
               "productImages": ["#productImage"]
             }
           ]
+        },
+        {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "editableLocalizedAttribute"
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "editableProduct",
+          "arguments": [
+            {
+              "localizedAttributes": [
+                {
+                  "locale": "#localeEN",
+                  "name": "#editableLocalizedAttribute.name"
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#editableLocalizedAttribute.name"
+                }
+              ]
+            },
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                {
+                  "locale": "#localeEN",
+                  "name": "#editableLocalizedAttribute.name"
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#editableLocalizedAttribute.name"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idMerchant": "#merchant.id_merchant",
+              "idProductAbstract": "#editableProduct.fk_product_abstract"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#editableProduct.abstract_sku",
+              "moneyValue": {
+                "netAmount": 9000,
+                "grossAmount": 10000,
+                "priceData": "{\"volume_prices\": [{\"quantity\": 2, \"net_price\": 800, \"gross_price\": 1000}]}"
+              },
+              "idProduct": null,
+              "skuProduct": ""
+            }
+          ]
         }
       ]
     }

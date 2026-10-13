@@ -158,6 +158,7 @@
         {
           "type": "helper",
           "name": "havePriceProductOffer",
+          "key": "productOfferPrice",
           "arguments": [
             {
               "fkProductOffer": "#productOffer.id_product_offer",
@@ -178,6 +179,86 @@
             {
               "idProductOffer": "#productOffer.id_product_offer",
               "productOfferReference": "#productOffer.product_offer_reference",
+              "isNeverOutOfStock": true
+            },
+            "#merchant.stocks"
+          ]
+        },
+        {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "editableLocalizedAttribute"
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "editableProduct",
+          "arguments": [
+            {
+              "localizedAttributes": [
+                {
+                  "locale": "#localeEN",
+                  "name": "#editableLocalizedAttribute.name"
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#editableLocalizedAttribute.name"
+                }
+              ]
+            },
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                {
+                  "locale": "#localeEN",
+                  "name": "#editableLocalizedAttribute.name"
+                },
+                {
+                  "locale": "#localeDE",
+                  "name": "#editableLocalizedAttribute.name"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOffer",
+          "key": "editableProductOffer",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "idProductConcrete": "#editableProduct.id_product_concrete",
+              "concreteSku": "#editableProduct.sku",
+              "merchantReference": "#merchant.merchant_reference",
+              "stores": "#stores"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProductOffer",
+          "arguments": [
+            {
+              "fkProductOffer": "#editableProductOffer.id_product_offer",
+              "skuProductAbstract": "#editableProduct.abstract_sku",
+              "skuProduct": "#editableProduct.sku",
+              "moneyValue": {
+                "netAmount": 18000,
+                "grossAmount": 20000,
+                "priceData": "{\"volume_prices\": [{\"quantity\": 2, \"net_price\": 800, \"gross_price\": 1000}]}"
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferStock",
+          "arguments": [
+            {
+              "idProductOffer": "#editableProductOffer.id_product_offer",
+              "productOfferReference": "#editableProductOffer.product_offer_reference",
               "isNeverOutOfStock": true
             },
             "#merchant.stocks"

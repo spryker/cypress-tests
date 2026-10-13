@@ -1,11 +1,17 @@
 import { Customer, Merchant, ProductConcrete, ProductOffer, User } from './shared';
 
+interface ProductOfferPrice {
+  id_price_product_offer: number;
+}
+
 export interface OfferVolumePricesDynamicFixtures {
   customer: Customer;
   merchantUser: User;
   merchant: Merchant;
   merchantProduct: ProductConcrete;
   productOffer: ProductOffer;
+  productOfferPrice: ProductOfferPrice;
+  editableProductOffer: ProductOffer;
 }
 
 export interface OfferVolumePricesStaticFixtures {
@@ -28,6 +34,8 @@ export interface OfferCreationDynamicFixtures {
   offerMerchant: Merchant;
   offerMerchantUser: User;
   merchantProduct: ProductConcrete;
+  offeredProduct: ProductConcrete;
+  productOffer: ProductOffer;
 }
 
 export interface OfferCreationStaticFixtures {
