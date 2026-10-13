@@ -3,6 +3,15 @@ import { WarehousePickingOmsDynamicFixtures, WarehousePickingOmsStaticFixtures }
 import { ActionEnum, SalesDetailPage, UserIndexPage, UserUpdatePage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
+// Warehouse picking (the warehouse-user flag on the user form and the DummyPicking subprocess in the
+// main OMS processes) ships with suite, b2c and b2c-mp. b2b and b2b-mp do not install the feature.
+const WAREHOUSE_PICKING_REPOSITORY_IDS = ['suite', 'b2c', 'b2c-mp'];
+
+// The order has to come with a shipment, because the order detail page renders its items per shipment
+// group. Only suite's dynamic fixtures carry a helper that seeds one (haveFullOrder); the b2c shops'
+// can seed a bare order only, which the page renders without a single item to trigger an event on.
+const SEEDED_ORDER_WITH_SHIPMENT_REPOSITORY_IDS = ['suite'];
+
 describe(
   'warehouse picking oms',
   {
@@ -18,8 +27,8 @@ describe(
     ],
   },
   (): void => {
-    if (!['suite', 'b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because only suite, b2c and b2c-mp wire the warehouse user form and the picking subprocess', () => {});
+    if (!WAREHOUSE_PICKING_REPOSITORY_IDS.includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because warehouse picking exists only in suite, b2c and b2c-mp', () => {});
 
       return;
     }
@@ -43,7 +52,7 @@ describe(
       });
     });
 
-    it('should offer the warehouse assignment action when a back-office user is flagged as a warehouse user', (): void => {
+    it('given a back office user when it is flagged as a warehouse user then the user list offers to assign it warehouses', (): void => {
       // Arrange
       userIndexPage.visit();
       userIndexPage.update({
@@ -65,15 +74,21 @@ describe(
         .should('contain', 'Assign Warehouses');
     });
 
-    skipDemoshopIt(
-      'should move the order item to ready for picking when picking list generation is scheduled',
-      (): void => {
-        // Arrange
+    describe('picking list generation', (): void => {
+      if (!SEEDED_ORDER_WITH_SHIPMENT_REPOSITORY_IDS.includes(Cypress.env('repositoryId'))) {
+        it.skip('skipped because only suite fixtures can seed an order with a shipment', () => {});
+
+        return;
+      }
+
+      beforeEach((): void => {
         salesDetailPage.visit({ qs: { 'id-sales-order': dynamicFixtures.salesOrder.id_sales_order } });
         salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
         salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
         salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
+      });
 
+      it('given a paid order item when picking list generation is scheduled then the item moves to ready for picking', (): void => {
         // Act
         salesDetailPage.triggerOms({ state: 'picking list generation schedule', shouldTriggerOmsInCli: true });
 
@@ -81,13 +96,7 @@ describe(
         // Generating the lists is an onEnter command and the hand-over to `ready for picking` is
         // condition guarded, so the item only settles once the OMS console commands have run again.
         salesDetailPage.waitForOrderItemState({ state: 'ready for picking', sku: dynamicFixtures.product.sku });
-      }
-    );
-
-    // Only suite installs haveFullOrder, so the b2c shops can build a bare order but not its
-    // shipment, and ShipmentGui renders the order items per shipment group.
-    function skipDemoshopIt(description: string, testFn: () => void): void {
-      (Cypress.env('repositoryId') === 'suite' ? it : it.skip)(description, testFn);
-    }
+      });
+    });
   }
 );
