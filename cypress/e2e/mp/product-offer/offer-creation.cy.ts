@@ -33,14 +33,6 @@ describe(
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
     const customerLoginScenario = container.get(CustomerLoginScenario);
 
-    // A tree-wide publish times the gateway out, so this stays narrowed to what the journey reads.
-    const publishAndSyncCommands = [
-      'console publish:trigger-events -r product_abstract',
-      'console publish:trigger-events -r product_offer',
-      'console publish:trigger-events -r price_product_offer',
-      'console queue:worker:start --stop-when-empty',
-    ];
-
     let staticFixtures: OfferCreationStaticFixtures;
     let dynamicFixtures: OfferCreationDynamicFixtures;
 
@@ -48,7 +40,7 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    it('given a product owned by another merchant when a merchant creates an offer on it then the storefront sells it under that merchant at the offer price', (): void => {
+    it('given a product owned by another merchant when a merchant creates an offer on it then the offer list carries the new offer', (): void => {
       // Arrange
       const merchantSku = `MERCHANT-SKU-${Date.now()}`;
 
@@ -70,9 +62,13 @@ describe(
         stockQuantity: staticFixtures.offer.stockQuantity,
       });
 
-      cy.runCliCommands(publishAndSyncCommands);
-
       // Assert
+      offersPage.visit();
+      offersPage.find({ query: merchantSku }).should('contain.text', dynamicFixtures.merchantProduct.sku);
+    });
+
+    it('given a merchant offer on a product owned by another merchant when a customer adds the offer to the cart then the cart line carries that merchant at the offer price', (): void => {
+      // Arrange
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
@@ -82,23 +78,22 @@ describe(
       cartPage.clearCartIfNotEmpty();
 
       catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.merchantProduct.abstract_sku });
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.offeredProduct.abstract_sku });
 
       productPage.getSoldByProductOffers().should('contain.text', dynamicFixtures.offerMerchant.name);
       productPage.getSoldByProductOffers().should('contain.text', staticFixtures.offer.displayedPrice);
 
-      productPage
-        .getSoldByProductOffers()
-        .contains(dynamicFixtures.offerMerchant.name)
-        .closest('[data-qa="component buy-box-item"]')
-        .find('input[type="radio"]')
-        .check({ force: true });
+      // Act
+      productPage.selectSoldByProductOffer({
+        productOfferReference: dynamicFixtures.productOffer.product_offer_reference,
+      });
       productPage.addToCart();
 
+      // Assert
       cartPage.visit();
       cartPage
         .getProductCartItems()
-        .filter(`:contains("${dynamicFixtures.merchantProduct.sku}")`)
+        .filter(`:contains("${dynamicFixtures.offeredProduct.sku}")`)
         .should('have.length', 1)
         .and('contain.text', dynamicFixtures.offerMerchant.name)
         .and('contain.text', staticFixtures.offer.displayedPrice);

@@ -6,6 +6,7 @@ export interface OfferVolumePricesDynamicFixtures {
   merchant: Merchant;
   merchantProduct: ProductConcrete;
   productOffer: ProductOffer;
+  editableProductOffer: ProductOffer;
 }
 
 export interface OfferVolumePricesStaticFixtures {
@@ -28,6 +29,8 @@ export interface OfferCreationDynamicFixtures {
   offerMerchant: Merchant;
   offerMerchantUser: User;
   merchantProduct: ProductConcrete;
+  offeredProduct: ProductConcrete;
+  productOffer: ProductOffer;
 }
 
 export interface OfferCreationStaticFixtures {

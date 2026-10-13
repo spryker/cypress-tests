@@ -47,20 +47,55 @@ describe(
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
+
+      cy.runCliCommands(publishAndSyncCommands);
     });
 
-    it('given an offer carrying a volume price when the merchant deletes that price row then the storefront falls back to the offer default price', (): void => {
+    it('given an offer carrying a volume price when the merchant deletes that price row then the offer no longer lists it', (): void => {
       // Arrange
-      cy.runCliCommands(publishAndSyncCommands);
-      loginAsCustomer();
-      openOfferOnProductDetailPage();
+      const offerReference = dynamicFixtures.editableProductOffer.product_offer_reference;
 
-      // The tier is what the storefront charges while the volume price row exists.
+      merchantUserLoginScenario.execute({
+        username: dynamicFixtures.merchantUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      // Act
+      offersPage.openOffer({ query: offerReference });
+      offersPage.deletePriceRowByQuantity({ quantity: staticFixtures.volumeTier.threshold });
+
+      // Assert
+      offersPage.openOffer({ query: offerReference });
+      offersPage.getPriceRowsByQuantity({ quantity: staticFixtures.volumeTier.threshold }).should('have.length', 0);
+    });
+
+    it('given an offer carrying a volume price when a customer orders more than its threshold then the storefront charges the volume price', (): void => {
+      // Arrange
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      cartPage.visit();
+      cartPage.clearCartIfNotEmpty();
+
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.merchantProduct.abstract_sku });
+      productPage.selectSoldByProductOffer({
+        productOfferReference: dynamicFixtures.productOffer.product_offer_reference,
+      });
       productPage.getProductDetailPrice().should('contain', staticFixtures.offerPrice);
+
+      // Act
       productPage.setQuantity({ quantity: staticFixtures.volumeTier.quantity });
+
+      // Assert
       productPage.getProductDetailPrice().should('contain', staticFixtures.volumeTier.price);
 
+      // Act
       productPage.addToCart();
+
+      // Assert
       cartPage.visit();
       cartPage
         .getProductCartItems()
@@ -68,52 +103,6 @@ describe(
         .should('have.length', 1)
         .and('contain.text', staticFixtures.volumeTier.price)
         .and('contain.text', dynamicFixtures.merchant.name);
-
-      cartPage.clearCartIfNotEmpty();
-
-      // Act
-      merchantUserLoginScenario.execute({
-        username: dynamicFixtures.merchantUser.username,
-        password: staticFixtures.defaultPassword,
-      });
-
-      offersPage.visit();
-      offersPage.find({ query: dynamicFixtures.merchantProduct.sku }).click();
-      offersPage.deletePriceRowByQuantity({ quantity: staticFixtures.volumeTier.threshold });
-
-      cy.runCliCommands(publishAndSyncCommands);
-
-      // Assert
-      loginAsCustomer();
-      openOfferOnProductDetailPage();
-
-      productPage.setQuantity({ quantity: staticFixtures.volumeTier.quantity });
-      productPage.getProductDetailPrice().should('contain', staticFixtures.offerPrice);
-
-      productPage.addToCart();
-      cartPage.visit();
-      cartPage
-        .getProductCartItems()
-        .filter(`:contains("${dynamicFixtures.merchantProduct.sku}")`)
-        .should('have.length', 1)
-        .and('contain.text', staticFixtures.offerPrice);
     });
-
-    function loginAsCustomer(): void {
-      customerLoginScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-      });
-    }
-
-    function openOfferOnProductDetailPage(): void {
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.merchantProduct.abstract_sku });
-
-      productPage.getSoldByProductOffers().should('contain.text', dynamicFixtures.merchant.name);
-      productPage.selectSoldByProductOffer({
-        productOfferReference: dynamicFixtures.productOffer.product_offer_reference,
-      });
-    }
   }
 );
