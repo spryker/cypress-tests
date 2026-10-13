@@ -10,17 +10,6 @@ export interface MerchantProfileUpdateStaticFixtures {
   defaultPassword: string;
 }
 
-export interface MerchantStoreStatusDynamicFixtures {
-  merchantUser: User;
-  merchant: Merchant;
-  merchantUrlEN: Url;
-  merchantProduct: ProductConcrete;
-}
-
-export interface MerchantStoreStatusStaticFixtures {
-  defaultPassword: string;
-}
-
 export interface ProductVolumePricesDynamicFixtures {
   customer: Customer;
   merchantUser: User;
@@ -65,16 +54,4 @@ interface CustomerPrice {
   netAmount: number;
   grossAmount: number;
   displayed: string;
-}
-
-export interface MerchantUserAccountDynamicFixtures {
-  rootUser: User;
-  merchantUser: User;
-  merchant: Merchant;
-}
-
-export interface MerchantUserAccountStaticFixtures {
-  defaultPassword: string;
-  merchantUserPassword: string;
-  updatedMerchantUserPassword: string;
 }

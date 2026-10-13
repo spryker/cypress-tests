@@ -10,10 +10,6 @@ export class ProductSetsPage extends YvesPage {
 
   protected PAGE_URL = '/product-sets';
 
-  visitProductSet = (urlKey: string): void => {
-    cy.visit(`/en/${urlKey}`);
-  };
-
   getProductSetCard = (name: string): Cypress.Chainable =>
     cy.contains(this.repository.getProductSetCardSelector(), name);
 

@@ -26,10 +26,6 @@ export class SalesDetailRepository {
   // the carrier separately under "Delivery Method:", neither with a data-qa of its own.
   getShipmentShippingMethods = (): Cypress.Chainable => cy.get('p:has(b:contains("Shipping Method"))');
 
-  // Sales prints the billing address as the <dd> following a "Billing address" <dt>, with no
-  // data-qa, so the term is what identifies it.
-  getBillingAddress = (): Cypress.Chainable => cy.get('dt:contains("Billing address") + dd');
-
   // ShipmentGui prints the shipment's address as a plain <p> led by a bold "Delivery Address:"
   // label, with no data-qa of its own, so the label is what identifies it.
   getShipmentDeliveryAddresses = (): Cypress.Chainable => cy.get('p:has(b:contains("Delivery Address"))');

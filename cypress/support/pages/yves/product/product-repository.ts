@@ -34,17 +34,12 @@ export interface ProductRepository {
   getVariantAttributeSelect(attributeKey: string): Cypress.Chainable;
   getVariantAttributeOptions(attributeKey: string): Cypress.Chainable;
   getSelectedVariantAttributeInput(attributeKey: string): Cypress.Chainable;
-  getProductLabels(): Cypress.Chainable;
   getRelatedProductsCarousel(): Cypress.Chainable;
   getRelatedProductsSectionSelector(): string;
 
   // The price block on the detail page itself. The related-products carousel prints prices too,
   // so this must stay narrowed to the product being viewed.
   getProductDetailPrice(): Cypress.Chainable;
-
-  // Product option groups are only offered once a concrete variant is resolved. The field name is
-  // built in PHP, so it is the one selector that does not differ between the storefront themes.
-  getProductOptionSelects(): Cypress.Chainable;
 
   // Rendered only when an ORIGINAL price above the default exists, which is what makes it the
   // assertion for a strike-through price rather than a second copy of the default one.

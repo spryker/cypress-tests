@@ -1,8 +1,5 @@
 export interface CheckoutAddressRepository {
   getSelectServicePointButton(): Cypress.Chainable;
-  getSelectedServicePoint(): Cypress.Chainable;
-  getShippingAddressSaveToAddressBookCheckbox(): Cypress.Chainable;
-  getBillingAddressSaveToAddressBookCheckbox(): Cypress.Chainable;
   getShippingAddressSelectElement(): Cypress.Chainable;
   getSelectShippingAddressField(): Cypress.Chainable;
   getShippingAddressFirstNameField(): Cypress.Chainable;

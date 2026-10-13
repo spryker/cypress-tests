@@ -14,8 +14,6 @@ export class QuickOrderPage extends YvesPage {
     cy.get('button[name="textOrder"]').click();
   };
 
-  getOrderRows = (): Cypress.Chainable => cy.get('[data-qa="component quick-order-rows"]');
-
   addRowsToCart = (): void => {
     cy.get('button[name="addToCart"]').click();
   };

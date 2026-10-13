@@ -24,10 +24,6 @@ export class CartPage extends YvesPage {
     this.repository.getQuickAddToCartSubmitButton().click();
   };
 
-  // The threshold surcharge is rendered by the core SalesOrderThresholdWidget molecule, whose
-  // data-qa is identical in every shop; the cart-summary markup wrapped around it is not.
-  getThresholdSurcharge = (): Cypress.Chainable => cy.get('[data-qa*="sales-order-threshold-expense"]');
-
   // The code field belongs to CartCodeWidget's form, not the DiscountWidget voucher form, and takes
   // gift-card codes as well as vouchers. Its id is the one the Robot source used for every shop, so
   // it is addressed here rather than per repository. The field sits inside a collapsible section, so

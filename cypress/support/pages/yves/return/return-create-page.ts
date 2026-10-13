@@ -20,9 +20,6 @@ export class ReturnCreatePage extends YvesPage {
       .check({ force: true });
   };
 
-  getItemCheckbox = (sku: string): Cypress.Chainable =>
-    this.repository.getReturnItemBlock(sku).find(this.repository.getReturnItemCheckboxSelector());
-
   submit = (): void => {
     this.repository.getSubmitButton().click();
   };

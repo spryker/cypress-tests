@@ -108,8 +108,6 @@ export class DataExchangePage extends BackofficePage {
   getFieldControl = (fieldName: string, control: FieldControl): Cypress.Chainable =>
     this.repository.getFieldDefinitionControl(fieldName, control);
 
-  getResourceName = (): Cypress.Chainable => this.repository.getResourceNameInput().invoke('val');
-
   private createConfiguration = (tableName: string): void => {
     this.repository.getTableNameSelect().select(tableName, { force: true });
     this.repository.getSubmitButton().click();

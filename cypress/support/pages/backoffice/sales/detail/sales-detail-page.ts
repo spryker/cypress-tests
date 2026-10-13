@@ -106,8 +106,6 @@ export class SalesDetailPage extends BackofficePage {
 
   getOrderComments = (): Cypress.Chainable => this.repository.getOrderComments();
 
-  getBillingAddress = (): Cypress.Chainable => this.repository.getBillingAddress();
-
   waitForOrderItemState = (params: WaitForOrderItemStateParams): void => {
     cy.url().then((url) => {
       cy.reloadUntilFound(

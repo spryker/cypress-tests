@@ -8,14 +8,11 @@ export interface DiscountsAndPromotionsDynamicFixtures {
   rootUser: User;
   customer: Customer;
   address: Address;
-  product: ProductConcrete;
   promotionalProduct: ProductConcrete;
   voucherDiscount: Discount;
   cartRuleDiscount: Discount;
   promotionDiscount: Discount;
   voucherCode: DiscountVoucherCode;
-  guestVoucherCode: DiscountVoucherCode;
-  productBundle: ProductConcrete;
 }
 
 export interface DiscountVoucherCode {

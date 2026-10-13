@@ -17,8 +17,6 @@ const FIELD_CONTROL_SELECTORS: Record<FieldControl, string> = {
 export class DataExchangeRepository {
   getTableNameSelect = (): Cypress.Chainable => cy.get('#dynamic-entity_table_name');
 
-  getResourceNameInput = (): Cypress.Chainable => cy.get('#dynamic-entity_table_alias');
-
   getIsEnabledCheckbox = (): Cypress.Chainable => cy.get('#dynamic-entity_is_active');
 
   getSubmitButton = (): Cypress.Chainable => cy.get('button.safe-submit');

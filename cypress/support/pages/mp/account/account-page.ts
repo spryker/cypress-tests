@@ -20,22 +20,6 @@ export class AccountPage extends MpPage {
     cy.wait(6000);
   };
 
-  // Saving ends the portal session, so the response has to be in before anything signs in again —
-  // otherwise the sign-in races the session that the save is still tearing down.
-  updatePersonalDetails = (params: UpdatePersonalDetailsParams): void => {
-    cy.intercept('POST', '**/user-merchant-portal-gui/my-account**').as('merchantAccountSaved');
-
-    this.repository.getFirstNameInput().clear().type(params.firstName);
-    this.repository.getLastNameInput().clear().type(params.lastName);
-    this.repository.getSaveButton().click();
-
-    cy.wait('@merchantAccountSaved');
-  };
-
-  getFirstNameValue = (): Cypress.Chainable => {
-    return this.repository.getFirstNameInput();
-  };
-
   openChangePasswordForm = (): void => {
     this.repository.getChangePasswordButton().click();
   };
@@ -50,9 +34,4 @@ export class AccountPage extends MpPage {
   getPasswordChangedMessage(): Cypress.Chainable {
     return cy.contains(this.repository.getPasswordChangedMessage());
   }
-}
-
-interface UpdatePersonalDetailsParams {
-  firstName: string;
-  lastName: string;
 }

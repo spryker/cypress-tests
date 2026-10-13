@@ -43,17 +43,6 @@ export interface SplitDeliveryDynamicFixtures {
   product3: ProductConcrete;
 }
 
-export interface MinimumOrderValueStaticFixtures {
-  defaultPassword: string;
-}
-
-export interface MinimumOrderValueDynamicFixtures {
-  rootUser: User;
-  customer: Customer;
-  address: Address;
-  product: ProductConcrete;
-}
-
 export interface CheckoutAuthenticationStaticFixtures {
   defaultPassword: string;
   registrationPassword: string;
@@ -66,13 +55,6 @@ export interface CheckoutAuthenticationDynamicFixtures {
   product1: ProductConcrete;
 }
 
-export interface CheckoutAddressManagementStaticFixtures {
-  defaultPassword: string;
-  discardedBillingAddress: CheckoutAddressFixture;
-  orderBillingAddress: CheckoutAddressFixture;
-  savedShippingAddress: CheckoutAddressFixture;
-}
-
 export interface CheckoutAddressFixture {
   firstName: string;
   lastName: string;
@@ -82,13 +64,6 @@ export interface CheckoutAddressFixture {
   city: string;
   company: string;
   phone: string;
-}
-
-export interface CheckoutAddressManagementDynamicFixtures {
-  customer: Customer;
-  address: Address;
-  product1: ProductConcrete;
-  rootUser: User;
 }
 
 export interface BusinessUnitAddressCheckoutStaticFixtures {

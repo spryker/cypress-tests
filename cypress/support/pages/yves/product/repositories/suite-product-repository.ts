@@ -48,16 +48,12 @@ export class SuiteProductRepository implements ProductRepository {
     cy.get(`input[type="hidden"][name="attribute[${attributeKey}]"]`);
   getRelatedProductsSectionSelector = (): string => 'main simple-carousel[data-qa="component simple-carousel"]';
   getRelatedProductsCarousel = (): Cypress.Chainable => cy.get(this.getRelatedProductsSectionSelector()).first();
-  getProductLabels = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-carousel"] [data-qa="component label-group"]');
   getProductConfigurationStatus = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-configurator"] [data-qa="component status"]');
   getConfigureButton = (): Cypress.Chainable => cy.get('[data-qa="component configuration-form"] button');
 
   getProductDetailPrice = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-configurator"] volume-price span.volume-price__price');
-  getProductOptionSelects = (): Cypress.Chainable => cy.get('select[name^="product-option["]');
-
   getProductDetailOriginalPrice = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-configurator"] volume-price span[class*="volume-price"][class*="original"]');
 

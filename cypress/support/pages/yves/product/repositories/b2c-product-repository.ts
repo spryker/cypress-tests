@@ -47,15 +47,11 @@ export class B2cProductRepository implements ProductRepository {
   getRelatedProductsSectionSelector = (): string => '[class*="product-slider"]:contains("You might also like")';
   getRelatedProductsCarousel = (): Cypress.Chainable =>
     cy.get(this.getRelatedProductsSectionSelector()).first().parent().find('slick-carousel');
-  getProductLabels = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-carousel"] [data-qa="component label-group"]');
   getProductConfigurationStatus = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-configurator"] [data-qa="component status"]');
   getConfigureButton = (): Cypress.Chainable => cy.get('[data-qa="component configuration-form"] button');
 
   getProductDetailPrice = (): Cypress.Chainable => cy.get('volume-price span.volume-price__price:visible').first();
-  getProductOptionSelects = (): Cypress.Chainable => cy.get('select[name^="product-option["]');
-
   getProductDetailOriginalPrice = (): Cypress.Chainable =>
     cy.get('volume-price span[class*="volume-price"][class*="original"]:visible').first();
 

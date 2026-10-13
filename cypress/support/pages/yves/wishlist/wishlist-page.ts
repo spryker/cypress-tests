@@ -41,21 +41,12 @@ export class WishlistPage extends YvesPage {
 
   getAddToWishlistForm = (): Cypress.Chainable => cy.get('form.wishlist-selector-default__form');
 
-  // The offer the add would carry. It is filled in server-side from the offer selected on the
-  // product detail page, so reading it back proves which merchant the next add belongs to.
-  getAddToWishlistProductOfferInput = (): Cypress.Chainable =>
-    cy.get('[data-qa="component wishlist-pdp-product-offer"] input[name="product_offer_reference"]');
-
   // A wishlist row carries its own configure form, distinct from both the detail page's
   // configuration-form and the cart's configuration-cart-form.
   configureProduct = (params: ConfigureProductParams): void => {
     cy.contains('[data-qa="component wishlist-table"] tr', params.sku)
       .find('[data-qa="component wishlist-configuration-form"] button')
       .click();
-  };
-
-  moveAllAvailableProductsToCart = (): void => {
-    cy.get('form[name="add_all_available_products_to_cart_form"] button[type="submit"]').click();
   };
 }
 
