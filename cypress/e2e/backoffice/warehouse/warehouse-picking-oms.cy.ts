@@ -81,7 +81,12 @@ describe(
         return;
       }
 
-      beforeEach((): void => {
+      // Runs once rather than per attempt: a retry finds the order already past these events.
+      before((): void => {
+        userLoginScenario.execute({
+          username: dynamicFixtures.rootUser.username,
+          password: staticFixtures.defaultPassword,
+        });
         salesDetailPage.visit({ qs: { 'id-sales-order': dynamicFixtures.salesOrder.id_sales_order } });
         salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
         salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
@@ -89,6 +94,9 @@ describe(
       });
 
       it('given a paid order item when picking list generation is scheduled then the item moves to ready for picking', (): void => {
+        // Arrange
+        salesDetailPage.visit({ qs: { 'id-sales-order': dynamicFixtures.salesOrder.id_sales_order } });
+
         // Act
         salesDetailPage.triggerOms({ state: 'picking list generation schedule', shouldTriggerOmsInCli: true });
 
