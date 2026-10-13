@@ -8,7 +8,11 @@ export interface AvailabilityCalculationStaticFixtures {
 
 export interface AvailabilityCalculationDynamicFixtures {
   rootUser: User;
-  customer: Customer;
+  orderingCustomer: Customer;
+
+  // A second customer whose cart already holds the product, so the reservation is read from a cart
+  // the order did not consume.
+  cartCustomer: Customer;
   address: Address;
   product: ProductConcrete;
 }

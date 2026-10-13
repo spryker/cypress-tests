@@ -35,7 +35,7 @@
         {
           "type": "helper",
           "name": "haveConfirmedCustomer",
-          "key": "customer",
+          "key": "orderingCustomer",
           "arguments": [
             {
               "locale_name": "en_US",
@@ -49,8 +49,19 @@
           "key": "address",
           "arguments": [
             {
-              "fkCustomer": "#customer.id_customer",
+              "fkCustomer": "#orderingCustomer.id_customer",
               "fkCountry": "#country.id_country"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "cartCustomer",
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
             }
           ]
         },
@@ -110,6 +121,42 @@
               "idProductAbstract": "#product.fk_product_abstract",
               "productImages": ["#productImage"]
             }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "orderingCustomerQuote",
+          "arguments": [
+            {
+              "customer": "#orderingCustomer",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            },
+            true
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "cartCustomerQuote",
+          "arguments": [
+            {
+              "customer": "#cartCustomer",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            },
+            true
           ]
         }
       ]
