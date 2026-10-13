@@ -127,6 +127,7 @@ describe(
 
       // Assert
       storeListPage.hasStore(storeName).should('equal', true);
+      storeListPage.visit();
       storeListPage.update({ query: storeName, action: ActionEnum.edit });
       storeEditPage.getDefaultLocaleSelect().should('have.value', staticFixtures.store.locale);
       storeEditPage.getDefaultCurrencySelect().should('have.value', staticFixtures.store.currency);
