@@ -52,31 +52,18 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
+    beforeEach((): void => {
+      // This drives the checkout steps itself rather than going through CheckoutScenario, so it
+      // repeats that scenario's recurring-order stub: without it the summary form is re-rendered
+      // and submit stays disabled.
+      cy.intercept('POST', '**/recurring-order/clear', { statusCode: 200, body: '' });
+    });
+
     it('given an offer collected at a service point when the order is placed then it ships to the service point as a single pickup shipment', (): void => {
       // Arrange
-      // Through the API and before the browser session exists: only the API can put a named
-      // offer on an item, and a cart filled after login is not the one the storefront shows.
-      cy.getCustomerAccessToken(dynamicFixtures.customer.email, staticFixtures.defaultPassword).then(
-        (accessToken: string) => {
-          cy.createCart(accessToken, {
-            name: 'cypress-click-and-collect-cart',
-            priceMode: 'GROSS_MODE',
-            currency: 'EUR',
-            store: 'DE',
-          }).then((cartId: string) => {
-            cy.addCartItem(accessToken, cartId, {
-              sku: dynamicFixtures.product1.sku,
-              quantity: 1,
-              productOfferReference: dynamicFixtures.pickupOffer.product_offer_reference,
-            });
-          });
-        }
-      );
-
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
-        withoutSession: true,
       });
 
       cartPage.visit();
@@ -84,12 +71,7 @@ describe(
 
       // Act
       // A single-item cart gets the single-shipment address form, not the multi-shipment one, so
-      // the shipment type and the service point are chosen directly on it. Because this drives the
-      // steps itself rather than going through CheckoutScenario, it repeats that scenario's
-      // recurring-order stub: without it the summary form is re-rendered and submit stays disabled.
-      cy.intercept('POST', '**/recurring-order/clear', { statusCode: 200, body: '' });
-
-      cartPage.visit();
+      // the shipment type and the service point are chosen directly on it.
       cartPage.startCheckout();
 
       checkoutAddressPage.selectPickupAtServicePoint({
@@ -101,7 +83,9 @@ describe(
       checkoutAddressPage.typeBillingAddress(staticFixtures.billingAddress);
       checkoutAddressPage.submitAddressStep();
 
-      checkoutShipmentPage.setStandardShippingMethod();
+      // A pickup group is offered only the shipment methods of the pickup shipment type, and the
+      // fixture brings its own so that every shop has one to choose.
+      checkoutShipmentPage.setShippingMethod(dynamicFixtures.pickupShipmentMethod.name);
       checkoutPaymentPage.setPaymentMethod(getPaymentMethodBasedOnEnv());
       checkoutSummaryPage.placeOrder();
 
@@ -124,6 +108,7 @@ describe(
         // rather than to any address of the customer's.
         salesDetailPage.getOrderItemTables().should('have.length', staticFixtures.expectedShipmentCount);
         salesDetailPage.getShipmentDeliveryAddresses().should('contain', dynamicFixtures.servicePointAddress.address1);
+        salesDetailPage.getShipmentShippingMethods().should('contain', dynamicFixtures.pickupShipmentMethod.name);
       });
     });
   }
