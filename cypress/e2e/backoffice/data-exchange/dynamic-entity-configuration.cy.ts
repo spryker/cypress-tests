@@ -39,35 +39,23 @@ describe(
       });
     });
 
-    // Leaves the table out of the Backend API again. The configuration row itself stays, because
-    // deleting it is a database operation Cypress has no route to, and an enabled leftover would
-    // change what every other specification-facing test sees.
-    after((): void => {
-      userLoginScenario.execute({
-        username: dynamicFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
-
-      dataExchangePage.openConfiguration(TABLE_NAME);
-      dataExchangePage.setConfigurationEnabled(false);
-      dataExchangePage.saveConfiguration();
-    });
-
-    it('given a data exchange api configuration for a table when its resource fields are configured and saved then the reloaded form renders back what was saved', (): void => {
+    it('given a data exchange api configuration for a table when its resource name and fields are configured and saved then the reloaded form renders back what was saved', (): void => {
       // Arrange
-      // The visible names are the witness that this run wrote the definition: every other value in
-      // the form is one a previous run could have left behind, and asserting those alone would pass
-      // against untouched state.
-      const runMarker = Math.random().toString(36).substring(2, 8);
-      const visibleNameOf = (field: FieldDefinition): string => `${field.name}_${runMarker}`;
+      // The resource name and the visible names are drawn per attempt, which makes them the witness
+      // that this run wrote the definition: every other value in the form is one an earlier run could
+      // have left behind, so the configuration is never reset and nothing is cleaned up afterwards.
+      const runMarker = `${Cypress._.random(100000, 999999)}`;
+      const resourceName = `mime-types-${runMarker}`;
+      const fieldDefinitions = FIELD_DEFINITIONS.map(
+        (field: FieldDefinition): FieldDefinition => ({ ...field, visibleName: `${field.name}_${runMarker}` })
+      );
 
       dataExchangePage.openConfiguration(TABLE_NAME);
 
       // Act
+      dataExchangePage.setResourceName(resourceName);
       dataExchangePage.setConfigurationEnabled(true);
-      FIELD_DEFINITIONS.forEach((field: FieldDefinition): void =>
-        dataExchangePage.configureField(field, visibleNameOf(field))
-      );
+      fieldDefinitions.forEach((field: FieldDefinition): void => dataExchangePage.configureField(field));
       dataExchangePage.saveConfiguration();
 
       // Assert
@@ -75,24 +63,23 @@ describe(
       dataExchangePage.getErrorMessage().should('not.exist');
 
       dataExchangePage.openConfiguration(TABLE_NAME);
+      dataExchangePage.getResourceNameInput().should('have.value', resourceName);
       dataExchangePage.getIsEnabledCheckbox().should('be.checked');
 
-      FIELD_DEFINITIONS.forEach((field: FieldDefinition): void => {
+      fieldDefinitions.forEach((field: FieldDefinition): void => {
         dataExchangePage.getFieldControl(field.name, 'enabled').should('be.checked');
-        dataExchangePage.getFieldControl(field.name, 'visibleName').should('have.value', visibleNameOf(field));
+        dataExchangePage.getFieldControl(field.name, 'visibleName').should('have.value', field.visibleName);
         dataExchangePage.getFieldControl(field.name, 'type').should('have.value', field.type);
-        assertToggle(field.name, 'creatable', field.isCreatable);
-        assertToggle(field.name, 'editable', field.isEditable);
-        assertToggle(field.name, 'required', field.isRequired);
+        dataExchangePage
+          .getFieldControl(field.name, 'creatable')
+          .should(field.isCreatable ? 'be.checked' : 'not.be.checked');
+        dataExchangePage
+          .getFieldControl(field.name, 'editable')
+          .should(field.isEditable ? 'be.checked' : 'not.be.checked');
+        dataExchangePage
+          .getFieldControl(field.name, 'required')
+          .should(field.isRequired ? 'be.checked' : 'not.be.checked');
       });
-
-      function assertToggle(
-        fieldName: string,
-        control: 'creatable' | 'editable' | 'required',
-        expected: boolean
-      ): void {
-        dataExchangePage.getFieldControl(fieldName, control).should(expected ? 'be.checked' : 'not.be.checked');
-      }
     });
   }
 );

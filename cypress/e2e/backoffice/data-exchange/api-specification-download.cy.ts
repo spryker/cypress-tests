@@ -7,10 +7,10 @@ import { DataExchangePage, FieldDefinition } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
 // spy_mime_type is a core table with no configuration in demo data, so exposing it is observable
-// as a resource the specification gained. Its alias is derived by the configuration mapper:
-// the spy_ prefix is dropped, underscores become dashes and the name is pluralised.
+// as a resource the specification gained.
 const TABLE_NAME = 'spy_mime_type';
-const RESOURCE_PATH = '/mime-types';
+
+const RESOURCE_PATH_PREFIX = '/dynamic-entity/';
 
 // A resource demo data already exposes, so the very first download proves the file is the real
 // specification and not an empty placeholder.
@@ -43,46 +43,31 @@ describe(
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
-    });
 
-    // Restores the state the run started from: the resource is taken back out of the specification
-    // so a later run still sees it as absent before the configuration is enabled.
-    after((): void => {
-      userLoginScenario.execute({
-        username: dynamicFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
-
-      dataExchangePage.openConfiguration(TABLE_NAME);
-      dataExchangePage.setConfigurationEnabled(false);
-      dataExchangePage.saveConfiguration();
-      dataExchangePage.waitForApiSpecificationToBeCurrent();
+      // The browser saves a second download of the same name beside the first, so the file a retry
+      // would read has to be gone before this attempt downloads its own.
       dataExchangePage.discardDownloadedApiSpecification();
     });
 
-    it('given a table is not exposed when its data exchange api configuration is enabled and the specification is regenerated then the downloaded specification gains its resource', (): void => {
+    it('given a table exposed under a resource name the specification does not know when its data exchange api configuration is enabled and the specification is regenerated then the downloaded specification gains the resource', (): void => {
       // Arrange
-      // The baseline is established rather than assumed. A retry re-enters the test with the
-      // configuration the previous attempt enabled and its download still on disk, and the two
-      // absence checks below would then fail for the wrong reason and hide what actually broke.
-      dataExchangePage.discardDownloadedApiSpecification();
-      dataExchangePage.openConfiguration(TABLE_NAME);
-      dataExchangePage.setConfigurationEnabled(false);
-      dataExchangePage.saveConfiguration();
+      // The resource name is drawn per attempt, so it is absent from every specification generated
+      // before it and nothing an earlier run enabled has to be taken back first.
+      const resourceName = `mime-types-${Cypress._.random(100000, 999999)}`;
+      const resourcePath = `${RESOURCE_PATH_PREFIX}${resourceName}`;
 
-      dataExchangePage.regenerateApiSpecification();
       dataExchangePage.waitForApiSpecificationToBeCurrent();
-
       dataExchangePage.getDownloadSpecificationButton().should('not.have.class', 'disabled');
       dataExchangePage.downloadApiSpecification();
       dataExchangePage
         .getDownloadedApiSpecification()
         .should('contain', ALREADY_EXPOSED_RESOURCE_PATH)
-        .and('not.contain', RESOURCE_PATH);
+        .and('not.contain', resourcePath);
       dataExchangePage.discardDownloadedApiSpecification();
 
       // Act
       dataExchangePage.openConfiguration(TABLE_NAME);
+      dataExchangePage.setResourceName(resourceName);
       dataExchangePage.setConfigurationEnabled(true);
       FIELD_DEFINITIONS.forEach((field: FieldDefinition): void => dataExchangePage.configureField(field));
       dataExchangePage.saveConfiguration();
@@ -94,7 +79,7 @@ describe(
 
       dataExchangePage.waitForApiSpecificationToBeCurrent();
       dataExchangePage.downloadApiSpecification();
-      dataExchangePage.getDownloadedApiSpecification().should('contain', RESOURCE_PATH);
+      dataExchangePage.getDownloadedApiSpecification().should('contain', resourcePath);
     });
   }
 );
