@@ -6,6 +6,11 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 
 const MERCHANT_PROFILE_SELECTOR = '[data-qa="component merchant-profile"]';
 
+// Republishing every merchant times the gateway out, so only the merchant under test is published.
+const PUBLISH_MERCHANT_COMMAND = 'console publish:trigger-events -r merchant -i';
+
+const QUEUE_WORKER_COMMAND = 'console queue:worker:start --stop-when-empty';
+
 describe(
   'merchant crud',
   {
@@ -30,11 +35,6 @@ describe(
     const merchantUpdatePage = container.get(MerchantUpdatePage);
     const merchantPage = container.get(MerchantPage);
     const userLoginScenario = container.get(UserLoginScenario);
-
-    const publishAndSyncCommands = [
-      'console publish:trigger-events -r merchant',
-      'console queue:worker:start --stop-when-empty',
-    ];
 
     let staticFixtures: MerchantCrudStaticFixtures;
     let dynamicFixtures: MerchantCrudDynamicFixtures;
@@ -87,6 +87,10 @@ describe(
     it('given a merchant served on the storefront when the back office renames it then the storefront serves the new name', (): void => {
       // Arrange
       const renamedMerchantName = `${dynamicFixtures.renamedMerchant.name} renamed`;
+      const publishAndSyncCommands = [
+        `${PUBLISH_MERCHANT_COMMAND} ${dynamicFixtures.renamedMerchant.id_merchant}`,
+        QUEUE_WORKER_COMMAND,
+      ];
 
       cy.reloadUntilFound(
         dynamicFixtures.renamedMerchantUrlEN.url,
@@ -119,6 +123,11 @@ describe(
 
     it('given a merchant served on the storefront when the back office unassigns all its stores then the storefront retires its page', (): void => {
       // Arrange
+      const publishAndSyncCommands = [
+        `${PUBLISH_MERCHANT_COMMAND} ${dynamicFixtures.unassignedMerchant.id_merchant}`,
+        QUEUE_WORKER_COMMAND,
+      ];
+
       cy.reloadUntilFound(
         dynamicFixtures.unassignedMerchantUrlEN.url,
         MERCHANT_PROFILE_SELECTOR,

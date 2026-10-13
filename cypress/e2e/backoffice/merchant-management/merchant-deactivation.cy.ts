@@ -32,16 +32,18 @@ describe(
     const userLoginScenario = container.get(UserLoginScenario);
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
 
-    const publishAndSyncCommands = [
-      'console publish:trigger-events -r merchant',
-      'console queue:worker:start --stop-when-empty',
-    ];
-
     let staticFixtures: MerchantDeactivationStaticFixtures;
     let dynamicFixtures: MerchantDeactivationDynamicFixtures;
+    let publishAndSyncCommands: Array<string>;
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
+
+      // Republishing every merchant times the gateway out, so only the merchant under test is published.
+      publishAndSyncCommands = [
+        `console publish:trigger-events -r merchant -i ${dynamicFixtures.merchant.id_merchant}`,
+        'console queue:worker:start --stop-when-empty',
+      ];
 
       // The merchant has no online profile until the portal writes one, which is what puts it on the
       // storefront.
