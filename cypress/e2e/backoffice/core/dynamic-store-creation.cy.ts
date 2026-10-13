@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { ActionEnum, StoreCreatePage, StoreEditPage, StoreListPage } from '@pages/backoffice';
+import { StoreCreatePage, StoreEditPage, StoreListPage } from '@pages/backoffice';
 import { CatalogPage, CmsContentPage, HomePage, LoginPage, ProductPage } from '@pages/yves';
 import { DynamicStoreCreationDynamicFixtures, DynamicStoreCreationStaticFixtures } from '@interfaces/backoffice';
 import {
@@ -127,8 +127,7 @@ describe(
 
       // Assert
       storeListPage.hasStore(storeName).should('equal', true);
-      storeListPage.visit();
-      storeListPage.update({ query: storeName, action: ActionEnum.edit });
+      storeListPage.editListedStore(storeName);
       storeEditPage.getDefaultLocaleSelect().should('have.value', staticFixtures.store.locale);
       storeEditPage.getDefaultCurrencySelect().should('have.value', staticFixtures.store.currency);
 
