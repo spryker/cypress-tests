@@ -2,7 +2,9 @@ import { Address, Customer, Merchant, ProductConcrete } from './shared';
 
 export interface QuickOrderToCheckoutDynamicFixtures {
   customer: Customer;
-  address: Address;
+  reorderCustomer: Customer;
+  reorderAddress: Address;
+  shoppingList: QuickOrderShoppingList;
   product1: ProductConcrete;
   product2: ProductConcrete;
   merchant1: Merchant;
@@ -14,4 +16,8 @@ export interface QuickOrderToCheckoutStaticFixtures {
   soldByText: string;
   firstProductQuantity: number;
   secondProductQuantity: number;
+}
+
+interface QuickOrderShoppingList {
+  name: string;
 }
