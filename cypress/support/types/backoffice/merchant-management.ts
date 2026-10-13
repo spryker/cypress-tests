@@ -14,6 +14,11 @@ export interface MerchantDeactivationStaticFixtures {
 
 export interface MerchantCrudDynamicFixtures {
   rootUser: User;
+  merchantWaitingForApproval: Merchant;
+  renamedMerchant: Merchant;
+  renamedMerchantUrlEN: Url;
+  unassignedMerchant: Merchant;
+  unassignedMerchantUrlEN: Url;
 }
 
 export interface MerchantCrudStaticFixtures {

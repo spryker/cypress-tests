@@ -4,6 +4,8 @@ import { ActionEnum, MerchantCreatePage, MerchantListPage, MerchantUpdatePage } 
 import { MerchantPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
+const MERCHANT_PROFILE_SELECTOR = '[data-qa="component merchant-profile"]';
+
 describe(
   'merchant crud',
   {
@@ -41,13 +43,15 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    it('given a merchant created in the back office when it is approved and renamed then the storefront serves it, and unassigning its store retires the page', (): void => {
-      // Arrange
+    beforeEach((): void => {
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
+    });
 
+    it('given a back office user when a merchant is created inactive for a store then the merchant list shows it inactive, waiting for approval and assigned to that store', (): void => {
+      // Arrange
       merchantCreatePage.visit();
 
       // Act
@@ -58,36 +62,81 @@ describe(
       merchantListPage.findRow({ query: merchant.name }).should('contain.text', 'Inactive');
       merchantListPage.findRow({ query: merchant.name }).should('contain.text', 'Waiting for Approval');
       merchantListPage.findRow({ query: merchant.name }).should('contain.text', 'DE');
+    });
 
-      merchantListPage.update({ query: merchant.name, action: ActionEnum.activate });
-      merchantListPage.update({ query: merchant.name, action: ActionEnum.approveAccess });
+    it('given an inactive merchant waiting for approval when the back office activates and approves it then the merchant list shows it active and approved', (): void => {
+      // Arrange
+      merchantListPage.visit();
 
-      merchantListPage.findRow({ query: merchant.name }).should('contain.text', 'Active');
-      merchantListPage.findRow({ query: merchant.name }).should('contain.text', 'Approved');
+      // Act
+      merchantListPage.update({ query: dynamicFixtures.merchantWaitingForApproval.name, action: ActionEnum.activate });
+      merchantListPage.update({
+        query: dynamicFixtures.merchantWaitingForApproval.name,
+        action: ActionEnum.approveAccess,
+      });
 
-      const renamedMerchant = `${merchant.name} renamed`;
-      merchantListPage.update({ query: merchant.name, action: ActionEnum.edit });
-      merchantUpdatePage.rename({ name: renamedMerchant });
+      // Assert
+      merchantListPage
+        .findRow({ query: dynamicFixtures.merchantWaitingForApproval.name })
+        .should('contain.text', 'Active');
+      merchantListPage
+        .findRow({ query: dynamicFixtures.merchantWaitingForApproval.name })
+        .should('contain.text', 'Approved');
+    });
+
+    it('given a merchant served on the storefront when the back office renames it then the storefront serves the new name', (): void => {
+      // Arrange
+      const renamedMerchantName = `${dynamicFixtures.renamedMerchant.name} renamed`;
 
       cy.reloadUntilFound(
-        `/en/merchant/${merchant.url}`,
-        '[data-qa="component merchant-profile"]',
+        dynamicFixtures.renamedMerchantUrlEN.url,
+        MERCHANT_PROFILE_SELECTOR,
+        'body',
+        10,
+        3000,
+        publishAndSyncCommands
+      );
+      merchantPage.getBody().should('not.contain.text', renamedMerchantName);
+
+      // Act
+      merchantListPage.visit();
+      merchantListPage.update({ query: dynamicFixtures.renamedMerchant.name, action: ActionEnum.edit });
+      merchantUpdatePage.rename({ name: renamedMerchantName });
+
+      // Assert
+      // The publish commands run before every visit, so the page is rendered from the renamed
+      // storage entry. The merchant name is the page heading, outside the profile component itself.
+      cy.reloadUntilFound(
+        dynamicFixtures.renamedMerchantUrlEN.url,
+        MERCHANT_PROFILE_SELECTOR,
+        'body',
+        10,
+        3000,
+        publishAndSyncCommands
+      );
+      merchantPage.getBody().should('contain.text', renamedMerchantName);
+    });
+
+    it('given a merchant served on the storefront when the back office unassigns all its stores then the storefront retires its page', (): void => {
+      // Arrange
+      cy.reloadUntilFound(
+        dynamicFixtures.unassignedMerchantUrlEN.url,
+        MERCHANT_PROFILE_SELECTOR,
         'body',
         10,
         3000,
         publishAndSyncCommands
       );
 
-      // The merchant name is the page heading, which sits outside the profile component itself.
-      merchantPage.getBody().should('contain.text', renamedMerchant);
-
+      // Act
       merchantListPage.visit();
-      merchantListPage.update({ query: renamedMerchant, action: ActionEnum.edit });
+      merchantListPage.update({ query: dynamicFixtures.unassignedMerchant.name, action: ActionEnum.edit });
       merchantUpdatePage.unassignAllStores();
 
+      // Assert
       cy.reloadUntilGone(
-        `/en/merchant/${merchant.url}`,
-        '[data-qa="component merchant-profile"]',
+        dynamicFixtures.unassignedMerchantUrlEN.url,
+        MERCHANT_PROFILE_SELECTOR,
         'body',
         10,
         3000,
