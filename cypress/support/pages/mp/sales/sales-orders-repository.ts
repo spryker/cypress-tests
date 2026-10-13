@@ -6,6 +6,7 @@ import { injectable } from 'inversify';
 export class SalesOrdersRepository {
   getFirstTableRow = (params?: Partial<Cypress.Timeoutable>): Cypress.Chainable =>
     cy.get('tbody > :nth-child(1):visible', params);
+  getTableRowContaining = (text: string): Cypress.Chainable => cy.contains('tbody > tr:visible', text);
   getSearchSelector = (): string => '.spy-table-search-feature input[type="text"]';
   getCancelButtonSelector = (): string => 'button:contains("Cancel")';
   getShipButtonSelector = (): string => 'button:contains("Ship")';
@@ -14,7 +15,6 @@ export class SalesOrdersRepository {
   getDeliverButtonSelector = (): string => 'button:contains("Deliver")';
   getRefundButtonSelector = (): string => 'button:contains("Refund")';
   getDrawer = (): Cypress.Chainable => cy.get('.spy-drawer-wrapper');
-  getOrderItemsStateChipSelector = (): string => 'web-spy-chips.mp-manage-order__states-col';
 
   getItemsTab = (): Cypress.Chainable => cy.contains('.ant-tabs-tab-btn', 'Items', { timeout: 20000 });
 
