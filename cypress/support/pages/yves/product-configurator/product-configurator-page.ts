@@ -34,4 +34,16 @@ export class ProductConfiguratorPage extends AbstractPage {
   save = (): void => {
     this.repository.getSaveButton().click();
   };
+
+  // The option lookup waits for the configurator application to render, which is on a sibling host
+  // the configure button redirects to.
+  chooseOption = (params: ChooseOptionParams): void => {
+    this.selectOption(params.groupNumber, params.optionNumber);
+    this.save();
+  };
+}
+
+interface ChooseOptionParams {
+  groupNumber: number;
+  optionNumber: number;
 }

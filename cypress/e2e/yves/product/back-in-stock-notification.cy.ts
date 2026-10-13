@@ -18,11 +18,6 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    const visitProductDetailPage = (sku: string): void => {
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: sku });
-    };
-
     beforeEach((): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
@@ -32,7 +27,8 @@ describe(
 
     it('given a product with no stock left when its detail page is opened then it reads as out of stock and offers a back in stock notification', (): void => {
       // Act
-      visitProductDetailPage(dynamicFixtures.outOfStockProduct.sku);
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.outOfStockProduct.sku });
 
       // Assert
       productPage.getAvailabilityStatus().should('contain.text', staticFixtures.outOfStockLabel);
@@ -41,7 +37,8 @@ describe(
 
     it('given a product with no stock left when a back in stock notification is subscribed to and then cancelled then each step is confirmed', (): void => {
       // Arrange
-      visitProductDetailPage(dynamicFixtures.outOfStockProduct.sku);
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.outOfStockProduct.sku });
 
       // Act
       productPage.subscribeToAvailabilityNotification({ email: dynamicFixtures.customer.email });
@@ -62,7 +59,8 @@ describe(
 
     it('given a product that is in stock when its detail page is opened then no back in stock notification is offered', (): void => {
       // Act
-      visitProductDetailPage(dynamicFixtures.inStockProduct.sku);
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.inStockProduct.sku });
 
       // Assert
       productPage.getAvailabilityStatus().should('not.contain.text', staticFixtures.outOfStockLabel);

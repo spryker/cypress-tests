@@ -4,6 +4,10 @@ import { inject, injectable } from 'inversify';
 import { YvesPage } from '@pages/yves';
 import { ProductRepository } from './product-repository';
 
+const CONFIGURE_BUTTON_SELECTOR = '[data-qa="component configuration-form"] button';
+const CONFIGURE_BUTTON_RELOAD_ATTEMPTS = 20;
+const CONFIGURE_BUTTON_RELOAD_INTERVAL_MS = 3000;
+
 @injectable()
 @autoWired
 export class ProductPage extends YvesPage {
@@ -93,6 +97,20 @@ export class ProductPage extends YvesPage {
 
   configure = (): void => {
     this.repository.getConfigureButton().click();
+  };
+
+  // A freshly created product's configuration can still be propagating to storage, and until it
+  // lands the detail page renders no configure button at all.
+  reloadUntilConfigurable = (): void => {
+    cy.url().then((productUrl: string) => {
+      cy.reloadUntilFound(
+        productUrl,
+        CONFIGURE_BUTTON_SELECTOR,
+        'body',
+        CONFIGURE_BUTTON_RELOAD_ATTEMPTS,
+        CONFIGURE_BUTTON_RELOAD_INTERVAL_MS
+      );
+    });
   };
 
   getProductConfigurator = (): Cypress.Chainable => {

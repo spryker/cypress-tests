@@ -118,6 +118,19 @@ export class CatalogPage extends YvesPage {
 
   getFoundItemsCounter = (): Cypress.Chainable => cy.get(this.repository.getFoundItemsCounterSelector());
 
+  getFoundItemsCount = (): Cypress.Chainable<number> =>
+    this.getFoundItemsCounter()
+      .invoke('text')
+      .then((text: string) => Number(text.replace(/\D/g, '')));
+
+  getFirstProductItemDefaultPriceAmount = (): Cypress.Chainable<number> =>
+    this.getFirstProductItemDefaultPrice()
+      .invoke('text')
+      .then((text: string) => Number(text.replace(/[^\d.]/g, '')));
+
+  getFirstProductItemText = (): Cypress.Chainable<string> =>
+    this.repository.getProductItemBlocks().first().invoke('text');
+
   getFilterTitles = (): Cypress.Chainable => cy.get(this.repository.getFilterTitlesSelector());
 
   applyFilterValue = (params: ApplyFilterValueParams): void => {

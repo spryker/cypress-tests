@@ -4,5 +4,9 @@
   "volumeTier": {
     "quantity": 3,
     "price": "€80.00"
+  },
+  "belowTierQuantities": {
+    "first": 2,
+    "second": 1
   }
 }

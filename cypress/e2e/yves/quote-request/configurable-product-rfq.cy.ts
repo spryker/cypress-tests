@@ -16,12 +16,6 @@ const CONFIGURED_GROUP_NUMBER = 1;
 
 const CONFIGURED_OPTION_NUMBER = 2;
 
-const CONFIGURE_BUTTON_SELECTOR = '[data-qa="component configuration-form"] button';
-
-const PUBLISH_RELOAD_ATTEMPTS = 20;
-
-const PUBLISH_RELOAD_INTERVAL_MS = 3000;
-
 describe(
   'configurable product request for quote',
   {
@@ -47,25 +41,34 @@ describe(
     let staticFixtures: ConfigurableProductRfqStaticFixtures;
     let dynamicFixtures: ConfigurableProductRfqDynamicFixtures;
 
+    let configuredOptionTitle = '';
+
+    // The configured product is put in the cart through the storefront: its configuration comes from
+    // the configurator application, which the dynamic-fixtures endpoint cannot drive.
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
-    });
 
-    it('given a configured product submitted as a quote request when an agent returns it and the customer converts it then the cart still carries the configuration', (): void => {
-      // Arrange
-      let configuredOptionTitle = '';
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+      companyUserSelectPage.visit();
+      companyUserSelectPage.selectBusinessUnit({ idCompanyUser: dynamicFixtures.companyUser.id_company_user });
 
-      loginAsCustomer();
-      openProductDetailPage();
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
+      productPage.reloadUntilConfigurable();
       productPage.configure();
-      productConfiguratorPage.getHeading().should('be.visible');
       productConfiguratorPage
         .getOptionTitle(CONFIGURED_GROUP_NUMBER, CONFIGURED_OPTION_NUMBER)
-        .then((title: string): void => {
+        .then((title: string) => {
           configuredOptionTitle = title;
         });
-      productConfiguratorPage.selectOption(CONFIGURED_GROUP_NUMBER, CONFIGURED_OPTION_NUMBER);
-      productConfiguratorPage.save();
+      productConfiguratorPage.chooseOption({
+        groupNumber: CONFIGURED_GROUP_NUMBER,
+        optionNumber: CONFIGURED_OPTION_NUMBER,
+      });
       productPage.getProductConfigurationStatus().should('contain', staticFixtures.configurationCompleteStatus);
 
       productPage.addToCart();
@@ -73,6 +76,17 @@ describe(
       // /quote-request/create reads the cart server-side, so the item has to be on it before the
       // request is created or the request comes out empty.
       cartPage.assertBodyContainsText(dynamicFixtures.product.sku);
+    });
+
+    it('given a configured product submitted as a quote request when an agent returns it and the customer converts it then the cart still carries the configuration', (): void => {
+      // Arrange
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+      companyUserSelectPage.visit();
+      companyUserSelectPage.selectBusinessUnit({ idCompanyUser: dynamicFixtures.companyUser.id_company_user });
 
       // Act
       quoteRequestPage.createFromCart();
@@ -93,7 +107,13 @@ describe(
         quoteRequestPage.sendToCustomer();
 
         cy.resetYvesCookies();
-        loginAsCustomer();
+        customerLoginScenario.execute({
+          email: dynamicFixtures.customer.email,
+          password: staticFixtures.defaultPassword,
+          withoutSession: true,
+        });
+        companyUserSelectPage.visit();
+        companyUserSelectPage.selectBusinessUnit({ idCompanyUser: dynamicFixtures.companyUser.id_company_user });
         quoteRequestPage.visitDetails(reference);
         quoteRequestPage.convertToCart(reference);
 
@@ -108,33 +128,5 @@ describe(
         });
       });
     });
-
-    function loginAsCustomer(): void {
-      customerLoginScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-        withoutSession: true,
-      });
-
-      companyUserSelectPage.visit();
-      companyUserSelectPage.selectBusinessUnit({ idCompanyUser: dynamicFixtures.companyUser.id_company_user });
-    }
-
-    // A freshly created product's configuration can still be propagating to storage, and until it
-    // lands the detail page renders no configure button at all.
-    function openProductDetailPage(): void {
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
-
-      cy.url().then((productUrl: string) => {
-        cy.reloadUntilFound(
-          productUrl,
-          CONFIGURE_BUTTON_SELECTOR,
-          'body',
-          PUBLISH_RELOAD_ATTEMPTS,
-          PUBLISH_RELOAD_INTERVAL_MS
-        );
-      });
-    }
   }
 );

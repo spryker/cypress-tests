@@ -15,12 +15,6 @@ const FIRST_CHOICE_OPTION_NUMBER = 2;
 
 const SECOND_CHOICE_OPTION_NUMBER = 1;
 
-const CONFIGURE_BUTTON_SELECTOR = '[data-qa="component configuration-form"] button';
-
-const PUBLISH_RELOAD_ATTEMPTS = 20;
-
-const PUBLISH_RELOAD_INTERVAL_MS = 3000;
-
 describe(
   'configurable product shopping list',
   {
@@ -61,7 +55,9 @@ describe(
 
     it('given a configurable product when it is added to the cart without being configured then the cart states that it cannot be processed', (): void => {
       // Arrange
-      openProductDetailPage();
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
+      productPage.reloadUntilConfigurable();
       productPage.getProductConfigurationStatus().should('contain', staticFixtures.configurationNotCompleteStatus);
 
       // Act
@@ -76,9 +72,14 @@ describe(
 
     it('given a configured product stocked with a limited number of items when more than that is added then the cart refuses the excess', (): void => {
       // Arrange
-      openProductDetailPage();
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
+      productPage.reloadUntilConfigurable();
       productPage.configure();
-      selectConfiguratorOption(FIRST_CHOICE_OPTION_NUMBER, (): void => undefined);
+      productConfiguratorPage.chooseOption({
+        groupNumber: CONFIGURED_GROUP_NUMBER,
+        optionNumber: FIRST_CHOICE_OPTION_NUMBER,
+      });
       productPage.getProductConfigurationStatus().should('contain', staticFixtures.configurationCompleteStatus);
 
       // Act
@@ -97,10 +98,18 @@ describe(
       shoppingListPage.visit();
       const shoppingListName = shoppingListPage.createShoppingList();
 
-      openProductDetailPage();
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
+      productPage.reloadUntilConfigurable();
       productPage.configure();
-      selectConfiguratorOption(FIRST_CHOICE_OPTION_NUMBER, (title: string): void => {
-        replacedOptionTitle = title;
+      productConfiguratorPage
+        .getOptionTitle(CONFIGURED_GROUP_NUMBER, FIRST_CHOICE_OPTION_NUMBER)
+        .then((title: string): void => {
+          replacedOptionTitle = title;
+        });
+      productConfiguratorPage.chooseOption({
+        groupNumber: CONFIGURED_GROUP_NUMBER,
+        optionNumber: FIRST_CHOICE_OPTION_NUMBER,
       });
       shoppingListPage.addDisplayedProductToShoppingList(shoppingListName);
 
@@ -109,8 +118,14 @@ describe(
 
       // Act
       shoppingListPage.configureProduct({ sku: dynamicFixtures.product.sku });
-      selectConfiguratorOption(SECOND_CHOICE_OPTION_NUMBER, (title: string): void => {
-        reconfiguredOptionTitle = title;
+      productConfiguratorPage
+        .getOptionTitle(CONFIGURED_GROUP_NUMBER, SECOND_CHOICE_OPTION_NUMBER)
+        .then((title: string): void => {
+          reconfiguredOptionTitle = title;
+        });
+      productConfiguratorPage.chooseOption({
+        groupNumber: CONFIGURED_GROUP_NUMBER,
+        optionNumber: SECOND_CHOICE_OPTION_NUMBER,
       });
 
       // Assert
@@ -129,31 +144,5 @@ describe(
         expect(items.text()).to.contain(reconfiguredOptionTitle);
       });
     });
-
-    // A freshly created product's configuration can still be propagating to storage, and until it
-    // lands the detail page renders no configure button at all.
-    function openProductDetailPage(): void {
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
-
-      cy.url().then((productUrl: string) => {
-        cy.reloadUntilFound(
-          productUrl,
-          CONFIGURE_BUTTON_SELECTOR,
-          'body',
-          PUBLISH_RELOAD_ATTEMPTS,
-          PUBLISH_RELOAD_INTERVAL_MS
-        );
-      });
-    }
-
-    function selectConfiguratorOption(optionNumber: number, captureOptionTitle: (title: string) => void): void {
-      productConfiguratorPage.getHeading().should('be.visible');
-      productConfiguratorPage
-        .getOptionTitle(CONFIGURED_GROUP_NUMBER, optionNumber)
-        .then((title: string): void => captureOptionTitle(title));
-      productConfiguratorPage.selectOption(CONFIGURED_GROUP_NUMBER, optionNumber);
-      productConfiguratorPage.save();
-    }
   }
 );

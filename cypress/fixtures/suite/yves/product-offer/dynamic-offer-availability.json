@@ -64,7 +64,7 @@
         {
           "type": "helper",
           "name": "haveConfirmedCustomer",
-          "key": "customer",
+          "key": "orderingCustomer",
           "arguments": [
             {
               "locale_name": "en_US",
@@ -78,8 +78,19 @@
           "key": "address",
           "arguments": [
             {
-              "fkCustomer": "#customer.id_customer",
+              "fkCustomer": "#orderingCustomer.id_customer",
               "fkCountry": "#country.id_country"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "cartCustomer",
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
             }
           ]
         },
@@ -196,6 +207,46 @@
               "isNeverOutOfStock": false
             },
             "#merchant.stocks"
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "orderingCustomerQuote",
+          "arguments": [
+            {
+              "customer": "#orderingCustomer",
+              "items": [
+                {
+                  "sku": "#merchantProduct.sku",
+                  "abstractSku": "#merchantProduct.abstract_sku",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference",
+                  "productOfferReference": "#productOffer.product_offer_reference"
+                }
+              ]
+            },
+            true
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "cartCustomerQuote",
+          "arguments": [
+            {
+              "customer": "#cartCustomer",
+              "items": [
+                {
+                  "sku": "#merchantProduct.sku",
+                  "abstractSku": "#merchantProduct.abstract_sku",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference",
+                  "productOfferReference": "#productOffer.product_offer_reference"
+                }
+              ]
+            },
+            true
           ]
         }
       ]

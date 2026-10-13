@@ -9,6 +9,13 @@ describe(
     tags: ['@yves', 'product-lists', 'product-customer-restrictions', 'catalog', 'search', 'spryker-core'],
   },
   (): void => {
+    // The product lists are scoped to merchant relationships of the suite's demo data.
+    if (Cypress.env('repositoryId') !== 'suite') {
+      it.skip('skipped because tests run only for suite', () => {});
+
+      return;
+    }
+
     const catalogPage = container.get(CatalogPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
 
@@ -21,7 +28,10 @@ describe(
 
     it('given a whitelist scoped to a customer merchant relationship when that customer searches then only the whitelisted product is offered', (): void => {
       // Arrange
-      loginAs(staticFixtures.restrictedCustomer.email);
+      customerLoginScenario.execute({
+        email: dynamicFixtures.whitelistedCustomer.email,
+        password: staticFixtures.defaultPassword,
+      });
 
       // Act
       catalogPage.visit();
@@ -39,9 +49,34 @@ describe(
       catalogPage.getSuggestedProducts().should('not.exist');
     });
 
-    it('given a customer outside that merchant relationship when the same products are searched then both are offered', (): void => {
+    it('given a blacklist scoped to a customer merchant relationship when that customer searches then every product but the blacklisted one is offered', (): void => {
       // Arrange
-      loginAs(staticFixtures.unrestrictedCustomer.email);
+      customerLoginScenario.execute({
+        email: staticFixtures.blacklistedCustomer.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      // Act
+      catalogPage.visit();
+      catalogPage.searchSuggestionsFor({ query: dynamicFixtures.allowedProduct.sku });
+
+      // Assert
+      // A blacklist only takes away what it lists, so a product it does not name stays offered.
+      catalogPage.getSuggestedProducts().should('exist');
+
+      // Act
+      catalogPage.searchSuggestionsFor({ query: dynamicFixtures.hiddenProduct.sku });
+
+      // Assert
+      catalogPage.getSuggestedProducts().should('not.exist');
+    });
+
+    it('given a customer outside both merchant relationships when the same products are searched then both are offered', (): void => {
+      // Arrange
+      customerLoginScenario.execute({
+        email: staticFixtures.unrestrictedCustomer.email,
+        password: staticFixtures.defaultPassword,
+      });
 
       // Act
       catalogPage.visit();
@@ -54,13 +89,9 @@ describe(
       catalogPage.searchSuggestionsFor({ query: dynamicFixtures.hiddenProduct.sku });
 
       // Assert
-      // The list belongs to one merchant relationship, so a customer outside it keeps the whole
-      // catalog — which is what proves the restriction is scoped rather than global.
+      // The lists belong to merchant relationships, so a customer outside them keeps the whole
+      // catalog — which is what proves the restrictions are scoped rather than global.
       catalogPage.getSuggestedProducts().should('exist');
     });
-
-    function loginAs(email: string): void {
-      customerLoginScenario.execute({ email: email, password: staticFixtures.defaultPassword });
-    }
   }
 );

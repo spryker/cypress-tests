@@ -1,4 +1,5 @@
 {
+  "defaultPassword": "change123",
   "searchTerm": "canon",
   "colorFilter": {
     "name": "color",
@@ -6,5 +7,6 @@
   },
   "filterTitles": ["Price", "Rating", "Label", "Brand", "Color", "Merchant"],
   "ascendingPriceSortLabel": "Sort by price ascending",
-  "descendingPriceSortLabel": "Sort by price descending"
+  "descendingPriceSortLabel": "Sort by price descending",
+  "merchantFilterName": "merchant_name"
 }

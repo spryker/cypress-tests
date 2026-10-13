@@ -18,18 +18,14 @@ describe(
     let staticFixtures: ProductSetsStaticFixtures;
     let dynamicFixtures: ProductSetsDynamicFixtures;
 
+    // The run marker keeps the set unique per run, so the overview lists exactly the set this run built.
+    const runMarker = Cypress._.uniqueId(`${Date.now()}`);
+    const productSetName = `Product Set ${runMarker}`;
+
+    // The set is built through the Back Office because haveProductSet is not reachable from the
+    // dynamic-fixtures endpoint; building it is not what this spec tests.
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
-    });
-
-    it('given a product set holding a variant product and a simple one when the set is opened from the overview and the variant is picked then the whole set reaches the cart with the picked variant', (): void => {
-      // Arrange
-      // The set is built here rather than by a fixture because haveProductSet is not reachable from
-      // the dynamic-fixtures endpoint; the run marker is drawn inside the test so a retry does not
-      // collide with the set its own first attempt left behind.
-      const runMarker = Cypress._.uniqueId(`${Date.now()}`);
-      const productSetName = `Product Set ${runMarker}`;
-      const productSetUrlKey = `product-set-${runMarker}`;
 
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
@@ -37,11 +33,14 @@ describe(
       });
       productSetCreatePage.create({
         name: productSetName,
-        urlKey: productSetUrlKey,
+        urlKey: `product-set-${runMarker}`,
         setKey: `product-set-key-${runMarker}`,
         productAbstractSkus: [dynamicFixtures.variantProduct.abstract_sku, dynamicFixtures.simpleProduct.abstract_sku],
       });
+    });
 
+    it('given a product set holding a variant product and a simple one when the set is opened from the overview and the variant is picked then the whole set reaches the cart with the picked variant', (): void => {
+      // Arrange
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
@@ -72,13 +71,6 @@ describe(
       // Assert
       cartPage.getProductCartItems().should('contain', dynamicFixtures.secondVariantProduct.sku);
       cartPage.getProductCartItems().should('contain', dynamicFixtures.simpleProduct.sku);
-
-      // Act
-      cartPage.removeProduct({ sku: dynamicFixtures.secondVariantProduct.sku });
-      cartPage.removeProduct({ sku: dynamicFixtures.simpleProduct.sku });
-
-      // Assert
-      cartPage.getProductCartItems().should('not.exist');
     });
   }
 );

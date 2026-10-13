@@ -11,3 +11,5 @@ export * from './agent-mfa-login-scenario';
 export * from './customer-mfa-activation-scenario';
 export * from './product-add-to-cart-scenario';
 export * from './impersonate-customer-scenario';
+export * from './open-product-detail-page-on-store-scenario';
+export * from './wait-for-storefront-url-scenario';

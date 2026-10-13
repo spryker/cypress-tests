@@ -5,6 +5,12 @@
       "synchronize": true,
       "operations": [
         {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "customer",
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
+        },
+        {
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "localeEN",
