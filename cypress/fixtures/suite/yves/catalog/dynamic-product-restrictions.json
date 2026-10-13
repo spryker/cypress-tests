@@ -119,11 +119,37 @@
         },
         {
           "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "whitelistedCustomer",
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "whitelistedCompanyUser",
+          "arguments": [
+            {
+              "customer": "#whitelistedCustomer",
+              "fkCustomer": "#whitelistedCustomer.id_customer",
+              "fkCompany": 1,
+              "fkCompanyBusinessUnit": 2,
+              "isActive": true,
+              "isDefault": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveProductList",
           "key": "whitelist",
           "arguments": [
             {
-              "fkMerchantRelationship": 2,
+              "fkMerchantRelationship": 1,
               "type": "whitelist",
               "productListProductConcreteRelation": {
                 "productIds": ["#allowedProduct.id_product_concrete"]

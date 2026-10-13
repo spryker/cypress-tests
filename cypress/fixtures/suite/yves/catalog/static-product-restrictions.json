@@ -1,8 +1,5 @@
 {
   "defaultPassword": "change123",
-  "whitelistedCustomer": {
-    "email": "spencor.hopkin@acme.com"
-  },
   "blacklistedCustomer": {
     "email": "Richi@acme.com"
   },

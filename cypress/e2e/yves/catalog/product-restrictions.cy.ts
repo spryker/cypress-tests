@@ -29,7 +29,7 @@ describe(
     it('given a whitelist scoped to a customer merchant relationship when that customer searches then only the whitelisted product is offered', (): void => {
       // Arrange
       customerLoginScenario.execute({
-        email: staticFixtures.whitelistedCustomer.email,
+        email: dynamicFixtures.whitelistedCustomer.email,
         password: staticFixtures.defaultPassword,
       });
 
