@@ -23,7 +23,7 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    it('given three products when a product set is created for them in the back office then the storefront serves the set and its whole content reaches the cart, and deleting the set retires the page', (): void => {
+    it('given three products when a product set is created for them in the back office then the storefront serves the set and its whole content reaches the cart, and deleting the set retires the page but leaves the cart untouched', (): void => {
       // Arrange
       // The set key and the url key are unique per database row, so they are drawn inside the test:
       // a value fixed at module scope is reused by a Cypress retry and collides with its own run.
@@ -75,6 +75,17 @@ describe(
 
       // Assert
       productSetsPage.waitUntilProductSetIsGone(productSetUrlKey);
+
+      // A set only groups products for display, so the items it put into the cart are the customer's
+      // own and outlive it.
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+      });
+      cartPage.visit();
+      products.forEach((product) => {
+        cartPage.getProductCartItems().should('contain', product.sku);
+      });
     });
   }
 );
