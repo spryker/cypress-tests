@@ -6,6 +6,7 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 import { CheckoutMpScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { ActionEnum, SalesOrdersPage } from '@pages/mp';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
+import { retryableBefore } from '../../../support/e2e';
 
 describe(
   'order fulfilment',
@@ -42,12 +43,12 @@ describe(
     let staticFixtures: OrderFulfilmentStaticFixtures;
     let dynamicFixtures: OrderFulfilmentDynamicFixtures;
 
-    before((): void => {
-      ({ staticFixtures, dynamicFixtures } = Cypress.env());
-    });
+    let orderReference: string;
 
-    it("given an order with two of a merchant's items when the merchant ships it and delivers one item then each item carries its own state", (): void => {
-      // Arrange
+    // A retry needs an order its items have not moved in yet, so the order is placed per attempt.
+    retryableBefore((): void => {
+      ({ staticFixtures, dynamicFixtures } = Cypress.env());
+
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
@@ -67,62 +68,52 @@ describe(
         shouldTriggerOmsInCli: true,
       });
 
+      // Paying and skipping picking is what hands the order over to the merchant.
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
 
       salesIndexPage.visit();
-      salesIndexPage.view();
+      salesIndexPage.viewByReference(dynamicFixtures.customer.email);
+      salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
+      salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
+      salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
 
-      salesIndexPage.getOrderReference().then((orderReference) => {
-        salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
-        salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
-        salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
-
-        merchantUserLoginScenario.execute({
-          username: dynamicFixtures.merchantUser.username,
-          password: staticFixtures.defaultPassword,
-        });
-
-        // Act
-        salesOrdersPage.visit();
-        salesOrdersPage.update({ query: orderReference, action: ActionEnum.ship });
-
-        // Act
-        // One item is moved on its own from the items tab, which is what proves the merchant can
-        // fulfil an order line by line rather than only as a whole.
-        salesOrdersPage.visit();
-        salesOrdersPage.openOrder({ query: orderReference });
-        salesOrdersPage.openItemsTab();
-        salesOrdersPage.changeOrderItemState({
-          sku: dynamicFixtures.merchantProduct.sku,
-          state: DELIVER_ORDER_ITEM_STATE,
-        });
-
-        // Assert
-        salesOrdersPage.visit();
-        salesOrdersPage.openOrder({ query: orderReference });
-        salesOrdersPage.openItemsTab();
-        salesOrdersPage
-          .getOrderItemState({ sku: dynamicFixtures.merchantProduct.sku })
-          .should('contain.text', staticFixtures.orderItemStates.delivered);
-        salesOrdersPage
-          .getOrderItemState({ sku: dynamicFixtures.merchantProduct2.sku })
-          .should('contain.text', staticFixtures.orderItemStates.shipped);
-
-        // Act
-        salesOrdersPage.visit();
-        salesOrdersPage.update({ query: orderReference, action: ActionEnum.deliver });
-
-        // Assert
-        salesOrdersPage.visit();
-        salesOrdersPage.openOrder({ query: orderReference });
-        salesOrdersPage.openItemsTab();
-        salesOrdersPage
-          .getOrderItemState({ sku: dynamicFixtures.merchantProduct2.sku })
-          .should('contain.text', staticFixtures.orderItemStates.delivered);
+      salesIndexPage.getOrderReference().then((reference: string) => {
+        orderReference = reference.trim();
       });
+    });
+
+    it("given an order with two of a merchant's items when the merchant ships it and delivers one item then each item carries its own state", (): void => {
+      // Arrange
+      merchantUserLoginScenario.execute({
+        username: dynamicFixtures.merchantUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+
+      // Act
+      salesOrdersPage.visit();
+      salesOrdersPage.update({ query: orderReference, action: ActionEnum.ship });
+
+      salesOrdersPage.visit();
+      salesOrdersPage.openOrder({ query: orderReference });
+      salesOrdersPage.openItemsTab();
+      salesOrdersPage.changeOrderItemState({
+        sku: dynamicFixtures.merchantProduct.sku,
+        state: DELIVER_ORDER_ITEM_STATE,
+      });
+
+      // Assert
+      salesOrdersPage.visit();
+      salesOrdersPage.openOrder({ query: orderReference });
+      salesOrdersPage.openItemsTab();
+      salesOrdersPage
+        .getOrderItemState({ sku: dynamicFixtures.merchantProduct.sku })
+        .should('contain.text', staticFixtures.orderItemStates.delivered);
+      salesOrdersPage
+        .getOrderItemState({ sku: dynamicFixtures.merchantProduct2.sku })
+        .should('contain.text', staticFixtures.orderItemStates.shipped);
     });
   }
 );
