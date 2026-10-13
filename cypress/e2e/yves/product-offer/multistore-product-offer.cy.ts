@@ -1,16 +1,15 @@
 import { container } from '@utils';
-import { CatalogPage, ProductPage } from '@pages/yves';
+import { ProductPage } from '@pages/yves';
 import { ProductManagementEditPage, ProductOfferEditPage } from '@pages/backoffice';
 import { MultistoreProductOfferDynamicFixtures, MultistoreProductOfferStaticFixtures } from '@interfaces/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
-import { SelectStoreScenario } from '@scenarios/yves';
+import { OpenProductDetailPageOnStoreScenario } from '@scenarios/yves';
 
 describe(
   'multistore product offer',
   {
     tags: [
       '@yves',
-      '@core',
       '@product-offer',
       'product',
       'prices',
@@ -28,12 +27,11 @@ describe(
       return;
     }
 
-    const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const productOfferEditPage = container.get(ProductOfferEditPage);
     const productManagementEditPage = container.get(ProductManagementEditPage);
     const userLoginScenario = container.get(UserLoginScenario);
-    const selectStoreScenario = container.get(SelectStoreScenario);
+    const openProductDetailPageOnStoreScenario = container.get(OpenProductDetailPageOnStoreScenario);
 
     let staticFixtures: MultistoreProductOfferStaticFixtures;
     let dynamicFixtures: MultistoreProductOfferDynamicFixtures;
@@ -65,22 +63,43 @@ describe(
       // A retry re-runs the test but not this hook, and by then the offer is already off the store,
       // so the test can no longer establish that it was ever there. That precondition is checked
       // here instead, while it still holds.
-      openProductDetailPageOnStore(staticFixtures.secondaryStoreName);
-      assertOfferIsListed(dynamicFixtures.productOfferToUnassign.product_offer_reference);
+      openProductDetailPageOnStoreScenario.execute({
+        storeName: staticFixtures.secondaryStoreName,
+        abstractSku: dynamicFixtures.product.abstract_sku,
+        sku: dynamicFixtures.product.sku,
+        productName: dynamicFixtures.product.localized_attributes[0].name,
+      });
+      productPage
+        .getProductOfferRadio({ productOfferReference: dynamicFixtures.productOfferToUnassign.product_offer_reference })
+        .should('have.length', 1);
     });
 
     it('given a product offer is assigned to both stores when a shopper opens the detail page on each store then the offer is listed', (): void => {
       // Act
-      openProductDetailPageOnStore(staticFixtures.primaryStoreName);
+      openProductDetailPageOnStoreScenario.execute({
+        storeName: staticFixtures.primaryStoreName,
+        abstractSku: dynamicFixtures.product.abstract_sku,
+        sku: dynamicFixtures.product.sku,
+        productName: dynamicFixtures.product.localized_attributes[0].name,
+      });
 
       // Assert
-      assertOfferIsListed(dynamicFixtures.productOffer.product_offer_reference);
+      productPage
+        .getProductOfferRadio({ productOfferReference: dynamicFixtures.productOffer.product_offer_reference })
+        .should('have.length', 1);
 
       // Act
-      openProductDetailPageOnStore(staticFixtures.secondaryStoreName);
+      openProductDetailPageOnStoreScenario.execute({
+        storeName: staticFixtures.secondaryStoreName,
+        abstractSku: dynamicFixtures.product.abstract_sku,
+        sku: dynamicFixtures.product.sku,
+        productName: dynamicFixtures.product.localized_attributes[0].name,
+      });
 
       // Assert
-      assertOfferIsListed(dynamicFixtures.productOffer.product_offer_reference);
+      productPage
+        .getProductOfferRadio({ productOfferReference: dynamicFixtures.productOffer.product_offer_reference })
+        .should('have.length', 1);
     });
 
     it('given a store is unassigned from a product offer when a shopper opens the detail page then only the remaining store still lists that offer', (): void => {
@@ -97,31 +116,28 @@ describe(
       cy.runQueueWorker();
 
       // Assert
-      openProductDetailPageOnStore(staticFixtures.secondaryStoreName);
-      assertOfferIsListed(dynamicFixtures.productOffer.product_offer_reference);
-      assertOfferIsNotListed(dynamicFixtures.productOfferToUnassign.product_offer_reference);
-
-      openProductDetailPageOnStore(staticFixtures.primaryStoreName);
-      assertOfferIsListed(dynamicFixtures.productOfferToUnassign.product_offer_reference);
-    });
-
-    // The suggestion dropdown ranks by completion, so a sku query can put a different product
-    // first; going through the result blocks and matching on the product name keeps it exact.
-    function openProductDetailPageOnStore(storeName: string): void {
-      selectStoreScenario.execute(storeName);
-      catalogPage.searchForProducts({ query: dynamicFixtures.product.abstract_sku });
-      catalogPage.openProductDetailPageFromResults({
+      openProductDetailPageOnStoreScenario.execute({
+        storeName: staticFixtures.secondaryStoreName,
+        abstractSku: dynamicFixtures.product.abstract_sku,
+        sku: dynamicFixtures.product.sku,
         productName: dynamicFixtures.product.localized_attributes[0].name,
       });
-      productPage.getProductConfigurator().should('contain', dynamicFixtures.product.sku);
-    }
+      productPage
+        .getProductOfferRadio({ productOfferReference: dynamicFixtures.productOffer.product_offer_reference })
+        .should('have.length', 1);
+      productPage
+        .getProductOfferRadio({ productOfferReference: dynamicFixtures.productOfferToUnassign.product_offer_reference })
+        .should('have.length', 0);
 
-    function assertOfferIsListed(productOfferReference: string): void {
-      productPage.getProductOfferRadio({ productOfferReference: productOfferReference }).should('have.length', 1);
-    }
-
-    function assertOfferIsNotListed(productOfferReference: string): void {
-      productPage.getProductOfferRadio({ productOfferReference: productOfferReference }).should('have.length', 0);
-    }
+      openProductDetailPageOnStoreScenario.execute({
+        storeName: staticFixtures.primaryStoreName,
+        abstractSku: dynamicFixtures.product.abstract_sku,
+        sku: dynamicFixtures.product.sku,
+        productName: dynamicFixtures.product.localized_attributes[0].name,
+      });
+      productPage
+        .getProductOfferRadio({ productOfferReference: dynamicFixtures.productOfferToUnassign.product_offer_reference })
+        .should('have.length', 1);
+    });
   }
 );
