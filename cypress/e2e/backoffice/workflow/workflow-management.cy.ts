@@ -26,6 +26,22 @@ describe(
       });
     });
 
+    it('admin should see only the triggers of the selected subject type when creating a workflow', (): void => {
+      const { subjectType, triggerEventLabel, otherSubjectTypeTriggerEventLabel } = staticFixtures;
+
+      workflowManagementPage.visitCreate();
+      workflowManagementPage.getProcessTriggerEventsSelect().should('be.disabled');
+
+      workflowManagementPage.selectSubjectType(subjectType);
+
+      workflowManagementPage.getProcessTriggerEventsSelect().should('not.be.disabled');
+      workflowManagementPage.getProcessTriggerEventsSelect().find('option').should('contain', triggerEventLabel);
+      workflowManagementPage
+        .getProcessTriggerEventsSelect()
+        .find('option')
+        .should('not.contain', otherSubjectTypeTriggerEventLabel);
+    });
+
     it('admin should be able to create, configure, version and activate a workflow', (): void => {
       const { subjectType, triggerEventLabel, initialState } = staticFixtures;
 

@@ -17,6 +17,18 @@ export class WorkflowManagementPage extends BackofficePage {
     this.repository.getProcessSaveButton().click();
   };
 
+  visitCreate = (): void => {
+    cy.visitBackoffice(`${this.PAGE_URL}/create`);
+  };
+
+  selectSubjectType = (subjectType: string): void => {
+    // Pick through the Select2 widget, not the native select: Select2 announces the change with a jQuery event only.
+    this.repository.getProcessSubjectTypeInput().siblings('.select2-container').find('.select2-selection').click();
+    this.repository.getSelect2Option(subjectType).click();
+  };
+
+  getProcessTriggerEventsSelect = (): Cypress.Chainable => this.repository.getProcessTriggerEventsSelect();
+
   configureTrigger = (params: { name: string; eventLabel: string }): void => {
     this.repository.getProcessRowTriggersButton(params.name).click();
     // Select2 combobox: open the dropdown next to the native select, then pick the option by its label.

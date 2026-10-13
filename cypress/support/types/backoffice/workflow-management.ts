@@ -4,6 +4,7 @@ export interface WorkflowManagementStaticFixtures {
   defaultPassword: string;
   subjectType: string;
   triggerEventLabel: string;
+  otherSubjectTypeTriggerEventLabel: string;
   initialState: string;
   definitionTemplate: string;
 }

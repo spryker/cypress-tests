@@ -25,6 +25,9 @@ export class WorkflowManagementRepository {
   getProcessNameInput = (): Cypress.Chainable => cy.get('[data-qa="workflow-process-name-input"]');
   getProcessSubjectTypeInput = (): Cypress.Chainable => cy.get('[data-qa="workflow-process-subject-type-input"]');
   getProcessSaveButton = (): Cypress.Chainable => cy.get('[data-qa="workflow-process-save"]');
+  getProcessTriggerEventsSelect = (): Cypress.Chainable => cy.get('[data-qa="workflow-process-trigger-events-select"]');
+  getSelect2Option = (label: string): Cypress.Chainable =>
+    cy.get('.select2-dropdown .select2-results__option').contains(new RegExp(`^${label}$`));
 
   getTriggerEventSelect = (): Cypress.Chainable => cy.get('[data-qa="trigger-events-select"]');
   getTriggerEventDropdownOption = (label: string): Cypress.Chainable =>
