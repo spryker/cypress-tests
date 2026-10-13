@@ -9,7 +9,7 @@ import {
   ProductPage,
 } from '@pages/yves';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
-import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
+import { CustomerLoginScenario, PlaceOrderScenario } from '@scenarios/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
 // The group and option the configurator is driven to. Option one of each group is preselected, so
@@ -17,12 +17,6 @@ import { UserLoginScenario } from '@scenarios/backoffice';
 const CONFIGURED_GROUP_NUMBER = 1;
 
 const CONFIGURED_OPTION_NUMBER = 2;
-
-const CONFIGURE_BUTTON_SELECTOR = '[data-qa="component configuration-form"] button';
-
-const PUBLISH_RELOAD_ATTEMPTS = 20;
-
-const PUBLISH_RELOAD_INTERVAL_MS = 3000;
 
 describe(
   'configurable product OMS',
@@ -52,25 +46,25 @@ describe(
     const salesDetailPage = container.get(SalesDetailPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const userLoginScenario = container.get(UserLoginScenario);
-    const checkoutScenario = container.get(CheckoutScenario);
+    const placeOrderScenario = container.get(PlaceOrderScenario);
 
     let staticFixtures: ConfigurableProductOmsStaticFixtures;
     let dynamicFixtures: ConfigurableProductOmsDynamicFixtures;
+    let configuredOptionTitle: string;
+    let orderReference: string;
 
+    // The order item has to carry a configuration the customer saved, and no fixture helper persists
+    // one onto a sales order item, so the order is placed through the storefront once for both tests.
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
-    });
-
-    it('given a configured product ordered and shipped when the order is reordered then the configuration is on the order but not in the new cart', (): void => {
-      // Arrange
-      let configuredOptionTitle: string;
 
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
       });
-      openProductDetailPage();
-      productPage.getProductConfigurationStatus().should('contain', staticFixtures.configurationNotCompleteStatus);
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
+      productPage.reloadUntilConfigurable();
 
       productPage.configure();
       productConfiguratorPage.getHeading().should('be.visible');
@@ -81,42 +75,57 @@ describe(
         });
       productConfiguratorPage.selectOption(CONFIGURED_GROUP_NUMBER, CONFIGURED_OPTION_NUMBER);
       productConfiguratorPage.save();
-
       productPage.getProductConfigurationStatus().should('contain', staticFixtures.configurationCompleteStatus);
       productPage.addToCart();
 
-      checkoutScenario.execute({
-        idCustomerAddress: dynamicFixtures.address.id_customer_address,
-        paymentMethod: getPaymentMethodBasedOnEnv(),
-        shouldTriggerOmsInCli: true,
+      placeOrderScenario
+        .execute({
+          idCustomerAddress: dynamicFixtures.address.id_customer_address,
+          paymentMethod: getPaymentMethodBasedOnEnv(),
+          shouldTriggerOmsInCli: true,
+        })
+        .then((placedOrderReference: string): void => {
+          orderReference = placedOrderReference;
+        });
+    });
+
+    it('given an order of a configured product when the back office drives it to shipped then the order item keeps the configuration', (): void => {
+      // Arrange
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
       });
+      salesIndexPage.visit();
+      salesIndexPage.viewByReference(orderReference);
 
-      // Act
-      openOrderInBackoffice();
-
-      // Assert
-      // The configuration the customer saved is carried onto the order item, and stays there while
-      // the order walks the state machine.
       salesDetailPage.getOrderItemTables().should((tables: JQuery<HTMLElement>): void => {
         expect(tables.text()).to.contain(configuredOptionTitle);
       });
 
       // Act
-      driveOrderToShipped();
+      salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
+      salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
+      salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
+      salesDetailPage.triggerOms({ state: 'skip picking' });
+      salesDetailPage.triggerOms({ state: 'Ship' });
 
       // Assert
       salesDetailPage.getOrderItemTables().should((tables: JQuery<HTMLElement>): void => {
         expect(tables.text()).to.contain(configuredOptionTitle);
       });
+    });
 
-      // Act
-      // Reordering copies the item back into the cart, but a configuration belongs to the order it
-      // was made for, so the customer has to configure the product again before checking out.
+    it('given an order of a configured product when the customer reorders it then the product is back in the cart without its configuration', (): void => {
+      // Arrange
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
       });
       customerOverviewPage.viewLastPlacedOrder();
+
+      // Act
+      // Reordering copies the item back into the cart, but a configuration belongs to the order it
+      // was made for, so the customer has to configure the product again before checking out.
       orderDetailsPage.reorderAll();
 
       // Assert
@@ -124,43 +133,5 @@ describe(
       cartPage.getBody().should('contain', dynamicFixtures.product.sku);
       cartPage.getBody().should('contain', staticFixtures.configurationNotCompleteStatus);
     });
-
-    // A freshly created product's data can still be propagating to storage right after fixture
-    // setup, and until the configuration lands the PDP renders no configure button at all.
-    function openProductDetailPage(): void {
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
-
-      cy.url().then((productUrl: string) => {
-        cy.reloadUntilFound(
-          productUrl,
-          CONFIGURE_BUTTON_SELECTOR,
-          'body',
-          PUBLISH_RELOAD_ATTEMPTS,
-          PUBLISH_RELOAD_INTERVAL_MS
-        );
-      });
-    }
-
-    function openOrderInBackoffice(): void {
-      customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
-        userLoginScenario.execute({
-          username: dynamicFixtures.rootUser.username,
-          password: staticFixtures.defaultPassword,
-        });
-
-        salesIndexPage.visit();
-        salesIndexPage.viewByReference(orderReference.trim());
-      });
-    }
-
-    function driveOrderToShipped(): void {
-      salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'skip picking' });
-      salesDetailPage.triggerOms({ state: 'Ship' });
-    }
   }
 );
