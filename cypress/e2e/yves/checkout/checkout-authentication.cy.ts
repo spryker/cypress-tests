@@ -1,6 +1,6 @@
 import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { CheckoutAuthenticationDynamicFixtures, CheckoutAuthenticationStaticFixtures } from '@interfaces/yves';
-import { CartPage, CheckoutCustomerPage, CustomerOverviewPage, CustomerProfilePage } from '@pages/yves';
+import { CartPage, CheckoutCustomerPage, CheckoutSummaryPage, CustomerProfilePage, OrderPage } from '@pages/yves';
 import { CheckoutScenario, ProductAddToCartScenario } from '@scenarios/yves';
 
 describe(
@@ -16,7 +16,8 @@ describe(
 
     const cartPage = container.get(CartPage);
     const checkoutCustomerPage = container.get(CheckoutCustomerPage);
-    const customerOverviewPage = container.get(CustomerOverviewPage);
+    const checkoutSummaryPage = container.get(CheckoutSummaryPage);
+    const orderPage = container.get(OrderPage);
     const customerProfilePage = container.get(CustomerProfilePage);
     const checkoutScenario = container.get(CheckoutScenario);
     const productAddToCartScenario = container.get(ProductAddToCartScenario);
@@ -51,8 +52,9 @@ describe(
       });
 
       // Assert
-      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage(), {
-        timeout: 15000,
+      checkoutSummaryPage.getPlacedOrderReference().then((orderReference: string) => {
+        orderPage.visit();
+        orderPage.getOrderHistoryRow(orderReference).should('exist');
       });
     });
 
@@ -90,8 +92,9 @@ describe(
       });
 
       // Assert
-      customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage(), {
-        timeout: 15000,
+      checkoutSummaryPage.getPlacedOrderReference().then((orderReference: string) => {
+        orderPage.visit();
+        orderPage.getOrderHistoryRow(orderReference).should('exist');
       });
 
       customerProfilePage.visit();
