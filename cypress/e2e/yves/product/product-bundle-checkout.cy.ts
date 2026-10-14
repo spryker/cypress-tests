@@ -1,4 +1,4 @@
-import { container, getPaymentMethodBasedOnEnv } from '@utils';
+import { container } from '@utils';
 import { ProductBundleCheckoutDynamicFixtures, ProductBundleCheckoutStaticFixtures } from '@interfaces/yves';
 import { CartPage, CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
@@ -55,7 +55,7 @@ describe(
       // fields hidden until a saved address is ruled out.
       checkoutScenario.execute({
         idCustomerAddress: dynamicFixtures.address.id_customer_address,
-        paymentMethod: getPaymentMethodBasedOnEnv(),
+        paymentMethod: staticFixtures.paymentMethod,
       });
 
       // Assert

@@ -1,4 +1,4 @@
-import { container, getPaymentMethodBasedOnEnv, skipWhenFeatureAbsent } from '@utils';
+import { container, skipWhenFeatureAbsent } from '@utils';
 import {
   ConfigurableProductCheckoutDynamicFixtures,
   ConfigurableProductCheckoutStaticFixtures,
@@ -125,7 +125,7 @@ describe(
       // Act
       checkoutScenario.execute({
         idCustomerAddress: dynamicFixtures.address.id_customer_address,
-        paymentMethod: getPaymentMethodBasedOnEnv(),
+        paymentMethod: staticFixtures.paymentMethod,
       });
 
       // Assert
