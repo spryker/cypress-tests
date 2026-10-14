@@ -29,6 +29,13 @@ describe(
     ],
   },
   (): void => {
+    // The B2C shops do not install the shopping list module.
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because the B2C storefronts have no shopping lists', () => {});
+
+      return;
+    }
+
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const productConfiguratorPage = container.get(ProductConfiguratorPage);
