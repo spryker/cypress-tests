@@ -26,10 +26,11 @@ describe(
     ],
   },
   (): void => {
-    // Only these two storefronts carry the service point finder the pickup location is chosen
-    // through; elsewhere the selection silently does nothing and the order ships to no store.
-    if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because only suite and b2b-mp offer the service point finder', () => {});
+    // Only the suite picks the shipment type and service point on the address step. The marketplace
+    // B2B shop hides the shipment type choices there and takes them from the product page instead;
+    // the other shops have no service point finder at all.
+    if (!['suite'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because only suite chooses the pickup service point on the address step', () => {});
 
       return;
     }
