@@ -136,7 +136,12 @@ export class B2bMpCartRepository implements CartRepository {
 
     return this.getConfiguredBundle(bundleName).find('input.formatted-number-input__input').first();
   };
-  submitConfiguredBundleQuantity = (): void => {
+  // Typing alone fires no change event, and the counter only schedules its post on one.
+  submitConfiguredBundleQuantity = (bundleName: string): void => {
+    this.getConfiguredBundle(bundleName)
+      .find('input.formatted-number-input__input')
+      .first()
+      .trigger('change', { force: true, bubbles: true });
     cy.wait('@configuredBundleQuantityChange');
     cy.reload();
   };
