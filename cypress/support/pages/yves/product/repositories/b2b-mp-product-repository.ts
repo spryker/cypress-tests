@@ -92,8 +92,11 @@ export class B2bMpProductRepository implements ProductRepository {
         return;
       }
 
+      // The volume-price component re-prices on the change event, which typing alone does not fire
+      // before the field loses focus.
       cy.get('formatted-number-input input').first().clear();
       cy.get('formatted-number-input input').first().type(String(quantity));
+      cy.get('formatted-number-input input').first().trigger('change');
     });
   };
 
@@ -114,8 +117,8 @@ export class B2bMpProductRepository implements ProductRepository {
 
   getBundleItems = (): Cypress.Chainable => cy.get('[data-qa*="component bundle-items"]');
 
-  getAvailabilityStatus = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-availability-widget"] [data-qa="component status"]');
+  getOutOfStockNotice = (): Cypress.Chainable =>
+    cy.get('[data-qa="component product-availability-widget"] [data-qa="component status"]:contains("Out of stock")');
   getAvailabilityNotificationEmailField = (): Cypress.Chainable =>
     cy.get('#availabilityNotificationSubscriptionForm_email');
   getAvailabilityNotificationSubscribeForm = (): Cypress.Chainable =>

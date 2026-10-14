@@ -31,6 +31,7 @@ describe(
       // Arrange
       customerLoginScenario.execute({
         email: staticFixtures.defaultPriceCustomer.email,
+        alternativeEmails: staticFixtures.defaultPriceCustomer.alternativeEmails,
         password: staticFixtures.defaultPassword,
       });
 
@@ -58,6 +59,7 @@ describe(
       // Arrange
       customerLoginScenario.execute({
         email: staticFixtures.merchantPriceCustomer.email,
+        alternativeEmails: staticFixtures.merchantPriceCustomer.alternativeEmails,
         password: staticFixtures.defaultPassword,
       });
 

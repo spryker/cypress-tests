@@ -16,9 +16,21 @@ export class B2bMpCartRepository implements CartRepository {
     cy.get('url-mask-generator[shareoptiongroup="external"]').find('.js-toggler-radio__trigger');
   getExternalCartShareLinkInput = (): Cypress.Chainable => cy.get('#PREVIEW');
   // The SKU field is ProductSearchWidget's own product-search-autocomplete-form, not the generic
-  // autocomplete-form the other shops render.
-  getQuickAddToCartSkuField = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-search-autocomplete-form"] .input');
+  // autocomplete-form the other shops render. An empty cart shows the form in the page body; a cart
+  // with items moves it into a collapsed sidebar accordion item, which is opened first.
+  getQuickAddToCartSkuField = (): Cypress.Chainable => {
+    const skuFieldSelector = '[data-qa="component product-search-autocomplete-form"] .input';
+
+    cy.get(skuFieldSelector)
+      .first()
+      .then(($skuField) => {
+        if (!$skuField.is(':visible')) {
+          cy.get('[data-toggle-target=".js-cart-sidebar-item__content-quick-add-widget"]').click();
+        }
+      });
+
+    return cy.get(skuFieldSelector);
+  };
   getQuickAddToCartProductListField = (): Cypress.Chainable => cy.get('[data-qa="component products-list"]');
   getFirstCartItemNoteField = (): Cypress.Chainable => {
     cy.get('[data-qa="component cart-item-note"]')
@@ -80,6 +92,10 @@ export class B2bMpCartRepository implements CartRepository {
   getCheckoutButton = (): Cypress.Chainable => cy.get('[data-qa="cart-go-to-checkout"]');
   getCartSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-summary"]');
   getCartDiscountSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-code-summary"]');
+  // The B2B promotion tiles show the product name only and carry the sku in their add-to-cart form,
+  // which also keeps the tile apart from those of any other active promotion discount.
+  getPromotionalProductAddToCartButton = (sku: string): Cypress.Chainable =>
+    cy.get(`[data-qa="component product-item"] form[action$="/cart/async/add/${sku}"] button`);
   getCustomOrderReferenceInput = (): Cypress.Chainable => {
     cy.get('[data-qa="component order-custom-reference-form"]').parent().parent().parent().click();
 

@@ -69,7 +69,7 @@ export interface ProductRepository {
 
   // Availability state and the back-in-stock notification form. The form ids come from the Symfony
   // form types, so they are the same wherever the widget is rendered.
-  getAvailabilityStatus(): Cypress.Chainable;
+  getOutOfStockNotice(): Cypress.Chainable;
   getAvailabilityNotificationEmailField(): Cypress.Chainable;
   getAvailabilityNotificationSubscribeForm(): Cypress.Chainable;
   getAvailabilityNotificationUnsubscribeForm(): Cypress.Chainable;

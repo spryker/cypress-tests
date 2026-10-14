@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, skipWhenFeatureAbsent } from '@utils';
 import {
   ProductManagementListPage,
   ProductManagementEditPage,
@@ -21,6 +21,8 @@ describe(
 
       return;
     }
+
+    skipWhenFeatureAbsent('productAttachments', ['b2b']);
 
     const productManagementListPage = container.get(ProductManagementListPage);
     const productManagementEditPage = container.get(ProductManagementEditPage);

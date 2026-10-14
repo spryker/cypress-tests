@@ -31,7 +31,7 @@ describe(
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.outOfStockProduct.sku });
 
       // Assert
-      productPage.getAvailabilityStatus().should('contain.text', staticFixtures.outOfStockLabel);
+      productPage.getOutOfStockNotice().should('be.visible');
       productPage.getAvailabilityNotificationEmailField().should('be.visible');
     });
 
@@ -63,7 +63,7 @@ describe(
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.inStockProduct.sku });
 
       // Assert
-      productPage.getAvailabilityStatus().should('not.contain.text', staticFixtures.outOfStockLabel);
+      productPage.getOutOfStockNotice().should('not.exist');
       productPage.getAvailabilityNotificationEmailField().should('not.exist');
       productPage.getAddToCartButton().should('be.enabled');
     });

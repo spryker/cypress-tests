@@ -61,6 +61,10 @@ export class SuiteCartRepository implements CartRepository {
   getCheckoutButton = (): Cypress.Chainable => cy.get('[data-qa="cart-go-to-checkout"]');
   getCartSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-summary"]');
   getCartDiscountSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-discount-summary"]');
+  // Scoped to one tile by sku, because any other active promotion discount offers its own product
+  // in the same carousel.
+  getPromotionalProductAddToCartButton = (sku: string): Cypress.Chainable =>
+    cy.contains('[data-qa="component product-item"]', sku).find('[data-qa="add-to-cart-button"]');
   getCustomOrderReferenceInput = (): Cypress.Chainable =>
     cy.get('[data-qa="component order-custom-reference-form"] input[type=text]');
   getCustomOrderReferenceSubmitButton = (): Cypress.Chainable =>

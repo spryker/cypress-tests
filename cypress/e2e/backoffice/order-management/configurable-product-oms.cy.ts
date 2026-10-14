@@ -1,4 +1,4 @@
-import { container, getPaymentMethodBasedOnEnv } from '@utils';
+import { container, getPaymentMethodBasedOnEnv, skipWhenFeatureAbsent } from '@utils';
 import { ConfigurableProductOmsDynamicFixtures, ConfigurableProductOmsStaticFixtures } from '@interfaces/backoffice';
 import {
   CartPage,
@@ -36,6 +36,8 @@ describe(
     ],
   },
   (): void => {
+    skipWhenFeatureAbsent('dateTimeConfigurator', ['b2b']);
+
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const productConfiguratorPage = container.get(ProductConfiguratorPage);

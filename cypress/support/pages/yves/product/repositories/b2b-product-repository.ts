@@ -89,13 +89,18 @@ export class B2bProductRepository implements ProductRepository {
         return;
       }
 
+      // The volume-price component re-prices on the change event, which typing alone does not fire
+      // before the field loses focus.
       cy.get('formatted-number-input input').first().clear();
       cy.get('formatted-number-input input').first().type(String(quantity));
+      cy.get('formatted-number-input input').first().trigger('change');
     });
   };
 
+  // Both B2B themes dress the native select up with select2, which lays its own box over it; the
+  // packaging unit selector still listens to the native select's change event.
   selectSalesUnit = (salesUnitName: string): void => {
-    cy.get('select[name="id-product-measurement-sales-unit"]').select(salesUnitName);
+    cy.get('select[name="id-product-measurement-sales-unit"]').select(salesUnitName, { force: true });
   };
 
   getMeasurementUnitChoice = (): Cypress.Chainable =>
@@ -111,8 +116,13 @@ export class B2bProductRepository implements ProductRepository {
 
   getBundleItems = (): Cypress.Chainable => cy.get('[data-qa*="component bundle-items"]');
 
-  getAvailabilityStatus = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-availability-widget"] [data-qa="component status"]');
+  // The redesigned theme states availability in a status badge either way; the classic theme has no
+  // badge and only renders an alert under the add to cart form once the product is out of stock.
+  getOutOfStockNotice = (): Cypress.Chainable =>
+    cy.get(
+      '[data-qa="component product-availability-widget"] [data-qa="component status"]:contains("Out of stock"), ' +
+        '[data-qa="component product-configurator"] .text-alert:contains("This product is currently not available.")'
+    );
   getAvailabilityNotificationEmailField = (): Cypress.Chainable =>
     cy.get('#availabilityNotificationSubscriptionForm_email');
   getAvailabilityNotificationSubscribeForm = (): Cypress.Chainable =>

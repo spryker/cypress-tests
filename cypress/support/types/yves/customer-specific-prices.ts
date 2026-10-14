@@ -7,6 +7,7 @@ export interface CustomerSpecificPricesStaticFixtures {
 
 interface StaticCustomer {
   email: string;
+  alternativeEmails?: string[];
 }
 
 interface PricedProduct {

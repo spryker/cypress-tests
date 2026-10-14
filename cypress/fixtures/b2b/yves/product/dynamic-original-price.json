@@ -134,7 +134,7 @@
           "arguments": [
             {
               "attributes": {
-                "storage_capacity": "32 GB"
+                "size": "S"
               },
               "localizedAttributes": [
                 {
@@ -150,7 +150,7 @@
             {
               "idTaxSet": 1,
               "attributes": {
-                "storage_capacity": "32 GB"
+                "size": "S"
               },
               "localizedAttributes": [
                 {
@@ -174,7 +174,7 @@
               "fkProductAbstract": "#product.fk_product_abstract",
               "abstractSku": "#product.abstract_sku",
               "attributes": {
-                "storage_capacity": "128 GB"
+                "size": "L"
               },
               "isActive": true
             }

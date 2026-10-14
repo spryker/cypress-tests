@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, skipWhenFeatureAbsent } from '@utils';
 import {
   ConfigurableProductShoppingListDynamicFixtures,
   ConfigurableProductShoppingListStaticFixtures,
@@ -35,6 +35,8 @@ describe(
 
       return;
     }
+
+    skipWhenFeatureAbsent('dateTimeConfigurator', ['b2b']);
 
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
