@@ -29,6 +29,8 @@ describe(
 
     // The bundle templates and the products their slots offer are demo data, and only the suite,
     // b2b and b2c shops ship them - the two marketplace shops carry no clone of this journey either.
+    // The b2b id also runs against the marketplace B2B shop, the only one built with SSP enabled,
+    // whose demo data deactivates this template.
     shopsWithBundleTemplatesIt(
       'given two configurations of one bundle template when one of them is doubled in the cart and the order is placed then the order carries three bundles',
       (): void => {
@@ -75,7 +77,12 @@ describe(
     }
 
     function shopsWithBundleTemplatesIt(description: string, testFn: () => void): void {
-      (['suite', 'b2b', 'b2c'].includes(Cypress.env('repositoryId')) ? it : it.skip)(description, testFn);
+      const isMarketplaceB2bShop = Cypress.env('repositoryId') === 'b2b' && Cypress.env('ENV_IS_SSP_ENABLED');
+
+      (['suite', 'b2b', 'b2c'].includes(Cypress.env('repositoryId')) && !isMarketplaceB2bShop ? it : it.skip)(
+        description,
+        testFn
+      );
     }
   }
 );
