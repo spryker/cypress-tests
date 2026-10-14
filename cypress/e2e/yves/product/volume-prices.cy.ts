@@ -60,36 +60,31 @@ describe('volume prices', { tags: ['@yves', 'prices', 'product', 'cart', 'spryke
       .should('have.length', 1);
   });
 
-  it('given a product priced in volume tiers when it is added twice below the tier and the two adds together reach it then the cart charges the tier price', (): void => {
-    // Act
-    productPage.setQuantity({ quantity: staticFixtures.belowTierQuantities.first });
+  it('given a product added to the cart below its volume tier when its cart line is raised to the tier then the cart charges the tier price', (): void => {
+    // Arrange
+    productPage.setQuantity({ quantity: staticFixtures.belowTierQuantity });
     productPage.addToCart();
     cartPage.visit();
-
-    // Assert
     cartPage
       .getCartItemsChargingUnitPrice({
         sku: dynamicFixtures.product.sku,
         unitPrice: staticFixtures.unitPrice,
-        quantity: staticFixtures.belowTierQuantities.first,
+        quantity: staticFixtures.belowTierQuantity,
       })
       .should('have.length', 1);
 
     // Act
-    // Neither add reaches the tier on its own, so only the quantity the cart holds in total can.
-    catalogPage.visit();
-    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
-    productPage.setQuantity({ quantity: staticFixtures.belowTierQuantities.second });
-    productPage.addToCart();
-    cartPage.visit();
+    // A second add of the same product is not guaranteed to join the first line - b2b-demo-shop keys the line
+    // it creates the cart with apart from later adds - so the tier is reached on the line itself.
+    cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: staticFixtures.volumeTier.quantity });
 
     // Assert
     cartPage
       .getCartItemsChargingUnitPrice({
         sku: dynamicFixtures.product.sku,
         unitPrice: staticFixtures.volumeTier.price,
-        quantity: staticFixtures.belowTierQuantities.first + staticFixtures.belowTierQuantities.second,
+        quantity: staticFixtures.volumeTier.quantity,
       })
-      .should('have.length.at.least', 1);
+      .should('have.length', 1);
   });
 });
