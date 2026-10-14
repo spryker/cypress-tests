@@ -38,12 +38,29 @@ export class B2bCartRepository implements CartRepository {
       .find('textarea')
       .first()
       .then(($textarea) => {
-        if (!$textarea.is(':visible')) {
-          cy.get('[data-qa="component product-cart-item"]')
-            .first()
-            .find('.product-cart-item__context-item[data-trigger-target*="cart-item-note"]')
-            .click();
+        if ($textarea.is(':visible')) {
+          return;
         }
+
+        // The redesigned theme opens the note from the item's context menu. The classic theme has no
+        // such menu: an empty note opens from its accordion title, a saved one from its edit link.
+        cy.get('[data-qa="component product-cart-item"]')
+          .first()
+          .then(($cartItem) => {
+            const $contextItem = $cartItem.find(
+              '.product-cart-item__context-item[data-trigger-target*="cart-item-note"]'
+            );
+
+            if ($contextItem.length) {
+              cy.wrap($contextItem).click();
+
+              return;
+            }
+
+            cy.wrap($cartItem.find('.js-cart-item-note__trigger, .js-cart-item-note__edit').filter(':visible'))
+              .first()
+              .click();
+          });
       });
 
     return cy.get('[data-qa="component cart-item-note"]').last().find('textarea').first();
