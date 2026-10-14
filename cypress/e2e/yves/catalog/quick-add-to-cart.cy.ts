@@ -8,6 +8,14 @@ describe(
   'quick add to cart',
   { tags: ['@yves', 'catalog', 'search', 'cart', 'quick-add-to-cart', 'product-groups', 'spryker-core'] },
   (): void => {
+    // The B2B marketplace empties the product card's add to cart block, in grid and list view alike,
+    // so its catalog offers no quick add; only its non-marketplace lane restores it.
+    if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because the B2B marketplace catalog has no quick add to cart', () => {});
+
+      return;
+    }
+
     const catalogPage = container.get(CatalogPage);
     const cartPage = container.get(CartPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
