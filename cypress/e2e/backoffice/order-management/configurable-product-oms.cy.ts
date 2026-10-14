@@ -130,8 +130,9 @@ describe(
 
       // Assert
       cartPage.assertPageLocation();
-      cartPage.getBody().should('contain', dynamicFixtures.product.sku);
-      cartPage.getBody().should('contain', staticFixtures.configurationNotCompleteStatus);
+      cartPage
+        .getCartItems({ sku: dynamicFixtures.product.sku })
+        .should('contain', staticFixtures.configurationNotCompleteStatus);
     });
   }
 );
