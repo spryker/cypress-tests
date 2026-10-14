@@ -15,6 +15,13 @@ describe(
   'product attachment storefront',
   { tags: ['@yves', '@product-attachment', 'product', 'spryker-core'] },
   (): void => {
+    // The B2C shops carry the product attachment tables but wire neither the Back Office form nor the storefront.
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because the B2C shops have no product attachments', () => {});
+
+      return;
+    }
+
     const productManagementListPage = container.get(ProductManagementListPage);
     const productManagementEditPage = container.get(ProductManagementEditPage);
     const backofficeProductPage = container.get(BackofficeProductPage);
