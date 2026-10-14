@@ -1,16 +1,21 @@
-export interface CustomerSpecificPricesStaticFixtures {
-  defaultPassword: string;
-  defaultPriceCustomer: StaticCustomer;
-  merchantPriceCustomer: StaticCustomer;
-  product: PricedProduct;
+import { Customer, ProductConcrete } from './shared';
+
+// Where demo data backs the scenario the static fixture names the product and both customers;
+// elsewhere the dynamic fixture creates them and the static one carries only the prices it seeds.
+export type CustomerSpecificPricesStaticFixtures = PricesStaticFixtures | DemoDataStaticFixtures;
+
+export interface CustomerSpecificPricesDynamicFixtures {
+  defaultPriceCustomer: Customer;
+  merchantPriceCustomer: Customer;
+  product: ProductConcrete;
 }
 
-interface StaticCustomer {
+export interface CustomerSpecificPricesCustomer {
   email: string;
   alternativeEmails?: string[];
 }
 
-interface PricedProduct {
+export interface CustomerSpecificPricesProduct {
   abstractSku: string;
   concreteSku: string;
 
@@ -18,6 +23,20 @@ interface PricedProduct {
   // two differ in the B2B demo data.
   name: string;
   cartItemName: string;
+}
+
+interface PricesStaticFixtures {
+  defaultPassword: string;
+  prices: Prices;
+}
+
+interface DemoDataStaticFixtures extends PricesStaticFixtures {
+  defaultPriceCustomer: CustomerSpecificPricesCustomer;
+  merchantPriceCustomer: CustomerSpecificPricesCustomer;
+  product: CustomerSpecificPricesProduct;
+}
+
+interface Prices {
   defaultPrice: string;
   merchantPrice: string;
 }
