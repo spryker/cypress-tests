@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, skipWhenFeatureAbsent } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ConfigurationPage } from '@pages/backoffice';
 import { ConfigurationManagementDynamicFixtures, ConfigurationManagementStaticFixtures } from '@interfaces/backoffice';
@@ -15,6 +15,8 @@ describe(
 
       return;
     }
+
+    skipWhenFeatureAbsent('configuration', ['b2b']);
 
     const configurationPage = container.get(ConfigurationPage);
     const userLoginScenario = container.get(UserLoginScenario);

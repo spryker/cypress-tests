@@ -110,18 +110,12 @@ export class SuiteProductRepository implements ProductRepository {
 
   getBundleItems = (): Cypress.Chainable => cy.get('[data-qa*="component bundle-items"]');
 
-  getAvailabilityStatus = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-availability-widget"] [data-qa="component status"]');
+  getOutOfStockNotice = (): Cypress.Chainable =>
+    cy.get('[data-qa="component product-availability-widget"] [data-qa="component status"]:contains("Out of stock")');
   getAvailabilityNotificationEmailField = (): Cypress.Chainable =>
     cy.get('#availabilityNotificationSubscriptionForm_email');
   getAvailabilityNotificationSubscribeForm = (): Cypress.Chainable =>
     cy.get('form#availability_notification_subscription');
   getAvailabilityNotificationUnsubscribeForm = (): Cypress.Chainable => cy.get('form#availability_unsubscribe');
   getFlashMessages = (): Cypress.Chainable => cy.get('[data-qa="component notification-area"] flash-message');
-
-  isShownAsAvailable = ($body: JQuery<HTMLElement>): boolean => {
-    const text = $body.text();
-
-    return text.includes('Available') || /\d+(\.\d+)?\s+in stock/.test(text);
-  };
 }

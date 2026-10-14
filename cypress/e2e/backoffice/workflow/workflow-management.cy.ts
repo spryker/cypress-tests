@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, skipWhenFeatureAbsent } from '@utils';
 import { WorkflowManagementDynamicFixtures, WorkflowManagementStaticFixtures } from '@interfaces/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { WorkflowManagementPage } from '@pages/backoffice';
@@ -15,6 +15,8 @@ describe(
 
       return;
     }
+
+    skipWhenFeatureAbsent('workflow', ['b2b']);
 
     const workflowManagementPage = container.get(WorkflowManagementPage);
     const userLoginScenario = container.get(UserLoginScenario);

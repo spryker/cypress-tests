@@ -16,9 +16,21 @@ export class B2bCartRepository implements CartRepository {
     cy.get('url-mask-generator[shareoptiongroup="external"]').find('.js-toggler-radio__trigger');
   getExternalCartShareLinkInput = (): Cypress.Chainable => cy.get('#PREVIEW');
   // The SKU field is ProductSearchWidget's own product-search-autocomplete-form, not the generic
-  // autocomplete-form the other shops render.
-  getQuickAddToCartSkuField = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-search-autocomplete-form"] .input');
+  // autocomplete-form the other shops render. An empty cart shows the form in the page body; a cart
+  // with items moves it into a collapsed sidebar accordion item, which is opened first.
+  getQuickAddToCartSkuField = (): Cypress.Chainable => {
+    const skuFieldSelector = '[data-qa="component product-search-autocomplete-form"] .input';
+
+    cy.get(skuFieldSelector)
+      .first()
+      .then(($skuField) => {
+        if (!$skuField.is(':visible')) {
+          cy.get('[data-toggle-target=".js-cart-sidebar-item__content-quick-add-widget"]').click();
+        }
+      });
+
+    return cy.get(skuFieldSelector);
+  };
   getQuickAddToCartProductListField = (): Cypress.Chainable => cy.get('[data-qa="component products-list"]');
   getFirstCartItemNoteField = (): Cypress.Chainable => {
     cy.get('[data-qa="component cart-item-note"]')
@@ -26,12 +38,29 @@ export class B2bCartRepository implements CartRepository {
       .find('textarea')
       .first()
       .then(($textarea) => {
-        if (!$textarea.is(':visible')) {
-          cy.get('[data-qa="component product-cart-item"]')
-            .first()
-            .find('.product-cart-item__context-item[data-trigger-target*="cart-item-note"]')
-            .click();
+        if ($textarea.is(':visible')) {
+          return;
         }
+
+        // The redesigned theme opens the note from the item's context menu. The classic theme has no
+        // such menu: an empty note opens from its accordion title, a saved one from its edit link.
+        cy.get('[data-qa="component product-cart-item"]')
+          .first()
+          .then(($cartItem) => {
+            const $contextItem = $cartItem.find(
+              '.product-cart-item__context-item[data-trigger-target*="cart-item-note"]'
+            );
+
+            if ($contextItem.length) {
+              cy.wrap($contextItem).click();
+
+              return;
+            }
+
+            cy.wrap($cartItem.find('.js-cart-item-note__trigger, .js-cart-item-note__edit').filter(':visible'))
+              .first()
+              .click();
+          });
       });
 
     return cy.get('[data-qa="component cart-item-note"]').last().find('textarea').first();
@@ -80,6 +109,10 @@ export class B2bCartRepository implements CartRepository {
   getCheckoutButton = (): Cypress.Chainable => cy.get('[data-qa="cart-go-to-checkout"]', { timeout: 10000 });
   getCartSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-summary"]');
   getCartDiscountSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-code-summary"]');
+  // The B2B promotion tiles show the product name only and carry the sku in their add-to-cart form,
+  // which also keeps the tile apart from those of any other active promotion discount.
+  getPromotionalProductAddToCartButton = (sku: string): Cypress.Chainable =>
+    cy.get(`[data-qa="component product-item"] form[action$="/cart/async/add/${sku}"] button`);
   getCustomOrderReferenceInput = (): Cypress.Chainable => {
     cy.get('[data-qa="component order-custom-reference-form"]').parent().parent().parent().click();
 
@@ -96,12 +129,7 @@ export class B2bCartRepository implements CartRepository {
   getCartItemSummaryBlock = (itemIndex: number): Cypress.Chainable =>
     cy.get('[data-qa="cart-item-summary"]').eq(itemIndex);
   getCancelOrderAmendmentButton = (): Cypress.Chainable => cy.get('[data-qa="cancel-order-amendment-button"]');
-  getProductCartItems = (): Cypress.Chainable => {
-    if (Cypress.env('ENV_IS_SSP_ENABLED')) {
-      return cy.get('[data-qa="component product-cart-item"]');
-    }
-    return cy.get('[data-qa="component product-card-item"]');
-  };
+  getProductCartItems = (): Cypress.Chainable => cy.get('[data-qa="component product-cart-item"]');
   getCartItemsListTitles = (): Cypress.Chainable => {
     if (Cypress.env('ENV_IS_SSP_ENABLED')) {
       return cy.get('[data-qa="cart-item-title"]');

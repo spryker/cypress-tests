@@ -48,6 +48,10 @@ export class B2cCartRepository implements CartRepository {
   getCheckoutButton = (): Cypress.Chainable => cy.get('[data-qa="cart-go-to-checkout"]:visible');
   findCartItemRemovalSubmit = (sku: string): Cypress.Chainable => this.findCartItemRemovalForm(sku).find('button');
   getCartDiscountSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-discount-summary"]');
+  // Scoped to one tile by sku, because any other active promotion discount offers its own product
+  // in the same carousel.
+  getPromotionalProductAddToCartButton = (sku: string): Cypress.Chainable =>
+    cy.contains('[data-qa="component product-item"]', sku).find('[data-qa="add-to-cart-button"]');
   getCartItemChangeQuantitySubmit = (sku: string): Cypress.Chainable =>
     this.findCartItemChangeQuantityForm(sku).find('[data-qa="quantity-input-submit"]');
   getCartSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-summary"]');

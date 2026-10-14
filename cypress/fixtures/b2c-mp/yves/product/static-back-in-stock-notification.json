@@ -1,6 +1,5 @@
 {
   "defaultPassword": "change123",
-  "outOfStockLabel": "This product is currently not available.",
   "subscribedMessage": "Successfully subscribed",
   "unsubscribedMessage": "Successfully unsubscribed"
 }

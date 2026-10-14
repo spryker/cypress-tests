@@ -1,4 +1,4 @@
-import { container, getPaymentMethodBasedOnEnv } from '@utils';
+import { container, getPaymentMethodBasedOnEnv, skipWhenFeatureAbsent } from '@utils';
 import { CartPage, CustomerOverviewPage, MultiCartPage, OrderDetailsPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario, CustomerLogoutScenario } from '@scenarios/yves';
 import { SharedCartDynamicFixtures, SharedCartStaticFixtures } from '@interfaces/yves';
@@ -24,6 +24,8 @@ describe(
 
       return;
     }
+
+    skipWhenFeatureAbsent('marketplaceStorefront', ['b2b']);
 
     const cartPage = container.get(CartPage);
     const multiCartPage = container.get(MultiCartPage);

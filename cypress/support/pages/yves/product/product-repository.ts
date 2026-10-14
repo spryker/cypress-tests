@@ -69,13 +69,9 @@ export interface ProductRepository {
 
   // Availability state and the back-in-stock notification form. The form ids come from the Symfony
   // form types, so they are the same wherever the widget is rendered.
-  getAvailabilityStatus(): Cypress.Chainable;
+  getOutOfStockNotice(): Cypress.Chainable;
   getAvailabilityNotificationEmailField(): Cypress.Chainable;
   getAvailabilityNotificationSubscribeForm(): Cypress.Chainable;
   getAvailabilityNotificationUnsubscribeForm(): Cypress.Chainable;
   getFlashMessages(): Cypress.Chainable;
-
-  // Whether the detail page presents the product as in stock. Some themes print a stock line, the B2C
-  // themes only print a notice when the product is out of stock.
-  isShownAsAvailable($body: JQuery<HTMLElement>): boolean;
 }

@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, skipWhenFeatureAbsent } from '@utils';
 import {
   WorkflowInstanceLifecycleDynamicFixtures,
   WorkflowInstanceLifecycleStaticFixtures,
@@ -18,6 +18,8 @@ describe(
 
       return;
     }
+
+    skipWhenFeatureAbsent('workflow', ['b2b']);
 
     const workflowInstanceLifecyclePage = container.get(WorkflowInstanceLifecyclePage);
     const userLoginScenario = container.get(UserLoginScenario);

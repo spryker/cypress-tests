@@ -79,7 +79,7 @@ describe(
       catalogPage.assertBodyContainsText(productAbstract.name);
       catalogPage.assertBodyContainsText(productAbstract.sku);
       catalogPage.assertBodyContainsText(productAbstract.description);
-      catalogPage.getBody().should('satisfy', productPage.isShownAsAvailable);
+      productPage.getBody().should('satisfy', productPage.isShownAsAvailable);
 
       if (!['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
         catalogPage.assertBodyContainsText(productAbstract.price);
@@ -103,7 +103,7 @@ describe(
       catalogPage.assertBodyContainsText(productAbstract.name);
       catalogPage.assertBodyContainsText(productAbstract.sku);
       catalogPage.assertBodyContainsText(productAbstract.description);
-      catalogPage.getBody().should('satisfy', productPage.isShownAsAvailable);
+      productPage.getBody().should('satisfy', productPage.isShownAsAvailable);
       catalogPage.assertBodyContainsText(productAbstract.price);
 
       productPage.addToCart();

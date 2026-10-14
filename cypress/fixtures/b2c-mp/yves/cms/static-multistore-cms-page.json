@@ -2,5 +2,5 @@
   "defaultPassword": "change123",
   "cmsPageName": "multistore-cms-page",
   "storeName": "AT",
-  "storeLocaleName": "en_US"
+  "localeName": "en_US"
 }

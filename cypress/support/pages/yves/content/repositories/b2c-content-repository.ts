@@ -10,7 +10,4 @@ export class B2cContentRepository implements ContentRepository {
   }
   getFirstSuggestedCmsPage = (cmsPageName: string): Cypress.Chainable =>
     cy.get(`h4:contains("Pages")`).first().closest('div').find(`a:contains("${cmsPageName}")`).first();
-  // The shop prefixes every cms page url with the language of its locale (CmsConfig::appendPrefixToCmsPageUrl).
-  getCmsPageUrlPath = (cmsPageName: string, localeName: string): string =>
-    `/${localeName.split('_')[0].toLowerCase()}/${cmsPageName}`;
 }

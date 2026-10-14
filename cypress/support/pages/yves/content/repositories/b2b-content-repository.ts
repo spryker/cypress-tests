@@ -9,5 +9,4 @@ export class B2bContentRepository implements ContentRepository {
   }
   getFirstSuggestedCmsPage = (cmsPageName: string): Cypress.Chainable =>
     cy.get(`h6:contains("Pages")`).first().closest('div').find(`a:contains("${cmsPageName}")`).first();
-  getCmsPageUrlPath = (cmsPageName: string): string => `/${cmsPageName}`;
 }

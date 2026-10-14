@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, skipWhenFeatureAbsent } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ConfigurationPage } from '@pages/backoffice';
 import { HomePage } from '@pages/yves';
@@ -16,6 +16,8 @@ describe(
 
       return;
     }
+
+    skipWhenFeatureAbsent('configuration', ['b2b']);
 
     const merchantIt = (description: string, testFn: () => void): void => {
       (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it : it.skip)(description, testFn);
