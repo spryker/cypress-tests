@@ -8,6 +8,7 @@ export interface MultistoreCmsPageStaticFixtures {
   defaultPassword: string;
   cmsPageName: string;
   storeName: string;
+  storeLocaleName: string;
 }
 
 export interface MultistoreProductDynamicFixtures {

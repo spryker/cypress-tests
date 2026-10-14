@@ -49,7 +49,11 @@ describe(
       // only knowable at run time — reading it here keeps the spec free of a hard-coded path.
       selectStoreScenario.execute(staticFixtures.storeName);
       cy.url().then((storeHomeUrl: string) => {
-        cmsPageUrl = `${storeHomeUrl.replace(/\/$/, '')}/${cmsPageName}`;
+        cmsPageUrl = cmsContentPage.getStoreCmsPageUrl({
+          storeHomeUrl: storeHomeUrl,
+          cmsPageName: cmsPageName,
+          localeName: staticFixtures.storeLocaleName,
+        });
       });
     });
 
