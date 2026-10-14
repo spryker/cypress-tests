@@ -79,11 +79,7 @@ describe(
       catalogPage.assertBodyContainsText(productAbstract.name);
       catalogPage.assertBodyContainsText(productAbstract.sku);
       catalogPage.assertBodyContainsText(productAbstract.description);
-      catalogPage.getBody().should('satisfy', ($body) => {
-        const text = $body.text();
-        // Number of in stock items or Available (never out of stock)
-        return text.includes('Available') || /\d+(\.\d+)?\s+in stock/.test(text);
-      });
+      catalogPage.getBody().should('satisfy', productPage.isShownAsAvailable);
 
       if (!['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
         catalogPage.assertBodyContainsText(productAbstract.price);
@@ -107,11 +103,7 @@ describe(
       catalogPage.assertBodyContainsText(productAbstract.name);
       catalogPage.assertBodyContainsText(productAbstract.sku);
       catalogPage.assertBodyContainsText(productAbstract.description);
-      catalogPage.getBody().should('satisfy', ($body) => {
-        const text = $body.text();
-        // Number of in stock items or Available (never out of stock)
-        return text.includes('Available') || /\d+(\.\d+)?\s+in stock/.test(text);
-      });
+      catalogPage.getBody().should('satisfy', productPage.isShownAsAvailable);
       catalogPage.assertBodyContainsText(productAbstract.price);
 
       productPage.addToCart();

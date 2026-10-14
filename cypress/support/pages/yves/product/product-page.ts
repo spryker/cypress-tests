@@ -225,6 +225,8 @@ export class ProductPage extends YvesPage {
 
   getFlashMessages = (): Cypress.Chainable => this.repository.getFlashMessages();
 
+  isShownAsAvailable = ($body: JQuery<HTMLElement>): boolean => this.repository.isShownAsAvailable($body);
+
   subscribeToAvailabilityNotification = (params: SubscribeToAvailabilityNotificationParams): void => {
     this.repository.getAvailabilityNotificationEmailField().clear();
     this.repository.getAvailabilityNotificationEmailField().type(params.email);

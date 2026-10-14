@@ -118,4 +118,10 @@ export class SuiteProductRepository implements ProductRepository {
     cy.get('form#availability_notification_subscription');
   getAvailabilityNotificationUnsubscribeForm = (): Cypress.Chainable => cy.get('form#availability_unsubscribe');
   getFlashMessages = (): Cypress.Chainable => cy.get('[data-qa="component notification-area"] flash-message');
+
+  isShownAsAvailable = ($body: JQuery<HTMLElement>): boolean => {
+    const text = $body.text();
+
+    return text.includes('Available') || /\d+(\.\d+)?\s+in stock/.test(text);
+  };
 }

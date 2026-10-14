@@ -74,4 +74,8 @@ export interface ProductRepository {
   getAvailabilityNotificationSubscribeForm(): Cypress.Chainable;
   getAvailabilityNotificationUnsubscribeForm(): Cypress.Chainable;
   getFlashMessages(): Cypress.Chainable;
+
+  // Whether the detail page presents the product as in stock. Some themes print a stock line, the B2C
+  // themes only print a notice when the product is out of stock.
+  isShownAsAvailable($body: JQuery<HTMLElement>): boolean;
 }

@@ -132,4 +132,8 @@ export class B2cProductRepository implements ProductRepository {
     cy.get('form#availability_notification_subscription');
   getAvailabilityNotificationUnsubscribeForm = (): Cypress.Chainable => cy.get('form#availability_unsubscribe');
   getFlashMessages = (): Cypress.Chainable => cy.get('[data-qa="component notification-area"] flash-message');
+
+  // AvailabilityWidget availability-product.twig renders the component only when the product is not available.
+  isShownAsAvailable = ($body: JQuery<HTMLElement>): boolean =>
+    $body.find('[data-qa="component availability-product"]').length === 0;
 }
