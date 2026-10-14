@@ -5,6 +5,7 @@ import { ActionEnum, ProductManagementListPage } from '@pages/backoffice';
 import { CatalogPage, ProductPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { MerchantUserLoginScenario } from '@scenarios/mp';
+import { CustomerLoginScenario } from '@scenarios/yves';
 
 describe(
   'product concretes management',
@@ -31,6 +32,7 @@ describe(
     const productPage = container.get(ProductPage);
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
     const userLoginScenario = container.get(UserLoginScenario);
+    const customerLoginScenario = container.get(CustomerLoginScenario);
 
     let publishAndSyncCommands: string[];
 
@@ -97,6 +99,14 @@ describe(
       productManagementListPage.update({ query: abstractSku, action: ActionEnum.approve });
 
       cy.runCliCommands(publishAndSyncCommands);
+
+      // The B2B marketplace shows prices to logged-in customers only.
+      if (dynamicFixtures.customer) {
+        customerLoginScenario.execute({
+          email: dynamicFixtures.customer.email,
+          password: staticFixtures.defaultPassword,
+        });
+      }
 
       // Assert
       catalogPage.visit();

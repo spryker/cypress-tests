@@ -1,7 +1,7 @@
 {
   "defaultPassword": "change123",
   "createdProduct": {
-    "attributeName": "color",
+    "attributeName": "farbe",
     "attributeValues": ["white", "black"]
   },
   "pendingProductPrice": "€100.00"
