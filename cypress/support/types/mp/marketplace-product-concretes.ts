@@ -31,6 +31,7 @@ export interface MerchantProductManagementDynamicFixtures {
 
 export interface MerchantProductManagementStaticFixtures {
   defaultPassword: string;
+  variantAttributeKey: string;
   addedConcrete: AddedConcrete;
 }
 
