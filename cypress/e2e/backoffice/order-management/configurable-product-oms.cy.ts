@@ -103,11 +103,9 @@ describe(
       });
 
       // Act
-      salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'skip picking' });
-      salesDetailPage.triggerOms({ state: 'Ship' });
+      // The marketplace order processes hand the order to its merchant after payment, so their back office walk
+      // ends there.
+      staticFixtures.orderShippingEvents.forEach((event) => salesDetailPage.triggerOms(event));
 
       // Assert
       salesDetailPage.getOrderItemTables().should((tables: JQuery<HTMLElement>): void => {
@@ -130,8 +128,9 @@ describe(
 
       // Assert
       cartPage.assertPageLocation();
-      cartPage.getBody().should('contain', dynamicFixtures.product.sku);
-      cartPage.getBody().should('contain', staticFixtures.configurationNotCompleteStatus);
+      cartPage
+        .getCartItems({ sku: dynamicFixtures.product.sku })
+        .should('contain', staticFixtures.configurationNotCompleteStatus);
     });
   }
 );

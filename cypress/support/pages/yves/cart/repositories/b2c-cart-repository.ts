@@ -76,7 +76,9 @@ export class B2cCartRepository implements CartRepository {
   getCartItemSummaryBlock = (itemIndex: number): Cypress.Chainable =>
     cy.get('[data-qa="component product-card-item"]').eq(itemIndex);
   getCancelOrderAmendmentButton = (): Cypress.Chainable => cy.get('[data-qa="cancel-order-amendment-button"]');
-  getProductCartItems = (): Cypress.Chainable => cy.get('[data-qa="component product-card-item"]');
+  // The header's mini cart renders the same component for every line, marked with its mini-cart modifier.
+  getProductCartItems = (): Cypress.Chainable =>
+    cy.get('[data-qa="component product-card-item"]:not(.product-card-item--mini-cart)');
   getCartItemsListTitles = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-card-item"] [data-qa="product-title"]');
   getCartItemAvailabilityLabel = (): Cypress.Chainable =>
@@ -86,10 +88,13 @@ export class B2cCartRepository implements CartRepository {
     cy.contains('article[data-qa*="configured-bundle-secondary"]', bundleName).first();
   getConfiguredBundleQuantityField = (bundleName: string): Cypress.Chainable =>
     this.getConfiguredBundle(bundleName).find('input.formatted-number-input__input').first();
+  // The bundle's quantity counter has no submit button: it submits its form itself a moment after the value
+  // changes, so the form is submitted directly instead of waiting on that timer.
   submitConfiguredBundleQuantity = (bundleName: string): void => {
-    this.getConfiguredBundle(bundleName).find('[data-qa="quantity-input-submit"]').first().click({ timeout: 10000 });
+    this.getConfiguredBundle(bundleName).find('form[action*="configured-bundle/change"]').first().submit();
   };
   getClearCartFormSelector = (): string => '[data-qa="multi-cart-clear-form"]';
 
   getConfigureButtonSelector = (): string => '[data-qa="component configuration-cart-form"] button';
+  getCartItemRemovalFormSelector = (): string => 'form[name^="removeFromCartForm_"]';
 }

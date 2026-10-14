@@ -41,12 +41,6 @@ export class OffersRepository {
   getStoresSelect = (): Cypress.Chainable =>
     cy.get('web-spy-select[name="productOffer[stores][]"] nz-select-top-control');
 
-  // ng-zorro renders every chosen value as an nz-select-item titled with its label, carrying its own remove control.
-  getSelectedStoreRemoveButton = (storeName: string): Cypress.Chainable =>
-    cy.get(
-      `web-spy-select[name="productOffer[stores][]"] nz-select-item[title="${storeName}"] .ant-select-selection-item-remove`
-    );
-
   getUpdateOfferUrlPattern = (): string => '**/product-offer-merchant-portal-gui/update-product-offer**';
 
   getStockQuantityInput = (): Cypress.Chainable => cy.get('input[name="productOffer[productOfferStocks][quantity]"]');

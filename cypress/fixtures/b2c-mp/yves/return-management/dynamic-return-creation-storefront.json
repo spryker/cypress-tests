@@ -49,6 +49,21 @@
         },
         {
           "type": "helper",
+          "name": "haveUser",
+          "key": "merchantUser",
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#merchant", "#merchantUser"]
+        },
+        {
+          "type": "helper",
           "name": "haveConfirmedCustomer",
           "key": "customer",
           "arguments": [

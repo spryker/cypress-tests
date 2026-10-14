@@ -42,6 +42,7 @@ export interface CheckoutAddressRepository {
   getMultiShipmentAddressItemShipmentTypeRadio?(index: number, shipmentTypeKey: string): Cypress.Chainable;
   getMultiShipmentAddressItemSelectServicePointButton?($addressItem: JQuery<HTMLElement>): Cypress.Chainable;
   getServicePointFinderInput?(): Cypress.Chainable;
+  getSameAddressForAllItemsCheckboxSelector?(): string;
   getServicePointFinderListItem?(servicePointName: string): Cypress.Chainable;
   getMultiShipmentAddressItemServicePointUuidInput?(index: number): Cypress.Chainable;
 }

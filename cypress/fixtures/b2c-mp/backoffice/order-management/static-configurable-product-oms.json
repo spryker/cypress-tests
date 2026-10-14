@@ -1,5 +1,19 @@
 {
   "defaultPassword": "change123",
   "configurationNotCompleteStatus": "Configuration is not complete.",
-  "configurationCompleteStatus": "Configuration complete!"
+  "configurationCompleteStatus": "Configuration complete!",
+  "orderShippingEvents": [
+    {
+      "state": "skip grace period",
+      "shouldTriggerOmsInCli": true
+    },
+    {
+      "state": "Pay",
+      "shouldTriggerOmsInCli": true
+    },
+    {
+      "state": "skip picking",
+      "shouldTriggerOmsInCli": true
+    }
+  ]
 }

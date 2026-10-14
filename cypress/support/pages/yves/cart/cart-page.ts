@@ -87,22 +87,45 @@ export class CartPage extends YvesPage {
     this.repository.submitCartItemChangeQuantity(params.sku);
   };
 
-  // cy.get() on the clear form fails outright on an empty cart, so a spec that only needs a known
-  // starting point has to look before it clears.
   configureProduct = (params: ConfigureProductParams): void => {
-    this.repository
-      .getProductCartItems()
-      .filter(`:contains("${params.sku}")`)
-      .first()
-      .find(this.repository.getConfigureButtonSelector())
-      .click();
+    this.getCartItems({ sku: params.sku }).first().find(this.repository.getConfigureButtonSelector()).click();
   };
 
+  // The B2C cart lines print no sku, so a line is also recognised by the quantity form it posts to, which every
+  // shop keys by sku.
+  getCartItems = (params: GetCartItemsParams): Cypress.Chainable => {
+    return this.repository
+      .getProductCartItems()
+      .filter(`:contains("${params.sku}"), :has([action$="change-quantity/${params.sku}"])`);
+  };
+
+  // cy.get() on the clear form fails outright on an empty cart, so a spec that only needs a known
+  // starting point has to look before it clears. The B2C shops have no clear-cart form, so their lines
+  // are removed one by one through the removal form each line carries.
   clearCartIfNotEmpty = (): void => {
     this.getBody().then(($body) => {
       if ($body.find(this.repository.getClearCartFormSelector()).length) {
         this.clearCart();
+
+        return;
       }
+
+      // The header's mini cart repeats each line with its removal form, so each line is posted once.
+      const removalRequests = new Map<string, string>();
+
+      $body.find(this.repository.getCartItemRemovalFormSelector()).each((index: number, form: HTMLElement): void => {
+        removalRequests.set((form as HTMLFormElement).action, Cypress.$(form).serialize());
+      });
+
+      if (!removalRequests.size) {
+        return;
+      }
+
+      removalRequests.forEach((body: string, url: string): void => {
+        cy.request({ method: 'POST', url, form: true, body });
+      });
+
+      this.visit();
     });
   };
 
@@ -199,6 +222,10 @@ export class CartPage extends YvesPage {
   getCartItemAvailabilityLabel = (): Cypress.Chainable => {
     return this.repository.getCartItemAvailabilityLabel();
   };
+}
+
+interface GetCartItemsParams {
+  sku: string;
 }
 
 interface FindCartItemParams {

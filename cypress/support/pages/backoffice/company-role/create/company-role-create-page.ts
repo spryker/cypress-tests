@@ -29,8 +29,13 @@ export class CompanyRoleCreatePage extends BackofficePage {
     cy.intercept('GET', '**/company-gui/suggest*').as('companySuggest');
 
     this.repository.getCompanySelect().then(($companySelect) => {
+      // Without autocomplete the options are labelled "<name> (ID: <id>)", so the name alone is no exact match.
       if (!$companySelect.is('[data-autocomplete-url]')) {
-        cy.wrap($companySelect).select(companyName, { force: true });
+        cy.wrap($companySelect)
+          .contains('option', companyName)
+          .then(($option) => {
+            cy.wrap($companySelect).select(String($option.val()), { force: true });
+          });
 
         return;
       }
