@@ -8,8 +8,6 @@ const CONSOLE_SUCCESS = 0;
 
 const REQUIRED_FEATURE_ENV_KEY = 'requiredFeature';
 
-const IS_REQUIRED_FEATURE_ABSENT_ENV_KEY = 'isRequiredFeatureAbsent';
-
 interface Feature {
   description: string;
   isPresent: () => Cypress.Chainable<boolean>;
@@ -76,7 +74,7 @@ export type FeatureName = keyof typeof FEATURES;
 /**
  * Declares, at the top of a describe, that the spec needs a feature on the listed repository ids. The feature is
  * probed before the fixtures load, because the fixtures of an absent feature cannot be created either; when it is
- * absent, the fixtures are not loaded and every test of the spec is skipped.
+ * absent, the fixtures are not loaded and every hook and test of the spec is skipped.
  *
  * @example skipWhenFeatureAbsent('workflow', ['b2b'])
  */
@@ -86,12 +84,6 @@ export const skipWhenFeatureAbsent = (featureName: FeatureName, repositoryIds: s
   }
 
   Cypress.env(REQUIRED_FEATURE_ENV_KEY, featureName);
-
-  before(function (): void {
-    if (Cypress.env(IS_REQUIRED_FEATURE_ABSENT_ENV_KEY)) {
-      this.skip();
-    }
-  });
 };
 
 /**
@@ -109,13 +101,17 @@ export const whenRequiredFeaturePresent = (callback: () => void): void => {
   const feature: Feature = FEATURES[featureName];
 
   feature.isPresent().then((isPresent: boolean): void => {
-    Cypress.env(IS_REQUIRED_FEATURE_ABSENT_ENV_KEY, !isPresent);
-
     if (isPresent) {
       callback();
 
       return;
     }
+
+    // this.skip() in a before hook marks only the tests pending and still runs the suite's later before hooks,
+    // which read the fixtures that were not loaded. A pending suite skips its hooks as well as its tests.
+    Cypress.mocha.getRunner().suite.suites.forEach((suite: Mocha.Suite): void => {
+      suite.pending = true;
+    });
 
     cy.task('log', `Skipping ${Cypress.spec.relative}: the shop has no ${feature.description}.`);
   });
