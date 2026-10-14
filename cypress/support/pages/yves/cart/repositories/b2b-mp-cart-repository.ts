@@ -92,6 +92,10 @@ export class B2bMpCartRepository implements CartRepository {
   getCheckoutButton = (): Cypress.Chainable => cy.get('[data-qa="cart-go-to-checkout"]');
   getCartSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-summary"]');
   getCartDiscountSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-code-summary"]');
+  // The B2B promotion tiles show the product name only and carry the sku in their add-to-cart form,
+  // which also keeps the tile apart from those of any other active promotion discount.
+  getPromotionalProductAddToCartButton = (sku: string): Cypress.Chainable =>
+    cy.get(`[data-qa="component product-item"] form[action$="/cart/async/add/${sku}"] button`);
   getCustomOrderReferenceInput = (): Cypress.Chainable => {
     cy.get('[data-qa="component order-custom-reference-form"]').parent().parent().parent().click();
 

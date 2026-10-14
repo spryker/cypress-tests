@@ -41,16 +41,12 @@ export class CartPage extends YvesPage {
     cy.wait('@cartAsyncView');
   };
 
-  // Scoped to one tile by sku, because any other active promotion discount offers its own product
-  // in the same carousel.
-  getPromotionalProduct = (sku: string): Cypress.Chainable => cy.contains('[data-qa="component product-item"]', sku);
-
   // Added asynchronously like a redeemed code, so this waits for the add and the cart re-render.
   addPromotionalProduct = (sku: string): void => {
     cy.intercept({ method: 'POST', pathname: `**/cart/async/add/${sku}` }).as('promotionalProductAdd');
     cy.intercept({ method: 'GET', pathname: '**/cart/async/view' }).as('cartAsyncView');
 
-    this.getPromotionalProduct(sku).find('[data-qa="add-to-cart-button"]').click();
+    this.repository.getPromotionalProductAddToCartButton(sku).click();
 
     cy.wait('@promotionalProductAdd');
     cy.wait('@cartAsyncView');
