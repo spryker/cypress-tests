@@ -2,6 +2,8 @@ import { Address, Customer, Discount, ProductConcrete } from './shared';
 
 export interface DiscountsAndPromotionsStaticFixtures {
   defaultPassword: string;
+  // The B2C marketplace offers its invoice only for merchant items, which the fixture cart does not carry.
+  paymentMethod: string;
 }
 
 export interface DiscountsAndPromotionsDynamicFixtures {

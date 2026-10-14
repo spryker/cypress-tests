@@ -1,4 +1,4 @@
-import { container, getPaymentMethodBasedOnEnv } from '@utils';
+import { container } from '@utils';
 import { DiscountsAndPromotionsDynamicFixtures, DiscountsAndPromotionsStaticFixtures } from '@interfaces/yves';
 import { CartPage, CustomerOverviewPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
@@ -54,7 +54,7 @@ describe(
       // Act
       checkoutScenario.execute({
         idCustomerAddress: dynamicFixtures.address.id_customer_address,
-        paymentMethod: getPaymentMethodBasedOnEnv(),
+        paymentMethod: staticFixtures.paymentMethod,
         shouldTriggerOmsInCli: true,
       });
 
