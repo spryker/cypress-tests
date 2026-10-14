@@ -14,4 +14,5 @@ export interface ReturnCreationStorefrontStaticFixtures {
   returnDetailsTitle: string;
   waitingForReturnState: string;
   shippedState: string;
+  orderShippingEvents: Array<{ state: string; shouldTriggerOmsInCli?: boolean }>;
 }

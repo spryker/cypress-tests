@@ -89,8 +89,9 @@ describe(
       });
     }
 
-    // `start-return` is offered from `shipped` and `delivered` only, so the order has to walk the
-    // happy path first; every event on the way is manual and has to be triggered.
+    // `start-return` is offered from the shipped and delivered states only, so the order has to walk
+    // the happy path first; every event on the way is manual, and the marketplace process ships by
+    // merchant right from `skip picking`, so each shop lists its own events.
     function driveOrderToShipped(): void {
       customerOverviewPage.viewLastPlacedOrder();
       orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
@@ -102,11 +103,7 @@ describe(
         salesIndexPage.visit();
         salesIndexPage.viewByReference(orderReference.trim());
 
-        salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
-        salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
-        salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
-        salesDetailPage.triggerOms({ state: 'skip picking' });
-        salesDetailPage.triggerOms({ state: 'Ship' });
+        staticFixtures.orderShippingEvents.forEach((event) => salesDetailPage.triggerOms(event));
       });
     }
   }

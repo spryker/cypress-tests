@@ -2,5 +2,19 @@
   "defaultPassword": "change123",
   "returnDetailsTitle": "Return Details",
   "waitingForReturnState": "Waiting for return",
-  "shippedState": "Shipped"
+  "shippedState": "Shipped",
+  "orderShippingEvents": [
+    {
+      "state": "skip grace period",
+      "shouldTriggerOmsInCli": true
+    },
+    {
+      "state": "Pay",
+      "shouldTriggerOmsInCli": true
+    },
+    {
+      "state": "skip picking",
+      "shouldTriggerOmsInCli": true
+    }
+  ]
 }
