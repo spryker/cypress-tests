@@ -92,8 +92,11 @@ export class B2bMpProductRepository implements ProductRepository {
         return;
       }
 
+      // The volume-price component re-prices on the change event, which typing alone does not fire
+      // before the field loses focus.
       cy.get('formatted-number-input input').first().clear();
       cy.get('formatted-number-input input').first().type(String(quantity));
+      cy.get('formatted-number-input input').first().trigger('change');
     });
   };
 
