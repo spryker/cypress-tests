@@ -78,13 +78,19 @@
         },
         {
           "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "addCartItemPermission",
+          "arguments": ["AddCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "arguments": [
             {
               "isDefault": true,
               "fkCompany": "#company.id_company"
             },
-            ["#placeOrderPermission", "#placeOrderWithAmountUpToPermission"]
+            ["#placeOrderPermission", "#placeOrderWithAmountUpToPermission", "#addCartItemPermission"]
           ]
         },
         {
