@@ -96,12 +96,7 @@ export class B2bCartRepository implements CartRepository {
   getCartItemSummaryBlock = (itemIndex: number): Cypress.Chainable =>
     cy.get('[data-qa="cart-item-summary"]').eq(itemIndex);
   getCancelOrderAmendmentButton = (): Cypress.Chainable => cy.get('[data-qa="cancel-order-amendment-button"]');
-  getProductCartItems = (): Cypress.Chainable => {
-    if (Cypress.env('ENV_IS_SSP_ENABLED')) {
-      return cy.get('[data-qa="component product-cart-item"]');
-    }
-    return cy.get('[data-qa="component product-card-item"]');
-  };
+  getProductCartItems = (): Cypress.Chainable => cy.get('[data-qa="component product-cart-item"]');
   getCartItemsListTitles = (): Cypress.Chainable => {
     if (Cypress.env('ENV_IS_SSP_ENABLED')) {
       return cy.get('[data-qa="cart-item-title"]');
