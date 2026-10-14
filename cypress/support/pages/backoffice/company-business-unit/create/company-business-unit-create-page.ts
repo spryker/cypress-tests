@@ -16,11 +16,19 @@ export class CompanyBusinessUnitCreatePage extends BackofficePage {
     this.repository.getSubmitButton().click();
   };
 
-  // The company choices are rendered server side, so the select2 search filters them without a request.
+  /**
+   * The company choices are rendered server side and labelled "<name> (ID: <id>)". Some Back Offices
+   * dress the select up with select2 and some leave it plain, so the option is picked on the select
+   * itself, by the value of the option that carries the name.
+   */
   private selectCompany = (companyName: string): void => {
-    this.repository.getCompanySelect().siblings('.select2-container').find('.select2-selection').click();
-    cy.get('.select2-dropdown .select2-search__field').type(companyName);
-    cy.contains('.select2-dropdown .select2-results__option', companyName).click();
+    this.repository
+      .getCompanySelect()
+      .find('option')
+      .contains(companyName)
+      .then(($option) => {
+        this.repository.getCompanySelect().select($option.val() as string, { force: true });
+      });
   };
 }
 
