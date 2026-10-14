@@ -9,6 +9,6 @@ export class B2cCompanyUserSelectRepository implements CompanyUserSelectReposito
   getBusinessUnitOptions = (): Cypress.Chainable =>
     cy.get('#company_user_account_selector_form_companyUserAccount option');
   // The top navigation names the business unit the customer is currently acting for.
-  getActiveBusinessUnitLink = (): Cypress.Chainable =>
+  getActiveBusinessUnit = (): Cypress.Chainable =>
     cy.get('[data-qa="component navigation-top"] a[href*="/company/user/select"]');
 }

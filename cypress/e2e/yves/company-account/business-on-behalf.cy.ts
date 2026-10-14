@@ -55,11 +55,9 @@ describe('business on behalf', { tags: ['@yves', '@company-account', 'company-ac
 
       // Assert
       // Offering both in the dropdown proves nothing on its own; the storefront has to end up
-      // acting for the one that was picked and not for its sibling.
-      companyUserSelectPage
-        .getActiveBusinessUnitLink()
-        .should('contain.text', label)
-        .and('not.contain.text', otherLabel);
+      // acting for the one that was picked and not for its sibling, also on the next page it renders.
+      companyUserSelectPage.visit();
+      companyUserSelectPage.getActiveBusinessUnit().should('contain.text', label).and('not.contain.text', otherLabel);
     });
   });
 });

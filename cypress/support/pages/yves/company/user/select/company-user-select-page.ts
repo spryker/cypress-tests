@@ -12,7 +12,7 @@ export class CompanyUserSelectPage extends YvesPage {
 
   getBusinessUnitOptions = (): Cypress.Chainable => this.repository.getBusinessUnitOptions();
 
-  getActiveBusinessUnitLink = (): Cypress.Chainable => this.repository.getActiveBusinessUnitLink();
+  getActiveBusinessUnit = (): Cypress.Chainable => this.repository.getActiveBusinessUnit();
 
   selectBusinessUnit = (params: SelectBusinessUnitParams): void => {
     this.repository.getBusinessUnitSelect().select(params.idCompanyUser.toString(), { force: true });
