@@ -10,10 +10,18 @@ export class WorkflowManagementPage extends BackofficePage {
 
   protected PAGE_URL = '/workflow/process';
 
-  createWorkflow = (params: { name: string; subjectType: string }): void => {
-    this.repository.getCreateWorkflowButton().click();
+  createWorkflow = (params: {
+    name: string;
+    subjectType: string;
+    triggerEventLabel: string;
+    initialState: string;
+    definition: string;
+  }): void => {
+    this.visitCreate();
     this.repository.getProcessNameInput().clear().type(params.name);
-    this.repository.getProcessSubjectTypeInput().clear().type(params.subjectType);
+    this.selectSubjectType(params.subjectType);
+    this.selectTriggerEvent(params.triggerEventLabel);
+    this.seedDefinition({ initialState: params.initialState, definition: params.definition });
     this.repository.getProcessSaveButton().click();
   };
 
@@ -27,47 +35,24 @@ export class WorkflowManagementPage extends BackofficePage {
     this.repository.getSelect2Option(subjectType).click();
   };
 
+  selectTriggerEvent = (triggerEventLabel: string): void => {
+    this.repository.getProcessTriggerEventsSelect().siblings('.select2-container').find('.select2-selection').click();
+    this.repository.getSelect2Option(triggerEventLabel).click();
+  };
+
   getProcessTriggerEventsSelect = (): Cypress.Chainable => this.repository.getProcessTriggerEventsSelect();
 
-  configureTrigger = (params: { name: string; eventLabel: string }): void => {
-    this.repository.getProcessRowTriggersButton(params.name).click();
-    // Select2 combobox: open the dropdown next to the native select, then pick the option by its label.
-    this.repository.getTriggerEventSelect().siblings('.select2-container').find('.select2-selection').click();
-    this.repository.getTriggerEventDropdownOption(params.eventLabel).click();
-    this.repository.getTriggerSaveButton().click();
-  };
-
-  createVersion = (params: { name: string; initialState: string; definition: string }): void => {
-    this.repository.getProcessRowVersionsButton(params.name).click();
-    this.repository.getCreateVersionButton().click();
-    this.repository.getAdvancedXmlToggle().click();
-    this.repository
-      .getAdvancedXmlEditor()
-      .clear()
-      .type(params.definition, { parseSpecialCharSequences: false, delay: 0 });
-
-    this.repository.getCanvasStateByLabel(params.initialState).click();
-    this.repository.getStateInitialCheckbox().check();
-  };
-
-  validateDefinition = (): void => {
-    this.repository.getValidateDefinitionButton().click();
-  };
-
-  saveVersion = (): void => {
-    this.repository.getVersionSaveButton().click();
-  };
-
-  activateLatestVersion = (): void => {
+  activateFirstVersion = (name: string): void => {
+    this.repository.getProcessRowViewButton(name).click();
+    this.repository.getVersionListButton().click();
     this.repository.getActivateVersionButton().click();
     this.repository.getVersionActivationConfirmButton().click();
   };
 
   activateProcess = (name: string): void => {
     this.repository.getProcessRowActivateButton(name).click();
+    this.repository.getActionConfirmationConfirmButton().click();
   };
-
-  getValidationResult = (): Cypress.Chainable => this.repository.getValidationResult();
 
   getProcessRow = (name: string): Cypress.Chainable => this.repository.getProcessRow(name);
 
@@ -78,4 +63,15 @@ export class WorkflowManagementPage extends BackofficePage {
   getProcessRowTriggers = (name: string): Cypress.Chainable => this.repository.getProcessRowTriggers(name);
 
   getProcessRowActivateButton = (name: string): Cypress.Chainable => this.repository.getProcessRowActivateButton(name);
+
+  private seedDefinition = (params: { initialState: string; definition: string }): void => {
+    this.repository.getAdvancedXmlToggle().click();
+    this.repository
+      .getAdvancedXmlEditor()
+      .clear()
+      .type(params.definition, { parseSpecialCharSequences: false, delay: 0 });
+
+    this.repository.getCanvasStateByLabel(params.initialState).click();
+    this.repository.getStateInitialCheckbox().check();
+  };
 }

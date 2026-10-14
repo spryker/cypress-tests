@@ -42,27 +42,24 @@ describe(
         .should('not.contain', otherSubjectTypeTriggerEventLabel);
     });
 
-    it('admin should be able to create, configure, version and activate a workflow', (): void => {
+    it('admin should be able to create and activate a workflow with a trigger', (): void => {
       const { subjectType, triggerEventLabel, initialState } = staticFixtures;
 
       const workflowName = `E2E Onboarding ${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
 
       const definition = staticFixtures.definitionTemplate.replace('%process_name%', workflowName);
 
-      workflowManagementPage.visit();
-
-      workflowManagementPage.createWorkflow({ name: workflowName, subjectType });
+      workflowManagementPage.createWorkflow({
+        name: workflowName,
+        subjectType,
+        triggerEventLabel,
+        initialState,
+        definition,
+      });
       workflowManagementPage.getProcessRow(workflowName).should('exist');
       workflowManagementPage.getProcessRowActiveVersion(workflowName).invoke('text').invoke('trim').should('eq', '-');
 
-      workflowManagementPage.configureTrigger({ name: workflowName, eventLabel: triggerEventLabel });
-
-      workflowManagementPage.createVersion({ name: workflowName, initialState, definition });
-      workflowManagementPage.validateDefinition();
-      workflowManagementPage.getValidationResult().should('contain', 'The definition is valid.');
-
-      workflowManagementPage.saveVersion();
-      workflowManagementPage.activateLatestVersion();
+      workflowManagementPage.activateFirstVersion(workflowName);
 
       workflowManagementPage.visit();
       workflowManagementPage.activateProcess(workflowName);

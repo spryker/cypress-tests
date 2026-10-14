@@ -12,8 +12,13 @@ export class WorkflowInstanceLifecyclePage extends BackofficePage {
 
   openInstances = (workflowName: string): void => {
     this.visit();
-    this.repository.getProcessRowVersionsButton(workflowName).click();
-    this.repository.getVersionRowInstancesButton().click();
+    this.repository.getProcessRowViewButton(workflowName).click();
+    // No page links to the instances list, so it is opened with the version id read from the version view URL.
+    cy.location('search').then((search: string): void => {
+      const idDefinition = new URLSearchParams(search).get('id-definition');
+
+      cy.visitBackoffice(`/workflow/instance?id-definition=${idDefinition}`);
+    });
   };
 
   triggerManualAction = (params: { identifier: number; eventName: string }): void => {

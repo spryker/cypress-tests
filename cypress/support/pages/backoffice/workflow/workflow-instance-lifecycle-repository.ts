@@ -7,10 +7,7 @@ export class WorkflowInstanceLifecycleRepository {
   getProcessTable = (): Cypress.Chainable => cy.get('table:visible');
   getProcessRow = (name: string): Cypress.Chainable =>
     this.getProcessTable().find('tbody tr:visible').filter(`:contains("${name}")`);
-  getProcessRowVersionsButton = (name: string): Cypress.Chainable =>
-    this.getProcessRow(name).find('a:contains("Versions")');
-  getVersionRowInstancesButton = (): Cypress.Chainable =>
-    this.getProcessTable().find('tbody tr:visible a:contains("Instances")').first();
+  getProcessRowViewButton = (name: string): Cypress.Chainable => this.getProcessRow(name).find('a:contains("View")');
   getInstanceRow = (identifier: number): Cypress.Chainable =>
     this.getProcessTable().find('tbody tr:visible').filter(`:contains("${identifier}")`).first();
   getInstanceRowState = (identifier: number): Cypress.Chainable =>
