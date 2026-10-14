@@ -32,13 +32,25 @@
         },
         {
           "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderPermission",
+          "arguments": ["PlaceOrderPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderWithAmountUpToPermission",
+          "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
+        },
+        {
+          "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "key": "buyerRole",
           "arguments": [
             {
               "fk_company": "#company.id_company"
             },
-            []
+            ["#placeOrderPermission", "#placeOrderWithAmountUpToPermission"]
           ]
         },
         {
