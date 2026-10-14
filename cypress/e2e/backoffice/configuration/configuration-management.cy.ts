@@ -9,6 +9,13 @@ describe(
     tags: ['@backoffice', '@configuration', 'configuration', 'spryker-core-back-office'],
   },
   (): void => {
+    // The B2C shops do not install the configuration module.
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because the B2C shops have no configuration management', () => {});
+
+      return;
+    }
+
     const configurationPage = container.get(ConfigurationPage);
     const userLoginScenario = container.get(UserLoginScenario);
 

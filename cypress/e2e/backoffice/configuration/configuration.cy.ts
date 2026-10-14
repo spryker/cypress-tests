@@ -10,6 +10,13 @@ describe(
     tags: ['@backoffice', '@configuration', 'shop-theme', 'spryker-core-back-office'],
   },
   (): void => {
+    // The B2C shops do not install the configuration module.
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because the B2C shops have no configuration management', () => {});
+
+      return;
+    }
+
     const merchantIt = (description: string, testFn: () => void): void => {
       (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it : it.skip)(description, testFn);
     };
