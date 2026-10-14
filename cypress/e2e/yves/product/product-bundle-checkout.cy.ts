@@ -1,4 +1,4 @@
-import { container, getPaymentMethodBasedOnEnv } from '@utils';
+import { container } from '@utils';
 import { ProductBundleCheckoutDynamicFixtures, ProductBundleCheckoutStaticFixtures } from '@interfaces/yves';
 import { CartPage, CatalogPage, CustomerOverviewPage, ProductPage } from '@pages/yves';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
@@ -50,12 +50,12 @@ describe(
       // Act
       productPage.addToCart();
       cartPage.visit();
-      cartPage.getProductCartItems().should('contain.text', dynamicFixtures.bundleProduct.sku);
+      cartPage.getCartItems({ sku: dynamicFixtures.bundleProduct.sku }).should('have.length', 1);
       // A saved address is picked rather than a new one typed: the B2B address forms keep their
       // fields hidden until a saved address is ruled out.
       checkoutScenario.execute({
         idCustomerAddress: dynamicFixtures.address.id_customer_address,
-        paymentMethod: getPaymentMethodBasedOnEnv(),
+        paymentMethod: staticFixtures.paymentMethod,
       });
 
       // Assert

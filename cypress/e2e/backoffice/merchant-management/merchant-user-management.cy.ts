@@ -77,11 +77,12 @@ describe(
       merchantUpdatePage.updateMerchantUser({ email: merchantUser.username, action: ActionEnum.delete });
 
       // Assert
-      merchantUpdatePage.visitUsersTab(dynamicFixtures.merchant.id_merchant);
-      merchantUpdatePage.getBody().should('not.contain.text', merchantUser.username);
+      merchantUpdatePage.getBody().should('contain.text', MERCHANT_USER_DELETED);
+      merchantUpdatePage.findDeletableMerchantUserRow({ email: merchantUser.username }).should('not.exist');
     });
   }
 );
 
 const DEACTIVATED = 'Deactivated';
 const ACTIVE = 'Active';
+const MERCHANT_USER_DELETED = 'Merchant user was deleted successfully.';

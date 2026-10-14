@@ -29,6 +29,10 @@ export class MerchantUpdatePage extends BackofficePage {
   findMerchantUserRow = (params: FindMerchantUserRowParams): Cypress.Chainable =>
     this.repository.getMerchantUserTableRows().filter(`:contains("${params.email}")`, { timeout: 20000 });
 
+  // Some shops keep a deleted merchant user listed, labelled Deleted and without a delete action.
+  findDeletableMerchantUserRow = (params: FindMerchantUserRowParams): Cypress.Chainable =>
+    this.findMerchantUserRow(params).filter(`:has(${this.repository.getMerchantUserDeleteButtonSelector()})`);
+
   updateMerchantUser = (params: UpdateMerchantUserParams): void => {
     const selectors = {
       [ActionEnum.edit]: this.repository.getMerchantUserEditButtonSelector(),
