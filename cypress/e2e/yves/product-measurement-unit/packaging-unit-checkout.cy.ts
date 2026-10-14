@@ -56,7 +56,12 @@ describe(
       productPage.addToCart();
       cartPage.visit();
       cartPage.getProductCartItems().should('contain.text', dynamicFixtures.product.sku);
-      checkoutScenario.execute({ paymentMethod: getPaymentMethodBasedOnEnv() });
+      // A saved address is picked rather than a new one typed: the B2B address forms keep their
+      // fields hidden until a saved address is ruled out.
+      checkoutScenario.execute({
+        idCustomerAddress: dynamicFixtures.address.id_customer_address,
+        paymentMethod: getPaymentMethodBasedOnEnv(),
+      });
 
       // Assert
       customerOverviewPage.assertBodyContainsText(customerOverviewPage.getPlacedOrderSuccessMessage());

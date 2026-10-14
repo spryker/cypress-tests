@@ -1,4 +1,4 @@
-import { Customer, ProductConcrete } from './shared';
+import { Address, Customer, ProductConcrete } from './shared';
 
 export interface ProductBundleCheckoutStaticFixtures {
   defaultPassword: string;
@@ -6,6 +6,7 @@ export interface ProductBundleCheckoutStaticFixtures {
 
 export interface ProductBundleCheckoutDynamicFixtures {
   customer: Customer;
+  address: Address;
   bundleProduct: ProductConcrete;
   bundledProductOne: ProductConcrete;
   bundledProductTwo: ProductConcrete;

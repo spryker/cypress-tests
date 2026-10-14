@@ -2,6 +2,7 @@ import { Address, Customer, ProductConcrete, Quote, User } from './shared';
 
 export interface CartCommentsDynamicFixtures {
   customer: Customer;
+  address: Address;
   product1: ProductConcrete;
   quote: Quote;
   emptyQuote: Quote;

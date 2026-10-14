@@ -38,9 +38,12 @@ export class MultiCartPage extends YvesPage {
     this.getCartRow(name).find('a[href*="/shared-cart/share/"]').click();
   };
 
-  // The share form lists every other company user by name and one access level each.
+  // The share form lists every other company user by name and one access level each. The B2B
+  // themes cover the native select with a select2 widget, so it is selected forcibly.
   shareCartWithCompanyUser = (params: ShareCartWithCompanyUserParams): void => {
-    cy.contains('[data-qa="component user-share-list"] li', params.name).find('select').select(params.accessLevel);
+    cy.contains('[data-qa="component user-share-list"] li', params.name)
+      .find('select')
+      .select(params.accessLevel, { force: true });
     cy.get('form[name="shareCartForm"] button[type="submit"]').click();
   };
 }

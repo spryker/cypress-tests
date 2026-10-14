@@ -1,4 +1,4 @@
-import { Customer, ProductConcrete } from './shared';
+import { Address, Customer, ProductConcrete } from './shared';
 
 export interface PackagingUnitCheckoutStaticFixtures {
   defaultPassword: string;
@@ -10,5 +10,6 @@ export interface PackagingUnitCheckoutStaticFixtures {
 
 export interface PackagingUnitCheckoutDynamicFixtures {
   customer: Customer;
+  address: Address;
   product: ProductConcrete;
 }

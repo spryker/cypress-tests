@@ -29,8 +29,10 @@ export class B2bOrderDetailsRepository implements OrderDetailsRepository {
   getOrderDetailTableBlock(): Cypress.Chainable {
     return cy.get('[data-qa="component order-detail-table"]');
   }
+  // The cancel button is a remote-form-submit: the button carries the form action as an attribute
+  // and submits a form rendered elsewhere, so it is not inside a form of its own.
   getCancelOrderButton(): Cypress.Chainable {
-    return cy.get('form[action*="order/cancel"] button');
+    return cy.get('remote-form-submit[form-action*="order/cancel"] button');
   }
   getCreateReturnLink(): Cypress.Chainable {
     return cy.get('[data-qa="component return-create-link"]');
