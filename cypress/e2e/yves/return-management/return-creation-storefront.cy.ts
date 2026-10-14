@@ -95,7 +95,7 @@ describe(
 
     // `start-return` is offered from the shipped and delivered states only, so the order has to walk
     // the happy path first; every event on the way is manual. The marketplace process hands the order to
-    // its merchant after payment, and `start-return` also needs the merchant's own item shipped, so there the
+    // its merchant once it is paid and picking is skipped, and `start-return` also needs the merchant's own item shipped, so there the
     // merchant ships it from the Merchant Portal. Each shop lists its own events.
     function driveOrderToShipped(): void {
       customerOverviewPage.viewLastPlacedOrder();

@@ -11,6 +11,10 @@
     {
       "state": "Pay",
       "shouldTriggerOmsInCli": true
+    },
+    {
+      "state": "skip picking",
+      "shouldTriggerOmsInCli": true
     }
   ],
   "merchantOrderShippingActions": ["ship"]
