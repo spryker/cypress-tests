@@ -1,8 +1,8 @@
 import { container } from '@utils';
 import { ProductPage } from '@pages/yves';
-import { ProductManagementEditPage, ProductOfferEditPage } from '@pages/backoffice';
+import { ProductManagementEditPage } from '@pages/backoffice';
 import { MultistoreProductOfferDynamicFixtures, MultistoreProductOfferStaticFixtures } from '@interfaces/yves';
-import { UserLoginScenario } from '@scenarios/backoffice';
+import { KeepProductOfferStoresScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { OpenProductDetailPageOnStoreScenario } from '@scenarios/yves';
 
 describe(
@@ -28,10 +28,10 @@ describe(
     }
 
     const productPage = container.get(ProductPage);
-    const productOfferEditPage = container.get(ProductOfferEditPage);
     const productManagementEditPage = container.get(ProductManagementEditPage);
     const userLoginScenario = container.get(UserLoginScenario);
     const openProductDetailPageOnStoreScenario = container.get(OpenProductDetailPageOnStoreScenario);
+    const keepProductOfferStoresScenario = container.get(KeepProductOfferStoresScenario);
 
     let staticFixtures: MultistoreProductOfferStaticFixtures;
     let dynamicFixtures: MultistoreProductOfferDynamicFixtures;
@@ -103,17 +103,16 @@ describe(
     });
 
     it('given a store is unassigned from a product offer when a shopper opens the detail page then only the remaining store still lists that offer', (): void => {
-      // Arrange
-      userLoginScenario.execute({
-        username: dynamicFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
-
       // Act
-      productOfferEditPage.visitOffer(dynamicFixtures.productOfferToUnassign.id_product_offer);
-      productOfferEditPage.keepOnlyStores([staticFixtures.primaryStoreName]);
-      productOfferEditPage.save();
-      cy.runQueueWorker();
+      keepProductOfferStoresScenario.execute({
+        backofficeUsername: dynamicFixtures.rootUser.username,
+        merchantUsername: dynamicFixtures.merchantToUnassignUser?.username,
+        password: staticFixtures.defaultPassword,
+        idProductOffer: dynamicFixtures.productOfferToUnassign.id_product_offer,
+        productOfferReference: dynamicFixtures.productOfferToUnassign.product_offer_reference,
+        storeNamesToKeep: [staticFixtures.primaryStoreName],
+        storeNamesToRemove: [staticFixtures.secondaryStoreName],
+      });
 
       // Assert
       openProductDetailPageOnStoreScenario.execute({

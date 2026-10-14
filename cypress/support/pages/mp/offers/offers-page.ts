@@ -38,6 +38,16 @@ export class OffersPage extends MpPage {
     return this.repository.getSaveButtonSelector();
   };
 
+  removeStores = (storeNames: string[]): void => {
+    storeNames.forEach((storeName) => this.repository.getSelectedStoreRemoveButton(storeName).click({ force: true }));
+  };
+
+  saveOffer = (): void => {
+    cy.intercept('POST', this.repository.getUpdateOfferUrlPattern()).as('offerUpdated');
+    this.repository.getDrawer().find(this.repository.getSaveButtonSelector()).click();
+    cy.wait('@offerUpdated');
+  };
+
   // Creating an offer runs in two steps: choosing the product it is offered on, then filling the
   // offer's own form, whose price table is the same editable table the offer drawer uses.
   createOffer = (params: CreateOfferParams): void => {
