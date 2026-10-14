@@ -243,8 +243,9 @@ describe(
       // button (it is gated on `product.available` and `idProductConcrete`), so clicking it
       // times out intermittently under CI load. Reload the product page until the button is
       // published before interacting with it — same publish-wait approach as CatalogPage.search.
+      // Only the visible button counts: the B2C mini cart's hidden remove buttons carry the same data-qa.
       cy.url().then((productUrl) => {
-        cy.reloadUntilFound(productUrl, '[data-qa="add-to-cart-button"]', 'body', 20, 3000);
+        cy.reloadUntilFound(productUrl, '[data-qa="add-to-cart-button"]:visible', 'body', 20, 3000);
       });
 
       productPage.addToCart({ quantity: quantity ?? 1 });
