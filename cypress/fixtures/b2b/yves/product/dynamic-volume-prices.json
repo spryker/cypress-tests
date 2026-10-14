@@ -34,13 +34,25 @@
         },
         {
           "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "changeCartItemPermission",
+          "arguments": ["ChangeCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "removeCartItemPermission",
+          "arguments": ["RemoveCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "arguments": [
             {
               "isDefault": true,
               "fkCompany": "#company.id_company"
             },
-            ["#permission"]
+            ["#permission", "#changeCartItemPermission", "#removeCartItemPermission"]
           ]
         },
         {

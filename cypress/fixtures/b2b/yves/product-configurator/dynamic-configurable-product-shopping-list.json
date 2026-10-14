@@ -39,13 +39,37 @@
         },
         {
           "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "addCartItemPermission",
+          "arguments": ["AddCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "changeCartItemPermission",
+          "arguments": ["ChangeCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "removeCartItemPermission",
+          "arguments": ["RemoveCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "key": "buyerRole",
           "arguments": [
             {
               "fk_company": "#company.id_company"
             },
-            ["#readShoppingListPermission", "#writeShoppingListPermission"]
+            [
+              "#readShoppingListPermission",
+              "#writeShoppingListPermission",
+              "#addCartItemPermission",
+              "#changeCartItemPermission",
+              "#removeCartItemPermission"
+            ]
           ]
         },
         {

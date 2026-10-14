@@ -53,6 +53,35 @@
         },
         {
           "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "addCartItemPermission",
+          "arguments": ["AddCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "changeCartItemPermission",
+          "arguments": ["ChangeCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "removeCartItemPermission",
+          "arguments": ["RemoveCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "arguments": [
+            {
+              "isDefault": true,
+              "fkCompany": "#company.id_company"
+            },
+            ["#addCartItemPermission", "#changeCartItemPermission", "#removeCartItemPermission"]
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveCompanyUser",
           "key": "companyUser",
           "arguments": [
@@ -80,7 +109,7 @@
           "arguments": [
             {
               "attributes": {
-                "storage_capacity": "32 GB"
+                "material": "steel"
               }
             },
             {
@@ -97,7 +126,7 @@
               "fkProductAbstract": "#variantProduct.fk_product_abstract",
               "abstractSku": "#variantProduct.abstract_sku",
               "attributes": {
-                "storage_capacity": "128 GB"
+                "material": "aluminium"
               },
               "isActive": true
             }

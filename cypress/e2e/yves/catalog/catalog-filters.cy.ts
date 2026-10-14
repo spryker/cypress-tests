@@ -32,7 +32,7 @@ describe('catalog filters', { tags: ['@yves', 'catalog', 'search', 'prices', 'sp
       catalogPage.searchForProducts({ query: staticFixtures.searchTerm });
     });
 
-    it('given a search result when a colour facet is applied then the catalog narrows to fewer products without emptying', (): void => {
+    it('given a search result when an attribute facet is applied then the catalog narrows to fewer products without emptying', (): void => {
       // Arrange
       let unfilteredCount = 0;
       catalogPage.getFoundItemsCount().then((count: number) => {
@@ -41,8 +41,8 @@ describe('catalog filters', { tags: ['@yves', 'catalog', 'search', 'prices', 'sp
 
       // Act
       catalogPage.applyFilterValue({
-        filterName: staticFixtures.colorFilter.name,
-        filterValue: staticFixtures.colorFilter.value,
+        filterName: staticFixtures.attributeFilter.name,
+        filterValue: staticFixtures.attributeFilter.value,
       });
 
       // Assert

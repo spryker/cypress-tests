@@ -1,11 +1,11 @@
 {
   "defaultPassword": "change123",
-  "searchTerm": "canon",
-  "colorFilter": {
-    "name": "color",
-    "value": "Blue"
+  "searchTerm": "cabinet",
+  "attributeFilter": {
+    "name": "material",
+    "value": "sheet steel"
   },
-  "filterTitles": ["Price", "Rating", "Label", "Brand", "Color"],
+  "filterTitles": ["Rating", "Brand", "Material"],
   "ascendingPriceSortLabel": "Sort by price ascending",
   "descendingPriceSortLabel": "Sort by price descending"
 }

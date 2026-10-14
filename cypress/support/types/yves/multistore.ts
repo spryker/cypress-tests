@@ -1,4 +1,4 @@
-import { Merchant, ProductConcrete, ProductOffer, User } from './shared';
+import { Customer, Merchant, ProductConcrete, ProductOffer, User } from './shared';
 
 export interface MultistoreCmsPageDynamicFixtures {
   rootUser: User;
@@ -14,6 +14,7 @@ export interface MultistoreProductDynamicFixtures {
   rootUser: User;
   product: ProductConcrete;
   productToUnassign: ProductConcrete;
+  customer: Customer;
 }
 
 export interface MultistoreProductStaticFixtures {
