@@ -13,5 +13,6 @@ export interface ConfigurableBundleCheckoutStaticFixtures {
 
 export interface BundleSlotSelection {
   slotName: string;
-  productIdentifier: string;
+  productIdentifier?: string;
+  productPosition?: number;
 }

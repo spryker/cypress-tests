@@ -15,14 +15,17 @@ export class BundleConfiguratorPage extends YvesPage {
     this.repository.getConfiguratorSidebar().should('be.visible');
   };
 
+  // A candidate is picked by the text or sku its card carries or, where a shop's slot offers its demo products in no
+  // stable set from run to run, by its position in the slot's list.
   selectSlotProduct = (params: SelectSlotProductParams): void => {
     this.repository.getSlotButton(params.slotName).click();
-    this.repository
-      .getConfiguratorProduct(params.productIdentifier)
-      .first()
-      .find(this.repository.getConfiguratorProductSelectButtonSelector())
-      .first()
-      .click();
+
+    const configuratorProduct =
+      params.productIdentifier !== undefined
+        ? this.repository.getConfiguratorProduct(params.productIdentifier).first()
+        : this.repository.getConfiguratorProducts().eq(params.productPosition ?? 0);
+
+    configuratorProduct.find(this.repository.getConfiguratorProductSelectButtonSelector()).first().click();
   };
 
   goToSummary = (): void => {
@@ -36,5 +39,6 @@ export class BundleConfiguratorPage extends YvesPage {
 
 interface SelectSlotProductParams {
   slotName: string;
-  productIdentifier: string;
+  productIdentifier?: string;
+  productPosition?: number;
 }

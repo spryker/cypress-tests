@@ -4,21 +4,21 @@
   "firstConfiguration": [
     {
       "slotName": "Slot 5",
-      "productIdentifier": "004_30663302"
+      "productPosition": 0
     },
     {
       "slotName": "Slot 6",
-      "productIdentifier": "185_25904533"
+      "productIdentifier": "Canon LEGRIA HF R606"
     }
   ],
   "secondConfiguration": [
     {
       "slotName": "Slot 5",
-      "productIdentifier": "007_30691822"
+      "productPosition": 1
     },
     {
       "slotName": "Slot 6",
-      "productIdentifier": "185_25904533"
+      "productIdentifier": "Canon LEGRIA HF R606"
     }
   ]
 }

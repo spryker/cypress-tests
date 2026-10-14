@@ -17,6 +17,7 @@ export class BundleConfiguratorRepository {
       `[data-qa="component configurator-product"]:contains("${productIdentifier}"), ` +
         `[data-qa="component configurator-product"]:has(input[type="hidden"][value="${productIdentifier}"])`
     );
+  getConfiguratorProducts = (): Cypress.Chainable => cy.get('[data-qa="component configurator-product"]');
   getConfiguratorProductSelectButtonSelector = (): string => 'button';
   getAddToCartButton = (): Cypress.Chainable =>
     cy.get('form[name="configurator_state_form"][action*="add-to-cart"] button');
