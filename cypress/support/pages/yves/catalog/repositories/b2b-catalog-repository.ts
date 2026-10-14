@@ -30,7 +30,7 @@ export class B2bCatalogRepository implements CatalogRepository {
       .contains('[class*="tooltip"]', swatchIdentifier)
       .parents('button')
       .first()
-      .trigger('mouseover');
+      .trigger('mouseenter', { force: true });
   };
 
   getFoundItemsCounterSelector = (): string => '[class*="col--counter"]';
