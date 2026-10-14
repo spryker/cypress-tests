@@ -97,8 +97,10 @@ export class B2bProductRepository implements ProductRepository {
     });
   };
 
+  // Both B2B themes dress the native select up with select2, which lays its own box over it; the
+  // packaging unit selector still listens to the native select's change event.
   selectSalesUnit = (salesUnitName: string): void => {
-    cy.get('select[name="id-product-measurement-sales-unit"]').select(salesUnitName);
+    cy.get('select[name="id-product-measurement-sales-unit"]').select(salesUnitName, { force: true });
   };
 
   getMeasurementUnitChoice = (): Cypress.Chainable =>
