@@ -4,7 +4,6 @@
   "volumeTier": {
     "threshold": 2,
     "quantity": 4,
-    "price": "€10.00",
-    "cartPrice": "€40.00"
+    "price": "€10.00"
   }
 }

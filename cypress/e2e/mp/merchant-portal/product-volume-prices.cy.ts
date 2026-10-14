@@ -92,9 +92,12 @@ describe(
       // Assert
       cartPage.visit();
       cartPage
-        .getCartItems({ sku: dynamicFixtures.merchantProduct.sku })
-        .should('have.length', 1)
-        .and('contain.text', staticFixtures.volumeTier.cartPrice);
+        .getCartItemsChargingUnitPrice({
+          sku: dynamicFixtures.merchantProduct.sku,
+          unitPrice: staticFixtures.volumeTier.price,
+          quantity: staticFixtures.volumeTier.quantity,
+        })
+        .should('have.length', 1);
     });
   }
 );
