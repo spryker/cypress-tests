@@ -54,8 +54,12 @@ export class ShoppingListPage extends YvesPage {
 
   // A shopping-list row reaches the configurator through the generic remote-form-submit molecule, so
   // the configurator route in its form-action is what tells it apart from the row's other actions.
+  // The classic B2B theme renders each row as a product card instead of a table row.
   configureProduct = (params: ConfigureProductParams): void => {
-    cy.contains('[data-qa="component shopping-list"] tr', params.sku)
+    cy.contains(
+      '[data-qa="component shopping-list"] tr, [data-qa="component shopping-list-table"] [data-qa="component product-card-item"]',
+      params.sku
+    )
       .find('[data-qa="component remote-form-submit"][form-action*="configurator"] button')
       .click();
   };
