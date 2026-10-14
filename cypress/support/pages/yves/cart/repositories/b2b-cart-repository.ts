@@ -145,19 +145,20 @@ export class B2bCartRepository implements CartRepository {
     cy
       .contains('article[data-qa*="configured-bundle"]:not([data-qa*="configured-bundle-product"])', bundleName)
       .first();
-  // The bundle's quantity counter has no submit button: it posts its form itself a moment after the value
-  // changes, so the request is awaited before the value is typed.
-  getConfiguredBundleQuantityField = (bundleName: string): Cypress.Chainable => {
+  // The bundle's quantity counter has no submit button. Its +/- buttons are the one path that posts the new
+  // quantity exactly once, after a short delay that collects consecutive clicks.
+  changeConfiguredBundleQuantity = (bundleName: string, quantity: number): void => {
     cy.intercept('POST', '**/configured-bundle/**').as('configuredBundleQuantityChange');
 
-    return this.getConfiguredBundle(bundleName).find('input.formatted-number-input__input').first();
-  };
-  // Typing alone fires no change event, and the counter only schedules its post on one.
-  submitConfiguredBundleQuantity = (bundleName: string): void => {
     this.getConfiguredBundle(bundleName)
       .find('input.formatted-number-input__input')
       .first()
-      .trigger('change', { force: true, bubbles: true });
+      .invoke('val')
+      .then((currentQuantity): void => {
+        Cypress._.times(quantity - Number(currentQuantity), (): void => {
+          this.getConfiguredBundle(bundleName).find('.quantity-counter__button--increment').first().click();
+        });
+      });
     cy.wait('@configuredBundleQuantityChange');
   };
   getClearCartFormSelector = (): string => 'form[name=multi_cart_clear_form]';

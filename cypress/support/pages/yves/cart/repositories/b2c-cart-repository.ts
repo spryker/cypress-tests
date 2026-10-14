@@ -86,11 +86,13 @@ export class B2cCartRepository implements CartRepository {
   getConfiguredBundles = (): Cypress.Chainable => cy.get('article[data-qa*="configured-bundle-secondary"]');
   getConfiguredBundle = (bundleName: string): Cypress.Chainable =>
     cy.contains('article[data-qa*="configured-bundle-secondary"]', bundleName).first();
-  getConfiguredBundleQuantityField = (bundleName: string): Cypress.Chainable =>
-    this.getConfiguredBundle(bundleName).find('input.formatted-number-input__input').first();
   // The bundle's quantity counter has no submit button: it submits its form itself a moment after the value
   // changes, so the form is submitted directly instead of waiting on that timer.
-  submitConfiguredBundleQuantity = (bundleName: string): void => {
+  changeConfiguredBundleQuantity = (bundleName: string, quantity: number): void => {
+    const input = this.getConfiguredBundle(bundleName).find('input.formatted-number-input__input').first();
+
+    input.type('{selectall}', { force: true });
+    input.type(String(quantity), { force: true });
     this.getConfiguredBundle(bundleName).find('form[action*="configured-bundle/change"]').first().submit();
   };
   getClearCartFormSelector = (): string => '[data-qa="multi-cart-clear-form"]';

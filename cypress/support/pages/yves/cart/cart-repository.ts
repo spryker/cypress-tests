@@ -36,6 +36,5 @@ export interface CartRepository {
   getCartItemsListTitles(): Cypress.Chainable;
   getCartItemAvailabilityLabel(): Cypress.Chainable;
   getConfiguredBundles(): Cypress.Chainable;
-  getConfiguredBundleQuantityField(bundleName: string): Cypress.Chainable;
-  submitConfiguredBundleQuantity(bundleName: string): void;
+  changeConfiguredBundleQuantity(bundleName: string, quantity: number): void;
 }

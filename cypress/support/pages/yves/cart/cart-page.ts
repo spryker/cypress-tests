@@ -211,11 +211,7 @@ export class CartPage extends YvesPage {
   };
 
   changeConfiguredBundleQuantity = (params: ChangeConfiguredBundleQuantityParams): void => {
-    const input = this.repository.getConfiguredBundleQuantityField(params.bundleName);
-
-    input.type('{selectall}', { force: true });
-    input.type(String(params.quantity), { force: true });
-    this.repository.submitConfiguredBundleQuantity(params.bundleName);
+    this.repository.changeConfiguredBundleQuantity(params.bundleName, params.quantity);
   };
 
   getConfiguredBundles = (): Cypress.Chainable => {

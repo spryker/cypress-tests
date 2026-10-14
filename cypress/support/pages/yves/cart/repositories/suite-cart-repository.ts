@@ -81,9 +81,11 @@ export class SuiteCartRepository implements CartRepository {
   getConfiguredBundles = (): Cypress.Chainable => cy.get('article[data-qa*="configured-bundle"]');
   getConfiguredBundle = (bundleName: string): Cypress.Chainable =>
     cy.contains('article[data-qa*="configured-bundle"]', bundleName).first();
-  getConfiguredBundleQuantityField = (bundleName: string): Cypress.Chainable =>
-    this.getConfiguredBundle(bundleName).find('input.formatted-number-input__input').first();
-  submitConfiguredBundleQuantity = (bundleName: string): void => {
+  changeConfiguredBundleQuantity = (bundleName: string, quantity: number): void => {
+    const input = this.getConfiguredBundle(bundleName).find('input.formatted-number-input__input').first();
+
+    input.type('{selectall}', { force: true });
+    input.type(String(quantity), { force: true });
     this.getConfiguredBundle(bundleName).find('[data-qa="quantity-input-submit"]').first().click({ timeout: 10000 });
   };
   getClearCartFormSelector = (): string => '[data-qa="multi-cart-clear-form"]';
