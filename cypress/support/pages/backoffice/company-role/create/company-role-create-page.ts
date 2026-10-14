@@ -17,7 +17,9 @@ export class CompanyRoleCreatePage extends BackofficePage {
   create = (params: CreateParams): void => {
     this.selectCompany(params.companyName);
     this.repository.getNameInput().clear().type(params.name);
-    this.repository.getPermissionCheckbox(params.permissionName).check({ force: true });
+    params.permissionNames.forEach((permissionName) => {
+      this.repository.getPermissionCheckbox(permissionName).check({ force: true });
+    });
     this.repository.getSubmitButton().click();
   };
 
@@ -34,5 +36,5 @@ export class CompanyRoleCreatePage extends BackofficePage {
 interface CreateParams {
   companyName: string;
   name: string;
-  permissionName: string;
+  permissionNames: string[];
 }
