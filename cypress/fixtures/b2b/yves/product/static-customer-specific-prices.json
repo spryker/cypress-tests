@@ -1,10 +1,12 @@
 {
   "defaultPassword": "change123",
   "defaultPriceCustomer": {
-    "email": "Richi@acme.com"
+    "email": "Richi@acme.com",
+    "alternativeEmails": ["Richi@spryker.com"]
   },
   "merchantPriceCustomer": {
-    "email": "Elizabet@acme.com"
+    "email": "Elizabet@acme.com",
+    "alternativeEmails": ["Elizabet@spryker.com"]
   },
   "product": {
     "abstractSku": "M70208",
