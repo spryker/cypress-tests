@@ -88,8 +88,7 @@ describe(
       // Filtered by sku rather than cleared beforehand, so a cart left behind by an earlier run or a
       // retry cannot change what this reads.
       cartPage
-        .getProductCartItems()
-        .filter(`:contains("${staticFixtures.product.concreteSku}")`)
+        .getCartItems({ sku: staticFixtures.product.concreteSku })
         .should('have.length', 1)
         .and('contain', staticFixtures.product.cartItemName)
         .and('contain', staticFixtures.product.merchantPrice);

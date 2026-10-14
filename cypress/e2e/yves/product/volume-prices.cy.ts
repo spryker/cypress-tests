@@ -52,8 +52,7 @@ describe('volume prices', { tags: ['@yves', 'prices', 'product', 'cart', 'spryke
 
     // Assert
     cartPage
-      .getProductCartItems()
-      .filter(`:contains("${dynamicFixtures.product.sku}")`)
+      .getCartItems({ sku: dynamicFixtures.product.sku })
       .should('have.length', 1)
       .and('contain.text', staticFixtures.volumeTier.price);
   });
@@ -66,8 +65,7 @@ describe('volume prices', { tags: ['@yves', 'prices', 'product', 'cart', 'spryke
 
     // Assert
     cartPage
-      .getProductCartItems()
-      .filter(`:contains("${dynamicFixtures.product.sku}")`)
+      .getCartItems({ sku: dynamicFixtures.product.sku })
       .should('contain.text', staticFixtures.unitPrice)
       .and('not.contain.text', staticFixtures.volumeTier.price);
 
@@ -81,8 +79,7 @@ describe('volume prices', { tags: ['@yves', 'prices', 'product', 'cart', 'spryke
 
     // Assert
     cartPage
-      .getProductCartItems()
-      .filter(`:contains("${dynamicFixtures.product.sku}")`)
+      .getCartItems({ sku: dynamicFixtures.product.sku })
       .should('have.length.at.least', 1)
       .each(($cartItem) => {
         cy.wrap($cartItem).should('contain.text', staticFixtures.volumeTier.price);

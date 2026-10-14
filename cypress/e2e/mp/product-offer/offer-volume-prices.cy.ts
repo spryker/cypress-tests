@@ -96,8 +96,7 @@ describe(
       // Assert
       cartPage.visit();
       cartPage
-        .getProductCartItems()
-        .filter(`:contains("${dynamicFixtures.merchantProduct.sku}")`)
+        .getCartItems({ sku: dynamicFixtures.merchantProduct.sku })
         .should('have.length', 1)
         .and('contain.text', staticFixtures.volumeTier.cartPrice)
         .and('contain.text', dynamicFixtures.merchant.name);

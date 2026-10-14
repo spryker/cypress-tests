@@ -92,4 +92,5 @@ export class B2cCartRepository implements CartRepository {
   getClearCartFormSelector = (): string => '[data-qa="multi-cart-clear-form"]';
 
   getConfigureButtonSelector = (): string => '[data-qa="component configuration-cart-form"] button';
+  getCartItemRemovalFormSelector = (): string => 'form[name^="removeFromCartForm_"]';
 }
