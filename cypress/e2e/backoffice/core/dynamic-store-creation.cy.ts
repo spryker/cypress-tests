@@ -169,7 +169,13 @@ describe(
 
       // Act
       cy.url().then((storeHomeUrl: string) => {
-        cmsContentPage.visitCmsPageUrl(`${storeHomeUrl.replace(/\/$/, '')}/${cmsPageName}`);
+        cmsContentPage.visitCmsPageUrl(
+          cmsContentPage.getStoreCmsPageUrl({
+            storeHomeUrl: storeHomeUrl,
+            cmsPageName: cmsPageName,
+            localeName: staticFixtures.store.locale,
+          })
+        );
       });
 
       // Assert

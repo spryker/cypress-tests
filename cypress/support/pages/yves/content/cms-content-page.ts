@@ -21,6 +21,9 @@ export class CmsContentPage extends YvesPage {
     cy.visit(cmsPageUrl);
   };
 
+  getStoreCmsPageUrl = (params: GetStoreCmsPageUrlParams): string =>
+    `${params.storeHomeUrl.replace(/\/$/, '')}${this.repository.getCmsPageUrlPath(params.cmsPageName, params.localeName)}`;
+
   findCmsPageFromSuggestions = (params: SearchParams): void => {
     this.repository.search(params.query);
     cy.intercept('**/search/suggestion**').as('searchSuggestion');
@@ -32,6 +35,12 @@ export class CmsContentPage extends YvesPage {
 
 interface SearchParams {
   query: string;
+}
+
+interface GetStoreCmsPageUrlParams {
+  storeHomeUrl: string;
+  cmsPageName: string;
+  localeName: string;
 }
 
 interface VisitCmsPageParams {
