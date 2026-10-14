@@ -165,6 +165,17 @@
         },
         {
           "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveProductImageSet",
           "arguments": [
             {
@@ -173,43 +184,6 @@
               "idProductAbstract": "#product.fk_product_abstract",
               "productImages": ["#productImage"]
             }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveActiveMerchantWithStore",
-          "key": "merchant",
-          "arguments": [
-            {
-              "isOpenForRelationRequest": true
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveProductOffer",
-          "key": "productOffer",
-          "arguments": [
-            {
-              "isActive": true,
-              "status": "approved",
-              "idProductConcrete": "#product.id_product_concrete",
-              "concreteSku": "#product.sku",
-              "merchantReference": "#merchant.merchant_reference",
-              "stores": "#stores"
-            }
-          ]
-        },
-        {
-          "type": "helper",
-          "name": "haveProductOfferStock",
-          "arguments": [
-            {
-              "idProductOffer": "#productOffer.id_product_offer",
-              "productOfferReference": "#productOffer.product_offer_reference",
-              "isNeverOutOfStock": true
-            },
-            "#merchant.stocks"
           ]
         }
       ]
