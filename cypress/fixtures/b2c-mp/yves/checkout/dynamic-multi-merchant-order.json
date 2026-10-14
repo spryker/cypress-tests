@@ -66,11 +66,26 @@
         },
         {
           "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "productMerchant"
+        },
+        {
+          "type": "helper",
           "name": "haveFullProduct",
           "key": "product1",
           "arguments": [
             {
               "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#product1.fk_product_abstract",
+              "idMerchant": "#productMerchant.id_merchant"
             }
           ]
         },
@@ -299,7 +314,8 @@
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
                   "idProductAbstract": "#product1.fk_product_abstract",
-                  "quantity": 1
+                  "quantity": 1,
+                  "merchantReference": "#productMerchant.merchant_reference"
                 },
                 {
                   "sku": "#product2.sku",
