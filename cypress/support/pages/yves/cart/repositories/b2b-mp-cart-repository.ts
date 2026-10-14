@@ -15,7 +15,10 @@ export class B2bMpCartRepository implements CartRepository {
   getExternalCartShareToggle = (): Cypress.Chainable =>
     cy.get('url-mask-generator[shareoptiongroup="external"]').find('.js-toggler-radio__trigger');
   getExternalCartShareLinkInput = (): Cypress.Chainable => cy.get('#PREVIEW');
-  getQuickAddToCartSkuField = (): Cypress.Chainable => cy.get('[data-qa="component autocomplete-form"] .input');
+  // The SKU field is ProductSearchWidget's own product-search-autocomplete-form, not the generic
+  // autocomplete-form the other shops render.
+  getQuickAddToCartSkuField = (): Cypress.Chainable =>
+    cy.get('[data-qa="component product-search-autocomplete-form"] .input');
   getQuickAddToCartProductListField = (): Cypress.Chainable => cy.get('[data-qa="component products-list"]');
   getFirstCartItemNoteField = (): Cypress.Chainable => {
     cy.get('[data-qa="component cart-item-note"]')
