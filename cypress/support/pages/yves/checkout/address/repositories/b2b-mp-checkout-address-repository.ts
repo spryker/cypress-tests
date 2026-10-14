@@ -148,4 +148,8 @@ export class B2bMpCheckoutAddressRepository implements CheckoutAddressRepository
       return $el;
     });
   getSameAddressForAllItemsCheckboxSelector = (): string => 'input[name$="[isSingleAddressPerShipmentType]"]';
+  // The self-service portal nests the item forms in one block per shipment type, so the list's children are those
+  // blocks; every theme wraps each item form in its own wrapper.
+  getMultiShipmentAddressItemsWithOwnAddress = (): Cypress.Chainable =>
+    cy.get('[data-qa="component address-item-form-field-list"] .address-item-form-field-list__wrapper');
 }

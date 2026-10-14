@@ -123,6 +123,10 @@ export class B2bCheckoutAddressRepository implements CheckoutAddressRepository {
     return servicePointUuid || undefined;
   };
   getSameAddressForAllItemsCheckboxSelector = (): string => 'input[name$="[isSingleAddressPerShipmentType]"]';
+  // The self-service portal nests the item forms in one block per shipment type, so the list's children are those
+  // blocks; every theme wraps each item form in its own wrapper.
+  getMultiShipmentAddressItemsWithOwnAddress = (): Cypress.Chainable =>
+    cy.get('[data-qa="component address-item-form-field-list"] .address-item-form-field-list__wrapper');
 
   // The b2b-demo-marketplace build of this theme hides the new-address fields of the single shipping form until
   // its self-service portal address toggle is used; the classic theme shows them, so this is a no-op there.
