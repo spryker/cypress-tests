@@ -124,8 +124,8 @@ export class B2cMpProductRepository implements ProductRepository {
 
   getBundleItems = (): Cypress.Chainable => cy.get('[data-qa*="component bundle-items"]');
 
-  getAvailabilityStatus = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-availability-widget"] [data-qa="component status"]');
+  // The B2C theme renders no availability status, only an out-of-stock note in place of the quantity.
+  getAvailabilityStatus = (): Cypress.Chainable => cy.get('[data-qa="component product-configurator"]');
   getAvailabilityNotificationEmailField = (): Cypress.Chainable =>
     cy.get('#availabilityNotificationSubscriptionForm_email');
   getAvailabilityNotificationSubscribeForm = (): Cypress.Chainable =>
