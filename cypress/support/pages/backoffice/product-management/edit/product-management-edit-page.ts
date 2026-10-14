@@ -21,11 +21,12 @@ export class ProductManagementEditPage extends BackofficePage {
     const variantTableUrl = '**/product-management/edit/variant-table**';
     cy.intercept('GET', variantTableUrl).as('variantTable');
     this.repository.getVariantsTab().click();
-    cy.wait('@variantTable', { timeout: 1000 });
-    this.repository.getVariantFirstTableRow().then(($productVariantRow) => {
-      cy.wrap($productVariantRow).find(this.repository.getVariantEditButtonSelector()).as('editVariantButton');
-      cy.get('@editVariantButton').click({ force: true });
-    });
+    cy.wait('@variantTable');
+    // One query chain, so a table redraw re-queries the row instead of leaving a detached one behind.
+    this.repository
+      .getVariantFirstTableRow()
+      .find(this.repository.getVariantEditButtonSelector())
+      .click({ force: true });
   };
 
   assignAllPossibleStores = (): void => {
