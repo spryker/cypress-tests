@@ -65,6 +65,11 @@
         },
         {
           "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
+        },
+        {
+          "type": "helper",
           "name": "haveFullProduct",
           "key": "product1",
           "arguments": [
@@ -110,6 +115,16 @@
             {
               "sku": "#product1.sku",
               "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#product1.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
             }
           ]
         },
@@ -165,6 +180,16 @@
         },
         {
           "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#product2.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveFullProduct",
           "key": "product3",
           "arguments": [
@@ -215,6 +240,16 @@
         },
         {
           "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#product3.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "havePersistentQuote",
           "key": "quote",
           "arguments": [
@@ -224,17 +259,20 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference"
                 },
                 {
                   "sku": "#product2.sku",
                   "abstractSku": "#product2.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference"
                 },
                 {
                   "sku": "#product3.sku",
                   "abstractSku": "#product3.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             },
