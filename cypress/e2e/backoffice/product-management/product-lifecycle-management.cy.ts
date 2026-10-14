@@ -4,12 +4,7 @@ import {
   ProductLifecycleManagementStaticFixtures,
 } from '@interfaces/backoffice';
 import { CatalogPage, ProductPage } from '@pages/yves';
-import {
-  ActionEnum,
-  ProductManagementEditPage,
-  ProductManagementEditVariantPage,
-  ProductManagementListPage,
-} from '@pages/backoffice';
+import { ProductManagementEditVariantPage } from '@pages/backoffice';
 import { CreateProductScenario, UserLoginScenario } from '@scenarios/backoffice';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
@@ -28,8 +23,6 @@ describe(
   (): void => {
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
-    const productManagementListPage = container.get(ProductManagementListPage);
-    const productManagementEditPage = container.get(ProductManagementEditPage);
     const productManagementEditVariantPage = container.get(ProductManagementEditVariantPage);
     const userLoginScenario = container.get(UserLoginScenario);
     const createProductScenario = container.get(CreateProductScenario);
@@ -69,6 +62,11 @@ describe(
       // Arrange
       // An absence is only evidence once the product has been seen in the catalog.
       const productAbstract = createProductScenario.execute({ shouldTriggerPublishAndSync: true });
+      // Product creation ends on the variant edit page, which is left to confirm the catalog listing.
+      let variantEditUrl: string;
+      cy.url().then((url: string): void => {
+        variantEditUrl = url;
+      });
 
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
@@ -81,9 +79,9 @@ describe(
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
-      productManagementListPage.visit();
-      productManagementListPage.update({ query: productAbstract.sku, action: ActionEnum.edit });
-      productManagementEditPage.openFirstVariant();
+      cy.then((): void => {
+        cy.visit(variantEditUrl);
+      });
       productManagementEditVariantPage.deactivate();
       cy.runQueueWorker();
 
