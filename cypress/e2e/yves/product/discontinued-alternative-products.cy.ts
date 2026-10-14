@@ -26,6 +26,15 @@ describe(
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
+
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+      productDiscontinuedPage.discontinueProduct({
+        idProductConcrete: dynamicFixtures.discontinuedProduct.id_product_concrete,
+      });
+      cy.runQueueWorker();
     });
 
     it('given a discontinued product carrying an alternative when its product detail page is opened then the alternative is offered there', (): void => {

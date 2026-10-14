@@ -420,11 +420,6 @@
         },
         {
           "type": "helper",
-          "name": "haveProductDiscontinued",
-          "arguments": ["#discontinuedProduct.id_product_concrete"]
-        },
-        {
-          "type": "helper",
           "name": "haveProductAlternative",
           "arguments": ["#wishlistProduct", "#wishlistSubstituteProduct.sku"]
         }
