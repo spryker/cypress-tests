@@ -100,8 +100,10 @@ export class B2bMpProductRepository implements ProductRepository {
     });
   };
 
+  // select2 lays its own box over the native select; the packaging unit selector still listens to the
+  // native select's change event.
   selectSalesUnit = (salesUnitName: string): void => {
-    cy.get('select[name="id-product-measurement-sales-unit"]').select(salesUnitName);
+    cy.get('select[name="id-product-measurement-sales-unit"]').select(salesUnitName, { force: true });
   };
 
   getMeasurementUnitChoice = (): Cypress.Chainable =>

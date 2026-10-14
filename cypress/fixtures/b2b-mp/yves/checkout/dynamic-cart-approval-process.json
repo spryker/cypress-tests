@@ -58,6 +58,12 @@
           "arguments": ["ApproveQuotePermissionPlugin"]
         },
         {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderWithAmountUpToPermission",
+          "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
+        },
+        {
           "type": "transfer",
           "name": "PermissionTransfer",
           "key": "limitedPlaceOrderPermission",
@@ -81,7 +87,7 @@
             {
               "fk_company": "#company.id_company"
             },
-            ["#limitedPlaceOrderPermission", "#requestQuoteApprovalPermission"]
+            ["#limitedPlaceOrderPermission", "#requestQuoteApprovalPermission", "#placeOrderWithAmountUpToPermission"]
           ]
         },
         {

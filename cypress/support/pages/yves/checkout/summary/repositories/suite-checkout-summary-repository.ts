@@ -13,6 +13,7 @@ export class SuiteCheckoutSummaryRepository implements CheckoutSummaryRepository
     cy.get('form[action$="/quote-approval/create"]').find('button[type="submit"]');
   getCancelApprovalRequestButton = (): Cypress.Chainable =>
     cy.get('form[action*="/quote-approval/"][action$="/remove"]').find('button');
+  getApproveButton = (): Cypress.Chainable => cy.get('form[action*="/quote-approval/approve/"]').find('button');
   getApprovalStatus = (): Cypress.Chainable => cy.get('.quote-status');
   getaAcceptTermsAndConditionsCheckbox = (): Cypress.Chainable =>
     cy.get('[data-qa="accept-terms-and-conditions-input"]');

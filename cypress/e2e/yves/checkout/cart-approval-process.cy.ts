@@ -81,10 +81,13 @@ describe(
       cartPage.visit();
       // The cart is locked while it waits, which is what the reset-lock form on it marks.
       cartPage.getLockedCartResetForm().should('exist');
-      cartPage.approveCart();
+      // The B2B themes render the approval actions only on the checkout summary, which the buyer's
+      // address, shipment and payment already lead straight to.
+      cartPage.startCheckout();
+      checkoutSummaryPage.approve();
 
       // Assert
-      cartPage.getApprovalStatus().should('contain', staticFixtures.approvedStatus);
+      checkoutSummaryPage.getApprovalStatus().should('contain', staticFixtures.approvedStatus);
 
       // Act
       customerLoginScenario.execute({

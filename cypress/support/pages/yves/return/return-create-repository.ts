@@ -13,5 +13,6 @@ export class ReturnCreateRepository {
   getReturnItemCheckboxSelector = (): string => 'input.js-return-create__trigger-state-toggler';
 
   // SalesReturnPage ships the submit button disabled; its own JS enables it once a line is ticked.
-  getSubmitButton = (): Cypress.Chainable => cy.get('button.js-return-create__target-state-toggler');
+  // The redesigned B2B theme repeats it in the page header, and either one submits the form.
+  getSubmitButton = (): Cypress.Chainable => cy.get('button.js-return-create__target-state-toggler').first();
 }

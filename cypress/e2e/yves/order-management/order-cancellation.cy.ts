@@ -9,11 +9,8 @@ const ORDER_CANCELLED_MESSAGE = 'Order was canceled successfully.';
 
 const CANCELLED_ITEM_STATE = 'Canceled';
 
-// The back office labels an item's manual events with ucfirst() of the event name, so the
-// item-level button reads differently from the order-level one for the same event.
-const SKIP_GRACE_PERIOD_ITEM_EVENT = 'Skip grace period';
-
-const PAY_ITEM_EVENT = 'Pay';
+// The back office labels an item's manual events with ucfirst() of the event name.
+const CANCEL_ITEM_EVENT = 'Cancel';
 
 describe(
   'order cancellation',
@@ -68,7 +65,7 @@ describe(
 
       // Act
       orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
-        advanceOrderItemPastCancellableStates(orderReference.trim(), dynamicFixtures.advancedItemProduct.sku);
+        moveOrderItemOutOfCancellableStates(orderReference.trim(), dynamicFixtures.advancedItemProduct.sku);
 
         customerLoginScenario.execute({
           email: dynamicFixtures.mixedStateCustomer.email,
@@ -91,10 +88,10 @@ describe(
       });
     }
 
-    // `pay` is the first happy event past the last cancellable state in both the dummy and the
-    // marketplace processes, and it is reachable only once the grace period has been skipped.
-    // Driving it on one item alone is what leaves the order's other item cancellable.
-    function advanceOrderItemPastCancellableStates(orderReference: string, sku: string): void {
+    // Cancelling one item from the back office is the one way out of the cancellable states every
+    // shop's process offers: the B2B dummy process still flags a paid item cancellable. Driving it on
+    // one item alone is what leaves the order's other item cancellable.
+    function moveOrderItemOutOfCancellableStates(orderReference: string, sku: string): void {
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
@@ -103,8 +100,7 @@ describe(
       salesIndexPage.visit();
       salesIndexPage.viewByReference(orderReference);
 
-      salesDetailPage.triggerOmsForOrderItem({ sku: sku, state: SKIP_GRACE_PERIOD_ITEM_EVENT });
-      salesDetailPage.triggerOmsForOrderItem({ sku: sku, state: PAY_ITEM_EVENT });
+      salesDetailPage.triggerOmsForOrderItem({ sku: sku, state: CANCEL_ITEM_EVENT });
     }
   }
 );

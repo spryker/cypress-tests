@@ -24,6 +24,7 @@ export interface CheckoutAddressRepository {
   getMultiShipmentTriggerButton(): Cypress.Chainable;
   getMultiShipmentAddressItemElement(): Cypress.Chainable;
   getAddressItemFormFieldListElement(): Cypress.Chainable;
+  getMultiShipmentAddressItems?(): Cypress.Chainable;
   getMultiShipmentAddressItemDeliveryRadio($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable;
   getMultiShipmentAddressItemAddressField($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable;
   getMultiShipmentAddressItemAddressFirstNameField($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable;
