@@ -17,18 +17,25 @@ export class CompanyBusinessUnitCreatePage extends BackofficePage {
   };
 
   /**
-   * The company choices are rendered server side and labelled "<name> (ID: <id>)". Some Back Offices
-   * dress the select up with select2 and some leave it plain, so the option is picked on the select
-   * itself, by the value of the option that carries the name.
+   * Suite picks the company through its select2 search. The B2B shops render a plain select whose options
+   * are labelled "<name> (ID: <id>)", so there the option carrying the name is picked by its value.
    */
   private selectCompany = (companyName: string): void => {
-    this.repository
-      .getCompanySelect()
-      .find('option')
-      .contains(companyName)
-      .then(($option) => {
-        this.repository.getCompanySelect().select($option.val() as string, { force: true });
-      });
+    if (this.isRepository('b2b', 'b2b-mp')) {
+      this.repository
+        .getCompanySelect()
+        .find('option')
+        .contains(companyName)
+        .then(($option) => {
+          this.repository.getCompanySelect().select($option.val() as string);
+        });
+
+      return;
+    }
+
+    this.repository.getCompanySelect().siblings('.select2-container').find('.select2-selection').click();
+    cy.get('.select2-dropdown .select2-search__field').type(companyName);
+    cy.contains('.select2-dropdown .select2-results__option', companyName).click();
   };
 }
 
