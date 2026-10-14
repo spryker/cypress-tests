@@ -50,7 +50,7 @@ describe(
       // Act
       productPage.addToCart();
       cartPage.visit();
-      cartPage.getProductCartItems().should('contain.text', dynamicFixtures.bundleProduct.sku);
+      cartPage.getCartItems({ sku: dynamicFixtures.bundleProduct.sku }).should('have.length', 1);
       // A saved address is picked rather than a new one typed: the B2B address forms keep their
       // fields hidden until a saved address is ruled out.
       checkoutScenario.execute({
