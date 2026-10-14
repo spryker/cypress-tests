@@ -19,6 +19,10 @@ const STORE_NAME_SUFFIX_LENGTH = 6;
 // The visibility checkbox is added by a store form expander the demoshops do not wire yet.
 const VISIBLE_TO_CUSTOMER_REPOSITORY_IDS = ['suite'];
 
+// The B2B storefronts render their registration form only for a company user invitation, so a guest
+// has no way to register there.
+const NO_GUEST_REGISTRATION_REPOSITORY_IDS = ['b2b', 'b2b-mp'];
+
 describe(
   'dynamic store creation',
   {
@@ -174,16 +178,19 @@ describe(
       cmsContentPage.assertBodyContainsText(cmsPageName).should('exist');
     });
 
-    it('given the registration content blocks are enabled for a newly created store when a guest registers there then the registration completes', (): void => {
-      // Arrange
-      selectStoreScenario.execute(staticFixtures.store.name);
+    (NO_GUEST_REGISTRATION_REPOSITORY_IDS.includes(Cypress.env('repositoryId')) ? it.skip : it)(
+      'given the registration content blocks are enabled for a newly created store when a guest registers there then the registration completes',
+      (): void => {
+        // Arrange
+        selectStoreScenario.execute(staticFixtures.store.name);
 
-      // Act
-      loginPage.visitRegistration();
-      loginPage.register();
+        // Act
+        loginPage.visit();
+        loginPage.register();
 
-      // Assert
-      loginPage.assertBodyContainsText(loginPage.getRegistrationCompletedMessage()).should('exist');
-    });
+        // Assert
+        loginPage.assertBodyContainsText(loginPage.getRegistrationCompletedMessage()).should('exist');
+      }
+    );
   }
 );
