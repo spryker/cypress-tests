@@ -4,21 +4,21 @@
   "firstConfiguration": [
     {
       "slotName": "Slot 5",
-      "productPosition": 0
+      "productIdentifier": "004_30663302"
     },
     {
       "slotName": "Slot 6",
-      "productPosition": 0
+      "productIdentifier": "185_25904533"
     }
   ],
   "secondConfiguration": [
     {
       "slotName": "Slot 5",
-      "productPosition": 1
+      "productIdentifier": "007_30691822"
     },
     {
       "slotName": "Slot 6",
-      "productPosition": 0
+      "productIdentifier": "185_25904533"
     }
   ]
 }

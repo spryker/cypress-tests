@@ -25,6 +25,5 @@ interface ExecuteParams {
 
 interface SlotSelection {
   slotName: string;
-  productIdentifier?: string;
-  productPosition?: number;
+  productIdentifier: string;
 }
