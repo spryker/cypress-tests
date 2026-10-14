@@ -4,6 +4,8 @@ import { CustomerOverviewPage, OrderDetailsPage, ReturnCreatePage, ReturnViewPag
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
 import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
+import { ActionEnum, SalesOrdersPage } from '@pages/mp';
+import { MerchantUserLoginScenario } from '@scenarios/mp';
 
 describe(
   'return creation storefront',
@@ -33,8 +35,10 @@ describe(
     const returnViewPage = container.get(ReturnViewPage);
     const salesIndexPage = container.get(SalesIndexPage);
     const salesDetailPage = container.get(SalesDetailPage);
+    const salesOrdersPage = container.get(SalesOrdersPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const userLoginScenario = container.get(UserLoginScenario);
+    const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
     const checkoutScenario = container.get(CheckoutScenario);
 
     let staticFixtures: ReturnCreationStorefrontStaticFixtures;
@@ -90,8 +94,9 @@ describe(
     }
 
     // `start-return` is offered from the shipped and delivered states only, so the order has to walk
-    // the happy path first; every event on the way is manual, and the marketplace process ships by
-    // merchant right from `skip picking`, so each shop lists its own events.
+    // the happy path first; every event on the way is manual. The marketplace process hands the order to
+    // its merchant after payment, and `start-return` also needs the merchant's own item shipped, so there the
+    // merchant ships it from the Merchant Portal. Each shop lists its own events.
     function driveOrderToShipped(): void {
       customerOverviewPage.viewLastPlacedOrder();
       orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
@@ -104,6 +109,19 @@ describe(
         salesIndexPage.viewByReference(orderReference.trim());
 
         staticFixtures.orderShippingEvents.forEach((event) => salesDetailPage.triggerOms(event));
+
+        if (!staticFixtures.merchantOrderShippingActions || !dynamicFixtures.merchantUser) {
+          return;
+        }
+
+        merchantUserLoginScenario.execute({
+          username: dynamicFixtures.merchantUser.username,
+          password: staticFixtures.defaultPassword,
+        });
+        staticFixtures.merchantOrderShippingActions.forEach((action) => {
+          salesOrdersPage.visit();
+          salesOrdersPage.update({ query: orderReference.trim(), action: ActionEnum[action] });
+        });
       });
     }
   }
