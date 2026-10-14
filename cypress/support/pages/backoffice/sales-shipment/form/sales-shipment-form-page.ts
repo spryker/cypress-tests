@@ -7,6 +7,8 @@ import { SalesShipmentFormRepository } from './sales-shipment-form-repository';
 // stored addresses; picking it is what reveals the address fields below.
 const NEW_ADDRESS_CHOICE = 'New address';
 
+const SHIPMENT_METHOD_OPTION_SEPARATOR = ' - ';
+
 @injectable()
 @autoWired
 export class SalesShipmentFormPage extends BackofficePage {
@@ -28,14 +30,21 @@ export class SalesShipmentFormPage extends BackofficePage {
     this.repository.getZipCodeField().clear().type(address.zipCode);
   };
 
-  // Every option reads "<carrier> - <method>", which is how the order detail page's two separate
-  // Delivery Method and Shipping Method lines can be checked against the one that was picked.
-  getShipmentMethodOptions = (): Cypress.Chainable<JQuery<HTMLOptionElement>> =>
-    this.repository.getShipmentMethodSelect().find('option');
+  // Every option reads "<carrier> - <method>", and the order detail page prints the two halves on
+  // separate lines, so only the method half is yielded for checking the Shipping Method line. The
+  // select also carries an empty placeholder option, which is never picked.
+  selectShipmentMethod = (position: ShipmentMethodPosition): Cypress.Chainable<string> =>
+    this.repository
+      .getShipmentMethodSelect()
+      .find('option')
+      .then(($options: JQuery<HTMLOptionElement>): Cypress.Chainable<string> => {
+        const selectableOptions = $options.filter((_index: number, option: HTMLOptionElement) => option.value !== '');
+        const option = position === 'first' ? selectableOptions.first() : selectableOptions.last();
 
-  selectShipmentMethod = (idShipmentMethod: string): void => {
-    this.repository.getShipmentMethodSelect().select(idShipmentMethod);
-  };
+        this.repository.getShipmentMethodSelect().select(option.val() as string);
+
+        return cy.wrap(option.text().trim().split(SHIPMENT_METHOD_OPTION_SEPARATOR).pop() as string);
+      });
 
   assignOrderItem = (sku: string): void => {
     this.repository.getOrderItemCheckbox(sku).check();
@@ -45,6 +54,8 @@ export class SalesShipmentFormPage extends BackofficePage {
     this.repository.getSaveButton().click();
   };
 }
+
+export type ShipmentMethodPosition = 'first' | 'last';
 
 export interface ShipmentAddress {
   salutation: string;

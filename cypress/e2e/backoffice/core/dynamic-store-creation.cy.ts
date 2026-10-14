@@ -1,4 +1,5 @@
 import { container } from '@utils';
+import { StoreCreatePage, StoreEditPage, StoreListPage } from '@pages/backoffice';
 import { CatalogPage, CmsContentPage, HomePage, LoginPage, ProductPage } from '@pages/yves';
 import { DynamicStoreCreationDynamicFixtures, DynamicStoreCreationStaticFixtures } from '@interfaces/backoffice';
 import {
@@ -10,6 +11,13 @@ import {
   UserLoginScenario,
 } from '@scenarios/backoffice';
 import { SelectStoreScenario } from '@scenarios/yves';
+
+// Store names take capital letters and single underscores only, so the per-run suffix is drawn from
+// the alphabet rather than from a counter.
+const STORE_NAME_SUFFIX_LENGTH = 6;
+
+// The visibility checkbox is added by a store form expander the demoshops do not wire yet.
+const VISIBLE_TO_CUSTOMER_REPOSITORY_IDS = ['suite'];
 
 describe(
   'dynamic store creation',
@@ -36,6 +44,9 @@ describe(
       return;
     }
 
+    const storeListPage = container.get(StoreListPage);
+    const storeCreatePage = container.get(StoreCreatePage);
+    const storeEditPage = container.get(StoreEditPage);
     const homePage = container.get(HomePage);
     const loginPage = container.get(LoginPage);
     const catalogPage = container.get(CatalogPage);
@@ -54,6 +65,8 @@ describe(
 
     let cmsPageName: string;
 
+    // The storefront tests below share one store and its relations, which a scenario sets up once and
+    // reuses on a re-run; creating a store is itself under test in the first test, on a store of its own.
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
@@ -93,6 +106,34 @@ describe(
           shouldTriggerPublishAndSync: true,
         });
       });
+    });
+
+    it('given a back office user when a store is created with a default locale and a default currency then the saved store keeps both selected and is visible to customers', (): void => {
+      // Arrange
+      // A name drawn per attempt makes the create form the only way the store can exist.
+      const storeName = `${staticFixtures.store.name}_${Cypress._.times(STORE_NAME_SUFFIX_LENGTH, () =>
+        String.fromCharCode(Cypress._.random(65, 90))
+      ).join('')}`;
+
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+      storeListPage.visit();
+      storeListPage.createStore();
+
+      // Act
+      storeCreatePage.create({ ...staticFixtures.store, name: storeName });
+
+      // Assert
+      storeListPage.hasStore(storeName).should('equal', true);
+      storeListPage.editListedStore(storeName);
+      storeEditPage.getDefaultLocaleSelect().should('have.value', staticFixtures.store.locale);
+      storeEditPage.getDefaultCurrencySelect().should('have.value', staticFixtures.store.currency);
+
+      if (storeEditPage.isRepository(...VISIBLE_TO_CUSTOMER_REPOSITORY_IDS)) {
+        storeEditPage.getVisibleToCustomerCheckbox().should('be.checked');
+      }
     });
 
     it('given a store is created in the back office when a shopper opens the storefront then the store switcher offers it', (): void => {

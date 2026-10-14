@@ -4,6 +4,12 @@ import { inject, injectable } from 'inversify';
 import { YvesPage } from '@pages/yves';
 import { CatalogRepository } from './catalog-repository';
 
+const SEARCH_INDEX_RELOAD_ATTEMPTS = 25;
+
+const SEARCH_INDEX_RELOAD_INTERVAL_MS = 5000;
+
+const SEARCH_INDEX_SYNC_COMMANDS = ['console queue:worker:start --stop-when-empty'];
+
 @injectable()
 @autoWired
 export class CatalogPage extends YvesPage {
@@ -166,6 +172,36 @@ export class CatalogPage extends YvesPage {
       .first()
       .click();
   };
+
+  // The search results are read from the search index, which a back office change reaches only
+  // through publish and sync, so the queue is drained and the results page reloaded until the card
+  // shows up.
+  waitUntilProductIsListed = (productName: string): void => {
+    cy.reloadUntilFound(
+      this.getSearchUrl(productName),
+      this.getProductItemBlockSelectorFor(productName),
+      'body',
+      SEARCH_INDEX_RELOAD_ATTEMPTS,
+      SEARCH_INDEX_RELOAD_INTERVAL_MS,
+      SEARCH_INDEX_SYNC_COMMANDS
+    );
+  };
+
+  waitUntilProductIsNotListed = (productName: string): void => {
+    cy.reloadUntilGone(
+      this.getSearchUrl(productName),
+      this.getProductItemBlockSelectorFor(productName),
+      'body',
+      SEARCH_INDEX_RELOAD_ATTEMPTS,
+      SEARCH_INDEX_RELOAD_INTERVAL_MS,
+      SEARCH_INDEX_SYNC_COMMANDS
+    );
+  };
+
+  private getSearchUrl = (query: string): string => `${this.PAGE_URL}?q=${encodeURIComponent(query)}`;
+
+  private getProductItemBlockSelectorFor = (productName: string): string =>
+    `${this.repository.getProductItemBlockSelector()}:contains("${productName}")`;
 
   getSspAssetSelectorBlock = (): Cypress.Chainable => this.repository.getSspAssetSelectorBlock();
 

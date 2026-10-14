@@ -32,31 +32,40 @@ describe(
     const userLoginScenario = container.get(UserLoginScenario);
     const merchantUserLoginScenario = container.get(MerchantUserLoginScenario);
 
-    const publishAndSyncCommands = [
-      'console publish:trigger-events -r merchant',
-      'console queue:worker:start --stop-when-empty',
-    ];
-
     let staticFixtures: MerchantDeactivationStaticFixtures;
     let dynamicFixtures: MerchantDeactivationDynamicFixtures;
+    let publishAndSyncCommands: Array<string>;
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
-    });
 
-    it('given a merchant offered on the storefront when the back office deactivates it then its profile and its products leave the storefront', (): void => {
-      // Arrange
-      // The merchant has no online profile until the portal writes one, which is what puts it on the storefront.
+      // Republishing every merchant times the gateway out, so only the merchant under test is published.
+      publishAndSyncCommands = [
+        `console publish:trigger-events -r merchant -i ${dynamicFixtures.merchant.id_merchant}`,
+        'console queue:worker:start --stop-when-empty',
+      ];
+
+      // The merchant has no online profile until the portal writes one, which is what puts it on the
+      // storefront.
       merchantUserLoginScenario.execute({
         username: dynamicFixtures.merchantUser.username,
         password: staticFixtures.defaultPassword,
       });
-
       profilePage.visit();
       profilePage.openOnlineProfileTab();
       profilePage.setStoreStatus({ isOnline: true });
       profilePage.save();
+    });
 
+    beforeEach((): void => {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+    });
+
+    it('given a merchant offered on the storefront when the back office deactivates it then its profile and its products leave the storefront', (): void => {
+      // Arrange
       cy.reloadUntilFound(
         dynamicFixtures.merchantUrlEN.url,
         '[data-qa="component merchant-profile"]',
@@ -65,16 +74,11 @@ describe(
         3000,
         publishAndSyncCommands
       );
-
-      openMerchantProductDetailPage();
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.merchantProduct.abstract_sku });
       productPage.getSoldByProductOffers().should('contain.text', dynamicFixtures.merchant.name);
 
       // Act
-      userLoginScenario.execute({
-        username: dynamicFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
-
       merchantListPage.visit();
       merchantListPage.update({ query: dynamicFixtures.merchant.name, action: ActionEnum.deactivate });
 
@@ -90,13 +94,9 @@ describe(
 
       // A deactivated merchant takes its whole buy-box entry with it, so the merchant name has to be
       // gone from the detail page rather than merely absent from a block that no longer exists.
-      openMerchantProductDetailPage();
-      productPage.getBody().should('not.contain.text', dynamicFixtures.merchant.name);
-    });
-
-    function openMerchantProductDetailPage(): void {
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.merchantProduct.abstract_sku });
-    }
+      productPage.getBody().should('not.contain.text', dynamicFixtures.merchant.name);
+    });
   }
 );

@@ -1,9 +1,8 @@
 import { container } from '@utils';
 import { OrderRefundDynamicFixtures, OrderRefundStaticFixtures } from '@interfaces/backoffice';
-import { RefundPage, SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
-import { CustomerOverviewPage, OrderDetailsPage } from '@pages/yves';
+import { RefundPage, SalesDetailPage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
-import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
+import { CustomerLoginScenario, PlaceOrderScenario } from '@scenarios/yves';
 
 // The marketplace repositories run MarketplacePayment01, whose only route into `refunded` starts
 // from `cancelled`; the delivered-to-refunded transition this journey drives exists in the Dummy
@@ -34,27 +33,56 @@ describe(
       return;
     }
 
-    const customerOverviewPage = container.get(CustomerOverviewPage);
-    const orderDetailsPage = container.get(OrderDetailsPage);
-    const salesIndexPage = container.get(SalesIndexPage);
     const salesDetailPage = container.get(SalesDetailPage);
     const refundPage = container.get(RefundPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const userLoginScenario = container.get(UserLoginScenario);
-    const checkoutScenario = container.get(CheckoutScenario);
+    const placeOrderScenario = container.get(PlaceOrderScenario);
 
     let staticFixtures: OrderRefundStaticFixtures;
     let dynamicFixtures: OrderRefundDynamicFixtures;
+    let idSalesOrder: number;
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      placeOrderScenario
+        .execute({ idCustomerAddress: dynamicFixtures.address.id_customer_address, shouldTriggerOmsInCli: true })
+        .then((placedIdSalesOrder: number): void => {
+          idSalesOrder = placedIdSalesOrder;
+
+          userLoginScenario.execute({
+            username: dynamicFixtures.rootUser.username,
+            password: staticFixtures.defaultPassword,
+          });
+          salesDetailPage.visit({ qs: { 'id-sales-order': idSalesOrder } });
+
+          // `refund` is reachable from `delivered` only, so the order has to walk the whole happy path
+          // first. Every event on it is manual, which is why each one is triggered rather than waited for.
+          salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
+          salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
+          salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
+          salesDetailPage.triggerOms({ state: 'skip picking' });
+          salesDetailPage.triggerOms({ state: 'Ship' });
+          salesDetailPage.triggerOms({ state: 'Stock update' });
+        });
+    });
+
+    beforeEach((): void => {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+      salesDetailPage.visit({ qs: { 'id-sales-order': idSalesOrder } });
     });
 
     it('given a delivered order of three items when they are refunded one by one then each refund is recorded and the grand total reaches zero', (): void => {
       // Arrange
-      placeOrderAndOpenInBackoffice();
-      driveOrderToDelivered();
-
       let firstItemAmount: number;
       let grandTotalBeforeRefunds: number;
 
@@ -66,7 +94,10 @@ describe(
       });
 
       // Act
-      refundOrderItem(dynamicFixtures.firstRefundedProduct.sku);
+      salesDetailPage.triggerOmsForOrderItem({
+        sku: dynamicFixtures.firstRefundedProduct.sku,
+        state: REFUND_ITEM_EVENT,
+      });
 
       // Assert
       refundPage.getRefundRows().should('have.length', 1);
@@ -78,8 +109,14 @@ describe(
       });
 
       // Act
-      refundOrderItem(dynamicFixtures.secondRefundedProduct.sku);
-      refundOrderItem(dynamicFixtures.thirdRefundedProduct.sku);
+      salesDetailPage.triggerOmsForOrderItem({
+        sku: dynamicFixtures.secondRefundedProduct.sku,
+        state: REFUND_ITEM_EVENT,
+      });
+      salesDetailPage.triggerOmsForOrderItem({
+        sku: dynamicFixtures.thirdRefundedProduct.sku,
+        state: REFUND_ITEM_EVENT,
+      });
 
       // Assert
       refundPage.getRefundRows().should('have.length', 3);
@@ -88,43 +125,5 @@ describe(
       });
       salesDetailPage.getGrandTotal().should('equal', 0);
     });
-
-    function placeOrderAndOpenInBackoffice(): void {
-      customerLoginScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-      });
-
-      checkoutScenario.execute({
-        idCustomerAddress: dynamicFixtures.address.id_customer_address,
-        shouldTriggerOmsInCli: true,
-      });
-
-      customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
-        userLoginScenario.execute({
-          username: dynamicFixtures.rootUser.username,
-          password: staticFixtures.defaultPassword,
-        });
-
-        salesIndexPage.visit();
-        salesIndexPage.viewByReference(orderReference.trim());
-      });
-    }
-
-    // `refund` is reachable from `delivered` only, so the order has to walk the whole happy path
-    // first. Every event on it is manual, which is why each one is triggered rather than waited for.
-    function driveOrderToDelivered(): void {
-      salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'skip picking' });
-      salesDetailPage.triggerOms({ state: 'Ship' });
-      salesDetailPage.triggerOms({ state: 'Stock update' });
-    }
-
-    function refundOrderItem(sku: string): void {
-      salesDetailPage.triggerOmsForOrderItem({ sku: sku, state: REFUND_ITEM_EVENT });
-    }
   }
 );

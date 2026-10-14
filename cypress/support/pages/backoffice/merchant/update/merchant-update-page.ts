@@ -19,6 +19,11 @@ export class MerchantUpdatePage extends BackofficePage {
     this.repository.getUsersTab().click();
   };
 
+  visitUsersTab = (idMerchant: number): void => {
+    this.visit({ qs: { 'id-merchant': idMerchant } });
+    this.openUsersTab();
+  };
+
   // The merchant-user table declares every column non-searchable, so its rows are matched on the
   // e-mail text rather than through the table search.
   findMerchantUserRow = (params: FindMerchantUserRowParams): Cypress.Chainable =>

@@ -63,13 +63,14 @@ describe(
       companyUserLastName = `User${unique}`;
     });
 
-    it('should list the new company user under its company when the company structure is built in the back office', (): void => {
-      // Arrange
+    beforeEach((): void => {
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
+    });
 
+    it('given a back office user when a company, its business unit, its role and a company user are created then the company user list shows the user under its company', (): void => {
       // Act
       companyCreatePage.visit();
       companyCreatePage.create(companyName);
@@ -107,7 +108,7 @@ describe(
       companyUserListPage.findByCompanyName(companyName).should('contain.text', companyUserLastName);
     });
 
-    it('created company user should reach only what its role allows', (): void => {
+    it('given the company user created above when an agent impersonates it on the storefront then it reaches the pages its role allows and no others', (): void => {
       // Arrange
       // Nothing knows the new company user's password, so the agent switches into their session.
       impersonateCustomerScenario.execute({

@@ -39,6 +39,7 @@ export * from './availability/edit/availability-edit-page';
 export * from './availability/index/availability-index-page';
 export * from './store/list/store-list-page';
 export * from './store/create/store-create-page';
+export * from './store/edit/store-edit-page';
 export * from './stock/list/stock-list-page';
 export * from './stock/edit/stock-edit-page';
 export * from './shipment/shipment-method/list/shipment-method-list-page';

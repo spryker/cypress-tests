@@ -19,6 +19,8 @@ export class DataExchangeRepository {
 
   getIsEnabledCheckbox = (): Cypress.Chainable => cy.get('#dynamic-entity_is_active');
 
+  getResourceNameInput = (): Cypress.Chainable => cy.get('#dynamic-entity_table_alias');
+
   getSubmitButton = (): Cypress.Chainable => cy.get('button.safe-submit');
 
   getFieldDefinitionRow = (fieldName: string): Cypress.Chainable =>

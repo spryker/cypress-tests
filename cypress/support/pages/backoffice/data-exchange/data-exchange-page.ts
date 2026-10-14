@@ -66,13 +66,22 @@ export class DataExchangePage extends BackofficePage {
     this.repository.getIsEnabledCheckbox().uncheck();
   };
 
-  configureField = (field: FieldDefinition, visibleName: string = field.name): void => {
+  // The resource name is the path segment the Backend API serves the table under, so a name drawn per
+  // run exposes a resource no earlier run can have left in the specification.
+  setResourceName = (resourceName: string): void => {
+    this.repository.getResourceNameInput().clear();
+    this.repository.getResourceNameInput().type(resourceName);
+  };
+
+  getResourceNameInput = (): Cypress.Chainable => this.repository.getResourceNameInput();
+
+  configureField = (field: FieldDefinition): void => {
     const selectorOf = (control: FieldControl): string => this.repository.getFieldControlSelector(control);
 
     this.repository.getFieldDefinitionRow(field.name).within(() => {
       cy.get(selectorOf('enabled')).check();
       cy.get(selectorOf('visibleName')).clear();
-      cy.get(selectorOf('visibleName')).type(visibleName);
+      cy.get(selectorOf('visibleName')).type(field.visibleName ?? field.name);
       cy.get(selectorOf('type')).select(field.type, { force: true });
 
       DataExchangePage.toggle(selectorOf('creatable'), field.isCreatable);
@@ -130,4 +139,5 @@ export interface FieldDefinition {
   isCreatable: boolean;
   isEditable: boolean;
   isRequired: boolean;
+  visibleName?: string;
 }

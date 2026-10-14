@@ -45,47 +45,42 @@ describe(
       cy.runCliCommands(publishAndSyncCommands);
     });
 
-    it('given an approved offer on the storefront when the back office denies it then it leaves the detail page, and approving it again brings it back', (): void => {
-      // Arrange
-      openProductDetailPage();
-      productPage.getSoldByProductOffers().should('contain.text', dynamicFixtures.merchant.name);
-
+    beforeEach((): void => {
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
+    });
+
+    it('given an approved offer on the storefront when the back office denies it then it leaves the detail page, and approving it again brings it back', (): void => {
+      // Arrange
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.merchantProduct.abstract_sku });
+      productPage.getSoldByProductOffers().should('contain.text', dynamicFixtures.merchant.name);
 
       // Act
-      setApprovalStatus({ isApproved: false });
+      productOfferListPage.visit();
+      productOfferListPage.findOffer({ query: dynamicFixtures.productOffer.product_offer_reference });
+      productOfferListPage.clickDenyButton();
+      cy.runCliCommands(publishAndSyncCommands);
 
       // Assert
       // A denied offer takes its whole buy-box entry with it, so the merchant name has to be gone
       // from the detail page rather than merely absent from a block that no longer exists.
-      openProductDetailPage();
-      productPage.getBody().should('not.contain.text', dynamicFixtures.merchant.name);
-
-      setApprovalStatus({ isApproved: true });
-
-      openProductDetailPage();
-      productPage.getSoldByProductOffers().should('contain.text', dynamicFixtures.merchant.name);
-    });
-
-    function setApprovalStatus(params: { isApproved: boolean }): void {
-      productOfferListPage.visit();
-      productOfferListPage.findOffer({ query: dynamicFixtures.productOffer.product_offer_reference });
-
-      if (params.isApproved) {
-        productOfferListPage.clickApproveButton();
-      } else {
-        productOfferListPage.clickDenyButton();
-      }
-
-      cy.runCliCommands(publishAndSyncCommands);
-    }
-
-    function openProductDetailPage(): void {
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.merchantProduct.abstract_sku });
-    }
+      productPage.getBody().should('not.contain.text', dynamicFixtures.merchant.name);
+
+      // Act
+      productOfferListPage.visit();
+      productOfferListPage.findOffer({ query: dynamicFixtures.productOffer.product_offer_reference });
+      productOfferListPage.clickApproveButton();
+      cy.runCliCommands(publishAndSyncCommands);
+
+      // Assert
+      catalogPage.visit();
+      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.merchantProduct.abstract_sku });
+      productPage.getSoldByProductOffers().should('contain.text', dynamicFixtures.merchant.name);
+    });
   }
 );

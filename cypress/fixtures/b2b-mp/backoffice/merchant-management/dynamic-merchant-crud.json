@@ -5,6 +5,15 @@
       "synchronize": true,
       "operations": [
         {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeEN",
+          "arguments": {
+            "id_locale": 66,
+            "locale_name": "en_US"
+          }
+        },
+        {
           "type": "helper",
           "name": "haveUser",
           "key": "rootUser",
@@ -18,6 +27,53 @@
           "type": "helper",
           "name": "addUserToGroup",
           "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchantWaitingForApproval",
+          "arguments": [
+            {
+              "status": "waiting-for-approval",
+              "isActive": false
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "renamedMerchant"
+        },
+        {
+          "type": "helper",
+          "name": "haveUrl",
+          "key": "renamedMerchantUrlEN",
+          "arguments": [
+            {
+              "fkLocale": "#localeEN.id_locale",
+              "fkResourceMerchant": "#renamedMerchant.id_merchant",
+              "urlPrefix": "/en/merchant/crud-rename-en-",
+              "url": "#renamedMerchant.name"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "unassignedMerchant"
+        },
+        {
+          "type": "helper",
+          "name": "haveUrl",
+          "key": "unassignedMerchantUrlEN",
+          "arguments": [
+            {
+              "fkLocale": "#localeEN.id_locale",
+              "fkResourceMerchant": "#unassignedMerchant.id_merchant",
+              "urlPrefix": "/en/merchant/crud-unassign-en-",
+              "url": "#unassignedMerchant.name"
+            }
+          ]
         }
       ]
     }

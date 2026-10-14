@@ -1,13 +1,8 @@
 import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import { ShipmentManagementDynamicFixtures, ShipmentManagementStaticFixtures } from '@interfaces/backoffice';
-import { SalesDetailPage, SalesIndexPage, SalesShipmentFormPage } from '@pages/backoffice';
+import { SalesDetailPage, SalesShipmentFormPage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
-import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
-import { CustomerOverviewPage, OrderDetailsPage } from '@pages/yves';
-
-// A shipment method option reads "<carrier> - <method>", and the order detail page prints the two
-// halves on separate lines, so only the second half is what the Shipping Method line carries.
-const SHIPMENT_METHOD_OPTION_SEPARATOR = ' - ';
+import { CustomerLoginScenario, PlaceOrderScenario } from '@scenarios/yves';
 
 describe(
   'shipment management',
@@ -24,38 +19,55 @@ describe(
     ],
   },
   (): void => {
-    const customerOverviewPage = container.get(CustomerOverviewPage);
-    const orderDetailsPage = container.get(OrderDetailsPage);
-    const salesIndexPage = container.get(SalesIndexPage);
     const salesDetailPage = container.get(SalesDetailPage);
     const salesShipmentFormPage = container.get(SalesShipmentFormPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const userLoginScenario = container.get(UserLoginScenario);
-    const checkoutScenario = container.get(CheckoutScenario);
+    const placeOrderScenario = container.get(PlaceOrderScenario);
 
     let staticFixtures: ShipmentManagementStaticFixtures;
     let dynamicFixtures: ShipmentManagementDynamicFixtures;
+    let idSalesOrder: number;
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
+
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+      });
+
+      placeOrderScenario
+        .execute({
+          idCustomerAddress: dynamicFixtures.address.id_customer_address,
+          paymentMethod: getPaymentMethodBasedOnEnv(),
+          shouldTriggerOmsInCli: true,
+        })
+        .then((placedIdSalesOrder: number): void => {
+          idSalesOrder = placedIdSalesOrder;
+        });
+    });
+
+    beforeEach((): void => {
+      userLoginScenario.execute({
+        username: dynamicFixtures.rootUser.username,
+        password: staticFixtures.defaultPassword,
+      });
+      salesDetailPage.visit({ qs: { 'id-sales-order': idSalesOrder } });
     });
 
     it('given an order delivered as one shipment when a second shipment is created and then edited then the item moves and the edited address is kept', (): void => {
       // Arrange
-      placeOrderAndOpenInBackoffice();
-      salesDetailPage.getOrderItemTables().should('have.length', 1);
-
-      // Act
       let createdShipmentMethodName: string;
       let editedShipmentMethodName: string;
 
+      salesDetailPage.getOrderItemTables().should('have.length', 1);
+
+      // Act
       salesDetailPage.createShipment();
       salesShipmentFormPage.fillNewDeliveryAddress(staticFixtures.newShipmentAddress);
-      salesShipmentFormPage.getShipmentMethodOptions().then(($options: JQuery<HTMLOptionElement>): void => {
-        const option = selectableOptions($options).last();
-        createdShipmentMethodName = shipmentMethodNameOf(option);
-
-        salesShipmentFormPage.selectShipmentMethod(option.val() as string);
+      salesShipmentFormPage.selectShipmentMethod('last').then((shipmentMethodName: string): void => {
+        createdShipmentMethodName = shipmentMethodName;
       });
       salesShipmentFormPage.assignOrderItem(dynamicFixtures.movedProduct.sku);
       salesShipmentFormPage.save();
@@ -82,11 +94,8 @@ describe(
       // shipment's address but not its method, so leaving the select alone fails validation.
       salesDetailPage.editShipment(2);
       salesShipmentFormPage.fillNewDeliveryAddress(staticFixtures.editedShipmentAddress);
-      salesShipmentFormPage.getShipmentMethodOptions().then(($options: JQuery<HTMLOptionElement>): void => {
-        const option = selectableOptions($options).first();
-        editedShipmentMethodName = shipmentMethodNameOf(option);
-
-        salesShipmentFormPage.selectShipmentMethod(option.val() as string);
+      salesShipmentFormPage.selectShipmentMethod('first').then((shipmentMethodName: string): void => {
+        editedShipmentMethodName = shipmentMethodName;
       });
       salesShipmentFormPage.save();
 
@@ -101,38 +110,5 @@ describe(
       });
       salesDetailPage.getShipmentItemTable(2).should('contain', dynamicFixtures.movedProduct.sku);
     });
-
-    // The select carries an empty placeholder option; only the real methods can be picked.
-    function selectableOptions($options: JQuery<HTMLOptionElement>): JQuery<HTMLOptionElement> {
-      return $options.filter((_index: number, option: HTMLOptionElement) => option.value !== '');
-    }
-
-    function shipmentMethodNameOf(option: JQuery<HTMLOptionElement>): string {
-      return option.text().trim().split(SHIPMENT_METHOD_OPTION_SEPARATOR).pop() as string;
-    }
-
-    function placeOrderAndOpenInBackoffice(): void {
-      customerLoginScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-      });
-
-      checkoutScenario.execute({
-        idCustomerAddress: dynamicFixtures.address.id_customer_address,
-        paymentMethod: getPaymentMethodBasedOnEnv(),
-        shouldTriggerOmsInCli: true,
-      });
-
-      customerOverviewPage.viewLastPlacedOrder();
-      orderDetailsPage.getOrderReferenceBlock().then((orderReference: string) => {
-        userLoginScenario.execute({
-          username: dynamicFixtures.rootUser.username,
-          password: staticFixtures.defaultPassword,
-        });
-
-        salesIndexPage.visit();
-        salesIndexPage.viewByReference(orderReference.trim());
-      });
-    }
   }
 );
