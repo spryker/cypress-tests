@@ -14,7 +14,7 @@ export class WishlistPage extends YvesPage {
 
     cy.get('#wishlist_form_name').clear();
     cy.get('#wishlist_form_name').type(wishlistName);
-    cy.get('[data-qa="component wishlist-form"] input[type="submit"]').click();
+    cy.get('[data-qa="component wishlist-form"] [type="submit"]').click();
 
     return wishlistName;
   };
@@ -26,25 +26,31 @@ export class WishlistPage extends YvesPage {
     this.getWishlistOverviewEntry(name).click();
   };
 
-  getWishlistItemsTable = (): Cypress.Chainable => cy.get('[data-qa="component wishlist-table"]');
+  // The B2C shops rename the detail table's component to wishlist-detail-table.
+  getWishlistItemsTable = (): Cypress.Chainable =>
+    cy.get('[data-qa="component wishlist-table"], [data-qa="component wishlist-detail-table"]');
 
   // The wishlist selector is a widget on the product detail page: it posts the displayed product
   // to `wishlist/add-item`. Its picker is filled in by an ajax call after page load, so reading it
-  // is what waits for that call to have rendered.
+  // is what waits for that call to have rendered. The B2C shops render the older wishlist-selector
+  // molecule instead of wishlist-selector-default, and wrap the picker in a custom select that hides it.
   getWishlistPicker = (): Cypress.Chainable =>
-    cy.get('[data-qa="component wishlist-selector-default"] [name="wishlist-name"]');
+    cy.get(
+      '[data-qa="component wishlist-selector-default"] [name="wishlist-name"], [data-qa="component wishlist-selector"] [name="wishlist-name"]'
+    );
 
   addDisplayedProductToWishlist = (name: string): void => {
-    cy.get('[data-qa="component wishlist-selector-default"] select[name="wishlist-name"]').select(name);
+    this.getWishlistPicker().filter('select').first().select(name, { force: true });
     this.getAddToWishlistForm().submit();
   };
 
-  getAddToWishlistForm = (): Cypress.Chainable => cy.get('form.wishlist-selector-default__form');
+  getAddToWishlistForm = (): Cypress.Chainable =>
+    cy.get('form.wishlist-selector-default__form, form.wishlist-selector__form').first();
 
   // A wishlist row carries its own configure form, distinct from both the detail page's
   // configuration-form and the cart's configuration-cart-form.
   configureProduct = (params: ConfigureProductParams): void => {
-    cy.contains('[data-qa="component wishlist-table"] tr', params.sku)
+    cy.contains('[data-qa="component wishlist-table"] tr, [data-qa="component wishlist-detail-table"] tr', params.sku)
       .find('[data-qa="component wishlist-configuration-form"] button')
       .click();
   };
