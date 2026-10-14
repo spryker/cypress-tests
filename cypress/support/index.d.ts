@@ -22,6 +22,11 @@ declare namespace Cypress {
     loadDynamicFixturesByPayload(dynamicFixturesDefaultFilePath: string, retries?: number): Chainable;
 
     /**
+     * @example cy.resetProxyCookieJar()
+     */
+    resetProxyCookieJar(): void;
+
+    /**
      * @example cy.resetBackofficeCookies()
      */
     resetBackofficeCookies(): void;
