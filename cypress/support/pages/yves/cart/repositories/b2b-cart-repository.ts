@@ -138,9 +138,13 @@ export class B2bCartRepository implements CartRepository {
   };
   getCartItemAvailabilityLabel = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-cart-item"] [data-qa="component availability-product"]');
-  getConfiguredBundles = (): Cypress.Chainable => cy.get('article[data-qa*="configured-bundle"]');
+  // The bundle's products render as configured-bundle-product articles inside it.
+  getConfiguredBundles = (): Cypress.Chainable =>
+    cy.get('article[data-qa*="configured-bundle"]:not([data-qa*="configured-bundle-product"])');
   getConfiguredBundle = (bundleName: string): Cypress.Chainable =>
-    cy.contains('article[data-qa*="configured-bundle"]', bundleName).first();
+    cy
+      .contains('article[data-qa*="configured-bundle"]:not([data-qa*="configured-bundle-product"])', bundleName)
+      .first();
   // The bundle's quantity counter has no submit button: it posts its form itself a moment after the value
   // changes, so the request is awaited before the value is typed.
   getConfiguredBundleQuantityField = (bundleName: string): Cypress.Chainable => {
@@ -155,7 +159,6 @@ export class B2bCartRepository implements CartRepository {
       .first()
       .trigger('change', { force: true, bubbles: true });
     cy.wait('@configuredBundleQuantityChange');
-    cy.reload();
   };
   getClearCartFormSelector = (): string => 'form[name=multi_cart_clear_form]';
 
