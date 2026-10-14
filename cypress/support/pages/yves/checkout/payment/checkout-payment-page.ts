@@ -36,10 +36,10 @@ export class CheckoutPaymentPage extends YvesPage {
 
   setDummyPaymentMethod = (): void => {
     this.repository.getDummyPaymentInvoiceRadio().click({ force: true });
-
-    if (!this.isRepository('suite', 'b2b-mp', 'b2b')) {
-      this.repository.getDummyPaymentInvoiceDateField().clear().type('12.12.1999');
-    }
+    this.typeDateOfBirthWhenAsked(
+      this.repository.getDummyPaymentInvoiceDateFieldSelector(),
+      this.repository.getDummyPaymentInvoiceDateField
+    );
 
     this.repository.getGoToSummaryButton().click();
   };
@@ -55,11 +55,24 @@ export class CheckoutPaymentPage extends YvesPage {
 
   setDummyMarketplacePaymentMethod = (): void => {
     this.repository.getDummyMarketplacePaymentInvoiceRadio().click({ force: true });
-
-    if (!this.isRepository('suite', 'b2b-mp', 'b2b')) {
-      this.repository.getDummyMarketplacePaymentInvoiceDateField().clear().type('12.12.1999');
-    }
+    this.typeDateOfBirthWhenAsked(
+      this.repository.getDummyMarketplacePaymentInvoiceDateFieldSelector(),
+      this.repository.getDummyMarketplacePaymentInvoiceDateField
+    );
 
     this.repository.getGoToSummaryButton().click();
+  };
+
+  // Whether the invoice asks for a date of birth is up to the shop's payment form, not the repository id:
+  // b2b-demo-shop requires it while the b2b lane of b2b-demo-marketplace renders no such field.
+  private typeDateOfBirthWhenAsked = (dateFieldSelector: string, getDateField: () => Cypress.Chainable): void => {
+    this.getBody().then(($body: JQuery<HTMLElement>): void => {
+      if ($body.find(`${dateFieldSelector}:visible`).length === 0) {
+        return;
+      }
+
+      getDateField().clear();
+      getDateField().type('12.12.1999');
+    });
   };
 }
