@@ -14,6 +14,15 @@
           }
         },
         {
+          "type": "transfer",
+          "name": "LocaleTransfer",
+          "key": "localeDE",
+          "arguments": {
+            "id_locale": 46,
+            "locale_name": "de_DE"
+          }
+        },
+        {
           "type": "helper",
           "name": "haveUser",
           "key": "rootUser",
@@ -59,6 +68,19 @@
         },
         {
           "type": "helper",
+          "name": "haveUrl",
+          "key": "renamedMerchantUrlDE",
+          "arguments": [
+            {
+              "fkLocale": "#localeDE.id_locale",
+              "fkResourceMerchant": "#renamedMerchant.id_merchant",
+              "urlPrefix": "/de/merchant/crud-rename-de-",
+              "url": "#renamedMerchant.name"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveActiveMerchantWithStore",
           "key": "unassignedMerchant"
         },
@@ -71,6 +93,19 @@
               "fkLocale": "#localeEN.id_locale",
               "fkResourceMerchant": "#unassignedMerchant.id_merchant",
               "urlPrefix": "/en/merchant/crud-unassign-en-",
+              "url": "#unassignedMerchant.name"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveUrl",
+          "key": "unassignedMerchantUrlDE",
+          "arguments": [
+            {
+              "fkLocale": "#localeDE.id_locale",
+              "fkResourceMerchant": "#unassignedMerchant.id_merchant",
+              "urlPrefix": "/de/merchant/crud-unassign-de-",
               "url": "#unassignedMerchant.name"
             }
           ]
