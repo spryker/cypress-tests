@@ -26,7 +26,9 @@ export class CheckoutSummaryPage extends YvesPage {
   getCancelApprovalRequestButton = (): Cypress.Chainable => this.repository.getCancelApprovalRequestButton();
 
   placeOrder = (): void => {
-    this.repository.getaAcceptTermsAndConditionsCheckbox().should('be.visible', { timeout: 1000 });
+    // The b2c themes render a styled checkbox over a transparent native input, which Cypress never reports
+    // as visible; presence is what every theme shares.
+    this.repository.getaAcceptTermsAndConditionsCheckbox().should('exist');
     this.repository.getaAcceptTermsAndConditionsCheckbox().check({ force: true });
     this.repository.getSummaryForm().submit();
   };
