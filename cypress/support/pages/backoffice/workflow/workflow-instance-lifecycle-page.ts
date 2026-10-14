@@ -10,26 +10,32 @@ export class WorkflowInstanceLifecyclePage extends BackofficePage {
 
   protected PAGE_URL = '/workflow/process';
 
-  openInstances = (workflowName: string): void => {
+  openWorkflowActivity = (workflowName: string): void => {
     this.visit();
     this.repository.getProcessRowViewButton(workflowName).click();
-    // No page links to the instances list, so it is opened with the version id read from the version view URL.
-    cy.location('search').then((search: string): void => {
-      const idDefinition = new URLSearchParams(search).get('id-definition');
-
-      cy.visitBackoffice(`/workflow/instance?id-definition=${idDefinition}`);
-    });
   };
 
   triggerManualAction = (params: { identifier: number; eventName: string }): void => {
     this.repository.getInstanceRowManualAction(params.identifier, params.eventName).click();
   };
 
+  getWorkflowActivityTable = (): Cypress.Chainable => this.repository.getWorkflowActivityTable();
+
+  getWorkflowActivityHeaders = (): Cypress.Chainable => this.repository.getWorkflowActivityHeaders();
+
   getInstanceRow = (identifier: number): Cypress.Chainable => this.repository.getInstanceRow(identifier);
 
   getInstanceRowState = (identifier: number): Cypress.Chainable => this.repository.getInstanceRowState(identifier);
 
   getInstanceRowStatus = (identifier: number): Cypress.Chainable => this.repository.getInstanceRowStatus(identifier);
+
+  openInstanceView = (identifier: number): void => {
+    this.repository.getInstanceRowViewButton(identifier).click();
+  };
+
+  getInstanceBackButton = (): Cypress.Chainable => this.repository.getInstanceBackButton();
+
+  getPageActionButtons = (): Cypress.Chainable => this.repository.getPageActionButtons();
 
   getInstanceRowManualAction = (identifier: number, eventName: string): Cypress.Chainable =>
     this.repository.getInstanceRowManualAction(identifier, eventName);

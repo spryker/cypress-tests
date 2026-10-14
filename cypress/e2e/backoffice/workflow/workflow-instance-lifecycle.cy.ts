@@ -37,16 +37,48 @@ describe(
 
       // The company-created trigger already ran during fixture synchronization, so the
       // instance exists on the active version, attached to the company id, in the initial state.
-      workflowInstanceLifecyclePage.openInstances(dynamicFixtures.workflow.process_name);
+      workflowInstanceLifecyclePage.openWorkflowActivity(dynamicFixtures.workflow.process_name);
+
+      // The version view lists the instances of every version of the workflow, most recently executed first.
+      workflowInstanceLifecyclePage.getWorkflowActivityTable().should('be.visible');
+      workflowInstanceLifecyclePage.getWorkflowActivityHeaders().then((headers: JQuery<HTMLElement>): void => {
+        expect([...headers].map((header: HTMLElement): string => header.innerText.trim())).to.deep.equal([
+          'Subject Identifier',
+          'Subject Type',
+          'Version',
+          'Current State',
+          'Status',
+          'Creation Date',
+          'Actions',
+        ]);
+      });
+      workflowInstanceLifecyclePage
+        .getWorkflowActivityTable()
+        .invoke('attr', 'data-order')
+        .then((order: string): void => {
+          expect(JSON.parse(order)).to.deep.equal([['5', 'desc']]);
+        });
 
       workflowInstanceLifecyclePage.getInstanceRow(identifier).should('contain', identifier);
       workflowInstanceLifecyclePage.getInstanceRowState(identifier).should('contain', initialState);
       workflowInstanceLifecyclePage.getInstanceRowStatus(identifier).should('contain', 'In progress');
 
+      // View opens the instance; its only header action leads back to the workflow view it was opened from.
+      cy.location('search').then((workflowViewSearch: string): void => {
+        const idDefinition = new URLSearchParams(workflowViewSearch).get('id-definition');
+
+        workflowInstanceLifecyclePage.openInstanceView(identifier);
+        cy.location('pathname').should('eq', '/workflow/instance/view');
+        workflowInstanceLifecyclePage.getPageActionButtons().should('have.length', 1);
+        workflowInstanceLifecyclePage.getInstanceBackButton().should('contain', 'Back to workflow').click();
+        cy.location('pathname').should('eq', '/workflow/version/view');
+        cy.location('search').should('contain', `id-definition=${idDefinition}`);
+      });
+
       // Admin fires the manual state-machine action directly from the Instances table.
       // Triggering redirects to the instance detail view, so re-open the list to read the updated row.
       workflowInstanceLifecyclePage.triggerManualAction({ identifier, eventName: manualEvent });
-      workflowInstanceLifecyclePage.openInstances(dynamicFixtures.workflow.process_name);
+      workflowInstanceLifecyclePage.openWorkflowActivity(dynamicFixtures.workflow.process_name);
 
       // The table reflects the new state and the finished status; the manual action is gone.
       workflowInstanceLifecyclePage.getInstanceRowState(identifier).should('contain', targetState);
