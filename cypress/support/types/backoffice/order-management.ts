@@ -99,4 +99,5 @@ export interface ConfigurableProductOmsStaticFixtures {
   defaultPassword: string;
   configurationNotCompleteStatus: string;
   configurationCompleteStatus: string;
+  orderShippingEvents: Array<{ state: string; shouldTriggerOmsInCli?: boolean }>;
 }

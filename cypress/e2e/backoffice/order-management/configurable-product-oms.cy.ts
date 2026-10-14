@@ -103,11 +103,8 @@ describe(
       });
 
       // Act
-      salesDetailPage.triggerOms({ state: 'skip grace period', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'Skip timeout', shouldTriggerOmsInCli: true });
-      salesDetailPage.triggerOms({ state: 'skip picking' });
-      salesDetailPage.triggerOms({ state: 'Ship' });
+      // The marketplace order process ships through the merchant, so its back office walk ends at skip picking.
+      staticFixtures.orderShippingEvents.forEach((event) => salesDetailPage.triggerOms(event));
 
       // Assert
       salesDetailPage.getOrderItemTables().should((tables: JQuery<HTMLElement>): void => {
