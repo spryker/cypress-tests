@@ -1,17 +1,7 @@
 {
   "defaultPassword": "change123",
-  "defaultPriceCustomer": {
-    "email": "Richi@acme.com"
-  },
-  "merchantPriceCustomer": {
-    "email": "Elizabet@acme.com"
-  },
-  "product": {
-    "abstractSku": "HWB-BP200",
-    "concreteSku": "HWB-BP200-1",
-    "name": "Biomass Pellet Hot Water Boiler 200kW",
-    "cartItemName": "Biomass Pellet Hot Water Boiler 200kW",
-    "defaultPrice": "€11,500.00",
-    "merchantPrice": "€9,200.00"
+  "prices": {
+    "defaultPrice": "€100.00",
+    "merchantPrice": "€80.00"
   }
 }

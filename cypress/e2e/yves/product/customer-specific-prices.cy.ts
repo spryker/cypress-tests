@@ -1,5 +1,10 @@
 import { container } from '@utils';
-import { CustomerSpecificPricesStaticFixtures } from '@interfaces/yves';
+import {
+  CustomerSpecificPricesCustomer,
+  CustomerSpecificPricesDynamicFixtures,
+  CustomerSpecificPricesProduct,
+  CustomerSpecificPricesStaticFixtures,
+} from '@interfaces/yves';
 import { CartPage, CatalogPage, ProductPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 import { retryableBefore } from '../../../support/e2e';
@@ -22,16 +27,34 @@ describe(
     const customerLoginScenario = container.get(CustomerLoginScenario);
 
     let staticFixtures: CustomerSpecificPricesStaticFixtures;
+    let dynamicFixtures: CustomerSpecificPricesDynamicFixtures;
+    let defaultPriceCustomer: CustomerSpecificPricesCustomer;
+    let merchantPriceCustomer: CustomerSpecificPricesCustomer;
+    let product: CustomerSpecificPricesProduct;
 
     retryableBefore((): void => {
-      ({ staticFixtures } = Cypress.env());
+      ({ staticFixtures, dynamicFixtures } = Cypress.env());
+
+      if ('product' in staticFixtures) {
+        ({ defaultPriceCustomer, merchantPriceCustomer, product } = staticFixtures);
+
+        return;
+      }
+
+      ({ defaultPriceCustomer, merchantPriceCustomer } = dynamicFixtures);
+      product = {
+        abstractSku: dynamicFixtures.product.abstract_sku,
+        concreteSku: dynamicFixtures.product.sku,
+        name: dynamicFixtures.product.localized_attributes[0].name,
+        cartItemName: dynamicFixtures.product.localized_attributes[0].name,
+      };
     });
 
     it('given a customer whose company has no merchant specific price when the product is browsed then the default price is shown in the catalog and on the product detail page', (): void => {
       // Arrange
       customerLoginScenario.execute({
-        email: staticFixtures.defaultPriceCustomer.email,
-        alternativeEmails: staticFixtures.defaultPriceCustomer.alternativeEmails,
+        email: defaultPriceCustomer.email,
+        alternativeEmails: defaultPriceCustomer.alternativeEmails,
         password: staticFixtures.defaultPassword,
       });
 
@@ -39,46 +62,46 @@ describe(
       // cy.session() restores cookies onto about:blank, so the header search form only exists once a
       // page has actually been loaded.
       catalogPage.visit();
-      catalogPage.searchForProducts({ query: staticFixtures.product.abstractSku });
+      catalogPage.searchForProducts({ query: product.abstractSku });
 
       // Assert
       catalogPage
         .getProductItemBlocks()
-        .filter(`:contains("${staticFixtures.product.name}")`)
+        .filter(`:contains("${product.name}")`)
         .first()
-        .should('contain', staticFixtures.product.defaultPrice);
+        .should('contain', staticFixtures.prices.defaultPrice);
 
       // Act
-      catalogPage.openProductDetailPageFromResults({ productName: staticFixtures.product.name });
+      catalogPage.openProductDetailPageFromResults({ productName: product.name });
 
       // Assert
-      productPage.getProductDetailPrice().should('contain', staticFixtures.product.defaultPrice);
+      productPage.getProductDetailPrice().should('contain', staticFixtures.prices.defaultPrice);
     });
 
     it('given a customer whose company has a merchant specific price when the product is browsed and added to the cart then that price replaces the default one on every surface', (): void => {
       // Arrange
       customerLoginScenario.execute({
-        email: staticFixtures.merchantPriceCustomer.email,
-        alternativeEmails: staticFixtures.merchantPriceCustomer.alternativeEmails,
+        email: merchantPriceCustomer.email,
+        alternativeEmails: merchantPriceCustomer.alternativeEmails,
         password: staticFixtures.defaultPassword,
       });
 
       // Act
       catalogPage.visit();
-      catalogPage.searchForProducts({ query: staticFixtures.product.abstractSku });
+      catalogPage.searchForProducts({ query: product.abstractSku });
 
       // Assert
       catalogPage
         .getProductItemBlocks()
-        .filter(`:contains("${staticFixtures.product.name}")`)
+        .filter(`:contains("${product.name}")`)
         .first()
-        .should('contain', staticFixtures.product.merchantPrice);
+        .should('contain', staticFixtures.prices.merchantPrice);
 
       // Act
-      catalogPage.openProductDetailPageFromResults({ productName: staticFixtures.product.name });
+      catalogPage.openProductDetailPageFromResults({ productName: product.name });
 
       // Assert
-      productPage.getProductDetailPrice().should('contain', staticFixtures.product.merchantPrice);
+      productPage.getProductDetailPrice().should('contain', staticFixtures.prices.merchantPrice);
 
       // Act
       productPage.addToCart();
@@ -88,10 +111,10 @@ describe(
       // Filtered by sku rather than cleared beforehand, so a cart left behind by an earlier run or a
       // retry cannot change what this reads.
       cartPage
-        .getCartItems({ sku: staticFixtures.product.concreteSku })
+        .getCartItems({ sku: product.concreteSku })
         .should('have.length', 1)
-        .and('contain', staticFixtures.product.cartItemName)
-        .and('contain', staticFixtures.product.merchantPrice);
+        .and('contain', product.cartItemName)
+        .and('contain', staticFixtures.prices.merchantPrice);
     });
   }
 );
