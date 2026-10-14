@@ -274,6 +274,9 @@ import { B2cMpCategoryReSortRepository } from '../../pages/backoffice/catalog/ca
 import { B2bMpCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/b2b-mp-category-re-sort-repository';
 import { B2bMpRecurringOrderReviewRepository } from '../../pages/yves/recurring-orders/review/repositories/b2b-mp-recurring-order-review-repository';
 import { B2bMpCheckoutSummaryRecurringOrderRepository } from '../../pages/yves/recurring-orders/checkout-summary/repositories/b2b-mp-checkout-summary-recurring-order-repository';
+import { SuiteCustomerGroupFormRepository } from '../../pages/backoffice/customer-group/form/repositories/suite-customer-group-form-repository';
+import { SuiteCustomerGroupViewRepository } from '../../pages/backoffice/customer-group/view/repositories/suite-customer-group-view-repository';
+import { SuiteCustomerGroupListRepository } from '../../pages/backoffice/customer-group/list/repositories/suite-customer-group-list-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -342,6 +345,9 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.CategoryCreateRepository]: SuiteCategoryCreateRepository,
   [REPOSITORIES.CategoryEditRepository]: SuiteCategoryEditRepository,
   [REPOSITORIES.CategoryReSortRepository]: SuiteCategoryReSortRepository,
+  [REPOSITORIES.CustomerGroupFormRepository]: SuiteCustomerGroupFormRepository,
+  [REPOSITORIES.CustomerGroupViewRepository]: SuiteCustomerGroupViewRepository,
+  [REPOSITORIES.CustomerGroupListRepository]: SuiteCustomerGroupListRepository,
 };
 
 const b2cMappings: BindingsMap = {
