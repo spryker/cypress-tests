@@ -181,7 +181,7 @@ describe(
       selectStoreScenario.execute(staticFixtures.store.name);
 
       // Act
-      loginPage.visit();
+      loginPage.visitRegistration();
       loginPage.register();
 
       // Assert
