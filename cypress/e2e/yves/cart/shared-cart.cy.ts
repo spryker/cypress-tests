@@ -67,20 +67,25 @@ describe(
 
       multiCartPage.selectCart({ name: cartName });
       cartPage.visit();
+      // contains() rather than contain.text: the B2B themes break the line between the label and the
+      // merchant link, which only contains() reads as one space.
       cartPage
         .getProductCartItems()
-        .should('contain.text', `${staticFixtures.soldByText} ${dynamicFixtures.merchant.name}`);
+        .contains(`${staticFixtures.soldByText} ${dynamicFixtures.merchant.name}`)
+        .should('exist');
 
       // Full access is only real if the colleague can order the cart, not merely look at it.
       checkoutScenario.execute({
         idCustomerAddress: dynamicFixtures.receiverAddress.id_customer_address,
         paymentMethod: getPaymentMethodBasedOnEnv(),
+        isMultiShipment: Cypress.env('ENV_IS_SSP_ENABLED') ? true : false,
       });
 
       customerOverviewPage.viewLastPlacedOrder();
       orderDetailsPage
         .getOrderDetailTableBlock()
-        .should('contain.text', `${staticFixtures.soldByText} ${dynamicFixtures.merchant.name}`);
+        .contains(`${staticFixtures.soldByText} ${dynamicFixtures.merchant.name}`)
+        .should('exist');
     });
 
     it('given a cart shared by external link when an anonymous visitor opens it then the cart is shown as a read-only preview', (): void => {
