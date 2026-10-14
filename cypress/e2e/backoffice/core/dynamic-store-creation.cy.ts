@@ -168,9 +168,7 @@ describe(
       selectStoreScenario.execute(staticFixtures.store.name);
 
       // Act
-      cy.url().then((storeHomeUrl: string) => {
-        cmsContentPage.visitCmsPageUrl(`${storeHomeUrl.replace(/\/$/, '')}/${cmsPageName}`);
-      });
+      cmsContentPage.visitCmsPageOnCurrentStore({ cmsPageName, localeName: staticFixtures.store.locale });
 
       // Assert
       cmsContentPage.assertBodyContainsText(cmsPageName).should('exist');

@@ -48,9 +48,11 @@ describe(
       // The store switcher owns the store url prefix, so the storefront url of the page is
       // only knowable at run time — reading it here keeps the spec free of a hard-coded path.
       selectStoreScenario.execute(staticFixtures.storeName);
-      cy.url().then((storeHomeUrl: string) => {
-        cmsPageUrl = `${storeHomeUrl.replace(/\/$/, '')}/${cmsPageName}`;
-      });
+      cmsContentPage
+        .getCmsPageUrlOnCurrentStore({ cmsPageName, localeName: staticFixtures.localeName })
+        .then((url: string) => {
+          cmsPageUrl = url;
+        });
     });
 
     it('given a cms page is assigned to a store when a shopper opens its url on that store then the page is served', (): void => {
