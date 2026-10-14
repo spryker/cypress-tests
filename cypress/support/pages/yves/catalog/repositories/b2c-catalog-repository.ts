@@ -37,7 +37,7 @@ export class B2cCatalogRepository implements CatalogRepository {
   getFilterTitlesSelector = (): string => '[class*="filter"] [class*="title"]';
   getFilterValueCheckboxSelector = (filterName: string, filterValue: string): string =>
     `input[type="checkbox"][name="${filterName}[]"][value="${filterValue}"]`;
-  getApplyFiltersButtonSelector = (): string => 'button.js-catalog__trigger.button--small';
+  getApplyFiltersButtonSelector = (): string => 'button.js-catalog__trigger.button--large';
   getSortSelectSelector = (): string => 'select[name="sort"]';
   getPaginationStepSelector = (): string => 'a[class*="pagination__step"]';
 }
