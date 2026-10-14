@@ -5,7 +5,7 @@
     "name": "material",
     "value": "sheet steel"
   },
-  "filterTitles": ["Rating", "Brand", "Material", "Merchant"],
+  "filterTitles": ["Brand", "Material", "Merchant"],
   "ascendingPriceSortLabel": "Sort by price ascending",
   "descendingPriceSortLabel": "Sort by price descending",
   "merchantFilterName": "merchant_name"
