@@ -215,7 +215,7 @@
           "arguments": [
             {
               "fkProduct": "#product.id_product_concrete",
-              "configuratorKey": "DATE_TIME_CONFIGURATOR",
+              "configuratorKey": "WATER_TREATMENT_CONFIGURATOR",
               "defaultDisplayData": "",
               "defaultConfiguration": "",
               "isComplete": false
