@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, skipWhenFeatureAbsent } from '@utils';
 import { ProductManagementListPage, ProductManagementEditPage, ProductPage } from '@pages/backoffice';
 import { ProductManagementStaticFixtures, ProductManagementDynamicFixtures } from '@interfaces/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
@@ -7,6 +7,8 @@ describe(
   'product attachment management',
   { tags: ['@backoffice', '@product-attachment', 'product', 'spryker-core-back-office', 'spryker-core'] },
   (): void => {
+    skipWhenFeatureAbsent('productAttachments', ['b2b']);
+
     const productManagementListPage = container.get(ProductManagementListPage);
     const productManagementEditPage = container.get(ProductManagementEditPage);
     const userLoginScenario = container.get(UserLoginScenario);
