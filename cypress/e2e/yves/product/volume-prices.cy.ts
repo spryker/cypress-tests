@@ -52,9 +52,12 @@ describe('volume prices', { tags: ['@yves', 'prices', 'product', 'cart', 'spryke
 
     // Assert
     cartPage
-      .getCartItems({ sku: dynamicFixtures.product.sku })
-      .should('have.length', 1)
-      .and('contain.text', staticFixtures.volumeTier.price);
+      .getCartItemsChargingUnitPrice({
+        sku: dynamicFixtures.product.sku,
+        unitPrice: staticFixtures.volumeTier.price,
+        quantity: staticFixtures.volumeTier.quantity,
+      })
+      .should('have.length', 1);
   });
 
   it('given a product priced in volume tiers when it is added twice below the tier and the two adds together reach it then the cart charges the tier price', (): void => {
@@ -65,9 +68,12 @@ describe('volume prices', { tags: ['@yves', 'prices', 'product', 'cart', 'spryke
 
     // Assert
     cartPage
-      .getCartItems({ sku: dynamicFixtures.product.sku })
-      .should('contain.text', staticFixtures.unitPrice)
-      .and('not.contain.text', staticFixtures.volumeTier.price);
+      .getCartItemsChargingUnitPrice({
+        sku: dynamicFixtures.product.sku,
+        unitPrice: staticFixtures.unitPrice,
+        quantity: staticFixtures.belowTierQuantities.first,
+      })
+      .should('have.length', 1);
 
     // Act
     // Neither add reaches the tier on its own, so only the quantity the cart holds in total can.
@@ -79,10 +85,11 @@ describe('volume prices', { tags: ['@yves', 'prices', 'product', 'cart', 'spryke
 
     // Assert
     cartPage
-      .getCartItems({ sku: dynamicFixtures.product.sku })
-      .should('have.length.at.least', 1)
-      .each(($cartItem) => {
-        cy.wrap($cartItem).should('contain.text', staticFixtures.volumeTier.price);
-      });
+      .getCartItemsChargingUnitPrice({
+        sku: dynamicFixtures.product.sku,
+        unitPrice: staticFixtures.volumeTier.price,
+        quantity: staticFixtures.belowTierQuantities.first + staticFixtures.belowTierQuantities.second,
+      })
+      .should('have.length.at.least', 1);
   });
 });

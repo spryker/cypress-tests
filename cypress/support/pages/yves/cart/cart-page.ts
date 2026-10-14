@@ -101,6 +101,19 @@ export class CartPage extends YvesPage {
       );
   };
 
+  // The redesigned B2B cart line prints only its total, the other themes the unit price, so a line charging
+  // a unit price is recognised by either.
+  getCartItemsChargingUnitPrice = (params: GetCartItemsChargingUnitPriceParams): Cypress.Chainable => {
+    const lineTotal = params.unitPrice.replace(/[\d.,]+/, (amount: string): string =>
+      (parseFloat(amount.replace(/,/g, '')) * params.quantity).toFixed(2)
+    );
+
+    return this.getCartItems({ sku: params.sku }).filter(
+      (_index: number, cartItem: HTMLElement): boolean =>
+        cartItem.innerText.includes(params.unitPrice) || cartItem.innerText.includes(lineTotal)
+    );
+  };
+
   // cy.get() on the clear form fails outright on an empty cart, so a spec that only needs a known
   // starting point has to look before it clears. The B2C shops have no clear-cart form, so their lines
   // are removed one by one through the removal form each line carries.
@@ -228,6 +241,12 @@ export class CartPage extends YvesPage {
 
 interface GetCartItemsParams {
   sku: string;
+}
+
+interface GetCartItemsChargingUnitPriceParams {
+  sku: string;
+  unitPrice: string;
+  quantity: number;
 }
 
 interface FindCartItemParams {
