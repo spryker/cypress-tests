@@ -1,8 +1,5 @@
 {
   "defaultPassword": "change123",
-  "customer": {
-    "email": "george.freeman@acme.com"
-  },
   "buyableProduct": {
     "searchQuery": "NEX-VG20EH",
     "cartEntry": "NEX-VG20EH"

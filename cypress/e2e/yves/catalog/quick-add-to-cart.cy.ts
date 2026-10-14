@@ -1,5 +1,5 @@
 import { container } from '@utils';
-import { QuickAddToCartStaticFixtures } from '@interfaces/yves';
+import { QuickAddToCartDynamicFixtures, QuickAddToCartStaticFixtures } from '@interfaces/yves';
 import { CartPage, CatalogPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
 import { retryableBefore } from '../../../support/e2e';
@@ -13,14 +13,15 @@ describe(
     const customerLoginScenario = container.get(CustomerLoginScenario);
 
     let staticFixtures: QuickAddToCartStaticFixtures;
+    let dynamicFixtures: QuickAddToCartDynamicFixtures;
 
     retryableBefore((): void => {
-      ({ staticFixtures } = Cypress.env());
+      ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
     beforeEach((): void => {
       customerLoginScenario.execute({
-        email: staticFixtures.customer.email,
+        email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
       });
 

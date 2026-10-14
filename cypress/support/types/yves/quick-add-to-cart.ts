@@ -1,13 +1,14 @@
+import { Customer } from './shared';
+
+export interface QuickAddToCartDynamicFixtures {
+  customer: Customer;
+}
+
 export interface QuickAddToCartStaticFixtures {
   defaultPassword: string;
-  customer: StaticCustomer;
   buyableProduct: SearchableProduct;
   unbuyableProduct: SearchableProduct;
   productGroup: GroupedProduct;
-}
-
-interface StaticCustomer {
-  email: string;
 }
 
 interface SearchableProduct {
