@@ -86,6 +86,21 @@ export class B2cProductRepository implements ProductRepository {
         return;
       }
 
+      // The detail page renders its quantity read-only, so only the counter buttons change it.
+      if ($body.find('.js-quantity-counter__input[readonly]').length) {
+        cy.get('.js-quantity-counter__input')
+          .first()
+          .invoke('val')
+          .then((value) => {
+            const difference = quantity - parseInt(String(value).replace(/\D/g, ''), 10);
+            const button = difference > 0 ? '.js-quantity-counter__incr' : '.js-quantity-counter__decr';
+
+            Cypress._.times(Math.abs(difference), () => cy.get(button).first().click());
+          });
+
+        return;
+      }
+
       cy.get('formatted-number-input input').first().clear();
       cy.get('formatted-number-input input').first().type(String(quantity));
     });
