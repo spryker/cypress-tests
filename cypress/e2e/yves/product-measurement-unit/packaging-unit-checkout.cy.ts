@@ -7,6 +7,13 @@ describe(
   'packaging unit checkout',
   { tags: ['@yves', 'packaging-units', 'measurement-units', 'product', 'cart', 'checkout', 'spryker-core'] },
   (): void => {
+    // The B2C shops do not install the packaging unit module.
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because the B2C storefronts have no packaging units', () => {});
+
+      return;
+    }
+
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const cartPage = container.get(CartPage);

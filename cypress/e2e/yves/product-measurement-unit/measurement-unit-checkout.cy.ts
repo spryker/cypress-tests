@@ -7,6 +7,13 @@ describe(
   'measurement unit checkout',
   { tags: ['@yves', 'measurement-units', 'product', 'cart', 'checkout', 'spryker-core'] },
   (): void => {
+    // The B2C shops do not install the measurement unit module.
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because the B2C storefronts have no measurement units', () => {});
+
+      return;
+    }
+
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const cartPage = container.get(CartPage);
