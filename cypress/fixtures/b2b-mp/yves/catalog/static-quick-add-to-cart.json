@@ -1,0 +1,18 @@
+{
+  "defaultPassword": "change123",
+  "customer": {
+    "email": "Richi@acme.com"
+  },
+  "buyableProduct": {
+    "searchQuery": "Verbatim USB stick OTG",
+    "cartEntry": "420573"
+  },
+  "unbuyableProduct": {
+    "searchQuery": "New Clairefontaine Collegeblock 8272C DIN A5, 90 sheets"
+  },
+  "productGroup": {
+    "searchQuery": "M12655",
+    "swatchIdentifier": "Blue",
+    "cartEntry": "107255"
+  }
+}
