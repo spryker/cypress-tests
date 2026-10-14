@@ -3,7 +3,11 @@ import { ProductPage } from '@pages/yves';
 import { ProductManagementEditPage } from '@pages/backoffice';
 import { MultistoreProductDynamicFixtures, MultistoreProductStaticFixtures } from '@interfaces/yves';
 import { AssignStoreToProductScenario, UserLoginScenario } from '@scenarios/backoffice';
-import { OpenProductDetailPageOnStoreScenario, WaitForStorefrontUrlScenario } from '@scenarios/yves';
+import {
+  CustomerLoginScenario,
+  OpenProductDetailPageOnStoreScenario,
+  WaitForStorefrontUrlScenario,
+} from '@scenarios/yves';
 
 describe(
   'multistore product',
@@ -17,6 +21,7 @@ describe(
     const openProductDetailPageOnStoreScenario = container.get(OpenProductDetailPageOnStoreScenario);
     const waitForStorefrontUrlScenario = container.get(WaitForStorefrontUrlScenario);
     const assignStoreToProductScenario = container.get(AssignStoreToProductScenario);
+    const customerLoginScenario = container.get(CustomerLoginScenario);
 
     let staticFixtures: MultistoreProductStaticFixtures;
     let dynamicFixtures: MultistoreProductDynamicFixtures;
@@ -71,6 +76,14 @@ describe(
       // Arrange
       const primaryStorePrice = `${staticFixtures.currencySymbol}${staticFixtures.primaryStorePrice}.00`;
       const secondaryStorePrice = `${staticFixtures.currencySymbol}${staticFixtures.secondaryStorePrice}.00`;
+
+      // The B2B storefronts show prices to logged-in customers only.
+      if (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+        customerLoginScenario.execute({
+          email: dynamicFixtures.customer.email,
+          password: staticFixtures.defaultPassword,
+        });
+      }
 
       // Act
       openProductDetailPageOnStoreScenario.execute({
