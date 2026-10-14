@@ -116,8 +116,13 @@ export class B2bProductRepository implements ProductRepository {
 
   getBundleItems = (): Cypress.Chainable => cy.get('[data-qa*="component bundle-items"]');
 
-  getAvailabilityStatus = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-availability-widget"] [data-qa="component status"]');
+  // The redesigned theme states availability in a status badge either way; the classic theme has no
+  // badge and only renders an alert under the add to cart form once the product is out of stock.
+  getOutOfStockNotice = (): Cypress.Chainable =>
+    cy.get(
+      '[data-qa="component product-availability-widget"] [data-qa="component status"]:contains("Out of stock"), ' +
+        '[data-qa="component product-configurator"] .text-alert:contains("This product is currently not available.")'
+    );
   getAvailabilityNotificationEmailField = (): Cypress.Chainable =>
     cy.get('#availabilityNotificationSubscriptionForm_email');
   getAvailabilityNotificationSubscribeForm = (): Cypress.Chainable =>
