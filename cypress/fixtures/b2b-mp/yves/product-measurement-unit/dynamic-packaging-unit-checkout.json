@@ -17,6 +17,22 @@
         },
         {
           "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address",
+          "arguments": [
+            {
+              "fkCustomer": "#customer.id_customer",
+              "fkCountry": "#country.id_country"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveCompany",
           "key": "company",
           "arguments": [
@@ -115,6 +131,11 @@
         },
         {
           "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
+        },
+        {
+          "type": "helper",
           "name": "haveFullProduct",
           "key": "product",
           "arguments": [
@@ -142,6 +163,16 @@
                   "name": "#productName.name"
                 }
               ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#product.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
             }
           ]
         },
