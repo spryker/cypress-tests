@@ -6,8 +6,7 @@ export class B2bCommentCartRepository implements CommentCartRepository {
   getAddCommentForm = (): Cypress.Chainable => cy.get('[data-qa="component add-comment-form"]');
   // The thread sits in a cart sidebar item on the cart page but in a plain box on the order
   // details page, so it is found through its own add form rather than the sidebar.
-  getCommentThreadListSection = (): Cypress.Chainable =>
-    cy.get('[data-qa="component add-comment-form"]').parent();
+  getCommentThreadListSection = (): Cypress.Chainable => cy.get('[data-qa="component add-comment-form"]').parent();
   getAddCommentButtonSelector = (): string => '[data-qa="component icon"]';
   getRemoveCommentButtonSelector = (): string => {
     if (Cypress.env('isDynamicStoreEnabled')) {
