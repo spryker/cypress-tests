@@ -39,8 +39,9 @@ export class B2bCustomerAddressRepository implements CustomerAddressRepository {
   getSubmitButton(): Cypress.Chainable {
     return cy.get('form[name="addressForm"] button[type="submit"]');
   }
+  // The classic theme renders the link as a plain action bar entry without a data-qa hook.
   getAddNewAddressLink(): Cypress.Chainable {
-    return cy.get('[data-qa="customer-add-new-address"]');
+    return cy.get('[data-qa="customer-add-new-address"], a[href$="/customer/address/new"]').first();
   }
   getAddressAddedMessage(): string {
     return 'Address was successfully added';
