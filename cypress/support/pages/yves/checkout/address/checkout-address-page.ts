@@ -45,6 +45,10 @@ export class CheckoutAddressPage extends YvesPage {
       this.repository.getMultiShipmentTriggerButton().click();
     }
 
+    if (params?.hasOwnAddressPerItem) {
+      this.uncheckSameAddressForAllItems();
+    }
+
     this.repository
       .getMultiShipmentAddressItemElement()
       .children()
@@ -126,6 +130,22 @@ export class CheckoutAddressPage extends YvesPage {
       });
 
     this.fillBillingAddress();
+  };
+
+  // The self-service portal checks "same address for all items" per shipment type group by default and hides
+  // every other item's address form behind it; a shop without the portal has no such checkbox.
+  uncheckSameAddressForAllItems = (): void => {
+    const checkboxSelector = this.repository.getSameAddressForAllItemsCheckboxSelector?.();
+
+    if (!checkboxSelector) {
+      return;
+    }
+
+    cy.get('body').then(($body) => {
+      if ($body.find(`${checkboxSelector}:checked`).length) {
+        cy.get(`${checkboxSelector}:checked`).uncheck({ force: true });
+      }
+    });
   };
 
   fillSingleCheckoutAddress = (params?: FillShippingAddressParams): void => {
@@ -321,6 +341,7 @@ export interface CheckoutAddressInput {
 
 interface FillShippingAddressParams {
   idCustomerAddress?: number;
+  hasOwnAddressPerItem?: boolean;
   shipmentType?: string;
   skipServicePointAddressOverride?: boolean;
   servicePointSelection?: ServicePointSelection;

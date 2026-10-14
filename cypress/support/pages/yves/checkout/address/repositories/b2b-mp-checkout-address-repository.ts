@@ -147,4 +147,5 @@ export class B2bMpCheckoutAddressRepository implements CheckoutAddressRepository
 
       return $el;
     });
+  getSameAddressForAllItemsCheckboxSelector = (): string => 'input[name$="[isSingleAddressPerShipmentType]"]';
 }

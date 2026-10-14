@@ -117,4 +117,5 @@ export class B2bCheckoutAddressRepository implements CheckoutAddressRepository {
     const servicePointUuid = $addressItem.find(`input[name*="[servicePoint][uuid]"]`).val() as string | undefined;
     return servicePointUuid || undefined;
   };
+  getSameAddressForAllItemsCheckboxSelector = (): string => 'input[name$="[isSingleAddressPerShipmentType]"]';
 }

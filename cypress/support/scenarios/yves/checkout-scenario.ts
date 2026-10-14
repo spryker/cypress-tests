@@ -54,6 +54,7 @@ export class CheckoutScenario {
   private fillShippingAddress = (params?: ExecuteParams): void => {
     const fillShippingAddressParams = {
       idCustomerAddress: params?.idCustomerAddress,
+      hasOwnAddressPerItem: params?.hasOwnAddressPerItem,
       shipmentType: params?.shipmentType,
       skipServicePointAddressOverride: params?.skipServicePointAddressOverride,
       servicePointSelection: params?.servicePointSelection,
@@ -84,6 +85,7 @@ export class CheckoutScenario {
 interface ExecuteParams {
   isGuest?: boolean;
   isMultiShipment?: boolean;
+  hasOwnAddressPerItem?: boolean;
   idCustomerAddress?: number;
   shouldTriggerOmsInCli?: boolean;
   paymentMethod?: string;

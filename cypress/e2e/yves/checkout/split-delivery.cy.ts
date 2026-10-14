@@ -32,6 +32,7 @@ describe('split delivery', { tags: ['@yves', '@checkout', 'checkout', 'shipment'
     // Each item gets its own generated delivery address, which is what splits the order.
     checkoutScenario.execute({
       isMultiShipment: true,
+      hasOwnAddressPerItem: true,
       shouldTriggerOmsInCli: true,
       paymentMethod: getPaymentMethodBasedOnEnv(),
     });
@@ -68,6 +69,7 @@ describe('split delivery', { tags: ['@yves', '@checkout', 'checkout', 'shipment'
       checkoutScenario.execute({
         isGuest: true,
         isMultiShipment: true,
+        hasOwnAddressPerItem: true,
         shouldTriggerOmsInCli: true,
         paymentMethod: getPaymentMethodBasedOnEnv(),
       });
