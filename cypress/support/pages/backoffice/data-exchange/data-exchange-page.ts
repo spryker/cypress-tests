@@ -19,10 +19,6 @@ export class DataExchangePage extends BackofficePage {
 
   protected PAGE_URL = '/dynamic-entity-gui/configuration-list';
 
-  regenerateApiSpecification = (): void => {
-    cy.runCliCommands([GENERATE_SPECIFICATION_COMMAND]);
-  };
-
   // The schema is only offered for download while it is newer than every configuration row, and
   // generation and the save that invalidated it can land in the same second. Regenerating on every
   // reload is the same loop the source test used to converge on a downloadable schema.
