@@ -1,4 +1,4 @@
-import { container, getPaymentMethodBasedOnEnv } from '@utils';
+import { container, getPaymentMethodBasedOnEnv, skipWhenFeatureAbsent } from '@utils';
 import {
   ConfigurableProductCheckoutDynamicFixtures,
   ConfigurableProductCheckoutStaticFixtures,
@@ -21,6 +21,8 @@ describe(
     tags: ['@yves', 'configurable-product', 'product', 'cart', 'checkout', 'spryker-core'],
   },
   (): void => {
+    skipWhenFeatureAbsent('dateTimeConfigurator', ['b2b']);
+
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const productConfiguratorPage = container.get(ProductConfiguratorPage);
