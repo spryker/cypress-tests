@@ -38,8 +38,10 @@ export class OffersPage extends MpPage {
     return this.repository.getSaveButtonSelector();
   };
 
+  // Picking a chosen value again deselects it. Not every Merchant Portal renders the chosen stores as removable
+  // tags (B2C marketplace shows them as one comma-joined label), so the dropdown is what both share.
   removeStores = (storeNames: string[]): void => {
-    storeNames.forEach((storeName) => this.repository.getSelectedStoreRemoveButton(storeName).click({ force: true }));
+    this.selectOptions(this.repository.getStoresSelect(), storeNames);
   };
 
   saveOffer = (): void => {
