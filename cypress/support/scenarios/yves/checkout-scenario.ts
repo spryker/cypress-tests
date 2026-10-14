@@ -60,11 +60,7 @@ export class CheckoutScenario {
       servicePointSelection: params?.servicePointSelection,
     };
 
-    // The self-service portal's address step has no single shipping address form, only one per item, so a new
-    // address is typed into the item forms there.
-    const isNewAddressPerItemOnly = Boolean(Cypress.env('ENV_IS_SSP_ENABLED')) && !params?.idCustomerAddress;
-
-    if (params?.isMultiShipment || isNewAddressPerItemOnly) {
+    if (params?.isMultiShipment) {
       this.checkoutAddressPage.fillMultiShippingAddress(fillShippingAddressParams);
       return;
     }
