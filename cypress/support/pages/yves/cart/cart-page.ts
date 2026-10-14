@@ -91,12 +91,14 @@ export class CartPage extends YvesPage {
     this.getCartItems({ sku: params.sku }).first().find(this.repository.getConfigureButtonSelector()).click();
   };
 
-  // The B2C cart lines print no sku, so a line is also recognised by the quantity form it posts to, which every
-  // shop keys by sku.
+  // The B2C cart lines print no sku, so a line is also recognised by the quantity or removal form it posts to,
+  // which every shop keys by sku; a promotional line has no quantity form.
   getCartItems = (params: GetCartItemsParams): Cypress.Chainable => {
     return this.repository
       .getProductCartItems()
-      .filter(`:contains("${params.sku}"), :has([action$="change-quantity/${params.sku}"])`);
+      .filter(
+        `:contains("${params.sku}"), :has([action$="change-quantity/${params.sku}"]), :has([action*="/remove/${params.sku}/"])`
+      );
   };
 
   // cy.get() on the clear form fails outright on an empty cart, so a spec that only needs a known

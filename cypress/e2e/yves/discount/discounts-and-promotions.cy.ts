@@ -49,7 +49,7 @@ describe(
 
       // Assert
       cartPage.getCartDiscountSummary().should('contain', dynamicFixtures.promotionDiscount.display_name);
-      cartPage.getProductCartItems().should('contain', dynamicFixtures.promotionalProduct.sku);
+      cartPage.getCartItems({ sku: dynamicFixtures.promotionalProduct.sku }).should('have.length', 1);
 
       // Act
       checkoutScenario.execute({
