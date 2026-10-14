@@ -10,16 +10,6 @@
     {
       "state": "Pay",
       "shouldTriggerOmsInCli": true
-    },
-    {
-      "state": "Skip timeout",
-      "shouldTriggerOmsInCli": true
-    },
-    {
-      "state": "skip picking"
-    },
-    {
-      "state": "Ship"
     }
   ]
 }

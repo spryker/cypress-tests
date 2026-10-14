@@ -103,7 +103,8 @@ describe(
       });
 
       // Act
-      // The marketplace order process ships through the merchant, so its back office walk ends at skip picking.
+      // The marketplace order processes hand the order to its merchant after payment, so their back office walk
+      // ends there.
       staticFixtures.orderShippingEvents.forEach((event) => salesDetailPage.triggerOms(event));
 
       // Assert
