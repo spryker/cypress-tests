@@ -5,7 +5,7 @@
     "name": "material",
     "value": "sheet steel"
   },
-  "filterTitles": ["Rating", "Brand", "Material"],
+  "filterTitles": ["Brand", "Material"],
   "ascendingPriceSortLabel": "Sort by price ascending",
   "descendingPriceSortLabel": "Sort by price descending"
 }
