@@ -56,13 +56,19 @@
         },
         {
           "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderWithAmountUpToPermission",
+          "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
+        },
+        {
+          "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "arguments": [
             {
               "isDefault": true,
               "fkCompany": "#company.id_company"
             },
-            ["#addCartItemPermission", "#placeOrderPermission"]
+            ["#addCartItemPermission", "#placeOrderPermission", "#placeOrderWithAmountUpToPermission"]
           ]
         },
         {

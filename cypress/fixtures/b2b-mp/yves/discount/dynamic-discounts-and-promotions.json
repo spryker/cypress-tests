@@ -34,6 +34,12 @@
         {
           "type": "helper",
           "name": "havePermissionByKey",
+          "key": "placeOrderWithAmountUpToPermission",
+          "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
           "key": "requestQuoteApprovalPermission",
           "arguments": ["RequestQuoteApprovalPermissionPlugin"]
         },
@@ -59,6 +65,7 @@
             },
             [
               "#placeOrderPermission",
+              "#placeOrderWithAmountUpToPermission",
               "#requestQuoteApprovalPermission",
               "#changeCartItemPermission",
               "#addCartItemPermission"

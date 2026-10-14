@@ -68,6 +68,12 @@
         },
         {
           "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderWithAmountUpToPermission",
+          "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
+        },
+        {
+          "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "key": "buyerRole",
           "arguments": [
@@ -75,7 +81,7 @@
               "isDefault": true,
               "fkCompany": "#company.id_company"
             },
-            ["#placeOrderPermission"]
+            ["#placeOrderPermission", "#placeOrderWithAmountUpToPermission"]
           ]
         },
         {
