@@ -150,6 +150,11 @@ export class CartPage extends YvesPage {
     return this.repository.getCartItemChangeQuantityField(sku);
   };
 
+  // The B2C cart lines print no sku, so a line is found by the quantity form it posts to, which every shop keys by sku.
+  findCartItem = (params: FindCartItemParams): Cypress.Chainable => {
+    return this.repository.findCartItemChangeQuantityForm(params.sku);
+  };
+
   addCustomOrderReferenceInput = (reference: string): void => {
     this.repository.getCustomOrderReferenceInput().type(reference);
     this.repository.getCustomOrderReferenceSubmitButton().click();
@@ -202,6 +207,10 @@ export class CartPage extends YvesPage {
   getCartItemAvailabilityLabel = (): Cypress.Chainable => {
     return this.repository.getCartItemAvailabilityLabel();
   };
+}
+
+interface FindCartItemParams {
+  sku: string;
 }
 
 interface ConfigureProductParams {
