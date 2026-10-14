@@ -18,6 +18,7 @@ const glueBackendHost = getEnvVar('ENV_GLUE_BACKEND_HOST', 'SPRYKER_GLUE_BACKEND
 const glueStorefrontHost = getEnvVar('ENV_GLUE_STOREFRONT_HOST', 'SPRYKER_GLUE_STOREFRONT_HOST');
 const mailCatcherHost = getEnvVar('ENV_MAIL_CATCHER_HOST', 'SPRYKER_SMTP_HOST');
 const baseHost = getEnvVar('E2E_BASE_HOST', 'SPRYKER_FE_HOST');
+const PROBE_TIMEOUT_MS = 10000;
 
 export default defineConfig({
   env: {
@@ -48,6 +49,20 @@ export default defineConfig({
           if (existsSync(filename)) {
             rmSync(filename);
           }
+
+          return null;
+        },
+        async probeUrl(url: string): Promise<number | null> {
+          try {
+            const response = await fetch(url, { redirect: 'manual', signal: AbortSignal.timeout(PROBE_TIMEOUT_MS) });
+
+            return response.status;
+          } catch {
+            return null;
+          }
+        },
+        log(message: string): null {
+          console.log(message);
 
           return null;
         },
