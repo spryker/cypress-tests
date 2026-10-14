@@ -33,7 +33,8 @@ export class B2bCatalogRepository implements CatalogRepository {
       .trigger('mouseover');
   };
 
-  getFoundItemsCounterSelector = (): string => '[class*="col--counter"]';
+  // The classic theme counts the results in its sort bar, the redesigned one in its catalog header.
+  getFoundItemsCounterSelector = (): string => '[class*="col--counter"], [class*="catalog-header__count"]';
   getFilterTitlesSelector = (): string => '[class*="filter"] [class*="title"]';
   getFilterValueCheckboxSelector = (filterName: string, filterValue: string): string =>
     `input[type="checkbox"][name="${filterName}[]"][value="${filterValue}"]`;
