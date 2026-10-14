@@ -3,9 +3,9 @@ import { AgentControlBarRepository } from '../agent-control-bar-repository';
 
 @injectable()
 export class B2cAgentControlBarRepository implements AgentControlBarRepository {
-  // The visible field carries no name; the form submits a hidden _switch_user input that the
-  // autocomplete fills when a suggestion is chosen, which is why the suggestion has to be clicked.
-  getCustomerSearchInput = (): Cypress.Chainable => cy.get('agent-control-bar .js-autocomplete-form__text-input');
+  // The B2C theme overrides the autocomplete field (ShopUi autocomplete-form.twig): the visible input is named
+  // query and the form submits the hidden _switch_user input the autocomplete fills when a suggestion is chosen.
+  getCustomerSearchInput = (): Cypress.Chainable => cy.get('agent-control-bar .js-autocomplete-form__input');
 
   getSuggestion = (email: string): Cypress.Chainable =>
     cy.get(`agent-control-bar li.customer-list__container-item[data-value="${email}"]`);
