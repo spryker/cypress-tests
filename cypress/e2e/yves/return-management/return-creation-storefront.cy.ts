@@ -19,6 +19,14 @@ describe(
     ],
   },
   (): void => {
+    // The marketplace payment process ships by merchant, so the back office offers no manual Ship
+    // event to bring the order to a returnable state.
+    if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because the marketplace payment process has no manual ship event', () => {});
+
+      return;
+    }
+
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const orderDetailsPage = container.get(OrderDetailsPage);
     const returnCreatePage = container.get(ReturnCreatePage);
