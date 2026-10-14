@@ -45,51 +45,55 @@ describe(
         .should('contain.text', dynamicFixtures.substituteProduct.localized_attributes[0].name);
     });
 
-    it('given a wishlisted product that is then discontinued when the wishlist is opened then the item is flagged discontinued and its alternative is listed beside it', (): void => {
-      // Arrange
-      customerLoginScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-      });
+    // The B2B storefronts ship without the wishlist feature.
+    (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(
+      'given a wishlisted product that is then discontinued when the wishlist is opened then the item is flagged discontinued and its alternative is listed beside it',
+      (): void => {
+        // Arrange
+        customerLoginScenario.execute({
+          email: dynamicFixtures.customer.email,
+          password: staticFixtures.defaultPassword,
+        });
 
-      wishlistPage.visit();
-      const wishlistName = wishlistPage.createWishlist();
+        wishlistPage.visit();
+        const wishlistName = wishlistPage.createWishlist();
 
-      catalogPage.visit();
-      catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.wishlistProduct.sku });
+        catalogPage.visit();
+        catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.wishlistProduct.sku });
 
-      // The picker is filled in by an ajax call after page load, so reading it waits for the widget
-      // to be able to route the add.
-      wishlistPage.getWishlistPicker().should('exist');
-      wishlistPage.addDisplayedProductToWishlist(wishlistName);
+        // The picker is filled in by an ajax call after page load, so reading it waits for the widget
+        // to be able to route the add.
+        wishlistPage.getWishlistPicker().should('exist');
+        wishlistPage.addDisplayedProductToWishlist(wishlistName);
 
-      // Act
-      userLoginScenario.execute({
-        username: dynamicFixtures.rootUser.username,
-        password: staticFixtures.defaultPassword,
-      });
-      productDiscontinuedPage.discontinueProduct({
-        idProductConcrete: dynamicFixtures.wishlistProduct.id_product_concrete,
-      });
+        // Act
+        userLoginScenario.execute({
+          username: dynamicFixtures.rootUser.username,
+          password: staticFixtures.defaultPassword,
+        });
+        productDiscontinuedPage.discontinueProduct({
+          idProductConcrete: dynamicFixtures.wishlistProduct.id_product_concrete,
+        });
 
-      // The wishlist row reads the discontinued flag and the alternatives out of storage, not out of
-      // the database the back office just wrote to.
-      cy.runQueueWorker();
+        // The wishlist row reads the discontinued flag and the alternatives out of storage, not out of
+        // the database the back office just wrote to.
+        cy.runQueueWorker();
 
-      // Assert
-      customerLoginScenario.execute({
-        email: dynamicFixtures.customer.email,
-        password: staticFixtures.defaultPassword,
-      });
-      wishlistPage.visit();
-      wishlistPage.openWishlist(wishlistName);
+        // Assert
+        customerLoginScenario.execute({
+          email: dynamicFixtures.customer.email,
+          password: staticFixtures.defaultPassword,
+        });
+        wishlistPage.visit();
+        wishlistPage.openWishlist(wishlistName);
 
-      wishlistPage
-        .getWishlistItemsTable()
-        .should('contain.text', dynamicFixtures.wishlistProduct.sku)
-        .and('contain.text', staticFixtures.discontinuedLabel)
-        .and('contain.text', staticFixtures.alternativeLabel)
-        .and('contain.text', dynamicFixtures.wishlistSubstituteProduct.sku);
-    });
+        wishlistPage
+          .getWishlistItemsTable()
+          .should('contain.text', dynamicFixtures.wishlistProduct.sku)
+          .and('contain.text', staticFixtures.discontinuedLabel)
+          .and('contain.text', staticFixtures.alternativeLabel)
+          .and('contain.text', dynamicFixtures.wishlistSubstituteProduct.sku);
+      }
+    );
   }
 );
