@@ -93,7 +93,7 @@ describe(
       cartPage.visit();
       cartPage
         .getProductCartItems()
-        .filter(`:contains("${dynamicFixtures.offeredProduct.sku}")`)
+        .filter(`:contains("${dynamicFixtures.offeredProduct.localized_attributes[0].name}")`)
         .should('have.length', 1)
         .and('contain.text', dynamicFixtures.offerMerchant.name)
         .and('contain.text', staticFixtures.offer.displayedPrice);
