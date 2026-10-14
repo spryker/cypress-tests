@@ -63,11 +63,7 @@ describe(
         customerOverviewPage.viewLastPlacedOrder();
 
         // Assert
-        orderDetailsPage
-          .getOrderDetailTableBlock()
-          .find('article')
-          .filter(`:contains("${staticFixtures.templateName}")`)
-          .should('have.length', 3);
+        orderDetailsPage.getConfiguredBundles(staticFixtures.templateName).should('have.length', 3);
       }
     );
   }
