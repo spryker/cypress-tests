@@ -4,21 +4,21 @@
   "firstConfiguration": [
     {
       "slotName": "Slot 5",
-      "productIdentifier": "Sony Cyber-shot DSC-WX220"
+      "productPosition": 0
     },
     {
       "slotName": "Slot 6",
-      "productIdentifier": "Canon LEGRIA HF R606"
+      "productPosition": 0
     }
   ],
   "secondConfiguration": [
     {
       "slotName": "Slot 5",
-      "productIdentifier": "Canon IXUS 175"
+      "productPosition": 1
     },
     {
       "slotName": "Slot 6",
-      "productIdentifier": "Canon LEGRIA HF R606"
+      "productPosition": 0
     }
   ]
 }

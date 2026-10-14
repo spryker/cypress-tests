@@ -15,6 +15,7 @@ export class BundleConfiguratorRepository {
   // passes whichever text its own shop shows.
   getConfiguratorProduct = (productIdentifier: string): Cypress.Chainable =>
     cy.contains('[data-qa="component configurator-product"]', productIdentifier);
+  getConfiguratorProducts = (): Cypress.Chainable => cy.get('[data-qa="component configurator-product"]');
   getConfiguratorProductSelectButtonSelector = (): string => 'button';
   getAddToCartButton = (): Cypress.Chainable =>
     cy.get('form[name="configurator_state_form"][action*="add-to-cart"] button');

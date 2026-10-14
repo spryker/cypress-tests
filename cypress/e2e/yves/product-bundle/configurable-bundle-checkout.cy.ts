@@ -1,11 +1,7 @@
 import { container, getPaymentMethodBasedOnEnv } from '@utils';
-import {
-  BundleSlotSelection,
-  ConfigurableBundleCheckoutDynamicFixtures,
-  ConfigurableBundleCheckoutStaticFixtures,
-} from '@interfaces/yves';
-import { BundleConfiguratorPage, CartPage, CustomerOverviewPage, OrderDetailsPage } from '@pages/yves';
-import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
+import { ConfigurableBundleCheckoutDynamicFixtures, ConfigurableBundleCheckoutStaticFixtures } from '@interfaces/yves';
+import { CartPage, CustomerOverviewPage, OrderDetailsPage } from '@pages/yves';
+import { CheckoutScenario, ConfigureBundleScenario, CustomerLoginScenario } from '@scenarios/yves';
 
 describe(
   'configurable bundle checkout',
@@ -13,12 +9,12 @@ describe(
     tags: ['@yves', '@merchandising', 'configurable-bundle', 'product', 'cart', 'checkout', 'spryker-core'],
   },
   (): void => {
-    const bundleConfiguratorPage = container.get(BundleConfiguratorPage);
     const cartPage = container.get(CartPage);
     const customerOverviewPage = container.get(CustomerOverviewPage);
     const orderDetailsPage = container.get(OrderDetailsPage);
     const checkoutScenario = container.get(CheckoutScenario);
     const customerLoginScenario = container.get(CustomerLoginScenario);
+    const configureBundleScenario = container.get(ConfigureBundleScenario);
 
     let staticFixtures: ConfigurableBundleCheckoutStaticFixtures;
     let dynamicFixtures: ConfigurableBundleCheckoutDynamicFixtures;
@@ -31,7 +27,10 @@ describe(
     // b2b and b2c shops ship them - the two marketplace shops carry no clone of this journey either.
     // The b2b id also runs against the marketplace B2B shop, the only one built with SSP enabled,
     // whose demo data deactivates this template.
-    shopsWithBundleTemplatesIt(
+    (['suite', 'b2b', 'b2c'].includes(Cypress.env('repositoryId')) &&
+      !(Cypress.env('repositoryId') === 'b2b' && Cypress.env('ENV_IS_SSP_ENABLED'))
+      ? it
+      : it.skip)(
       'given two configurations of one bundle template when one of them is doubled in the cart and the order is placed then the order carries three bundles',
       (): void => {
         // Arrange
@@ -41,8 +40,14 @@ describe(
         });
 
         // Act
-        configureBundle(staticFixtures.firstConfiguration);
-        configureBundle(staticFixtures.secondConfiguration);
+        configureBundleScenario.execute({
+          templateName: staticFixtures.templateName,
+          slotSelections: staticFixtures.firstConfiguration,
+        });
+        configureBundleScenario.execute({
+          templateName: staticFixtures.templateName,
+          slotSelections: staticFixtures.secondConfiguration,
+        });
         cartPage.visit();
         cartPage.changeConfiguredBundleQuantity({ bundleName: staticFixtures.templateName, quantity: 2 });
 
@@ -65,24 +70,5 @@ describe(
           .should('have.length', 3);
       }
     );
-
-    function configureBundle(slotSelections: BundleSlotSelection[]): void {
-      bundleConfiguratorPage.visit();
-      bundleConfiguratorPage.chooseTemplate(staticFixtures.templateName);
-
-      slotSelections.forEach((slotSelection) => bundleConfiguratorPage.selectSlotProduct(slotSelection));
-
-      bundleConfiguratorPage.goToSummary();
-      bundleConfiguratorPage.addConfiguredBundleToCart();
-    }
-
-    function shopsWithBundleTemplatesIt(description: string, testFn: () => void): void {
-      const isMarketplaceB2bShop = Cypress.env('repositoryId') === 'b2b' && Cypress.env('ENV_IS_SSP_ENABLED');
-
-      (['suite', 'b2b', 'b2c'].includes(Cypress.env('repositoryId')) && !isMarketplaceB2bShop ? it : it.skip)(
-        description,
-        testFn
-      );
-    }
   }
 );

@@ -14,3 +14,4 @@ export * from './product-add-to-cart-scenario';
 export * from './impersonate-customer-scenario';
 export * from './open-product-detail-page-on-store-scenario';
 export * from './wait-for-storefront-url-scenario';
+export * from './configure-bundle-scenario';
