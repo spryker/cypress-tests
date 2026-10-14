@@ -35,7 +35,13 @@
         {
           "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
-          "arguments": ["#company", "#addCartItemPermission"]
+          "arguments": [
+            {
+              "isDefault": true,
+              "fkCompany": "#company.id_company"
+            },
+            ["#addCartItemPermission"]
+          ]
         },
         {
           "type": "helper",

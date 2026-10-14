@@ -50,7 +50,13 @@
         {
           "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
-          "arguments": ["#company", "#permission"]
+          "arguments": [
+            {
+              "isDefault": true,
+              "fkCompany": "#company.id_company"
+            },
+            ["#permission"]
+          ]
         },
         {
           "type": "helper",
