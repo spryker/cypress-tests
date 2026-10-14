@@ -1,4 +1,4 @@
-import { container, getPaymentMethodBasedOnEnv } from '@utils';
+import { container, getPaymentMethodBasedOnEnv, skipWhenFeatureAbsent } from '@utils';
 import { MultiMerchantOrderDynamicFixtures, MultiMerchantOrderStaticFixtures } from '@interfaces/yves';
 import { CartPage, CheckoutSummaryPage, CustomerOverviewPage } from '@pages/yves';
 import { SalesDetailPage, SalesIndexPage } from '@pages/backoffice';
@@ -20,12 +20,14 @@ describe(
     ],
   },
   (): void => {
-    // Product offers belong to the marketplace storefronts; the plain B2B and B2C shops have none.
-    if (['b2b', 'b2c'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because the non-marketplace storefronts have no product offers', () => {});
+    // Product offers belong to the marketplace storefronts; the plain B2C shop has none.
+    if (['b2c'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because the B2C storefront has no product offers', () => {});
 
       return;
     }
+
+    skipWhenFeatureAbsent('marketplaceStorefront', ['b2b']);
 
     const cartPage = container.get(CartPage);
     const checkoutSummaryPage = container.get(CheckoutSummaryPage);
