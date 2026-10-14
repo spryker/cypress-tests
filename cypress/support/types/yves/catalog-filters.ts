@@ -3,7 +3,8 @@ import { Customer, Merchant } from './shared';
 export interface CatalogFiltersStaticFixtures {
   defaultPassword: string;
   searchTerm: string;
-  colorFilter: FacetSelection;
+  // A colour on the shops that carry colours; the B2B catalogs barely do, so they narrow by material.
+  attributeFilter: FacetSelection;
 
   // Substrings of the facet headings the catalog has to offer; the full wording differs per theme.
   filterTitles: string[];

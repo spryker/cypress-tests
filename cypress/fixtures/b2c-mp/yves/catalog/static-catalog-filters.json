@@ -1,7 +1,7 @@
 {
   "defaultPassword": "change123",
   "searchTerm": "canon",
-  "colorFilter": {
+  "attributeFilter": {
     "name": "color",
     "value": "Blue"
   },
