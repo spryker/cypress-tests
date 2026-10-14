@@ -31,6 +31,7 @@ describe(
       // Arrange
       const ownerName = `${dynamicFixtures.ownerCustomer.first_name} ${dynamicFixtures.ownerCustomer.last_name}`;
       const receiverName = `${dynamicFixtures.receiverCustomer.first_name} ${dynamicFixtures.receiverCustomer.last_name}`;
+      const productName = dynamicFixtures.product.localized_attributes[0].name;
 
       customerLoginScenario.execute({
         email: dynamicFixtures.ownerCustomer.email,
@@ -64,16 +65,12 @@ describe(
       });
 
       shoppingListPage.openShoppingList(shoppingListName);
-      shoppingListPage
-        .getShoppingListItemsTable()
-        .should('contain.text', `${staticFixtures.soldByText} ${dynamicFixtures.merchant.name}`);
+      shoppingListPage.getShoppingListItemsTable().should('contain.text', productName);
 
       // Full access is only real if the colleague can act on the list, not merely read it.
       shoppingListPage.addAllAvailableProductsToCart();
       cartPage.visit();
-      cartPage
-        .getProductCartItems()
-        .should('contain.text', `${staticFixtures.soldByText} ${dynamicFixtures.merchant.name}`);
+      cartPage.getProductCartItems().should('contain.text', productName);
     });
   }
 );

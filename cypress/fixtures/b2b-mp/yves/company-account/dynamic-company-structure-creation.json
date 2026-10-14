@@ -51,13 +51,19 @@
         },
         {
           "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "seeCompanyMenu",
+          "arguments": ["SeeCompanyMenuPermissionPlugin"]
+        },
+        {
+          "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "key": "adminRole",
           "arguments": [
             {
               "fk_company": "#company.id_company"
             },
-            ["#seeCompanyRoles", "#createCompanyRoles", "#seeCompanyUsers", "#addCompanyUser"]
+            ["#seeCompanyRoles", "#createCompanyRoles", "#seeCompanyUsers", "#addCompanyUser", "#seeCompanyMenu"]
           ]
         },
         {
@@ -69,7 +75,7 @@
               "fk_company": "#company.id_company",
               "name": "ViewCompanyUsersOnly"
             },
-            ["#seeCompanyUsers"]
+            ["#seeCompanyUsers", "#seeCompanyMenu"]
           ]
         },
         {

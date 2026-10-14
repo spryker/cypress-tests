@@ -88,7 +88,7 @@ describe(
       companyRoleCreatePage.create({
         companyName: companyName,
         name: roleName,
-        permissionName: staticFixtures.seeCompanyUsersPermissionName,
+        permissionNames: staticFixtures.companyUserRolePermissionNames,
       });
 
       companyUserCreatePage.visit();

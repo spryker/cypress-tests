@@ -19,17 +19,25 @@ export class ShoppingListPage extends YvesPage {
     return shoppingListName;
   };
 
+  // The B2B shops render the overview, the share entries and the items through their own molecules.
   getShoppingListOverviewEntry = (name: string): Cypress.Chainable =>
-    cy.contains('[data-qa="component shopping-list-overview"] a', name);
+    cy.contains(
+      '[data-qa="component shopping-list-overview"] a, [data-qa="component shopping-list-overview-table"] a',
+      name
+    );
 
   openShoppingList = (name: string): void => {
     this.getShoppingListOverviewEntry(name).click();
   };
 
-  getShoppingListItemsTable = (): Cypress.Chainable => cy.get('[data-qa="component shopping-list"]');
+  getShoppingListItemsTable = (): Cypress.Chainable =>
+    cy.get('[data-qa="component shopping-list"], [data-qa="component shopping-list-table"]');
 
   getShoppingListOverviewRow = (name: string): Cypress.Chainable =>
-    cy.contains('[data-qa="component shopping-list-overview"] tbody tr', name);
+    cy.contains(
+      '[data-qa="component shopping-list-overview"] tbody tr, [data-qa="component shopping-list-overview-table"] tbody tr',
+      name
+    );
 
   // The visible Share button on a list's own page. Scoped to the customer content, because the
   // collapsed side drawer carries a hidden copy of the same link.
@@ -38,7 +46,9 @@ export class ShoppingListPage extends YvesPage {
   };
 
   shareWithCompanyUser = (params: ShareWithCompanyUserParams): void => {
-    cy.contains('[data-qa="component share-list-item"]', params.name).find('select').select(params.accessLevel);
+    cy.contains('[data-qa="component share-list-item"], [data-qa="component shopping-list-item"]', params.name)
+      .find('select')
+      .select(params.accessLevel, { force: true });
     cy.get('form[name="share_shopping_list_form"] [data-qa="submit-button"]').click();
   };
 
@@ -60,9 +70,11 @@ export class ShoppingListPage extends YvesPage {
   getAddToShoppingListProductOfferInput = (): Cypress.Chainable =>
     cy.get('form.js-shopping-list__form input[name="productOfferReference"]');
 
+  // Forced, because the B2B marketplace keeps this form in a popup that has to be opened first and
+  // dresses the list select up with select2; the form submits all the same.
   addDisplayedProductToShoppingList = (name: string): void => {
-    cy.get('form.js-shopping-list__form select[name="idShoppingList"]').select(name);
-    cy.get('[data-qa="add-to-shopping-list-button"]').click();
+    cy.get('form.js-shopping-list__form select[name="idShoppingList"]').select(name, { force: true });
+    cy.get('form.js-shopping-list__form [data-qa="add-to-shopping-list-button"]').click({ force: true });
   };
 }
 

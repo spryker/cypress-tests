@@ -2,7 +2,7 @@ import { User } from './shared';
 
 export interface CompanyStructureCreationStaticFixtures {
   defaultPassword: string;
-  seeCompanyUsersPermissionName: string;
+  companyUserRolePermissionNames: string[];
   companyUserPagePath: string;
   companyRolePagePath: string;
 }

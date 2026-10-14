@@ -16,8 +16,23 @@ export class CompanyBusinessUnitCreatePage extends BackofficePage {
     this.repository.getSubmitButton().click();
   };
 
-  // The company choices are rendered server side, so the select2 search filters them without a request.
+  /**
+   * Suite picks the company through its select2 search. The B2B shops render a plain select whose options
+   * are labelled "<name> (ID: <id>)", so there the option carrying the name is picked by its value.
+   */
   private selectCompany = (companyName: string): void => {
+    if (this.isRepository('b2b', 'b2b-mp')) {
+      this.repository
+        .getCompanySelect()
+        .find('option')
+        .contains(companyName)
+        .then(($option) => {
+          this.repository.getCompanySelect().select($option.val() as string);
+        });
+
+      return;
+    }
+
     this.repository.getCompanySelect().siblings('.select2-container').find('.select2-selection').click();
     cy.get('.select2-dropdown .select2-search__field').type(companyName);
     cy.contains('.select2-dropdown .select2-results__option', companyName).click();
