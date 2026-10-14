@@ -21,6 +21,11 @@ export class CheckoutSummaryPage extends YvesPage {
     this.repository.getSendApprovalRequestButton().click();
   };
 
+  // The approver decides on the checkout summary, the one page every theme renders the approval widget on.
+  approve = (): void => {
+    this.repository.getApproveButton().click();
+  };
+
   getApprovalStatus = (): Cypress.Chainable => this.repository.getApprovalStatus();
 
   getCancelApprovalRequestButton = (): Cypress.Chainable => this.repository.getCancelApprovalRequestButton();
