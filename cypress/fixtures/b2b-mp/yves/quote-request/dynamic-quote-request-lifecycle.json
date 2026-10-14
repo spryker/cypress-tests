@@ -5,6 +5,11 @@
       "synchronize": true,
       "operations": [
         {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
+        },
+        {
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
@@ -63,6 +68,30 @@
         },
         {
           "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "addCartItemPermission",
+          "arguments": ["AddCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "changeCartItemPermission",
+          "arguments": ["ChangeCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "removeCartItemPermission",
+          "arguments": ["RemoveCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "placeOrderWithAmountUpToPermission",
+          "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
+        },
+        {
+          "type": "helper",
           "name": "haveCompanyRoleWithPermissions",
           "key": "buyerRole",
           "arguments": [
@@ -70,7 +99,13 @@
               "isDefault": true,
               "fkCompany": "#company.id_company"
             },
-            ["#placeOrderPermission"]
+            [
+              "#placeOrderPermission",
+              "#addCartItemPermission",
+              "#changeCartItemPermission",
+              "#removeCartItemPermission",
+              "#placeOrderWithAmountUpToPermission"
+            ]
           ]
         },
         {
@@ -151,6 +186,16 @@
         },
         {
           "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#product1.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "havePersistentQuote",
           "key": "quote",
           "arguments": [
@@ -160,7 +205,8 @@
                 {
                   "sku": "#product1.sku",
                   "abstractSku": "#product1.abstract_sku",
-                  "quantity": 1
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference"
                 }
               ]
             },
