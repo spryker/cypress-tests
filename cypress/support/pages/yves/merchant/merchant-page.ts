@@ -23,7 +23,7 @@ export class MerchantPage extends YvesPage {
   getInformationItemValue = (params: GetInformationItemValueParams): Cypress.Chainable => {
     return cy
       .get('[data-qa="component merchant-profile"]')
-      .contains('[data-qa="component information-item"] strong', params.label)
+      .contains(this.repository.getInformationItemLabelSelector(), params.label)
       .parent();
   };
 
