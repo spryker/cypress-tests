@@ -21,8 +21,11 @@ export class ProductSetsPage extends YvesPage {
 
   getProductSetProductItems = (): Cypress.Chainable => this.repository.getProductSetProductItems();
 
+  // The B2B storefronts hide the native select behind a select2 widget, which still submits on its change.
   selectProductVariant = (params: SelectProductVariantParams): void => {
-    this.repository.getVariantSelect(params.productName, params.attributeKey).select(params.attributeValue);
+    this.repository
+      .getVariantSelect(params.productName, params.attributeKey)
+      .select(params.attributeValue, { force: true });
   };
 
   addAllProductsToCart = (): void => {
