@@ -110,8 +110,7 @@ export class B2bMpCheckoutAddressRepository implements CheckoutAddressRepository
     index: number
   ): string | undefined =>
     ($addressItem.find(`#addressesForm_multiShippingAddresses_${index}_servicePoint_uuid`).val() as
-      | string
-      | undefined) || undefined;
+      string | undefined) || undefined;
 
   getMultiShipmentAddressItemShipmentTypeRadio = (index: number, shipmentTypeKey: string): Cypress.Chainable =>
     cy.get(`#addressesForm_multiShippingAddresses_${index}_shipmentType_key [value="${shipmentTypeKey}"]`);
