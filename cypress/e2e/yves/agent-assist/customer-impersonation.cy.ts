@@ -53,22 +53,26 @@ describe(
 
       // Assert
       customerOverviewPage.assertPageLocation();
-      agentControlBarPage.getEndAssistanceLink().should('exist');
+      agentControlBarPage.getActiveAssistanceIndicator().should('exist');
     });
 
-    it('given an agent impersonating a customer when the agent ends the assistance then the agent own session is back', (): void => {
-      // Arrange
-      agentControlBarPage.getEndAssistanceLink().should('exist');
+    // The B2B marketplace agent control only ends the whole agent session, and the b2b id runs on it too.
+    (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it.skip : it)(
+      'given an agent impersonating a customer when the agent ends the assistance then the agent own session is back',
+      (): void => {
+        // Arrange
+        agentControlBarPage.getEndAssistanceLink().should('exist');
 
-      // Act
-      agentControlBarPage.endAssistance();
+        // Act
+        agentControlBarPage.endAssistance();
 
-      // Assert
-      // The control bar shows the customer search only when nobody is being assisted, and the exit
-      // link only while somebody is, so the swap is what proves the session was handed back.
-      agentControlBarPage.getCustomerSearchInput().should('exist');
-      agentControlBarPage.getEndAssistanceLink().should('not.exist');
-    });
+        // Assert
+        // The control bar shows the customer search only when nobody is being assisted, and the exit
+        // link only while somebody is, so the swap is what proves the session was handed back.
+        agentControlBarPage.getCustomerSearchInput().should('exist');
+        agentControlBarPage.getEndAssistanceLink().should('not.exist');
+      }
+    );
 
     it('given an agent impersonating a customer with a filled cart when the agent checks out then the order is in the customer order history', (): void => {
       // Act
