@@ -27,10 +27,6 @@ describe(
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
-      if (!staticFixtures.isDiscontinuedInBackOffice) {
-        return;
-      }
-
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,

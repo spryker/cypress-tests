@@ -69,8 +69,8 @@ describe(
       cartPage.visit();
 
       // Assert
-      cartPage.getProductCartItems().should('contain', dynamicFixtures.secondVariantProduct.sku);
-      cartPage.getProductCartItems().should('contain', dynamicFixtures.simpleProduct.sku);
+      cartPage.findCartItem({ sku: dynamicFixtures.secondVariantProduct.sku }).should('exist');
+      cartPage.findCartItem({ sku: dynamicFixtures.simpleProduct.sku }).should('exist');
     });
   }
 );

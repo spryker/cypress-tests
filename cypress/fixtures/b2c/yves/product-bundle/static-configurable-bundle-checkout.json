@@ -4,21 +4,21 @@
   "firstConfiguration": [
     {
       "slotName": "Slot 5",
-      "productIdentifier": "Sony Cyber-shot DSC-W830"
+      "productIdentifier": "Canon IXUS 160"
     },
     {
       "slotName": "Slot 6",
-      "productIdentifier": "Sony NEX-VG30E"
+      "productIdentifier": "Canon LEGRIA HF G25"
     }
   ],
   "secondConfiguration": [
     {
       "slotName": "Slot 5",
-      "productIdentifier": "Canon IXUS 165"
+      "productIdentifier": "Canon IXUS 175"
     },
     {
       "slotName": "Slot 6",
-      "productIdentifier": "Sony HDR-MV1"
+      "productIdentifier": "Canon LEGRIA HF R606"
     }
   ]
 }

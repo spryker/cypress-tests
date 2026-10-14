@@ -3,7 +3,7 @@
   "searchTerm": "canon",
   "attributeFilter": {
     "name": "color",
-    "value": "Blue"
+    "value": "blue"
   },
   "filterTitles": ["Price", "Rating", "Label", "Brand", "Color"],
   "ascendingPriceSortLabel": "Sort by price ascending",

@@ -23,8 +23,9 @@ export class B2cMpCustomerOverviewRepository implements CustomerOverviewReposito
   getOrderDetailTableRow(): Cypress.Chainable {
     return cy.get('[data-qa="component order-detail-table"]');
   }
+  // The side drawer renders the same navigation a second time, so the link is taken from the account sidebar.
   getSidebarLink(section: CustomerSidebarSection): Cypress.Chainable {
-    return cy.get(`[data-id="sidebar-${section}"]`);
+    return cy.get(`[data-qa="customer-account-sidebar"] [data-id="sidebar-${section}"]`);
   }
   getDefaultBillingAddressHeading(): string {
     return 'Default Billing Address';

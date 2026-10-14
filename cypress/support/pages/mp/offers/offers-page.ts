@@ -38,6 +38,16 @@ export class OffersPage extends MpPage {
     return this.repository.getSaveButtonSelector();
   };
 
+  removeStores = (storeNames: string[]): void => {
+    storeNames.forEach((storeName) => this.repository.getSelectedStoreRemoveButton(storeName).click({ force: true }));
+  };
+
+  saveOffer = (): void => {
+    cy.intercept('POST', this.repository.getUpdateOfferUrlPattern()).as('offerUpdated');
+    this.repository.getDrawer().find(this.repository.getSaveButtonSelector()).click();
+    cy.wait('@offerUpdated');
+  };
+
   // Creating an offer runs in two steps: choosing the product it is offered on, then filling the
   // offer's own form, whose price table is the same editable table the offer drawer uses.
   createOffer = (params: CreateOfferParams): void => {
@@ -46,11 +56,12 @@ export class OffersPage extends MpPage {
     this.repository.getAddOfferButton().click();
 
     // The product table has to have narrowed to the searched sku before a row is picked, or the
-    // offer is created on whichever product the unfiltered list happened to list first.
+    // offer is created on whichever product the unfiltered list happened to list first. The table
+    // can still show the unfiltered rows when the response has arrived, so the row is picked by its sku.
     this.interceptTable({ url: '/product-offer-merchant-portal-gui/product-list/table-data**', expectedCount: 1 }, () =>
       this.repository.getProductSearchInput().type(`${params.concreteSku}{enter}`)
     );
-    this.repository.getProductRows().first().click();
+    this.repository.getProductRows().filter(`:contains("${params.concreteSku}")`).first().click();
 
     this.repository.getMerchantSkuInput().type(params.merchantSku);
     this.repository.getIsActiveLabel().click();

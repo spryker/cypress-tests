@@ -1,6 +1,5 @@
 {
   "defaultPassword": "change123",
   "discontinuedLabel": "Discontinued",
-  "alternativeLabel": "Alternative for",
-  "isDiscontinuedInBackOffice": true
+  "alternativeLabel": "Alternative for"
 }

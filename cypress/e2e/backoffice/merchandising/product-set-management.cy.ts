@@ -63,7 +63,7 @@ describe(
 
       // Assert
       products.forEach((product) => {
-        cartPage.getProductCartItems().should('contain', product.sku);
+        cartPage.findCartItem({ sku: product.sku }).should('exist');
       });
 
       // Act
@@ -84,7 +84,7 @@ describe(
       });
       cartPage.visit();
       products.forEach((product) => {
-        cartPage.getProductCartItems().should('contain', product.sku);
+        cartPage.findCartItem({ sku: product.sku }).should('exist');
       });
     });
   }

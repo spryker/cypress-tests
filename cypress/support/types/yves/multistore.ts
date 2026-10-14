@@ -33,6 +33,7 @@ export interface MultistoreProductOfferDynamicFixtures {
   product: ProductConcrete;
   merchant: Merchant;
   merchantToUnassign: Merchant;
+  merchantToUnassignUser?: User;
   productOffer: ProductOffer;
   productOfferToUnassign: ProductOffer;
 }

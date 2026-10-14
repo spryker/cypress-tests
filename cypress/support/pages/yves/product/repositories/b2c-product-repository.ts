@@ -86,6 +86,22 @@ export class B2cProductRepository implements ProductRepository {
         return;
       }
 
+      // The detail page renders its quantity read-only, so only the counter buttons change it.
+      if ($body.find('.js-quantity-counter__input[readonly]:visible').length) {
+        cy.get('.js-quantity-counter__input[readonly]:visible')
+          .first()
+          .then(($input) => {
+            const difference = quantity - parseInt(String($input.val()).replace(/\D/g, ''), 10);
+            const button = difference > 0 ? '.js-quantity-counter__incr' : '.js-quantity-counter__decr';
+
+            Cypress._.times(Math.abs(difference), () =>
+              cy.wrap($input).closest('quantity-counter').find(button).click()
+            );
+          });
+
+        return;
+      }
+
       cy.get('formatted-number-input input').first().clear();
       cy.get('formatted-number-input input').first().type(String(quantity));
     });
@@ -108,8 +124,8 @@ export class B2cProductRepository implements ProductRepository {
 
   getBundleItems = (): Cypress.Chainable => cy.get('[data-qa*="component bundle-items"]');
 
-  getOutOfStockNotice = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-availability-widget"] [data-qa="component status"]:contains("Out of stock")');
+  // The B2C theme renders no availability status, only an out-of-stock note in place of the quantity.
+  getOutOfStockNotice = (): Cypress.Chainable => cy.get('[data-qa="component availability-product"]');
   getAvailabilityNotificationEmailField = (): Cypress.Chainable =>
     cy.get('#availabilityNotificationSubscriptionForm_email');
   getAvailabilityNotificationSubscribeForm = (): Cypress.Chainable =>

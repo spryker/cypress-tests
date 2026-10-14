@@ -173,7 +173,7 @@ export class ProductPage extends YvesPage {
     cy.visit(params.url);
   };
 
-  // The B2B themes dress the select up with select2, which covers the native one; the form submitter
+  // The B2B and B2C themes dress the select up with select2, which covers the native one; the form submitter
   // still listens to the native select's change event.
   selectVariantAttribute = (params: SelectVariantAttributeParams): void => {
     this.repository.getVariantAttributeSelect(params.attributeKey).select(params.attributeValue, { force: true });

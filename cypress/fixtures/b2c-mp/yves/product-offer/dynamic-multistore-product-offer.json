@@ -126,6 +126,21 @@
         },
         {
           "type": "helper",
+          "name": "haveUser",
+          "key": "merchantToUnassignUser",
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#merchantToUnassign", "#merchantToUnassignUser"]
+        },
+        {
+          "type": "helper",
           "name": "haveProductOffer",
           "key": "productOffer",
           "arguments": [

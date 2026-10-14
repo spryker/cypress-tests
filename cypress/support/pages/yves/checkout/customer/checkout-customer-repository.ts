@@ -6,6 +6,7 @@ export interface CheckoutCustomerRepository {
   getGuestTermsCheckbox(): Cypress.Chainable;
   getGuestSubmitButton(): Cypress.Chainable;
   getLoginRadioButton(): Cypress.Chainable;
+  getRegisterRadioButton(): Cypress.Chainable;
   getLoginEmailField(): Cypress.Chainable;
   getLoginPasswordField(): Cypress.Chainable;
   getLoginSubmitButton(): Cypress.Chainable;

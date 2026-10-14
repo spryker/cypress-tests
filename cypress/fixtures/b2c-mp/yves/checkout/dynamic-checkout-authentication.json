@@ -41,6 +41,11 @@
         },
         {
           "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
+        },
+        {
+          "type": "helper",
           "name": "haveFullProduct",
           "key": "product1",
           "arguments": [
@@ -72,6 +77,16 @@
             {
               "sku": "#product1.sku",
               "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#product1.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
             }
           ]
         }

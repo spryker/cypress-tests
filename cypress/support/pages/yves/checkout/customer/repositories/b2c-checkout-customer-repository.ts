@@ -12,7 +12,9 @@ export class B2cCheckoutCustomerRepository implements CheckoutCustomerRepository
     cy.get('[data-qa="component checkbox guestForm[customer][accept_terms] guestForm_customer_accept_terms"]');
   getGuestSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="submit-button"]:visible');
   getLoginRadioButton = (): Cypress.Chainable =>
-    cy.get('[data-qa="component toggler-radio checkoutProceedAs register"]');
+    cy.get('[data-qa="component toggler-radio checkoutProceedAs login"] input');
+  getRegisterRadioButton = (): Cypress.Chainable =>
+    cy.get('[data-qa="component toggler-radio checkoutProceedAs register"] input');
   getLoginEmailField = (): Cypress.Chainable => cy.get('#loginForm_email');
   getLoginPasswordField = (): Cypress.Chainable => cy.get('#loginForm_password');
   getLoginSubmitButton = (): Cypress.Chainable => cy.get('form[name="loginForm"]').find('button[type="submit"]');
