@@ -16,9 +16,21 @@ export class B2bCartRepository implements CartRepository {
     cy.get('url-mask-generator[shareoptiongroup="external"]').find('.js-toggler-radio__trigger');
   getExternalCartShareLinkInput = (): Cypress.Chainable => cy.get('#PREVIEW');
   // The SKU field is ProductSearchWidget's own product-search-autocomplete-form, not the generic
-  // autocomplete-form the other shops render.
-  getQuickAddToCartSkuField = (): Cypress.Chainable =>
-    cy.get('[data-qa="component product-search-autocomplete-form"] .input');
+  // autocomplete-form the other shops render. An empty cart shows the form in the page body; a cart
+  // with items moves it into a collapsed sidebar accordion item, which is opened first.
+  getQuickAddToCartSkuField = (): Cypress.Chainable => {
+    const skuFieldSelector = '[data-qa="component product-search-autocomplete-form"] .input';
+
+    cy.get(skuFieldSelector)
+      .first()
+      .then(($skuField) => {
+        if (!$skuField.is(':visible')) {
+          cy.get('[data-toggle-target=".js-cart-sidebar-item__content-quick-add-widget"]').click();
+        }
+      });
+
+    return cy.get(skuFieldSelector);
+  };
   getQuickAddToCartProductListField = (): Cypress.Chainable => cy.get('[data-qa="component products-list"]');
   getFirstCartItemNoteField = (): Cypress.Chainable => {
     cy.get('[data-qa="component cart-item-note"]')
