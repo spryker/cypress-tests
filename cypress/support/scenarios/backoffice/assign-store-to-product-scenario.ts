@@ -16,6 +16,9 @@ export class AssignStoreToProductScenario {
       .find({
         searchQuery: params.abstractProductSku,
         interceptTableUrl: `**/product-management/index/table**`,
+        // The abstract sku is unique, and waiting for the table to show that one row keeps the edit
+        // link from being taken off the unfiltered table before it redraws.
+        expectedCount: 1,
       })
       .then((getRow) => {
         if (!getRow) {
