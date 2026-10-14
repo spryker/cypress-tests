@@ -131,8 +131,21 @@ export class B2bMpCartRepository implements CartRepository {
     cy.contains('article[data-qa*="configured-bundle"]', bundleName).first();
   getConfiguredBundleQuantityField = (bundleName: string): Cypress.Chainable =>
     this.getConfiguredBundle(bundleName).find('input.formatted-number-input__input').first();
+  // The bundle's quantity counter has no submit button and posts its form itself on a timer, to the async
+  // change route in the B2B carts, so the form is posted directly and the cart reloaded to show the result.
   submitConfiguredBundleQuantity = (bundleName: string): void => {
-    this.getConfiguredBundle(bundleName).find('[data-qa="quantity-input-submit"]').first().click({ timeout: 10000 });
+    this.getConfiguredBundle(bundleName)
+      .find('form[action*="configured-bundle"]')
+      .first()
+      .then(($form: JQuery<HTMLElement>): void => {
+        cy.request({
+          method: 'POST',
+          url: $form.attr('action'),
+          body: $form.serialize(),
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        });
+      });
+    cy.reload();
   };
   getClearCartFormSelector = (): string => 'form[name=multi_cart_clear_form]';
 
