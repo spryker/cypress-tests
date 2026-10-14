@@ -61,10 +61,6 @@ export class B2bMpCheckoutAddressRepository implements CheckoutAddressRepository
     cy.get('[data-qa="component address-item-form-field-list"]');
   getAddressItemFormFieldListElement = (): Cypress.Chainable =>
     cy.get('[data-qa="component address-item-form-field-list"]');
-  // The redesigned theme groups the address items by shipment type, one container per group, so the
-  // list's children are the groups; each item is a wrapper in both B2B themes.
-  getMultiShipmentAddressItems = (): Cypress.Chainable =>
-    cy.get('[data-qa="component address-item-form-field-list"] .address-item-form-field-list__wrapper');
   getMultiShipmentAddressItemDeliveryRadio = ($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable =>
     cy.wrap($addressItem).get(`#addressesForm_multiShippingAddresses_${index}_shipmentType_key [value="delivery"]`);
   getMultiShipmentAddressItemAddressField = ($addressItem: JQuery<HTMLElement>, index: number): Cypress.Chainable => {
