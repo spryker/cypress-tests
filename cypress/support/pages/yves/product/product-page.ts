@@ -170,8 +170,9 @@ export class ProductPage extends YvesPage {
     cy.visit(params.url);
   };
 
+  // The B2C storefront covers the native select with a select2 widget, which still submits on its change.
   selectVariantAttribute = (params: SelectVariantAttributeParams): void => {
-    this.repository.getVariantAttributeSelect(params.attributeKey).select(params.attributeValue);
+    this.repository.getVariantAttributeSelect(params.attributeKey).select(params.attributeValue, { force: true });
   };
 
   getVariantAttributeOptions = (attributeKey: string): Cypress.Chainable => {
