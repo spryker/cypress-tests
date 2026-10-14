@@ -40,7 +40,7 @@ export class CheckoutCustomerPage extends YvesPage {
   };
 
   registerDuringCheckout = (params: RegisterDuringCheckoutParams): void => {
-    this.repository.getLoginRadioButton().click({ force: true });
+    this.repository.getRegisterRadioButton().click({ force: true });
 
     this.repository.getRegisterSalutationField().select(params.salutation, { force: true });
     this.repository.getRegisterFirstNameField().clear().type(params.firstName);

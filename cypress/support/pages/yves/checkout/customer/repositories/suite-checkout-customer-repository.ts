@@ -13,6 +13,8 @@ export class SuiteCheckoutCustomerRepository implements CheckoutCustomerReposito
   getGuestSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="guest-form-submit-button"]');
   getLoginRadioButton = (): Cypress.Chainable =>
     cy.get('[data-qa="component toggler-radio checkoutProceedAs register"]');
+  getRegisterRadioButton = (): Cypress.Chainable =>
+    cy.get('[data-qa="component toggler-radio checkoutProceedAs register"]');
   getLoginEmailField = (): Cypress.Chainable => cy.get('#loginForm_email');
   getLoginPasswordField = (): Cypress.Chainable => cy.get('#loginForm_password');
   getLoginSubmitButton = (): Cypress.Chainable => cy.get('form[name="loginForm"]').find('button[type="submit"]');
