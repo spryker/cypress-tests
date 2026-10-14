@@ -8,6 +8,13 @@ describe(
   'quick add to cart',
   { tags: ['@yves', 'catalog', 'search', 'cart', 'quick-add-to-cart', 'product-groups', 'spryker-core'] },
   (): void => {
+    // The B2C marketplace's product card empties the add to cart block, so its catalog offers no quick add.
+    if (['b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because the B2C marketplace catalog has no quick add to cart', () => {});
+
+      return;
+    }
+
     const catalogPage = container.get(CatalogPage);
     const cartPage = container.get(CartPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
