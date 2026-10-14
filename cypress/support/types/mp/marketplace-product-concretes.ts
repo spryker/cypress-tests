@@ -1,10 +1,11 @@
-import { Merchant, ProductConcrete, User } from './shared';
+import { Customer, Merchant, ProductConcrete, User } from './shared';
 
 export interface ProductConcreteManagementDynamicFixtures {
   rootUser: User;
   merchant: Merchant;
   merchantUser: User;
   approvalMerchant: Merchant;
+  customer?: Customer;
 
   concreteProduct1: ProductConcrete;
   concreteProduct2: ProductConcrete;
@@ -30,6 +31,7 @@ export interface MerchantProductManagementDynamicFixtures {
 
 export interface MerchantProductManagementStaticFixtures {
   defaultPassword: string;
+  variantAttributeKey: string;
   addedConcrete: AddedConcrete;
 }
 

@@ -26,6 +26,8 @@ interface VolumeTier {
   threshold: number;
   quantity: number;
   price: string;
+  // The B2B marketplace cart shows only the item total, the other shops the unit price as well.
+  cartPrice: string;
 }
 
 export interface OfferCreationDynamicFixtures {

@@ -75,12 +75,9 @@ describe(
       // Assert
       catalogPage.visit();
       catalogPage.searchProductFromSuggestions({ query: abstractSku });
-      productPage.getVariantAttributeOptions(VARIANT_ATTRIBUTE_KEY).should('have.length.at.least', 2);
+      productPage.getVariantAttributeOptions(staticFixtures.variantAttributeKey).should('have.length.at.least', 2);
     });
   }
 );
 
 const PRODUCT_SAVED_MESSAGE = 'The Product is saved.';
-
-// The super attribute the fixture product varies on.
-const VARIANT_ATTRIBUTE_KEY = 'color';

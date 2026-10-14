@@ -72,7 +72,7 @@
           "arguments": [
             {
               "attributes": {
-                "color": "white"
+                "farbe": "white"
               },
               "localizedAttributes": [
                 {
@@ -88,7 +88,7 @@
             {
               "idTaxSet": 1,
               "attributes": {
-                "color": "white"
+                "farbe": "white"
               },
               "localizedAttributes": [
                 {

@@ -80,6 +80,11 @@ describe(
       salesDetailPage.triggerOms({ state: 'Pay', shouldTriggerOmsInCli: true });
       salesDetailPage.triggerOms({ state: 'skip picking', shouldTriggerOmsInCli: true });
 
+      // The B2B marketplace creates the merchant order on an OMS condition and timeout check.
+      if (['b2b-mp'].includes(Cypress.env('repositoryId'))) {
+        cy.runCliCommands(['console oms:check-condition', 'console oms:check-timeout']);
+      }
+
       salesIndexPage.getOrderReference().then((reference: string) => {
         orderReference = reference.trim();
       });

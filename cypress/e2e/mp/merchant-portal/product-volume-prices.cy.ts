@@ -95,7 +95,7 @@ describe(
         .getProductCartItems()
         .filter(`:contains("${dynamicFixtures.merchantProduct.sku}")`)
         .should('have.length', 1)
-        .and('contain.text', staticFixtures.volumeTier.price);
+        .and('contain.text', staticFixtures.volumeTier.cartPrice);
     });
   }
 );

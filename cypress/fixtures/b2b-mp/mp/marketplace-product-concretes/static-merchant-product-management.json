@@ -1,5 +1,6 @@
 {
   "defaultPassword": "change123",
+  "variantAttributeKey": "farbe",
   "addedConcrete": {
     "attributeValue": "Grey",
     "stockQuantity": 5,

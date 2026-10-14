@@ -10,7 +10,18 @@ export class LoginPage extends YvesPage {
   @inject(REPOSITORIES.LoginRepository) private repository: LoginRepository;
 
   protected PAGE_URL = '/login';
+  protected REGISTRATION_PAGE_URL = '/register';
   protected DEFAULT_SALUTATION = 'Mr';
+
+  visitRegistration = (): void => {
+    if (this.isRepository('b2b', 'b2b-mp')) {
+      cy.visit(this.REGISTRATION_PAGE_URL);
+
+      return;
+    }
+
+    this.visit();
+  };
 
   login = (params: LoginParams): void => {
     this.repository.getLoginEmailInput().clear().type(params.email);

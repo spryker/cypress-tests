@@ -36,6 +36,11 @@ describe(
     ],
   },
   (): void => {
+    // The B2B marketplace deploys the water treatment configurator instead of the date-time example one.
+    if (['b2b', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped due to repo being b2b or b2b-mp', () => {});
+      return;
+    }
     const catalogPage = container.get(CatalogPage);
     const productPage = container.get(ProductPage);
     const productConfiguratorPage = container.get(ProductConfiguratorPage);
