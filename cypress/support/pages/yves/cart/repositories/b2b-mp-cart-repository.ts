@@ -129,22 +129,15 @@ export class B2bMpCartRepository implements CartRepository {
   getConfiguredBundles = (): Cypress.Chainable => cy.get('article[data-qa*="configured-bundle"]');
   getConfiguredBundle = (bundleName: string): Cypress.Chainable =>
     cy.contains('article[data-qa*="configured-bundle"]', bundleName).first();
-  getConfiguredBundleQuantityField = (bundleName: string): Cypress.Chainable =>
-    this.getConfiguredBundle(bundleName).find('input.formatted-number-input__input').first();
-  // The bundle's quantity counter has no submit button and posts its form itself on a timer, to the async
-  // change route in the B2B carts, so the form is posted directly and the cart reloaded to show the result.
-  submitConfiguredBundleQuantity = (bundleName: string): void => {
-    this.getConfiguredBundle(bundleName)
-      .find('form[action*="configured-bundle"]')
-      .first()
-      .then(($form: JQuery<HTMLElement>): void => {
-        cy.request({
-          method: 'POST',
-          url: $form.attr('action'),
-          body: $form.serialize(),
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        });
-      });
+  // The bundle's quantity counter has no submit button: it posts its form itself a moment after the value
+  // changes, so the request is awaited before the value is typed.
+  getConfiguredBundleQuantityField = (bundleName: string): Cypress.Chainable => {
+    cy.intercept('POST', '**/configured-bundle/**').as('configuredBundleQuantityChange');
+
+    return this.getConfiguredBundle(bundleName).find('input.formatted-number-input__input').first();
+  };
+  submitConfiguredBundleQuantity = (): void => {
+    cy.wait('@configuredBundleQuantityChange');
     cy.reload();
   };
   getClearCartFormSelector = (): string => 'form[name=multi_cart_clear_form]';
