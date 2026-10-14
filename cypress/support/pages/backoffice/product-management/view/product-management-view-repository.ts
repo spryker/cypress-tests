@@ -17,10 +17,11 @@ export class ProductManagementViewRepository {
   };
 
   // Zed renders the block as label/value column pairs with no data attribute, so the label text is the anchor.
+  // Its case depends on the shop's Zed translations (Sku on suite, SKU on the B2C marketplace).
   getGeneralInformationValue = (label: string): Cypress.Chainable => {
     return this.getGeneralInformation()
       .find('> .row')
-      .filter((_index, row) => Cypress.$(row).children().first().text().trim() === label)
+      .filter((_index, row) => Cypress.$(row).children().first().text().trim().toLowerCase() === label.toLowerCase())
       .children()
       .last();
   };
