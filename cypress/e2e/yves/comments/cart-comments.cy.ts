@@ -103,6 +103,7 @@ describe('cart comments', { tags: ['@yves', '@comments', 'cart', 'marketplace-ca
 
     // Act
     checkoutScenario.execute({
+      idCustomerAddress: dynamicFixtures.address.id_customer_address,
       shouldTriggerOmsInCli: true,
       paymentMethod: getPaymentMethodBasedOnEnv(),
     });
