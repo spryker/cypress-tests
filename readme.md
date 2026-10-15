@@ -94,8 +94,8 @@ All commands below run from the **root of this repository**.
 3. The videos are in `cypress/videos/`, one per spec, named after it. A run of several specs
    keeps their folders, e.g. `cypress/videos/yves/agentic-commerce/customer-connects-client.cy.ts.mp4`;
    a run of one spec writes it straight into `cypress/videos/`.
-4. Copy the ones you want to keep: the next recording run overwrites them. The folder is
-   git-ignored.
+4. Copy the ones you want to keep: every Cypress run in this repository empties
+   `cypress/videos/` first, also one without `--video`. The folder is git-ignored.
 5. For smooth, retina-quality footage, run with `--headed` and record the Chrome window with
    the macOS screen recorder (Cmd+Shift+5) instead.
 
