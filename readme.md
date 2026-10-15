@@ -87,9 +87,8 @@ All commands below run from the **root of this repository**.
    npm run cy:agentic-commerce -- --cut 1 --demo --spec cypress/e2e/yves/agentic-commerce/customer-connects-client.cy.ts
    ```
    `--demo` records for an audience: 1920×1080, the shop fills the frame, every click and
-   entry waits 0.8 s, typing is visible, each test holds its last screen, and the Symfony
-   toolbar is collapsed. The API specs open no page, so their videos keep the Cypress command
-   log. `--video` records at normal speed with the command log, which is quicker for
+   entry waits 0.8 s, typing is visible, and each test holds its last screen. The API specs
+   open no page, so their videos keep the Cypress command log. `--video` records at normal speed with the command log, which is quicker for
    debugging.
 3. The videos are in `cypress/videos/`, one per spec, named after it. A run of several specs
    keeps their folders, e.g. `cypress/videos/yves/agentic-commerce/customer-connects-client.cy.ts.mp4`;
