@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Runs the AgenticCommerce user-story specs for one cut and writes a JSON summary.
-// Usage: node tools/scripts/agentic-commerce/run.mjs --cut <cut> --summary <path> [--headed] [--spec <glob or path>]...
+// Usage: node tools/scripts/agentic-commerce/run.mjs --cut <cut> --summary <path> [--headed] [--video] [--spec <glob or path>]...
+// --video records one MP4 per spec into cypress/videos/.
 import { mkdirSync, writeFileSync } from 'fs';
 import { dirname } from 'path';
 import cypress from 'cypress';
@@ -8,7 +9,7 @@ import cypress from 'cypress';
 const DEFAULT_SPEC = 'cypress/e2e/**/agentic-commerce/**/*.cy.ts';
 
 const parseArguments = (argv) => {
-  const options = { cut: process.env.AGENTIC_COMMERCE_CUT ?? '', summary: '', headed: false, specs: [] };
+  const options = { cut: process.env.AGENTIC_COMMERCE_CUT ?? '', summary: '', headed: false, video: false, specs: [] };
 
   for (let index = 0; index < argv.length; index++) {
     const argument = argv[index];
@@ -16,6 +17,7 @@ const parseArguments = (argv) => {
     if (argument === '--cut') options.cut = argv[++index];
     else if (argument === '--summary') options.summary = argv[++index];
     else if (argument === '--headed') options.headed = true;
+    else if (argument === '--video') options.video = true;
     else if (argument === '--spec') options.specs.push(argv[++index]);
     else throw new Error(`Unknown argument ${argument}`);
   }
@@ -50,6 +52,7 @@ const results = await cypress.run({
   headed: options.headed,
   spec: (options.specs.length ? options.specs : [DEFAULT_SPEC]).join(','),
   env: { agenticCommerceCut: options.cut, grepTags: '@agentic-commerce', repositoryId: 'suite' },
+  config: options.video ? { video: true, videoCompression: false } : {},
 });
 
 if (results.status === 'failed') {
