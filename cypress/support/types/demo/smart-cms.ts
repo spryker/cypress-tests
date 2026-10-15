@@ -10,8 +10,8 @@ export interface SmartCmsDemoStaticFixtures {
   cmsBlockEntityType: string;
   cmsBlockIdEntity: number;
   generateEndpointPath: string;
-  invalidCsrfErrorKey: string;
-  disabledErrorKey: string;
+  invalidCsrfErrorMessage: string;
+  disabledErrorMessage: string;
   unsupportedAttachmentMediaType: string;
   unsupportedAttachmentError: string;
   probeImagePath: string;

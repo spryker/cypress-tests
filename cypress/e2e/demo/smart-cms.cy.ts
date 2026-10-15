@@ -213,22 +213,22 @@ describe(
           description: string;
           options: { method?: string; body?: Record<string, unknown> };
           expectedStatus: number;
-          expectedErrorKey?: string;
+          expectedErrorMessage?: string;
           disableFeature?: boolean;
         }> = [
           { description: 'GET is rejected', options: { method: 'GET' }, expectedStatus: 403 },
           { description: 'token-less POST is rejected', options: { method: 'POST', body: {} }, expectedStatus: 403 },
           {
-            description: 'invalid CSRF token is rejected with the invalid-csrf error key',
+            description: 'invalid CSRF token is rejected with the translated invalid-csrf error message',
             options: { method: 'POST', body: { _token: 'not-a-valid-token', userPrompt: 'x' } },
             expectedStatus: 403,
-            expectedErrorKey: staticFixtures.invalidCsrfErrorKey,
+            expectedErrorMessage: staticFixtures.invalidCsrfErrorMessage,
           },
           {
-            description: 'when disabled, the disabled error key is returned ahead of the CSRF check',
+            description: 'when disabled, the translated disabled error message is returned ahead of the CSRF check',
             options: { method: 'POST', body: { _token: 'not-a-valid-token' } },
             expectedStatus: 403,
-            expectedErrorKey: staticFixtures.disabledErrorKey,
+            expectedErrorMessage: staticFixtures.disabledErrorMessage,
             disableFeature: true,
           },
         ];
@@ -240,8 +240,8 @@ describe(
 
           smartCmsPage.requestGenerate(staticFixtures.generateEndpointPath, contract.options).then((response): void => {
             expect(response.status, contract.description).to.eq(contract.expectedStatus);
-            if (contract.expectedErrorKey) {
-              expect(response.body).to.have.property('error', contract.expectedErrorKey);
+            if (contract.expectedErrorMessage) {
+              expect(response.body).to.have.property('error', contract.expectedErrorMessage);
             }
           });
 
