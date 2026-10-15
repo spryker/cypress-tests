@@ -3,3 +3,4 @@ export * from './cart';
 export * from './checkout';
 export * from './cms';
 export * from './shopping-list';
+export * from './agentic-commerce';

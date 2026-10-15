@@ -25,7 +25,8 @@
     "cy:smoke": "cypress run --spec \"cypress/e2e/smoke/**/*.ts\" --headless --browser chrome",
     "cy:dms": "cypress run --spec \"cypress/e2e/!(smoke)/**/*dms.cy.ts\" --headless --browser chrome",
     "cy:smoke:demo": "cypress run --spec \"cypress/e2e/smoke/!(product)/*.ts\" --headless --browser chrome",
-    "cy:repack": "node tools/scripts/cypress-shards/repack.mjs"
+    "cy:repack": "node tools/scripts/cypress-shards/repack.mjs",
+    "cy:agentic-commerce": "node tools/scripts/agentic-commerce/run.mjs"
   },
   "engines": {
     "node": ">=18.0.0",

@@ -1,0 +1,62 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": false,
+      "operations": [
+        { "type": "helper", "name": "haveRole", "key": "readOnlyRole" },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "dashboard",
+              "controller": "*",
+              "action": "*",
+              "type": "allow",
+              "fk_acl_role": "#readOnlyRole.id_acl_role"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "agentic-commerce",
+              "controller": "*",
+              "action": "index",
+              "type": "allow",
+              "fk_acl_role": "#readOnlyRole.id_acl_role"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "agentic-commerce",
+              "controller": "*",
+              "action": "table",
+              "type": "allow",
+              "fk_acl_role": "#readOnlyRole.id_acl_role"
+            }
+          ]
+        },
+        { "type": "helper", "name": "haveGroup", "key": "readOnlyGroup" },
+        {
+          "type": "helper",
+          "name": "addRoleToGroup",
+          "arguments": ["#readOnlyRole.id_acl_role", "#readOnlyGroup.id_acl_group"]
+        },
+        { "type": "helper", "name": "haveUser", "key": "readOnlyUser", "arguments": [{ "password": "Change123@_!" }] },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#readOnlyUser.id_user", "#readOnlyGroup.id_acl_group"]
+        }
+      ]
+    }
+  }
+}
