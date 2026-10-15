@@ -2,5 +2,8 @@
   "defaultPassword": "change123",
   "newCostCenterName": "Test Cost Center",
   "newCostCenterDescription": "Test description",
-  "updatedCostCenterName": "Updated Cost Center Name"
+  "newBudgetName": "Q1 Budget",
+  "budgetAmount": "100000",
+  "budgetCurrency": "EUR",
+  "budgetEnforcementRule": "block"
 }

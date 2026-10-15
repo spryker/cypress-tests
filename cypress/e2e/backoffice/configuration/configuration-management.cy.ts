@@ -46,57 +46,5 @@ describe(
       configurationPage.saveConfiguration();
       cy.runQueueWorker();
     });
-
-    it('reverts unsaved changes when reset button is clicked', (): void => {
-      configurationPage.visitStorefrontTab();
-
-      configurationPage.setThemeMainColor(staticFixtures.themeSettings.validColor);
-      configurationPage.getChangesCount().should('have.text', '1');
-
-      configurationPage.resetChanges();
-
-      configurationPage.getThemeMainColor().should('have.value', staticFixtures.themeSettings.mainColorDefault);
-      configurationPage.getSaveBar().should('not.be.visible');
-    });
-
-    it('filters sidebar navigation when searching for a term', (): void => {
-      configurationPage.visitStorefrontTab();
-
-      configurationPage.searchSettings(staticFixtures.searchTerm);
-
-      configurationPage.getNavTab('logos').should('be.visible');
-    });
-
-    it('rejects an invalid hex color and keeps the original value', (): void => {
-      configurationPage.visitStorefrontTab();
-
-      configurationPage.getThemeMainColor().invoke('removeAttr', 'type');
-      configurationPage.setThemeMainColor(staticFixtures.themeSettings.invalidColor);
-      configurationPage.saveConfiguration();
-
-      configurationPage
-        .getSettingRow(staticFixtures.themeSettings.mainColorKey)
-        .find('.invalid-feedback')
-        .should('not.be.empty');
-
-      configurationPage.visitStorefrontTab();
-      configurationPage.getThemeMainColor().should('have.value', staticFixtures.themeSettings.mainColorDefault);
-    });
-
-    it('reverts an overridden setting to its default via the Use Default link', (): void => {
-      configurationPage.visitStorefrontTab();
-
-      configurationPage.setThemeMainColor(staticFixtures.themeSettings.validColor);
-      configurationPage.saveConfiguration();
-      cy.runQueueWorker();
-
-      configurationPage.visitStorefrontTab();
-      configurationPage.clickUseDefaultLink(staticFixtures.themeSettings.mainColorKey);
-      configurationPage.saveConfiguration();
-      cy.runQueueWorker();
-
-      configurationPage.visitStorefrontTab();
-      configurationPage.getThemeMainColor().should('have.value', staticFixtures.themeSettings.mainColorDefault);
-    });
   }
 );

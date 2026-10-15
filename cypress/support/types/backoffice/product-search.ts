@@ -7,11 +7,3 @@ export interface FilterPreferencesStaticFixtures {
 export interface FilterPreferencesDynamicFixtures {
   rootUser: User;
 }
-
-export interface SearchPreferencesStaticFixtures {
-  defaultPassword: string;
-}
-
-export interface SearchPreferencesDynamicFixtures {
-  rootUser: User;
-}

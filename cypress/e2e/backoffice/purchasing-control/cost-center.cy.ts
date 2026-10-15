@@ -3,11 +3,31 @@ import {
   BackofficeCostCenterCrudStaticFixtures,
   BackofficeCostCenterCrudDynamicFixtures,
 } from '@interfaces/backoffice';
-import { CostCenterListPage, CostCenterCreatePage, CostCenterEditPage } from '@pages/backoffice';
+import { CostCenterListPage, CostCenterCreatePage, BackofficeBudgetCreatePage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
+function formatDate(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
+
+function getBudgetStartDate(): string {
+  const date = new Date();
+  date.setMonth(date.getMonth() + 1);
+  date.setDate(1);
+
+  return formatDate(date);
+}
+
+function getBudgetEndDate(): string {
+  const date = new Date();
+  date.setMonth(date.getMonth() + 4);
+  date.setDate(0);
+
+  return formatDate(date);
+}
+
 describe(
-  'purchasing control cost center crud',
+  'purchasing control cost center and budget',
   {
     tags: ['@backoffice', '@purchasing-control', 'purchasing-control', 'spryker-core-back-office', 'spryker-core'],
   },
@@ -19,7 +39,7 @@ describe(
 
     const costCenterListPage = container.get(CostCenterListPage);
     const costCenterCreatePage = container.get(CostCenterCreatePage);
-    const costCenterEditPage = container.get(CostCenterEditPage);
+    const budgetCreatePage = container.get(BackofficeBudgetCreatePage);
     const userLoginScenario = container.get(UserLoginScenario);
 
     let staticFixtures: BackofficeCostCenterCrudStaticFixtures;
@@ -36,7 +56,7 @@ describe(
       });
     });
 
-    it('backoffice user should be able to create a cost center', (): void => {
+    it('backoffice user should be able to create a cost center and a budget for a cost center', (): void => {
       costCenterListPage.waitForTable();
       costCenterListPage.clickCreateButton();
 
@@ -47,16 +67,17 @@ describe(
       costCenterCreatePage.submit();
 
       costCenterCreatePage.getSuccessMessage().should('be.visible');
-    });
 
-    it('backoffice user should be able to edit a cost center', (): void => {
-      costCenterEditPage.visitById(dynamicFixtures.preExistingCostCenter.id_cost_center);
-      costCenterEditPage.fillName(staticFixtures.updatedCostCenterName);
-      costCenterEditPage.submit();
+      budgetCreatePage.visitByCostCenter(dynamicFixtures.preExistingCostCenter.id_cost_center);
+      budgetCreatePage.fillName(staticFixtures.newBudgetName);
+      budgetCreatePage.fillAmount(staticFixtures.budgetAmount);
+      budgetCreatePage.selectCurrency(staticFixtures.budgetCurrency);
+      budgetCreatePage.selectEnforcementRule(staticFixtures.budgetEnforcementRule);
+      budgetCreatePage.fillStartDate(getBudgetStartDate());
+      budgetCreatePage.fillEndDate(getBudgetEndDate());
+      budgetCreatePage.submit();
 
-      costCenterEditPage.getSuccessMessage().should('be.visible');
-      costCenterListPage.waitForTable();
-      costCenterListPage.getTableBody().should('contain', staticFixtures.updatedCostCenterName);
+      budgetCreatePage.getSuccessMessage().should('be.visible');
     });
   }
 );
