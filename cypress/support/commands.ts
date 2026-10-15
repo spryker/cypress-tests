@@ -80,6 +80,23 @@ Cypress.Commands.add(
   }
 );
 
+Cypress.Commands.add('resetProxyCookieJar', () => {
+  cy.getCookies().then((cookies) => {
+    cy.clearCookies();
+    cookies.forEach((cookie) => {
+      cy.setCookie(cookie.name, cookie.value, {
+        domain: cookie.domain,
+        path: cookie.path,
+        hostOnly: cookie.hostOnly,
+        httpOnly: cookie.httpOnly,
+        secure: cookie.secure,
+        sameSite: cookie.sameSite,
+        expiry: cookie.expiry,
+      });
+    });
+  });
+});
+
 Cypress.Commands.add('resetBackofficeCookies', () => {
   cy.clearCookies();
   cy.visitBackoffice('/security-gui/login', {
