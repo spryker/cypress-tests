@@ -99,6 +99,11 @@ All commands below run from the **root of this repository**.
 5. For smooth, retina-quality footage, run with `--headed` and record the Chrome window with
    the macOS screen recorder (Cmd+Shift+5) instead.
 
+To change the demo settings: the pause per action is `DEMO_DELAY` in
+`tools/scripts/agentic-commerce/run.mjs`, the video size is `DEMO_WINDOW_WIDTH` and
+`DEMO_WINDOW_HEIGHT` in `cypress.config.ts` (the height includes 88 px of browser toolbar), and
+the typing speed and the paused actions are in `cypress/support/demo-pace.ts`.
+
 ### Good to know
 
 - Each spec registers its own client per run and blocks it afterwards, so runs do not share
