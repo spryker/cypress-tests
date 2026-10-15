@@ -74,6 +74,7 @@ All commands below run from the **root of this repository**.
 | ------------------------------------ | ------------------------------------------------------------------------- |
 | Watch the run in a visible Chrome    | `--headed`                                                                |
 | Record one MP4 per spec              | `--video`                                                                 |
+| Record videos to show to colleagues  | `--demo`                                                                  |
 | Run a single spec                    | `--spec cypress/e2e/yves/agentic-commerce/customer-connects-client.cy.ts` |
 | Pick specs in the Cypress UI instead | `npx cypress open --e2e --browser chrome --env agenticCommerceCut=6a-1`   |
 
@@ -82,13 +83,21 @@ All commands below run from the **root of this repository**.
 1. Prepare the shop and install as in steps 1 and 2.
 2. Run, for example:
    ```bash
-   npm run cy:agentic-commerce -- --cut 6a-1 --video
-   npm run cy:agentic-commerce -- --cut 1 --video --spec cypress/e2e/yves/agentic-commerce/customer-connects-client.cy.ts
+   npm run cy:agentic-commerce -- --cut 6a-1 --demo
+   npm run cy:agentic-commerce -- --cut 1 --demo --spec cypress/e2e/yves/agentic-commerce/customer-connects-client.cy.ts
    ```
-3. The videos are in `cypress/videos/`, one per spec, named after it, e.g.
-   `customer-connects-client.cy.ts.mp4`.
-4. Copy the ones you want to keep: the next `--video` run overwrites them. The folder is
+   `--demo` records for an audience: 1920×1080, the shop fills the frame, every click and
+   entry waits 0.8 s, typing is visible, each test holds its last screen, and the Symfony
+   toolbar is collapsed. The API specs open no page, so their videos keep the Cypress command
+   log. `--video` records at normal speed with the command log, which is quicker for
+   debugging.
+3. The videos are in `cypress/videos/`, one per spec, named after it. A run of several specs
+   keeps their folders, e.g. `cypress/videos/yves/agentic-commerce/customer-connects-client.cy.ts.mp4`;
+   a run of one spec writes it straight into `cypress/videos/`.
+4. Copy the ones you want to keep: the next recording run overwrites them. The folder is
    git-ignored.
+5. For smooth, retina-quality footage, run with `--headed` and record the Chrome window with
+   the macOS screen recorder (Cmd+Shift+5) instead.
 
 ### Good to know
 

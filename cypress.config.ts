@@ -5,6 +5,10 @@ import { existsSync, mkdirSync, writeFileSync } from 'fs';
 
 dotenv.config();
 
+// Demo recordings: the video is the page area of the Chrome window, which loses 88 px to the browser toolbar.
+const DEMO_WINDOW_WIDTH = 1920;
+const DEMO_WINDOW_HEIGHT = 1080 + 88;
+
 const protocolMap: { [key: string]: 'http' | 'https' } = {
   '1': 'https',
   '0': 'http',
@@ -65,6 +69,11 @@ export default defineConfig({
           launchOptions.args.push('--disable-background-timer-throttling');
           launchOptions.args.push('--disable-renderer-backgrounding');
           launchOptions.args.push('--disable-backgrounding-occluded-windows');
+        }
+
+        if (browser.name === 'chrome' && config.env.demoDelay) {
+          launchOptions.args.push(`--window-size=${DEMO_WINDOW_WIDTH},${DEMO_WINDOW_HEIGHT}`);
+          launchOptions.args.push('--force-device-scale-factor=1');
         }
 
         return launchOptions;
