@@ -87,6 +87,7 @@ Cypress.Commands.add('resetProxyCookieJar', () => {
       cy.setCookie(cookie.name, cookie.value, {
         domain: cookie.domain,
         path: cookie.path,
+        hostOnly: cookie.hostOnly,
         httpOnly: cookie.httpOnly,
         secure: cookie.secure,
         sameSite: cookie.sameSite,
