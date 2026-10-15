@@ -33,8 +33,11 @@ export class GlossaryFormPage extends BackofficePage {
     });
   };
 
+  // Waits for the form post, so a following login or visit cannot leave the page before the key is stored.
   private save = (): void => {
+    cy.intercept('POST', '**/glossary/**').as('glossarySave');
     this.repository.getSaveButton().click();
+    cy.wait('@glossarySave');
   };
 }
 
