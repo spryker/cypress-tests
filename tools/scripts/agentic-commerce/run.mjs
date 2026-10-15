@@ -57,7 +57,7 @@ const summarize = (cut, startedAt, results) => ({
   })),
 });
 
-const runSpecs = async (options, specs, { runnerUi = true } = {}) =>
+const runSpecs = async (options, specs, { runnerUi = true, keepAssets = false } = {}) =>
   cypress.run({
     browser: 'chrome',
     headed: options.headed,
@@ -69,7 +69,10 @@ const runSpecs = async (options, specs, { runnerUi = true } = {}) =>
       repositoryId: 'suite',
       ...(options.demo ? { demoDelay: DEMO_DELAY } : {}),
     },
-    config: options.video || options.demo ? { video: true, videoCompression: false } : {},
+    config: {
+      ...(options.video || options.demo ? { video: true, videoCompression: false } : {}),
+      ...(keepAssets ? { trashAssetsBeforeRuns: false } : {}),
+    },
   });
 
 const mergeResults = (results) => ({
@@ -110,7 +113,8 @@ const runDemo = async (options, specs) => {
   const results = [];
 
   if (pageFiles.length) results.push(await runSpecs(options, pageFiles, { runnerUi: false }));
-  if (apiFiles.length) results.push(await runSpecs(options, apiFiles));
+  // The second run keeps the videos and screenshots of the first.
+  if (apiFiles.length) results.push(await runSpecs(options, apiFiles, { keepAssets: results.length > 0 }));
 
   return mergeResults(results);
 };
