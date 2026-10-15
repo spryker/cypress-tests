@@ -20,9 +20,9 @@ describe(
     const OPENAI_OPTION = 'AI_COMMERCE:AI_CONFIGURATION_BACKOFFICE_ASSISTANT_OPENAI';
     const AWS_OPTION = 'AI_COMMERCE:AI_CONFIGURATION_BACKOFFICE_ASSISTANT_AWS';
 
-    const OPENAI_MODEL_DEFAULT = 'gpt-4.1';
+    const OPENAI_MODEL_DEFAULT = 'gpt-6-luna';
     const OPENAI_MODEL_UPDATED = 'gpt-4.1-mini';
-    const AWS_MODEL_DEFAULT = 'eu.anthropic.claude-sonnet-4-5-20250929-v1:0';
+    const AWS_MODEL_DEFAULT = 'eu.anthropic.claude-haiku-5-5';
     const AWS_REGION_DEFAULT = 'eu-central-1';
 
     type VendorTab = {
@@ -190,7 +190,7 @@ describe(
     );
 
     it(
-      'with OpenAI selected, only the OpenAI model field (gpt-4.1) is visible and the AWS and Anthropic model fields are hidden',
+      'with OpenAI selected, only the OpenAI model field (gpt-6-luna) is visible and the AWS and Anthropic model fields are hidden',
       { tags: ['@demo-smoke'] },
       (): void => {
         aiConfigurationPage.visitTab('ai_commerce', 'backoffice_assistant');

@@ -527,6 +527,7 @@ describe(
                 .then((appliedValue): void => {
                   const normalize = (value: unknown): string =>
                     String(value ?? '')
+                      .replace(/[\r\n]+/g, '')
                       .replace(/\s+/g, ' ')
                       .trim();
 
