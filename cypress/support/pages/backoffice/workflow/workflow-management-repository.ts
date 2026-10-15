@@ -41,11 +41,6 @@ export class WorkflowManagementRepository {
 
   getActivateVersionButton = (): Cypress.Chainable => cy.get('[data-qa="workflow-version-activate"]:visible').first();
 
-  getVersionActivationConfirmButton = (): Cypress.Chainable =>
-    cy
-      .get('[data-qa="version-activation-confirmation-modal"]:visible')
-      .find('[data-qa="workflow-version-activation-confirm"]');
-
   getActionConfirmationConfirmButton = (): Cypress.Chainable =>
     cy.get('[data-qa="action-confirmation-modal"]:visible').find('[data-qa="action-confirmation-confirm"]');
 

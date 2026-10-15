@@ -46,7 +46,7 @@ export class WorkflowManagementPage extends BackofficePage {
     this.repository.getProcessRowViewButton(name).click();
     this.repository.getVersionListButton().click();
     this.repository.getActivateVersionButton().click();
-    this.repository.getVersionActivationConfirmButton().click();
+    this.repository.getActionConfirmationConfirmButton().click();
   };
 
   activateProcess = (name: string): void => {
