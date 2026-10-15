@@ -1,3 +1,4 @@
+import { createHash, randomBytes } from 'crypto';
 import { defineConfig } from 'cypress';
 import dotenv from 'dotenv';
 import { existsSync, mkdirSync, writeFileSync } from 'fs';
@@ -43,6 +44,11 @@ export default defineConfig({
       on('task', {
         isFileExists(filename: string): boolean {
           return existsSync(filename);
+        },
+        createProofKey(): { verifier: string; challenge: string } {
+          const verifier = randomBytes(48).toString('base64url');
+
+          return { verifier, challenge: createHash('sha256').update(verifier).digest('base64url') };
         },
       });
       if (!config.env.grepTags) {
