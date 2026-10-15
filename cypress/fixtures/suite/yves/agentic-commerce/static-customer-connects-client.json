@@ -1,0 +1,8 @@
+{
+  "defaultPassword": "change123",
+  "scope": "agentic-commerce:principal-read",
+  "redirectUri": "http://localhost:8765/callback",
+  "customer": { "email": "maria.williams@acme.com", "customerReference": "DE--2" },
+  "companyUser": { "email": "sonia@acme.com", "companyName": "Acme Corporation" },
+  "backofficeUser": { "username": "admin@spryker.com", "password": "change123" }
+}

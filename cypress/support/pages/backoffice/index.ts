@@ -102,3 +102,6 @@ export * from './order-experience-management/list/recurring-schedule-list-page';
 export * from './order-experience-management/view/recurring-schedule-view-page';
 export * from './service-point/list/service-point-list-page';
 export * from './service-point/view/service-point-view-page';
+export * from './agentic-commerce/client/list/client-list-page';
+export * from './agentic-commerce/client/create/client-create-page';
+export * from './agentic-commerce/consent/list/consent-list-page';

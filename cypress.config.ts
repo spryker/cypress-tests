@@ -1,8 +1,13 @@
+import { createHash, randomBytes } from 'crypto';
 import { defineConfig } from 'cypress';
 import dotenv from 'dotenv';
 import { existsSync, mkdirSync, writeFileSync } from 'fs';
 
 dotenv.config();
+
+// Demo recordings: the video is the page area of the Chrome window, which loses 88 px to the browser toolbar.
+const DEMO_WINDOW_WIDTH = 1920;
+const DEMO_WINDOW_HEIGHT = 1080 + 88;
 
 const protocolMap: { [key: string]: 'http' | 'https' } = {
   '1': 'https',
@@ -44,6 +49,11 @@ export default defineConfig({
         isFileExists(filename: string): boolean {
           return existsSync(filename);
         },
+        createProofKey(): { verifier: string; challenge: string } {
+          const verifier = randomBytes(48).toString('base64url');
+
+          return { verifier, challenge: createHash('sha256').update(verifier).digest('base64url') };
+        },
       });
       if (!config.env.grepTags) {
         config.env.grepFilterSpecs = false;
@@ -59,6 +69,11 @@ export default defineConfig({
           launchOptions.args.push('--disable-background-timer-throttling');
           launchOptions.args.push('--disable-renderer-backgrounding');
           launchOptions.args.push('--disable-backgrounding-occluded-windows');
+        }
+
+        if (browser.name === 'chrome' && config.env.demoDelay) {
+          launchOptions.args.push(`--window-size=${DEMO_WINDOW_WIDTH},${DEMO_WINDOW_HEIGHT}`);
+          launchOptions.args.push('--force-device-scale-factor=1');
         }
 
         return launchOptions;

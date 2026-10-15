@@ -114,3 +114,4 @@ cypress/downloads/*
 
 # Multiple stores executor results
 tools/scripts/multi-store-runner/results/*
+cypress/videos/
