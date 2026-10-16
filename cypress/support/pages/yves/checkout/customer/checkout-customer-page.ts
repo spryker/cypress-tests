@@ -36,6 +36,7 @@ export class CheckoutCustomerPage extends YvesPage {
     this.repository.getLoginEmailField().clear().type(params.email);
     this.repository.getLoginPasswordField().clear().type(params.password, { log: false });
 
+    cy.resetProxyCookieJar();
     this.repository.getLoginSubmitButton().click();
   };
 

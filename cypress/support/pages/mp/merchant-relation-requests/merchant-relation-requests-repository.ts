@@ -15,6 +15,7 @@ export class MerchantRelationRequestsRepository {
   getRejectButtonSelector = (): string => 'button:contains("Reject")';
   getBusinessUnitsCheckboxSelector = (): string => '[id="assigneeCompanyBusinessUnits[]"]';
   getBusinessUnitCheckboxSelector = (): string => '[type="checkbox"]';
+  getBusinessUnitCheckboxToggleSelector = (): string => 'label[nz-checkbox]';
   getApprovalModalConfirmButton = (): Cypress.Chainable =>
     cy.get('.ant-modal--confirmation').find('button:contains("Confirm approval")');
   getRejectionModalConfirmButton = (): Cypress.Chainable =>

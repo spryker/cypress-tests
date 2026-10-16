@@ -18,6 +18,7 @@ export class MerchantRelationRequestsPage extends MpPage {
       {
         url: '/merchant-relation-request-merchant-portal-gui/merchant-relation-requests/table-data**',
         expectedCount: params.expectedCount,
+        search: params.query,
       },
       () => {
         cy.get(searchSelector).clear();
@@ -48,13 +49,29 @@ export class MerchantRelationRequestsPage extends MpPage {
       this.repository.getDrawer().find(this.repository.getIsSplitEnabledCheckboxSelector()).click();
     }
 
+    const updateRequestAlias = this.faker.string.uuid();
+    cy.intercept({
+      method: 'POST',
+      pathname: '/merchant-relation-request-merchant-portal-gui/update-merchant-relation-request',
+    }).as(updateRequestAlias);
+
     this.repository.getDrawer().find(this.repository.getApproveButtonSelector()).click();
     this.repository.getApprovalModalConfirmButton().click();
+
+    cy.wait(`@${updateRequestAlias}`);
   };
 
   reject = (): void => {
+    const updateRequestAlias = this.faker.string.uuid();
+    cy.intercept({
+      method: 'POST',
+      pathname: '/merchant-relation-request-merchant-portal-gui/update-merchant-relation-request',
+    }).as(updateRequestAlias);
+
     this.repository.getDrawer().find(this.repository.getRejectButtonSelector()).click();
     this.repository.getRejectionModalConfirmButton().click();
+
+    cy.wait(`@${updateRequestAlias}`);
   };
 
   uncheckBusinessUnits = (params: UncheckBusinessUnitsParams): void => {
@@ -64,8 +81,9 @@ export class MerchantRelationRequestsPage extends MpPage {
         const checkboxSelector = this.repository.getBusinessUnitCheckboxSelector();
         const idBusinessUnit = $businessUnitCheckbox.find(checkboxSelector).last().attr('value') ?? '';
 
+        // The visible ng-zorro input does not carry the checked state, so uncheck() on it is a no-op.
         if (params.businessUnitIds.includes(parseInt(idBusinessUnit))) {
-          cy.wrap($businessUnitCheckbox.find(checkboxSelector).first()).uncheck();
+          cy.wrap($businessUnitCheckbox.find(this.repository.getBusinessUnitCheckboxToggleSelector())).click();
         }
       });
   };

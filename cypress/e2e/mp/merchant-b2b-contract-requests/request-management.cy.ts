@@ -33,7 +33,16 @@ describe(
     let staticFixtures: RequestManagementStaticFixtures;
 
     before((): void => {
-      ({ dynamicFixtures, staticFixtures } = Cypress.env());
+      ({ staticFixtures } = Cypress.env());
+    });
+
+    // Every test approves, rejects or comments on a request, so each test and each retry gets its own data.
+    beforeEach((): void => {
+      cy.loadDynamicFixturesByPayload(
+        `${Cypress.env('repositoryId')}/mp/merchant-b2b-contract-requests/dynamic-request-management-per-test`
+      ).then((fixtures: RequestManagementDynamicFixtures) => {
+        dynamicFixtures = fixtures;
+      });
     });
 
     it('merchant user should be able to see request note from company user', (): void => {
