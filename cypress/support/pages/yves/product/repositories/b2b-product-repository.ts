@@ -48,4 +48,85 @@ export class B2bProductRepository implements ProductRepository {
     this.getVariantAttributeSelect(attributeKey).find('option[value]:not([value=""])');
   getSelectedVariantAttributeInput = (attributeKey: string): Cypress.Chainable =>
     cy.get(`input[type="hidden"][name="attribute[${attributeKey}]"]`);
+  getRelatedProductsSectionSelector = (): string => '[class*="title--product-slider"]:contains("Similar products")';
+  getRelatedProductsCarousel = (): Cypress.Chainable =>
+    cy.get(this.getRelatedProductsSectionSelector()).first().parent().find('slick-carousel');
+  getProductConfigurationStatus = (): Cypress.Chainable =>
+    cy.get('[data-qa="component product-configurator"] [data-qa="component status"]');
+  getConfigureButton = (): Cypress.Chainable => cy.get('[data-qa="component configuration-form"] button');
+
+  getProductDetailPrice = (): Cypress.Chainable => cy.get('volume-price span.volume-price__price:visible').first();
+  getProductDetailOriginalPrice = (): Cypress.Chainable =>
+    cy.get('volume-price span[class*="volume-price"][class*="original"]:visible').first();
+
+  getAlternativeProductsSlider = (): Cypress.Chainable => cy.get('[data-qa="component product-alternative-slider"]');
+
+  setQuantity = (quantity: number): void => {
+    cy.get('body').then(($body) => {
+      // The volume-price component binds its own quantity control. A logged-in detail page also
+      // renders a quantity select for the shopping-list widget, so matching on the name alone finds
+      // two and cy.select() refuses the pair.
+      if ($body.find('select.js-volume-price__quantity').length) {
+        cy.get('select.js-volume-price__quantity').first().select(String(quantity));
+
+        return;
+      }
+
+      // On a measurement-unit product the quantity is counted in sales units, and the field beside
+      // it holds the resulting amount in base units — writing the amount instead would not convert.
+      if ($body.find('.js-packaging-unit-quantity-selector__formatted-sales-unit-quantity input').length) {
+        cy.get('.js-packaging-unit-quantity-selector__formatted-sales-unit-quantity input').first().clear();
+        cy.get('.js-packaging-unit-quantity-selector__formatted-sales-unit-quantity input')
+          .first()
+          .type(String(quantity));
+
+        return;
+      }
+
+      if ($body.find('select[name="quantity"]').length) {
+        cy.get('select[name="quantity"]').first().select(String(quantity));
+
+        return;
+      }
+
+      // The volume-price component re-prices on the change event, which typing alone does not fire
+      // before the field loses focus.
+      cy.get('formatted-number-input input').first().clear();
+      cy.get('formatted-number-input input').first().type(String(quantity));
+      cy.get('formatted-number-input input').first().trigger('change');
+    });
+  };
+
+  // Both B2B themes dress the native select up with select2, which lays its own box over it; the
+  // packaging unit selector still listens to the native select's change event.
+  selectSalesUnit = (salesUnitName: string): void => {
+    cy.get('select[name="id-product-measurement-sales-unit"]').select(salesUnitName, { force: true });
+  };
+
+  getMeasurementUnitChoice = (): Cypress.Chainable =>
+    cy.get('.js-packaging-unit-quantity-selector__measurement-unit-choice');
+
+  setAmount = (amount: number): void => {
+    cy.get('.js-packaging-unit-quantity-selector__formatted-user-amount input').first().clear();
+    cy.get('.js-packaging-unit-quantity-selector__formatted-user-amount input').first().type(String(amount));
+  };
+
+  getPackagingUnitChoice = (): Cypress.Chainable =>
+    cy.get('.js-packaging-unit-quantity-selector__packaging-unit-choice');
+
+  getBundleItems = (): Cypress.Chainable => cy.get('[data-qa*="component bundle-items"]');
+
+  // The redesigned theme states availability in a status badge either way; the classic theme has no
+  // badge and only renders an alert under the add to cart form once the product is out of stock.
+  getOutOfStockNotice = (): Cypress.Chainable =>
+    cy.get(
+      '[data-qa="component product-availability-widget"] [data-qa="component status"]:contains("Out of stock"), ' +
+        '[data-qa="component product-configurator"] .text-alert:contains("This product is currently not available.")'
+    );
+  getAvailabilityNotificationEmailField = (): Cypress.Chainable =>
+    cy.get('#availabilityNotificationSubscriptionForm_email');
+  getAvailabilityNotificationSubscribeForm = (): Cypress.Chainable =>
+    cy.get('form#availability_notification_subscription');
+  getAvailabilityNotificationUnsubscribeForm = (): Cypress.Chainable => cy.get('form#availability_unsubscribe');
+  getFlashMessages = (): Cypress.Chainable => cy.get('[data-qa="component notification-area"] flash-message');
 }

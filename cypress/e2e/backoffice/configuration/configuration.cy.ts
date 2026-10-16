@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, skipWhenFeatureAbsent } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ConfigurationPage } from '@pages/backoffice';
 import { HomePage } from '@pages/yves';
@@ -10,6 +10,15 @@ describe(
     tags: ['@backoffice', '@configuration', 'shop-theme', 'spryker-core-back-office'],
   },
   (): void => {
+    // The B2C shops do not install the configuration module.
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because the B2C shops have no configuration management', () => {});
+
+      return;
+    }
+
+    skipWhenFeatureAbsent('configuration', ['b2b']);
+
     const merchantIt = (description: string, testFn: () => void): void => {
       (['suite', 'b2b-mp'].includes(Cypress.env('repositoryId')) ? it : it.skip)(description, testFn);
     };

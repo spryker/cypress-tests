@@ -21,6 +21,8 @@ export class ProductOfferViewPage extends BackofficePage {
 
   getStoreContainer = (): Cypress.Chainable => this.repository.getStoreContainer();
 
+  getMerchantSkuContainer = (): Cypress.Chainable => this.repository.getMerchantSkuContainer();
+
   getValidFromContainer = (): Cypress.Chainable => this.repository.getValidFromContainer();
 
   getValidToContainer = (): Cypress.Chainable => this.repository.getValidToContainer();

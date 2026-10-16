@@ -1,0 +1,336 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": {
+            "id_store": 1,
+            "name": "DE"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "transfer",
+          "name": "ProductImageTransfer",
+          "key": "productImage",
+          "arguments": {
+            "externalUrlSmall": "https://images.icecat.biz/img/gallery_mediums/30691822_1486.jpg",
+            "externalUrlLarge": "https://images.icecat.biz/img/gallery/30691822_1486.jpg"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "customer",
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address",
+          "arguments": [
+            {
+              "fkCustomer": "#customer.id_customer",
+              "fkCountry": "#country.id_country"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "firstRefundedProduct",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#firstRefundedProduct.abstract_sku",
+              "skuProduct": "#firstRefundedProduct.sku",
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#firstRefundedProduct.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#firstRefundedProduct.id_product_concrete",
+              "idProductAbstract": "#firstRefundedProduct.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#firstRefundedProduct.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "secondRefundedProduct",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#secondRefundedProduct.abstract_sku",
+              "skuProduct": "#secondRefundedProduct.sku",
+              "moneyValue": {
+                "netAmount": 45000,
+                "grossAmount": 45000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#secondRefundedProduct.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#secondRefundedProduct.id_product_concrete",
+              "idProductAbstract": "#secondRefundedProduct.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#secondRefundedProduct.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "thirdRefundedProduct",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#thirdRefundedProduct.abstract_sku",
+              "skuProduct": "#thirdRefundedProduct.sku",
+              "moneyValue": {
+                "netAmount": 60000,
+                "grossAmount": 60000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#thirdRefundedProduct.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#thirdRefundedProduct.id_product_concrete",
+              "idProductAbstract": "#thirdRefundedProduct.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantProduct",
+          "arguments": [
+            {
+              "idProductAbstract": "#thirdRefundedProduct.fk_product_abstract",
+              "idMerchant": "#merchant.id_merchant"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#firstRefundedProduct.sku",
+                  "abstractSku": "#firstRefundedProduct.abstract_sku",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference"
+                },
+                {
+                  "sku": "#secondRefundedProduct.sku",
+                  "abstractSku": "#secondRefundedProduct.abstract_sku",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference"
+                },
+                {
+                  "sku": "#thirdRefundedProduct.sku",
+                  "abstractSku": "#thirdRefundedProduct.abstract_sku",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#firstRefundedProduct.sku",
+                  "abstractSku": "#firstRefundedProduct.abstract_sku",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference"
+                },
+                {
+                  "sku": "#secondRefundedProduct.sku",
+                  "abstractSku": "#secondRefundedProduct.abstract_sku",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference"
+                },
+                {
+                  "sku": "#thirdRefundedProduct.sku",
+                  "abstractSku": "#thirdRefundedProduct.abstract_sku",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#firstRefundedProduct.sku",
+                  "abstractSku": "#firstRefundedProduct.abstract_sku",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference"
+                },
+                {
+                  "sku": "#secondRefundedProduct.sku",
+                  "abstractSku": "#secondRefundedProduct.abstract_sku",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference"
+                },
+                {
+                  "sku": "#thirdRefundedProduct.sku",
+                  "abstractSku": "#thirdRefundedProduct.abstract_sku",
+                  "quantity": 1,
+                  "merchantReference": "#merchant.merchant_reference"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

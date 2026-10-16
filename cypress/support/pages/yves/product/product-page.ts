@@ -4,6 +4,13 @@ import { inject, injectable } from 'inversify';
 import { YvesPage } from '@pages/yves';
 import { ProductRepository } from './product-repository';
 
+const CONFIGURE_BUTTON_SELECTOR = '[data-qa="component configuration-form"] button';
+const CONFIGURE_BUTTON_RELOAD_ATTEMPTS = 20;
+const CONFIGURE_BUTTON_RELOAD_INTERVAL_MS = 3000;
+const AVAILABILITY_WIDGET_SELECTOR = '[data-qa="component product-availability-widget"]';
+const CLASSIC_B2B_OUT_OF_STOCK_ALERT_SELECTOR = '[data-qa="component product-configurator"] .text-alert';
+const IN_STOCK_QUANTITY_PATTERN = /\d+(\.\d+)?\s+in stock/;
+
 @injectable()
 @autoWired
 export class ProductPage extends YvesPage {
@@ -87,6 +94,28 @@ export class ProductPage extends YvesPage {
     return this.repository.getInputRadioSelector();
   };
 
+  getProductConfigurationStatus = (): Cypress.Chainable => {
+    return this.repository.getProductConfigurationStatus();
+  };
+
+  configure = (): void => {
+    this.repository.getConfigureButton().click();
+  };
+
+  // A freshly created product's configuration can still be propagating to storage, and until it
+  // lands the detail page renders no configure button at all.
+  reloadUntilConfigurable = (): void => {
+    cy.url().then((productUrl: string) => {
+      cy.reloadUntilFound(
+        productUrl,
+        CONFIGURE_BUTTON_SELECTOR,
+        'body',
+        CONFIGURE_BUTTON_RELOAD_ATTEMPTS,
+        CONFIGURE_BUTTON_RELOAD_INTERVAL_MS
+      );
+    });
+  };
+
   getProductConfigurator = (): Cypress.Chainable => {
     return this.repository.getProductConfigurator();
   };
@@ -144,8 +173,10 @@ export class ProductPage extends YvesPage {
     cy.visit(params.url);
   };
 
+  // The B2B and B2C themes dress the select up with select2, which covers the native one; the form submitter
+  // still listens to the native select's change event.
   selectVariantAttribute = (params: SelectVariantAttributeParams): void => {
-    this.repository.getVariantAttributeSelect(params.attributeKey).select(params.attributeValue);
+    this.repository.getVariantAttributeSelect(params.attributeKey).select(params.attributeValue, { force: true });
   };
 
   getVariantAttributeOptions = (attributeKey: string): Cypress.Chainable => {
@@ -158,6 +189,69 @@ export class ProductPage extends YvesPage {
 
   getSelectedVariantAttributeValue = (attributeKey: string): Cypress.Chainable => {
     return this.repository.getSelectedVariantAttributeInput(attributeKey).invoke('val');
+  };
+
+  getRelatedProductsCarousel = (): Cypress.Chainable => this.repository.getRelatedProductsCarousel();
+
+  getRelatedProductsSection = (): Cypress.Chainable => cy.get(this.repository.getRelatedProductsSectionSelector());
+
+  getProductDetailPrice = (): Cypress.Chainable => this.repository.getProductDetailPrice();
+
+  getProductDetailOriginalPrice = (): Cypress.Chainable => this.repository.getProductDetailOriginalPrice();
+
+  getAlternativeProductsSlider = (): Cypress.Chainable => this.repository.getAlternativeProductsSlider();
+
+  setQuantity = (params: SetQuantityParams): void => {
+    this.repository.setQuantity(params.quantity);
+  };
+
+  selectSalesUnit = (params: SelectSalesUnitParams): void => {
+    this.repository.selectSalesUnit(params.salesUnitName);
+  };
+
+  getMeasurementUnitChoice = (): Cypress.Chainable => this.repository.getMeasurementUnitChoice();
+
+  setAmount = (params: SetAmountParams): void => {
+    this.repository.setAmount(params.amount);
+  };
+
+  getPackagingUnitChoice = (): Cypress.Chainable => this.repository.getPackagingUnitChoice();
+
+  getBundleItems = (): Cypress.Chainable => this.repository.getBundleItems();
+
+  getOutOfStockNotice = (): Cypress.Chainable => this.repository.getOutOfStockNotice();
+
+  // A product in stock reads "Available" (never out of stock) or "<n> in stock". The classic B2B theme
+  // renders no availability widget at all and only flags a product that cannot be bought.
+  isShownAsAvailable = ($body: JQuery<HTMLElement>): boolean => {
+    const text = $body.text();
+
+    if (text.includes('Available') || IN_STOCK_QUANTITY_PATTERN.test(text)) {
+      return true;
+    }
+
+    return (
+      $body.find(AVAILABILITY_WIDGET_SELECTOR).length === 0 &&
+      $body.find(CLASSIC_B2B_OUT_OF_STOCK_ALERT_SELECTOR).length === 0
+    );
+  };
+
+  getAvailabilityNotificationEmailField = (): Cypress.Chainable =>
+    this.repository.getAvailabilityNotificationEmailField();
+
+  getAvailabilityNotificationUnsubscribeForm = (): Cypress.Chainable =>
+    this.repository.getAvailabilityNotificationUnsubscribeForm();
+
+  getFlashMessages = (): Cypress.Chainable => this.repository.getFlashMessages();
+
+  subscribeToAvailabilityNotification = (params: SubscribeToAvailabilityNotificationParams): void => {
+    this.repository.getAvailabilityNotificationEmailField().clear();
+    this.repository.getAvailabilityNotificationEmailField().type(params.email);
+    this.repository.getAvailabilityNotificationSubscribeForm().submit();
+  };
+
+  unsubscribeFromAvailabilityNotification = (): void => {
+    this.repository.getAvailabilityNotificationUnsubscribeForm().submit();
   };
 }
 
@@ -179,6 +273,22 @@ interface GetProductOfferRadioParams {
 
 interface VisitProductDetailPageParams {
   url: string;
+}
+
+interface SubscribeToAvailabilityNotificationParams {
+  email: string;
+}
+
+interface SetAmountParams {
+  amount: number;
+}
+
+interface SelectSalesUnitParams {
+  salesUnitName: string;
+}
+
+interface SetQuantityParams {
+  quantity: number;
 }
 
 interface SelectVariantAttributeParams {

@@ -17,6 +17,8 @@ export class LoginPage extends BackofficePage {
     cy.resetProxyCookieJar();
     this.repository.getSubmitButton().click();
   };
+
+  getErrorMessage = (): Cypress.Chainable => this.repository.getErrorMessage();
 }
 
 interface LoginParams {

@@ -23,4 +23,7 @@ export class B2bMpOrderRepository implements OrderRepository {
   getOrderFilters(): Cypress.Chainable {
     return cy.get('form[name="orderSearchForm"]');
   }
+  getOrderTable(): Cypress.Chainable {
+    return cy.get('[data-qa="component order-table"]');
+  }
 }
