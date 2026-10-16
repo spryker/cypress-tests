@@ -72,7 +72,7 @@ describe(
         .invoke('text')
         .invoke('trim')
         .should('match', /^active$/i);
-      workflowManagementPage.getProcessRowActiveVersion(workflowName).should('contain', '1');
+      workflowManagementPage.getProcessRowActiveVersion(workflowName).invoke('text').invoke('trim').should('eq', 'V1');
       workflowManagementPage.getProcessRowTriggers(workflowName).should('contain', triggerEventLabel);
     });
   }
