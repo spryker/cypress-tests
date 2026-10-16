@@ -60,7 +60,7 @@ describe('volume prices', { tags: ['@yves', 'prices', 'product', 'cart', 'spryke
       .should('have.length', 1);
   });
 
-  it('given a product added to the cart below its volume tier when its cart line is raised to the tier then the cart charges the tier price', (): void => {
+  it('given a product added to the cart twice below its volume tier when the lines together reach the tier then every line charges the tier price', (): void => {
     // Arrange
     productPage.setQuantity({ quantity: staticFixtures.belowTierQuantity });
     productPage.addToCart();
@@ -74,17 +74,23 @@ describe('volume prices', { tags: ['@yves', 'prices', 'product', 'cart', 'spryke
       .should('have.length', 1);
 
     // Act
-    // A second add of the same product is not guaranteed to join the first line - b2b-demo-shop keys the line
-    // it creates the cart with apart from later adds - so the tier is reached on the line itself.
-    cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: staticFixtures.volumeTier.quantity });
+    catalogPage.visit();
+    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
+    productPage.setQuantity({ quantity: staticFixtures.volumeTier.quantity - staticFixtures.belowTierQuantity });
+    productPage.addToCart();
+    cartPage.visit();
 
     // Assert
+    cartPage.getCartItemQuantities({ sku: dynamicFixtures.product.sku }).then((quantities: number[]): void => {
+      expect(quantities.reduce((total: number, quantity: number): number => total + quantity, 0)).to.equal(
+        staticFixtures.volumeTier.quantity
+      );
+    });
     cartPage
-      .getCartItemsChargingUnitPrice({
+      .getCartItemsNotChargingUnitPrice({
         sku: dynamicFixtures.product.sku,
         unitPrice: staticFixtures.volumeTier.price,
-        quantity: staticFixtures.volumeTier.quantity,
       })
-      .should('have.length', 1);
+      .should('have.length', 0);
   });
 });

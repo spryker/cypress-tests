@@ -101,16 +101,23 @@ export class CartPage extends YvesPage {
       );
   };
 
-  // The redesigned B2B cart line prints only its total, the other themes the unit price, so a line charging
-  // a unit price is recognised by either.
   getCartItemsChargingUnitPrice = (params: GetCartItemsChargingUnitPriceParams): Cypress.Chainable => {
-    const lineTotal = params.unitPrice.replace(/[\d.,]+/, (amount: string): string =>
-      (parseFloat(amount.replace(/,/g, '')) * params.quantity).toFixed(2)
+    return this.getCartItems({ sku: params.sku }).filter((_index: number, cartItem: HTMLElement): boolean =>
+      this.isChargingUnitPrice(cartItem, params.unitPrice, params.quantity)
     );
+  };
 
+  // A product can sit on several cart lines, so each line is checked against the quantity in its own field.
+  getCartItemsNotChargingUnitPrice = (params: GetCartItemsNotChargingUnitPriceParams): Cypress.Chainable => {
     return this.getCartItems({ sku: params.sku }).filter(
       (_index: number, cartItem: HTMLElement): boolean =>
-        cartItem.innerText.includes(params.unitPrice) || cartItem.innerText.includes(lineTotal)
+        !this.isChargingUnitPrice(cartItem, params.unitPrice, this.getCartItemQuantity(cartItem))
+    );
+  };
+
+  getCartItemQuantities = (params: GetCartItemsParams): Cypress.Chainable<number[]> => {
+    return this.getCartItems({ sku: params.sku }).then(($cartItems: JQuery<HTMLElement>): number[] =>
+      $cartItems.toArray().map((cartItem: HTMLElement): number => this.getCartItemQuantity(cartItem))
     );
   };
 
@@ -233,6 +240,20 @@ export class CartPage extends YvesPage {
   getCartItemAvailabilityLabel = (): Cypress.Chainable => {
     return this.repository.getCartItemAvailabilityLabel();
   };
+
+  private getCartItemQuantity = (cartItem: HTMLElement): number => {
+    return Number(Cypress.$(cartItem).find(this.repository.getCartItemQuantityInputSelector()).first().val());
+  };
+
+  // The redesigned B2B cart line prints only its total, the other themes the unit price, so a line charging
+  // a unit price is recognised by either.
+  private isChargingUnitPrice = (cartItem: HTMLElement, unitPrice: string, quantity: number): boolean => {
+    const lineTotal = unitPrice.replace(/[\d.,]+/, (amount: string): string =>
+      (parseFloat(amount.replace(/,/g, '')) * quantity).toFixed(2)
+    );
+
+    return cartItem.innerText.includes(unitPrice) || cartItem.innerText.includes(lineTotal);
+  };
 }
 
 interface GetCartItemsParams {
@@ -243,6 +264,11 @@ interface GetCartItemsChargingUnitPriceParams {
   sku: string;
   unitPrice: string;
   quantity: number;
+}
+
+interface GetCartItemsNotChargingUnitPriceParams {
+  sku: string;
+  unitPrice: string;
 }
 
 interface FindCartItemParams {

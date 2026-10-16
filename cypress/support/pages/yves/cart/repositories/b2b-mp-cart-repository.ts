@@ -153,4 +153,5 @@ export class B2bMpCartRepository implements CartRepository {
 
   getConfigureButtonSelector = (): string => '[data-qa="component configuration-cart-form"] button';
   getCartItemRemovalFormSelector = (): string => 'form[name^="removeFromCartForm_"]';
+  getCartItemQuantityInputSelector = (): string => '[data-qa="quantity-input"]';
 }

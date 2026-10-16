@@ -17,6 +17,7 @@ export interface CartRepository {
   findClearCartForm(): Cypress.Chainable;
   getClearCartFormSelector(): string;
   getCartItemRemovalFormSelector(): string;
+  getCartItemQuantityInputSelector(): string;
 
   // The cart line's own configure form. It is a different component from the detail page's, so the
   // detail-page selector does not find it.

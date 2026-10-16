@@ -92,4 +92,5 @@ export class SuiteCartRepository implements CartRepository {
 
   getConfigureButtonSelector = (): string => '[data-qa="component configuration-cart-form"] button';
   getCartItemRemovalFormSelector = (): string => 'form[name^="removeFromCartForm_"]';
+  getCartItemQuantityInputSelector = (): string => '[data-qa="cart-item-quantity-input"]';
 }
