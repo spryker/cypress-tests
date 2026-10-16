@@ -17,7 +17,13 @@ export class MpPage extends AbstractPage {
     const expectedCount = params.expectedCount ?? 1;
     const interceptAlias = this.faker.string.uuid();
 
-    cy.intercept('GET', params.url).as(interceptAlias);
+    // The search input is debounced, so without the search term the wait can catch the page-load request while the
+    // search request is still running and writes the session after the drawer has stored its CSRF token.
+    cy.intercept({
+      method: 'GET',
+      url: params.url,
+      ...(params.search !== undefined && { query: { search: params.search } }),
+    }).as(interceptAlias);
 
     if (customFunction) {
       customFunction();
@@ -125,4 +131,5 @@ export enum ActionEnum {
 interface InterceptMpGuiTableParams {
   url: string;
   expectedCount?: number;
+  search?: string;
 }
