@@ -1,9 +1,3 @@
 {
-  "defaultPassword": "change123",
-  "blacklistedCustomer": {
-    "email": "Richi@acme.com"
-  },
-  "unrestrictedCustomer": {
-    "email": "george.freeman@acme.com"
-  }
+  "defaultPassword": "change123"
 }

@@ -9,9 +9,9 @@ describe(
     tags: ['@yves', 'product-lists', 'product-customer-restrictions', 'catalog', 'search', 'spryker-core'],
   },
   (): void => {
-    // The product lists are scoped to merchant relationships of the suite's demo data.
-    if (Cypress.env('repositoryId') !== 'suite') {
-      it.skip('skipped because tests run only for suite', () => {});
+    // The product lists are scoped to merchant relationships, which the B2C shops do not have.
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because tests run only for suite and b2b and b2b-mp', () => {});
 
       return;
     }
@@ -52,7 +52,7 @@ describe(
     it('given a blacklist scoped to a customer merchant relationship when that customer searches then every product but the blacklisted one is offered', (): void => {
       // Arrange
       customerLoginScenario.execute({
-        email: staticFixtures.blacklistedCustomer.email,
+        email: dynamicFixtures.blacklistedCustomer.email,
         password: staticFixtures.defaultPassword,
       });
 
@@ -74,7 +74,7 @@ describe(
     it('given a customer outside both merchant relationships when the same products are searched then both are offered', (): void => {
       // Arrange
       customerLoginScenario.execute({
-        email: staticFixtures.unrestrictedCustomer.email,
+        email: dynamicFixtures.unrestrictedCustomer.email,
         password: staticFixtures.defaultPassword,
       });
 

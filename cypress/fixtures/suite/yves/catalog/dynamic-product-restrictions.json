@@ -119,6 +119,27 @@
         },
         {
           "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "whitelistedBusinessUnit",
+          "arguments": [
+            {
+              "fkCompany": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
           "name": "haveConfirmedCustomer",
           "key": "whitelistedCustomer",
           "arguments": [
@@ -131,15 +152,107 @@
         {
           "type": "helper",
           "name": "haveCompanyUser",
-          "key": "whitelistedCompanyUser",
           "arguments": [
             {
               "customer": "#whitelistedCustomer",
               "fkCustomer": "#whitelistedCustomer.id_customer",
-              "fkCompany": 1,
-              "fkCompanyBusinessUnit": 2,
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#whitelistedBusinessUnit.id_company_business_unit",
               "isActive": true,
               "isDefault": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "blacklistedBusinessUnit",
+          "arguments": [
+            {
+              "fkCompany": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "blacklistedCustomer",
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "arguments": [
+            {
+              "customer": "#blacklistedCustomer",
+              "fkCustomer": "#blacklistedCustomer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#blacklistedBusinessUnit.id_company_business_unit",
+              "isActive": true,
+              "isDefault": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "unrestrictedBusinessUnit",
+          "arguments": [
+            {
+              "fkCompany": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "unrestrictedCustomer",
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "arguments": [
+            {
+              "customer": "#unrestrictedCustomer",
+              "fkCustomer": "#unrestrictedCustomer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#unrestrictedBusinessUnit.id_company_business_unit",
+              "isActive": true,
+              "isDefault": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantRelationship",
+          "key": "whitelistMerchantRelationship",
+          "arguments": [
+            {
+              "fkMerchant": "#merchant.id_merchant",
+              "fkCompanyBusinessUnit": "#whitelistedBusinessUnit.id_company_business_unit",
+              "assigneeCompanyBusinessUnits": {
+                "companyBusinessUnits": [
+                  {
+                    "idCompanyBusinessUnit": "#whitelistedBusinessUnit.id_company_business_unit"
+                  }
+                ]
+              }
             }
           ]
         },
@@ -149,10 +262,28 @@
           "key": "whitelist",
           "arguments": [
             {
-              "fkMerchantRelationship": 1,
+              "fkMerchantRelationship": "#whitelistMerchantRelationship.id_merchant_relationship",
               "type": "whitelist",
               "productListProductConcreteRelation": {
                 "productIds": ["#allowedProduct.id_product_concrete"]
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantRelationship",
+          "key": "blacklistMerchantRelationship",
+          "arguments": [
+            {
+              "fkMerchant": "#merchant.id_merchant",
+              "fkCompanyBusinessUnit": "#blacklistedBusinessUnit.id_company_business_unit",
+              "assigneeCompanyBusinessUnits": {
+                "companyBusinessUnits": [
+                  {
+                    "idCompanyBusinessUnit": "#blacklistedBusinessUnit.id_company_business_unit"
+                  }
+                ]
               }
             }
           ]
@@ -163,7 +294,7 @@
           "key": "blacklist",
           "arguments": [
             {
-              "fkMerchantRelationship": 9,
+              "fkMerchantRelationship": "#blacklistMerchantRelationship.id_merchant_relationship",
               "type": "blacklist",
               "productListProductConcreteRelation": {
                 "productIds": ["#hiddenProduct.id_product_concrete"]
