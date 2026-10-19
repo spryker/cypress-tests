@@ -12,4 +12,7 @@ export interface CustomerProfileRepository {
   getProfileSavedMessage(): string;
   getEmailInUseErrorMessage(): string;
   getPasswordsDoNotMatchMessage(): string;
+  getEmailChangeMailSentMessage(): string;
+  getEmailChangeRequestedMessage(): string;
+  getEmailChangePendingRequestExistsMessage(): string;
 }

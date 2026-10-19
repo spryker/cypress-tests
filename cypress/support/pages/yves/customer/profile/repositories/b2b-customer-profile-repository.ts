@@ -53,4 +53,16 @@ export class B2bCustomerProfileRepository implements CustomerProfileRepository {
   getPasswordsDoNotMatchMessage(): string {
     return "Passwords don't match";
   }
+
+  getEmailChangeMailSentMessage(): string {
+    return 'Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.';
+  }
+
+  getEmailChangeRequestedMessage(): string {
+    return 'You requested to change your e-mail to';
+  }
+
+  getEmailChangePendingRequestExistsMessage(): string {
+    return 'Your previous email change request is still pending, so we did not send a new verification email.';
+  }
 }
