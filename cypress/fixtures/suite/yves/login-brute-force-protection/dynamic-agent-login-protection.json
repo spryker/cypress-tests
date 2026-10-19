@@ -1,0 +1,42 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "challengeAgent",
+          "arguments": [{ "password": "change123", "isAgent": true }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#challengeAgent.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "captchaRejectionAgent",
+          "arguments": [{ "password": "change123", "isAgent": true }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#captchaRejectionAgent.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "lockAgent",
+          "arguments": [{ "password": "change123", "isAgent": true }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#lockAgent.id_user", 1]
+        }
+      ]
+    }
+  }
+}

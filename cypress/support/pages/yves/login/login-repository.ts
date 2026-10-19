@@ -15,4 +15,11 @@ export interface LoginRepository {
   getRegistrationToggleRadio(): Cypress.Chainable;
   getForgotPasswordLink(): Cypress.Chainable;
   getForgotPasswordEmailInput(): Cypress.Chainable;
+  getCaptchaWidget(): Cypress.Chainable;
+  getCaptchaCheckboxLabel(): Cypress.Chainable;
+  getCaptchaPayloadInput(): Cypress.Chainable;
+  getCaptchaVerifiedStateSelector(): string;
+  getCaptchaRequiredText(): string;
+  getCaptchaInvalidText(): string;
+  getAccountBlockedText(): string;
 }

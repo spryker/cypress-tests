@@ -51,6 +51,11 @@ export default defineConfig({
 
       // Add Chrome flags for CI stability
       on('before:browser:launch', (browser, launchOptions) => {
+        if (protocol === 'http' && browser.family === 'chromium' && browser.name !== 'electron') {
+          const applicationOrigins = [config.baseUrl, config.env.backofficeUrl, config.env.merchantPortalUrl];
+          launchOptions.args.push(`--unsafely-treat-insecure-origin-as-secure=${applicationOrigins.join(',')}`);
+        }
+
         if (browser.name === 'chrome' && browser.isHeadless) {
           launchOptions.args.push('--no-sandbox');
           launchOptions.args.push('--disable-gpu');
