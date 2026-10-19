@@ -75,6 +75,20 @@ describe(
         .should('be.visible');
     });
 
+    it('backoffice user should keep the selected customer when saving a customer group fails validation', (): void => {
+      customerGroupFormPage.visit();
+      customerGroupFormPage.fillName(dynamicFixtures.customerGroupWithMemberships.name);
+      customerGroupFormPage.assignCustomer({
+        idCustomer: dynamicFixtures.customer.id_customer,
+        searchTerm: dynamicFixtures.customer.email,
+      });
+      customerGroupFormPage.save();
+
+      customerGroupFormPage.getSuccessMessage().should('not.exist');
+      customerGroupFormPage.openCustomersToBeAssignedTab();
+      customerGroupFormPage.getCustomerToBeAssignedRemoveLink(dynamicFixtures.customer.id_customer).should('exist');
+    });
+
     it('backoffice user should be able to de-assign a customer, a company and a business unit from a customer group', (): void => {
       customerGroupFormPage.visitEditPage(dynamicFixtures.customerGroupWithMemberships.id_customer_group);
       customerGroupFormPage.deassignCustomer(dynamicFixtures.customer.id_customer);

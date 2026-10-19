@@ -47,6 +47,14 @@ export class CustomerGroupFormPage extends BackofficePage {
     this.repository.getCustomersTab().click();
   };
 
+  openCustomersToBeAssignedTab = (): void => {
+    this.repository.getCustomersTab().click();
+    this.repository.getCustomersToBeAssignedTab().click();
+  };
+
+  getCustomerToBeAssignedRemoveLink = (idCustomer: number): Cypress.Chainable =>
+    this.repository.getCustomerToBeAssignedRemoveLink(idCustomer);
+
   getAssignedCustomerCheckbox = (idCustomer: number): Cypress.Chainable =>
     this.repository.getAssignedCustomerCheckbox(idCustomer);
 
