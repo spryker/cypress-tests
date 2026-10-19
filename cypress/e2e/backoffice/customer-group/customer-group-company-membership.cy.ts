@@ -75,8 +75,9 @@ describe(
         .should('be.visible');
     });
 
-    it('backoffice user should be able to de-assign a company and a business unit from a customer group', (): void => {
+    it('backoffice user should be able to de-assign a customer, a company and a business unit from a customer group', (): void => {
       customerGroupFormPage.visitEditPage(dynamicFixtures.customerGroupWithMemberships.id_customer_group);
+      customerGroupFormPage.deassignCustomer(dynamicFixtures.customer.id_customer);
       customerGroupFormPage.deassignCompany(dynamicFixtures.company.id_company);
       customerGroupFormPage.deassignBusinessUnit(dynamicFixtures.businessUnit.id_company_business_unit);
       customerGroupFormPage.save();
@@ -87,6 +88,9 @@ describe(
       );
       customerGroupFormPage.getSuccessMessage().should('be.visible');
       customerGroupFormPage.getBusinessUnitsTab().should('have.class', 'active');
+      customerGroupFormPage.openCustomersTab();
+      customerGroupFormPage.getAssignedCustomerCheckbox(dynamicFixtures.customerToKeep.id_customer).should('exist');
+      customerGroupFormPage.getAssignedCustomerCheckbox(dynamicFixtures.customer.id_customer).should('not.exist');
 
       customerGroupViewPage.visitViewPage(dynamicFixtures.customerGroupWithMemberships.id_customer_group);
       customerGroupViewPage.getCompanyTable().should('contain', dynamicFixtures.companyToKeep.name);

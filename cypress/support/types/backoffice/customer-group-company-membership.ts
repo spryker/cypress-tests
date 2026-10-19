@@ -7,6 +7,7 @@ export interface CustomerGroupCompanyMembershipStaticFixtures {
 export interface CustomerGroupCompanyMembershipDynamicFixtures {
   rootUser: User;
   customer: CustomerGroupCompanyMembershipCustomer;
+  customerToKeep: CustomerGroupCompanyMembershipCustomer;
   company: Company;
   businessUnit: CompanyBusinessUnit;
   companyToKeep: Company;

@@ -23,6 +23,12 @@
         },
         {
           "type": "helper",
+          "name": "haveCustomer",
+          "key": "customerToKeep",
+          "arguments": [{}]
+        },
+        {
+          "type": "helper",
           "name": "haveCompany",
           "key": "company",
           "arguments": [{ "status": "approved", "is_active": true }]
@@ -51,6 +57,9 @@
           "key": "customerGroupWithMemberships",
           "arguments": [
             {
+              "customerAssignment": {
+                "idsCustomerToAssign": ["#customer.id_customer", "#customerToKeep.id_customer"]
+              },
               "companyAssignment": {
                 "idsCompanyToAssign": ["#company.id_company", "#companyToKeep.id_company"]
               },

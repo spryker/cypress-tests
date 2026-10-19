@@ -23,6 +23,10 @@ export class SuiteCustomerGroupFormRepository implements CustomerGroupFormReposi
     return cy.get('#available-items-destination-tab-label');
   }
 
+  getCustomersToBeDeassignedTab(): Cypress.Chainable {
+    return cy.get('#assigned-items-destination-tab-label');
+  }
+
   getAvailableCustomersSearchInput(): Cypress.Chainable {
     return cy.get('#available-items-source-tab [data-qa="table-search"]');
   }
@@ -37,6 +41,10 @@ export class SuiteCustomerGroupFormRepository implements CustomerGroupFormReposi
 
   getAvailableCustomerCheckbox(idCustomer: number): Cypress.Chainable {
     return cy.get(`#available-items-source-tab input[type="checkbox"][value="${idCustomer}"]`, { timeout: 20000 });
+  }
+
+  getAssignedCustomerCheckbox(idCustomer: number): Cypress.Chainable {
+    return cy.get(`#assigned-items-source-tab input[type="checkbox"][value="${idCustomer}"]`, { timeout: 20000 });
   }
 
   getAvailableCompanyCheckbox(idCompany: number): Cypress.Chainable {
@@ -61,6 +69,10 @@ export class SuiteCustomerGroupFormRepository implements CustomerGroupFormReposi
 
   getCustomerToBeAssignedRemoveLink(idCustomer: number): Cypress.Chainable {
     return cy.get(`#available-items-destination-tab-table [data-id="${idCustomer}"]`);
+  }
+
+  getCustomerToBeDeassignedRemoveLink(idCustomer: number): Cypress.Chainable {
+    return cy.get(`#assigned-items-destination-tab-table [data-id="${idCustomer}"]`);
   }
 
   getCompanyToBeAssignedRemoveLink(idCompany: number): Cypress.Chainable {
