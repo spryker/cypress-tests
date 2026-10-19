@@ -104,10 +104,10 @@ describe(
         expect(getRow).not.to.equal(null);
       });
 
-      cy.visitBackoffice(`/agentic-commerce/client/block?client-identifier=${client.clientId}`, {
+      cy.visitBackoffice(`/agentic-commerce/agentic-commerce-client/block?client-identifier=${client.clientId}`, {
         failOnStatusCode: false,
       });
-      cy.location('pathname').should('not.equal', '/agentic-commerce/client/block');
+      cy.location('pathname').should('not.equal', '/agentic-commerce/agentic-commerce-client/block');
     });
   }
 );

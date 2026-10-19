@@ -50,7 +50,7 @@ describe(
 
       clientCreatePage.register(client);
 
-      cy.location('pathname').should('equal', '/agentic-commerce/client');
+      cy.location('pathname').should('equal', '/agentic-commerce/agentic-commerce-client');
       clientListPage.getFlashMessage().should('contain', 'Client registered');
       clientListPage.findClient(client.clientId).then((getRow) => {
         expect(getRow).not.to.equal(null);

@@ -9,13 +9,13 @@ import { ClientListRepository } from './client-list-repository';
 export class ClientListPage extends BackofficePage {
   @inject(ClientListRepository) private repository: ClientListRepository;
 
-  protected PAGE_URL = '/agentic-commerce/client';
+  protected PAGE_URL = '/agentic-commerce/agentic-commerce-client';
 
   findClient = (clientId: string): Cypress.Chainable => {
     this.waitForFirstTableLoad();
 
     return this.find({
-      interceptTableUrl: '**/agentic-commerce/client/table**',
+      interceptTableUrl: '**/agentic-commerce/agentic-commerce-client/table**',
       searchQuery: clientId,
       expectedToSeeInTable: clientId,
     });

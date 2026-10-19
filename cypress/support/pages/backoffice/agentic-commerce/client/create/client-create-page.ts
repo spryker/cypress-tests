@@ -9,7 +9,7 @@ import { ClientCreateRepository } from './client-create-repository';
 export class ClientCreatePage extends BackofficePage {
   @inject(ClientCreateRepository) private repository: ClientCreateRepository;
 
-  protected PAGE_URL = '/agentic-commerce/client/create';
+  protected PAGE_URL = '/agentic-commerce/agentic-commerce-client/create';
 
   register = (params: RegisterParams): void => {
     this.repository.getClientIdentifierInput().clear().type(params.clientId);

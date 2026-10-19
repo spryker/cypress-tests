@@ -9,13 +9,13 @@ import { ConsentListRepository } from './consent-list-repository';
 export class ConsentListPage extends BackofficePage {
   @inject(ConsentListRepository) private repository: ConsentListRepository;
 
-  protected PAGE_URL = '/agentic-commerce/consent';
+  protected PAGE_URL = '/agentic-commerce/agentic-commerce-consent';
 
   findConsent = (clientId: string): Cypress.Chainable => {
     this.waitForFirstTableLoad();
 
     return this.find({
-      interceptTableUrl: '**/agentic-commerce/consent/table**',
+      interceptTableUrl: '**/agentic-commerce/agentic-commerce-consent/table**',
       searchQuery: clientId,
       expectedToSeeInTable: clientId,
     });
