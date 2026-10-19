@@ -13,4 +13,43 @@ export class CompanyRoleCreatePage extends BackofficePage {
   getCompanyRoleCreateForm = (): Cypress.Chainable => {
     return this.repository.getCompanyRoleCreateForm();
   };
+
+  create = (params: CreateParams): void => {
+    this.selectCompany(params.companyName);
+    this.repository.getNameInput().clear().type(params.name);
+    params.permissionNames.forEach((permissionName) => {
+      this.repository.getPermissionCheckbox(permissionName).check({ force: true });
+    });
+    this.repository.getSubmitButton().click();
+  };
+
+  // A shop wiring the company form expander searches companies through an autocomplete select2 box;
+  // without it the field is a plain select listing every company.
+  private selectCompany = (companyName: string): void => {
+    cy.intercept('GET', '**/company-gui/suggest*').as('companySuggest');
+
+    this.repository.getCompanySelect().then(($companySelect) => {
+      // Without autocomplete the options are labelled "<name> (ID: <id>)", so the name alone is no exact match.
+      if (!$companySelect.is('[data-autocomplete-url]')) {
+        cy.wrap($companySelect)
+          .contains('option', companyName)
+          .then(($option) => {
+            cy.wrap($companySelect).select(String($option.val()), { force: true });
+          });
+
+        return;
+      }
+
+      cy.wrap($companySelect).siblings('.select2-container').find('.select2-selection').click();
+      cy.get('.select2-dropdown .select2-search__field').type(companyName);
+      cy.wait('@companySuggest');
+      cy.contains('.select2-dropdown .select2-results__option', companyName).click();
+    });
+  };
+}
+
+interface CreateParams {
+  companyName: string;
+  name: string;
+  permissionNames: string[];
 }

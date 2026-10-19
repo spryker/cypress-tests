@@ -27,47 +27,56 @@ export class SalesOrdersPage extends MpPage {
       }
     );
 
-    return this.repository.getFirstTableRow();
+    return this.repository.getTableRowContaining(params.query);
   };
 
   update = (params: UpdateParams): void => {
     this.find({ query: params.query }).click({ force: true });
-
-    if (params.action === ActionEnum.sendToDistribution) {
-      this.repository.getDrawer().find(this.repository.getSendToDistributionButtonSelector()).click();
-    }
-
-    if (params.action === ActionEnum.confirmAtCenter) {
-      this.repository.getDrawer().find(this.repository.getConfirmAtCenterButtonSelector()).click();
-    }
-
-    if (params.action === ActionEnum.ship) {
-      this.repository.getDrawer().find(this.repository.getShipButtonSelector()).click();
-    }
-
-    if (params.action === ActionEnum.deliver) {
-      this.repository
-        .getDrawer()
-        .should('be.visible')
-        .find(this.repository.getDeliverButtonSelector(), { timeout: 10000 })
-        .should('be.visible')
-        .click();
-
-      this.repository
-        .getDrawer()
-        .find(this.repository.getOrderItemsStateChipSelector(), { timeout: 10000 })
-        .should('be.visible')
-        .and('contain.text', 'Delivered');
-    }
-
-    if (params.action === ActionEnum.cancel) {
-      this.repository.getDrawer().find(this.repository.getCancelButtonSelector()).click();
-    }
-
-    if (params.action === ActionEnum.refund) {
-      this.repository.getDrawer().find(this.repository.getRefundButtonSelector()).click();
-    }
+    this.triggerDrawerAction(this.getActionButtonSelector(params.action));
   };
+
+  private triggerDrawerAction = (actionButtonSelector: string): void => {
+    const triggerAlias = this.faker.string.uuid();
+    cy.intercept({ pathname: '/sales-merchant-portal-gui/trigger-merchant-oms' }).as(triggerAlias);
+
+    this.repository.getDrawer().find(actionButtonSelector, { timeout: 10000 }).click();
+
+    cy.wait(`@${triggerAlias}`);
+  };
+
+  private getActionButtonSelector = (action: ActionEnum): string => {
+    const actionButtonSelectors: Record<ActionEnum, string> = {
+      [ActionEnum.sendToDistribution]: this.repository.getSendToDistributionButtonSelector(),
+      [ActionEnum.confirmAtCenter]: this.repository.getConfirmAtCenterButtonSelector(),
+      [ActionEnum.ship]: this.repository.getShipButtonSelector(),
+      [ActionEnum.deliver]: this.repository.getDeliverButtonSelector(),
+      [ActionEnum.cancel]: this.repository.getCancelButtonSelector(),
+      [ActionEnum.refund]: this.repository.getRefundButtonSelector(),
+    };
+
+    return actionButtonSelectors[action];
+  };
+
+  openOrder = (params: OpenOrderParams): void => {
+    this.find({ query: params.query }).click({ force: true });
+  };
+
+  openItemsTab = (): void => {
+    this.repository.getItemsTab().click();
+  };
+
+  getOrderItemState = (params: OrderItemParams): Cypress.Chainable =>
+    this.repository
+      .getOrderItemHeaderCell(STATE_COLUMN_TITLE)
+      .then(($headerCell: JQuery<HTMLElement>) => this.getOrderItemRow(params.sku).find('td').eq($headerCell.index()));
+
+  changeOrderItemState = (params: ChangeOrderItemStateParams): void => {
+    this.getOrderItemRow(params.sku).find(this.repository.getRowActionTriggerSelector()).click();
+    this.repository.getRowActionItem(params.state).click();
+  };
+
+  private getOrderItemRow = (sku: string): Cypress.Chainable =>
+    this.repository.getOrderItemRows().filter(`:contains("${sku}")`).first();
 
   hasOrderByOrderReference = (query: string): Cypress.Chainable<boolean> => {
     return cy.get('tbody').then((body) => {
@@ -86,6 +95,21 @@ export class SalesOrdersPage extends MpPage {
   getTotalRefundedCommissionBlock = (): Cypress.Chainable<JQuery<HTMLElement>> => {
     return this.repository.getDrawer().contains('Total Refunded Commission').parent();
   };
+}
+
+const STATE_COLUMN_TITLE = 'State';
+
+interface OpenOrderParams {
+  query: string;
+}
+
+interface OrderItemParams {
+  sku: string;
+}
+
+interface ChangeOrderItemStateParams {
+  sku: string;
+  state: string;
 }
 
 interface FindParams {

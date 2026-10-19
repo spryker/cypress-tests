@@ -5,4 +5,5 @@ import { MerchantRepository } from '../merchant-repository';
 export class B2cMpMerchantRepository implements MerchantRepository {
   getMerchantRelationRequestButton = (): Cypress.Chainable =>
     cy.get('[data-qa="merchant-relation-request-create-button"]');
+  getInformationItemLabelSelector = (): string => '[data-qa="component information-item"] strong';
 }

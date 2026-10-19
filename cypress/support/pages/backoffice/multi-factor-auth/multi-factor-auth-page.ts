@@ -12,6 +12,7 @@ export class MultiFactorAuthPage extends BackofficePage {
   protected PAGE_URL = '/multi-factor-auth/user-management/set-up';
 
   verifyCode(code: string): void {
+    cy.resetProxyCookieJar();
     this.repository.getVerificationCodeInput().type(code);
     this.repository.getVerifyButton().click();
   }

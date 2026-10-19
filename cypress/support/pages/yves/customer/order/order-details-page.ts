@@ -36,7 +36,31 @@ export class OrderDetailsPage extends YvesPage {
     return this.repository.getOrderDetailTableBlock();
   };
 
+  // A configured bundle is the innermost article naming its template: some themes wrap the whole shipment in an
+  // article of its own, and a bundle's product rows never carry the template name.
+  getConfiguredBundles = (templateName: string): Cypress.Chainable => {
+    return this.repository
+      .getOrderDetailTableBlock()
+      .find(`article:contains("${templateName}")`)
+      .filter(
+        (_index: number, article: HTMLElement): boolean =>
+          Cypress.$(article).find(`article:contains("${templateName}")`).length === 0
+      );
+  };
+
   getEditOrderForm = (): Cypress.Chainable => {
     return this.repository.getEditOrderForm();
+  };
+
+  getCancelOrderButton = (): Cypress.Chainable => {
+    return this.repository.getCancelOrderButton();
+  };
+
+  cancelOrder = (): void => {
+    this.repository.getCancelOrderButton().click();
+  };
+
+  createReturn = (): void => {
+    this.repository.getCreateReturnLink().first().click();
   };
 }

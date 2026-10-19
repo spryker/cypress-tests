@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, skipWhenFeatureAbsent } from '@utils';
 import {
   WorkflowInstanceLifecycleDynamicFixtures,
   WorkflowInstanceLifecycleStaticFixtures,
@@ -12,6 +12,15 @@ describe(
     tags: ['@backoffice', '@workflow', 'workflow', 'spryker-core-back-office', 'spryker-core'],
   },
   (): void => {
+    // The B2C shops do not install the workflow module.
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because the B2C shops have no workflows', () => {});
+
+      return;
+    }
+
+    skipWhenFeatureAbsent('workflow', ['b2b']);
+
     const workflowInstanceLifecyclePage = container.get(WorkflowInstanceLifecyclePage);
     const userLoginScenario = container.get(UserLoginScenario);
 

@@ -16,4 +16,6 @@ export class NavigationMenuRepository {
     '[data-qa="navigation-menu"] [data-qa="menu-item"]:not(:visible), [data-qa="navigation-menu"] [data-qa="menu-parent-item"]:not(:visible)';
   getVisibleMenuItemsSelector = (): string => '[data-qa="menu-item"]:visible, [data-qa="menu-parent-item"]:visible';
   getFilteredMenuSelector = (): string => '[data-qa="navigation-menu"].filtered';
+  getMenuItemLinkSelector = (): string => '[data-qa="menu-item-link"]';
+  getUserNavigationTogglerSelector = (): string => '[data-qa="backoffice-user-navigation"]';
 }

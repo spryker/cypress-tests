@@ -12,4 +12,5 @@ export class MerchantListRepository {
   getApproveAccessButtonSelector = (): string => 'button:contains("Approve Access")';
   getDenyAccessButtonSelector = (): string => 'button:contains("Deny Access")';
   getStoreCellSelector = (): string => 'td[class*="column-spy_merchant_store"]';
+  getStatusFormPathPattern = (): RegExp => /\/merchant-gui\/(edit-merchant\/(de)?activate|merchant-status)$/;
 }

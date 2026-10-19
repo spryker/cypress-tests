@@ -10,4 +10,6 @@ export class B2cMpCheckoutShipmentRepository implements CheckoutShipmentReposito
   getNextButton = (): Cypress.Chainable => cy.get('[data-qa="submit-button"]');
   getShipmentDateInput = (): Cypress.Chainable =>
     cy.get('#shipmentCollectionForm_shipmentGroups_0_shipment_requestedDeliveryDate');
+  getShipmentMethodLabel = (methodName: string): Cypress.Chainable =>
+    cy.contains('[data-qa="multi-shipment-group"] label', methodName);
 }
