@@ -93,6 +93,34 @@ describe(
         .should('match', /^inactive$/i);
     });
 
+    it('admin should be warned when activating a workflow without an active version', (): void => {
+      const { subjectType, triggerEventLabel, initialState } = staticFixtures;
+
+      const workflowName = createWorkflowName();
+
+      workflowManagementPage.createWorkflow({
+        name: workflowName,
+        subjectType,
+        triggerEventLabel,
+        initialState,
+        definition: staticFixtures.definitionTemplate.replace('%process_name%', workflowName),
+      });
+
+      workflowManagementPage.openProcessActivation(workflowName);
+
+      workflowManagementPage
+        .getActionConfirmationMessage()
+        .should('have.text', 'This workflow has no active version. Are you sure you want to activate it?');
+
+      workflowManagementPage.confirmAction();
+
+      workflowManagementPage
+        .getProcessRowStatus(workflowName)
+        .invoke('text')
+        .invoke('trim')
+        .should('match', /^active$/i);
+    });
+
     it('admin should share one event between transitions that use the same event name', (): void => {
       const { subjectType, triggerEventLabel, initialState, sharedEventName, secondEventName, validTimeout } =
         staticFixtures;

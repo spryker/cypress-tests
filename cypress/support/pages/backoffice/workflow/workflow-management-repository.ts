@@ -63,6 +63,8 @@ export class WorkflowManagementRepository {
 
   getActionConfirmationConfirmButton = (): Cypress.Chainable =>
     cy.get('[data-qa="action-confirmation-modal"]:visible').find('[data-qa="action-confirmation-confirm"]');
+  getActionConfirmationMessage = (): Cypress.Chainable =>
+    cy.get('[data-qa="action-confirmation-modal"]:visible').find('[id="action-confirmation-message"]');
 
   getFlashMessage = (): Cypress.Chainable => cy.get('.alert:visible, [class*="flash-message"]:visible');
 }

@@ -103,9 +103,19 @@ export class WorkflowManagementPage extends BackofficePage {
   };
 
   activateProcess = (name: string): void => {
+    this.openProcessActivation(name);
+    this.confirmAction();
+  };
+
+  openProcessActivation = (name: string): void => {
     this.repository.getProcessRowActivateButton(name).click();
+  };
+
+  confirmAction = (): void => {
     this.repository.getActionConfirmationConfirmButton().click();
   };
+
+  getActionConfirmationMessage = (): Cypress.Chainable => this.repository.getActionConfirmationMessage();
 
   getProcessRow = (name: string): Cypress.Chainable => this.repository.getProcessRow(name);
 
