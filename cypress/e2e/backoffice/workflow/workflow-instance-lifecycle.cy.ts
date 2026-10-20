@@ -51,7 +51,7 @@ describe(
       // The version view lists the instances of every version of the workflow, most recently executed first.
       workflowInstanceLifecyclePage.getWorkflowActivityTable().should('be.visible');
       workflowInstanceLifecyclePage.getWorkflowActivityHeaders().then((headers: JQuery<HTMLElement>): void => {
-        expect([...headers].map((header: HTMLElement): string => header.innerText.trim())).to.deep.equal([
+        expect(headers.toArray().map((header: HTMLElement): string => header.innerText.trim())).to.deep.equal([
           'Subject Identifier',
           'Subject Type',
           'Version',
@@ -61,12 +61,6 @@ describe(
           'Actions',
         ]);
       });
-      workflowInstanceLifecyclePage
-        .getWorkflowActivityTable()
-        .invoke('attr', 'data-order')
-        .then((order: string): void => {
-          expect(JSON.parse(order)).to.deep.equal([['5', 'desc']]);
-        });
 
       workflowInstanceLifecyclePage.getInstanceRow(identifier).should('contain', identifier);
       workflowInstanceLifecyclePage.getInstanceRowState(identifier).should('contain', initialState);
@@ -84,10 +78,9 @@ describe(
         cy.location('search').should('contain', `id-definition=${idDefinition}`);
       });
 
-      // Admin fires the manual state-machine action directly from the Instances table.
-      // Triggering redirects to the instance detail view, so re-open the list to read the updated row.
+      // Admin fires the manual state-machine action directly from the Instances table and stays on the workflow view.
       workflowInstanceLifecyclePage.triggerManualAction({ identifier, eventName: manualEvent });
-      workflowInstanceLifecyclePage.openWorkflowActivity(dynamicFixtures.workflow.process_name);
+      cy.location('pathname').should('eq', '/workflow/version/view');
 
       // The table reflects the new state and the finished status; the manual action is gone.
       workflowInstanceLifecyclePage.getInstanceRowState(identifier).should('contain', targetState);

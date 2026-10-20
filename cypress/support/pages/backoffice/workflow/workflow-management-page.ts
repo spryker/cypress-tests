@@ -17,12 +17,65 @@ export class WorkflowManagementPage extends BackofficePage {
     initialState: string;
     definition: string;
   }): void => {
+    this.fillCreateForm(params);
+    this.submitCreateForm();
+  };
+
+  fillCreateForm = (params: {
+    name: string;
+    subjectType: string;
+    triggerEventLabel: string;
+    initialState: string;
+    definition: string;
+  }): void => {
     this.visitCreate();
     this.repository.getProcessNameInput().clear().type(params.name);
     this.selectSubjectType(params.subjectType);
     this.selectTriggerEvent(params.triggerEventLabel);
     this.seedDefinition({ initialState: params.initialState, definition: params.definition });
+  };
+
+  submitCreateForm = (): void => {
     this.repository.getProcessSaveButton().click();
+  };
+
+  renameCanvasState = (params: { currentName: string; newName: string }): void => {
+    this.repository.getCanvasStateByLabel(params.currentName).click();
+    this.repository.getStateNameInput().clear().type(params.newName);
+  };
+
+  renameCanvasTransitionEvent = (params: { currentEventName: string; newEventName: string }): void => {
+    this.selectCanvasTransition(params.currentEventName);
+    this.repository.getTransitionEventInput().clear().type(params.newEventName).blur();
+  };
+
+  selectCanvasTransition = (eventName: string): void => {
+    this.repository.getCanvasTransitionLabel(eventName).first().click({ force: true });
+  };
+
+  openNewVersion = (): void => {
+    this.repository.getNewVersionButton().click();
+  };
+
+  saveVersion = (): void => {
+    this.repository.getVersionSaveButton().click();
+  };
+
+  activateLatestVersion = (): void => {
+    this.repository.getVersionListButton().click();
+    this.repository.getActivateVersionButton().click();
+    this.repository.getActionConfirmationConfirmButton().click();
+  };
+
+  saveProcessDescription = (description: string): void => {
+    this.repository.getProcessEditToggle().click();
+    this.repository.getProcessEditDescriptionInput().clear().type(description);
+    this.repository.getProcessEditSaveButton().click();
+  };
+
+  deactivateProcess = (name: string): void => {
+    this.repository.getProcessRowDeactivateButton(name).click();
+    this.repository.getActionConfirmationConfirmButton().click();
   };
 
   visitCreate = (): void => {
@@ -63,6 +116,24 @@ export class WorkflowManagementPage extends BackofficePage {
   getProcessRowTriggers = (name: string): Cypress.Chainable => this.repository.getProcessRowTriggers(name);
 
   getProcessRowActivateButton = (name: string): Cypress.Chainable => this.repository.getProcessRowActivateButton(name);
+
+  getProcessForm = (): Cypress.Chainable => this.repository.getProcessForm();
+
+  getStateNameInput = (): Cypress.Chainable => this.repository.getStateNameInput();
+
+  getCanvas = (): Cypress.Chainable => this.repository.getCanvas();
+
+  getEventSharedHint = (): Cypress.Chainable => this.repository.getEventSharedHint();
+
+  getEventTransitionCount = (): Cypress.Chainable => this.repository.getEventTransitionCount();
+
+  getDefinitionValidationResult = (): Cypress.Chainable => this.repository.getDefinitionValidationResult();
+
+  getVersionSource = (): Cypress.Chainable => this.repository.getVersionSource();
+
+  getActiveVersionNumber = (): Cypress.Chainable => this.repository.getActiveVersionNumber();
+
+  getSummaryDescription = (): Cypress.Chainable => this.repository.getSummaryDescription();
 
   private seedDefinition = (params: { initialState: string; definition: string }): void => {
     this.repository.getAdvancedXmlToggle().click();

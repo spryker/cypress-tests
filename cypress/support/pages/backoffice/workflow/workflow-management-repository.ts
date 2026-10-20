@@ -11,6 +11,8 @@ export class WorkflowManagementRepository {
 
   getProcessRowActivateButton = (name: string): Cypress.Chainable =>
     this.getProcessRow(name).find('button:contains("Activate")');
+  getProcessRowDeactivateButton = (name: string): Cypress.Chainable =>
+    this.getProcessRow(name).find('button:contains("Deactivate")');
   getProcessRowViewButton = (name: string): Cypress.Chainable => this.getProcessRow(name).find('a:contains("View")');
   getProcessRowStatus = (name: string): Cypress.Chainable =>
     this.getProcessRow(name).find('[data-qa="workflow-process-status"]');
@@ -22,6 +24,7 @@ export class WorkflowManagementRepository {
   getProcessNameInput = (): Cypress.Chainable => cy.get('[data-qa="workflow-process-name-input"]');
   getProcessSubjectTypeInput = (): Cypress.Chainable => cy.get('[data-qa="workflow-process-subject-type-input"]');
   getProcessSaveButton = (): Cypress.Chainable => cy.get('[data-qa="workflow-process-save"]');
+  getProcessForm = (): Cypress.Chainable => cy.get('[data-qa="workflow-process-form"]');
   getProcessTriggerEventsSelect = (): Cypress.Chainable => cy.get('[data-qa="workflow-process-trigger-events-select"]');
   getSelect2Option = (label: string): Cypress.Chainable =>
     cy.get('.select2-dropdown .select2-results__option').contains(new RegExp(`^${label}$`));
@@ -36,8 +39,25 @@ export class WorkflowManagementRepository {
   // data-qa, so it is reached by its rendered label text within the canvas.
   getCanvasStateByLabel = (label: string): Cypress.Chainable => this.getCanvas().find('text').contains(label);
   getStateInitialCheckbox = (): Cypress.Chainable => cy.get('[data-qa="workflow-state-initial"]');
+  getStateNameInput = (): Cypress.Chainable => cy.get('[data-qa="workflow-state-name"]');
+  getCanvasTransitionLabel = (eventName: string): Cypress.Chainable =>
+    this.getCanvas().contains('text', eventName).siblings('rect');
+  getTransitionEventInput = (): Cypress.Chainable => cy.get('[data-qa="workflow-transition-event"]');
+  getEventSharedHint = (): Cypress.Chainable => cy.get('[data-qa="workflow-event-shared-hint"]');
+  getEventTransitionCount = (): Cypress.Chainable => cy.get('[data-qa="workflow-event-transition-count"]');
+  getDefinitionValidationResult = (): Cypress.Chainable => cy.get('[data-qa="workflow-definition-validation-result"]');
 
   getVersionListButton = (): Cypress.Chainable => cy.get('[data-qa="workflow-version-list"]');
+  getNewVersionButton = (): Cypress.Chainable => cy.get('[data-qa="workflow-active-version-new-version"]');
+  getVersionSource = (): Cypress.Chainable => cy.get('[data-qa="workflow-version-source"]');
+  getVersionSaveButton = (): Cypress.Chainable => cy.get('[data-qa="workflow-version-save"]');
+  getActiveVersionNumber = (): Cypress.Chainable => cy.get('[data-qa="workflow-active-version-number"]');
+
+  getProcessEditToggle = (): Cypress.Chainable => cy.get('[data-qa="workflow-process-edit-toggle"]');
+  getProcessEditDescriptionInput = (): Cypress.Chainable =>
+    cy.get('[data-qa="workflow-process-edit-description-input"]');
+  getProcessEditSaveButton = (): Cypress.Chainable => cy.get('[data-qa="workflow-process-edit-save"]');
+  getSummaryDescription = (): Cypress.Chainable => cy.get('[data-qa="workflow-summary-description"]');
 
   getActivateVersionButton = (): Cypress.Chainable => cy.get('[data-qa="workflow-version-activate"]:visible').first();
 

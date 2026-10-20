@@ -54,7 +54,7 @@ describe(
     it('admin should be able to create and activate a workflow with a trigger', (): void => {
       const { subjectType, triggerEventLabel, initialState } = staticFixtures;
 
-      const workflowName = `E2E Onboarding ${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
+      const workflowName = createWorkflowName();
 
       const definition = staticFixtures.definitionTemplate.replace('%process_name%', workflowName);
 
@@ -83,6 +83,118 @@ describe(
         .should('match', /^active$/i);
       workflowManagementPage.getProcessRowActiveVersion(workflowName).invoke('text').invoke('trim').should('eq', 'V1');
       workflowManagementPage.getProcessRowTriggers(workflowName).should('contain', triggerEventLabel);
+
+      workflowManagementPage.deactivateProcess(workflowName);
+
+      workflowManagementPage
+        .getProcessRowStatus(workflowName)
+        .invoke('text')
+        .invoke('trim')
+        .should('match', /^inactive$/i);
     });
+
+    it('admin should share one event between transitions that use the same event name', (): void => {
+      const { subjectType, triggerEventLabel, initialState, sharedEventName, secondEventName, validTimeout } =
+        staticFixtures;
+      const workflowName = createWorkflowName();
+
+      workflowManagementPage.fillCreateForm({
+        name: workflowName,
+        subjectType,
+        triggerEventLabel,
+        initialState,
+        definition: createDefinitionWithTimeout(workflowName, validTimeout),
+      });
+
+      workflowManagementPage.selectCanvasTransition(sharedEventName);
+      workflowManagementPage.getEventSharedHint().should('not.be.visible');
+
+      workflowManagementPage.renameCanvasTransitionEvent({
+        currentEventName: secondEventName,
+        newEventName: sharedEventName,
+      });
+
+      workflowManagementPage.getEventSharedHint().should('be.visible');
+      workflowManagementPage.getEventTransitionCount().should('have.text', '2');
+    });
+
+    it('admin should not be able to create a workflow from an invalid definition', (): void => {
+      const {
+        subjectType,
+        triggerEventLabel,
+        initialState,
+        invalidTimeout,
+        duplicateStateName,
+        secondStateName,
+        duplicateStateNameMessage,
+      } = staticFixtures;
+      const workflowName = createWorkflowName();
+
+      workflowManagementPage.fillCreateForm({
+        name: workflowName,
+        subjectType,
+        triggerEventLabel,
+        initialState,
+        definition: createDefinitionWithTimeout(workflowName, invalidTimeout),
+      });
+
+      workflowManagementPage.renameCanvasState({ currentName: secondStateName, newName: duplicateStateName });
+      workflowManagementPage.getStateNameInput().should('have.class', 'is-invalid');
+      workflowManagementPage.submitCreateForm();
+
+      cy.location('pathname').should('eq', '/workflow/process/create');
+      workflowManagementPage.getDefinitionValidationResult().should('contain', duplicateStateNameMessage);
+
+      workflowManagementPage.getStateNameInput().clear().type(secondStateName);
+      workflowManagementPage.getStateNameInput().should('not.have.class', 'is-invalid');
+      workflowManagementPage.submitCreateForm();
+
+      workflowManagementPage.getProcessForm().should('contain', invalidTimeout);
+
+      workflowManagementPage.visit();
+      workflowManagementPage.getProcessRow(workflowName).should('not.exist');
+    });
+
+    it('admin should be able to create, describe and activate a new version of a workflow', (): void => {
+      const { subjectType, triggerEventLabel, initialState, duplicateStateName, renamedStateName, updatedDescription } =
+        staticFixtures;
+      const workflowName = createWorkflowName();
+
+      workflowManagementPage.createWorkflow({
+        name: workflowName,
+        subjectType,
+        triggerEventLabel,
+        initialState,
+        definition: staticFixtures.definitionTemplate.replace('%process_name%', workflowName),
+      });
+      workflowManagementPage.activateFirstVersion(workflowName);
+
+      workflowManagementPage.openNewVersion();
+      workflowManagementPage.getVersionSource().should('contain', staticFixtures.sourceVersionText);
+      workflowManagementPage.renameCanvasState({ currentName: duplicateStateName, newName: renamedStateName });
+      workflowManagementPage.saveVersion();
+
+      cy.location('pathname').should('eq', '/workflow/version/view');
+      workflowManagementPage.getCanvas().should('contain', renamedStateName);
+
+      workflowManagementPage.saveProcessDescription(updatedDescription);
+      workflowManagementPage.getSummaryDescription().should('contain', updatedDescription);
+
+      workflowManagementPage.activateLatestVersion();
+      workflowManagementPage.getActiveVersionNumber().invoke('text').invoke('trim').should('eq', 'V2');
+
+      workflowManagementPage.visit();
+      workflowManagementPage.getProcessRowActiveVersion(workflowName).invoke('text').invoke('trim').should('eq', 'V2');
+    });
+
+    function createWorkflowName(): string {
+      return `E2E Onboarding ${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
+    }
+
+    function createDefinitionWithTimeout(workflowName: string, timeout: string): string {
+      return staticFixtures.timeoutDefinitionTemplate
+        .replace('%process_name%', workflowName)
+        .replace('%timeout%', timeout);
+    }
   }
 );
