@@ -62,7 +62,7 @@ export class B2cMpCustomerProfileRepository implements CustomerProfileRepository
     return 'You requested to change your e-mail to';
   }
 
-  getEmailChangePendingRequestExistsMessage(): string {
-    return 'Your previous email change request is still pending, so we did not send a new verification email.';
+  getEmailChangeLimitExceededMessage(): string {
+    return 'You reached the limit of email change requests.';
   }
 }

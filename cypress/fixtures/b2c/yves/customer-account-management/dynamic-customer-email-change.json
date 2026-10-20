@@ -12,7 +12,7 @@
         {
           "type": "helper",
           "name": "haveConfirmedCustomer",
-          "key": "customerWithPendingEmailChange",
+          "key": "customerWithEmailChangeLimit",
           "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         }
       ]

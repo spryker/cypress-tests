@@ -17,7 +17,7 @@
         {
           "type": "helper",
           "name": "haveConfirmedCustomer",
-          "key": "customerWithPendingEmailChange",
+          "key": "customerWithEmailChangeLimit",
           "arguments": [
             {
               "locale_name": "en_US",
@@ -62,11 +62,11 @@
         {
           "type": "helper",
           "name": "haveCompanyUser",
-          "key": "companyUserWithPendingEmailChange",
+          "key": "companyUserWithEmailChangeLimit",
           "arguments": [
             {
-              "customer": "#customerWithPendingEmailChange",
-              "fkCustomer": "#customerWithPendingEmailChange.id_customer",
+              "customer": "#customerWithEmailChangeLimit",
+              "fkCustomer": "#customerWithEmailChangeLimit.id_customer",
               "fkCompany": "#company.id_company",
               "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
             }

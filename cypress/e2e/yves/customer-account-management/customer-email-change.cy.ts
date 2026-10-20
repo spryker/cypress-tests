@@ -42,17 +42,20 @@ describe(
       customerProfilePage.getEmailInput().should('have.value', dynamicFixtures.customer.email);
     });
 
-    it('customer should not receive a second verification email while the email change request is pending', (): void => {
-      const customerEmail = dynamicFixtures.customerWithPendingEmailChange.email;
+    it('customer should not receive more than 3 verification emails within 15 minutes', (): void => {
+      const customerEmail = dynamicFixtures.customerWithEmailChangeLimit.email;
 
       loginAs(customerEmail);
       customerProfilePage.visit();
-      customerProfilePage.updateEmail(getNewEmail('first', customerEmail));
-      customerProfilePage.getEmailChangeMailSentMessage().should('be.visible');
 
-      customerProfilePage.updateEmail(getNewEmail('second', customerEmail));
+      ['first', 'second', 'third'].forEach((prefix: string): void => {
+        customerProfilePage.updateEmail(getNewEmail(prefix, customerEmail));
+        customerProfilePage.getEmailChangeMailSentMessage().should('be.visible');
+      });
 
-      customerProfilePage.getEmailChangePendingRequestExistsError().should('be.visible');
+      customerProfilePage.updateEmail(getNewEmail('fourth', customerEmail));
+
+      customerProfilePage.getEmailChangeLimitExceededError().should('be.visible');
       customerProfilePage.getEmailChangeMailSentMessage().should('not.exist');
       customerProfilePage.getEmailInput().should('have.value', customerEmail);
     });

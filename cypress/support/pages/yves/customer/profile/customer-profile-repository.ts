@@ -14,5 +14,5 @@ export interface CustomerProfileRepository {
   getPasswordsDoNotMatchMessage(): string;
   getEmailChangeMailSentMessage(): string;
   getEmailChangeRequestedMessage(): string;
-  getEmailChangePendingRequestExistsMessage(): string;
+  getEmailChangeLimitExceededMessage(): string;
 }

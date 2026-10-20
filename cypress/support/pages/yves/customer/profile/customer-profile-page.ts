@@ -49,8 +49,8 @@ export class CustomerProfilePage extends YvesPage {
     return cy.contains(this.repository.getEmailChangeRequestedMessage());
   }
 
-  getEmailChangePendingRequestExistsError(): Cypress.Chainable {
-    return cy.contains(this.repository.getEmailChangePendingRequestExistsMessage());
+  getEmailChangeLimitExceededError(): Cypress.Chainable {
+    return cy.contains(this.repository.getEmailChangeLimitExceededMessage());
   }
 
   getPasswordsDoNotMatchError(): Cypress.Chainable {

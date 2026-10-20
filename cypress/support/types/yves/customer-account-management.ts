@@ -56,7 +56,7 @@ export interface CustomerProfileManagementStaticFixtures {
 
 export interface CustomerEmailChangeDynamicFixtures {
   customer: Customer;
-  customerWithPendingEmailChange: Customer;
+  customerWithEmailChangeLimit: Customer;
 }
 
 export interface CustomerEmailChangeStaticFixtures {
