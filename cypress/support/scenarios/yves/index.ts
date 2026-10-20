@@ -1,6 +1,7 @@
 export * from './agent-login-scenario';
 export * from './checkout-scenario';
 export * from './checkout-mp-scenario';
+export * from './place-order-scenario';
 export * from './customer-login-scenario';
 export * from './customer-logout-scenario';
 export * from './locale-switching-scenario';
@@ -10,3 +11,7 @@ export * from './agent-logout-scenario';
 export * from './agent-mfa-login-scenario';
 export * from './customer-mfa-activation-scenario';
 export * from './product-add-to-cart-scenario';
+export * from './impersonate-customer-scenario';
+export * from './open-product-detail-page-on-store-scenario';
+export * from './wait-for-storefront-url-scenario';
+export * from './configure-bundle-scenario';

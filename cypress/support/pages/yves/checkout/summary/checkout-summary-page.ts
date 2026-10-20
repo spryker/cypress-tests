@@ -11,8 +11,29 @@ export class CheckoutSummaryPage extends YvesPage {
 
   protected PAGE_URL = '/checkout/summary';
 
+  // The order-success page carries the reference only as schema.org metadata, which is the sole
+  // handle a guest has on the order it just placed: there is no order history to read it back from.
+  getPlacedOrderReference = (): Cypress.Chainable<string> =>
+    cy.get('meta[itemprop="identifier"]', { timeout: 15000 }).invoke('attr', 'content');
+
+  requestApproval = (idCompanyUser: number): void => {
+    this.repository.getApproverSelect().select(idCompanyUser.toString(), { force: true });
+    this.repository.getSendApprovalRequestButton().click();
+  };
+
+  // The approver decides on the checkout summary, the one page every theme renders the approval widget on.
+  approve = (): void => {
+    this.repository.getApproveButton().click();
+  };
+
+  getApprovalStatus = (): Cypress.Chainable => this.repository.getApprovalStatus();
+
+  getCancelApprovalRequestButton = (): Cypress.Chainable => this.repository.getCancelApprovalRequestButton();
+
   placeOrder = (): void => {
-    this.repository.getaAcceptTermsAndConditionsCheckbox().should('be.visible', { timeout: 1000 });
+    // The b2c themes render a styled checkbox over a transparent native input, which Cypress never reports
+    // as visible; presence is what every theme shares.
+    this.repository.getaAcceptTermsAndConditionsCheckbox().should('exist');
     this.repository.getaAcceptTermsAndConditionsCheckbox().check({ force: true });
     this.repository.getSummaryForm().submit();
   };

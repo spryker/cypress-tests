@@ -3,8 +3,8 @@ import { CartUpSellingProductsRepository } from '../cart-up-selling-products-rep
 
 @injectable()
 export class B2bCartUpSellingProductsRepository implements CartUpSellingProductsRepository {
-  // Both B2B shops override the similar-products template to use the slick carousel; the simple
-  // carousel is what the other storefronts render.
+  // The demoshops override the similar-products template to use the slick carousel; suite renders the
+  // simple carousel.
   getUpSellingCarousel(): Cypress.Chainable {
     return cy.get('.slick-carousel__container');
   }

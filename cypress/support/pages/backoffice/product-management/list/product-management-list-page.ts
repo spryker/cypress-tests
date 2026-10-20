@@ -48,6 +48,15 @@ export class ProductManagementListPage extends BackofficePage {
     this.repository.getFilterButton().click();
   };
 
+  // The merchant switcher is a plain select that reloads the table through its own GET form.
+  filterByMerchant = (params: FilterByMerchantParams): void => {
+    this.repository.getMerchantFilterSelect().select(String(params.idMerchant));
+  };
+
+  clickViewButton = (): void => {
+    this.getTableRows().first().find(this.repository.getViewButtonSelector()).click();
+  };
+
   applySearchQuery = (query: string, callback: () => void): void => {
     this.repository
       .getFilterSearchInput()
@@ -94,6 +103,10 @@ export class ProductManagementListPage extends BackofficePage {
 interface UpdateParams {
   action: ActionEnum;
   query: string;
+}
+
+interface FilterByMerchantParams {
+  idMerchant: number;
 }
 
 interface ApplyFiltersParams {

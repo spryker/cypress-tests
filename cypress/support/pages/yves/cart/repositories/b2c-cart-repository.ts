@@ -3,6 +3,17 @@ import { CartRepository } from '../cart-repository';
 
 @injectable()
 export class B2cCartRepository implements CartRepository {
+  // The approver's actions live on the cart page, not the summary, and put the approval's id at
+  // the end of the path - /quote-approval/approve/8 - the opposite way round to the requester's
+  // cancel form. A cart waiting for approval is also locked, which the reset-lock form marks.
+  getLockedCartResetForm = (): Cypress.Chainable => cy.get('form[action$="/cart/reset-lock"]');
+  getApprovalStatus = (): Cypress.Chainable => cy.get('.quote-status');
+  // The share widget renders one url-mask-generator per share option group. Clicking the group's
+  // toggler fires the cart/create-link AJAX, which renders the generated link into an input whose
+  // id is the share option - PREVIEW for the external group.
+  getExternalCartShareToggle = (): Cypress.Chainable =>
+    cy.get('url-mask-generator[shareoptiongroup="external"]').find('.js-toggler-radio__trigger');
+  getExternalCartShareLinkInput = (): Cypress.Chainable => cy.get('#PREVIEW');
   getQuickAddToCartSkuField = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-quick-add-form"] input').first();
   getQuickAddToCartProductListField = (): Cypress.Chainable => cy.get('[data-qa="component products-list"]');
@@ -36,6 +47,12 @@ export class B2cCartRepository implements CartRepository {
   getCheckoutButton = (): Cypress.Chainable => cy.get('[data-qa="cart-go-to-checkout"]:visible');
   findCartItemRemovalSubmit = (sku: string): Cypress.Chainable => this.findCartItemRemovalForm(sku).find('button');
   getCartDiscountSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-discount-summary"]');
+  // Scoped to one tile by sku, because any other active promotion discount offers its own product
+  // in the same carousel. The tile shows the product name only; the sku is in its group key input.
+  getPromotionalProductAddToCartButton = (sku: string): Cypress.Chainable =>
+    cy.get(
+      `[data-qa="component product-item"]:has(input[name="groupKey"][value="${sku}"]) [data-qa="add-to-cart-button"]`
+    );
   getCartItemChangeQuantitySubmit = (sku: string): Cypress.Chainable =>
     this.findCartItemChangeQuantityForm(sku).find('[data-qa="quantity-input-submit"]');
   getCartSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-summary"]');
@@ -59,9 +76,28 @@ export class B2cCartRepository implements CartRepository {
   getCartItemSummaryBlock = (itemIndex: number): Cypress.Chainable =>
     cy.get('[data-qa="component product-card-item"]').eq(itemIndex);
   getCancelOrderAmendmentButton = (): Cypress.Chainable => cy.get('[data-qa="cancel-order-amendment-button"]');
-  getProductCartItems = (): Cypress.Chainable => cy.get('[data-qa="component product-card-item"]');
+  // The header's mini cart renders the same component for every line, marked with its mini-cart modifier.
+  getProductCartItems = (): Cypress.Chainable =>
+    cy.get('[data-qa="component product-card-item"]:not(.product-card-item--mini-cart)');
   getCartItemsListTitles = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-card-item"] [data-qa="product-title"]');
   getCartItemAvailabilityLabel = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-cart-item"] [data-qa="component availability-product"]');
+  getConfiguredBundles = (): Cypress.Chainable => cy.get('article[data-qa*="configured-bundle-secondary"]');
+  getConfiguredBundle = (bundleName: string): Cypress.Chainable =>
+    cy.contains('article[data-qa*="configured-bundle-secondary"]', bundleName).first();
+  // The bundle's quantity counter has no submit button: it submits its form itself a moment after the value
+  // changes, so the form is submitted directly instead of waiting on that timer.
+  changeConfiguredBundleQuantity = (bundleName: string, quantity: number): void => {
+    const input = this.getConfiguredBundle(bundleName).find('input.formatted-number-input__input').first();
+
+    input.type('{selectall}', { force: true });
+    input.type(String(quantity), { force: true });
+    this.getConfiguredBundle(bundleName).find('form[action*="configured-bundle/change"]').first().submit();
+  };
+  getClearCartFormSelector = (): string => '[data-qa="multi-cart-clear-form"]';
+
+  getConfigureButtonSelector = (): string => '[data-qa="component configuration-cart-form"] button';
+  getCartItemRemovalFormSelector = (): string => 'form[name^="removeFromCartForm_"]';
+  getCartItemQuantityInputSelector = (): string => '[data-qa="component quantity-counter"] input:visible';
 }

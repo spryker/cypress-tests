@@ -27,4 +27,6 @@ export interface CustomerAddressRepository {
   getSubmitButton(): Cypress.Chainable;
   getAddNewAddressLink(): Cypress.Chainable;
   getAddressAddedMessage(): string;
+  getAddressListEntrySelector(): string;
+  getAddressDeleteFormSelector(): string;
 }
