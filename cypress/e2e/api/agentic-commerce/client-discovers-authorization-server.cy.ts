@@ -51,6 +51,26 @@ describe(
 );
 
 describe(
+  'client-discovers-self-registration',
+  { tags: ['@api', '@agentic-commerce', '@agentic-commerce-cut-2', 'agentic-commerce'] },
+  (): void => {
+    if (!isAgenticCommerceCutReached('2')) {
+      it.skip('skipped until the suite runs AgenticCommerce cut 2', () => {});
+      return;
+    }
+
+    it('authorization server metadata should announce metadata documents and dynamic registration', (): void => {
+      readAuthorizationServerMetadata().then((metadataResponse) => {
+        expect(metadataResponse.body.client_id_metadata_document_supported).to.equal(true);
+        expect(metadataResponse.body.registration_endpoint).to.equal(
+          `${Cypress.env('glueStorefrontUrl')}/oauth/register`
+        );
+      });
+    });
+  }
+);
+
+describe(
   'client-without-token-is-pointed-to-the-metadata',
   { tags: ['@api', '@agentic-commerce', '@agentic-commerce-cut-3', 'agentic-commerce'] },
   (): void => {

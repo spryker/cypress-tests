@@ -1,6 +1,7 @@
 import {
   AgenticCommerceAuthorizationResponse,
   AgenticCommerceClient,
+  AgenticCommerceClientRegistration,
   AgenticCommerceProofKey,
   AgenticCommerceTokens,
 } from '../../../types/api/agentic-commerce';
@@ -60,6 +61,22 @@ export function requestAuthorizationStart(client: AgenticCommerceClient): Cypres
 
 export function buildProbeAuthorizationUrl(client: AgenticCommerceClient): string {
   return buildAuthorizationUrl(client, PROBE_PROOF_KEY, 'authorization-start');
+}
+
+/**
+ * Posts a raw body to the Dynamic Client Registration endpoint (RFC 7591), so a test can also send
+ * what is not a JSON object.
+ */
+export function requestDynamicClientRegistration(
+  rawBody: string
+): Cypress.Chainable<Cypress.Response<AgenticCommerceClientRegistration>> {
+  return cy.request({
+    method: 'POST',
+    url: `${Cypress.env().glueStorefrontUrl}/oauth/register`,
+    headers: { 'Content-Type': 'application/json' },
+    body: rawBody,
+    failOnStatusCode: false,
+  });
 }
 
 export function blockAgenticCommerceClient(client: AgenticCommerceClient): void {

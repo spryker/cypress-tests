@@ -15,6 +15,16 @@ export class ConsentPage extends YvesPage {
 
   getPrincipalSelect = (): Cypress.Chainable => this.repository.getPrincipalSelect();
 
+  getUnverifiedTrustNotice = (): Cypress.Chainable => this.repository.getUnverifiedTrustNotice();
+
+  getNoScopesNotice = (): Cypress.Chainable => this.repository.getNoScopesNotice();
+
+  getClientLogo = (): Cypress.Chainable => this.getConsentBox().find(this.repository.getClientLogoSelector());
+
+  getAllowButton = (): Cypress.Chainable => this.getConsentBox().find(this.repository.getAllowButtonSelector());
+
+  getDenyButton = (): Cypress.Chainable => this.repository.getDenyButton();
+
   selectStore = (storeName: string): void => {
     this.repository.getStoreSelect().select(storeName);
   };

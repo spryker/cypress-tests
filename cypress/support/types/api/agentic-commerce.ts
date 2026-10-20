@@ -33,3 +33,20 @@ export interface AgenticCommerceStaticFixtures {
   companyUser: { email: string; companyName: string };
   backofficeUser: { username: string; password: string };
 }
+
+export interface AgenticCommerceDynamicRegistrationStaticFixtures extends AgenticCommerceStaticFixtures {
+  dynamicClient: { clientName: string; softwareId: string; foreignRedirectUri: string; requestMaxBytes: number };
+}
+
+export interface AgenticCommerceClientRegistration {
+  client_id?: string;
+  client_id_issued_at?: number;
+  client_name?: string;
+  redirect_uris?: string[];
+  grant_types?: string[];
+  response_types?: string[];
+  token_endpoint_auth_method?: string;
+  software_id?: string;
+  error?: string;
+  error_description?: string;
+}
