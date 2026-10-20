@@ -44,3 +44,4 @@ export * from './data-exchange';
 export * from './product-lifecycle-management';
 export * from './dynamic-store-creation';
 export * from './merchant-management';
+export * from './customer-group-company-membership';
