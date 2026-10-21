@@ -50,3 +50,30 @@ export interface AgenticCommerceClientRegistration {
   error?: string;
   error_description?: string;
 }
+
+export interface AgenticCommerceOrderPlacementStaticFixtures extends AgenticCommerceStaticFixtures {
+  scopeWithOrderPlacement: string;
+  orderPlacementScopeLabel: string;
+  buyerWithLimit: { email: string; roleLimitHint: string };
+  consentLimit: { amount: string; label: string };
+  invalidConsentLimits: string[];
+  b2cConsentLimit: { amount: string; label: string };
+  texts: { ordersNotPlaced: string; maximumPerOrderPrefix: string };
+}
+
+export interface AgenticCommerceOrderApprovalStaticFixtures {
+  defaultPassword: string;
+  buyerWithLimit: { email: string };
+  approver: { email: string; fullName: string };
+  store: string;
+  currency: string;
+  priceMode: string;
+  idShipmentMethod: number;
+  payment: { paymentProviderName: string; paymentMethodName: string };
+  address: Record<string, string>;
+  requireApprovalMessage: string;
+}
+
+export interface AgenticCommerceOrderApprovalDynamicFixtures {
+  product: { sku: string };
+}

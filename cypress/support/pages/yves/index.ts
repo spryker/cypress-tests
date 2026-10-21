@@ -11,6 +11,7 @@ export * from './checkout/summary/checkout-summary-page';
 export * from './comment/cart/comment-cart-page';
 export * from './login/login-page';
 export * from './multi-cart/multi-cart-page';
+export * from './quote-approval/quote-approval-page';
 export * from './catalog/catalog-page';
 export * from './company/user/select/company-user-select-page';
 export * from './company/merchant-relation-request/create/merchant-relation-request-create-page';

@@ -25,6 +25,30 @@ export class ConsentPage extends YvesPage {
 
   getDenyButton = (): Cypress.Chainable => this.repository.getDenyButton();
 
+  getScopeCheckbox = (scope: string): Cypress.Chainable => this.repository.getScopeCheckbox(scope);
+
+  getOrderLimitInput = (): Cypress.Chainable => this.repository.getOrderLimitInput();
+
+  getConstraintError = (): Cypress.Chainable => this.repository.getConstraintError();
+
+  setScope = (scope: string, isGranted: boolean): void => {
+    if (isGranted) {
+      this.repository.getScopeCheckbox(scope).check();
+
+      return;
+    }
+
+    this.repository.getScopeCheckbox(scope).uncheck();
+  };
+
+  enterOrderLimit = (amount: string): void => {
+    this.repository.getOrderLimitInput().clear();
+
+    if (amount !== '') {
+      this.repository.getOrderLimitInput().type(amount);
+    }
+  };
+
   selectStore = (storeName: string): void => {
     this.repository.getStoreSelect().select(storeName);
   };

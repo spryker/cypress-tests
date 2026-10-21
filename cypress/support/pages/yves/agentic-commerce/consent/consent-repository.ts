@@ -11,6 +11,11 @@ export class ConsentRepository {
   getDenyButton = (): Cypress.Chainable => cy.get('[data-qa="agentic-commerce-deny"]');
   getUnverifiedTrustNotice = (): Cypress.Chainable => cy.get('[data-qa="agentic-commerce-trust-unverified"]');
   getNoScopesNotice = (): Cypress.Chainable => cy.get('[data-qa="agentic-commerce-no-scopes"]');
+  getScopeCheckbox = (scope: string): Cypress.Chainable =>
+    cy.get(`[name="agenticCommerceConsentForm[scopes][]"][value="${scope}"]`);
+  getOrderLimitInput = (): Cypress.Chainable =>
+    cy.get('[name="agenticCommerceConsentForm[constraints][order_total_limit]"]');
+  getConstraintError = (): Cypress.Chainable => cy.get('[data-qa="agentic-commerce-constraint-error"]');
   getClientLogoSelector = (): string => '[data-qa="agentic-commerce-client-logo"]';
   getAllowButtonSelector = (): string => '[data-qa="agentic-commerce-allow"]';
 }

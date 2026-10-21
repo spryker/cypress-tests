@@ -1,0 +1,18 @@
+{
+  "defaultPassword": "change123",
+  "scope": "agentic-commerce:principal-read",
+  "scopeWithOrderPlacement": "agentic-commerce:principal-read order:place",
+  "orderPlacementScopeLabel": "Place orders",
+  "redirectUri": "http://localhost:8765/callback",
+  "customer": { "email": "maria.williams@acme.com", "customerReference": "DE--2" },
+  "companyUser": { "email": "sonia@acme.com", "companyName": "Acme Corporation" },
+  "backofficeUser": { "username": "admin@spryker.com", "password": "change123" },
+  "buyerWithLimit": { "email": "kevin@acme.com", "roleLimitHint": "Your role may order up to €300.00" },
+  "consentLimit": { "amount": "100.00", "label": "Maximum per order: €100.00" },
+  "invalidConsentLimits": ["", "0.00"],
+  "b2cConsentLimit": { "amount": "25.00", "label": "Maximum per order: €25.00" },
+  "texts": {
+    "ordersNotPlaced": "It can't place orders. You always review and order yourself.",
+    "maximumPerOrderPrefix": "Maximum per order"
+  }
+}

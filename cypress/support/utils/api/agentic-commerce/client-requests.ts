@@ -79,6 +79,18 @@ export function requestDynamicClientRegistration(
   });
 }
 
+/**
+ * Replaces the scopes the client may ever request, so the consent page can offer more than the
+ * `principal-read` scope the client was registered with.
+ */
+export function setAgenticCommerceScopeCeiling(client: AgenticCommerceClient, scopes: string[]): void {
+  const scopeOptions = scopes.map((scope) => `--scope=${scope}`).join(' ');
+
+  cy.runCliCommands([
+    `vendor/bin/console agentic-commerce:client:set-scope-ceiling --client-id=${client.clientId} ${scopeOptions}`,
+  ]);
+}
+
 export function blockAgenticCommerceClient(client: AgenticCommerceClient): void {
   cy.runCliCommands([`vendor/bin/console agentic-commerce:client:block --client-id=${client.clientId}`]);
 }

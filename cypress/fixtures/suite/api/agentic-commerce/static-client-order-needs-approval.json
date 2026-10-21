@@ -1,0 +1,24 @@
+{
+  "defaultPassword": "change123",
+  "buyerWithLimit": { "email": "kevin@acme.com" },
+  "approver": { "email": "arnold@acme.com", "fullName": "Arnold Kurmann" },
+  "store": "DE",
+  "currency": "EUR",
+  "priceMode": "GROSS_MODE",
+  "idShipmentMethod": 1,
+  "payment": { "paymentProviderName": "DummyPayment", "paymentMethodName": "invoice" },
+  "address": {
+    "salutation": "Mr",
+    "firstName": "Kevin",
+    "lastName": "Sidorov",
+    "address1": "Julie-Wolfthorn-Strasse",
+    "address2": "1",
+    "address3": "",
+    "zipCode": "10115",
+    "city": "Berlin",
+    "iso2Code": "DE",
+    "company": "Acme Corporation",
+    "phone": "4902890031"
+  },
+  "requireApprovalMessage": "quote_approval.cart.require_approval"
+}
