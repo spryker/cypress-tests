@@ -54,13 +54,6 @@ describe(
 
     before((): void => {
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
-
-      const unique = Date.now();
-      companyName = `Company${unique}`;
-      businessUnitName = `BusinessUnit${unique}`;
-      roleName = `Role${unique}`;
-      companyUserEmail = `company.user.${unique}@spryker.local`;
-      companyUserLastName = `User${unique}`;
     });
 
     beforeEach((): void => {
@@ -71,9 +64,21 @@ describe(
     });
 
     it('given a back office user when a company, its business unit, its role and a company user are created then the company user list shows the user under its company', (): void => {
+      // Arrange
+      // A retry leaves the previous attempt's half-built structure behind, and every page picks the first
+      // entity matching a name, so each attempt names its own. The second test reads the names the last
+      // attempt left here.
+      const unique = Date.now();
+      companyName = `Company${unique}`;
+      businessUnitName = `BusinessUnit${unique}`;
+      roleName = `Role${unique}`;
+      companyUserEmail = `company.user.${unique}@spryker.local`;
+      companyUserLastName = `User${unique}`;
+
       // Act
       companyCreatePage.visit();
       companyCreatePage.create(companyName);
+      cy.url().should('include', '/company-gui/list-company');
 
       // A company is created inactive and pending, and only an active approved one can carry users.
       companyListPage.visit();
@@ -83,6 +88,7 @@ describe(
 
       companyBusinessUnitCreatePage.visit();
       companyBusinessUnitCreatePage.create({ companyName: companyName, name: businessUnitName });
+      cy.url().should('include', '/company-business-unit-gui/list-company-business-unit');
 
       companyRoleCreatePage.visit();
       companyRoleCreatePage.create({
@@ -90,6 +96,7 @@ describe(
         name: roleName,
         permissionNames: staticFixtures.companyUserRolePermissionNames,
       });
+      cy.url().should('include', '/company-role-gui/list-company-role');
 
       companyUserCreatePage.visit();
       companyUserCreatePage.create({
