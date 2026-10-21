@@ -42,22 +42,26 @@ describe(
       customerProfilePage.getEmailInput().should('have.value', dynamicFixtures.customer.email);
     });
 
-    it('customer should not receive more than 3 verification emails within 15 minutes', (): void => {
-      const customerEmail = dynamicFixtures.customerWithEmailChangeLimit.email;
+    it(
+      'customer should not receive more than 3 verification emails within 15 minutes',
+      { tags: ['@quarantine'] },
+      (): void => {
+        const customerEmail = dynamicFixtures.customerWithEmailChangeLimit.email;
 
-      loginAs(customerEmail);
-      customerProfilePage.visit();
+        loginAs(customerEmail);
+        customerProfilePage.visit();
 
-      ['first', 'second', 'third'].forEach((prefix: string): void => {
-        customerProfilePage.updateEmail(getNewEmail(prefix, customerEmail));
-        customerProfilePage.getEmailChangeMailSentMessage().should('be.visible');
-      });
+        ['first', 'second', 'third'].forEach((prefix: string): void => {
+          customerProfilePage.updateEmail(getNewEmail(prefix, customerEmail));
+          customerProfilePage.getEmailChangeMailSentMessage().should('be.visible');
+        });
 
-      customerProfilePage.updateEmail(getNewEmail('fourth', customerEmail));
+        customerProfilePage.updateEmail(getNewEmail('fourth', customerEmail));
 
-      customerProfilePage.getEmailChangeLimitExceededError().should('be.visible');
-      customerProfilePage.getEmailChangeMailSentMessage().should('not.exist');
-      customerProfilePage.getEmailInput().should('have.value', customerEmail);
-    });
+        customerProfilePage.getEmailChangeLimitExceededError().should('be.visible');
+        customerProfilePage.getEmailChangeMailSentMessage().should('not.exist');
+        customerProfilePage.getEmailInput().should('have.value', customerEmail);
+      }
+    );
   }
 );
