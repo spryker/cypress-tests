@@ -137,7 +137,7 @@ describe(
 
       consentPage.setScope(ORDER_PLACE_SCOPE, false);
 
-      consentPage.getOrderLimitInput().should('not.exist');
+      consentPage.getOrderLimitInput().should('not.be.visible');
     });
 
     it('customer should connect the client without the order scope and see no maximum per order', (): void => {
