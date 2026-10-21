@@ -20,5 +20,6 @@
     "company": "Acme Corporation",
     "phone": "4902890031"
   },
+  "approvedLabel": "Approved by",
   "requireApprovalMessage": "quote_approval.cart.require_approval"
 }

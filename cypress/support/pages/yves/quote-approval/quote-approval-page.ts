@@ -11,6 +11,8 @@ export class QuoteApprovalPage extends YvesPage {
 
   protected PAGE_URL = '/cart';
 
+  getApprovalStatus = (): Cypress.Chainable => this.repository.getApprovalStatus();
+
   sendForApproval = (approverName: string): void => {
     this.repository.getApproverSelect().select(approverName);
     this.repository.getSendForApprovalButton().click();

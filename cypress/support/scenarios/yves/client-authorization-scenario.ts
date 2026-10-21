@@ -39,6 +39,10 @@ export class ClientAuthorizationScenario {
         this.consentPage.selectStore(params.storeName);
       }
 
+      if (params.withoutScope) {
+        this.consentPage.setScope(params.withoutScope, false);
+      }
+
       if (params.orderLimit !== undefined) {
         this.consentPage.enterOrderLimit(params.orderLimit);
       }
@@ -53,7 +57,7 @@ export class ClientAuthorizationScenario {
     });
   };
 
-  openConsentPage = (params: Omit<ExecuteParams, 'allow' | 'storeName' | 'orderLimit'>): void => {
+  openConsentPage = (params: Omit<ExecuteParams, 'allow' | 'storeName' | 'orderLimit' | 'withoutScope'>): void => {
     createProofKey().then((proofKey) => {
       cy.visit(buildAuthorizationUrl(params.client, proofKey, `state-${Date.now()}`));
       this.loginPage.login({ email: params.email, password: params.password });
@@ -68,6 +72,7 @@ interface ExecuteParams {
   storeName?: string;
   allow?: boolean;
   orderLimit?: string;
+  withoutScope?: string;
 }
 
 export interface AuthorizationResult {

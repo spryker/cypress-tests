@@ -139,5 +139,18 @@ describe(
 
       consentPage.getOrderLimitInput().should('not.exist');
     });
+
+    it('customer should connect the client without the order scope and see no maximum per order', (): void => {
+      clientAuthorizationScenario.execute({
+        client,
+        email: staticFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutScope: ORDER_PLACE_SCOPE,
+      });
+
+      connectedAppsPage.visit();
+      connectedAppsPage.getConnectedApp(client.name).should('be.visible');
+      connectedAppsPage.getConnectedApp(client.name).should('not.contain', staticFixtures.texts.maximumPerOrderPrefix);
+    });
   }
 );

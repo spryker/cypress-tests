@@ -1,6 +1,6 @@
 import { MultiCartPage, QuoteApprovalPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
-import { addCartItem, container, isAgenticCommerceCutReached, submitCheckout } from '@utils';
+import { addCartItem, container, deleteCart, isAgenticCommerceCutReached, submitCheckout } from '@utils';
 import {
   AgenticCommerceOrderApprovalDynamicFixtures,
   AgenticCommerceOrderApprovalStaticFixtures,
@@ -33,6 +33,10 @@ describe(
       cy.getCustomerAccessToken(staticFixtures.buyerWithLimit.email, staticFixtures.defaultPassword).then((token) => {
         accessToken = token;
 
+        if (cartId) {
+          return;
+        }
+
         cy.createCart(accessToken, {
           name: CART_NAME,
           priceMode: staticFixtures.priceMode,
@@ -46,6 +50,12 @@ describe(
           });
         });
       });
+    });
+
+    after((): void => {
+      if (cartId) {
+        deleteCart(accessToken, cartId);
+      }
     });
 
     it('buyer should be refused the checkout of a cart above the role limit', (): void => {
@@ -71,6 +81,8 @@ describe(
       multiCartPage.visit();
       multiCartPage.selectCart({ name: CART_NAME });
       quoteApprovalPage.approve();
+
+      quoteApprovalPage.getApprovalStatus().should('contain', staticFixtures.approvedLabel);
     });
 
     it('buyer should check out the approved cart', (): void => {

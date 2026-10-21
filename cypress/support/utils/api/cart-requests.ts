@@ -58,3 +58,15 @@ export function getCart(accessToken: string, cartId: string): Cypress.Chainable 
     headers: authHeaders(accessToken),
   });
 }
+
+/**
+ * Deletes the cart (`DELETE /carts/{cartId}`), also when it is already gone.
+ */
+export function deleteCart(accessToken: string, cartId: string): Cypress.Chainable {
+  return cy.request({
+    method: 'DELETE',
+    url: cartUrl(cartId),
+    headers: authHeaders(accessToken),
+    failOnStatusCode: false,
+  });
+}

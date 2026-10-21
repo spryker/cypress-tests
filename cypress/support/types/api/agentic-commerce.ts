@@ -71,6 +71,7 @@ export interface AgenticCommerceOrderApprovalStaticFixtures {
   idShipmentMethod: number;
   payment: { paymentProviderName: string; paymentMethodName: string };
   address: Record<string, string>;
+  approvedLabel: string;
   requireApprovalMessage: string;
 }
 
