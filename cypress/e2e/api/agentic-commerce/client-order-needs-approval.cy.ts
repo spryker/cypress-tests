@@ -1,6 +1,6 @@
 import { MultiCartPage, QuoteApprovalPage } from '@pages/yves';
 import { CustomerLoginScenario } from '@scenarios/yves';
-import { addCartItem, container, getCompanyUserAccessToken, isAgenticCommerceCutReached, submitCheckout } from '@utils';
+import { addCartItem, container, isAgenticCommerceCutReached, submitCheckout } from '@utils';
 import {
   AgenticCommerceOrderApprovalDynamicFixtures,
   AgenticCommerceOrderApprovalStaticFixtures,
@@ -30,7 +30,7 @@ describe(
     retryableBefore((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
 
-      getCompanyUserAccessToken(staticFixtures.buyerWithLimit.email, staticFixtures.defaultPassword).then((token) => {
+      cy.getCustomerAccessToken(staticFixtures.buyerWithLimit.email, staticFixtures.defaultPassword).then((token) => {
         accessToken = token;
 
         cy.createCart(accessToken, {
