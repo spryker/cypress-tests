@@ -2,6 +2,21 @@
   "defaultPassword": "change123",
   "subjectType": "Company",
   "triggerEventLabel": "Company created",
+  "otherSubjectType": "Merchant",
+  "otherSubjectTypeTriggerEventLabel": "Merchant created",
   "initialState": "new",
-  "definitionTemplate": "<?xml version=\"1.0\"?>\n<statemachine xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://static.spryker.com/state-machine-01.xsd\">\n    <process name=\"%process_name%\" main=\"true\">\n        <states>\n            <state name=\"new\" display=\"New\"/>\n            <state name=\"done\" display=\"Done\"/>\n        </states>\n        <transitions>\n            <transition>\n                <source>new</source>\n                <target>done</target>\n                <event>finish</event>\n            </transition>\n        </transitions>\n        <events>\n            <event name=\"finish\" manual=\"true\"/>\n        </events>\n    </process>\n</statemachine>"
+  "definitionTemplate": "<?xml version=\"1.0\"?>\n<statemachine xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://static.spryker.com/state-machine-01.xsd\">\n    <process name=\"%process_name%\" main=\"true\">\n        <states>\n            <state name=\"new\" display=\"New\"/>\n            <state name=\"done\" display=\"Done\"/>\n        </states>\n        <transitions>\n            <transition>\n                <source>new</source>\n                <target>done</target>\n                <event>finish</event>\n            </transition>\n        </transitions>\n        <events>\n            <event name=\"finish\" manual=\"true\"/>\n        </events>\n    </process>\n</statemachine>",
+  "timeoutDefinitionTemplate": "<?xml version=\"1.0\"?>\n<statemachine xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://static.spryker.com/state-machine-01.xsd\">\n    <process name=\"%process_name%\" main=\"true\">\n        <states>\n            <state name=\"new\" display=\"New\"/>\n            <state name=\"done\" display=\"Done\"/>\n            <state name=\"closed\" display=\"Closed\"/>\n        </states>\n        <transitions>\n            <transition>\n                <source>new</source>\n                <target>done</target>\n                <event>finish</event>\n            </transition>\n            <transition>\n                <source>done</source>\n                <target>closed</target>\n                <event>archive</event>\n            </transition>\n        </transitions>\n        <events>\n            <event name=\"finish\" manual=\"true\"/>\n            <event name=\"archive\" timeout=\"%timeout%\"/>\n        </events>\n    </process>\n</statemachine>",
+  "sharedEventName": "finish",
+  "secondEventName": "archive",
+  "invalidTimeout": "14 dayz",
+  "duplicateStateName": "done",
+  "secondStateName": "closed",
+  "duplicateStateNameMessage": "State names must be unique. Rename the states that share a name.",
+  "renamedStateName": "completed",
+  "updatedDescription": "Onboarding of new companies",
+  "validTimeout": "1 day",
+  "sourceVersionText": "based on version 1",
+  "connectedStateSourceName": "done",
+  "addedStateName": "state 3"
 }
