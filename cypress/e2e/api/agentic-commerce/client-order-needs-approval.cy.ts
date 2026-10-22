@@ -1,5 +1,5 @@
 import { MultiCartPage, QuoteApprovalPage } from '@pages/yves';
-import { CustomerLoginScenario } from '@scenarios/yves';
+import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 import { addCartItem, container, deleteCart, isAgenticCommerceCutReached, submitCheckout } from '@utils';
 import {
   AgenticCommerceOrderApprovalDynamicFixtures,
@@ -18,6 +18,7 @@ describe(
 
     const customerLoginScenario = container.get(CustomerLoginScenario);
     const multiCartPage = container.get(MultiCartPage);
+    const checkoutScenario = container.get(CheckoutScenario);
     const quoteApprovalPage = container.get(QuoteApprovalPage);
 
     const CART_NAME = `Approval cart ${Date.now()}`;
@@ -61,7 +62,8 @@ describe(
     it('buyer should be refused the checkout of a cart above the role limit', (): void => {
       submitCheckout(accessToken, buildCheckoutPayload(), false).then((response) => {
         expect(response.status).to.equal(422);
-        expect(JSON.stringify(response.body)).to.contain(staticFixtures.requireApprovalMessage);
+        expect(response.body.errors[0].code).to.equal(staticFixtures.requireApprovalErrorCode);
+        expect(response.body.errors[0].detail).to.equal(staticFixtures.requireApprovalMessage);
       });
     });
 
@@ -72,6 +74,7 @@ describe(
       });
       multiCartPage.visit();
       multiCartPage.selectCart({ name: CART_NAME });
+      checkoutScenario.execute({ shouldSkipPlaceOrder: true });
       quoteApprovalPage.sendForApproval(staticFixtures.approver.fullName);
 
       customerLoginScenario.execute({

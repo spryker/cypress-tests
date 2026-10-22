@@ -133,7 +133,7 @@ describe(
         password: staticFixtures.defaultPassword,
       });
 
-      consentPage.getOrderLimitInput().should('exist');
+      consentPage.getOrderLimitInput().should('be.visible');
 
       consentPage.setScope(ORDER_PLACE_SCOPE, false);
 

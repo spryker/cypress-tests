@@ -33,12 +33,12 @@ export class ConsentPage extends YvesPage {
 
   setScope = (scope: string, isGranted: boolean): void => {
     if (isGranted) {
-      this.repository.getScopeCheckbox(scope).check();
+      this.repository.getScopeCheckbox(scope).check({ force: true });
 
       return;
     }
 
-    this.repository.getScopeCheckbox(scope).uncheck();
+    this.repository.getScopeCheckbox(scope).uncheck({ force: true });
   };
 
   enterOrderLimit = (amount: string): void => {

@@ -4,7 +4,15 @@ import { CheckoutAddressRepository } from '../checkout-address-repository';
 
 @injectable()
 export class SuiteCheckoutAddressRepository implements CheckoutAddressRepository {
-  getSelectShippingAddressField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_id_customer_address');
+  getSelectShippingAddressField = (): Cypress.Chainable => {
+    return cy.get('body').then((body) => {
+      if (body.find('#addressesForm_shippingAddress_id_customer_address').length === 1) {
+        return cy.get('#addressesForm_shippingAddress_id_customer_address');
+      }
+
+      return cy.get('[name="checkout-full-addresses"]').first();
+    });
+  };
   getShippingAddressFirstNameField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_first_name');
   getShippingAddressLastNameField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_last_name');
   getShippingAddressAddress1Field = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_address1');

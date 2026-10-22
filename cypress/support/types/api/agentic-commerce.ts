@@ -72,6 +72,7 @@ export interface AgenticCommerceOrderApprovalStaticFixtures {
   payment: { paymentProviderName: string; paymentMethodName: string };
   address: Record<string, string>;
   approvedLabel: string;
+  requireApprovalErrorCode: string;
   requireApprovalMessage: string;
 }
 
