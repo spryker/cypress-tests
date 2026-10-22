@@ -120,3 +120,6 @@ export * from './glossary/form/glossary-form-page';
 export * from './data-exchange/data-exchange-page';
 export * from './service-point/list/service-point-list-page';
 export * from './service-point/view/service-point-view-page';
+export * from './customer-group/form/customer-group-form-page';
+export * from './customer-group/view/customer-group-view-page';
+export * from './customer-group/list/customer-group-list-page';

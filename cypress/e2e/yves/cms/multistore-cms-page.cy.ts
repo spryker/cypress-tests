@@ -7,8 +7,12 @@ import { SelectStoreScenario, WaitForStorefrontUrlScenario } from '@scenarios/yv
 
 describe(
   'multistore cms page',
-  { tags: ['@yves', '@cms', 'cms', 'content-item', 'spryker-core', 'spryker-cms', 'spryker-cms-gui'] },
+  { tags: ['@yves', '@cms', '@dms', 'cms', 'content-item', 'spryker-core', 'spryker-cms', 'spryker-cms-gui'] },
   (): void => {
+    if (!Cypress.env('isDynamicStoreEnabled')) {
+      it.skip('skipped due to disabled dynamic store feature', () => {});
+      return;
+    }
     const cmsContentPage = container.get(CmsContentPage);
     const cmsPageUpdatePage = container.get(CmsPageUpdatePage);
     const userLoginScenario = container.get(UserLoginScenario);

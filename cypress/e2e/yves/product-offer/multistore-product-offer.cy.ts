@@ -11,6 +11,7 @@ describe(
     tags: [
       '@yves',
       '@product-offer',
+      '@dms',
       'product',
       'prices',
       'catalog',
@@ -21,6 +22,10 @@ describe(
     ],
   },
   (): void => {
+    if (!Cypress.env('isDynamicStoreEnabled')) {
+      it.skip('skipped due to disabled dynamic store feature', () => {});
+      return;
+    }
     if (['b2b', 'b2c'].includes(Cypress.env('repositoryId'))) {
       it.skip('skipped because product offers exist only in marketplace repositories', () => {});
 

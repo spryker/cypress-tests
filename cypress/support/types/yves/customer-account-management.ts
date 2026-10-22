@@ -54,6 +54,15 @@ export interface CustomerProfileManagementStaticFixtures {
   newPassword: string;
 }
 
+export interface CustomerEmailChangeDynamicFixtures {
+  customer: Customer;
+  customerWithEmailChangeLimit: Customer;
+}
+
+export interface CustomerEmailChangeStaticFixtures {
+  defaultPassword: string;
+}
+
 export interface NewsletterSubscriptionDynamicFixtures {
   customer: Customer;
 }

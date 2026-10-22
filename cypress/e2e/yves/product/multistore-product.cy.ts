@@ -12,9 +12,23 @@ import {
 describe(
   'multistore product',
   {
-    tags: ['@yves', '@product', 'product', 'prices', 'catalog', 'search', 'spryker-core', 'spryker-core-back-office'],
+    tags: [
+      '@yves',
+      '@product',
+      '@dms',
+      'product',
+      'prices',
+      'catalog',
+      'search',
+      'spryker-core',
+      'spryker-core-back-office',
+    ],
   },
   (): void => {
+    if (!Cypress.env('isDynamicStoreEnabled')) {
+      it.skip('skipped due to disabled dynamic store feature', () => {});
+      return;
+    }
     const productPage = container.get(ProductPage);
     const productManagementEditPage = container.get(ProductManagementEditPage);
     const userLoginScenario = container.get(UserLoginScenario);
