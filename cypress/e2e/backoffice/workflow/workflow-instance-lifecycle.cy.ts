@@ -42,7 +42,7 @@ describe(
       const identifier = dynamicFixtures.company.id_company;
       // These states mirror the workflow XML authored in the dynamic fixture: `confirmed` is a final
       // state, so triggering the manual `confirm` event both advances the state and finishes the instance.
-      const { initialState, manualEvent, targetState } = staticFixtures;
+      const { initialState, manualEvent, targetState, finalManualEvent, finalState } = staticFixtures;
 
       // The company-created trigger already ran during fixture synchronization, so the
       // instance exists on the active version, attached to the company id, in the initial state.
@@ -82,10 +82,21 @@ describe(
       workflowInstanceLifecyclePage.triggerManualAction({ identifier, eventName: manualEvent });
       cy.location('pathname').should('eq', '/workflow/version/view');
 
-      // The table reflects the new state and the finished status; the manual action is gone.
       workflowInstanceLifecyclePage.getInstanceRowState(identifier).should('contain', targetState);
-      workflowInstanceLifecyclePage.getInstanceRowStatus(identifier).should('contain', 'Finished');
+      workflowInstanceLifecyclePage.getInstanceRowStatus(identifier).should('contain', 'In progress');
       workflowInstanceLifecyclePage.getInstanceRowManualAction(identifier, manualEvent).should('not.exist');
+
+      workflowInstanceLifecyclePage.openInstanceView(identifier);
+      workflowInstanceLifecyclePage.getInstanceCurrentState().should('have.text', targetState);
+      workflowInstanceLifecyclePage.triggerInstanceManualEvent(finalManualEvent);
+
+      cy.location('pathname').should('eq', '/workflow/instance/view');
+      workflowInstanceLifecyclePage.getInstanceCurrentState().should('have.text', finalState);
+      workflowInstanceLifecyclePage.getInstanceManualActions().should('not.exist');
+
+      workflowInstanceLifecyclePage.getInstanceBackButton().click();
+      workflowInstanceLifecyclePage.getInstanceRowState(identifier).should('contain', finalState);
+      workflowInstanceLifecyclePage.getInstanceRowStatus(identifier).should('contain', 'Finished');
     });
   }
 );

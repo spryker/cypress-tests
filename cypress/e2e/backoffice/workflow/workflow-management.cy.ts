@@ -36,7 +36,7 @@ describe(
     });
 
     it('admin should see only the triggers of the selected subject type when creating a workflow', (): void => {
-      const { subjectType, triggerEventLabel, otherSubjectTypeTriggerEventLabel } = staticFixtures;
+      const { subjectType, triggerEventLabel, otherSubjectType, otherSubjectTypeTriggerEventLabel } = staticFixtures;
 
       workflowManagementPage.visitCreate();
       workflowManagementPage.getProcessTriggerEventsSelect().should('be.disabled');
@@ -49,6 +49,14 @@ describe(
         .getProcessTriggerEventsSelect()
         .find('option')
         .should('not.contain', otherSubjectTypeTriggerEventLabel);
+
+      workflowManagementPage.selectSubjectType(otherSubjectType);
+
+      workflowManagementPage
+        .getProcessTriggerEventsSelect()
+        .find('option')
+        .should('contain', otherSubjectTypeTriggerEventLabel);
+      workflowManagementPage.getProcessTriggerEventsSelect().find('option').should('not.contain', triggerEventLabel);
     });
 
     it('admin should be able to create and activate a workflow with a trigger', (): void => {
@@ -84,7 +92,14 @@ describe(
       workflowManagementPage.getProcessRowActiveVersion(workflowName).invoke('text').invoke('trim').should('eq', 'V1');
       workflowManagementPage.getProcessRowTriggers(workflowName).should('contain', triggerEventLabel);
 
-      workflowManagementPage.deactivateProcess(workflowName);
+      workflowManagementPage.openProcessDeactivation(workflowName);
+
+      workflowManagementPage.getActionConfirmationTitle().should('have.text', `Deactivate ${workflowName}?`);
+      workflowManagementPage
+        .getActionConfirmationMessage()
+        .should('have.text', `New “${triggerEventLabel}” events will no longer start this workflow`);
+
+      workflowManagementPage.confirmAction();
 
       workflowManagementPage
         .getProcessRowStatus(workflowName)
@@ -119,6 +134,26 @@ describe(
         .invoke('text')
         .invoke('trim')
         .should('match', /^active$/i);
+    });
+
+    it('admin should be able to add a connected state with the editor', (): void => {
+      const { subjectType, triggerEventLabel, initialState, connectedStateSourceName, addedStateName } = staticFixtures;
+      const workflowName = createWorkflowName();
+
+      workflowManagementPage.fillCreateForm({
+        name: workflowName,
+        subjectType,
+        triggerEventLabel,
+        initialState,
+        definition: staticFixtures.definitionTemplate.replace('%process_name%', workflowName),
+      });
+
+      workflowManagementPage.addConnectedCanvasState(connectedStateSourceName);
+      workflowManagementPage.getCanvas().should('contain', addedStateName);
+      workflowManagementPage.submitCreateForm();
+
+      workflowManagementPage.openProcessView(workflowName);
+      workflowManagementPage.getCanvas().should('contain', addedStateName);
     });
 
     it('admin should share one event between transitions that use the same event name', (): void => {

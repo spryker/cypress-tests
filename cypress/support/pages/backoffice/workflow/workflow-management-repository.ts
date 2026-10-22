@@ -38,6 +38,8 @@ export class WorkflowManagementRepository {
   // State nodes are JointJS SVG shapes labelled with the state's display name; the node carries no
   // data-qa, so it is reached by its rendered label text within the canvas.
   getCanvasStateByLabel = (label: string): Cypress.Chainable => this.getCanvas().find('text').contains(label);
+  getCanvasAddConnectedStateButton = (): Cypress.Chainable =>
+    this.getCanvas().find('[data-qa="workflow-canvas-add-connected-state"]');
   getStateInitialCheckbox = (): Cypress.Chainable => cy.get('[data-qa="workflow-state-initial"]');
   getStateNameInput = (): Cypress.Chainable => cy.get('[data-qa="workflow-state-name"]');
   getCanvasTransitionLabel = (eventName: string): Cypress.Chainable =>
@@ -63,6 +65,8 @@ export class WorkflowManagementRepository {
 
   getActionConfirmationConfirmButton = (): Cypress.Chainable =>
     cy.get('[data-qa="action-confirmation-modal"]:visible').find('[data-qa="action-confirmation-confirm"]');
+  getActionConfirmationTitle = (): Cypress.Chainable =>
+    cy.get('[data-qa="action-confirmation-modal"]:visible').find('[id="action-confirmation-title"]');
   getActionConfirmationMessage = (): Cypress.Chainable =>
     cy.get('[data-qa="action-confirmation-modal"]:visible').find('[id="action-confirmation-message"]');
 

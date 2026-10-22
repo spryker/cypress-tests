@@ -33,6 +33,14 @@ export class WorkflowInstanceLifecyclePage extends BackofficePage {
     this.repository.getInstanceRowViewButton(identifier).click();
   };
 
+  triggerInstanceManualEvent = (eventName: string): void => {
+    this.repository.getInstanceManualAction(eventName).click();
+  };
+
+  getInstanceCurrentState = (): Cypress.Chainable => this.repository.getInstanceCurrentState();
+
+  getInstanceManualActions = (): Cypress.Chainable => this.repository.getInstanceManualActions();
+
   getInstanceBackButton = (): Cypress.Chainable => this.repository.getInstanceBackButton();
 
   getPageActionButtons = (): Cypress.Chainable => this.repository.getPageActionButtons();

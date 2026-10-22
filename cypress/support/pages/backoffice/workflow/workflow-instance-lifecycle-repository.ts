@@ -19,6 +19,10 @@ export class WorkflowInstanceLifecycleRepository {
   getInstanceRowViewButton = (identifier: number): Cypress.Chainable =>
     this.getInstanceRow(identifier).find('[data-qa="workflow-instance-view"]');
   getInstanceBackButton = (): Cypress.Chainable => cy.get('[data-qa="workflow-instance-back"]');
+  getInstanceCurrentState = (): Cypress.Chainable => cy.get('[data-qa="workflow-instance-current-state"]');
+  getInstanceManualActions = (): Cypress.Chainable => cy.get('[data-qa="workflow-instance-manual-action"]');
+  getInstanceManualAction = (eventName: string): Cypress.Chainable =>
+    this.getInstanceManualActions().filter(`:contains("${eventName}")`);
   getPageActionButtons = (): Cypress.Chainable => cy.get('.title-action').find('a, button');
   getInstanceRowManualAction = (identifier: number, eventName: string): Cypress.Chainable =>
     this.getInstanceRow(identifier).find(`[data-qa~="workflow-instance-manual-action"]:contains("${eventName}")`);

@@ -49,6 +49,11 @@ export class WorkflowManagementPage extends BackofficePage {
     this.repository.getTransitionEventInput().clear().type(params.newEventName).blur();
   };
 
+  addConnectedCanvasState = (sourceStateName: string): void => {
+    this.repository.getCanvasStateByLabel(sourceStateName).trigger('mouseover');
+    this.repository.getCanvasAddConnectedStateButton().click();
+  };
+
   selectCanvasTransition = (eventName: string): void => {
     this.repository.getCanvasTransitionLabel(eventName).first().click({ force: true });
   };
@@ -73,9 +78,8 @@ export class WorkflowManagementPage extends BackofficePage {
     this.repository.getProcessEditSaveButton().click();
   };
 
-  deactivateProcess = (name: string): void => {
+  openProcessDeactivation = (name: string): void => {
     this.repository.getProcessRowDeactivateButton(name).click();
-    this.repository.getActionConfirmationConfirmButton().click();
   };
 
   visitCreate = (): void => {
@@ -95,8 +99,12 @@ export class WorkflowManagementPage extends BackofficePage {
 
   getProcessTriggerEventsSelect = (): Cypress.Chainable => this.repository.getProcessTriggerEventsSelect();
 
-  activateFirstVersion = (name: string): void => {
+  openProcessView = (name: string): void => {
     this.repository.getProcessRowViewButton(name).click();
+  };
+
+  activateFirstVersion = (name: string): void => {
+    this.openProcessView(name);
     this.repository.getVersionListButton().click();
     this.repository.getActivateVersionButton().click();
     this.repository.getActionConfirmationConfirmButton().click();
@@ -114,6 +122,8 @@ export class WorkflowManagementPage extends BackofficePage {
   confirmAction = (): void => {
     this.repository.getActionConfirmationConfirmButton().click();
   };
+
+  getActionConfirmationTitle = (): Cypress.Chainable => this.repository.getActionConfirmationTitle();
 
   getActionConfirmationMessage = (): Cypress.Chainable => this.repository.getActionConfirmationMessage();
 

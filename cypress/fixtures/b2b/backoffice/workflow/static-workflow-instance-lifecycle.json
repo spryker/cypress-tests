@@ -2,5 +2,7 @@
   "defaultPassword": "change123",
   "initialState": "new",
   "manualEvent": "confirm",
-  "targetState": "confirmed"
+  "targetState": "confirmed",
+  "finalManualEvent": "close",
+  "finalState": "closed"
 }
