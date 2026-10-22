@@ -42,7 +42,7 @@ describe(
       customerProfilePage.getEmailInput().should('have.value', dynamicFixtures.customer.email);
     });
 
-    it('customer should not receive more than 3 verification emails within 15 minutes', (): void => {
+    it('customer should not receive more than 3 verification emails within 15 minutes', { retries: 0 }, (): void => {
       const customerEmail = dynamicFixtures.customerWithEmailChangeLimit.email;
 
       loginAs(customerEmail);
@@ -57,6 +57,8 @@ describe(
 
       customerProfilePage.getEmailChangeLimitExceededError().should('be.visible');
       customerProfilePage.getEmailChangeMailSentMessage().should('not.exist');
+
+      customerProfilePage.visit();
       customerProfilePage.getEmailInput().should('have.value', customerEmail);
     });
   }
