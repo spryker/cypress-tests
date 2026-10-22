@@ -580,6 +580,9 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.CategoryCreateRepository]: B2bMpCategoryCreateRepository,
   [REPOSITORIES.CategoryEditRepository]: B2bMpCategoryEditRepository,
   [REPOSITORIES.CategoryReSortRepository]: B2bMpCategoryReSortRepository,
+  [REPOSITORIES.CustomerGroupFormRepository]: SuiteCustomerGroupFormRepository,
+  [REPOSITORIES.CustomerGroupViewRepository]: SuiteCustomerGroupViewRepository,
+  [REPOSITORIES.CustomerGroupListRepository]: SuiteCustomerGroupListRepository,
 };
 
 const mappings = {
