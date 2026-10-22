@@ -8,7 +8,7 @@
     },
     {
       "slotName": "Slot 6",
-      "productIdentifier": "042_31040075"
+      "productPosition": 0
     }
   ],
   "secondConfiguration": [
@@ -18,7 +18,7 @@
     },
     {
       "slotName": "Slot 6",
-      "productIdentifier": "043_31040074"
+      "productPosition": 1
     }
   ]
 }
