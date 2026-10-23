@@ -1,0 +1,28 @@
+{
+  "defaultPassword": "change123",
+  "redirectUri": "http://localhost:8765/callback",
+  "scope": "agentic-commerce:principal-read",
+  "scopeWithCart": "agentic-commerce:principal-read cart:read cart:write",
+  "cartWriteScope": "cart:write",
+  "buyerWithLimit": { "email": "kevin@acme.com" },
+  "approver": { "email": "arnold@acme.com", "firstName": "Arnold", "lastName": "Kurmann" },
+  "store": "DE",
+  "currency": "EUR",
+  "priceMode": "GROSS_MODE",
+  "idShipmentMethod": 1,
+  "payment": { "paymentProviderName": "DummyPayment", "paymentMethodName": "invoice" },
+  "address": {
+    "salutation": "Mr",
+    "firstName": "Kevin",
+    "lastName": "Sidorov",
+    "address1": "Julie-Wolfthorn-Strasse",
+    "address2": "1",
+    "address3": "",
+    "zipCode": "10115",
+    "city": "Berlin",
+    "iso2Code": "DE",
+    "company": "Acme Corporation",
+    "phone": "4902890031"
+  },
+  "approvalAlreadyRequestedErrorCode": "5753"
+}

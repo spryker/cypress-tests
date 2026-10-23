@@ -63,8 +63,11 @@ export interface AgenticCommerceOrderPlacementStaticFixtures extends AgenticComm
 
 export interface AgenticCommerceOrderApprovalStaticFixtures {
   defaultPassword: string;
+  redirectUri: string;
+  scope: string;
+  scopeWithCart: string;
   buyerWithLimit: { email: string };
-  approver: { email: string; fullName: string };
+  approver: { email: string; fullName: string; firstName: string; lastName: string };
   store: string;
   currency: string;
   priceMode: string;
@@ -77,5 +80,26 @@ export interface AgenticCommerceOrderApprovalStaticFixtures {
 }
 
 export interface AgenticCommerceOrderApprovalDynamicFixtures {
+  product: { sku: string };
+}
+
+export interface AgenticCommerceQuoteApprovalStaticFixtures {
+  defaultPassword: string;
+  redirectUri: string;
+  scope: string;
+  scopeWithCart: string;
+  cartWriteScope: string;
+  buyerWithLimit: { email: string };
+  approver: { email: string; firstName: string; lastName: string };
+  store: string;
+  currency: string;
+  priceMode: string;
+  idShipmentMethod: number;
+  payment: { paymentProviderName: string; paymentMethodName: string };
+  address: Record<string, string>;
+  approvalAlreadyRequestedErrorCode: string;
+}
+
+export interface AgenticCommerceQuoteApprovalDynamicFixtures {
   product: { sku: string };
 }
