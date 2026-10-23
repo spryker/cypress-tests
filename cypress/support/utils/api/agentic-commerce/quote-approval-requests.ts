@@ -165,3 +165,29 @@ export interface StorefrontCollectionBody {
   meta?: Record<string, unknown>;
   errors?: StorefrontError[];
 }
+
+/**
+ * Sends a state-changing request only once per test, so a retried test asserts the response of its first attempt
+ * instead of repeating a change that already happened.
+ */
+export function requestOnce<T>(
+  recordedResponse: Cypress.Response<T> | undefined,
+  sendRequest: () => Cypress.Chainable<Cypress.Response<T>>
+): Cypress.Chainable<Cypress.Response<T>> {
+  if (recordedResponse !== undefined) {
+    return cy.wrap(recordedResponse, { log: false });
+  }
+
+  return sendRequest();
+}
+
+/**
+ * Returns a value an earlier test was expected to set, or fails with its name instead of building an `undefined` URL.
+ */
+export function requireTestValue(value: string | undefined, name: string): string {
+  if (!value) {
+    throw new Error(`${name} is not set: the earlier test that sets it did not pass.`);
+  }
+
+  return value;
+}

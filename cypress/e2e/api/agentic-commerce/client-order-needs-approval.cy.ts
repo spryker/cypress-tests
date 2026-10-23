@@ -8,7 +8,9 @@ import {
   getQuoteApprovals,
   getQuoteApprovers,
   isAgenticCommerceCutReached,
+  requestOnce,
   requestQuoteApproval,
+  StorefrontItemBody,
   submitCheckout,
 } from '@utils';
 import {
@@ -100,6 +102,7 @@ describe(
 
         let buyerAccessToken: string;
         let resourceCartId: string;
+        let approvalResponse: Cypress.Response<StorefrontItemBody> | undefined;
 
         before((): void => {
           ({ staticFixtures, dynamicFixtures } = Cypress.env());
@@ -134,13 +137,17 @@ describe(
 
             expect(arnold, 'Arnold among the approvers').to.not.equal(undefined);
 
-            requestQuoteApproval(buyerAccessToken, resourceCartId, {
-              approverCompanyUserUuid: String(arnold?.attributes.companyUserUuid),
-              billingAddress: buildAddressPayload(),
-              shippingAddress: buildAddressPayload(),
-              shipment: { idShipmentMethod: staticFixtures.idShipmentMethod },
-              payments: [staticFixtures.payment],
-            }).then((response) => {
+            requestOnce(approvalResponse, () =>
+              requestQuoteApproval(buyerAccessToken, resourceCartId, {
+                approverCompanyUserUuid: String(arnold?.attributes.companyUserUuid),
+                billingAddress: buildAddressPayload(),
+                shippingAddress: buildAddressPayload(),
+                shipment: { idShipmentMethod: staticFixtures.idShipmentMethod },
+                payments: [staticFixtures.payment],
+              })
+            ).then((response) => {
+              approvalResponse = response;
+
               expect(response.status).to.equal(201);
               expect(response.body.data.attributes.status).to.equal(QUOTE_APPROVAL_STATUS_WAITING);
             });

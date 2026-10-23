@@ -10,8 +10,11 @@ import {
   getQuoteApprovers,
   isAgenticCommerceCutReached,
   QuoteApprovalRequestAttributes,
+  requestOnce,
   requestQuoteApproval,
+  requireTestValue,
   sendQuoteRequestToUser,
+  StorefrontItemBody,
 } from '@utils';
 import {
   AgenticCommerceQuoteApprovalDynamicFixtures,
@@ -44,6 +47,10 @@ describe(
     let approverCompanyUserUuid: string;
     let quoteApprovalId: string;
     let quoteRequestReference: string;
+    let approvalResponse: Cypress.Response<StorefrontItemBody> | undefined;
+    let cancelResponse: Cypress.Response<StorefrontItemBody> | undefined;
+    let quoteRequestCreateResponse: Cypress.Response<StorefrontItemBody> | undefined;
+    let quoteRequestSendResponse: Cypress.Response<StorefrontItemBody> | undefined;
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
@@ -95,7 +102,11 @@ describe(
     });
 
     it('buyer should send the cart to Arnold for approval, which locks the cart', (): void => {
-      requestQuoteApproval(buyerAccessToken, approvalCartUuid, buildQuoteApprovalAttributes()).then((response) => {
+      requestOnce(approvalResponse, () =>
+        requestQuoteApproval(buyerAccessToken, approvalCartUuid, buildQuoteApprovalAttributes())
+      ).then((response) => {
+        approvalResponse = response;
+
         expect(response.status).to.equal(201);
         expect(response.body.data.attributes.status).to.equal(QUOTE_APPROVAL_STATUS_WAITING);
         expect(response.body.data.attributes.approverCompanyUserUuid).to.equal(approverCompanyUserUuid);
@@ -123,7 +134,13 @@ describe(
     });
 
     it('buyer should cancel the approval, which unlocks the cart', (): void => {
-      cancelQuoteApproval(buyerAccessToken, approvalCartUuid, quoteApprovalId).its('status').should('equal', 204);
+      requestOnce(cancelResponse, () =>
+        cancelQuoteApproval(buyerAccessToken, approvalCartUuid, requireTestValue(quoteApprovalId, 'quoteApprovalId'))
+      ).then((response) => {
+        cancelResponse = response;
+
+        expect(response.status).to.equal(204);
+      });
 
       getQuoteApprovals(buyerAccessToken, approvalCartUuid).then((response) => {
         expect(response.status).to.equal(200);
@@ -134,16 +151,26 @@ describe(
     });
 
     it('buyer should turn a cart into a quote request and send it to the sales representative', (): void => {
-      createQuoteRequest(buyerAccessToken, quoteRequestCartUuid).then((createResponse) => {
-        expect(createResponse.status).to.equal(201);
-        expect(createResponse.body.data.attributes.status).to.equal(QUOTE_REQUEST_STATUS_DRAFT);
+      requestOnce(quoteRequestCreateResponse, () => createQuoteRequest(buyerAccessToken, quoteRequestCartUuid)).then(
+        (response) => {
+          quoteRequestCreateResponse = response;
 
-        quoteRequestReference = String(createResponse.body.data.id);
+          expect(response.status).to.equal(201);
+          expect(response.body.data.attributes.status).to.equal(QUOTE_REQUEST_STATUS_DRAFT);
 
-        sendQuoteRequestToUser(buyerAccessToken, quoteRequestReference).then((sendResponse) => {
-          expect(sendResponse.status).to.equal(201);
-          expect(sendResponse.body.data.attributes.status).to.equal(QUOTE_REQUEST_STATUS_WAITING);
-        });
+          quoteRequestReference = String(response.body.data.id);
+        }
+      );
+
+      cy.then(() =>
+        requestOnce(quoteRequestSendResponse, () =>
+          sendQuoteRequestToUser(buyerAccessToken, requireTestValue(quoteRequestReference, 'quoteRequestReference'))
+        )
+      ).then((response) => {
+        quoteRequestSendResponse = response;
+
+        expect(response.status).to.equal(201);
+        expect(response.body.data.attributes.status).to.equal(QUOTE_REQUEST_STATUS_WAITING);
       });
     });
 
@@ -167,6 +194,8 @@ describe(
      * stays as created.
      */
     function expectCartLocked(cartUuid: string): void {
+      // The same item body is accepted once the approval is cancelled (`201` in the cancel test), so an unchanged
+      // quantity here comes from the lock, not from a bad request.
       addCartItem(buyerAccessToken, cartUuid, buildCartItemBody(), false);
 
       getCart(buyerAccessToken, cartUuid).then((response) => {
@@ -189,7 +218,7 @@ describe(
       const address = { ...staticFixtures.address, isDefaultBilling: false, isDefaultShipping: false };
 
       return {
-        approverCompanyUserUuid,
+        approverCompanyUserUuid: requireTestValue(approverCompanyUserUuid, 'approverCompanyUserUuid'),
         billingAddress: address,
         shippingAddress: address,
         shipment: { idShipmentMethod: staticFixtures.idShipmentMethod },
