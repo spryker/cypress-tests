@@ -1,8 +1,5 @@
 {
   "defaultPassword": "change123",
-  "redirectUri": "http://localhost:8765/callback",
-  "scope": "agentic-commerce:principal-read",
-  "scopeWithCart": "agentic-commerce:principal-read cart:read cart:write",
   "buyerWithLimit": { "email": "kevin@acme.com" },
   "approver": {
     "email": "arnold@acme.com",

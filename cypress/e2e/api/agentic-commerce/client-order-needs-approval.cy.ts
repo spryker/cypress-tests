@@ -1,22 +1,17 @@
 import { MultiCartPage, QuoteApprovalPage } from '@pages/yves';
-import { CheckoutScenario, ClientAuthorizationScenario, CustomerLoginScenario } from '@scenarios/yves';
+import { CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 import {
   addCartItem,
-  blockAgenticCommerceClient,
   cancelWaitingQuoteApprovals,
   container,
   deleteCart,
-  exchangeAuthorizationCode,
   getQuoteApprovals,
   getQuoteApprovers,
   isAgenticCommerceCutReached,
-  registerAgenticCommerceClient,
   requestQuoteApproval,
-  setAgenticCommerceScopeCeiling,
   submitCheckout,
 } from '@utils';
 import {
-  AgenticCommerceClient,
   AgenticCommerceOrderApprovalDynamicFixtures,
   AgenticCommerceOrderApprovalStaticFixtures,
 } from '@interfaces/api';
@@ -35,7 +30,6 @@ describe(
     const multiCartPage = container.get(MultiCartPage);
     const checkoutScenario = container.get(CheckoutScenario);
     const quoteApprovalPage = container.get(QuoteApprovalPage);
-    const clientAuthorizationScenario = container.get(ClientAuthorizationScenario);
 
     const CART_NAME = `Approval cart ${Date.now()}`;
 
@@ -54,7 +48,7 @@ describe(
           return;
         }
 
-        createCartWithItem(accessToken, CART_NAME).then((id) => {
+        createCartWithItem(accessToken, CART_NAME, (id) => {
           cartId = id;
         });
       });
@@ -100,14 +94,12 @@ describe(
           return;
         }
 
-        const CLIENT_CART_NAME = `Client approval cart ${Date.now()}`;
+        const RESOURCE_CART_NAME = `Resource approval cart ${Date.now()}`;
         const QUOTE_APPROVAL_STATUS_WAITING = 'waiting';
         const QUOTE_APPROVAL_STATUS_APPROVED = 'approved';
 
-        let client: AgenticCommerceClient;
-        let clientAccessToken: string;
-        let clientCartId: string;
         let buyerAccessToken: string;
+        let resourceCartId: string;
 
         before((): void => {
           ({ staticFixtures, dynamicFixtures } = Cypress.env());
@@ -116,48 +108,22 @@ describe(
             (token) => {
               buyerAccessToken = token;
 
-              createCartWithItem(buyerAccessToken, CLIENT_CART_NAME).then((id) => {
-                clientCartId = id;
+              createCartWithItem(buyerAccessToken, RESOURCE_CART_NAME, (id) => {
+                resourceCartId = id;
               });
             }
           );
-
-          registerAgenticCommerceClient(
-            'ClientOrderNeedsApproval',
-            staticFixtures.redirectUri,
-            staticFixtures.scope
-          ).then((registeredClient) => {
-            client = { ...registeredClient, scope: staticFixtures.scopeWithCart };
-            setAgenticCommerceScopeCeiling(client, staticFixtures.scopeWithCart.split(' '));
-
-            clientAuthorizationScenario
-              .execute({
-                client,
-                email: staticFixtures.buyerWithLimit.email,
-                password: staticFixtures.defaultPassword,
-              })
-              .then(({ proofKey, response }) => {
-                exchangeAuthorizationCode(client, String(response.code), proofKey).then((tokenResponse) => {
-                  expect(tokenResponse.status).to.equal(200);
-                  clientAccessToken = tokenResponse.body.access_token;
-                });
-              });
-          });
         });
 
         after((): void => {
-          if (buyerAccessToken && clientCartId) {
-            cancelWaitingQuoteApprovals(buyerAccessToken, clientCartId);
-            deleteCart(buyerAccessToken, clientCartId);
-          }
-
-          if (client) {
-            blockAgenticCommerceClient(client);
+          if (buyerAccessToken && resourceCartId) {
+            cancelWaitingQuoteApprovals(buyerAccessToken, resourceCartId);
+            deleteCart(buyerAccessToken, resourceCartId);
           }
         });
 
-        it('client should send the cart to Arnold through the quote approvals resource', (): void => {
-          getQuoteApprovers(clientAccessToken, clientCartId).then((approversResponse) => {
+        it('buyer should send the cart to Arnold through the quote approvals resource', (): void => {
+          getQuoteApprovers(buyerAccessToken, resourceCartId).then((approversResponse) => {
             expect(approversResponse.status).to.equal(200);
 
             const arnold = approversResponse.body.data.find(
@@ -168,7 +134,7 @@ describe(
 
             expect(arnold, 'Arnold among the approvers').to.not.equal(undefined);
 
-            requestQuoteApproval(clientAccessToken, clientCartId, {
+            requestQuoteApproval(buyerAccessToken, resourceCartId, {
               approverCompanyUserUuid: String(arnold?.attributes.companyUserUuid),
               billingAddress: buildAddressPayload(),
               shippingAddress: buildAddressPayload(),
@@ -181,36 +147,38 @@ describe(
           });
         });
 
-        it('approver should approve the cart the client sent for approval', (): void => {
-          approveAsApprover(CLIENT_CART_NAME);
+        it('approver should approve the cart the buyer sent through the resource', (): void => {
+          approveAsApprover(RESOURCE_CART_NAME);
         });
 
-        it('client should read the approved status and the buyer should check out the cart', (): void => {
-          getQuoteApprovals(clientAccessToken, clientCartId).then((response) => {
+        it('buyer should read the approved status and check out the cart', (): void => {
+          getQuoteApprovals(buyerAccessToken, resourceCartId).then((response) => {
             expect(response.status).to.equal(200);
             expect(response.body.meta?.cartApprovalStatus).to.equal(QUOTE_APPROVAL_STATUS_APPROVED);
           });
 
-          submitCheckout(buyerAccessToken, buildCheckoutPayload(clientCartId), false)
+          submitCheckout(buyerAccessToken, buildCheckoutPayload(resourceCartId), false)
             .its('status')
             .should('equal', 201);
         });
       }
     );
 
-    function createCartWithItem(buyerToken: string, name: string): Cypress.Chainable<string> {
-      return cy
-        .createCart(buyerToken, {
-          name,
-          priceMode: staticFixtures.priceMode,
-          currency: staticFixtures.currency,
-          store: staticFixtures.store,
-        })
-        .then((id) =>
-          addCartItem(buyerToken, id, {
-            data: { type: 'items', attributes: { sku: dynamicFixtures.product.sku, quantity: 1 } },
-          }).then(() => id)
-        );
+    /**
+     * The id is handed over as soon as the cart exists, so the `after` hook deletes it even when adding the item fails.
+     */
+    function createCartWithItem(buyerToken: string, name: string, onCreated: (id: string) => void): void {
+      cy.createCart(buyerToken, {
+        name,
+        priceMode: staticFixtures.priceMode,
+        currency: staticFixtures.currency,
+        store: staticFixtures.store,
+      }).then((id) => {
+        onCreated(id);
+        addCartItem(buyerToken, id, {
+          data: { type: 'items', attributes: { sku: dynamicFixtures.product.sku, quantity: 1 } },
+        });
+      });
     }
 
     function approveAsApprover(cartName: string): void {

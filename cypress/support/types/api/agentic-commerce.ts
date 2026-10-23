@@ -63,9 +63,6 @@ export interface AgenticCommerceOrderPlacementStaticFixtures extends AgenticComm
 
 export interface AgenticCommerceOrderApprovalStaticFixtures {
   defaultPassword: string;
-  redirectUri: string;
-  scope: string;
-  scopeWithCart: string;
   buyerWithLimit: { email: string };
   approver: { email: string; fullName: string; firstName: string; lastName: string };
   store: string;
@@ -85,10 +82,6 @@ export interface AgenticCommerceOrderApprovalDynamicFixtures {
 
 export interface AgenticCommerceQuoteApprovalStaticFixtures {
   defaultPassword: string;
-  redirectUri: string;
-  scope: string;
-  scopeWithCart: string;
-  cartWriteScope: string;
   buyerWithLimit: { email: string };
   approver: { email: string; firstName: string; lastName: string };
   store: string;
