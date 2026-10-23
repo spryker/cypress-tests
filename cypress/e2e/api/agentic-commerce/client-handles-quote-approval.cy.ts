@@ -58,10 +58,10 @@ describe(
       cy.getCustomerAccessToken(staticFixtures.buyerWithLimit.email, staticFixtures.defaultPassword).then((token) => {
         buyerAccessToken = token;
 
-        createCartWithItem(`Quote approval cart ${Date.now()}`, (cartUuid) => {
+        createCartWithItem(`Quote approval ${Date.now()}`, (cartUuid) => {
           approvalCartUuid = cartUuid;
         });
-        createCartWithItem(`Quote request cart ${Date.now()}`, (cartUuid) => {
+        createCartWithItem(`Quote request ${Date.now()}`, (cartUuid) => {
           quoteRequestCartUuid = cartUuid;
         });
       });

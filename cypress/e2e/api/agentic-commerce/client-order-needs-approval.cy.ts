@@ -96,7 +96,7 @@ describe(
           return;
         }
 
-        const RESOURCE_CART_NAME = `Resource approval cart ${Date.now()}`;
+        const RESOURCE_CART_NAME = `Resource cart ${Date.now()}`;
         const QUOTE_APPROVAL_STATUS_WAITING = 'waiting';
         const QUOTE_APPROVAL_STATUS_APPROVED = 'approved';
 
