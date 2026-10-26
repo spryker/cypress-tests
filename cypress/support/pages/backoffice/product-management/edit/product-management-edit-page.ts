@@ -21,11 +21,12 @@ export class ProductManagementEditPage extends BackofficePage {
     const variantTableUrl = '**/product-management/edit/variant-table**';
     cy.intercept('GET', variantTableUrl).as('variantTable');
     this.repository.getVariantsTab().click();
-    cy.wait('@variantTable', { timeout: 1000 });
-    this.repository.getVariantFirstTableRow().then(($productVariantRow) => {
-      cy.wrap($productVariantRow).find(this.repository.getVariantEditButtonSelector()).as('editVariantButton');
-      cy.get('@editVariantButton').click({ force: true });
-    });
+    cy.wait('@variantTable');
+    // One query chain, so a table redraw re-queries the row instead of leaving a detached one behind.
+    this.repository
+      .getVariantFirstTableRow()
+      .find(this.repository.getVariantEditButtonSelector())
+      .click({ force: true });
   };
 
   assignAllPossibleStores = (): void => {
@@ -36,6 +37,31 @@ export class ProductManagementEditPage extends BackofficePage {
   getGeneralTab(): Cypress.Chainable {
     return this.repository.getGeneralTab();
   }
+
+  visitProduct = (idProductAbstract: string): void => {
+    cy.visitBackoffice(`${this.PAGE_URL}?id-product-abstract=${idProductAbstract}`);
+  };
+
+  unassignStore = (storeName: string): void => {
+    this.repository.getGeneralTab().click({ force: true });
+    this.repository.getStoreRelationCheckbox(storeName).uncheck();
+  };
+
+  // The price rows are keyed by store id, which is only readable from the store checkbox on the
+  // general tab — hence the tab switch in the middle.
+  setStorePrice = (params: SetStorePriceParams): void => {
+    this.repository.getGeneralTab().click({ force: true });
+    this.repository
+      .getStoreRelationCheckbox(params.storeName)
+      .invoke('val')
+      .then((idStore) => {
+        this.repository.getPriceTaxTab().click();
+        this.repository.getStorePriceInputs(String(idStore)).each(($priceInput) => {
+          cy.wrap($priceInput).clear({ force: true });
+          cy.wrap($priceInput).type(params.price, { force: true, delay: 0 });
+        });
+      });
+  };
 
   bulkPriceUpdate = (productPrice: string): void => {
     this.repository.getPriceTaxTab().click();
@@ -123,6 +149,11 @@ export class ProductManagementEditPage extends BackofficePage {
   getFirstAttachmentFormIbox = (): Cypress.Chainable => this.repository.getFirstAttachmentFormIbox();
 
   getFirstAttachmentFormAddButton = (): Cypress.Chainable => this.repository.getFirstAttachmentFormAddButton();
+}
+
+interface SetStorePriceParams {
+  storeName: string;
+  price: string;
 }
 
 interface AttachmentParams {

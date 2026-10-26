@@ -24,9 +24,10 @@ export class B2bCustomerOverviewRepository implements CustomerOverviewRepository
     return cy.get('[data-qa="component order-detail-table"]');
   }
   // The B2B shops replace the vendor customer navigation with the sidebar molecule, which carries no
-  // per-section marker, so the section is matched on the link target instead.
+  // per-section marker, so the section is matched on the link target instead. The classic theme also
+  // renders the same links in the header's hidden account dropdown, so only the visible one is taken.
   getSidebarLink(section: CustomerSidebarSection): Cypress.Chainable {
-    return cy.get(`[data-qa="component navigation-sidebar-item"] a[href$="/customer/${section}"]`);
+    return cy.get(`[data-qa="component navigation-sidebar-item"] a[href$="/customer/${section}"]:visible`);
   }
   getDefaultBillingAddressHeading(): string {
     return 'Default Billing Address';

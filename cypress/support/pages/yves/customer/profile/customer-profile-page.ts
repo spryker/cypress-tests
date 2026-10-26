@@ -41,7 +41,35 @@ export class CustomerProfilePage extends YvesPage {
     return cy.contains(this.repository.getEmailInUseErrorMessage());
   }
 
+  getEmailChangeMailSentMessage(): Cypress.Chainable {
+    return cy.contains(this.repository.getEmailChangeMailSentMessage());
+  }
+
+  getEmailChangeRequestedNotice(): Cypress.Chainable {
+    return cy.contains(this.repository.getEmailChangeRequestedMessage());
+  }
+
+  getEmailChangeLimitExceededError(): Cypress.Chainable {
+    return cy.contains(this.repository.getEmailChangeLimitExceededMessage());
+  }
+
   getPasswordsDoNotMatchError(): Cypress.Chainable {
     return cy.contains(this.repository.getPasswordsDoNotMatchMessage());
+  }
+
+  getSalutationSelect(): Cypress.Chainable {
+    return this.repository.getSalutationSelect();
+  }
+
+  getFirstNameInput(): Cypress.Chainable {
+    return this.repository.getFirstNameInput();
+  }
+
+  getLastNameInput(): Cypress.Chainable {
+    return this.repository.getLastNameInput();
+  }
+
+  getEmailInput(): Cypress.Chainable {
+    return this.repository.getEmailInput();
   }
 }

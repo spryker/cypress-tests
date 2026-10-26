@@ -163,8 +163,15 @@ export class BackofficePage extends AbstractPage {
                     }
 
                     if (rows.length > 0) {
-                      const rowIndex = Array.from($rows).indexOf(rows.first()[0]);
-                      const getRow: TableRowGetter = () => cy.get('tbody > tr:visible').eq(rowIndex);
+                      // The row filters are applied again when the row is used: an index taken here can point
+                      // past the end of the table once a late search redraw has narrowed it.
+                      const getRow: TableRowGetter = () =>
+                        cy
+                          .get('tbody > tr:visible')
+                          .filter((_index: number, row: HTMLElement): boolean =>
+                            (params.rowFilter ?? []).every((filterFn) => filterFn(Cypress.$(row)))
+                          )
+                          .first();
 
                       return getRow;
                     } else {

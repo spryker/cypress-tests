@@ -3,4 +3,5 @@ export interface OrderRepository {
   getOrderFilterApplyButton(): Cypress.Chainable;
   getEditOrderButton(): Cypress.Chainable;
   getEditOrderConfirmButton(): Cypress.Chainable;
+  getOrderTable(): Cypress.Chainable;
 }

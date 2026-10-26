@@ -4,6 +4,14 @@ import { CheckoutAddressRepository } from '../checkout-address-repository';
 
 @injectable()
 export class B2bCheckoutAddressRepository implements CheckoutAddressRepository {
+  // The single-shipment address form offers the service point through its own selector component;
+  // the multi-shipment getters above are per address item and do not match here.
+  getSelectServicePointButton = (): Cypress.Chainable =>
+    cy.get('[data-qa="component service-point-selector"]').find('button');
+  // With an active company user the shipping select is rendered with no id and named
+  // checkout-full-addresses, so an id-based getter finds nothing. This class sits on the select
+  // in both layouts, and is what a business unit address has to be picked through.
+  getShippingAddressSelectElement = (): Cypress.Chainable => cy.get('.js-address__form-select-shippingAddress');
   getSelectShippingAddressField = (): Cypress.Chainable => {
     return cy.get('body').then((body) => {
       if (body.find('#addressesForm_shippingAddress_id_customer_address').length === 1) {
@@ -13,14 +21,19 @@ export class B2bCheckoutAddressRepository implements CheckoutAddressRepository {
       return cy.get('[name="checkout-full-addresses"]').first();
     });
   };
-  getShippingAddressFirstNameField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_first_name');
-  getShippingAddressLastNameField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_last_name');
-  getShippingAddressAddress1Field = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_address1');
-  getShippingAddressAddress2Field = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_address2');
-  getShippingAddressZipCodeField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_zip_code');
-  getShippingAddressCityField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_city');
-  getShippingAddressCompanyField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_company');
-  getShippingAddressPhoneField = (): Cypress.Chainable => cy.get('#addressesForm_shippingAddress_phone');
+  getShippingAddressFirstNameField = (): Cypress.Chainable =>
+    this.revealAndGet('#addressesForm_shippingAddress_first_name');
+  getShippingAddressLastNameField = (): Cypress.Chainable =>
+    this.revealAndGet('#addressesForm_shippingAddress_last_name');
+  getShippingAddressAddress1Field = (): Cypress.Chainable =>
+    this.revealAndGet('#addressesForm_shippingAddress_address1');
+  getShippingAddressAddress2Field = (): Cypress.Chainable =>
+    this.revealAndGet('#addressesForm_shippingAddress_address2');
+  getShippingAddressZipCodeField = (): Cypress.Chainable =>
+    this.revealAndGet('#addressesForm_shippingAddress_zip_code');
+  getShippingAddressCityField = (): Cypress.Chainable => this.revealAndGet('#addressesForm_shippingAddress_city');
+  getShippingAddressCompanyField = (): Cypress.Chainable => this.revealAndGet('#addressesForm_shippingAddress_company');
+  getShippingAddressPhoneField = (): Cypress.Chainable => this.revealAndGet('#addressesForm_shippingAddress_phone');
   getShippingAddressBillingSameAsShippingCheckbox = (): Cypress.Chainable =>
     cy.get('#addressesForm_billingSameAsShipping input');
   getNextButton = (): Cypress.Chainable => cy.get('[data-qa="submit-button"]');
@@ -109,4 +122,18 @@ export class B2bCheckoutAddressRepository implements CheckoutAddressRepository {
     const servicePointUuid = $addressItem.find(`input[name*="[servicePoint][uuid]"]`).val() as string | undefined;
     return servicePointUuid || undefined;
   };
+  getSameAddressForAllItemsCheckboxSelector = (): string => 'input[name$="[isSingleAddressPerShipmentType]"]';
+  // The self-service portal nests the item forms in one block per shipment type, so the list's children are those
+  // blocks; every theme wraps each item form in its own wrapper.
+  getMultiShipmentAddressItemsWithOwnAddress = (): Cypress.Chainable =>
+    cy.get('[data-qa="component address-item-form-field-list"] .address-item-form-field-list__wrapper');
+
+  // The b2b-demo-marketplace build of this theme hides the new-address fields of the single shipping form until
+  // its self-service portal address toggle is used; the classic theme shows them, so this is a no-op there.
+  private revealAndGet = (selector: string): Cypress.Chainable =>
+    cy.get(selector).then(($el) => {
+      $el.parents('.is-hidden').removeClass('is-hidden');
+
+      return $el;
+    });
 }

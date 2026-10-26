@@ -10,7 +10,10 @@
           "key": "merchant1",
           "arguments": [
             {
-              "isOpenForRelationRequest": true
+              "isOpenForRelationRequest": true,
+              "storeRelation": {
+                "idStores": [1]
+              }
             }
           ]
         },

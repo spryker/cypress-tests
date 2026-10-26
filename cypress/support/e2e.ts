@@ -15,6 +15,7 @@
 
 import { dirname, parse, relative } from 'path';
 import './commands';
+import { whenRequiredFeaturePresent } from './utils/feature';
 
 // @see error 2306 https://github.com/microsoft/TypeScript/blob/3fcd1b51a1e6b16d007b368229af03455c7d5794/src/compiler/diagnosticMessages.json#L1635
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -27,7 +28,7 @@ before(() => {
     cy.runQueueWorker();
   }
 
-  loadFixture();
+  whenRequiredFeaturePresent(loadFixture);
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-function-return-type

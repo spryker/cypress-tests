@@ -1,0 +1,9 @@
+{
+  "defaultPassword": "change123",
+  "variantAttributeKey": "color",
+  "addedConcrete": {
+    "attributeValue": "Grey",
+    "stockQuantity": 5,
+    "searchableLocales": ["en_US", "de_DE"]
+  }
+}
