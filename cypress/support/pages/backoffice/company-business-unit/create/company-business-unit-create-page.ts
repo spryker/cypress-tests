@@ -14,6 +14,9 @@ export class CompanyBusinessUnitCreatePage extends BackofficePage {
     this.selectCompany(params.companyName);
     this.repository.getNameInput().clear().type(params.name);
     this.repository.getSubmitButton().click();
+
+    // Without this a failed save only surfaces later, as a business unit the company user form cannot find.
+    this.repository.getSuccessMessage().should('contain.text', params.name);
   };
 
   /**
