@@ -17,7 +17,11 @@ export class MpPage extends AbstractPage {
     const expectedCount = params.expectedCount ?? 1;
     const interceptAlias = this.faker.string.uuid();
 
-    cy.intercept('GET', params.url).as(interceptAlias);
+    if (params.searchQuery === undefined) {
+      cy.intercept('GET', params.url).as(interceptAlias);
+    } else {
+      cy.intercept({ method: 'GET', url: params.url, query: { search: params.searchQuery } }).as(interceptAlias);
+    }
 
     if (customFunction) {
       customFunction();
@@ -125,4 +129,5 @@ export enum ActionEnum {
 interface InterceptMpGuiTableParams {
   url: string;
   expectedCount?: number;
+  searchQuery?: string;
 }
