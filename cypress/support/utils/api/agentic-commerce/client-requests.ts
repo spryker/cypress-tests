@@ -95,6 +95,17 @@ export function blockAgenticCommerceClient(client: AgenticCommerceClient): void 
   cy.runCliCommands([`vendor/bin/console agentic-commerce:client:block --client-id=${client.clientId}`]);
 }
 
+/**
+ * Switches delegated access off for the region the stack runs in; consents survive.
+ */
+export function disableAgenticCommerce(): void {
+  cy.runCliCommands(['vendor/bin/console agentic-commerce:disable']);
+}
+
+export function enableAgenticCommerce(): void {
+  cy.runCliCommands(['vendor/bin/console agentic-commerce:enable']);
+}
+
 export function createProofKey(): Cypress.Chainable<AgenticCommerceProofKey> {
   return cy.task<AgenticCommerceProofKey>('createProofKey');
 }
