@@ -107,3 +107,6 @@ export * from './content-experience-management/workspace/page-workspace-page';
 export * from './content-experience-management/usage/content-usage-page';
 export * from './content-experience-management/page-builder/page-builder-page';
 export * from './content-experience-management/page-create/page-create-page';
+export * from './content-experience-management/home/home-page';
+export * from './content-experience-management/content-menu/content-menu-page';
+export * from './content-experience-management/publish-result/page-publish-result-page';

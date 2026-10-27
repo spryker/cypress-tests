@@ -68,8 +68,48 @@ export class PageBuilderPage extends BackofficePage {
     this.repository.getSaveButton().click();
   };
 
-  publish = (): void => {
+  openPublishModal = (): void => {
     this.repository.getPublishButton().should('not.be.disabled').click();
+  };
+
+  getPublishModal = (): Cypress.Chainable => this.repository.getPublishModal();
+
+  getPublishImpact = (): Cypress.Chainable => this.repository.getPublishImpact();
+
+  confirmPublish = (): void => {
+    this.repository.getPublishConfirmButton().click();
+  };
+
+  publish = (): void => {
+    this.openPublishModal();
+    this.confirmPublish();
+  };
+
+  editFirstSection = (placeholder: string, text: string): void => {
+    this.repository.getPlaceholder(placeholder).find(this.repository.getSectionEditButtonSelector()).first().click();
+    this.repository.getPlaceholder(placeholder).find(this.repository.getRichTextSelector()).type(`{selectall}${text}`);
+  };
+
+  getGuide = (): Cypress.Chainable => this.repository.getGuide();
+
+  getGuideSteps = (): Cypress.Chainable => this.repository.getGuideSteps();
+
+  getGuideStep = (stepId: string): Cypress.Chainable => this.repository.getGuideStep(stepId);
+
+  openBannerUsage = (bannerName: string): void => {
+    this.repository
+      .getLibraryCard(bannerName)
+      .find(this.repository.getLibraryEditBannerButtonSelector())
+      .scrollIntoView({ offset: { top: -200, left: 0 } })
+      .click();
+  };
+
+  getBannerUsageModal = (): Cypress.Chainable => this.repository.getBannerUsageModal();
+
+  getBannerUsage = (): Cypress.Chainable => this.repository.getBannerUsage();
+
+  cancelBannerUsage = (): void => {
+    this.repository.getBannerUsageCancelButton().click();
   };
 
   getRoot = (): Cypress.Chainable => this.repository.getRoot();

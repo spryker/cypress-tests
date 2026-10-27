@@ -63,4 +63,7 @@ export const enum REPOSITORIES {
   CategoryCreateRepository = 'CategoryCreateRepository',
   CategoryEditRepository = 'CategoryEditRepository',
   CategoryReSortRepository = 'CategoryReSortRepository',
+  ContentHomeRepository = 'ContentHomeRepository',
+  ContentMenuRepository = 'ContentMenuRepository',
+  PagePublishResultRepository = 'PagePublishResultRepository',
 }

@@ -16,9 +16,49 @@ export class PageWorkspacePage extends BackofficePage {
 
   getPanel = (panel: PageWorkspacePanel): Cypress.Chainable => this.repository.getPanel(panel);
 
-  toggleActive = (): void => {
+  openBuilder = (): void => {
+    this.repository.getOpenBuilderButton().click();
+  };
+
+  openPublishModal = (): void => {
+    this.repository.getPublishButton().click();
+  };
+
+  getPublishModal = (): Cypress.Chainable => this.repository.getPublishModal();
+
+  confirmPublish = (): void => {
+    this.repository.getPublishConfirmButton().click();
+  };
+
+  cancelPublish = (): void => {
+    this.repository.getPublishCancelButton().click();
+  };
+
+  publish = (): void => {
+    this.openPublishModal();
+    this.confirmPublish();
+  };
+
+  openDeactivateModal = (): void => {
+    this.repository.getToggleActiveButton().click();
+  };
+
+  getDeactivateModal = (): Cypress.Chainable => this.repository.getDeactivateModal();
+
+  confirmDeactivate = (): void => {
+    this.repository.getDeactivateConfirmButton().click();
+  };
+
+  deactivate = (): void => {
+    this.openDeactivateModal();
+    this.confirmDeactivate();
+  };
+
+  activate = (): void => {
     this.repository.getToggleActiveButton().click();
   };
 
   getDeactivatedMessage = (): Cypress.Chainable => cy.contains(this.repository.getDeactivatedMessage());
+
+  getActivatedMessage = (): Cypress.Chainable => cy.contains(this.repository.getActivatedMessage());
 }

@@ -37,3 +37,7 @@ export * from './workflow-instance-lifecycle';
 export * from './order-experience-management';
 export * from './content-workspace';
 export * from './page-builder';
+export * from './content-home';
+export * from './content-menu';
+export * from './publish-undo';
+export * from './page-builder-guides';

@@ -63,7 +63,12 @@ describe('content workspace', { tags: ['@backoffice', '@content-experience-manag
     pageWorkspacePage.getPanel('content').should('contain', cmsPageName);
     pageWorkspacePage.getPanel('history').should('contain', 'v. 1');
 
-    pageWorkspacePage.toggleActive();
+    pageWorkspacePage.openDeactivateModal();
+
+    pageWorkspacePage.getDeactivateModal().should('be.visible');
+    pageWorkspacePage.getStatus().should('contain', 'Live');
+
+    pageWorkspacePage.confirmDeactivate();
 
     pageWorkspacePage.getDeactivatedMessage().should('be.visible');
     pageWorkspacePage.getStatus().should('contain', 'Inactive');

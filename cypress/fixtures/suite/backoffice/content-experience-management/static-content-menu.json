@@ -1,0 +1,11 @@
+{
+  "defaultPassword": "change123",
+  "visibleMenuUrls": [
+    "/content-experience-management/home",
+    "/content-experience-management/block-list",
+    "/cms-slot-gui/template-list",
+    "/navigation-gui",
+    "/file-manager-gui"
+  ],
+  "legacyUrls": ["/cms-gui/list-page", "/cms-block-gui/list-block", "/content-gui/list-content"]
+}

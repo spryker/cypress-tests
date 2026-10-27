@@ -272,6 +272,9 @@ import { B2cCategoryReSortRepository } from '../../pages/backoffice/catalog/cate
 import { B2bCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/b2b-category-re-sort-repository';
 import { B2cMpCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/b2c-mp-category-re-sort-repository';
 import { B2bMpCategoryReSortRepository } from '../../pages/backoffice/catalog/category/re-sort/repositories/b2b-mp-category-re-sort-repository';
+import { SuiteContentHomeRepository } from '../../pages/backoffice/content-experience-management/home/repositories/suite-home-repository';
+import { SuiteContentMenuRepository } from '../../pages/backoffice/content-experience-management/content-menu/repositories/suite-content-menu-repository';
+import { SuitePagePublishResultRepository } from '../../pages/backoffice/content-experience-management/publish-result/repositories/suite-page-publish-result-repository';
 import { B2bMpRecurringOrderReviewRepository } from '../../pages/yves/recurring-orders/review/repositories/b2b-mp-recurring-order-review-repository';
 import { B2bMpCheckoutSummaryRecurringOrderRepository } from '../../pages/yves/recurring-orders/checkout-summary/repositories/b2b-mp-checkout-summary-recurring-order-repository';
 
@@ -342,6 +345,9 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.CategoryCreateRepository]: SuiteCategoryCreateRepository,
   [REPOSITORIES.CategoryEditRepository]: SuiteCategoryEditRepository,
   [REPOSITORIES.CategoryReSortRepository]: SuiteCategoryReSortRepository,
+  [REPOSITORIES.ContentHomeRepository]: SuiteContentHomeRepository,
+  [REPOSITORIES.ContentMenuRepository]: SuiteContentMenuRepository,
+  [REPOSITORIES.PagePublishResultRepository]: SuitePagePublishResultRepository,
 };
 
 const b2cMappings: BindingsMap = {

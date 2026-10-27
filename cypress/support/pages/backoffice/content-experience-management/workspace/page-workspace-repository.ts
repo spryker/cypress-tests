@@ -10,9 +10,25 @@ export class PageWorkspaceRepository {
 
   getPanel = (panel: PageWorkspacePanel): Cypress.Chainable => cy.get(`[data-qa="page-workspace-panel-${panel}"]`);
 
+  getOpenBuilderButton = (): Cypress.Chainable => cy.get('[data-qa="page-workspace-open-builder"]');
+
+  getPublishButton = (): Cypress.Chainable => cy.get('[data-qa="page-workspace-publish"]');
+
+  getPublishModal = (): Cypress.Chainable => cy.get('[data-qa="page-workspace-publish-modal"]');
+
+  getPublishConfirmButton = (): Cypress.Chainable => cy.get('[data-qa="page-workspace-publish-confirm"]');
+
+  getPublishCancelButton = (): Cypress.Chainable => cy.get('[data-qa="page-workspace-publish-cancel"]');
+
   getToggleActiveButton = (): Cypress.Chainable => cy.get('[data-qa="page-workspace-toggle-active"]');
 
+  getDeactivateModal = (): Cypress.Chainable => cy.get('[data-qa="page-workspace-deactivate-modal"]');
+
+  getDeactivateConfirmButton = (): Cypress.Chainable => cy.get('[data-qa="page-workspace-deactivate-confirm"]');
+
   getDeactivatedMessage = (): string => 'Page deactivated.';
+
+  getActivatedMessage = (): string => 'Page activated.';
 }
 
 export type PageWorkspacePanel = 'content' | 'settings' | 'placements' | 'menus' | 'history';

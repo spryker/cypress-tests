@@ -1,11 +1,13 @@
 import { container } from '@utils';
 import { PageBuilderDynamicFixtures, PageBuilderStaticFixtures } from '@interfaces/backoffice';
-import { PageBuilderPage, PageCreatePage } from '@pages/backoffice';
+import { PageBuilderPage, PageCreatePage, PagePublishResultPage, PageWorkspacePage } from '@pages/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
 
 describe('page builder', { tags: ['@backoffice', '@content-experience-management', 'spryker-cms'] }, (): void => {
   const pageCreatePage = container.get(PageCreatePage);
   const pageBuilderPage = container.get(PageBuilderPage);
+  const pagePublishResultPage = container.get(PagePublishResultPage);
+  const pageWorkspacePage = container.get(PageWorkspacePage);
   const userLoginScenario = container.get(UserLoginScenario);
 
   let staticFixtures: PageBuilderStaticFixtures;
@@ -65,11 +67,19 @@ describe('page builder', { tags: ['@backoffice', '@content-experience-management
     pageBuilderPage.switchLocale(staticFixtures.otherLocaleName);
     pageBuilderPage.getSections('title').should('contain', 'Spring sale');
 
-    pageBuilderPage.publish();
+    pageBuilderPage.openPublishModal();
 
-    pageBuilderPage.getStatusLine().should('contain', 'Page published as version 1.');
-    pageBuilderPage.getStatus().should('contain', 'Live');
-    pageBuilderPage.getSlotBlocks(staticFixtures.slotName).should('contain', staticFixtures.cmsBlockName);
+    pageBuilderPage.getPublishModal().should('be.visible');
+    pageBuilderPage.getPublishImpact().should('contain', staticFixtures.localeName);
+
+    pageBuilderPage.confirmPublish();
+
+    pagePublishResultPage.getSummary().should('contain', 'Latest published version: 1');
+
+    pagePublishResultPage.backToWorkspace();
+
+    pageWorkspacePage.getStatus().should('contain', 'Live');
+    pageWorkspacePage.getPanel('placements').should('contain', staticFixtures.cmsBlockName);
   });
 
   it('should show the server message when a banner cannot be created', (): void => {

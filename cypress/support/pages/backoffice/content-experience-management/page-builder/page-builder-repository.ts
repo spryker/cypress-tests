@@ -43,6 +43,35 @@ export class PageBuilderRepository {
 
   getPublishButton = (): Cypress.Chainable => cy.get('[data-qa="page-builder-publish"]');
 
+  getPublishModal = (): Cypress.Chainable => cy.get('[data-qa="page-builder-publish-modal"]');
+
+  getPublishImpact = (): Cypress.Chainable => cy.get('[data-qa="page-builder-publish-impact"]');
+
+  getPublishConfirmButton = (): Cypress.Chainable => cy.get('[data-qa="page-builder-publish-confirm"]');
+
+  getPublishCancelButton = (): Cypress.Chainable => cy.get('[data-qa="page-builder-publish-cancel"]');
+
+  getSectionEditButtonSelector = (): string => '[data-qa="page-builder-section-edit"]';
+
+  getGuide = (): Cypress.Chainable => cy.get('[data-qa="page-builder-guide"]');
+
+  getGuideSteps = (): Cypress.Chainable => cy.get('[data-qa="page-builder-guide-step"]');
+
+  getGuideStep = (stepId: string): Cypress.Chainable =>
+    cy.get(`[data-qa="page-builder-guide-step"][data-step="${stepId}"]`);
+
+  getGuideLeaveButton = (): Cypress.Chainable => cy.get('[data-qa="page-builder-guide-leave"]');
+
+  getLibraryEditBannerButtonSelector = (): string => '[data-qa="page-builder-library-edit-banner"]';
+
+  getBannerUsageModal = (): Cypress.Chainable => cy.get('[data-qa="page-builder-banner-usage-modal"]');
+
+  getBannerUsage = (): Cypress.Chainable => cy.get('[data-qa="page-builder-banner-usage"]');
+
+  getBannerUsageCancelButton = (): Cypress.Chainable => cy.get('[data-qa="page-builder-banner-usage-cancel"]');
+
+  getBannerUsageAddButton = (): Cypress.Chainable => cy.get('[data-qa="page-builder-banner-usage-add"]');
+
   getCreateBannerButton = (): Cypress.Chainable => cy.get('[data-qa="page-builder-create-banner"]');
 
   getBannerInput = (field: string): Cypress.Chainable => cy.get(`[data-qa="page-builder-banner-${field}"]`);
