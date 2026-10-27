@@ -51,7 +51,7 @@ describe(
 
       // Assert
       // A merchant user starts deactivated, so activating it is the first thing the back office does.
-      merchantUpdatePage.findMerchantUserRow({ email: merchantUser.username }).should('contain.text', DEACTIVATED);
+      merchantUpdatePage.findMerchantUserRow({ email: merchantUser.username }).should('contain.text', INACTIVE);
 
       merchantUpdatePage.updateMerchantUser({ email: merchantUser.username, action: ActionEnum.activate });
       merchantUpdatePage.visitUsersTab(dynamicFixtures.merchant.id_merchant);
