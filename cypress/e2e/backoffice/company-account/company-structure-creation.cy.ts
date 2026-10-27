@@ -54,13 +54,6 @@ describe(
 
     before((): void => {
       ({ dynamicFixtures, staticFixtures } = Cypress.env());
-
-      const unique = Date.now();
-      companyName = `Company${unique}`;
-      businessUnitName = `BusinessUnit${unique}`;
-      roleName = `Role${unique}`;
-      companyUserEmail = `company.user.${unique}@spryker.local`;
-      companyUserLastName = `User${unique}`;
     });
 
     beforeEach((): void => {
@@ -71,6 +64,16 @@ describe(
     });
 
     it('given a back office user when a company, its business unit, its role and a company user are created then the company user list shows the user under its company', (): void => {
+      // Arrange
+      // Named per attempt: a retry reusing the names would create a second company of the same name, and the
+      // business unit and company user pickers would then each choose a different one of the two.
+      const unique = Date.now();
+      companyName = `Company${unique}`;
+      businessUnitName = `BusinessUnit${unique}`;
+      roleName = `Role${unique}`;
+      companyUserEmail = `company.user.${unique}@spryker.local`;
+      companyUserLastName = `User${unique}`;
+
       // Act
       companyCreatePage.visit();
       companyCreatePage.create(companyName);

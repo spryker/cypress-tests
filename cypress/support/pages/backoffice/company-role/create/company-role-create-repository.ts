@@ -8,6 +8,7 @@ export class CompanyRoleCreateRepository {
   getCompanySelect = (): Cypress.Chainable => cy.get('#company_role_create_form_fkCompany');
   getNameInput = (): Cypress.Chainable => cy.get('#company_role_create_form_name');
   getSubmitButton = (): Cypress.Chainable => cy.get('input[type="submit"].safe-submit');
+  getSuccessMessage = (): Cypress.Chainable => cy.get('.alert-success');
 
   // Permissions render as checkboxes labelled with their translated name, e.g. "View company users".
   getPermissionCheckbox = (permissionName: string): Cypress.Chainable =>
