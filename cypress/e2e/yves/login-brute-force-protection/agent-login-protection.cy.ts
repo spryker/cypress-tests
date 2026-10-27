@@ -37,6 +37,9 @@ describe(
       agentLoginPage.visit();
       agentLoginPage.getCaptchaWidget().should('be.visible');
       agentLoginPage.solveCaptcha();
+      // Under Cypress the browser keeps the old session cookie instead of the one the successful login XHR sets
+      // after earlier logins, so this login starts without a session.
+      cy.clearCookies();
       agentLoginPage.login({ username, password: staticFixtures.defaultPassword });
 
       agentOverviewPage.visit();

@@ -42,6 +42,9 @@ describe(
       loginPage.visit();
       loginPage.getCaptchaWidget().should('be.visible');
       loginPage.solveCaptcha();
+      // Under Cypress the browser keeps the old session cookie instead of the one the successful login XHR sets
+      // after earlier logins, so this login starts without a session.
+      cy.clearCookies();
       loginPage.login({ email, password: staticFixtures.defaultPassword });
 
       customerOverviewPage.assertPageLocation();
@@ -88,6 +91,9 @@ describe(
       failLogin(email, staticFixtures.challengeAfterFailedAttempts);
       loginPage.visit();
       loginPage.solveCaptcha();
+      // Under Cypress the browser keeps the old session cookie instead of the one the successful login XHR sets
+      // after earlier logins, so this login starts without a session.
+      cy.clearCookies();
       loginPage.login({ email, password: staticFixtures.defaultPassword });
 
       multiFactorAuthPage.getVerificationPopup().should('be.visible');
