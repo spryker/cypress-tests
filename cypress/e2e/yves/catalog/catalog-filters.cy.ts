@@ -117,11 +117,13 @@ describe('catalog filters', { tags: ['@yves', 'catalog', 'search', 'prices', 'sp
 
     it("given two merchants offering a product of the same name when the merchant facet is applied then only that merchant's product is listed", (): void => {
       // Arrange
-      // Both fixture products carry the same name, so the query returns both of them alongside the
-      // catalog's own matches, and the merchant facet is what narrows the list.
+      // Both fixture products carry the same name, the random name of the first merchant, which no
+      // other product carries, so the query returns exactly these two and the merchant facet is what
+      // narrows the list. A lorem name would also match the lorem products of earlier specs, whose
+      // merchants can push the fixture merchant out of the facet's value limit.
       catalogPage.visit();
       catalogPage.searchForProducts({ query: dynamicFixtures.localizedAttribute.name });
-      catalogPage.getProductItemBlocks().should('have.length.at.least', 2);
+      catalogPage.getProductItemBlocks().should('have.length', 2);
 
       // Act
       catalogPage.applyFilterValue({
