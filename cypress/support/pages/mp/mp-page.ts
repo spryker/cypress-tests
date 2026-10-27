@@ -71,11 +71,11 @@ export class MpPage extends AbstractPage {
     // The price columns are configured server-side, so the quantity column is located by its
     // heading rather than by a position that a configuration change would silently move.
     params.getMatchColumnHeaderCell().then(($headerCell: JQuery<HTMLElement>) => {
-      const columnIndex = $headerCell.index();
+      const headerTitle = $headerCell.text().trim();
 
       params
         .getRows()
-        .filter((_rowIndex, row) => params.isMatchingCell(Cypress.$(row).find('td').eq(columnIndex).text().trim()), {
+        .filter((_rowIndex, row) => isMatchingPriceRow(row, headerTitle, params.isMatchingCell), {
           timeout: PRICE_TABLE_TIMEOUT,
         })
         .find(params.rowActionTriggerSelector, { timeout: PRICE_TABLE_TIMEOUT })
@@ -89,13 +89,30 @@ export class MpPage extends AbstractPage {
 
   protected getPriceTableRowsByCell = (params: FindPriceTableRowsParams): Cypress.Chainable =>
     params.getMatchColumnHeaderCell().then(($headerCell: JQuery<HTMLElement>) => {
-      const columnIndex = $headerCell.index();
+      const headerTitle = $headerCell.text().trim();
 
-      return params
-        .getRows()
-        .filter((_rowIndex, row) => params.isMatchingCell(Cypress.$(row).find('td').eq(columnIndex).text().trim()));
+      return params.getRows().filter((_rowIndex, row) => isMatchingPriceRow(row, headerTitle, params.isMatchingCell));
     });
 }
+
+// The table can render its header again after the heading first appears, so the column is located
+// on every retry: an index read once from the first header can point at another column for the
+// whole timeout.
+const isMatchingPriceRow = (
+  row: HTMLElement,
+  headerTitle: string,
+  isMatchingCell: (cellText: string) => boolean
+): boolean => {
+  const columnIndex = Cypress.$(row)
+    .parents()
+    .filter((_ancestorIndex, ancestor) => Cypress.$(ancestor).find('thead th').length > 0)
+    .first()
+    .find('thead th')
+    .filter((_headerIndex, headerCell) => Cypress.$(headerCell).text().trim() === headerTitle)
+    .index();
+
+  return columnIndex >= 0 && isMatchingCell(Cypress.$(row).find('td').eq(columnIndex).text().trim());
+};
 
 // The Angular bundle paints the table well after page load, and re-renders it once more when the
 // row actions arrive.
