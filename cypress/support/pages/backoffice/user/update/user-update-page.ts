@@ -9,7 +9,7 @@ export class UserUpdatePage extends BackofficePage {
   @inject(UserUpdateRepository) private repository: UserUpdateRepository;
 
   protected PAGE_URL = '/user/edit/update';
-  protected DEFAULT_PASSWORD = 'Change123@_';
+  protected DEFAULT_PASSWORD = 'Change123@_!';
 
   checkMerchantAgentCheckbox = (): void => {
     this.getAgentMerchantCheckbox().check();
