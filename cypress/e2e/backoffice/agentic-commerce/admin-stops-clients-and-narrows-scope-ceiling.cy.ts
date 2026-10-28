@@ -1,7 +1,3 @@
-import { ClientListPage, KillSwitchPage, ScopeCeilingPage } from '@pages/backoffice';
-import { ConsentPage } from '@pages/yves';
-import { UserLoginScenario } from '@scenarios/backoffice';
-import { ClientAuthorizationScenario } from '@scenarios/yves';
 import {
   blockAgenticCommerceClient,
   container,
@@ -13,6 +9,10 @@ import {
   requestDynamicClientRegistration,
   setAgenticCommerceScopeCeiling,
 } from '@utils';
+import { ClientListPage, KillSwitchPage, ScopeCeilingPage } from '@pages/backoffice';
+import { ConsentPage } from '@pages/yves';
+import { UserLoginScenario } from '@scenarios/backoffice';
+import { ClientAuthorizationScenario } from '@scenarios/yves';
 import { AgenticCommerceClient, AgenticCommerceKillSwitchStaticFixtures, AgenticCommerceTokens } from '@interfaces/api';
 
 describe(

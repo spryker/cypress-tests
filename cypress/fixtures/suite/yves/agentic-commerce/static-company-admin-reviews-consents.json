@@ -6,7 +6,7 @@
   "consentLimit": { "amount": "100.00", "label": "Maximum per order: €100.00" },
   "redirectUri": "http://localhost:8765/callback",
   "companyAdmin": { "email": "sonia@acme.com", "fullName": "Sonia Wagner" },
-  "companyUser": { "email": "arnold@acme.com", "fullName": "Arnold Kurmann" },
+  "companyUser": { "email": "kevin@acme.com", "fullName": "Kevin Sidorov" },
   "otherCompanyUser": { "email": "spencor.hopkin@acme.com", "fullName": "Spencor Hopkin" },
   "userWithoutPermission": { "email": "kevin@acme.com" },
   "texts": {

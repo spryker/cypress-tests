@@ -36,7 +36,7 @@ describe(
     let otherCompanyConsentUuid: string;
 
     const connectAs = (email: string, orderLimit?: string): Cypress.Chainable<AgenticCommerceTokens> => {
-      cy.clearCookies();
+      cy.clearAllCookies();
 
       return clientAuthorizationScenario
         .execute({ client, email, password: staticFixtures.defaultPassword, orderLimit })
@@ -147,7 +147,12 @@ describe(
     it('company user without the permission should get no connected apps page and no navigation entry', (): void => {
       loginAs(staticFixtures.userWithoutPermission.email);
 
-      cy.request({ url: '/company/connected-apps', failOnStatusCode: false }).its('status').should('equal', 403);
+      // Yves answers a denied page with a redirect to its 403 error page.
+      cy.request({ url: '/DE/en/company/connected-apps', failOnStatusCode: false, followRedirect: false }).then(
+        (response) => {
+          expect(response.redirectedToUrl).to.match(/\/error-page\/403$/);
+        }
+      );
 
       cy.visit('/company/overview');
       cy.url().should('include', '/company/overview');
