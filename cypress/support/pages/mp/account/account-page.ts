@@ -20,6 +20,10 @@ export class AccountPage extends MpPage {
     cy.wait(6000);
   };
 
+  requestAccountPage = (): Cypress.Chainable<Cypress.Response<string>> => {
+    return cy.request(Cypress.env().merchantPortalUrl + this.PAGE_URL);
+  };
+
   openChangePasswordForm = (): void => {
     this.repository.getChangePasswordButton().click();
   };
