@@ -68,6 +68,7 @@ describe(
     });
 
     after((): void => {
+      enableAgenticCommerce();
       loginAsAdmin();
       killSwitchPage.visit();
       killSwitchPage.getPageBody().then(($body) => {
@@ -75,7 +76,6 @@ describe(
           killSwitchPage.switchOn(staticFixtures.killSwitch.enableReason);
         }
       });
-      enableAgenticCommerce();
 
       if (client) {
         blockAgenticCommerceClient(client);
@@ -216,6 +216,7 @@ describe(
       cy.then(() => {
         clientListPage.editScopeCeiling(dynamicClient.clientId);
       });
+      // Both scopes, not only order:place: the principal call the story ends with needs principal-read.
       supportedScopes.forEach((scope) => scopeCeilingPage.setScope(scope, true));
       scopeCeilingPage.save();
       clientListPage.getFlashMessage().should('contain', staticFixtures.scopeCeiling.savedMessage);

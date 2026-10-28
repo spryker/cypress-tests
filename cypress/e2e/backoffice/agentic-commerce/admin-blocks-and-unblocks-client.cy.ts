@@ -133,6 +133,17 @@ describe(
         killSwitchPage.visit();
         killSwitchPage.getPageBody().should('contain', 'Delegated access is on in this region.');
         requestAuthorizationStart(client).its('status').should('equal', 302);
+
+        userLoginScenario.execute({
+          username: staticFixtures.backofficeUser.username,
+          password: staticFixtures.backofficeUser.password,
+        });
+        clientListPage.visit();
+        clientListPage.findClient(client.clientId).then((getRow) => {
+          if (getRow) {
+            getRow().should('contain', staticFixtures.scope);
+          }
+        });
       });
     }
   }

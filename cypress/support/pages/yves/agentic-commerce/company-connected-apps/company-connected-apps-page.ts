@@ -35,6 +35,9 @@ export class CompanyConnectedAppsPage extends YvesPage {
   getScopesCell = (clientName: string, email: string): Cypress.Chainable =>
     this.getConsentRow(clientName, email).find(this.repository.getScopesSelector());
 
+  getOrderLimitCell = (clientName: string, email: string): Cypress.Chainable =>
+    this.getConsentRow(clientName, email).find('td').eq(4);
+
   getLastUsedCell = (clientName: string, email: string): Cypress.Chainable =>
     this.getConsentRow(clientName, email).find(this.repository.getLastUsedSelector());
 

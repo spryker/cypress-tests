@@ -121,6 +121,8 @@ export interface AgenticCommerceCompanyConsentsStaticFixtures {
   defaultPassword: string;
   scope: string;
   scopeLabel: string;
+  scopeWithOrderPlacement: string;
+  consentLimit: { amount: string; label: string };
   redirectUri: string;
   companyAdmin: { email: string; fullName: string };
   companyUser: { email: string; fullName: string };

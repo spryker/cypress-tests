@@ -7,6 +7,7 @@ import {
   isAgenticCommerceCutReached,
   readPrincipal,
   registerAgenticCommerceClient,
+  setAgenticCommerceScopeCeiling,
 } from '@utils';
 import {
   AgenticCommerceClient,
@@ -34,11 +35,11 @@ describe(
     let otherCompanyUserTokens: AgenticCommerceTokens;
     let otherCompanyConsentUuid: string;
 
-    const connectAs = (email: string): Cypress.Chainable<AgenticCommerceTokens> => {
+    const connectAs = (email: string, orderLimit?: string): Cypress.Chainable<AgenticCommerceTokens> => {
       cy.clearCookies();
 
       return clientAuthorizationScenario
-        .execute({ client, email, password: staticFixtures.defaultPassword })
+        .execute({ client, email, password: staticFixtures.defaultPassword, orderLimit })
         .then(({ proofKey, response }) => exchangeAuthorizationCode(client, String(response.code), proofKey))
         .then((tokenResponse) => tokenResponse.body);
     };
@@ -51,13 +52,14 @@ describe(
       ({ staticFixtures } = Cypress.env());
       registerAgenticCommerceClient('CompanyAdminReviews', staticFixtures.redirectUri, staticFixtures.scope).then(
         (registeredClient) => {
-          client = registeredClient;
+          client = { ...registeredClient, scope: staticFixtures.scopeWithOrderPlacement };
+          setAgenticCommerceScopeCeiling(client, staticFixtures.scopeWithOrderPlacement.split(' '));
         }
       );
 
       cy.then(() => {
         connectAs(staticFixtures.companyAdmin.email);
-        connectAs(staticFixtures.companyUser.email).then((tokens) => {
+        connectAs(staticFixtures.companyUser.email, staticFixtures.consentLimit.amount).then((tokens) => {
           companyUserTokens = tokens;
         });
         connectAs(staticFixtures.otherCompanyUser.email).then((tokens) => {
@@ -91,6 +93,13 @@ describe(
         companyConnectedAppsPage.getLastUsedCell(client.name, user.email).should('contain', texts.neverUsed);
         companyConnectedAppsPage.getRevokeButton(client.name, user.email).should('contain', texts.revoke);
       });
+
+      companyConnectedAppsPage
+        .getOrderLimitCell(client.name, companyUser.email)
+        .should('contain', staticFixtures.consentLimit.label);
+      companyConnectedAppsPage
+        .getOrderLimitCell(client.name, companyAdmin.email)
+        .should('not.contain', staticFixtures.consentLimit.label);
 
       companyConnectedAppsPage.getList().should('not.contain', otherCompanyUser.email);
       companyConnectedAppsPage.getConsentRow(client.name, otherCompanyUser.email).should('not.exist');

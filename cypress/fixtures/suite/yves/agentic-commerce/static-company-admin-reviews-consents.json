@@ -2,6 +2,8 @@
   "defaultPassword": "change123",
   "scope": "agentic-commerce:principal-read",
   "scopeLabel": "See who you are signed in as",
+  "scopeWithOrderPlacement": "agentic-commerce:principal-read order:place",
+  "consentLimit": { "amount": "100.00", "label": "Maximum per order: €100.00" },
   "redirectUri": "http://localhost:8765/callback",
   "companyAdmin": { "email": "sonia@acme.com", "fullName": "Sonia Wagner" },
   "companyUser": { "email": "arnold@acme.com", "fullName": "Arnold Kurmann" },
