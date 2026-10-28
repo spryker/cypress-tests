@@ -7,8 +7,6 @@ describe(
   'customer login brute-force protection',
   {
     tags: ['@yves', '@login-brute-force-protection', 'customer-account-management', 'spryker-core'],
-    // Every attempt moves the account's server-side counters, so a retried test would start from the wrong
-    // state; a failed spec is rerun as a whole with fresh fixture customers instead.
     retries: 0,
   },
   (): void => {
@@ -42,8 +40,6 @@ describe(
       loginPage.visit();
       loginPage.getCaptchaWidget().should('be.visible');
       loginPage.solveCaptcha();
-      // Under Cypress the browser keeps the old session cookie instead of the one the successful login XHR sets
-      // after earlier logins, so this login starts without a session.
       cy.clearCookies();
       loginPage.login({ email, password: staticFixtures.defaultPassword });
 
@@ -91,8 +87,6 @@ describe(
       failLogin(email, staticFixtures.challengeAfterFailedAttempts);
       loginPage.visit();
       loginPage.solveCaptcha();
-      // Under Cypress the browser keeps the old session cookie instead of the one the successful login XHR sets
-      // after earlier logins, so this login starts without a session.
       cy.clearCookies();
       loginPage.login({ email, password: staticFixtures.defaultPassword });
 

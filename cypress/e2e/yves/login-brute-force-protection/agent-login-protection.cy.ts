@@ -6,8 +6,6 @@ describe(
   'agent login brute-force protection',
   {
     tags: ['@yves', '@login-brute-force-protection', 'agent-assist', 'spryker-core'],
-    // Every attempt moves the account's server-side counters, so a retried test would start from the wrong
-    // state; a failed spec is rerun as a whole with fresh fixture agents instead.
     retries: 0,
   },
   (): void => {
@@ -37,8 +35,6 @@ describe(
       agentLoginPage.visit();
       agentLoginPage.getCaptchaWidget().should('be.visible');
       agentLoginPage.solveCaptcha();
-      // Under Cypress the browser keeps the old session cookie instead of the one the successful login XHR sets
-      // after earlier logins, so this login starts without a session.
       cy.clearCookies();
       agentLoginPage.login({ username, password: staticFixtures.defaultPassword });
 

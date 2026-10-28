@@ -18,10 +18,6 @@ export class LoginPage extends BackofficePage {
     this.repository.getSubmitButton().click();
   };
 
-  /**
-   * Submits the form element directly, the way a script would, so the browser-side "verification required"
-   * check of an unsolved CAPTCHA widget does not stop the request from reaching the server.
-   */
   loginBypassingFormValidation = (params: LoginParams): void => {
     this.repository.getEmailInput().clear().type(params.username);
     this.repository.getPasswordInput().clear().type(params.password);
