@@ -4,6 +4,14 @@ import { CheckoutAddressRepository } from '../checkout-address-repository';
 
 @injectable()
 export class B2bMpCheckoutAddressRepository implements CheckoutAddressRepository {
+  // The single-shipment address form offers the service point through its own selector component;
+  // the multi-shipment getters above are per address item and do not match here.
+  getSelectServicePointButton = (): Cypress.Chainable =>
+    cy.get('[data-qa="component service-point-selector"]').find('button');
+  // With an active company user the shipping select is rendered with no id and named
+  // checkout-full-addresses, so an id-based getter finds nothing. This class sits on the select
+  // in both layouts, and is what a business unit address has to be picked through.
+  getShippingAddressSelectElement = (): Cypress.Chainable => cy.get('.js-address__form-select-shippingAddress');
   getSelectShippingAddressField = (): Cypress.Chainable => {
     return cy.get('body').then((body) => {
       if (body.find('#addressesForm_shippingAddress_id_customer_address').length === 1) {
@@ -139,4 +147,9 @@ export class B2bMpCheckoutAddressRepository implements CheckoutAddressRepository
 
       return $el;
     });
+  getSameAddressForAllItemsCheckboxSelector = (): string => 'input[name$="[isSingleAddressPerShipmentType]"]';
+  // The self-service portal nests the item forms in one block per shipment type, so the list's children are those
+  // blocks; every theme wraps each item form in its own wrapper.
+  getMultiShipmentAddressItemsWithOwnAddress = (): Cypress.Chainable =>
+    cy.get('[data-qa="component address-item-form-field-list"] .address-item-form-field-list__wrapper');
 }

@@ -28,7 +28,11 @@ export class CheckoutScenario {
     if (params?.isGuest) {
       this.checkoutCustomerPage.checkoutAsGuest();
     }
-    this.fillShippingAddress(params);
+    // A checkout resumed after the cart changed re-enters at the first invalidated step, and the
+    // address it already holds is no longer asked for.
+    if (!params?.shouldSkipAddressStep) {
+      this.fillShippingAddress(params);
+    }
 
     if (!params?.shouldSkipShipmentStep) {
       this.checkoutShipmentPage.setStandardShippingMethod();
@@ -50,6 +54,7 @@ export class CheckoutScenario {
   private fillShippingAddress = (params?: ExecuteParams): void => {
     const fillShippingAddressParams = {
       idCustomerAddress: params?.idCustomerAddress,
+      hasOwnAddressPerItem: params?.hasOwnAddressPerItem,
       shipmentType: params?.shipmentType,
       skipServicePointAddressOverride: params?.skipServicePointAddressOverride,
       servicePointSelection: params?.servicePointSelection,
@@ -80,9 +85,11 @@ export class CheckoutScenario {
 interface ExecuteParams {
   isGuest?: boolean;
   isMultiShipment?: boolean;
+  hasOwnAddressPerItem?: boolean;
   idCustomerAddress?: number;
   shouldTriggerOmsInCli?: boolean;
   paymentMethod?: string;
+  shouldSkipAddressStep?: boolean;
   shouldSkipShipmentStep?: boolean;
   shouldSkipPlaceOrder?: boolean;
   shipmentType?: string;

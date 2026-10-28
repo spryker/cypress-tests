@@ -13,6 +13,7 @@ export class MerchantUserMultiFactorAuthPage extends MpPage implements MultiFact
   protected PAGE_URL = '/multi-factor-auth-merchant-portal/user-management/set-up';
 
   submitCode(code: string): void {
+    cy.resetProxyCookieJar();
     cy.intercept('POST', '**/send-code').as('sendCode');
     this.repository.getVerificationCodeInput().type(code);
     this.repository.getVerifyButton().click();

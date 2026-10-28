@@ -3,4 +3,5 @@ export interface CheckoutShipmentRepository {
   getStandardShipmentRadio($shipmentItem: JQuery<HTMLElement>, index: number): Cypress.Chainable;
   getNextButton(): Cypress.Chainable;
   getShipmentDateInput(): Cypress.Chainable;
+  getShipmentMethodLabel(methodName: string): Cypress.Chainable;
 }

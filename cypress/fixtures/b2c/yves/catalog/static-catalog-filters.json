@@ -1,0 +1,11 @@
+{
+  "defaultPassword": "change123",
+  "searchTerm": "canon",
+  "attributeFilter": {
+    "name": "color",
+    "value": "blue"
+  },
+  "filterTitles": ["Price", "Rating", "Label", "Brand", "Color"],
+  "ascendingPriceSortLabel": "Sort by price ascending",
+  "descendingPriceSortLabel": "Sort by price descending"
+}

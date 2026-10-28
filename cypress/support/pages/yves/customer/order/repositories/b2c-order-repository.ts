@@ -21,4 +21,7 @@ export class B2cOrderRepository implements OrderRepository {
   getOrderFilters(): Cypress.Chainable {
     return cy.get('[data-qa="component order-filters"]');
   }
+  getOrderTable(): Cypress.Chainable {
+    return cy.get('[data-qa="component order-table"]');
+  }
 }

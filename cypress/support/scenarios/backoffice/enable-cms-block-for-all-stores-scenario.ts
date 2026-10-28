@@ -24,7 +24,7 @@ export class EnableCmsBlockForAllStoresScenario {
 
           getRow().then(($cmsBlockRow: JQuery<HTMLElement>) => {
             if (!this.blockListPage.rowIsAssignedToStore({ row: $cmsBlockRow, storeName: params.storeName })) {
-              this.blockListPage.clickEditAction($cmsBlockRow);
+              this.blockListPage.clickEditActionOfBlock(params.cmsBlockName);
 
               this.blockUpdatePage.assignAllAvailableStore();
               this.blockUpdatePage.save();

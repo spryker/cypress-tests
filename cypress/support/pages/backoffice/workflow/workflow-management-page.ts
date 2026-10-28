@@ -10,36 +10,56 @@ export class WorkflowManagementPage extends BackofficePage {
 
   protected PAGE_URL = '/workflow/process';
 
-  createWorkflow = (params: { name: string; subjectType: string }): void => {
-    this.repository.getCreateWorkflowButton().click();
+  createWorkflow = (params: {
+    name: string;
+    subjectType: string;
+    triggerEventLabel: string;
+    initialState: string;
+    definition: string;
+  }): void => {
+    this.fillCreateForm(params);
+    this.submitCreateForm();
+  };
+
+  fillCreateForm = (params: {
+    name: string;
+    subjectType: string;
+    triggerEventLabel: string;
+    initialState: string;
+    definition: string;
+  }): void => {
+    this.visitCreate();
     this.repository.getProcessNameInput().clear().type(params.name);
-    this.repository.getProcessSubjectTypeInput().clear().type(params.subjectType);
+    this.selectSubjectType(params.subjectType);
+    this.selectTriggerEvent(params.triggerEventLabel);
+    this.seedDefinition({ initialState: params.initialState, definition: params.definition });
+  };
+
+  submitCreateForm = (): void => {
     this.repository.getProcessSaveButton().click();
   };
 
-  configureTrigger = (params: { name: string; eventLabel: string }): void => {
-    this.repository.getProcessRowTriggersButton(params.name).click();
-    // Select2 combobox: open the dropdown next to the native select, then pick the option by its label.
-    this.repository.getTriggerEventSelect().siblings('.select2-container').find('.select2-selection').click();
-    this.repository.getTriggerEventDropdownOption(params.eventLabel).click();
-    this.repository.getTriggerSaveButton().click();
+  renameCanvasState = (params: { currentName: string; newName: string }): void => {
+    this.repository.getCanvasStateByLabel(params.currentName).click();
+    this.repository.getStateNameInput().clear().type(params.newName);
   };
 
-  createVersion = (params: { name: string; initialState: string; definition: string }): void => {
-    this.repository.getProcessRowVersionsButton(params.name).click();
-    this.repository.getCreateVersionButton().click();
-    this.repository.getAdvancedXmlToggle().click();
-    this.repository
-      .getAdvancedXmlEditor()
-      .clear()
-      .type(params.definition, { parseSpecialCharSequences: false, delay: 0 });
-
-    this.repository.getCanvasStateByLabel(params.initialState).click();
-    this.repository.getStateInitialCheckbox().check();
+  renameCanvasTransitionEvent = (params: { currentEventName: string; newEventName: string }): void => {
+    this.selectCanvasTransition(params.currentEventName);
+    this.repository.getTransitionEventInput().clear().type(params.newEventName).blur();
   };
 
-  validateDefinition = (): void => {
-    this.repository.getValidateDefinitionButton().click();
+  addConnectedCanvasState = (sourceStateName: string): void => {
+    this.repository.getCanvasStateByLabel(sourceStateName).trigger('mouseover');
+    this.repository.getCanvasAddConnectedStateButton().click();
+  };
+
+  selectCanvasTransition = (eventName: string): void => {
+    this.repository.getCanvasTransitionLabel(eventName).first().click({ force: true });
+  };
+
+  openNewVersion = (): void => {
+    this.repository.getNewVersionButton().click();
   };
 
   saveVersion = (): void => {
@@ -47,15 +67,65 @@ export class WorkflowManagementPage extends BackofficePage {
   };
 
   activateLatestVersion = (): void => {
+    this.repository.getVersionListButton().click();
     this.repository.getActivateVersionButton().click();
-    this.repository.getVersionActivationConfirmButton().click();
+    this.repository.getActionConfirmationConfirmButton().click();
+  };
+
+  saveProcessDescription = (description: string): void => {
+    this.repository.getProcessEditToggle().click();
+    this.repository.getProcessEditDescriptionInput().clear().type(description);
+    this.repository.getProcessEditSaveButton().click();
+  };
+
+  openProcessDeactivation = (name: string): void => {
+    this.repository.getProcessRowDeactivateButton(name).click();
+  };
+
+  visitCreate = (): void => {
+    cy.visitBackoffice(`${this.PAGE_URL}/create`);
+  };
+
+  selectSubjectType = (subjectType: string): void => {
+    // Pick through the Select2 widget, not the native select: Select2 announces the change with a jQuery event only.
+    this.repository.getProcessSubjectTypeInput().siblings('.select2-container').find('.select2-selection').click();
+    this.repository.getSelect2Option(subjectType).click();
+  };
+
+  selectTriggerEvent = (triggerEventLabel: string): void => {
+    this.repository.getProcessTriggerEventsSelect().siblings('.select2-container').find('.select2-selection').click();
+    this.repository.getSelect2Option(triggerEventLabel).click();
+  };
+
+  getProcessTriggerEventsSelect = (): Cypress.Chainable => this.repository.getProcessTriggerEventsSelect();
+
+  openProcessView = (name: string): void => {
+    this.repository.getProcessRowViewButton(name).click();
+  };
+
+  activateFirstVersion = (name: string): void => {
+    this.openProcessView(name);
+    this.repository.getVersionListButton().click();
+    this.repository.getActivateVersionButton().click();
+    this.repository.getActionConfirmationConfirmButton().click();
   };
 
   activateProcess = (name: string): void => {
+    this.openProcessActivation(name);
+    this.confirmAction();
+  };
+
+  openProcessActivation = (name: string): void => {
     this.repository.getProcessRowActivateButton(name).click();
   };
 
-  getValidationResult = (): Cypress.Chainable => this.repository.getValidationResult();
+  confirmAction = (): void => {
+    this.repository.getActionConfirmationConfirmButton().click();
+  };
+
+  getActionConfirmationTitle = (): Cypress.Chainable => this.repository.getActionConfirmationTitle();
+
+  getActionConfirmationMessage = (): Cypress.Chainable => this.repository.getActionConfirmationMessage();
 
   getProcessRow = (name: string): Cypress.Chainable => this.repository.getProcessRow(name);
 
@@ -66,4 +136,33 @@ export class WorkflowManagementPage extends BackofficePage {
   getProcessRowTriggers = (name: string): Cypress.Chainable => this.repository.getProcessRowTriggers(name);
 
   getProcessRowActivateButton = (name: string): Cypress.Chainable => this.repository.getProcessRowActivateButton(name);
+
+  getProcessForm = (): Cypress.Chainable => this.repository.getProcessForm();
+
+  getStateNameInput = (): Cypress.Chainable => this.repository.getStateNameInput();
+
+  getCanvas = (): Cypress.Chainable => this.repository.getCanvas();
+
+  getEventSharedHint = (): Cypress.Chainable => this.repository.getEventSharedHint();
+
+  getEventTransitionCount = (): Cypress.Chainable => this.repository.getEventTransitionCount();
+
+  getDefinitionValidationResult = (): Cypress.Chainable => this.repository.getDefinitionValidationResult();
+
+  getVersionSource = (): Cypress.Chainable => this.repository.getVersionSource();
+
+  getActiveVersionNumber = (): Cypress.Chainable => this.repository.getActiveVersionNumber();
+
+  getSummaryDescription = (): Cypress.Chainable => this.repository.getSummaryDescription();
+
+  private seedDefinition = (params: { initialState: string; definition: string }): void => {
+    this.repository.getAdvancedXmlToggle().click();
+    this.repository
+      .getAdvancedXmlEditor()
+      .clear()
+      .type(params.definition, { parseSpecialCharSequences: false, delay: 0 });
+
+    this.repository.getCanvasStateByLabel(params.initialState).click();
+    this.repository.getStateInitialCheckbox().check();
+  };
 }
