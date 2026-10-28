@@ -1,0 +1,24 @@
+{
+  "defaultPassword": "change123",
+  "templateName": "Smartstation Kit",
+  "firstConfiguration": [
+    {
+      "slotName": "Slot 5",
+      "productPosition": 0
+    },
+    {
+      "slotName": "Slot 6",
+      "productIdentifier": "Canon LEGRIA HF R606"
+    }
+  ],
+  "secondConfiguration": [
+    {
+      "slotName": "Slot 5",
+      "productPosition": 1
+    },
+    {
+      "slotName": "Slot 6",
+      "productIdentifier": "Canon LEGRIA HF R606"
+    }
+  ]
+}

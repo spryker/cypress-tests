@@ -27,9 +27,11 @@ export class BlockListPage extends BackofficePage {
     });
   };
 
-  clickEditAction = (row: JQuery<HTMLElement>): void => {
-    cy.wrap(row).find(this.repository.getEditButtonSelector()).as('editBtn');
-    cy.get('@editBtn').click();
+  // The row is looked up again by name, because the table can redraw between reading the row and the click.
+  clickEditActionOfBlock = (cmsBlockName: string): void => {
+    cy.contains(this.repository.getVisibleRowSelector(), cmsBlockName)
+      .find(this.repository.getEditButtonSelector())
+      .click();
   };
 
   rowIsAssignedToStore = (params: IsAssignedParams): boolean => {

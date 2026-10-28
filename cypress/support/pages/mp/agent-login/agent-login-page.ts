@@ -15,6 +15,7 @@ export class AgentLoginPage extends MpPage {
     this.repository.getEmailInput().clear().type(params.username);
     this.repository.getPasswordInput().clear().type(params.password);
 
+    cy.resetProxyCookieJar();
     this.repository.getSubmitButton().click();
   };
 

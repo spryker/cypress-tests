@@ -27,3 +27,23 @@ export interface OrderCreationDmsStaticFixtures {
   store: Store;
   paymentMethods: PaymentMethod[];
 }
+
+export interface OrderFulfilmentDynamicFixtures {
+  rootUser: User;
+  merchant: Merchant;
+  merchantUser: User;
+  customer: Customer;
+  address: Address;
+  merchantProduct: ProductConcrete;
+  merchantProduct2: ProductConcrete;
+}
+
+export interface OrderFulfilmentStaticFixtures {
+  defaultPassword: string;
+  orderItemStates: OrderItemStates;
+}
+
+interface OrderItemStates {
+  shipped: string;
+  delivered: string;
+}

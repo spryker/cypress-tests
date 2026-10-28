@@ -138,6 +138,64 @@
           "type": "helper",
           "name": "addUserToGroup",
           "arguments": ["#combinedUser.id_user", "#customerGroup.id_acl_group"]
+        },
+
+        { "type": "helper", "name": "haveRole", "key": "globalAllowRole" },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "*",
+              "controller": "*",
+              "action": "*",
+              "type": "allow",
+              "fk_acl_role": "#globalAllowRole.id_acl_role"
+            }
+          ]
+        },
+        { "type": "helper", "name": "haveRole", "key": "attributeCreateDenyRole" },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "product-attribute-gui",
+              "controller": "attribute",
+              "action": "create",
+              "type": "deny",
+              "fk_acl_role": "#attributeCreateDenyRole.id_acl_role"
+            }
+          ]
+        },
+        { "type": "helper", "name": "haveGroup", "key": "attributeCreateDenyGroup" },
+        {
+          "type": "helper",
+          "name": "addRoleToGroup",
+          "arguments": ["#globalAllowRole.id_acl_role", "#attributeCreateDenyGroup.id_acl_group"]
+        },
+        {
+          "type": "helper",
+          "name": "addRoleToGroup",
+          "arguments": ["#attributeCreateDenyRole.id_acl_role", "#attributeCreateDenyGroup.id_acl_group"]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "deniedActionUser",
+          "arguments": [{ "password": "Change123@_!" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#deniedActionUser.id_user", "#attributeCreateDenyGroup.id_acl_group"]
+        },
+
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "blockedUser",
+          "arguments": [{ "password": "Change123@_!", "status": "blocked" }]
         }
       ]
     }

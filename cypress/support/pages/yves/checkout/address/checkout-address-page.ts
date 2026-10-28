@@ -45,87 +45,109 @@ export class CheckoutAddressPage extends YvesPage {
       this.repository.getMultiShipmentTriggerButton().click();
     }
 
-    this.repository
-      .getMultiShipmentAddressItemElement()
-      .children()
-      .each(($addressItem, index) => {
-        const hasServicePointUuid = Boolean(
-          this.repository.getMultiShipmentAddressItemServicePointUuidValue?.($addressItem, index)
-        );
+    if (params?.hasOwnAddressPerItem) {
+      this.uncheckSameAddressForAllItems();
+    }
 
-        if (
-          params?.servicePointSelection &&
-          (hasServicePointUuid || $addressItem.text().includes(params.servicePointSelection.productName))
-        ) {
-          this.selectServicePointForAddressItem($addressItem, index, params.servicePointSelection);
+    const addressItems =
+      params?.hasOwnAddressPerItem && this.repository.getMultiShipmentAddressItemsWithOwnAddress
+        ? this.repository.getMultiShipmentAddressItemsWithOwnAddress()
+        : this.repository.getMultiShipmentAddressItemElement().children();
 
-          return;
-        }
+    addressItems.each(($addressItem, index) => {
+      const hasServicePointUuid = Boolean(
+        this.repository.getMultiShipmentAddressItemServicePointUuidValue?.($addressItem, index)
+      );
 
-        if (params?.skipServicePointAddressOverride && hasServicePointUuid) {
-          // Pre-checked from the quote — assert instead of re-checking, so a hidden radio cannot mask it
-          if (params.shipmentType) {
-            this.repository
-              .getMultiShipmentAddressItemShipmentTypeRadio?.(index, params.shipmentType)
-              .should('be.checked');
-          }
+      if (
+        params?.servicePointSelection &&
+        (hasServicePointUuid || $addressItem.text().includes(params.servicePointSelection.productName))
+      ) {
+        this.selectServicePointForAddressItem($addressItem, index, params.servicePointSelection);
 
-          return;
-        }
+        return;
+      }
 
-        const checkoutAddress = this.createDummyCheckoutAddress();
-
-        if (!this.isRepository('b2c', 'b2b', 'b2b-mp')) {
-          this.repository.getMultiShipmentAddressItemDeliveryRadio($addressItem, index).click({ force: true });
-        }
-
-        if (params?.idCustomerAddress) {
+      if (params?.skipServicePointAddressOverride && hasServicePointUuid) {
+        // Pre-checked from the quote — assert instead of re-checking, so a hidden radio cannot mask it
+        if (params.shipmentType) {
           this.repository
-            .getMultiShipmentAddressItemAddressField($addressItem, index)
-            .select(params.idCustomerAddress.toString(), { force: true });
-
-          return;
+            .getMultiShipmentAddressItemShipmentTypeRadio?.(index, params.shipmentType)
+            .should('be.checked');
         }
 
-        this.repository.getMultiShipmentAddressItemAddressField($addressItem, index).select('0', { force: true });
+        return;
+      }
 
-        // Setting mandatory fields
-        this.repository
-          .getMultiShipmentAddressItemAddressFirstNameField($addressItem, index)
-          .clear()
-          .type(checkoutAddress.firstName, { delay: 0 });
-        this.repository
-          .getMultiShipmentAddressItemAddressLastNameField($addressItem, index)
-          .clear()
-          .type(checkoutAddress.lastName, { delay: 0 });
-        this.repository
-          .getMultiShipmentAddressItemAddressAddress1Field($addressItem, index)
-          .clear()
-          .type(checkoutAddress.address1, { delay: 0 });
-        this.repository
-          .getMultiShipmentAddressItemAddressAddress2Field($addressItem, index)
-          .clear()
-          .type(checkoutAddress.address2, { delay: 0 });
-        this.repository
-          .getMultiShipmentAddressItemAddressZipCodeField($addressItem, index)
-          .clear()
-          .type(checkoutAddress.zipCode, { delay: 0 });
-        this.repository
-          .getMultiShipmentAddressItemAddressCityField($addressItem, index)
-          .clear()
-          .type(checkoutAddress.city, { delay: 0 });
+      const checkoutAddress = this.createDummyCheckoutAddress();
 
+      if (!this.isRepository('b2c', 'b2b', 'b2b-mp')) {
+        this.repository.getMultiShipmentAddressItemDeliveryRadio($addressItem, index).click({ force: true });
+      }
+
+      if (params?.idCustomerAddress) {
         this.repository
-          .getMultiShipmentAddressItemAddressCompanyField($addressItem, index)
-          .clear()
-          .type(checkoutAddress.company, { delay: 0 });
-        this.repository
-          .getMultiShipmentAddressItemAddressPhoneField($addressItem, index)
-          .clear()
-          .type(checkoutAddress.phone, { delay: 0 });
-      });
+          .getMultiShipmentAddressItemAddressField($addressItem, index)
+          .select(params.idCustomerAddress.toString(), { force: true });
+
+        return;
+      }
+
+      this.repository.getMultiShipmentAddressItemAddressField($addressItem, index).select('0', { force: true });
+
+      // Setting mandatory fields
+      this.repository
+        .getMultiShipmentAddressItemAddressFirstNameField($addressItem, index)
+        .clear()
+        .type(checkoutAddress.firstName, { delay: 0 });
+      this.repository
+        .getMultiShipmentAddressItemAddressLastNameField($addressItem, index)
+        .clear()
+        .type(checkoutAddress.lastName, { delay: 0 });
+      this.repository
+        .getMultiShipmentAddressItemAddressAddress1Field($addressItem, index)
+        .clear()
+        .type(checkoutAddress.address1, { delay: 0 });
+      this.repository
+        .getMultiShipmentAddressItemAddressAddress2Field($addressItem, index)
+        .clear()
+        .type(checkoutAddress.address2, { delay: 0 });
+      this.repository
+        .getMultiShipmentAddressItemAddressZipCodeField($addressItem, index)
+        .clear()
+        .type(checkoutAddress.zipCode, { delay: 0 });
+      this.repository
+        .getMultiShipmentAddressItemAddressCityField($addressItem, index)
+        .clear()
+        .type(checkoutAddress.city, { delay: 0 });
+
+      this.repository
+        .getMultiShipmentAddressItemAddressCompanyField($addressItem, index)
+        .clear()
+        .type(checkoutAddress.company, { delay: 0 });
+      this.repository
+        .getMultiShipmentAddressItemAddressPhoneField($addressItem, index)
+        .clear()
+        .type(checkoutAddress.phone, { delay: 0 });
+    });
 
     this.fillBillingAddress();
+  };
+
+  // The self-service portal checks "same address for all items" per shipment type group by default and hides
+  // every other item's address form behind it; a shop without the portal has no such checkbox.
+  uncheckSameAddressForAllItems = (): void => {
+    const checkboxSelector = this.repository.getSameAddressForAllItemsCheckboxSelector?.();
+
+    if (!checkboxSelector) {
+      return;
+    }
+
+    cy.get('body').then(($body) => {
+      if ($body.find(`${checkboxSelector}:checked`).length) {
+        cy.get(`${checkboxSelector}:checked`).uncheck({ force: true });
+      }
+    });
   };
 
   fillSingleCheckoutAddress = (params?: FillShippingAddressParams): void => {
@@ -251,10 +273,77 @@ export class CheckoutAddressPage extends YvesPage {
       phone: this.faker.phone.number(),
     };
   };
+
+  // Collecting at a service point on a single-shipment cart: choose the shipment type, then the
+  // location. Picking a service point is what replaces the item's delivery address with the
+  // store's, so no shipping address is filled here.
+  selectPickupAtServicePoint = (params: SelectPickupAtServicePointParams): void => {
+    this.repository.getShipmentTypeRadio(params.shipmentTypeKey).click({ force: true });
+    this.repository.getSelectServicePointButton().first().click({ force: true });
+    this.repository.getServicePointFinderInput?.().clear().type(params.servicePointName);
+    this.repository.getServicePointFinderListItem?.(params.servicePointName).first().click();
+  };
+
+  setBillingSameAsShipping = (isSame: boolean): void => {
+    const checkbox = this.repository.getShippingAddressBillingSameAsShippingCheckbox();
+
+    if (isSame) {
+      checkbox.check({ force: true });
+
+      return;
+    }
+
+    checkbox.uncheck({ force: true });
+  };
+
+  // A business unit address is offered in the same select as the customer's own addresses, but
+  // its option value is not an id_customer_address, so it is chosen by its visible label.
+  selectShippingAddressByText = (addressText: string): void => {
+    this.repository
+      .getShippingAddressSelectElement()
+      .contains('option', addressText)
+      .then(($option: JQuery<HTMLElement>) => {
+        this.repository.getShippingAddressSelectElement().select($option.val() as string, { force: true });
+      });
+  };
+
+  typeBillingAddress = (address: CheckoutAddressInput): void => {
+    this.repository.getSelectBillingAddressField().select('0', { force: true });
+
+    this.repository.getBillingAddressFirstNameField().clear().type(address.firstName, { delay: 0 });
+    this.repository.getBillingAddressLastNameField().clear().type(address.lastName, { delay: 0 });
+    this.repository.getBillingAddressAddress1Field().clear().type(address.address1, { delay: 0 });
+    this.repository.getBillingAddressAddress2Field().clear().type(address.address2, { delay: 0 });
+    this.repository.getBillingAddressZipCodeField().clear().type(address.zipCode, { delay: 0 });
+    this.repository.getBillingAddressCityField().clear().type(address.city, { delay: 0 });
+    this.repository.getBillingAddressCompanyField().clear().type(address.company, { delay: 0 });
+    this.repository.getBillingAddressPhoneField().clear().type(address.phone, { delay: 0 });
+  };
+
+  submitAddressStep = (): void => {
+    this.repository.getNextButton().click();
+  };
+}
+
+interface SelectPickupAtServicePointParams {
+  shipmentTypeKey: string;
+  servicePointName: string;
+}
+
+export interface CheckoutAddressInput {
+  firstName: string;
+  lastName: string;
+  address1: string;
+  address2: string;
+  zipCode: string;
+  city: string;
+  company: string;
+  phone: string;
 }
 
 interface FillShippingAddressParams {
   idCustomerAddress?: number;
+  hasOwnAddressPerItem?: boolean;
   shipmentType?: string;
   skipServicePointAddressOverride?: boolean;
   servicePointSelection?: ServicePointSelection;

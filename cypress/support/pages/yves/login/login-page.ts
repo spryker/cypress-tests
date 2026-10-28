@@ -16,6 +16,7 @@ export class LoginPage extends YvesPage {
     this.repository.getLoginEmailInput().clear().type(params.email);
     this.repository.getLoginPasswordInput().clear().type(params.password);
 
+    cy.resetProxyCookieJar();
     this.repository.getLoginForm().submit();
   };
 

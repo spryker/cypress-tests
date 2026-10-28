@@ -1,0 +1,243 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "customer",
+          "arguments": [
+            {
+              "registered": "2025-01-01",
+              "password": "change123",
+              "locale_name": "en_US"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address",
+          "arguments": [
+            {
+              "fkCustomer": "#customer.id_customer",
+              "fkCountry": "#country.id_country"
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": {
+            "id_store": 1,
+            "name": "DE",
+            "defaultCurrencyIsoCode": "EUR"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product",
+          "arguments": [
+            {
+              "attributes": {
+                "brand": "Discounts and promotions fixture"
+              }
+            },
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#product.abstract_sku",
+              "skuProduct": "#product.sku",
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#product.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "promotionalProduct",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#promotionalProduct.abstract_sku",
+              "skuProduct": "#promotionalProduct.sku",
+              "moneyValue": {
+                "netAmount": 7500,
+                "grossAmount": 7500
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#promotionalProduct.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveDiscount",
+          "key": "voucherDiscount",
+          "arguments": [
+            {
+              "discountGeneral": {
+                "discountType": "voucher",
+                "isActive": true,
+                "storeRelation": {
+                  "idStores": [1]
+                }
+              },
+              "discountCalculator": {
+                "calculatorPlugin": "PLUGIN_CALCULATOR_PERCENTAGE",
+                "amount": 500,
+                "collectorQueryString": "attribute.brand = 'Discounts and promotions fixture'"
+              },
+              "discountCondition": {
+                "decisionRuleQueryString": "attribute.brand = 'Discounts and promotions fixture'"
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveGeneratedVoucherCodes",
+          "key": "voucherCode",
+          "arguments": [
+            {
+              "idDiscount": "#voucherDiscount.id_discount",
+              "quantity": 1,
+              "randomGeneratedCodeLength": 10
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveDiscount",
+          "key": "cartRuleDiscount",
+          "arguments": [
+            {
+              "discountGeneral": {
+                "discountType": "cart_rule",
+                "isActive": true,
+                "storeRelation": {
+                  "idStores": [1]
+                }
+              },
+              "discountCalculator": {
+                "calculatorPlugin": "PLUGIN_CALCULATOR_PERCENTAGE",
+                "amount": 1000,
+                "collectorQueryString": "attribute.brand = 'Discounts and promotions fixture'"
+              },
+              "discountCondition": {
+                "decisionRuleQueryString": "attribute.brand = 'Discounts and promotions fixture'"
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveDiscount",
+          "key": "promotionDiscount",
+          "arguments": [
+            {
+              "discountGeneral": {
+                "discountType": "voucher",
+                "isActive": true,
+                "storeRelation": {
+                  "idStores": [1]
+                }
+              },
+              "discountCalculator": {
+                "calculatorPlugin": "PLUGIN_CALCULATOR_PERCENTAGE",
+                "amount": 10000,
+                "collectorStrategyType": "promotion",
+                "discountPromotion": {
+                  "abstractSkus": ["#promotionalProduct.abstract_sku"],
+                  "abstractSku": "#promotionalProduct.abstract_sku",
+                  "quantity": 2
+                }
+              },
+              "discountCondition": {
+                "decisionRuleQueryString": "attribute.brand = 'Discounts and promotions fixture'"
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveGeneratedVoucherCodes",
+          "key": "promotionVoucherCode",
+          "arguments": [
+            {
+              "idDiscount": "#promotionDiscount.id_discount",
+              "quantity": 1,
+              "randomGeneratedCodeLength": 10
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePersistentQuote",
+          "key": "quote",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "items": [
+                {
+                  "sku": "#product.sku",
+                  "abstractSku": "#product.abstract_sku",
+                  "quantity": 1
+                }
+              ]
+            },
+            true
+          ]
+        }
+      ]
+    }
+  }
+}

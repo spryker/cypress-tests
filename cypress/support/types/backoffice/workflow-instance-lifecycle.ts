@@ -5,6 +5,8 @@ export interface WorkflowInstanceLifecycleStaticFixtures {
   initialState: string;
   manualEvent: string;
   targetState: string;
+  finalManualEvent: string;
+  finalState: string;
 }
 
 export interface WorkflowInstanceLifecycleDynamicFixtures {

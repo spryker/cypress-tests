@@ -1,0 +1,7 @@
+{
+  "defaultPassword": "change123",
+  "configurationNotCompleteStatus": "Configuration is not complete.",
+  "configurationCompleteStatus": "Configuration complete!",
+  "unconfiguredCheckoutBlockedMessage": "Please configure items inside the cart.",
+  "availableStock": 5
+}

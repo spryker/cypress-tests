@@ -8,6 +8,9 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
+// The queue worker that publishes a newly created store runs past 100 seconds on the B2B marketplace.
+const CLI_COMMANDS_TIMEOUT_MS = 200000;
+
 Cypress.Commands.add('iframe', { prevSubject: 'element' }, ($iframe) => {
   return new Cypress.Promise((resolve) => {
     $iframe.on('load', () => {
@@ -79,6 +82,23 @@ Cypress.Commands.add(
     });
   }
 );
+
+Cypress.Commands.add('resetProxyCookieJar', () => {
+  cy.getCookies().then((cookies) => {
+    cy.clearCookies();
+    cookies.forEach((cookie) => {
+      cy.setCookie(cookie.name, cookie.value, {
+        domain: cookie.domain,
+        path: cookie.path,
+        hostOnly: cookie.hostOnly,
+        httpOnly: cookie.httpOnly,
+        secure: cookie.secure,
+        sameSite: cookie.sameSite,
+        expiry: cookie.expiry,
+      });
+    });
+  });
+});
 
 Cypress.Commands.add('resetBackofficeCookies', () => {
   cy.clearCookies();
@@ -176,7 +196,7 @@ Cypress.Commands.add('runCliCommands', (commands) => {
         },
       },
     },
-    timeout: 100000,
+    timeout: CLI_COMMANDS_TIMEOUT_MS,
   });
 });
 
@@ -411,6 +431,23 @@ Cypress.Commands.add('createCart', (accessToken, attributes) => {
       },
     })
     .then((response) => response.body.data.id);
+});
+
+Cypress.Commands.add('addCartItem', (accessToken, cartId, attributes) => {
+  return cy.request({
+    method: 'POST',
+    url: `${Cypress.env().glueUrl}/carts/${cartId}/items`,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: {
+      data: {
+        type: 'items',
+        attributes,
+      },
+    },
+  });
 });
 
 Cypress.Commands.add('createShoppingList', (accessToken, name) => {

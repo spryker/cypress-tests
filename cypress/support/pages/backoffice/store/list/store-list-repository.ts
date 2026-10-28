@@ -9,4 +9,5 @@ export class StoreListRepository {
   getViewButtonSelector = (): string => 'a:contains("View Store")';
   getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1):visible');
   getSearchSelector = (): string => '[data-qa="table-search"]';
+  getTableRowSelector = (): string => 'tbody > tr';
 }

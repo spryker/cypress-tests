@@ -6,7 +6,8 @@ import { inject, injectable } from 'inversify';
 // search and added from its PDP; the b2b-style ones quick-add by SKU straight from the cart page.
 const CATALOG_SEARCH_REPOSITORY_IDS = ['b2c', 'b2c-mp'];
 
-const ADD_TO_CART_BUTTON = '[data-qa="add-to-cart-button"]';
+// Scoped to the product configurator: the B2C mini-cart labels its remove buttons add-to-cart-button too.
+const ADD_TO_CART_BUTTON = '[data-qa="component product-configurator"] [data-qa="add-to-cart-button"]';
 
 const PUBLISH_RELOAD_ATTEMPTS = 20;
 

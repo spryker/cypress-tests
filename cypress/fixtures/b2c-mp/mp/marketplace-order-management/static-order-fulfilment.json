@@ -1,0 +1,7 @@
+{
+  "defaultPassword": "change123",
+  "orderItemStates": {
+    "shipped": "shipped",
+    "delivered": "delivered"
+  }
+}

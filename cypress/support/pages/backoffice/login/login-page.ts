@@ -14,6 +14,7 @@ export class LoginPage extends BackofficePage {
     this.repository.getEmailInput().clear().type(params.username);
     this.repository.getPasswordInput().clear().type(params.password);
 
+    cy.resetProxyCookieJar();
     this.repository.getSubmitButton().click();
   };
 
@@ -56,6 +57,8 @@ export class LoginPage extends BackofficePage {
   getCaptchaInvalidText = (): string => this.repository.getCaptchaInvalidText();
 
   getAccountBlockedText = (): string => this.repository.getAccountBlockedText();
+
+  getErrorMessage = (): Cypress.Chainable => this.repository.getErrorMessage();
 }
 
 interface LoginParams {

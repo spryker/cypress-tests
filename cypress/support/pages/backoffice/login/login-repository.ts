@@ -17,4 +17,5 @@ export class LoginRepository {
   getCaptchaRequiredText = (): string => 'Please complete the security check.';
   getCaptchaInvalidText = (): string => 'The security check could not be verified. Please try again.';
   getAccountBlockedText = (): string => 'Too many login attempts. Please wait';
+  getErrorMessage = (): Cypress.Chainable => cy.get('[data-qa="error-message"]');
 }
