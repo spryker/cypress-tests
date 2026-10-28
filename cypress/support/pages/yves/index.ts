@@ -62,3 +62,4 @@ export * from './company/register/company-registration-page';
 export * from './agentic-commerce/consent/consent-page';
 export * from './agentic-commerce/connected-apps/connected-apps-page';
 export * from './agentic-commerce/authorization-error/authorization-error-page';
+export * from './agentic-commerce/company-connected-apps/company-connected-apps-page';

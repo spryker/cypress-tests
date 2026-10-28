@@ -16,6 +16,9 @@ export class ConnectedAppsPage extends YvesPage {
   getConnectedAppPrincipal = (clientName: string): Cypress.Chainable =>
     this.repository.getConnectedApp(clientName).find(this.repository.getPrincipalSelector());
 
+  getConsentUuid = (clientName: string): Cypress.Chainable =>
+    this.repository.getConnectedApp(clientName).find(this.repository.getConsentUuidInputSelector()).invoke('val');
+
   getList = (): Cypress.Chainable => this.repository.getList();
 
   disconnect = (clientName: string): void => {

@@ -4,9 +4,12 @@ import { injectable } from 'inversify';
 @injectable()
 @autoWired
 export class ClientListRepository {
-  getRegisterClientButton = (): Cypress.Chainable => cy.get('a[href="/agentic-commerce/agentic-commerce-client/create"]');
+  getRegisterClientButton = (): Cypress.Chainable =>
+    cy.get('a[href="/agentic-commerce/agentic-commerce-client/create"]');
   getBlockButtonSelector = (): string => 'a[href*="/agentic-commerce/agentic-commerce-client/block"]';
   getUnblockButtonSelector = (): string => 'a[href*="/agentic-commerce/agentic-commerce-client/unblock"]';
+  getEditScopeCeilingButtonSelector = (): string =>
+    'a[href*="/agentic-commerce/agentic-commerce-client/edit-scope-ceiling"]';
   getConfirmButton = (): Cypress.Chainable => cy.get('form input[type="submit"].safe-submit');
   getFlashMessage = (): Cypress.Chainable => cy.get('.flash-messages, .alert');
 }

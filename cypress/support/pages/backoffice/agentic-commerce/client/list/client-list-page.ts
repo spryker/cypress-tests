@@ -37,6 +37,10 @@ export class ClientListPage extends BackofficePage {
     this.repository.getConfirmButton().click();
   };
 
+  editScopeCeiling = (clientId: string): void => {
+    this.clickRowAction(clientId, this.repository.getEditScopeCeilingButtonSelector());
+  };
+
   getFlashMessage = (): Cypress.Chainable => this.repository.getFlashMessage();
 
   private clickRowAction = (clientId: string, actionSelector: string): void => {

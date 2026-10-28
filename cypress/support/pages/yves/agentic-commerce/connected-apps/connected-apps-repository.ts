@@ -9,5 +9,6 @@ export class ConnectedAppsRepository {
   getConnectedAppSelector = (): string => '[data-qa="agentic-commerce-consent"]';
   getPrincipalSelector = (): string => '[data-qa="agentic-commerce-consent-principal"]';
   getDisconnectButtonSelector = (): string => '[data-qa="agentic-commerce-disconnect"]';
+  getConsentUuidInputSelector = (): string => 'input[type="hidden"][name$="[consentUuid]"]';
   getList = (): Cypress.Chainable => cy.get('[data-qa="agentic-commerce-connected-apps-list"]');
 }

@@ -8,7 +8,7 @@ import {
   readPrincipal,
   registerAgenticCommerceClient,
 } from '@utils';
-import { ClientListPage } from '@pages/backoffice';
+import { ClientListPage, KillSwitchPage } from '@pages/backoffice';
 import { AuthorizationErrorPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ClientAuthorizationScenario } from '@scenarios/yves';
@@ -36,6 +36,7 @@ describe(
     const userLoginScenario = container.get(UserLoginScenario);
     const clientAuthorizationScenario = container.get(ClientAuthorizationScenario);
     const clientListPage = container.get(ClientListPage);
+    const killSwitchPage = container.get(KillSwitchPage);
     const authorizationErrorPage = container.get(AuthorizationErrorPage);
 
     let staticFixtures: AgenticCommerceStaticFixtures;
@@ -109,6 +110,31 @@ describe(
       });
       cy.location('pathname').should('not.equal', '/agentic-commerce/agentic-commerce-client/block');
     });
+
+    if (isAgenticCommerceCutReached('6a-2')) {
+      it('read-only back office user should be denied the kill switch and scope ceiling changes', (): void => {
+        const deniedPaths = [
+          '/agentic-commerce/agentic-commerce-kill-switch/disable',
+          '/agentic-commerce/agentic-commerce-kill-switch/enable',
+          `/agentic-commerce/agentic-commerce-client/edit-scope-ceiling?client-identifier=${client.clientId}`,
+        ];
+
+        userLoginScenario.execute({ username: dynamicFixtures.readOnlyUser.username, password: 'Change123@_!' });
+
+        killSwitchPage.visit();
+        killSwitchPage.getForm().should('be.visible');
+        killSwitchPage.getPageBody().should('contain', 'Delegated access is on in this region.');
+
+        deniedPaths.forEach((deniedPath) => {
+          cy.visitBackoffice(deniedPath, { failOnStatusCode: false });
+          cy.location('pathname').should('not.equal', deniedPath.split('?')[0]);
+        });
+
+        killSwitchPage.visit();
+        killSwitchPage.getPageBody().should('contain', 'Delegated access is on in this region.');
+        requestAuthorizationStart(client).its('status').should('equal', 302);
+      });
+    }
   }
 );
 

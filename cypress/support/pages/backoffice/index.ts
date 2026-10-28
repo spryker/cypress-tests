@@ -105,3 +105,5 @@ export * from './service-point/view/service-point-view-page';
 export * from './agentic-commerce/client/list/client-list-page';
 export * from './agentic-commerce/client/create/client-create-page';
 export * from './agentic-commerce/consent/list/consent-list-page';
+export * from './agentic-commerce/client/scope-ceiling/scope-ceiling-page';
+export * from './agentic-commerce/kill-switch/kill-switch-page';

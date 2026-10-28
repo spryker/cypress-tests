@@ -1,0 +1,17 @@
+{
+  "defaultPassword": "change123",
+  "scope": "agentic-commerce:principal-read",
+  "scopeLabel": "See who you are signed in as",
+  "redirectUri": "http://localhost:8765/callback",
+  "companyAdmin": { "email": "sonia@acme.com", "fullName": "Sonia Wagner" },
+  "companyUser": { "email": "arnold@acme.com", "fullName": "Arnold Kurmann" },
+  "otherCompanyUser": { "email": "spencor.hopkin@acme.com", "fullName": "Spencor Hopkin" },
+  "userWithoutPermission": { "email": "kevin@acme.com" },
+  "texts": {
+    "neverUsed": "Not used yet",
+    "revoked": "Delegated access revoked",
+    "notInCompany": "This delegated access does not belong to your company.",
+    "revoke": "Revoke",
+    "connectedApps": "Connected apps"
+  }
+}

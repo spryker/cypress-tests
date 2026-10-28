@@ -1,0 +1,30 @@
+{
+  "defaultPassword": "change123",
+  "scope": "agentic-commerce:principal-read",
+  "redirectUri": "http://localhost:8765/callback",
+  "customer": { "email": "maria.williams@acme.com", "customerReference": "DE--2" },
+  "companyUser": { "email": "sonia@acme.com", "companyName": "Acme Corporation" },
+  "backofficeUser": { "username": "admin@spryker.com", "password": "change123" },
+  "scopeCeiling": {
+    "supportedScopes": ["agentic-commerce:principal-read", "order:place"],
+    "narrowedScope": "order:place",
+    "removedScope": "agentic-commerce:principal-read",
+    "savedMessage": "Scope ceiling saved"
+  },
+  "killSwitch": {
+    "disableReason": "Suspicious client traffic",
+    "enableReason": "Traffic checked",
+    "tooShortReason": "abc",
+    "texts": {
+      "statusOn": "Delegated access is on in this region.",
+      "statusOff": "Delegated access is off in this region.",
+      "disabled": "Delegated access is switched off",
+      "enabled": "Delegated access is switched on",
+      "reasonRequired": "Enter a reason.",
+      "reasonTooShort": "The reason must have at least 5 characters."
+    }
+  },
+  "dynamicClient": { "clientName": "E2E upfront approved client", "softwareId": "spryker-e2e-upfront-approved-client" },
+  "noPermissionsNotice": "This app has no permissions configured in this shop.",
+  "b2cConsentLimit": { "amount": "25.00", "label": "Maximum per order: €25.00" }
+}

@@ -96,3 +96,35 @@ export interface AgenticCommerceQuoteApprovalStaticFixtures {
 export interface AgenticCommerceQuoteApprovalDynamicFixtures {
   product: { sku: string };
 }
+
+export interface AgenticCommerceKillSwitchStaticFixtures extends AgenticCommerceStaticFixtures {
+  scopeCeiling: { supportedScopes: string[]; narrowedScope: string; removedScope: string; savedMessage: string };
+  killSwitch: {
+    disableReason: string;
+    enableReason: string;
+    tooShortReason: string;
+    texts: {
+      statusOn: string;
+      statusOff: string;
+      disabled: string;
+      enabled: string;
+      reasonRequired: string;
+      reasonTooShort: string;
+    };
+  };
+  dynamicClient: { clientName: string; softwareId: string };
+  noPermissionsNotice: string;
+  b2cConsentLimit: { amount: string; label: string };
+}
+
+export interface AgenticCommerceCompanyConsentsStaticFixtures {
+  defaultPassword: string;
+  scope: string;
+  scopeLabel: string;
+  redirectUri: string;
+  companyAdmin: { email: string; fullName: string };
+  companyUser: { email: string; fullName: string };
+  otherCompanyUser: { email: string; fullName: string };
+  userWithoutPermission: { email: string };
+  texts: { neverUsed: string; revoked: string; notInCompany: string; revoke: string; connectedApps: string };
+}
