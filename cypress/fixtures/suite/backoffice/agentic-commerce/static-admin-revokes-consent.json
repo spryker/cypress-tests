@@ -4,5 +4,19 @@
   "redirectUri": "http://localhost:8765/callback",
   "customer": { "email": "maria.williams@acme.com", "customerReference": "DE--2" },
   "companyUser": { "email": "sonia@acme.com", "companyName": "Acme Corporation" },
-  "backofficeUser": { "username": "admin@spryker.com", "password": "change123" }
+  "backofficeUser": { "username": "admin@spryker.com", "password": "change123" },
+  "scopeWithOrderPlacement": "agentic-commerce:principal-read order:place",
+  "limits": {
+    "orderLimitAmount": "50.00",
+    "budgetAmount": "100.00",
+    "budgetPeriod": "week",
+    "sellerReference": "MER000001",
+    "categoryKey": "computer",
+    "constraintsColumnTexts": [
+      "Maximum per order: 50.00 EUR",
+      "Budget: 100.00 EUR per week",
+      "Merchants: MER000001",
+      "Categories: computer"
+    ]
+  }
 }

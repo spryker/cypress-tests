@@ -4,7 +4,7 @@ import {
   readPrincipal,
   readResourceMetadata,
 } from '@utils';
-import { AgenticCommerceStaticFixtures } from '@interfaces/api';
+import { AgenticCommerceMetadataStaticFixtures, AgenticCommerceStaticFixtures } from '@interfaces/api';
 
 describe(
   'client-discovers-authorization-server',
@@ -126,6 +126,31 @@ describe(
     it('authorization server metadata should keep listing the scope of the resource', (): void => {
       readAuthorizationServerMetadata().then((metadataResponse) => {
         expect(metadataResponse.body.scopes_supported).to.include(staticFixtures.scope);
+      });
+    });
+  }
+);
+
+describe(
+  'client-discovers-authorization-details-types',
+  { tags: ['@api', '@agentic-commerce', '@agentic-commerce-cut-6b', 'agentic-commerce'] },
+  (): void => {
+    if (!isAgenticCommerceCutReached('6b')) {
+      it.skip('skipped until the suite runs AgenticCommerce cut 6b', () => {});
+      return;
+    }
+
+    let staticFixtures: AgenticCommerceMetadataStaticFixtures;
+
+    before((): void => {
+      ({ staticFixtures } = Cypress.env());
+    });
+
+    it('authorization server metadata should list the authorization details types the shop supports', (): void => {
+      readAuthorizationServerMetadata().then((metadataResponse) => {
+        expect(metadataResponse.body.authorization_details_types_supported).to.have.members(
+          staticFixtures.authorizationDetailsTypes
+        );
       });
     });
   }

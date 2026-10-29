@@ -113,7 +113,8 @@ export function createProofKey(): Cypress.Chainable<AgenticCommerceProofKey> {
 export function buildAuthorizationUrl(
   client: AgenticCommerceClient,
   proofKey: AgenticCommerceProofKey,
-  state: string
+  state: string,
+  authorizationDetails?: string
 ): string {
   const query = new URLSearchParams({
     response_type: 'code',
@@ -125,6 +126,10 @@ export function buildAuthorizationUrl(
     code_challenge_method: 'S256',
     resource: resourceUrl(),
   });
+
+  if (authorizationDetails !== undefined) {
+    query.set('authorization_details', authorizationDetails);
+  }
 
   return `/connect/authorize?${query.toString()}`;
 }
@@ -156,7 +161,8 @@ export function readAuthorizationResponse(): Cypress.Chainable<AgenticCommerceAu
 export function exchangeAuthorizationCode(
   client: AgenticCommerceClient,
   code: string,
-  proofKey: AgenticCommerceProofKey
+  proofKey: AgenticCommerceProofKey,
+  additionalParameters: Record<string, string> = {}
 ): Cypress.Chainable<Cypress.Response<AgenticCommerceTokens>> {
   return cy.request({
     method: 'POST',
@@ -170,6 +176,7 @@ export function exchangeAuthorizationCode(
       redirect_uri: client.redirectUri,
       client_id: client.clientId,
       resource: resourceUrl(),
+      ...additionalParameters,
     },
   });
 }

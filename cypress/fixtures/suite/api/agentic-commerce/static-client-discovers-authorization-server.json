@@ -4,5 +4,11 @@
   "redirectUri": "http://localhost:8765/callback",
   "customer": { "email": "maria.williams@acme.com", "customerReference": "DE--2" },
   "companyUser": { "email": "sonia@acme.com", "companyName": "Acme Corporation" },
-  "backofficeUser": { "username": "admin@spryker.com", "password": "change123" }
+  "backofficeUser": { "username": "admin@spryker.com", "password": "change123" },
+  "authorizationDetailsTypes": [
+    "https://spryker.com/oauth/authorization-details/order-total-limit",
+    "https://spryker.com/oauth/authorization-details/order-budget",
+    "https://spryker.com/oauth/authorization-details/merchant-allowlist",
+    "https://spryker.com/oauth/authorization-details/category-allowlist"
+  ]
 }

@@ -5,12 +5,17 @@ import {
   isAgenticCommerceCutReached,
   readPrincipal,
   registerAgenticCommerceClient,
+  setAgenticCommerceScopeCeiling,
 } from '@utils';
 import { ConsentListPage } from '@pages/backoffice';
 import { ConnectedAppsPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ClientAuthorizationScenario } from '@scenarios/yves';
-import { AgenticCommerceClient, AgenticCommerceStaticFixtures, AgenticCommerceTokens } from '@interfaces/api';
+import {
+  AgenticCommerceClient,
+  AgenticCommerceConsentConstraintsStaticFixtures,
+  AgenticCommerceTokens,
+} from '@interfaces/api';
 
 describe(
   'admin-revokes-consent',
@@ -26,7 +31,7 @@ describe(
     const consentListPage = container.get(ConsentListPage);
     const connectedAppsPage = container.get(ConnectedAppsPage);
 
-    let staticFixtures: AgenticCommerceStaticFixtures;
+    let staticFixtures: AgenticCommerceConsentConstraintsStaticFixtures;
     let client: AgenticCommerceClient;
 
     before((): void => {
@@ -43,6 +48,43 @@ describe(
         blockAgenticCommerceClient(client);
       }
     });
+
+    // The constraints column arrives with cut 6b.
+    if (isAgenticCommerceCutReached('6b')) {
+      it('back office user should see the limits of a consent in the constraints column', (): void => {
+        setAgenticCommerceScopeCeiling(client, staticFixtures.scopeWithOrderPlacement.split(' '));
+
+        cy.then(() => {
+          clientAuthorizationScenario.execute({
+            client: { ...client, scope: staticFixtures.scopeWithOrderPlacement },
+            email: staticFixtures.customer.email,
+            password: staticFixtures.defaultPassword,
+            orderLimit: staticFixtures.limits.orderLimitAmount,
+            budget: { amount: staticFixtures.limits.budgetAmount, period: staticFixtures.limits.budgetPeriod },
+            allowedSellers: [staticFixtures.limits.sellerReference],
+            allowedCategories: [staticFixtures.limits.categoryKey],
+          });
+        });
+
+        userLoginScenario.execute({
+          username: staticFixtures.backofficeUser.username,
+          password: staticFixtures.backofficeUser.password,
+        });
+        consentListPage.visit();
+        cy.then(() => {
+          consentListPage
+            .getConstraintsCell(client.clientId)
+            .invoke('text')
+            .then((constraintsText) => {
+              staticFixtures.limits.constraintsColumnTexts.forEach((text) => {
+                expect(constraintsText).to.contain(text);
+              });
+            });
+        });
+      });
+    } else {
+      it.skip('skipped until the suite runs AgenticCommerce cut 6b', () => {});
+    }
 
     it('client should lose access once a back office user revokes its consent', (): void => {
       let tokens: AgenticCommerceTokens;

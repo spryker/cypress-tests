@@ -29,6 +29,18 @@ export class ConsentPage extends YvesPage {
 
   getOrderLimitInput = (): Cypress.Chainable => this.repository.getOrderLimitInput();
 
+  getBudgetAmountInput = (): Cypress.Chainable => this.repository.getBudgetAmountInput();
+
+  getBudgetPeriodSelect = (): Cypress.Chainable => this.repository.getBudgetPeriodSelect();
+
+  getSellerCheckbox = (reference: string): Cypress.Chainable => this.repository.getSellerCheckbox(reference);
+
+  getSellerCheckboxes = (): Cypress.Chainable => this.repository.getSellerCheckboxes();
+
+  getCategoryCheckbox = (key: string): Cypress.Chainable => this.repository.getCategoryCheckbox(key);
+
+  getCategoryCheckboxes = (): Cypress.Chainable => this.repository.getCategoryCheckboxes();
+
   getConstraintError = (): Cypress.Chainable => this.repository.getConstraintError();
 
   setScope = (scope: string, isGranted: boolean): void => {
@@ -47,6 +59,38 @@ export class ConsentPage extends YvesPage {
     if (amount !== '') {
       this.repository.getOrderLimitInput().type(amount);
     }
+  };
+
+  enterBudget = (amount: string, period?: string): void => {
+    this.repository.getBudgetAmountInput().clear();
+
+    if (amount !== '') {
+      this.repository.getBudgetAmountInput().type(amount);
+    }
+
+    if (period !== undefined) {
+      this.repository.getBudgetPeriodSelect().select(period);
+    }
+  };
+
+  setSeller = (reference: string, isAllowed: boolean): void => {
+    if (isAllowed) {
+      this.repository.getSellerCheckbox(reference).check({ force: true });
+
+      return;
+    }
+
+    this.repository.getSellerCheckbox(reference).uncheck({ force: true });
+  };
+
+  setCategory = (key: string, isAllowed: boolean): void => {
+    if (isAllowed) {
+      this.repository.getCategoryCheckbox(key).check({ force: true });
+
+      return;
+    }
+
+    this.repository.getCategoryCheckbox(key).uncheck({ force: true });
   };
 
   selectStore = (storeName: string): void => {

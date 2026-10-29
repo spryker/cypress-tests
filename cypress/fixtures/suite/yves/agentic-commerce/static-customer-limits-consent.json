@@ -1,0 +1,42 @@
+{
+  "defaultPassword": "change123",
+  "scopeWithOrderPlacement": "agentic-commerce:principal-read order:place",
+  "redirectUri": "http://localhost:8765/callback",
+  "customer": { "email": "maria.williams@acme.com" },
+  "orderLimit": { "amount": "50.00", "label": "Maximum per order: €50.00" },
+  "authorizationDetailsTypes": {
+    "orderTotalLimit": "https://spryker.com/oauth/authorization-details/order-total-limit",
+    "orderBudget": "https://spryker.com/oauth/authorization-details/order-budget",
+    "merchantAllowlist": "https://spryker.com/oauth/authorization-details/merchant-allowlist",
+    "categoryAllowlist": "https://spryker.com/oauth/authorization-details/category-allowlist",
+    "unknown": "https://example.com/unknown"
+  },
+  "merchants": {
+    "spryker": { "reference": "MER000001", "name": "Spryker" },
+    "videoKing": { "reference": "MER000002", "name": "Video King" }
+  },
+  "categories": {
+    "computer": { "key": "computer", "name": "Computer" },
+    "notebooks": { "key": "notebooks", "name": "Notebooks" }
+  },
+  "budget": {
+    "amount": "100.00",
+    "period": "week",
+    "connectedAppsLabel": "Budget: €100.00 per week",
+    "requestedAmount": 20000,
+    "requestedDisplay": "200.00",
+    "loweredAmount": "100.00",
+    "raisedAmount": "300.00"
+  },
+  "periodLabels": ["per day", "per week", "per month"],
+  "texts": {
+    "budgetLabel": "Budget",
+    "sellersLabel": "Only these sellers",
+    "categoriesLabel": "Only these categories",
+    "sellersLine": "Sellers: Spryker",
+    "categoriesLine": "Categories: Computer",
+    "widerThanRequested": "You can only tighten the limits the app asked for.",
+    "requestedRemoved": "The app asked for this limit. Keep or tighten it, or don't allow access.",
+    "tokenEndpointNotSupported": "authorization_details is not supported at the token endpoint"
+  }
+}

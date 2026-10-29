@@ -26,5 +26,9 @@
   },
   "dynamicClient": { "clientName": "E2E upfront approved client", "softwareId": "spryker-e2e-upfront-approved-client" },
   "noPermissionsNotice": "This app has no permissions configured in this shop.",
-  "b2cConsentLimit": { "amount": "25.00", "label": "Maximum per order: €25.00" }
+  "b2cConsentLimit": {
+    "amount": "25.00",
+    "label": "Maximum per order: €25.00",
+    "constraintsColumnText": "Maximum per order: 25.00 EUR"
+  }
 }

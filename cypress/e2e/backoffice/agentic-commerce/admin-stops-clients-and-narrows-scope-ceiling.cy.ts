@@ -9,7 +9,7 @@ import {
   requestDynamicClientRegistration,
   setAgenticCommerceScopeCeiling,
 } from '@utils';
-import { ClientListPage, KillSwitchPage, ScopeCeilingPage } from '@pages/backoffice';
+import { ClientListPage, ConsentListPage, KillSwitchPage, ScopeCeilingPage } from '@pages/backoffice';
 import { ConsentPage } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { ClientAuthorizationScenario } from '@scenarios/yves';
@@ -31,6 +31,7 @@ describe(
     const killSwitchPage = container.get(KillSwitchPage);
     const clientListPage = container.get(ClientListPage);
     const scopeCeilingPage = container.get(ScopeCeilingPage);
+    const consentListPage = container.get(ConsentListPage);
     const consentPage = container.get(ConsentPage);
 
     const ORDER_PLACE_SCOPE = 'order:place';
@@ -243,6 +244,16 @@ describe(
             });
           });
       });
+
+      // The constraints column arrives with cut 6b.
+      if (isAgenticCommerceCutReached('6b')) {
+        cy.then(() => {
+          consentListPage.visit();
+          consentListPage
+            .getConstraintsCell(dynamicClient.clientId)
+            .should('contain', staticFixtures.b2cConsentLimit.constraintsColumnText);
+        });
+      }
     });
   }
 );

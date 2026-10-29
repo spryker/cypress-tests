@@ -32,7 +32,7 @@ export class ClientAuthorizationScenario {
     return createProofKey().then((proofKey) => {
       interceptAuthorizationResponse(params.client);
 
-      cy.visit(buildAuthorizationUrl(params.client, proofKey, state));
+      cy.visit(buildAuthorizationUrl(params.client, proofKey, state, params.authorizationDetails));
       this.loginPage.login({ email: params.email, password: params.password });
 
       if (params.storeName) {
@@ -47,6 +47,13 @@ export class ClientAuthorizationScenario {
         this.consentPage.enterOrderLimit(params.orderLimit);
       }
 
+      if (params.budget !== undefined) {
+        this.consentPage.enterBudget(params.budget.amount, params.budget.period);
+      }
+
+      params.allowedSellers?.forEach((reference) => this.consentPage.setSeller(reference, true));
+      params.allowedCategories?.forEach((key) => this.consentPage.setCategory(key, true));
+
       if (params.allow === false) {
         this.consentPage.deny();
       } else {
@@ -57,11 +64,44 @@ export class ClientAuthorizationScenario {
     });
   };
 
-  openConsentPage = (params: Omit<ExecuteParams, 'allow' | 'storeName' | 'orderLimit' | 'withoutScope'>): void => {
-    createProofKey().then((proofKey) => {
-      cy.visit(buildAuthorizationUrl(params.client, proofKey, `state-${Date.now()}`));
+  openConsentPage = (
+    params: Pick<ExecuteParams, 'client' | 'email' | 'password' | 'authorizationDetails'>
+  ): Cypress.Chainable<{ state: string; proofKey: AgenticCommerceProofKey }> => {
+    const state = `state-${Date.now()}`;
+
+    return createProofKey().then((proofKey) => {
+      interceptAuthorizationResponse(params.client);
+
+      cy.visit(buildAuthorizationUrl(params.client, proofKey, state, params.authorizationDetails));
       this.loginPage.login({ email: params.email, password: params.password });
+
+      return cy.wrap({ state, proofKey });
     });
+  };
+
+  /**
+   * The authorization request reaches `/connect/authorize` and the browser comes back to the client's
+   * redirect URI at once, without a login or a consent page, as it does for a request that is refused.
+   */
+  startAuthorization = (
+    client: AgenticCommerceClient,
+    authorizationDetails: string
+  ): Cypress.Chainable<AuthorizationResult> => {
+    const state = `state-${Date.now()}`;
+
+    return createProofKey().then((proofKey) => {
+      interceptAuthorizationResponse(client);
+
+      cy.visit(buildAuthorizationUrl(client, proofKey, state, authorizationDetails));
+
+      return readAuthorizationResponse().then((response) => ({ state, proofKey, response }));
+    });
+  };
+
+  allowConsentPage = (): Cypress.Chainable<AgenticCommerceAuthorizationResponse> => {
+    this.consentPage.allow();
+
+    return readAuthorizationResponse();
   };
 }
 
@@ -73,6 +113,10 @@ interface ExecuteParams {
   allow?: boolean;
   orderLimit?: string;
   withoutScope?: string;
+  authorizationDetails?: string;
+  budget?: { amount: string; period?: string };
+  allowedSellers?: string[];
+  allowedCategories?: string[];
 }
 
 export interface AuthorizationResult {

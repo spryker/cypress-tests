@@ -21,6 +21,11 @@ export class ConsentListPage extends BackofficePage {
     });
   };
 
+  getConstraintsCell = (clientId: string): Cypress.Chainable =>
+    this.findConsent(clientId).then((getRow) =>
+      getRow ? getRow().find(this.repository.getConstraintsCellSelector()) : cy.wrap(null)
+    );
+
   getRevokeButtonSelector = (): string => this.repository.getRevokeButtonSelector();
 
   getFlashMessage = (): Cypress.Chainable => this.repository.getFlashMessage();

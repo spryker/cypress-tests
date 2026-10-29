@@ -23,6 +23,12 @@ export interface AgenticCommerceTokens {
   token_type: string;
   expires_in: number;
   scope: string;
+  authorization_details?: Array<Record<string, unknown>>;
+}
+
+export interface AgenticCommerceTokenError {
+  error: string;
+  error_description: string;
 }
 
 export interface AgenticCommerceStaticFixtures {
@@ -32,6 +38,22 @@ export interface AgenticCommerceStaticFixtures {
   customer: { email: string; customerReference: string };
   companyUser: { email: string; companyName: string };
   backofficeUser: { username: string; password: string };
+}
+
+export interface AgenticCommerceConsentConstraintsStaticFixtures extends AgenticCommerceStaticFixtures {
+  scopeWithOrderPlacement: string;
+  limits: {
+    orderLimitAmount: string;
+    budgetAmount: string;
+    budgetPeriod: string;
+    sellerReference: string;
+    categoryKey: string;
+    constraintsColumnTexts: string[];
+  };
+}
+
+export interface AgenticCommerceMetadataStaticFixtures extends AgenticCommerceStaticFixtures {
+  authorizationDetailsTypes: string[];
 }
 
 export interface AgenticCommerceDynamicRegistrationStaticFixtures extends AgenticCommerceStaticFixtures {
@@ -114,7 +136,7 @@ export interface AgenticCommerceKillSwitchStaticFixtures extends AgenticCommerce
   };
   dynamicClient: { clientName: string; softwareId: string };
   noPermissionsNotice: string;
-  b2cConsentLimit: { amount: string; label: string };
+  b2cConsentLimit: { amount: string; label: string; constraintsColumnText: string };
 }
 
 export interface AgenticCommerceCompanyConsentsStaticFixtures {
@@ -129,4 +151,41 @@ export interface AgenticCommerceCompanyConsentsStaticFixtures {
   otherCompanyUser: { email: string; fullName: string };
   userWithoutPermission: { email: string };
   texts: { neverUsed: string; revoked: string; notInCompany: string; revoke: string; connectedApps: string };
+}
+
+export interface AgenticCommerceCustomerLimitsStaticFixtures {
+  defaultPassword: string;
+  scopeWithOrderPlacement: string;
+  redirectUri: string;
+  customer: { email: string };
+  orderLimit: { amount: string; label: string };
+  authorizationDetailsTypes: {
+    orderTotalLimit: string;
+    orderBudget: string;
+    merchantAllowlist: string;
+    categoryAllowlist: string;
+    unknown: string;
+  };
+  merchants: { spryker: { reference: string; name: string }; videoKing: { reference: string; name: string } };
+  categories: { computer: { key: string; name: string }; notebooks: { key: string; name: string } };
+  budget: {
+    amount: string;
+    period: string;
+    connectedAppsLabel: string;
+    requestedAmount: number;
+    requestedDisplay: string;
+    loweredAmount: string;
+    raisedAmount: string;
+  };
+  periodLabels: string[];
+  texts: {
+    budgetLabel: string;
+    sellersLabel: string;
+    categoriesLabel: string;
+    sellersLine: string;
+    categoriesLine: string;
+    widerThanRequested: string;
+    requestedRemoved: string;
+    tokenEndpointNotSupported: string;
+  };
 }
