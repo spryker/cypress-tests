@@ -22,6 +22,20 @@ describe(
       return aiConfigurationPage.setFeatureVendor(ASSISTANT_FEATURE, 'openai');
     };
 
+    const buildAnswerEvents = (
+      answer: string,
+      messageMetadata: Record<string, unknown> = {}
+    ): Array<Record<string, unknown>> => [
+      { type: 'start', messageMetadata },
+      { type: 'text-start', id: 'answer' },
+      { type: 'text-delta', id: 'answer', delta: answer },
+      { type: 'text-end', id: 'answer' },
+      { type: 'finish' },
+    ];
+
+    const readRequestBody = (body: unknown): Record<string, unknown> =>
+      typeof body === 'string' ? JSON.parse(body) : (body as Record<string, unknown>);
+
     let staticFixtures: BackofficeAssistantDemoStaticFixtures;
 
     before((): void => {
@@ -38,78 +52,74 @@ describe(
     });
 
     it(
-      'injects the launcher globally (dashboard + Sales), and clicking it opens the panel with the greeting and core controls',
+      'injects the trigger globally (dashboard + Sales), and clicking it opens the panel with the greeting and core controls',
       { tags: ['@demo-smoke'] },
       (): void => {
         backofficeAssistantPage.visitDashboard().its('response.statusCode').should('eq', 200);
 
         backofficeAssistantPage
-          .getWidgetToggle()
+          .getTrigger()
           .should('be.visible')
-          .and('contain.text', backofficeAssistantPage.getWidgetToggleLabel());
-        backofficeAssistantPage.getWidgetPanel().should('exist').and('have.attr', 'role', 'dialog');
+          .and('contain.text', backofficeAssistantPage.getTriggerLabel());
+        backofficeAssistantPage.getPanel().should('exist').and('have.attr', 'role', 'dialog');
 
         backofficeAssistantPage.visitSales().its('response.statusCode').should('eq', 200);
         backofficeAssistantPage
-          .getWidgetToggle()
+          .getTrigger()
           .should('be.visible')
-          .and('contain.text', backofficeAssistantPage.getWidgetToggleLabel());
+          .and('contain.text', backofficeAssistantPage.getTriggerLabel());
 
         backofficeAssistantPage.visitDashboard();
         backofficeAssistantPage.openPanel();
 
-        backofficeAssistantPage.getWidgetToggle().should('not.be.visible');
-        backofficeAssistantPage.getWidgetMessages().should('contain.text', backofficeAssistantPage.getGreetingText());
-        backofficeAssistantPage.getWidgetAgentSelect().should('be.visible');
+        backofficeAssistantPage.getTrigger().should('have.attr', 'aria-pressed', 'true');
+        backofficeAssistantPage.getWelcomeText().should('contain.text', backofficeAssistantPage.getGreetingText());
+        backofficeAssistantPage.getAgentSelectorToggle().should('be.visible');
         backofficeAssistantPage
-          .getWidgetInput()
+          .getInput()
           .should('be.visible')
           .and('have.attr', 'placeholder', backofficeAssistantPage.getInputPlaceholder());
-        backofficeAssistantPage.getWidgetSend().should('be.visible');
-        backofficeAssistantPage.getWidgetHistoryButton().should('be.visible');
-        backofficeAssistantPage.getWidgetNewChat().should('be.visible');
-        backofficeAssistantPage.getWidgetAttach().should('be.visible');
+        backofficeAssistantPage.getSend().should('be.visible');
+        backofficeAssistantPage.getMoreToggle().should('be.visible');
+        backofficeAssistantPage.getAttachButton().should('be.visible');
+
+        backofficeAssistantPage.typeMessage('List the latest orders');
+        backofficeAssistantPage.getInput().should('have.value', 'List the latest orders');
+
+        backofficeAssistantPage.closePanel();
       }
     );
 
     it(
-      'the agent picker lists Auto plus every config-enabled agent, and selecting one updates the active-agent badge',
+      'the agent picker lists Auto plus every config-enabled agent, and selecting one updates the active-agent label',
       { tags: ['@demo-smoke'] },
       (): void => {
         backofficeAssistantPage.visitDashboard();
         backofficeAssistantPage.openPanel();
 
         backofficeAssistantPage
-          .getWidgetAgentSelect()
-          .find('option')
+          .getAgentSelectorLabel()
+          .should('contain.text', backofficeAssistantPage.getAutoAgentLabel());
+
+        backofficeAssistantPage.getAgentSelectorToggle().click();
+        backofficeAssistantPage
+          .getAgentOptionLabels()
           .first()
           .should('contain.text', backofficeAssistantPage.getAutoAgentLabel());
         staticFixtures.enabledAgents.forEach((agentName): void => {
-          backofficeAssistantPage.getWidgetAgentSelect().find('option').should('contain.text', agentName);
+          backofficeAssistantPage.getAgentOptionLabels().should('contain.text', agentName);
         });
 
-        backofficeAssistantPage.selectAgent(backofficeAssistantPage.getOrderManagementAgentLabel());
+        backofficeAssistantPage.getAgentOption(backofficeAssistantPage.getOrderManagementAgentLabel()).click();
 
         backofficeAssistantPage
-          .getWidgetAgentSelect()
-          .should('have.value', backofficeAssistantPage.getOrderManagementAgentLabel());
-        backofficeAssistantPage
-          .getWidgetAgentBadge()
+          .getAgentSelectorLabel()
           .should('contain.text', backofficeAssistantPage.getOrderManagementAgentLabel());
       }
     );
 
-    it('the message input accepts typed text', { tags: ['@demo-smoke'] }, (): void => {
-      backofficeAssistantPage.visitDashboard();
-      backofficeAssistantPage.openPanel();
-
-      backofficeAssistantPage.typeMessage('List the latest orders');
-
-      backofficeAssistantPage.getWidgetInput().should('have.value', 'List the latest orders');
-    });
-
     it(
-      'sends the prompt POST with the message payload and recovers when the provider fails',
+      'sends the prompt POST with the message payload and CSRF header, and recovers when the provider fails',
       { tags: ['@demo-smoke'] },
       (): void => {
         backofficeAssistantPage.interceptPromptWithFailure();
@@ -121,20 +131,18 @@ describe(
         backofficeAssistantPage.send();
 
         cy.wait('@assistantPrompt').then((interception): void => {
-          const body = interception.request.body;
-          const serialized = typeof body === 'string' ? body : JSON.stringify(body);
-          expect(serialized).to.include('prompt');
-          expect(serialized).to.include('List the latest orders');
-          expect(serialized).to.include('selected_agent');
-          expect(serialized).to.include('_token');
+          const body = readRequestBody(interception.request.body);
+          expect(body.message).to.eq('List the latest orders');
+          expect(body).to.have.property('selectedAgent');
+          expect(interception.request.headers).to.have.property(
+            backofficeAssistantPage.getCsrfTokenHeaderName().toLowerCase()
+          );
         });
 
-        backofficeAssistantPage.getWidgetMessages().should('contain.text', 'List the latest orders');
-        backofficeAssistantPage
-          .getWidgetMessages()
-          .should('contain.text', backofficeAssistantPage.getTransportFailureText());
-        backofficeAssistantPage.getWidgetRetryButton().should('be.visible');
-        backofficeAssistantPage.getWidgetInput().should('not.be.disabled');
+        backofficeAssistantPage.getUserMessage().should('contain.text', 'List the latest orders');
+        backofficeAssistantPage.getErrorMessage().should('contain.text', backofficeAssistantPage.getGenericErrorText());
+        backofficeAssistantPage.getRetryButton().should('be.visible');
+        backofficeAssistantPage.getInput().should('not.be.disabled');
       }
     );
 
@@ -150,32 +158,28 @@ describe(
         backofficeAssistantPage.attachFile(staticFixtures.attachmentImagePath);
 
         backofficeAssistantPage
-          .getWidgetAttachmentChipName()
+          .getAttachmentChipName()
           .should('be.visible')
-          .and('have.attr', 'title', 'backoffice-assistant-attachment.png');
+          .and('contain.text', staticFixtures.attachmentImageName);
 
         backofficeAssistantPage.typeMessage('Describe the attached image');
         backofficeAssistantPage.send();
 
         cy.wait('@assistantPrompt').then((interception): void => {
-          const body = interception.request.body;
-          const serialized = typeof body === 'string' ? body : JSON.stringify(body);
-          expect(serialized).to.include('attachments');
-          expect(serialized).to.include('mediaType');
-          expect(serialized).to.include('image/png');
+          const attachments = readRequestBody(interception.request.body).attachments as Array<Record<string, unknown>>;
+          expect(attachments).to.have.length(1);
+          expect(attachments[0].mediaType).to.eq('image/png');
         });
 
-        backofficeAssistantPage.getWidgetMessageAttachmentPill().should('exist');
-        backofficeAssistantPage
-          .getWidgetMessages()
-          .should('contain.text', backofficeAssistantPage.getTransportFailureText());
-        backofficeAssistantPage.getWidgetAttachmentsPreview().children().should('have.length', 0);
-        backofficeAssistantPage.getWidgetInput().should('not.be.disabled');
+        backofficeAssistantPage.getMessageAttachmentPill().should('have.length', 1);
+        backofficeAssistantPage.getErrorMessage().should('contain.text', backofficeAssistantPage.getGenericErrorText());
+        backofficeAssistantPage.getAttachmentChip().should('not.exist');
+        backofficeAssistantPage.getInput().should('not.be.disabled');
       }
     );
 
     it(
-      'adds the page form as a context chip, prefixes the prompt POST with it, and recovers when the provider fails',
+      'adds the page form as a context chip, carries it in the prompt POST, and recovers when the provider fails',
       { tags: ['@demo-smoke'] },
       (): void => {
         backofficeAssistantPage.interceptPromptWithFailure();
@@ -184,14 +188,14 @@ describe(
         backofficeAssistantPage.openPanel();
 
         backofficeAssistantPage
-          .getWidgetFormContextSuggestionLabel()
+          .getFormContextSuggestionName()
           .should('be.visible')
           .and('contain.text', staticFixtures.contextFormName);
 
         backofficeAssistantPage.addFormContext();
 
         backofficeAssistantPage
-          .getWidgetContextChipName()
+          .getFormContextChipName()
           .should('be.visible')
           .and('contain.text', staticFixtures.contextFormName);
 
@@ -199,55 +203,60 @@ describe(
         backofficeAssistantPage.send();
 
         cy.wait('@assistantPrompt').then((interception): void => {
-          const body = interception.request.body;
-          const serialized = typeof body === 'string' ? body : JSON.stringify(body);
-          expect(serialized).to.include('[Form:');
-          expect(serialized).to.include(staticFixtures.contextFormName);
-          expect(serialized).to.include('Review the fields on this form');
+          const body = readRequestBody(interception.request.body);
+          expect(body.message).to.eq('Review the fields on this form');
+          expect((body.formContext as Record<string, unknown>).name).to.eq(staticFixtures.contextFormName);
         });
 
-        backofficeAssistantPage.getWidgetMessages().should('contain.text', 'Review the fields on this form');
-        backofficeAssistantPage
-          .getWidgetMessages()
-          .should('contain.text', backofficeAssistantPage.getTransportFailureText());
-        backofficeAssistantPage.getWidgetContextChip().should('not.exist');
-        backofficeAssistantPage.getWidgetInput().should('not.be.disabled');
+        backofficeAssistantPage.getUserMessage().should('contain.text', 'Review the fields on this form');
+        backofficeAssistantPage.getErrorMessage().should('contain.text', backofficeAssistantPage.getGenericErrorText());
+        backofficeAssistantPage.getFormContextChip().should('not.be.visible');
+        backofficeAssistantPage.getInput().should('not.be.disabled');
       }
     );
 
     it(
-      'New chat resets the conversation locally — it clears the messages, re-renders the greeting and issues no prompt/detail fetch',
+      'persists a streamed conversation reference, and New chat resets the conversation without loading any messages',
       { tags: ['@demo-smoke'] },
       (): void => {
-        backofficeAssistantPage.interceptPromptWithFailure();
-        backofficeAssistantPage.interceptDetail();
+        backofficeAssistantPage.interceptPromptWithStreamEvents(
+          buildAnswerEvents('Persisted answer.', { conversationReference: staticFixtures.stubbedConversationReference })
+        );
+        backofficeAssistantPage.interceptConversationMessages();
 
         backofficeAssistantPage.visitDashboard();
         backofficeAssistantPage.openPanel();
 
-        backofficeAssistantPage.typeMessage('A message that should be wiped by New chat');
-        backofficeAssistantPage.getWidgetInput().should('have.value', 'A message that should be wiped by New chat');
+        backofficeAssistantPage.typeMessage('Persist this conversation');
+        backofficeAssistantPage.send();
+        cy.wait('@assistantPrompt');
+
+        backofficeAssistantPage.getAssistantMessage().last().should('contain.text', 'Persisted answer.');
+        backofficeAssistantPage
+          .readStoredConversationReference()
+          .should('eq', staticFixtures.stubbedConversationReference);
 
         backofficeAssistantPage.newChat();
 
-        backofficeAssistantPage.getWidgetInput().should('have.value', '');
-        backofficeAssistantPage.getWidgetMessages().should('contain.text', backofficeAssistantPage.getGreetingText());
-        backofficeAssistantPage.getWidgetUserMessage().should('not.exist');
-
+        backofficeAssistantPage.getWelcomeText().should('contain.text', backofficeAssistantPage.getGreetingText());
+        backofficeAssistantPage.getUserMessage().should('not.exist');
+        backofficeAssistantPage.getAssistantMessage().should('not.exist');
+        backofficeAssistantPage.readStoredConversationReference().should('be.null');
         // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
-        cy.get('@assistantPrompt.all').should('have.length', 0);
-        // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
-        cy.get('@assistantDetail.all').should('have.length', 0);
+        cy.get('@assistantConversationMessages.all').should('have.length', 0);
       }
     );
 
     it(
-      'a streamed reasoning event renders as a dedicated reasoning bubble, distinct from the AI answer bubble',
+      'a streamed reasoning block renders separately from the assistant answer',
       { tags: ['@demo-smoke'] },
       (): void => {
-        backofficeAssistantPage.interceptPromptWithSseEvents([
-          { type: 'reasoning', message: 'Inspecting the latest orders to answer the request.' },
-          { type: 'ai_response', message: 'Here is a short summary.', conversation_reference: '' },
+        backofficeAssistantPage.interceptPromptWithStreamEvents([
+          { type: 'start', messageMetadata: {} },
+          { type: 'reasoning-start', id: 'reasoning' },
+          { type: 'reasoning-delta', id: 'reasoning', delta: 'Inspecting the latest orders to answer the request.' },
+          { type: 'reasoning-end', id: 'reasoning' },
+          ...buildAnswerEvents('Here is a short summary.').slice(1),
         ]);
 
         backofficeAssistantPage.visitDashboard();
@@ -259,20 +268,21 @@ describe(
         cy.wait('@assistantPrompt');
 
         backofficeAssistantPage
-          .getWidgetReasoningMessage()
+          .getReasoning()
           .should('be.visible')
           .and('contain.text', 'Inspecting the latest orders to answer the request.');
-        backofficeAssistantPage.getWidgetAiMessage().last().should('contain.text', 'Here is a short summary.');
-        backofficeAssistantPage.getWidgetRetryButton().should('not.exist');
+        backofficeAssistantPage.getAssistantMessage().last().should('contain.text', 'Here is a short summary.');
+        backofficeAssistantPage.getRetryButton().should('not.exist');
       }
     );
 
     it(
-      'a streamed error event renders as an AI error bubble with a retry control, distinct from an HTTP transport failure',
+      'a streamed error event renders its own text with a retry control, not the generic transport failure',
       { tags: ['@demo-smoke'] },
       (): void => {
-        backofficeAssistantPage.interceptPromptWithSseEvents([
-          { type: 'error', message: 'The selected agent could not process the request.' },
+        backofficeAssistantPage.interceptPromptWithStreamEvents([
+          { type: 'start', messageMetadata: {} },
+          { type: 'error', errorText: 'The selected agent could not process the request.' },
         ]);
 
         backofficeAssistantPage.visitDashboard();
@@ -284,46 +294,54 @@ describe(
         cy.wait('@assistantPrompt');
 
         backofficeAssistantPage
-          .getWidgetMessages()
-          .should('contain.text', 'Error: The selected agent could not process the request.');
-        backofficeAssistantPage.getWidgetMessages().should('not.contain.text', 'Request failed with status');
-        backofficeAssistantPage.getWidgetRetryButton().should('be.visible');
-        backofficeAssistantPage.getWidgetInput().should('not.be.disabled');
+          .getErrorMessage()
+          .should('contain.text', 'The selected agent could not process the request.')
+          .and('not.contain.text', backofficeAssistantPage.getGenericErrorText());
+        backofficeAssistantPage.getRetryButton().should('be.visible');
+        backofficeAssistantPage.getInput().should('not.be.disabled');
       }
     );
 
     it(
-      'a streamed agent_selected event updates the active-agent badge without a user selection',
+      'a streamed agent in the start metadata updates the active-agent label without a user selection',
       { tags: ['@demo-smoke'] },
       (): void => {
-        backofficeAssistantPage.interceptPromptWithSseEvents([
-          { type: 'agent_selected', agent: staticFixtures.stubbedAgentName, conversation_reference: '' },
-          { type: 'ai_response', message: 'Handled by the resolved agent.', conversation_reference: '' },
-        ]);
+        backofficeAssistantPage.interceptPromptWithStreamEvents(
+          buildAnswerEvents('Handled by the resolved agent.', { agent: staticFixtures.stubbedAgentName })
+        );
 
         backofficeAssistantPage.visitDashboard();
         backofficeAssistantPage.openPanel();
 
-        backofficeAssistantPage.getWidgetAgentSelect().should('have.value', '');
-        backofficeAssistantPage.getWidgetAgentBadge().should('not.contain.text', staticFixtures.stubbedAgentName);
+        backofficeAssistantPage
+          .getAgentSelectorLabel()
+          .should('contain.text', backofficeAssistantPage.getAutoAgentLabel())
+          .and('not.contain.text', staticFixtures.stubbedAgentName);
 
         backofficeAssistantPage.typeMessage('Let the assistant pick an agent');
         backofficeAssistantPage.send();
 
         cy.wait('@assistantPrompt');
 
-        backofficeAssistantPage.getWidgetAgentBadge().should('contain.text', staticFixtures.stubbedAgentName);
-        backofficeAssistantPage.getWidgetAiMessage().last().should('contain.text', 'Handled by the resolved agent.');
+        backofficeAssistantPage.getAgentSelectorLabel().should('contain.text', staticFixtures.stubbedAgentName);
+        backofficeAssistantPage.getAssistantMessage().last().should('contain.text', 'Handled by the resolved agent.');
       }
     );
 
     it(
-      'renders no tool-call block for a streamed tool_call, only the final assistant answer',
+      'a streamed tool input without output renders no tool-call block, only the final assistant answer',
       { tags: ['@demo-smoke'] },
       (): void => {
-        backofficeAssistantPage.interceptPromptWithSseEvents([
-          { type: 'tool_call', name: 'list_orders', arguments: { limit: 5 } },
-          { type: 'ai_response', message: 'Fetched the orders.', conversation_reference: '' },
+        backofficeAssistantPage.interceptPromptWithStreamEvents([
+          { type: 'start', messageMetadata: {} },
+          { type: 'tool-input-start', toolCallId: 'call-1', toolName: staticFixtures.stubbedToolName },
+          {
+            type: 'tool-input-available',
+            toolCallId: 'call-1',
+            toolName: staticFixtures.stubbedToolName,
+            input: { limit: 5 },
+          },
+          ...buildAnswerEvents('Fetched the orders.').slice(1),
         ]);
 
         backofficeAssistantPage.visitDashboard();
@@ -334,21 +352,25 @@ describe(
 
         cy.wait('@assistantPrompt');
 
-        // A tool REQUEST is an in-progress signal only — it names the running tool on the
-        // transient loading indicator (removed once the stream closes) and never becomes a
-        // message block. Only tool_call_result renders a block; see the sibling test below.
-        backofficeAssistantPage.getWidgetAiMessage().last().should('contain.text', 'Fetched the orders.');
-        backofficeAssistantPage.getWidgetToolCallMessage().should('not.exist');
+        backofficeAssistantPage.getAssistantMessage().last().should('contain.text', 'Fetched the orders.');
+        backofficeAssistantPage.getToolCall().should('not.exist');
       }
     );
 
     it(
-      'a streamed tool_call_result event renders a tool-call block with a result toggle, distinct from a plain tool_call',
+      'a streamed tool output renders a tool-call block with the tool name and a result toggle',
       { tags: ['@demo-smoke'] },
       (): void => {
-        backofficeAssistantPage.interceptPromptWithSseEvents([
-          { type: 'tool_call_result', name: 'list_orders', result: '{"orders":3}' },
-          { type: 'ai_response', message: 'Summarised the result.', conversation_reference: '' },
+        backofficeAssistantPage.interceptPromptWithStreamEvents([
+          { type: 'start', messageMetadata: {} },
+          {
+            type: 'tool-input-available',
+            toolCallId: 'call-1',
+            toolName: staticFixtures.stubbedToolName,
+            input: { limit: 5 },
+          },
+          { type: 'tool-output-available', toolCallId: 'call-1', output: '{"orders":3}' },
+          ...buildAnswerEvents('Summarised the result.').slice(1),
         ]);
 
         backofficeAssistantPage.visitDashboard();
@@ -359,25 +381,24 @@ describe(
 
         cy.wait('@assistantPrompt');
 
-        backofficeAssistantPage.getWidgetToolCallMessage().should('have.length', 1);
-        backofficeAssistantPage
-          .getWidgetToolCallMessage()
-          .find(backofficeAssistantPage.getWidgetToolCallNameSelector())
-          .should('contain.text', 'list_orders');
-        backofficeAssistantPage.getWidgetToolCallResultToggle().should('exist').and('be.visible');
+        backofficeAssistantPage.getToolCall().should('have.length', 1);
+        backofficeAssistantPage.getToolCallName().should('contain.text', staticFixtures.stubbedToolLabel);
+        backofficeAssistantPage.getToolCallToggle().should('be.visible');
+        backofficeAssistantPage.getAssistantMessage().last().should('contain.text', 'Summarised the result.');
       }
     );
 
     it(
-      'a streamed form_fill event writes the value into the current page form, no chat bubble',
+      'a streamed form-fill data event writes the value into the current page form',
       { tags: ['@demo-smoke'] },
       (): void => {
-        backofficeAssistantPage.interceptPromptWithSseEvents([
+        backofficeAssistantPage.interceptPromptWithStreamEvents([
+          { type: 'start', messageMetadata: {} },
           {
-            type: 'form_fill',
-            fields: { [staticFixtures.formFill.targetFieldName]: staticFixtures.formFillTargetValue },
+            type: 'data-form-fill',
+            data: { fields: { [staticFixtures.formFill.targetFieldName]: staticFixtures.formFillTargetValue } },
           },
-          { type: 'ai_response', message: 'Filled the requested field.', conversation_reference: '' },
+          ...buildAnswerEvents('Filled the requested field.').slice(1),
         ]);
 
         backofficeAssistantPage.visitContextPage();
@@ -393,43 +414,15 @@ describe(
         backofficeAssistantPage
           .getFormFillTargetField(staticFixtures.formFill.targetFieldName)
           .should('have.value', staticFixtures.formFillTargetValue);
-        backofficeAssistantPage.getWidgetAiMessage().last().should('contain.text', 'Filled the requested field.');
+        backofficeAssistantPage.getAssistantMessage().last().should('contain.text', 'Filled the requested field.');
       }
     );
 
     it(
-      'persists a streamed ai_response conversation_reference so New chat then reopen starts fresh',
+      'sanitizes a streamed answer: markdown renders but script/onerror payloads are stripped',
       { tags: ['@demo-smoke'] },
       (): void => {
-        backofficeAssistantPage.interceptPromptWithSseEvents([
-          { type: 'ai_response', message: 'Persisted answer.', conversation_reference: 'cypress-stub-conv-ref-1' },
-        ]);
-        backofficeAssistantPage.interceptDetail();
-
-        backofficeAssistantPage.visitDashboard();
-        backofficeAssistantPage.openPanel();
-
-        backofficeAssistantPage.typeMessage('Persist this conversation');
-        backofficeAssistantPage.send();
-        cy.wait('@assistantPrompt');
-
-        backofficeAssistantPage.getWidgetAiMessage().last().should('contain.text', 'Persisted answer.');
-
-        backofficeAssistantPage.newChat();
-        backofficeAssistantPage.getWidgetMessages().should('contain.text', backofficeAssistantPage.getGreetingText());
-        backofficeAssistantPage.getWidgetUserMessage().should('not.exist');
-        // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
-        cy.get('@assistantDetail.all').should('have.length', 0);
-      }
-    );
-
-    it(
-      'sanitizes a streamed ai_response: markdown renders but script/onerror payloads are stripped',
-      { tags: ['@demo-smoke'] },
-      (): void => {
-        backofficeAssistantPage.interceptPromptWithSseEvents([
-          { type: 'ai_response', message: staticFixtures.xssPromptPayload, conversation_reference: '' },
-        ]);
+        backofficeAssistantPage.interceptPromptWithStreamEvents(buildAnswerEvents(staticFixtures.xssPromptPayload));
 
         backofficeAssistantPage.visitDashboard();
         backofficeAssistantPage.openPanel();
@@ -444,7 +437,7 @@ describe(
         cy.wait('@assistantPrompt');
 
         backofficeAssistantPage
-          .getWidgetAiMessage()
+          .getAssistantMessage()
           .last()
           /* eslint-disable spryker-cypress/no-cy-get-outside-repository -- XSS sanitization probe: generic HTML tag/attribute names scoped by .within(), not page selectors to move into a repository. */
           .within((): void => {
@@ -471,12 +464,10 @@ describe(
         backofficeAssistantPage.send();
 
         cy.wait('@assistantPrompt');
-        backofficeAssistantPage.getWidgetRetryButton().should('be.visible').click();
+        backofficeAssistantPage.getRetryButton().should('be.visible').click();
 
         cy.wait('@assistantPrompt').then((interception): void => {
-          const body = interception.request.body;
-          const serialized = typeof body === 'string' ? body : JSON.stringify(body);
-          expect(serialized).to.include('Retry me');
+          expect(readRequestBody(interception.request.body).message).to.eq('Retry me');
         });
         // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
         cy.get('@assistantPrompt.all').should('have.length.at.least', 2);
@@ -493,20 +484,19 @@ describe(
         backofficeAssistantPage.openPanel();
 
         backofficeAssistantPage.attachFile(staticFixtures.attachmentImagePath);
-        backofficeAssistantPage.getWidgetAttachmentChip().should('have.length', 1);
+        backofficeAssistantPage.getAttachmentChip().should('have.length', 1);
 
         backofficeAssistantPage.removeFirstAttachmentChip();
-        backofficeAssistantPage.getWidgetAttachmentChip().should('have.length', 0);
+        backofficeAssistantPage.getAttachmentChip().should('not.exist');
 
         backofficeAssistantPage.typeMessage('No attachment should be sent');
         backofficeAssistantPage.send();
 
         cy.wait('@assistantPrompt').then((interception): void => {
-          const body = interception.request.body;
-          const serialized = typeof body === 'string' ? body : JSON.stringify(body);
-          expect(serialized).to.not.include('attachments');
+          const attachments = readRequestBody(interception.request.body).attachments;
+          expect(attachments ?? []).to.have.length(0);
         });
-        backofficeAssistantPage.getWidgetMessageAttachmentPill().should('not.exist');
+        backofficeAssistantPage.getMessageAttachmentPill().should('not.exist');
       }
     );
 
@@ -520,17 +510,15 @@ describe(
         backofficeAssistantPage.openPanel();
 
         backofficeAssistantPage.attachFile([staticFixtures.attachmentImagePath, staticFixtures.attachmentImagePath]);
-        backofficeAssistantPage.getWidgetAttachmentChip().should('have.length', 2);
+        backofficeAssistantPage.getAttachmentChip().should('have.length', 2);
 
         backofficeAssistantPage.typeMessage('Describe both attachments');
         backofficeAssistantPage.send();
 
         cy.wait('@assistantPrompt').then((interception): void => {
-          const body = interception.request.body;
-          const parsed = typeof body === 'string' ? JSON.parse(body) : body;
-          expect(parsed.attachments).to.have.length(2);
+          expect(readRequestBody(interception.request.body).attachments).to.have.length(2);
         });
-        backofficeAssistantPage.getWidgetMessageAttachmentPill().should('have.length', 2);
+        backofficeAssistantPage.getMessageAttachmentPill().should('have.length', 2);
       }
     );
 
@@ -543,62 +531,64 @@ describe(
 
         backofficeAssistantPage.attachFile(staticFixtures.unsupportedAttachmentPath);
 
-        backofficeAssistantPage.getWidgetAttachmentChip().should('have.length', 0);
+        backofficeAssistantPage.getAttachmentChip().should('not.exist');
         backofficeAssistantPage
-          .getWidgetMessages()
-          .should('contain.text', backofficeAssistantPage.getUnsupportedFileTypeText());
+          .getAttachmentNotice()
+          .should('be.visible')
+          .and('contain.text', backofficeAssistantPage.getUnsupportedFileTypeText());
       }
     );
 
+    it('lists conversations in the histories view and removes a row on delete', { tags: ['@demo-smoke'] }, (): void => {
+      backofficeAssistantPage.interceptConversationsWith(
+        [
+          {
+            conversationReference: 'cypress-stub-conv-a',
+            name: staticFixtures.historyEntryName,
+            agent: backofficeAssistantPage.getOrderManagementAgentLabel(),
+            updatedAt: 0,
+          },
+          {
+            conversationReference: 'cypress-stub-conv-b',
+            name: 'Second stubbed conversation',
+            agent: null,
+            updatedAt: 0,
+          },
+        ],
+        staticFixtures.enabledAgents
+      );
+      backofficeAssistantPage.interceptDeleteConversationSuccess();
+
+      backofficeAssistantPage.visitDashboard();
+      backofficeAssistantPage.openPanel();
+      backofficeAssistantPage.openHistories();
+
+      cy.wait('@assistantConversations');
+      backofficeAssistantPage.getHistoryItem().should('have.length', 2);
+      backofficeAssistantPage.getHistoryItem().first().should('contain.text', staticFixtures.historyEntryName);
+
+      backofficeAssistantPage.deleteFirstHistoryItem();
+
+      cy.wait('@assistantDeleteConversation').then((interception): void => {
+        expect(readRequestBody(interception.request.body).conversationReferences).to.deep.eq(['cypress-stub-conv-a']);
+      });
+      backofficeAssistantPage.getHistoryItem().should('have.length', 1);
+    });
+
     it(
-      'lists conversations in the histories panel and removes a row on delete',
+      'the histories view shows the empty-state notice when no conversations exist',
       { tags: ['@demo-smoke'] },
       (): void => {
-        backofficeAssistantPage.interceptHistoriesWith(
-          [
-            {
-              conversation_reference: 'cypress-stub-conv-a',
-              name: staticFixtures.historyEntryName,
-              agent: backofficeAssistantPage.getOrderManagementAgentLabel(),
-            },
-            { conversation_reference: 'cypress-stub-conv-b', name: 'Second stubbed conversation', agent: '' },
-          ],
-          staticFixtures.enabledAgents
-        );
-        backofficeAssistantPage.interceptDeleteSuccess();
+        backofficeAssistantPage.interceptConversationsWith([], staticFixtures.enabledAgents);
 
         backofficeAssistantPage.visitDashboard();
         backofficeAssistantPage.openPanel();
         backofficeAssistantPage.openHistories();
 
-        cy.wait('@assistantHistories');
-        backofficeAssistantPage.getWidgetHistoryItem().should('have.length', 2);
-        backofficeAssistantPage.getWidgetHistoryItem().first().should('contain.text', staticFixtures.historyEntryName);
-
-        backofficeAssistantPage.deleteFirstHistoryItem();
-
-        cy.wait('@assistantDelete').then((interception): void => {
-          expect(interception.response?.statusCode).to.eq(200);
-          expect(JSON.stringify(interception.response?.body)).to.include('success');
-        });
-        backofficeAssistantPage.getWidgetHistoryItem().should('have.length', 1);
-      }
-    );
-
-    it(
-      'the histories panel shows the empty-state notice when no conversations exist',
-      { tags: ['@demo-smoke'] },
-      (): void => {
-        backofficeAssistantPage.interceptHistoriesWith([], staticFixtures.enabledAgents);
-
-        backofficeAssistantPage.visitDashboard();
-        backofficeAssistantPage.openPanel();
-        backofficeAssistantPage.openHistories();
-
-        cy.wait('@assistantHistories');
-        backofficeAssistantPage.getWidgetHistoryItem().should('have.length', 0);
+        cy.wait('@assistantConversations');
+        backofficeAssistantPage.getHistoryItem().should('not.exist');
         backofficeAssistantPage
-          .getWidgetHistoriesEmpty()
+          .getHistoriesEmpty()
           .should('be.visible')
           .and('contain.text', backofficeAssistantPage.getHistoriesEmptyText());
       }
@@ -610,17 +600,13 @@ describe(
       (): void => {
         backofficeAssistantPage.visitDashboard();
 
-        const detailUrl = backofficeAssistantPage.getBackofficeAbsoluteUrl(
-          backofficeAssistantPage.repositoryDetailPath()
-        );
-        const deleteUrl = backofficeAssistantPage.getBackofficeAbsoluteUrl(
-          backofficeAssistantPage.repositoryDeletePath()
-        );
-        const promptUrl = backofficeAssistantPage.getBackofficeAbsoluteUrl(
-          backofficeAssistantPage.repositoryPromptPath()
-        );
-        const invalidToken = backofficeAssistantPage.getInvalidCsrfToken();
+        const messagesUrl = backofficeAssistantPage.getConversationMessagesUrl();
+        const deleteUrl = backofficeAssistantPage.getDeleteConversationUrl();
+        const promptUrl = backofficeAssistantPage.getPromptUrl();
         const unknownReference = staticFixtures.unknownConversationReference;
+        const invalidTokenHeaders = {
+          [backofficeAssistantPage.getCsrfTokenHeaderName()]: backofficeAssistantPage.getInvalidCsrfToken(),
+        };
 
         const contract: Array<{
           description: string;
@@ -628,24 +614,30 @@ describe(
           expectedStatus: number;
         }> = [
           {
-            description: 'conversation detail without a reference is a 400',
-            request: { method: 'GET', url: detailUrl },
+            description: 'conversation messages without a reference is a 400',
+            request: { method: 'GET', url: messagesUrl },
             expectedStatus: 400,
           },
           {
-            description: 'conversation detail with an unknown reference is a 404',
+            description: 'conversation messages with an unknown reference is a 404',
             request: {
               method: 'GET',
-              url: `${detailUrl}?conversationReference=${encodeURIComponent(unknownReference)}`,
+              url: `${messagesUrl}?conversationReference=${encodeURIComponent(unknownReference)}`,
             },
             expectedStatus: 404,
           },
           {
+            description: 'prompt over GET is a 405',
+            request: { method: 'GET', url: promptUrl },
+            expectedStatus: 405,
+          },
+          {
             description: 'conversation delete with an invalid CSRF token is a 403',
             request: {
-              method: 'POST',
+              method: 'DELETE',
               url: deleteUrl,
-              body: { conversation_reference: unknownReference, _token: invalidToken },
+              headers: invalidTokenHeaders,
+              body: { conversationReferences: [unknownReference] },
             },
             expectedStatus: 403,
           },
@@ -654,7 +646,8 @@ describe(
             request: {
               method: 'POST',
               url: promptUrl,
-              body: { prompt: 'Should never reach the provider', _token: invalidToken },
+              headers: invalidTokenHeaders,
+              body: { message: 'Should never reach the provider' },
             },
             expectedStatus: 403,
           },
@@ -667,13 +660,14 @@ describe(
         });
 
         backofficeAssistantPage.readCsrfToken().then((csrfToken): void => {
-          expect(csrfToken, 'CSRF token exposed to the widget').to.have.length.greaterThan(0);
+          expect(csrfToken, 'CSRF token exposed to the chat').to.have.length.greaterThan(0);
 
           cy.request({
-            method: 'POST',
+            method: 'DELETE',
             url: deleteUrl,
             failOnStatusCode: false,
-            body: { conversation_reference: unknownReference, _token: csrfToken },
+            headers: { [backofficeAssistantPage.getCsrfTokenHeaderName()]: csrfToken },
+            body: { conversationReferences: [unknownReference] },
           }).then((response): void => {
             expect(response.status, 'valid-token delete of an unknown reference is a 404').to.eq(404);
           });
@@ -682,88 +676,83 @@ describe(
     );
 
     it(
-      'the prompt endpoint streams a resolved validation error (no 500, no raw glossary key) for each invalid payload',
+      'the prompt endpoint rejects each invalid payload with a resolved message (no 500, no raw glossary key)',
       { tags: ['@demo-smoke'] },
       (): void => {
         backofficeAssistantPage.visitDashboard();
 
-        const promptUrl = backofficeAssistantPage.getBackofficeAbsoluteUrl(
-          backofficeAssistantPage.repositoryPromptPath()
-        );
+        const promptUrl = backofficeAssistantPage.getPromptUrl();
 
         backofficeAssistantPage.readCsrfToken().then((csrfToken): void => {
-          expect(csrfToken, 'CSRF token exposed to the widget').to.have.length.greaterThan(0);
+          expect(csrfToken, 'CSRF token exposed to the chat').to.have.length.greaterThan(0);
 
+          const headers = { [backofficeAssistantPage.getCsrfTokenHeaderName()]: csrfToken };
           const tooManyAttachments = Array.from({ length: staticFixtures.attachmentMaxCount + 1 }, () => ({
+            name: 'attachment.png',
             mediaType: 'image/png',
             content: 'QUJD',
           }));
 
           const invalidPayloads: Array<{ description: string; body: Record<string, unknown>; message: string }> = [
             {
-              description: 'empty prompt',
-              body: { prompt: '', _token: csrfToken },
-              message: staticFixtures.promptRequiredValidationMessage,
+              description: 'empty message',
+              body: { message: '' },
+              message: staticFixtures.invalidPayloadMessage,
             },
             {
               description: 'unsupported attachment media type',
               body: {
-                prompt: 'Describe this file',
-                _token: csrfToken,
-                attachments: [{ mediaType: 'application/zip', content: 'QUJD' }],
+                message: 'Describe this file',
+                attachments: [{ name: 'archive.zip', mediaType: 'application/zip', content: 'QUJD' }],
               },
               message: staticFixtures.attachmentUnsupportedMediaTypeMessage,
             },
             {
               description: 'attachment count exceeded',
-              body: { prompt: 'Describe these files', _token: csrfToken, attachments: tooManyAttachments },
+              body: { message: 'Describe these files', attachments: tooManyAttachments },
               message: staticFixtures.attachmentCountExceededMessage,
             },
           ];
 
           invalidPayloads.forEach(({ description, body, message }): void => {
-            cy.request({ method: 'POST', url: promptUrl, failOnStatusCode: false, body }).then((response): void => {
-              expect(response.status, `${description}: streamed, not a 500`).to.eq(200);
+            cy.request({ method: 'POST', url: promptUrl, failOnStatusCode: false, headers, body }).then(
+              (response): void => {
+                expect(response.status, `${description}: rejected, not a 500`).to.be.lessThan(500);
 
-              const rawBody = typeof response.body === 'string' ? response.body : JSON.stringify(response.body);
-              expect(rawBody, `${description}: SSE stream carries an error event`).to.include('"type":"error"');
-              expect(rawBody, `${description}: validation message is resolved`).to.include(message);
-              expect(rawBody, `${description}: no unresolved glossary key leaks`).to.not.include(
-                backofficeAssistantPage.getValidationGlossaryKey()
-              );
-            });
+                const rawBody = typeof response.body === 'string' ? response.body : JSON.stringify(response.body);
+                expect(rawBody, `${description}: message is resolved`).to.include(message);
+                expect(rawBody, `${description}: no unresolved glossary key leaks`).to.not.include(
+                  backofficeAssistantPage.getValidationGlossaryKey()
+                );
+              }
+            );
           });
         });
       }
     );
 
     it(
-      'when disabled, every assistant endpoint returns 403 and the widget is not injected',
+      'when disabled, every assistant endpoint returns 403 and the chat is not injected',
       { tags: ['@demo-smoke'] },
       (): void => {
         backofficeAssistantPage.disableAssistant();
 
-        const indexUrl = backofficeAssistantPage.getBackofficeAbsoluteUrl(
-          backofficeAssistantPage.getHistoriesEndpointPath()
+        [backofficeAssistantPage.getConversationsUrl(), backofficeAssistantPage.getConversationMessagesUrl()].forEach(
+          (url): void => {
+            cy.request({
+              method: 'GET',
+              url,
+              failOnStatusCode: false,
+              headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            }).then((response): void => {
+              expect(response.status, 'disabled assistant endpoint is a 403').to.eq(403);
+            });
+          }
         );
-        const detailUrl = backofficeAssistantPage.getBackofficeAbsoluteUrl(
-          backofficeAssistantPage.repositoryDetailPath()
-        );
-
-        [indexUrl, detailUrl].forEach((url): void => {
-          cy.request({
-            method: 'GET',
-            url,
-            failOnStatusCode: false,
-            headers: { 'X-Requested-With': 'XMLHttpRequest' },
-          }).then((response): void => {
-            expect(response.status, 'disabled assistant endpoint is a 403').to.eq(403);
-          });
-        });
 
         backofficeAssistantPage.visitDashboard();
-        backofficeAssistantPage.getWidgetToggle().should('not.exist');
-        backofficeAssistantPage.getWidgetPanel().should('not.exist');
+        backofficeAssistantPage.getTrigger().should('not.exist');
+        backofficeAssistantPage.getChat().should('not.exist');
 
         backofficeAssistantPage.enableAssistant();
       }
@@ -774,7 +763,7 @@ describe(
       const AWS_REAL_FLOW_TIMEOUT = 45000;
 
       it(
-        'a real prompt streams an assistant answer that renders as a non-empty AI message bubble',
+        'a real prompt streams an assistant answer that renders as a non-empty assistant message',
         { tags: ['@demo-full'] },
         function (): void {
           skipUnlessAiProviderEnabled(this);
@@ -791,25 +780,25 @@ describe(
             .should('be.within', 200, 299);
 
           backofficeAssistantPage
-            .getWidgetAiMessage({ timeout: REAL_FLOW_TIMEOUT })
-            .should('have.length.at.least', 2)
+            .getAssistantMessage({ timeout: REAL_FLOW_TIMEOUT })
+            .should('have.length.at.least', 1)
             .last()
             .should('not.be.empty');
-          backofficeAssistantPage.getWidgetUserMessage().should('contain.text', staticFixtures.simplePrompt);
-          backofficeAssistantPage.getWidgetInput().should('not.be.disabled');
-          backofficeAssistantPage.getWidgetRetryButton().should('not.exist');
+          backofficeAssistantPage.getUserMessage().should('contain.text', staticFixtures.simplePrompt);
+          backofficeAssistantPage.getInput().should('not.be.disabled');
+          backofficeAssistantPage.getRetryButton().should('not.exist');
         }
       );
 
       it(
-        'a persisted conversation reloads its prior user and assistant messages from the history detail endpoint',
+        'a persisted conversation reloads its prior user and assistant messages from the conversation messages endpoint',
         { tags: ['@demo-full'] },
         function (): void {
           skipUnlessAiProviderEnabled(this);
 
           backofficeAssistantPage.interceptRealPrompt();
-          backofficeAssistantPage.interceptHistories();
-          backofficeAssistantPage.interceptDetail();
+          backofficeAssistantPage.interceptConversations();
+          backofficeAssistantPage.interceptConversationMessages();
           backofficeAssistantPage.visitDashboard();
           backofficeAssistantPage.openPanel();
 
@@ -818,23 +807,23 @@ describe(
           cy.wait('@assistantRealPrompt', { timeout: REAL_FLOW_TIMEOUT })
             .its('response.statusCode')
             .should('be.within', 200, 299);
-          backofficeAssistantPage.getWidgetAiMessage({ timeout: REAL_FLOW_TIMEOUT }).should('have.length.at.least', 2);
+          backofficeAssistantPage.getAssistantMessage({ timeout: REAL_FLOW_TIMEOUT }).should('have.length.at.least', 1);
 
           backofficeAssistantPage.newChat();
           backofficeAssistantPage.openHistories();
 
-          cy.wait('@assistantHistories', { timeout: REAL_FLOW_TIMEOUT })
+          cy.wait('@assistantConversations', { timeout: REAL_FLOW_TIMEOUT })
             .its('response.statusCode')
             .should('be.within', 200, 299);
-          backofficeAssistantPage.getWidgetHistoryItem().should('have.length.at.least', 1);
+          backofficeAssistantPage.getHistoryItem().should('have.length.at.least', 1);
 
           backofficeAssistantPage.clickFirstHistoryItem();
 
-          cy.wait('@assistantDetail', { timeout: REAL_FLOW_TIMEOUT })
+          cy.wait('@assistantConversationMessages', { timeout: REAL_FLOW_TIMEOUT })
             .its('response.statusCode')
             .should('be.within', 200, 299);
-          backofficeAssistantPage.getWidgetUserMessage().should('have.length.at.least', 1);
-          backofficeAssistantPage.getWidgetAiMessage().should('have.length.at.least', 1);
+          backofficeAssistantPage.getUserMessage().should('have.length.at.least', 1);
+          backofficeAssistantPage.getAssistantMessage().should('have.length.at.least', 1);
         }
       );
 
@@ -845,8 +834,8 @@ describe(
           skipUnlessAiProviderEnabled(this);
 
           backofficeAssistantPage.interceptRealPrompt();
-          backofficeAssistantPage.interceptHistories();
-          backofficeAssistantPage.interceptDelete();
+          backofficeAssistantPage.interceptConversations();
+          backofficeAssistantPage.interceptDeleteConversation();
           backofficeAssistantPage.visitDashboard();
           backofficeAssistantPage.openPanel();
 
@@ -855,28 +844,28 @@ describe(
           cy.wait('@assistantRealPrompt', { timeout: REAL_FLOW_TIMEOUT })
             .its('response.statusCode')
             .should('be.within', 200, 299);
-          backofficeAssistantPage.getWidgetAiMessage({ timeout: REAL_FLOW_TIMEOUT }).should('have.length.at.least', 2);
+          backofficeAssistantPage.getAssistantMessage({ timeout: REAL_FLOW_TIMEOUT }).should('have.length.at.least', 1);
 
           backofficeAssistantPage.newChat();
           backofficeAssistantPage.openHistories();
-          cy.wait('@assistantHistories', { timeout: REAL_FLOW_TIMEOUT })
+          cy.wait('@assistantConversations', { timeout: REAL_FLOW_TIMEOUT })
             .its('response.statusCode')
             .should('be.within', 200, 299);
 
           backofficeAssistantPage
-            .getWidgetHistoryItem()
+            .getHistoryItem()
             .should('have.length.at.least', 1)
             .then(($items): void => {
               const initialCount = $items.length;
 
               backofficeAssistantPage.deleteFirstHistoryItem();
 
-              cy.wait('@assistantDelete', { timeout: REAL_FLOW_TIMEOUT }).then((interception): void => {
+              cy.wait('@assistantDeleteConversation', { timeout: REAL_FLOW_TIMEOUT }).then((interception): void => {
                 expect(interception.response?.statusCode).to.be.within(200, 299);
-                expect(JSON.stringify(interception.response?.body)).to.include('success');
+                expect(interception.response?.body).to.have.property('deletedCount', 1);
               });
 
-              backofficeAssistantPage.getWidgetHistoryItem().should('have.length', initialCount - 1);
+              backofficeAssistantPage.getHistoryItem().should('have.length', initialCount - 1);
             });
         }
       );
@@ -939,15 +928,9 @@ describe(
             .its('response.statusCode')
             .should('be.within', 200, 299);
 
-          backofficeAssistantPage
-            .getWidgetToolCallMessage({ timeout: REAL_FLOW_TIMEOUT })
-            .should('have.length.at.least', 1);
-          backofficeAssistantPage
-            .getWidgetToolCallMessage()
-            .first()
-            .find(backofficeAssistantPage.getWidgetToolCallNameSelector())
-            .should('exist');
-          backofficeAssistantPage.getWidgetAiMessage().should('have.length.at.least', 2);
+          backofficeAssistantPage.getToolCall({ timeout: REAL_FLOW_TIMEOUT }).should('have.length.at.least', 1);
+          backofficeAssistantPage.getToolCallName().first().should('not.be.empty');
+          backofficeAssistantPage.getAssistantMessage({ timeout: REAL_FLOW_TIMEOUT }).should('have.length.at.least', 1);
         }
       );
 
@@ -962,29 +945,27 @@ describe(
           backofficeAssistantPage.openPanel();
 
           backofficeAssistantPage.attachFile(staticFixtures.attachmentImagePath);
-          backofficeAssistantPage.getWidgetAttachmentChipName().should('be.visible');
+          backofficeAssistantPage.getAttachmentChipName().should('be.visible');
 
           backofficeAssistantPage.typeMessage('Describe the attached image.');
           backofficeAssistantPage.send();
 
           cy.wait('@assistantRealPrompt', { timeout: REAL_FLOW_TIMEOUT }).then((interception): void => {
             expect(interception.response?.statusCode).to.be.within(200, 299);
-            const body = interception.request.body;
-            const serialized = typeof body === 'string' ? body : JSON.stringify(body);
-            expect(serialized).to.include('attachments');
+            expect(readRequestBody(interception.request.body).attachments).to.have.length(1);
           });
 
-          backofficeAssistantPage.getWidgetMessageAttachmentPill().should('exist');
+          backofficeAssistantPage.getMessageAttachmentPill().should('exist');
           backofficeAssistantPage
-            .getWidgetAiMessage({ timeout: REAL_FLOW_TIMEOUT })
-            .should('have.length.at.least', 2)
+            .getAssistantMessage({ timeout: REAL_FLOW_TIMEOUT })
+            .should('have.length.at.least', 1)
             .last()
             .should('not.be.empty');
         }
       );
 
       it(
-        'with Auto selected a real answer resolves an agent and populates the active-agent badge',
+        'with Auto selected a real answer resolves an agent and populates the active-agent label',
         { tags: ['@demo-full'] },
         function (): void {
           skipUnlessAiProviderEnabled(this);
@@ -993,7 +974,9 @@ describe(
           backofficeAssistantPage.visitDashboard();
           backofficeAssistantPage.openPanel();
 
-          backofficeAssistantPage.getWidgetAgentSelect().should('have.value', '');
+          backofficeAssistantPage
+            .getAgentSelectorLabel()
+            .should('contain.text', backofficeAssistantPage.getAutoAgentLabel());
           backofficeAssistantPage.typeMessage(staticFixtures.simplePrompt);
           backofficeAssistantPage.send();
 
@@ -1001,8 +984,12 @@ describe(
             .its('response.statusCode')
             .should('be.within', 200, 299);
 
-          backofficeAssistantPage.getWidgetAiMessage({ timeout: REAL_FLOW_TIMEOUT }).should('have.length.at.least', 2);
-          backofficeAssistantPage.getWidgetAgentBadge().invoke('text').should('have.length.greaterThan', 0);
+          backofficeAssistantPage.getAssistantMessage({ timeout: REAL_FLOW_TIMEOUT }).should('have.length.at.least', 1);
+          backofficeAssistantPage
+            .getAgentSelectorLabel()
+            .invoke('text')
+            .should('have.length.greaterThan', 0)
+            .and('not.eq', backofficeAssistantPage.getAutoAgentLabel());
         }
       );
 
@@ -1039,15 +1026,15 @@ describe(
               return;
             }
 
-            backofficeAssistantPage.getWidgetRetryButton().should('be.visible').click();
+            backofficeAssistantPage.getRetryButton().should('be.visible').click();
             cy.wait('@assistantRealPrompt', { timeout: AWS_REAL_FLOW_TIMEOUT })
               .its('response.statusCode')
               .should('be.within', 200, 299);
           });
 
           backofficeAssistantPage
-            .getWidgetAiMessage({ timeout: AWS_REAL_FLOW_TIMEOUT })
-            .should('have.length.at.least', 2)
+            .getAssistantMessage({ timeout: AWS_REAL_FLOW_TIMEOUT })
+            .should('have.length.at.least', 1)
             .last()
             .should('not.be.empty');
 

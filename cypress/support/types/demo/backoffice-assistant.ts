@@ -3,9 +3,9 @@ export interface BackofficeAssistantDemoStaticFixtures {
   rootUser: {
     username: string;
   };
-  contextPageUrl: string;
   contextFormName: string;
   attachmentImagePath: string;
+  attachmentImageName: string;
   formFill: {
     agentName: string;
     prompt: string;
@@ -17,14 +17,17 @@ export interface BackofficeAssistantDemoStaticFixtures {
   };
   simplePrompt: string;
   unknownConversationReference: string;
+  stubbedConversationReference: string;
   enabledAgents: string[];
-  promptRequiredValidationMessage: string;
+  invalidPayloadMessage: string;
   attachmentUnsupportedMediaTypeMessage: string;
   attachmentCountExceededMessage: string;
   attachmentMaxCount: number;
   formFillTargetValue: string;
   xssPromptPayload: string;
   stubbedAgentName: string;
+  stubbedToolName: string;
+  stubbedToolLabel: string;
   historyEntryName: string;
   unsupportedAttachmentPath: string;
 }

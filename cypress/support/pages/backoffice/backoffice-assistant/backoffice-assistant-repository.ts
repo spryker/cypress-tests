@@ -6,9 +6,13 @@ import { injectable } from 'inversify';
 export class BackofficeAssistantRepository {
   private static readonly ENABLE_SETTING_KEY = 'ai_commerce:backoffice_assistant:general:is_enabled';
 
-  getWidgetStateStorageKey = (): string => 'backoffice_assistant_state';
+  private static readonly CHAT_ENDPOINT_PATH = '/ai-commerce/backoffice-assistant-chat';
 
-  getWidgetToggleLabel = (): string => 'Assistant';
+  getSessionStorageKey = (): string => 'spryker-chat-session';
+
+  getAgentStorageKey = (): string => 'spryker-chat-agent';
+
+  getTriggerLabel = (): string => 'Backoffice Assistant';
 
   getGreetingText = (): string => 'How can I help you today?';
 
@@ -18,104 +22,121 @@ export class BackofficeAssistantRepository {
 
   getOrderManagementAgentLabel = (): string => 'Order Management';
 
-  getTransportFailureText = (): string => 'Request failed with status 503';
+  getGenericErrorText = (): string => 'Something went wrong. Please try again.';
+
+  getChatTurnFailureMessage = (): string => 'The chat turn failed';
 
   getUnsupportedFileTypeText = (): string => 'Unsupported file type';
 
   getHistoriesEmptyText = (): string => 'No conversations yet';
 
+  getHistoryMenuItemLabel = (): string => 'Chat history';
+
   getValidationGlossaryKey = (): string => 'backoffice_assistant.validation';
 
   getInvalidCsrfToken = (): string => 'invalid-token';
+
+  getCsrfTokenHeaderName = (): string => 'X-CSRF-Token';
+
+  getCsrfTokenAttributeName = (): string => 'csrf-token';
+
+  getStreamDoneSentinel = (): string => '[DONE]';
 
   getEnableToggleSelector = (): string =>
     `.setting-row[data-setting-key="${BackofficeAssistantRepository.ENABLE_SETTING_KEY}"] .config-input`;
 
   getSaveButtonSelector = (): string => '[data-qa="save-configuration"]';
 
-  getWidgetToggleSelector = (): string => '.js-backoffice-assistant__toggle';
+  getChatSelector = (): string => 'spryker-chat';
 
-  getWidgetPanelSelector = (): string => '.js-backoffice-assistant__panel';
+  getTriggerSelector = (): string => '[data-chat-trigger]';
 
-  getWidgetPanelOpenClass = (): string => 'backoffice-assistant__panel--open';
+  getPanelSelector = (): string => '.spryker-chat-panel';
 
-  getWidgetAgentSelectSelector = (): string => '.js-backoffice-assistant__agent-select';
+  getPanelOpenAttribute = (): string => 'data-open';
 
-  getWidgetAgentBadgeSelector = (): string => '.js-backoffice-assistant__agent-badge';
+  getWelcomeTextSelector = (): string => '.spryker-chat-transcript__welcome-text';
 
-  getWidgetInputSelector = (): string => '.js-backoffice-assistant__input';
+  getMoreToggleSelector = (): string => '[data-ref="moreToggle"]';
 
-  getWidgetSendSelector = (): string => '.js-backoffice-assistant__send';
+  getMenuItemSelector = (): string => '.spryker-chat-menu__item';
 
-  getWidgetHistoryButtonSelector = (): string => '.js-backoffice-assistant__history-btn';
+  getNewConversationSelector = (): string => '[data-ref="newConversation"]';
 
-  getWidgetNewChatSelector = (): string => '.js-backoffice-assistant__new-chat';
+  getCloseSelector = (): string => '.spryker-chat-panel__header-actions [data-ref="close"]';
 
-  getWidgetAttachSelector = (): string => '.js-backoffice-assistant__attach';
+  getAgentSelectorToggleSelector = (): string => '.chat-agent-selector__toggle';
 
-  getWidgetMessagesSelector = (): string => '.js-backoffice-assistant__messages';
+  getAgentSelectorLabelSelector = (): string => '.chat-agent-selector__label';
 
-  getWidgetRetryButtonSelector = (): string => '.backoffice-assistant__retry-btn';
+  getAgentSelectorOptionSelector = (): string => '.chat-agent-selector__option';
 
-  getWidgetFileInputSelector = (): string => '.js-backoffice-assistant__file-input';
+  getAgentSelectorOptionLabelSelector = (): string => '.chat-agent-selector__option-label';
 
-  getWidgetAttachmentsPreviewSelector = (): string => '.js-backoffice-assistant__attachments-preview';
+  getInputSelector = (): string => '.spryker-chat-composer__input';
 
-  getWidgetAttachmentChipSelector = (): string => '.backoffice-assistant__attachment-chip';
+  getSendSelector = (): string => '.spryker-chat-composer__send';
 
-  getWidgetAttachmentChipNameSelector = (): string => '.backoffice-assistant__attachment-chip-name';
+  getAttachButtonSelector = (): string => '.chat-attachments__attach-button';
 
-  getWidgetMessageAttachmentPillSelector = (): string => '.backoffice-assistant__message-attachment-pill';
+  getFileInputSelector = (): string => 'spryker-chat input[type="file"]';
 
-  getWidgetContextSuggestionsSelector = (): string => '.js-backoffice-assistant__page-context-suggestions';
+  getAttachmentChipSelector = (): string => '.chat-attachments__chip';
 
-  getWidgetFormContextSuggestionLabelSelector = (): string => '.js-backoffice-assistant__form-context-suggestion-label';
+  getAttachmentChipNameSelector = (): string => '.chat-attachments__name';
 
-  getWidgetContextChipSelector = (): string => '.backoffice-assistant__context-chip';
+  getAttachmentChipRemoveSelector = (): string => '.chat-attachments__remove';
 
-  getWidgetContextChipNameSelector = (): string => '.js-backoffice-assistant__context-chip-name';
+  getMessageAttachmentPillSelector = (): string => '.chat-attachments__pill';
 
-  getWidgetAiMessageSelector = (): string => '.backoffice-assistant__message--ai';
+  getAttachmentNoticeSelector = (): string => '.chat-attachments__notice';
 
-  getWidgetReasoningMessageSelector = (): string => '.backoffice-assistant__message--reasoning';
+  getFormContextSuggestionSelector = (): string => '.chat-form-context__suggestion';
 
-  getWidgetUserMessageSelector = (): string => '.backoffice-assistant__message--user';
+  getFormContextChipSelector = (): string => '.chat-form-context__chip';
 
-  getWidgetToolCallMessageSelector = (): string => '.backoffice-assistant__message--tool-call';
+  getFormContextNameSelector = (): string => '.chat-form-context__name';
 
-  getWidgetToolCallNameSelector = (): string => '.backoffice-assistant__tool-call-name';
+  getTranscriptSelector = (): string => '.spryker-chat-transcript__messages';
 
-  getWidgetToolCallResultToggleSelector = (): string => '.backoffice-assistant__tool-call-toggle';
+  getAssistantMessageSelector = (): string => '.spryker-chat-message--assistant';
 
-  getWidgetAttachmentChipRemoveSelector = (): string => '.backoffice-assistant__attachment-chip-remove';
+  getUserMessageSelector = (): string => '.spryker-chat-message--user';
 
-  getWidgetHistoriesSelector = (): string => '.js-backoffice-assistant__histories';
+  getErrorMessageSelector = (): string => '.spryker-chat-message--error';
 
-  getWidgetHistoriesListSelector = (): string => '.js-backoffice-assistant__histories-list';
+  getRetryButtonSelector = (): string => '.spryker-chat-transcript__retry';
 
-  getWidgetHistoryItemSelector = (): string => '.backoffice-assistant__histories-item';
+  getReasoningSelector = (): string => '.chat-reasoning';
 
-  getWidgetHistoryItemDeleteSelector = (): string => '.backoffice-assistant__histories-item-delete';
+  getToolCallSelector = (): string => '.chat-tool-calls__card';
 
-  getWidgetHistoriesEmptySelector = (): string => '.js-backoffice-assistant__histories-empty';
+  getToolCallNameSelector = (): string => '.chat-tool-calls__name';
+
+  getToolCallToggleSelector = (): string => '.chat-tool-calls__toggle';
+
+  getHistoriesSelector = (): string => '.chat-histories';
+
+  getHistoryItemSelector = (): string => '.chat-histories__item';
+
+  getHistoryItemDeleteSelector = (): string => '.chat-histories__item-delete';
+
+  getHistoryItemOpenSelector = (): string => '.chat-histories__item-open';
+
+  getHistoriesEmptySelector = (): string => '.chat-histories__empty';
 
   getFormFillTargetFieldSelector = (fieldName: string): string => `[name="${fieldName}"]`;
 
   getIboxCollapseLinkSelector = (): string => '.ibox-title .collapse-link';
 
-  getPromptEndpoint = (): string => '**/ai-commerce/backoffice-assistant-prompt/index';
+  getPromptPath = (): string => `${BackofficeAssistantRepository.CHAT_ENDPOINT_PATH}/prompt`;
 
-  getHistoriesEndpoint = (): string => '**/ai-commerce/backoffice-assistant-conversation/index';
+  getConversationsPath = (): string => `${BackofficeAssistantRepository.CHAT_ENDPOINT_PATH}/conversations`;
 
-  getDetailEndpoint = (): string => '**/ai-commerce/backoffice-assistant-conversation/detail**';
+  getConversationMessagesPath = (): string =>
+    `${BackofficeAssistantRepository.CHAT_ENDPOINT_PATH}/conversation-messages`;
 
-  getDeleteEndpoint = (): string => '**/ai-commerce/backoffice-assistant-conversation/delete';
+  getDeleteConversationPath = (): string => `${BackofficeAssistantRepository.CHAT_ENDPOINT_PATH}/delete-conversation`;
 
-  getPromptPath = (): string => '/ai-commerce/backoffice-assistant-prompt/index';
-
-  getHistoriesPath = (): string => '/ai-commerce/backoffice-assistant-conversation/index';
-
-  getDetailPath = (): string => '/ai-commerce/backoffice-assistant-conversation/detail';
-
-  getDeletePath = (): string => '/ai-commerce/backoffice-assistant-conversation/delete';
+  getEndpointPattern = (path: string): string => `**${path}**`;
 }
