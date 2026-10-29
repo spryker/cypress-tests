@@ -21,6 +21,8 @@ export class CompanyRoleCreatePage extends BackofficePage {
       this.repository.getPermissionCheckbox(permissionName).check({ force: true });
     });
     this.repository.getSubmitButton().click();
+
+    this.repository.getSuccessMessage().should('contain.text', 'Company role has been successfully created');
   };
 
   // A shop wiring the company form expander searches companies through an autocomplete select2 box;

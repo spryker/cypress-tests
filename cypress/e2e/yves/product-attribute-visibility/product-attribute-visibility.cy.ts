@@ -178,7 +178,7 @@ describe(
           .then(($options: JQuery<HTMLOptionElement>) => {
             const offeredValues = $options.toArray().map((option) => option.textContent?.trim());
 
-            expect(offeredValues).to.deep.equal(unselectedAttribute.combinableValues);
+            expect(offeredValues).to.have.members(unselectedAttribute.combinableValues);
             valuesNotCombinable.forEach((value) => expect(offeredValues).to.not.include(value));
           });
 

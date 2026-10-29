@@ -26,6 +26,8 @@ export class CompanyUserCreatePage extends BackofficePage {
     this.repository.getRoleCheckbox(params.roleName).check({ force: true });
 
     this.repository.getSubmitButton().click();
+
+    this.repository.getSuccessMessage().should('contain.text', 'Company user has been created.');
   };
 
   private selectCompany = (companyName: string): void => {

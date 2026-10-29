@@ -12,6 +12,7 @@ export class CompanyUserCreateRepository {
   getCompanySelect = (): Cypress.Chainable => cy.get('select#company-user_fk_company');
   getBusinessUnitSelect = (): Cypress.Chainable => cy.get('select#company-user_fk_company_business_unit');
   getSubmitButton = (): Cypress.Chainable => cy.get('input[type="submit"].safe-submit');
+  getSuccessMessage = (): Cypress.Chainable => cy.get('.alert-success');
 
   // Each role is labelled "<name> (id: <id>)", so the label text is the only handle a spec can predict.
   getRoleCheckbox = (roleName: string): Cypress.Chainable =>

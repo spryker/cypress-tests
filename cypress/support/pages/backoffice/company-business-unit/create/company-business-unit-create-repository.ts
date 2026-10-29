@@ -7,4 +7,5 @@ export class CompanyBusinessUnitCreateRepository {
   getCompanySelect = (): Cypress.Chainable => cy.get('#company-business-unit_fk_company');
   getNameInput = (): Cypress.Chainable => cy.get('#company-business-unit_name');
   getSubmitButton = (): Cypress.Chainable => cy.get('input[type="submit"].safe-submit');
+  getSuccessMessage = (): Cypress.Chainable => cy.get('.alert-success');
 }
