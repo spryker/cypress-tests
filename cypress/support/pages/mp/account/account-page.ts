@@ -11,6 +11,19 @@ export class AccountPage extends MpPage {
 
   protected PAGE_URL = '/user-merchant-portal-gui/my-account';
 
+  // The portal renders this page from its Angular bundle after the server response, and the form
+  // fields appear only once that has parsed. There is no request to wait on, so this settles first.
+  visitAccount = (): void => {
+    this.visit();
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting, spryker-cypress/no-numeric-wait
+    cy.wait(6000);
+  };
+
+  requestAccountPage = (): Cypress.Chainable<Cypress.Response<string>> => {
+    return cy.request(Cypress.env().merchantPortalUrl + this.PAGE_URL);
+  };
+
   openChangePasswordForm = (): void => {
     this.repository.getChangePasswordButton().click();
   };

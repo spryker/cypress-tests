@@ -1,0 +1,7 @@
+{
+  "defaultPassword": "change123",
+  "abstractPrice": {
+    "default": "€100.00",
+    "original": "€150.00"
+  }
+}

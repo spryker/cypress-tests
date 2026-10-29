@@ -16,6 +16,16 @@ export class CheckoutShipmentPage extends YvesPage {
       this.repository.getStandardShipmentRadio($shipmentItem, index).click({ force: true });
     });
 
+    this.submitWithRequestedDeliveryDate();
+  };
+
+  setShippingMethod = (methodName: string): void => {
+    this.repository.getShipmentMethodLabel(methodName).click({ force: true });
+
+    this.submitWithRequestedDeliveryDate();
+  };
+
+  private submitWithRequestedDeliveryDate = (): void => {
     this.repository
       .getShipmentDateInput()
       .clear({ force: true })

@@ -1,0 +1,96 @@
+import { autoWired } from '@utils';
+import { inject, injectable } from 'inversify';
+import { BackofficePage } from '@pages/backoffice';
+import { NavigationMenuRepository } from './navigation-menu-repository';
+
+@injectable()
+@autoWired
+export class NavigationMenuPage extends BackofficePage {
+  @inject(NavigationMenuRepository) private repository: NavigationMenuRepository;
+
+  filterMenu = (searchTerm: string): void => {
+    cy.get(this.repository.getFilterInputSelector()).clear();
+    cy.get(this.repository.getFilterInputSelector()).type(searchTerm);
+  };
+
+  clearFilter = (): void => {
+    cy.get(this.repository.getFilterInputSelector()).clear();
+  };
+
+  pressEnter = (): void => {
+    cy.get(this.repository.getFilterInputSelector()).type('{enter}');
+  };
+
+  getFilterInput = (): Cypress.Chainable => cy.get(this.repository.getFilterInputSelector());
+
+  getNavigationMenu = (): Cypress.Chainable => cy.get(this.repository.getNavigationMenuSelector());
+
+  getHiddenMenuItems = (): Cypress.Chainable => cy.get(this.repository.getHiddenMenuItemsSelector());
+
+  getVisibleMenuItems = (): Cypress.Chainable => cy.get(this.repository.getVisibleMenuItemsSelector());
+
+  getAnyMenuItems = (): Cypress.Chainable =>
+    cy.get(`${this.repository.getMenuItemSelector()}, ${this.repository.getMenuParentItemSelector()}`);
+
+  getTopLevelMenuItems = (): Cypress.Chainable =>
+    cy
+      .get(this.repository.getNavigationMenuSelector())
+      .find(`> ${this.repository.getMenuItemSelector()}, > ${this.repository.getMenuParentItemSelector()}`);
+
+  getOpenActiveSubmenus = (): Cypress.Chainable =>
+    cy.get(`${this.repository.getActiveMenuItemSelector()} ${this.repository.getMenuSubmenuSelector()}.in`);
+
+  getMenuItemLabels = (): Cypress.Chainable =>
+    cy.get(`${this.repository.getNavigationMenuSelector()} ${this.repository.getMenuItemLabelSelector()}`);
+
+  getItemByLabel = (label: string): Cypress.Chainable => cy.contains(this.repository.getMenuItemLabelSelector(), label);
+
+  getParentItemByLabel = (label: string): Cypress.Chainable =>
+    cy
+      .contains(this.repository.getMenuItemLabelSelector(), label)
+      .parents(this.repository.getMenuParentItemSelector())
+      .first();
+
+  getMenuItemLabelSelector = (): string => this.repository.getMenuItemLabelSelector();
+
+  getMenuSubmenuSelector = (): string => this.repository.getMenuSubmenuSelector();
+
+  getMenuItemSelector = (): string => this.repository.getMenuItemSelector();
+
+  getMenuItemsOrder = (): Cypress.Chainable<string[]> => {
+    return this.getMenuItemLabels().then(($labels) => {
+      return $labels.map((i: number, el: HTMLElement) => Cypress.$(el).text()).get();
+    });
+  };
+
+  getUserNavigationToggler = (): Cypress.Chainable => cy.get(this.repository.getUserNavigationTogglerSelector());
+
+  /**
+   * Every navigable node in the side menu, both levels. The collapsed second level is present in
+   * the DOM already — the parent only toggles a CSS class — so nothing has to be expanded first.
+   * Parent nodes are excluded because their href is an in-page collapse anchor, not a page.
+   */
+  getMenuItemPaths = (): Cypress.Chainable<string[]> => {
+    return cy
+      .get(`${this.repository.getNavigationMenuSelector()} ${this.repository.getMenuItemLinkSelector()}`)
+      .then(($links): string[] => {
+        const paths = $links
+          .map((index: number, element: HTMLElement) => Cypress.$(element).attr('href'))
+          .get()
+          .filter((href): href is string => typeof href === 'string' && href.startsWith('/'));
+
+        return Array.from(new Set(paths));
+      });
+  };
+
+  getTopLevelIcons = (): Cypress.Chainable =>
+    cy
+      .get(this.repository.getNavigationMenuSelector())
+      .find(`> ${this.repository.getMenuItemSelector()} > a i, > ${this.repository.getMenuParentItemSelector()} > a i`);
+
+  hasMenuItem = (itemLabel: string): Cypress.Chainable<boolean> => {
+    return cy.get(this.repository.getNavigationMenuSelector()).then(($menu) => {
+      return $menu.find(`${this.repository.getMenuItemLabelSelector()}:contains("${itemLabel}")`).length > 0;
+    });
+  };
+}

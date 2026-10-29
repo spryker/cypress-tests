@@ -6,9 +6,11 @@ import * as Cypress from 'cypress';
 export class B2bCatalogRepository implements CatalogRepository {
   getSearchInput = (): Cypress.Chainable => cy.get('[data-qa="component search-form"] input:visible').first();
   getFirstSuggestedProduct = (): Cypress.Chainable => cy.get('[data-qa="component suggestion-product"] a').first();
+  getSuggestedProductSelector = (): string => '[data-qa="component suggestion-product"]';
   getSearchButton = (): Cypress.Chainable => cy.get('[data-qa="component search-form"] [type="submit"]:visible');
   getProductItemBlocks = (): Cypress.Chainable => cy.get('[data-qa="component product-item"]');
   getFirstProductItemBlockSelector = (): string => '[data-qa="component product-item"]:first';
+  getProductItemBlockSelector = (): string => '[data-qa="component product-item"]';
   getViewButtonSelector = (): string => 'a:contains("View")';
   getItemBlockSearchQuery = (query: string): string => `a:contains("${query}")`;
   getSspAssetSelectorBlock = (): Cypress.Chainable => cy.get('[data-qa="component asset-selector"]');
@@ -17,4 +19,29 @@ export class B2bCatalogRepository implements CatalogRepository {
   getSspAssetOption = (name: string): Cypress.Chainable =>
     cy.get('[data-qa="component asset-option"]').filter(`:contains("${name}")`);
   getSspAssetOptionTriggerButtonSelector = (): string => '[data-qa="asset-option-trigger"]';
+
+  getProductItemDefaultPriceSelector = (): string => 'span[class*="default-price"]';
+  getProductItemOriginalPriceSelector = (): string => 'span[class*="original-price"]';
+
+  getEnabledAddToCartButtonSelector = (): string => 'ajax-add-to-cart button:not([disabled])';
+  selectColorSwatch = (swatchIdentifier: string): void => {
+    cy.get('[data-qa="component product-item"] product-item-color-selector')
+      .first()
+      .contains('[class*="tooltip"]', swatchIdentifier)
+      .parents('button')
+      .first()
+      .trigger('mouseenter', { force: true });
+  };
+
+  // The classic theme counts the results in its sort bar, the redesigned one in its catalog header.
+  getFoundItemsCounterSelector = (): string => '[class*="col--counter"], [class*="catalog-header__count"]';
+  getFilterTitlesSelector = (): string => '[class*="filter"] [class*="title"]';
+  getFilterValueCheckboxSelector = (filterName: string, filterValue: string): string =>
+    `input[type="checkbox"][name="${filterName}[]"][value="${filterValue}"]`;
+  // The redesigned theme's apply button is a small one; the classic theme renders a big one at the
+  // foot of its filter section.
+  getApplyFiltersButtonSelector = (): string =>
+    'button.js-catalog__trigger.button--small, button.js-catalog__trigger.filter-section__button';
+  getSortSelectSelector = (): string => 'select[name="sort"]';
+  getPaginationStepSelector = (): string => 'a[class*="pagination__step"]';
 }

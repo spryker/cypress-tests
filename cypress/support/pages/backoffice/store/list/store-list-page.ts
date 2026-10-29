@@ -32,6 +32,12 @@ export class StoreListPage extends BackofficePage {
     );
   };
 
+  // Opens a store from the rows the table shows now, so it follows hasStore(), which leaves the table
+  // filtered down to that store.
+  editListedStore = (storeName: string): void => {
+    cy.contains(this.repository.getTableRowSelector(), storeName).find(this.repository.getEditButtonSelector()).click();
+  };
+
   hasStore = (storeName: string): Cypress.Chainable<boolean> => {
     // Existence check only — read the real row count, never assert a band on a precondition.
 

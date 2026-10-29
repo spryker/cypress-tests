@@ -24,6 +24,9 @@ export class OrderPage extends YvesPage {
     this.repository.getOrderFilterApplyButton().click();
   };
 
+  getOrderHistoryRow = (orderReference: string): Cypress.Chainable =>
+    this.repository.getOrderTable().contains('tr', orderReference);
+
   editOrder = (): void => {
     this.repository.getEditOrderButton().click();
 

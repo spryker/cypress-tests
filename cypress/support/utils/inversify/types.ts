@@ -12,6 +12,7 @@ export const enum REPOSITORIES {
   CheckoutPaymentRepository = 'CheckoutPaymentRepository',
   CheckoutSummaryRepository = 'CheckoutSummaryRepository',
   AgentLoginRepository = 'AgentLoginRepository',
+  AgentControlBarRepository = 'AgentControlBarRepository',
   CatalogRepository = 'CatalogRepository',
   ProductRepository = 'ProductRepository',
   CompanyUserSelectRepository = 'CompanyUserSelectRepository',
@@ -60,4 +61,7 @@ export const enum REPOSITORIES {
   ProductRelationRepository = 'ProductRelationRepository',
   CategoryCreateRepository = 'CategoryCreateRepository',
   CategoryReSortRepository = 'CategoryReSortRepository',
+  CustomerGroupFormRepository = 'CustomerGroupFormRepository',
+  CustomerGroupViewRepository = 'CustomerGroupViewRepository',
+  CustomerGroupListRepository = 'CustomerGroupListRepository',
 }

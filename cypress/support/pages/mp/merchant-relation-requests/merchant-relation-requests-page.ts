@@ -13,16 +13,21 @@ export class MerchantRelationRequestsPage extends MpPage {
 
   find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(params.query, { delay: 0 });
-    cy.get(searchSelector).type('{enter}');
 
-    this.interceptTable({
-      url: '/merchant-relation-request-merchant-portal-gui/merchant-relation-requests/table-data**',
-      expectedCount: params.expectedCount,
-    });
+    this.interceptTable(
+      {
+        url: '/merchant-relation-request-merchant-portal-gui/merchant-relation-requests/table-data**',
+        expectedCount: params.expectedCount,
+        searchQuery: params.query,
+      },
+      () => {
+        cy.get(searchSelector).clear();
+        cy.get(searchSelector).type(params.query, { delay: 0 });
+        cy.get(searchSelector).type('{enter}');
+      }
+    );
 
-    return this.repository.getFirstTableRow();
+    return this.repository.getTableRowContaining(params.query);
   };
 
   getDrawer = (): Cypress.Chainable => {
@@ -30,8 +35,13 @@ export class MerchantRelationRequestsPage extends MpPage {
   };
 
   addInternalComment = (params: AddInternalCommentParams): void => {
+    const createCommentAlias = this.faker.string.uuid();
+    cy.intercept({ pathname: '/comment-merchant-portal-gui/comment/create' }).as(createCommentAlias);
+
     this.repository.getInternalCommentTextarea().type(params.comment);
     this.repository.getInternalCommentAddCommentButton().click();
+
+    cy.wait(`@${createCommentAlias}`).its('response.statusCode').should('eq', 200);
   };
 
   approve = (params?: ApproveParams): void => {
@@ -40,12 +50,12 @@ export class MerchantRelationRequestsPage extends MpPage {
     }
 
     this.repository.getDrawer().find(this.repository.getApproveButtonSelector()).click();
-    this.repository.getApprovalModalConfirmButton().click();
+    this.submitDecision(() => this.repository.getApprovalModalConfirmButton().click());
   };
 
   reject = (): void => {
     this.repository.getDrawer().find(this.repository.getRejectButtonSelector()).click();
-    this.repository.getRejectionModalConfirmButton().click();
+    this.submitDecision(() => this.repository.getRejectionModalConfirmButton().click());
   };
 
   uncheckBusinessUnits = (params: UncheckBusinessUnitsParams): void => {
@@ -63,6 +73,18 @@ export class MerchantRelationRequestsPage extends MpPage {
 
   getMessageFromCompanyValue = (): Cypress.Chainable => {
     return this.repository.getMessageFromCompanyValue();
+  };
+
+  private submitDecision = (confirm: () => void): void => {
+    const updateRequestAlias = this.faker.string.uuid();
+    cy.intercept({
+      method: 'POST',
+      pathname: '/merchant-relation-request-merchant-portal-gui/update-merchant-relation-request',
+    }).as(updateRequestAlias);
+
+    confirm();
+
+    cy.wait(`@${updateRequestAlias}`);
   };
 }
 

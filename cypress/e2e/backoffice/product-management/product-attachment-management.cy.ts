@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, skipWhenFeatureAbsent } from '@utils';
 import { ProductManagementListPage, ProductManagementEditPage, ProductPage } from '@pages/backoffice';
 import { ProductManagementStaticFixtures, ProductManagementDynamicFixtures } from '@interfaces/backoffice';
 import { UserLoginScenario } from '@scenarios/backoffice';
@@ -7,6 +7,15 @@ describe(
   'product attachment management',
   { tags: ['@backoffice', '@product-attachment', 'product', 'spryker-core-back-office', 'spryker-core'] },
   (): void => {
+    // The B2C shops carry the product attachment tables but wire neither the Back Office form nor the storefront.
+    if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because the B2C shops have no product attachments', () => {});
+
+      return;
+    }
+
+    skipWhenFeatureAbsent('productAttachments', ['b2b']);
+
     const productManagementListPage = container.get(ProductManagementListPage);
     const productManagementEditPage = container.get(ProductManagementEditPage);
     const userLoginScenario = container.get(UserLoginScenario);

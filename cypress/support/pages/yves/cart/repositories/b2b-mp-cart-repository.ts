@@ -3,7 +3,33 @@ import { CartRepository } from '../cart-repository';
 
 @injectable()
 export class B2bMpCartRepository implements CartRepository {
-  getQuickAddToCartSkuField = (): Cypress.Chainable => cy.get('[data-qa="component autocomplete-form"] .input');
+  // The approver's actions live on the cart page, not the summary, and put the approval's id at
+  // the end of the path - /quote-approval/approve/8 - the opposite way round to the requester's
+  // cancel form. A cart waiting for approval is also locked, which the reset-lock form marks.
+  getLockedCartResetForm = (): Cypress.Chainable => cy.get('form[action$="/cart/reset-lock"]');
+  getApprovalStatus = (): Cypress.Chainable => cy.get('.quote-status');
+  // The share widget renders one url-mask-generator per share option group. Clicking the group's
+  // toggler fires the cart/create-link AJAX, which renders the generated link into an input whose
+  // id is the share option - PREVIEW for the external group.
+  getExternalCartShareToggle = (): Cypress.Chainable =>
+    cy.get('url-mask-generator[shareoptiongroup="external"]').find('.js-toggler-radio__trigger');
+  getExternalCartShareLinkInput = (): Cypress.Chainable => cy.get('#PREVIEW');
+  // The SKU field is ProductSearchWidget's own product-search-autocomplete-form, not the generic
+  // autocomplete-form the other shops render. An empty cart shows the form in the page body; a cart
+  // with items moves it into a collapsed sidebar accordion item, which is opened first.
+  getQuickAddToCartSkuField = (): Cypress.Chainable => {
+    const skuFieldSelector = '[data-qa="component product-search-autocomplete-form"] .input';
+
+    cy.get(skuFieldSelector)
+      .first()
+      .then(($skuField) => {
+        if (!$skuField.is(':visible')) {
+          cy.get('[data-toggle-target=".js-cart-sidebar-item__content-quick-add-widget"]').click();
+        }
+      });
+
+    return cy.get(skuFieldSelector);
+  };
   getQuickAddToCartProductListField = (): Cypress.Chainable => cy.get('[data-qa="component products-list"]');
   getFirstCartItemNoteField = (): Cypress.Chainable => {
     cy.get('[data-qa="component cart-item-note"]')
@@ -65,6 +91,11 @@ export class B2bMpCartRepository implements CartRepository {
   getCheckoutButton = (): Cypress.Chainable => cy.get('[data-qa="cart-go-to-checkout"]');
   getCartSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-summary"]');
   getCartDiscountSummary = (): Cypress.Chainable => cy.get('[data-qa="component cart-code-summary"]');
+  // The B2B promotion tiles show the product name only and carry the sku in their add-to-cart form,
+  // which also keeps the tile apart from those of any other active promotion discount; the quantity
+  // counter beside the add button brings its own +/- buttons.
+  getPromotionalProductAddToCartButton = (sku: string): Cypress.Chainable =>
+    cy.get(`[data-qa="component product-item"] form[action$="/cart/async/add/${sku}"] button[data-init-single-click]`);
   getCustomOrderReferenceInput = (): Cypress.Chainable => {
     cy.get('[data-qa="component order-custom-reference-form"]').parent().parent().parent().click();
 
@@ -95,4 +126,32 @@ export class B2bMpCartRepository implements CartRepository {
   };
   getCartItemAvailabilityLabel = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-cart-item"] [data-qa="component status"]');
+  // The bundle's products render as configured-bundle-product articles inside it.
+  getConfiguredBundles = (): Cypress.Chainable =>
+    cy.get('article[data-qa*="configured-bundle"]:not([data-qa*="configured-bundle-product"])');
+  getConfiguredBundle = (bundleName: string): Cypress.Chainable =>
+    cy
+      .contains('article[data-qa*="configured-bundle"]:not([data-qa*="configured-bundle-product"])', bundleName)
+      .first();
+  // The bundle's quantity counter has no submit button. Its +/- buttons are the one path that posts the new
+  // quantity exactly once, after a short delay that collects consecutive clicks.
+  changeConfiguredBundleQuantity = (bundleName: string, quantity: number): void => {
+    cy.intercept('POST', '**/configured-bundle/**').as('configuredBundleQuantityChange');
+
+    this.getConfiguredBundle(bundleName)
+      .find('input.formatted-number-input__input')
+      .first()
+      .invoke('val')
+      .then((currentQuantity): void => {
+        Cypress._.times(quantity - Number(currentQuantity), (): void => {
+          this.getConfiguredBundle(bundleName).find('.quantity-counter__button--increment').first().click();
+        });
+      });
+    cy.wait('@configuredBundleQuantityChange');
+  };
+  getClearCartFormSelector = (): string => 'form[name=multi_cart_clear_form]';
+
+  getConfigureButtonSelector = (): string => '[data-qa="component configuration-cart-form"] button';
+  getCartItemRemovalFormSelector = (): string => 'form[name^="removeFromCartForm_"]';
+  getCartItemQuantityInputSelector = (): string => '[data-qa="quantity-input"]';
 }

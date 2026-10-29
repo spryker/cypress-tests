@@ -22,6 +22,11 @@ declare namespace Cypress {
     loadDynamicFixturesByPayload(dynamicFixturesDefaultFilePath: string, retries?: number): Chainable;
 
     /**
+     * @example cy.resetProxyCookieJar()
+     */
+    resetProxyCookieJar(): void;
+
+    /**
      * @example cy.resetBackofficeCookies()
      */
     resetBackofficeCookies(): void;
@@ -139,6 +144,18 @@ declare namespace Cypress {
      * @example cy.createCart(token, { priceMode: 'GROSS_MODE', currency: 'EUR', store: 'DE', name: 'cart' })
      */
     createCart(accessToken: string, attributes: Record<string, unknown>): Chainable<string>;
+
+    /**
+     * Adds an item to a cart through the storefront API. Unlike the storefront UI, this can put a
+     * specific merchant's offer on the item, which is what a per-merchant order split needs.
+     *
+     * @example cy.addCartItem(token, cartId, { sku: 'X', quantity: 1, productOfferReference: 'OF--1' })
+     */
+    addCartItem(
+      accessToken: string,
+      cartId: string,
+      attributes: Record<string, unknown>
+    ): Chainable<Cypress.Response<unknown>>;
 
     /**
      * Creates a shopping list for an authenticated customer and returns its id.

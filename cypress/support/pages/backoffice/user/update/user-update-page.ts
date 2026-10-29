@@ -9,7 +9,7 @@ export class UserUpdatePage extends BackofficePage {
   @inject(UserUpdateRepository) private repository: UserUpdateRepository;
 
   protected PAGE_URL = '/user/edit/update';
-  protected DEFAULT_PASSWORD = 'Change123@_';
+  protected DEFAULT_PASSWORD = 'Change123@_!';
 
   checkMerchantAgentCheckbox = (): void => {
     this.getAgentMerchantCheckbox().check();
@@ -27,6 +27,11 @@ export class UserUpdatePage extends BackofficePage {
 
   getAgentCustomerCheckbox = (): Cypress.Chainable => {
     return this.repository.getAgentCustomerCheckbox();
+  };
+
+  checkWarehouseUserCheckbox = (): void => {
+    this.repository.getWarehouseUserCheckbox().check();
+    this.repository.getUpdateUserButton().click();
   };
 
   setDefaultPassword = (): void => {

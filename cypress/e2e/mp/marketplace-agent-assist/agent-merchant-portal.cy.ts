@@ -117,8 +117,7 @@ describe(
         query: dynamicFixtures.merchantUser.username,
       });
 
-      productsPage.visit();
-      productsPage.find({ query: dynamicFixtures.productConcreteForMerchant.abstract_sku }).click();
+      productsPage.openProduct({ query: dynamicFixtures.productConcreteForMerchant.abstract_sku });
 
       productsPage.getDrawer().as('drawer');
 
@@ -140,8 +139,7 @@ describe(
         query: dynamicFixtures.merchantUser.username,
       });
 
-      offersPage.visit();
-      offersPage.find({ query: dynamicFixtures.productOffer.product_offer_reference }).click({ force: true });
+      offersPage.openOffer({ query: dynamicFixtures.productOffer.product_offer_reference });
       offersPage.getDrawer().find(offersPage.getSaveButtonSelector()).click();
 
       offersPage.assertBodyContainsText('The Offer is saved.');

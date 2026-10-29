@@ -1,0 +1,308 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": {
+            "id_store": 1
+          }
+        },
+        {
+          "type": "transfer",
+          "name": "ProductImageTransfer",
+          "key": "productImage",
+          "arguments": {
+            "externalUrlSmall": "https://images.icecat.biz/img/gallery_mediums/30691822_1486.jpg",
+            "externalUrlLarge": "https://images.icecat.biz/img/gallery/30691822_1486.jpg"
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "allowedProduct",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#allowedProduct.abstract_sku",
+              "skuProduct": "#allowedProduct.sku",
+              "moneyValue": {
+                "netAmount": 9000,
+                "grossAmount": 10000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#allowedProduct.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#allowedProduct.id_product_concrete",
+              "idProductAbstract": "#allowedProduct.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "hiddenProduct",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#hiddenProduct.abstract_sku",
+              "skuProduct": "#hiddenProduct.sku",
+              "moneyValue": {
+                "netAmount": 9000,
+                "grossAmount": 10000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": [
+            "#store",
+            {
+              "sku": "#hiddenProduct.sku",
+              "isNeverOutOfStock": "1"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductImageSet",
+          "arguments": [
+            {
+              "name": "default",
+              "idProduct": "#hiddenProduct.id_product_concrete",
+              "idProductAbstract": "#hiddenProduct.fk_product_abstract",
+              "productImages": ["#productImage"]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "whitelistedBusinessUnit",
+          "arguments": [
+            {
+              "fkCompany": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "whitelistedCustomer",
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "arguments": [
+            {
+              "customer": "#whitelistedCustomer",
+              "fkCustomer": "#whitelistedCustomer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#whitelistedBusinessUnit.id_company_business_unit",
+              "isActive": true,
+              "isDefault": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "blacklistedBusinessUnit",
+          "arguments": [
+            {
+              "fkCompany": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "blacklistedCustomer",
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "arguments": [
+            {
+              "customer": "#blacklistedCustomer",
+              "fkCustomer": "#blacklistedCustomer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#blacklistedBusinessUnit.id_company_business_unit",
+              "isActive": true,
+              "isDefault": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "unrestrictedBusinessUnit",
+          "arguments": [
+            {
+              "fkCompany": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "unrestrictedCustomer",
+          "arguments": [
+            {
+              "locale_name": "en_US",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "arguments": [
+            {
+              "customer": "#unrestrictedCustomer",
+              "fkCustomer": "#unrestrictedCustomer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#unrestrictedBusinessUnit.id_company_business_unit",
+              "isActive": true,
+              "isDefault": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantRelationship",
+          "key": "whitelistMerchantRelationship",
+          "arguments": [
+            {
+              "fkMerchant": "#merchant.id_merchant",
+              "fkCompanyBusinessUnit": "#whitelistedBusinessUnit.id_company_business_unit",
+              "assigneeCompanyBusinessUnits": {
+                "companyBusinessUnits": [
+                  {
+                    "idCompanyBusinessUnit": "#whitelistedBusinessUnit.id_company_business_unit"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductList",
+          "key": "whitelist",
+          "arguments": [
+            {
+              "fkMerchantRelationship": "#whitelistMerchantRelationship.id_merchant_relationship",
+              "type": "whitelist",
+              "productListProductConcreteRelation": {
+                "productIds": ["#allowedProduct.id_product_concrete"]
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantRelationship",
+          "key": "blacklistMerchantRelationship",
+          "arguments": [
+            {
+              "fkMerchant": "#merchant.id_merchant",
+              "fkCompanyBusinessUnit": "#blacklistedBusinessUnit.id_company_business_unit",
+              "assigneeCompanyBusinessUnits": {
+                "companyBusinessUnits": [
+                  {
+                    "idCompanyBusinessUnit": "#blacklistedBusinessUnit.id_company_business_unit"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductList",
+          "key": "blacklist",
+          "arguments": [
+            {
+              "fkMerchantRelationship": "#blacklistMerchantRelationship.id_merchant_relationship",
+              "type": "blacklist",
+              "productListProductConcreteRelation": {
+                "productIds": ["#hiddenProduct.id_product_concrete"]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

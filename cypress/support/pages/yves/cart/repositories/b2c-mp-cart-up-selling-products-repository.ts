@@ -4,10 +4,10 @@ import { CartUpSellingProductsRepository } from '../cart-up-selling-products-rep
 @injectable()
 export class B2cMpCartUpSellingProductsRepository implements CartUpSellingProductsRepository {
   getUpSellingCarousel(): Cypress.Chainable {
-    return cy.get('.simple-carousel__container');
+    return cy.get('.slick-carousel__container');
   }
 
   getUpSellingProductItems(): Cypress.Chainable {
-    return cy.get('.simple-carousel__container [data-qa="component product-item"]');
+    return cy.get('.slick-carousel__container [data-qa="component product-item"]');
   }
 }
