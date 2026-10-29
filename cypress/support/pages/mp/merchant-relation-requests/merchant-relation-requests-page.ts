@@ -70,14 +70,11 @@ export class MerchantRelationRequestsPage extends MpPage {
 
       // spy-checkbox gets its initial checked state from ngModel after the first render, the visible box later than
       // the submitted one. An uncheck before that does nothing, and the decision is submitted with this business unit.
-      // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Waits for the checkbox to settle; not a spec-level assertion.
       this.getDrawer().find(submittedCheckboxSelector).should('be.checked');
-      // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Waits for the checkbox to settle; not a spec-level assertion.
       getVisibleCheckbox().should('be.checked');
 
       getVisibleCheckbox().uncheck();
 
-      // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Guards that the submitted value changed; not a spec-level assertion.
       this.getDrawer().find(submittedCheckboxSelector).should('not.be.checked');
     });
   };
