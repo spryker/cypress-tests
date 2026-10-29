@@ -35,7 +35,6 @@ describe(
       agentLoginPage.visit();
       agentLoginPage.getCaptchaWidget().should('be.visible');
       agentLoginPage.solveCaptcha();
-      cy.clearCookies();
       agentLoginPage.login({ username, password: staticFixtures.defaultPassword });
 
       agentOverviewPage.visit();

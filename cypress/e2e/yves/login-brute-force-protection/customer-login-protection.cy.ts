@@ -40,7 +40,6 @@ describe(
       loginPage.visit();
       loginPage.getCaptchaWidget().should('be.visible');
       loginPage.solveCaptcha();
-      cy.clearCookies();
       loginPage.login({ email, password: staticFixtures.defaultPassword });
 
       customerOverviewPage.assertPageLocation();
@@ -87,7 +86,6 @@ describe(
       failLogin(email, staticFixtures.challengeAfterFailedAttempts);
       loginPage.visit();
       loginPage.solveCaptcha();
-      cy.clearCookies();
       loginPage.login({ email, password: staticFixtures.defaultPassword });
 
       multiFactorAuthPage.getVerificationPopup().should('be.visible');

@@ -35,7 +35,6 @@ describe(
       loginPage.visit();
       loginPage.getCaptchaWidget().should('be.visible');
       loginPage.solveCaptcha();
-      cy.clearCookies();
       loginPage.login({ username, password: staticFixtures.defaultPassword });
 
       indexPage.getLoginForm().should('not.exist');

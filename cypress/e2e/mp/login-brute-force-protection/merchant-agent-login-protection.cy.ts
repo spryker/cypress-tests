@@ -41,7 +41,6 @@ describe(
       loginPage.visit();
       loginPage.getCaptchaWidget().should('be.visible');
       loginPage.solveCaptcha();
-      cy.clearCookies();
       cy.intercept('POST', '**/login_check').as('loginCheck');
       loginPage.login({ username, password: staticFixtures.defaultPassword });
       cy.wait('@loginCheck');
