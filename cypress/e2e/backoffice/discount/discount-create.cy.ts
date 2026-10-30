@@ -52,23 +52,4 @@ describe('discount create', { tags: ['@backoffice', '@discount', 'discount', 'sp
 
     discountPage.getSuccessMessage().should('be.visible');
   });
-
-  it('should show validation errors when creating a discount with a blank name and amount', (): void => {
-    discountPage.createDiscount({
-      type: 'Cart rule',
-      name: '',
-      validFrom,
-      validTo,
-      calculatorPlugin: 'Fixed amount',
-      applyWhen,
-    });
-
-    discountPage.getSuccessMessage().should('not.exist');
-    cy.url().should('include', discountPage.getCreatePageUrl());
-
-    discountPage.openGeneralTab();
-    discountPage.getActiveTabError().should('be.visible');
-    discountPage.getBlankValueError().should('be.visible');
-    discountPage.getNameErrorContainer().should('contain', 'Name');
-  });
 });

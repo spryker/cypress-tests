@@ -1,39 +1,3 @@
-import { User } from './shared';
-
-export interface ServiceListStaticFixtures {
-  defaultPassword: string;
-}
-
-export interface ServiceListDynamicFixtures {
-  rootUser: User;
-  businessUnit: BusinessUnit;
-  company: Company;
-  customer: Customer;
-  serviceProduct: Product;
-  salesOrder: SalesOrder;
-}
-
-interface Company {
-  id_company: number;
-  name: string;
-  isActive: boolean;
-  status: string;
-}
-
-interface BusinessUnit {
-  id_company_business_unit: number;
-  name: string;
-  fkCompany: number;
-}
-
-interface Customer {
-  id_customer: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  customer_reference: string;
-}
-
 export interface CompanyUser {
   id_company_user: number;
   fkCompany: number;
