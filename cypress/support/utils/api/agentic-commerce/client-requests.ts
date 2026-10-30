@@ -50,13 +50,49 @@ export function registerAgenticCommerceClient(
 /**
  * Starts an authorization without a browser: `302` to the login for a client that may connect,
  * `200` with an error page for an unknown or blocked client.
+ * A shop with store routing first redirects the path without store and language to the same path
+ * with them; that one redirect is followed, so the answer is the one of the authorize endpoint.
  */
 export function requestAuthorizationStart(client: AgenticCommerceClient): Cypress.Chainable<Cypress.Response<string>> {
-  return cy.request({
-    url: buildAuthorizationUrl(client, PROBE_PROOF_KEY, 'authorization-start'),
-    followRedirect: false,
-    failOnStatusCode: false,
+  const authorizationUrl = buildAuthorizationUrl(client, PROBE_PROOF_KEY, 'authorization-start');
+
+  return requestWithoutRedirect(authorizationUrl).then((response) => {
+    const location = response.headers.location;
+
+    if (
+      response.status !== 302 ||
+      typeof location !== 'string' ||
+      !isStoreRoutingRedirect(authorizationUrl, location)
+    ) {
+      return cy.wrap(response);
+    }
+
+    return requestWithoutRedirect(location);
   });
+}
+
+function requestWithoutRedirect(url: string): Cypress.Chainable<Cypress.Response<string>> {
+  return cy.request({ url, followRedirect: false, failOnStatusCode: false });
+}
+
+function sortedQuery(url: URL): string {
+  const query = new URLSearchParams(url.search);
+  query.sort();
+
+  return query.toString();
+}
+
+function isStoreRoutingRedirect(requestedUrl: string, location: string): boolean {
+  const baseUrl = Cypress.config('baseUrl') ?? undefined;
+  const requested = new URL(requestedUrl, baseUrl);
+  const redirected = new URL(location, requested);
+
+  return (
+    redirected.host === requested.host &&
+    sortedQuery(redirected) === sortedQuery(requested) &&
+    redirected.pathname !== requested.pathname &&
+    redirected.pathname.endsWith(requested.pathname)
+  );
 }
 
 export function buildProbeAuthorizationUrl(client: AgenticCommerceClient): string {
