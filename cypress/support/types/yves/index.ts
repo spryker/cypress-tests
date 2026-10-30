@@ -50,3 +50,4 @@ export * from './order-cancellation';
 export * from './return-management';
 export * from './multistore';
 export * from './product-offer';
+export * from './login-brute-force-protection';
