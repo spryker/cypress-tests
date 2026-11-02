@@ -13,6 +13,8 @@ export class ConfigurationPage extends BackofficePage {
 
   protected THEME_FEATURE = 'theme';
 
+  protected INTEGRATIONS_FEATURE = 'integrations';
+
   visitLogosTab = (): void => {
     cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.THEME_FEATURE}&tab=logos`);
   };
@@ -23,6 +25,30 @@ export class ConfigurationPage extends BackofficePage {
 
   visitBackofficeTab = (): void => {
     cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.THEME_FEATURE}&tab=backoffice`);
+  };
+
+  visitIntegrationsTab = (tabKey: string): void => {
+    cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.INTEGRATIONS_FEATURE}&tab=${tabKey}`);
+  };
+
+  getSettingInput = (settingKey: string): Cypress.Chainable =>
+    cy.get(this.repository.getSettingInputSelector(settingKey));
+
+  setTextSetting = (settingKey: string, value: string): void => {
+    cy.get(this.repository.getSettingInputSelector(settingKey)).clear();
+
+    if (value !== '') {
+      cy.get(this.repository.getSettingInputSelector(settingKey)).type(value);
+    }
+  };
+
+  // A boolean setting is a toggle, so it is clicked only when its state differs from the wanted one.
+  setBooleanSetting = (settingKey: string, isEnabled: boolean): void => {
+    cy.get(this.repository.getSettingInputSelector(settingKey)).then(($input: JQuery<HTMLElement>): void => {
+      if ($input.prop('checked') !== isEnabled) {
+        cy.wrap($input).click({ force: true });
+      }
+    });
   };
 
   visitMerchantPortalTab = (): void => {

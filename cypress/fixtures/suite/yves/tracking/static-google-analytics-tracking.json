@@ -1,0 +1,11 @@
+{
+  "defaultPassword": "change123",
+  "measurementId": "G-CYPRESS01",
+  "googleAnalyticsTab": "google_analytics",
+  "measurementIdSetting": "integrations:google_analytics:tracking:measurement_id",
+  "addToCartSetting": "integrations:google_analytics:cart_events:add_to_cart_event_enabled",
+  "removeFromCartSetting": "integrations:google_analytics:cart_events:remove_from_cart_event_enabled",
+  "concreteSkuParameter": "concrete_sku",
+  "productPrice": "300",
+  "currency": "EUR"
+}
