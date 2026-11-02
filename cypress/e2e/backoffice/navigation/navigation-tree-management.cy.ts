@@ -27,12 +27,6 @@ describe(
       });
     });
 
-    // Ported from NavigationCRUDCest::testICanCreateReadUpdateAndDeleteNavigation
-    // Ported from NavigationTreeCest::testSeeEmptyNavigationTree
-    // Ported from NavigationTreeCest::testCreateChildNodeWithoutType
-    // Ported from NavigationTreeCest::testCreateChildNodeWithExternalUrlType
-    // Ported from NavigationTreeCest::testUpdateNodeToCategoryType
-    // Ported from NavigationTreeCest::testCreateChildNodeWithCmsPageType
     // Ported from NavigationTreeCest::testChangeNavigationTreeStructure
     it('should change the navigation tree structure and persist it', (): void => {
       navigationTreePage.openNavigationTree(dynamicFixtures.navigationStructure.name);

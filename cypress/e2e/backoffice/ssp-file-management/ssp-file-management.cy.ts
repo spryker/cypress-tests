@@ -45,8 +45,7 @@ describe(
       fileManagerAttachmentListPage.visit();
       fileManagerAttachmentListPage.clickAttachButton();
 
-      // Parity with the sibling attach blocks: activate the Asset tab first so the
-      // nav-tabs settle and the unattached table is rendered before we search it.
+      // Activate the Asset tab first so the nav-tabs settle and the unattached table renders before the search.
       fileManagerAttachmentAttachPage.selectAttachmentScope('asset');
       fileManagerAttachmentAttachPage.searchUnattachedItem('asset', dynamicFixtures.sspAsset.name);
       fileManagerAttachmentAttachPage.getUnattachedProcessingOverlay('asset').should('not.be.visible');

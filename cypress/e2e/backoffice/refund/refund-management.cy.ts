@@ -42,8 +42,6 @@ describe(
       });
     });
 
-    // Ported from RefundListCest::testThatRefundListIsVisible (the only live
-    // Codeception refund presentation test).
     // Replaces the three disabled RefundCest scenarios. Those seeded a refundable item by writing the
     // OMS state straight into the database and then addressed each item row through
     // `data-qa-item-row` / `data-qa-item-current-state`; neither hook exists in the Zed templates any
