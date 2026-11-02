@@ -7,6 +7,10 @@ export interface OrderCreationDynamicFixtures {
   rootUser: User;
 }
 
+export interface OrderManagementStaticFixtures {
+  defaultPassword: string;
+}
+
 export interface OrderCreationDmsDynamicFixtures {
   customer: Customer;
   address: Address;

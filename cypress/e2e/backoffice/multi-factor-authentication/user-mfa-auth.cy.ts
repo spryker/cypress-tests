@@ -9,6 +9,7 @@ import {
   UserMfaActivationScenario,
   UserLogoutScenario,
   UserMfaLoginScenario,
+  UserMfaCreateScenario,
 } from '@scenarios/backoffice';
 import { retryableBefore } from '../../../support/e2e';
 
@@ -30,6 +31,7 @@ describe(
     const mfaLoginScenario = container.get(UserMfaLoginScenario);
     const userLoginScenario = container.get(UserLoginScenario);
     const userLogoutScenario = container.get(UserLogoutScenario);
+    const userMfaCreateScenario = container.get(UserMfaCreateScenario);
 
     let dynamicFixtures: UserMfaAuthDynamicFixtures;
     let staticFixtures: UserMfaAuthStaticFixtures;
@@ -52,12 +54,25 @@ describe(
       mfaActivationScenario.execute(dynamicFixtures.rootUserOne.username);
 
       userLogoutScenario.execute();
+      mfaLoginScenario.executeWithInvalidCode(
+        {
+          username: dynamicFixtures.rootUserOne.username,
+          password: staticFixtures.defaultPassword,
+        },
+        staticFixtures
+      );
       mfaLoginScenario.execute({
         username: dynamicFixtures.rootUserOne.username,
         password: staticFixtures.defaultPassword,
       });
 
       backofficeIndexPage.assertPageLocation();
+
+      userMfaCreateScenario.execute({
+        password: staticFixtures.newPassword,
+        adminUsername: dynamicFixtures.rootUserOne.username,
+        isRootUser: true,
+      });
     });
   }
 );

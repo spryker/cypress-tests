@@ -45,6 +45,11 @@ describe(
       configurationPage.getSaveBar().should('be.visible');
       configurationPage.getChangesCount().should('have.text', '1');
 
+      configurationPage.resetChanges();
+      configurationPage.getThemeMainColor().should('have.value', staticFixtures.themeSettings.mainColorDefault);
+      configurationPage.getSaveBar().should('not.be.visible');
+
+      configurationPage.setThemeMainColor(staticFixtures.themeSettings.validColor);
       configurationPage.saveConfiguration();
       cy.runQueueWorker();
 
@@ -54,6 +59,9 @@ describe(
       configurationPage.setThemeMainColor(staticFixtures.themeSettings.mainColorDefault);
       configurationPage.saveConfiguration();
       cy.runQueueWorker();
+
+      configurationPage.searchSettings(staticFixtures.searchTerm);
+      configurationPage.getNavTab('logos').should('be.visible');
     });
   }
 );
