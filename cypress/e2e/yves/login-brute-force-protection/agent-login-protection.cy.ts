@@ -67,6 +67,7 @@ describe(
       agentLoginPage.login({ username, password: staticFixtures.defaultPassword });
 
       agentLoginPage.assertBodyContainsText(agentLoginPage.getAccountBlockedText()).should('be.visible');
+      agentLoginPage.getCaptchaWidget().should('not.exist');
       agentOverviewPage.visit();
       agentLoginPage.assertPageLocation();
     });

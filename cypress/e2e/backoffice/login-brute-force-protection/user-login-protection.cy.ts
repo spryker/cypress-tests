@@ -45,7 +45,7 @@ describe(
 
       failLogin(username, staticFixtures.challengeAfterFailedAttempts);
       loginPage.visit();
-      loginPage.loginBypassingFormValidation({ username, password: staticFixtures.defaultPassword });
+      loginPage.submitLoginWithoutSolvingCaptcha({ username, password: staticFixtures.defaultPassword });
 
       loginPage.assertBodyContainsText(loginPage.getCaptchaRequiredText()).should('be.visible');
       loginPage.getCaptchaWidget().should('be.visible');
@@ -66,6 +66,7 @@ describe(
       loginPage.login({ username, password: staticFixtures.defaultPassword });
 
       loginPage.assertBodyContainsText(loginPage.getAccountBlockedText()).should('be.visible');
+      loginPage.getCaptchaWidget().should('not.exist');
       indexPage.visit();
       indexPage.getLoginForm().should('be.visible');
     });

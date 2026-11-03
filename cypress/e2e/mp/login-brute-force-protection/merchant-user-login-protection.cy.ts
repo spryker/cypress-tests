@@ -69,6 +69,7 @@ describe(
       loginPage.login({ username, password: staticFixtures.defaultPassword });
 
       loginPage.assertBodyContainsText(loginPage.getAccountBlockedText()).should('be.visible');
+      loginPage.getCaptchaWidget().should('not.exist');
       dashboardPage.visit();
       loginPage.assertPageLocation();
     });

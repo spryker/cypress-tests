@@ -18,10 +18,11 @@ export class LoginPage extends BackofficePage {
     this.repository.getSubmitButton().click();
   };
 
-  loginBypassingFormValidation = (params: LoginParams): void => {
+  submitLoginWithoutSolvingCaptcha = (params: LoginParams): void => {
     this.repository.getEmailInput().clear().type(params.username);
     this.repository.getPasswordInput().clear().type(params.password);
 
+    cy.resetProxyCookieJar();
     this.repository.getLoginForm().submit();
   };
 
