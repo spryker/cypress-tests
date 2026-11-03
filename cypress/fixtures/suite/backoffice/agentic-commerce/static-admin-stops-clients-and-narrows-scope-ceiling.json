@@ -6,7 +6,7 @@
   "companyUser": { "email": "sonia@acme.com", "companyName": "Acme Corporation" },
   "backofficeUser": { "username": "admin@spryker.com", "password": "change123" },
   "scopeCeiling": {
-    "supportedScopes": ["agentic-commerce:principal-read", "order:place"],
+    "supportedScopes": ["agentic-commerce:principal-read", "catalog:read", "company:read", "cart:read", "cart:write", "order:place"],
     "narrowedScope": "order:place",
     "removedScope": "agentic-commerce:principal-read",
     "savedMessage": "Scope ceiling saved"
