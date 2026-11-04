@@ -40,8 +40,6 @@ export class BackofficeAssistantRepository {
 
   getCsrfTokenAttributeName = (): string => 'csrf-token';
 
-  getStreamDoneSentinel = (): string => '[DONE]';
-
   getEnableToggleSelector = (): string =>
     `.setting-row[data-setting-key="${BackofficeAssistantRepository.ENABLE_SETTING_KEY}"] .config-input`;
 
