@@ -58,6 +58,7 @@ export * from './purchasing-control/budget/update/budget-update-page';
 export * from './purchasing-control/checkout-summary/checkout-summary-budget-page';
 export * from './quick-order-image-to-cart/quick-order-image-to-cart-page';
 export * from './search-by-image/search-by-image-page';
+export * from './storefront-assistant/storefront-assistant-page';
 export * from './recurring-orders/checkout-summary/checkout-summary-recurring-order-page';
 export * from './recurring-orders/list/recurring-order-list-page';
 export * from './recurring-orders/detail/recurring-order-detail-page';

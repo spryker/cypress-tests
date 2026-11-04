@@ -1,0 +1,857 @@
+{
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "customer": {
+    "email": "spencor.hopkin@acme.com",
+    "firstName": "Spencor"
+  },
+  "storeLocalePath": "/DE/en",
+  "germanStoreLocalePath": "/DE/de",
+  "agents": [
+    {
+      "value": "",
+      "label": "Auto"
+    },
+    {
+      "value": "product_discovery",
+      "label": "Product Discovery"
+    }
+  ],
+  "defaultPrompts": ["Help me find a gift", "What do you recommend?", "Compare products for me"],
+  "productPrompts": [
+    "Show me cheaper alternatives to {productName}",
+    "Show me similar products",
+    "Compare {productName} with similar models"
+  ],
+  "productResultPrompt": "Compare these for me",
+  "productResultNamedPrompt": "Tell me more about {productName}",
+  "product": {
+    "abstractSku": "HP-ECO-45K",
+    "name": "High-Efficiency Heat Pump 45kW",
+    "path": "/DE/en/highefficiencyheatpump45kw"
+  },
+  "pageContexts": [
+    {
+      "description": "category page",
+      "path": "/DE/en/air-conditioning-and-heating-solutions/industrial-heat-pumps",
+      "label": "Industrial Heat Pumps",
+      "pageContext": {
+        "pageType": "category",
+        "categoryName": "Industrial Heat Pumps",
+        "filters": []
+      },
+      "firstPrompt": "Which Industrial Heat Pumps do you recommend?"
+    },
+    {
+      "description": "search page",
+      "path": "/DE/en/search?q=heat+pump",
+      "label": "heat pump",
+      "pageContext": {
+        "pageType": "search",
+        "searchQuery": "heat pump",
+        "filters": []
+      },
+      "firstPrompt": "Narrow these results for me"
+    },
+    {
+      "description": "cart page",
+      "path": "/DE/en/cart",
+      "label": null,
+      "pageContext": null,
+      "firstPrompt": "Help me find a gift"
+    }
+  ],
+  "messages": {
+    "simple": "What is your return policy?",
+    "multiline": ["line one", "line two"],
+    "products": "Show me heat pumps under 300 euro",
+    "pageContextFollowUp": "and cheaper?",
+    "attachment": "What is in these files?"
+  },
+  "stubbedConversationReferences": {
+    "text": "cypress-sfa-conv-1",
+    "products": "cypress-sfa-conv-2"
+  },
+  "contractPayload": {
+    "message": "Hello",
+    "conversationReference": "cypress-sfa-contract",
+    "attachments": []
+  },
+  "streams": {
+    "text": [
+      {
+        "type": "start",
+        "messageId": "msg_sfa_a",
+        "messageMetadata": {
+          "conversationReference": "cypress-sfa-conv-1"
+        }
+      },
+      {
+        "type": "data-agent",
+        "data": {
+          "name": "product_discovery"
+        }
+      },
+      {
+        "type": "tool-input-start",
+        "toolCallId": "call_sfa_a1",
+        "toolName": "catalog_suggest"
+      },
+      {
+        "type": "tool-input-available",
+        "toolCallId": "call_sfa_a1",
+        "toolName": "catalog_suggest",
+        "input": {
+          "query": "returns"
+        }
+      },
+      {
+        "type": "text-start",
+        "id": "text_1"
+      },
+      {
+        "type": "text-delta",
+        "id": "text_1",
+        "delta": "You can return items within **30 days**. "
+      },
+      {
+        "type": "text-delta",
+        "id": "text_1",
+        "delta": "See the [Return policy](/DE/en/return-policy)."
+      },
+      {
+        "type": "text-end",
+        "id": "text_1"
+      },
+      {
+        "type": "finish"
+      }
+    ],
+    "reasoning": [
+      {
+        "type": "start",
+        "messageId": "msg_sfa_r"
+      },
+      {
+        "type": "reasoning-start",
+        "id": "reasoning_1"
+      },
+      {
+        "type": "reasoning-delta",
+        "id": "reasoning_1",
+        "delta": "The customer wants a heat pump. "
+      },
+      {
+        "type": "reasoning-delta",
+        "id": "reasoning_1",
+        "delta": "I will search the heating category."
+      },
+      {
+        "type": "reasoning-end",
+        "id": "reasoning_1"
+      },
+      {
+        "type": "text-start",
+        "id": "text_2"
+      },
+      {
+        "type": "text-delta",
+        "id": "text_2",
+        "delta": "Here is my answer."
+      },
+      {
+        "type": "text-end",
+        "id": "text_2"
+      },
+      {
+        "type": "finish"
+      }
+    ],
+    "error": [
+      {
+        "type": "start",
+        "messageId": "msg_sfa_f"
+      },
+      {
+        "type": "data-agent",
+        "data": {
+          "name": "product_discovery"
+        }
+      },
+      {
+        "type": "error",
+        "errorText": "The shopping assistant is temporarily unavailable. Please try again."
+      },
+      {
+        "type": "finish"
+      }
+    ],
+    "deniedTool": [
+      {
+        "type": "start",
+        "messageId": "msg_sfa_h"
+      },
+      {
+        "type": "tool-input-start",
+        "toolCallId": "call_sfa_h1",
+        "toolName": "display_products"
+      },
+      {
+        "type": "tool-input-available",
+        "toolCallId": "call_sfa_h1",
+        "toolName": "display_products",
+        "input": {
+          "idProductAbstracts": [1]
+        }
+      },
+      {
+        "type": "tool-output-denied",
+        "toolCallId": "call_sfa_h1"
+      },
+      {
+        "type": "text-start",
+        "id": "text_5"
+      },
+      {
+        "type": "text-delta",
+        "id": "text_5",
+        "delta": "I could not load the product details."
+      },
+      {
+        "type": "text-end",
+        "id": "text_5"
+      },
+      {
+        "type": "finish"
+      }
+    ],
+    "markdown": [
+      {
+        "type": "start",
+        "messageId": "msg_sfa_x"
+      },
+      {
+        "type": "text-start",
+        "id": "text_7"
+      },
+      {
+        "type": "text-delta",
+        "id": "text_7",
+        "delta": "- first\n- second\n\n| A | B |\n|---|---|\n| 1 | 2 |\n\n[Shop](/DE/en)\n\n<script>window.__sfaXss=1</script><img src=x onerror=\"window.__sfaXss=1\">"
+      },
+      {
+        "type": "text-end",
+        "id": "text_7"
+      },
+      {
+        "type": "finish"
+      }
+    ],
+    "cut": [
+      {
+        "type": "start",
+        "messageId": "msg_sfa_i"
+      },
+      {
+        "type": "text-start",
+        "id": "text_6"
+      },
+      {
+        "type": "text-delta",
+        "id": "text_6",
+        "delta": "Partial"
+      }
+    ]
+  },
+  "textAnswer": {
+    "strongText": "30 days",
+    "linkPath": "/DE/en/return-policy",
+    "plainText": "You can return items within 30 days. See the Return policy."
+  },
+  "reasoningText": "The customer wants a heat pump. I will search the heating category.",
+  "reasoningAnswerText": "Here is my answer.",
+  "streamErrorText": "The shopping assistant is temporarily unavailable. Please try again.",
+  "transportFailureError": "AI provider unavailable",
+  "deniedToolAnswerText": "I could not load the product details.",
+  "xssWindowKey": "__sfaXss",
+  "productResult": {
+    "products": [
+      {
+        "idProductAbstract": 1,
+        "name": "High-Efficiency Heat Pump 45kW",
+        "sku": "HP-ECO-45K",
+        "url": "/DE/en/highefficiencyheatpump45kw",
+        "price": 26700,
+        "priceFormatted": "€267.00",
+        "originalPrice": 26900,
+        "originalPriceFormatted": "€269.00",
+        "reason": "Best value"
+      },
+      {
+        "idProductAbstract": 2,
+        "name": "Industrial Heat Pump 60kW",
+        "sku": "HP-IND-60K",
+        "url": "/DE/en/industrialheatpump60kw",
+        "price": 23900,
+        "priceFormatted": "€239.00",
+        "reason": "Cheapest pick"
+      }
+    ],
+    "displayedCount": 2,
+    "refinementChips": [
+      {
+        "label": "Canon",
+        "filterArgument": "brand",
+        "value": "Canon",
+        "matchCount": 7
+      },
+      {
+        "label": "Black",
+        "filterArgument": "color",
+        "value": "Black",
+        "matchCount": 5
+      }
+    ],
+    "activeFilters": [
+      {
+        "label": "≤ €300.00",
+        "filterArgument": "priceMax",
+        "value": "300"
+      }
+    ],
+    "seeAll": {
+      "totalResults": 27,
+      "queryString": "price%5Bmax%5D=300",
+      "categoryUrl": "/DE/en/air-conditioning-and-heating-solutions/industrial-heat-pumps"
+    }
+  },
+  "carouselResult": {
+    "products": [
+      {
+        "idProductAbstract": 1,
+        "name": "High-Efficiency Heat Pump 45kW",
+        "sku": "HP-ECO-45K",
+        "url": "/DE/en/highefficiencyheatpump45kw",
+        "price": 26700,
+        "priceFormatted": "€267.00",
+        "reason": "Best value"
+      },
+      {
+        "idProductAbstract": 2,
+        "name": "Industrial Heat Pump 60kW",
+        "sku": "HP-IND-60K",
+        "url": "/DE/en/industrialheatpump60kw",
+        "price": 23900,
+        "priceFormatted": "€239.00",
+        "reason": "Cheapest pick"
+      },
+      {
+        "idProductAbstract": 3,
+        "name": "Stub Heat Pump 3",
+        "sku": "SFA-STUB-3",
+        "url": "/DE/en/highefficiencyheatpump45kw",
+        "price": 21000,
+        "priceFormatted": "€210.00",
+        "reason": "Quiet"
+      },
+      {
+        "idProductAbstract": 4,
+        "name": "Stub Heat Pump 4",
+        "sku": "SFA-STUB-4",
+        "url": "/DE/en/highefficiencyheatpump45kw",
+        "price": 22000,
+        "priceFormatted": "€220.00",
+        "reason": "Compact"
+      },
+      {
+        "idProductAbstract": 5,
+        "name": "Stub Heat Pump 5",
+        "sku": "SFA-STUB-5",
+        "url": "/DE/en/highefficiencyheatpump45kw",
+        "price": 23000,
+        "priceFormatted": "€230.00",
+        "reason": "Efficient"
+      }
+    ],
+    "displayedCount": 5,
+    "refinementChips": [],
+    "activeFilters": [],
+    "seeAll": {
+      "totalResults": 27,
+      "queryString": "price%5Bmax%5D=300",
+      "categoryUrl": "/DE/en/air-conditioning-and-heating-solutions/industrial-heat-pumps"
+    }
+  },
+  "productAnswerText": "Both fit your **€300** budget.",
+  "productAnswerPlainText": "Both fit your €300 budget.",
+  "comparisonResult": {
+    "comparedProducts": [
+      {
+        "idProductAbstract": 1,
+        "name": "High-Efficiency Heat Pump 45kW",
+        "sku": "HP-ECO-45K",
+        "priceFormatted": "€267.00",
+        "rating": 4.5,
+        "reviewCount": 2,
+        "isAvailable": true,
+        "url": "/DE/en/highefficiencyheatpump45kw"
+      },
+      {
+        "idProductAbstract": 2,
+        "name": "Industrial Heat Pump 60kW",
+        "sku": "HP-IND-60K",
+        "priceFormatted": "€239.00",
+        "isAvailable": false,
+        "url": "/DE/en/industrialheatpump60kw"
+      }
+    ],
+    "attributeRows": [
+      {
+        "attribute": "Heating Capacity",
+        "values": ["45 kW", "60 kW"],
+        "isDifferent": true
+      },
+      {
+        "attribute": "Brand",
+        "values": ["Heatstar", "Heatstar"],
+        "isDifferent": false
+      }
+    ]
+  },
+  "comparisonDifferentAttribute": "Heating Capacity",
+  "comparisonSameAttribute": "Brand",
+  "choicesResult": {
+    "question": "Who is the gift for?",
+    "choices": ["Partner", "Child", "Colleague"]
+  },
+  "setupResult": {
+    "products": [
+      {
+        "name": "High-Efficiency Heat Pump 45kW",
+        "sku": "HP-ECO-45K",
+        "url": "/DE/en/highefficiencyheatpump45kw",
+        "priceFormatted": "€267.00",
+        "reason": "Main item"
+      },
+      {
+        "name": "Industrial Heat Pump 60kW",
+        "sku": "HP-IND-60K",
+        "url": "/DE/en/industrialheatpump60kw",
+        "priceFormatted": "€29.00",
+        "reason": "Add-on"
+      }
+    ],
+    "totalFormatted": "€296.00",
+    "budgetFormatted": "€300.00"
+  },
+  "conversations": [
+    {
+      "conversationReference": "cypress-sfa-hist-1",
+      "name": "Show me heat pumps under 300 euro",
+      "updatedAtSecondsAgo": 60
+    },
+    {
+      "conversationReference": "cypress-sfa-hist-2",
+      "name": "",
+      "updatedAtSecondsAgo": 3600
+    }
+  ],
+  "historyMessages": [
+    {
+      "role": "user",
+      "content": "Show me heat pumps under 300 euro"
+    },
+    {
+      "role": "ai",
+      "content": "Here are some heat pumps."
+    }
+  ],
+  "promptContractCases": [
+    {
+      "description": "missing CSRF token",
+      "method": "POST",
+      "endpoint": "prompt",
+      "csrf": "none",
+      "expectedStatus": 403,
+      "expectedError": "Your session has expired. Please reload the page and try again."
+    },
+    {
+      "description": "invalid CSRF token",
+      "method": "POST",
+      "endpoint": "prompt",
+      "csrf": "invalid",
+      "expectedStatus": 403,
+      "expectedError": "Your session has expired. Please reload the page and try again."
+    },
+    {
+      "description": "body that is not JSON",
+      "method": "POST",
+      "endpoint": "prompt",
+      "rawBody": "not-json",
+      "contentType": "text/plain",
+      "csrf": "valid",
+      "expectedStatus": 400,
+      "expectedError": "The request could not be processed. Please try again."
+    },
+    {
+      "description": "missing conversation reference",
+      "method": "POST",
+      "endpoint": "prompt",
+      "omittedKeys": ["conversationReference"],
+      "csrf": "valid",
+      "expectedStatus": 400,
+      "expectedError": "The conversation could not be identified. Please start a new conversation."
+    },
+    {
+      "description": "invalid conversation reference",
+      "method": "POST",
+      "endpoint": "prompt",
+      "body": {
+        "conversationReference": "a b"
+      },
+      "csrf": "valid",
+      "expectedStatus": 400,
+      "expectedError": "The conversation could not be identified. Please start a new conversation."
+    },
+    {
+      "description": "blank message",
+      "method": "POST",
+      "endpoint": "prompt",
+      "body": {
+        "message": "   "
+      },
+      "csrf": "valid",
+      "expectedStatus": 400,
+      "expectedError": "Please enter a message."
+    },
+    {
+      "description": "message that is not a string",
+      "method": "POST",
+      "endpoint": "prompt",
+      "body": {
+        "message": 123
+      },
+      "csrf": "valid",
+      "expectedStatus": 400,
+      "expectedError": "Please enter a message."
+    },
+    {
+      "description": "wrong method",
+      "method": "GET",
+      "endpoint": "prompt",
+      "csrf": "valid",
+      "expectedStatus": 405
+    },
+    {
+      "description": "message above the length limit",
+      "method": "POST",
+      "endpoint": "prompt",
+      "messageLength": 100001,
+      "csrf": "valid",
+      "expectedStatus": 400,
+      "expectedError": "Your message is too long. Maximum length is 100000 characters."
+    },
+    {
+      "description": "unsupported attachment type",
+      "method": "POST",
+      "endpoint": "prompt",
+      "body": {
+        "attachments": [
+          {
+            "name": "a.svg",
+            "mediaType": "image/svg+xml",
+            "content": "PHN2Zz48L3N2Zz4="
+          }
+        ]
+      },
+      "csrf": "valid",
+      "expectedStatus": 400,
+      "expectedError": "Unsupported file type. Supported types: image/jpeg, image/png, image/webp, image/gif, application/pdf."
+    },
+    {
+      "description": "attachment content that does not match its type",
+      "method": "POST",
+      "endpoint": "prompt",
+      "body": {
+        "attachments": [
+          {
+            "name": "a.png",
+            "mediaType": "image/png",
+            "content": "YWJj"
+          }
+        ]
+      },
+      "csrf": "valid",
+      "expectedStatus": 400,
+      "expectedError": "Unsupported file type. Supported types: image/jpeg, image/png, image/webp, image/gif, application/pdf."
+    },
+    {
+      "description": "too many attachments",
+      "method": "POST",
+      "endpoint": "prompt",
+      "validPngAttachmentCount": 6,
+      "csrf": "valid",
+      "expectedStatus": 400,
+      "expectedError": "Too many attachments. Maximum is 5 files."
+    },
+    {
+      "description": "unknown agent",
+      "method": "POST",
+      "endpoint": "prompt",
+      "body": {
+        "selectedAgent": "cypress_unknown_agent"
+      },
+      "csrf": "valid",
+      "expectedStatus": 400,
+      "expectedError": "The request could not be processed. Please try again."
+    },
+    {
+      "description": "attachments that are not a list",
+      "method": "POST",
+      "endpoint": "prompt",
+      "body": {
+        "attachments": "cypress"
+      },
+      "csrf": "valid",
+      "expectedStatus": 400,
+      "expectedError": "The request could not be processed. Please try again."
+    }
+  ],
+  "conversationContractCases": [
+    {
+      "description": "conversation list",
+      "method": "GET",
+      "endpoint": "conversations",
+      "csrf": "none",
+      "expectedStatus": 200,
+      "expectsConversationList": true
+    },
+    {
+      "description": "messages of an unknown reference",
+      "method": "GET",
+      "endpoint": "messages",
+      "query": "conversationReference=cypress-unknown-ref",
+      "csrf": "none",
+      "expectedStatus": 404,
+      "expectedError": "This conversation is no longer available."
+    },
+    {
+      "description": "messages of an invalid reference",
+      "method": "GET",
+      "endpoint": "messages",
+      "query": "conversationReference=a%20b",
+      "csrf": "none",
+      "expectedStatus": 404,
+      "expectedError": "This conversation is no longer available."
+    },
+    {
+      "description": "messages without a reference",
+      "method": "GET",
+      "endpoint": "messages",
+      "csrf": "none",
+      "expectedStatus": 404,
+      "expectedError": "This conversation is no longer available."
+    },
+    {
+      "description": "delete of an unknown reference",
+      "method": "DELETE",
+      "endpoint": "conversations",
+      "body": {
+        "conversationReferences": ["cypress-unknown-ref"]
+      },
+      "csrf": "valid",
+      "expectedStatus": 200,
+      "expectedDeletedCount": 0
+    },
+    {
+      "description": "delete with an empty object",
+      "method": "DELETE",
+      "endpoint": "conversations",
+      "body": {},
+      "csrf": "valid",
+      "expectedStatus": 400,
+      "expectedError": "The request could not be processed. Please try again."
+    },
+    {
+      "description": "delete with an empty reference list",
+      "method": "DELETE",
+      "endpoint": "conversations",
+      "body": {
+        "conversationReferences": []
+      },
+      "csrf": "valid",
+      "expectedStatus": 400,
+      "expectedError": "The request could not be processed. Please try again."
+    },
+    {
+      "description": "wrong method",
+      "method": "POST",
+      "endpoint": "conversations",
+      "csrf": "valid",
+      "expectedStatus": 405
+    },
+    {
+      "description": "delete of an invalid reference",
+      "method": "DELETE",
+      "endpoint": "conversations",
+      "body": {
+        "conversationReferences": ["a b"]
+      },
+      "csrf": "valid",
+      "expectedStatus": 422,
+      "expectedError": "This conversation could not be deleted. Please try again."
+    },
+    {
+      "description": "delete without a CSRF token",
+      "method": "DELETE",
+      "endpoint": "conversations",
+      "body": {
+        "conversationReferences": ["cypress-unknown-ref"]
+      },
+      "csrf": "none",
+      "expectedStatus": 403,
+      "expectedError": "Your session has expired. Please reload the page and try again."
+    }
+  ],
+  "guestEndpoints": [
+    {
+      "method": "POST",
+      "endpoint": "prompt",
+      "body": {
+        "message": "Hello",
+        "conversationReference": "abc"
+      }
+    },
+    {
+      "method": "GET",
+      "endpoint": "conversations"
+    },
+    {
+      "method": "GET",
+      "endpoint": "messages",
+      "query": "conversationReference=abc"
+    },
+    {
+      "method": "DELETE",
+      "endpoint": "conversations",
+      "body": {
+        "conversationReferences": ["abc"]
+      }
+    }
+  ],
+  "guestError": "Please sign in to use the shopping assistant.",
+  "attachmentFiles": [
+    {
+      "path": "cypress/fixtures/b2b-mp/demo/files/backoffice-assistant-attachment.png",
+      "name": "backoffice-assistant-attachment.png",
+      "mediaType": "image/png"
+    },
+    {
+      "path": "cypress/fixtures/b2b-mp/demo/files/storefront-assistant-attachment.pdf",
+      "name": "storefront-assistant-attachment.pdf",
+      "mediaType": "application/pdf"
+    }
+  ],
+  "extraAttachmentFile": {
+    "path": "cypress/fixtures/b2b-mp/demo/files/storefront-assistant-extra.png",
+    "name": "storefront-assistant-extra.png",
+    "mediaType": "image/png"
+  },
+  "clientRejections": [
+    {
+      "description": "unsupported type",
+      "files": [
+        {
+          "fileName": "storefront-assistant.svg",
+          "mimeType": "image/svg+xml",
+          "sizeBytes": 64
+        }
+      ],
+      "notice": "Unsupported file type. Supported types: JPEG, PNG, WEBP, GIF, PDF.",
+      "acceptedCount": 0
+    },
+    {
+      "description": "file above the size limit",
+      "files": [
+        {
+          "fileName": "storefront-assistant-large.png",
+          "mimeType": "image/png",
+          "sizeBytes": 5242881
+        }
+      ],
+      "notice": "File is too large. Maximum size is 5 MB.",
+      "acceptedCount": 0
+    },
+    {
+      "description": "sixth file",
+      "files": [
+        {
+          "fileName": "storefront-assistant-1.png",
+          "mimeType": "image/png",
+          "sizeBytes": 64
+        },
+        {
+          "fileName": "storefront-assistant-2.png",
+          "mimeType": "image/png",
+          "sizeBytes": 64
+        },
+        {
+          "fileName": "storefront-assistant-3.png",
+          "mimeType": "image/png",
+          "sizeBytes": 64
+        },
+        {
+          "fileName": "storefront-assistant-4.png",
+          "mimeType": "image/png",
+          "sizeBytes": 64
+        },
+        {
+          "fileName": "storefront-assistant-5.png",
+          "mimeType": "image/png",
+          "sizeBytes": 64
+        },
+        {
+          "fileName": "storefront-assistant-6.png",
+          "mimeType": "image/png",
+          "sizeBytes": 64
+        }
+      ],
+      "notice": "Too many attachments. Maximum is 5 files.",
+      "acceptedCount": 5
+    }
+  ],
+  "germanTexts": {
+    "trigger": "Einkaufsassistent",
+    "greeting": "Hallo, Spencor! Wie kann ich Ihnen heute helfen?",
+    "placeholder": "Fragen Sie mich alles über unsere Produkte...",
+    "hint": "Enter zum Senden · Umschalt + Enter für eine neue Zeile",
+    "disclosure": "KI-generierte Antworten. Vor dem Handeln prüfen.",
+    "historyMenuItem": "Chatverlauf",
+    "newConversationMenuItem": "Neue Unterhaltung",
+    "agentLabels": ["Automatisch", "Produktsuche"],
+    "emptyMessageError": "Bitte geben Sie eine Nachricht ein."
+  },
+  "mobileViewport": {
+    "width": 390,
+    "height": 844
+  },
+  "realPrompts": {
+    "discovery": "Show me heat pumps",
+    "compareFollowUp": "Compare these for me",
+    "setup": "Put together a complete home office setup under 1500 euros: a desk item, a chair and a lamp",
+    "policy": "What is your return policy and how does shipping work?",
+    "historyPrefix": "Cypress SFA history",
+    "imageQuestion": "Find products like this",
+    "german": "Zeig mir blaue Collegeblöcke",
+    "offTopic": "What is the weather in Berlin tomorrow?"
+  },
+  "productImageFile": {
+    "path": "cypress/fixtures/b2b-mp/demo/files/storefront-assistant-product.jpg",
+    "name": "storefront-assistant-product.jpg",
+    "mediaType": "image/jpeg"
+  },
+  "historyNameLength": 60,
+  "defaultVendor": "openai"
+}
