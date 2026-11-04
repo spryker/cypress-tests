@@ -411,6 +411,9 @@ export class StorefrontAssistantPage extends YvesPage {
   readDocumentScrollOverflow = (): Cypress.Chainable<number> =>
     cy.window().then((win) => win.document.documentElement.scrollWidth - win.innerWidth);
 
+  readLayoutViewportWidth = (): Cypress.Chainable<number> =>
+    cy.window().then((win) => win.document.documentElement.clientWidth);
+
   readIsPointInsidePanel = (selector: string): Cypress.Chainable<boolean> =>
     cy.get(selector).then(($element) => {
       const rectangle = $element[0].getBoundingClientRect();

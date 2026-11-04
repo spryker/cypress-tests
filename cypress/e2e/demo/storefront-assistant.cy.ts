@@ -1347,7 +1347,9 @@ describe(
 
           storefrontAssistantPage.openPanel();
 
-          storefrontAssistantPage.getPanel().invoke('outerWidth').should('eq', staticFixtures.mobileViewport.width);
+          storefrontAssistantPage.readLayoutViewportWidth().then((layoutWidth): void => {
+            storefrontAssistantPage.getPanel().invoke('outerWidth').should('eq', layoutWidth);
+          });
           storefrontAssistantPage.getHtml().should('not.have.attr', storefrontAssistantPage.getDockedAttributeName());
           storefrontAssistantPage.getBody().invoke('css', 'padding-right').should('eq', '0px');
 
