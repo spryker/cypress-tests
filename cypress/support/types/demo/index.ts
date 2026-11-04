@@ -8,3 +8,4 @@ export * from './smart-cms';
 export * from './quick-add-by-image';
 export * from './search-by-image';
 export * from './cost-price';
+export * from './storefront-assistant';

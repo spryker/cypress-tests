@@ -68,6 +68,29 @@ export class AiConfigurationPage extends BackofficePage {
     this.getSaveButton().click();
   };
 
+  hasApiToken = (vendor: string): Cypress.Chainable<boolean> => {
+    this.visitTab('ai_vendor', vendor);
+
+    return this.getApiTokenSettingInput(vendor)
+      .invoke('val')
+      .then((token) => String(token ?? '') !== '');
+  };
+
+  setBooleanSetting = (feature: string, tab: string, settingKey: string, isEnabled: boolean): Cypress.Chainable => {
+    this.visitTab(feature, tab);
+
+    return this.getSettingInput(settingKey).then(($input) => {
+      if (($input[0] as HTMLInputElement).checked === isEnabled) {
+        return;
+      }
+
+      cy.wrap($input)[isEnabled ? 'check' : 'uncheck']({ force: true });
+      this.saveConfiguration();
+      // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Post-action guard: the setter must not return before the save round-trip succeeds.
+      cy.wait('@saveConfiguration').its('response.body').should('have.property', 'success', true);
+    });
+  };
+
   getFeatureVendorSettingKey = (feature: string): string => this.repository.getFeatureVendorSettingKey(feature);
 
   getFeatureVendorOptionValue = (feature: string, vendor: string): string =>

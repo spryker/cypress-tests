@@ -1,4 +1,4 @@
-import { autoWired } from '@utils';
+import { autoWired, buildChatStreamBody } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { BackofficePage } from '@pages/backoffice';
@@ -247,9 +247,7 @@ export class BackofficeAssistantPage extends BackofficePage {
       .intercept('POST', this.repository.getEndpointPattern(this.repository.getPromptPath()), {
         statusCode: 200,
         headers: { 'content-type': 'text/event-stream' },
-        body: [...events.map((event) => JSON.stringify(event)), this.repository.getStreamDoneSentinel()]
-          .map((line) => `data: ${line}\n\n`)
-          .join(''),
+        body: buildChatStreamBody(events),
       })
       .as('assistantPrompt');
 

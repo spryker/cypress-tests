@@ -1,4 +1,4 @@
-import { container, skipUnlessAiProviderEnabled } from '@utils';
+import { container, readChatRequestBody, skipUnlessAiProviderEnabled } from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { AiConfigurationPage, AuditLogsPage, BackofficeAssistantPage } from '@pages/backoffice';
 import { BackofficeAssistantDemoStaticFixtures } from '@interfaces/demo';
@@ -32,9 +32,6 @@ describe(
       { type: 'text-end', id: 'answer' },
       { type: 'finish' },
     ];
-
-    const readRequestBody = (body: unknown): Record<string, unknown> =>
-      typeof body === 'string' ? JSON.parse(body) : (body as Record<string, unknown>);
 
     let staticFixtures: BackofficeAssistantDemoStaticFixtures;
 
@@ -131,7 +128,7 @@ describe(
         backofficeAssistantPage.send();
 
         cy.wait('@assistantPrompt').then((interception): void => {
-          const body = readRequestBody(interception.request.body);
+          const body = readChatRequestBody(interception.request.body);
           expect(body.message).to.eq('List the latest orders');
           expect(body).to.have.property('selectedAgent');
           expect(interception.request.headers).to.have.property(
@@ -166,7 +163,9 @@ describe(
         backofficeAssistantPage.send();
 
         cy.wait('@assistantPrompt').then((interception): void => {
-          const attachments = readRequestBody(interception.request.body).attachments as Array<Record<string, unknown>>;
+          const attachments = readChatRequestBody(interception.request.body).attachments as Array<
+            Record<string, unknown>
+          >;
           expect(attachments).to.have.length(1);
           expect(attachments[0].mediaType).to.eq('image/png');
         });
@@ -203,7 +202,7 @@ describe(
         backofficeAssistantPage.send();
 
         cy.wait('@assistantPrompt').then((interception): void => {
-          const body = readRequestBody(interception.request.body);
+          const body = readChatRequestBody(interception.request.body);
           expect(body.message).to.eq('Review the fields on this form');
           expect((body.formContext as Record<string, unknown>).name).to.eq(staticFixtures.contextFormName);
         });
@@ -467,7 +466,7 @@ describe(
         backofficeAssistantPage.getRetryButton().should('be.visible').click();
 
         cy.wait('@assistantPrompt').then((interception): void => {
-          expect(readRequestBody(interception.request.body).message).to.eq('Retry me');
+          expect(readChatRequestBody(interception.request.body).message).to.eq('Retry me');
         });
         // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
         cy.get('@assistantPrompt.all').should('have.length.at.least', 2);
@@ -493,7 +492,7 @@ describe(
         backofficeAssistantPage.send();
 
         cy.wait('@assistantPrompt').then((interception): void => {
-          const attachments = readRequestBody(interception.request.body).attachments;
+          const attachments = readChatRequestBody(interception.request.body).attachments;
           expect(attachments ?? []).to.have.length(0);
         });
         backofficeAssistantPage.getMessageAttachmentPill().should('not.exist');
@@ -516,7 +515,7 @@ describe(
         backofficeAssistantPage.send();
 
         cy.wait('@assistantPrompt').then((interception): void => {
-          expect(readRequestBody(interception.request.body).attachments).to.have.length(2);
+          expect(readChatRequestBody(interception.request.body).attachments).to.have.length(2);
         });
         backofficeAssistantPage.getMessageAttachmentPill().should('have.length', 2);
       }
@@ -570,7 +569,9 @@ describe(
       backofficeAssistantPage.deleteFirstHistoryItem();
 
       cy.wait('@assistantDeleteConversation').then((interception): void => {
-        expect(readRequestBody(interception.request.body).conversationReferences).to.deep.eq(['cypress-stub-conv-a']);
+        expect(readChatRequestBody(interception.request.body).conversationReferences).to.deep.eq([
+          'cypress-stub-conv-a',
+        ]);
       });
       backofficeAssistantPage.getHistoryItem().should('have.length', 1);
     });
@@ -952,7 +953,7 @@ describe(
 
           cy.wait('@assistantRealPrompt', { timeout: REAL_FLOW_TIMEOUT }).then((interception): void => {
             expect(interception.response?.statusCode).to.be.within(200, 299);
-            expect(readRequestBody(interception.request.body).attachments).to.have.length(1);
+            expect(readChatRequestBody(interception.request.body).attachments).to.have.length(1);
           });
 
           backofficeAssistantPage.getMessageAttachmentPill().should('exist');
