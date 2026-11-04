@@ -1,4 +1,4 @@
-const LANDING_ORDER = ['1', '6a-1', '3', '2', '4', '4b', '5', '7a', '6a-2', '6b', '6c', '6d', '7b'];
+const LANDING_ORDER = ['1', '6a-1', '3', '2', '4', '4b', '5', '3b', '7a', '6a-2', '6b', '6c', '6d', '7b'];
 
 /**
  * The AgenticCommerce stories run only when `agenticCommerceCut` names the cut the suite is on;

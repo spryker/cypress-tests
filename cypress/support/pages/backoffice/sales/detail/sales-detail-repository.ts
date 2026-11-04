@@ -7,4 +7,5 @@ export class SalesDetailRepository {
   getTriggerOmsDivSelector = (): string => '.col-md-12 > .row > .col-lg-12 > .ibox > .ibox-content';
   getOmsButtonSelector = (action: string): string => `button:contains("${action}")`;
   getReturnButton = (): Cypress.Chainable => cy.get('.title-action').find('a:contains("Return")');
+  getWidget = (title: string): Cypress.Chainable => cy.contains('.ibox-title', title).closest('.ibox');
 }

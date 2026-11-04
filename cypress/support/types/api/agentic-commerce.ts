@@ -3,6 +3,8 @@ export interface AgenticCommerceClient {
   name: string;
   redirectUri: string;
   scope: string;
+  /** The protected resource the client asks a token for; `/agentic-commerce` when unset. */
+  resource?: string;
 }
 
 export interface AgenticCommerceProofKey {
@@ -81,6 +83,23 @@ export interface AgenticCommerceOrderPlacementStaticFixtures extends AgenticComm
   invalidConsentLimits: string[];
   b2cConsentLimit: { amount: string; label: string };
   texts: { ordersNotPlaced: string; maximumPerOrderPrefix: string };
+  mcpOrder: {
+    scope: string;
+    store: string;
+    currency: string;
+    priceMode: string;
+    idShipmentMethod: number;
+    payment: { paymentProviderName: string; paymentMethodName: string };
+    address: Record<string, string>;
+    quantityWithinConsentLimit: number;
+    quantityAboveConsentLimit: number;
+    limitExceededError: string;
+    connectedAppTitle: string;
+  };
+}
+
+export interface AgenticCommerceOrderPlacementDynamicFixtures {
+  product: { sku: string };
 }
 
 export interface AgenticCommerceOrderApprovalStaticFixtures {

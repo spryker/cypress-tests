@@ -51,6 +51,10 @@ export class SalesDetailPage extends BackofficePage {
     this.repository.getReturnButton().click();
   };
 
+  getWidget = (title: string): Cypress.Chainable => {
+    return this.repository.getWidget(title);
+  };
+
   getTotalCommissionBlock = (): Cypress.Chainable<JQuery<HTMLElement>> => {
     return cy.contains('Total Commission').parent().parent().parent();
   };

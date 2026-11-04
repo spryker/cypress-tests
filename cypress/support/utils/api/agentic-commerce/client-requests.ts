@@ -160,7 +160,7 @@ export function buildAuthorizationUrl(
     state,
     code_challenge: proofKey.challenge,
     code_challenge_method: 'S256',
-    resource: resourceUrl(),
+    resource: client.resource ?? resourceUrl(),
   });
 
   if (authorizationDetails !== undefined) {
@@ -211,7 +211,7 @@ export function exchangeAuthorizationCode(
       code_verifier: proofKey.verifier,
       redirect_uri: client.redirectUri,
       client_id: client.clientId,
-      resource: resourceUrl(),
+      resource: client.resource ?? resourceUrl(),
       ...additionalParameters,
     },
   });
@@ -230,7 +230,7 @@ export function refreshTokens(
       grant_type: 'refresh_token',
       refresh_token: refreshToken,
       client_id: client.clientId,
-      resource: resourceUrl(),
+      resource: client.resource ?? resourceUrl(),
     },
   });
 }
