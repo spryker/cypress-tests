@@ -22,7 +22,8 @@ export class MerchantUpdateRepository {
 
   getMerchantUserDeleteButtonSelector = (): string => '[data-qa="delete-button"]';
 
-  getConfirmDeleteButton = (): Cypress.Chainable => cy.get('[data-qa="delete-merchant-user"], form [type="submit"]');
+  getConfirmDeleteButton = (): Cypress.Chainable =>
+    cy.get('[data-qa="delete-merchant-user"], form[name="delete_confirm_form"] [type="submit"]');
 
   getAllAvailableStoresInputs = (): Cypress.Chainable => cy.get('input[name="merchant[storeRelation][id_stores][]"]');
   getSaveButton = (): Cypress.Chainable => cy.get('input[type="submit"]');
