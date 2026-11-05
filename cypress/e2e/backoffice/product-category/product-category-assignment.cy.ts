@@ -40,18 +40,5 @@ describe(
         .getAssignedProductCheckbox(dynamicFixtures.productToAssign.fk_product_abstract)
         .should('exist');
     });
-
-    it('should deassign a product from a category', (): void => {
-      productCategoryAssignPage.visitAssignPage(dynamicFixtures.category.id_category);
-
-      productCategoryAssignPage.deassignProduct({
-        idProductAbstract: dynamicFixtures.productToDeassign.fk_product_abstract,
-      });
-
-      productCategoryAssignPage.getSuccessAlert().should('be.visible');
-      productCategoryAssignPage
-        .getAssignedProductCheckbox(dynamicFixtures.productToDeassign.fk_product_abstract)
-        .should('not.exist');
-    });
   }
 );

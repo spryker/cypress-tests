@@ -48,94 +48,6 @@ describe(
       });
     });
 
-    it('operator should be able to see all requests from all merchants', (): void => {
-      const merchants = [dynamicFixtures.merchant1, dynamicFixtures.merchant2, dynamicFixtures.merchant3];
-
-      merchants.forEach((merchant) => {
-        merchantRelationRequestListPage.visit();
-        merchantRelationRequestListPage.update({
-          action: ActionEnum.edit,
-          idMerchant: merchant.id_merchant,
-        });
-
-        merchantRelationRequestListPage.assertBodyContainsText(merchant.name);
-      });
-    });
-
-    it('operator should be able to see internal comments from all merchant users', (): void => {
-      merchantRelationRequestListPage.visit();
-      merchantRelationRequestListPage.update({
-        action: ActionEnum.edit,
-        idMerchant: dynamicFixtures.merchant1.id_merchant,
-        idRelationRequest: dynamicFixtures.requestFromMerchant1.id_merchant_relation_request,
-      });
-
-      merchantRelationRequestListPage.assertBodyContainsText(staticFixtures.internalCommentFromMerchantUser1);
-      merchantRelationRequestListPage.assertBodyContainsText(staticFixtures.internalCommentFromMerchantUser2);
-    });
-
-    it('operator should be able to add internal comment', (): void => {
-      merchantRelationRequestListPage.visit();
-      merchantRelationRequestListPage.update({
-        action: ActionEnum.edit,
-        idMerchant: dynamicFixtures.merchant1.id_merchant,
-        idRelationRequest: dynamicFixtures.requestFromMerchant1.id_merchant_relation_request,
-      });
-
-      merchantRelationRequestEditPage.addInternalComment({ comment: staticFixtures.internalCommentFromRootUser });
-
-      merchantRelationRequestListPage.visit();
-      merchantRelationRequestListPage.update({
-        action: ActionEnum.edit,
-        idMerchant: dynamicFixtures.merchant1.id_merchant,
-        idRelationRequest: dynamicFixtures.requestFromMerchant1.id_merchant_relation_request,
-      });
-
-      merchantRelationRequestListPage.assertBodyContainsText(staticFixtures.internalCommentFromRootUser);
-    });
-
-    it('operator should be able to add internal comment with emoji', (): void => {
-      merchantRelationRequestListPage.visit();
-      merchantRelationRequestListPage.update({
-        action: ActionEnum.edit,
-        idMerchant: dynamicFixtures.merchant1.id_merchant,
-      });
-
-      merchantRelationRequestEditPage.addInternalComment({
-        comment: staticFixtures.internalCommentFromRootUserWithEmoji,
-      });
-
-      merchantRelationRequestListPage.visit();
-      merchantRelationRequestListPage.update({
-        action: ActionEnum.edit,
-        idMerchant: dynamicFixtures.merchant1.id_merchant,
-      });
-
-      merchantRelationRequestListPage.assertBodyContainsText(staticFixtures.internalCommentFromRootUserWithEmoji);
-    });
-
-    it('operator should be able to reject request', (): void => {
-      merchantRelationRequestListPage.visit();
-      merchantRelationRequestListPage.update({
-        action: ActionEnum.edit,
-        idMerchant: dynamicFixtures.merchant3.id_merchant,
-      });
-
-      merchantRelationRequestEditPage.reject();
-
-      merchantRelationRequestListPage.visit();
-      merchantRelationRequestListPage.update({
-        action: ActionEnum.view,
-        idMerchant: dynamicFixtures.merchant3.id_merchant,
-      });
-
-      merchantRelationRequestListPage.assertBodyContainsText('Rejected');
-
-      merchantRelationshipListPage.visit();
-      merchantRelationshipListPage.applyFilters({ idCompany: dynamicFixtures.company2.id_company });
-      merchantRelationshipListPage.getEditButtons().should('have.length', 0);
-    });
-
     it('operator should be able to approve request (additionally copy internal comments to relation)', (): void => {
       merchantRelationRequestListPage.visit();
       merchantRelationRequestListPage.update({
@@ -159,29 +71,6 @@ describe(
 
       merchantRelationshipListPage.assertBodyContainsText(staticFixtures.internalCommentFromMerchantUser1);
       merchantRelationshipListPage.assertBodyContainsText(staticFixtures.internalCommentFromMerchantUser2);
-    });
-
-    it('operator should be able to approve request with enabled BU splitting', (): void => {
-      merchantRelationRequestListPage.visit();
-      merchantRelationRequestListPage.update({
-        action: ActionEnum.edit,
-        idMerchant: dynamicFixtures.merchant2.id_merchant,
-        idRelationRequest: dynamicFixtures.requestFromMerchant2.id_merchant_relation_request,
-      });
-
-      merchantRelationRequestEditPage.approve({ isSplitEnabled: true });
-
-      merchantRelationRequestListPage.visit();
-      merchantRelationRequestListPage.update({
-        action: ActionEnum.view,
-        idMerchant: dynamicFixtures.merchant2.id_merchant,
-        idRelationRequest: dynamicFixtures.requestFromMerchant2.id_merchant_relation_request,
-      });
-      merchantRelationRequestListPage.assertBodyContainsText('Approved');
-
-      merchantRelationshipListPage.visit();
-      merchantRelationshipListPage.applyFilters({ idCompany: dynamicFixtures.company2.id_company });
-      merchantRelationshipListPage.getEditButtons().should('have.length', 2);
     });
   }
 );

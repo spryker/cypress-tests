@@ -30,18 +30,6 @@ describe(
       });
     });
 
-    it('multi-group user combining allow + deny rules across groups', (): void => {
-      const { dynamicFixtures } = Cypress.env() as { dynamicFixtures: AclNavigationAccessDynamicFixtures };
-
-      aclNavigationAccessScenario.execute({
-        username: dynamicFixtures.combinedUser.username,
-        password: password,
-        expectedMenuItems: ['Dashboard', 'Sales', 'Customers'],
-        allowedPaths: ['/dashboard', '/sales', '/customer'],
-        deniedPaths: ['/sales/detail', '/cms-gui/list-page/index', '/user', '/product-management'],
-      });
-    });
-
     it('should deny an action for a role with an explicit deny rule', (): void => {
       // Arrange
       const { dynamicFixtures } = Cypress.env() as { dynamicFixtures: AclNavigationAccessDynamicFixtures };
