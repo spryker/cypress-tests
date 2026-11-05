@@ -1,0 +1,33 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "challengeCustomer",
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "captchaRejectionCustomer",
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "lockCustomer",
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "multiFactorAuthCustomer",
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
+        }
+      ]
+    }
+  }
+}

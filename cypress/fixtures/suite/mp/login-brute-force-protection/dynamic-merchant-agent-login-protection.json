@@ -1,0 +1,43 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "challengeMerchantAgent",
+          "arguments": [{ "password": "change123", "isMerchantAgent": true }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#challengeMerchantAgent.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "captchaRejectionMerchantAgent",
+          "arguments": [{ "password": "change123", "isMerchantAgent": true }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#captchaRejectionMerchantAgent.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "lockMerchantAgent",
+          "arguments": [{ "password": "change123", "isMerchantAgent": true }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#lockMerchantAgent.id_user", 1]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "challengeMerchantUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "challengeMerchant"
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#challengeMerchant", "#challengeMerchantUser"]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "captchaRejectionMerchantUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "captchaRejectionMerchant"
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#captchaRejectionMerchant", "#captchaRejectionMerchantUser"]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "lockMerchantUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "lockMerchant"
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#lockMerchant", "#lockMerchantUser"]
+        }
+      ]
+    }
+  }
+}
