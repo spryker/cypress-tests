@@ -21,3 +21,13 @@ export interface DiscountListDynamicFixtures {
   rootUser: User;
   discount: Discount;
 }
+
+export interface DiscountCustomerGroupSuggestStaticFixtures {
+  defaultPassword: string;
+}
+
+export interface DiscountCustomerGroupSuggestDynamicFixtures {
+  rootUser: User;
+  customerGroup: { name: string };
+  discountWithMissingCustomerGroups: Discount;
+}

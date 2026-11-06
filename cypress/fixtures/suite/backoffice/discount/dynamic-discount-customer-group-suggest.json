@@ -1,0 +1,55 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerGroup",
+          "key": "customerGroup",
+          "arguments": [{}]
+        },
+        {
+          "type": "helper",
+          "name": "haveDiscount",
+          "key": "discountWithMissingCustomerGroups",
+          "arguments": [
+            {
+              "discountGeneral": {
+                "discountType": "cart_rule",
+                "isActive": false,
+                "storeRelation": {
+                  "idStores": [1]
+                }
+              },
+              "discountCalculator": {
+                "calculatorPlugin": "PLUGIN_CALCULATOR_PERCENTAGE",
+                "amount": 1000,
+                "collectorQueryString": "sku = 'ANY-SKU'"
+              },
+              "discountCondition": {
+                "decisionRuleQueryString": "customer-group is in 'cypress-missing-customer-group-a;cypress-missing-customer-group-b'"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

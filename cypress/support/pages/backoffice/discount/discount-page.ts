@@ -23,7 +23,89 @@ export class DiscountPage extends BackofficePage {
 
   private CONDITIONS_TAB = 'tab-content-conditions';
 
+  private UPDATE_SUCCESS_MESSAGE = 'Discount successfully updated.';
+
+  // Markup rendered by @spryker/jquery-query-builder and select2, identical in every repository.
+  private CONDITION_BUILDER_SELECTOR = '#builder_condition';
+
+  private QUERY_BUILDER_ADD_RULE_SELECTOR = '[data-add="rule"]';
+
+  private QUERY_BUILDER_RULE_SELECTOR = '.rule-container';
+
+  private QUERY_BUILDER_FILTER_SELECTOR = '.rule-filter-container select';
+
+  private QUERY_BUILDER_OPERATOR_SELECTOR = '.rule-operator-container select';
+
+  private SELECT2_SELECTION_SELECTOR = '.rule-value-container .select2-selection';
+
+  private SELECT2_SEARCH_FIELD_SELECTOR = '.select2-container--open .select2-search__field';
+
+  private SELECT2_OPTION_SELECTOR = '.select2-results__option';
+
   createDiscount = (data: DiscountFormData): void => {
+    this.fillGeneralAndCalculation(data);
+
+    this.openTab(this.CONDITIONS_TAB);
+    this.repository.getConditionGetButton().click();
+
+    cy.document().then((doc) => {
+      doc.querySelector(this.repository.getDecisionRuleContainerSelector())?.classList.remove('hidden');
+    });
+
+    this.repository.getDecisionRuleQueryStringInput().should('be.visible').clear().type(data.applyWhen);
+
+    this.repository.getCreateButton().click();
+  };
+
+  createDiscountWithSuggestedConditionValue = (
+    data: Omit<DiscountFormData, 'applyWhen'>,
+    condition: SuggestedConditionValue
+  ): void => {
+    this.fillGeneralAndCalculation(data);
+
+    this.openTab(this.CONDITIONS_TAB);
+    // The builder opens with one empty rule; a second one would stay empty and fail validation on save.
+    cy.get(this.CONDITION_BUILDER_SELECTOR).then(($builder) => {
+      if ($builder.find(this.QUERY_BUILDER_RULE_SELECTOR).length === 0) {
+        cy.wrap($builder).find(this.QUERY_BUILDER_ADD_RULE_SELECTOR).first().click();
+      }
+    });
+    cy.get(this.CONDITION_BUILDER_SELECTOR)
+      .find(this.QUERY_BUILDER_RULE_SELECTOR)
+      .last()
+      .within((): void => {
+        cy.get(this.QUERY_BUILDER_FILTER_SELECTOR).select(condition.field);
+        cy.get(this.SELECT2_SELECTION_SELECTOR).click();
+      });
+
+    cy.intercept('GET', `${condition.suggestUrl}*`).as('valueSuggestion');
+    cy.get(this.SELECT2_SEARCH_FIELD_SELECTOR).type(condition.searchTerm);
+    cy.wait('@valueSuggestion');
+    cy.contains(this.SELECT2_OPTION_SELECTOR, condition.value).click();
+
+    this.repository.getCreateButton().click();
+  };
+
+  submitWithoutChanges = (): void => {
+    this.repository.getCreateButton().click();
+  };
+
+  getDecisionRuleQueryString = (): Cypress.Chainable<string> =>
+    this.repository.getDecisionRuleQueryStringInput().invoke('val');
+
+  getDecisionRuleOperators = (): Cypress.Chainable<Array<string>> =>
+    cy
+      .get(this.CONDITION_BUILDER_SELECTOR)
+      .find(this.QUERY_BUILDER_OPERATOR_SELECTOR)
+      .then(($selects): Array<string> => $selects.toArray().map((select) => (select as HTMLSelectElement).value));
+
+  getDecisionRuleSelectedValues = (): Cypress.Chainable<Array<string>> =>
+    cy
+      .get(this.CONDITION_BUILDER_SELECTOR)
+      .find('.rule-value-container select option:selected')
+      .then(($options): Array<string> => $options.toArray().map((option) => (option as HTMLOptionElement).value));
+
+  private fillGeneralAndCalculation = (data: Omit<DiscountFormData, 'applyWhen'>): void => {
     this.visit();
 
     if (data.type) {
@@ -65,20 +147,18 @@ export class DiscountPage extends BackofficePage {
     if (data.applyTo) {
       this.repository.getCollectorQueryStringInput().clear().type(data.applyTo);
     }
-
-    this.openTab(this.CONDITIONS_TAB);
-    this.repository.getConditionGetButton().click();
-
-    cy.document().then((doc) => {
-      doc.querySelector(this.repository.getDecisionRuleContainerSelector())?.classList.remove('hidden');
-    });
-
-    this.repository.getDecisionRuleQueryStringInput().should('be.visible').clear().type(data.applyWhen);
-
-    this.repository.getCreateButton().click();
   };
 
   getCreatePageUrl = (): string => this.PAGE_URL;
+
+  getUpdateSuccessMessage = (): Cypress.Chainable => cy.contains(this.UPDATE_SUCCESS_MESSAGE);
+
+  getUnknownConditionValueError = (field: string, values: Array<string>): Cypress.Chainable =>
+    cy.contains(`Could not find "${values.join('", "')}" for field "${field}".`);
+
+  visitEdit = (idDiscount: number): void => {
+    cy.visitBackoffice(this.editUrl(idDiscount));
+  };
 
   getSuccessMessage = (): Cypress.Chainable => cy.contains(this.repository.getSuccessMessage());
 
@@ -151,6 +231,13 @@ export class DiscountPage extends BackofficePage {
       expectedToSeeInTable: name,
     });
   }
+}
+
+interface SuggestedConditionValue {
+  field: string;
+  suggestUrl: string;
+  searchTerm: string;
+  value: string;
 }
 
 interface DiscountFormData {
