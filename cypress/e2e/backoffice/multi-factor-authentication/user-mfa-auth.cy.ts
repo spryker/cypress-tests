@@ -61,6 +61,7 @@ describe(
         },
         staticFixtures
       );
+
       mfaLoginScenario.execute({
         username: dynamicFixtures.rootUserOne.username,
         password: staticFixtures.defaultPassword,

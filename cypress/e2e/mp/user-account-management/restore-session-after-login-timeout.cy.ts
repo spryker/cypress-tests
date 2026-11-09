@@ -9,7 +9,7 @@ import { MerchantUserLoginScenario } from '@scenarios/mp';
 describe(
   'restore session after login timeout',
   {
-    tags: ['@mp', '@user-account-management', 'marketplace-merchantportal-core', '@quarantine'],
+    tags: ['@mp', '@user-account-management', 'marketplace-merchantportal-core'],
   },
   (): void => {
     const loginPage = container.get(LoginPage);

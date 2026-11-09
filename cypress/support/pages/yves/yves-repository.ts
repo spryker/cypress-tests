@@ -3,4 +3,5 @@ export interface YvesRepository {
   getLocaleOptionsSelector(): string;
   getLocaleAttributeName(): string;
   getLastVisitedPageCookieName(): string;
+  getFlashMessageSelector(): string;
 }
