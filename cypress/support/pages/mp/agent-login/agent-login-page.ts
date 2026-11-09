@@ -1,4 +1,4 @@
-import { autoWired, blockNextCaptchaChallenge, CAPTCHA_VERIFICATION_TIMEOUT, tamperAltchaPayload } from '@utils';
+import { autoWired, CAPTCHA_VERIFICATION_TIMEOUT, tamperAltchaPayload } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { MpPage } from '@pages/mp';
@@ -28,10 +28,6 @@ export class AgentLoginPage extends MpPage {
   solveCaptcha = (): void => {
     this.repository.getCaptchaCheckboxLabel().click();
     this.waitForCaptchaVerified();
-  };
-
-  blockCaptchaChallenge = (): void => {
-    blockNextCaptchaChallenge();
   };
 
   waitForCaptchaVerified = (): void => {

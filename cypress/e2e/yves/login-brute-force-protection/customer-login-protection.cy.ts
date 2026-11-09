@@ -50,7 +50,6 @@ describe(
 
       failLogin(email, staticFixtures.challengeAfterFailedAttempts);
       loginPage.visit();
-      loginPage.blockCaptchaChallenge();
       loginPage.login({ email, password: staticFixtures.defaultPassword });
 
       loginPage.assertBodyContainsText(loginPage.getCaptchaRequiredText()).should('be.visible');

@@ -48,7 +48,6 @@ describe(
 
       failLogin(username, staticFixtures.challengeAfterFailedAttempts);
       loginPage.visit();
-      loginPage.blockCaptchaChallenge();
       loginPage.login({ username, password: staticFixtures.defaultPassword });
 
       loginPage.assertBodyContainsText(loginPage.getCaptchaRequiredText()).should('be.visible');

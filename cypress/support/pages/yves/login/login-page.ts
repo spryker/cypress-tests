@@ -1,10 +1,4 @@
-import {
-  CAPTCHA_VERIFICATION_TIMEOUT,
-  REPOSITORIES,
-  autoWired,
-  blockNextCaptchaChallenge,
-  tamperAltchaPayload,
-} from '@utils';
+import { CAPTCHA_VERIFICATION_TIMEOUT, REPOSITORIES, autoWired, tamperAltchaPayload } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { YvesPage } from '@pages/yves';
@@ -35,10 +29,6 @@ export class LoginPage extends YvesPage {
   solveCaptcha = (): void => {
     this.repository.getCaptchaCheckboxLabel().click();
     this.waitForCaptchaVerified();
-  };
-
-  blockCaptchaChallenge = (): void => {
-    blockNextCaptchaChallenge();
   };
 
   waitForCaptchaVerified = (): void => {
