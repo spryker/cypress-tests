@@ -40,6 +40,9 @@ export default defineConfig({
   e2e: {
     chromeWebSecurity: false,
     baseUrl: `${protocol}://${baseHost}`,
+    // The demo data takes its product images from this external host, whose slow or missing answers keep a page's load
+    // event from firing and time out page loads. No test needs these images to load.
+    blockHosts: ['images.icecat.biz'],
     setupNodeEvents(on, config) {
       on('task', {
         isFileExists(filename: string): boolean {
