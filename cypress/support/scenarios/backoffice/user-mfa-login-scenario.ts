@@ -17,9 +17,9 @@ export class UserMfaLoginScenario {
 
     cy.getUserMultiFactorAuthCode(params.username, 'email').then((code) => {
       this.mfaPage.verifyCode(code);
+      this.indexPage.getLoginForm().should('not.exist');
+      cy.cleanUpUserMultiFactorAuthCode(code);
     });
-
-    this.indexPage.getLoginForm().should('not.exist');
   }
 
   executeWithInvalidCode(params: ExecuteParams, staticFixtures: UserMfaAuthStaticFixtures): void {
