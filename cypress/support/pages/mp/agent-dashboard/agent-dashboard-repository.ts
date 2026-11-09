@@ -5,6 +5,7 @@ import { injectable } from 'inversify';
 @autoWired
 export class AgentDashboardRepository {
   getDashboardSidebarSelector = (): Cypress.Chainable => cy.get('spy-sidebar.spy-sidebar');
+  getTableRows = (): Cypress.Chainable => cy.get('nz-table-inner-default tbody > tr.ant-table-row');
   getTableRowContaining = (text: string): Cypress.Chainable =>
     cy.contains('nz-table-inner-default tbody > tr:visible', text);
   getSearchSelector = (): string => '.spy-table-search-feature input[type="text"]';

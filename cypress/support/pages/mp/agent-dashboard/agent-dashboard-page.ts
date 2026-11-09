@@ -86,6 +86,11 @@ export class AgentDashboardPage extends MpPage {
       }
     );
 
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Render guard: a row of the previous table result is destroyed when the search result is drawn.
+    this.repository.getTableRows().should(($rows: JQuery<HTMLElement>) => {
+      expect($rows.toArray().every((row: HTMLElement): boolean => row.innerText.includes(params.query))).to.equal(true);
+    });
+
     return this.repository.getTableRowContaining(params.query);
   };
 
