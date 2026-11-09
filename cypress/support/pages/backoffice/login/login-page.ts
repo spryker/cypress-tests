@@ -1,4 +1,4 @@
-import { autoWired, CAPTCHA_VERIFICATION_TIMEOUT, tamperAltchaPayload } from '@utils';
+import { autoWired, blockNextCaptchaChallenge, CAPTCHA_VERIFICATION_TIMEOUT, tamperAltchaPayload } from '@utils';
 import { inject, injectable } from 'inversify';
 import { BackofficePage } from '@pages/backoffice';
 import { LoginRepository } from './login-repository';
@@ -31,6 +31,10 @@ export class LoginPage extends BackofficePage {
   solveCaptcha = (): void => {
     this.repository.getCaptchaCheckboxLabel().click();
     this.waitForCaptchaVerified();
+  };
+
+  blockCaptchaChallenge = (): void => {
+    blockNextCaptchaChallenge();
   };
 
   waitForCaptchaVerified = (): void => {
