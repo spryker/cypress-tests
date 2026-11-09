@@ -28,6 +28,14 @@ describe(
 
     it('should open every left navigation node without an error', (): void => {
       // Arrange
+      if (Cypress.env('repositoryId') === 'suite') {
+        navigationMenuPage.filterMenu(staticFixtures.menuFilterTerm);
+        navigationMenuPage.getHiddenMenuItems().should('have.length.greaterThan', 0);
+        navigationMenuPage.getVisibleMenuItems().should('have.length.greaterThan', 0);
+        navigationMenuPage.clearFilter();
+        navigationMenuPage.getOpenActiveSubmenus().should('not.exist');
+      }
+
       navigationMenuPage.getMenuItemPaths().then((paths) => {
         expect(paths, 'navigable side-menu nodes').to.have.length.greaterThan(0);
         cy.log(`crawling ${paths.length} navigation nodes`);
