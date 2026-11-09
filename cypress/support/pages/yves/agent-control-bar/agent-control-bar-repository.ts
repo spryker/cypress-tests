@@ -5,4 +5,5 @@ export interface AgentControlBarRepository {
   getActiveAssistanceIndicator(): Cypress.Chainable;
   getEndAssistanceLink(): Cypress.Chainable;
   getCustomerAutocompleteUrl(): string;
+  getFlashMessageSelector(): string;
 }
