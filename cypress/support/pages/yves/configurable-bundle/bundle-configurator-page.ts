@@ -26,6 +26,11 @@ export class BundleConfiguratorPage extends YvesPage {
         : this.repository.getConfiguratorProducts().eq(params.productPosition ?? 0);
 
     configuratorProduct.find(this.repository.getConfiguratorProductSelectButtonSelector()).first().click();
+
+    // The selection reloads the page: a click on the next slot before that would cancel it.
+    if (params.productIdentifier !== undefined) {
+      this.repository.getSelectedConfiguratorProduct(params.productIdentifier);
+    }
   };
 
   goToSummary = (): void => {

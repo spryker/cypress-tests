@@ -64,6 +64,13 @@ export class ShoppingListPage extends YvesPage {
       .click();
   };
 
+  // A row's own submit button adds that row's product with the quantity of the row.
+  addItemToCart = (params: AddItemToCartParams): void => {
+    cy.contains('[data-qa="component shopping-list"] tr, [data-qa="component shopping-list-table"] tr', params.sku)
+      .find('button[name="add-item"]')
+      .click();
+  };
+
   addAllAvailableProductsToCart = (): void => {
     cy.get('form[name="shopping_list_add_item_to_cart_form"] button[name="add-all-available"]').click();
   };
@@ -88,5 +95,9 @@ interface ShareWithCompanyUserParams {
 }
 
 interface ConfigureProductParams {
+  sku: string;
+}
+
+interface AddItemToCartParams {
   sku: string;
 }

@@ -7,5 +7,49 @@
   "removeFromCartSetting": "integrations:google_analytics:cart_events:remove_from_cart_event_enabled",
   "concreteSkuParameter": "concrete_sku",
   "productPrice": "300",
-  "currency": "EUR"
+  "currency": "EUR",
+  "configuredBundle": {
+    "templateName": "Smartstation Kit",
+    "slots": [
+      {
+        "slotName": "Slot 5",
+        "sku": "112_312526171",
+        "abstractSku": "112",
+        "abstractName": "Acer Extensa M2610"
+      },
+      {
+        "slotName": "Slot 6",
+        "sku": "081_22196533",
+        "abstractSku": "081",
+        "abstractName": "TomTom Multi-Sport Cardio"
+      }
+    ]
+  },
+  "productSet": {
+    "name": "Sony Product Set",
+    "products": [
+      {
+        "abstractSku": "111",
+        "abstractName": "Sony SmartWatch"
+      },
+      {
+        "abstractSku": "080",
+        "abstractName": "Sony Xperia Z3"
+      },
+      {
+        "abstractSku": "183",
+        "abstractName": "Sony Xperia SGP512E1"
+      }
+    ]
+  },
+  "catalogProduct": {
+    "sku": "150_29554292",
+    "abstractSku": "150",
+    "abstractName": "HP Chromebook 11"
+  },
+  "wishlistProduct": {
+    "sku": "111_12295890",
+    "abstractSku": "111",
+    "abstractName": "Sony SmartWatch"
+  }
 }

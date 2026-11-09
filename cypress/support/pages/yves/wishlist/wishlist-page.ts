@@ -2,6 +2,9 @@ import { autoWired } from '@utils';
 import { injectable } from 'inversify';
 import { YvesPage } from '@pages/yves';
 
+// The ajax call that fills in the picker can take longer than the default command timeout on a busy environment.
+const WISHLIST_PICKER_TIMEOUT_MS = 30000;
+
 @injectable()
 @autoWired
 export class WishlistPage extends YvesPage {
@@ -36,7 +39,8 @@ export class WishlistPage extends YvesPage {
   // molecule instead of wishlist-selector-default, and wrap the picker in a custom select that hides it.
   getWishlistPicker = (): Cypress.Chainable =>
     cy.get(
-      '[data-qa="component wishlist-selector-default"] [name="wishlist-name"], [data-qa="component wishlist-selector"] [name="wishlist-name"]'
+      '[data-qa="component wishlist-selector-default"] [name="wishlist-name"], [data-qa="component wishlist-selector"] [name="wishlist-name"]',
+      { timeout: WISHLIST_PICKER_TIMEOUT_MS }
     );
 
   addDisplayedProductToWishlist = (name: string): void => {
@@ -46,6 +50,11 @@ export class WishlistPage extends YvesPage {
 
   getAddToWishlistForm = (): Cypress.Chainable =>
     cy.get('form.wishlist-selector-default__form, form.wishlist-selector__form').first();
+
+  // Every row posts its own move-to-cart form, whose action names the row's product.
+  moveItemToCart = (params: MoveItemToCartParams): void => {
+    cy.get(`form[action*="wishlist/move-to-cart"][action*="${params.sku}"] button`).first().click();
+  };
 
   // A wishlist row carries its own configure form, distinct from both the detail page's
   // configuration-form and the cart's configuration-cart-form.
@@ -57,5 +66,9 @@ export class WishlistPage extends YvesPage {
 }
 
 interface ConfigureProductParams {
+  sku: string;
+}
+
+interface MoveItemToCartParams {
   sku: string;
 }

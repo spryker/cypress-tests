@@ -1,19 +1,32 @@
 import { container } from '@utils';
-import { GoogleAnalyticsTrackingDynamicFixtures, GoogleAnalyticsTrackingStaticFixtures } from '@interfaces/yves';
+import {
+  GoogleAnalyticsTrackingDynamicFixtures,
+  GoogleAnalyticsTrackingStaticFixtures,
+  TrackedAbstractProduct,
+} from '@interfaces/yves';
 import { ConfigurationPage } from '@pages/backoffice';
 import {
+  BundleConfiguratorPage,
   CartPage,
   CatalogPage,
   GoogleAnalyticsEvent,
+  GoogleAnalyticsItem,
   GoogleAnalyticsTraffic,
   ProductPage,
+  ProductSetsPage,
+  QuickOrderPage,
+  ShoppingListPage,
   TrackingPage,
+  WishlistPage,
 } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CustomerLoginScenario } from '@scenarios/yves';
 
 // gtag sends the hits of a page in batches, a few seconds after the events.
 const GOOGLE_ANALYTICS_HIT_TIMEOUT = 30000;
+// Opening the shopping list loads a full page, which a busy environment takes longer than the default command timeout for.
+const SHOPPING_LIST_PAGE_TIMEOUT = 30000;
+const CART_LINES_TIMEOUT = 30000;
 const ADD_TO_CART_EVENT = 'add_to_cart';
 const REMOVE_FROM_CART_EVENT = 'remove_from_cart';
 
@@ -28,6 +41,11 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
   const productPage = container.get(ProductPage);
   const cartPage = container.get(CartPage);
   const trackingPage = container.get(TrackingPage);
+  const wishlistPage = container.get(WishlistPage);
+  const shoppingListPage = container.get(ShoppingListPage);
+  const quickOrderPage = container.get(QuickOrderPage);
+  const bundleConfiguratorPage = container.get(BundleConfiguratorPage);
+  const productSetsPage = container.get(ProductSetsPage);
   const userLoginScenario = container.get(UserLoginScenario);
   const customerLoginScenario = container.get(CustomerLoginScenario);
 
@@ -71,7 +89,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
       const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
 
-      expect(events).to.have.length(1);
+      expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
       expectProductEvent(events[0], 1);
     });
   });
@@ -81,13 +99,14 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
 
     openProductPage();
     productPage.addToCart();
-    cartPage.visit();
+    openCartWithLoadedLines();
+    trackingPage.waitForGoogleAnalyticsToLoad();
     cartPage.removeProduct({ sku: dynamicFixtures.product.sku });
 
     cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
       const events = getEvents(recordedTraffic, REMOVE_FROM_CART_EVENT);
 
-      expect(events).to.have.length(1);
+      expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
       expectProductEvent(events[0], 1);
     });
   });
@@ -97,15 +116,16 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
 
     openProductPage();
     productPage.addToCart();
-    cartPage.visit();
+    openCartWithLoadedLines();
 
+    trackingPage.waitForGoogleAnalyticsToLoad();
     cartPage.changeQuantity({ sku: dynamicFixtures.product.sku, quantity: 3 });
 
     cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
       // The first one is the add on the product page.
       const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
 
-      expect(events).to.have.length(2);
+      expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(2);
       expectProductEvent(events[1], 2);
     });
 
@@ -114,8 +134,127 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
       const events = getEvents(recordedTraffic, REMOVE_FROM_CART_EVENT);
 
-      expect(events).to.have.length(1);
+      expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
       expectProductEvent(events[0], 2);
+    });
+  });
+
+  // A demo product, as the catalog search does not find the fixture product by its SKU of digits only.
+  it('customer quick adding a product from its catalog card should be tracked with add_to_cart', (): void => {
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    catalogPage.openSearchResults({ query: staticFixtures.catalogProduct.sku });
+    trackingPage.waitForGoogleAnalyticsToLoad();
+    catalogPage.quickAddFirstProductItemToCart();
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
+
+      expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
+      expectEventsReportAbstractProducts(events, [staticFixtures.catalogProduct]);
+    });
+  });
+
+  // A demo product with images, as the wishlist page does not render a product without images.
+  it('customer moving a product from the wishlist to the cart should be tracked with add_to_cart', (): void => {
+    wishlistPage.visit();
+    const wishlistName = wishlistPage.createWishlist();
+    openProductPage(staticFixtures.wishlistProduct.sku);
+    wishlistPage.addDisplayedProductToWishlist(wishlistName);
+    wishlistPage.visit();
+    wishlistPage.openWishlist(wishlistName);
+    trackingPage.waitForGoogleAnalyticsToLoad();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    wishlistPage.moveItemToCart({ sku: staticFixtures.wishlistProduct.sku });
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
+
+      expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
+      expectEventsReportAbstractProducts(events, [staticFixtures.wishlistProduct]);
+    });
+  });
+
+  it('company user adding a product of a shopping list to the cart should be tracked with add_to_cart', (): void => {
+    openShoppingListWithProduct();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    shoppingListPage.addItemToCart({ sku: dynamicFixtures.product.sku });
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
+
+      expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
+      expectProductEvent(events[0], 1);
+    });
+  });
+
+  it('company user adding all available products of a shopping list to the cart should be tracked with add_to_cart', (): void => {
+    openShoppingListWithProduct();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    shoppingListPage.addAllAvailableProductsToCart();
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
+
+      expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
+      expectProductEvent(events[0], 1);
+    });
+  });
+
+  it('customer adding a product through quick order should be tracked with add_to_cart', (): void => {
+    quickOrderPage.visit();
+    trackingPage.waitForGoogleAnalyticsToLoad();
+    quickOrderPage.verifyPastedOrder(`${dynamicFixtures.product.sku},1`);
+    quickOrderPage.waitForTrackedRow(dynamicFixtures.product.sku);
+    trackingPage.waitForGoogleAnalyticsToLoad();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    quickOrderPage.addRowsToCart();
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
+
+      expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
+      expectProductEvent(events[0], 1);
+    });
+  });
+
+  it('customer adding a configured bundle to the cart should be tracked with add_to_cart for its products', (): void => {
+    bundleConfiguratorPage.visit();
+    bundleConfiguratorPage.chooseTemplate(staticFixtures.configuredBundle.templateName);
+    staticFixtures.configuredBundle.slots.forEach((slot): void => {
+      bundleConfiguratorPage.selectSlotProduct({ slotName: slot.slotName, productIdentifier: slot.sku });
+    });
+    bundleConfiguratorPage.goToSummary();
+    trackingPage.waitForGoogleAnalyticsToLoad();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    bundleConfiguratorPage.addConfiguredBundleToCart();
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      expectEventsReportAbstractProducts(
+        getEvents(recordedTraffic, ADD_TO_CART_EVENT),
+        staticFixtures.configuredBundle.slots
+      );
+    });
+  });
+
+  it('customer adding a product set to the cart should be tracked with add_to_cart for its products', (): void => {
+    productSetsPage.visit();
+    productSetsPage.openProductSet(staticFixtures.productSet.name);
+    trackingPage.waitForGoogleAnalyticsToLoad();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    productSetsPage.addAllProductsToCart();
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      expectEventsReportAbstractProducts(
+        getEvents(recordedTraffic, ADD_TO_CART_EVENT),
+        staticFixtures.productSet.products
+      );
     });
   });
 
@@ -132,26 +271,66 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     openProductPage();
     productPage.addToCart();
     cartPage.visit();
+    trackingPage.waitForGoogleAnalyticsToLoad();
     // The removal is still tracked, so its hit shows that the hits of the add have been sent as well.
     cartPage.removeProduct({ sku: dynamicFixtures.product.sku });
 
     cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
-      expect(getEvents(recordedTraffic, REMOVE_FROM_CART_EVENT)).to.have.length(1);
-      expect(getEvents(recordedTraffic, ADD_TO_CART_EVENT)).to.have.length(0);
+      expect(
+        getEvents(recordedTraffic, REMOVE_FROM_CART_EVENT),
+        describeRecordedEvents(recordedTraffic)
+      ).to.have.length(1);
+      expect(getEvents(recordedTraffic, ADD_TO_CART_EVENT), describeRecordedEvents(recordedTraffic)).to.have.length(0);
     });
   });
 
-  function openProductPage(): void {
+  // The cart page loads its lines with a separate request, which a busy environment answers later than the default command
+  // timeout, so the lines are waited for before a test acts on them.
+  function openCartWithLoadedLines(): void {
+    cy.intercept('**/cart/get-cart-items*').as('cartLines');
+    cartPage.visit();
+    cy.wait('@cartLines', { responseTimeout: CART_LINES_TIMEOUT });
+  }
+
+  function openProductPage(sku: string = dynamicFixtures.product.sku): void {
     catalogPage.visit();
-    catalogPage.searchProductFromSuggestions({ query: dynamicFixtures.product.sku });
-    trackingPage.getGoogleAnalyticsAdapter().should('exist');
+    catalogPage.openProductPageFromSuggestions({ query: sku });
+    trackingPage.waitForGoogleAnalyticsToLoad();
+  }
+
+  // Names the recorded events in a failed count, so the failure shows what was sent instead.
+  function describeRecordedEvents(traffic: GoogleAnalyticsTraffic): string {
+    const eventNames = traffic.events.map((event: GoogleAnalyticsEvent): string => event.name);
+
+    return `recorded events: ${eventNames.join(', ') || 'none'}`;
   }
 
   function getEvents(traffic: GoogleAnalyticsTraffic, eventName: string): GoogleAnalyticsEvent[] {
     return traffic.events.filter((event: GoogleAnalyticsEvent): boolean => event.name === eventName);
   }
 
-  // The product is reported by its abstract SKU, with the concrete SKU as a custom item parameter.
+  // The company user's shopping list of the fixtures, opened with an empty cart and Google Analytics loaded. The list comes
+  // from the fixtures because the product page offers a new list only once its session cache sees the list's publish.
+  // The customer of beforeEach is logged out first: clearing the cookies does not end its session, as the session cookie is
+  // set for the storefront domain, so the login page would redirect to that customer's account instead. The logout URL is
+  // visited rather than the header link clicked, so the logout does not wait for the page the test is on to finish loading.
+  function openShoppingListWithProduct(): void {
+    cy.visit('/logout');
+    cy.resetYvesCookies();
+    customerLoginScenario.execute({
+      email: dynamicFixtures.companyCustomer.email,
+      password: staticFixtures.defaultPassword,
+      withoutSession: true,
+    });
+    cartPage.visit();
+    cartPage.clearCartIfNotEmpty();
+    shoppingListPage.visit();
+    shoppingListPage.openShoppingList(dynamicFixtures.shoppingList.name);
+    cy.location('pathname', { timeout: SHOPPING_LIST_PAGE_TIMEOUT }).should('include', '/shopping-list/details/');
+    trackingPage.waitForGoogleAnalyticsToLoad();
+  }
+
+  // The product is reported by its abstract SKU and abstract name, with the concrete SKU as a custom item parameter; no brand, variant or category is sent.
   function expectProductEvent(event: GoogleAnalyticsEvent, quantity: number): void {
     const productPrice = Number(staticFixtures.productPrice);
 
@@ -162,12 +341,41 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     const item = event.items[0];
 
     expect(item.id, event.name).to.equal(dynamicFixtures.product.abstract_sku);
-    expect(item.name, event.name).to.not.be.empty;
+    // The concrete product has a name of its own, so this also shows the concrete name is not sent.
+    expect(item.name, event.name).to.equal(dynamicFixtures.abstractLocalizedAttributes.name);
+    expect(item.name, event.name).to.not.equal(dynamicFixtures.concreteLocalizedAttributes.name);
+    expectNoProductDetails(item, event.name);
     expect(Number(item.price), event.name).to.equal(productPrice);
     expect(Number(item.quantity), event.name).to.equal(quantity);
     expect(item.customParameters[staticFixtures.concreteSkuParameter], event.name).to.equal(
       dynamicFixtures.product.sku
     );
+  }
+
+  // A list adds several products at once: each one is reported by its abstract SKU and abstract name, in whichever of
+  // the events its item is.
+  function expectEventsReportAbstractProducts(
+    events: GoogleAnalyticsEvent[],
+    products: TrackedAbstractProduct[]
+  ): void {
+    expect(events, ADD_TO_CART_EVENT).to.not.be.empty;
+
+    const items = events.flatMap((event: GoogleAnalyticsEvent): GoogleAnalyticsItem[] => event.items);
+
+    products.forEach((product: TrackedAbstractProduct): void => {
+      const item = items.find((candidate: GoogleAnalyticsItem): boolean => candidate.id === product.abstractSku);
+
+      expect(item, product.abstractSku).to.not.equal(undefined);
+      expect(item?.name, product.abstractSku).to.equal(product.abstractName);
+      expectNoProductDetails(item as GoogleAnalyticsItem, product.abstractSku);
+    });
+  }
+
+  // The cart events of this feature report neither the brand, nor the variant, nor the category path of a product.
+  function expectNoProductDetails(item: GoogleAnalyticsItem, message: string): void {
+    expect(item.brand, message).to.be.empty;
+    expect(item.variant, message).to.be.empty;
+    expect(item.categories, message).to.be.empty;
   }
 
   function loginToBackoffice(): void {

@@ -29,6 +29,27 @@ export class CatalogPage extends YvesPage {
     });
   };
 
+  // Opens the first suggested product by the link in the suggestion response. Clicking the rendered suggestion races the
+  // dropdown, which re-renders while the suggestions of the query are still loading, so a click or an Enter can land on the
+  // search results page instead.
+  openProductPageFromSuggestions = (params: SearchParams): void => {
+    if (this.isRepository('b2c', 'b2c-mp')) {
+      cy.get('.header__search-open').click();
+    }
+
+    cy.intercept({ pathname: /\/search\/suggestion$/, query: { q: params.query } }).as('querySuggestion');
+    this.repository.getSearchInput().clear().invoke('val', params.query);
+    cy.wait('@querySuggestion').then((interception) => {
+      const productUrl = Cypress.$(`<div>${interception.response?.body?.suggestion ?? ''}</div>`)
+        .find(`${this.repository.getSuggestedProductSelector()} a`)
+        .first()
+        .attr('href');
+
+      expect(productUrl, `suggested product for ${params.query}`).to.be.a('string');
+      cy.visit(productUrl as string);
+    });
+  };
+
   // Types the query and waits for the suggestion response without following it, so a spec can assert
   // whether a product is offered at all. The results page is not usable for that: it does not list a
   // freshly created product even when the suggestion endpoint already does.
@@ -71,6 +92,11 @@ export class CatalogPage extends YvesPage {
 
     this.repository.getSearchInput().clear().type(`${params.query}{enter}`);
 
+    // The submitted search loads a new page: until it has, the URL is still the one of the page before, and reloading
+    // that URL would wait for the unfiltered catalog instead of the results.
+    cy.location('search').should((search: string) => {
+      expect(new URLSearchParams(search).get('q')).to.equal(params.query);
+    });
     cy.url().then((url) => {
       cy.reloadUntilFound(url, this.repository.getFirstProductItemBlockSelector(), 'body', 25, 5000);
     });
@@ -165,6 +191,18 @@ export class CatalogPage extends YvesPage {
         cy.get(this.repository.getApplyFiltersButtonSelector()).first().click();
       }
     });
+  };
+
+  // Opens the results by URL. Typing the query and pressing Enter races the suggestion dropdown, which can take the Enter
+  // for a click on one of its links while the suggestions of the query are still loading.
+  openSearchResults = (params: SearchParams): void => {
+    cy.reloadUntilFound(
+      this.getSearchUrl(params.query),
+      this.repository.getFirstProductItemBlockSelector(),
+      'body',
+      SEARCH_INDEX_RELOAD_ATTEMPTS,
+      SEARCH_INDEX_RELOAD_INTERVAL_MS
+    );
   };
 
   openFirstProductDetailPageFromResults = (): void => {

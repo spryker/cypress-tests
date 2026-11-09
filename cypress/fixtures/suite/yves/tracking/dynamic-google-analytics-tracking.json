@@ -29,9 +29,149 @@
         },
         {
           "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [
+            {
+              "status": "approved",
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [
+            {
+              "fk_company": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "readShoppingListPermission",
+          "arguments": ["ReadShoppingListPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "writeShoppingListPermission",
+          "arguments": ["WriteShoppingListPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "key": "buyerRole",
+          "arguments": [
+            {
+              "fk_company": "#company.id_company"
+            },
+            ["#readShoppingListPermission", "#writeShoppingListPermission"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "companyCustomer",
+          "arguments": [
+            {
+              "password": "change123",
+              "locale_name": "en_US"
+            }
+          ]
+        },
+        {
+          "type": "builder",
+          "name": "CompanyRoleCollectionBuilder",
+          "key": "buyerRoleCollection",
+          "arguments": {
+            "roles": ["#buyerRole"]
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser",
+          "arguments": [
+            {
+              "customer": "#companyCustomer",
+              "fk_company": "#company.id_company",
+              "company_role_collection": ["#buyerRoleCollection"],
+              "fk_company_business_unit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "assignCompanyRoles",
+          "arguments": ["#companyUser", ["#buyerRole"]]
+        },
+        {
+          "type": "helper",
+          "name": "haveLocale",
+          "key": "locale",
+          "arguments": [
+            {
+              "localeName": "en_US"
+            }
+          ]
+        },
+        {
+          "type": "transfer",
+          "name": "LocalizedAttributesTransfer",
+          "key": "abstractLocalizedAttributes",
+          "arguments": {
+            "name": "Tracked abstract product",
+            "locale": {
+              "id_locale": "#locale.id_locale",
+              "locale_name": "#locale.locale_name"
+            },
+            "attributes": [],
+            "is_searchable": true
+          }
+        },
+        {
+          "type": "transfer",
+          "name": "LocalizedAttributesTransfer",
+          "key": "concreteLocalizedAttributes",
+          "arguments": {
+            "name": "Tracked concrete product",
+            "locale": {
+              "id_locale": "#locale.id_locale",
+              "locale_name": "#locale.locale_name"
+            },
+            "attributes": [],
+            "is_searchable": true
+          }
+        },
+        {
+          "type": "helper",
           "name": "haveFullProduct",
           "key": "product",
-          "arguments": [{}, { "idTaxSet": 1 }]
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                {
+                  "name": "#abstractLocalizedAttributes.name",
+                  "locale": {
+                    "id_locale": "#locale.id_locale",
+                    "locale_name": "#locale.locale_name"
+                  },
+                  "attributes": [],
+                  "is_searchable": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "addLocalizedAttributesToProductConcrete",
+          "arguments": ["#product", ["#concreteLocalizedAttributes"]]
         },
         {
           "type": "helper",
@@ -50,6 +190,32 @@
           "name": "haveProductInStockForStore",
           "key": "productWithPriceAndStore",
           "arguments": ["#store", { "sku": "#product.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveShoppingList",
+          "key": "shoppingList",
+          "arguments": [
+            {
+              "name": "Tracked shopping list",
+              "customerReference": "#companyCustomer.customer_reference",
+              "idCompanyUser": "#companyUser.id_company_user"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveShoppingListItem",
+          "key": "shoppingListItem",
+          "arguments": [
+            {
+              "fkShoppingList": "#shoppingList.id_shopping_list",
+              "sku": "#product.sku",
+              "quantity": 1,
+              "idCompanyUser": "#companyUser.id_company_user",
+              "customerReference": "#companyCustomer.customer_reference"
+            }
+          ]
         }
       ]
     }

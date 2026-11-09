@@ -1,6 +1,9 @@
 import { autoWired } from '@utils';
 import { injectable } from 'inversify';
 
+// Selecting a candidate submits the slot form and reloads the page.
+const SELECTION_RELOAD_TIMEOUT_MS = 30000;
+
 @injectable()
 @autoWired
 export class BundleConfiguratorRepository {
@@ -18,6 +21,12 @@ export class BundleConfiguratorRepository {
         `[data-qa="component configurator-product"]:has(input[type="hidden"][value="${productIdentifier}"])`
     );
   getConfiguratorProducts = (): Cypress.Chainable => cy.get('[data-qa="component configurator-product"]');
+  // A selected candidate's card offers to unselect it, with the success-styled configurator button.
+  getSelectedConfiguratorProduct = (productIdentifier: string): Cypress.Chainable =>
+    cy.get(
+      `[data-qa="component configurator-product"]:contains("${productIdentifier}"):has(.configurator-button--success)`,
+      { timeout: SELECTION_RELOAD_TIMEOUT_MS }
+    );
   getConfiguratorProductSelectButtonSelector = (): string => 'button';
   getAddToCartButton = (): Cypress.Chainable =>
     cy.get('form[name="configurator_state_form"][action*="add-to-cart"] button');

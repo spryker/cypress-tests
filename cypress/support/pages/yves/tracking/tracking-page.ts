@@ -8,16 +8,24 @@ import { TrackingRepository } from './tracking-repository';
 const GOOGLE_ANALYTICS_HIT_URL_PATTERN = /google-analytics\.com\/g\/collect/;
 const NO_CONTENT_STATUS_CODE = 204;
 // A GA4 hit carries one event in its query, or several in its body, one per line.
-const HIT_BODY_EVENT_SEPARATOR = '\r\n';
+// gtag puts one event per line into the body of a batched hit.
+const HIT_BODY_EVENT_SEPARATOR = /\r?\n/;
 const EVENT_NAME_PARAMETER = 'en';
 const ITEM_PARAMETER_PATTERN = /^pr\d+$/;
 // An item is one parameter of `~`-separated fields, each a two-character name and its value, e.g. `idSKU-1~qt2`.
 const ITEM_FIELD_SEPARATOR = '~';
 const ITEM_FIELD_NAME_LENGTH = 2;
+// GA4 sends the item category levels as `ca` and `c2` to `c5`.
+const ITEM_CATEGORY_FIELD_NAMES = ['ca', 'c2', 'c3', 'c4', 'c5'];
 // A custom item parameter is a pair of fields: `k<n>` holds its name and `v<n>` its value.
 const CUSTOM_ITEM_PARAMETER_NAME_PATTERN = /^k(\d)$/;
 const CUSTOM_ITEM_PARAMETER_VALUE_PREFIX = 'v';
 // A Back Office configuration change reaches the storefront once the publish and synchronize queues are processed.
+// gtag.js defines this global once it has loaded and run.
+const GOOGLE_TAG_LOADED_GLOBAL = 'google_tag_manager';
+// A cold load of gtag.js from Google, which a slow network or browser can take long for.
+const GOOGLE_TAG_LOAD_TIMEOUT = 30000;
+
 const SETTINGS_SYNC_COMMANDS = ['console queue:worker:start --stop-when-empty'];
 const SETTINGS_SYNC_RETRIES = 10;
 const SETTINGS_SYNC_RETRY_WAIT = 2000;
@@ -63,9 +71,30 @@ export class TrackingPage extends YvesPage {
 
   getGoogleAnalyticsAdapter = (): Cypress.Chainable => cy.get(this.repository.getGoogleAnalyticsAdapterSelector());
 
+  // The adapter waits at most its gtag-event-timeout for Google Analytics to take an event before the page may navigate,
+  // so an action taken before gtag.js has loaded can lose its hit. Called on every page before the action under test.
+  // Both commands retry until they find what they read: the adapter element, then the global of gtag.js.
+  waitForGoogleAnalyticsToLoad = (): void => {
+    this.getGoogleAnalyticsAdapter();
+    cy.window().its(GOOGLE_TAG_LOADED_GLOBAL, { timeout: GOOGLE_TAG_LOAD_TIMEOUT });
+  };
+
+  // Cypress hands a hit body over as text or, depending on how the browser sent it, as bytes; both hold the batched events.
+  private getHitBodyText = (body: unknown): string => {
+    if (typeof body === 'string') {
+      return body;
+    }
+
+    if (body instanceof ArrayBuffer || ArrayBuffer.isView(body)) {
+      return new TextDecoder().decode(body);
+    }
+
+    return '';
+  };
+
   private getHitEvents = (url: string, body: unknown): GoogleAnalyticsEvent[] => {
     const sharedParameters = new URL(url).searchParams;
-    const bodyLines = typeof body === 'string' ? body.split(HIT_BODY_EVENT_SEPARATOR).filter(Boolean) : [];
+    const bodyLines = this.getHitBodyText(body).split(HIT_BODY_EVENT_SEPARATOR).filter(Boolean);
     const eventLines = bodyLines.length ? bodyLines : [''];
 
     return eventLines
@@ -113,6 +142,9 @@ export class TrackingPage extends YvesPage {
     return {
       id: fields['id'] ?? '',
       name: fields['nm'] ?? '',
+      brand: fields['br'] ?? '',
+      variant: fields['va'] ?? '',
+      categories: ITEM_CATEGORY_FIELD_NAMES.map((fieldName: string): string => fields[fieldName] ?? '').filter(Boolean),
       price: fields['pr'] ?? '',
       quantity: fields['qt'] ?? '',
       customParameters,
@@ -130,6 +162,10 @@ export interface GoogleAnalyticsEvent {
 export interface GoogleAnalyticsItem {
   id: string;
   name: string;
+  brand: string;
+  variant: string;
+  // The category levels sent, top level first; empty when the item has no category.
+  categories: string[];
   price: string;
   quantity: string;
   customParameters: Record<string, string>;
