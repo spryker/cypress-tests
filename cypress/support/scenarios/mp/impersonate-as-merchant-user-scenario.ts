@@ -1,4 +1,4 @@
-import { AgentDashboardPage, AgentLoginPage } from '@pages/mp';
+import { AgentDashboardPage, AgentLoginPage, DashboardPage } from '@pages/mp';
 import { autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
 
@@ -7,6 +7,7 @@ import { inject, injectable } from 'inversify';
 export class ImpersonateAsMerchantUserScenario {
   @inject(AgentLoginPage) private agentLoginPage: AgentLoginPage;
   @inject(AgentDashboardPage) private mpAgentDashboardPage: AgentDashboardPage;
+  @inject(DashboardPage) private mpDashboardPage: DashboardPage;
 
   execute = (params: ExecuteParams): void => {
     this.agentLoginPage.visit();
@@ -16,7 +17,9 @@ export class ImpersonateAsMerchantUserScenario {
     cy.wait('@impersonateLogin');
 
     this.mpAgentDashboardPage.visit();
+    const dashboardRequestAlias = this.mpDashboardPage.interceptRequest();
     this.mpAgentDashboardPage.assist({ query: params.query });
+    cy.wait(`@${dashboardRequestAlias}`);
   };
 }
 
