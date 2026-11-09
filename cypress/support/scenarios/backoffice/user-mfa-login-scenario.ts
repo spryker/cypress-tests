@@ -31,6 +31,8 @@ export class UserMfaLoginScenario {
     this.mfaPage.getInvalidCodeMessage().should('be.visible');
     this.mfaPage.getVerificationPopup().should('be.visible');
     this.loginPage.assertPageLocation();
+
+    cy.resetBackofficeCookies();
   }
 }
 

@@ -64,14 +64,4 @@ export class AgentControlBarPage extends YvesPage {
 
     cy.get(confirmButtonSelector).click();
   };
-
-  private dismissFlashMessages = (): void => {
-    const flashMessageSelector = this.repository.getFlashMessageSelector();
-
-    cy.get('body').then(($body) => {
-      if ($body.find(flashMessageSelector).length) {
-        cy.get(flashMessageSelector).click({ multiple: true });
-      }
-    });
-  };
 }

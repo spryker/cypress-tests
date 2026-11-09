@@ -62,7 +62,6 @@ describe(
         staticFixtures
       );
 
-      cy.resetBackofficeCookies();
       mfaLoginScenario.execute({
         username: dynamicFixtures.rootUserOne.username,
         password: staticFixtures.defaultPassword,

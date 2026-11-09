@@ -21,6 +21,4 @@ export class B2bMpAgentControlBarRepository implements AgentControlBarRepository
   getEndAssistanceLink = (): Cypress.Chainable => cy.get('agent-control a[href*="_switch_user=_exit"]');
 
   getCustomerAutocompleteUrl = (): string => '**/agent-widget/customer-autocomplete**';
-
-  getFlashMessageSelector = (): string => '[data-qa="component notification-area"] flash-message';
 }
