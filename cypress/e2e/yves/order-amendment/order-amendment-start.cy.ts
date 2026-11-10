@@ -15,7 +15,6 @@ describe(
     tags: [
       '@yves',
       '@order-amendment',
-      '@quarantine',
       'product',
       'marketplace-product',
       'marketplace-merchant-portal-product-management',

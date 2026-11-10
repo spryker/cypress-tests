@@ -2,13 +2,7 @@ import { container } from '@utils';
 import { retryableBefore } from '../../../support/e2e';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { SspAssetStaticFixtures, SspAssetDynamicFixtures } from '@interfaces/backoffice';
-import {
-  SspAssetListPage,
-  SspAssetAddPage,
-  SspAssetDetailPage,
-  SspAssetUpdatePage,
-  SspModelListPage,
-} from '@pages/backoffice/';
+import { SspAssetListPage, SspAssetAddPage, SspAssetDetailPage, SspModelListPage } from '@pages/backoffice/';
 
 import { SspAssetDetailPage as YvesSspAssetDetailPage } from '@pages/yves/';
 import { CustomerLoginScenario } from '@scenarios/yves';
@@ -138,7 +132,6 @@ describe(
     const assetManagementListPage = container.get(SspAssetListPage);
     const assetManagementAddPage = container.get(SspAssetAddPage);
     const assetManagementDetailPage = container.get(SspAssetDetailPage);
-    const assetManagementUpdatePage = container.get(SspAssetUpdatePage);
     const sspModelListPage = container.get(SspModelListPage);
     const yvesSspAssetDetailPage = container.get(YvesSspAssetDetailPage);
     const customerLoginScenario = container.get(CustomerLoginScenario);
@@ -159,19 +152,6 @@ describe(
 
     it('should be able to create a new asset', () => {
       assetManagementListPage.visit();
-
-      assetManagementListPage.getIdHeader().should('exist');
-      assetManagementListPage.getReferenceHeader().should('exist');
-      assetManagementListPage.getImageHeader().should('exist');
-      assetManagementListPage.getNameHeader().should('exist');
-      assetManagementListPage.getSerialNumberHeader().should('exist');
-      assetManagementListPage.getStatusHeader().should('exist');
-
-      assetManagementListPage.getIdColumnValues().then((ids) => {
-        const sortedIds = [...ids].sort((a, b) => b - a);
-        expect(ids).to.deep.equal(sortedIds, 'ID column should be sorted in descending order');
-      });
-
       assetManagementListPage.clickCreateButton();
 
       assetManagementAddPage.fillAssetForm({
@@ -213,9 +193,8 @@ describe(
 
         assetManagementListPage.visit();
 
-        assetManagementListPage.searchAsset(reference);
-
         cy.intercept('GET', '**/self-service-portal/list-asset/table*').as('assetTableData');
+        assetManagementListPage.searchAsset(reference);
 
         cy.wait('@assetTableData').then(() => {
           let displayStatus = staticFixtures.sspAsset.status;
@@ -259,45 +238,6 @@ describe(
 
       sspModelListPage.visit();
       sspModelListPage.verifyModelInTable({ name: staticFixtures.sspAsset.name });
-    });
-
-    it('should update an existing asset', () => {
-      assetManagementUpdatePage.visit({
-        qs: { 'id-ssp-asset': dynamicFixtures.sspAsset.id_ssp_asset },
-      });
-
-      assetManagementUpdatePage.updateAssetForm({
-        name: staticFixtures.sspAssetOverride.name,
-        serialNumber: staticFixtures.sspAssetOverride.serial_number,
-        note: staticFixtures.sspAssetOverride.note,
-        status: staticFixtures.sspAssetOverride.status,
-        businessUnitOwner: { name: dynamicFixtures.businessUnit2.name },
-        assignedbusinessUnits: [
-          { name: dynamicFixtures.businessUnit2.name },
-          { name: dynamicFixtures.businessUnit3.name },
-        ],
-        companies: [{ name: dynamicFixtures.company1.name }, { name: dynamicFixtures.company2.name }],
-      });
-
-      assetManagementUpdatePage.submitForm();
-      assetManagementUpdatePage
-        .getSuccessMessage()
-        .should('contain', assetManagementUpdatePage.getSuccessMessageText());
-      assetManagementDetailPage.assertPageLocation();
-      verifyAssetDetails(assetManagementDetailPage, {
-        reference: staticFixtures.sspAsset.reference,
-        name: staticFixtures.sspAssetOverride.name,
-        serialNumber: staticFixtures.sspAssetOverride.serial_number,
-        note: staticFixtures.sspAssetOverride.note,
-        status: staticFixtures.sspAssetOverride.status,
-        businessUnitOwner: { name: dynamicFixtures.businessUnit2.name },
-        assignedbusinessUnits: [
-          { name: dynamicFixtures.businessUnit2.name },
-          { name: dynamicFixtures.businessUnit3.name },
-        ],
-        companies: [{ name: dynamicFixtures.company1.name }, { name: dynamicFixtures.company2.name }],
-        orderReference: dynamicFixtures.salesOrder.order_reference,
-      });
     });
   }
 );

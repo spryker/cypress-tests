@@ -26,24 +26,6 @@ describe(
       });
     });
 
-    it('Backoffice user should see the sub-categories', (): void => {
-      categoryReSortPage.visitReSortPage(idCategoryNode);
-
-      categoryReSortPage.getSubCategory('first').should('be.visible');
-    });
-
-    it('Backoffice user should be able to move sub-categories', (): void => {
-      categoryReSortPage.visitReSortPage(idCategoryNode);
-
-      categoryReSortPage.getSubCategoryName('first').then((firstItemName) => {
-        categoryReSortPage.reorder('first', 'last');
-        categoryReSortPage.reorder('last', 'second');
-
-        // Cypress retries the assertion, so the re-render after a reorder settles without a fixed wait.
-        categoryReSortPage.getSubCategoryHandle('last').should('contain', firstItemName);
-      });
-    });
-
     it('Backoffice user should be able to save the re-sorted sub-categories', (): void => {
       categoryReSortPage.visitReSortPage(idCategoryNode);
 

@@ -94,7 +94,7 @@ describe(
       productPage.addToCart();
 
       // Assert
-      cartPage.visit();
+      cartPage.visitAndWaitForCartItems();
       cartPage
         .getCartItemsChargingUnitPrice({
           sku: dynamicFixtures.merchantProduct.sku,
