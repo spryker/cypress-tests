@@ -32,7 +32,14 @@ export class OffersPage extends MpPage {
 
   openOffer = (params: FindParams): void => {
     this.visit();
-    this.find(params).click({ force: true });
+    this.find(params);
+
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Render guard: a row of the previous table result is destroyed when the search result is drawn.
+    this.repository.getTableRows().should(($rows: JQuery<HTMLElement>) => {
+      expect($rows.toArray().every((row: HTMLElement): boolean => row.innerText.includes(params.query))).to.equal(true);
+    });
+
+    this.repository.getTableRowContaining(params.query).click({ force: true });
   };
 
   getDrawer = (): Cypress.Chainable => {
