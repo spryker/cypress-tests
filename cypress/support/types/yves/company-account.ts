@@ -1,4 +1,4 @@
-import { Customer, CompanyRole, CompanyUser, User } from './shared';
+import { Customer, CompanyBusinessUnit, CompanyRole, CompanyUser, User } from './shared';
 
 export interface CompanyRoleDynamicFixtures {
   customer: Customer;
@@ -9,4 +9,19 @@ export interface CompanyRoleDynamicFixtures {
 
 export interface CompanyRoleStaticFixtures {
   defaultPassword: string;
+}
+
+export interface CompanyUserInvitationStaticFixtures {
+  defaultPassword: string;
+  invitationStatusNotSent: string;
+  invitationStatusPending: string;
+  invitationSentMessage: string;
+  invitationResentMessage: string;
+  invitationDeletedMessage: string;
+  invalidFileMessage: string;
+}
+
+export interface CompanyUserInvitationDynamicFixtures {
+  customer: Customer;
+  businessUnit: CompanyBusinessUnit;
 }
