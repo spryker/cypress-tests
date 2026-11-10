@@ -11,18 +11,6 @@ export class CartPage extends YvesPage {
 
   protected PAGE_URL = '/cart';
 
-  visitAndWaitForCartItems = (): void => {
-    cy.intercept({ method: 'GET', pathname: '**/cart/get-cart-items' }).as('cartItemsAjaxLoad');
-
-    this.visit();
-
-    cy.get('body').then(($body) => {
-      if ($body.find('[url*="cart/get-cart-items"]').length) {
-        cy.wait('@cartItemsAjaxLoad');
-      }
-    });
-  };
-
   quickAddToCart = (params: QuickAddToCartParams): void => {
     this.repository.getQuickAddToCartSkuField().clear({ timeout: 10000 });
     this.repository.getQuickAddToCartSkuField().type(params.sku);
