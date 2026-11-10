@@ -11,7 +11,7 @@ export class B2bMpCompanyUserInvitationRepository implements CompanyUserInvitati
   getImportForm = (): Cypress.Chainable => cy.get('form[name="company_user_invitation_form"]');
   getInvitationRow = (email: string): Cypress.Chainable =>
     cy.contains('[data-qa="component invitation-table"] tbody tr', email);
-  getInvitationStatusSelector = (): string => 'td';
+  getInvitationStatusSelector = (): string => 'td:nth-child(5)';
   getSendButtonSelector = (): string => 'a[href*="user-invitation/send"]';
   getResendButtonSelector = (): string => 'a[href*="user-invitation/resend"]';
   getDeleteButtonSelector = (): string => 'a[href*="user-invitation/delete"]';
