@@ -267,11 +267,13 @@ import { B2bMpCheckoutSummaryRecurringOrderRepository } from '../../pages/yves/r
 import { SuiteCustomerGroupFormRepository } from '../../pages/backoffice/customer-group/form/repositories/suite-customer-group-form-repository';
 import { SuiteCustomerGroupViewRepository } from '../../pages/backoffice/customer-group/view/repositories/suite-customer-group-view-repository';
 import { SuiteCustomerGroupListRepository } from '../../pages/backoffice/customer-group/list/repositories/suite-customer-group-list-repository';
+import { SuiteTrackingRepository } from '../../pages/yves/tracking/repositories/suite-tracking-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
 const suiteMappings: BindingsMap = {
   [REPOSITORIES.YvesRepository]: SuiteYvesRepository,
+  [REPOSITORIES.TrackingRepository]: SuiteTrackingRepository,
   [REPOSITORIES.HomeRepository]: SuiteHomeRepository,
   [REPOSITORIES.MultiFactorAuthRepository]: SuiteMultiFactorAuthRepository,
   [REPOSITORIES.LoginRepository]: SuiteLoginRepository,

@@ -71,3 +71,4 @@ export * from './agent-control-bar/agent-control-bar-page';
 export * from './company/business-unit/create/company-business-unit-create-page';
 export * from './company/user/create/company-user-create-page';
 export * from './quote-request/quote-request-page';
+export * from './tracking/tracking-page';
