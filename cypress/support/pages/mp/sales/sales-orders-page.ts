@@ -78,14 +78,23 @@ export class SalesOrdersPage extends MpPage {
   private getOrderItemRow = (sku: string): Cypress.Chainable =>
     this.repository.getOrderItemRows().filter(`:contains("${sku}")`).first();
 
-  hasOrderByOrderReference = (query: string): Cypress.Chainable<boolean> => {
-    return cy.get('tbody').then((body) => {
-      if (body.find(`tr:contains("${query}")`).length > 0) {
-        return cy.wrap(true);
-      } else {
-        return cy.wrap(false);
-      }
-    });
+  /**
+   * Visits the orders page and resolves from the table-data response, not the DOM: `tbody` exists
+   * before the asynchronous table-data request returns, so reading it right after the visit races.
+   */
+  hasOrderByOrderReference = (orderReference: string): Cypress.Chainable<boolean> => {
+    const interceptAlias = this.faker.string.uuid();
+    cy.intercept('GET', '/sales-merchant-portal-gui/orders/table-data**').as(interceptAlias);
+
+    this.visit();
+
+    return cy
+      .wait(`@${interceptAlias}`, { timeout: 20000 })
+      .then((interception) =>
+        ((interception.response?.body?.data ?? []) as Array<{ reference?: string }>).some(
+          (row) => row.reference === orderReference
+        )
+      );
   };
 
   getTotalCommissionBlock = (): Cypress.Chainable<JQuery<HTMLElement>> => {
