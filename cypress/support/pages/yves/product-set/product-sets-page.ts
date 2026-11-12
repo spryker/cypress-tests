@@ -35,6 +35,11 @@ export class ProductSetsPage extends YvesPage {
     this.repository.getAddAllToCartButton().click();
   };
 
+  addAllCmsContentProductsToCart = (): void => {
+    this.repository.getCmsContentAddAllToCartButton().should('be.enabled');
+    this.repository.getCmsContentAddAllToCartButton().click();
+  };
+
   waitUntilProductSetIsPublished = (urlKey: string): void => {
     cy.reloadUntilFound(`/en/${urlKey}`, this.repository.getProductSetDetailsSelector(), 'body', 15, 3000, [
       'console queue:worker:start --stop-when-empty',

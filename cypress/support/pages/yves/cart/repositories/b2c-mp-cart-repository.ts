@@ -94,6 +94,9 @@ export class B2cMpCartRepository implements CartRepository {
     this.getConfiguredBundle(bundleName).find('[data-qa="quantity-input-submit"]').first().click({ timeout: 10000 });
   };
   getClearCartFormSelector = (): string => '[data-qa="multi-cart-clear-form"]';
+  // The removal form posts to cart/configured-bundle/remove, or to its async route in the cart async mode.
+  getConfiguredBundleRemoveButtonSelector = (): string =>
+    'form[action*="/configured-bundle/"][action*="/remove/"] button';
 
   getConfigureButtonSelector = (): string => '[data-qa="component configuration-cart-form"] button';
   getCartItemRemovalFormSelector = (): string => 'form[name^="removeFromCartForm_"]';

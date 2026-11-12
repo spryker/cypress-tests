@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, getPaymentMethodBasedOnEnv } from '@utils';
 import {
   GoogleAnalyticsTrackingDynamicFixtures,
   GoogleAnalyticsTrackingStaticFixtures,
@@ -9,18 +9,23 @@ import {
   BundleConfiguratorPage,
   CartPage,
   CatalogPage,
+  CompanyUserSelectPage,
+  CustomerOverviewPage,
   GoogleAnalyticsEvent,
   GoogleAnalyticsItem,
   GoogleAnalyticsTraffic,
+  OrderDetailsPage,
   ProductPage,
   ProductSetsPage,
   QuickOrderPage,
+  QuoteRequestPage,
   ShoppingListPage,
+  SlotProduct,
   TrackingPage,
   WishlistPage,
 } from '@pages/yves';
 import { UserLoginScenario } from '@scenarios/backoffice';
-import { CustomerLoginScenario } from '@scenarios/yves';
+import { AgentLoginScenario, CheckoutScenario, CustomerLoginScenario } from '@scenarios/yves';
 
 // gtag sends the hits of a page in batches, a few seconds after the events.
 const GOOGLE_ANALYTICS_HIT_TIMEOUT = 30000;
@@ -46,8 +51,14 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
   const quickOrderPage = container.get(QuickOrderPage);
   const bundleConfiguratorPage = container.get(BundleConfiguratorPage);
   const productSetsPage = container.get(ProductSetsPage);
+  const customerOverviewPage = container.get(CustomerOverviewPage);
+  const orderDetailsPage = container.get(OrderDetailsPage);
+  const companyUserSelectPage = container.get(CompanyUserSelectPage);
+  const quoteRequestPage = container.get(QuoteRequestPage);
   const userLoginScenario = container.get(UserLoginScenario);
   const customerLoginScenario = container.get(CustomerLoginScenario);
+  const agentLoginScenario = container.get(AgentLoginScenario);
+  const checkoutScenario = container.get(CheckoutScenario);
 
   let staticFixtures: GoogleAnalyticsTrackingStaticFixtures;
   let dynamicFixtures: GoogleAnalyticsTrackingDynamicFixtures;
@@ -55,6 +66,8 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
   const originalSettings: Record<string, OriginalSetting> = {};
   // An environment's own Measurement ID is kept: the hits are answered by the test and never reach Google Analytics.
   let isTestMeasurementIdUsed = false;
+  let quoteRequestReference: string;
+  let configuredBundleProducts: TrackedAbstractProduct[];
 
   before((): void => {
     ({ staticFixtures, dynamicFixtures } = Cypress.env());
@@ -84,7 +97,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     const traffic = trackingPage.recordGoogleAnalyticsTraffic();
 
     openProductPage();
-    productPage.addToCart();
+    addProductToCart();
 
     cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
       const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
@@ -98,7 +111,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     const traffic = trackingPage.recordGoogleAnalyticsTraffic();
 
     openProductPage();
-    productPage.addToCart();
+    addProductToCart();
     openCartWithLoadedLines();
     trackingPage.waitForGoogleAnalyticsToLoad();
     cartPage.removeProduct({ sku: dynamicFixtures.product.sku });
@@ -115,7 +128,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     const traffic = trackingPage.recordGoogleAnalyticsTraffic();
 
     openProductPage();
-    productPage.addToCart();
+    addProductToCart();
     openCartWithLoadedLines();
 
     trackingPage.waitForGoogleAnalyticsToLoad();
@@ -223,22 +236,14 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
   });
 
   it('customer adding a configured bundle to the cart should be tracked with add_to_cart for its products', (): void => {
-    bundleConfiguratorPage.visit();
-    bundleConfiguratorPage.chooseTemplate(staticFixtures.configuredBundle.templateName);
-    staticFixtures.configuredBundle.slots.forEach((slot): void => {
-      bundleConfiguratorPage.selectSlotProduct({ slotName: slot.slotName, productIdentifier: slot.sku });
-    });
-    bundleConfiguratorPage.goToSummary();
+    openConfiguredBundleSummary();
     trackingPage.waitForGoogleAnalyticsToLoad();
     const traffic = trackingPage.recordGoogleAnalyticsTraffic();
 
     bundleConfiguratorPage.addConfiguredBundleToCart();
 
     cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
-      expectEventsReportAbstractProducts(
-        getEvents(recordedTraffic, ADD_TO_CART_EVENT),
-        staticFixtures.configuredBundle.slots
-      );
+      expectEventsReportAbstractProducts(getEvents(recordedTraffic, ADD_TO_CART_EVENT), configuredBundleProducts);
     });
   });
 
@@ -258,6 +263,120 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     });
   });
 
+  it('customer adding a product set from a CMS page to the cart should be tracked with add_to_cart for its products', (): void => {
+    cy.visit(staticFixtures.productSet.cmsPageUrl);
+    trackingPage.waitForGoogleAnalyticsToLoad();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    productSetsPage.addAllCmsContentProductsToCart();
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      expectEventsReportAbstractProducts(
+        getEvents(recordedTraffic, ADD_TO_CART_EVENT),
+        staticFixtures.productSet.products
+      );
+    });
+  });
+
+  it('customer removing a configured bundle on the cart page should be tracked with remove_from_cart for its products', (): void => {
+    openConfiguredBundleSummary();
+    addConfiguredBundleAndWaitForCartLines();
+    trackingPage.waitForGoogleAnalyticsToLoad();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    cartPage.removeConfiguredBundle(staticFixtures.configuredBundle.templateName);
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      expectEventsReportAbstractProducts(getEvents(recordedTraffic, REMOVE_FROM_CART_EVENT), configuredBundleProducts);
+    });
+  });
+
+  it('customer clearing the cart should be tracked with remove_from_cart for its lines', (): void => {
+    openProductPage();
+    addProductToCart();
+    openCartWithLoadedLines();
+    trackingPage.waitForGoogleAnalyticsToLoad();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    cartPage.clickClearCart();
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const events = getEvents(recordedTraffic, REMOVE_FROM_CART_EVENT);
+
+      expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
+      expectProductEvent(events[0], 1);
+    });
+  });
+
+  it('customer quick adding a product on the cart page should be tracked with add_to_cart', (): void => {
+    trackingPage.waitForGoogleAnalyticsToLoad();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 2 });
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
+
+      expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
+      expectProductEvent(events[0], 2);
+    });
+  });
+
+  it(
+    'customer reordering selected items of an order should be tracked with add_to_cart',
+    (): void => {
+      openDetailsOfPlacedOrder();
+      const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+      orderDetailsPage.reorderFirstSalesOrderItem();
+
+      cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+        const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
+
+        expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
+        expectProductEvent(events[0], 1);
+      });
+    }
+  );
+
+  it(
+    'customer reordering all items of an order should be tracked with add_to_cart',
+    (): void => {
+      openDetailsOfPlacedOrder();
+      const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+      orderDetailsPage.reorderAll();
+
+      cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+        const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
+
+        expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
+        expectProductEvent(events[0], 1);
+      });
+    }
+  );
+
+  // The price is not checked: the quote request sends it only to a company user allowed to see prices.
+  it('company user converting a quote request to the cart should be tracked with add_to_cart', (): void => {
+    openQuoteRequestSentBackByAgent();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    cy.then((): void => quoteRequestPage.convertToCart(quoteRequestReference));
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
+
+      expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
+      expectEventsReportAbstractProducts(events, [
+        {
+          abstractSku: dynamicFixtures.product.abstract_sku,
+          abstractName: dynamicFixtures.abstractLocalizedAttributes.name,
+        },
+      ]);
+    });
+  });
+
+  // The Back Office switch tests come last: each one leaves an event switched off for the tests after it.
   it('customer adding a product should not be tracked when add_to_cart is switched off in the Back Office', (): void => {
     applyEventSettings({ isAddToCartEnabled: false, isRemoveFromCartEnabled: true });
     cy.resetYvesCookies();
@@ -269,7 +388,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     const traffic = trackingPage.recordGoogleAnalyticsTraffic();
 
     openProductPage();
-    productPage.addToCart();
+    addProductToCart();
     cartPage.visit();
     trackingPage.waitForGoogleAnalyticsToLoad();
     // The removal is still tracked, so its hit shows that the hits of the add have been sent as well.
@@ -284,12 +403,53 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     });
   });
 
+  it('customer removing a product should not be tracked when remove_from_cart is switched off in the Back Office', (): void => {
+    applyEventSettings({ isAddToCartEnabled: true, isRemoveFromCartEnabled: false });
+    cy.resetYvesCookies();
+    customerLoginScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+      withoutSession: true,
+    });
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    openProductPage();
+    addProductToCart();
+    openCartWithLoadedLines();
+    trackingPage.waitForGoogleAnalyticsToLoad();
+    cartPage.removeProduct({ sku: dynamicFixtures.product.sku });
+    // The add after the removal is still tracked, so its hit shows that the hits of the removal have been sent as well.
+    cartPage.quickAddToCart({ sku: dynamicFixtures.product.sku, quantity: 1 });
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      expect(getEvents(recordedTraffic, ADD_TO_CART_EVENT), describeRecordedEvents(recordedTraffic)).to.have.length(2);
+      expect(
+        getEvents(recordedTraffic, REMOVE_FROM_CART_EVENT),
+        describeRecordedEvents(recordedTraffic)
+      ).to.have.length(0);
+    });
+  });
+
   // The cart page loads its lines with a separate request, which a busy environment answers later than the default command
   // timeout, so the lines are waited for before a test acts on them.
   function openCartWithLoadedLines(): void {
     cy.intercept('**/cart/get-cart-items*').as('cartLines');
     cartPage.visit();
     cy.wait('@cartLines', { responseTimeout: CART_LINES_TIMEOUT });
+  }
+
+  // Adding the bundle redirects to the cart: a visit of the cart before that would cancel the request that adds it.
+  function addConfiguredBundleAndWaitForCartLines(): void {
+    cy.intercept('**/cart/get-cart-items*').as('cartLines');
+    bundleConfiguratorPage.addConfiguredBundleToCart();
+    cy.wait('@cartLines', { requestTimeout: CART_LINES_TIMEOUT, responseTimeout: CART_LINES_TIMEOUT });
+  }
+
+  // The next page visit would cancel the request that adds the product, so it waits for the request to finish.
+  function addProductToCart(): void {
+    cy.intercept('POST', '**/cart/add/**').as('cartAdd');
+    productPage.addToCart();
+    cy.wait('@cartAdd', { requestTimeout: CART_LINES_TIMEOUT, responseTimeout: CART_LINES_TIMEOUT });
   }
 
   function openProductPage(sku: string = dynamicFixtures.product.sku): void {
@@ -311,23 +471,102 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
 
   // The company user's shopping list of the fixtures, opened with an empty cart and Google Analytics loaded. The list comes
   // from the fixtures because the product page offers a new list only once its session cache sees the list's publish.
-  // The customer of beforeEach is logged out first: clearing the cookies does not end its session, as the session cookie is
-  // set for the storefront domain, so the login page would redirect to that customer's account instead. The logout URL is
-  // visited rather than the header link clicked, so the logout does not wait for the page the test is on to finish loading.
   function openShoppingListWithProduct(): void {
-    cy.visit('/logout');
-    cy.resetYvesCookies();
-    customerLoginScenario.execute({
-      email: dynamicFixtures.companyCustomer.email,
-      password: staticFixtures.defaultPassword,
-      withoutSession: true,
-    });
-    cartPage.visit();
-    cartPage.clearCartIfNotEmpty();
+    loginAsCustomerWithEmptyCart(dynamicFixtures.companyCustomer.email);
     shoppingListPage.visit();
     shoppingListPage.openShoppingList(dynamicFixtures.shoppingList.name);
     cy.location('pathname', { timeout: SHOPPING_LIST_PAGE_TIMEOUT }).should('include', '/shopping-list/details/');
     trackingPage.waitForGoogleAnalyticsToLoad();
+  }
+
+  // The customer of beforeEach is logged out first: clearing the cookies does not end its session, as the session cookie is
+  // set for the storefront domain, so the login page would redirect to that customer's account instead. The logout URL is
+  // visited rather than the header link clicked, so the logout does not wait for the page the test is on to finish loading.
+  function loginAsCustomerWithEmptyCart(email: string): void {
+    cy.visit('/logout');
+    cy.resetYvesCookies();
+    customerLoginScenario.execute({ email, password: staticFixtures.defaultPassword, withoutSession: true });
+    cartPage.visit();
+    cartPage.clearCartIfNotEmpty();
+  }
+
+  // The products of the slots are read from their cards: in demo data, the abstract SKU is the part of the concrete
+  // SKU before the underscore, and a concrete product has the name of its abstract product.
+  function openConfiguredBundleSummary(): void {
+    configuredBundleProducts = [];
+    bundleConfiguratorPage.visit();
+    bundleConfiguratorPage.chooseTemplate(staticFixtures.configuredBundle.templateName);
+    staticFixtures.configuredBundle.slots.forEach((slot): void => {
+      bundleConfiguratorPage.getSlotProduct(slot).then((slotProduct: SlotProduct): void => {
+        configuredBundleProducts.push({ abstractSku: slotProduct.sku.split('_')[0], abstractName: slotProduct.name });
+        bundleConfiguratorPage.selectSlotProduct({ slotName: slot.slotName, productIdentifier: slotProduct.sku });
+      });
+    });
+    bundleConfiguratorPage.goToSummary();
+  }
+
+  // An order of the fixture product, placed by a customer with an address, opened with Google Analytics loaded.
+  function openDetailsOfPlacedOrder(): void {
+    loginAsCustomerWithEmptyCart(dynamicFixtures.reorderCustomer.email);
+    openProductPage();
+    addProductToCart();
+    checkoutScenario.execute({
+      idCustomerAddress: dynamicFixtures.reorderCustomer.addresses.addresses[0].id_customer_address,
+      paymentMethod: getPaymentMethodBasedOnEnv(),
+    });
+    customerOverviewPage.viewLastPlacedOrder();
+    trackingPage.waitForGoogleAnalyticsToLoad();
+  }
+
+  // A quote request of the fixture product that the agent has sent back, so the company user can convert it to a cart.
+  // The fixtures cannot create a quote request in a given state, so it is walked there.
+  function openQuoteRequestSentBackByAgent(): void {
+    loginAsCompanyUserWithEmptyCart();
+    openProductPage();
+    addProductToCart();
+    quoteRequestPage.createFromCart();
+    quoteRequestPage.getReference().then((reference: string): void => {
+      quoteRequestReference = reference;
+    });
+    sendQuoteRequestToAgent();
+
+    cy.visit('/logout');
+    cy.resetYvesCookies();
+    agentLoginScenario.execute({
+      username: dynamicFixtures.agentUser.username,
+      password: staticFixtures.defaultPassword,
+      withoutSession: true,
+    });
+    cy.then((): void => quoteRequestPage.visitAgentRevise(quoteRequestReference));
+    sendQuoteRequestToCustomer();
+
+    // The agent's cookies go first, or the customer login redirects away.
+    cy.resetYvesCookies();
+    loginAsCompanyUserWithEmptyCart();
+    cy.then((): void => quoteRequestPage.visitDetails(quoteRequestReference));
+    trackingPage.waitForGoogleAnalyticsToLoad();
+  }
+
+  // The logout after it would cancel the request that hands the quote request to the agent.
+  function sendQuoteRequestToAgent(): void {
+    cy.intercept('GET', '**/quote-request/send-to-user/**').as('sendToAgent');
+    quoteRequestPage.sendToAgent();
+    cy.wait('@sendToAgent', { requestTimeout: CART_LINES_TIMEOUT, responseTimeout: CART_LINES_TIMEOUT });
+  }
+
+  // The agent's form redirects to the sending: the customer login after it would cancel that request
+  // and leave the quote request in progress.
+  function sendQuoteRequestToCustomer(): void {
+    cy.intercept('GET', '**/agent/quote-request/send-to-customer/**').as('sendToCustomer');
+    quoteRequestPage.sendToCustomer();
+    cy.wait('@sendToCustomer', { requestTimeout: CART_LINES_TIMEOUT, responseTimeout: CART_LINES_TIMEOUT });
+  }
+
+  // A quote request belongs to the business unit the company user works in.
+  function loginAsCompanyUserWithEmptyCart(): void {
+    loginAsCustomerWithEmptyCart(dynamicFixtures.companyCustomer.email);
+    companyUserSelectPage.visit();
+    companyUserSelectPage.selectBusinessUnit({ idCompanyUser: dynamicFixtures.companyUser.id_company_user });
   }
 
   // The product is reported by its abstract SKU and abstract name, with the concrete SKU as a custom item parameter; no brand, variant or category is sent.
@@ -358,7 +597,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     events: GoogleAnalyticsEvent[],
     products: TrackedAbstractProduct[]
   ): void {
-    expect(events, ADD_TO_CART_EVENT).to.not.be.empty;
+    expect(events, 'tracked events').to.not.be.empty;
 
     const items = events.flatMap((event: GoogleAnalyticsEvent): GoogleAnalyticsItem[] => event.items);
 

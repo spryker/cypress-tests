@@ -13,6 +13,11 @@ export class BundleConfiguratorRepository {
   getConfiguratorSidebar = (): Cypress.Chainable => cy.get('[data-qa="component configurator-sidebar"]');
   getSlotButton = (slotName: string): Cypress.Chainable =>
     cy.contains('form[name="configurator_state_form"] button', slotName);
+  // The slot whose candidates the page shows has the active-styled configurator button.
+  getActiveSlotButton = (slotName: string): Cypress.Chainable =>
+    cy.contains('form[name="configurator_state_form"] button.configurator-button--active', slotName, {
+      timeout: SELECTION_RELOAD_TIMEOUT_MS,
+    });
   // Every shop renders the slot's candidates as configurator-product cards. Suite and b2b print the sku in the
   // card, b2c only the name, but every card's selection form carries the sku in a hidden input.
   getConfiguratorProduct = (productIdentifier: string): Cypress.Chainable =>
@@ -28,6 +33,8 @@ export class BundleConfiguratorRepository {
       { timeout: SELECTION_RELOAD_TIMEOUT_MS }
     );
   getConfiguratorProductSelectButtonSelector = (): string => 'button';
+  getConfiguratorProductSkuInputSelector = (): string => 'input[type="hidden"][name$="[sku]"]';
+  getConfiguratorProductNameSelector = (): string => '.configurator-product__name';
   getAddToCartButton = (): Cypress.Chainable =>
     cy.get('form[name="configurator_state_form"][action*="add-to-cart"] button');
 }

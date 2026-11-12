@@ -37,5 +37,6 @@ export interface CartRepository {
   getCartItemsListTitles(): Cypress.Chainable;
   getCartItemAvailabilityLabel(): Cypress.Chainable;
   getConfiguredBundles(): Cypress.Chainable;
+  getConfiguredBundleRemoveButtonSelector(): string;
   changeConfiguredBundleQuantity(bundleName: string, quantity: number): void;
 }

@@ -151,6 +151,20 @@ export class CartPage extends YvesPage {
     });
   };
 
+  // Clicked rather than submitted, so the cart's own scripts handle it as a customer's click, e.g. with an async request.
+  clickClearCart = (): void => {
+    this.repository.findClearCartForm().find('button').click();
+  };
+
+  removeConfiguredBundle = (bundleName: string): void => {
+    this.repository
+      .getConfiguredBundles()
+      .filter(`:contains("${bundleName}")`)
+      .first()
+      .find(this.repository.getConfiguredBundleRemoveButtonSelector())
+      .click();
+  };
+
   clearCart = (): void => {
     const form = this.repository.findClearCartForm();
 

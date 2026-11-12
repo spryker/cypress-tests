@@ -150,6 +150,9 @@ export class B2bMpCartRepository implements CartRepository {
     cy.wait('@configuredBundleQuantityChange');
   };
   getClearCartFormSelector = (): string => 'form[name=multi_cart_clear_form]';
+  // The removal form posts to cart/configured-bundle/remove, or to its async route in the cart async mode.
+  getConfiguredBundleRemoveButtonSelector = (): string =>
+    'form[action*="/configured-bundle/"][action*="/remove/"] button';
 
   getConfigureButtonSelector = (): string => '[data-qa="component configuration-cart-form"] button';
   getCartItemRemovalFormSelector = (): string => 'form[name^="removeFromCartForm_"]';

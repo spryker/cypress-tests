@@ -13,20 +13,17 @@
     "slots": [
       {
         "slotName": "Slot 5",
-        "sku": "112_312526171",
-        "abstractSku": "112",
-        "abstractName": "Acer Extensa M2610"
+        "productPosition": 0
       },
       {
         "slotName": "Slot 6",
-        "sku": "081_22196533",
-        "abstractSku": "081",
-        "abstractName": "TomTom Multi-Sport Cardio"
+        "productPosition": 0
       }
     ]
   },
   "productSet": {
     "name": "Sony Product Set",
+    "cmsPageUrl": "/en/demo-landing-page",
     "products": [
       {
         "abstractSku": "111",

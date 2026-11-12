@@ -10,6 +10,9 @@ export class ProductSetsRepository {
   getProductSetDetailsSelector = (): string => '[data-qa="component product-set-details"]';
   getProductSetProductItems = (): Cypress.Chainable => cy.get('[data-qa="component product-item"]');
   getAddAllToCartButton = (): Cypress.Chainable => cy.get('form[name="addItemsForm"] button');
+  // A product set a CMS page embeds with its product_set() function.
+  getCmsContentAddAllToCartButton = (): Cypress.Chainable =>
+    cy.get('[data-qa="component product-set-cms-content"] form[name="addItemsForm"] button');
   // One select per super attribute of the product, all of them named attributes[<abstract>][<key>].
   getVariantSelect = (productName: string, attributeKey: string): Cypress.Chainable =>
     cy.contains('[data-qa="component product-item"]', productName).find(`select[name$="[${attributeKey}]"]`);

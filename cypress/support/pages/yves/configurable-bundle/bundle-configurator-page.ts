@@ -33,6 +33,24 @@ export class BundleConfiguratorPage extends YvesPage {
     }
   };
 
+  // Reads the candidate at a position of a slot's list from its card.
+  getSlotProduct = (params: GetSlotProductParams): Cypress.Chainable<SlotProduct> => {
+    this.repository.getSlotButton(params.slotName).click();
+    // Opening a slot reloads the page: the cards before that are the previous slot's.
+    this.repository.getActiveSlotButton(params.slotName);
+
+    return this.repository
+      .getConfiguratorProducts()
+      .eq(params.productPosition)
+      .then(
+        ($configuratorProduct: JQuery<HTMLElement>): SlotProduct => ({
+          // The card's form also carries the products of the other slots: the card's own sku comes last.
+          sku: String($configuratorProduct.find(this.repository.getConfiguratorProductSkuInputSelector()).last().val()),
+          name: $configuratorProduct.find(this.repository.getConfiguratorProductNameSelector()).first().text().trim(),
+        })
+      );
+  };
+
   goToSummary = (): void => {
     this.repository.getSlotButton('Summary').click();
   };
@@ -40,6 +58,16 @@ export class BundleConfiguratorPage extends YvesPage {
   addConfiguredBundleToCart = (): void => {
     this.repository.getAddToCartButton().click();
   };
+}
+
+interface GetSlotProductParams {
+  slotName: string;
+  productPosition: number;
+}
+
+export interface SlotProduct {
+  sku: string;
+  name: string;
 }
 
 interface SelectSlotProductParams {
