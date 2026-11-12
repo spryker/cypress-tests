@@ -1,8 +1,10 @@
 import { injectable } from 'inversify';
 import { CompanyUserInvitationRepository } from '../company-user-invitation-repository';
 
+const INVITATION_STATUS_HEADER = /^\s*Status\s*$/;
+
 // The b2b-mp shop overrides the invitation templates without data-qa hooks, so the selectors use the
-// form name and the action URLs.
+// form name, the action URLs and the column header.
 @injectable()
 export class B2bMpCompanyUserInvitationRepository implements CompanyUserInvitationRepository {
   getImportFileInput = (): Cypress.Chainable =>
@@ -11,7 +13,11 @@ export class B2bMpCompanyUserInvitationRepository implements CompanyUserInvitati
   getImportForm = (): Cypress.Chainable => cy.get('form[name="company_user_invitation_form"]');
   getInvitationRow = (email: string): Cypress.Chainable =>
     cy.contains('[data-qa="component invitation-table"] tbody tr', email);
-  getInvitationStatusSelector = (): string => 'td:nth-child(5)';
+  getInvitationStatus = (email: string): Cypress.Chainable =>
+    cy
+      .contains('[data-qa="component invitation-table"] thead th', INVITATION_STATUS_HEADER)
+      .invoke('index')
+      .then((statusColumnIndex) => this.getInvitationRow(email).find('td').eq(Number(statusColumnIndex)));
   getSendButtonSelector = (): string => 'a[href*="user-invitation/send"]';
   getResendButtonSelector = (): string => 'a[href*="user-invitation/resend"]';
   getDeleteButtonSelector = (): string => 'a[href*="user-invitation/delete"]';

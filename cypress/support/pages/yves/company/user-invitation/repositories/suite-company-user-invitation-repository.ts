@@ -8,7 +8,8 @@ export class SuiteCompanyUserInvitationRepository implements CompanyUserInvitati
   getImportSubmitButton = (): Cypress.Chainable => cy.get('[data-qa="invitation-import-form"] [type="submit"]');
   getImportForm = (): Cypress.Chainable => cy.get('[data-qa="invitation-import-form"]');
   getInvitationRow = (email: string): Cypress.Chainable => cy.contains('[data-qa="invitation-row"]', email);
-  getInvitationStatusSelector = (): string => '[data-qa="invitation-status"]';
+  getInvitationStatus = (email: string): Cypress.Chainable =>
+    this.getInvitationRow(email).find('[data-qa="invitation-status"]');
   getSendButtonSelector = (): string => '[data-qa="invitation-send-button"]';
   getResendButtonSelector = (): string => '[data-qa="invitation-resend-button"]';
   getDeleteButtonSelector = (): string => '[data-qa="invitation-delete-button"]';

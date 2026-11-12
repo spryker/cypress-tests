@@ -15,6 +15,7 @@ export interface CompanyUserInvitationStaticFixtures {
   defaultPassword: string;
   invitationStatusNotSent: string;
   invitationStatusPending: string;
+  excelCsvMimeType: string;
   invitationSentMessage: string;
   invitationResentMessage: string;
   invitationDeletedMessage: string;

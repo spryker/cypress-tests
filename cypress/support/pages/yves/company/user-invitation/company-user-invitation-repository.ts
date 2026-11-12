@@ -3,7 +3,7 @@ export interface CompanyUserInvitationRepository {
   getImportSubmitButton(): Cypress.Chainable;
   getImportForm(): Cypress.Chainable;
   getInvitationRow(email: string): Cypress.Chainable;
-  getInvitationStatusSelector(): string;
+  getInvitationStatus(email: string): Cypress.Chainable;
   getSendButtonSelector(): string;
   getResendButtonSelector(): string;
   getDeleteButtonSelector(): string;

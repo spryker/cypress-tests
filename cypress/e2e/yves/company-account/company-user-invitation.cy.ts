@@ -46,6 +46,16 @@ describe(
       });
     });
 
+    it('company admin should be able to import a CSV file that the browser sends as an Excel file', (): void => {
+      const invitation = companyUserInvitationPage.createInvitation(dynamicFixtures.businessUnit.name);
+
+      companyUserInvitationPage.importInvitationsWithMimeType([invitation], staticFixtures.excelCsvMimeType);
+
+      companyUserInvitationPage
+        .getInvitationStatus(invitation.email)
+        .should('contain', staticFixtures.invitationStatusNotSent);
+    });
+
     it('company admin should see a validation error when the import file has a wrong header', (): void => {
       companyUserInvitationPage.importFile('name,mail\nJohn,john@spryker.com', 'invitations.csv');
 
