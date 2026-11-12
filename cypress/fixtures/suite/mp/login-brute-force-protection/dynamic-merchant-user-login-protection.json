@@ -51,6 +51,22 @@
           "type": "helper",
           "name": "haveMerchantUserWithAclEntities",
           "arguments": ["#lockMerchant", "#lockMerchantUser"]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "doubleClickMerchantUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "doubleClickMerchant"
+        },
+        {
+          "type": "helper",
+          "name": "haveMerchantUserWithAclEntities",
+          "arguments": ["#doubleClickMerchant", "#doubleClickMerchantUser"]
         }
       ]
     }

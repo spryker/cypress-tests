@@ -29,7 +29,7 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    it('customer should log in after solving the security check shown after repeated failed logins', (): void => {
+    it('customer should log in after solving the security check shown after repeated failed logins, and without it after logging out', (): void => {
       const email = dynamicFixtures.challengeCustomer.email;
 
       failLogin(email, 1);
@@ -40,6 +40,13 @@ describe(
       loginPage.visit();
       loginPage.getCaptchaWidget().should('be.visible');
       loginPage.solveCaptcha();
+      loginPage.login({ email, password: staticFixtures.defaultPassword });
+
+      customerOverviewPage.assertPageLocation();
+
+      customerLogoutScenario.execute();
+      loginPage.visit();
+      loginPage.getCaptchaWidget().should('not.exist');
       loginPage.login({ email, password: staticFixtures.defaultPassword });
 
       customerOverviewPage.assertPageLocation();

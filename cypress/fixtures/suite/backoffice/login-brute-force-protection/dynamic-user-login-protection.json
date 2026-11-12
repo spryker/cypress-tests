@@ -36,6 +36,17 @@
           "type": "helper",
           "name": "addUserToGroup",
           "arguments": ["#lockUser.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "doubleClickUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#doubleClickUser.id_user", 1]
         }
       ]
     }

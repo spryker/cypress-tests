@@ -1,5 +1,6 @@
 import { container } from '@utils';
 import { IndexPage, LoginPage } from '@pages/backoffice';
+import { UserLogoutScenario } from '@scenarios/backoffice';
 import { LoginBruteForceProtectionStaticFixtures, UserLoginProtectionDynamicFixtures } from '@interfaces/backoffice';
 
 describe(
@@ -16,6 +17,7 @@ describe(
 
     const loginPage = container.get(LoginPage);
     const indexPage = container.get(IndexPage);
+    const userLogoutScenario = container.get(UserLogoutScenario);
 
     let staticFixtures: LoginBruteForceProtectionStaticFixtures;
     let dynamicFixtures: UserLoginProtectionDynamicFixtures;
@@ -24,7 +26,7 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    it('user should log in after solving the security check shown after repeated failed logins', (): void => {
+    it('user should log in after solving the security check shown after repeated failed logins, and without it after logging out', (): void => {
       const username = dynamicFixtures.challengeUser.username;
 
       failLogin(username, 1);
@@ -35,6 +37,13 @@ describe(
       loginPage.visit();
       loginPage.getCaptchaWidget().should('be.visible');
       loginPage.solveCaptcha();
+      loginPage.login({ username, password: staticFixtures.defaultPassword });
+
+      indexPage.getLoginForm().should('not.exist');
+
+      userLogoutScenario.execute();
+      loginPage.visit();
+      loginPage.getCaptchaWidget().should('not.exist');
       loginPage.login({ username, password: staticFixtures.defaultPassword });
 
       indexPage.getLoginForm().should('not.exist');
@@ -69,6 +78,18 @@ describe(
       loginPage.getCaptchaWidget().should('not.exist');
       indexPage.visit();
       indexPage.getLoginForm().should('be.visible');
+    });
+
+    it('user should be logged in with one login request when double-clicking the login button after solving the security check', (): void => {
+      const username = dynamicFixtures.doubleClickUser.username;
+
+      failLogin(username, staticFixtures.challengeAfterFailedAttempts);
+      loginPage.visit();
+      loginPage.solveCaptcha();
+      loginPage.loginWithDoubleClick({ username, password: staticFixtures.defaultPassword });
+
+      indexPage.getLoginForm().should('not.exist');
+      loginPage.getLoginCheckRequests().should('have.length', 1);
     });
 
     function failLogin(username: string, numberOfAttempts: number, previousFailedAttempts = 0): void {

@@ -11,4 +11,5 @@ export interface UserLoginProtectionDynamicFixtures {
   challengeUser: User;
   captchaRejectionUser: User;
   lockUser: User;
+  doubleClickUser: User;
 }

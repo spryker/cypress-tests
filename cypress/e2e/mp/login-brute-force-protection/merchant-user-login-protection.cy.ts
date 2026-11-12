@@ -74,6 +74,18 @@ describe(
       loginPage.assertPageLocation();
     });
 
+    it('merchant user should be logged in with one login request when double-clicking the login button after solving the security check', (): void => {
+      const username = dynamicFixtures.doubleClickMerchantUser.username;
+
+      failLogin(username, staticFixtures.challengeAfterFailedAttempts);
+      loginPage.visit();
+      loginPage.solveCaptcha();
+      loginPage.loginWithDoubleClick({ username, password: staticFixtures.defaultPassword });
+
+      dashboardPage.assertPageLocation();
+      loginPage.getLoginCheckRequests().should('have.length', 1);
+    });
+
     function failLogin(username: string, numberOfAttempts: number, previousFailedAttempts = 0): void {
       for (let attempt = 0; attempt < numberOfAttempts; attempt++) {
         loginPage.visit();

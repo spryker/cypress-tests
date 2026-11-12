@@ -18,6 +18,17 @@ export class LoginPage extends BackofficePage {
     this.repository.getSubmitButton().click();
   };
 
+  loginWithDoubleClick = (params: LoginParams): void => {
+    this.repository.getEmailInput().clear().type(params.username);
+    this.repository.getPasswordInput().clear().type(params.password);
+
+    cy.resetProxyCookieJar();
+    cy.intercept('POST', '**/login_check').as('loginCheck');
+    this.repository.getSubmitButton().dblclick();
+  };
+
+  getLoginCheckRequests = (): Cypress.Chainable => cy.get('@loginCheck.all');
+
   submitLoginWithoutSolvingCaptcha = (params: LoginParams): void => {
     this.repository.getEmailInput().clear().type(params.username);
     this.repository.getPasswordInput().clear().type(params.password);
