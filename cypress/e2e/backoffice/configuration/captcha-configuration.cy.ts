@@ -60,7 +60,7 @@ describe(
     it('opens the Login Lock tab from the CAPTCHA mode link after asking about the unsaved changes', (): void => {
       const captchaSettings = staticFixtures.captchaSettings;
       const loginLockSettings = staticFixtures.loginLockSettings;
-      const unsavedChangesConfirm = cy.stub().as('unsavedChangesConfirm').returns(true);
+      const unsavedChangesConfirm = cy.stub().returns(true);
       cy.on('window:confirm', unsavedChangesConfirm);
 
       configurationPage.visitCaptchaTab();
@@ -74,7 +74,7 @@ describe(
         );
         configurationPage.getSettingTabLink(captchaSettings.modeKey).click();
 
-        cy.get('@unsavedChangesConfirm').should('have.been.calledOnce');
+        cy.wrap(unsavedChangesConfirm).should('have.been.calledOnce');
         cy.location('search').should('contain', `tab=${loginLockSettings.tabKey}`);
         configurationPage.getSettingRow(loginLockSettings.keys[0]).should('be.visible');
       });
