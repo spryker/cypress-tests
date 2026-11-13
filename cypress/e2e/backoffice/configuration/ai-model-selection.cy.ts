@@ -36,6 +36,10 @@ describe(
       });
     });
 
+    afterEach((): void => {
+      configurationPage.requestUseDefaultConfigurationValue(staticFixtures.storefrontAssistant.openAiModelSettingKey);
+    });
+
     it('offers only the supported models and persists the selected model', (): void => {
       const { storefrontAssistant } = staticFixtures;
 
@@ -57,9 +61,6 @@ describe(
       configurationPage
         .getSelectSetting(storefrontAssistant.openAiModelSettingKey)
         .should('have.value', storefrontAssistant.alternativeModel);
-
-      configurationPage.clickUseDefaultLink(storefrontAssistant.openAiModelSettingKey);
-      configurationPage.saveConfigurationAndWaitForResponse();
     });
 
     it('rejects a model that is not in the supported list', (): void => {

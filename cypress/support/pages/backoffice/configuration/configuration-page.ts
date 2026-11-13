@@ -53,6 +53,16 @@ export class ConfigurationPage extends BackofficePage {
       failOnStatusCode: false,
     });
 
+  requestUseDefaultConfigurationValue = (
+    settingKey: string
+  ): Cypress.Chainable<Cypress.Response<SaveConfigurationResponse>> =>
+    cy.request<SaveConfigurationResponse>({
+      method: 'POST',
+      url: `${Cypress.env().backofficeUrl}${this.repository.getSaveUrl()}`,
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      body: { changes: [{ key: settingKey, value: null, use_default: true, scope: this.SCOPE_GLOBAL }] },
+    });
+
   visitLogosTab = (): void => {
     cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.THEME_FEATURE}&tab=logos`);
   };
