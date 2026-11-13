@@ -1,12 +1,12 @@
 {
   "defaultPassword": "change123",
-  "productPrice": "227.50",
+  "productPrice": "585.69",
   "customer": {
     "email": "sonia@acme.com"
   },
   "concreteProduct": {
-    "name": "Club chair - Leather covering - black",
-    "sku": "100907",
-    "abstract_sku": "M53238"
+    "name": "Toyota pallet lift truck from TOYOTA - BT-Lifter - wheels polyurethane",
+    "sku": "464012",
+    "abstract_sku": "M1014642"
   }
 }

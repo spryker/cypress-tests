@@ -1,7 +1,9 @@
-import { Customer } from './shared';
+import { Customer, ProductConcrete } from './shared';
 
 export interface QuickAddToCartDynamicFixtures {
   customer: Customer;
+  productGroupFirstItem?: ProductConcrete;
+  productGroupSibling?: ProductConcrete;
 }
 
 export interface QuickAddToCartStaticFixtures {
@@ -19,7 +21,10 @@ interface SearchableProduct {
   cartEntry?: string;
 }
 
-interface GroupedProduct extends SearchableProduct {
+interface GroupedProduct {
+  searchQuery?: string;
+  cartEntry?: string;
+
   // The colour code the swatch carries in its style, or the colour name its tooltip prints,
   // whichever the repository's theme keys the swatch by.
   swatchIdentifier: string;
