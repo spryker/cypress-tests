@@ -65,8 +65,13 @@ describe(
 
     it('given a product card offering its group siblings by colour when a sibling colour is picked and quick added then the sibling is what lands in the cart', (): void => {
       // Arrange
+      // A group built by the dynamic fixtures wins over the demo data one named in the static fixtures.
+      const searchQuery =
+        dynamicFixtures.productGroupFirstItem?.abstract_sku ?? staticFixtures.productGroup.searchQuery ?? '';
+      const cartEntry = dynamicFixtures.productGroupSibling?.sku ?? staticFixtures.productGroup.cartEntry ?? '';
+
       catalogPage.visit();
-      catalogPage.searchForProducts({ query: staticFixtures.productGroup.searchQuery });
+      catalogPage.searchForProducts({ query: searchQuery });
 
       // Act
       catalogPage.selectFirstProductItemColor({ swatchIdentifier: staticFixtures.productGroup.swatchIdentifier });
@@ -74,7 +79,7 @@ describe(
 
       // Assert
       cartPage.visit();
-      cartPage.getProductCartItems().should('contain.text', staticFixtures.productGroup.cartEntry);
+      cartPage.getProductCartItems().should('contain.text', cartEntry);
     });
   }
 );

@@ -187,7 +187,7 @@
           "arguments": [
             {
               "status": "approved",
-              "merchant": "#merchant1",
+              "merchant": "#merchant3",
               "companyUser": "#companyUser1FromCompany2",
               "ownerCompanyBusinessUnit": "#businessUnit1FromCompany2",
               "assigneeCompanyBusinessUnits": "#assigneeCompanyBusinessUnitsFromCompany2"

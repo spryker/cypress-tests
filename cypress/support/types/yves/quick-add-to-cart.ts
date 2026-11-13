@@ -1,7 +1,12 @@
-import { Customer } from './shared';
+import { Customer, ProductConcrete } from './shared';
 
 export interface QuickAddToCartDynamicFixtures {
   customer: Customer;
+
+  // Repositories whose demo data carries no colour group of single-variant products build one: the card
+  // of the first item offers the sibling's colour.
+  productGroupFirstItem?: ProductConcrete;
+  productGroupSibling?: ProductConcrete;
 }
 
 export interface QuickAddToCartStaticFixtures {
@@ -19,7 +24,11 @@ interface SearchableProduct {
   cartEntry?: string;
 }
 
-interface GroupedProduct extends SearchableProduct {
+interface GroupedProduct {
+  // Left out where the dynamic fixtures build the group: the search and the cart line then come from there.
+  searchQuery?: string;
+  cartEntry?: string;
+
   // The colour code the swatch carries in its style, or the colour name its tooltip prints,
   // whichever the repository's theme keys the swatch by.
   swatchIdentifier: string;
