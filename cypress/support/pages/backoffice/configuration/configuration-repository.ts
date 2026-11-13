@@ -70,4 +70,6 @@ export class ConfigurationRepository {
   getInvalidFeedbackSelector = (): string => '.invalid-feedback';
 
   getNavTabSelector = (tabKey: string): string => `.js-nav-tab[data-tab="${tabKey}"]`;
+
+  getSettingTabLinkSelector = (): string => '[data-qa="setting-tab-link"]';
 }

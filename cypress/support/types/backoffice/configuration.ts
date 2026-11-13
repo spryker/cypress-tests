@@ -47,7 +47,6 @@ export interface CaptchaConfigurationStaticFixtures {
   defaultPassword: string;
   captchaSettings: {
     modeKey: string;
-    limitKeys: string[];
     modeAlways: string;
     modeAfterFailedAttempts: string;
   };

@@ -32,38 +32,20 @@ describe(
       });
     });
 
-    it('hides the CAPTCHA mode and the failed attempt limits while the CAPTCHA is disabled', (): void => {
+    it('shows the CAPTCHA mode only while the CAPTCHA is enabled', (): void => {
       const captchaSettings = staticFixtures.captchaSettings;
 
       configurationPage.visitCaptchaTab();
       configurationPage.setCaptchaEnabled(false);
 
       configurationPage.getSettingRow(captchaSettings.modeKey).should('not.be.visible');
-      captchaSettings.limitKeys.forEach((limitKey: string): void => {
-        configurationPage.getSettingRow(limitKey).should('not.be.visible');
-      });
-    });
 
-    it('shows the failed attempt limits only in the After Failed Attempts mode of an enabled CAPTCHA', (): void => {
-      const captchaSettings = staticFixtures.captchaSettings;
-
-      configurationPage.visitCaptchaTab();
       configurationPage.setCaptchaEnabled(true);
-      configurationPage.selectCaptchaMode(captchaSettings.modeAfterFailedAttempts);
 
       configurationPage.getSettingRow(captchaSettings.modeKey).should('be.visible');
-      captchaSettings.limitKeys.forEach((limitKey: string): void => {
-        configurationPage.getSettingRow(limitKey).should('be.visible');
-      });
-
-      configurationPage.selectCaptchaMode(captchaSettings.modeAlways);
-
-      captchaSettings.limitKeys.forEach((limitKey: string): void => {
-        configurationPage.getSettingRow(limitKey).should('not.be.visible');
-      });
     });
 
-    it('shows the account lock settings while the CAPTCHA is disabled', (): void => {
+    it('shows the account lock and the security check limits on the Login Lock tab while the CAPTCHA is disabled', (): void => {
       const loginLockSettings = staticFixtures.loginLockSettings;
 
       configurationPage.visitCaptchaTab();
@@ -72,6 +54,29 @@ describe(
 
       loginLockSettings.keys.forEach((settingKey: string): void => {
         configurationPage.getSettingRow(settingKey).should('be.visible');
+      });
+    });
+
+    it('opens the Login Lock tab from the CAPTCHA mode link after asking about the unsaved changes', (): void => {
+      const captchaSettings = staticFixtures.captchaSettings;
+      const loginLockSettings = staticFixtures.loginLockSettings;
+      const unsavedChangesConfirm = cy.stub().as('unsavedChangesConfirm').returns(true);
+      cy.on('window:confirm', unsavedChangesConfirm);
+
+      configurationPage.visitCaptchaTab();
+      configurationPage.setCaptchaEnabled(true);
+
+      configurationPage.getSelectedCaptchaMode().then((selectedCaptchaMode: string) => {
+        configurationPage.selectCaptchaMode(
+          selectedCaptchaMode === captchaSettings.modeAlways
+            ? captchaSettings.modeAfterFailedAttempts
+            : captchaSettings.modeAlways
+        );
+        configurationPage.getSettingTabLink(captchaSettings.modeKey).click();
+
+        cy.get('@unsavedChangesConfirm').should('have.been.calledOnce');
+        cy.location('search').should('contain', `tab=${loginLockSettings.tabKey}`);
+        configurationPage.getSettingRow(loginLockSettings.keys[0]).should('be.visible');
       });
     });
 

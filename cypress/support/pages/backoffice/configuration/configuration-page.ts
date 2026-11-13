@@ -189,4 +189,7 @@ export class ConfigurationPage extends BackofficePage {
   getChangesCount = (): Cypress.Chainable => cy.get(this.repository.getChangesCountSelector());
 
   getSettingRow = (settingKey: string): Cypress.Chainable => cy.get(this.repository.getSettingRowSelector(settingKey));
+
+  getSettingTabLink = (settingKey: string): Cypress.Chainable =>
+    cy.get(this.repository.getSettingRowSelector(settingKey)).find(this.repository.getSettingTabLinkSelector());
 }
