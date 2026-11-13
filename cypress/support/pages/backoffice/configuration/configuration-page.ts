@@ -13,6 +13,38 @@ export class ConfigurationPage extends BackofficePage {
 
   protected THEME_FEATURE = 'theme';
 
+  protected SECURITY_FEATURE = 'security';
+
+  visitCaptchaTab = (): void => {
+    cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.SECURITY_FEATURE}&tab=captcha`);
+  };
+
+  setCaptchaEnabled = (isCaptchaEnabled: boolean): void => {
+    if (isCaptchaEnabled) {
+      cy.get(this.repository.getCaptchaEnabledToggleSelector()).check({ force: true });
+
+      return;
+    }
+
+    cy.get(this.repository.getCaptchaEnabledToggleSelector()).uncheck({ force: true });
+  };
+
+  selectCaptchaMode = (captchaMode: string): void => {
+    cy.get(this.repository.getCaptchaModeOptionSelector(captchaMode)).check({ force: true });
+  };
+
+  getSelectedCaptchaMode = (): Cypress.Chainable =>
+    cy.get(this.repository.getSelectedCaptchaModeSelector()).invoke('val');
+
+  stubConfigurationSave = (): void => {
+    cy.intercept('POST', this.repository.getSaveUrl(), {
+      statusCode: 200,
+      body: { success: true, count: 0, errors: [] },
+    }).as('configurationSave');
+  };
+
+  waitForConfigurationSave = (): Cypress.Chainable => cy.wait('@configurationSave');
+
   visitLogosTab = (): void => {
     cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.THEME_FEATURE}&tab=logos`);
   };
@@ -157,4 +189,7 @@ export class ConfigurationPage extends BackofficePage {
   getChangesCount = (): Cypress.Chainable => cy.get(this.repository.getChangesCountSelector());
 
   getSettingRow = (settingKey: string): Cypress.Chainable => cy.get(this.repository.getSettingRowSelector(settingKey));
+
+  getSettingTabLink = (settingKey: string): Cypress.Chainable =>
+    cy.get(this.repository.getSettingRowSelector(settingKey)).find(this.repository.getSettingTabLinkSelector());
 }

@@ -9,3 +9,4 @@ export * from './data-import';
 export * from './restore-session-after-login-timeout';
 export * from './merchant-portal';
 export * from './product-offer';
+export * from './login-brute-force-protection';

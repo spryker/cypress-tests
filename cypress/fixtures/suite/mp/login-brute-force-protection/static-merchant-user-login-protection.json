@@ -1,0 +1,6 @@
+{
+  "defaultPassword": "change123",
+  "wrongPassword": "wrong-password-123",
+  "challengeAfterFailedAttempts": 2,
+  "lockAfterFailedAttempts": 5
+}

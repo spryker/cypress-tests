@@ -42,3 +42,20 @@ export interface ConfigurationManagementStaticFixtures {
 export interface ConfigurationManagementDynamicFixtures {
   rootUser: User;
 }
+
+export interface CaptchaConfigurationStaticFixtures {
+  defaultPassword: string;
+  captchaSettings: {
+    modeKey: string;
+    modeAlways: string;
+    modeAfterFailedAttempts: string;
+  };
+  loginLockSettings: {
+    tabKey: string;
+    keys: string[];
+  };
+}
+
+export interface CaptchaConfigurationDynamicFixtures {
+  rootUser: User;
+}

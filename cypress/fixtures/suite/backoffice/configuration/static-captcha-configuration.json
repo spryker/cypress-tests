@@ -1,0 +1,27 @@
+{
+  "defaultPassword": "change123",
+  "captchaSettings": {
+    "modeKey": "security:captcha:login:mode",
+    "modeAlways": "always",
+    "modeAfterFailedAttempts": "after_failed_attempts"
+  },
+  "loginLockSettings": {
+    "tabKey": "login_lock",
+    "keys": [
+      "security:login_lock:customer:number_of_failed_attempts",
+      "security:login_lock:customer:counting_window",
+      "security:login_lock:customer:lock_duration",
+      "security:login_lock:customer:challenge_account_number_of_failed_attempts",
+      "security:login_lock:customer:challenge_ip_number_of_failed_attempts",
+      "security:login_lock:customer:challenge_all_accounts_number_of_failed_attempts",
+      "security:login_lock:customer:challenge_all_accounts_time_window",
+      "security:login_lock:user:number_of_failed_attempts",
+      "security:login_lock:user:counting_window",
+      "security:login_lock:user:lock_duration",
+      "security:login_lock:user:challenge_account_number_of_failed_attempts",
+      "security:login_lock:user:challenge_ip_number_of_failed_attempts",
+      "security:login_lock:user:challenge_all_accounts_number_of_failed_attempts",
+      "security:login_lock:user:challenge_all_accounts_time_window"
+    ]
+  }
+}
