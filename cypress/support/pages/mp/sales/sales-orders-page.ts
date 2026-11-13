@@ -78,10 +78,6 @@ export class SalesOrdersPage extends MpPage {
   private getOrderItemRow = (sku: string): Cypress.Chainable =>
     this.repository.getOrderItemRows().filter(`:contains("${sku}")`).first();
 
-  /**
-   * Visits the orders page and resolves from the table-data response, not the DOM: `tbody` exists
-   * before the asynchronous table-data request returns, so reading it right after the visit races.
-   */
   hasOrderByOrderReference = (orderReference: string): Cypress.Chainable<boolean> => {
     const interceptAlias = this.faker.string.uuid();
     cy.intercept('GET', '/sales-merchant-portal-gui/orders/table-data**').as(interceptAlias);

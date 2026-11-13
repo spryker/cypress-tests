@@ -2,9 +2,6 @@ import { Customer, ProductConcrete } from './shared';
 
 export interface QuickAddToCartDynamicFixtures {
   customer: Customer;
-
-  // Repositories whose demo data carries no colour group of single-variant products build one: the card
-  // of the first item offers the sibling's colour.
   productGroupFirstItem?: ProductConcrete;
   productGroupSibling?: ProductConcrete;
 }
@@ -25,7 +22,6 @@ interface SearchableProduct {
 }
 
 interface GroupedProduct {
-  // Left out where the dynamic fixtures build the group: the search and the cart line then come from there.
   searchQuery?: string;
   cartEntry?: string;
 
