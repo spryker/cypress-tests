@@ -54,6 +54,15 @@ export class ConfigurationRepository {
 
   getSettingRowSelector = (settingKey: string): string => `.setting-row[data-setting-key="${settingKey}"]`;
 
+  getCaptchaEnabledToggleSelector = (): string => 'input[id="setting-security:captcha:login:is_enabled"]';
+
+  getCaptchaModeOptionSelector = (captchaMode: string): string =>
+    `input[name="setting-security:captcha:login:mode"][value="${captchaMode}"]`;
+
+  getSelectedCaptchaModeSelector = (): string => 'input[name="setting-security:captcha:login:mode"]:checked';
+
+  getSaveUrl = (): string => '**/configuration/manage/save';
+
   getOverridesDefaultBadgeSelector = (): string => '.js-overrides-default-badge';
 
   getUseDefaultLinkSelector = (): string => '.use-default-link';

@@ -1,0 +1,29 @@
+{
+  "defaultPassword": "change123",
+  "captchaSettings": {
+    "modeKey": "security:captcha:login:mode",
+    "limitKeys": [
+      "security:captcha:login:customer_number_of_failed_attempts",
+      "security:captcha:login:customer_ip_number_of_failed_attempts",
+      "security:captcha:login:customer_all_accounts_number_of_failed_attempts",
+      "security:captcha:login:customer_all_accounts_time_window",
+      "security:captcha:login:user_number_of_failed_attempts",
+      "security:captcha:login:user_ip_number_of_failed_attempts",
+      "security:captcha:login:user_all_accounts_number_of_failed_attempts",
+      "security:captcha:login:user_all_accounts_time_window"
+    ],
+    "modeAlways": "always",
+    "modeAfterFailedAttempts": "after_failed_attempts"
+  },
+  "loginLockSettings": {
+    "tabKey": "login_lock",
+    "keys": [
+      "security:login_lock:customer:number_of_failed_attempts",
+      "security:login_lock:customer:counting_window",
+      "security:login_lock:customer:lock_duration",
+      "security:login_lock:user:number_of_failed_attempts",
+      "security:login_lock:user:counting_window",
+      "security:login_lock:user:lock_duration"
+    ]
+  }
+}
