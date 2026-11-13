@@ -1,0 +1,10 @@
+{
+  "defaultPassword": "change123",
+  "invitationStatusNotSent": "Not Sent",
+  "invitationStatusPending": "Pending",
+  "invitationSentMessage": "Invitation sent successfully",
+  "invitationResentMessage": "Invitation resent successfully",
+  "invitationDeletedMessage": "Invitation deleted successfully",
+  "invalidFileMessage": "The import file is not valid",
+  "excelCsvMimeType": "application/vnd.ms-excel"
+}

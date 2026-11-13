@@ -47,6 +47,13 @@ export class WishlistPage extends YvesPage {
   getAddToWishlistForm = (): Cypress.Chainable =>
     cy.get('form.wishlist-selector-default__form, form.wishlist-selector__form').first();
 
+  getWishlistItemRow = (sku: string): Cypress.Chainable =>
+    cy.contains('[data-qa="component wishlist-table"] tr, [data-qa="component wishlist-detail-table"] tr', sku);
+
+  removeItem = (sku: string): void => {
+    this.getWishlistItemRow(sku).find('form[action*="wishlist/remove-item"] button').click();
+  };
+
   // A wishlist row carries its own configure form, distinct from both the detail page's
   // configuration-form and the cart's configuration-cart-form.
   configureProduct = (params: ConfigureProductParams): void => {

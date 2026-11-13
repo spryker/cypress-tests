@@ -132,7 +132,6 @@ describe(
     function checkOrderVisibility(orderReference: string, attempt = 1): void {
       const maxAttempts = 10;
 
-      salesOrdersPage.visit();
       salesOrdersPage.hasOrderByOrderReference(orderReference).then((isVisible) => {
         if (isVisible) {
           return;
