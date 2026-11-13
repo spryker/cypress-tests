@@ -5,16 +5,16 @@
       "synchronize": true,
       "operations": [
         {
-          "type": "transfer",
-          "name": "MerchantTransfer",
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
           "key": "merchant1",
-          "arguments": { "id_merchant": 6, "name": "Sugar Monster", "merchant_reference": "MER000006" }
+          "arguments": [{ "isOpenForRelationRequest": true, "storeRelation": { "idStores": [1] } }]
         },
         {
-          "type": "transfer",
-          "name": "MerchantTransfer",
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
           "key": "merchant3",
-          "arguments": { "id_merchant": 6, "name": "Sugar Monster", "merchant_reference": "MER000006" }
+          "arguments": [{ "isOpenForRelationRequest": true, "storeRelation": { "idStores": [1] } }]
         },
         {
           "type": "helper",
