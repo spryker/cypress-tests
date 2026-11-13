@@ -13,6 +13,46 @@ export class ConfigurationPage extends BackofficePage {
 
   protected THEME_FEATURE = 'theme';
 
+  protected AI_COMMERCE_FEATURE = 'ai_commerce';
+
+  protected SCOPE_GLOBAL = 'global';
+
+  visitAiCommerceTab = (tabKey: string): void => {
+    cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.AI_COMMERCE_FEATURE}&tab=${tabKey}`);
+  };
+
+  selectRadioOption = (settingKey: string, value: string): void => {
+    cy.get(this.repository.getRadioOptionSelector(settingKey, value)).check({ force: true });
+  };
+
+  getSelectSetting = (settingKey: string): Cypress.Chainable =>
+    cy.get(this.repository.getSelectSettingSelector(settingKey));
+
+  getSelectableOptions = (settingKey: string): Cypress.Chainable =>
+    cy.get(this.repository.getSelectSettingSelector(settingKey)).find(this.repository.getSelectableOptionSelector());
+
+  selectOption = (settingKey: string, value: string): void => {
+    cy.get(this.repository.getSelectSettingSelector(settingKey)).select(value);
+  };
+
+  saveConfigurationAndWaitForResponse = (): void => {
+    cy.intercept('POST', `**${this.repository.getSaveUrl()}`).as('saveConfiguration');
+    this.saveConfiguration();
+    cy.wait('@saveConfiguration');
+  };
+
+  requestSaveConfigurationValue = (params: {
+    settingKey: string;
+    value: string;
+  }): Cypress.Chainable<Cypress.Response<SaveConfigurationResponse>> =>
+    cy.request<SaveConfigurationResponse>({
+      method: 'POST',
+      url: `${Cypress.env().backofficeUrl}${this.repository.getSaveUrl()}`,
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      body: { changes: [{ key: params.settingKey, value: params.value, scope: this.SCOPE_GLOBAL }] },
+      failOnStatusCode: false,
+    });
+
   visitLogosTab = (): void => {
     cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.THEME_FEATURE}&tab=logos`);
   };
@@ -157,4 +197,10 @@ export class ConfigurationPage extends BackofficePage {
   getChangesCount = (): Cypress.Chainable => cy.get(this.repository.getChangesCountSelector());
 
   getSettingRow = (settingKey: string): Cypress.Chainable => cy.get(this.repository.getSettingRowSelector(settingKey));
+}
+
+interface SaveConfigurationResponse {
+  success: boolean;
+  count: number;
+  errors: Record<string, string>;
 }
