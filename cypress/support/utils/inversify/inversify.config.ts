@@ -267,6 +267,8 @@ import { B2bMpCheckoutSummaryRecurringOrderRepository } from '../../pages/yves/r
 import { SuiteCustomerGroupFormRepository } from '../../pages/backoffice/customer-group/form/repositories/suite-customer-group-form-repository';
 import { SuiteCustomerGroupViewRepository } from '../../pages/backoffice/customer-group/view/repositories/suite-customer-group-view-repository';
 import { SuiteCustomerGroupListRepository } from '../../pages/backoffice/customer-group/list/repositories/suite-customer-group-list-repository';
+import { SuiteCompanyUserInvitationRepository } from '../../pages/yves/company/user-invitation/repositories/suite-company-user-invitation-repository';
+import { B2bMpCompanyUserInvitationRepository } from '../../pages/yves/company/user-invitation/repositories/b2b-mp-company-user-invitation-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
@@ -336,6 +338,7 @@ const suiteMappings: BindingsMap = {
   [REPOSITORIES.CustomerGroupFormRepository]: SuiteCustomerGroupFormRepository,
   [REPOSITORIES.CustomerGroupViewRepository]: SuiteCustomerGroupViewRepository,
   [REPOSITORIES.CustomerGroupListRepository]: SuiteCustomerGroupListRepository,
+  [REPOSITORIES.CompanyUserInvitationRepository]: SuiteCompanyUserInvitationRepository,
 };
 
 const b2cMappings: BindingsMap = {
@@ -553,6 +556,7 @@ const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.CustomerGroupFormRepository]: SuiteCustomerGroupFormRepository,
   [REPOSITORIES.CustomerGroupViewRepository]: SuiteCustomerGroupViewRepository,
   [REPOSITORIES.CustomerGroupListRepository]: SuiteCustomerGroupListRepository,
+  [REPOSITORIES.CompanyUserInvitationRepository]: B2bMpCompanyUserInvitationRepository,
 };
 
 const mappings = {
