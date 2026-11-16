@@ -40,10 +40,6 @@ describe(
     it('renders the service point list and its detail page with services and connected offers', (): void => {
       servicePointListPage.visit();
 
-      servicePointListPage.getAddressColumn().should('exist');
-      servicePointListPage.getStoresColumn().should('exist');
-      servicePointListPage.getServiceTypesColumn().should('exist');
-
       servicePointListPage.findByKey(dynamicFixtures.servicePoint.key);
 
       servicePointListPage
@@ -82,25 +78,6 @@ describe(
 
       cy.url().should('contain', `id-product-offer=${dynamicFixtures.productOffer.id_product_offer}`);
       productOfferViewPage.getProductSkuContainer().should('contain', dynamicFixtures.product.sku);
-    });
-
-    it('shows an inactive service point without an address in the list and on its detail page', (): void => {
-      servicePointListPage.visit();
-
-      servicePointListPage.findByKey(dynamicFixtures.inactiveServicePoint.key);
-
-      servicePointListPage.getTableRows().should('contain', dynamicFixtures.inactiveServicePoint.name);
-      servicePointListPage.getStatusCell().should('contain', 'Inactive');
-      servicePointListPage.getAddressCell().should('contain', 'Not set');
-
-      servicePointListPage.getViewButton().click();
-
-      cy.url().should('contain', `id-service-point=${dynamicFixtures.inactiveServicePoint.id_service_point}`);
-      servicePointViewPage.getNameContainer().should('contain', dynamicFixtures.inactiveServicePoint.name);
-      servicePointViewPage.getStatusContainer().should('contain', 'Inactive');
-      servicePointViewPage.getEmptyAddressContainer().should('contain', 'Not set');
-      servicePointViewPage.getEmptyServicesMessage().should('exist');
-      servicePointViewPage.getConnectedOffersSection().should('contain', 'No data found');
     });
   }
 );

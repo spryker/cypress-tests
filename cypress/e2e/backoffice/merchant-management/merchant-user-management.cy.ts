@@ -51,7 +51,7 @@ describe(
 
       // Assert
       // A merchant user starts deactivated, so activating it is the first thing the back office does.
-      merchantUpdatePage.findMerchantUserRow({ email: merchantUser.username }).should('contain.text', DEACTIVATED);
+      merchantUpdatePage.findMerchantUserRow({ email: merchantUser.username }).should('contain.text', INACTIVE);
 
       merchantUpdatePage.updateMerchantUser({ email: merchantUser.username, action: ActionEnum.activate });
       merchantUpdatePage.visitUsersTab(dynamicFixtures.merchant.id_merchant);
@@ -71,7 +71,7 @@ describe(
 
       // Assert
       merchantUpdatePage.visitUsersTab(dynamicFixtures.merchant.id_merchant);
-      merchantUpdatePage.findMerchantUserRow({ email: merchantUser.username }).should('contain.text', DEACTIVATED);
+      merchantUpdatePage.findMerchantUserRow({ email: merchantUser.username }).should('contain.text', INACTIVE);
 
       // Act
       merchantUpdatePage.updateMerchantUser({ email: merchantUser.username, action: ActionEnum.delete });
@@ -83,6 +83,6 @@ describe(
   }
 );
 
-const DEACTIVATED = 'Deactivated';
+const INACTIVE = 'Inactive';
 const ACTIVE = 'Active';
 const MERCHANT_USER_DELETED = 'Merchant user was deleted successfully.';

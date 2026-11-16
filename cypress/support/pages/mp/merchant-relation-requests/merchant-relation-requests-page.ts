@@ -59,16 +59,24 @@ export class MerchantRelationRequestsPage extends MpPage {
   };
 
   uncheckBusinessUnits = (params: UncheckBusinessUnitsParams): void => {
-    this.getDrawer()
-      .find(this.repository.getBusinessUnitsCheckboxSelector())
-      .each(($businessUnitCheckbox) => {
-        const checkboxSelector = this.repository.getBusinessUnitCheckboxSelector();
-        const idBusinessUnit = $businessUnitCheckbox.find(checkboxSelector).last().attr('value') ?? '';
+    params.businessUnitIds.forEach((idBusinessUnit) => {
+      const submittedCheckboxSelector = this.repository.getSubmittedBusinessUnitCheckboxSelector(idBusinessUnit);
+      const getVisibleCheckbox = (): Cypress.Chainable =>
+        this.getDrawer()
+          .find(submittedCheckboxSelector)
+          .closest(this.repository.getBusinessUnitsCheckboxSelector())
+          .find(this.repository.getBusinessUnitCheckboxSelector())
+          .first();
 
-        if (params.businessUnitIds.includes(parseInt(idBusinessUnit))) {
-          cy.wrap($businessUnitCheckbox.find(checkboxSelector).first()).uncheck();
-        }
-      });
+      // spy-checkbox gets its initial checked state from ngModel after the first render, the visible box later than
+      // the submitted one. An uncheck before that does nothing, and the decision is submitted with this business unit.
+      this.getDrawer().find(submittedCheckboxSelector).should('be.checked');
+      getVisibleCheckbox().should('be.checked');
+
+      getVisibleCheckbox().uncheck();
+
+      this.getDrawer().find(submittedCheckboxSelector).should('not.be.checked');
+    });
   };
 
   getMessageFromCompanyValue = (): Cypress.Chainable => {

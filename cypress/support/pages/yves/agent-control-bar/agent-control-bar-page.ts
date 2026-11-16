@@ -31,6 +31,7 @@ export class AgentControlBarPage extends YvesPage {
   };
 
   endAssistance = (): void => {
+    this.dismissFlashMessages();
     this.repository.getEndAssistanceLink().click();
   };
 

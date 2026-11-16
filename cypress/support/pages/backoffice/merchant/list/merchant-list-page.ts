@@ -10,11 +10,17 @@ export class MerchantListPage extends BackofficePage {
 
   protected PAGE_URL = '/merchant-gui/list-merchant';
 
+  visit = (options?: Partial<Cypress.VisitOptions>): void => {
+    const tableLoadAlias = this.faker.string.uuid();
+    cy.intercept('GET', MERCHANT_TABLE_URL).as(tableLoadAlias);
+
+    cy.visitBackoffice(this.PAGE_URL, options);
+
+    cy.wait(`@${tableLoadAlias}`);
+  };
+
   update = (params: UpdateParams): void => {
-    this.find({
-      interceptTableUrl: `**/merchant-gui/list-merchant/table**`,
-      searchQuery: params.query,
-    }).then((getRow) => {
+    this.find(this.createFindParams(params.query)).then((getRow) => {
       if (!getRow) {
         return;
       }
@@ -40,11 +46,17 @@ export class MerchantListPage extends BackofficePage {
   };
 
   findRow = (params: FindRowParams): Cypress.Chainable => {
-    return this.find({
-      interceptTableUrl: `**/merchant-gui/list-merchant/table**`,
-      searchQuery: params.query,
-    }).then((getRow) => (getRow ? getRow() : cy.wrap(null)));
+    return this.find(this.createFindParams(params.query)).then((getRow) => (getRow ? getRow() : cy.wrap(null)));
   };
+
+  // The table redraws after the search response arrives, so the first visible row can still be a merchant of the
+  // unfiltered list. The row count and the name filter make the row getter wait for the searched merchant.
+  private createFindParams = (query: string): Parameters<BackofficePage['find']>[0] => ({
+    interceptTableUrl: MERCHANT_TABLE_URL,
+    searchQuery: query,
+    expectedCount: 1,
+    rowFilter: [($row: JQuery<HTMLElement>): boolean => $row.text().includes(query)],
+  });
 
   // Every status form saves the whole merchant as it read it, so a form posted before the previous one is
   // saved writes the previous change back; each post is therefore awaited.
@@ -69,6 +81,8 @@ export class MerchantListPage extends BackofficePage {
     return params.row.find(this.repository.getStoreCellSelector()).text().includes(params.storeName);
   };
 }
+
+const MERCHANT_TABLE_URL = '**/merchant-gui/list-merchant/table**';
 
 interface UpdateParams {
   action: ActionEnum;

@@ -42,4 +42,14 @@ export class YvesPage extends AbstractPage {
   clearSessionCookie = (): void => {
     cy.clearCookie(Cypress.env('yvesSessionCookieName'));
   };
+
+  protected dismissFlashMessages = (): void => {
+    const flashMessageSelector = this.yvesRepository.getFlashMessageSelector();
+
+    cy.get('body').then(($body) => {
+      if ($body.find(flashMessageSelector).length) {
+        cy.get(flashMessageSelector).click({ multiple: true });
+      }
+    });
+  };
 }

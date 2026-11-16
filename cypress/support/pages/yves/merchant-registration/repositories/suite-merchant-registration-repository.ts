@@ -35,10 +35,10 @@ export class SuiteMerchantRegistrationRepository implements MerchantRegistration
   getSubmitButton = (): Cypress.Chainable => cy.get('button.button--wider');
 
   selectCountry(country: string): void {
-    cy.get('select[name="MerchantRegistrationRequestForm[iso2_code]"]').select(country);
+    cy.get('select[name="MerchantRegistrationRequestForm[iso2_code]"]').select(country, { force: true });
   }
 
   selectTitle(title: string): void {
-    cy.get('select[name="MerchantRegistrationRequestForm[contact_person_title]"]').select(title);
+    cy.get('select[name="MerchantRegistrationRequestForm[contact_person_title]"]').select(title, { force: true });
   }
 }

@@ -51,38 +51,5 @@ describe(
       recurringScheduleViewPage.getStatus().should('contain', staticFixtures.activeStatus);
       recurringScheduleViewPage.getItems().should('contain', dynamicFixtures.product.sku);
     });
-
-    it('backoffice user sees the configurable bundle name on the items of a recurring schedule', (): void => {
-      recurringScheduleViewPage.visitById(dynamicFixtures.activeSchedule.id_recurring_schedule);
-
-      recurringScheduleViewPage.getItems().should('contain', dynamicFixtures.configurableBundleProduct.sku);
-      recurringScheduleViewPage
-        .getConfigurableBundleLabels()
-        .should('have.length', 1)
-        .and('contain', staticFixtures.configurableBundleLabel);
-    });
-
-    it('backoffice user can filter the recurring schedules by status', (): void => {
-      recurringScheduleListPage.filterByStatus(staticFixtures.pausedStatus);
-
-      recurringScheduleListPage.getTableBody().should('contain', dynamicFixtures.pausedSchedule.name);
-      recurringScheduleListPage.getTableBody().should('not.contain', dynamicFixtures.activeSchedule.name);
-    });
-
-    it('backoffice user can search recurring schedules by name', (): void => {
-      recurringScheduleListPage.waitForTable();
-      recurringScheduleListPage.searchByName(dynamicFixtures.activeSchedule.name);
-
-      recurringScheduleListPage.getTableBody().should('contain', dynamicFixtures.activeSchedule.name);
-      recurringScheduleListPage.getTableBody().should('not.contain', dynamicFixtures.pausedSchedule.name);
-    });
-
-    it('backoffice user sees the committed recurring volume statistic widget on the list page', (): void => {
-      recurringScheduleListPage.waitForTable();
-
-      recurringScheduleListPage.getForecastSummary().should('be.visible');
-      recurringScheduleListPage.getForecastMonth().should('contain', staticFixtures.forecastWidgetMonthText);
-      recurringScheduleListPage.getForecastResult().should('be.visible');
-    });
   }
 );

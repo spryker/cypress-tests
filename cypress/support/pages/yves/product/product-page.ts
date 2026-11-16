@@ -38,7 +38,13 @@ export class ProductPage extends YvesPage {
     this.repository.getSoldByProductOfferRadios().then(($radios) => {
       const targetRadio = $radios.filter(`[value="${params.productOfferReference}"]`);
       if (targetRadio.length) {
+        if (targetRadio.is(':checked')) {
+          return;
+        }
+
         cy.wrap(targetRadio).check(params.productOfferReference, { force: true });
+        // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Page-navigation guard: checking an offer reloads the page with the offer in the query string.
+        cy.location('search').should('include', params.productOfferReference);
       } else {
         cy.url().then((currentUrl) => {
           cy.log('Fallback redirect to the product offer page');

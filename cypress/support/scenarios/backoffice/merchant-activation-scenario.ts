@@ -10,6 +10,7 @@ export class MerchantActivationScenario {
   execute = (params: ExecuteParams): void => {
     this.merchantListPage.visit();
     this.merchantListPage.update({ query: params.companyName, action: ActionEnum.activate });
+    this.merchantListPage.update({ query: params.companyName, action: ActionEnum.approveAccess });
   };
 }
 

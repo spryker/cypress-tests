@@ -1,4 +1,5 @@
 {
   "defaultPassword": "change123",
-  "accessDeniedUrlPart": "/acl/index/denied"
+  "accessDeniedUrlPart": "/acl/index/denied",
+  "menuFilterTerm": "Cat"
 }

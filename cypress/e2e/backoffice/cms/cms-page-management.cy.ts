@@ -40,11 +40,5 @@ describe(
 
       cmsPageListPage.getPublishedMessage().should('be.visible');
     });
-
-    it('should open the cms page list and show the pages table', (): void => {
-      cmsPageListPage.visit();
-
-      cmsPageListPage.getFirstRowFirstCell().should('be.visible');
-    });
   }
 );

@@ -9,7 +9,7 @@ export class CmsPlaceholderEditRepository {
   getTabLink = (hrefFragment: string): Cypress.Chainable => cy.get(`a[href*="${hrefFragment}"]`);
   getAllIboxesSelector = (): string => '.placeholder-translation-container > .ibox.nested';
   getAllCollapsedIboxButtonsSelector = (): string => '.placeholder-translation-container >  .collapsed .collapse-link';
-  getLocalizedTextareaSelector = (): string => '.note-editor .note-editable';
+  getLocalizedTextareaSelector = (): string => '[data-qa="wysiwyg-content"]';
   getPublishPageButton = (): Cypress.Chainable => cy.get('[name="publish_version_page_form"]').find('.safe-submit');
   getUpdatePlaceholderButton = (): Cypress.Chainable => cy.get('form[name=cms_glossary]').find('[type="submit"]');
 }

@@ -1,8 +1,0 @@
-{
-  "defaultPassword": "change123",
-  "newBudgetName": "Q1 Budget",
-  "budgetAmount": "100000",
-  "budgetCurrency": "EUR",
-  "budgetEnforcementRule": "block",
-  "updatedBudgetName": "Updated Budget Name"
-}

@@ -73,16 +73,25 @@ export class AgentDashboardPage extends MpPage {
 
   find = (params: FindParams): Cypress.Chainable => {
     const searchSelector = this.repository.getSearchSelector();
-    cy.get(searchSelector).clear();
-    cy.get(searchSelector).type(params.query, { delay: 0 });
-    cy.get(searchSelector).type('{enter}');
 
-    this.interceptTable({
-      url: '/agent-dashboard-merchant-portal-gui/merchant-users/table-data**',
-      expectedCount: params.expectedCount,
+    this.interceptTable(
+      {
+        url: '/agent-dashboard-merchant-portal-gui/merchant-users/table-data**',
+        expectedCount: params.expectedCount,
+      },
+      () => {
+        cy.get(searchSelector).clear();
+        cy.get(searchSelector).type(params.query, { delay: 0 });
+        cy.get(searchSelector).type('{enter}');
+      }
+    );
+
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Render guard: a row of the previous table result is destroyed when the search result is drawn.
+    this.repository.getTableRows().should(($rows: JQuery<HTMLElement>) => {
+      expect($rows.toArray().every((row: HTMLElement): boolean => row.innerText.includes(params.query))).to.equal(true);
     });
 
-    return this.repository.getFirstTableRow();
+    return this.repository.getTableRowContaining(params.query);
   };
 
   getDashboardSidebarSelector = (): Cypress.Chainable => {

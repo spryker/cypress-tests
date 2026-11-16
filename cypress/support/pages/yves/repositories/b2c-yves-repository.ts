@@ -11,4 +11,5 @@ export class B2cYvesRepository implements YvesRepository {
   getLocaleOptionsSelector = (): string => `[data-qa="language-selector"] option`;
   getLocaleAttributeName = (): string => 'data-locale';
   getLastVisitedPageCookieName = (): string => '';
+  getFlashMessageSelector = (): string => '[data-qa="component notification-area"] flash-message';
 }
