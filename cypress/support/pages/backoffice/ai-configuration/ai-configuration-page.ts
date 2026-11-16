@@ -63,6 +63,9 @@ export class AiConfigurationPage extends BackofficePage {
   setSettingInputValue = (settingKey: string, value: string): Cypress.Chainable =>
     this.getSettingInput(settingKey).clear().type(value).blur();
 
+  selectSettingOption = (settingKey: string, value: string): Cypress.Chainable =>
+    this.getSettingInput(settingKey).select(value);
+
   saveConfiguration = (): void => {
     cy.intercept('POST', '**/configuration/manage/save').as('saveConfiguration');
     this.getSaveButton().click();
