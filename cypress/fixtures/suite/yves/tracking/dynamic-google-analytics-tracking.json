@@ -151,7 +151,7 @@
               "id_locale": "#locale.id_locale",
               "locale_name": "#locale.locale_name"
             },
-            "attributes": [],
+            "attributes": { "brand": "Tracked brand" },
             "is_searchable": true
           }
         },
@@ -184,7 +184,7 @@
                     "id_locale": "#locale.id_locale",
                     "locale_name": "#locale.locale_name"
                   },
-                  "attributes": [],
+                  "attributes": { "brand": "Tracked brand" },
                   "is_searchable": true
                 }
               ]
@@ -213,6 +213,68 @@
           "name": "haveProductInStockForStore",
           "key": "productWithPriceAndStore",
           "arguments": ["#store", { "sku": "#product.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "measurementUnitProduct",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                {
+                  "name": "Tracked measurement unit product",
+                  "locale": {
+                    "id_locale": "#locale.id_locale",
+                    "locale_name": "#locale.locale_name"
+                  },
+                  "attributes": [],
+                  "is_searchable": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#measurementUnitProduct.abstract_sku",
+              "skuProduct": "#measurementUnitProduct.sku",
+              "moneyValue": { "netAmount": 100, "grossAmount": 100 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductInStockForStore",
+          "arguments": ["#store", { "sku": "#measurementUnitProduct.sku", "isNeverOutOfStock": "1" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductMeasurementBaseUnit",
+          "key": "measurementUnitProductBaseUnit",
+          "arguments": ["#measurementUnitProduct.fk_product_abstract", 14]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductMeasurementSalesUnit",
+          "arguments": [
+            "#measurementUnitProduct.id_product_concrete",
+            13,
+            "#measurementUnitProductBaseUnit.id_product_measurement_base_unit",
+            { "conversion": 100, "precision": 100, "isDefault": true, "isDisplayed": true }
+          ]
+        },
+        {
+          "type": "cli-command",
+          "name": "console publish:trigger-events -r product_concrete_measurement_unit"
+        },
+        {
+          "type": "cli-command",
+          "name": "console queue:worker:start --stop-when-empty"
         },
         {
           "type": "helper",

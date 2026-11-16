@@ -27,26 +27,49 @@
     "products": [
       {
         "abstractSku": "111",
-        "abstractName": "Sony SmartWatch"
+        "abstractName": "Sony SmartWatch",
+        "brand": "Sony"
       },
       {
         "abstractSku": "080",
-        "abstractName": "Sony Xperia Z3"
+        "abstractName": "Sony Xperia Z3",
+        "brand": "Sony"
       },
       {
         "abstractSku": "183",
-        "abstractName": "Sony Xperia SGP512E1"
+        "abstractName": "Sony Xperia SGP512E1",
+        "brand": "Sony"
       }
     ]
   },
   "catalogProduct": {
     "sku": "150_29554292",
     "abstractSku": "150",
-    "abstractName": "HP Chromebook 11"
+    "abstractName": "HP Chromebook 11",
+    "brand": "HP"
   },
   "wishlistProduct": {
     "sku": "111_12295890",
     "abstractSku": "111",
-    "abstractName": "Sony SmartWatch"
+    "abstractName": "Sony SmartWatch",
+    "brand": "Sony"
+  },
+  "variantProduct": {
+    "url": "/en/samsung-galaxy-s6-edge-51",
+    "abstractSku": "051",
+    "concreteSku": "051_30107816",
+    "abstractName": "Samsung Galaxy S6 edge",
+    "brand": "Samsung",
+    "variantAttributeKey": "storage_capacity",
+    "variantAttributeValue": "64 GB"
+  },
+  "searchResultProduct": {
+    "abstractSku": "002",
+    "concreteSku": "002_25904004",
+    "brand": "Canon"
+  },
+  "measurementUnitAdd": {
+    "quantity": 0.25,
+    "trackedQuantity": 1
   }
 }

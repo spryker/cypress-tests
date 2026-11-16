@@ -32,6 +32,11 @@ const GOOGLE_ANALYTICS_HIT_TIMEOUT = 30000;
 // Opening the shopping list loads a full page, which a busy environment takes longer than the default command timeout for.
 const SHOPPING_LIST_PAGE_TIMEOUT = 30000;
 const CART_LINES_TIMEOUT = 30000;
+const VARIANT_PAGE_TIMEOUT = 10000;
+// A reorder test checks out right after the cart page opens: the session lock queues every checkout step behind the cart
+// page's own requests, which can outlast the default command timeout.
+const CHECKOUT_COMMAND_TIMEOUT = 30000;
+const ORDER_DETAILS_PATH = '/customer/order/details';
 const ADD_TO_CART_EVENT = 'add_to_cart';
 const REMOVE_FROM_CART_EVENT = 'remove_from_cart';
 
@@ -324,6 +329,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
 
   it(
     'customer reordering selected items of an order should be tracked with add_to_cart',
+    { defaultCommandTimeout: CHECKOUT_COMMAND_TIMEOUT },
     (): void => {
       openDetailsOfPlacedOrder();
       const traffic = trackingPage.recordGoogleAnalyticsTraffic();
@@ -341,6 +347,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
 
   it(
     'customer reordering all items of an order should be tracked with add_to_cart',
+    { defaultCommandTimeout: CHECKOUT_COMMAND_TIMEOUT },
     (): void => {
       openDetailsOfPlacedOrder();
       const traffic = trackingPage.recordGoogleAnalyticsTraffic();
@@ -357,22 +364,121 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
   );
 
   // The price is not checked: the quote request sends it only to a company user allowed to see prices.
-  it('company user converting a quote request to the cart should be tracked with add_to_cart', (): void => {
-    openQuoteRequestSentBackByAgent();
+  // Creating, revising and sending back the quote request each take a slow server round trip.
+  it(
+    'company user converting a quote request to the cart should be tracked with add_to_cart',
+    { defaultCommandTimeout: CHECKOUT_COMMAND_TIMEOUT },
+    (): void => {
+      openQuoteRequestSentBackByAgent();
+      const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+      cy.then((): void => quoteRequestPage.convertToCart(quoteRequestReference));
+
+      cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+        const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
+
+        expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
+        expect(events[0].items, events[0].name).to.have.length(1);
+
+        const item = events[0].items[0];
+
+        expect(item.id, events[0].name).to.equal(dynamicFixtures.product.abstract_sku);
+        expect(item.name, events[0].name).to.equal(dynamicFixtures.abstractLocalizedAttributes.name);
+        expectFixtureProductDetails(item, events[0].name);
+      });
+    }
+  );
+
+  it('customer adding a variant on the product page should be tracked with its item details', (): void => {
     const traffic = trackingPage.recordGoogleAnalyticsTraffic();
 
-    cy.then((): void => quoteRequestPage.convertToCart(quoteRequestReference));
+    addVariantOnProductPage();
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
+
+      expect(events).to.have.length(1);
+      expectVariantProductItem(events[0]);
+    });
+  });
+
+  it('customer changing the quantity of a variant in the cart should be tracked with the item details of the product page', (): void => {
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    addVariantOnProductPage();
+    cartPage.visit();
+    cartPage.changeQuantity({ sku: staticFixtures.variantProduct.concreteSku, quantity: 2 });
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      // The first one is the add on the product page, the second one the cart line.
+      const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
+
+      expect(events).to.have.length(2);
+      expectVariantProductItem(events[1]);
+      expect(events[1].items[0].categories, 'cart line categories').to.deep.equal(events[0].items[0].categories);
+    });
+  });
+
+  // The order item keeps the selected variant attributes, so the reorder reports the variant the customer ordered.
+  it(
+    'customer reordering a variant should be tracked with the item details of the ordered variant',
+    { defaultCommandTimeout: CHECKOUT_COMMAND_TIMEOUT },
+    (): void => {
+      openDetailsOfPlacedOrder(addVariantOnProductPage);
+      const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+      orderDetailsPage.reorderAll();
+
+      cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+        const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
+
+        expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
+        expectVariantProductItem(events[0]);
+      });
+    }
+  );
+
+  it('customer adding a product from a search result card should be tracked with its brand and categories', (): void => {
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    catalogPage.visit();
+    catalogPage.searchForProducts({ query: staticFixtures.searchResultProduct.concreteSku });
+    trackingPage.waitForGoogleAnalyticsToLoad();
+    catalogPage.quickAddFirstProductItemToCart();
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
+
+      expect(events).to.have.length(1);
+      expect(events[0].items).to.have.length(1);
+
+      const item = events[0].items[0];
+
+      expect(item.id).to.equal(staticFixtures.searchResultProduct.abstractSku);
+      expect(item.categories).to.not.be.empty;
+      // The search result data of a card has no product attributes: the product tracking details of the page add the brand.
+      expect(item.brand).to.equal(staticFixtures.searchResultProduct.brand);
+    });
+  });
+
+  // GA4 counts whole pieces: the quantity the customer enters in the sales unit, here a fraction of one, is rounded and
+  // stays at least 1.
+  it('customer adding a measurement unit product in a fraction of its sales unit should be tracked with a whole quantity', (): void => {
+    const { quantity, trackedQuantity } = staticFixtures.measurementUnitAdd;
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    // The product has one sales unit, meter, so the page offers no choice of unit.
+    openProductPage(dynamicFixtures.measurementUnitProduct.sku);
+    productPage.setSalesUnitQuantity({ quantity });
+    addProductToCart();
 
     cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
       const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
 
       expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
-      expectEventsReportAbstractProducts(events, [
-        {
-          abstractSku: dynamicFixtures.product.abstract_sku,
-          abstractName: dynamicFixtures.abstractLocalizedAttributes.name,
-        },
-      ]);
+      expect(events[0].items).to.have.length(1);
+      expect(events[0].items[0].id).to.equal(dynamicFixtures.measurementUnitProduct.abstract_sku);
+      expect(Number(events[0].items[0].quantity)).to.equal(trackedQuantity);
     });
   });
 
@@ -465,6 +571,42 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     return `recorded events: ${eventNames.join(', ') || 'none'}`;
   }
 
+  function addVariantOnProductPage(): void {
+    const { url, variantAttributeKey, variantAttributeValue } = staticFixtures.variantProduct;
+
+    productPage.visitProductDetailPage({ url });
+    trackingPage.waitForGoogleAnalyticsToLoad();
+    productPage.selectVariantAttribute({ attributeKey: variantAttributeKey, attributeValue: variantAttributeValue });
+    // The select submits its form to the same page with the attribute in the query; rendering the variant's page can
+    // outlast the default command timeout, and the address only changes once its response arrives.
+    cy.location('search', { timeout: VARIANT_PAGE_TIMEOUT }).should((search: string): void => {
+      expect(decodeURIComponent(search)).to.include(`attribute[${variantAttributeKey}]=`);
+    });
+    productPage.getSelectedVariantAttributeValue(variantAttributeKey).should('eq', variantAttributeValue);
+    addProductToCart();
+  }
+
+  function addFixtureProductOnProductPage(): void {
+    openProductPage();
+    addProductToCart();
+  }
+
+  // A variant is reported by its abstract product: its name and brand, the selected values and the category path.
+  function expectVariantProductItem(event: GoogleAnalyticsEvent): void {
+    const variantProduct = staticFixtures.variantProduct;
+
+    expect(event.items, event.name).to.have.length(1);
+
+    const item = event.items[0];
+
+    expect(item.id, event.name).to.equal(variantProduct.abstractSku);
+    expect(item.name, event.name).to.equal(variantProduct.abstractName);
+    expect(item.brand, event.name).to.equal(variantProduct.brand);
+    expect(item.variant, event.name).to.equal(variantProduct.variantAttributeValue);
+    expect(item.categories, event.name).to.not.be.empty;
+    expect(item.customParameters[staticFixtures.concreteSkuParameter], event.name).to.equal(variantProduct.concreteSku);
+  }
+
   function getEvents(traffic: GoogleAnalyticsTraffic, eventName: string): GoogleAnalyticsEvent[] {
     return traffic.events.filter((event: GoogleAnalyticsEvent): boolean => event.name === eventName);
   }
@@ -505,16 +647,18 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     bundleConfiguratorPage.goToSummary();
   }
 
-  // An order of the fixture product, placed by a customer with an address, opened with Google Analytics loaded.
-  function openDetailsOfPlacedOrder(): void {
+  // An order of the product the given step adds, the fixture product by default, placed by a customer with an address and
+  // opened with Google Analytics loaded.
+  function openDetailsOfPlacedOrder(addOrderedProduct: () => void = addFixtureProductOnProductPage): void {
     loginAsCustomerWithEmptyCart(dynamicFixtures.reorderCustomer.email);
-    openProductPage();
-    addProductToCart();
+    addOrderedProduct();
     checkoutScenario.execute({
       idCustomerAddress: dynamicFixtures.reorderCustomer.addresses.addresses[0].id_customer_address,
       paymentMethod: getPaymentMethodBasedOnEnv(),
     });
     customerOverviewPage.viewLastPlacedOrder();
+    // The overview has loaded Google Analytics as well, so the order page is waited for before its own load is.
+    cy.location('pathname', { timeout: CART_LINES_TIMEOUT }).should('include', ORDER_DETAILS_PATH);
     trackingPage.waitForGoogleAnalyticsToLoad();
   }
 
@@ -569,7 +713,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     companyUserSelectPage.selectBusinessUnit({ idCompanyUser: dynamicFixtures.companyUser.id_company_user });
   }
 
-  // The product is reported by its abstract SKU and abstract name, with the concrete SKU as a custom item parameter; no brand, variant or category is sent.
+  // The product is reported by its abstract SKU, abstract name and brand, with the concrete SKU as a custom item parameter.
   function expectProductEvent(event: GoogleAnalyticsEvent, quantity: number): void {
     const productPrice = Number(staticFixtures.productPrice);
 
@@ -583,7 +727,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     // The concrete product has a name of its own, so this also shows the concrete name is not sent.
     expect(item.name, event.name).to.equal(dynamicFixtures.abstractLocalizedAttributes.name);
     expect(item.name, event.name).to.not.equal(dynamicFixtures.concreteLocalizedAttributes.name);
-    expectNoProductDetails(item, event.name);
+    expectFixtureProductDetails(item, event.name);
     expect(Number(item.price), event.name).to.equal(productPrice);
     expect(Number(item.quantity), event.name).to.equal(quantity);
     expect(item.customParameters[staticFixtures.concreteSkuParameter], event.name).to.equal(
@@ -591,8 +735,8 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     );
   }
 
-  // A list adds several products at once: each one is reported by its abstract SKU and abstract name, in whichever of
-  // the events its item is.
+  // A list adds several products at once: each one is reported by its abstract SKU, abstract name, brand and category
+  // path, in whichever of the events its item is.
   function expectEventsReportAbstractProducts(
     events: GoogleAnalyticsEvent[],
     products: TrackedAbstractProduct[]
@@ -606,15 +750,26 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
 
       expect(item, product.abstractSku).to.not.equal(undefined);
       expect(item?.name, product.abstractSku).to.equal(product.abstractName);
-      expectNoProductDetails(item as GoogleAnalyticsItem, product.abstractSku);
+      expectDemoProductDetails(item as GoogleAnalyticsItem, product);
     });
   }
 
-  // The cart events of this feature report neither the brand, nor the variant, nor the category path of a product.
-  function expectNoProductDetails(item: GoogleAnalyticsItem, message: string): void {
-    expect(item.brand, message).to.be.empty;
+  // The fixture product has a brand, but a single concrete product and no category, so it has no variant or category path to report.
+  function expectFixtureProductDetails(item: GoogleAnalyticsItem, message: string): void {
+    expect(item.brand, message).to.equal(dynamicFixtures.abstractLocalizedAttributes.attributes.brand);
     expect(item.variant, message).to.be.empty;
     expect(item.categories, message).to.be.empty;
+  }
+
+  // Every demo data product the tests add has a brand and is in a category.
+  function expectDemoProductDetails(item: GoogleAnalyticsItem, product: TrackedAbstractProduct): void {
+    if (product.brand === undefined) {
+      expect(item.brand, product.abstractSku).to.not.be.empty;
+    } else {
+      expect(item.brand, product.abstractSku).to.equal(product.brand);
+    }
+
+    expect(item.categories, product.abstractSku).to.not.be.empty;
   }
 
   function loginToBackoffice(): void {

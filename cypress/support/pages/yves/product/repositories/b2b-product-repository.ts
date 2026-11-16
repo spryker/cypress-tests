@@ -42,6 +42,7 @@ export class B2bProductRepository implements ProductRepository {
   getAttachmentsList = (): Cypress.Chainable => cy.get(this.getAttachmentsListSelector());
   getAttachmentItems = (): Cypress.Chainable =>
     cy.get('[data-qa="component product-detail"] [data-qa="attachment-item"]');
+  getFormSubmitter = (): Cypress.Chainable => cy.get('[data-qa="component form-submitter"]');
   getVariantAttributeSelect = (attributeKey: string): Cypress.Chainable =>
     cy.get(`select[name="attribute[${attributeKey}]"]`);
   getVariantAttributeOptions = (attributeKey: string): Cypress.Chainable =>
@@ -105,6 +106,12 @@ export class B2bProductRepository implements ProductRepository {
 
   getMeasurementUnitChoice = (): Cypress.Chainable =>
     cy.get('.js-packaging-unit-quantity-selector__measurement-unit-choice');
+
+  // The quantity in the selected sales unit of a measurement unit product, which may be a fraction, e.g. 0.25 m.
+  setSalesUnitQuantity = (quantity: number): void => {
+    cy.get('.js-packaging-unit-quantity-selector__formatted-sales-unit-quantity input').first().clear();
+    cy.get('.js-packaging-unit-quantity-selector__formatted-sales-unit-quantity input').first().type(String(quantity));
+  };
 
   setAmount = (amount: number): void => {
     cy.get('.js-packaging-unit-quantity-selector__formatted-user-amount input').first().clear();

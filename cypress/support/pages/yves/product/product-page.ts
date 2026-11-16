@@ -175,7 +175,12 @@ export class ProductPage extends YvesPage {
 
   // The B2B and B2C themes dress the select up with select2, which covers the native one; the form submitter
   // still listens to the native select's change event.
+  // The form submitter adds that listener in its init(), once the page's scripts have run, so a change before that only
+  // changes the value and the form is never submitted. isMounted is what the component sets once the listener is on.
   selectVariantAttribute = (params: SelectVariantAttributeParams): void => {
+    this.repository.getFormSubmitter().should(($formSubmitter: JQuery<HTMLElement>): void => {
+      expect($formSubmitter[0]).to.have.property('isMounted', true);
+    });
     this.repository.getVariantAttributeSelect(params.attributeKey).select(params.attributeValue, { force: true });
   };
 
@@ -210,6 +215,10 @@ export class ProductPage extends YvesPage {
   };
 
   getMeasurementUnitChoice = (): Cypress.Chainable => this.repository.getMeasurementUnitChoice();
+
+  setSalesUnitQuantity = (params: SetQuantityParams): void => {
+    this.repository.setSalesUnitQuantity(params.quantity);
+  };
 
   setAmount = (params: SetAmountParams): void => {
     this.repository.setAmount(params.amount);

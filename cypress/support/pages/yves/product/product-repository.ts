@@ -31,6 +31,8 @@ export interface ProductRepository {
   getAttachmentsListSelector(): string;
   getAttachmentsList(): Cypress.Chainable;
   getAttachmentItems(): Cypress.Chainable;
+  // The page's one form submitter: it submits the form of every select marked data-form-submitter, the variant selects among them.
+  getFormSubmitter(): Cypress.Chainable;
   getVariantAttributeSelect(attributeKey: string): Cypress.Chainable;
   getVariantAttributeOptions(attributeKey: string): Cypress.Chainable;
   getSelectedVariantAttributeInput(attributeKey: string): Cypress.Chainable;
@@ -61,6 +63,7 @@ export interface ProductRepository {
 
   // A packaging unit is ordered by amount rather than by quantity, and it has its own choice block
   // for the min / max / interval rules that amount has to satisfy.
+  setSalesUnitQuantity(quantity: number): void;
   setAmount(amount: number): void;
   getPackagingUnitChoice(): Cypress.Chainable;
 

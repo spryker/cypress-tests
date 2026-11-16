@@ -24,12 +24,27 @@ export interface GoogleAnalyticsTrackingStaticFixtures {
   // Demo data products with images that the catalog search finds by their SKU.
   catalogProduct: TrackedAbstractProduct & { sku: string };
   wishlistProduct: TrackedAbstractProduct & { sku: string };
+  variantProduct: {
+    url: string;
+    abstractSku: string;
+    concreteSku: string;
+    abstractName: string;
+    brand: string;
+    variantAttributeKey: string;
+    variantAttributeValue: string;
+  };
+  searchResultProduct: { abstractSku: string; concreteSku: string; brand: string };
+  // A quantity in a sales unit that is a fraction of a piece but whole base units, e.g. 0.25 m of a product counted in cm,
+  // and the whole quantity GA4 gets for it.
+  measurementUnitAdd: { quantity: number; trackedQuantity: number };
 }
 
-// A demo data product whose events report its abstract SKU and abstract name.
+// A demo data product whose events report its abstract SKU, abstract name, brand and category path.
 export interface TrackedAbstractProduct {
   abstractSku: string;
   abstractName: string;
+  // Unknown for a product the test reads from the page, e.g. a configured bundle slot candidate: any brand is accepted then.
+  brand?: string;
 }
 
 export interface GoogleAnalyticsTrackingDynamicFixtures {
@@ -45,6 +60,9 @@ export interface GoogleAnalyticsTrackingDynamicFixtures {
   // A shopping list of the company user holding the fixture product.
   shoppingList: { name: string };
   product: { sku: string; abstract_sku: string };
-  abstractLocalizedAttributes: { name: string };
+  // Counted in centimeters and sold in meters.
+  measurementUnitProduct: { sku: string; abstract_sku: string };
+  // The brand is a localized attribute of the abstract product; the fixture product has no category and no variant.
+  abstractLocalizedAttributes: { name: string; attributes: { brand: string } };
   concreteLocalizedAttributes: { name: string };
 }
