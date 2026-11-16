@@ -551,6 +551,15 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     cy.wait('@cartLines', { requestTimeout: CART_LINES_TIMEOUT, responseTimeout: CART_LINES_TIMEOUT });
   }
 
+  // Adding redirects to the cart. A page visited before the cart has loaded runs beside that cart request, which then saves
+  // the session it read before the visit and drops what the visit stored, e.g. the CSRF token of a form; where the
+  // environment does not lock the session for every URL, the form is then rejected.
+  function addProductToCartAndWaitForCartLines(): void {
+    cy.intercept('**/cart/get-cart-items*').as('cartLines');
+    addProductToCart();
+    cy.wait('@cartLines', { requestTimeout: CART_LINES_TIMEOUT, responseTimeout: CART_LINES_TIMEOUT });
+  }
+
   // The next page visit would cancel the request that adds the product, so it waits for the request to finish.
   function addProductToCart(): void {
     cy.intercept('POST', '**/cart/add/**').as('cartAdd');
@@ -667,7 +676,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
   function openQuoteRequestSentBackByAgent(): void {
     loginAsCompanyUserWithEmptyCart();
     openProductPage();
-    addProductToCart();
+    addProductToCartAndWaitForCartLines();
     quoteRequestPage.createFromCart();
     quoteRequestPage.getReference().then((reference: string): void => {
       quoteRequestReference = reference;
