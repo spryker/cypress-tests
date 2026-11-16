@@ -21,7 +21,7 @@ describe(
     const AWS_OPTION = 'AI_COMMERCE:AI_CONFIGURATION_BACKOFFICE_ASSISTANT_AWS';
 
     const OPENAI_MODEL_DEFAULT = 'gpt-6-luna';
-    const OPENAI_MODEL_UPDATED = 'gpt-4.1-mini';
+    const OPENAI_MODEL_UPDATED = 'gpt-6.1-terra';
     const AWS_MODEL_DEFAULT = 'eu.anthropic.claude-haiku-5-5';
     const AWS_REGION_DEFAULT = 'eu-central-1';
 
@@ -228,7 +228,7 @@ describe(
         aiConfigurationPage.visitTab('ai_commerce', 'backoffice_assistant');
         aiConfigurationPage.getSaveBar().should('have.css', 'display', 'none');
 
-        aiConfigurationPage.setSettingInputValue(OPENAI_MODEL_KEY, OPENAI_MODEL_UPDATED);
+        aiConfigurationPage.selectSettingOption(OPENAI_MODEL_KEY, OPENAI_MODEL_UPDATED);
         aiConfigurationPage.getSaveBar().should('have.css', 'display', 'block');
         aiConfigurationPage.getChangesCount().should('have.text', '1');
 
@@ -248,7 +248,7 @@ describe(
         aiConfigurationPage.getSettingInput(OPENAI_MODEL_KEY).should('have.value', OPENAI_MODEL_UPDATED);
         aiConfigurationPage.getSaveBar().should('have.css', 'display', 'none');
 
-        aiConfigurationPage.setSettingInputValue(OPENAI_MODEL_KEY, OPENAI_MODEL_DEFAULT);
+        aiConfigurationPage.selectSettingOption(OPENAI_MODEL_KEY, OPENAI_MODEL_DEFAULT);
         aiConfigurationPage.saveConfiguration();
         cy.wait('@saveConfiguration').its('response.body').should('have.property', 'success', true);
 
