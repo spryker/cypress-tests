@@ -79,10 +79,6 @@ export class ConfigurationPage extends BackofficePage {
     cy.get(this.repository.getCaptchaEnabledToggleSelector()).uncheck({ force: true });
   };
 
-  selectCaptchaMode = (captchaMode: string): void => {
-    cy.get(this.repository.getCaptchaModeOptionSelector(captchaMode)).check({ force: true });
-  };
-
   getSelectedCaptchaMode = (): Cypress.Chainable =>
     cy.get(this.repository.getSelectedCaptchaModeSelector()).invoke('val');
 
@@ -94,6 +90,12 @@ export class ConfigurationPage extends BackofficePage {
   };
 
   waitForConfigurationSave = (): Cypress.Chainable => cy.wait('@configurationSave');
+
+  interceptConfigurationPageLoad = (): void => {
+    cy.intercept({ method: 'GET', pathname: this.PAGE_URL }).as('configurationPageLoad');
+  };
+
+  waitForConfigurationPageLoad = (): Cypress.Chainable => cy.wait('@configurationPageLoad');
 
   visitLogosTab = (): void => {
     cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.THEME_FEATURE}&tab=logos`);

@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, requestAgentAccessToken } from '@utils';
 import { AgentLoginPage, AgentOverviewPage } from '@pages/yves';
 import { AgentLoginProtectionDynamicFixtures, LoginBruteForceProtectionStaticFixtures } from '@interfaces/yves';
 
@@ -59,10 +59,11 @@ describe(
       agentLoginPage.getCaptchaWidget().should('be.visible');
     });
 
-    it('agent should be locked out after repeated failed logins, even with the correct password', (): void => {
+    it('agent should be locked out after failed logins on the Storefront and the Glue API, while another agent can log in from the same IP address', (): void => {
       const username = dynamicFixtures.lockAgent.username;
 
-      failLogin(username, staticFixtures.lockAfterFailedAttempts);
+      failLogin(username, staticFixtures.challengeAfterFailedAttempts);
+      failGlueApiLogin(username, staticFixtures.lockAfterFailedAttempts - staticFixtures.challengeAfterFailedAttempts);
       agentLoginPage.visit();
       agentLoginPage.login({ username, password: staticFixtures.defaultPassword });
 
@@ -70,7 +71,19 @@ describe(
       agentLoginPage.getCaptchaWidget().should('not.exist');
       agentOverviewPage.visit();
       agentLoginPage.assertPageLocation();
+
+      agentLoginPage.visit();
+      agentLoginPage.login({ username: dynamicFixtures.otherAgent.username, password: staticFixtures.defaultPassword });
+
+      agentOverviewPage.visit();
+      agentOverviewPage.assertPageLocation();
     });
+
+    function failGlueApiLogin(username: string, numberOfAttempts: number): void {
+      for (let attempt = 0; attempt < numberOfAttempts; attempt++) {
+        requestAgentAccessToken(username, staticFixtures.wrongPassword).its('status').should('eq', 401);
+      }
+    }
 
     function failLogin(username: string, numberOfAttempts: number, previousFailedAttempts = 0): void {
       for (let attempt = 0; attempt < numberOfAttempts; attempt++) {

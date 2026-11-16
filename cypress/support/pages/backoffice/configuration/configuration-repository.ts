@@ -56,9 +56,6 @@ export class ConfigurationRepository {
 
   getCaptchaEnabledToggleSelector = (): string => 'input[id="setting-security:captcha:login:is_enabled"]';
 
-  getCaptchaModeOptionSelector = (captchaMode: string): string =>
-    `input[name="setting-security:captcha:login:mode"][value="${captchaMode}"]`;
-
   getSelectedCaptchaModeSelector = (): string => 'input[name="setting-security:captcha:login:mode"]:checked';
 
   getOverridesDefaultBadgeSelector = (): string => '.js-overrides-default-badge';

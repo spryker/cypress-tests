@@ -55,18 +55,18 @@
         {
           "type": "helper",
           "name": "haveUser",
-          "key": "doubleClickMerchantUser",
+          "key": "otherMerchantUser",
           "arguments": [{ "password": "change123" }]
         },
         {
           "type": "helper",
           "name": "haveActiveMerchantWithStore",
-          "key": "doubleClickMerchant"
+          "key": "otherMerchant"
         },
         {
           "type": "helper",
           "name": "haveMerchantUserWithAclEntities",
-          "arguments": ["#doubleClickMerchant", "#doubleClickMerchantUser"]
+          "arguments": ["#otherMerchant", "#otherMerchantUser"]
         }
       ]
     }

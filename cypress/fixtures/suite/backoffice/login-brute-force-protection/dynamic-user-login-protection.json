@@ -40,13 +40,13 @@
         {
           "type": "helper",
           "name": "haveUser",
-          "key": "doubleClickUser",
+          "key": "otherUser",
           "arguments": [{ "password": "change123" }]
         },
         {
           "type": "helper",
           "name": "addUserToGroup",
-          "arguments": ["#doubleClickUser.id_user", 1]
+          "arguments": ["#otherUser.id_user", 1]
         }
       ]
     }

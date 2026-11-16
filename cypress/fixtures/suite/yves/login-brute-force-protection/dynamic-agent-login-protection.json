@@ -35,6 +35,17 @@
           "type": "helper",
           "name": "addUserToGroup",
           "arguments": ["#lockAgent.id_user", 1]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "otherAgent",
+          "arguments": [{ "password": "change123", "isAgent": true }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#otherAgent.id_user", 1]
         }
       ]
     }

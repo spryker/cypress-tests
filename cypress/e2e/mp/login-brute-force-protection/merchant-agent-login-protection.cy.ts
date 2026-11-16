@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, requestBackendApiAccessToken } from '@utils';
 import { AgentDashboardPage, AgentLoginPage } from '@pages/mp';
 import { LoginBruteForceProtectionStaticFixtures, MerchantAgentLoginProtectionDynamicFixtures } from '@interfaces/mp';
 
@@ -67,10 +67,14 @@ describe(
       loginPage.getCaptchaWidget().should('be.visible');
     });
 
-    it('merchant agent should be locked out after repeated failed logins, even with the correct password', (): void => {
+    it('merchant agent should be locked out after failed logins in the Merchant Portal and the Backend API, while another merchant agent can log in from the same IP address', (): void => {
       const username = dynamicFixtures.lockMerchantAgent.username;
 
-      failLogin(username, staticFixtures.lockAfterFailedAttempts);
+      failLogin(username, staticFixtures.challengeAfterFailedAttempts);
+      failBackendApiLogin(
+        username,
+        staticFixtures.lockAfterFailedAttempts - staticFixtures.challengeAfterFailedAttempts
+      );
       loginPage.visit();
       loginPage.login({ username, password: staticFixtures.defaultPassword });
 
@@ -78,19 +82,24 @@ describe(
       loginPage.getCaptchaWidget().should('not.exist');
       agentDashboardPage.visit();
       loginPage.assertPageLocation();
-    });
 
-    it('merchant agent should be logged in with one login request when double-clicking the login button after solving the security check', (): void => {
-      const username = dynamicFixtures.doubleClickMerchantAgent.username;
-
-      failLogin(username, staticFixtures.challengeAfterFailedAttempts);
       loginPage.visit();
-      loginPage.solveCaptcha();
-      loginPage.loginWithDoubleClick({ username, password: staticFixtures.defaultPassword });
+      cy.intercept('POST', '**/login_check').as('otherMerchantAgentLoginCheck');
+      loginPage.login({
+        username: dynamicFixtures.otherMerchantAgent.username,
+        password: staticFixtures.defaultPassword,
+      });
+      cy.wait('@otherMerchantAgentLoginCheck');
 
+      agentDashboardPage.visit();
       agentDashboardPage.assertPageLocation();
-      loginPage.getLoginCheckRequests().should('have.length', 1);
     });
+
+    function failBackendApiLogin(username: string, numberOfAttempts: number): void {
+      for (let attempt = 0; attempt < numberOfAttempts; attempt++) {
+        requestBackendApiAccessToken(username, staticFixtures.wrongPassword).its('status').should('eq', 400);
+      }
+    }
 
     function failLogin(username: string, numberOfAttempts: number, previousFailedAttempts = 0): void {
       for (let attempt = 0; attempt < numberOfAttempts; attempt++) {

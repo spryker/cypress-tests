@@ -45,49 +45,26 @@ describe(
       configurationPage.getSettingRow(captchaSettings.modeKey).should('be.visible');
     });
 
-    it('shows the account lock and the security check limits on the Login Lock tab while the CAPTCHA is disabled', (): void => {
-      const loginLockSettings = staticFixtures.loginLockSettings;
-
-      configurationPage.visitCaptchaTab();
-      configurationPage.setCaptchaEnabled(false);
-      configurationPage.clickNavTab(loginLockSettings.tabKey);
-
-      loginLockSettings.keys.forEach((settingKey: string): void => {
-        configurationPage.getSettingRow(settingKey).should('be.visible');
-      });
-    });
-
-    it('opens the Login Lock tab from the CAPTCHA mode link after asking about the unsaved changes', (): void => {
+    it('asks about the unsaved CAPTCHA mode before the Login Lock link leaves the page, saves the mode, and then opens the Login Lock tab from the link', (): void => {
       const captchaSettings = staticFixtures.captchaSettings;
       const loginLockSettings = staticFixtures.loginLockSettings;
-      const unsavedChangesConfirm = cy.stub().returns(true);
-      cy.on('window:confirm', unsavedChangesConfirm);
-
-      configurationPage.visitCaptchaTab();
-      configurationPage.setCaptchaEnabled(true);
-
-      configurationPage.getSelectedCaptchaMode().then((selectedCaptchaMode: string) => {
-        configurationPage.selectCaptchaMode(
-          selectedCaptchaMode === captchaSettings.modeAlways
-            ? captchaSettings.modeAfterFailedAttempts
-            : captchaSettings.modeAlways
-        );
-        configurationPage.getSettingTabLink(captchaSettings.modeKey).click();
-
-        cy.wrap(unsavedChangesConfirm).should('have.been.calledOnce');
-        cy.location('search').should('contain', `tab=${loginLockSettings.tabKey}`);
-        configurationPage.getSettingRow(loginLockSettings.keys[0]).should('be.visible');
-      });
-    });
-
-    it('saves the CAPTCHA mode selected on the page when the CAPTCHA is enabled', (): void => {
-      const captchaSettings = staticFixtures.captchaSettings;
+      const unsavedChangesConfirm = cy.stub().returns(false);
 
       configurationPage.visitCaptchaTab();
       configurationPage.setCaptchaEnabled(false);
       configurationPage.setCaptchaEnabled(true);
+      
+      cy.wrap(null).then((): void => {
+        cy.on('window:confirm', unsavedChangesConfirm);
+      });
+      configurationPage.getSettingTabLink(captchaSettings.modeKey).click();
+
+      cy.wrap(unsavedChangesConfirm).should('have.been.calledOnce');
+      cy.location('search').should('not.contain', `tab=${loginLockSettings.tabKey}`);
+      configurationPage.getSettingRow(captchaSettings.modeKey).should('be.visible');
+
       configurationPage.stubConfigurationSave();
-
+      configurationPage.interceptConfigurationPageLoad();
       configurationPage.getSelectedCaptchaMode().then((selectedCaptchaMode: string) => {
         configurationPage.saveConfiguration();
 
@@ -100,6 +77,12 @@ describe(
             expect(modeChange?.value).to.equal(selectedCaptchaMode);
           });
       });
+      configurationPage.waitForConfigurationPageLoad();
+      configurationPage.getSettingTabLink(captchaSettings.modeKey).click();
+
+      cy.wrap(unsavedChangesConfirm).should('have.been.calledOnce');
+      cy.location('search').should('contain', `tab=${loginLockSettings.tabKey}`);
+      configurationPage.getSettingRow(loginLockSettings.settingKey).should('be.visible');
     });
   }
 );

@@ -1,4 +1,4 @@
-import { container } from '@utils';
+import { container, requestCustomerAccessToken } from '@utils';
 import { CustomerOverviewPage, LoginPage, MultiFactorAuthPage } from '@pages/yves';
 import { CustomerLoginScenario, CustomerLogoutScenario, CustomerMfaActivationScenario } from '@scenarios/yves';
 import { CustomerLoginProtectionDynamicFixtures, LoginBruteForceProtectionStaticFixtures } from '@interfaces/yves';
@@ -70,10 +70,11 @@ describe(
       loginPage.getCaptchaWidget().should('be.visible');
     });
 
-    it('customer should be locked out after repeated failed logins, even with the correct password', (): void => {
+    it('customer should be locked out after failed logins on the Storefront and the Glue API, while another customer can log in from the same IP address', (): void => {
       const email = dynamicFixtures.lockCustomer.email;
 
-      failLogin(email, staticFixtures.lockAfterFailedAttempts);
+      failLogin(email, staticFixtures.challengeAfterFailedAttempts);
+      failGlueApiLogin(email, staticFixtures.lockAfterFailedAttempts - staticFixtures.challengeAfterFailedAttempts);
       loginPage.visit();
       loginPage.login({ email, password: staticFixtures.defaultPassword });
 
@@ -81,6 +82,11 @@ describe(
       loginPage.getCaptchaWidget().should('not.exist');
       customerOverviewPage.visit();
       loginPage.assertPageLocation();
+
+      loginPage.visit();
+      loginPage.login({ email: dynamicFixtures.otherCustomer.email, password: staticFixtures.defaultPassword });
+
+      customerOverviewPage.assertPageLocation();
     });
 
     it('customer with multi-factor authentication should log in after solving the security check', (): void => {
@@ -103,6 +109,12 @@ describe(
 
       customerOverviewPage.assertPageLocation();
     });
+
+    function failGlueApiLogin(email: string, numberOfAttempts: number): void {
+      for (let attempt = 0; attempt < numberOfAttempts; attempt++) {
+        requestCustomerAccessToken(email, staticFixtures.wrongPassword).its('status').should('eq', 401);
+      }
+    }
 
     function failLogin(email: string, numberOfAttempts: number, previousFailedAttempts = 0): void {
       for (let attempt = 0; attempt < numberOfAttempts; attempt++) {

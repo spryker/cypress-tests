@@ -64,12 +64,10 @@ export interface CaptchaConfigurationStaticFixtures {
   defaultPassword: string;
   captchaSettings: {
     modeKey: string;
-    modeAlways: string;
-    modeAfterFailedAttempts: string;
   };
   loginLockSettings: {
     tabKey: string;
-    keys: string[];
+    settingKey: string;
   };
 }
 

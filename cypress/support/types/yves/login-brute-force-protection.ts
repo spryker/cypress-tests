@@ -12,10 +12,12 @@ export interface CustomerLoginProtectionDynamicFixtures {
   captchaRejectionCustomer: Customer;
   lockCustomer: Customer;
   multiFactorAuthCustomer: Customer;
+  otherCustomer: Customer;
 }
 
 export interface AgentLoginProtectionDynamicFixtures {
   challengeAgent: User;
   captchaRejectionAgent: User;
   lockAgent: User;
+  otherAgent: User;
 }

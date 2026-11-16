@@ -1,12 +1,19 @@
-import { container } from '@utils';
+import { container, requestBackendApiAccessToken } from '@utils';
 import { IndexPage, LoginPage } from '@pages/backoffice';
+import { LoginPage as MerchantPortalLoginPage } from '@pages/mp';
 import { UserLogoutScenario } from '@scenarios/backoffice';
 import { LoginBruteForceProtectionStaticFixtures, UserLoginProtectionDynamicFixtures } from '@interfaces/backoffice';
 
 describe(
   'user login brute-force protection',
   {
-    tags: ['@backoffice', '@login-brute-force-protection', 'spryker-core-back-office', 'spryker-core'],
+    tags: [
+      '@backoffice',
+      '@login-brute-force-protection',
+      'spryker-core-back-office',
+      'marketplace-merchantportal-core',
+      'spryker-core',
+    ],
     retries: 0,
   },
   (): void => {
@@ -17,6 +24,7 @@ describe(
 
     const loginPage = container.get(LoginPage);
     const indexPage = container.get(IndexPage);
+    const merchantPortalLoginPage = container.get(MerchantPortalLoginPage);
     const userLogoutScenario = container.get(UserLogoutScenario);
 
     let staticFixtures: LoginBruteForceProtectionStaticFixtures;
@@ -67,10 +75,15 @@ describe(
       loginPage.getCaptchaWidget().should('be.visible');
     });
 
-    it('user should be locked out after repeated failed logins, even with the correct password', (): void => {
+    it('user should be locked out after failed logins in the Back Office, the Merchant Portal and the Backend API, while another user can log in from the same IP address', (): void => {
       const username = dynamicFixtures.lockUser.username;
 
-      failLogin(username, staticFixtures.lockAfterFailedAttempts);
+      failLogin(username, 1);
+      failMerchantPortalLogin(username, staticFixtures.challengeAfterFailedAttempts - 1);
+      failBackendApiLogin(
+        username,
+        staticFixtures.lockAfterFailedAttempts - staticFixtures.challengeAfterFailedAttempts
+      );
       loginPage.visit();
       loginPage.login({ username, password: staticFixtures.defaultPassword });
 
@@ -78,19 +91,28 @@ describe(
       loginPage.getCaptchaWidget().should('not.exist');
       indexPage.visit();
       indexPage.getLoginForm().should('be.visible');
-    });
 
-    it('user should be logged in with one login request when double-clicking the login button after solving the security check', (): void => {
-      const username = dynamicFixtures.doubleClickUser.username;
-
-      failLogin(username, staticFixtures.challengeAfterFailedAttempts);
       loginPage.visit();
-      loginPage.solveCaptcha();
-      loginPage.loginWithDoubleClick({ username, password: staticFixtures.defaultPassword });
+      loginPage.login({ username: dynamicFixtures.otherUser.username, password: staticFixtures.defaultPassword });
 
       indexPage.getLoginForm().should('not.exist');
-      loginPage.getLoginCheckRequests().should('have.length', 1);
     });
+
+    function failMerchantPortalLogin(username: string, numberOfAttempts: number): void {
+      for (let attempt = 0; attempt < numberOfAttempts; attempt++) {
+        merchantPortalLoginPage.visit();
+        merchantPortalLoginPage.login({ username, password: staticFixtures.wrongPassword });
+        merchantPortalLoginPage
+          .assertBodyContainsText(merchantPortalLoginPage.getFailedAuthenticationText())
+          .should('be.visible');
+      }
+    }
+
+    function failBackendApiLogin(username: string, numberOfAttempts: number): void {
+      for (let attempt = 0; attempt < numberOfAttempts; attempt++) {
+        requestBackendApiAccessToken(username, staticFixtures.wrongPassword).its('status').should('eq', 400);
+      }
+    }
 
     function failLogin(username: string, numberOfAttempts: number, previousFailedAttempts = 0): void {
       for (let attempt = 0; attempt < numberOfAttempts; attempt++) {

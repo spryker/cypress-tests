@@ -26,6 +26,12 @@
           "name": "haveConfirmedCustomer",
           "key": "multiFactorAuthCustomer",
           "arguments": [{ "locale_name": "en_US", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "otherCustomer",
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
         }
       ]
     }

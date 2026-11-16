@@ -11,12 +11,12 @@ export interface MerchantUserLoginProtectionDynamicFixtures {
   challengeMerchantUser: User;
   captchaRejectionMerchantUser: User;
   lockMerchantUser: User;
-  doubleClickMerchantUser: User;
+  otherMerchantUser: User;
 }
 
 export interface MerchantAgentLoginProtectionDynamicFixtures {
   challengeMerchantAgent: User;
   captchaRejectionMerchantAgent: User;
   lockMerchantAgent: User;
-  doubleClickMerchantAgent: User;
+  otherMerchantAgent: User;
 }
