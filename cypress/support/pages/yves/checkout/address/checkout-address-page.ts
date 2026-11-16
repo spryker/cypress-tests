@@ -3,6 +3,13 @@ import { inject, injectable } from 'inversify';
 import { YvesPage } from '@pages/yves';
 import { CheckoutAddressRepository } from './checkout-address-repository';
 
+// Publish and synchronize is asynchronous; every attempt drains the queue again before the finder is
+// searched once more.
+const SERVICE_POINT_SEARCH_ATTEMPTS = 10;
+const SERVICE_POINT_SEARCH_URL_PATTERN = '**/service-point-widget/search**';
+// The service point finder's `min-letters` attribute: a shorter text is not searched.
+const SERVICE_POINT_SEARCH_MIN_LETTERS = 2;
+
 @injectable()
 @autoWired
 export class CheckoutAddressPage extends YvesPage {
@@ -223,7 +230,7 @@ export class CheckoutAddressPage extends YvesPage {
     }
 
     this.repository.getMultiShipmentAddressItemSelectServicePointButton?.($addressItem).first().click({ force: true });
-    this.repository.getServicePointFinderInput?.().clear().type(servicePointSelection.servicePointName);
+    this.searchAvailableServicePoint(servicePointSelection.servicePointName);
     this.repository.getServicePointFinderListItem?.(servicePointSelection.servicePointName).first().click();
 
     this.repository.getMultiShipmentAddressItemServicePointUuidInput?.(index).should(($input: JQuery<HTMLElement>) => {
@@ -238,6 +245,42 @@ export class CheckoutAddressPage extends YvesPage {
         .getMultiShipmentAddressItemShipmentTypeRadio?.(index, servicePointSelection.shipmentTypeKey)
         .should('be.checked');
     }
+  };
+
+  // The finder reads the service point from the search index and its availability from storage, and
+  // both reach the storefront through publish and sync, which can still be running when the checkout
+  // starts right after the fixtures. The queue is drained and the search re-sent until the finder
+  // offers the service point as available.
+  private searchAvailableServicePoint = (
+    servicePointName: string,
+    attemptsLeft = SERVICE_POINT_SEARCH_ATTEMPTS
+  ): void => {
+    // The finder debounces its key-up and skips a search whose text equals the previous one, so a
+    // retry that retyped the whole name at once would send nothing. Typing a prefix first gives every
+    // attempt two distinct searches to wait for.
+    const namePrefix = servicePointName.slice(0, SERVICE_POINT_SEARCH_MIN_LETTERS);
+    const nameRest = servicePointName.slice(SERVICE_POINT_SEARCH_MIN_LETTERS);
+    const prefixSearchAlias = `servicePointPrefixSearch${attemptsLeft}`;
+    const searchAlias = `servicePointSearch${attemptsLeft}`;
+
+    cy.intercept({ url: SERVICE_POINT_SEARCH_URL_PATTERN, query: { searchString: namePrefix } }).as(prefixSearchAlias);
+    cy.intercept({ url: SERVICE_POINT_SEARCH_URL_PATTERN, query: { searchString: servicePointName } }).as(searchAlias);
+
+    this.repository.getServicePointFinderInput?.().clear().type(namePrefix);
+    cy.wait(`@${prefixSearchAlias}`);
+    this.repository.getServicePointFinderInput?.().type(nameRest);
+    cy.wait(`@${searchAlias}`);
+
+    this.getBody().then(($body: JQuery<HTMLElement>) => {
+      const isOffered = Boolean(this.repository.getAvailableServicePointListItems?.($body, servicePointName).length);
+
+      if (isOffered || attemptsLeft === 0) {
+        return;
+      }
+
+      cy.runQueueWorker();
+      this.searchAvailableServicePoint(servicePointName, attemptsLeft - 1);
+    });
   };
 
   fillBillingAddress = (): void => {
