@@ -38,7 +38,7 @@ describe(
         key: relationKey,
         relationType: relatedProductsRelationType,
         baseProductSearch: dynamicFixtures.baseProduct.abstract_sku,
-        relatedProductSku: dynamicFixtures.relatedProduct.sku,
+        relatedProductSku: dynamicFixtures.relatedProduct.abstract_sku,
       });
 
       productRelationPage.getEditRelationHeading(relationKey).should('be.visible');
