@@ -59,3 +59,18 @@ export interface ConfigurationAiModelSelectionStaticFixtures {
 export interface ConfigurationAiModelSelectionDynamicFixtures {
   rootUser: User;
 }
+
+export interface CaptchaConfigurationStaticFixtures {
+  defaultPassword: string;
+  captchaSettings: {
+    modeKey: string;
+  };
+  loginLockSettings: {
+    tabKey: string;
+    settingKey: string;
+  };
+}
+
+export interface CaptchaConfigurationDynamicFixtures {
+  rootUser: User;
+}

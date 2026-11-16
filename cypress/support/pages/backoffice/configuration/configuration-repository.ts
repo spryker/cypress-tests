@@ -54,6 +54,10 @@ export class ConfigurationRepository {
 
   getSettingRowSelector = (settingKey: string): string => `.setting-row[data-setting-key="${settingKey}"]`;
 
+  getCaptchaEnabledToggleSelector = (): string => 'input[id="setting-security:captcha:login:is_enabled"]';
+
+  getSelectedCaptchaModeSelector = (): string => 'input[name="setting-security:captcha:login:mode"]:checked';
+
   getOverridesDefaultBadgeSelector = (): string => '.js-overrides-default-badge';
 
   getUseDefaultLinkSelector = (): string => '.use-default-link';
@@ -61,6 +65,8 @@ export class ConfigurationRepository {
   getInvalidFeedbackSelector = (): string => '.invalid-feedback';
 
   getNavTabSelector = (tabKey: string): string => `.js-nav-tab[data-tab="${tabKey}"]`;
+
+  getSettingTabLinkSelector = (): string => '[data-qa="setting-tab-link"]';
 
   getSelectSettingSelector = (settingKey: string): string => `select[id="setting-${settingKey}"]`;
 
