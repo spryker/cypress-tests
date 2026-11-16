@@ -43,6 +43,23 @@ export interface ConfigurationManagementDynamicFixtures {
   rootUser: User;
 }
 
+export interface ConfigurationAiModelSelectionStaticFixtures {
+  defaultPassword: string;
+  storefrontAssistant: {
+    tabKey: string;
+    vendorSettingKey: string;
+    openAiVendor: string;
+    openAiModelSettingKey: string;
+    supportedModels: string[];
+    alternativeModel: string;
+    unsupportedModel: string;
+  };
+}
+
+export interface ConfigurationAiModelSelectionDynamicFixtures {
+  rootUser: User;
+}
+
 export interface CaptchaConfigurationStaticFixtures {
   defaultPassword: string;
   captchaSettings: {

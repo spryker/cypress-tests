@@ -13,7 +13,57 @@ export class ConfigurationPage extends BackofficePage {
 
   protected THEME_FEATURE = 'theme';
 
+  protected AI_COMMERCE_FEATURE = 'ai_commerce';
+
+  protected SCOPE_GLOBAL = 'global';
+
   protected SECURITY_FEATURE = 'security';
+
+  visitAiCommerceTab = (tabKey: string): void => {
+    cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.AI_COMMERCE_FEATURE}&tab=${tabKey}`);
+  };
+
+  selectRadioOption = (settingKey: string, value: string): void => {
+    cy.get(this.repository.getRadioOptionSelector(settingKey, value)).check({ force: true });
+  };
+
+  getSelectSetting = (settingKey: string): Cypress.Chainable =>
+    cy.get(this.repository.getSelectSettingSelector(settingKey));
+
+  getSelectableOptions = (settingKey: string): Cypress.Chainable =>
+    cy.get(this.repository.getSelectSettingSelector(settingKey)).find(this.repository.getSelectableOptionSelector());
+
+  selectOption = (settingKey: string, value: string): void => {
+    cy.get(this.repository.getSelectSettingSelector(settingKey)).select(value);
+  };
+
+  saveConfigurationAndWaitForResponse = (): void => {
+    cy.intercept('POST', `**${this.repository.getSaveUrl()}`).as('saveConfiguration');
+    this.saveConfiguration();
+    cy.wait('@saveConfiguration');
+  };
+
+  requestSaveConfigurationValue = (params: {
+    settingKey: string;
+    value: string;
+  }): Cypress.Chainable<Cypress.Response<SaveConfigurationResponse>> =>
+    cy.request<SaveConfigurationResponse>({
+      method: 'POST',
+      url: `${Cypress.env().backofficeUrl}${this.repository.getSaveUrl()}`,
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      body: { changes: [{ key: params.settingKey, value: params.value, scope: this.SCOPE_GLOBAL }] },
+      failOnStatusCode: false,
+    });
+
+  requestUseDefaultConfigurationValue = (
+    settingKey: string
+  ): Cypress.Chainable<Cypress.Response<SaveConfigurationResponse>> =>
+    cy.request<SaveConfigurationResponse>({
+      method: 'POST',
+      url: `${Cypress.env().backofficeUrl}${this.repository.getSaveUrl()}`,
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      body: { changes: [{ key: settingKey, value: null, use_default: true, scope: this.SCOPE_GLOBAL }] },
+    });
 
   visitCaptchaTab = (): void => {
     cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.SECURITY_FEATURE}&tab=captcha`);
@@ -37,7 +87,7 @@ export class ConfigurationPage extends BackofficePage {
     cy.get(this.repository.getSelectedCaptchaModeSelector()).invoke('val');
 
   stubConfigurationSave = (): void => {
-    cy.intercept('POST', this.repository.getSaveUrl(), {
+    cy.intercept('POST', `**${this.repository.getSaveUrl()}`, {
       statusCode: 200,
       body: { success: true, count: 0, errors: [] },
     }).as('configurationSave');
@@ -192,4 +242,10 @@ export class ConfigurationPage extends BackofficePage {
 
   getSettingTabLink = (settingKey: string): Cypress.Chainable =>
     cy.get(this.repository.getSettingRowSelector(settingKey)).find(this.repository.getSettingTabLinkSelector());
+}
+
+interface SaveConfigurationResponse {
+  success: boolean;
+  count: number;
+  errors: Record<string, string>;
 }

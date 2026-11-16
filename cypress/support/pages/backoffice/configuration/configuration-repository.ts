@@ -61,8 +61,6 @@ export class ConfigurationRepository {
 
   getSelectedCaptchaModeSelector = (): string => 'input[name="setting-security:captcha:login:mode"]:checked';
 
-  getSaveUrl = (): string => '**/configuration/manage/save';
-
   getOverridesDefaultBadgeSelector = (): string => '.js-overrides-default-badge';
 
   getUseDefaultLinkSelector = (): string => '.use-default-link';
@@ -72,4 +70,13 @@ export class ConfigurationRepository {
   getNavTabSelector = (tabKey: string): string => `.js-nav-tab[data-tab="${tabKey}"]`;
 
   getSettingTabLinkSelector = (): string => '[data-qa="setting-tab-link"]';
+
+  getSelectSettingSelector = (settingKey: string): string => `select[id="setting-${settingKey}"]`;
+
+  getSelectableOptionSelector = (): string => 'option:not([disabled])';
+
+  getRadioOptionSelector = (settingKey: string, value: string): string =>
+    `input[type="radio"][id="setting-${settingKey}-${value}"]`;
+
+  getSaveUrl = (): string => '/configuration/manage/save';
 }
