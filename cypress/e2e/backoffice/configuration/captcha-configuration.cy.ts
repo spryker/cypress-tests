@@ -53,7 +53,7 @@ describe(
       configurationPage.visitCaptchaTab();
       configurationPage.setCaptchaEnabled(false);
       configurationPage.setCaptchaEnabled(true);
-      
+
       cy.wrap(null).then((): void => {
         cy.on('window:confirm', unsavedChangesConfirm);
       });
