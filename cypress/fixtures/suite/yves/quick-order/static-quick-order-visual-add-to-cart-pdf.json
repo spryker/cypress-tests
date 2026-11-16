@@ -1,0 +1,13 @@
+{
+  "defaultPassword": "change123",
+  "visualAddToCartEnabledSettingKey": "ai_commerce:quick_order:visual_add_to_cart:enabled",
+  "enabledSettingValue": "true",
+  "pdfMimeType": "application/pdf",
+  "pdfFormatName": "PDF",
+  "invalidFileTypeMessage": "Invalid file type.",
+  "textOrderFile": {
+    "contents": "HP-IND-60KW,1",
+    "fileName": "order-list.txt",
+    "mimeType": "text/plain"
+  }
+}
