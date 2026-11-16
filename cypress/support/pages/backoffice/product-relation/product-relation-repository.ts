@@ -14,4 +14,6 @@ export interface ProductRelationRepository {
   getRuleValueInput(ruleIndex: number): Cypress.Chainable;
   getSaveButton(): Cypress.Chainable;
   getEditRelationHeading(key: string): string;
+  getRuleQueryTable(): Cypress.Chainable;
+  getSuccessMessage(): Cypress.Chainable;
 }

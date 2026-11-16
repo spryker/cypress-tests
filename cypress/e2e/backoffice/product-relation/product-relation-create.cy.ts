@@ -43,5 +43,24 @@ describe(
 
       productRelationPage.getEditRelationHeading(relationKey).should('be.visible');
     });
+
+    it('should list the product that matches the product rule in the rule query table', (): void => {
+      const ruleQueryTableAlias = productRelationPage.interceptRuleQueryTable('create');
+
+      productRelationPage.fillProductRelationForm({
+        key: relationKey,
+        relationType: relatedProductsRelationType,
+        baseProductSearch: dynamicFixtures.baseProduct.abstract_sku,
+        relatedProductSku: dynamicFixtures.relatedProduct.abstract_sku,
+      });
+
+      productRelationPage.getRuleQueryTable().should('contain', dynamicFixtures.relatedProduct.abstract_sku);
+      productRelationPage.getRuleQueryTableRequests(ruleQueryTableAlias).should((interceptions): void => {
+        expect(interceptions).not.to.be.empty;
+        interceptions.forEach((interception): void => {
+          expect(interception.response?.statusCode).to.equal(200);
+        });
+      });
+    });
   }
 );
