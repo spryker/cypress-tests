@@ -260,7 +260,7 @@ describe(
               expect(interception.response?.body.redirectUrl).to.be.a('string').and.not.be.empty;
             });
 
-          cy.location('pathname', { timeout: 30000 }).should('not.eq', staticFixtures.searchResultsUrl.split('?')[0]);
+          cy.url({ timeout: 30000 }).should('not.include', staticFixtures.searchResultsUrl);
 
           searchByImagePage.getResultsPageSurface().should('exist').its('length').should('be.greaterThan', 0);
         }

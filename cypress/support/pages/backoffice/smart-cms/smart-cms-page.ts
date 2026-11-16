@@ -137,8 +137,17 @@ export class SmartCmsPage extends BackofficePage {
 
   getGlossaryEditorValue = (): Cypress.Chainable<string> =>
     this.getGlossaryEditor()
-      .invoke('val')
-      .then((value): string => String(value ?? ''));
+      .first()
+      .then(($editor) =>
+        cy.window().then((win): string => {
+          const richTextEditor = (
+            win as Window & { SprykerRichTextEditor?: { readHtml: (element: HTMLElement) => unknown } }
+          ).SprykerRichTextEditor;
+          const richTextEditorHtml = richTextEditor?.readHtml($editor[0]);
+
+          return typeof richTextEditorHtml === 'string' ? richTextEditorHtml : String($editor.val() ?? '');
+        })
+      );
 
   getInjectedCsrfToken = (): Cypress.Chainable<string> =>
     cy

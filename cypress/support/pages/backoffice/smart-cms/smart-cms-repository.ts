@@ -29,7 +29,7 @@ export class SmartCmsRepository {
 
   getPanelAttachmentRemoveSelector = (): string => '.js-smart-cms-panel__attachment-remove';
 
-  getGlossaryEditorSelector = (): string => 'textarea.html-editor';
+  getGlossaryEditorSelector = (): string => 'textarea.html-editor, textarea[data-spryker-rich-text-editor]';
 
   getPanelMessageSelector = (): string => '.js-smart-cms-panel__message';
 
