@@ -16,7 +16,7 @@ interface SearchByImageInterception {
 export class SearchByImagePage extends YvesPage {
   @inject(SearchByImageRepository) private repository: SearchByImageRepository;
 
-  protected PAGE_URL = '/en/search?q=cable';
+  protected PAGE_URL = '/DE/en/search?q=cable';
 
   private CONFIGURATION_URL = '/configuration/manage?feature=ai_commerce&tab=search_by_image';
 

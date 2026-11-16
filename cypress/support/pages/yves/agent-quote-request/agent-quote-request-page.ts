@@ -27,7 +27,7 @@ export class AgentQuoteRequestPage extends YvesPage {
 
   visitCustomerDetails = (reference: string): Cypress.Chainable => {
     cy.intercept('GET', '**/quote-request/details/**').as('customerQuoteRequestDetailsDocument');
-    cy.visit(`/quote-request/details/${reference}`);
+    cy.visit(`/DE/en/quote-request/details/${reference}`);
 
     return cy.wait('@customerQuoteRequestDetailsDocument');
   };

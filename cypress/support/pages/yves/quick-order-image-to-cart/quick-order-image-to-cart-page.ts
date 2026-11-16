@@ -9,7 +9,7 @@ import { QuickOrderImageToCartRepository } from './quick-order-image-to-cart-rep
 export class QuickOrderImageToCartPage extends YvesPage {
   @inject(QuickOrderImageToCartRepository) private repository: QuickOrderImageToCartRepository;
 
-  protected PAGE_URL = '/quick-order';
+  protected PAGE_URL = '/DE/en/quick-order';
 
   private CONFIGURATION_URL = '/configuration/manage?feature=ai_commerce&tab=quick_order';
 
