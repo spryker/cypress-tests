@@ -61,4 +61,13 @@ export class ConfigurationRepository {
   getInvalidFeedbackSelector = (): string => '.invalid-feedback';
 
   getNavTabSelector = (tabKey: string): string => `.js-nav-tab[data-tab="${tabKey}"]`;
+
+  getSelectSettingSelector = (settingKey: string): string => `select[id="setting-${settingKey}"]`;
+
+  getSelectableOptionSelector = (): string => 'option:not([disabled])';
+
+  getRadioOptionSelector = (settingKey: string, value: string): string =>
+    `input[type="radio"][id="setting-${settingKey}-${value}"]`;
+
+  getSaveUrl = (): string => '/configuration/manage/save';
 }
