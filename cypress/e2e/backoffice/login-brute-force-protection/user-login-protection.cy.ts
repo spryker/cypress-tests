@@ -17,8 +17,8 @@ describe(
     retries: 0,
   },
   (): void => {
-    if (!['suite'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because the login brute-force protection is wired only in suite', () => {});
+    if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because the login brute-force protection is wired only in suite and b2b-mp', () => {});
       return;
     }
 
