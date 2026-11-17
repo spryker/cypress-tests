@@ -4,7 +4,9 @@ import { injectable } from 'inversify';
 @injectable()
 @autoWired
 export class OffersRepository {
-  getFirstTableRow = (): Cypress.Chainable => cy.get('tbody > :nth-child(1):visible');
+  getTableRows = (): Cypress.Chainable => cy.get('web-mp-offers-list tbody > tr.ant-table-row');
+  getTableRowContaining = (text: string): Cypress.Chainable =>
+    cy.contains('web-mp-offers-list tbody > tr:visible', text);
   getSearchSelector = (): string => '.spy-table-search-feature input[type="text"]';
   getSaveButtonSelector = (): string => 'button:contains("Save")';
   getDrawer = (): Cypress.Chainable => cy.get('.spy-drawer-wrapper');
