@@ -1,5 +1,6 @@
 import { REPOSITORIES, autoWired } from '@utils';
 import { inject, injectable } from 'inversify';
+import { Interception } from 'cypress/types/net-stubbing';
 
 import { BackofficePage } from '@pages/backoffice';
 import { ProductRelationRepository } from './product-relation-repository';
@@ -15,6 +16,11 @@ export class ProductRelationPage extends BackofficePage {
   // relation type, pick the base product from the DataTables picker, then add a
   // product_sku rule on the "Assign products" tab before saving.
   createProductRelation = (params: ProductRelationFormData): void => {
+    this.fillProductRelationForm(params);
+    this.saveProductRelation();
+  };
+
+  fillProductRelationForm = (params: ProductRelationFormData): void => {
     this.visit();
 
     this.repository.getRelationKeyInput().clear().type(params.key);
@@ -24,10 +30,32 @@ export class ProductRelationPage extends BackofficePage {
 
     this.switchToAssignProductsTab();
     this.selectProductRule({ field: 'product_sku', operator: 'equal', value: params.relatedProductSku });
+  };
 
+  saveProductRelation = (): void => {
     this.switchToRelationTypeTab();
     this.repository.getSaveButton().click();
   };
+
+  updateProductRuleValue = (value: string): void => {
+    this.switchToAssignProductsTab();
+    this.repository.getRuleValueInput(0).clear().type(value).blur();
+  };
+
+  interceptRuleQueryTable = (action: RuleQueryTableAction): string => {
+    const interceptAlias = `${action}RuleQueryTable`;
+
+    cy.intercept('GET', `**/product-relation-gui/${action}/rule-query-table*`).as(interceptAlias);
+
+    return interceptAlias;
+  };
+
+  getRuleQueryTable = (): Cypress.Chainable => this.repository.getRuleQueryTable();
+
+  getRuleQueryTableRequests = (interceptAlias: string): Cypress.Chainable<Interception[]> =>
+    cy.get<Interception[]>(`@${interceptAlias}.all`);
+
+  getSuccessMessage = (): Cypress.Chainable => this.repository.getSuccessMessage();
 
   getEditRelationHeading = (key: string): Cypress.Chainable =>
     cy.contains(this.repository.getEditRelationHeading(key), { timeout: 20000 });
@@ -70,6 +98,8 @@ export class ProductRelationPage extends BackofficePage {
     this.repository.getRuleValueInput(0).clear().type(rule.value).blur();
   }
 }
+
+type RuleQueryTableAction = 'create' | 'edit';
 
 interface ProductRelationFormData {
   key: string;
