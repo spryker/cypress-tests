@@ -7,8 +7,8 @@ import { CheckoutAddressRepository } from './checkout-address-repository';
 // searched once more.
 const SERVICE_POINT_SEARCH_ATTEMPTS = 10;
 const SERVICE_POINT_SEARCH_URL_PATTERN = '**/service-point-widget/search**';
-// The service point finder's `min-letters` attribute: a shorter text is not searched.
-const SERVICE_POINT_SEARCH_MIN_LETTERS = 2;
+// Typed after the service point name for the first search of an attempt, then deleted for the second.
+const SERVICE_POINT_SEARCH_EXTRA_LETTER = 'x';
 
 @injectable()
 @autoWired
@@ -256,19 +256,22 @@ export class CheckoutAddressPage extends YvesPage {
     attemptsLeft = SERVICE_POINT_SEARCH_ATTEMPTS
   ): void => {
     // The finder debounces its key-up and skips a search whose text equals the previous one, so a
-    // retry that retyped the whole name at once would send nothing. Typing a prefix first gives every
-    // attempt two distinct searches to wait for.
-    const namePrefix = servicePointName.slice(0, SERVICE_POINT_SEARCH_MIN_LETTERS);
-    const nameRest = servicePointName.slice(SERVICE_POINT_SEARCH_MIN_LETTERS);
-    const prefixSearchAlias = `servicePointPrefixSearch${attemptsLeft}`;
+    // retry that retyped the whole name at once would send nothing. Typing the name with an extra
+    // letter, then deleting the letter, gives every attempt two distinct searches to wait for, the
+    // second one for the exact name. A prefix of the name would not work for every name: the
+    // generated names can be as short as the finder's minimum search length of two letters.
+    const extendedName = `${servicePointName}${SERVICE_POINT_SEARCH_EXTRA_LETTER}`;
+    const extendedSearchAlias = `servicePointExtendedSearch${attemptsLeft}`;
     const searchAlias = `servicePointSearch${attemptsLeft}`;
 
-    cy.intercept({ url: SERVICE_POINT_SEARCH_URL_PATTERN, query: { searchString: namePrefix } }).as(prefixSearchAlias);
+    cy.intercept({ url: SERVICE_POINT_SEARCH_URL_PATTERN, query: { searchString: extendedName } }).as(
+      extendedSearchAlias
+    );
     cy.intercept({ url: SERVICE_POINT_SEARCH_URL_PATTERN, query: { searchString: servicePointName } }).as(searchAlias);
 
-    this.repository.getServicePointFinderInput?.().clear().type(namePrefix);
-    cy.wait(`@${prefixSearchAlias}`);
-    this.repository.getServicePointFinderInput?.().type(nameRest);
+    this.repository.getServicePointFinderInput?.().clear().type(extendedName);
+    cy.wait(`@${extendedSearchAlias}`);
+    this.repository.getServicePointFinderInput?.().type('{backspace}');
     cy.wait(`@${searchAlias}`);
 
     this.getBody().then(($body: JQuery<HTMLElement>) => {
