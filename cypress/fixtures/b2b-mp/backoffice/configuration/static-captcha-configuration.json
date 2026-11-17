@@ -1,0 +1,10 @@
+{
+  "defaultPassword": "change123",
+  "captchaSettings": {
+    "modeKey": "security:captcha:login:mode"
+  },
+  "loginLockSettings": {
+    "tabKey": "login_lock",
+    "settingKey": "security:login_lock:customer:number_of_failed_attempts"
+  }
+}

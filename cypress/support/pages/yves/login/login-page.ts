@@ -1,4 +1,4 @@
-import { REPOSITORIES, autoWired } from '@utils';
+import { CAPTCHA_VERIFICATION_TIMEOUT, REPOSITORIES, autoWired, tamperAltchaPayload } from '@utils';
 import { inject, injectable } from 'inversify';
 
 import { YvesPage } from '@pages/yves';
@@ -23,6 +23,33 @@ export class LoginPage extends YvesPage {
   getFailedAuthenticationText = (): string => {
     return this.repository.getFailedAuthenticationText();
   };
+
+  getCaptchaWidget = (): Cypress.Chainable => this.repository.getCaptchaWidget();
+
+  solveCaptcha = (): void => {
+    this.repository.getCaptchaCheckboxLabel().click();
+    this.waitForCaptchaVerified();
+  };
+
+  waitForCaptchaVerified = (): void => {
+    this.repository
+      .getCaptchaWidget()
+      .find(this.repository.getCaptchaVerifiedStateSelector(), { timeout: CAPTCHA_VERIFICATION_TIMEOUT });
+  };
+
+  tamperCaptchaPayload = (): void => {
+    this.repository
+      .getCaptchaPayloadInput()
+      .then(($payloadInput: JQuery<HTMLInputElement>) =>
+        $payloadInput.val(tamperAltchaPayload(String($payloadInput.val())))
+      );
+  };
+
+  getCaptchaRequiredText = (): string => this.repository.getCaptchaRequiredText();
+
+  getCaptchaInvalidText = (): string => this.repository.getCaptchaInvalidText();
+
+  getAccountBlockedText = (): string => this.repository.getAccountBlockedText();
 
   register = (params?: RegisterParams): RegisteredCustomer => {
     if (['b2c', 'b2c-mp'].includes(Cypress.env('repositoryId'))) {
