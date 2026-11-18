@@ -13,7 +13,7 @@ export class BackofficeAssistantPage extends BackofficePage {
 
   private CONFIGURATION_URL = '/configuration/manage?feature=ai_commerce&tab=backoffice_assistant';
 
-  private CONTEXT_PAGE_SKU = 'M53235';
+  private CONTEXT_PAGE_SKU = 'M5022';
 
   enableAssistant = (): Cypress.Chainable => this.setAssistantEnabled(true);
 
