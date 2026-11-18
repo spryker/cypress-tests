@@ -1,0 +1,111 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [{ "isActive": true, "status": "approved" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [{ "fkCompany": "#company.id_company" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "challengeCustomer",
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "arguments": [
+            {
+              "customer": "#challengeCustomer",
+              "fkCustomer": "#challengeCustomer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "captchaRejectionCustomer",
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "arguments": [
+            {
+              "customer": "#captchaRejectionCustomer",
+              "fkCustomer": "#captchaRejectionCustomer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "lockCustomer",
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "arguments": [
+            {
+              "customer": "#lockCustomer",
+              "fkCustomer": "#lockCustomer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "multiFactorAuthCustomer",
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "arguments": [
+            {
+              "customer": "#multiFactorAuthCustomer",
+              "fkCustomer": "#multiFactorAuthCustomer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "otherCustomer",
+          "arguments": [{ "locale_name": "en_US", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "arguments": [
+            {
+              "customer": "#otherCustomer",
+              "fkCustomer": "#otherCustomer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

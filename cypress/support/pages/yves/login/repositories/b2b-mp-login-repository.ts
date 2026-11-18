@@ -15,8 +15,7 @@ export class B2bMpLoginRepository implements LoginRepository {
   getRegisterConfirmPasswordInput = (): Cypress.Chainable => cy.get('#registerForm_password_confirm');
   getRegisterAcceptTermsCheckbox = (): Cypress.Chainable => cy.get('#registerForm_accept_terms');
   getRegisterForm = (): Cypress.Chainable => cy.get('form[name=registerForm]');
-  getFailedAuthenticationText = (): string =>
-    'Please check that your E-mail address and password are correct and that you have confirmed your E-mail address by clicking the link in the registration message';
+  getFailedAuthenticationText = (): string => 'The email or password you entered is incorrect.';
   getRegistrationCompletedMessage = (): string =>
     'Almost there! We send you an email to validate your email address. Please confirm it to be able to log in.';
   getRegistrationToggleRadio = (): Cypress.Chainable =>
@@ -27,4 +26,12 @@ export class B2bMpLoginRepository implements LoginRepository {
   getForgotPasswordEmailInput(): Cypress.Chainable {
     return cy.get('#forgottenPassword_email');
   }
+  getCaptchaWidget = (): Cypress.Chainable => cy.get('[data-qa="captcha-widget"]');
+  getCaptchaCheckboxLabel = (): Cypress.Chainable => cy.get('[data-qa="captcha-widget"] label');
+  getCaptchaPayloadInput = (): Cypress.Chainable =>
+    cy.get('[data-qa="captcha-widget"] input[type="hidden"][name$="[captcha]"]');
+  getCaptchaVerifiedStateSelector = (): string => '[data-state="verified"]';
+  getCaptchaRequiredText = (): string => 'Please complete the security check.';
+  getCaptchaInvalidText = (): string => 'The security check could not be verified. Please try again.';
+  getAccountBlockedText = (): string => 'Too many login attempts. Please wait';
 }
