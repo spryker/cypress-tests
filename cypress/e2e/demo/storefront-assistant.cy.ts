@@ -1653,14 +1653,19 @@ describe(
         );
 
         it(
-          'on a product page, "Show me similar products" sends the product context and gets products or an answer',
+          'on a product page, "Show me cheaper alternatives" sends the product context and gets products or an answer',
           { tags: ['@demo-full'] },
           function (): void {
             skipUnlessAiProviderEnabled(this);
 
             storefrontAssistantPage.visitWithChat(staticFixtures.product.path);
             storefrontAssistantPage.openPanel();
-            storefrontAssistantPage.clickSuggestedPrompt(staticFixtures.productPrompts[1]);
+            storefrontAssistantPage.clickSuggestedPrompt(
+              storefrontAssistantPage.getProductPromptText(
+                staticFixtures.productPrompts[2],
+                staticFixtures.product.name
+              )
+            );
             finishRealTurn();
 
             storefrontAssistantPage

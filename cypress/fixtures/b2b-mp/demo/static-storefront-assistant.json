@@ -19,10 +19,16 @@
       "label": "Product Discovery"
     }
   ],
-  "defaultPrompts": ["Help me find a gift", "What do you recommend?", "Compare products for me"],
+  "defaultPrompts": [
+    "What do you recommend?",
+    "Show me spare parts for my equipment",
+    "Compare products for me",
+    "Find a product by its SKU"
+  ],
   "productPrompts": [
+    "How do I set up {productName}?",
+    "What warranty does {productName} have?",
     "Show me cheaper alternatives to {productName}",
-    "Show me similar products",
     "Compare {productName} with similar models"
   ],
   "productResultPrompt": "Compare these for me",
