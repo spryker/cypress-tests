@@ -66,7 +66,7 @@
       "path": "/DE/en/cart",
       "label": null,
       "pageContext": null,
-      "firstPrompt": "Help me find a gift"
+      "firstPrompt": "What do you recommend?"
     }
   ],
   "messages": {
