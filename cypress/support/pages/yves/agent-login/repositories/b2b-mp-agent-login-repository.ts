@@ -7,7 +7,7 @@ export class B2bMpAgentLoginRepository implements AgentLoginRepository {
   getLoginEmailInput = (): Cypress.Chainable => cy.get('#loginForm_email');
   getLoginPasswordInput = (): Cypress.Chainable => cy.get('#loginForm_password');
   getLoginForm = (): Cypress.Chainable => cy.get('form[name=loginForm]');
-  getFailedAuthenticationText = (): string => 'Authentication failed';
+  getFailedAuthenticationText = (): string => 'The email or password you entered is incorrect.';
   getCaptchaWidget = (): Cypress.Chainable => cy.get('[data-qa="captcha-widget"]');
   getCaptchaCheckboxLabel = (): Cypress.Chainable => cy.get('[data-qa="captcha-widget"] label');
   getCaptchaPayloadInput = (): Cypress.Chainable =>
