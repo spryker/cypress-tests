@@ -2,6 +2,8 @@ import { injectable } from 'inversify';
 
 import { CheckoutAddressRepository } from '../checkout-address-repository';
 
+const AVAILABLE_SERVICE_POINT_SELECTOR = '[data-qa="available-service-point"]:visible';
+
 @injectable()
 export class SuiteCheckoutAddressRepository implements CheckoutAddressRepository {
   // The single-shipment address form offers the service point through its own selector component;
@@ -107,12 +109,13 @@ export class SuiteCheckoutAddressRepository implements CheckoutAddressRepository
     cy.get('[data-qa="ssp-service-point-finder-input"] input:visible');
 
   getServicePointFinderListItem = (servicePointName: string): Cypress.Chainable =>
-    cy
-      .get('[data-qa="available-service-point"]:visible')
-      .filter(
-        (_, el) =>
-          Cypress.$(el).closest('.service-point').find('.service-point__name').text().trim() === servicePointName
-      );
+    cy.get(AVAILABLE_SERVICE_POINT_SELECTOR).filter((_, el) => this.isServicePointNamed(el, servicePointName));
+
+  getAvailableServicePointListItems = ($body: JQuery<HTMLElement>, servicePointName: string): JQuery<HTMLElement> =>
+    $body.find(AVAILABLE_SERVICE_POINT_SELECTOR).filter((_, el) => this.isServicePointNamed(el, servicePointName));
+
+  private isServicePointNamed = (el: HTMLElement, servicePointName: string): boolean =>
+    Cypress.$(el).closest('.service-point').find('.service-point__name').text().trim() === servicePointName;
 
   getMultiShipmentAddressItemServicePointUuidInput = (index: number): Cypress.Chainable =>
     cy.get(`#addressesForm_multiShippingAddresses_${index}_servicePoint_uuid`);

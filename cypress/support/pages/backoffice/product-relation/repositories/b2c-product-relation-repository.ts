@@ -64,4 +64,12 @@ export class B2cProductRelationRepository implements ProductRelationRepository {
   getOwningProductField(): Cypress.Chainable {
     return cy.get('#product_relation_fkProductAbstract');
   }
+
+  getRuleQueryTable(): Cypress.Chainable {
+    return cy.get('#rule-query-table');
+  }
+
+  getSuccessMessage(): Cypress.Chainable {
+    return cy.get('.alert-success');
+  }
 }
