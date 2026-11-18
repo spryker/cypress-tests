@@ -2,6 +2,6 @@
   "defaultPassword": "change123",
   "cmsPageUrlEn": "/en/imprint",
   "cmsPageUrlDe": "/de/impressum",
-  "categoryUrlEn": "/en/office",
-  "categoryUrlDe": "/de/büro"
+  "categoryUrlEn": "/en/transport",
+  "categoryUrlDe": "/de/transport"
 }
