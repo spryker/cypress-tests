@@ -9,3 +9,14 @@ export interface ProductRelationCreateDynamicFixtures {
 export interface ProductRelationCreateStaticFixtures {
   defaultPassword: string;
 }
+
+export interface ProductRelationEditDynamicFixtures {
+  rootUser: User;
+  baseProduct: ProductConcrete;
+  relatedProduct: ProductConcrete;
+  updatedRelatedProduct: ProductConcrete;
+}
+
+export interface ProductRelationEditStaticFixtures {
+  defaultPassword: string;
+}
