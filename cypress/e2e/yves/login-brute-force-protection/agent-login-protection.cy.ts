@@ -9,11 +9,6 @@ describe(
     retries: 0,
   },
   (): void => {
-    if (!['suite', 'b2b-mp', 'b2c-mp', 'b2b', 'b2c'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because the login brute-force protection is wired only in suite, b2b-mp, b2c-mp, b2b and b2c', () => {});
-      return;
-    }
-
     const agentLoginPage = container.get(AgentLoginPage);
     const agentOverviewPage = container.get(AgentOverviewPage);
 
