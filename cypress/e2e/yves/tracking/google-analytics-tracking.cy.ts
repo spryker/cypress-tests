@@ -39,6 +39,9 @@ const CHECKOUT_COMMAND_TIMEOUT = 30000;
 const ORDER_DETAILS_PATH = '/customer/order/details';
 const ADD_TO_CART_EVENT = 'add_to_cart';
 const REMOVE_FROM_CART_EVENT = 'remove_from_cart';
+const PAGE_VIEW_EVENT = 'page_view';
+// GA4 sends the page URL of a hit as `dl`.
+const PAGE_LOCATION_PARAMETER = 'dl';
 
 describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'spryker-core'] }, (): void => {
   if (Cypress.env('repositoryId') !== 'suite') {
@@ -79,10 +82,12 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
 
     readOriginalSettings();
     applyEventSettings({ isAddToCartEnabled: true, isRemoveFromCartEnabled: true });
+    requireTrackingConsent();
   });
 
   after((): void => {
     restoreOriginalSettings();
+    restoreTrackingConsentRequirement();
   });
 
   beforeEach((): void => {
@@ -92,9 +97,11 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
       password: staticFixtures.defaultPassword,
       withoutSession: true,
     });
-    // The page of the clearing has sent its hits before the next test page records any.
+    // Without consent yet, the pages of the clearing send no hits that a test could record; the cart page a test starts on
+    // has it.
     cartPage.visit();
     cartPage.clearCartIfNotEmpty();
+    trackingPage.grantTrackingConsent([staticFixtures.statisticsConsentPurpose]);
     cartPage.visit();
   });
 
@@ -482,7 +489,96 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     });
   });
 
-  // The Back Office switch tests come last: each one leaves an event switched off for the tests after it.
+  it('customer without tracking consent should not be tracked, and gtag.js should not be loaded', (): void => {
+    startWithoutTrackingConsent();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    addProductOnUntrackedPagesAndExpectNoHits(traffic);
+  });
+
+  // Google Analytics serves statistics; consent to another purpose does not start it.
+  it('customer consenting to marketing only should not be tracked, and gtag.js should not be loaded', (): void => {
+    startWithoutTrackingConsent();
+    trackingPage.grantTrackingConsent([staticFixtures.marketingConsentPurpose]);
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    addProductOnUntrackedPagesAndExpectNoHits(traffic);
+  });
+
+  it('customer consenting on the page should be tracked from then on, with the page view of that page sent once', (): void => {
+    startWithoutTrackingConsent();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    openUntrackedProductPage();
+    trackingPage.getGtagScript().should('not.exist');
+
+    trackingPage.grantTrackingConsentOnPage([staticFixtures.statisticsConsentPurpose]);
+    // A consent management platform may report the same consent again; the page view is still sent once.
+    trackingPage.grantTrackingConsentOnPage([staticFixtures.statisticsConsentPurpose]);
+    trackingPage.waitForGoogleAnalyticsToLoad();
+
+    cy.location('pathname').then((productPagePath: string): void => {
+      addProductToCart();
+
+      cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+        expect(getEvents(recordedTraffic, ADD_TO_CART_EVENT), describeRecordedEvents(recordedTraffic)).to.have.length(
+          1
+        );
+        expect(getPageViews(recordedTraffic, productPagePath), describeRecordedEvents(recordedTraffic)).to.have.length(
+          1
+        );
+      });
+    });
+  });
+
+  it('customer withdrawing tracking consent on the page should not be tracked from then on', (): void => {
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+    let hitsBeforeWithdrawal = 0;
+
+    openProductPage();
+
+    cy.location('pathname').then((productPagePath: string): void => {
+      // The page view shows that Google Analytics sends while consent is given.
+      cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+        expect(getPageViews(recordedTraffic, productPagePath), describeRecordedEvents(recordedTraffic)).to.have.length(
+          1
+        );
+      });
+    });
+
+    cy.then((): void => {
+      hitsBeforeWithdrawal = traffic.events.length;
+    });
+    trackingPage.withdrawTrackingConsentOnPage();
+    addProductToCart();
+    cartPage.visit();
+
+    // The cart page has loaded, so the product page has sent every hit it had.
+    trackingPage.getGoogleAnalyticsAdapter().should('have.prop', 'isMounted', true);
+    trackingPage.getGtagScript().should('not.exist');
+    cy.then((): void => {
+      expect(traffic.events.slice(hitsBeforeWithdrawal)).to.deep.equal([]);
+    });
+  });
+
+  // Google Analytics is set up already on that page, so it only starts sending again.
+  it('customer consenting again on the page after withdrawing should be tracked again', (): void => {
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    openProductPage();
+    trackingPage.withdrawTrackingConsentOnPage();
+    trackingPage.grantTrackingConsentOnPage([staticFixtures.statisticsConsentPurpose]);
+    addProductToCart();
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const events = getEvents(recordedTraffic, ADD_TO_CART_EVENT);
+
+      expect(events, describeRecordedEvents(recordedTraffic)).to.have.length(1);
+      expectProductEvent(events[0], 1);
+    });
+  });
+
+  // The Back Office switch tests come last: each one leaves a setting changed for the tests after it.
   it('customer adding a product should not be tracked when add_to_cart is switched off in the Back Office', (): void => {
     applyEventSettings({ isAddToCartEnabled: false, isRemoveFromCartEnabled: true });
     cy.resetYvesCookies();
@@ -491,6 +587,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
       password: staticFixtures.defaultPassword,
       withoutSession: true,
     });
+    trackingPage.grantTrackingConsent([staticFixtures.statisticsConsentPurpose]);
     const traffic = trackingPage.recordGoogleAnalyticsTraffic();
 
     openProductPage();
@@ -517,6 +614,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
       password: staticFixtures.defaultPassword,
       withoutSession: true,
     });
+    trackingPage.grantTrackingConsent([staticFixtures.statisticsConsentPurpose]);
     const traffic = trackingPage.recordGoogleAnalyticsTraffic();
 
     openProductPage();
@@ -533,6 +631,25 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
         getEvents(recordedTraffic, REMOVE_FROM_CART_EVENT),
         describeRecordedEvents(recordedTraffic)
       ).to.have.length(0);
+    });
+  });
+
+  // Last: it leaves consent not required until the settings are restored after the tests.
+  it('customer without tracking consent should be tracked when consent is not required in the Back Office', (): void => {
+    applyTrackingConsentRequirement(false);
+    cy.resetYvesCookies();
+    customerLoginScenario.execute({
+      email: dynamicFixtures.customer.email,
+      password: staticFixtures.defaultPassword,
+      withoutSession: true,
+    });
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    openProductPage();
+    addProductToCart();
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      expect(getEvents(recordedTraffic, ADD_TO_CART_EVENT), describeRecordedEvents(recordedTraffic)).to.have.length(1);
     });
   });
 
@@ -565,6 +682,40 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     cy.intercept('POST', '**/cart/add/**').as('cartAdd');
     productPage.addToCart();
     cy.wait('@cartAdd', { requestTimeout: CART_LINES_TIMEOUT, responseTimeout: CART_LINES_TIMEOUT });
+  }
+
+  // The cart page of beforeEach has consent, so a page without consent is loaded before a test records any hits. The
+  // browser may still send the last hits of that cart page after it left it, so a test checks the hits of its own pages.
+  function startWithoutTrackingConsent(): void {
+    trackingPage.removeTrackingConsent();
+    cartPage.visit();
+    trackingPage.getGoogleAnalyticsAdapter().should('have.prop', 'isMounted', true);
+  }
+
+  // Neither page loads gtag.js, so neither sends a hit: no add_to_cart is recorded, and no page view of the product page.
+  function addProductOnUntrackedPagesAndExpectNoHits(traffic: GoogleAnalyticsTraffic): void {
+    openUntrackedProductPage();
+    trackingPage.getGtagScript().should('not.exist');
+
+    cy.location('pathname').then((productPagePath: string): void => {
+      addProductToCart();
+      cartPage.visit();
+      trackingPage.getGoogleAnalyticsAdapter().should('have.prop', 'isMounted', true);
+      trackingPage.getGtagScript().should('not.exist');
+
+      cy.then((): void => {
+        expect(getEvents(traffic, ADD_TO_CART_EVENT), describeRecordedEvents(traffic)).to.have.length(0);
+        expect(getPageViews(traffic, productPagePath), describeRecordedEvents(traffic)).to.have.length(0);
+      });
+    });
+  }
+
+  // Without consent gtag.js does not load, so only the adapter is waited for: once it is mounted, the orchestrator has
+  // decided whether it may start.
+  function openUntrackedProductPage(): void {
+    catalogPage.visit();
+    catalogPage.openProductPageFromSuggestions({ query: dynamicFixtures.product.sku });
+    trackingPage.getGoogleAnalyticsAdapter().should('have.prop', 'isMounted', true);
   }
 
   function openProductPage(sku: string = dynamicFixtures.product.sku): void {
@@ -620,6 +771,12 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     return traffic.events.filter((event: GoogleAnalyticsEvent): boolean => event.name === eventName);
   }
 
+  function getPageViews(traffic: GoogleAnalyticsTraffic, pagePath: string): GoogleAnalyticsEvent[] {
+    return getEvents(traffic, PAGE_VIEW_EVENT).filter(
+      (event: GoogleAnalyticsEvent): boolean => new URL(event.parameters[PAGE_LOCATION_PARAMETER]).pathname === pagePath
+    );
+  }
+
   // The company user's shopping list of the fixtures, opened with an empty cart and Google Analytics loaded. The list comes
   // from the fixtures because the product page offers a new list only once its session cache sees the list's publish.
   function openShoppingListWithProduct(): void {
@@ -636,6 +793,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
   function loginAsCustomerWithEmptyCart(email: string): void {
     cy.visit('/logout');
     cy.resetYvesCookies();
+    trackingPage.grantTrackingConsent([staticFixtures.statisticsConsentPurpose]);
     customerLoginScenario.execute({ email, password: staticFixtures.defaultPassword, withoutSession: true });
     cartPage.visit();
     cartPage.clearCartIfNotEmpty();
@@ -839,6 +997,33 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
 
       restoreSetting(staticFixtures.addToCartSetting, true);
       restoreSetting(staticFixtures.removeFromCartSetting, true);
+    });
+    saveConfiguration();
+    cy.runQueueWorker();
+  }
+
+  // Consent is required by default; an environment that switched it off gets it back after the tests.
+  function requireTrackingConsent(): void {
+    loginToBackoffice();
+    configurationPage.visitIntegrationsTab(staticFixtures.trackingConsentTab);
+    readOriginalSetting(staticFixtures.consentRequiredSetting);
+    applyTrackingConsentRequirement(true);
+  }
+
+  function applyTrackingConsentRequirement(isConsentRequired: boolean): void {
+    loginToBackoffice();
+    configurationPage.visitIntegrationsTab(staticFixtures.trackingConsentTab);
+    configurationPage.setBooleanSetting(staticFixtures.consentRequiredSetting, isConsentRequired);
+    saveConfiguration();
+
+    trackingPage.waitForTrackingConsentRequirement(isConsentRequired);
+  }
+
+  function restoreTrackingConsentRequirement(): void {
+    loginToBackoffice();
+    configurationPage.visitIntegrationsTab(staticFixtures.trackingConsentTab);
+    cy.then((): void => {
+      restoreSetting(staticFixtures.consentRequiredSetting, true);
     });
     saveConfiguration();
     cy.runQueueWorker();

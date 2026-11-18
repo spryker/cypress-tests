@@ -20,15 +20,19 @@ const ITEM_CATEGORY_FIELD_NAMES = ['ca', 'c2', 'c3', 'c4', 'c5'];
 // A custom item parameter is a pair of fields: `k<n>` holds its name and `v<n>` its value.
 const CUSTOM_ITEM_PARAMETER_NAME_PATTERN = /^k(\d)$/;
 const CUSTOM_ITEM_PARAMETER_VALUE_PREFIX = 'v';
-// A Back Office configuration change reaches the storefront once the publish and synchronize queues are processed.
 // gtag.js defines this global once it has loaded and run.
 const GOOGLE_TAG_LOADED_GLOBAL = 'google_tag_manager';
 // A cold load of gtag.js from Google, which a slow network or browser can take long for.
 const GOOGLE_TAG_LOAD_TIMEOUT = 30000;
-
+// A Back Office configuration change reaches the storefront once the publish and synchronize queues are processed.
 const SETTINGS_SYNC_COMMANDS = ['console queue:worker:start --stop-when-empty'];
 const SETTINGS_SYNC_RETRIES = 10;
 const SETTINGS_SYNC_RETRY_WAIT = 2000;
+// The storefront's consent component reads the granted consent purposes from this cookie, comma separated.
+const TRACKING_CONSENT_COOKIE_NAME = 'trackingConsent';
+const CONSENT_PURPOSE_SEPARATOR = ',';
+// A consent management platform dispatches it on the document once it stored the shopper's new consent.
+const CONSENT_CHANGE_EVENT = 'traceable-events-consent-change';
 
 @injectable()
 @autoWired
@@ -69,6 +73,43 @@ export class TrackingPage extends YvesPage {
     );
   };
 
+  /**
+   * Waits until the storefront renders the orchestrator with consent required or not,
+   * as the Back Office setting says.
+   */
+  waitForTrackingConsentRequirement = (isConsentRequired: boolean): void => {
+    cy.reloadUntilFound(
+      this.PAGE_URL,
+      `${this.repository.getTrackingOrchestratorSelector()}[consent-required="${isConsentRequired}"]`,
+      'body',
+      SETTINGS_SYNC_RETRIES,
+      SETTINGS_SYNC_RETRY_WAIT,
+      SETTINGS_SYNC_COMMANDS
+    );
+  };
+
+  // Consent stored before the page loads, as a consent management platform keeps it between visits.
+  grantTrackingConsent = (purposes: string[]): void => {
+    cy.setCookie(TRACKING_CONSENT_COOKIE_NAME, purposes.join(CONSENT_PURPOSE_SEPARATOR));
+  };
+
+  // Consent the shopper gives on the open page: stored, then reported the way a consent management platform reports it.
+  grantTrackingConsentOnPage = (purposes: string[]): void => {
+    this.grantTrackingConsent(purposes);
+    this.reportTrackingConsentChange();
+  };
+
+  // No consent stored, for the next page that loads.
+  removeTrackingConsent = (): void => {
+    cy.clearCookie(TRACKING_CONSENT_COOKIE_NAME);
+  };
+
+  // Consent the shopper withdraws on the open page: removed, then reported the way a consent management platform reports it.
+  withdrawTrackingConsentOnPage = (): void => {
+    this.removeTrackingConsent();
+    this.reportTrackingConsentChange();
+  };
+
   getGoogleAnalyticsAdapter = (): Cypress.Chainable => cy.get(this.repository.getGoogleAnalyticsAdapterSelector());
 
   // The adapter waits at most its gtag-event-timeout for Google Analytics to take an event before the page may navigate,
@@ -78,6 +119,8 @@ export class TrackingPage extends YvesPage {
     this.getGoogleAnalyticsAdapter();
     cy.window().its(GOOGLE_TAG_LOADED_GLOBAL, { timeout: GOOGLE_TAG_LOAD_TIMEOUT });
   };
+
+  getGtagScript = (): Cypress.Chainable => cy.get(this.repository.getGtagScriptSelector());
 
   // Cypress hands a hit body over as text or, depending on how the browser sent it, as bytes; both hold the batched events.
   private getHitBodyText = (body: unknown): string => {
@@ -90,6 +133,13 @@ export class TrackingPage extends YvesPage {
     }
 
     return '';
+  };
+
+  // An event of the page's own window, as the page's listeners expect.
+  private reportTrackingConsentChange = (): void => {
+    cy.window().then((window: Window & typeof globalThis): void => {
+      window.document.dispatchEvent(new window.Event(CONSENT_CHANGE_EVENT));
+    });
   };
 
   private getHitEvents = (url: string, body: unknown): GoogleAnalyticsEvent[] => {

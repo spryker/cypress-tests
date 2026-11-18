@@ -7,6 +7,10 @@ export interface GoogleAnalyticsTrackingStaticFixtures {
   measurementIdSetting: string;
   addToCartSetting: string;
   removeFromCartSetting: string;
+  trackingConsentTab: string;
+  consentRequiredSetting: string;
+  statisticsConsentPurpose: string;
+  marketingConsentPurpose: string;
   concreteSkuParameter: string;
   productPrice: string;
   currency: string;
