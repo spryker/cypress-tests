@@ -1,0 +1,9 @@
+{
+  "defaultPassword": "change123",
+  "configuratorKey": "CONFIGURABLE_PRODUCT",
+  "fileName": "configuration.json",
+  "savedMessage": "Last upload validated & saved · configuration.json · 6 groups · 57 options · 12 rules · prices complete in EUR, CHF, USD",
+  "missingCurrencyError": "groups[2].options[0].price.CHF: price is missing for currency CHF.",
+  "unknownFormatContent": "{\"time_of_day\": \"4\"}",
+  "configuratorNotFoundError": "The file does not match the format of any configurator."
+}

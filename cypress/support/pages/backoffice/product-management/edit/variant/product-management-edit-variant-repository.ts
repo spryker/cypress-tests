@@ -16,4 +16,14 @@ export class ProductManagementEditVariantRepository {
   getSaveButton = (): Cypress.Chainable => cy.get('[type="submit"]');
   getPriceTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-price"]');
   getAllPriceInputs = (): Cypress.Chainable => cy.get('#price-table-collection [data-decimal-rounding="2"]');
+  getConfiguratorSetupTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-configurator-setup"]');
+  getConfigurationTemplateDownloadLink = (configuratorKey: string): Cypress.Chainable =>
+    cy.get(`[data-qa="configurator-setup-download-template"][data-configurator-key="${configuratorKey}"]`);
+  getConfigurationFileInput = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-file"]');
+  getConfiguratorSetupErrors = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-errors"]');
+  getConfiguratorSetupNotSavedBadge = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-not-saved"]');
+  getConfiguratorSetupConfiguratorKey = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurator-setup-configurator-key"]');
+  // Saving a product runs its after-update plugins and publish triggers synchronously, so the flash needs a wider window.
+  getFlashMessage = (message: string): Cypress.Chainable => cy.contains(message, { timeout: 30000 });
 }
