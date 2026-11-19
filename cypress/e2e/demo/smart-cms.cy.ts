@@ -15,7 +15,8 @@ describe(
     const auditLogsPage = container.get(AuditLogsPage);
 
     const REAL_FLOW_TIMEOUT = 15000;
-    const AWS_GENERATE_ATTEMPT_TIMEOUT_MS = 45000;
+    // Above the 60s gateway timeout: a slow Bedrock generate must come back as a 5xx that the retry can see, not as a client-side wait timeout.
+    const AWS_GENERATE_ATTEMPT_TIMEOUT_MS = 120000;
     const AWS_GENERATE_MAX_ATTEMPTS = 3;
 
     const restoreSmartCmsOpenAiVendor = (): Cypress.Chainable =>
@@ -26,53 +27,28 @@ describe(
     const isSuccessfulInterception = (interception: GenerateInterception): boolean =>
       (interception.response?.statusCode ?? 0) >= 200 && (interception.response?.statusCode ?? 0) <= 299;
 
-    const isSettledInterception = (interception: GenerateInterception): boolean => interception.response !== undefined;
-
-    const findSettledInterceptionForClick = (
-      allInterceptions: Array<GenerateInterception>,
-      requestCountBeforeClick: number
-    ): GenerateInterception | undefined => allInterceptions.slice(requestCountBeforeClick).find(isSettledInterception);
-
     const clickAskAiAndAwaitRealGenerate = (attemptsLeft = AWS_GENERATE_MAX_ATTEMPTS): void => {
-      // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
-      cy.get('@generateRequest.all').then((before: unknown): void => {
-        const requestCountBeforeClick = (before as Array<GenerateInterception>).length;
+      smartCmsPage.clickAskAi();
 
-        smartCmsPage.clickAskAi();
+      cy.wait('@generateRequest', { responseTimeout: AWS_GENERATE_ATTEMPT_TIMEOUT_MS }).then(
+        (interception: GenerateInterception): void => {
+          if (isSuccessfulInterception(interception)) {
+            return;
+          }
 
-        // eslint-disable-next-line spryker-cypress/no-cy-get-outside-repository -- Reads a cy.intercept() alias, not a DOM selector; there is no selector to move into a repository.
-        cy.get('@generateRequest.all', { timeout: AWS_GENERATE_ATTEMPT_TIMEOUT_MS })
-          .should((interceptions: unknown): void => {
-            const settled = findSettledInterceptionForClick(
-              interceptions as Array<GenerateInterception>,
-              requestCountBeforeClick
-            );
+          if (attemptsLeft <= 1) {
+            expect(
+              interception.response?.statusCode ?? 0,
+              `generate responded 2xx within ${AWS_GENERATE_MAX_ATTEMPTS} attempts`
+            ).to.be.within(200, 299);
 
-            expect(settled, 'the request triggered by this click has a settled response').to.not.be.undefined;
-          })
-          .then((interceptions: unknown): void => {
-            const settled = findSettledInterceptionForClick(
-              interceptions as Array<GenerateInterception>,
-              requestCountBeforeClick
-            ) as GenerateInterception;
+            return;
+          }
 
-            if (isSuccessfulInterception(settled)) {
-              return;
-            }
-
-            if (attemptsLeft <= 1) {
-              expect(
-                settled.response?.statusCode ?? 0,
-                `generate responded 2xx within ${AWS_GENERATE_MAX_ATTEMPTS} attempts`
-              ).to.be.within(200, 299);
-
-              return;
-            }
-
-            smartCmsPage.getPanelAsk().should('not.be.disabled');
-            clickAskAiAndAwaitRealGenerate(attemptsLeft - 1);
-          });
-      });
+          smartCmsPage.getPanelAsk().should('not.be.disabled');
+          clickAskAiAndAwaitRealGenerate(attemptsLeft - 1);
+        }
+      );
     };
 
     let staticFixtures: SmartCmsDemoStaticFixtures;
@@ -426,7 +402,6 @@ describe(
           cy.window().its(smartCmsPage.getContentConfigWindowKey()).its('entityType').should('eq', editor.entityType);
           smartCmsPage.getPanelToggle().should('be.visible');
           smartCmsPage.expandPanel();
-          smartCmsPage.interceptRealGenerate();
 
           smartCmsPage.typePrompt(editor.prompt);
           clickAskAiAndAwaitRealGenerate();
@@ -443,6 +418,8 @@ describe(
 
             switchedToAws = true;
             aiConfigurationPage.setFeatureVendor('smart_cms', 'aws');
+            // One intercept for both editors: cy.wait() counts responses per alias, so re-registering it per editor would wait for a response that never comes.
+            smartCmsPage.interceptRealGenerate();
 
             driveRealGenerate({
               visit: () => smartCmsPage.visitCmsPageEditor(),

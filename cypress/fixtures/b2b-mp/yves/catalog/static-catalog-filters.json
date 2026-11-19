@@ -1,9 +1,9 @@
 {
   "defaultPassword": "change123",
-  "searchTerm": "cabinet",
+  "searchTerm": "truck",
   "attributeFilter": {
     "name": "material",
-    "value": "sheet steel"
+    "value": "steel"
   },
   "filterTitles": ["Brand", "Material", "Merchant"],
   "ascendingPriceSortLabel": "Sort by price ascending",

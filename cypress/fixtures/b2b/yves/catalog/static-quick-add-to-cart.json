@@ -1,15 +1,13 @@
 {
   "defaultPassword": "change123",
   "buyableProduct": {
-    "searchQuery": "Verbatim USB stick OTG",
-    "cartEntry": "420573"
+    "searchQuery": "M1014642",
+    "cartEntry": "464012"
   },
   "unbuyableProduct": {
-    "searchQuery": "New Clairefontaine Collegeblock 8272C DIN A5, 90 sheets"
+    "searchQuery": "cable-hdmi-1"
   },
   "productGroup": {
-    "searchQuery": "M12655",
-    "swatchIdentifier": "Blue",
-    "cartEntry": "107255"
+    "swatchIdentifier": "Blue"
   }
 }

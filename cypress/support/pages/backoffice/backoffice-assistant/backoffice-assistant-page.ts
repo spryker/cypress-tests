@@ -13,7 +13,7 @@ export class BackofficeAssistantPage extends BackofficePage {
 
   private CONFIGURATION_URL = '/configuration/manage?feature=ai_commerce&tab=backoffice_assistant';
 
-  private CONTEXT_PAGE_SKU = 'M53235';
+  private CONTEXT_PAGE_SKU = 'M5022';
 
   enableAssistant = (): Cypress.Chainable => this.setAssistantEnabled(true);
 
@@ -118,7 +118,22 @@ export class BackofficeAssistantPage extends BackofficePage {
     return this.getHistories().should('be.visible');
   };
 
-  deleteFirstHistoryItem = (): Cypress.Chainable => this.getFirstHistoryItemDelete().click();
+  deleteFirstHistoryItem = (): Cypress.Chainable => {
+    // The histories view asks for a native window.confirm() before it deletes; answer it explicitly so the run never blocks on the dialog.
+    cy.window().then((win): void => {
+      const confirm = win.confirm as unknown as Partial<Cypress.Agent<sinon.SinonStub>>;
+
+      if (typeof confirm.returns === 'function') {
+        confirm.returns(true);
+
+        return;
+      }
+
+      cy.stub(win, 'confirm').as('confirmDialog').returns(true);
+    });
+
+    return this.getFirstHistoryItemDelete().click();
+  };
 
   clickFirstHistoryItem = (): Cypress.Chainable =>
     this.getHistoryItem().first().find(this.repository.getHistoryItemOpenSelector()).click();
