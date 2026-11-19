@@ -16,6 +16,7 @@ export * from './product';
 export * from './reorder';
 export * from './order-amendment';
 export * from './product-attribute-visibility';
+export * from './customer-item-number';
 export * from './customer-specific-prices';
 export * from './original-price';
 export * from './discontinued-alternative-products';

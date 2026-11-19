@@ -1,0 +1,13 @@
+{
+  "defaultPassword": "change123",
+  "companyUser": {
+    "email": "Richi@acme.com"
+  },
+  "itemNumberPrefix": "acme-100",
+  "firstSuggestedItemNumber": "ACME-1001",
+  "exactMatch": {
+    "itemNumber": "ACME-1007",
+    "sku": "007_30691822",
+    "productName": "Canon IXUS 285"
+  }
+}

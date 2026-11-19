@@ -44,6 +44,20 @@ export class CatalogPage extends YvesPage {
 
   getSuggestedProducts = (): Cypress.Chainable => cy.get(this.repository.getSuggestedProductSelector());
 
+  // The first suggestion links list is "Search suggestions" (completion terms).
+  getFirstSearchSuggestionTerm = (): Cypress.Chainable =>
+    cy.get('[data-qa="component suggestion-links-list"] .js-suggest-search__item--navigable').first();
+
+  // Rendered inside a product suggestion by the ProductExperienceManagement widget, with the same markup in every repository.
+  getCustomerItemNumberSuggestionProduct = (itemNumber: string): Cypress.Chainable =>
+    cy.get(`[data-qa="customer-item-number-suggestion-product"]:contains("${itemNumber}")`).first();
+
+  getCustomerItemNumberSuggestionHighlight = (itemNumber: string): Cypress.Chainable =>
+    this.getCustomerItemNumberSuggestionProduct(itemNumber).find('mark');
+
+  getCustomerItemNumberSuggestionSku = (itemNumber: string): Cypress.Chainable =>
+    this.getCustomerItemNumberSuggestionProduct(itemNumber).find('[data-qa="customer-item-number-suggestion-sku"]');
+
   search = (params: SearchParams): void => {
     if (this.isRepository('b2c', 'b2c-mp')) {
       cy.get('.header__search-open').click();
