@@ -1,0 +1,19 @@
+{
+  "defaultPassword": "change123",
+  "rootUser": {
+    "username": "admin@spryker.com"
+  },
+  "cmsPageEditorUrl": "/cms-gui/create-glossary?id-cms-page=6",
+  "cmsBlockEditorUrl": "/cms-block-gui/edit-glossary?id-cms-block=24",
+  "cmsPageEntityType": "cms_page",
+  "cmsPageIdEntity": 6,
+  "cmsBlockEntityType": "cms_block",
+  "cmsBlockIdEntity": 24,
+  "generateEndpointPath": "/ai-commerce/smart-cms-content/generate",
+  "invalidCsrfErrorMessage": "Invalid CSRF token.",
+  "disabledErrorMessage": "Smart CMS is not enabled.",
+  "unsupportedAttachmentMediaType": "application/x-msdownload",
+  "unsupportedAttachmentError": "backoffice_assistant.validation.attachment_unsupported_media_type",
+  "probeImagePath": "cypress/fixtures/b2b-mp/demo/files/search-by-image-probe.png",
+  "probeImageMediaType": "image/png"
+}
