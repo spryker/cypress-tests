@@ -12,6 +12,8 @@ export interface ProductConfiguratorSetupStaticFixtures {
   missingCurrencyError: string;
   unknownFormatContent: string;
   configuratorNotFoundError: string;
+  nameLocale: string;
+  changedProductName: string;
 }
 
 export interface ProductConfiguratorSetupDynamicFixtures {

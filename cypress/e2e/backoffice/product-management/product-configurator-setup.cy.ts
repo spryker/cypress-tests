@@ -56,20 +56,41 @@ describe(
         });
     });
 
-    it('backoffice user sees every error of an invalid configuration with its path, marked not saved', (): void => {
+    it('backoffice user sees every error of an invalid configuration with its path, and nothing of the form is saved', (): void => {
       productManagementEditVariantPage
-        .downloadConfigurationTemplate(staticFixtures.configuratorKey)
-        .then((template: string): void => {
-          const basis = JSON.parse(template);
-          delete basis.groups[2].options[0].price.CHF;
-
-          productManagementEditVariantPage.uploadConfigurationFile(JSON.stringify(basis), staticFixtures.fileName);
-          productManagementEditVariantPage.save();
+        .getProductNameInput(staticFixtures.nameLocale)
+        .invoke('val')
+        .then((originalProductName): void => {
+          productManagementEditVariantPage.changeProductName(
+            staticFixtures.nameLocale,
+            staticFixtures.changedProductName
+          );
 
           productManagementEditVariantPage
-            .getConfiguratorSetupErrors()
-            .should('contain', staticFixtures.missingCurrencyError);
-          productManagementEditVariantPage.getConfiguratorSetupNotSavedBadge().should('exist');
+            .downloadConfigurationTemplate(staticFixtures.configuratorKey)
+            .then((template: string): void => {
+              const basis = JSON.parse(template);
+              delete basis.groups[2].options[0].price.CHF;
+
+              productManagementEditVariantPage.uploadConfigurationFile(JSON.stringify(basis), staticFixtures.fileName);
+              productManagementEditVariantPage.save();
+
+              productManagementEditVariantPage
+                .getConfiguratorSetupErrors()
+                .should('contain', staticFixtures.missingCurrencyError);
+              productManagementEditVariantPage.getConfiguratorSetupNotSavedBadge().should('exist');
+              productManagementEditVariantPage
+                .getProductNameInput(staticFixtures.nameLocale)
+                .should('have.value', staticFixtures.changedProductName);
+
+              productManagementEditVariantPage.visitVariant(
+                dynamicFixtures.product.id_product_concrete,
+                dynamicFixtures.product.fk_product_abstract
+              );
+              productManagementEditVariantPage
+                .getProductNameInput(staticFixtures.nameLocale)
+                .should('have.value', String(originalProductName));
+            });
         });
     });
 

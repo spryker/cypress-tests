@@ -16,6 +16,8 @@ export class ProductManagementEditVariantRepository {
   getSaveButton = (): Cypress.Chainable => cy.get('[type="submit"]');
   getPriceTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-price"]');
   getAllPriceInputs = (): Cypress.Chainable => cy.get('#price-table-collection [data-decimal-rounding="2"]');
+  getProductNameInput = (localeName: string): Cypress.Chainable =>
+    cy.get(`input[name="product_concrete_form_edit[general_${localeName}][name]"]`);
   getConfiguratorSetupTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-configurator-setup"]');
   getConfigurationTemplateDownloadLink = (configuratorKey: string): Cypress.Chainable =>
     cy.get(`[data-qa="configurator-setup-download-template"][data-configurator-key="${configuratorKey}"]`);

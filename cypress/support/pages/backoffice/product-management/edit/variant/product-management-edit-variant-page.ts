@@ -31,6 +31,13 @@ export class ProductManagementEditVariantPage extends BackofficePage {
     cy.visitBackoffice(`${this.PAGE_URL}?id-product=${idProductConcrete}&id-product-abstract=${idProductAbstract}`);
   };
 
+  getProductNameInput = (localeName: string): Cypress.Chainable => this.repository.getProductNameInput(localeName);
+
+  // The localized name sits in a collapsed section, so the value is set without typing.
+  changeProductName = (localeName: string, name: string): void => {
+    this.repository.getProductNameInput(localeName).invoke('val', name);
+  };
+
   openConfiguratorSetupTab = (): void => {
     this.repository.getConfiguratorSetupTab().click();
   };
