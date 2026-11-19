@@ -64,6 +64,39 @@ export interface StorefrontAssistantPageContext {
   firstPrompt: string;
 }
 
+export interface StorefrontAssistantAssetCatalogPage {
+  description: string;
+  path: string;
+}
+
+export interface StorefrontAssistantAsset {
+  reference: string;
+  name: string;
+  serialNumber: string;
+  detailsPath: string;
+  germanDetailsPath: string;
+  catalogPages: StorefrontAssistantAssetCatalogPage[];
+  compatibleSparePartSkus: string[];
+  compatibleProductSkus: string[];
+}
+
+export interface StorefrontAssistantKnowledge {
+  product: {
+    abstractSku: string;
+    path: string;
+    germanPath: string;
+  };
+  searchToolName: string;
+  question: string;
+  expectedFacts: string[];
+  sourcePattern: string;
+  germanQuestion: string;
+  germanExpectedFacts: string[];
+  assetSerialQuestion: string;
+  assetSparePartsQuestion: string;
+  assetDocumentQuestion: string;
+}
+
 export interface StorefrontAssistantConversation {
   conversationReference: string;
   name: string;
@@ -216,4 +249,16 @@ export interface StorefrontAssistantDemoStaticFixtures {
   productImageFile: StorefrontAssistantAttachmentFile;
   historyNameLength: number;
   defaultVendor: string;
+  assetCustomer: {
+    email: string;
+  };
+  foreignAssetCustomer: {
+    email: string;
+  };
+  assetListPath: string;
+  assetAccessDeniedPath: string;
+  asset: StorefrontAssistantAsset;
+  assetPrompts: string[];
+  germanAssetPrompts: string[];
+  knowledge: StorefrontAssistantKnowledge;
 }

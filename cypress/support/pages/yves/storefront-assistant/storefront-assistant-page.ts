@@ -586,6 +586,9 @@ export class StorefrontAssistantPage extends YvesPage {
   getProductPromptText = (template: string, productName: string): string =>
     this.repository.getProductPromptText(template, productName);
 
+  getAssetPromptText = (template: string, assetName: string): string =>
+    this.repository.getAssetPromptText(template, assetName);
+
   getPricePattern = (): RegExp => this.repository.getPricePattern();
 
   getMessageTimePattern = (): RegExp => this.repository.getMessageTimePattern();

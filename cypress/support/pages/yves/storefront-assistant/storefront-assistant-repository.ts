@@ -386,6 +386,8 @@ export class StorefrontAssistantRepository {
   getProductPromptText = (template: string, productName: string): string =>
     template.replace('{productName}', productName);
 
+  getAssetPromptText = (template: string, assetName: string): string => template.replace('{assetName}', assetName);
+
   getPricePattern = (): RegExp => /€\s?\d/;
 
   getMessageTimePattern = (): RegExp => /^\d{1,2}:\d{2}/;

@@ -1,4 +1,10 @@
-import { container, readChatRequestBody, skipUnlessAiProviderEnabled } from '@utils';
+import {
+  container,
+  readChatRequestBody,
+  readChatStreamEvents,
+  skipUnlessAiKnowledgeBaseEnabled,
+  skipUnlessAiProviderEnabled,
+} from '@utils';
 import { UserLoginScenario } from '@scenarios/backoffice';
 import { CustomerLoginScenario } from '@scenarios/yves';
 import { AiConfigurationPage, AuditLogsPage } from '@pages/backoffice';
@@ -1902,6 +1908,143 @@ describe(
           }
         );
 
+        describe('product knowledge and asset support', (): void => {
+          const loginAssetCustomer = (): void =>
+            customerLoginScenario.execute({
+              email: staticFixtures.assetCustomer.email,
+              password: staticFixtures.defaultPassword,
+            });
+
+          const readRealToolInputs = (toolName: string): Cypress.Chainable<Array<Record<string, unknown>>> =>
+            storefrontAssistantPage.getAlias('sfaRealPrompt.all').then(
+              (interceptions): Array<Record<string, unknown>> =>
+                (interceptions as unknown as Array<{ response?: { body?: unknown } }>)
+                  .flatMap((interception) => readChatStreamEvents(interception.response?.body))
+                  .filter((event) => event.type === 'tool-input-available' && event.toolName === toolName)
+                  .map((event) => event.input as Record<string, unknown>)
+            );
+
+          const askOnPage = (path: string, question: string): void => {
+            storefrontAssistantPage.visitWithChat(path);
+            storefrontAssistantPage.openPanel();
+            storefrontAssistantPage.sendMessage(question);
+            finishRealTurn();
+          };
+
+          const assertAnswerContains = (facts: string[]): void => {
+            storefrontAssistantPage
+              .getLastAnswer()
+              .invoke('text')
+              .then((answer): void => {
+                facts.forEach((fact): void => {
+                  expect(answer, `the answer names "${fact}"`).to.contain(fact);
+                });
+              });
+          };
+
+          const assertKnowledgeSearchLimitedTo = (skus: string[]): void => {
+            readRealToolInputs(staticFixtures.knowledge.searchToolName).then((inputs): void => {
+              expect(inputs, 'the assistant searched the product documents').to.have.length.at.least(1);
+              inputs.forEach((input): void => {
+                const searchedSkus = [
+                  ...((input.abstract_skus as string[] | undefined) ?? []),
+                  ...((input.concrete_skus as string[] | undefined) ?? []),
+                ];
+
+                expect(searchedSkus, 'the document search names products').not.to.be.empty;
+                searchedSkus.forEach((sku): void => {
+                  expect(
+                    skus.some((allowedSku) => sku.startsWith(allowedSku)),
+                    `${sku} is an allowed product`
+                  ).to.eq(true);
+                });
+              });
+            });
+          };
+
+          beforeEach((): void => {
+            loginAssetCustomer();
+          });
+
+          it(
+            'on a product page, a document question searches only the documents of this product and answers with the document facts and the source',
+            { tags: ['@demo-full'] },
+            function (): void {
+              skipUnlessAiKnowledgeBaseEnabled(this);
+
+              askOnPage(staticFixtures.knowledge.product.path, staticFixtures.knowledge.question);
+
+              assertKnowledgeSearchLimitedTo([staticFixtures.knowledge.product.abstractSku]);
+              assertAnswerContains(staticFixtures.knowledge.expectedFacts);
+              storefrontAssistantPage
+                .getLastAnswer()
+                .invoke('text')
+                .should('match', new RegExp(staticFixtures.knowledge.sourcePattern));
+            }
+          );
+
+          it(
+            'on the German product page, a German document question gets the facts of the German documents',
+            { tags: ['@demo-full'] },
+            function (): void {
+              skipUnlessAiKnowledgeBaseEnabled(this);
+
+              askOnPage(staticFixtures.knowledge.product.germanPath, staticFixtures.knowledge.germanQuestion);
+
+              assertKnowledgeSearchLimitedTo([staticFixtures.knowledge.product.abstractSku]);
+              assertAnswerContains(staticFixtures.knowledge.germanExpectedFacts);
+            }
+          );
+
+          it(
+            'on the asset details page, the assistant answers the serial number from the asset data',
+            { tags: ['@demo-full'] },
+            function (): void {
+              skipUnlessAiProviderEnabled(this);
+
+              askOnPage(staticFixtures.asset.detailsPath, staticFixtures.knowledge.assetSerialQuestion);
+
+              assertAnswerContains([staticFixtures.asset.serialNumber]);
+            }
+          );
+
+          it(
+            'on the asset details page, a spare parts request shows only the compatible spare parts of the asset',
+            { tags: ['@demo-full'] },
+            function (): void {
+              skipUnlessAiProviderEnabled(this);
+
+              askOnPage(staticFixtures.asset.detailsPath, staticFixtures.knowledge.assetSparePartsQuestion);
+
+              storefrontAssistantPage.getProductCards().should('have.length.at.least', 1);
+              storefrontAssistantPage.getProductCards().each((_, index): void => {
+                storefrontAssistantPage
+                  .getProductCardSku(index)
+                  .invoke('text')
+                  .then((skuText): void => {
+                    expect(
+                      staticFixtures.asset.compatibleSparePartSkus.some((sku) => skuText.includes(sku)),
+                      `${skuText.trim()} is a compatible spare part`
+                    ).to.eq(true);
+                  });
+              });
+            }
+          );
+
+          it(
+            'on the asset details page, a replacement question searches only the documents of compatible products and gets an answer',
+            { tags: ['@demo-full'] },
+            function (): void {
+              skipUnlessAiKnowledgeBaseEnabled(this);
+
+              askOnPage(staticFixtures.asset.detailsPath, staticFixtures.knowledge.assetDocumentQuestion);
+
+              assertKnowledgeSearchLimitedTo(staticFixtures.asset.compatibleProductSkus);
+              storefrontAssistantPage.getLastAnswer().invoke('text').invoke('trim').should('not.be.empty');
+            }
+          );
+        });
+
         describe('other AI vendors', (): void => {
           const vendorsWithToken: Record<string, boolean> = {};
 
@@ -1950,6 +2093,141 @@ describe(
           });
         });
       });
+    });
+
+    describe('asset context', (): void => {
+      const loginAssetCustomer = (): void =>
+        customerLoginScenario.execute({
+          email: staticFixtures.assetCustomer.email,
+          password: staticFixtures.defaultPassword,
+        });
+
+      const expectedAssetPageContext = (): Record<string, unknown> => ({
+        pageType: 'asset',
+        assetReference: staticFixtures.asset.reference,
+        assetName: staticFixtures.asset.name,
+      });
+
+      const assertAssetPrompts = (templates: string[]): void => {
+        const expectedPrompts = templates.map((prompt) =>
+          storefrontAssistantPage.getAssetPromptText(prompt, staticFixtures.asset.name)
+        );
+
+        storefrontAssistantPage.getSuggestedPrompts().should('have.length', expectedPrompts.length);
+        expectedPrompts.forEach((prompt, index): void => {
+          storefrontAssistantPage.getSuggestedPrompts().eq(index).should(haveTrimmedText(prompt));
+        });
+      };
+
+      const assertAssetChip = (): void => {
+        storefrontAssistantPage
+          .getPageContextLabel()
+          .should('be.visible')
+          .and(haveTrimmedText(staticFixtures.asset.name));
+        storefrontAssistantPage
+          .getPageContextChip()
+          .should('have.attr', storefrontAssistantPage.getAttachedAttributeName());
+      };
+
+      beforeEach((): void => {
+        storefrontAssistantPage.interceptPromptWithStream(staticFixtures.streams.text);
+      });
+
+      it(
+        'on the asset details page the context chip shows the asset name, the asset prompts name the asset, and a prompt sends the asset context, while the asset list shows the default prompts without context',
+        { tags: ['@demo-smoke'] },
+        (): void => {
+          loginAssetCustomer();
+
+          storefrontAssistantPage.visitWithChat(staticFixtures.assetListPath);
+          storefrontAssistantPage.openPanel();
+
+          storefrontAssistantPage.getPageContextChip().should('not.be.visible');
+          storefrontAssistantPage
+            .getSuggestedPrompts()
+            .first()
+            .should(haveTrimmedText(staticFixtures.defaultPrompts[0]));
+
+          storefrontAssistantPage.visitWithChat(staticFixtures.asset.detailsPath);
+          storefrontAssistantPage.openPanel();
+
+          assertAssetChip();
+          assertAssetPrompts(staticFixtures.assetPrompts);
+
+          storefrontAssistantPage.clickFirstSuggestedPrompt();
+
+          waitForPromptBody().then((body): void => {
+            expect(body.pageContext).to.deep.eq(expectedAssetPageContext());
+            expect(body.message).to.eq(
+              storefrontAssistantPage.getAssetPromptText(staticFixtures.assetPrompts[0], staticFixtures.asset.name)
+            );
+          });
+          assertTurnState(TURN_STATE.done);
+        }
+      );
+
+      it(
+        'on the German asset details page the asset prompts are German and name the asset',
+        { tags: ['@demo-smoke'] },
+        (): void => {
+          loginAssetCustomer();
+
+          storefrontAssistantPage.visitWithChat(staticFixtures.asset.germanDetailsPath);
+          storefrontAssistantPage.openPanel();
+
+          assertAssetChip();
+          assertAssetPrompts(staticFixtures.germanAssetPrompts);
+        }
+      );
+
+      it(
+        'the Shop Spare Parts and Search services pages of a visible asset show the asset chip and prompts and send the asset context',
+        { tags: ['@demo-smoke'] },
+        (): void => {
+          loginAssetCustomer();
+
+          staticFixtures.asset.catalogPages.forEach(({ description, path }): void => {
+            cy.log(description);
+            storefrontAssistantPage.visitWithChat(path);
+            storefrontAssistantPage.openPanel();
+
+            assertAssetChip();
+            assertAssetPrompts(staticFixtures.assetPrompts);
+
+            storefrontAssistantPage.clickFirstSuggestedPrompt();
+
+            waitForPromptBody().its('pageContext').should('deep.eq', expectedAssetPageContext());
+          });
+        }
+      );
+
+      it(
+        'a customer without access to the asset gets the access-denied page for the asset details, and the asset catalog page sends no asset context',
+        { tags: ['@demo-smoke'] },
+        (): void => {
+          customerLoginScenario.execute({
+            email: staticFixtures.foreignAssetCustomer.email,
+            password: staticFixtures.defaultPassword,
+          });
+
+          storefrontAssistantPage.visitWithChat(staticFixtures.asset.detailsPath);
+
+          cy.location('pathname').should('eq', staticFixtures.assetAccessDeniedPath);
+
+          storefrontAssistantPage.visitWithChat(staticFixtures.asset.catalogPages[0].path);
+          storefrontAssistantPage.openPanel();
+
+          storefrontAssistantPage.getPageContextLabel().should('not.contain.text', staticFixtures.asset.name);
+          storefrontAssistantPage.getSuggestedPrompts().should('not.contain.text', staticFixtures.asset.name);
+
+          storefrontAssistantPage.clickFirstSuggestedPrompt();
+
+          waitForPromptBody().then((body): void => {
+            expect(body.pageContext).not.to.have.property('assetReference');
+            expect(body.pageContext).to.have.property('pageType').that.not.eq('asset');
+          });
+        }
+      );
     });
   }
 );

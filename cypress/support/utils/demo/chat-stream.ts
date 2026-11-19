@@ -14,3 +14,18 @@ export function buildChatStreamBody(
 export function readChatRequestBody(body: unknown): Record<string, unknown> {
   return typeof body === 'string' ? JSON.parse(body) : (body as Record<string, unknown>);
 }
+
+export function readChatStreamEvents(body: unknown): Array<Record<string, unknown>> {
+  return String(body ?? '')
+    .split('\n')
+    .filter((line) => line.startsWith('data:'))
+    .map((line) => line.slice('data:'.length).trim())
+    .filter((payload) => payload !== '' && payload !== STREAM_DONE_SENTINEL)
+    .flatMap((payload) => {
+      try {
+        return [JSON.parse(payload) as Record<string, unknown>];
+      } catch {
+        return [];
+      }
+    });
+}

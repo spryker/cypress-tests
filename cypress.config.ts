@@ -25,6 +25,7 @@ export default defineConfig({
     CI: true,
     repositoryId: process.env.ENV_REPOSITORY_ID,
     DEMO_AI_PROVIDER_ENABLED: process.env.DEMO_AI_PROVIDER_ENABLED === '1',
+    DEMO_AI_KNOWLEDGE_BASE_ENABLED: process.env.DEMO_AI_KNOWLEDGE_BASE_ENABLED === '1',
     isDynamicStoreEnabled: getEnvVar('ENV_IS_DYNAMIC_STORE_ENABLED', 'SPRYKER_DYNAMIC_STORE_MODE') === 'true',
     ENV_IS_SSP_ENABLED: getEnvVar('ENV_IS_SSP_ENABLED', 'ENV_IS_SSP_ENABLED') === 'true',
     backofficeUrl: `${protocol}://${backofficeHost}`,
