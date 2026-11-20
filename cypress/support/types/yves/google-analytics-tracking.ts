@@ -11,8 +11,11 @@ export interface GoogleAnalyticsTrackingStaticFixtures {
   consentRequiredSetting: string;
   statisticsConsentPurpose: string;
   marketingConsentPurpose: string;
+  // The settings of the list and checkout events by event name, e.g. { view_cart: '...:view_cart_event_enabled' }.
+  listAndCheckoutEventSettings: Record<string, string>;
   concreteSkuParameter: string;
   productPrice: string;
+  productPriceAfterDiscounts: string;
   currency: string;
   configuredBundle: {
     templateName: string;
@@ -41,6 +44,18 @@ export interface GoogleAnalyticsTrackingStaticFixtures {
   // A quantity in a sales unit that is a fraction of a piece but whole base units, e.g. 0.25 m of a product counted in cm,
   // and the whole quantity GA4 gets for it.
   measurementUnitAdd: { quantity: number; trackedQuantity: number };
+  categoryUrl: string;
+  categoryName: string;
+  categoryListIdPrefix: string;
+  secondPageQuery: string;
+  similarProductsUrl: string;
+  similarProductsListId: string;
+  similarProductsListName: string;
+  checkoutUrl: string;
+  checkoutSummaryUrl: string;
+  homeUrl: string;
+  shippingTier: string;
+  paymentType: string;
 }
 
 // A demo data product whose events report its abstract SKU, abstract name, brand and category path.
@@ -63,6 +78,7 @@ export interface GoogleAnalyticsTrackingDynamicFixtures {
   companyUser: { id_company_user: number };
   // A shopping list of the company user holding the fixture product.
   shoppingList: { name: string };
+  address: { id_customer_address: number };
   product: { sku: string; abstract_sku: string };
   // Counted in centimeters and sold in meters.
   measurementUnitProduct: { sku: string; abstract_sku: string };

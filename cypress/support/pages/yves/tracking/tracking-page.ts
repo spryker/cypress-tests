@@ -33,6 +33,11 @@ const TRACKING_CONSENT_COOKIE_NAME = 'trackingConsent';
 const CONSENT_PURPOSE_SEPARATOR = ',';
 // A consent management platform dispatches it on the document once it stored the shopper's new consent.
 const CONSENT_CHANGE_EVENT = 'traceable-events-consent-change';
+// The storefront's item list view tracker writes each card's position in its list here, and a paginated list's first position.
+const ITEM_LIST_INDEX_ATTRIBUTE = 'data-item-list-index';
+const ITEM_LIST_INDEX_OFFSET_ATTRIBUTE = 'data-item-list-index-offset';
+// Dispatched by the storefront's item list view tracker for the products seen, whether or not an adapter sends them.
+const ITEM_LIST_VIEW_EVENT = 'item-list-view';
 
 @injectable()
 @autoWired
@@ -142,6 +147,47 @@ export class TrackingPage extends YvesPage {
     });
   };
 
+  // Counts the list views the storefront reports from now on, on every page loaded later; call it before the page is visited.
+  recordItemListViews = (): ItemListViews => {
+    const itemListViews: ItemListViews = { count: 0 };
+
+    cy.on('window:before:load', (window: Window): void => {
+      window.document.addEventListener(ITEM_LIST_VIEW_EVENT, (): void => {
+        itemListViews.count += 1;
+      });
+    });
+
+    return itemListViews;
+  };
+
+  visitStorefrontPage = (url: string): void => {
+    cy.visit(url);
+  };
+
+  // A list is reported once its cards are half visible on the screen.
+  scrollToItemList = (itemListIdPrefix: string): void => {
+    this.getItemList(itemListIdPrefix).scrollIntoView();
+  };
+
+  getItemListIndexOffset = (itemListIdPrefix: string): Cypress.Chainable<number> =>
+    this.getItemList(itemListIdPrefix)
+      .invoke('attr', ITEM_LIST_INDEX_OFFSET_ATTRIBUTE)
+      .then((indexOffset: string | undefined): number => Number(indexOffset));
+
+  // Only a card the tracker has already given its position sends one with the click.
+  openFirstItemListCard = (itemListIdPrefix: string): void => {
+    cy.get(
+      `${this.repository.getItemListSelector(itemListIdPrefix)} ${this.repository.getItemListCardSelector()}[${ITEM_LIST_INDEX_ATTRIBUTE}]`
+    )
+      .first()
+      .find(this.repository.getItemListCardLinkSelector())
+      .first()
+      .click();
+  };
+
+  private getItemList = (itemListIdPrefix: string): Cypress.Chainable =>
+    cy.get(this.repository.getItemListSelector(itemListIdPrefix)).first();
+
   private getHitEvents = (url: string, body: unknown): GoogleAnalyticsEvent[] => {
     const sharedParameters = new URL(url).searchParams;
     const bodyLines = this.getHitBodyText(body).split(HIT_BODY_EVENT_SEPARATOR).filter(Boolean);
@@ -197,6 +243,7 @@ export class TrackingPage extends YvesPage {
       categories: ITEM_CATEGORY_FIELD_NAMES.map((fieldName: string): string => fields[fieldName] ?? '').filter(Boolean),
       price: fields['pr'] ?? '',
       quantity: fields['qt'] ?? '',
+      index: fields['lp'] ?? '',
       customParameters,
     };
   };
@@ -218,9 +265,15 @@ export interface GoogleAnalyticsItem {
   categories: string[];
   price: string;
   quantity: string;
+  // The item's position in its list, sent for list events only.
+  index: string;
   customParameters: Record<string, string>;
 }
 
 export interface GoogleAnalyticsTraffic {
   events: GoogleAnalyticsEvent[];
+}
+
+export interface ItemListViews {
+  count: number;
 }

@@ -75,5 +75,26 @@
   "measurementUnitAdd": {
     "quantity": 0.25,
     "trackedQuantity": 1
-  }
+  },
+  "productPriceAfterDiscounts": "270",
+  "listAndCheckoutEventSettings": {
+    "view_item_list": "integrations:google_analytics:product_events:view_item_list_event_enabled",
+    "select_item": "integrations:google_analytics:product_events:select_item_event_enabled",
+    "view_cart": "integrations:google_analytics:cart_events:view_cart_event_enabled",
+    "begin_checkout": "integrations:google_analytics:checkout_events:begin_checkout_event_enabled",
+    "add_shipping_info": "integrations:google_analytics:checkout_events:add_shipping_info_event_enabled",
+    "add_payment_info": "integrations:google_analytics:checkout_events:add_payment_info_event_enabled"
+  },
+  "categoryUrl": "/en/cameras-&-camcorders",
+  "categoryName": "Cameras & Camcorders",
+  "categoryListIdPrefix": "category_",
+  "secondPageQuery": "?page=2",
+  "similarProductsUrl": "/en/canon-ixus-160-1",
+  "similarProductsListId": "similar_products",
+  "similarProductsListName": "Similar products",
+  "checkoutUrl": "/en/checkout",
+  "checkoutSummaryUrl": "/en/checkout/summary",
+  "homeUrl": "/en",
+  "shippingTier": "Standard",
+  "paymentType": "Invoice"
 }

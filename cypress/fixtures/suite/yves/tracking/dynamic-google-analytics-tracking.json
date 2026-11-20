@@ -23,9 +23,20 @@
         },
         {
           "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "helper",
           "name": "haveConfirmedCustomer",
           "key": "customer",
           "arguments": [{ "locale_name": "en_US", "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address",
+          "arguments": [{ "fkCustomer": "#customer.id_customer", "fkCountry": "#country.id_country" }]
         },
         {
           "type": "helper",

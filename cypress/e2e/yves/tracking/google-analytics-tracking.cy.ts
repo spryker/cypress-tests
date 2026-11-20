@@ -39,9 +39,20 @@ const CHECKOUT_COMMAND_TIMEOUT = 30000;
 const ORDER_DETAILS_PATH = '/customer/order/details';
 const ADD_TO_CART_EVENT = 'add_to_cart';
 const REMOVE_FROM_CART_EVENT = 'remove_from_cart';
+const VIEW_ITEM_LIST_EVENT = 'view_item_list';
+const SELECT_ITEM_EVENT = 'select_item';
+const VIEW_CART_EVENT = 'view_cart';
+const BEGIN_CHECKOUT_EVENT = 'begin_checkout';
+const ADD_SHIPPING_INFO_EVENT = 'add_shipping_info';
+const ADD_PAYMENT_INFO_EVENT = 'add_payment_info';
 const PAGE_VIEW_EVENT = 'page_view';
-// GA4 sends the page URL of a hit as `dl`.
+// GA4 sends the page URL as `dl`, text event parameters as `ep.<name>`.
 const PAGE_LOCATION_PARAMETER = 'dl';
+const ITEM_LIST_ID_PARAMETER = 'ep.item_list_id';
+const ITEM_LIST_NAME_PARAMETER = 'ep.item_list_name';
+const SHIPPING_TIER_PARAMETER = 'ep.shipping_tier';
+const PAYMENT_TYPE_PARAMETER = 'ep.payment_type';
+const FIRST_LIST_POSITION = '0';
 
 describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'spryker-core'] }, (): void => {
   if (Cypress.env('repositoryId') !== 'suite') {
@@ -634,6 +645,235 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     });
   });
 
+  it('customer on a category page should be tracked with view_item_list and select_item of the category list', (): void => {
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    trackingPage.visitStorefrontPage(staticFixtures.categoryUrl);
+
+    // The click leaves the page, so the list view is sent before.
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const events = getEvents(recordedTraffic, VIEW_ITEM_LIST_EVENT);
+
+      expect(events).to.have.length.greaterThan(0);
+      expect(events[0].parameters[ITEM_LIST_ID_PARAMETER]).to.match(categoryListIdPattern());
+      expect(events[0].parameters[ITEM_LIST_NAME_PARAMETER]).to.equal(staticFixtures.categoryName);
+      expect(events[0].items[0].index).to.equal(FIRST_LIST_POSITION);
+    });
+
+    trackingPage.openFirstItemListCard(staticFixtures.categoryListIdPrefix);
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const listView = getEvents(recordedTraffic, VIEW_ITEM_LIST_EVENT)[0];
+      const events = getEvents(recordedTraffic, SELECT_ITEM_EVENT);
+
+      expect(events).to.have.length(1);
+      expect(events[0].parameters[ITEM_LIST_ID_PARAMETER]).to.equal(listView.parameters[ITEM_LIST_ID_PARAMETER]);
+      expect(events[0].items).to.have.length(1);
+      expect(events[0].items[0].id).to.equal(listView.items[0].id);
+      expect(events[0].items[0].index).to.equal(FIRST_LIST_POSITION);
+    });
+  });
+
+  it('customer on the second category page should be tracked with positions continuing from the first page', (): void => {
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    trackingPage.visitStorefrontPage(`${staticFixtures.categoryUrl}${staticFixtures.secondPageQuery}`);
+
+    trackingPage.getItemListIndexOffset(staticFixtures.categoryListIdPrefix).then((indexOffset: number): void => {
+      expect(indexOffset).to.be.greaterThan(0);
+
+      cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+        const events = getEvents(recordedTraffic, VIEW_ITEM_LIST_EVENT);
+
+        expect(events).to.have.length.greaterThan(0);
+        expect(events[0].parameters[ITEM_LIST_ID_PARAMETER]).to.match(categoryListIdPattern());
+        expect(events[0].items[0].index).to.equal(String(indexOffset));
+      });
+    });
+  });
+
+  it('customer on a product page should be tracked with view_item_list and select_item of the similar products', (): void => {
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    trackingPage.visitStorefrontPage(staticFixtures.similarProductsUrl);
+    trackingPage.scrollToItemList(staticFixtures.similarProductsListId);
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const events = getItemListEvents(recordedTraffic, VIEW_ITEM_LIST_EVENT, staticFixtures.similarProductsListId);
+
+      expect(events).to.have.length.greaterThan(0);
+      expect(events[0].parameters[ITEM_LIST_NAME_PARAMETER]).to.equal(staticFixtures.similarProductsListName);
+      expect(events[0].items[0].index).to.equal(FIRST_LIST_POSITION);
+    });
+
+    trackingPage.openFirstItemListCard(staticFixtures.similarProductsListId);
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const events = getItemListEvents(recordedTraffic, SELECT_ITEM_EVENT, staticFixtures.similarProductsListId);
+
+      expect(events).to.have.length(1);
+      expect(events[0].items).to.have.length(1);
+      expect(events[0].items[0].index).to.equal(FIRST_LIST_POSITION);
+    });
+  });
+
+  it('customer opening the cart should be tracked with view_cart', (): void => {
+    openProductPage();
+    productPage.addToCart();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    cartPage.visit();
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      const events = getEvents(recordedTraffic, VIEW_CART_EVENT);
+
+      expect(events).to.have.length(1);
+      expectProductEvent(events[0], 1, getPriceAfterDiscounts());
+    });
+  });
+
+  it('customer going through the checkout should be tracked with begin_checkout, add_shipping_info and add_payment_info', (): void => {
+    openProductPage();
+    productPage.addToCart();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    checkoutScenario.execute({
+      idCustomerAddress: dynamicFixtures.address.id_customer_address,
+      paymentMethod: getPaymentMethodBasedOnEnv(),
+      shouldSkipPlaceOrder: true,
+    });
+
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      [BEGIN_CHECKOUT_EVENT, ADD_SHIPPING_INFO_EVENT, ADD_PAYMENT_INFO_EVENT].forEach((eventName: string): void => {
+        const events = getEvents(recordedTraffic, eventName);
+
+        expect(events, eventName).to.have.length(1);
+        expectProductEvent(events[0], 1, getPriceAfterDiscounts());
+      });
+      expect(getEvents(recordedTraffic, ADD_SHIPPING_INFO_EVENT)[0].parameters[SHIPPING_TIER_PARAMETER]).to.equal(
+        staticFixtures.shippingTier
+      );
+      expect(getEvents(recordedTraffic, ADD_PAYMENT_INFO_EVENT)[0].parameters[PAYMENT_TYPE_PARAMETER]).to.equal(
+        staticFixtures.paymentType
+      );
+    });
+  });
+
+  it('customer opening the checkout by its URL should not be tracked with begin_checkout', (): void => {
+    openProductPage();
+    productPage.addToCart();
+    const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+    trackingPage.visitStorefrontPage(staticFixtures.checkoutUrl);
+
+    // The page view of the checkout shows that the hits of its page have been sent.
+    cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+      expect(getCheckoutPageViews(recordedTraffic)).to.have.length.greaterThan(0);
+      expect(getEvents(recordedTraffic, BEGIN_CHECKOUT_EVENT)).to.have.length(0);
+    });
+  });
+
+  // Each event is switched on alone; the other events of the same journey must then not be sent.
+  // Every journey ends on the home page: its page view is sent after the hits of all pages before it.
+  describe('with a single event switched on', (): void => {
+    const cartAndCheckoutEvents = [
+      VIEW_CART_EVENT,
+      BEGIN_CHECKOUT_EVENT,
+      ADD_SHIPPING_INFO_EVENT,
+      ADD_PAYMENT_INFO_EVENT,
+    ];
+
+    after((): void => {
+      applyEventSettings({ isAddToCartEnabled: true, isRemoveFromCartEnabled: true });
+    });
+
+    it('customer on a category page should be tracked with view_item_list only when select_item is switched off', (): void => {
+      switchOnSingleEvent(VIEW_ITEM_LIST_EVENT);
+      const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+      trackingPage.visitStorefrontPage(staticFixtures.categoryUrl);
+      // The click leaves the page, so the list view is sent before.
+      cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+        expect(getEvents(recordedTraffic, VIEW_ITEM_LIST_EVENT)).to.have.length.greaterThan(0);
+      });
+      trackingPage.openFirstItemListCard(staticFixtures.categoryListIdPrefix);
+      trackingPage.visitStorefrontPage(staticFixtures.homeUrl);
+
+      cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+        expect(getHomePageViews(recordedTraffic)).to.have.length.greaterThan(0);
+        expect(getEvents(recordedTraffic, SELECT_ITEM_EVENT)).to.have.length(0);
+      });
+    });
+
+    it('customer on a category page should be tracked with select_item only when view_item_list is switched off', (): void => {
+      switchOnSingleEvent(SELECT_ITEM_EVENT);
+      const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+      const itemListViews = trackingPage.recordItemListViews();
+
+      trackingPage.visitStorefrontPage(staticFixtures.categoryUrl);
+      // The storefront has seen the list, so a switched-on view_item_list would have been sent.
+      cy.wrap(itemListViews).its('count').should('be.greaterThan', 0);
+      trackingPage.openFirstItemListCard(staticFixtures.categoryListIdPrefix);
+      trackingPage.visitStorefrontPage(staticFixtures.homeUrl);
+
+      cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+        expect(getHomePageViews(recordedTraffic)).to.have.length.greaterThan(0);
+        expect(getEvents(recordedTraffic, SELECT_ITEM_EVENT)).to.have.length(1);
+        expect(getEvents(recordedTraffic, VIEW_ITEM_LIST_EVENT)).to.have.length(0);
+      });
+    });
+
+    cartAndCheckoutEvents.forEach((enabledEvent: string): void => {
+      it(`customer going through the checkout should be tracked with ${enabledEvent} only when the other cart and checkout events are switched off`, (): void => {
+        switchOnSingleEvent(enabledEvent);
+        openProductPage();
+        productPage.addToCart();
+        const traffic = trackingPage.recordGoogleAnalyticsTraffic();
+
+        checkoutScenario.execute({
+          idCustomerAddress: dynamicFixtures.address.id_customer_address,
+          paymentMethod: getPaymentMethodBasedOnEnv(),
+          shouldSkipPlaceOrder: true,
+        });
+        // The adapter is loaded after the page and reports the accepted payment step on the summary page; a page opened before
+        // that discards the submit. The page view of the summary page shows that the adapter has run there.
+        cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
+          expect(getCheckoutSummaryPageViews(recordedTraffic)).to.have.length.greaterThan(0);
+        });
+        trackingPage.visitStorefrontPage(staticFixtures.homeUrl);
+
+        cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should(
+          (recordedTraffic: GoogleAnalyticsTraffic) => {
+            expect(getHomePageViews(recordedTraffic)).to.have.length.greaterThan(0);
+            expect(getEvents(recordedTraffic, enabledEvent), enabledEvent).to.have.length(1);
+            cartAndCheckoutEvents
+              .filter((eventName: string): boolean => eventName !== enabledEvent)
+              .forEach((eventName: string): void => {
+                expect(getEvents(recordedTraffic, eventName), eventName).to.have.length(0);
+              });
+          }
+        );
+      });
+    });
+
+    // The Back Office login replaces the storefront session, so the customer logs in again.
+    function switchOnSingleEvent(eventName: string): void {
+      applyEventSettings({
+        isAddToCartEnabled: true,
+        isRemoveFromCartEnabled: true,
+        enabledListAndCheckoutEvents: [eventName],
+      });
+      cy.resetYvesCookies();
+      customerLoginScenario.execute({
+        email: dynamicFixtures.customer.email,
+        password: staticFixtures.defaultPassword,
+        withoutSession: true,
+      });
+      // Resetting the cookies also removed the tracking consent of beforeEach.
+      trackingPage.grantTrackingConsent([staticFixtures.statisticsConsentPurpose]);
+    }
+  });
+
   // Last: it leaves consent not required until the settings are restored after the tests.
   it('customer without tracking consent should be tracked when consent is not required in the Back Office', (): void => {
     applyTrackingConsentRequirement(false);
@@ -708,6 +948,38 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
         expect(getPageViews(traffic, productPagePath), describeRecordedEvents(traffic)).to.have.length(0);
       });
     });
+  }
+
+  function getHomePageViews(traffic: GoogleAnalyticsTraffic): GoogleAnalyticsEvent[] {
+    return getEvents(traffic, PAGE_VIEW_EVENT).filter((event: GoogleAnalyticsEvent): boolean =>
+      new URL(event.parameters[PAGE_LOCATION_PARAMETER]).pathname.replace(/\/$/, '').endsWith(staticFixtures.homeUrl)
+    );
+  }
+
+  function categoryListIdPattern(): RegExp {
+    return new RegExp(`^${staticFixtures.categoryListIdPrefix}\\d+$`);
+  }
+
+  function getItemListEvents(
+    traffic: GoogleAnalyticsTraffic,
+    eventName: string,
+    itemListId: string
+  ): GoogleAnalyticsEvent[] {
+    return getEvents(traffic, eventName).filter(
+      (event: GoogleAnalyticsEvent): boolean => event.parameters[ITEM_LIST_ID_PARAMETER] === itemListId
+    );
+  }
+
+  function getCheckoutSummaryPageViews(traffic: GoogleAnalyticsTraffic): GoogleAnalyticsEvent[] {
+    return getEvents(traffic, PAGE_VIEW_EVENT).filter((event: GoogleAnalyticsEvent): boolean =>
+      new URL(event.parameters[PAGE_LOCATION_PARAMETER]).pathname.includes(staticFixtures.checkoutSummaryUrl)
+    );
+  }
+
+  function getCheckoutPageViews(traffic: GoogleAnalyticsTraffic): GoogleAnalyticsEvent[] {
+    return getEvents(traffic, PAGE_VIEW_EVENT).filter((event: GoogleAnalyticsEvent): boolean =>
+      new URL(event.parameters[PAGE_LOCATION_PARAMETER]).pathname.includes(staticFixtures.checkoutUrl)
+    );
   }
 
   // Without consent gtag.js does not load, so only the adapter is waited for: once it is mounted, the orchestrator has
@@ -880,9 +1152,18 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     companyUserSelectPage.selectBusinessUnit({ idCompanyUser: dynamicFixtures.companyUser.id_company_user });
   }
 
+  // The cart and checkout events report the price after the cart discounts: the demo discount "10% off minimum order"
+  // applies to every cart of 100 EUR or more.
+  function getPriceAfterDiscounts(): number {
+    return Number(staticFixtures.productPriceAfterDiscounts);
+  }
+
   // The product is reported by its abstract SKU, abstract name and brand, with the concrete SKU as a custom item parameter.
-  function expectProductEvent(event: GoogleAnalyticsEvent, quantity: number): void {
-    const productPrice = Number(staticFixtures.productPrice);
+  function expectProductEvent(
+    event: GoogleAnalyticsEvent,
+    quantity: number,
+    productPrice: number = Number(staticFixtures.productPrice)
+  ): void {
 
     expect(event.parameters['cu'], event.name).to.equal(staticFixtures.currency);
     expect(Number(event.parameters['epn.value']), event.name).to.equal(productPrice * quantity);
@@ -953,6 +1234,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
       staticFixtures.measurementIdSetting,
       staticFixtures.addToCartSetting,
       staticFixtures.removeFromCartSetting,
+      ...Object.values(staticFixtures.listAndCheckoutEventSettings),
     ].forEach(readOriginalSetting);
   }
 
@@ -979,11 +1261,26 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
     });
     configurationPage.setBooleanSetting(staticFixtures.addToCartSetting, params.isAddToCartEnabled);
     configurationPage.setBooleanSetting(staticFixtures.removeFromCartSetting, params.isRemoveFromCartEnabled);
+
+    // All list and checkout events are switched on unless the test names the ones it wants.
+    const enabledListAndCheckoutEventNames =
+      params.enabledListAndCheckoutEvents ?? Object.keys(staticFixtures.listAndCheckoutEventSettings);
+    const listAndCheckoutEventStates = Object.fromEntries(
+      Object.keys(staticFixtures.listAndCheckoutEventSettings).map((eventName: string): [string, boolean] => [
+        eventName,
+        enabledListAndCheckoutEventNames.includes(eventName),
+      ])
+    );
+
+    Object.entries(staticFixtures.listAndCheckoutEventSettings).forEach(([eventName, settingKey]): void => {
+      configurationPage.setBooleanSetting(settingKey, listAndCheckoutEventStates[eventName]);
+    });
     saveConfiguration();
 
     trackingPage.waitForEventSettings({
       [ADD_TO_CART_EVENT]: params.isAddToCartEnabled,
       [REMOVE_FROM_CART_EVENT]: params.isRemoveFromCartEnabled,
+      ...listAndCheckoutEventStates,
     });
   }
 
@@ -997,6 +1294,9 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
 
       restoreSetting(staticFixtures.addToCartSetting, true);
       restoreSetting(staticFixtures.removeFromCartSetting, true);
+      Object.values(staticFixtures.listAndCheckoutEventSettings).forEach((settingKey: string): void =>
+        restoreSetting(settingKey, true)
+      );
     });
     saveConfiguration();
     cy.runQueueWorker();
@@ -1080,4 +1380,5 @@ interface OriginalSetting {
 interface EventSettingsParams {
   isAddToCartEnabled: boolean;
   isRemoveFromCartEnabled: boolean;
+  enabledListAndCheckoutEvents?: string[];
 }
