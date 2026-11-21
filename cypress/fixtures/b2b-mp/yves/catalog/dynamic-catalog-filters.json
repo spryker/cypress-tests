@@ -54,11 +54,6 @@
           }
         },
         {
-          "type": "builder",
-          "name": "LocalizedAttributesBuilder",
-          "key": "localizedAttribute"
-        },
-        {
           "type": "transfer",
           "name": "StoreTransfer",
           "key": "store",
@@ -85,6 +80,14 @@
           "type": "helper",
           "name": "haveActiveMerchantWithStore",
           "key": "merchant1"
+        },
+        {
+          "type": "builder",
+          "name": "LocalizedAttributesBuilder",
+          "key": "localizedAttribute",
+          "arguments": {
+            "name": "#merchant1.name"
+          }
         },
         {
           "type": "helper",
