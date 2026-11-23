@@ -9,8 +9,8 @@ describe(
     tags: ['@backoffice', '@configuration', 'configuration', 'spryker-core-back-office'],
   },
   (): void => {
-    if (!['suite'].includes(Cypress.env('repositoryId'))) {
-      it.skip('skipped because the CAPTCHA settings are installed only in suite', () => {});
+    if (!['suite', 'b2b-mp'].includes(Cypress.env('repositoryId'))) {
+      it.skip('skipped because the CAPTCHA settings are installed only in suite and b2b-mp', () => {});
 
       return;
     }
