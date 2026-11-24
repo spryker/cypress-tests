@@ -27,19 +27,22 @@ describe(
 
     before((): void => {
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
-    });
 
-    beforeEach((): void => {
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
         password: staticFixtures.defaultPassword,
       });
-      configurationPage.requestSaveConfigurationValue({
-        settingKey: staticFixtures.visualAddToCartEnabledSettingKey,
-        value: staticFixtures.enabledSettingValue,
-      });
+      configurationPage
+        .requestSaveConfigurationValue({
+          settingKey: staticFixtures.visualAddToCartEnabledSettingKey,
+          value: staticFixtures.enabledSettingValue,
+        })
+        .its('body.success')
+        .should('eq', true);
       cy.runQueueWorker();
+    });
 
+    beforeEach((): void => {
       customerLoginScenario.execute({
         email: dynamicFixtures.customer.email,
         password: staticFixtures.defaultPassword,
