@@ -1,0 +1,12 @@
+{
+  "defaultPassword": "change123",
+  "storefrontAssistant": {
+    "tabKey": "storefront_assistant",
+    "vendorSettingKey": "ai_commerce:storefront_assistant:ai_vendor:ai_configuration",
+    "openAiVendor": "AI_COMMERCE:AI_CONFIGURATION_STOREFRONT_ASSISTANT_OPENAI",
+    "openAiModelSettingKey": "ai_commerce:storefront_assistant:ai_vendor:openai_model",
+    "supportedModels": ["gpt-6-luna", "gpt-6.1-terra"],
+    "alternativeModel": "gpt-6.1-terra",
+    "unsupportedModel": "gpt-4o"
+  }
+}

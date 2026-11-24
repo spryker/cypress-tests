@@ -27,7 +27,12 @@ export class OffersPage extends MpPage {
       }
     );
 
-    return this.repository.getFirstTableRow();
+    // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Render guard: a row of the previous table result is destroyed when the search result is drawn, so clicking the first row before that opens whichever offer the unfiltered table listed first.
+    this.repository.getTableRows().should(($rows: JQuery<HTMLElement>) => {
+      expect($rows.toArray().every((row: HTMLElement): boolean => row.innerText.includes(params.query))).to.equal(true);
+    });
+
+    return this.repository.getTableRowContaining(params.query);
   };
 
   openOffer = (params: FindParams): void => {

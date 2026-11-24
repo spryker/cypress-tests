@@ -13,6 +13,90 @@ export class ConfigurationPage extends BackofficePage {
 
   protected THEME_FEATURE = 'theme';
 
+  protected AI_COMMERCE_FEATURE = 'ai_commerce';
+
+  protected SCOPE_GLOBAL = 'global';
+
+  protected SECURITY_FEATURE = 'security';
+
+  visitAiCommerceTab = (tabKey: string): void => {
+    cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.AI_COMMERCE_FEATURE}&tab=${tabKey}`);
+  };
+
+  selectRadioOption = (settingKey: string, value: string): void => {
+    cy.get(this.repository.getRadioOptionSelector(settingKey, value)).check({ force: true });
+  };
+
+  getSelectSetting = (settingKey: string): Cypress.Chainable =>
+    cy.get(this.repository.getSelectSettingSelector(settingKey));
+
+  getSelectableOptions = (settingKey: string): Cypress.Chainable =>
+    cy.get(this.repository.getSelectSettingSelector(settingKey)).find(this.repository.getSelectableOptionSelector());
+
+  selectOption = (settingKey: string, value: string): void => {
+    cy.get(this.repository.getSelectSettingSelector(settingKey)).select(value);
+  };
+
+  saveConfigurationAndWaitForResponse = (): void => {
+    cy.intercept('POST', `**${this.repository.getSaveUrl()}`).as('saveConfiguration');
+    this.saveConfiguration();
+    cy.wait('@saveConfiguration');
+  };
+
+  requestSaveConfigurationValue = (params: {
+    settingKey: string;
+    value: string;
+  }): Cypress.Chainable<Cypress.Response<SaveConfigurationResponse>> =>
+    cy.request<SaveConfigurationResponse>({
+      method: 'POST',
+      url: `${Cypress.env().backofficeUrl}${this.repository.getSaveUrl()}`,
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      body: { changes: [{ key: params.settingKey, value: params.value, scope: this.SCOPE_GLOBAL }] },
+      failOnStatusCode: false,
+    });
+
+  requestUseDefaultConfigurationValue = (
+    settingKey: string
+  ): Cypress.Chainable<Cypress.Response<SaveConfigurationResponse>> =>
+    cy.request<SaveConfigurationResponse>({
+      method: 'POST',
+      url: `${Cypress.env().backofficeUrl}${this.repository.getSaveUrl()}`,
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      body: { changes: [{ key: settingKey, value: null, use_default: true, scope: this.SCOPE_GLOBAL }] },
+    });
+
+  visitCaptchaTab = (): void => {
+    cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.SECURITY_FEATURE}&tab=captcha`);
+  };
+
+  setCaptchaEnabled = (isCaptchaEnabled: boolean): void => {
+    if (isCaptchaEnabled) {
+      cy.get(this.repository.getCaptchaEnabledToggleSelector()).check({ force: true });
+
+      return;
+    }
+
+    cy.get(this.repository.getCaptchaEnabledToggleSelector()).uncheck({ force: true });
+  };
+
+  getSelectedCaptchaMode = (): Cypress.Chainable =>
+    cy.get(this.repository.getSelectedCaptchaModeSelector()).invoke('val');
+
+  stubConfigurationSave = (): void => {
+    cy.intercept('POST', `**${this.repository.getSaveUrl()}`, {
+      statusCode: 200,
+      body: { success: true, count: 0, errors: [] },
+    }).as('configurationSave');
+  };
+
+  waitForConfigurationSave = (): Cypress.Chainable => cy.wait('@configurationSave');
+
+  interceptConfigurationPageLoad = (): void => {
+    cy.intercept({ method: 'GET', pathname: this.PAGE_URL }).as('configurationPageLoad');
+  };
+
+  waitForConfigurationPageLoad = (): Cypress.Chainable => cy.wait('@configurationPageLoad');
+
   visitLogosTab = (): void => {
     cy.visitBackoffice(`${this.PAGE_URL}?feature=${this.THEME_FEATURE}&tab=logos`);
   };
@@ -157,4 +241,13 @@ export class ConfigurationPage extends BackofficePage {
   getChangesCount = (): Cypress.Chainable => cy.get(this.repository.getChangesCountSelector());
 
   getSettingRow = (settingKey: string): Cypress.Chainable => cy.get(this.repository.getSettingRowSelector(settingKey));
+
+  getSettingTabLink = (settingKey: string): Cypress.Chainable =>
+    cy.get(this.repository.getSettingRowSelector(settingKey)).find(this.repository.getSettingTabLinkSelector());
+}
+
+interface SaveConfigurationResponse {
+  success: boolean;
+  count: number;
+  errors: Record<string, string>;
 }

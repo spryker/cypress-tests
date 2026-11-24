@@ -5,3 +5,4 @@ export * from './demo/chat-stream';
 export * from './feature';
 export * from './inversify';
 export * from './nestable';
+export * from './captcha';
