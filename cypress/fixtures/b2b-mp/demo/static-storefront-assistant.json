@@ -914,10 +914,10 @@
     },
     "searchToolName": "product_knowledge_search",
     "question": "What is the maximum condensate temperature and how long is the warranty?",
-    "expectedFacts": ["95", "24 months"],
-    "sourcePattern": "User Manual|Technical Specifications",
+    "expectedFactPatterns": ["95", "24[\\s-]*months?"],
+    "sourcePattern": "User[\\s-]Manual|Technical Specifications|Installation[\\s-]Guide",
     "germanQuestion": "Wie lange ist die Garantie dieser Pumpe?",
-    "germanExpectedFacts": ["24 Monate"],
+    "germanExpectedFactPatterns": ["24[\\s-]*Monat"],
     "assetSerialQuestion": "What is the serial number of this asset?",
     "assetSparePartsQuestion": "Show me spare parts for this asset",
     "assetDocumentQuestion": "How do I replace the shaft seal of this pump?"

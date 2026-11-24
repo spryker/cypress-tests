@@ -1942,6 +1942,31 @@ describe(
               });
           };
 
+          const assertAnswerMatches = (factPatterns: string[]): void => {
+            storefrontAssistantPage
+              .getLastAnswer()
+              .invoke('text')
+              .then((answer): void => {
+                factPatterns.forEach((factPattern): void => {
+                  expect(answer, `the answer names /${factPattern}/i`).to.match(new RegExp(factPattern, 'i'));
+                });
+              });
+          };
+
+          const assertKnowledgeSourceLinks = (sourcePattern: string): void => {
+            storefrontAssistantPage
+              .getLastAnswerKnowledgeSourceLinks()
+              .should('have.length.at.least', 1)
+              .each(($link): void => {
+                expect($link.attr('href'), 'the source links to an https document').to.match(/^https:\/\//);
+                expect($link.attr('target'), 'the source opens in a new tab').to.eq('_blank');
+                expect($link.attr('rel'), 'the source link is isolated').to.eq('noopener noreferrer');
+              })
+              .then(($links): void => {
+                expect($links.text(), 'a source names a product document').to.match(new RegExp(sourcePattern, 'i'));
+              });
+          };
+
           const assertKnowledgeSearchLimitedTo = (skus: string[]): void => {
             readRealToolInputs(staticFixtures.knowledge.searchToolName).then((inputs): void => {
               expect(inputs, 'the assistant searched the product documents').to.have.length.at.least(1);
@@ -1967,7 +1992,7 @@ describe(
           });
 
           it(
-            'on a product page, a document question searches only the documents of this product and answers with the document facts and the source',
+            'on a product page, a document question searches only the documents of this product, answers with the document facts and shows the source documents as links',
             { tags: ['@demo-full'] },
             function (): void {
               skipUnlessAiKnowledgeBaseEnabled(this);
@@ -1975,11 +2000,8 @@ describe(
               askOnPage(staticFixtures.knowledge.product.path, staticFixtures.knowledge.question);
 
               assertKnowledgeSearchLimitedTo([staticFixtures.knowledge.product.abstractSku]);
-              assertAnswerContains(staticFixtures.knowledge.expectedFacts);
-              storefrontAssistantPage
-                .getLastAnswer()
-                .invoke('text')
-                .should('match', new RegExp(staticFixtures.knowledge.sourcePattern));
+              assertAnswerMatches(staticFixtures.knowledge.expectedFactPatterns);
+              assertKnowledgeSourceLinks(staticFixtures.knowledge.sourcePattern);
             }
           );
 
@@ -1992,7 +2014,7 @@ describe(
               askOnPage(staticFixtures.knowledge.product.germanPath, staticFixtures.knowledge.germanQuestion);
 
               assertKnowledgeSearchLimitedTo([staticFixtures.knowledge.product.abstractSku]);
-              assertAnswerContains(staticFixtures.knowledge.germanExpectedFacts);
+              assertAnswerMatches(staticFixtures.knowledge.germanExpectedFactPatterns);
             }
           );
 

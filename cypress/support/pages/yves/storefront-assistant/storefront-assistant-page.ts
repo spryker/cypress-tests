@@ -653,6 +653,12 @@ export class StorefrontAssistantPage extends YvesPage {
 
   getLastAnswerLinks = (): Cypress.Chainable => this.getLastAnswer().find(this.repository.getMarkdownAnyLinkSelector());
 
+  getLastAnswerKnowledgeSourceLinks = (): Cypress.Chainable =>
+    cy
+      .get(this.repository.getAssistantMessageParentSelector())
+      .last()
+      .find(this.repository.getKnowledgeSourceLinkSelector());
+
   getLastAnswerListItems = (): Cypress.Chainable =>
     this.getLastAnswer().find(this.repository.getMarkdownListItemSelector());
 
