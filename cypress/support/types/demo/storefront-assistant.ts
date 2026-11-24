@@ -88,10 +88,10 @@ export interface StorefrontAssistantKnowledge {
   };
   searchToolName: string;
   question: string;
-  expectedFacts: string[];
+  expectedFactPatterns: string[];
   sourcePattern: string;
   germanQuestion: string;
-  germanExpectedFacts: string[];
+  germanExpectedFactPatterns: string[];
   assetSerialQuestion: string;
   assetSparePartsQuestion: string;
   assetDocumentQuestion: string;

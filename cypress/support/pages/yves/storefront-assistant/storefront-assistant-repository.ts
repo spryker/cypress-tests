@@ -143,6 +143,8 @@ export class StorefrontAssistantRepository {
 
   getMarkdownAnyLinkSelector = (): string => 'a[href]';
 
+  getKnowledgeSourceLinkSelector = (): string => '.chat-knowledge-sources__link';
+
   getMarkdownListItemSelector = (): string => 'ul > li';
 
   getMarkdownTableSelector = (): string => 'table';

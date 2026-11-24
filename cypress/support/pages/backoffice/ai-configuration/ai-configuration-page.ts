@@ -66,6 +66,11 @@ export class AiConfigurationPage extends BackofficePage {
   selectSettingOption = (settingKey: string, value: string): Cypress.Chainable =>
     this.getSettingInput(settingKey).select(value);
 
+  acceptDependentResetConfirmation = (): Cypress.Chainable =>
+    cy.window().then((win): void => {
+      cy.stub(win, 'confirm').as('dependentResetConfirm').returns(true);
+    });
+
   saveConfiguration = (): void => {
     cy.intercept('POST', '**/configuration/manage/save').as('saveConfiguration');
     this.getSaveButton().click();
@@ -115,6 +120,7 @@ export class AiConfigurationPage extends BackofficePage {
         return;
       }
 
+      this.acceptDependentResetConfirmation();
       this.selectRadioOption(settingKey, value);
       this.saveConfiguration();
       // eslint-disable-next-line spryker-cypress/no-assertions-in-page-objects -- Post-action guard: the setter must not return before the save round-trip succeeds.
