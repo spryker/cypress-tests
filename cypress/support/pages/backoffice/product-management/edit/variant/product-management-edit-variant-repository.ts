@@ -1,6 +1,8 @@
 import { autoWired } from '@utils';
 import { injectable } from 'inversify';
 
+const PRODUCT_SAVE_TIMEOUT = 30000;
+
 @injectable()
 @autoWired
 export class ProductManagementEditVariantRepository {
@@ -19,13 +21,19 @@ export class ProductManagementEditVariantRepository {
   getProductNameInput = (localeName: string): Cypress.Chainable =>
     cy.get(`input[name="product_concrete_form_edit[general_${localeName}][name]"]`);
   getConfiguratorSetupTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-configurator-setup"]');
+  getConfiguratorSetupStatus = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-status"]');
   getConfigurationTemplateDownloadLink = (configuratorKey: string): Cypress.Chainable =>
     cy.get(`[data-qa="configurator-setup-download-template"][data-configurator-key="${configuratorKey}"]`);
+  getSavedConfigurationDownloadLink = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-download"]');
+  getSavedConfigurationDownloadUnavailableButton = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurator-setup-download-unavailable"]');
   getConfigurationFileInput = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-file"]');
   getConfiguratorSetupErrors = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-errors"]');
   getConfiguratorSetupNotSavedBadge = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-not-saved"]');
+  getConfiguratorSetupEmptySummary = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-summary-empty"]');
   getConfiguratorSetupConfiguratorKey = (): Cypress.Chainable =>
     cy.get('[data-qa="configurator-setup-configurator-key"]');
-  // Saving a product runs its after-update plugins and publish triggers synchronously, so the flash needs a wider window.
-  getFlashMessage = (message: string): Cypress.Chainable => cy.contains(message, { timeout: 30000 });
+  getConfiguratorSetupSummaryItems = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-summary-item"]');
+  getConfiguratorSetupLastChange = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-last-change"]');
+  getFlashMessage = (message: string): Cypress.Chainable => cy.contains(message, { timeout: PRODUCT_SAVE_TIMEOUT });
 }

@@ -26,6 +26,7 @@ export * from './packaging-unit-checkout';
 export * from './product-bundle-checkout';
 export * from './catalog-filters';
 export * from './back-in-stock-notification';
+export * from './configurable-product-basis';
 export * from './configurable-product-checkout';
 export * from './configurable-product-shopping-list';
 export * from './configurable-product-rfq';

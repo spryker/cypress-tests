@@ -4,6 +4,10 @@ import { inject, injectable } from 'inversify';
 import { BackofficePage } from '@pages/backoffice';
 import { ProductManagementEditVariantRepository } from './product-management-edit-variant-repository';
 
+const CONFIGURATION_DOWNLOAD_URL = '/product-configuration-gui/configurator-setup/download';
+
+const CONFIGURATION_TEMPLATE_DOWNLOAD_URL = '/product-configuration-gui/configurator-setup/download-template';
+
 @injectable()
 @autoWired
 export class ProductManagementEditVariantPage extends BackofficePage {
@@ -33,7 +37,6 @@ export class ProductManagementEditVariantPage extends BackofficePage {
 
   getProductNameInput = (localeName: string): Cypress.Chainable => this.repository.getProductNameInput(localeName);
 
-  // The localized name sits in a collapsed section, so the value is set without typing.
   changeProductName = (localeName: string, name: string): void => {
     this.repository.getProductNameInput(localeName).invoke('val', name);
   };
@@ -42,13 +45,36 @@ export class ProductManagementEditVariantPage extends BackofficePage {
     this.repository.getConfiguratorSetupTab().click();
   };
 
-  // The template is downloaded with the session of the logged-in user, as the link in the tab does.
+  getConfiguratorSetupStatus = (): Cypress.Chainable => this.repository.getConfiguratorSetupStatus();
+
+  getConfigurationTemplateDownloadLink = (configuratorKey: string): Cypress.Chainable =>
+    this.repository.getConfigurationTemplateDownloadLink(configuratorKey);
+
+  getSavedConfigurationDownloadUnavailableButton = (): Cypress.Chainable =>
+    this.repository.getSavedConfigurationDownloadUnavailableButton();
+
   downloadConfigurationTemplate = (configuratorKey: string): Cypress.Chainable<string> =>
     this.repository
       .getConfigurationTemplateDownloadLink(configuratorKey)
       .invoke('attr', 'href')
       .then((href) => cy.request(`${Cypress.env().backofficeUrl}${String(href)}`))
       .then((response) => JSON.stringify(response.body, null, 4));
+
+  downloadSavedConfiguration = (): Cypress.Chainable<Cypress.Response<unknown>> =>
+    this.repository
+      .getSavedConfigurationDownloadLink()
+      .invoke('attr', 'href')
+      .then((href) => cy.request(`${Cypress.env().backofficeUrl}${String(href)}`));
+
+  visitConfigurationDownload = (idProductConcrete: number): void => {
+    cy.visitBackoffice(`${CONFIGURATION_DOWNLOAD_URL}?id-product-concrete=${idProductConcrete}`);
+  };
+
+  visitConfigurationTemplateDownload = (idProductConcrete: number, configuratorKey: string): void => {
+    cy.visitBackoffice(
+      `${CONFIGURATION_TEMPLATE_DOWNLOAD_URL}?id-product-concrete=${idProductConcrete}&configurator-key=${configuratorKey}`
+    );
+  };
 
   uploadConfigurationFile = (contents: string, fileName: string): void => {
     this.repository
@@ -64,7 +90,13 @@ export class ProductManagementEditVariantPage extends BackofficePage {
 
   getConfiguratorSetupNotSavedBadge = (): Cypress.Chainable => this.repository.getConfiguratorSetupNotSavedBadge();
 
+  getConfiguratorSetupEmptySummary = (): Cypress.Chainable => this.repository.getConfiguratorSetupEmptySummary();
+
   getConfiguratorSetupConfiguratorKey = (): Cypress.Chainable => this.repository.getConfiguratorSetupConfiguratorKey();
+
+  getConfiguratorSetupSummaryItems = (): Cypress.Chainable => this.repository.getConfiguratorSetupSummaryItems();
+
+  getConfiguratorSetupLastChange = (): Cypress.Chainable => this.repository.getConfiguratorSetupLastChange();
 
   getFlashMessage = (message: string): Cypress.Chainable => this.repository.getFlashMessage(message);
 

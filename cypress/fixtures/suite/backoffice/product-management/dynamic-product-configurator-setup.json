@@ -16,6 +16,68 @@
           "arguments": ["#rootUser.id_user", 1]
         },
         {
+          "type": "helper",
+          "name": "haveRole",
+          "key": "allowAllRole"
+        },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "*",
+              "controller": "*",
+              "action": "*",
+              "type": "allow",
+              "fk_acl_role": "#allowAllRole.id_acl_role"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveRole",
+          "key": "configuratorSetupDenyRole"
+        },
+        {
+          "type": "helper",
+          "name": "haveRule",
+          "arguments": [
+            {
+              "bundle": "product-configuration-gui",
+              "controller": "configurator-setup",
+              "action": "*",
+              "type": "deny",
+              "fk_acl_role": "#configuratorSetupDenyRole.id_acl_role"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveGroup",
+          "key": "configuratorSetupDenyGroup"
+        },
+        {
+          "type": "helper",
+          "name": "addRoleToGroup",
+          "arguments": ["#allowAllRole.id_acl_role", "#configuratorSetupDenyGroup.id_acl_group"]
+        },
+        {
+          "type": "helper",
+          "name": "addRoleToGroup",
+          "arguments": ["#configuratorSetupDenyRole.id_acl_role", "#configuratorSetupDenyGroup.id_acl_group"]
+        },
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "configuratorSetupDeniedUser",
+          "arguments": [{ "password": "change123" }]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#configuratorSetupDeniedUser.id_user", "#configuratorSetupDenyGroup.id_acl_group"]
+        },
+        {
           "type": "transfer",
           "name": "LocaleTransfer",
           "key": "localeEN",
@@ -35,7 +97,13 @@
         {
           "type": "helper",
           "name": "haveFullProduct",
-          "key": "product",
+          "key": "productWithoutConfiguration",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productForTemplate",
           "arguments": [
             {},
             {
@@ -50,11 +118,10 @@
         {
           "type": "helper",
           "name": "havePriceProductAbstract",
-          "key": "productAbstractPrice",
           "arguments": [
-            "#product.fk_product_abstract",
+            "#productForTemplate.fk_product_abstract",
             {
-              "skuProductAbstract": "#product.abstract_sku",
+              "skuProductAbstract": "#productForTemplate.abstract_sku",
               "priceTypeName": "DEFAULT",
               "moneyValue": { "netAmount": 40000, "grossAmount": 48000 }
             }
@@ -65,9 +132,175 @@
           "name": "havePriceProduct",
           "arguments": [
             {
-              "skuProductAbstract": "#product.abstract_sku",
-              "skuProduct": "#product.sku",
+              "skuProductAbstract": "#productForTemplate.abstract_sku",
+              "skuProduct": "#productForTemplate.sku",
               "moneyValue": { "netAmount": 50000, "grossAmount": 50000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productForDownload",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConfigurationTransferPersisted",
+          "key": "productConfigurationForDownload",
+          "arguments": [
+            {
+              "fkProduct": "#productForDownload.id_product_concrete",
+              "configuratorKey": "CONFIGURABLE_PRODUCT",
+              "defaultConfiguration": "{\"schemaVersion\":\"1.0\",\"currencies\":[\"EUR\"],\"groups\":[],\"rules\":[]}",
+              "defaultDisplayData": "{}",
+              "isComplete": false
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productForInvalidConfiguration",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                { "locale": "#localeEN", "name": "#localizedAttribute.name" },
+                { "locale": "#localeDE", "name": "#localizedAttribute.name" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProductAbstract",
+          "arguments": [
+            "#productForInvalidConfiguration.fk_product_abstract",
+            {
+              "skuProductAbstract": "#productForInvalidConfiguration.abstract_sku",
+              "priceTypeName": "DEFAULT",
+              "moneyValue": { "netAmount": 40000, "grossAmount": 48000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productForInvalidConfiguration.abstract_sku",
+              "skuProduct": "#productForInvalidConfiguration.sku",
+              "moneyValue": { "netAmount": 50000, "grossAmount": 50000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productForFailedUpload",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                { "locale": "#localeEN", "name": "#localizedAttribute.name" },
+                { "locale": "#localeDE", "name": "#localizedAttribute.name" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProductAbstract",
+          "arguments": [
+            "#productForFailedUpload.fk_product_abstract",
+            {
+              "skuProductAbstract": "#productForFailedUpload.abstract_sku",
+              "priceTypeName": "DEFAULT",
+              "moneyValue": { "netAmount": 40000, "grossAmount": 48000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productForFailedUpload.abstract_sku",
+              "skuProduct": "#productForFailedUpload.sku",
+              "moneyValue": { "netAmount": 50000, "grossAmount": 50000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConfigurationTransferPersisted",
+          "arguments": [
+            {
+              "fkProduct": "#productForFailedUpload.id_product_concrete",
+              "configuratorKey": "CONFIGURABLE_PRODUCT",
+              "defaultConfiguration": "#productConfigurationForDownload.default_configuration",
+              "defaultDisplayData": "{}",
+              "isComplete": false
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productForUnknownFormat",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                { "locale": "#localeEN", "name": "#localizedAttribute.name" },
+                { "locale": "#localeDE", "name": "#localizedAttribute.name" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProductAbstract",
+          "arguments": [
+            "#productForUnknownFormat.fk_product_abstract",
+            {
+              "skuProductAbstract": "#productForUnknownFormat.abstract_sku",
+              "priceTypeName": "DEFAULT",
+              "moneyValue": { "netAmount": 40000, "grossAmount": 48000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "arguments": [
+            {
+              "skuProductAbstract": "#productForUnknownFormat.abstract_sku",
+              "skuProduct": "#productForUnknownFormat.sku",
+              "moneyValue": { "netAmount": 50000, "grossAmount": 50000 }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "productForAccessCheck",
+          "arguments": [{}, { "idTaxSet": 1 }]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductConfigurationTransferPersisted",
+          "arguments": [
+            {
+              "fkProduct": "#productForAccessCheck.id_product_concrete",
+              "configuratorKey": "CONFIGURABLE_PRODUCT",
+              "defaultConfiguration": "#productConfigurationForDownload.default_configuration",
+              "defaultDisplayData": "{}",
+              "isComplete": false
             }
           ]
         }
