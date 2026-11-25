@@ -35,5 +35,13 @@ export class ProductManagementEditVariantRepository {
     cy.get('[data-qa="configurator-setup-configurator-key"]');
   getConfiguratorSetupSummaryItems = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-summary-item"]');
   getConfiguratorSetupLastChange = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-last-change"]');
+  getConfigurableProductSummaryGroupsToggle = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurable-product-summary-groups-toggle"]');
+  getConfigurableProductSummaryRulesToggle = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurable-product-summary-rules-toggle"]');
+  getConfigurableProductSummaryGroupLabels = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurable-product-summary-group-label"]');
+  getConfigurableProductSummaryRuleTexts = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurable-product-summary-rule-text"]');
   getFlashMessage = (message: string): Cypress.Chainable => cy.contains(message, { timeout: PRODUCT_SAVE_TIMEOUT });
 }

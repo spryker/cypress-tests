@@ -98,6 +98,17 @@ export class ProductManagementEditVariantPage extends BackofficePage {
 
   getConfiguratorSetupLastChange = (): Cypress.Chainable => this.repository.getConfiguratorSetupLastChange();
 
+  openConfigurableProductSummarySections = (): void => {
+    this.repository.getConfigurableProductSummaryGroupsToggle().click();
+    this.repository.getConfigurableProductSummaryRulesToggle().click();
+  };
+
+  getConfigurableProductSummaryGroupLabels = (): Cypress.Chainable =>
+    this.repository.getConfigurableProductSummaryGroupLabels();
+
+  getConfigurableProductSummaryRuleTexts = (): Cypress.Chainable =>
+    this.repository.getConfigurableProductSummaryRuleTexts();
+
   getFlashMessage = (message: string): Cypress.Chainable => this.repository.getFlashMessage(message);
 
   updatePrice = (newPrice: string): void => {

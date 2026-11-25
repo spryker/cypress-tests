@@ -24,6 +24,9 @@ export interface ProductConfiguratorSetupStaticFixtures {
   notSetUpStatus: string;
   noLastChange: string;
   templateSummaryItems: string[];
+  templateGroupLabels: string[];
+  templateRuleCount: number;
+  templateFirstRuleText: string;
   savedConfigurationSummaryItems: string[];
   missingPrice: ProductConfiguratorSetupMissingPrice;
   missingPriceError: string;

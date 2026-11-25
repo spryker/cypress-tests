@@ -71,7 +71,7 @@ describe(
         .should('be.visible');
     });
 
-    it('backoffice user saves the template of the configurator and sees its summary', (): void => {
+    it('backoffice user saves the template of the configurator and sees its summary with its groups, options and rules', (): void => {
       openConfiguratorSetup(dynamicFixtures.productForTemplate);
 
       uploadTemplate((template: string): string => template);
@@ -92,6 +92,21 @@ describe(
         .invoke('text')
         .invoke('trim')
         .should('not.equal', staticFixtures.noLastChange);
+
+      productManagementEditVariantPage.openConfigurableProductSummarySections();
+
+      productManagementEditVariantPage.getConfigurableProductSummaryGroupLabels().first().should('be.visible');
+      productManagementEditVariantPage
+        .getConfigurableProductSummaryGroupLabels()
+        .should((labels: JQuery<HTMLElement>): void => {
+          expect(getTexts(labels)).to.deep.equal(staticFixtures.templateGroupLabels);
+        });
+      productManagementEditVariantPage
+        .getConfigurableProductSummaryRuleTexts()
+        .should('have.length', staticFixtures.templateRuleCount)
+        .first()
+        .should('be.visible')
+        .and('have.text', staticFixtures.templateFirstRuleText);
     });
 
     it('backoffice user downloads the saved configuration', (): void => {
