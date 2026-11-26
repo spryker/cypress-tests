@@ -51,6 +51,11 @@ export class QuickOrderImageToCartPage extends YvesPage {
 
   getImageToCartTitle = (): Cypress.Chainable => cy.get(this.repository.getImageToCartTitleSelector());
 
+  getSupportedFormatsDescription = (): Cypress.Chainable =>
+    cy.get(this.repository.getSupportedFormatsDescriptionSelector());
+
+  getPdfFormatText = (): string => this.repository.getPdfFormatText();
+
   getImageToCartTitleText = (): string => this.repository.getImageToCartTitleText();
 
   getBrowseFileText = (): string => this.repository.getBrowseFileText();
@@ -59,7 +64,7 @@ export class QuickOrderImageToCartPage extends YvesPage {
 
   getImageUploadInputName = (): string => this.repository.getImageUploadInputName();
 
-  getAcceptedImageMimeTypes = (): string => this.repository.getAcceptedImageMimeTypes();
+  getAcceptedFileMimeTypes = (): string => this.repository.getAcceptedFileMimeTypes();
 
   getImageUploadInput = (): Cypress.Chainable => cy.get(this.repository.getImageUploadInputSelector());
 
@@ -115,12 +120,12 @@ export class QuickOrderImageToCartPage extends YvesPage {
       .then((csrfToken) => {
         const formData = new FormData();
         formData.append(
-          'image_order_form[uploadImageOrder]',
+          'visual_add_to_cart_form[orderFile]',
           new Blob([params.contents], { type: params.mimeType }),
           params.fileName
         );
-        formData.append('image_order_form[_token]', String(csrfToken));
-        formData.append('uploadImage', '');
+        formData.append('visual_add_to_cart_form[_token]', String(csrfToken));
+        formData.append('uploadOrderFile', '');
 
         return cy.window().then(
           (win) =>

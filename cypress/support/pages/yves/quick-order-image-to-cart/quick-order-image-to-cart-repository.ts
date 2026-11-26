@@ -13,9 +13,13 @@ export class QuickOrderImageToCartRepository {
 
   getPageTitleSelector = (): string => 'h1.page-info__title';
 
-  getImageToCartSectionSelector = (): string => '[data-qa="component quick-order-image-to-cart"]';
+  getImageToCartSectionSelector = (): string => '[data-qa="component quick-order-visual-add-to-cart"]';
 
-  getImageToCartTitleSelector = (): string => '.quick-order-image-to-cart__title';
+  getImageToCartTitleSelector = (): string => '.quick-order-visual-add-to-cart__title';
+
+  getSupportedFormatsDescriptionSelector = (): string => '[data-qa="quick-order-visual-add-to-cart-description"]';
+
+  getPdfFormatText = (): string => 'PDF';
 
   getPageTitleText = (): string => 'Quick Order';
 
@@ -25,34 +29,35 @@ export class QuickOrderImageToCartRepository {
 
   getUploadButtonText = (): string => 'Upload';
 
-  getImageUploadInputName = (): string => 'image_order_form[uploadImageOrder]';
+  getImageUploadInputName = (): string => 'visual_add_to_cart_form[orderFile]';
 
-  getAcceptedImageMimeTypes = (): string => 'image/jpeg,image/jpg,image/png';
+  getAcceptedFileMimeTypes = (): string => 'image/jpeg,image/jpg,image/png,application/pdf';
 
-  getImageUploadInputSelector = (): string => '#image_order_form_uploadImageOrder';
+  getImageUploadInputSelector = (): string => '#visual_add_to_cart_form_orderFile';
 
-  getBrowseFileLabelSelector = (): string => 'label[for="image_order_form_uploadImageOrder"]';
+  getBrowseFileLabelSelector = (): string => 'label[for="visual_add_to_cart_form_orderFile"]';
 
-  getUploadSubmitButtonSelector = (): string => 'button[name="uploadImage"]';
+  getUploadSubmitButtonSelector = (): string => 'button[name="uploadOrderFile"]';
 
-  getImageOrderCsrfTokenSelector = (): string => 'input[name="image_order_form[_token]"]';
+  getImageOrderCsrfTokenSelector = (): string => 'input[name="visual_add_to_cart_form[_token]"]';
 
   getFileSelectLabelSelector = (): string =>
-    '[data-qa="component quick-order-image-to-cart"] .quick-order-image-to-cart__file-select';
+    '[data-qa="component quick-order-visual-add-to-cart"] .quick-order-visual-add-to-cart__file-select';
 
   getFileSelectErrorSelector = (): string =>
-    '[data-qa="component quick-order-image-to-cart"] .quick-order-image-to-cart__file-select--error';
+    '[data-qa="component quick-order-visual-add-to-cart"] .quick-order-visual-add-to-cart__file-select--error';
 
   getBrowseFileToggleLabelSelector = (): string =>
-    '[data-qa="component quick-order-image-to-cart"] .js-quick-order-image-to-cart__browse-file';
+    '[data-qa="component quick-order-visual-add-to-cart"] .js-quick-order-visual-add-to-cart__browse-file';
 
   getRemoveFileIconSelector = (): string =>
-    '[data-qa="component quick-order-image-to-cart"] .js-quick-order-image-to-cart__remove-file';
+    '[data-qa="component quick-order-visual-add-to-cart"] .js-quick-order-visual-add-to-cart__remove-file';
 
-  getErrorDropzoneSelector = (): string => '[data-qa="component quick-order-image-to-cart"] .input-dropzone--error';
+  getErrorDropzoneSelector = (): string =>
+    '[data-qa="component quick-order-visual-add-to-cart"] .input-dropzone--error';
 
   getErrorMessageSelector = (): string =>
-    '[data-qa="component quick-order-image-to-cart"] :is(.list--error, .list--alert) .list__item';
+    '[data-qa="component quick-order-visual-add-to-cart"] :is(.list--error, .list--alert) .list__item';
 
   getQuickOrderRowsSelector = (): string => '.js-quick-order-form__rows';
 
