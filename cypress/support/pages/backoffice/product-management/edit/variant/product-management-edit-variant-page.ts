@@ -4,10 +4,6 @@ import { inject, injectable } from 'inversify';
 import { BackofficePage } from '@pages/backoffice';
 import { ProductManagementEditVariantRepository } from './product-management-edit-variant-repository';
 
-const CONFIGURATION_DOWNLOAD_URL = '/product-configuration-gui/configurator-setup/download';
-
-const CONFIGURATION_TEMPLATE_DOWNLOAD_URL = '/product-configuration-gui/configurator-setup/download-template';
-
 @injectable()
 @autoWired
 export class ProductManagementEditVariantPage extends BackofficePage {
@@ -53,28 +49,22 @@ export class ProductManagementEditVariantPage extends BackofficePage {
   getSavedConfigurationDownloadUnavailableButton = (): Cypress.Chainable =>
     this.repository.getSavedConfigurationDownloadUnavailableButton();
 
-  downloadConfigurationTemplate = (configuratorKey: string): Cypress.Chainable<string> =>
+  requestConfigurationTemplateDownload = (configuratorKey: string): Cypress.Chainable<Cypress.Response<unknown>> =>
     this.repository
       .getConfigurationTemplateDownloadLink(configuratorKey)
       .invoke('attr', 'href')
-      .then((href) => cy.request(`${Cypress.env().backofficeUrl}${String(href)}`))
-      .then((response) => JSON.stringify(response.body, null, 4));
+      .then((href) => cy.request(`${Cypress.env().backofficeUrl}${String(href)}`));
+
+  downloadConfigurationTemplate = (configuratorKey: string): Cypress.Chainable<string> =>
+    this.requestConfigurationTemplateDownload(configuratorKey).then((response) =>
+      JSON.stringify(response.body, null, 4)
+    );
 
   downloadSavedConfiguration = (): Cypress.Chainable<Cypress.Response<unknown>> =>
     this.repository
       .getSavedConfigurationDownloadLink()
       .invoke('attr', 'href')
       .then((href) => cy.request(`${Cypress.env().backofficeUrl}${String(href)}`));
-
-  visitConfigurationDownload = (idProductConcrete: number): void => {
-    cy.visitBackoffice(`${CONFIGURATION_DOWNLOAD_URL}?id-product-concrete=${idProductConcrete}`);
-  };
-
-  visitConfigurationTemplateDownload = (idProductConcrete: number, configuratorKey: string): void => {
-    cy.visitBackoffice(
-      `${CONFIGURATION_TEMPLATE_DOWNLOAD_URL}?id-product-concrete=${idProductConcrete}&configurator-key=${configuratorKey}`
-    );
-  };
 
   uploadConfigurationFile = (contents: string, fileName: string): void => {
     this.repository

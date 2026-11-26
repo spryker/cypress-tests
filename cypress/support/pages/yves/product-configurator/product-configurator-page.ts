@@ -23,12 +23,12 @@ export class ProductConfiguratorPage extends AbstractPage {
       .invoke('text')
       .then((label: string) => label.split(OPTION_LABEL_PRICE_SEPARATOR)[0].trim());
 
+  getOptionInput = (groupNumber: number, optionNumber: number): Cypress.Chainable =>
+    this.repository.getGroupOption(groupNumber, optionNumber).find(this.repository.getOptionInputSelector());
+
   // The radio is visually replaced by its tile, so the input the value lives on is covered.
   selectOption = (groupNumber: number, optionNumber: number): void => {
-    this.repository
-      .getGroupOption(groupNumber, optionNumber)
-      .find(this.repository.getOptionInputSelector())
-      .check({ force: true });
+    this.getOptionInput(groupNumber, optionNumber).check({ force: true });
   };
 
   save = (): void => {

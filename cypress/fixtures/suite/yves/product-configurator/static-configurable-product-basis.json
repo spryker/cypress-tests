@@ -4,5 +4,6 @@
   "fileName": "configuration.json",
   "savedMessage": "Last upload validated & saved · configuration.json · 6 groups · 57 options · 12 rules · prices complete in EUR, CHF, USD",
   "chosenOptionTitle": "10 m³/h",
+  "reconfiguredOptionTitle": "15 m³/h",
   "configurationCompleteStatus": "Configuration complete!"
 }

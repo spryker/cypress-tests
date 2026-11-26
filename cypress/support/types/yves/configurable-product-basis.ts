@@ -6,6 +6,7 @@ export interface ConfigurableProductBasisStaticFixtures {
   fileName: string;
   savedMessage: string;
   chosenOptionTitle: string;
+  reconfiguredOptionTitle: string;
   configurationCompleteStatus: string;
 }
 

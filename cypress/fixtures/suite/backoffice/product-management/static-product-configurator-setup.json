@@ -2,12 +2,14 @@
   "defaultPassword": "change123",
   "configuratorKey": "CONFIGURABLE_PRODUCT",
   "configurationFileExtension": "json",
+  "configurationFileContentType": "application/json",
   "fileName": "configuration.json",
   "savedMessage": "Last upload validated & saved · configuration.json · 6 groups · 57 options · 12 rules · prices complete in EUR, CHF, USD",
   "setUpStatus": "set-up",
   "notSetUpStatus": "not-set-up",
   "noLastChange": "—",
   "templateSummaryItems": ["6 / 57 / 12", "EUR, CHF, USD"],
+  "templateSchemaVersion": "1.0",
   "templateGroupLabels": [
     "Flow Rate (m³/h)",
     "Filtration Type",
@@ -24,6 +26,5 @@
   "unknownFormatContent": "{\"time_of_day\": \"4\"}",
   "configuratorNotFoundError": "The file does not match the format of any configurator.",
   "nameLocale": "en_US",
-  "changedProductName": "Changed together with an invalid configuration",
-  "accessDeniedTitle": "Access denied"
+  "changedProductName": "Changed together with an invalid configuration"
 }

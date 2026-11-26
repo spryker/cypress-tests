@@ -9,6 +9,8 @@ const CONFIGURED_GROUP_NUMBER = 1;
 
 const CHOSEN_OPTION_NUMBER = 2;
 
+const RECONFIGURED_OPTION_NUMBER = 3;
+
 describe(
   'configurable product basis',
   {
@@ -36,7 +38,7 @@ describe(
       ({ staticFixtures, dynamicFixtures } = Cypress.env());
     });
 
-    it('given a basis configuration saved in the back office when a customer configures the product then the chosen option reaches the cart', (): void => {
+    it('given a basis configuration saved in the back office when a customer configures the product and changes the configuration from the cart then the cart shows the changed option', (): void => {
       // Arrange
       userLoginScenario.execute({
         username: dynamicFixtures.rootUser.username,
@@ -83,6 +85,27 @@ describe(
 
       // Assert
       cartPage.getProductCartItems().should('contain', staticFixtures.chosenOptionTitle);
+
+      // Act
+      cartPage.configureProduct({ sku: dynamicFixtures.product.sku });
+
+      // Assert
+      productConfiguratorPage.getOptionInput(CONFIGURED_GROUP_NUMBER, CHOSEN_OPTION_NUMBER).should('be.checked');
+      productConfiguratorPage
+        .getOptionTitle(CONFIGURED_GROUP_NUMBER, RECONFIGURED_OPTION_NUMBER)
+        .should('equal', staticFixtures.reconfiguredOptionTitle);
+
+      // Act
+      productConfiguratorPage.chooseOption({
+        groupNumber: CONFIGURED_GROUP_NUMBER,
+        optionNumber: RECONFIGURED_OPTION_NUMBER,
+      });
+
+      // Assert
+      cartPage.getProductCartItems().should((items: JQuery<HTMLElement>): void => {
+        expect(items.text()).to.contain(staticFixtures.reconfiguredOptionTitle);
+        expect(items.text()).to.not.contain(staticFixtures.chosenOptionTitle);
+      });
     });
   }
 );

@@ -18,12 +18,14 @@ export interface ProductConfiguratorSetupStaticFixtures {
   defaultPassword: string;
   configuratorKey: string;
   configurationFileExtension: string;
+  configurationFileContentType: string;
   fileName: string;
   savedMessage: string;
   setUpStatus: string;
   notSetUpStatus: string;
   noLastChange: string;
   templateSummaryItems: string[];
+  templateSchemaVersion: string;
   templateGroupLabels: string[];
   templateRuleCount: number;
   templateFirstRuleText: string;
@@ -34,18 +36,13 @@ export interface ProductConfiguratorSetupStaticFixtures {
   configuratorNotFoundError: string;
   nameLocale: string;
   changedProductName: string;
-  accessDeniedTitle: string;
 }
 
 export interface ProductConfiguratorSetupDynamicFixtures {
   rootUser: User;
-  configuratorSetupDeniedUser: User;
-  productWithoutConfiguration: ProductConfiguratorSetupProduct;
   productForTemplate: ProductConfiguratorSetupProduct;
   productForDownload: ProductConfiguratorSetupProduct;
   productConfigurationForDownload: ProductConfiguratorSetupProductConfiguration;
-  productForInvalidConfiguration: ProductConfiguratorSetupProduct;
   productForFailedUpload: ProductConfiguratorSetupProduct;
   productForUnknownFormat: ProductConfiguratorSetupProduct;
-  productForAccessCheck: ProductConfiguratorSetupProduct;
 }
