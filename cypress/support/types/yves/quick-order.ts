@@ -1,4 +1,4 @@
-import { Address, Customer, Merchant, ProductConcrete } from './shared';
+import { Address, Customer, Merchant, ProductConcrete, User } from './shared';
 
 export interface QuickOrderToCheckoutDynamicFixtures {
   customer: Customer;
@@ -18,6 +18,27 @@ export interface QuickOrderToCheckoutStaticFixtures {
   secondProductQuantity: number;
 }
 
+export interface QuickOrderVisualAddToCartDynamicFixtures {
+  rootUser: User;
+  customer: Customer;
+}
+
+export interface QuickOrderVisualAddToCartStaticFixtures {
+  defaultPassword: string;
+  visualAddToCartEnabledSettingKey: string;
+  enabledSettingValue: string;
+  pdfMimeType: string;
+  pdfFormatName: string;
+  invalidFileTypeMessage: string;
+  textOrderFile: QuickOrderUploadedFile;
+}
+
 interface QuickOrderShoppingList {
   name: string;
+}
+
+interface QuickOrderUploadedFile {
+  contents: string;
+  fileName: string;
+  mimeType: string;
 }
