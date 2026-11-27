@@ -5,7 +5,7 @@ import { QuickOrderImageToCartPage } from '@pages/yves';
 import { QuickAddByImageDemoStaticFixtures } from '@interfaces/demo';
 
 describe(
-  'Quick Add by Image - storefront Quick Order image-to-cart',
+  'Quick Add by Image - storefront Quick Order Visual add to cart',
   {
     tags: ['@demo', '@quick-add-by-image', '@ai-commerce'],
   },
@@ -34,7 +34,7 @@ describe(
     });
 
     it(
-      'shows the "Add to cart from image" section with an image-only file input, browse-file label and enabled Upload button',
+      'shows the "Add to cart from image" section with an image and PDF file input, the supported formats, browse-file label and enabled Upload button',
       { tags: ['@demo-smoke'] },
       (): void => {
         quickOrderImageToCartPage.visitQuickOrder().its('response.statusCode').should('eq', 200);
@@ -54,7 +54,12 @@ describe(
           .should('exist')
           .and('have.attr', 'type', 'file')
           .and('have.attr', 'name', quickOrderImageToCartPage.getImageUploadInputName())
-          .and('have.attr', 'accept', quickOrderImageToCartPage.getAcceptedImageMimeTypes());
+          .and('have.attr', 'accept', quickOrderImageToCartPage.getAcceptedFileMimeTypes());
+
+        quickOrderImageToCartPage
+          .getSupportedFormatsDescription()
+          .should('be.visible')
+          .and('contain.text', quickOrderImageToCartPage.getPdfFormatText());
 
         quickOrderImageToCartPage.getBrowseFileLabel().should('be.visible');
 
@@ -102,7 +107,7 @@ describe(
 
         quickOrderImageToCartPage.getImageUploadInput().then(($input) => {
           const maxFileSizeInBytes = Number(
-            ($input.closest('[data-qa="component quick-order-image-to-cart"]')[0] as HTMLElement).getAttribute(
+            ($input.closest('[data-qa="component quick-order-visual-add-to-cart"]')[0] as HTMLElement).getAttribute(
               'max-file-size'
             )
           );
@@ -141,7 +146,7 @@ describe(
         quickOrderImageToCartPage.getRemoveFileIcon().should('not.be.visible');
         quickOrderImageToCartPage
           .getBrowseFileToggleLabel()
-          .should('have.attr', 'for', 'image_order_form_uploadImageOrder');
+          .should('have.attr', 'for', 'visual_add_to_cart_form_orderFile');
         quickOrderImageToCartPage.getImageUploadInput().should(($input) => {
           expect(($input[0] as HTMLInputElement).value).to.eq('');
         });
@@ -149,14 +154,14 @@ describe(
     );
 
     it(
-      'shows the "no image" validation error when Upload is pressed with no file attached',
+      'shows the "no file" validation error when Upload is pressed with no file attached',
       { tags: ['@demo-smoke'] },
       (): void => {
         quickOrderImageToCartPage.visitQuickOrder();
 
         quickOrderImageToCartPage.submitEmptyImageOrder().then((interception) => {
           expect(interception.request.method).to.eq('POST');
-          expect(interception.request.body).to.contain('name="uploadImage"');
+          expect(interception.request.body).to.contain('name="uploadOrderFile"');
           expect(interception.response?.statusCode).to.eq(200);
         });
 
@@ -167,7 +172,7 @@ describe(
     );
 
     it(
-      'rejects a non-image file server-side with the error dropzone and no recognized row',
+      'rejects an unsupported file server-side with the error dropzone and no recognized row',
       { tags: ['@demo-smoke'] },
       (): void => {
         quickOrderImageToCartPage
@@ -194,9 +199,9 @@ describe(
         quickOrderImageToCartPage.submitImageOrder().then((interception) => {
           expect(interception.request.method).to.eq('POST');
           expect(interception.request.headers['content-type']).to.contain('multipart/form-data');
-          expect(interception.request.body).to.contain('name="image_order_form[uploadImageOrder]"');
+          expect(interception.request.body).to.contain('name="visual_add_to_cart_form[orderFile]"');
           expect(interception.request.body).to.contain(staticFixtures.imageFileName);
-          expect(interception.request.body).to.contain('name="uploadImage"');
+          expect(interception.request.body).to.contain('name="uploadOrderFile"');
           expect(interception.response?.statusCode).to.eq(200);
         });
 

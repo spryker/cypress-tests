@@ -50,6 +50,11 @@ describe(
             label: 'Image Recognition Prompt',
             placeholders: ['%s'],
           },
+          {
+            key: 'ai_commerce:quick_order:system_prompts:document_recognition_prompt',
+            label: 'Document Recognition Prompt',
+            placeholders: ['%s'],
+          },
         ],
       },
       {
