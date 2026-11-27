@@ -12,9 +12,9 @@ export interface GoogleAnalyticsTrackingStaticFixtures {
   productPrice: string;
   productPriceAfterDiscounts: string;
   currency: string;
-  categoryUrl: string;
-  categoryName: string;
   categoryListIdPrefix: string;
+  // The language the storefront is browsed in, for the Glue request that reads the category URL.
+  storefrontLanguage: string;
   shippingTier: string;
   paymentType: string;
 }
@@ -27,4 +27,7 @@ export interface GoogleAnalyticsTrackingDynamicFixtures {
   // The brand is a localized attribute of the abstract product; the fixture product has no category and no variant.
   abstractLocalizedAttributes: { name: string; attributes: { brand: string } };
   concreteLocalizedAttributes: { name: string };
+  // A category of its own with one product in it, so the category page does not depend on demo data.
+  category: { category_node: { id_category_node: number } };
+  categoryAttributes: { name: string };
 }

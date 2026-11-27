@@ -23,9 +23,8 @@
     "add_payment_info": "integrations:google_analytics:checkout_events:add_payment_info_event_enabled",
     "purchase": "integrations:google_analytics:checkout_events:purchase_event_enabled"
   },
-  "categoryUrl": "/en/cameras-&-camcorders",
-  "categoryName": "Cameras & Camcorders",
   "categoryListIdPrefix": "category_",
   "shippingTier": "Standard",
-  "paymentType": "Invoice"
+  "paymentType": "Invoice",
+  "storefrontLanguage": "en-US"
 }

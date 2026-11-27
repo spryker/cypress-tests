@@ -186,6 +186,15 @@ export class TrackingPage extends YvesPage {
     return '';
   };
 
+  // The storefront URL of a category node as the shop generates it, read from Glue: it is built from the category names.
+  getCategoryUrl = (idCategoryNode: number, language: string): Cypress.Chainable<string> =>
+    cy
+      .request({
+        url: `${Cypress.env('glueUrl')}/category-nodes/${idCategoryNode}`,
+        headers: { 'Accept-Language': language },
+      })
+      .its('body.data.attributes.url');
+
   visitStorefrontPage = (url: string): void => {
     cy.visit(url);
   };

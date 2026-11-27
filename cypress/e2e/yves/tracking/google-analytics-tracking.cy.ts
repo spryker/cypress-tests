@@ -140,19 +140,22 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
   });
 
   it('customer on a category page should be tracked with view_item_list and select_item of the category list', (): void => {
+    const idCategoryNode = dynamicFixtures.category.category_node.id_category_node;
     const traffic = trackingPage.recordGoogleAnalyticsTraffic();
 
-    trackingPage.visitStorefrontPage(staticFixtures.categoryUrl);
+    trackingPage.getCategoryUrl(idCategoryNode, staticFixtures.storefrontLanguage).then((categoryUrl: string) => {
+      trackingPage.visitStorefrontPage(categoryUrl);
+    });
 
     // The click leaves the page, so the list view is sent before.
     cy.wrap(traffic, { timeout: GOOGLE_ANALYTICS_HIT_TIMEOUT }).should((recordedTraffic: GoogleAnalyticsTraffic) => {
       const events = getEvents(recordedTraffic, VIEW_ITEM_LIST_EVENT);
 
       expect(events).to.have.length.greaterThan(0);
-      expect(events[0].parameters[ITEM_LIST_ID_PARAMETER]).to.match(
-        new RegExp(`^${staticFixtures.categoryListIdPrefix}\\d+$`)
+      expect(events[0].parameters[ITEM_LIST_ID_PARAMETER]).to.equal(
+        `${staticFixtures.categoryListIdPrefix}${idCategoryNode}`
       );
-      expect(events[0].parameters[ITEM_LIST_NAME_PARAMETER]).to.equal(staticFixtures.categoryName);
+      expect(events[0].parameters[ITEM_LIST_NAME_PARAMETER]).to.equal(dynamicFixtures.categoryAttributes.name);
       expect(events[0].items[0].index).to.equal(FIRST_LIST_POSITION);
     });
 
