@@ -155,7 +155,7 @@ describe(
                 .should((items: JQuery<HTMLElement>): void => {
                   expect(getTexts(items)).to.deep.equal(staticFixtures.templateSummaryItems);
                 });
-              getLastChange().should('equal', savedLastChange);
+              productManagementEditVariantPage.getConfiguratorSetupLastChange().should('not.exist');
               productManagementEditVariantPage
                 .getProductNameInput(staticFixtures.nameLocale)
                 .should('have.value', staticFixtures.changedProductName);
@@ -170,8 +170,32 @@ describe(
                 .should((items: JQuery<HTMLElement>): void => {
                   expect(getTexts(items)).to.deep.equal(staticFixtures.savedConfigurationSummaryItems);
                 });
+              getLastChange().should('equal', savedLastChange);
             });
         });
+    });
+
+    it('backoffice user keeps the chosen file when dropping a file of an unsupported format onto it', (): void => {
+      openConfiguratorSetup(dynamicFixtures.productForUnknownFormat);
+
+      productManagementEditVariantPage.uploadConfigurationFile(
+        staticFixtures.unknownFormatContent,
+        staticFixtures.fileName
+      );
+      productManagementEditVariantPage.dropConfigurationFile(
+        staticFixtures.unknownFormatContent,
+        staticFixtures.unsupportedFileName,
+        staticFixtures.unsupportedFileMimeType
+      );
+
+      productManagementEditVariantPage
+        .getConfigurationFileList()
+        .should('contain', staticFixtures.fileName)
+        .and('not.contain', staticFixtures.unsupportedFileName);
+      productManagementEditVariantPage
+        .getConfigurationFileMessage()
+        .should('be.visible')
+        .and('have.text', staticFixtures.unsupportedFormatMessage);
     });
 
     it('backoffice user cannot save a file that no configurator recognizes', (): void => {

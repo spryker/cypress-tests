@@ -72,6 +72,16 @@ export class ProductManagementEditVariantPage extends BackofficePage {
       .selectFile({ contents: Cypress.Buffer.from(contents), fileName, mimeType: 'application/json' }, { force: true });
   };
 
+  dropConfigurationFile = (contents: string, fileName: string, mimeType: string): void => {
+    this.repository
+      .getConfigurationFileDropArea()
+      .selectFile({ contents: Cypress.Buffer.from(contents), fileName, mimeType }, { action: 'drag-drop' });
+  };
+
+  getConfigurationFileList = (): Cypress.Chainable => this.repository.getConfigurationFileList();
+
+  getConfigurationFileMessage = (): Cypress.Chainable => this.repository.getConfigurationFileMessage();
+
   save = (): void => {
     this.repository.getSaveButton().click();
   };

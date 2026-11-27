@@ -34,6 +34,9 @@ export interface ProductConfiguratorSetupStaticFixtures {
   missingPriceError: string;
   unknownFormatContent: string;
   configuratorNotFoundError: string;
+  unsupportedFileName: string;
+  unsupportedFileMimeType: string;
+  unsupportedFormatMessage: string;
   nameLocale: string;
   changedProductName: string;
 }

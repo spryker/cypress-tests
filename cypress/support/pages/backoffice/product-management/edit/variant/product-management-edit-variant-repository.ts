@@ -28,6 +28,12 @@ export class ProductManagementEditVariantRepository {
   getSavedConfigurationDownloadUnavailableButton = (): Cypress.Chainable =>
     cy.get('[data-qa="configurator-setup-download-unavailable"]');
   getConfigurationFileInput = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-file"]');
+  getConfigurationFileDropArea = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurator-setup-upload"] [data-qa="input-dropzone-area"]');
+  getConfigurationFileList = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurator-setup-upload"] [data-qa="input-dropzone-files"]');
+  getConfigurationFileMessage = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurator-setup-upload"] [data-qa="input-dropzone-message"]');
   getConfiguratorSetupErrors = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-errors"]');
   getConfiguratorSetupNotSavedBadge = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-not-saved"]');
   getConfiguratorSetupEmptySummary = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-summary-empty"]');

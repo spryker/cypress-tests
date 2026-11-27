@@ -25,6 +25,9 @@
   "missingPriceError": "groups[2].options[0].price.CHF: price is missing for currency CHF.",
   "unknownFormatContent": "{\"time_of_day\": \"4\"}",
   "configuratorNotFoundError": "The file does not match the format of any configurator.",
+  "unsupportedFileName": "configuration.txt",
+  "unsupportedFileMimeType": "text/plain",
+  "unsupportedFormatMessage": "The file configuration.txt has an unsupported format.",
   "nameLocale": "en_US",
   "changedProductName": "Changed together with an invalid configuration"
 }
