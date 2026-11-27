@@ -20,8 +20,11 @@ export class B2bMpCheckoutSummaryRecurringOrderRepository extends SuiteCheckoutS
     this.getStartDateInput()
       .closest('date-time-picker')
       .find('.date-time-picker__datepicker-input')
-      .then(($trigger): string => {
-        const { config, formatDate } = ($trigger[0] as FlatpickrTrigger)._flatpickr;
+      // The date-time-picker chunk is lazy-loaded, so flatpickr attaches to the trigger after the input renders;
+      // its() retries until the instance exists instead of reading it once.
+      .its('0._flatpickr')
+      .then((flatpickrInstance: FlatpickrTrigger['_flatpickr']): string => {
+        const { config, formatDate } = flatpickrInstance;
 
         return formatDate(config.minDate, 'Y-m-d');
       });
