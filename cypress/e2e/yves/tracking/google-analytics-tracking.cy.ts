@@ -318,7 +318,7 @@ describe('google analytics tracking', { tags: ['@yves', '@google-analytics', 'sp
   function expectProductEvent(
     event: GoogleAnalyticsEvent,
     quantity: number,
-    productPrice: number = Number(staticFixtures.productPrice)
+    productPrice = Number(staticFixtures.productPrice)
   ): void {
     expect(event.parameters[CURRENCY_PARAMETER], event.name).to.equal(staticFixtures.currency);
     expect(Number(event.parameters[VALUE_PARAMETER]), event.name).to.equal(productPrice * quantity);
