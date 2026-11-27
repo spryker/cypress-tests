@@ -1,0 +1,33 @@
+{
+  "defaultPassword": "change123",
+  "configuratorKey": "CONFIGURABLE_PRODUCT",
+  "configurationFileExtension": "json",
+  "configurationFileContentType": "application/json",
+  "fileName": "configuration.json",
+  "savedMessage": "Last upload validated & saved · configuration.json · 6 groups · 57 options · 12 rules · prices complete in EUR, CHF, USD",
+  "setUpStatus": "set-up",
+  "notSetUpStatus": "not-set-up",
+  "noLastChange": "—",
+  "templateSummaryItems": ["6 / 57 / 12", "EUR, CHF, USD"],
+  "templateSchemaVersion": "1.0",
+  "templateGroupLabels": [
+    "Flow Rate (m³/h)",
+    "Filtration Type",
+    "Vessel Material",
+    "Control System",
+    "Intake Connection (DN)",
+    "Power Supply"
+  ],
+  "templateRuleCount": 12,
+  "templateFirstRuleText": "Flow Rate (m³/h): 5 m³/h, 10 m³/h, 15 m³/h excludes Vessel Material: Duplex Steel, Titanium",
+  "savedConfigurationSummaryItems": ["0 / 0 / 0", "EUR"],
+  "missingPrice": { "groupIndex": 2, "optionIndex": 0, "currency": "CHF" },
+  "missingPriceError": "groups[2].options[0].price.CHF: price is missing for currency CHF.",
+  "unknownFormatContent": "{\"time_of_day\": \"4\"}",
+  "configuratorNotFoundError": "The file does not match the format of any configurator.",
+  "unsupportedFileName": "configuration.txt",
+  "unsupportedFileMimeType": "text/plain",
+  "unsupportedFormatMessage": "The file configuration.txt has an unsupported format.",
+  "nameLocale": "en_US",
+  "changedProductName": "Changed together with an invalid configuration"
+}

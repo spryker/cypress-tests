@@ -1,6 +1,8 @@
 import { autoWired } from '@utils';
 import { injectable } from 'inversify';
 
+const PRODUCT_SAVE_TIMEOUT = 30000;
+
 @injectable()
 @autoWired
 export class ProductManagementEditVariantRepository {
@@ -16,4 +18,36 @@ export class ProductManagementEditVariantRepository {
   getSaveButton = (): Cypress.Chainable => cy.get('[type="submit"]');
   getPriceTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-price"]');
   getAllPriceInputs = (): Cypress.Chainable => cy.get('#price-table-collection [data-decimal-rounding="2"]');
+  getProductNameInput = (localeName: string): Cypress.Chainable =>
+    cy.get(`input[name="product_concrete_form_edit[general_${localeName}][name]"]`);
+  getConfiguratorSetupTab = (): Cypress.Chainable => cy.get('[data-tab-content-id="tab-content-configurator-setup"]');
+  getConfiguratorSetupStatus = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-status"]');
+  getConfigurationTemplateDownloadLink = (configuratorKey: string): Cypress.Chainable =>
+    cy.get(`[data-qa="configurator-setup-download-template"][data-configurator-key="${configuratorKey}"]`);
+  getSavedConfigurationDownloadLink = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-download"]');
+  getSavedConfigurationDownloadUnavailableButton = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurator-setup-download-unavailable"]');
+  getConfigurationFileInput = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-file"]');
+  getConfigurationFileDropArea = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurator-setup-upload"] [data-qa="input-dropzone-area"]');
+  getConfigurationFileList = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurator-setup-upload"] [data-qa="input-dropzone-files"]');
+  getConfigurationFileMessage = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurator-setup-upload"] [data-qa="input-dropzone-message"]');
+  getConfiguratorSetupErrors = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-errors"]');
+  getConfiguratorSetupNotSavedBadge = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-not-saved"]');
+  getConfiguratorSetupEmptySummary = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-summary-empty"]');
+  getConfiguratorSetupConfiguratorKey = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurator-setup-configurator-key"]');
+  getConfiguratorSetupSummaryItems = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-summary-item"]');
+  getConfiguratorSetupLastChange = (): Cypress.Chainable => cy.get('[data-qa="configurator-setup-last-change"]');
+  getConfigurableProductSummaryGroupsToggle = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurable-product-summary-groups-toggle"]');
+  getConfigurableProductSummaryRulesToggle = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurable-product-summary-rules-toggle"]');
+  getConfigurableProductSummaryGroupLabels = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurable-product-summary-group-label"]');
+  getConfigurableProductSummaryRuleTexts = (): Cypress.Chainable =>
+    cy.get('[data-qa="configurable-product-summary-rule-text"]');
+  getFlashMessage = (message: string): Cypress.Chainable => cy.contains(message, { timeout: PRODUCT_SAVE_TIMEOUT });
 }
