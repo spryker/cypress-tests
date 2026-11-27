@@ -65,5 +65,6 @@ export const enum REPOSITORIES {
   CustomerGroupViewRepository = 'CustomerGroupViewRepository',
   CustomerGroupListRepository = 'CustomerGroupListRepository',
   CompanyUserInvitationRepository = 'CompanyUserInvitationRepository',
+  TrackingRepository = 'TrackingRepository',
   QuickOrderRepository = 'QuickOrderRepository',
 }

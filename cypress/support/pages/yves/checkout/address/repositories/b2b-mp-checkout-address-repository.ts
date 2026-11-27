@@ -2,6 +2,9 @@ import { injectable } from 'inversify';
 
 import { CheckoutAddressRepository } from '../checkout-address-repository';
 
+// Leaving the cart can be held back while the storefront reports the checkout start, and the address page loads after it.
+const ADDRESS_PAGE_TIMEOUT = 10000;
+
 @injectable()
 export class B2bMpCheckoutAddressRepository implements CheckoutAddressRepository {
   // The single-shipment address form offers the service point through its own selector component;
@@ -13,6 +16,11 @@ export class B2bMpCheckoutAddressRepository implements CheckoutAddressRepository
   // in both layouts, and is what a business unit address has to be picked through.
   getShippingAddressSelectElement = (): Cypress.Chainable => cy.get('.js-address__form-select-shippingAddress');
   getSelectShippingAddressField = (): Cypress.Chainable => {
+    // Waits for the address page first: the step before may still be leaving its page, e.g. while a tracking event is sent.
+    cy.get('#addressesForm_shippingAddress_id_customer_address, [name="checkout-full-addresses"]', {
+      timeout: ADDRESS_PAGE_TIMEOUT,
+    });
+
     return cy.get('body').then((body) => {
       if (body.find('#addressesForm_shippingAddress_id_customer_address').length === 1) {
         return cy.get('#addressesForm_shippingAddress_id_customer_address');

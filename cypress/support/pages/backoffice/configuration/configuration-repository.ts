@@ -76,4 +76,5 @@ export class ConfigurationRepository {
     `input[type="radio"][id="setting-${settingKey}-${value}"]`;
 
   getSaveUrl = (): string => '/configuration/manage/save';
+  getSettingInputSelector = (settingKey: string): string => `[id="setting-${settingKey}"]`;
 }
