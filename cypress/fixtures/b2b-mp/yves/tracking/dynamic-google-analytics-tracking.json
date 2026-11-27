@@ -1,0 +1,263 @@
+{
+  "data": {
+    "type": "dynamic-fixtures",
+    "attributes": {
+      "synchronize": true,
+      "operations": [
+        {
+          "type": "helper",
+          "name": "haveUser",
+          "key": "rootUser",
+          "arguments": [
+            {
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "addUserToGroup",
+          "arguments": ["#rootUser.id_user", 1]
+        },
+        {
+          "type": "transfer",
+          "name": "StoreTransfer",
+          "key": "store",
+          "arguments": {
+            "id_store": 1,
+            "name": "DE"
+          }
+        },
+        {
+          "type": "array-object",
+          "key": "stores",
+          "arguments": ["#store"]
+        },
+        {
+          "type": "helper",
+          "name": "haveLocale",
+          "key": "locale",
+          "arguments": [
+            {
+              "localeName": "en_US"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCountry",
+          "key": "country"
+        },
+        {
+          "type": "helper",
+          "name": "haveConfirmedCustomer",
+          "key": "customer",
+          "arguments": [
+            {
+              "locale": "#locale",
+              "password": "change123"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCustomerAddress",
+          "key": "address",
+          "arguments": [
+            {
+              "fkCustomer": "#customer.id_customer",
+              "fkCountry": "#country.id_country"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompany",
+          "key": "company",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyBusinessUnit",
+          "key": "businessUnit",
+          "arguments": [
+            {
+              "fkCompany": "#company.id_company"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "permission1",
+          "arguments": ["AddCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "permission2",
+          "arguments": ["ChangeCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "permission3",
+          "arguments": ["RemoveCartItemPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "permission4",
+          "arguments": ["PlaceOrderWithAmountUpToPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "permission5",
+          "arguments": ["PlaceOrderPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "havePermissionByKey",
+          "key": "permission6",
+          "arguments": ["SeeBusinessUnitOrdersPermissionPlugin"]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyRoleWithPermissions",
+          "arguments": [
+            {
+              "isDefault": true,
+              "fkCompany": "#company.id_company"
+            },
+            ["#permission1", "#permission2", "#permission3", "#permission4", "#permission5", "#permission6"]
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveCompanyUser",
+          "key": "companyUser",
+          "arguments": [
+            {
+              "customer": "#customer",
+              "fkCustomer": "#customer.id_customer",
+              "fkCompany": "#company.id_company",
+              "fkCompanyBusinessUnit": "#businessUnit.id_company_business_unit"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveActiveMerchantWithStore",
+          "key": "merchant"
+        },
+        {
+          "type": "transfer",
+          "name": "LocalizedAttributesTransfer",
+          "key": "abstractLocalizedAttributes",
+          "arguments": {
+            "name": "Tracked abstract product",
+            "locale": {
+              "id_locale": "#locale.id_locale",
+              "locale_name": "#locale.locale_name"
+            },
+            "attributes": {
+              "brand": "Tracked brand"
+            },
+            "is_searchable": true
+          }
+        },
+        {
+          "type": "transfer",
+          "name": "LocalizedAttributesTransfer",
+          "key": "concreteLocalizedAttributes",
+          "arguments": {
+            "name": "Tracked concrete product",
+            "locale": {
+              "id_locale": "#locale.id_locale",
+              "locale_name": "#locale.locale_name"
+            },
+            "attributes": [],
+            "is_searchable": true
+          }
+        },
+        {
+          "type": "helper",
+          "name": "haveFullProduct",
+          "key": "product",
+          "arguments": [
+            {},
+            {
+              "idTaxSet": 1,
+              "localizedAttributes": [
+                {
+                  "name": "#abstractLocalizedAttributes.name",
+                  "locale": {
+                    "id_locale": "#locale.id_locale",
+                    "locale_name": "#locale.locale_name"
+                  },
+                  "attributes": {
+                    "brand": "Tracked brand"
+                  },
+                  "is_searchable": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "addLocalizedAttributesToProductConcrete",
+          "arguments": ["#product", ["#concreteLocalizedAttributes"]]
+        },
+        {
+          "type": "helper",
+          "name": "havePriceProduct",
+          "key": "productWithPrice",
+          "arguments": [
+            {
+              "skuProductAbstract": "#product.abstract_sku",
+              "skuProduct": "#product.sku",
+              "moneyValue": {
+                "netAmount": 30000,
+                "grossAmount": 30000
+              }
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOffer",
+          "key": "productOffer",
+          "arguments": [
+            {
+              "isActive": true,
+              "status": "approved",
+              "idProductConcrete": "#product.id_product_concrete",
+              "concreteSku": "#product.sku",
+              "merchantReference": "#merchant.merchant_reference",
+              "stores": "#stores"
+            }
+          ]
+        },
+        {
+          "type": "helper",
+          "name": "haveProductOfferStock",
+          "arguments": [
+            {
+              "idProductOffer": "#productOffer.id_product_offer",
+              "productOfferReference": "#productOffer.product_offer_reference",
+              "isNeverOutOfStock": true
+            },
+            "#merchant.stocks"
+          ]
+        }
+      ]
+    }
+  }
+}

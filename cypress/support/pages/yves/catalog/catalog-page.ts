@@ -29,6 +29,27 @@ export class CatalogPage extends YvesPage {
     });
   };
 
+  // Opens the first suggested product by the link in the suggestion response. Clicking the rendered suggestion races the
+  // dropdown, which re-renders while the suggestions of the query are still loading, so a click or an Enter can land on the
+  // search results page instead.
+  openProductPageFromSuggestions = (params: SearchParams): void => {
+    if (this.isRepository('b2c', 'b2c-mp')) {
+      cy.get('.header__search-open').click();
+    }
+
+    cy.intercept({ pathname: /\/search\/suggestion$/, query: { q: params.query } }).as('querySuggestion');
+    this.repository.getSearchInput().clear().invoke('val', params.query);
+    cy.wait('@querySuggestion').then((interception) => {
+      const productUrl = Cypress.$(`<div>${interception.response?.body?.suggestion ?? ''}</div>`)
+        .find(`${this.repository.getSuggestedProductSelector()} a`)
+        .first()
+        .attr('href');
+
+      expect(productUrl, `suggested product for ${params.query}`).to.be.a('string');
+      cy.visit(productUrl as string);
+    });
+  };
+
   // Types the query and waits for the suggestion response without following it, so a spec can assert
   // whether a product is offered at all. The results page is not usable for that: it does not list a
   // freshly created product even when the suggestion endpoint already does.

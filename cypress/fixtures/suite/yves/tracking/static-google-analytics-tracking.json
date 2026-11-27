@@ -1,0 +1,31 @@
+{
+  "defaultPassword": "change123",
+  "measurementId": "G-CYPRESS01",
+  "googleAnalyticsTab": "google_analytics",
+  "measurementIdSetting": "integrations:google_analytics:tracking:measurement_id",
+  "trackingConsentTab": "tracking_consent",
+  "consentRequiredSetting": "integrations:tracking_consent:consent:consent_required",
+  "statisticsConsentPurpose": "statistics",
+  "concreteSkuParameter": "concrete_sku",
+  "productPrice": "300",
+  "productPriceAfterDiscounts": "270",
+  "currency": "EUR",
+  "eventSettings": {
+    "view_item": "integrations:google_analytics:product_events:view_item_event_enabled",
+    "view_item_list": "integrations:google_analytics:product_events:view_item_list_event_enabled",
+    "select_item": "integrations:google_analytics:product_events:select_item_event_enabled",
+    "add_to_cart": "integrations:google_analytics:cart_events:add_to_cart_event_enabled",
+    "remove_from_cart": "integrations:google_analytics:cart_events:remove_from_cart_event_enabled",
+    "view_cart": "integrations:google_analytics:cart_events:view_cart_event_enabled",
+    "add_to_wishlist": "integrations:google_analytics:customer_list_events:add_to_wishlist_event_enabled",
+    "begin_checkout": "integrations:google_analytics:checkout_events:begin_checkout_event_enabled",
+    "add_shipping_info": "integrations:google_analytics:checkout_events:add_shipping_info_event_enabled",
+    "add_payment_info": "integrations:google_analytics:checkout_events:add_payment_info_event_enabled",
+    "purchase": "integrations:google_analytics:checkout_events:purchase_event_enabled"
+  },
+  "categoryUrl": "/en/cameras-&-camcorders",
+  "categoryName": "Cameras & Camcorders",
+  "categoryListIdPrefix": "category_",
+  "shippingTier": "Standard",
+  "paymentType": "Invoice"
+}

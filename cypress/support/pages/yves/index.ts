@@ -72,3 +72,4 @@ export * from './company/business-unit/create/company-business-unit-create-page'
 export * from './company/user/create/company-user-create-page';
 export * from './company/user-invitation/company-user-invitation-page';
 export * from './quote-request/quote-request-page';
+export * from './tracking/tracking-page';

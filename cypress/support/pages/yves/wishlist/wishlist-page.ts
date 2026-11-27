@@ -2,6 +2,9 @@ import { autoWired } from '@utils';
 import { injectable } from 'inversify';
 import { YvesPage } from '@pages/yves';
 
+// The ajax call that fills in the picker can take longer than the default command timeout on a busy environment.
+const WISHLIST_PICKER_TIMEOUT_MS = 30000;
+
 @injectable()
 @autoWired
 export class WishlistPage extends YvesPage {
@@ -15,6 +18,8 @@ export class WishlistPage extends YvesPage {
     cy.get('#wishlist_form_name').clear();
     cy.get('#wishlist_form_name').type(wishlistName);
     cy.get('[data-qa="component wishlist-form"] [type="submit"]').click();
+    // The form redirects back to the overview: the next command would otherwise act on the page that is being replaced.
+    this.getWishlistOverviewEntry(wishlistName).should('exist');
 
     return wishlistName;
   };
@@ -36,12 +41,19 @@ export class WishlistPage extends YvesPage {
   // molecule instead of wishlist-selector-default, and wrap the picker in a custom select that hides it.
   getWishlistPicker = (): Cypress.Chainable =>
     cy.get(
-      '[data-qa="component wishlist-selector-default"] [name="wishlist-name"], [data-qa="component wishlist-selector"] [name="wishlist-name"]'
+      '[data-qa="component wishlist-selector-default"] [name="wishlist-name"], [data-qa="component wishlist-selector"] [name="wishlist-name"]',
+      { timeout: WISHLIST_PICKER_TIMEOUT_MS }
     );
 
   addDisplayedProductToWishlist = (name: string): void => {
     this.getWishlistPicker().filter('select').first().select(name, { force: true });
     this.getAddToWishlistForm().submit();
+  };
+
+  // As a customer does it: the click on the form's button, which the storefront's traceable events listen to.
+  clickAddDisplayedProductToWishlist = (name: string): void => {
+    this.getWishlistPicker().filter('select').first().select(name, { force: true });
+    this.getAddToWishlistForm().find('button[type="submit"]').click();
   };
 
   getAddToWishlistForm = (): Cypress.Chainable =>

@@ -269,11 +269,14 @@ import { SuiteCustomerGroupViewRepository } from '../../pages/backoffice/custome
 import { SuiteCustomerGroupListRepository } from '../../pages/backoffice/customer-group/list/repositories/suite-customer-group-list-repository';
 import { SuiteCompanyUserInvitationRepository } from '../../pages/yves/company/user-invitation/repositories/suite-company-user-invitation-repository';
 import { B2bMpCompanyUserInvitationRepository } from '../../pages/yves/company/user-invitation/repositories/b2b-mp-company-user-invitation-repository';
+import { SuiteTrackingRepository } from '../../pages/yves/tracking/repositories/suite-tracking-repository';
+import { B2bMpTrackingRepository } from '../../pages/yves/tracking/repositories/b2b-mp-tracking-repository';
 
 type BindingsMap = { [K in REPOSITORIES]?: interfaces.Newable<unknown> };
 
 const suiteMappings: BindingsMap = {
   [REPOSITORIES.YvesRepository]: SuiteYvesRepository,
+  [REPOSITORIES.TrackingRepository]: SuiteTrackingRepository,
   [REPOSITORIES.HomeRepository]: SuiteHomeRepository,
   [REPOSITORIES.MultiFactorAuthRepository]: SuiteMultiFactorAuthRepository,
   [REPOSITORIES.LoginRepository]: SuiteLoginRepository,
@@ -492,6 +495,7 @@ const b2cMpMappings: BindingsMap = {
 
 const b2bMpMappings: BindingsMap = {
   [REPOSITORIES.YvesRepository]: B2bMpYvesRepository,
+  [REPOSITORIES.TrackingRepository]: B2bMpTrackingRepository,
   [REPOSITORIES.HomeRepository]: B2bMpHomeRepository,
   [REPOSITORIES.MultiFactorAuthRepository]: B2bMpMultiFactorAuthRepository,
   [REPOSITORIES.LoginRepository]: B2bMpLoginRepository,
